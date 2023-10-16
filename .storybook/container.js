@@ -1,13 +1,13 @@
 /**
  * @license
  *
- * Copyright IBM Corp. 2020, 2023
+ * Copyright IBM Corp. 2023
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, TemplateResult } from 'lit';
+import { html } from 'lit';
 import containerStyles from './_container.scss'; // eslint-disable-line import/first
 
 /**
@@ -19,9 +19,6 @@ import containerStyles from './_container.scss'; // eslint-disable-line import/f
 const container = ({
   hasMainTag,
   children,
-}: {
-  hasMainTag?: boolean;
-  children: TemplateResult;
 }) => html`
   <style>
     ${containerStyles}

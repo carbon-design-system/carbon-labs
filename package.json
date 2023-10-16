@@ -1,5 +1,5 @@
 {
-  "name": "carbon-for-ai",
+  "name": "@carbon-labs/ai",
   "private": true,
   "version": "0.1.0",
   "type": "module",

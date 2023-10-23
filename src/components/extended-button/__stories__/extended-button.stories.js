@@ -1,3 +1,12 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import '../extended-button';
 import { html } from 'lit';
 import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';

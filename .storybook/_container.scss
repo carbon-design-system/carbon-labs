@@ -1,7 +1,7 @@
 //
 // @license
 //
-// Copyright IBM Corp. 2019, 2023
+// Copyright IBM Corp. 2023
 //
 // This source code is licensed under the Apache-2.0 license found in the
 // LICENSE file in the root directory of this source tree.
@@ -62,11 +62,4 @@ body {
 #main-content {
   padding: 42px;
   position: relative;
-}
-
-.#{$prefix}--content.#{$prefix}-ce-demo-devenv--ui-shell-content {
-  margin: 0;
-  height: 100vh;
-  width: 100%;
-  padding: 2rem;
 }

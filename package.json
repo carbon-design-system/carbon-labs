@@ -103,14 +103,8 @@
       "prettier --cache --write",
       "stylelint --report-needless-disables --report-invalid-scope-disables --allow-empty-input"
     ],
-    "!(*sass).md": [
+    "*.md": [
       "prettier --cache --write"
-    ],
-    "README.md": [
-      "all-contributors generate"
-    ],
-    ".all-contributorsrc": [
-      "all-contributors generate"
     ]
   },
   "eslintConfig": {

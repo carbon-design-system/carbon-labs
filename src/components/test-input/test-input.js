@@ -1,6 +1,5 @@
 import settings from "../../globals/settings.js";
 import { LitElement, html } from "lit";
-import { property } from "lit/decorators.js";
 import { SearchTypeaheadAPI } from "../../services/SearchTypeahead/index.js";
 
 const { stablePrefix: c4aiPrefix } = settings;
@@ -8,7 +7,7 @@ const { stablePrefix: c4aiPrefix } = settings;
 /**
  * Input component using search typeahead api
  */
-export class C4AITestInput extends LitElement {
+export default class C4AITestInput extends LitElement {
   static properties = {
     searchResults: { attribute: false },
   };

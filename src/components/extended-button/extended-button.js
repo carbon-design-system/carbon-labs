@@ -7,7 +7,7 @@ const { stablePrefix: c4aiPrefix } = settings;
 /**
  * Component extending the @carbon/web-components' button
  */
-export class C4AIExtendedButton extends CDSButton {
+export default class C4AIExtendedButton extends CDSButton {
   static styles = styles;
 }
 

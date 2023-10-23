@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "build": "rollup --config rollup.config.js",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -17,8 +18,11 @@
     "@carbon/icon-helpers": "^10.44.0",
     "@carbon/icons": "^11.28.0",
     "@carbon/layout": "^11.19.0",
+    "@carbon/motion": "^11.15.0",
     "@carbon/themes": "^11.25.0",
+    "@carbon/type": "^11.24.0",
     "@rollup/plugin-multi-entry": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@storybook/addon-essentials": "^7.4.5",
     "@storybook/addon-links": "^7.4.5",
     "@storybook/addon-styling": "^1.3.7",

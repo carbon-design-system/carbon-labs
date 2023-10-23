@@ -1,26 +1,30 @@
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 import { mergeConfig } from 'vite';
 import postcss from 'rollup-plugin-postcss';
 import postcssLit from 'rollup-plugin-postcss-lit';
 import sass from 'sass';
-import svgr from 'vite-plugin-svgr';
 
 const config = {
   stories: [
-    "../src/components/**/*.mdx",
-    "../src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    '../src/components/**/*.mdx',
+    '../src/components/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-  ],
+  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   framework: {
-    name: "@storybook/web-components-vite",
+    name: '@storybook/web-components-vite',
     options: {},
   },
   docs: {
-    autodocs: "tag",
+    autodocs: 'tag',
   },
   async viteFinal(config) {
     return mergeConfig(config, {
@@ -31,11 +35,7 @@ const config = {
           },
         },
       },
-      plugins: [
-        postcss(),
-        postcssLit(),
-        svgr(),
-      ],
+      plugins: [postcss(), postcssLit()],
     });
   },
 };

@@ -1,3 +1,4 @@
+
 /**
  * @license
  *
@@ -7,9 +8,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const settings = {
-  stablePrefix: 'c4ai',
-  prefix: 'cds',
-};
-
-export default settings;
+export { default as SearchTypeaheadAPI } from './SearchTypeahead';

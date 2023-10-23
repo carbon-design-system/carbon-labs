@@ -5,7 +5,5 @@
 // LICENSE file in the root directory of this source tree.
 //
 
-@use '@carbon/grid';
-
-// Emit the css-grid styles
-@include grid.css-grid();
+$c4ai-prefix: 'c4ai' !default;
+$cds-prefix: 'cds';

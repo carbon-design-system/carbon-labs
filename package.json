@@ -2,37 +2,119 @@
   "name": "@carbon-labs/ai",
   "private": true,
   "version": "0.1.0",
-  "type": "module",
   "scripts": {
+    "build": "rollup --config rollup.config.js",
+    "build-storybook": "storybook build",
+    "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd}/**'",
+    "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd}/**' '!src/components/**'",
+    "lint": "eslint src --ext .js,.ts",
+    "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@carbon/styles": "^1.39.0",
-    "@carbon/web-components": "^2.0.1",
+    "@carbon/web-components": "2.0.1-canary.1",
     "lit": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.2",
     "@carbon/grid": "^11.20.0",
-    "@carbon/icons": "^11.28.0",
     "@carbon/icon-helpers": "^10.44.0",
+    "@carbon/icons": "^11.28.0",
     "@carbon/layout": "^11.19.0",
+    "@carbon/motion": "^11.15.0",
     "@carbon/themes": "^11.25.0",
+    "@carbon/type": "^11.24.0",
+    "@commitlint/cli": "^18.0.0",
+    "@commitlint/config-conventional": "^18.0.0",
+    "@rollup/plugin-multi-entry": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@storybook/addon-essentials": "^7.4.5",
     "@storybook/addon-links": "^7.4.5",
     "@storybook/addon-styling": "^1.3.7",
     "@storybook/blocks": "^7.4.5",
     "@storybook/web-components": "^7.4.5",
     "@storybook/web-components-vite": "^7.4.5",
+    "axios": "^1.5.1",
+    "babel-preset-carbon": "^0.0.14",
+    "browserslist-config-carbon": "^11.2.0",
+    "eslint-config-carbon": "^3.10.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
+    "prettier": "^2.8.8",
+    "prettier-config-carbon": "^0.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^3.29.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-postcss-lit": "^2.1.0",
-    "@rollup/plugin-multi-entry": "^6.0.0",
     "sass": "~1.64.0",
     "storybook": "^7.4.5",
-    "vite": "^4.4.5",
-    "vite-plugin-svgr": "^4.1.0"
+    "stylelint": "^15.11.0",
+    "stylelint-config-carbon": "^1.16.0",
+    "vite": "^4.4.5"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "header-max-length": [
+        2,
+        "always",
+        72
+      ],
+      "body-max-line-length": [
+        2,
+        "always",
+        80
+      ],
+      "scope-case": [
+        0,
+        "always",
+        "lower-case"
+      ],
+      "type-enum": [
+        2,
+        "always",
+        [
+          "build",
+          "ci",
+          "chore",
+          "docs",
+          "feat",
+          "fix",
+          "perf",
+          "refactor",
+          "revert",
+          "test",
+          "style"
+        ]
+      ]
+    }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "prettier --cache --write",
+      "eslint"
+    ],
+    "**/*.scss": [
+      "prettier --cache --write",
+      "stylelint --report-needless-disables --report-invalid-scope-disables --allow-empty-input"
+    ],
+    "*.md": [
+      "prettier --cache --write"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-carbon/base"
+    ]
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-carbon"
+    ]
   }
 }

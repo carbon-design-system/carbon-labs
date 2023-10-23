@@ -7,9 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const settings = {
-  stablePrefix: 'c4ai',
-  prefix: 'cds',
-};
+import { addons } from '@storybook/manager-api';
+import storybookTheme from './theme';
 
-export default settings;
+addons.setConfig({
+  theme: storybookTheme,
+});

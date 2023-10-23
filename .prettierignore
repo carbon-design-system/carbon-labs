@@ -1,0 +1,8 @@
+build
+dist
+es
+html
+lib
+node_modules
+ts
+umd

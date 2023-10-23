@@ -7,9 +7,5 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const settings = {
-  stablePrefix: 'c4ai',
-  prefix: 'cds',
-};
-
-export default settings;
+export { default as C4AIExtendedButton } from './extended-button/extended-button';
+export { default as C4AITestInput } from './test-input/test-input';

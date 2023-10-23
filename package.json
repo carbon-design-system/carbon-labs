@@ -9,7 +9,8 @@
     "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd}/**' '!src/components/**'",
     "lint": "eslint src --ext .js,.ts",
     "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
-    "storybook": "storybook dev -p 6006"
+    "storybook": "storybook dev -p 6006",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@carbon/styles": "^1.39.0",
@@ -25,6 +26,8 @@
     "@carbon/motion": "^11.15.0",
     "@carbon/themes": "^11.25.0",
     "@carbon/type": "^11.24.0",
+    "@commitlint/cli": "^18.0.0",
+    "@commitlint/config-conventional": "^18.0.0",
     "@rollup/plugin-multi-entry": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@storybook/addon-essentials": "^7.4.5",
@@ -37,6 +40,7 @@
     "babel-preset-carbon": "^0.0.14",
     "browserslist-config-carbon": "^11.2.0",
     "eslint-config-carbon": "^3.10.0",
+    "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
     "prettier": "^2.8.8",
     "prettier-config-carbon": "^0.11.0",
@@ -50,6 +54,45 @@
     "stylelint": "^15.11.0",
     "stylelint-config-carbon": "^1.16.0",
     "vite": "^4.4.5"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "header-max-length": [
+        2,
+        "always",
+        72
+      ],
+      "body-max-line-length": [
+        2,
+        "always",
+        80
+      ],
+      "scope-case": [
+        0,
+        "always",
+        "lower-case"
+      ],
+      "type-enum": [
+        2,
+        "always",
+        [
+          "build",
+          "ci",
+          "chore",
+          "docs",
+          "feat",
+          "fix",
+          "perf",
+          "refactor",
+          "revert",
+          "test",
+          "style"
+        ]
+      ]
+    }
   },
   "lint-staged": {
     "**/*.js": [

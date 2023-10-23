@@ -1,1 +1,1 @@
-export { default as SearchTypeaheadAPI } from "./SearchTypeahead";
+export { default as SearchTypeaheadAPI } from './SearchTypeahead';

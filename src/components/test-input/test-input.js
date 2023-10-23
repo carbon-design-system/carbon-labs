@@ -1,6 +1,6 @@
-import settings from "../../globals/settings.js";
-import { LitElement, html } from "lit";
-import { SearchTypeaheadAPI } from "../../services/SearchTypeahead/index.js";
+import settings from '../../globals/settings.js';
+import { LitElement, html } from 'lit';
+import { SearchTypeaheadAPI } from '../../services/SearchTypeahead/index.js';
 
 const { stablePrefix: c4aiPrefix } = settings;
 

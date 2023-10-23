@@ -1,7 +1,7 @@
 $css--plex: true !default;
 
-@use "../../globals/scss/vars" as *;
-@use "@carbon/web-components/scss/components/button/button";
+@use '../../globals/scss/vars' as *;
+@use '@carbon/web-components/scss/components/button/button';
 
 :host(#{$c4ai-prefix}-extended-button) {
   @extend :host(#{$cds-prefix}-button);

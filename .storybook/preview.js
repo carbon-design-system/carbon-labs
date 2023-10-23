@@ -1,7 +1,7 @@
 /** @type { import('@storybook/web-components').Preview } */
-import { html } from "lit";
-import "@carbon/web-components/es/components/skip-to-content/skip-to-content.js";
-import containerStyles from "./_container.scss?inline"; // eslint-disable-line import/first
+import { html } from 'lit';
+import '@carbon/web-components/es/components/skip-to-content/skip-to-content.js';
+import containerStyles from './_container.scss?inline'; // eslint-disable-line import/first
 
 export default {
   decorators: [
@@ -17,14 +17,13 @@ export default {
         name="main-content"
         data-floating-menu-container
         data-modal-container
-        role="main"
-      >
+        role="main">
         ${story()}
       </div>
     `,
   ],
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
+    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 /**
  * @constant {string | string} Host for the API calls
@@ -6,7 +6,7 @@ import axios from "axios";
  */
 const _host =
   (import.meta.env && import.meta.env.VITE_SEARCH_TYPEAHEAD_API) ||
-  "https://www-api.ibm.com";
+  'https://www-api.ibm.com';
 /**
  * Search endpoint
  *
@@ -29,15 +29,15 @@ class SearchTypeaheadAPI {
    *   return response;
    * }
    */
-  static async getResults(query, appid = "") {
+  static async getResults(query) {
     const urlQuery = [`lang=en&cc=us`, `query=${encodeURIComponent(query)}`]
       .filter((item) => item)
-      .join("&");
+      .join('&');
     const url = `${_endpoint}?${urlQuery}`;
     return await axios
       .get(url, {
         headers: {
-          "Content-Type": "application/json; charset=utf-8",
+          'Content-Type': 'application/json; charset=utf-8',
         },
       })
       .then((response) => response.data.response);

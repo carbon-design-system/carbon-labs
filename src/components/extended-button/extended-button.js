@@ -1,6 +1,6 @@
-import settings from "../../globals/settings.js";
-import CDSButton from "@carbon/web-components/es/components/button/button";
-import styles from "./extended-button.scss?inline";
+import settings from '../../globals/settings.js';
+import CDSButton from '@carbon/web-components/es/components/button/button';
+import styles from './extended-button.scss?inline';
 
 const { stablePrefix: c4aiPrefix } = settings;
 

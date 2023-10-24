@@ -16,3 +16,8 @@ To run Storybook locally:
 ```bash
 pnpm storybook
 ```
+
+## 📝 License
+
+Licensed under the
+[Apache 2.0 License](https://github.com/carbon-design-system/carbon-for-ai/blob/main/LICENSE).

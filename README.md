@@ -1,7 +1,7 @@
 # @carbon/ai
 
-> A collection of AI components and patterns implemented using
-> [Carbon Web Components](https://carbondesignsystem.com/developing/frameworks/web-components).
+> A collection of components and patterns implemented using
+> [Carbon Web Components](https://carbondesignsystem.com/developing/frameworks/web-components) for the IBM AI experience.
 
 ## Getting Started
 
@@ -16,3 +16,8 @@ To run Storybook locally:
 ```bash
 pnpm storybook
 ```
+
+## 📝 License
+
+Licensed under the
+[Apache 2.0 License](https://github.com/carbon-design-system/carbon-for-ai/blob/main/LICENSE).

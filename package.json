@@ -2,8 +2,9 @@
   "name": "@carbon-labs/ai",
   "private": true,
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "vite build --mode development && vite build --mode production",
     "build-storybook": "storybook build",
     "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd}/**'",
     "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd}/**' '!src/components/**'",

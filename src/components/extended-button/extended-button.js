@@ -7,9 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import settings from '../../globals/settings.js';
-import CDSButton from '@carbon/web-components/es/components/button/button';
-import styles from './extended-button.scss?inline';
+import settings from "../../globals/settings.js";
+import CDSButton from "@carbon/web-components/es/components/button/button.js";
+import styles from "./extended-button.scss?inline";
 
 const { stablePrefix: c4aiPrefix } = settings;
 

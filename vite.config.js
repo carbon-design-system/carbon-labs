@@ -1,10 +1,10 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv } from "vite";
 
-import fs from 'fs';
-import path from 'path';
-import resolve from '@rollup/plugin-node-resolve';
-import postcss from 'rollup-plugin-postcss';
-import postcssLit from 'rollup-plugin-postcss-lit';
+import fs from "fs";
+import path from "path";
+import resolve from "@rollup/plugin-node-resolve";
+import postcss from "rollup-plugin-postcss";
+import postcssLit from "rollup-plugin-postcss-lit";
 
 /**
  * Gets all of the folders and returns out
@@ -19,11 +19,11 @@ function _getFolders(dir) {
     .filter((file) => fs.statSync(path.join(dir, file)).isDirectory());
 }
 
-if (!fs.existsSync('dist')) {
-  fs.mkdirSync('dist');
+if (!fs.existsSync("dist")) {
+  fs.mkdirSync("dist");
 }
 
-const folders = _getFolders('src/components');
+const folders = _getFolders("src/components");
 
 for (let i = folders.length - 1; i >= 0; i--) {
   if (!fs.existsSync(`src/components/${folders[i]}/index.js`)) {
@@ -37,19 +37,38 @@ folders.forEach((folder) => {
   inputs[`${folder}`] = `src/components/${folder}/index.js`;
 });
 
+/**
+ * Stores the suffix to append depending on build mode
+ *
+ * @type {{development: string, production: string}}
+ */
+const modeSuffixes = {
+  development: "",
+  production: ".min",
+};
+
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
-  const env = loadEnv(mode, process.cwd(), '');
+  const env = loadEnv(mode, process.cwd(), "");
+
+  let destDir = "dist";
+  if (mode === "production") {
+    destDir = "es";
+  }
   return {
     // vite config
     define: {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
     },
     build: {
+      outDir: destDir,
       lib: {
         entry: inputs,
-        formats: ['es'],
+        fileName: (_, entryName) => {
+          return `${entryName}${modeSuffixes[mode]}.js`;
+        },
+        formats: ["es"],
       },
       rollupOptions: {
         plugins: [
@@ -57,19 +76,12 @@ export default defineConfig(({ mode }) => {
             browser: true,
           }),
           postcss({
-            extensions: ['.scss'],
+            extensions: [".scss"],
             minimize: true,
-            use: [
-              [
-                'sass',
-                {
-                  includePaths: ['./node_modules'],
-                },
-              ],
-            ],
+            use: [["sass"]],
           }),
           postcssLit({
-            include: ['/node_modules', '**/*.scss', '**/*.scss?inline*'],
+            include: ["./node_modules", "src/**/*.scss", "src/**/*.scss?*"],
           }),
         ],
       },

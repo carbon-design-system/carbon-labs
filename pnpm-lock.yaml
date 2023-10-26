@@ -79,6 +79,9 @@ devDependencies:
   eslint-config-carbon:
     specifier: ^3.10.0
     version: 3.10.0(@babel/core@7.23.2)(eslint@8.52.0)(prettier@2.8.8)(typescript@5.2.2)
+  fast-glob:
+    specifier: ^3.3.1
+    version: 3.3.1
   husky:
     specifier: ^8.0.3
     version: 8.0.3

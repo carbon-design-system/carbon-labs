@@ -1,17 +1,28 @@
 {
-  "name": "@carbon-labs/ai",
-  "private": true,
-  "version": "0.1.0",
+  "name": "@carbon/ai",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
+  "description": "Carbon for AI",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/carbon-design-system/carbon-for-ai",
+  "main": "es/index.js",
+  "module": "es/index.js",
+  "exports": {
+    "./dist/": "./dist/",
+    "./es/": "./es/"
+  },
   "scripts": {
     "build": "vite build --mode development && vite build --mode production",
     "build-storybook": "storybook build",
-    "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd}/**'",
+    "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,.storybook,ts,umd}/**'",
     "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd}/**' '!src/components/**'",
     "lint": "eslint src --ext .js,.ts",
     "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
     "storybook": "storybook dev -p 6006",
-    "postinstall": "husky install"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@carbon/styles": "^1.39.0",
@@ -40,6 +51,7 @@
     "babel-preset-carbon": "^0.0.14",
     "browserslist-config-carbon": "^11.2.0",
     "eslint-config-carbon": "^3.10.0",
+    "fast-glob": "^3.3.1",
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
     "prettier": "^2.8.8",
@@ -115,11 +127,6 @@
   "stylelint": {
     "extends": [
       "stylelint-config-carbon"
-    ]
-  },
-  "prettier": {
-    "extends": [
-      "prettier-config-carbon"
     ]
   }
 }

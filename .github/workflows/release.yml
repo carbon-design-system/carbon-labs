@@ -30,12 +30,14 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
         with:
           fetch-depth: '0'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.9.2
       - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
           node-version: '18.x'
           cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
       - name: Install dependencies
         run: pnpm install
       - name: Build project

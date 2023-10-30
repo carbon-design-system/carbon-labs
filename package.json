@@ -10,10 +10,11 @@
   "repository": "https://github.com/carbon-design-system/carbon-for-ai",
   "main": "es/index.js",
   "module": "es/index.js",
-  "exports": {
-    "./dist/": "./dist/",
-    "./es/": "./es/"
-  },
+  "files": [
+    "dist",
+    "es",
+    "index.js"
+  ],
   "scripts": {
     "build": "vite build --mode development && vite build --mode production",
     "build-storybook": "storybook build",

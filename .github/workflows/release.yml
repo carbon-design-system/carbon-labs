@@ -1,5 +1,5 @@
 name: Release
-run-name: ${{ inputs.type }} - ${{ inputs.tag }} by @${{ github.actor }}
+run-name: ${{ inputs.type }} - ${{ inputs.version }} by @${{ github.actor }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -16,13 +16,13 @@ on:
         options:
           - minor
           - preminor
-      tag:
+      version:
         required: true
-        description: 'Specify the tag for this release (ie. v0.0.1-rc.0)'
+        description: 'Specify the version for this release (ie. 0.0.1-rc.0)'
         type: string
 
 jobs:
-  version:
+  release:
     runs-on: ubuntu-latest
     if: github.repository == 'carbon-design-system/carbon-for-ai'
     timeout-minutes: 60
@@ -30,6 +30,9 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
         with:
           fetch-depth: '0'
+      - run: |
+          git config user.name carbon-bot
+          git config user.email carbon@us.ibm.com
       - uses: pnpm/action-setup@v2
         with:
           version: 8.9.2
@@ -46,11 +49,19 @@ jobs:
         run:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >>
           .npmrc
-      - name: Create preminor release
+      # Bump up package version and create git tag if dry-run is false
+      - name: Bump up package.json version and create Git tag
+        uses: reedyuk/npm-version@1.2.2
+        with:
+          version: ${{ github.event.inputs.version }}
+          git-tag-version: 'true'
+      # Preminor publishing
+      - name: Publish preminor version
         if: ${{ github.event.inputs.type == 'preminor' }}
         run: |
           npm publish --dry-run --access=public --tag next
-      - name: Create minor release
+      # Minor publishing
+      - name: Publish minor version
         if: ${{ github.event.inputs.type == 'minor' }}
         run: |
           npm publish --dry-run --access=public --tag latest

@@ -1,5 +1,5 @@
 name: Release
-run-name: ${{ inputs.type }} - ${{ inputs.branch }} by @${{ github.actor }}
+run-name: ${{ inputs.type }} - ${{ inputs.tag }} by @${{ github.actor }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -18,7 +18,7 @@ on:
           - preminor
       branch:
         required: true
-        description: 'Specify the branch for this release (ie. v0.0.1)'
+        description: 'Specify the tag for this release (ie. v0.0.1-rc.0)'
         type: string
 
 jobs:

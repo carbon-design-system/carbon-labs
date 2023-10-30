@@ -16,7 +16,7 @@ on:
         options:
           - minor
           - preminor
-      branch:
+      tag:
         required: true
         description: 'Specify the tag for this release (ie. v0.0.1-rc.0)'
         type: string

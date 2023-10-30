@@ -35,7 +35,12 @@ const config = {
           },
         },
       },
-      plugins: [postcss(), postcssLit()],
+      plugins: [
+        postcss(),
+        postcssLit({
+          include: ['./node_modules', 'src/**/*.scss', 'src/**/*.scss?*'],
+        }),
+      ],
     });
   },
 };

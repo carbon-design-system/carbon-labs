@@ -1,5 +1,5 @@
 name: Release
-run-name: ${{ inputs.type }} - ${{ inputs.branch }} by @${{ github.actor }}
+run-name: ${{ inputs.type }} - ${{ inputs.tag }} by @${{ github.actor }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -16,9 +16,9 @@ on:
         options:
           - minor
           - preminor
-      branch:
+      tag:
         required: true
-        description: 'Specify the branch for this release (ie. v0.0.1)'
+        description: 'Specify the tag for this release (ie. v0.0.1-rc.0)'
         type: string
 
 jobs:
@@ -30,15 +30,18 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
         with:
           fetch-depth: '0'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.9.2
       - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
           node-version: '18.x'
-          cache: 'yarn'
+          cache: 'pnpm'
       - name: Install dependencies
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: pnpm install
       - name: Build project
-        run: yarn build
+        run: pnpm build
       - name: Set NPM token
         run:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >>

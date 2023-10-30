@@ -1,0 +1,53 @@
+name: Release
+run-name: ${{ inputs.type }} - ${{ inputs.branch }} by @${{ github.actor }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        required: true
+        description: 'Specify the type of release'
+        type: choice
+        default: preminor
+        options:
+          - minor
+          - preminor
+      branch:
+        required: true
+        description: 'Specify the branch for this release (ie. v0.0.1)'
+        type: string
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    if: github.repository == 'carbon-design-system/carbon-for-ai'
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+        with:
+          fetch-depth: '0'
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
+      - name: Build project
+        run: yarn build
+      - name: Set NPM token
+        run:
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >>
+          .npmrc
+      - name: Create preminor release
+        if: ${{ github.event.inputs.type == 'preminor' }}
+        run: |
+          npm publish --dry-run --access=public --tag next
+      - name: Create minor release
+        if: ${{ github.event.inputs.type == 'minor' }}
+        run: |
+          npm publish --dry-run --access=public --tag latest

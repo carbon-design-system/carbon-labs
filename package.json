@@ -21,6 +21,7 @@
     "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,.storybook,ts,umd}/**'",
     "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd}/**' '!src/components/**'",
     "lint": "eslint src --ext .js,.ts",
+    "lint:license:staged": "tasks/check-license.js -w",
     "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
     "storybook": "storybook dev -p 6006",
     "postversion": "git push && git push --tags",
@@ -52,6 +53,7 @@
     "axios": "^1.5.1",
     "babel-preset-carbon": "^0.0.14",
     "browserslist-config-carbon": "^11.2.0",
+    "commander": "^11.1.0",
     "eslint-config-carbon": "^3.10.0",
     "fast-glob": "^3.3.1",
     "husky": "^8.0.3",
@@ -111,11 +113,13 @@
   "lint-staged": {
     "**/*.js": [
       "prettier --cache --write",
-      "eslint"
+      "eslint",
+      "pnpm lint:license:staged"
     ],
     "**/*.scss": [
       "prettier --cache --write",
-      "stylelint --report-needless-disables --report-invalid-scope-disables --allow-empty-input"
+      "stylelint --report-needless-disables --report-invalid-scope-disables --allow-empty-input",
+      "yarn lint:license:staged"
     ],
     "*.md": [
       "prettier --cache --write"

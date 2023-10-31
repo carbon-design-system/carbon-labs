@@ -1,0 +1,64 @@
+name: Release
+run-name: alpha - ${{ inputs.version }} by @${{ github.actor }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: 'Specify the version for this release (ie. 0.0.1-rc.0)'
+        type: string
+      dry-run:
+        required: true
+        default: true
+        description: 'Run dry run'
+        type: boolean
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: |
+      github.repository == 'carbon-design-system/carbon-for-ai'
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+        with:
+          fetch-depth: '0'
+      - run: |
+          git config user.name carbon-bot
+          git config user.email carbon@us.ibm.com
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.9.2
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build project
+        run: pnpm build
+      - name: Set NPM token
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+      # Bump up package version and create git tag if dry-run is false
+      - name: Bump up package.json version and create Git tag
+        uses: reedyuk/npm-version@1.2.2
+        with:
+          version: ${{ github.event.inputs.version }}
+          git-tag-version: ${{ github.event.inputs.dry-run != 'true' }}
+      # Dry run
+      - name: Alpha dry-run
+        if: github.event.inputs.dry-run == 'true'
+        run: |
+          npm publish --dry-run --access=public --tag alpha
+      # Publish alpha version
+      - name: Publish alpha version
+        if: github.event.inputs.dry-run == 'false'
+        run: |
+          npm publish --access=public --tag alpha

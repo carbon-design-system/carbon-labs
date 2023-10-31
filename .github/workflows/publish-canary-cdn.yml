@@ -1,4 +1,4 @@
-name: canary CDN to Cloud Object Storage
+name: Publish CDN artifacts (canary) to S3
 on:
   push:
     branches:

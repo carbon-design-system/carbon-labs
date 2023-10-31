@@ -74,7 +74,7 @@ jobs:
           github.event.inputs.type == 'preminor' &&
           github.event.inputs.dry-run == 'false'
         run: |
-          npm publish --dry-run --access=public --tag next
+          npm publish --access=public --tag next
       # Dry run of minor
       - name: Minor dry-run
         if: |
@@ -88,4 +88,4 @@ jobs:
           github.event.inputs.type == 'minor' &&
           github.event.inputs.dry-run == 'false'
         run: |
-          npm publish --dry-run --access=public --tag latest
+          npm publish --access=public --tag latest

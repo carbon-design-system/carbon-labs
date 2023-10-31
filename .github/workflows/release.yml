@@ -60,7 +60,7 @@ jobs:
         uses: reedyuk/npm-version@1.2.2
         with:
           version: ${{ github.event.inputs.version }}
-          git-tag-version: ${{ !github.event.inputs.dry-run }}
+          git-tag-version: ${{ github.event.inputs.dry-run != 'true' }}
       # Dry run of preminor
       - name: Preminor dry-run
         if: |

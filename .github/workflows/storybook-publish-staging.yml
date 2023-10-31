@@ -1,5 +1,5 @@
 name: Deploy storybook to S3 (staging)
-run-name: ${{ inputs.tag }} by @${{ github.actor }}
+run-name: Publish ${{ inputs.tag }} to Stage by @${{ github.actor }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -23,6 +23,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18.x'
+
+      - name: Install pnpm
+        run: npm install -g pnpm@8
 
       - name: Install dependencies
         run: pnpm install

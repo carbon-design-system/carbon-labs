@@ -1,4 +1,4 @@
-name: Release
+name: Alpha release
 run-name: alpha - ${{ inputs.version }} by @${{ github.actor }}
 
 concurrency:

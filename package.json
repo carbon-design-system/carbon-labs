@@ -1,6 +1,6 @@
 {
   "name": "@carbon/ai",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha.0",
   "publishConfig": {
     "access": "public"
   },
@@ -23,6 +23,7 @@
     "lint": "eslint src --ext .js,.ts",
     "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
     "storybook": "storybook dev -p 6006",
+    "postversion": "git push && git push --tags",
     "prepare": "husky install"
   },
   "dependencies": {

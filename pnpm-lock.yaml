@@ -76,6 +76,9 @@ devDependencies:
   browserslist-config-carbon:
     specifier: ^11.2.0
     version: 11.2.0
+  commander:
+    specifier: ^11.1.0
+    version: 11.1.0
   eslint-config-carbon:
     specifier: ^3.10.0
     version: 3.10.0(@babel/core@7.23.2)(eslint@8.52.0)(prettier@2.8.8)(typescript@5.2.2)

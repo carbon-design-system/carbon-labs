@@ -1,0 +1,81 @@
+name: Publish CDN artifacts (next) to S3
+run-name: Publish CDN artifacts - ${{ inputs.version }} by @${{ github.actor }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: 'Specify the rc version for this release (ie. 0.0.1-rc.0)'
+        type: string
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish-next-tag:
+    if: |
+      github.repository == 'carbon-design-system/carbon-for-ai' &&
+      startsWith(github.ref_name, 'release/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+        with:
+          fetch-depth: '0'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.9.2
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build library
+        run: pnpm build
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks
+        env:
+          AWS_S3_BUCKET: ${{ secrets.COMMON_COS_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.COMMON_COS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.COMMON_COS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.COMMON_COS_REGION }}
+          AWS_S3_ENDPOINT: https://${{ secrets.COMMON_COS_ENDPOINT }}
+          SOURCE_DIR: 'dist'
+          DEST_DIR: 'common/carbon/ai/tag/v1/next'
+  # Publish the version
+  publish-version:
+    if: |
+      github.repository == 'carbon-design-system/carbon-for-ai' &&
+      startsWith(github.ref_name, 'release/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
+        with:
+          fetch-depth: '0'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.9.2
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build library
+        run: pnpm build
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks
+        env:
+          AWS_S3_BUCKET: ${{ secrets.COMMON_COS_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.COMMON_COS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.COMMON_COS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.COMMON_COS_REGION }}
+          AWS_S3_ENDPOINT: https://${{ secrets.COMMON_COS_ENDPOINT }}
+          SOURCE_DIR: 'dist'
+          DEST_DIR: 'common/carbon/ai/version/v${{ inputs.version }}'

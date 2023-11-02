@@ -24,6 +24,9 @@ const _host =
  */
 const _endpoint = `${_host}/search/typeahead/v1`;
 
+/**
+ * Search Typeahead API class
+ */
 class SearchTypeaheadAPI {
   /**
    * Gets search results

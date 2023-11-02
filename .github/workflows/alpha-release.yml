@@ -1,5 +1,5 @@
-name: Release
-run-name: ${{ inputs.type }} - ${{ inputs.version }} by @${{ github.actor }}
+name: Alpha release
+run-name: alpha - ${{ inputs.version }} by @${{ github.actor }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -8,14 +8,6 @@ concurrency:
 on:
   workflow_dispatch:
     inputs:
-      type:
-        required: true
-        description: 'Specify the type of release'
-        type: choice
-        default: preminor
-        options:
-          - minor
-          - preminor
       version:
         required: true
         description: 'Specify the version for this release (ie. 0.0.1-rc.0)'
@@ -30,8 +22,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     if: |
-      github.repository == 'carbon-design-system/carbon-for-ai' &&
-      startsWith(github.ref_name, 'release/')
+      github.repository == 'carbon-design-system/carbon-for-ai'
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
@@ -61,31 +52,13 @@ jobs:
         with:
           version: ${{ github.event.inputs.version }}
           git-tag-version: ${{ github.event.inputs.dry-run != 'true' }}
-      # Dry run of preminor
-      - name: Preminor dry-run
-        if: |
-          github.event.inputs.type == 'preminor' &&
-          github.event.inputs.dry-run == 'true'
+      # Dry run
+      - name: Alpha dry-run
+        if: github.event.inputs.dry-run == 'true'
         run: |
-          npm publish --dry-run --access=public --tag next
-      # Preminor publishing
-      - name: Publish preminor version
-        if: |
-          github.event.inputs.type == 'preminor' &&
-          github.event.inputs.dry-run == 'false'
+          npm publish --dry-run --access=public --tag alpha
+      # Publish alpha version
+      - name: Publish alpha version
+        if: github.event.inputs.dry-run == 'false'
         run: |
-          npm publish --access=public --tag next
-      # Dry run of minor
-      - name: Minor dry-run
-        if: |
-          github.event.inputs.type == 'minor' &&
-          github.event.inputs.dry-run == 'true'
-        run: |
-          npm publish --dry-run --access=public --tag latest
-      # Minor publishing
-      - name: Publish minor version
-        if: |
-          github.event.inputs.type == 'minor' &&
-          github.event.inputs.dry-run == 'false'
-        run: |
-          npm publish --access=public --tag latest
+          npm publish --access=public --tag alpha

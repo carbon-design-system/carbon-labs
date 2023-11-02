@@ -13,6 +13,9 @@ import { testInputTemplate } from './src/test-input.template.js';
 
 const { stablePrefix: c4aiPrefix } = settings;
 
+/**
+ * Constructed class functionality for the test input custom element
+ */
 class C4AITestInput extends testInput {
   render() {
     return testInputTemplate(this);

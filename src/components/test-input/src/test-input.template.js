@@ -9,13 +9,19 @@
 
 import { html } from 'lit';
 
-export function testInputTemplate(cls) {
-  const { _handleInput: handleInput } = cls;
+/**
+ * Lit template for test-input
+ *
+ * @param {object} customElementClass Class functionality for the custom element
+ * @returns {TemplateResult<1>} Lit html template
+ */
+export function testInputTemplate(customElementClass) {
+  const { _handleInput: handleInput } = customElementClass;
   return html`<div>
     <label>Search typeahead</label>
     <input type="text" @input="${handleInput}" />
-    ${cls.searchResults
-      ? cls.searchResults.map((result) => html`<p>${result}</p>`)
+    ${customElementClass.searchResults
+      ? customElementClass.searchResults.map((result) => html`<p>${result}</p>`)
       : undefined}
   </div>`;
 }

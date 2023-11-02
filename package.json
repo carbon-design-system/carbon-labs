@@ -21,7 +21,7 @@
     "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,.storybook,ts,umd}/**'",
     "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd}/**' '!src/components/**'",
     "lint": "eslint src --ext .js,.ts",
-    "lint:license:staged": "tasks/check-license.js -w",
+    "lint:license:staged": "tasks/check-license.cjs -w",
     "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
     "storybook": "storybook dev -p 6006",
     "prepare": "husky install"
@@ -118,7 +118,7 @@
     "**/*.scss": [
       "prettier --cache --write",
       "stylelint --report-needless-disables --report-invalid-scope-disables --allow-empty-input",
-      "yarn lint:license:staged"
+      "pnpm lint:license:staged"
     ],
     "*.md": [
       "prettier --cache --write"

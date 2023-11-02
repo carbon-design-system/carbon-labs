@@ -24,7 +24,6 @@
     "lint:license:staged": "tasks/check-license.js -w",
     "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
     "storybook": "storybook dev -p 6006",
-    "postversion": "git push && git push --tags",
     "prepare": "husky install"
   },
   "dependencies": {

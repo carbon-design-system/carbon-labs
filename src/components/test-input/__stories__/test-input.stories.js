@@ -17,5 +17,10 @@ export default {
 };
 
 export const Default = {
+  /**
+   * Renders the template for Storybook
+   *
+   * @returns {TemplateResult<1>}
+   */
   render: () => html` <c4ai-test-input> </c4ai-test-input>`,
 };

@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import { defineConfig, loadEnv } from 'vite';
 
 import fs from 'fs';
@@ -46,6 +53,12 @@ function _getFolders(dir) {
     .filter((file) => fs.statSync(path.join(dir, file)).isDirectory());
 }
 
+/**
+ * Fetches the inputs for dist
+ *
+ * @returns {{}} Associative array of inputs
+ * @private
+ */
 function _getDistInputs() {
   const folders = _getFolders('src/components');
   for (let i = folders.length - 1; i >= 0; i--) {
@@ -87,6 +100,13 @@ export default defineConfig(({ mode }) => {
       outDir: destDir,
       lib: {
         entry: inputs,
+        /**
+         * Sets the filename
+         *
+         * @param {object} _ obj
+         * @param {string} entryName entryname
+         * @returns {string}
+         */
         fileName: (_, entryName) => {
           return `${entryName}.js`;
         },

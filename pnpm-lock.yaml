@@ -85,6 +85,12 @@ devDependencies:
   fast-glob:
     specifier: ^3.3.1
     version: 3.3.1
+  gitignore-to-glob:
+    specifier: ^0.3.0
+    version: 0.3.0
+  globby:
+    specifier: ^11.1.0
+    version: 11.1.0
   husky:
     specifier: ^8.0.3
     version: 8.0.3
@@ -8037,6 +8043,11 @@ packages:
 
   /github-slugger@1.5.0:
     resolution: {integrity: sha512-wIh+gKBI9Nshz2o46B0B3f5k/W+WI9ZAv6y5Dn5WJ5SK1t0TnDimB4WE5rmTD05ZAIn8HALCZVmCsvj0w0v0lw==}
+    dev: true
+
+  /gitignore-to-glob@0.3.0:
+    resolution: {integrity: sha512-mk74BdnK7lIwDHnotHddx1wsjMOFIThpLY3cPNniJ/2fA/tlLzHnFxIdR+4sLOu5KGgQJdij4kjJ2RoUNnCNMA==}
+    engines: {node: '>=4.4 <5 || >=6.9'}
     dev: true
 
   /glob-parent@5.1.2:

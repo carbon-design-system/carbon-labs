@@ -23,6 +23,9 @@ export default class testInput extends LitElement {
     searchResults: { attribute: false },
   };
 
+  /**
+   * Class Constructor
+   */
   constructor() {
     super();
     this.searchResults;

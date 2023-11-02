@@ -17,6 +17,11 @@ const { stablePrefix: c4aiPrefix } = settings;
  * Constructed class functionality for the test input custom element
  */
 class C4AITestInput extends testInput {
+  /**
+   * Renders the template while passing in class functionality
+   *
+   * @returns {TemplateResult<1>}
+   */
   render() {
     return testInputTemplate(this);
   }

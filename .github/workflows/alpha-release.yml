@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+      contents: write
     if: |
       github.repository == 'carbon-design-system/carbon-for-ai'
     timeout-minutes: 60

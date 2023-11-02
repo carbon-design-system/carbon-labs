@@ -29,6 +29,9 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
     if: |
       github.repository == 'carbon-design-system/carbon-for-ai' &&
       startsWith(github.ref_name, 'release/')
@@ -61,6 +64,9 @@ jobs:
         with:
           version: ${{ github.event.inputs.version }}
           git-tag-version: ${{ github.event.inputs.dry-run != 'true' }}
+      - name: Push git tags
+        if: github.event.inputs.dry-run == 'false'
+        run: git push && git push --tags
       # Dry run of preminor
       - name: Preminor dry-run
         if: |
@@ -74,7 +80,7 @@ jobs:
           github.event.inputs.type == 'preminor' &&
           github.event.inputs.dry-run == 'false'
         run: |
-          npm publish --access=public --tag next
+          npm publish --provenance --access=public --tag next
       # Dry run of minor
       - name: Minor dry-run
         if: |
@@ -88,4 +94,4 @@ jobs:
           github.event.inputs.type == 'minor' &&
           github.event.inputs.dry-run == 'false'
         run: |
-          npm publish --access=public --tag latest
+          npm publish --provenance --access=public --tag latest

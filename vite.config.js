@@ -21,6 +21,8 @@ const entryPoints = [
   '!src/components/**/__stories__/*.js',
   'src/components/index.js',
   'src/services/**/*.js',
+  '!src/components/**/*.test.js',
+  '!src/components/**/*.snap.js',
 ];
 
 // Searches for files that match the patterns defined in the array of input points.

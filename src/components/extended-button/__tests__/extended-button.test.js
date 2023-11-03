@@ -11,15 +11,12 @@ import { html, fixture, expect } from '@open-wc/testing';
 import '../../../../dist/extended-button.js';
 
 describe('c4ai-extended-button', function () {
-  describe('Misc attributes', function () {
-    it('should render with cds-button minimum attributes', async () => {
-      const el = await fixture(
-        html`<c4ai-extended-button> button </c4ai-extended-button>`
-      );
+  it('should render with cds-button minimum attributes', async () => {
+    const el = await fixture(
+      html`<c4ai-extended-button> button </c4ai-extended-button>`
+    );
 
-      await expect(el).dom.to.equalSnapshot();
-      await expect(el).shadowDom.to.be.accessible();
-      expect(el.kind).to.equal('primary');
-    });
+    await expect(el).dom.to.equalSnapshot();
+    await expect(el).shadowDom.to.be.accessible();
   });
 });

@@ -60,7 +60,7 @@ const check = async (paths, options) => {
   let checkPaths = [];
   if (options.checkAllFiles) {
     const gitIgnorePath = await globby(
-      [path.resolve(__dirname, '../.gitignore'), '../src/**/*.snap.js'],
+      path.resolve(__dirname, '../.gitignore'),
       {
         cwd: path.resolve(__dirname, '..'),
         gitignore: true,
@@ -70,7 +70,7 @@ const check = async (paths, options) => {
     checkPaths = await globby(
       gitIgnorePath.reduce(
         (acc, item) => acc.concat(gitignoreToGlob(item)),
-        ['**/*.{js,ts,tsx,scss,html}', '!**/*.snap.js']
+        ['**/*.{js,ts,tsx,scss,html}']
       )
     );
   }

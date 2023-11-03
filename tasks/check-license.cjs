@@ -11,7 +11,10 @@
 
 const fs = require('fs');
 const { promisify } = require('util');
-const commander = require('commander');
+const { program } = require('commander');
+const gitignoreToGlob = require('gitignore-to-glob');
+const globby = require('globby');
+const path = require('path');
 const reLicense = require('./license-text.cjs');
 
 const readFile = promisify(fs.readFile);
@@ -23,6 +26,29 @@ const {
   reLicenseTextRange,
 } = reLicense;
 
+program
+  .option(
+    '-c, --test-current-year',
+    'Ensures the license header represents the current year'
+  )
+  .option(
+    '-w, --write-current-year',
+    'Updates the license header to represent the current year'
+  )
+  .option(
+    '-a, --check-all-files',
+    'Grabs all files in the project to check'
+  );
+
+program.parse();
+
+/**
+ * Stores the arguments
+ *
+ * @type {OptionValues}
+ */
+const options = program.opts();
+
 /**
  * Checks files with the given paths for valid license text.
  *
@@ -30,23 +56,41 @@ const {
  * @param {object} options The options.
  * @param {boolean} options.testCurrentYear `true` to see if the license text contains the current year.
  * @param {boolean} options.writeCurrentYear `true` to update the given file with the current year for the license text.
+ * @param {boolean} options.checkAllFiles `true` to grab all files in the project to check.
  * @returns {Promise<void>} The promise that is fulfilled when the check finishes.
  */
-const check = async (paths, { testCurrentYear, writeCurrentYear }) => {
+const check = async (paths, options) => {
+  let checkPaths = [];
+  if (options.checkAllFiles) {
+    const gitIgnorePath = await globby(path.resolve(__dirname, '../.gitignore'), {
+      cwd: path.resolve(__dirname, '..'),
+      gitignore: true,
+    });
+
+    checkPaths = await globby(gitIgnorePath.reduce(
+      (acc, item) => acc.concat(gitignoreToGlob(item)),
+      [
+        '**/*.{js,ts,tsx,scss,html}',
+      ]
+    ));
+  }
+
+  const checkFiles = options.checkAllFiles ? checkPaths : paths;
+
   const filesWithErrors = (
     await Promise.all(
-      paths.map(async (item) => {
+      checkFiles.map(async (item) => {
         if (item.indexOf('.yarn') !== -1) {
           return;
         }
         const contents = await readFile(item, 'utf8');
         const result = (
-          testCurrentYear || writeCurrentYear
+          options.testCurrentYear || options.writeCurrentYear
             ? reLicenseTextCurrentYear
             : reLicense
         ).test(contents);
         if (!result) {
-          if (writeCurrentYear) {
+          if (options.writeCurrentYear) {
             const newContents = contents
               .replace(
                 reLicenseTextSingleYear,
@@ -74,17 +118,7 @@ const check = async (paths, { testCurrentYear, writeCurrentYear }) => {
   }
 };
 
-const { args, ...options } = commander
-  .option(
-    '-c, --test-current-year',
-    'Ensures the license header represents the current year'
-  )
-  .option(
-    '-w, --write-current-year',
-    'Updates the license header to represent the current year'
-  )
-  .parse(process.argv);
-check(args, options).then(
+check(program.args, options).then(
   () => {
     process.exit(0);
   },

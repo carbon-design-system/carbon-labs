@@ -20,7 +20,7 @@ describe('c4ai-test-input', function () {
   it('should render with minimum attributes', async () => {
     const el = await fixture(html`<c4ai-test-input></c4ai-test-input>`);
     await expect(el).shadowDom.to.equalSnapshot();
-    // await expect(el).shadowDom.to.be.accessible();
+    await expect(el).shadowDom.to.be.accessible();
   });
 
   it('should render with search results', async () => {

@@ -9,8 +9,8 @@ dependencies:
     specifier: ^1.39.0
     version: 1.39.0(sass@1.64.2)
   '@carbon/web-components':
-    specifier: 2.0.1-canary.1
-    version: 2.0.1-canary.1(sass@1.64.2)
+    specifier: 2.0.1
+    version: 2.0.1(sass@1.64.2)
   lit:
     specifier: ^3.0.0
     version: 3.0.0
@@ -2407,8 +2407,8 @@ packages:
       '@carbon/grid': 11.20.0
       '@carbon/layout': 11.19.0
 
-  /@carbon/web-components@2.0.1-canary.1(sass@1.64.2):
-    resolution: {integrity: sha512-xTymQ5SNaVGuxDuXq3p3N36CWxHS38DlHHxC9pqTKQUZDCzscYnepjBaRTT/m4wnJKziK4kwidSTYN0M2miokg==}
+  /@carbon/web-components@2.0.1(sass@1.64.2):
+    resolution: {integrity: sha512-M0t++AdvPWmPmYFyF/ZCcIA+SHMgLTiYi3GeKNFE5pFPiX+apNYZOG58KAOf6yirYfjmirRC8ZttURXnJZH4dw==}
     dependencies:
       '@babel/runtime': 7.23.1
       '@carbon/styles': 1.39.0(sass@1.64.2)

@@ -61,6 +61,6 @@ jobs:
       - name: License check (staged)
         if: ${{ github.event_name == 'pull_request' }}
         run: pnpm lint:license:staged
-      - name: Licence check (non-staged)
+      - name: License check (non-staged)
         if: ${{ github.event_name != 'pull_request' }}
         run: pnpm lint:license

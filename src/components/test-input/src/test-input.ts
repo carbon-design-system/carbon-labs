@@ -8,28 +8,18 @@
  */
 
 import { LitElement } from 'lit';
-import { SearchTypeaheadAPI } from '../../../services/SearchTypeahead/index.js';
+import { property } from 'lit/decorators.js';
+import { SearchTypeaheadAPI } from '../../../services/SearchTypeahead/index';
 
 /**
  * Input component using search typeahead api
  */
 export default class testInput extends LitElement {
   /**
-   * Properties object for Lit
-   *
-   * @type {{searchResults: {attribute: boolean}}}
+   * Array of search results from typeahead API
    */
-  static properties = {
-    searchResults: { attribute: false },
-  };
-
-  /**
-   * Class Constructor
-   */
-  constructor() {
-    super();
-    this.searchResults;
-  }
+  @property({ type: Array, attribute: false })
+  searchResults = [];
 
   /**
    * Fetches the results from the SearchTypeaheadAPI
@@ -37,19 +27,20 @@ export default class testInput extends LitElement {
    * @param {string} searchQuery query to pass into the API
    * @returns {Promise<*>}
    */
-  async getResults(searchQuery) {
+  async getResults(searchQuery: string) {
     const response = await SearchTypeaheadAPI.getResults(searchQuery);
-    return response.map((res) => res[0]);
+    return response.map((res: Array<string>) => res[0]);
   }
 
   /**
    * Input event handler that is attached to the search input
    *
    * @param {object} event Event object of the search form
+   * @param {object} event.target input element
    * @private
    */
-  _handleInput(event) {
-    const { value } = event.target;
+  _handleInput({ target }: Event) {
+    const { value } = target as HTMLInputElement;
     this.getResults(value).then((res) => {
       this.searchResults = res;
     });

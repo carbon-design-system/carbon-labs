@@ -15,6 +15,7 @@ lib
 *.local
 .env
 storybook-static
+custom-elements.json
 
 # Editor directories and files
 .vscode/*

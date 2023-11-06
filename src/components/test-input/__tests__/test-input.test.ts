@@ -15,11 +15,14 @@ import {
   waitUntil,
 } from '@open-wc/testing';
 import { stub } from 'sinon';
-import '../../../../es/components/test-input/test-input.js';
+import '../../../../es/components/test-input/test-input';
+import C4AITestInput from '../test-input.js';
 
 describe('c4ai-test-input', function () {
   it('should render with minimum attributes', async () => {
-    const el = await fixture(html`<c4ai-test-input></c4ai-test-input>`);
+    const el = await fixture<C4AITestInput>(
+      html`<c4ai-test-input></c4ai-test-input>`
+    );
     await expect(el).shadowDom.to.equalSnapshot();
     await expect(el).shadowDom.to.be.accessible();
   });
@@ -38,26 +41,32 @@ describe('c4ai-test-input', function () {
       'report',
     ];
 
-    const el = await fixture(html`<c4ai-test-input></c4ai-test-input>`);
+    const el = await fixture<C4AITestInput>(
+      html`<c4ai-test-input></c4ai-test-input>`
+    );
     stub(el, 'getResults').returns(Promise.resolve(res));
     el.requestUpdate();
     await el.updateComplete;
 
     const root = el.shadowRoot;
-    const input = root.querySelector('input');
 
-    input.value = 're';
-    input.dispatchEvent(new Event('input'));
+    if (root) {
+      const input = root.querySelector('input');
+      if (input) {
+        input.value = 're';
+        input.dispatchEvent(new Event('input'));
 
-    await elementUpdated(el);
-    await waitUntil(
-      () => root.querySelector('p'),
-      'search results should be visible',
-      { interval: 100, timeout: 10000 }
-    );
-    const results = root.querySelector('p');
+        await elementUpdated(el);
+        await waitUntil(
+          () => root.querySelector('p'),
+          'search results should be visible',
+          { interval: 100, timeout: 10000 }
+        );
+        const results = root.querySelector('p');
 
-    expect(results).to.exist;
-    await expect(el).shadowDom.to.equalSnapshot();
+        expect(results).to.exist;
+        await expect(el).shadowDom.to.equalSnapshot();
+      }
+    }
   });
 });

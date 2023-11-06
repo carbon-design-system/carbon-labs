@@ -16,12 +16,12 @@ import fg from 'fast-glob';
 
 // Defines an array of entry points to be used to search for files.
 const entryPoints = [
-  'src/index.js',
-  'src/components/**/*.js',
-  '!src/components/**/__stories__/*.js',
-  'src/components/index.js',
+  'src/index.ts',
+  'src/components/**/*.ts',
+  '!src/components/**/__stories__/*.ts',
+  'src/components/index.ts',
   'src/services/**/*.js',
-  '!src/components/**/*.test.js',
+  '!src/components/**/*.test.ts',
   '!src/components/**/*.snap.js',
 ];
 

@@ -7,7 +7,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const settings = {
+const settings: {
+  stablePrefix: string;
+  prefix: string;
+} = {
   stablePrefix: 'c4ai',
   prefix: 'cds',
 };

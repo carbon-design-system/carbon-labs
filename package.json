@@ -18,8 +18,8 @@
   "scripts": {
     "build": "vite build --mode development && vite build --mode production",
     "build-storybook": "storybook build",
-    "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,.storybook,ts,umd}/**'",
-    "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/{build,es,lib,storybook,ts,umd}/**' '!src/components/**'",
+    "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
+    "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,storybook,ts,umd}/**' '!src/components/**'",
     "lint": "eslint src --ext .js,.ts",
     "lint:license": "tasks/check-license.cjs -a",
     "lint:license:staged": "tasks/check-license.cjs -w",

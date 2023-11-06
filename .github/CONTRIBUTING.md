@@ -69,8 +69,8 @@ details.
 When you clone your forked repo, running `git remote -v` will show that the
 `origin` is pointing to your forked repo by default.
 
-Now you need to add the `carbon-design-system/carbon-for-ai` repo as your upstream
-remote branch:
+Now you need to add the `carbon-design-system/carbon-for-ai` repo as your
+upstream remote branch:
 
 ```sh
 # Add the upstream remote to your repo
@@ -96,7 +96,8 @@ Great job on getting to this point! Now it's time to code :computer:
 ### 1. Find or create an issue
 
 Before you start coding, if you have an issue in mind that you'd like to tackle,
-please first [search](https://github.com/carbon-design-system/carbon-for-ai/issues) the
+please first
+[search](https://github.com/carbon-design-system/carbon-for-ai/issues) the
 issues to see if a similar issue you'd like to work on has already been
 submitted. If a similar issue has been submitted, assign yourself or ask to be
 assigned to the issue by posting a comment.
@@ -213,8 +214,8 @@ GitHub.
 
 - **Development:** If coding is your thing, you can help us by contributing bug
   fixes or community components. Checkout our
-  [Developer Handbook](https://github.com/carbon-design-system/carbon/docs/developer-handbook.md) to get your dev
-  environment set up, read up on our best practices and more.
+  [Developer Handbook](https://github.com/carbon-design-system/carbon/docs/developer-handbook.md)
+  to get your dev environment set up, read up on our best practices and more.
 - **Design:** Design contributions can vary from visual assets, UX interactions,
   motion design, Sketch kit bug fixes and more.
 - **Content:** Our documentation is just as important as our design and code
@@ -238,8 +239,8 @@ GitHub.
 2. **Development environment:** If you haven't already, fork and clone whichever
    repo you want to contribute to. Then, create a new branch and add your
    contribution in it. Checkout our
-   [Developer Handbook](https://github.com/carbon-design-system/carbon/docs/developer-handbook.md) to read up on our best
-   coding practices and proper commit messages.
+   [Developer Handbook](https://github.com/carbon-design-system/carbon/docs/developer-handbook.md)
+   to read up on our best coding practices and proper commit messages.
 3. **Pull request:** Submit a PR. Be sure to fill out the template properly.
 4. **Developer Certificate of Origin:** In order to contribute any code, we need
    you to sign a Developer Certificate of Origin (DCO). Code doesn't just mean
@@ -298,9 +299,9 @@ work:
   best to answer questions on slack, it's not always possible to answer
   everything. One of the easiest ways to help us it to jump in on slack
   conversations if there's something you know the answer to! Some of our most
-  popular slack channels include `#carbon-for-ai`, `#carbon-components`, `#carbon-react`,
-  `#carbon-design-system`, `#carbon-ng`, `#carbon-vue`, `#carbon-announcements`,
-  `#carbon-community-components`.
+  popular slack channels include `#carbon-for-ai`, `#carbon-components`,
+  `#carbon-react`, `#carbon-design-system`, `#carbon-ng`, `#carbon-vue`,
+  `#carbon-announcements`, `#carbon-community-components`.
 - **Report bugs.** Even if you don't have the time to contribute a bug fix,
   opening an issue alone makes a big difference! Be sure to completely fill out
   the issue template to best help us understand what is going wrong.
@@ -308,8 +309,8 @@ work:
 ### If I'm contributing code, am I required to contribute it as web components?
 
 If you've been working with Carbon for a while, you know that we have code
-assets in multiple frameworks. For the `Carbon for AI` initiative, the focus is to
-deliver reusable components and patterns in a framework-agnostic approach. 
+assets in multiple frameworks. For the `Carbon for AI` initiative, the focus is
+to deliver reusable components and patterns in a framework-agnostic approach.
 
 ### How can I test-drive components or provide a bug reproduction?
 

@@ -43,11 +43,7 @@ jobs:
         run: npm install -g pnpm@8
       - name: Install dependencies
         run: pnpm install
-      - name: Lint (staged)
-        if: ${{ github.event_name == 'pull_request' }}
-        run: pnpm lint:staged && pnpm lint:styles:staged
-      - name: Lint (non-staged)
-        if: ${{ github.event_name != 'pull_request' }}
+      - name: Lint
         run: pnpm lint && pnpm lint:styles
 
   license:
@@ -62,9 +58,5 @@ jobs:
         run: npm install -g pnpm@8
       - name: Install dependencies
         run: pnpm install
-      - name: License check (staged)
-        if: ${{ github.event_name == 'pull_request' }}
-        run: pnpm lint:license:staged
-      - name: License check (non-staged)
-        if: ${{ github.event_name != 'pull_request' }}
+      - name: License check
         run: pnpm lint:license

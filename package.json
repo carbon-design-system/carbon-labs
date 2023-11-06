@@ -25,7 +25,9 @@
     "lint:license:staged": "tasks/check-license.cjs -w",
     "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
     "storybook": "storybook dev -p 6006",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "pnpm build && web-test-runner \"src/components/**/*.test.js\" --node-resolve --playwright --browsers chromium firefox webkit",
+    "test:updateSnapshot": "pnpm build && web-test-runner \"src/components/**/*.test.js\" --node-resolve --update-snapshots"
   },
   "dependencies": {
     "@carbon/styles": "^1.39.0",
@@ -42,6 +44,8 @@
     "@carbon/type": "^11.24.0",
     "@commitlint/cli": "^18.0.0",
     "@commitlint/config-conventional": "^18.0.0",
+    "@open-wc/testing": "^3.2.1",
+    "@playwright/test": "^1.39.0",
     "@rollup/plugin-multi-entry": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@storybook/addon-essentials": "^7.5.1",
@@ -50,6 +54,9 @@
     "@storybook/blocks": "^7.5.1",
     "@storybook/web-components": "^7.5.1",
     "@storybook/web-components-vite": "^7.5.1",
+    "@web/test-runner": "^0.18.0",
+    "@web/test-runner-commands": "^0.9.0",
+    "@web/test-runner-playwright": "^0.11.0",
     "axios": "^1.5.1",
     "babel-preset-carbon": "^0.0.14",
     "browserslist-config-carbon": "^11.2.0",
@@ -68,6 +75,7 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-postcss-lit": "^2.1.0",
     "sass": "~1.64.0",
+    "sinon": "^17.0.1",
     "storybook": "^7.5.1",
     "stylelint": "^15.11.0",
     "stylelint-config-carbon": "^1.16.0",

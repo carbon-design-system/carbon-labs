@@ -1,5 +1,5 @@
 {
-  "**/*.js": [
+  "**/*.js, !**/*.snap.js": [
     "prettier --cache --write",
     "eslint",
     "pnpm lint:license:staged"
@@ -9,7 +9,5 @@
     "stylelint --report-needless-disables --report-invalid-scope-disables --allow-empty-input",
     "pnpm lint:license:staged"
   ],
-  "*.md": [
-    "prettier --cache --write"
-  ]
+  "*.md": ["prettier --cache --write"]
 }

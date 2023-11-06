@@ -18,8 +18,10 @@ import { html } from 'lit';
 export function testInputTemplate(customElementClass) {
   const { _handleInput: handleInput } = customElementClass;
   return html`<div>
-    <label>Search typeahead</label>
-    <input type="text" @input="${handleInput}" />
+    <label for="typeahead"
+      >Search typeahead
+      <input type="text" name="typeahead" @input="${handleInput}" />
+    </label>
     ${customElementClass.searchResults
       ? customElementClass.searchResults.map((result) => html`<p>${result}</p>`)
       : undefined}

@@ -35,10 +35,7 @@ program
     '-w, --write-current-year',
     'Updates the license header to represent the current year'
   )
-  .option(
-    '-a, --check-all-files',
-    'Grabs all files in the project to check'
-  );
+  .option('-a, --check-all-files', 'Grabs all files in the project to check');
 
 program.parse();
 
@@ -62,17 +59,20 @@ const options = program.opts();
 const check = async (paths, options) => {
   let checkPaths = [];
   if (options.checkAllFiles) {
-    const gitIgnorePath = await globby(path.resolve(__dirname, '../.gitignore'), {
-      cwd: path.resolve(__dirname, '..'),
-      gitignore: true,
-    });
+    const gitIgnorePath = await globby(
+      path.resolve(__dirname, '../.gitignore'),
+      {
+        cwd: path.resolve(__dirname, '..'),
+        gitignore: true,
+      }
+    );
 
-    checkPaths = await globby(gitIgnorePath.reduce(
-      (acc, item) => acc.concat(gitignoreToGlob(item)),
-      [
-        '**/*.{js,ts,tsx,scss,html}',
-      ]
-    ));
+    checkPaths = await globby(
+      gitIgnorePath.reduce(
+        (acc, item) => acc.concat(gitignoreToGlob(item)),
+        ['**/*.{js,ts,tsx,scss,html}']
+      )
+    );
   }
 
   const checkFiles = options.checkAllFiles ? checkPaths : paths;

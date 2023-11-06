@@ -33,5 +33,6 @@ We prefer all communications to be in English.
 
 If you have suggestions on how this process could be improved please
 [submit a pull request](https://github.com/carbon-design-system/carbon-for-ai/compare)
-or [file an issue](https://github.com/carbon-design-system/carbon-for-ai/issues/new) to
-discuss.
+or
+[file an issue](https://github.com/carbon-design-system/carbon-for-ai/issues/new)
+to discuss.

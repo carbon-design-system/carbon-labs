@@ -70,7 +70,7 @@ const check = async (paths, options) => {
     checkPaths = await globby(
       gitIgnorePath.reduce(
         (acc, item) => acc.concat(gitignoreToGlob(item)),
-        ['**/*.{js,ts,tsx,scss,html}']
+        ['**/*.{js,ts,tsx,scss,html}','!**/*.snap.js'],
       )
     );
   }

@@ -24,7 +24,7 @@ snapshots["c4ai-test-input should render with search results"] =
     >
   </label>
   <p>
-    re
+    red
   </p>
   <p>
     red hat

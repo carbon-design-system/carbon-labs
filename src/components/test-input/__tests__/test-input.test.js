@@ -14,7 +14,8 @@ import {
   elementUpdated,
   waitUntil,
 } from '@open-wc/testing';
-import '../../../../dist/test-input.js';
+import { stub } from 'sinon';
+import '../../../../es/components/test-input/test-input.js';
 
 describe('c4ai-test-input', function () {
   it('should render with minimum attributes', async () => {
@@ -24,7 +25,24 @@ describe('c4ai-test-input', function () {
   });
 
   it('should render with search results', async () => {
+    const res = [
+      'red',
+      'red hat',
+      'redbooks',
+      'resilient',
+      'redhat',
+      'redbook',
+      'redbooks ibm',
+      'redbook drug pricing',
+      'retiree benefits',
+      'report',
+    ];
+
     const el = await fixture(html`<c4ai-test-input></c4ai-test-input>`);
+    stub(el, 'getResults').returns(Promise.resolve(res));
+    el.requestUpdate();
+    await el.updateComplete;
+
     const root = el.shadowRoot;
     const input = root.querySelector('input');
 

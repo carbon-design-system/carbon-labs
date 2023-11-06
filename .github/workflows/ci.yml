@@ -24,8 +24,12 @@ jobs:
         run: npm install -g pnpm@8
       - name: Install dependencies
         run: pnpm install
-      - name: Check formatting of project files
-        run: pnpm format:diff
+      - name: Check formatting of project files (staged)
+        if: ${{ github.event_name == 'pull_request' }}
+        run: pnpm format:staged
+      - name: Check formatting of project files (non-staged)
+        if: ${{ github.event_name != 'pull_request' }}
+        run: pnpm format
 
   lint:
     runs-on: ubuntu-latest

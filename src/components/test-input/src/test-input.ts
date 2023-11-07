@@ -19,7 +19,7 @@ export default class testInput extends LitElement {
    * Array of search results from typeahead API
    */
   @property({ type: Array, attribute: false })
-  searchResults = [];
+  searchResults: string[] = [];
 
   /**
    * Fetches the results from the SearchTypeaheadAPI

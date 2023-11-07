@@ -9,8 +9,8 @@
 
 import { customElement } from 'lit/decorators.js';
 import settings from '../../globals/settings.js';
-import testInput from './src/test-input.ts';
-import { testInputTemplate } from './src/test-input.template.ts';
+import testInput from './src/test-input';
+import { testInputTemplate } from './src/test-input.template';
 
 const { stablePrefix: c4aiPrefix } = settings;
 

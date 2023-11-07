@@ -1,25 +1,29 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "experimentalDecorators": true,
-    "useDefineForClassFields": false,
+    "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "typeRoots": ["src/typings", "./node_modules/@types/"],
+    "experimentalDecorators": true,
 
     /* Bundler mode */
+    "declaration": true,
+    "stripInternal": true,
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "sourceMap": true,
+    "outDir": "es",
 
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
     "types": ["mocha", "sinon"]
   },
   "include": ["src/**/*.ts", ".storybook/**/*.tsx", ".storybook/**/*.ts"]

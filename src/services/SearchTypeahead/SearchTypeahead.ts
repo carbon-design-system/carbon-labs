@@ -14,6 +14,7 @@ import axios from 'axios';
  * @private
  */
 const _host =
+  //@ts-ignore
   (import.meta.env && import.meta.env.VITE_SEARCH_TYPEAHEAD_API) ||
   'https://www-api.ibm.com';
 /**
@@ -41,7 +42,7 @@ class SearchTypeaheadAPI {
    *   return response;
    * }
    */
-  static async getResults(query) {
+  static async getResults(query: string) {
     const urlQuery = [`lang=en&cc=us`, `query=${encodeURIComponent(query)}`]
       .filter((item) => item)
       .join('&');

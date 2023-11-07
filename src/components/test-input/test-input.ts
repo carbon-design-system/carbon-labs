@@ -7,16 +7,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { customElement } from 'lit/decorators.js';
 import settings from '../../globals/settings.js';
-import testInput from './src/test-input.js';
-import { testInputTemplate } from './src/test-input.template.js';
+import testInput from './src/test-input';
+import { testInputTemplate } from './src/test-input.template';
 
 const { stablePrefix: c4aiPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-export default class C4AITestInput extends testInput {
+@customElement(`${c4aiPrefix}-test-input`)
+class C4AITestInput extends testInput {
   /**
    * Renders the template while passing in class functionality
    *
@@ -27,4 +29,4 @@ export default class C4AITestInput extends testInput {
   }
 }
 
-customElements.define(`${c4aiPrefix}-test-input`, C4AITestInput);
+export default C4AITestInput;

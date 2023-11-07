@@ -82,7 +82,7 @@
     "rollup": "^3.29.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-postcss-lit": "^2.1.0",
-    "sass": "~1.64.0",
+    "sass": "~1.69.0",
     "sinon": "^17.0.1",
     "storybook": "^7.5.1",
     "stylelint": "^15.11.0",

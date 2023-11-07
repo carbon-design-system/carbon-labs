@@ -23,7 +23,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm@8
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install
       - name: Check formatting of project files (staged)
         if: ${{ github.event_name == 'pull_request' }}
         run: pnpm format:staged
@@ -42,7 +42,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm@8
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install
       - name: Lint
         run: pnpm lint && pnpm lint:styles
 
@@ -57,6 +57,6 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm@8
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install
       - name: License check
         run: pnpm lint:license

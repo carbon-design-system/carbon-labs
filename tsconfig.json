@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "useDefineForClassFields": true,
+    "useDefineForClassFields": false,
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
@@ -9,12 +9,14 @@
     "experimentalDecorators": true,
 
     /* Bundler mode */
-    "declaration": true,
     "stripInternal": true,
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noEmitOnError": true,
+    "rootDir": "src",
     "sourceMap": true,
+    "declaration": true,
     "outDir": "es",
 
     /* Linting */
@@ -26,5 +28,11 @@
     "allowSyntheticDefaultImports": true,
     "types": ["mocha", "sinon"]
   },
-  "include": ["src/**/*.ts", ".storybook/**/*.tsx", ".storybook/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    ".storybook/**/*.tsx",
+    ".storybook/**/*.ts",
+    "src/components/extended-button/__stories__/extended-button.stories.js"
+  ],
+  "exclude": ["src/**/__tests__"]
 }

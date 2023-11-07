@@ -9,7 +9,7 @@
 
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
-import { SearchTypeaheadAPI } from '../../../services/SearchTypeahead/index';
+import { SearchTypeaheadAPI } from '../../../services/SearchTypeahead/index.js';
 
 /**
  * Input component using search typeahead api

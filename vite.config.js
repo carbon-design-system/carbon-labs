@@ -12,35 +12,7 @@ import path from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
 import postcssLit from 'rollup-plugin-postcss-lit';
-import fg from 'fast-glob';
-
-// Defines an array of entry points to be used to search for files.
-const entryPoints = [
-  'src/index.ts',
-  'src/components/**/*.ts',
-  '!src/components/**/__stories__/*.ts',
-  'src/components/index.ts',
-  'src/services/**/*.js',
-  '!src/components/**/*.test.ts',
-  '!src/components/**/*.snap.js',
-];
-
-// Searches for files that match the patterns defined in the array of input points.
-// Returns an array of relative file paths.
-const files = fg.sync(entryPoints);
-
-// Maps the file paths in the "files" array to an array of key-value pair.
-const entities = files.map((file) => {
-  // Extract the part of the file path after the "src" folder and before the file extension.
-  const [key] = file.match(/(?<=src\/).*$/) || [];
-
-  // Remove the file extension from the key.
-  const keyWithoutExt = key.replace(/\.[^.]*$/, '');
-
-  return [keyWithoutExt, file];
-});
-
-const entries = Object.fromEntries(entities);
+import terser from '@rollup/plugin-terser';
 
 /**
  * Gets all of the folders and returns out
@@ -80,18 +52,20 @@ function _getDistInputs() {
 
 const distInputs = _getDistInputs();
 
+/**
+ * Stores the suffix to append depending on build mode
+ *
+ * @type {{development: string, production: string}}
+ */
+const modeSuffixes = {
+  development: '',
+  production: '.min',
+};
+
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '');
-
-  let destDir = 'dist';
-  let inputs = distInputs;
-
-  if (mode === 'production') {
-    destDir = 'es';
-    inputs = entries;
-  }
 
   return {
     // vite config
@@ -99,9 +73,9 @@ export default defineConfig(({ mode }) => {
       __APP_ENV__: JSON.stringify(env.APP_ENV),
     },
     build: {
-      outDir: destDir,
+      outDir: 'dist',
       lib: {
-        entry: inputs,
+        entry: distInputs,
         /**
          * Sets the filename
          *
@@ -110,7 +84,7 @@ export default defineConfig(({ mode }) => {
          * @returns {string}
          */
         fileName: (_, entryName) => {
-          return `${entryName}.js`;
+          return `${entryName}${modeSuffixes[mode]}.js`;
         },
         formats: ['es'],
       },
@@ -127,6 +101,7 @@ export default defineConfig(({ mode }) => {
           postcssLit({
             include: ['./node_modules', 'src/**/*.scss', 'src/**/*.scss?*'],
           }),
+          ...(mode === 'production' ? [terser()] : []),
         ],
       },
     },

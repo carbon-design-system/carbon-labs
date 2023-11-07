@@ -15,8 +15,8 @@ import {
   waitUntil,
 } from '@open-wc/testing';
 import { stub } from 'sinon';
-import '../../../../es/components/test-input/test-input';
-import C4AITestInput from '../test-input.js';
+import '../../../../dist/test-input.min.js';
+import C4AITestInput from '../test-input';
 
 describe('c4ai-test-input', function () {
   it('should render with minimum attributes', async () => {

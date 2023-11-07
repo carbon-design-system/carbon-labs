@@ -25,7 +25,6 @@ declare global {
   }
 }
 
-declare module 'dist/*';
 declare module '*.scss?inline';
 declare module '*.svg';
 declare module '*.jpg';

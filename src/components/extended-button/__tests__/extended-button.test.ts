@@ -8,8 +8,8 @@
  */
 
 import { html, fixture, expect } from '@open-wc/testing';
-import '../../../../es/components/extended-button/extended-button.js';
-import C4AIExtendedButton from '../extended-button.js';
+import '../../../../dist/extended-button.min.js';
+import C4AIExtendedButton from '../extended-button';
 
 describe('c4ai-extended-button', function () {
   it('should render with cds-button minimum attributes', async () => {

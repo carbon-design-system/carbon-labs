@@ -7,4 +7,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import './test-input.ts';
+const settings: {
+  stablePrefix: string;
+  prefix: string;
+} = {
+  stablePrefix: 'c4ai',
+  prefix: 'cds',
+};
+export default settings;

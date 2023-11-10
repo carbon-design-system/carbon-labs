@@ -9,7 +9,8 @@
 
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
-import { SearchTypeaheadAPI } from '../../../services/SearchTypeahead/index.js';
+import { SearchTypeaheadAPI } from '../services/SearchTypeahead/index.js';
+import styles from './test-input.scss?inline';
 
 /**
  * Input component using search typeahead api
@@ -45,4 +46,6 @@ export default class testInput extends LitElement {
       this.searchResults = res;
     });
   }
+
+  static styles = styles;
 }

@@ -1,0 +1,31 @@
+{
+  "name": "@carbon-labs/ai-test-input",
+  "version": "0.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Carbon for AI - test-input component",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-for-ai",
+    "directory": "packages/test-input"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.dev.js",
+      "default": "./src/index.js"
+    }
+  },
+  "files": [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "custom-elements.json"
+  ],
+  "types": "./src/index.d.ts",
+  "customElements": "custom-elements.json"
+}

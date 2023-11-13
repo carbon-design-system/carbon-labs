@@ -50,8 +50,8 @@ devDependencies:
     specifier: ^1.0.1
     version: 1.0.1(@types/react@18.2.23)
   '@open-wc/testing':
-    specifier: ^3.2.1
-    version: 3.2.1
+    specifier: ^4.0.0
+    version: 4.0.0
   '@playwright/test':
     specifier: ^1.39.0
     version: 1.39.0
@@ -3412,26 +3412,15 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@open-wc/chai-dom-equals@0.12.36:
-    resolution: {integrity: sha512-Gt1fa37h4rtWPQGETSU4n1L678NmMi9KwHM1sH+JCGcz45rs8DBPx7MUVeGZ+HxRlbEI5t9LU2RGGv6xT2OlyA==}
-    dependencies:
-      '@open-wc/semantic-dom-diff': 0.13.21
-      '@types/chai': 4.3.9
-    dev: true
-
   /@open-wc/dedupe-mixin@1.4.0:
     resolution: {integrity: sha512-Sj7gKl1TLcDbF7B6KUhtvr+1UCxdhMbNY5KxdU5IfMFWqL8oy1ZeAcCANjoB1TL0AJTcPmcCFsCbHf8X2jGDUA==}
     dev: true
 
-  /@open-wc/scoped-elements@2.2.4:
-    resolution: {integrity: sha512-12X4F4QGPWcvPbxAiJ4v8wQFCOu+laZHRGfTrkoj+3JzACCtuxHG49YbuqVzQ135QPKCuhP9wA0kpGGEfUegyg==}
+  /@open-wc/scoped-elements@3.0.2:
+    resolution: {integrity: sha512-TZ9NjcAGjrfoZ8GjbMYDTuztFL1YPHtvFgqlcTrYy6C7jHSgCv67Rv9Cgf55VDNZgzRu+yBi5IjcyLzWNZ17eg==}
     dependencies:
-      '@lit/reactive-element': 2.0.0
       '@open-wc/dedupe-mixin': 1.4.0
-    dev: true
-
-  /@open-wc/semantic-dom-diff@0.13.21:
-    resolution: {integrity: sha512-BONpjHcGX2zFa9mfnwBCLEmlDsOHzT+j6Qt1yfK3MzFXFtAykfzFjAgaxPetu0YbBlCfXuMlfxI4vlRGCGMvFg==}
+      lit: 3.0.0
     dev: true
 
   /@open-wc/semantic-dom-diff@0.20.0:
@@ -3445,22 +3434,20 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@open-wc/testing-helpers@2.3.2:
-    resolution: {integrity: sha512-uZMGC/C1m5EiwQsff6KMmCW25TYMQlJt4ilAWIjnelWGFg9HPUiLnlFvAas3ESUP+4OXLO8Oft7p4mHvbYvAEQ==}
+  /@open-wc/testing-helpers@3.0.0:
+    resolution: {integrity: sha512-zkR39b7ljH/TqZgzBB9ekHKg1OLvR/JQYCEaW76V0RuASfV/vkgx2xfUQNe8DlEOLOetRZ3agFqssEREF45ClA==}
     dependencies:
-      '@open-wc/scoped-elements': 2.2.4
+      '@open-wc/scoped-elements': 3.0.2
       lit: 3.0.0
       lit-html: 3.0.0
     dev: true
 
-  /@open-wc/testing@3.2.1:
-    resolution: {integrity: sha512-AW7WcCTkJ4oiXgIQUJ2XP11cDsMiRmG5Dr++NQwpER2qufAFTK5+0mLedQ6GnLbWe8kl6FoddkpBCMXKukLudQ==}
+  /@open-wc/testing@4.0.0:
+    resolution: {integrity: sha512-KI70O0CJEpBWs3jrTju4BFCy7V/d4tFfYWkg8pMzncsDhD7TYNHLw5cy+s1FHXIgVFetnMDhPpwlKIPvtTQW7w==}
     dependencies:
       '@esm-bundle/chai': 4.3.4-fix.0
-      '@open-wc/chai-dom-equals': 0.12.36
       '@open-wc/semantic-dom-diff': 0.20.0
-      '@open-wc/testing-helpers': 2.3.2
-      '@types/chai': 4.3.9
+      '@open-wc/testing-helpers': 3.0.0
       '@types/chai-dom': 1.11.2
       '@types/sinon-chai': 3.2.11
       chai-a11y-axe: 1.5.0

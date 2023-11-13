@@ -49,7 +49,7 @@
     "@commitlint/config-conventional": "^18.0.0",
     "@custom-elements-manifest/analyzer": "^0.9.0",
     "@lit/react": "^1.0.1",
-    "@open-wc/testing": "^3.2.1",
+    "@open-wc/testing": "^4.0.0",
     "@playwright/test": "^1.39.0",
     "@rollup/plugin-multi-entry": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.2.3",

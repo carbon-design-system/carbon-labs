@@ -15,7 +15,7 @@ import { html } from 'lit';
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export function testInputTemplate(customElementClass: any) {
+export function testInputTemplate(customElementClass) {
   const { _handleInput: handleInput } = customElementClass;
   return html`<div>
     <label for="typeahead"
@@ -23,9 +23,7 @@ export function testInputTemplate(customElementClass: any) {
       <input type="text" name="typeahead" @input="${handleInput}" />
     </label>
     ${customElementClass.searchResults
-      ? customElementClass.searchResults.map(
-          (result: string) => html`<p>${result}</p>`
-        )
+      ? customElementClass.searchResults.map((result) => html`<p>${result}</p>`)
       : undefined}
   </div>`;
 }

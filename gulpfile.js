@@ -7,12 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const settings: {
-  stablePrefix: string;
-  prefix: string;
-} = {
-  stablePrefix: 'c4ai',
-  prefix: 'cds',
-};
+import './gulp-tasks/build.js';
 
-export default settings;
+process.once('SIGINT', () => {
+  process.exit(0);
+});

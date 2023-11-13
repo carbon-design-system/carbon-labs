@@ -11,5 +11,5 @@
 @use '@carbon/styles/scss/themes' as *;
 
 :host(#{$c4ai-prefix}-test-input) {
-  color: $background-ui;
+  color: $background;
 }

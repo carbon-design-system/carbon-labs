@@ -10,7 +10,8 @@
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 import { SearchTypeaheadAPI } from '../services/SearchTypeahead/index.js';
-import styles from './test-input.scss?inline';
+// @ts-ignore
+import styles from './test-input.scss';
 
 /**
  * Input component using search typeahead api
@@ -20,7 +21,7 @@ export default class testInput extends LitElement {
    * Array of search results from typeahead API
    */
   @property({ type: Array, attribute: false })
-  searchResults: string[] = [];
+  searchResults = [];
 
   /**
    * Fetches the results from the SearchTypeaheadAPI

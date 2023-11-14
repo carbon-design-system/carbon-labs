@@ -9,7 +9,6 @@
 
 import gulp from 'gulp';
 import path from 'path';
-// import merge from 'merge2';
 import through2 from 'through2';
 import sourcemaps from 'gulp-sourcemaps';
 import ts from 'gulp-typescript';
@@ -18,7 +17,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
- * Builds the types module
+ * Builds the types modules (d.ts files)
  *
  * @returns {*} gulp stream
  */
@@ -37,7 +36,12 @@ return dts
     })
   )
   .pipe(sourcemaps.write('.'))
-  .pipe(gulp.dest('es'));
+  .pipe(gulp.dest(function(file){
+     // output type files within the package folders itself (ie. packages/es/{component}/src/..)
+    const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
+    file.dirname = file.dirname.replace(`/${destPath}`, '')
+    return `packages/${destPath}/es`;
+  }));
 }
 
 gulp.task('build:modules:types', types);

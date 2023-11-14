@@ -65,7 +65,12 @@ const buildModulesCSS = ({ banner }) =>
     )
     .pipe(prettier())
     .pipe(header(banner))
-    .pipe(gulp.dest(path.resolve('es')));
+    .pipe(gulp.dest(function(file){
+      // output type files within the package folders itself (ie. packages/es/{component}/src/..)
+     const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
+     file.dirname = file.dirname.replace(`/${destPath}`, '')
+     return `packages/${destPath}/es`;
+   }));
 
 /**
  * Builds the CSS

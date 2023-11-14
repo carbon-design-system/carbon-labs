@@ -1,5 +1,5 @@
 {
-  "name": "@carbon-labs/ai-extended-button",
+  "name": "@carbon/ai-extended-button",
   "version": "0.0.1",
   "publishConfig": {
     "access": "public"
@@ -16,9 +16,9 @@
   "type": "module",
   "exports": {
     ".": {
-      "development": "./src/index.dev.js",
       "default": "./src/index.js"
-    }
+    },
+    "./es/": "./es"
   },
   "files": [
     "**/*.d.ts",

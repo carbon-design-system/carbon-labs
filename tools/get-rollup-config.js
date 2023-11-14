@@ -8,8 +8,8 @@
  */
 
 import autoprefixer from 'autoprefixer';
-import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
+import esbuild from 'rollup-plugin-esbuild';
 import cssnano from 'cssnano';
 import path from 'path';
 import postcss from 'postcss';
@@ -81,44 +81,27 @@ function getRollupConfig({ mode = 'development', folders = [] } = {}) {
 
   return {
     input: _generateInputs(mode, folders),
-    external: [/@babel\/runtime/],
     plugins: [
+      replace({
+        'process.env.NODE_ENV': JSON.stringify(mode),
+        preventAssignment: true,
+      }),
       nodeResolve({
         browser: true,
-        mainFields: ['jsnext', 'module', 'main'],
+        preferBuiltins: false,
         extensions: ['.js', '.ts'],
       }),
       commonjs({
         include: [/node_modules/],
         sourceMap: true,
       }),
-      babel({
-        babelHelpers: 'inline',
-        extensions: ['.ts'],
-        exclude: ['node_modules/**'], // only transpile our source code
-        presets: ['@babel/preset-modules'],
-        plugins: [
-          '@babel/plugin-transform-typescript',
-          '@babel/plugin-transform-class-properties',
-          [
-            '@babel/plugin-proposal-decorators',
-            { decoratorsBeforeExport: true },
-          ],
-          '@babel/plugin-transform-nullish-coalescing-operator',
-          ['@babel/plugin-transform-object-rest-spread', { useBuiltIns: true }],
-          '@babel/plugin-transform-optional-chaining',
-        ],
-      }),
+      esbuild({ sourceMap: false, tsconfig: '../tsconfig.json' }),
       rollupPluginLitSCSS({
         includePaths: [path.resolve(__dirname, '../node_modules')],
         async preprocessor(contents, id) {
           return (await postcss(postCSSPlugins).process(contents, { from: id }))
             .css;
         },
-      }),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(mode),
-        preventAssignment: true,
       }),
       ...(mode === 'development' ? [] : [terser()]),
     ],

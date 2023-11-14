@@ -38,8 +38,8 @@ function scripts() {
           plugins: [
             '@babel/plugin-transform-typescript',
             ['@babel/plugin-transform-runtime', { useESModules: true, version: '7.8.0' }],
-            '@babel/plugin-transform-class-properties',
             ['@babel/plugin-proposal-decorators', {decoratorsBeforeExport: true}],
+            '@babel/plugin-transform-class-properties',
             babelPluginResourceJSPaths,
           ],
         })
@@ -47,7 +47,12 @@ function scripts() {
       // Avoids generating `.js` from interface-only `.ts` files
       .pipe(filter((file) => stripComments(file.contents.toString(), { sourceType: 'module' }).replace(/\s/g, '')))
       .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest('es'))
+      .pipe(gulp.dest(function(file){
+        // output type files within the package folders itself (ie. packages/es/{component}/src/..)
+        const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
+        file.dirname = file.dirname.replace(`/${destPath}`, '')
+        return `packages/${destPath}/es`;
+      }))
   );
 }
 

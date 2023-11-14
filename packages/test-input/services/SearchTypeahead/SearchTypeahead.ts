@@ -7,8 +7,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import axios from 'axios';
-
 /**
  * @constant {string | string} Host for the API calls
  * @private
@@ -47,13 +45,13 @@ class SearchTypeaheadAPI {
       .filter((item) => item)
       .join('&');
     const url = `${_endpoint}?${urlQuery}`;
-    return await axios
-      .get(url, {
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-        },
-      })
-      .then((response) => response.data.response);
+    return await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => response.response);
   }
 }
 export default SearchTypeaheadAPI;

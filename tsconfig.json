@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "es2015",
+    "target": "es2018",
+    "lib": ["es2018", "dom", "dom.iterable"],
+    "module": "esNext",
     "moduleResolution": "node",
-    "lib": ["es2017", "esnext.array", "dom", "dom.iterable"],
     "typeRoots": [
       "declarations.d.ts",
       "./node_modules/@types/",
-      "../../node_modules/@types"
+      "../../node_modules/@ types"
     ],
     "declaration": true,
     "rootDir": ".",
     "skipLibCheck": true,
     "stripInternal": true,
-    "sourceMap": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,

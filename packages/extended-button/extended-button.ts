@@ -11,8 +11,6 @@ import { customElement } from 'lit/decorators.js';
 // import settings from '../../globals/settings.js';
 import extendedButton from './src/extended-button.template.js';
 
-// const { stablePrefix: c4aiPrefix } = settings;
-
 /**
  * Component extending the @carbon/web-components' button
  */

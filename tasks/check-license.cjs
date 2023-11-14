@@ -13,7 +13,6 @@ const fs = require('fs');
 const { promisify } = require('util');
 const { program } = require('commander');
 const gitignoreToGlob = require('gitignore-to-glob');
-const globby = require('globby');
 const path = require('path');
 const reLicense = require('./license-text.cjs');
 
@@ -42,7 +41,7 @@ program.parse();
 /**
  * Stores the arguments
  *
- * @type {OptionValues}
+ * @type {{}}
  */
 const options = program.opts();
 
@@ -58,7 +57,10 @@ const options = program.opts();
  */
 const check = async (paths, options) => {
   let checkPaths = [];
+
   if (options.checkAllFiles) {
+    const { globby } = await import ('globby');
+
     const gitIgnorePath = await globby(
       path.resolve(__dirname, '../.gitignore'),
       {

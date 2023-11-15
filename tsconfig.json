@@ -13,6 +13,7 @@
     "rootDir": ".",
     "skipLibCheck": true,
     "stripInternal": true,
+    "sourceMap": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,

@@ -24,7 +24,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 function types() {
   const tsProject = ts.createProject(path.resolve(__dirname, '../../../tsconfig.json'));
   const { dts } = gulp
-  .src([`packages/**/*.ts`, `!packages/*/__tests__/**/*.ts`, `!packages/**/*-story*.ts*`, `!packages/**/__stories__/**/*.ts*`])
+  .src([`packages/**/*.ts`, `!packages/**/__tests__/*.ts`, `!packages/**/*-story*.ts*`, `!packages/**/__stories__/*.ts`])
   .pipe(sourcemaps.init())
   .pipe(tsProject());
 

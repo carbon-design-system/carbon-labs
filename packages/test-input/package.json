@@ -13,12 +13,11 @@
   },
   "main": "./src/index.js",
   "module": "./src/index.js",
-  "type": "module",
   "exports": {
     ".": {
       "default": "./src/index.js"
     },
-    "./es/": "./es"
+    "./es/": "./es/"
   },
   "files": [
     "**/*.d.ts",
@@ -27,5 +26,9 @@
     "custom-elements.json"
   ],
   "types": "./src/index.d.ts",
-  "customElements": "custom-elements.json"
+  "customElements": "custom-elements.json",
+  "dependencies": {
+    "@babel/runtime": "^7.23.2",
+    "lit": "^3.0.0"
+  }
 }

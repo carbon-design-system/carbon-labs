@@ -9,7 +9,7 @@
 
 import CDSButton from '@carbon/web-components/es/components/button/button.js';
 // @ts-ignore
-import styles from './extended-button.scss';
+import styles from './extended-button.scss?inline';
 
 /**
  * Component extending the @carbon/web-components' button

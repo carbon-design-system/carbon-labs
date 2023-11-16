@@ -15,7 +15,7 @@ import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
  */
 export default {
-  title: 'Components/Extended button',
+  title: 'Components/Extended button/Extended button',
   tags: ['autodocs'],
 };
 

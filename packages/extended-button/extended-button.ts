@@ -8,6 +8,8 @@
  */
 
 import { customElement } from 'lit/decorators.js';
+// need to set up package to import global files like the one below. Hardcoding the prefixes
+// for now
 // import settings from '../../globals/settings.js';
 import extendedButton from './src/extended-button.template.js';
 

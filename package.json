@@ -33,8 +33,8 @@
     "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
     "storybook": "storybook dev -p 6006",
     "prepare": "husky install",
-    "test": "pnpm build && web-test-runner \"src/components/**/*.test.ts\" --node-resolve --playwright --browsers chromium firefox webkit",
-    "test:updateSnapshot": "pnpm build && web-test-runner \"src/components/**/*.test.ts\" --node-resolve --update-snapshots"
+    "test": "pnpm build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --playwright --browsers chromium firefox webkit",
+    "test:updateSnapshot": "pnpm build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
@@ -103,6 +103,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "replace-ext": "^2.0.0",
+    "replace-in-file": "^7.0.2",
     "rollup": "^3.29.4",
     "rollup-plugin-esbuild": "^6.1.0",
     "rollup-plugin-postcss": "^4.0.2",

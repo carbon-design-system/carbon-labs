@@ -201,6 +201,9 @@ importers:
       replace-ext:
         specifier: ^2.0.0
         version: 2.0.0
+      replace-in-file:
+        specifier: ^7.0.2
+        version: 7.0.2
       rollup:
         specifier: ^3.29.4
         version: 3.29.4
@@ -14512,6 +14515,16 @@ packages:
       homedir-polyfill: 1.0.3
       is-absolute: 1.0.0
       remove-trailing-separator: 1.1.0
+    dev: true
+
+  /replace-in-file@7.0.2:
+    resolution: {integrity: sha512-tPG+Qmqf+x2Rf1WVdb/9B5tFIf6KJ5hs3fgxh1OTzPRUugPPvyAva7NvCJtnSpmyq6r+ABYcuUOqZkm6yzGSUw==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      chalk: 4.1.2
+      glob: 8.1.0
+      yargs: 17.7.2
     dev: true
 
   /require-directory@2.1.1:

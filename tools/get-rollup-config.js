@@ -17,6 +17,7 @@ import replace from '@rollup/plugin-replace';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import alias from '@rollup/plugin-alias';
+import rollupPluginScssPath from './rollup-plugin-scss-path.js';
 import rollupPluginLitSCSS from './rollup-plugin-lit-scss.js';
 import { fileURLToPath } from 'url';
 
@@ -83,14 +84,7 @@ function getRollupConfig({ mode = 'development', folders = [] } = {}) {
   return {
     input: _generateInputs(mode, folders),
     plugins: [
-      /**
-       * When running storybook, default and named imports from CSS files
-       * are deprecated with Vite - the `?inline` query is required
-       * (e.g import styles from './foo.scss?inline)
-       *
-       * Set alias here so rollup knows to reference the scss file
-       */
-      alias({ find: /^(.*)\.scss\?inline$/, replacement: '$1.scss' }),
+      rollupPluginScssPath(),
       replace({
         'process.env.NODE_ENV': JSON.stringify(mode),
         preventAssignment: true,

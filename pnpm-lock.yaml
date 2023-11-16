@@ -13,10 +13,10 @@ importers:
         version: 7.23.2
       '@carbon/styles':
         specifier: ^1.39.0
-        version: 1.42.0(sass@1.64.2)
+        version: 1.42.0(sass@1.69.5)
       '@carbon/web-components':
         specifier: 2.0.1-canary.1
-        version: 2.0.1-canary.1(sass@1.64.2)
+        version: 2.0.1-canary.1(sass@1.69.5)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -86,7 +86,7 @@ importers:
         version: 7.5.3(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-styling':
         specifier: ^1.3.7
-        version: 1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.64.2)(typescript@5.2.2)(webpack@5.89.0)
+        version: 1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.69.5)(typescript@5.2.2)(webpack@5.89.0)
       '@storybook/blocks':
         specifier: ^7.5.1
         version: 7.5.3(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
@@ -145,8 +145,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       globby:
-        specifier: ^11.1.0
-        version: 11.1.0
+        specifier: ^14.0.0
+        version: 14.0.0
       gulp:
         specifier: ^4.0.2
         version: 4.0.2
@@ -217,8 +217,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(rollup@3.29.4)
       sass:
-        specifier: ~1.64.0
-        version: 1.64.2
+        specifier: ~1.69.0
+        version: 1.69.5
       sinon:
         specifier: ^17.0.1
         version: 17.0.1
@@ -242,7 +242,7 @@ importers:
         version: 5.2.2
       vite:
         specifier: ^4.4.5
-        version: 4.5.0(@types/node@18.18.9)(less@4.2.0)(sass@1.64.2)
+        version: 4.5.0(@types/node@18.18.9)(less@4.2.0)(sass@1.69.5)
 
   packages/extended-button:
     dependencies:
@@ -251,10 +251,10 @@ importers:
         version: 7.23.2
       '@carbon/styles':
         specifier: ^1.39.0
-        version: 1.42.0(sass@1.64.2)
+        version: 1.42.0(sass@1.69.5)
       '@carbon/web-components':
         specifier: 2.0.1-canary.1
-        version: 2.0.1-canary.1(sass@1.64.2)
+        version: 2.0.1-canary.1(sass@1.69.5)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -2527,7 +2527,7 @@ packages:
   /@carbon/motion@11.16.0:
     resolution: {integrity: sha512-gr2oijosvrbV8I8dT+s+KTAzHswQ7GE1ffgKxMWWkdg4b91hlJ0qJe1BlG7ZnaHCRpeHKS12QQgnS/dy4yx92Q==}
 
-  /@carbon/styles@1.42.0(sass@1.64.2):
+  /@carbon/styles@1.42.0(sass@1.69.5):
     resolution: {integrity: sha512-Op6IB/YKjUsD90eI5RCLvl169UocGeUwlXtglZTBTF+b0xZHhIJkyA7b/5QFPPjRaJjIPMUr9DmEya+PTRDRBw==}
     peerDependencies:
       sass: ^1.33.0
@@ -2543,7 +2543,7 @@ packages:
       '@carbon/themes': 11.27.0
       '@carbon/type': 11.25.0
       '@ibm/plex': 6.0.0-next.6
-      sass: 1.64.2
+      sass: 1.69.5
     dev: false
 
   /@carbon/themes@11.27.0:
@@ -2560,11 +2560,11 @@ packages:
       '@carbon/grid': 11.21.0
       '@carbon/layout': 11.20.0
 
-  /@carbon/web-components@2.0.1-canary.1(sass@1.64.2):
+  /@carbon/web-components@2.0.1-canary.1(sass@1.69.5):
     resolution: {integrity: sha512-xTymQ5SNaVGuxDuXq3p3N36CWxHS38DlHHxC9pqTKQUZDCzscYnepjBaRTT/m4wnJKziK4kwidSTYN0M2miokg==}
     dependencies:
       '@babel/runtime': 7.23.2
-      '@carbon/styles': 1.42.0(sass@1.64.2)
+      '@carbon/styles': 1.42.0(sass@1.69.5)
       flatpickr: 4.6.1
       lit: 2.8.0
       lodash-es: 4.17.21
@@ -4259,6 +4259,11 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
+  /@sindresorhus/merge-streams@1.0.0:
+    resolution: {integrity: sha512-rUV5WyJrJLoloD4NDN1V1+LDMDWOa4OTsT4yYJwQNpTU6FWxkxHpL7eu4w+DmiH8x/EAM1otkPE1+LaspIbplw==}
+    engines: {node: '>=18'}
+    dev: true
+
   /@sinonjs/commons@2.0.0:
     resolution: {integrity: sha512-uLa0j859mMrg2slwQYdO/AkrOfmH+X6LTVmNTS9CqexuE2IvVORIkSpJLqePAbEnKJ77aMmCwr1NUZ57120Xcg==}
     dependencies:
@@ -4537,7 +4542,7 @@ packages:
       - '@types/react-dom'
     dev: true
 
-  /@storybook/addon-styling@1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.64.2)(typescript@5.2.2)(webpack@5.89.0):
+  /@storybook/addon-styling@1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.69.5)(typescript@5.2.2)(webpack@5.89.0):
     resolution: {integrity: sha512-JSBZMOrSw/3rlq5YoEI7Qyq703KSNP0Jd+gxTWu3/tP6245mpjn2dXnR8FvqVxCi+FG4lt2kQyPzgsuwEw1SSA==}
     hasBin: true
     peerDependencies:
@@ -4578,7 +4583,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       resolve-url-loader: 5.0.0
-      sass-loader: 13.3.2(sass@1.64.2)(webpack@5.89.0)
+      sass-loader: 13.3.2(sass@1.69.5)(webpack@5.89.0)
       style-loader: 3.3.3(webpack@5.89.0)
       webpack: 5.89.0(esbuild@0.19.5)
     transitivePeerDependencies:
@@ -4754,7 +4759,7 @@ packages:
       magic-string: 0.30.5
       rollup: 3.29.4
       typescript: 5.2.2
-      vite: 4.5.0(@types/node@18.18.9)(less@4.2.0)(sass@1.64.2)
+      vite: 4.5.0(@types/node@18.18.9)(less@4.2.0)(sass@1.69.5)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -10057,6 +10062,18 @@ packages:
       slash: 3.0.0
     dev: true
 
+  /globby@14.0.0:
+    resolution: {integrity: sha512-/1WM/LNHRAOH9lZta77uGbq0dAEQM+XjNesWwhlERDVenqothRbnzTrL3/LrIoEPPjeUHC3vrS6TwoyxeHs7MQ==}
+    engines: {node: '>=18'}
+    dependencies:
+      '@sindresorhus/merge-streams': 1.0.0
+      fast-glob: 3.3.2
+      ignore: 5.2.4
+      path-type: 5.0.0
+      slash: 5.1.0
+      unicorn-magic: 0.1.0
+    dev: true
+
   /globjoin@0.1.4:
     resolution: {integrity: sha512-xYfnw62CKG8nLkZBfWbhWwDw02CHty86jfPcc2cr3ZfeuK9ysoVPPEUxf21bAD/rWAgk52SuBrLJlefNy8mvFg==}
     dev: true
@@ -12979,6 +12996,11 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /path-type@5.0.0:
+    resolution: {integrity: sha512-5HviZNaZcfqP95rwpv+1HDgUamezbqdSYTyzjTvwtJSnIH+3vnbmWsItli8OFEndS984VT55M3jduxZbX351gg==}
+    engines: {node: '>=12'}
+    dev: true
+
   /pathe@1.1.1:
     resolution: {integrity: sha512-d+RQGp0MAYTIaDBIMmOfMwz3E+LOZnxx1HZd5R18mmCZY0QBlK0LDZfPc8FW8Ed2DlvsuE6PRjroDY+wg4+j/Q==}
     dev: true
@@ -14792,7 +14814,7 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
-  /sass-loader@13.3.2(sass@1.64.2)(webpack@5.89.0):
+  /sass-loader@13.3.2(sass@1.69.5)(webpack@5.89.0):
     resolution: {integrity: sha512-CQbKl57kdEv+KDLquhC+gE3pXt74LEAzm+tzywcA0/aHZuub8wTErbjAoNI57rPUWRYRNC5WUnNl8eGJNbDdwg==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -14812,12 +14834,12 @@ packages:
         optional: true
     dependencies:
       neo-async: 2.6.2
-      sass: 1.64.2
+      sass: 1.69.5
       webpack: 5.89.0(esbuild@0.19.5)
     dev: true
 
-  /sass@1.64.2:
-    resolution: {integrity: sha512-TnDlfc+CRnUAgLO9D8cQLFu/GIjJIzJCGkE7o4ekIGQOH7T3GetiRR/PsTWJUHhkzcSPrARkPI+gNWn5alCzDg==}
+  /sass@1.69.5:
+    resolution: {integrity: sha512-qg2+UCJibLr2LCVOt3OlPhr/dqVHWOa9XtZf2OjbLs/T4VPSJ00udtgJxH3neXZm+QqX8B+3cU7RaLqp1iVfcQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -15022,6 +15044,11 @@ packages:
   /slash@4.0.0:
     resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
     engines: {node: '>=12'}
+    dev: true
+
+  /slash@5.1.0:
+    resolution: {integrity: sha512-ZA6oR3T/pEyuqwMgAKT0/hAv8oAXckzbkmR0UkUosQ+Mc4RxGoJkRmwHgHufaenlyAgE1Mxgpdcrf75y6XcnDg==}
+    engines: {node: '>=14.16'}
     dev: true
 
   /slice-ansi@4.0.0:
@@ -16390,6 +16417,11 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /unicorn-magic@0.1.0:
+    resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
+    engines: {node: '>=18'}
+    dev: true
+
   /union-value@1.0.1:
     resolution: {integrity: sha512-tJfXmxMeWYnczCVs7XAEvIV7ieppALdyepWMkHkwciRpZraG/xwT+s2JN8+pr1+8jCRf80FFzvr+MpQeeoF4Xg==}
     engines: {node: '>=0.10.0'}
@@ -16655,7 +16687,7 @@ packages:
       replace-ext: 1.0.1
     dev: true
 
-  /vite@4.5.0(@types/node@18.18.9)(less@4.2.0)(sass@1.64.2):
+  /vite@4.5.0(@types/node@18.18.9)(less@4.2.0)(sass@1.69.5):
     resolution: {integrity: sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -16688,7 +16720,7 @@ packages:
       less: 4.2.0
       postcss: 8.4.31
       rollup: 3.29.4
-      sass: 1.64.2
+      sass: 1.69.5
     optionalDependencies:
       fsevents: 2.3.3
     dev: true

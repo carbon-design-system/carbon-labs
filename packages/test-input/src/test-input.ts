@@ -21,13 +21,13 @@ export default class testInput extends LitElement {
   @property({ type: Array, attribute: false })
   searchResults: string[] = [];
 
-  /*
+  /**
    * Fetches the results from the SearchTypeaheadAPI
    *
-   * @param {string} searchQuery query to pass into the API
-   * @returns {Promise<*>}
+   * @param {string} searchQuery searchQuery query to pass into the API
+   * @returns {Promise<*>} search results
    */
-  async getResults(searchQuery: string) {
+  async getResults(searchQuery) {
     const response = await SearchTypeaheadAPI.getResults(searchQuery);
     return response.map((res) => res[0]);
   }

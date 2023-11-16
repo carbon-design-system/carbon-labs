@@ -7,4 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import './extended-button.js';
+import './components/extended-button/extended-button.js';

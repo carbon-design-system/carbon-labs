@@ -15,7 +15,7 @@ import sass from 'sass';
 
 const config = {
   stories: [
-    '../packages/**/src/__stories__/*.mdx',
+    '../packages/**/__stories__/*.mdx',
     '../packages/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],

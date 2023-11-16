@@ -9,7 +9,7 @@
 
 import { html, fixture, expect } from '@open-wc/testing';
 import '@carbon-labs/ai-extended-button/es/extended-button.js';
-import C4AIExtendedButton from '../src/extended-button.template.js';
+import C4AIExtendedButton from '../components/extended-button/src/extended-button.template.js';
 
 describe('c4ai-extended-button', function () {
   it('should render with cds-button minimum attributes', async () => {

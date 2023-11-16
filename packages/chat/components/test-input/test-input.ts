@@ -8,8 +8,9 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-// need to set up package to import global files like the one below. Hardcoding the prefixes
-// for now
+// need to set up package to import global files like the one below. Hardcoding
+// the `c4ai` prefixes for now
+
 // import settings from '../../globals/settings.js';
 import testInput from './src/test-input.js';
 import { testInputTemplate } from './src/test-input.template.js';

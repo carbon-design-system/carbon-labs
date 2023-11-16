@@ -38,7 +38,7 @@ const promisifyStream = promisify(asyncDone);
  */
 const buildModulesCSS = ({ banner }) =>
   gulp
-    .src([`packages/*/src/*.scss`])
+    .src([`packages/**/src/*.scss`])
     .pipe(
       sass({
         includePaths: ['node_modules', '../../node_modules'],

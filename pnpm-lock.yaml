@@ -244,6 +244,15 @@ importers:
         specifier: ^4.4.5
         version: 4.5.0(@types/node@18.18.9)(less@4.2.0)(sass@1.69.5)
 
+  packages/chat:
+    dependencies:
+      '@babel/runtime':
+        specifier: ^7.23.2
+        version: 7.23.2
+      lit:
+        specifier: ^3.0.0
+        version: 3.0.2
+
   packages/extended-button:
     dependencies:
       '@babel/runtime':
@@ -255,15 +264,6 @@ importers:
       '@carbon/web-components':
         specifier: 2.0.1-canary.1
         version: 2.0.1-canary.1(sass@1.69.5)
-      lit:
-        specifier: ^3.0.0
-        version: 3.0.2
-
-  packages/test-input:
-    dependencies:
-      '@babel/runtime':
-        specifier: ^7.23.2
-        version: 7.23.2
       lit:
         specifier: ^3.0.0
         version: 3.0.2

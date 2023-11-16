@@ -7,12 +7,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '../test-input.ts';
+import '../components/test-input/test-input';
 import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Test input',
+  title: 'Components/Chat/Test input',
   tags: ['autodocs'],
 };
 

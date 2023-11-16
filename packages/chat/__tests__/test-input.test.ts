@@ -16,7 +16,7 @@ import {
 } from '@open-wc/testing';
 import { stub } from 'sinon';
 import '@carbon-labs/ai-test-input/es/test-input.js';
-import C4AITestInput from '../test-input.js';
+import C4AITestInput from '../components/test-input/test-input.js';
 
 describe('c4ai-test-input', function () {
   it('should render with minimum attributes', async () => {

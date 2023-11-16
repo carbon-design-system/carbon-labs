@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '../extended-button.ts';
+import '../components/extended-button/extended-button';
 import { html } from 'lit';
 import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
 
@@ -15,7 +15,7 @@ import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
  */
 export default {
-  title: 'Components/Extended button',
+  title: 'Components/Extended button/Extended button',
   tags: ['autodocs'],
 };
 

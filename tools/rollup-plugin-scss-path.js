@@ -9,8 +9,6 @@
 
 import path from 'path';
 import replace from 'replace-in-file';
-import { promisify } from 'util';
-import * as sass from 'sass';
 import { createFilter } from '@rollup/pluginutils';
 
 /**

@@ -7,7 +7,7 @@
 
 $css--plex: true !default;
 
-@use '../../../globals/scss/vars' as *;
+@use '../../../../../globals/scss/vars' as *;
 @use '@carbon/styles/scss/themes' as *;
 @use '@carbon/web-components/scss/components/button/button';
 

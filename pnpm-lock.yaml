@@ -268,6 +268,21 @@ importers:
         specifier: ^3.0.0
         version: 3.0.2
 
+  packages/feedback:
+    dependencies:
+      '@babel/runtime':
+        specifier: ^7.23.2
+        version: 7.23.2
+      '@carbon/styles':
+        specifier: ^1.39.0
+        version: 1.42.0(sass@1.69.5)
+      '@carbon/web-components':
+        specifier: 2.0.1-canary.1
+        version: 2.0.1-canary.1(sass@1.69.5)
+      lit:
+        specifier: ^3.0.0
+        version: 3.0.2
+
 packages:
 
   /@75lb/deep-merge@1.1.1:

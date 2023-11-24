@@ -60,16 +60,28 @@ export class FeedbackContainer extends LitElement {
   offset_y = 0;
 
   @property({ attribute: 'api-key' })
-  api_key: string = '';
+  private _api_key: string = '';
 
   @property({ attribute: 'user' })
-  user_id: string = '';
+  private _user_id: string = '';
 
   @property({ attribute: 'ai-model' })
-  model_id: string = '';
+  private _model_id: string = '';
+
+  get api_key() {
+    return this._api_key;
+  }
+
+  get user_id() {
+    return this._user_id;
+  }
+
+  get model_id() {
+    return this._model_id;
+  }
 
   @state()
-  generation_id?: number;
+  generation_id?: string = '';
 
   @state()
   app_id?: number;
@@ -106,57 +118,7 @@ export class FeedbackContainer extends LitElement {
     this.isModelOpen = false;
   }
 
-  async recordFeedback() {
-    try {
-      const payload = {
-        generation_id: this.generation_id,
-        user_id: this.user_id,
-        app_id: this.app_id,
-        feedback: JSON.stringify(this.formData),
-      };
-      const response = await fetch('http://0.0.0.0:8000/feedback', {
-        // Adding method type
-        method: 'POST',
-        // Adding body or contents to send
-        body: JSON.stringify(payload),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      });
-      let resp = await response.json();
-      console.log(resp);
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
-  async recordGeneration(data) {
-    try {
-      const payload = {
-        user_id: this.user_id,
-        api_key: this.api_key,
-        model_id: this.model_id,
-        input_value: data,
-        output_value: data,
-      };
-      const response = await fetch('http://0.0.0.0:8000/generated_content', {
-        // Adding method type
-        method: 'POST',
-        // Adding body or contents to send
-        body: JSON.stringify(payload),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      });
-      let resp = await response.json();
-      this.generation_id = resp.id;
-      this.app_id = resp.app_id;
-      console.log('generation_id', this.generation_id);
-      console.log('app_id', this.app_id);
-    } catch (e) {
-      console.log(e);
-    }
-  }
 
   handleTextSelection() {
     this.selection = window.getSelection();
@@ -166,7 +128,6 @@ export class FeedbackContainer extends LitElement {
     if (selectedText) {
       this.selectedText = selectedText;
       this.setAttribute('selected', '');
-      this.recordGeneration(fullText);
     } else {
       this.removeAttribute('selected');
     }
@@ -187,6 +148,7 @@ export class FeedbackContainer extends LitElement {
       // this.selection = null
     }
   }
+  
   // connectedCallback(): void {
   //   super.connectedCallback();
   //   this.addEventListener('click', this.handleTextSelection);

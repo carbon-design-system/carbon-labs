@@ -57,29 +57,16 @@ jobs:
 
       - name: Publish releases with dry run
         run: |
-          if [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'full minor release'}}]; then
+          if [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'full minor release'}} ]; then
             pnpm lerna publish minor --conventional-graduate
-          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'first minor rc'}}]; then
+          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'first minor rc'}} ]; then
             pnpm lerna publish preminor --conventional-prerelease --preid rc --pre-dist-tag next
-          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'full patch release'}}]; then
+          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'full patch release'}} ]; then
             pnpm lerna publish patch --conventional-graduate
-          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'first patch rc'}}]; then
+          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'first patch rc'}} ]; then
             pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next
-          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'subsequent rc'}}]; then
+          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'subsequent rc'}} ]; then
             pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Set NPM token
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
-      # Bump up package version and create git tag if dry-run is false
-      - name: Bump up package.json version and create Git tag
-        uses: reedyuk/npm-version@1.2.2
-        with:
-          version: ${{ github.event.inputs.version }}
-          git-tag-version: ${{ github.event.inputs.dry-run != 'true' }}
-      - name: Push git tags
-        if: github.event.inputs.dry-run == 'false'
-        run: git push && git push --tags

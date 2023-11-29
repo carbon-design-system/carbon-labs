@@ -67,6 +67,7 @@ jobs:
             pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next
           elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'subsequent rc'}}]; then
             pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

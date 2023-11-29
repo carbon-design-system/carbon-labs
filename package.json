@@ -1,9 +1,7 @@
 {
   "name": "@carbon/ai",
-  "version": "0.0.1-alpha.0",
-  "publishConfig": {
-    "access": "public"
-  },
+  "version": "0.0.0",
+  "private": true,
   "type": "module",
   "description": "Carbon for AI",
   "license": "Apache-2.0",
@@ -96,6 +94,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-typescript": "6.0.0-alpha.1",
     "husky": "^8.0.3",
+    "lerna": "^8.0.0",
     "lint-staged": "^15.0.2",
     "postcss": "^8.4.31",
     "prettier": "^2.8.8",

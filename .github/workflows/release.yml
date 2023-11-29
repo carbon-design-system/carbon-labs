@@ -57,15 +57,15 @@ jobs:
 
       - name: Publish releases with dry run
         run: |
-          if [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'full minor release'}} ]; then
+          if [[ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'full minor release' }} ]]; then
             pnpm lerna publish minor --conventional-graduate
-          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'first minor rc'}} ]; then
+          elif [[ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'first minor rc' }} ]]; then
             pnpm lerna publish preminor --conventional-prerelease --preid rc --pre-dist-tag next
-          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'full patch release'}} ]; then
+          elif [[ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'full patch release' }} ]]; then
             pnpm lerna publish patch --conventional-graduate
-          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'first patch rc'}} ]; then
+          elif [[ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'first patch rc' }} ]]; then
             pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next
-          elif [ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'subsequent rc'}} ]; then
+          elif [[ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'subsequent rc' }} ]]; then
             pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next
           fi
         env:

@@ -93,7 +93,7 @@ jobs:
       - name: Publish first patch RC (ie. v1.0.x-rc.0)
         if: github.event.inputs.type == 'first patch rc'
         run: |
-          echo "DRY RUN: ${{ env.DRY_RUN }}"s
+          echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
           pnpm lerna publish prepatch --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
       - name: Publish subsequent RC (ie. v1.0.0-rc.x)

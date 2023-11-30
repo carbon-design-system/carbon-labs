@@ -22,9 +22,20 @@ on:
           - subsequent rc
       dry-run:
         required: true
-        default: true
-        description: 'Run dry-run'
-        type: boolean
+        description: 'Run dry run?'
+        type: choice
+        default: ' '
+        options:
+          - ' '
+          - --yes
+      force-publish:
+        required: true
+        description: 'Force publish?'
+        type: choice
+        default: ' '
+        options:
+          - ' '
+          - --force-publish
 
 jobs:
   release:
@@ -54,19 +65,31 @@ jobs:
         run: pnpm install
       - name: Build project
         run: pnpm build
-
-      - name: Publish releases with dry run
+      - name: Set NPM token
         run: |
-          if [[ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'full minor release' }} ]]; then
-            pnpm lerna publish minor --conventional-graduate
-          elif [[ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'first minor rc' }} ]]; then
-            pnpm lerna publish preminor --conventional-prerelease --preid rc --pre-dist-tag next
-          elif [[ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'full patch release' }} ]]; then
-            pnpm lerna publish patch --yes
-          elif [[ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'first patch rc' }} ]]; then
-            pnpm lerna publish prepatch --conventional-prerelease --preid rc --pre-dist-tag next
-          elif [[ ${{ github.event.inputs.dry-run == 'true' }} && ${{github.event.inputs.type == 'subsequent rc' }} ]]; then
-            pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next
-          fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+
+      - name: Publish full minor release (ie. v1.x.0)
+        if: github.event.inputs.type == 'full minor release'
+        run: |
+          pnpm lerna publish minor --conventional-graduate $(echo "${{ github.event.inputs.dry-run }}") $(echo "${{ github.event.inputs.force-publish }}")
+
+      - name: Publish first minor RC (ie. v1.x.0-rc.0)
+        if: github.event.inputs.type == 'first minor rc'
+        run: |
+          pnpm lerna publish preminor --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ github.event.inputs.dry-run }}") $(echo "${{ github.event.inputs.force-publish }}")
+
+      - name: Publish full patch release (ie. v1.0.x)
+        if: github.event.inputs.type == 'full patch release'
+        run: |
+          pnpm lerna publish patch --conventional-graduate $(echo "${{ github.event.inputs.dry-run }}") $(echo "${{ github.event.inputs.force-publish }}")
+
+      - name: Publish first patch RC (ie. v1.0.x-rc.0)
+        if: github.event.inputs.type == 'full patch release'
+        run: |
+          pnpm lerna publish prepatch --conventional-prerelease --preid rc --pre-dist-tag next --force-publish $(echo "${{ github.event.inputs.dry-run }}") $(echo "${{ github.event.inputs.force-publish }}")
+
+      - name: Publish subsequent RC (ie. v1.0.0-rc.x)
+        if: github.event.inputs.type == 'subsequent rc'
+        run: |
+          pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ github.event.inputs.dry-run }}") $(echo "${{ github.event.inputs.force-publish }}")

@@ -54,8 +54,8 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1(@types/react@18.2.37)
       '@open-wc/testing':
-        specifier: ^3.2.1
-        version: 3.2.2
+        specifier: ^4.0.0
+        version: 4.0.0
       '@playwright/test':
         specifier: ^1.39.0
         version: 1.39.0
@@ -5094,14 +5094,14 @@ packages:
       }
     dev: true
 
-  /@open-wc/scoped-elements@2.2.4:
+  /@open-wc/scoped-elements@3.0.2:
     resolution:
       {
-        integrity: sha512-12X4F4QGPWcvPbxAiJ4v8wQFCOu+laZHRGfTrkoj+3JzACCtuxHG49YbuqVzQ135QPKCuhP9wA0kpGGEfUegyg==,
+        integrity: sha512-TZ9NjcAGjrfoZ8GjbMYDTuztFL1YPHtvFgqlcTrYy6C7jHSgCv67Rv9Cgf55VDNZgzRu+yBi5IjcyLzWNZ17eg==,
       }
     dependencies:
-      '@lit/reactive-element': 2.0.1
       '@open-wc/dedupe-mixin': 1.4.0
+      lit: 3.0.2
     dev: true
 
   /@open-wc/semantic-dom-diff@0.20.1:
@@ -5118,26 +5118,26 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@open-wc/testing-helpers@2.3.2:
+  /@open-wc/testing-helpers@3.0.0:
     resolution:
       {
-        integrity: sha512-uZMGC/C1m5EiwQsff6KMmCW25TYMQlJt4ilAWIjnelWGFg9HPUiLnlFvAas3ESUP+4OXLO8Oft7p4mHvbYvAEQ==,
+        integrity: sha512-zkR39b7ljH/TqZgzBB9ekHKg1OLvR/JQYCEaW76V0RuASfV/vkgx2xfUQNe8DlEOLOetRZ3agFqssEREF45ClA==,
       }
     dependencies:
-      '@open-wc/scoped-elements': 2.2.4
+      '@open-wc/scoped-elements': 3.0.2
       lit: 3.0.2
       lit-html: 3.0.2
     dev: true
 
-  /@open-wc/testing@3.2.2:
+  /@open-wc/testing@4.0.0:
     resolution:
       {
-        integrity: sha512-byN4dJTd6ZyI9mWmI4lVj30uiu+rYvQr93g64Pd7UFBdAUgb02DHLj6fkJ1gjxA6LC/MeFd7K7mOZ4+vKrMptw==,
+        integrity: sha512-KI70O0CJEpBWs3jrTju4BFCy7V/d4tFfYWkg8pMzncsDhD7TYNHLw5cy+s1FHXIgVFetnMDhPpwlKIPvtTQW7w==,
       }
     dependencies:
       '@esm-bundle/chai': 4.3.4-fix.0
       '@open-wc/semantic-dom-diff': 0.20.1
-      '@open-wc/testing-helpers': 2.3.2
+      '@open-wc/testing-helpers': 3.0.0
       '@types/chai-dom': 1.11.3
       '@types/sinon-chai': 3.2.12
       chai-a11y-axe: 1.5.0

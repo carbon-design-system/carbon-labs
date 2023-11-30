@@ -101,4 +101,4 @@ jobs:
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
-          echo "testing"
+          pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")

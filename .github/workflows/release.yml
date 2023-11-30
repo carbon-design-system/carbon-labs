@@ -69,43 +69,37 @@ jobs:
           else
             echo "DRY_RUN=''" >> $GITHUB_ENV
           fi
-
-      - name: Set dry run env variable
+      - name: Set force publish env variable
         run: |
           if [ ${{ github.event.inputs.force-publish == 'true'}} ]; then
             echo "FORCE_PUBLISH=--force-publish" >> $GITHUB_ENV
           else
             echo "FORCE_PUBLISH=''" >> $GITHUB_ENV
           fi
-
       - name: Publish full minor release (ie. v1.x.0)
         if: github.event.inputs.type == 'full minor release'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
           pnpm lerna publish minor --conventional-graduate $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
-
       - name: Publish first minor RC (ie. v1.x.0-rc.0)
         if: github.event.inputs.type == 'first minor rc'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
           pnpm lerna publish preminor --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ github.event.inputs.dry-run }}") $(echo "${{ github.event.inputs.force-publish }}")
-
       - name: Publish full patch release (ie. v1.0.x)
         if: github.event.inputs.type == 'full patch release'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
           pnpm lerna publish patch --conventional-graduate $(echo "${{ github.event.inputs.dry-run }}") $(echo "${{ github.event.inputs.force-publish }}")
-
       - name: Publish first patch RC (ie. v1.0.x-rc.0)
         if: github.event.inputs.type == 'full patch release'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
           pnpm lerna publish prepatch --conventional-prerelease --preid rc --pre-dist-tag next --force-publish $(echo "${{ github.event.inputs.dry-run }}") $(echo "${{ github.event.inputs.force-publish }}")
-
       - name: Publish subsequent RC (ie. v1.0.0-rc.x)
         if: github.event.inputs.type == 'subsequent rc'
         run: |

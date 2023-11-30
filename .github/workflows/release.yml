@@ -64,14 +64,14 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
       - name: Set dry run env variable
         run: |
-          if [ ${{ github.event.inputs.dry-run == 'false' }} ]; then
+          if [ "${{ github.event.inputs.dry-run }}" == "false"  ]; then
             echo "DRY_RUN=--yes" >> $GITHUB_ENV
           else
             echo "DRY_RUN" >> $GITHUB_ENV
           fi
       - name: Set force publish env variable
         run: |
-          if [ ${{ github.event.inputs.force-publish == 'true' }} ]; then
+          if [ "${{ github.event.inputs.force-publish }}" == "true" ]; then
             echo "FORCE_PUBLISH=--force-publish" >> $GITHUB_ENV
           else
             echo "FORCE_PUBLISH" >> $GITHUB_ENV

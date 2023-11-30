@@ -66,15 +66,11 @@ jobs:
         run: |
           if [ "${{ github.event.inputs.dry-run }}" == "false"  ]; then
             echo "DRY_RUN=--yes" >> $GITHUB_ENV
-          else
-            echo "DRY_RUN" >> $GITHUB_ENV
           fi
       - name: Set force publish env variable
         run: |
           if [ "${{ github.event.inputs.force-publish }}" == "true" ]; then
             echo "FORCE_PUBLISH=--force-publish" >> $GITHUB_ENV
-          else
-            echo "FORCE_PUBLISH" >> $GITHUB_ENV
           fi
       - name: Publish full minor release (ie. v1.x.0)
         if: github.event.inputs.type == 'full minor release'

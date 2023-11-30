@@ -27,3 +27,4 @@ custom-elements.json
 *.njsproj
 *.sln
 *.sw?
+.nx/*

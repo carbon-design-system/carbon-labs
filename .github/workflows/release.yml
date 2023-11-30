@@ -64,12 +64,12 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
       - name: Set dry run env variable
         run: |
-          if [ ${{ github.event.inputs.dry-run == 'false'}} ]; then
+          if [ "${{ github.event.inputs.dry-run }}" == "false"  ]; then
             echo "DRY_RUN=--yes" >> $GITHUB_ENV
           fi
       - name: Set force publish env variable
         run: |
-          if [ ${{ github.event.inputs.force-publish == 'true'}} ]; then
+          if [ "${{ github.event.inputs.force-publish }}" == "true" ]; then
             echo "FORCE_PUBLISH=--force-publish" >> $GITHUB_ENV
           fi
       - name: Publish full minor release (ie. v1.x.0)
@@ -95,7 +95,7 @@ jobs:
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
-          pnpm lerna publish prepatch --conventional-prerelease --preid rc --pre-dist-tag next --force-publish $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
+          pnpm lerna publish prepatch --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
       - name: Publish subsequent RC (ie. v1.0.0-rc.x)
         if: github.event.inputs.type == 'subsequent rc'
         run: |

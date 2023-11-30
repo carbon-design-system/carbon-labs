@@ -1,5 +1,6 @@
 name: Release
-run-name: ${{ inputs.type }} - ${{ inputs.version }} by @${{ github.actor }}
+run-name:
+  ${{ inputs.type }} - dry-run:${{ inputs.dry-run }} by @${{ github.actor }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -12,19 +13,23 @@ on:
         required: true
         description: 'Specify the type of release'
         type: choice
-        default: preminor
+        default: first minor rc
         options:
-          - minor
-          - preminor
-      version:
-        required: true
-        description: 'Specify the version for this release (ie. 0.0.1-rc.0)'
-        type: string
+          - full minor release
+          - first minor rc
+          - full patch release
+          - first patch rc
+          - subsequent rc
       dry-run:
         required: true
-        default: true
-        description: 'Run dry run'
+        description: 'Run dry run?'
         type: boolean
+        default: true
+      force-publish:
+        required: true
+        description: 'Force publish?'
+        type: boolean
+        default: false
 
 jobs:
   release:
@@ -33,8 +38,7 @@ jobs:
       id-token: write
       contents: write
     if: |
-      github.repository == 'carbon-design-system/carbon-for-ai' &&
-      startsWith(github.ref_name, 'release/')
+      github.repository == 'carbon-design-system/carbon-for-ai'
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
@@ -58,40 +62,43 @@ jobs:
       - name: Set NPM token
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
-      # Bump up package version and create git tag if dry-run is false
-      - name: Bump up package.json version and create Git tag
-        uses: reedyuk/npm-version@1.2.2
-        with:
-          version: ${{ github.event.inputs.version }}
-          git-tag-version: ${{ github.event.inputs.dry-run != 'true' }}
-      - name: Push git tags
-        if: github.event.inputs.dry-run == 'false'
-        run: git push && git push --tags
-      # Dry run of preminor
-      - name: Preminor dry-run
-        if: |
-          github.event.inputs.type == 'preminor' &&
-          github.event.inputs.dry-run == 'true'
+      - name: Set dry run env variable
         run: |
-          npm publish --dry-run --access=public --tag next
-      # Preminor publishing
-      - name: Publish preminor version
-        if: |
-          github.event.inputs.type == 'preminor' &&
-          github.event.inputs.dry-run == 'false'
+          if [ ${{ github.event.inputs.dry-run == 'false'}} ]; then
+            echo "DRY_RUN=--yes" >> $GITHUB_ENV
+          fi
+      - name: Set force publish env variable
         run: |
-          npm publish --provenance --access=public --tag next
-      # Dry run of minor
-      - name: Minor dry-run
-        if: |
-          github.event.inputs.type == 'minor' &&
-          github.event.inputs.dry-run == 'true'
+          if [ ${{ github.event.inputs.force-publish == 'true'}} ]; then
+            echo "FORCE_PUBLISH=--force-publish" >> $GITHUB_ENV
+          fi
+      - name: Publish full minor release (ie. v1.x.0)
+        if: github.event.inputs.type == 'full minor release'
         run: |
-          npm publish --dry-run --access=public --tag latest
-      # Minor publishing
-      - name: Publish minor version
-        if: |
-          github.event.inputs.type == 'minor' &&
-          github.event.inputs.dry-run == 'false'
+          echo "DRY RUN: ${{ env.DRY_RUN }}"
+          echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
+          pnpm lerna publish minor --conventional-graduate $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
+      - name: Publish first minor RC (ie. v1.x.0-rc.0)
+        if: github.event.inputs.type == 'first minor rc'
         run: |
-          npm publish --provenance --access=public --tag latest
+          echo "DRY RUN: ${{ env.DRY_RUN }}"
+          echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
+          pnpm lerna publish preminor --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
+      - name: Publish full patch release (ie. v1.0.x)
+        if: github.event.inputs.type == 'full patch release'
+        run: |
+          echo "DRY RUN: ${{ env.DRY_RUN }}"
+          echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
+          pnpm lerna publish patch --conventional-graduate $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
+      - name: Publish first patch RC (ie. v1.0.x-rc.0)
+        if: github.event.inputs.type == 'first patch rc'
+        run: |
+          echo "DRY RUN: ${{ env.DRY_RUN }}"
+          echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
+          pnpm lerna publish prepatch --conventional-prerelease --preid rc --pre-dist-tag next --force-publish $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
+      - name: Publish subsequent RC (ie. v1.0.0-rc.x)
+        if: github.event.inputs.type == 'subsequent rc'
+        run: |
+          echo "DRY RUN: ${{ env.DRY_RUN }}"
+          echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
+          pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")

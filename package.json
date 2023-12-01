@@ -20,7 +20,9 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build": "rm -rf packages/*/es && rm -rf dist && gulp build",
+    "build": "rm -rf packages/*/es && gulp build",
+    "build:dist": "lerna run build:dist --stream",
+    "build:dist:canary": "lerna run build:dist:canary --stream",
     "build-storybook": "storybook build",
     "format": "prettier --check '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:write": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
@@ -54,7 +56,6 @@
     "@lit/react": "^1.0.1",
     "@open-wc/testing": "^4.0.0",
     "@playwright/test": "^1.39.0",
-    "@rollup/plugin-alias": "^5.0.1",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.5",

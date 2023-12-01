@@ -41,7 +41,7 @@ for (let i = folders.length - 1; i >= 0; i--) {
 function _getVersion() {
   const data = fs.readFileSync('package.json', 'utf8');
   const version = /"version"\: "(.*?)"/g.exec(data);
-  return version[1];
+  return `v${version[1]}`;
 }
 
 /**
@@ -65,8 +65,6 @@ function _generateInputs(folders, canary) {
   const inputs = {};
   const version = _getVersion();
   const name = _getName();
-
-  console.log('canary', canary);
 
   folders.forEach((folder) => {
     // get the main file of each component (ie. components/${component-name}/${component-name}.ts)

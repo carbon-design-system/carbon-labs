@@ -29,7 +29,8 @@
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
-    "build:dist": "rm -rf packages/*/dist && rollup --config ../../tools/rollup.config.dist.js"
+    "build:dist": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js",
+    "build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",

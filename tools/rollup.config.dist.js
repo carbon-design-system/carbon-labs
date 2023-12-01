@@ -57,18 +57,21 @@ function _getName() {
  * Generates the multi-input for the rollup config
  *
  * @param {Array} folders Package names as inputs
+ * @param {boolean} canary set canary in path
  * @returns {{}} Object with inputs
  * @private
  */
-function _generateInputs(folders) {
+function _generateInputs(folders, canary) {
   const inputs = {};
   const version = _getVersion();
   const name = _getName();
 
+  console.log('canary', canary);
+
   folders.forEach((folder) => {
     // get the main file of each component (ie. components/${component-name}/${component-name}.ts)
     inputs[
-      `${name}/${version}/${folder}.min`
+      `${name}/${canary ? 'canary' : version}/${folder}.min`
     ] = `components/${folder}/${folder}.ts`;
   });
 
@@ -76,43 +79,49 @@ function _generateInputs(folders) {
    * add the packages' index.js file that contains all the component imports
    * (ie. packages/chat/index.js)
    */
-  inputs[`${name}/${version}/index.min`] = `index.ts`;
+  inputs[`${name}/${canary ? 'canary' : version}/index.min`] = `index.ts`;
 
   return inputs;
 }
 
-export default {
-  input: _generateInputs(folders),
-  output: {
-    format: 'es',
-    dir: 'dist',
-  },
-  plugins: [
-    rollupPluginScssPath(),
-    replace({
-      'process.env.NODE_ENV': 'production',
-      preventAssignment: true,
-    }),
-    nodeResolve({
-      browser: true,
-      preferBuiltins: false,
-      extensions: ['.js', '.ts'],
-    }),
-    commonjs({
-      include: [/node_modules/],
-      sourceMap: true,
-    }),
-    esbuild({ sourceMap: false, tsconfig: '../tsconfig.json' }),
-    rollupPluginLitSCSS({
-      includePaths: [path.resolve(__dirname, '../node_modules')],
-      async preprocessor(contents, id) {
-        return (
-          await postcss([autoprefixer(), cssnano()]).process(contents, {
-            from: id,
-          })
-        ).css;
-      },
-    }),
-    terser(),
-  ],
+/**
+ * Rollup configuration to generate the CDN artifacts
+ * @param {Object} commandLineArgs Rollup CI arguments
+ */
+export default (commandLineArgs) => {
+  return {
+    input: _generateInputs(folders, commandLineArgs.configCanary),
+    output: {
+      format: 'es',
+      dir: 'dist',
+    },
+    plugins: [
+      rollupPluginScssPath(),
+      replace({
+        'process.env.NODE_ENV': 'production',
+        preventAssignment: true,
+      }),
+      nodeResolve({
+        browser: true,
+        preferBuiltins: false,
+        extensions: ['.js', '.ts'],
+      }),
+      commonjs({
+        include: [/node_modules/],
+        sourceMap: true,
+      }),
+      esbuild({ sourceMap: false, tsconfig: '../tsconfig.json' }),
+      rollupPluginLitSCSS({
+        includePaths: [path.resolve(__dirname, '../node_modules')],
+        async preprocessor(contents, id) {
+          return (
+            await postcss([autoprefixer(), cssnano()]).process(contents, {
+              from: id,
+            })
+          ).css;
+        },
+      }),
+      terser(),
+    ],
+  };
 };

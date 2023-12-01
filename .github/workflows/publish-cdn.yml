@@ -1,24 +1,22 @@
-name: Publish CDN artifacts (canary) to S3
+name: Publish CDN artifacts (latest) to S3
+run-name: Publish CDN artifacts - ${{ inputs.version }} by @${{ github.actor }}
+
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
-    if: github.repository == 'carbon-design-system/carbon-for-ai'
+  publish-cdn:
+    if: |
+      github.repository == 'carbon-design-system/carbon-for-ai'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
         with:
           fetch-depth: '0'
-      - uses: fkirc/skip-duplicate-actions@v5.3.1
-        with:
-          github_token: ${{ github.token }}
       - uses: pnpm/action-setup@v2
         with:
           version: 8.9.2
@@ -30,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Build dist folders in each package
-        run: pnpm build:dist:canary
+        run: pnpm build:dist
       - name: Create one folder with dist contents from each package
         run: |
           mkdir dist

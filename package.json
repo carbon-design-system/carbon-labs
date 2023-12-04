@@ -20,7 +20,7 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build": "rm -rf packages/*/es && gulp build",
+    "build": "rm -rf packages/*/es && lerna run build --scope @carbon/ai-utilities && gulp build",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "build-storybook": "storybook build",

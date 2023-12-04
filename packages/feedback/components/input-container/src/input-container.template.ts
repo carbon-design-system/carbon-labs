@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, queryAll } from 'lit/decorators.js';
 import { v4 as uuidv4 } from 'uuid';
 import { FeedbackContainer } from '../../feedback-container/src/feedback-container.template';
 import { FeedbackApi } from '../../../services/api';
@@ -27,13 +27,23 @@ export class InputContainer extends LitElement {
   }
 
   handleSlotchange() {
-    const text = this._slottedChildren[0].innerHTML;
-    this.content = text;
+    // const text = this._slottedChildren[0].innerHTML;
+    // this.content = text;
+
+    const slot = this.shadowRoot?.querySelector('slot')!;
+    const assignNodes = slot.assignedNodes()
+    assignNodes.forEach(node=>{
+      if(node.nodeType === Node.ELEMENT_NODE && node.textContent?.trim() !== ''){
+        const text = node.textContent?.trim();
+        this.content = text!
+      }else if(node.textContent?.trim()!==''){
+        this.content = node.textContent?.trim()!
+      }
+    })
   }
 
   updated(changedProperties) {
     super.updated(changedProperties);
-
     const feedbackContainer = this.parentElement as FeedbackContainer;
     if (
       feedbackContainer &&

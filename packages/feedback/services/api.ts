@@ -28,13 +28,11 @@ export class FeedbackApi {
   }
 
   async recordGeneration(data) {
-    // console.log("🚀 ~ file: api.ts:31 ~ RecordGeneration:", data)
     const response = await this._post('generated_content', data);
     return response;
   }
 
   async recordFeedback(data) {
-    // console.log("🚀 ~ file: api.ts:37 ~ RecordFeedback:", data)
     const response = await this._post('feedback', data)
     return response
   }

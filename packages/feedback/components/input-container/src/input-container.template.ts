@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { property, queryAll } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 import { v4 as uuidv4 } from 'uuid';
 import { FeedbackContainer } from '../../feedback-container/src/feedback-container.template';
 import { FeedbackApi } from '../../../services/api';

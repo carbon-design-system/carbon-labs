@@ -1,17 +1,39 @@
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import { LitElement, html } from 'lit';
 import { FeedbackContainer } from '../../feedback-container/src/feedback-container.template';
 import { InputContainer } from '../../input-container/src/input-container.template';
 import { FeedbackApi } from '../../../services/api';
+import Flag16 from '@carbon/web-components/es/icons/flag/24';
 
 export class OutputContainer extends LitElement {
   @property()
   content = '';
 
-  @property({type: String})
+  @property({ type: String })
   generationId = '';
 
-  feedbackApi = FeedbackApi.getInstance()
+  @state()
+  isModelOpen = false;
+
+  @state()
+  private selection;
+
+  @state()
+  private selectedText;
+
+  @state()
+  private formData = {
+    id: '',
+    generation_id: '',
+    start_index: 0,
+    end_index: 0,
+    selected_value: '',
+    corrected_value: '',
+    feedback: '',
+    comment: '',
+  };
+
+  feedbackApi = FeedbackApi.getInstance();
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -20,7 +42,8 @@ export class OutputContainer extends LitElement {
 
   shouldUpdate(changedProperties) {
     super.shouldUpdate(changedProperties);
-    const previousInputContainer = this.previousElementSibling as InputContainer;
+    const previousInputContainer = this
+      .previousElementSibling as InputContainer;
 
     this.generationId = previousInputContainer?.generationId;
     if (this.generationId) {
@@ -47,7 +70,7 @@ export class OutputContainer extends LitElement {
         user_id: feedbackContainer.user_id,
         output_value: this.content,
       };
-      this.feedbackApi.recordGeneration(payload)
+      this.feedbackApi.recordGeneration(payload);
     }
   }
 
@@ -59,25 +82,21 @@ export class OutputContainer extends LitElement {
   handleTextSelection() {
     console.log('Output: ', this.generationId);
     let selection = window.getSelection()!;
+    this.selection = selection;
     const selectedText = selection?.toString().trim();
+    this.selectedText = selectedText;
     this.setAttribute('selected', '');
-    // if (selectedText) {
-    //   this.selectedText = selectedText;
-
-    //   this.recordGeneration(fullText);
-    // } else {
-    //   this.removeAttribute('selected');
-    // }
 
     if (selectedText) {
-      const range = window
-        .getSelection()
-        ?.getRangeAt(0)
-        .getBoundingClientRect();
       const minOffset = Math.min(selection.anchorOffset, selection.focusOffset);
       const maxOffset = Math.max(selection.anchorOffset, selection.focusOffset);
+      this.formData.generation_id = this.generationId;
+      this.formData.selected_value = selectedText;
+      this.formData.start_index = minOffset;
+      this.formData.end_index = maxOffset;
     } else {
-      // this.selection = null
+      this.selection = null;
+      this.removeAttribute('selected');
     }
   }
 
@@ -86,23 +105,113 @@ export class OutputContainer extends LitElement {
     // this.content = text;
 
     const slot = this.shadowRoot?.querySelector('slot')!;
-    const assignNodes = slot.assignedNodes()
-    assignNodes.forEach(node=>{
-      if(node.nodeType === Node.ELEMENT_NODE && node.textContent?.trim() !== ''){
+    const assignNodes = slot.assignedNodes();
+    assignNodes.forEach((node) => {
+      if (
+        node.nodeType === Node.ELEMENT_NODE &&
+        node.textContent?.trim() !== ''
+      ) {
         const text = node.textContent?.trim();
-        this.content = text!
-      }else if(node.textContent?.trim()!==''){
-        this.content = node.textContent?.trim()!
+        this.content = text!;
+      } else if (node.textContent?.trim() !== '') {
+        this.content = node.textContent?.trim()!;
       }
-    })
+    });
+  }
+
+  bulb() {
+    const range = window.getSelection()?.getRangeAt(0).getBoundingClientRect();
+    return html`
+      <div
+        @click=${this.toggle}
+        class="bulb-icon"
+        style="position:absolute; top: ${-range?.height!}px; left: ${range?.left}px; font-weight: bold">
+        ${Flag16({ slot: 'icon' })}
+      </div>
+    `;
+  }
+
+  handleTextArea(event) {
+    this.formData.corrected_value = event?.target.value;
+  }
+
+  handleFeedRadio(event) {
+    this.formData.feedback = event?.detail.value;
+  }
+
+  handleFormData() {
+    this.feedbackApi.recordFeedback(this.formData)
+    this.selectedText = '';
+    this.selection = '';
+    this.formData = {
+      id: '',
+      generation_id: '',
+      start_index: 0,
+      end_index: 0,
+      selected_value: '',
+      corrected_value: '',
+      feedback: '',
+      comment: '',
+    };
+    this.isModelOpen = false;
+  }
+
+  openModal() {
+    const range = window.getSelection()?.getRangeAt(0).getBoundingClientRect();
+    return html`
+      <div
+        class="feedback_dialog"
+        style="top: ${-range?.top!}px; left: ${range?.left}px">
+        <cds-textarea
+          rows="2"
+          value=${this.formData.selected_value}
+          id="selected-text"
+          @input=${this.handleTextArea}>
+          <span slot="label-text">Selected Text:</span>
+        </cds-textarea>
+
+        <cds-radio-button-group
+          label-position="right"
+          orientation="vertical"
+          name="radio-group"
+          @cds-radio-button-group-changed=${this.handleFeedRadio}
+          defaultSelected="harmful">
+          <cds-radio-button
+            value="harmful"
+            label-text="Harmful"></cds-radio-button>
+          <cds-radio-button
+            value="not_harmful"
+            label-text="Not harmful"></cds-radio-button>
+          <cds-radio-button
+            value="something_else"
+            label-text="Something else"></cds-radio-button>
+        </cds-radio-button-group>
+        <cds-button
+          @click=${this.handleFormData}
+          size="sm"
+          style="padding-top:8px"
+          buttonClassName="save-btn">
+          Save
+        </cds-button>
+      </div>
+    `;
+  }
+
+  toggle() {
+    this.isModelOpen = !this.isModelOpen;
   }
 
   render() {
     return html`
-      <h5
-        style="padding:0.5rem; margin: 0.25rem 0; background: #DDF2FD; color:#000">
-        Bot: <slot @slotchange=${this.handleSlotchange}></slot>
-      </h5>
+      <div
+        style="padding:0.5rem; margin: 0.25rem 0; background: #DDF2FD; color:#000;">
+        <h5 style="padding: 0; margin:0">Bot:</h5>
+        <div style=" position: relative;">
+          ${this.selection ? this.bulb() : ''}
+          <slot @slotchange=${this.handleSlotchange}></slot>
+          ${this.isModelOpen ? this.openModal() : ''}
+        </div>
+      </div>
     `;
   }
 }

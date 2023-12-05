@@ -1,0 +1,36 @@
+{
+  "name": "@carbon/ai-utilities",
+  "version": "0.0.1-rc.1",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon for AI - utilities",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-for-ai",
+    "directory": "packages/utilities"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "exports": {
+    ".": {
+      "default": "./src/index.js"
+    },
+    "./es/": "./es/"
+  },
+  "scripts": {
+    "build": "pnpm clean && babel src --quiet -d es",
+    "clean": "rm -rf es"
+  },
+  "files": [
+    "es/**/*.js",
+    "es/index.js"
+  ],
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "babel-cli": "^6.26.0"
+  }
+}

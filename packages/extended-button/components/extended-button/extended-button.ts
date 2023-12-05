@@ -8,16 +8,15 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-// need to set up package to import global files like the one below. Hardcoding
-//the `c4ai`prefixes for now
-
-// import settings from '../../globals/settings.js';
+import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 import extendedButton from './src/extended-button.template.js';
+
+const { stablePrefix: c4aiPrefix } = settings;
 
 /**
  * Component extending the @carbon/web-components' button
  */
-@customElement(`c4ai-extended-button`)
+@customElement(`${c4aiPrefix}-extended-button`)
 class C4AIExtendedButton extends extendedButton {}
 
 export default C4AIExtendedButton;

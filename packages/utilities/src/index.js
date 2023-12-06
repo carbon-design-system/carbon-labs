@@ -7,7 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import gulp from 'gulp';
-import './build/modules.js';
-
-gulp.task('build', gulp.task('build:modules'));
+export * from './settings';

@@ -35,7 +35,7 @@ function rollupPluginSCSSPath({
 
     async buildStart() {
       const replaceOptions = {
-        files: 'packages/**/src/*.ts',
+        files: 'components/**/src/*.ts',
         from: /\.scss\?inline/g,
         to: '.scss',
       };
@@ -45,7 +45,7 @@ function rollupPluginSCSSPath({
 
     async buildEnd() {
       const replaceOptions = {
-        files: 'packages/**/src/*.ts',
+        files: 'components/**/src/*.ts',
         from: /\.scss/g,
         to: '.scss?inline',
       };

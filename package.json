@@ -1,9 +1,7 @@
 {
   "name": "@carbon/ai",
-  "version": "0.0.1-alpha.0",
-  "publishConfig": {
-    "access": "public"
-  },
+  "version": "0.0.0",
+  "private": true,
   "type": "module",
   "description": "Carbon for AI",
   "license": "Apache-2.0",
@@ -22,8 +20,10 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build": "rm -rf packages/*/es && rm -rf dist && gulp build",
-    "build-storybook": "storybook build",
+    "build": "rm -rf packages/*/es && lerna run build --scope @carbon/ai-utilities && gulp build",
+    "build:dist": "lerna run build:dist --stream",
+    "build:dist:canary": "lerna run build:dist:canary --stream",
+    "build-storybook": "pnpm build && storybook build",
     "format": "prettier --check '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:write": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:staged": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,storybook,ts,umd}/**' '!src/components/**'",
@@ -54,9 +54,8 @@
     "@commitlint/config-conventional": "^18.0.0",
     "@custom-elements-manifest/analyzer": "^0.9.0",
     "@lit/react": "^1.0.1",
-    "@open-wc/testing": "^3.2.1",
+    "@open-wc/testing": "^4.0.0",
     "@playwright/test": "^1.39.0",
-    "@rollup/plugin-alias": "^5.0.1",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.5",
@@ -96,6 +95,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-typescript": "6.0.0-alpha.1",
     "husky": "^8.0.3",
+    "lerna": "^8.0.0",
     "lint-staged": "^15.0.2",
     "postcss": "^8.4.31",
     "prettier": "^2.8.8",
@@ -104,7 +104,7 @@
     "react-dom": "^18.2.0",
     "replace-ext": "^2.0.0",
     "replace-in-file": "^7.0.2",
-    "rollup": "^3.29.4",
+    "rollup": "^4.0.0",
     "rollup-plugin-esbuild": "^6.1.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-postcss-lit": "^2.1.0",

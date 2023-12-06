@@ -4,7 +4,7 @@ import { FeedbackContainer } from '../../feedback-container/src/feedback-contain
 import { InputContainer } from '../../input-container/src/input-container.template';
 import { FeedbackApi } from '../../../services/api';
 import Flag16 from '@carbon/web-components/es/icons/flag/24';
-
+import { v4 as uuidv4 } from 'uuid';
 export class OutputContainer extends LitElement {
   @property()
   content = '';
@@ -48,6 +48,9 @@ export class OutputContainer extends LitElement {
     this.generationId = previousInputContainer?.generationId;
     if (this.generationId) {
       this.setAttribute('generation-id', this.generationId);
+    }else{
+      this.generationId = uuidv4();
+      this.setAttribute('generation-id', this.generationId);
     }
     return true;
   }
@@ -61,7 +64,7 @@ export class OutputContainer extends LitElement {
       feedbackContainer.api_key &&
       feedbackContainer.model_id &&
       feedbackContainer.user_id &&
-      this.content
+      this.content && changedProperties.has('content')
     ) {
       const payload = {
         id: this.generationId,
@@ -70,7 +73,7 @@ export class OutputContainer extends LitElement {
         user_id: feedbackContainer.user_id,
         output_value: this.content,
       };
-      this.feedbackApi.recordGeneration(payload);
+      this.feedbackApi.recordGeneration(payload)
     }
   }
 
@@ -94,7 +97,8 @@ export class OutputContainer extends LitElement {
       this.formData.selected_value = selectedText;
       this.formData.start_index = minOffset;
       this.formData.end_index = maxOffset;
-    } else {
+    } 
+    else {
       this.selection = null;
       this.removeAttribute('selected');
     }
@@ -140,6 +144,9 @@ export class OutputContainer extends LitElement {
   }
 
   handleFormData() {
+    if(!this.formData.corrected_value){
+      this.formData.corrected_value = this.formData.selected_value
+    }
     this.feedbackApi.recordFeedback(this.formData)
     this.selectedText = '';
     this.selection = '';

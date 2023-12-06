@@ -12,12 +12,6 @@ import '../components/input-container/input-container';
 import '../components/output-container/output-container';
 
 import { html } from 'lit';
-
-let hello = 'sajnsjankjnsa';
-let isVisible = false;
-setTimeout(() => {
-  isVisible = true;
-}, 3000);
 /**
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
  */

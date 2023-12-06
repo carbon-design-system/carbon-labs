@@ -33,8 +33,8 @@ export class FeedbackApi {
   }
 
   async recordFeedback(data) {
-    const response = await this._post('feedback', data)
-    return response
+    const response = await this._post('feedback', data);
+    return response;
   }
 
   public static getInstance(): FeedbackApi {

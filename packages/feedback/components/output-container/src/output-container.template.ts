@@ -48,7 +48,7 @@ export class OutputContainer extends LitElement {
     this.generationId = previousInputContainer?.generationId;
     if (this.generationId) {
       this.setAttribute('generation-id', this.generationId);
-    }else{
+    } else {
       this.generationId = uuidv4();
       this.setAttribute('generation-id', this.generationId);
     }
@@ -64,7 +64,8 @@ export class OutputContainer extends LitElement {
       feedbackContainer.api_key &&
       feedbackContainer.model_id &&
       feedbackContainer.user_id &&
-      this.content && changedProperties.has('content')
+      this.content &&
+      changedProperties.has('content')
     ) {
       const payload = {
         id: this.generationId,
@@ -73,7 +74,7 @@ export class OutputContainer extends LitElement {
         user_id: feedbackContainer.user_id,
         output_value: this.content,
       };
-      this.feedbackApi.recordGeneration(payload)
+      this.feedbackApi.recordGeneration(payload);
     }
   }
 
@@ -97,8 +98,7 @@ export class OutputContainer extends LitElement {
       this.formData.selected_value = selectedText;
       this.formData.start_index = minOffset;
       this.formData.end_index = maxOffset;
-    } 
-    else {
+    } else {
       this.selection = null;
       this.removeAttribute('selected');
     }
@@ -144,10 +144,10 @@ export class OutputContainer extends LitElement {
   }
 
   handleFormData() {
-    if(!this.formData.corrected_value){
-      this.formData.corrected_value = this.formData.selected_value
+    if (!this.formData.corrected_value) {
+      this.formData.corrected_value = this.formData.selected_value;
     }
-    this.feedbackApi.recordFeedback(this.formData)
+    this.feedbackApi.recordFeedback(this.formData);
     this.selectedText = '';
     this.selection = '';
     this.formData = {

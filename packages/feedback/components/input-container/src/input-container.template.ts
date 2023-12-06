@@ -11,7 +11,7 @@ export class InputContainer extends LitElement {
   @property({ type: String })
   content: string = '';
 
-  feedbackApi = FeedbackApi.getInstance()
+  feedbackApi = FeedbackApi.getInstance();
 
   constructor() {
     super();
@@ -31,15 +31,18 @@ export class InputContainer extends LitElement {
     // this.content = text;
 
     const slot = this.shadowRoot?.querySelector('slot')!;
-    const assignNodes = slot.assignedNodes()
-    assignNodes.forEach(node=>{
-      if(node.nodeType === Node.ELEMENT_NODE && node.textContent?.trim() !== ''){
+    const assignNodes = slot.assignedNodes();
+    assignNodes.forEach((node) => {
+      if (
+        node.nodeType === Node.ELEMENT_NODE &&
+        node.textContent?.trim() !== ''
+      ) {
         const text = node.textContent?.trim();
-        this.content = text!
-      }else if(node.textContent?.trim()!==''){
-        this.content = node.textContent?.trim()!
+        this.content = text!;
+      } else if (node.textContent?.trim() !== '') {
+        this.content = node.textContent?.trim()!;
       }
-    })
+    });
   }
 
   updated(changedProperties) {
@@ -59,9 +62,9 @@ export class InputContainer extends LitElement {
         user_id: feedbackContainer.user_id,
         input_value: this.content,
       };
-      
-      this.feedbackApi.recordGeneration(payload)
-    //  feedbackContainer.recordGeneration(payload)
+
+      this.feedbackApi.recordGeneration(payload);
+      //  feedbackContainer.recordGeneration(payload)
     }
   }
 

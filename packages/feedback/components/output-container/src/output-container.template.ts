@@ -129,7 +129,9 @@ export class OutputContainer extends LitElement {
       <div
         @click=${this.toggle}
         class="bulb-icon"
-        style="position:absolute; top: ${-range?.height!}px; left: ${range?.left}px; font-weight: bold">
+        style="position:absolute; top: ${-(
+          range?.height! + 16
+        )}px; left: ${range?.left}px; font-weight: bold">
         ${Flag16({ slot: 'icon' })}
       </div>
     `;

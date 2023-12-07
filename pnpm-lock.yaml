@@ -252,9 +252,18 @@ importers:
       '@carbon/ai-utilities':
         specifier: 0.0.1-rc.1
         version: link:../utilities
+      '@carbon/styles':
+        specifier: ^1.39.0
+        version: 1.42.0(sass@1.69.5)
+      '@carbon/web-components':
+        specifier: 2.0.1-canary.1
+        version: 2.0.1-canary.1(sass@1.69.5)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
 
   packages/extended-button:
     dependencies:

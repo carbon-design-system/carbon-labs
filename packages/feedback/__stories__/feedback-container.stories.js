@@ -27,7 +27,9 @@ export default {
  */
 export const Default = {
   args: {
-    label: 'Feedback container',
+    apiKey: 'api-key',
+    user: 'user id',
+    model: 'model name',
   },
 
   /**
@@ -38,9 +40,9 @@ export const Default = {
   render: (args) =>
     html`
       <c4ai-feedback-container
-        api-key="some-api-key"
-        user="priyanshu.rai@ibm.com"
-        model="">
+        api-key=${args.apiKey}
+        user=${args.user}
+        ai-model=${args.model}>
         <c4ai-output-container>
           <p>Hello, How can i help you today</p>
         </c4ai-output-container>

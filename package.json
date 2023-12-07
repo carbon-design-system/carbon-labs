@@ -6,6 +6,9 @@
   "description": "Carbon for AI",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-for-ai",
+  "engines": {
+    "node": ">=18.x"
+  },
   "main": "es/index",
   "types": "es/index",
   "module": "es/index",
@@ -24,6 +27,7 @@
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "build-storybook": "pnpm build && storybook build",
+    "ci-check": "pnpm run format:staged && pnpm lint:license && pnpm lint && pnpm lint:styles",
     "format": "prettier --check '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:write": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:staged": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,storybook,ts,umd}/**' '!src/components/**'",

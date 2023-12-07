@@ -6,34 +6,24 @@
 
 ## Getting started
 
-To install `@carbon/ai` in your project, you will need to run the following
-command using [npm](https://www.npmjs.com/):
+This monorepo houses a collection of components, each as their own package.
+Here's a full list of packages that we support!
 
-```bash
-npm install -S @carbon/ai
-```
+| Package name                                                                                                 | Description                              |
+| ------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
+| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-for-ai/tree/main/packages/chat)      | AI Chat component                        |
+| [`@carbon/ai-utilities`](https://github.com/carbon-design-system/carbon-for-ai/tree/main/packages/utilities) | Common utilities shared amongst packages |
 
-If you prefer [Yarn](https://yarnpkg.com/en/), use the following command
-instead:
+A Storybook demo of all component packages is available here:
+https://ai.carbondesignsystem.com
 
-```bash
-yarn add @carbon/ai
-```
+## 🙌 Contributing
 
-## Contributing
+We're always looking for contributors to help us fix bugs, build new features,
+or help us improve the project documentation. If you're interested, definitely
+check out our guides:
 
-To contribute to the repository, run the following command using
-[pnpm](https://pnpm.io/):
-
-```bash
-pnpm install
-```
-
-To run Storybook locally:
-
-```bash
-pnpm storybook
-```
+- [Developer Guide](https://github.com/carbon-design-system/carbon-for-ai/blob/main/docs/developing.md)
 
 ## 📝 License
 

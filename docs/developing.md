@@ -84,9 +84,17 @@ the following command:
 pnpm build
 ```
 
-Afterwards, you should be good to go! For more information about how we handle
-dependencies, definitely take a look at our write-up
-[here](https://github.com/carbon-design-system/carbon-for-ibm-dotcom/blob/main/docs/dependencies.md).
+Afterwards, you should be good to go!
+
+## Running Storybook
+
+To get your development server running and to start coding, you just have to run:
+
+```bash
+pnpm storybook
+```
+
+This will start a development server where you can see any changes you are making to components in Storybook.
 
 ## Common tasks
 

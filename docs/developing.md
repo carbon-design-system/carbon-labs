@@ -88,13 +88,15 @@ Afterwards, you should be good to go!
 
 ## Running Storybook
 
-To get your development server running and to start coding, you just have to run:
+To get your development server running and to start coding, you just have to
+run:
 
 ```bash
 pnpm storybook
 ```
 
-This will start a development server where you can see any changes you are making to components in Storybook.
+This will start a development server where you can see any changes you are
+making to components in Storybook.
 
 ## Common tasks
 
@@ -131,7 +133,8 @@ might want to run:
    $ git commit -m "chore(header): Update header with newest designs"
    ```
 
-   **Note:** See [writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
+   **Note:** See
+   [writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
    for more details on commit messages.
 
    Carbon for AI also uses a commit format called

@@ -88,13 +88,15 @@ Afterwards, you should be good to go!
 
 ## Running Storybook
 
-To get your development server running and to start coding, you just have to run:
+To get your development server running and to start coding, you just have to
+run:
 
 ```bash
 pnpm storybook
 ```
 
-This will start a development server where you can see any changes you are making to components in Storybook.
+This will start a development server where you can see any changes you are
+making to components in Storybook.
 
 ## Common tasks
 
@@ -128,17 +130,14 @@ might want to run:
 5. Commit your changes using a descriptive commit message.
 
    ```
-   $ git commit -a -m "chore: Update header with newest designs, resolves #123"
+   $ git commit -m "chore(header): Update header with newest designs"
    ```
 
-   **Note:** the optional commit -a command line option will automatically "add"
-   and "rm" edited files. See
-   [Close a commit via commit message](https://help.github.com/articles/closing-issues-via-commit-messages/)
-   and
+   **Note:** See
    [writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
    for more details on commit messages.
 
-   Carbon for IBM.com also uses a commit format called
+   Carbon for AI also uses a commit format called
    [Conventional Commits](https://www.conventionalcommits.org). This format is
    used to help automate details about our project and how it changes. When
    committing changes, there will be a tool that automatically looks at commits

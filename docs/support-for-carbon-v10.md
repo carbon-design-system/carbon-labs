@@ -10,6 +10,16 @@ For projects using Carbon v10 that can not yet migrate to v11, this document
 outlines some "bridge solutions" - approaches a project can use to include
 Carbon for AI and Carbon v11 assets in a project still using Carbon v10.
 
+> [!CAUTION] This guidance largely pertains to the consumption of AI features
+> that are enhancements of existing components in `@carbon/react` and
+> `@carbon/web-components`. AI patterns that do not exist in these core Carbon
+> libraries will be available as packages from the `Carbon for AI` library. If
+> your application is on Carbon v11 (regardless of front-end framework), you
+> will be able to consume the `Carbon for AI` components and patterns via NPM or
+> IBM Akamai CDN. However, if your application is on Carbon v10 (regardless of
+> front-end framework), you will still be able to consume the `Carbon for AI`
+> components via IBM Akamai CDN.
+
 > [!CAUTION] The bridge solutions outlined in this document are only meant to be
 > a temporary, stopgap measure to bring in selective, business critical features
 > until your project can migrate to v11.

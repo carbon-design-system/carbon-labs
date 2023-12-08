@@ -10,7 +10,7 @@ For projects using Carbon v10 that can not yet migrate to v11, this document
 outlines some "bridge solutions" - approaches a project can use to include
 Carbon for AI and Carbon v11 assets in a project still using Carbon v10.
 
-> [!CAUTION] This guidance largely pertains to the consumption of AI features
+> [!IMPORTANT] This guidance largely pertains to the consumption of AI features
 > that are enhancements of existing components in `@carbon/react` and
 > `@carbon/web-components`. AI patterns that do not exist in these core Carbon
 > libraries will be available as packages from the `Carbon for AI` library. If
@@ -27,7 +27,8 @@ Carbon for AI and Carbon v11 assets in a project still using Carbon v10.
 So far we have identified two broad approaches:
 
 - Use Carbon v11 package assets in a v10 application (React teams only)
-- Use assets from a CDN in a v10 application (regardless of front-end framework used)
+- Use assets from a CDN in a v10 application (regardless of front-end framework
+  used)
 
 ## Use Carbon v11 `@carbon/react` assets in a v10 application
 

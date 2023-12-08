@@ -26,8 +26,8 @@ Carbon for AI and Carbon v11 assets in a project still using Carbon v10.
 
 So far we have identified two broad approaches:
 
-- Use Carbon v11 package assets in a v10 application
-- Use assets from a CDN in a v10 application
+- Use Carbon v11 package assets in a v10 application (React teams only)
+- Use assets from a CDN in a v10 application (regardless of front-end framework used)
 
 ## Use Carbon v11 `@carbon/react` assets in a v10 application
 

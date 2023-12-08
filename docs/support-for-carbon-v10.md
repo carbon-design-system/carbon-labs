@@ -201,7 +201,7 @@ using assets from a CDN. The end result is the same: the project fulfills the
 immediate need of being able to use v11 things like `Slug` but each path
 ultimately results in additional tech debt to be paid off later.
 
-## Use assets from a CDN in a v10 application
+## Use assets from IBM's Akamai CDN (hosted by IBM corporate webmaster team) in a v10 application
 
 This approach will be documented in more depth soon.
 

@@ -9,13 +9,20 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-import { FeedbackContainer } from './src/feedback-container.template.js';
+import { FeedbackContainer } from './src/feedback-container';
+import { TemplateResult } from 'lit';
+import { feedbackContainerTemplate } from './src/feedback-container.template';
+
 const { stablePrefix: c4aiPrefix } = settings;
 
 /**
  * Component extending the Feedback Container
  */
 @customElement(`${c4aiPrefix}-feedback-container`)
-class C4AIFeedbackContainer extends FeedbackContainer {}
+class C4AIFeedbackContainer extends FeedbackContainer {
+  render(): TemplateResult<1> {
+    return feedbackContainerTemplate(this);
+  }
+}
 
 export default C4AIFeedbackContainer;

@@ -68,6 +68,13 @@ export class FeedbackContainer extends LitElement {
   private selection;
 
   /**
+   * Getter for selection
+   */
+  get Selection() {
+    return this.selection;
+  }
+
+  /**
    * Object for recording the feedback
    */
   @state()

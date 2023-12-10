@@ -117,9 +117,9 @@ function openModal(customElementClass) {
  * @returns {TemplateResult<1>} Lit html template
  */
 export function feedbackContainerTemplate(customElementClass) {
-  const { isModelOpen, selection } = customElementClass;
+  const { isModelOpen, Selection } = customElementClass;
   return html`
-    ${selection ? openFeedbackFlag(customElementClass) : null}
+    ${Selection ? openFeedbackFlag(customElementClass) : null}
     <slot></slot>
     ${isModelOpen ? openModal(customElementClass) : ''}
   `;

@@ -112,12 +112,12 @@ function openModal(customElementClass) {
 }
 
 /**
- * Lit template for Feedback Container
+ * Lit template for Feedback component
  *
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export function feedbackContainerTemplate(customElementClass) {
+export function feedbackTemplate(customElementClass) {
   const { isModelOpen, Selection } = customElementClass;
   return html`
     ${Selection ? openFeedbackFlag(customElementClass) : null}

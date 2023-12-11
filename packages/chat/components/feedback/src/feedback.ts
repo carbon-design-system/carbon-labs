@@ -12,11 +12,11 @@ import { property, state } from 'lit/decorators.js';
 import { v4 as uuidv4 } from 'uuid';
 import { FeedbackAPI } from '../../../services/feedback';
 // @ts-ignore
-import styles from './feedback-container.scss?inline';
+import styles from './feedback.scss?inline';
 /**
- * Feedback Container component to record and give feedback on AI generated content
+ * Feedback component to record and give feedback on AI generated content
  */
-export class FeedbackContainer extends LitElement {
+export class Feedback extends LitElement {
   static styles = styles;
 
   /**

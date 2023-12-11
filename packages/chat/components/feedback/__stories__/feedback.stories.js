@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import '../components/feedback/feedback-container';
+import '../feedback';
 
 import { html } from 'lit';
 /**
@@ -46,13 +46,13 @@ export const Default = {
     html`
       <h5>${args.input}</h5>
       <br />
-      <c4ai-feedback-container
+      <c4ai-feedback
         api-key=${args.apiKey}
         user=${args.userId}
         ai-model=${args['ai-model']}
         input=${args.input}
         output=${args.output}>
         ${args.output}
-      </c4ai-feedback-container>
+      </c4ai-feedback>
     `,
 };

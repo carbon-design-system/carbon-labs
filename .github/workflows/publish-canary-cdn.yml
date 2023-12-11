@@ -29,6 +29,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
+      - name: Build packages
+        run: pnpm build
       - name: Build dist folders in each package
         run: pnpm build:dist:canary
       - name: Create one folder with dist contents from each package

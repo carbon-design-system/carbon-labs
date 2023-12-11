@@ -53,7 +53,7 @@ export class FeedbackContainer extends LitElement {
    * ID generated For a particular input and output
    */
   @state()
-  generation_id: string = '';
+  generation_id = '';
 
   /**
    * State variable for Feedback Model
@@ -99,11 +99,17 @@ export class FeedbackContainer extends LitElement {
    */
   private _feedbacks: string[] = [];
 
+  /**
+   * Creating generation id when component is created
+   */
   constructor() {
     super();
     this.generation_id = uuidv4();
   }
 
+  /**
+   * For Mounting the web component
+   */
   connectedCallback(): void {
     super.connectedCallback();
     if (
@@ -129,12 +135,12 @@ export class FeedbackContainer extends LitElement {
    * @private
    */
   _handleTextSelection() {
-    let selection = window.getSelection()!;
+    const selection = window.getSelection();
     this.selection = selection;
     const selectedText = selection?.toString().trim();
     this.setAttribute('selected', '');
 
-    if (selectedText) {
+    if (selectedText && selection) {
       const minOffset = Math.min(selection.anchorOffset, selection.focusOffset);
       const maxOffset = Math.max(selection.anchorOffset, selection.focusOffset);
       this.formData.generation_id = this.generation_id;
@@ -194,6 +200,11 @@ export class FeedbackContainer extends LitElement {
     this.isModelOpen = false;
   }
 
+  /**
+   *
+   * @param {PropertyValueMap<any>} _changedProperties
+   * Contains the properties/attribute which are changed
+   */
   protected updated(
     _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
   ): void {
@@ -213,7 +224,7 @@ export class FeedbackContainer extends LitElement {
    * @private
    */
   _handleFeedback(event) {
-    let feedback = event.target.labelText;
+    const feedback = event.target.labelText;
     if (!this._feedbacks.includes(feedback)) {
       this._feedbacks.push(feedback);
     } else {

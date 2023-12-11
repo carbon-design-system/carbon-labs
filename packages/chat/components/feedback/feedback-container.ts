@@ -20,6 +20,9 @@ const { stablePrefix: c4aiPrefix } = settings;
  */
 @customElement(`${c4aiPrefix}-feedback-container`)
 class C4AIFeedbackContainer extends FeedbackContainer {
+  /**
+   * Renders the template while passing in class functionality
+   */
   render(): TemplateResult<1> {
     return feedbackContainerTemplate(this);
   }

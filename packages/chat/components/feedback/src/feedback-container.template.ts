@@ -30,7 +30,7 @@ function openFeedbackFlag(customElementClass) {
       @click=${toggle}
       class="feedback-flag"
       style="top: ${-(
-        range?.height! + 8
+        (range?.height || 0) + 8
       )}px; left: ${range?.left}px; font-weight: bold; display: ${isModelOpen
         ? 'none'
         : 'block'}">
@@ -46,14 +46,15 @@ function openFeedbackFlag(customElementClass) {
  * @returns {TemplateResult<1>} Lit html template
  */
 function openModal(customElementClass) {
-  let {
-    isModelOpen,
+  const {
     formData,
     _handleTextInput: handleTextInput,
     _handleFeedback: handleFeedback,
     _handleTextArea: handleTextArea,
     _handleFormData: handleFormData,
   } = customElementClass;
+
+  let { isModelOpen } = customElementClass;
 
   return html`
     <cds-modal

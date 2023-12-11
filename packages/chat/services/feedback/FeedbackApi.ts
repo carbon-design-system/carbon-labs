@@ -16,10 +16,16 @@ const _host =
   (import.meta.env && import.meta.env.VITE_FEEDBACK_API) ||
   'http://0.0.0.0:8000';
 
+/**
+ * Class for calling feedback Api Endpoints
+ */
 class FeedbackApi {
   private static instance: FeedbackApi;
   private BASE_URL: string;
 
+  /**
+   * Constructor of FeedbackApi Class
+   */
   constructor() {
     this.BASE_URL = _host;
   }

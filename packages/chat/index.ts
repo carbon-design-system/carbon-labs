@@ -8,3 +8,4 @@
  */
 
 import './components/test-input/test-input.js';
+import './components/feedback/feedback-container.js'

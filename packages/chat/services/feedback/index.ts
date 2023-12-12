@@ -7,5 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import './components/test-input/test-input.js';
-import './components/feedback/feedback.js';
+export { default as FeedbackAPI } from './FeedbackApi';

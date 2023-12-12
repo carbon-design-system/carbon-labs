@@ -15,7 +15,7 @@ import {
   waitUntil,
 } from '@open-wc/testing';
 import { stub } from 'sinon';
-import '@carbon-labs/ai-test-input/es/test-input.js';
+import '@carbon-labs/ai-chat/es/components/test-input/test-input.js';
 import C4AITestInput from '../components/test-input/test-input.js';
 
 describe('c4ai-test-input', function () {

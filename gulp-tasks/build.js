@@ -8,10 +8,6 @@
  */
 
 import gulp from 'gulp';
-import './build/dist.js';
 import './build/modules.js';
 
-gulp.task(
-  'build',
-  gulp.parallel(gulp.task('build:modules'), gulp.task('build:dist'))
-);
+gulp.task('build', gulp.task('build:modules'));

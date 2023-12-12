@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-import Flag24 from '@carbon/web-components/es/icons/flag/24';
+import Flag24 from '@carbon/web-components/es/icons/flag/24.js';
 import '@carbon/web-components/es/components/modal/index.js';
 import '@carbon/web-components/es/components/textarea/index.js';
 import '@carbon/web-components/es/components/radio-button/index.js';

@@ -8,8 +8,6 @@
 $css--plex: true !default;
 
 @use '../../../../../globals/scss/vars' as *;
-@use '@carbon/styles/scss/themes' as *;
-@use '@carbon/web-components/scss/components/button/button';
 
 :host(#{$c4ai-prefix}-feedback) {
   position: relative;

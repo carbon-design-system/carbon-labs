@@ -42,17 +42,16 @@ export const Default = {
    * @param {object} args Storybook arguments
    * @returns {TemplateResult<1>}
    */
-  render: (args) =>
-    html`
-      <h5>${args.input}</h5>
-      <br />
-      <c4ai-feedback
-        api-key=${args.apiKey}
-        user=${args.userId}
-        ai-model=${args['ai-model']}
-        input=${args.input}
-        output=${args.output}>
-        ${args.output}
-      </c4ai-feedback>
-    `,
+  render: (args) => html`
+    <h5>${args.input}</h5>
+    <br />
+    <c4ai-feedback
+      api-key=${args.apiKey}
+      user=${args.userId}
+      ai-model=${args['ai-model']}
+      input=${args.input}
+      output=${args.output}>
+      ${args.output}
+    </c4ai-feedback>
+  `,
 };

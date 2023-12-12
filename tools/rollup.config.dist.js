@@ -77,9 +77,8 @@ function _generateInputs(folders, canary) {
 
   folders.forEach((folder) => {
     // get the main file of each component (ie. components/${component-name}/${component-name}.ts)
-    inputs[
-      `${name}/${canary ? 'canary' : version}/${folder}.min`
-    ] = `components/${folder}/${folder}.ts`;
+    inputs[`${name}/${canary ? 'canary' : version}/${folder}.min`] =
+      `components/${folder}/${folder}.ts`;
   });
 
   /*

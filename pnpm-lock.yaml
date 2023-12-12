@@ -252,9 +252,15 @@ importers:
       '@carbon/ai-utilities':
         specifier: 0.0.1-rc.1
         version: link:../utilities
+      '@carbon/web-components':
+        specifier: 2.0.1-canary.1
+        version: 2.0.1-canary.1(sass@1.69.5)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
 
   packages/extended-button:
     dependencies:
@@ -19310,7 +19316,6 @@ packages:
   /uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
-    dev: true
 
   /v8-compile-cache@2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}

@@ -42,4 +42,4 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
       - name: Publish canary release of packages
         run: |
-          pnpm lerna publish --canary --preid canary --dist-tag canary
+          pnpm lerna publish --canary --preid canary --dist-tag canary --yes

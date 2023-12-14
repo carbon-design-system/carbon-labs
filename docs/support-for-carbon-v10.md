@@ -341,7 +341,7 @@ export default function App() {
 
 #### Verifying your prefix changes
 
-If you have multiple packages and dependencies you will need to ensure the all
+If you have multiple packages and dependencies you will need to ensure that all
 of the packages have the prefix updates.
 
 In addition, if you are dependant on other projects like `@carbon/ibm-products`

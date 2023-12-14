@@ -1,5 +1,6 @@
 {
-  "extends": [
-    "stylelint-config-carbon"
-  ]
+  "extends": ["stylelint-config-carbon"],
+  "rules": {
+    "max-nesting-depth": 2
+  }
 }

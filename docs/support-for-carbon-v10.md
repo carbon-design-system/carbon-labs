@@ -228,7 +228,7 @@ etc), as Web Components can be used in the same way as native HTML elements.
 ### Caveats
 
 The solution outlined here shows that use of Carbon 11 Web Components, via the
-CDN, is possible in a a Carbon v10 projects. In doing so it only makes use of a
+CDN, is possible in a Carbon v10 projects. In doing so it only makes use of a
 small number of components from the CDN.
 
 ### Solution

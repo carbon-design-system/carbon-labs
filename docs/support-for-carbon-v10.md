@@ -504,6 +504,51 @@ return (
 );
 ```
 
+#### Theming
+
+In the example Carbon v10 React theming is configured by defining and adding
+theming classes. See `_theme-dropdown.scss` earlier in this document.
+
+The Carbon web components CDN comes with pre-defined theming classes which you
+can apply alongside the V10 ones. These are:
+
+- cds-theme-zone-white
+- cds-theme-zone-g10
+- cds-theme-zone-g90
+- cds-theme-zone-g100
+
+In the example both V10 and V11 classes are applied to the root element ,
+depending on the current theme selected. If needed they can also be applied to
+other HTML elements.
+
+```jsx
+/* _theme-dropdown.scss 
+- https://stackblitz.com/edit/github-pdxjpu-qkh5qn?file=src%2FThemeSelector%2FThemeContext.jsx
+- applies theme classes for Carbon 10 and Carbon web components V11 CDN 
+*/
+
+import React, { createContext, useReducer } from 'react';
+
+export const themeData = [
+  {
+    text: 'White',
+    value: 'carbon-theme--white cds-theme-zone-white',
+  },
+  {
+    text: 'Gray 10',
+    value: 'carbon-theme--g10 cds-theme-zone-g10',
+  },
+  {
+    text: 'Gray 90',
+    value: 'carbon-theme--g90 cds-theme-zone-g90',
+  },
+  {
+    text: 'Gray 100',
+    value: 'carbon-theme--g100 cds-theme-zone-g100',
+  },
+];
+```
+
 ### Impacts to compiled bundle size
 
 While the bundle size does not change you are downloading additional source code

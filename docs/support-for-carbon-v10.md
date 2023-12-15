@@ -439,11 +439,13 @@ provide fill a slot as shown below.
 </cds-button>;
 ```
 
-One key technology behind Web Components is the use of the Shadow DOM. The
-Shadow DOM is a hidden separate DOM tree attached to an element (referred to as
-the Shadow Host). This allows for the encapsulation of styles and functionality
-within the component. The Shadow DOM and its contained elements can be viewed
-with the browser inspector tool as shown.
+One key technology behind Web Components is the use of the
+[Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM),
+which is a browser standard and part of the Web APIs available in all modern
+browsers today. The Shadow DOM is a hidden separate DOM tree attached to an
+element (referred to as the Shadow Host). This allows for the encapsulation of
+styles and functionality within the component. The Shadow DOM and its contained
+elements can be viewed with the browser inspector tool as shown.
 
 ![Example of Shadow DOM in inspector tool ](shadow-dom-inspector.png)
 

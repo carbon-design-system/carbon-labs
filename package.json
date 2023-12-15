@@ -120,6 +120,6 @@
     "stylelint-config-carbon": "^1.16.0",
     "through2": "^4.0.2",
     "typescript": "^5.2.2",
-    "vite": "^4.4.5"
+    "vite": "^5.0.0"
   }
 }

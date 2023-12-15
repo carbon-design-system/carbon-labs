@@ -424,19 +424,19 @@ done you are ready to use the components in your project.
     <!-- Carbon Web Component CDN registrations -->
     <script
       type="module"
-      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.2-rc.1/text-input.min.js"></script>
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.1.0/text-input.min.js"></script>
     <script
       type="module"
-      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.2-rc.1/button.min.js"></script>
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.1.0/button.min.js"></script>
     <script
       type="module"
-      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.2-rc.1/accordion.min.js"></script>
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.1.0/accordion.min.js"></script>
     <script
       type="module"
-      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.2-rc.1/icon-button.min.js"></script>
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.1.0/icon-button.min.js"></script>
     <script
       type="module"
-      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.0.2-rc.1/slug.min.js"></script>
+      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.1.0/slug.min.js"></script>
   </head>
 </html>
 ```

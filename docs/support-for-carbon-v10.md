@@ -218,7 +218,7 @@ ultimately results in additional tech debt to be paid off later.
 
 ## Use assets from IBM's Akamai CDN (hosted by IBM corporate webmaster team) in a v10 application
 
-Components published on a CDN can be in created/consumed in a number of forms.
+Components published on a CDN can be created/consumed in a number of forms.
 This section is based on the section
 [Using CDN](https://github.com/carbon-design-system/carbon-for-ibm-dotcom/tree/main/packages/carbon-web-components#using-cdn)
 documented in the `Carbon Web Components` package. It builds a React application

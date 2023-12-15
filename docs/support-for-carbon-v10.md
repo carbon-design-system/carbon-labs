@@ -409,11 +409,21 @@ done you are ready to use the components in your project.
 #### Using Web Components
 
 Web components are built on and form part of the HTML standards and as a result
-behave as if native HTML components in all modern browsers. They are however
-slightly different in their construction and usage to React (and other
-frameworks) which may lead to a little confusion. While a React developer is
-used to passing around properties for nearly every purpose, including child
-components in some cases, Web components use slots.
+behave as if native HTML components in all modern browsers. One key technology
+behind Web Components is the use of the
+[Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM),
+which is a browser standard and part of the Web APIs available in all modern
+browsers today. The Shadow DOM is a hidden separate DOM tree attached to an
+element (referred to as the Shadow Host). This allows for the encapsulation of
+styles and functionality within the component. The Shadow DOM and its contained
+elements can be viewed with the browser inspector tool as shown.
+
+![Example of Shadow DOM in inspector tool ](shadow-dom-inspector.png)
+
+They are however slightly different in their construction and usage to React
+(and other frameworks) which may lead to a little confusion. While a React
+developer is used to passing around properties for nearly every purpose,
+including child components in some cases, Web components use slots.
 
 So instead of passing a `renderIcon` property you would likely be asked to
 provide fill a slot as shown below.
@@ -439,18 +449,8 @@ provide fill a slot as shown below.
 </cds-button>;
 ```
 
-One key technology behind Web Components is the use of the
-[Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM),
-which is a browser standard and part of the Web APIs available in all modern
-browsers today. The Shadow DOM is a hidden separate DOM tree attached to an
-element (referred to as the Shadow Host). This allows for the encapsulation of
-styles and functionality within the component. The Shadow DOM and its contained
-elements can be viewed with the browser inspector tool as shown.
-
-![Example of Shadow DOM in inspector tool ](shadow-dom-inspector.png)
-
-In general, however, using the Web Components should not feel alien to the
-average web developer.
+In general, using the Web Components should not feel alien to the average web
+developer.
 
 The following snippet, shows two similar forms with only minor text differences
 and the use of the Carbon 11 AI Slug component.

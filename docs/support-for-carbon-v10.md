@@ -4,7 +4,7 @@
 ## Table of Contents
 
 - [Support for Carbon v10](#support-for-carbon-v10)
-  - [Use Carbon v11 `@carbon/react` assets in a v10 application](#use-carbon-v11-carbonreact-assets-in-a-v10-application)
+  - [Method 1: Use Carbon v11 `@carbon/react` assets in a v10 application (applications using React only)](#method-1-use-carbon-v11-carbonreact-assets-in-a-v10-application-applications-using-react-only)
     - [Caveats](#caveats)
     - [Potential solutions](#potential-solutions)
       - [Option 1: Alias the package names](#option-1-alias-the-package-names)
@@ -16,7 +16,7 @@
         - [Mitigation](#mitigation-1)
     - [Things to avoid](#things-to-avoid)
     - [Is it worth it?](#is-it-worth-it)
-  - [Use assets from IBM's Akamai CDN (hosted by IBM corporate webmaster team) in a v10 application](#use-assets-from-ibms-akamai-cdn-hosted-by-ibm-corporate-webmaster-team-in-a-v10-application)
+  - [Method 2: Use assets from IBM's Akamai CDN (hosted by IBM corporate webmaster team) in a v10 application (applications using any front-end framework)](#method-2-use-assets-from-ibms-akamai-cdn-hosted-by-ibm-corporate-webmaster-team-in-a-v10-application-applications-using-any-front-end-framework)
     - [Caveats](#caveats-1)
     - [Solution](#solution)
     - [Preparing your V10 project](#preparing-your-v10-project)

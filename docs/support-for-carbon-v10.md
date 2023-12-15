@@ -351,7 +351,7 @@ You can build and run your project, nothing visible will have changed. If you
 browse the developer tools of you browser you should see that the prefix has
 changed for both CSS selector classes and the custom properties.
 
-![Prefix changes in browser developer tools](prefix-changes.png)
+![Prefix changes in browser developer tools](images/prefix-changes.png)
 
 ### Adding V11 Web Components
 
@@ -418,7 +418,7 @@ element (referred to as the Shadow Host). This allows for the encapsulation of
 styles and functionality within the component. The Shadow DOM and its contained
 elements can be viewed with the browser inspector tool as shown.
 
-![Example of Shadow DOM in inspector tool ](shadow-dom-inspector.png)
+![Example of Shadow DOM in inspector tool ](images/shadow-dom-inspector.png)
 
 They are however slightly different in their construction and usage to React
 (and other frameworks) which may lead to a little confusion. While a React
@@ -566,7 +566,7 @@ from the CDN. While the total is dependant on the number of components you use
 This the total loaded from the CDN for the example being used, including CSS.
 This will ordinarily be cached locally.
 
-![Network usage of example](network-usage.png)
+![Network usage of example](images/network-usage.png)
 
 There will also be a small amount of time to process the additional CSS, which
 is not assessed here.

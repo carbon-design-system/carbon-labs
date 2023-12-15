@@ -12,11 +12,11 @@ importers:
         specifier: ^7.23.2
         version: 7.23.2
       '@carbon/styles':
-        specifier: ^1.39.0
-        version: 1.42.0(sass@1.69.5)
+        specifier: ^1.45.0
+        version: 1.45.0(sass@1.69.5)
       '@carbon/web-components':
-        specifier: 2.0.1-canary.1
-        version: 2.0.1-canary.1(sass@1.69.5)
+        specifier: 2.1.0
+        version: 2.1.0(sass@1.69.5)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -256,8 +256,8 @@ importers:
         specifier: 0.0.1-rc.1
         version: link:../utilities
       '@carbon/web-components':
-        specifier: 2.0.1-canary.1
-        version: 2.0.1-canary.1(sass@1.69.5)
+        specifier: 2.1.0
+        version: 2.1.0(sass@1.69.5)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -274,11 +274,11 @@ importers:
         specifier: 0.0.1-rc.1
         version: link:../utilities
       '@carbon/styles':
-        specifier: ^1.39.0
-        version: 1.42.0(sass@1.69.5)
+        specifier: ^1.45.0
+        version: 1.45.0(sass@1.69.5)
       '@carbon/web-components':
-        specifier: 2.0.1-canary.1
-        version: 2.0.1-canary.1(sass@1.69.5)
+        specifier: 2.1.0
+        version: 2.1.0(sass@1.69.5)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -2551,8 +2551,8 @@ packages:
   /@carbon/motion@11.16.0:
     resolution: {integrity: sha512-gr2oijosvrbV8I8dT+s+KTAzHswQ7GE1ffgKxMWWkdg4b91hlJ0qJe1BlG7ZnaHCRpeHKS12QQgnS/dy4yx92Q==}
 
-  /@carbon/styles@1.42.0(sass@1.69.5):
-    resolution: {integrity: sha512-Op6IB/YKjUsD90eI5RCLvl169UocGeUwlXtglZTBTF+b0xZHhIJkyA7b/5QFPPjRaJjIPMUr9DmEya+PTRDRBw==}
+  /@carbon/styles@1.45.0(sass@1.69.5):
+    resolution: {integrity: sha512-ihBjGeURX9BOyyesCQH7gAMS/BboPGXIp12gUIy0G9dBvDOjVJ3rJszF/iu/qatGMHLk0Gt53UQe2WL0i0Utvw==}
     peerDependencies:
       sass: ^1.33.0
     peerDependenciesMeta:
@@ -2564,7 +2564,7 @@ packages:
       '@carbon/grid': 11.21.0
       '@carbon/layout': 11.20.0
       '@carbon/motion': 11.16.0
-      '@carbon/themes': 11.27.0
+      '@carbon/themes': 11.28.0
       '@carbon/type': 11.25.0
       '@ibm/plex': 6.0.0-next.6
       sass: 1.69.5
@@ -2577,6 +2577,16 @@ packages:
       '@carbon/layout': 11.20.0
       '@carbon/type': 11.25.0
       color: 4.2.3
+    dev: true
+
+  /@carbon/themes@11.28.0:
+    resolution: {integrity: sha512-LvUFGXjsJ6csTrSjSOhkmvKHA0wcJOGchPaBrnWZB5J0UVCW+66P7lLuQBkTab7qgwRp4VgOSOkGdPPFQuchWQ==}
+    dependencies:
+      '@carbon/colors': 11.20.0
+      '@carbon/layout': 11.20.0
+      '@carbon/type': 11.25.0
+      color: 4.2.3
+    dev: false
 
   /@carbon/type@11.25.0:
     resolution: {integrity: sha512-p3i5B0uANc2GwPBnbxRVg/KFMWkPV+5I52pkFCs87Bgx6T8r4jB0Y5iPPwsVn2aI5wOnDfiULwSC4JS0LCIgxA==}
@@ -2584,11 +2594,11 @@ packages:
       '@carbon/grid': 11.21.0
       '@carbon/layout': 11.20.0
 
-  /@carbon/web-components@2.0.1-canary.1(sass@1.69.5):
-    resolution: {integrity: sha512-xTymQ5SNaVGuxDuXq3p3N36CWxHS38DlHHxC9pqTKQUZDCzscYnepjBaRTT/m4wnJKziK4kwidSTYN0M2miokg==}
+  /@carbon/web-components@2.1.0(sass@1.69.5):
+    resolution: {integrity: sha512-0B5CEIVHFE0XnvMcVl6Q2cE+6bNCT6e+GPj3AHaMM8/7bZdtUZ+Mi6CNlGZizwMQzMl37mYoUDjf4BG/NeGpeg==}
     dependencies:
       '@babel/runtime': 7.23.2
-      '@carbon/styles': 1.42.0(sass@1.69.5)
+      '@carbon/styles': 1.45.0(sass@1.69.5)
       flatpickr: 4.6.1
       lit: 2.8.0
       lodash-es: 4.17.21

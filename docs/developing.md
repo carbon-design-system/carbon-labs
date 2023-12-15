@@ -7,8 +7,8 @@
 
 - [Setup](#setup)
 - [Installing dependencies](#installing-dependencies)
+- [Running Storybook](#running-storybook)
 - [Common tasks](#common-tasks)
-- [Developing Locally](#developing-locally)
 - [Submitting a Pull Request](#submitting-a-pull-request)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->

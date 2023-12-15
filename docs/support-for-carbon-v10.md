@@ -1,3 +1,38 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+## Table of Contents
+
+- [Support for Carbon v10](#support-for-carbon-v10)
+  - [Use Carbon v11 `@carbon/react` assets in a v10 application](#use-carbon-v11-carbonreact-assets-in-a-v10-application)
+    - [Caveats](#caveats)
+    - [Potential solutions](#potential-solutions)
+      - [Option 1: Alias the package names](#option-1-alias-the-package-names)
+      - [Option 2: Isolate the styles](#option-2-isolate-the-styles)
+    - [Impacts to bundle size](#impacts-to-bundle-size)
+      - [Impact to javascript bundle size](#impact-to-javascript-bundle-size)
+        - [Mitigation](#mitigation)
+      - [Impact to style/css bundle size](#impact-to-stylecss-bundle-size)
+        - [Mitigation](#mitigation-1)
+    - [Things to avoid](#things-to-avoid)
+    - [Is it worth it?](#is-it-worth-it)
+  - [Use assets from IBM's Akamai CDN (hosted by IBM corporate webmaster team) in a v10 application](#use-assets-from-ibms-akamai-cdn-hosted-by-ibm-corporate-webmaster-team-in-a-v10-application)
+    - [Caveats](#caveats-1)
+    - [Solution](#solution)
+    - [Preparing your V10 project](#preparing-your-v10-project)
+      - [Style Prefix](#style-prefix)
+      - [Javascript prefix](#javascript-prefix)
+      - [Verifying your prefix changes](#verifying-your-prefix-changes)
+    - [Adding V11 Web Components](#adding-v11-web-components)
+      - [Registering the Web Components](#registering-the-web-components)
+      - [Using Web Components](#using-web-components)
+      - [Theming](#theming)
+    - [Impacts to compiled bundle size](#impacts-to-compiled-bundle-size)
+    - [Things to avoid](#things-to-avoid-1)
+    - [Is it worth it?](#is-it-worth-it-1)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Support for Carbon v10
 
 Carbon for AI is built on the latest major version of Carbon, v11. The most
@@ -34,7 +69,7 @@ So far we have identified two broad approaches:
 - Use assets from a CDN in a v10 application (regardless of front-end framework
   used)
 
-## Use Carbon v11 `@carbon/react` assets in a v10 application
+## Method 1: Use Carbon v11 `@carbon/react` assets in a v10 application (applications using React only)
 
 It is possible to run v10 and v11 together without any strenuous configuration.
 Package managers and bundlers handle duplicate transitive dependencies with
@@ -215,7 +250,7 @@ using assets from a CDN. The end result is the same: the project fulfills the
 immediate need of being able to use v11 things like `Slug` but each path
 ultimately results in additional tech debt to be paid off later.
 
-## Use assets from IBM's Akamai CDN (hosted by IBM corporate webmaster team) in a v10 application
+## Method 2: Use assets from IBM's Akamai CDN (hosted by IBM corporate webmaster team) in a v10 application (applications using any front-end framework)
 
 Components published on a CDN can be created/consumed in a number of forms. This
 part of the guide is based on the section

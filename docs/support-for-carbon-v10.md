@@ -11,9 +11,9 @@ outlines some "bridge solutions" - approaches a project can use to include
 Carbon for AI and Carbon v11 assets in a project still using Carbon v10.
 
 <!-- prettier-ignore-start -->
-> [!IMPORTANT] 
-> This guidance largely pertains to the consumption of AI features that are 
-> enhancements of existing components in `@carbon/react` and 
+> [!IMPORTANT]
+> This guidance largely pertains to the consumption of AI features that are
+> enhancements of existing components in `@carbon/react` and
 > `@carbon/web-components`. AI patterns that do not exist in these core Carbon
 > libraries will be available as packages from the `Carbon for AI` library. If
 > your application is on Carbon v11 (regardless of front-end framework), you
@@ -22,8 +22,8 @@ Carbon for AI and Carbon v11 assets in a project still using Carbon v10.
 > front-end framework), you will still be able to consume the `Carbon for AI`
 > components via IBM Akamai CDN.
 
-> [!CAUTION] 
-> The bridge solutions outlined in this document are only meant to be a 
+> [!CAUTION]
+> The bridge solutions outlined in this document are only meant to be a
 > temporary, stopgap measure to bring in selective, business critical features
 > until your project can migrate to v11.
 <!-- prettier-ignore-end -->
@@ -41,7 +41,7 @@ Package managers and bundlers handle duplicate transitive dependencies with
 different versions just fine, though you do have to be aware of what's happening
 and the potential caveats you can run into.
 
-> [!NOTE]  
+> [!NOTE] >
 > [Here is a stackblitz example](https://stackblitz.com/edit/github-pdxjpu?file=package.json,src%2FApp.jsx,src%2Findex.scss,src%2Fextra-slug-styles.scss&preset=node=)
 > showing it is possible to use various components and styles from v10 and v11
 > together, including the new `Slug`.
@@ -67,12 +67,11 @@ additional library(ies) that proxy Carbon v10, like Cloud PAL. Sometimes the
 libraries don't fully proxy carbon but they
 [list carbon as hard dependencies](https://github.com/carbon-design-system/ibm-products/blob/7994c5c13da6b467f5ecea5487b2bb8ff20e15bd/packages/security/package.json#L57-L66).
 
-> [!IMPORTANT]  
-> So far, **all the errors we've seen are only styling-based (sass) errors**. We
-> haven't seen any javascript errors resulting from mixing v10 and v11. It
-> commonly presents as Sass errors of "mixin not found", "... is not a number",
-> etc. indicating the erroring stylesheet is looking for part of an API that
-> can't be found in that version.
+> [!IMPORTANT] So far, **all the errors we've seen are only styling-based (sass)
+> errors**. We haven't seen any javascript errors resulting from mixing v10 and
+> v11. It commonly presents as Sass errors of "mixin not found", "... is not a
+> number", etc. indicating the erroring stylesheet is looking for part of an API
+> that can't be found in that version.
 
 If a developer adds `@carbon/react` to their project, configures the styles, and
 then sees an error, it's most likely due to the bundler using a v10 carbon
@@ -218,8 +217,8 @@ ultimately results in additional tech debt to be paid off later.
 
 ## Use assets from IBM's Akamai CDN (hosted by IBM corporate webmaster team) in a v10 application
 
-Components published on a CDN can be created/consumed in a number of forms.
-This section is based on the section
+Components published on a CDN can be created/consumed in a number of forms. This
+section is based on the section
 [Using CDN](https://github.com/carbon-design-system/carbon-for-ibm-dotcom/tree/main/packages/carbon-web-components#using-cdn)
 documented in the `Carbon Web Components` package. It builds a React application
 but the technique is applicable to all reactive libraries (Angular, Vue, Svelte
@@ -248,7 +247,7 @@ Carbon styles. As you may do this in a number of places it can be handy to
 create a separate file for Carbon CSS settings as below.
 
 ```scss
-/* _carbon-settings.scss 
+/* _carbon-settings.scss
 - https://stackblitz.com/edit/github-pdxjpu-qkh5qn?file=src%2F_carbon-settings.scss */
 
 $feature-flags: (
@@ -271,7 +270,7 @@ individual components you just need to ensure they are imported after the
 `./_carbon-settings.scss`.
 
 ```scss
-/* _carbon_.scss 
+/* _carbon_.scss
 - https://stackblitz.com/edit/github-pdxjpu-qkh5qn?file=src%2F_carbon.scss
 - The file you import the Carbon SCSS into your project and/or component */
 
@@ -283,7 +282,7 @@ In the example settings are also imported before configuring theming. Theming is
 optional but is included for completeness.
 
 ```scss
-/* _theme-dropdown.scss 
+/* _theme-dropdown.scss
 - https://stackblitz.com/edit/github-pdxjpu-qkh5qn?file=src%2FThemeSelector%2F_theme-dropdown.scss
 - configures themes classes for Carbon 10 */
 @import '../_carbon-settings';
@@ -311,7 +310,7 @@ Configuring in a separate file is optional and is done so here to try and avoid
 any issues with side effects not being applied until after other imports.
 
 ```js
-/* _carbon-settings.js 
+/* _carbon-settings.js
 - https://stackblitz.com/edit/github-pdxjpu-qkh5qn?file=src%2F_carbon-settings.js */
 
 import { settings } from 'carbon-components';
@@ -440,6 +439,14 @@ provide fill a slot as shown below.
 </cds-button>;
 ```
 
+One key technology behind Web Components is the use of the Shadow DOM. The
+Shadow DOM is a hidden separate DOM tree attached to an element (referred to as
+the Shadow Host). This allows for the encapsulation of styles and functionality
+within the component. The Shadow DOM and its contained elements can be viewed
+with the browser inspector tool as shown.
+
+![Example of Shadow DOM in inspector tool ](shadow-dom-inspector.png)
+
 In general, however, using the Web Components should not feel alien to the
 average web developer.
 
@@ -522,9 +529,9 @@ depending on the current theme selected. If needed they can also be applied to
 other HTML elements.
 
 ```jsx
-/* _theme-dropdown.scss 
+/* _theme-dropdown.scss
 - https://stackblitz.com/edit/github-pdxjpu-qkh5qn?file=src%2FThemeSelector%2FThemeContext.jsx
-- applies theme classes for Carbon 10 and Carbon web components V11 CDN 
+- applies theme classes for Carbon 10 and Carbon web components V11 CDN
 */
 
 import React, { createContext, useReducer } from 'react';

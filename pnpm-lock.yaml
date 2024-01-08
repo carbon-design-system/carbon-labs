@@ -15,8 +15,8 @@ importers:
         specifier: ^1.45.0
         version: 1.45.0(sass@1.69.5)
       '@carbon/web-components':
-        specifier: 2.1.0
-        version: 2.1.0(sass@1.69.5)
+        specifier: 2.1.1
+        version: 2.1.1(sass@1.69.5)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -256,8 +256,8 @@ importers:
         specifier: 0.0.1-rc.1
         version: link:../utilities
       '@carbon/web-components':
-        specifier: 2.1.0
-        version: 2.1.0(sass@1.69.5)
+        specifier: 2.1.1
+        version: 2.1.1(sass@1.69.5)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -277,8 +277,8 @@ importers:
         specifier: ^1.45.0
         version: 1.45.0(sass@1.69.5)
       '@carbon/web-components':
-        specifier: 2.1.0
-        version: 2.1.0(sass@1.69.5)
+        specifier: 2.1.1
+        version: 2.1.1(sass@1.69.5)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -2594,8 +2594,8 @@ packages:
       '@carbon/grid': 11.21.0
       '@carbon/layout': 11.20.0
 
-  /@carbon/web-components@2.1.0(sass@1.69.5):
-    resolution: {integrity: sha512-0B5CEIVHFE0XnvMcVl6Q2cE+6bNCT6e+GPj3AHaMM8/7bZdtUZ+Mi6CNlGZizwMQzMl37mYoUDjf4BG/NeGpeg==}
+  /@carbon/web-components@2.1.1(sass@1.69.5):
+    resolution: {integrity: sha512-kMJNSbJPzl5v4u6ASqVZCdTzOZ9B56Qt51HocOnywHC6Iqm7Yz+B6mhz6nWCr4IZOuXVDZpg7ipYFi7/DwnBAQ==}
     dependencies:
       '@babel/runtime': 7.23.2
       '@carbon/styles': 1.45.0(sass@1.69.5)
@@ -7794,6 +7794,7 @@ packages:
   /binary-extensions@1.13.1:
     resolution: {integrity: sha512-Un7MIEDdUC5gNpcGDV97op1Ywk748MpHcFTHoYs6qnj1Z3j7I53VG3nwZhKzoBZmbdRNnb6WRdFlwl7tSDuZGw==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dev: true
 
   /binary-extensions@2.2.0:

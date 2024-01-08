@@ -17,7 +17,7 @@ import postcss from 'postcss';
 import replace from '@rollup/plugin-replace';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
-import rollupPluginScssPath from './rollup-plugin-scss-path.js';
+import alias from '@rollup/plugin-alias';
 import rollupPluginLitSCSS from './rollup-plugin-lit-scss.js';
 import { fileURLToPath } from 'url';
 
@@ -103,7 +103,9 @@ export default (commandLineArgs) => {
       dir: 'dist',
     },
     plugins: [
-      rollupPluginScssPath(),
+      alias({
+        entries: [{ find: /^(.*)\.scss\?inline$/, replacement: '$1.scss' }],
+      }),
       replace({
         'process.env.NODE_ENV': 'production',
         preventAssignment: true,

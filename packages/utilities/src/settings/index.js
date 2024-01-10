@@ -7,4 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export { default as settings } from './settings';
+export { default as settings } from './settings.js';

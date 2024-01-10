@@ -7,4 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export * from './settings';
+export * from './settings/index.js';

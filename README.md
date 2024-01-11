@@ -4,7 +4,7 @@
 > [Carbon Web Components](https://carbondesignsystem.com/developing/frameworks/web-components)
 > for the IBM AI experience.
 
-## Getting started
+## Getting started now
 
 This monorepo houses a collection of components, each as their own package.
 Here's a full list of packages that we support!

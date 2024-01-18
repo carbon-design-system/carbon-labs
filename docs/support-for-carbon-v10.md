@@ -259,6 +259,17 @@ documented in the `Carbon Web Components` package. It builds a React application
 but the technique is applicable to all reactive libraries (Angular, Vue, Svelte
 etc), as Web Components can be used in the same way as native HTML elements.
 
+> [!NOTE] >
+> [Here is a stackblitz example](https://stackblitz.com/edit/github-pdxjpu-k8tist?file=package.json,src%2FApp.jsx,src%2Fmain.jsx,index.html&preset=node=)
+> showing it is possible to use various components and styles from v10, v11, and
+> CDN's together, including the new `Slug`.
+>
+> The example will take a few moments to load because it uses live sass
+> compilation, which takes a bit to complete with v10 styles.
+>
+> [Here is a stackblitz example](https://stackblitz.com/edit/web-platform-maqfpg?file=index.html,script.js)
+> showing CDN's on their own.
+
 ### Caveats
 
 The solution outlined here shows that use of Carbon 11 Web Components, via the

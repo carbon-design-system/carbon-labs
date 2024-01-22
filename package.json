@@ -118,7 +118,7 @@
     "sinon": "^17.0.1",
     "storybook": "^7.5.1",
     "strip-comments": "^2.0.1",
-    "stylelint": "^15.11.0",
+    "stylelint": "^16.0.0",
     "stylelint-config-carbon": "^1.16.0",
     "through2": "^4.0.2",
     "typescript": "^5.2.2",

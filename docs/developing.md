@@ -103,10 +103,10 @@ making to components in Storybook.
 While working on Carbon for AI, here are some of the top-level tasks that you
 might want to run:
 
-| Command                             | Usage                                                                                                       |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `pnpm build`                        | Runs the gulp `build` tasks and uses lerna to run the `build` script for the `@carbon/ai-utilities` package |
-| `pnpm format`, `pnpm format:staged` | Format files using prettier, check if files have been formatted                                             |
+| Command                            | Usage                                                                                                       |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `pnpm build`                       | Runs the gulp `build` tasks and uses lerna to run the `build` script for the `@carbon/ai-utilities` package |
+| `pnpm format`, `pnpm format:write` | Check if files have been formatted, format files using prettier                                             |
 
 ## Submitting a Pull Request
 

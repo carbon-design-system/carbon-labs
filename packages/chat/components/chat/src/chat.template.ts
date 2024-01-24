@@ -14,6 +14,8 @@ import ThumbsDown16 from '@carbon/web-components/es/icons/thumbs-down/16';
 import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
 import User24 from '@carbon/web-components/es/icons/user/24';
 import Search24 from '@carbon/web-components/es/icons/search/24';
+import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+const { stablePrefix: c4aiPrefix } = settings;
 
 /**
  * Lit template for test-input
@@ -36,7 +38,7 @@ export function chatTemplate(customElementClass) {
     _handleAPIselection: handleAPIselection 
   } = customElementClass;
 
-    return html`<div class="chat-container">
+    return html`<div class="${c4aiPrefix}--chat-container">
         <div class="chat-messages">
         &nbsp;
           ${messages.map(

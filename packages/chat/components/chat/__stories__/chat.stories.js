@@ -22,7 +22,7 @@ export const Default = {
       model="llama-2"
       userprompt="You are Watson, you will answer all my questions."
       api-url="https://bam-api.res.ibm.com/v1/generate"
-      
+      feedback-url="https://localhost:5000/feeback"
       temperature="0.0"
       username="user"
       agentname="bot"

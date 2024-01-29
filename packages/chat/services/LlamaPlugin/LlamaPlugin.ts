@@ -19,6 +19,9 @@ const _watsonxai_key =
   //@ts-ignore
   import.meta.env && import.meta.env.VITE_WATSONXAI_KEY;
 
+/**
+ * LlamaPlugin piece to fetch data from user defined api url
+ */
 class LlamaPluginAPI {
   /**
    * Gets WatsonX payload
@@ -34,7 +37,6 @@ class LlamaPluginAPI {
    * @example
    * import { LlamaPluginAPI } from '@carbon/ibmdotcom-services';
    */
-
   static async sendMessageWatsonX(
     API_URL,
     model,
@@ -131,7 +133,6 @@ class LlamaPluginAPI {
    * @example
    * import { LlamaPluginAPI } from '@carbon/ibmdotcom-services';
    */
-
   static async sendMessageBAM(
     API_URL,
     model,
@@ -218,10 +219,9 @@ class LlamaPluginAPI {
    * @example
    * import { LlamaPluginAPI } from '@carbon/ibmdotcom-services';
    */
-
   static async sendMessageLocal(
     API_URL,
-    _model,
+    model,
     temperature,
     userPrompt,
     messages,
@@ -265,7 +265,7 @@ class LlamaPluginAPI {
     const n = 1;
     const user_id = 'o.cornec@ibm.com';
 
-    var payload = {
+    const payload = {
       user_id: user_id,
       session: session,
       event: eventNumber,

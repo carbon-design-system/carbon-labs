@@ -13,10 +13,10 @@ importers:
         version: 7.23.2
       '@carbon/styles':
         specifier: ^1.45.0
-        version: 1.45.0(sass@1.69.5)
+        version: 1.45.0(sass@1.70.0)
       '@carbon/web-components':
         specifier: 2.1.1
-        version: 2.1.1(sass@1.69.5)
+        version: 2.1.1(sass@1.70.0)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -86,7 +86,7 @@ importers:
         version: 7.5.3(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-styling':
         specifier: ^1.3.7
-        version: 1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.69.5)(typescript@5.2.2)(webpack@5.89.0)
+        version: 1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)(typescript@5.2.2)(webpack@5.89.0)
       '@storybook/blocks':
         specifier: ^7.5.1
         version: 7.5.3(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
@@ -220,8 +220,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(rollup@4.5.0)
       sass:
-        specifier: ~1.69.0
-        version: 1.69.5
+        specifier: ~1.70.0
+        version: 1.70.0
       sinon:
         specifier: ^17.0.1
         version: 17.0.1
@@ -245,7 +245,7 @@ importers:
         version: 5.2.2
       vite:
         specifier: ^5.0.0
-        version: 5.0.7(@types/node@18.18.9)(less@4.2.0)(sass@1.69.5)
+        version: 5.0.7(@types/node@18.18.9)(less@4.2.0)(sass@1.70.0)
 
   packages/chat:
     dependencies:
@@ -257,7 +257,7 @@ importers:
         version: link:../utilities
       '@carbon/web-components':
         specifier: 2.1.1
-        version: 2.1.1(sass@1.69.5)
+        version: 2.1.1(sass@1.70.0)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -275,10 +275,10 @@ importers:
         version: link:../utilities
       '@carbon/styles':
         specifier: ^1.45.0
-        version: 1.45.0(sass@1.69.5)
+        version: 1.45.0(sass@1.70.0)
       '@carbon/web-components':
         specifier: 2.1.1
-        version: 2.1.1(sass@1.69.5)
+        version: 2.1.1(sass@1.70.0)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -2551,7 +2551,7 @@ packages:
   /@carbon/motion@11.16.0:
     resolution: {integrity: sha512-gr2oijosvrbV8I8dT+s+KTAzHswQ7GE1ffgKxMWWkdg4b91hlJ0qJe1BlG7ZnaHCRpeHKS12QQgnS/dy4yx92Q==}
 
-  /@carbon/styles@1.45.0(sass@1.69.5):
+  /@carbon/styles@1.45.0(sass@1.70.0):
     resolution: {integrity: sha512-ihBjGeURX9BOyyesCQH7gAMS/BboPGXIp12gUIy0G9dBvDOjVJ3rJszF/iu/qatGMHLk0Gt53UQe2WL0i0Utvw==}
     peerDependencies:
       sass: ^1.33.0
@@ -2567,7 +2567,7 @@ packages:
       '@carbon/themes': 11.28.0
       '@carbon/type': 11.25.0
       '@ibm/plex': 6.0.0-next.6
-      sass: 1.69.5
+      sass: 1.70.0
     dev: false
 
   /@carbon/themes@11.27.0:
@@ -2594,11 +2594,11 @@ packages:
       '@carbon/grid': 11.21.0
       '@carbon/layout': 11.20.0
 
-  /@carbon/web-components@2.1.1(sass@1.69.5):
+  /@carbon/web-components@2.1.1(sass@1.70.0):
     resolution: {integrity: sha512-kMJNSbJPzl5v4u6ASqVZCdTzOZ9B56Qt51HocOnywHC6Iqm7Yz+B6mhz6nWCr4IZOuXVDZpg7ipYFi7/DwnBAQ==}
     dependencies:
       '@babel/runtime': 7.23.2
-      '@carbon/styles': 1.45.0(sass@1.69.5)
+      '@carbon/styles': 1.45.0(sass@1.70.0)
       flatpickr: 4.6.1
       lit: 2.8.0
       lodash-es: 4.17.21
@@ -5172,7 +5172,7 @@ packages:
       - '@types/react-dom'
     dev: true
 
-  /@storybook/addon-styling@1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.69.5)(typescript@5.2.2)(webpack@5.89.0):
+  /@storybook/addon-styling@1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)(typescript@5.2.2)(webpack@5.89.0):
     resolution: {integrity: sha512-JSBZMOrSw/3rlq5YoEI7Qyq703KSNP0Jd+gxTWu3/tP6245mpjn2dXnR8FvqVxCi+FG4lt2kQyPzgsuwEw1SSA==}
     hasBin: true
     peerDependencies:
@@ -5213,7 +5213,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       resolve-url-loader: 5.0.0
-      sass-loader: 13.3.2(sass@1.69.5)(webpack@5.89.0)
+      sass-loader: 13.3.2(sass@1.70.0)(webpack@5.89.0)
       style-loader: 3.3.3(webpack@5.89.0)
       webpack: 5.89.0(esbuild@0.19.5)
     transitivePeerDependencies:
@@ -5389,7 +5389,7 @@ packages:
       magic-string: 0.30.5
       rollup: 3.29.4
       typescript: 5.2.2
-      vite: 5.0.7(@types/node@18.18.9)(less@4.2.0)(sass@1.69.5)
+      vite: 5.0.7(@types/node@18.18.9)(less@4.2.0)(sass@1.70.0)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -17695,7 +17695,7 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
-  /sass-loader@13.3.2(sass@1.69.5)(webpack@5.89.0):
+  /sass-loader@13.3.2(sass@1.70.0)(webpack@5.89.0):
     resolution: {integrity: sha512-CQbKl57kdEv+KDLquhC+gE3pXt74LEAzm+tzywcA0/aHZuub8wTErbjAoNI57rPUWRYRNC5WUnNl8eGJNbDdwg==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -17715,12 +17715,12 @@ packages:
         optional: true
     dependencies:
       neo-async: 2.6.2
-      sass: 1.69.5
+      sass: 1.70.0
       webpack: 5.89.0(esbuild@0.19.5)
     dev: true
 
-  /sass@1.69.5:
-    resolution: {integrity: sha512-qg2+UCJibLr2LCVOt3OlPhr/dqVHWOa9XtZf2OjbLs/T4VPSJ00udtgJxH3neXZm+QqX8B+3cU7RaLqp1iVfcQ==}
+  /sass@1.70.0:
+    resolution: {integrity: sha512-uUxNQ3zAHeAx5nRFskBnrWzDUJrrvpCPD5FNAoRvTi0WwremlheES3tg+56PaVtCs5QDRX5CBLxxKMDJMEa1WQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -19836,7 +19836,7 @@ packages:
       replace-ext: 1.0.1
     dev: true
 
-  /vite@5.0.7(@types/node@18.18.9)(less@4.2.0)(sass@1.69.5):
+  /vite@5.0.7(@types/node@18.18.9)(less@4.2.0)(sass@1.70.0):
     resolution: {integrity: sha512-B4T4rJCDPihrQo2B+h1MbeGL/k/GMAHzhQ8S0LjQ142s6/+l3hHTT095ORvsshj4QCkoWu3Xtmob5mazvakaOw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -19869,7 +19869,7 @@ packages:
       less: 4.2.0
       postcss: 8.4.32
       rollup: 4.5.0
-      sass: 1.69.5
+      sass: 1.70.0
     optionalDependencies:
       fsevents: 2.3.3
     dev: true

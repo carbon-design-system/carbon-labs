@@ -6,7 +6,9 @@
  */
 
 @use '../../../../../globals/scss/vars' as *;
+
 @use '@carbon/styles/scss/theme' as *;
+
 :host(#{$c4ai-prefix}-chat) {
   position: relative;
   display: block;
@@ -14,7 +16,7 @@
   font-family: 'IBM Plex Sans', sans-serif;
   min-block-size: 320px;
 
-  .chat-container {
+  .#{$c4ai-prefix}--chat-container {
     padding: 20px 20px 20px 35px;
     border-radius: 10px;
     background: #1c1c17;

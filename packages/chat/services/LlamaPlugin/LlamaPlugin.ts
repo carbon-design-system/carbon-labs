@@ -14,43 +14,46 @@
  */
 const _bam_key = 
 //@ts-ignore
-    (import.meta.env && import.meta.env.VITE_BAM_KEY)
+    (import.meta.env && import.meta.env.VITE_BAM_KEY);
 
 const _watsonxai_key = 
 //@ts-ignore
-    (import.meta.env && import.meta.env.VITE_WATSONXAI_KEY)
+    (import.meta.env && import.meta.env.VITE_WATSONXAI_KEY);
 
 class LlamaPluginAPI {
 
 
     static async sendMessageWatsonX(API_URL, model, temperature, userPrompt, messages, message, session, eventNumber){
-    console.log("sending to WatsonX...")
+    console.log("sending to WatsonX...");
+    console.log(userPrompt);
+    console.log(temperature);
+    console.log(message);
+    console.log(eventNumber);
+    console.log(session);
     if(!_watsonxai_key){
-        return {"reply":"Error: No Watsonx-ai API key specified, please append your key to your .env root file in order to access the Watson service"}
+        return {"reply":"Error: No Watsonx-ai API key specified, please append your key to your .env root file in order to access the Watson service"};
     }
     let max_tokens =  10000;
-    let user_name = "user"
-    let agent_name = "bot"
+    let user_name = "user";
+    let agent_name = "bot";
     let initial_prompt = `[INST] <<SYS>> You are Watson, you'll answer all my questions. <</SYS>> [/INST]
     `;
+    let model_id = "meta-llama/llama-2-70b-chat";
+    if(model == "granite"){
+        model_id= "granite"
+    }
 
-    let WATSONXAPI_URL = "https://us-south.ml.cloud.ibm.com/ml/v1-beta/generation/text?version=2023-05-29"
-    let model_id = "meta-llama/llama-2-70b-chat"
     let parameters = {
     "decoding_method": "greedy",
     "max_new_tokens": max_tokens,
     "min_new_tokens": 0,
     "stop_sequences": [user_name ,agent_name],
     "repetition_penalty": 1
-    }
-    let project_id = "89ba2198-b548-4b26-99f9-50d171e091a2"
+    };
+
+    let project_id = "89ba2198-b548-4b26-99f9-50d171e091a2";
     
-
-    let history = messages.map((conv)=>{return conv.origin+":"+conv.text}).join("\n")
-
-    prompt = initial_prompt;
-
-    let completePrompt = initial_prompt + '\n' + history 
+    let history = messages.map((conv)=>{return conv.origin+":"+conv.text}).join("\n");
 
     let watsonxPayload = {
         "b64_encoded_inputs": true,
@@ -63,47 +66,47 @@ class LlamaPluginAPI {
             "modelId": model_id,
             "modelParameters": parameters
         }
-    }
+    };
 
-    console.log(watsonxPayload)
-    console.log(_watsonxai_key)
+    console.log(watsonxPayload);
+    console.log(_watsonxai_key);
 
     const requestOptions = {
         method: 'POST',
-        mode: "cors",
-        credentials: "include",
         headers: { 'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + _watsonxai_key},
         body:    JSON.stringify(watsonxPayload)
     };
 
     try{
-        return await fetch(WATSONXAPI_URL, requestOptions).then(response => response.json()).then((response) => response);
+        return await fetch(API_URL, requestOptions)
+        .then(response => response.json())
+        .then((response) => response);
     } catch (error){
-        return {"reply":"Error reaching: "+WATSONXAPI_URL}
+        return {"reply":"Error reaching: "+ API_URL};
     }
   }
 
 
   static async sendMessageBAM(API_URL, model, temperature, userPrompt, messages, message, session, eventNumber){
-    console.log("sending to BAM...")
+    console.log("sending to BAM...");
+    console.log(userPrompt);
+    console.log(message);
+    console.log(eventNumber);
+    console.log(session);
+
     if(!_bam_key){
         return {"reply":"Error: No API key specified, please append your key to your .env root file in order to access the BAM service"}
     }
-    let max_tokens =  10000;
-    let user_name = "user"
-    let agent_name = "bot"
-    let initial_prompt = `[INST] <<SYS>> You are Watson, you'll answer all my questions. <</SYS>> [/INST]
-    `;
+    let user_name = "user";
+    let agent_name = "bot";
+    let initial_prompt = `[INST] <<SYS>> You are Watson, you'll answer all my questions. <</SYS>> [/INST]`;
 
-    let history = messages.map((conv)=>{return conv.origin+":"+conv.text}).join("\n")
-
-    prompt = initial_prompt;
+    let history = messages.map((conv)=>{return conv.origin+":"+conv.text}).join("\n");
 
     let model_id = "meta-llama/"+model+"-70b-chat";
 
-    let completePrompt = initial_prompt + '\n' + history 
-    console.log(completePrompt)
+    let completePrompt = initial_prompt + '\n' + history;
 
     let top_k = 50;
     let top_p = 1.0;
@@ -116,13 +119,13 @@ class LlamaPluginAPI {
             'top_p':             top_p,
             'max_new_tokens':    1024,
             'stop_sequences':    [user_name ,agent_name ]
-            }
+            };
 
     let bam_payload = {
         'model_id'          : model_id,
         'inputs'            : [completePrompt],
         'parameters'        : parameters
-    }
+    };
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
@@ -133,7 +136,7 @@ class LlamaPluginAPI {
     try{
         return await fetch(API_URL, requestOptions).then(response => response.json()).then((response) => response);
     } catch (error){
-        return {"reply":"Error reaching: "+API_URL}
+        return {"reply":"Error reaching: "+API_URL};
     }
   }
 
@@ -159,9 +162,9 @@ class LlamaPluginAPI {
     let agent_name = "bot";
     let initial_prompt = '[INST] <<SYS>> ' + userPrompt + ' If returning code of any kind you must use "```" delimiters<</SYS>> [/INST]';
 
-    let prompt = initial_prompt + messages.map((message)=>{ return message.type == "bot" ? "[INST]"+message.text+"[/INST]" : message.text}).join("\n")
+    let prompt = initial_prompt + messages.map((message)=>{ return message.type == "bot" ? "[INST]"+message.text+"[/INST]" : message.text}).join("\n");
 
-    let history = messages.map((conv)=>{return conv.type+":"+conv.text}).join("\n")
+    let history = messages.map((conv)=>{return conv.type+":"+conv.text}).join("\n");
 
     prompt = initial_prompt;
 
@@ -173,7 +176,6 @@ class LlamaPluginAPI {
     const presence_penalty = 0.0;
     const n = 1;
     let user_id = "o.cornec@ibm.com";
-    let url = "http://localhost:5001";
 
     var payload = {"user_id":user_id, 
     "session":session, 
@@ -184,7 +186,7 @@ class LlamaPluginAPI {
     "entry":entry, 
     "temperature":temperature, 
     "max_tokens":max_tokens, 
-    "top_p":top_p, "frequency_penalty":frequency_penalty, "presence_penalty":presence_penalty, "n":n, user_name: "user", agent_name: "bot", max_tries: 3};
+    "top_p":top_p, "frequency_penalty":frequency_penalty, "presence_penalty":presence_penalty, "n":n, user_name: user_name, agent_name: agent_name, max_tries: 3};
 
     const requestOptions = {
         method: 'POST',
@@ -193,9 +195,9 @@ class LlamaPluginAPI {
     };
 
     try{
-        return await fetch(url+"/generate", requestOptions).then(response => response.json()).then((response) => response);
+        return await fetch(API_URL+"/generate", requestOptions).then(response => response.json()).then((response) => response);
     } catch (error){
-        return {"reply":"Error reaching: "+url}
+        return {"reply":"Error reaching: "+API_URL}
     }
 
   }

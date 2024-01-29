@@ -26,68 +26,82 @@ export default class C4AIChat extends LitElement {
    * {"message":"displayed text", "origin":"can be bot or user, depending on user-defined role names"}
    */
   private _messages: any[] = [];
+
   /**
    * string variable edited by textInput, auto-updates at every keystroke and is sent to the api url on 'enter' or 'send' button click
    */
   @state()
   _messageText = "";
+
   /** 
    * server side integer denoting the number of messages sent in total
    */
   private _eventNumber = 0;
+
   /**
    * session ID to ensure no two conversations collide within the server
    */
   private _session = '' + Math.random();
+
   /**
    * boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message
    */
   @state()
   _queryInProgress = false;
+
   /**
    * current string returned by the input dom object
    **/
   private _inputText = '';
+
   /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
    */
   @property({type: String, attribute: 'api-url'})
   apiURL;
+
   /** 
    * string denoting which model to use, only 'llama-2' is available currently
    */
   @property({type: String, attribute: 'feedback-url'})
   feedbackURL;
+
   /** 
    * string denoting which model to use, only 'llama-2' is available currently
    */
   @property({type: String, attribute: 'model'})
   model;
+
   /**
    * float varying from 0.0 to 1.0, denotes how 'creative' the model's response will be. 0.0 (default) is the most safe and predictable while 1.0 is hightly creative but unpredictable (not advised for operations returning code or JSON objects)
    */
   @property({type: Number, attribute: 'temperature'})
   temperature;
+
   /**
    * string denoting the user name, used for internal logic in the server to differentiate bot responses and user reseponses. default: 'user' but should be the user's real name based on IBM ID or any other data available
    */
   @property({type: String, attribute: 'username'})
   username;
+
   /**
    * string denoting the bot name, default: 'bot' but can be changed to 'Watson' or 'client assistant' or any other name
    */
   @property({type: String, attribute: 'agentname'})
   agentname;
+
   /**
    * string denoting the unique behavior of the model designated by the user, appended to the private system prompt
    */
   @property({type: String, attribute: 'userprompt'})
   userprompt;
+
   /**
    * string denoting whether to use a light of dark theme
    */
   @property({type: String, attribute: 'theme'})
   theme;
+
   /**
    * TEST OPTION FOR API CONNECTIONS
    */
@@ -108,7 +122,7 @@ export default class C4AIChat extends LitElement {
     let response;
     if(this._selectedapi == "local"){
       response = await LlamaPluginAPI.sendMessageLocal(
-        this.apiURL,
+        "http://localhost:5001",
         this.model,
         this.temperature,
         this.userprompt,
@@ -132,7 +146,7 @@ export default class C4AIChat extends LitElement {
     }
      if(this._selectedapi == "watsonx-ai"){
       response = await LlamaPluginAPI.sendMessageWatsonX(
-        this.apiURL,
+        "https://us-south.ml.cloud.ibm.com/ml/v1-beta/generation/text?version=2023-05-29",
         this.model,
         this.temperature,
         this.userprompt,
@@ -192,6 +206,7 @@ export default class C4AIChat extends LitElement {
       this._updateScroll();
 
     }).catch(error => {
+      console.log(error)
       this._messages.push({"text":"Error reaching the model server, try again","origin":this.agentname,"showButtons":false,"style":"error","time":this._getCurrentTime()});
       this._queryInProgress = false;
       this.requestUpdate();
@@ -210,8 +225,6 @@ export default class C4AIChat extends LitElement {
     }
     const strings = string.split('\n');
     let mode = 'text';
-    // commenting below because I don't see where `previousMode` is being used in the code
-    // let previousMode = 'text';
     const splitStrings: any[] = [];
     let currentString: any[] = [];
     let toggler = false;
@@ -233,8 +246,6 @@ export default class C4AIChat extends LitElement {
       } else {
         currentString.push(ss);
       }
-      // commenting below because I don't see where `previousMode` is being used in the code
-      // previousMode = mode;
       toggler = false;
     }
     return splitStrings;
@@ -318,22 +329,12 @@ export default class C4AIChat extends LitElement {
    * @param{index} selected message index within the messages array
    **/
   _handleEdit(event,index){
-    let parent = event.target.parentElement;
-    let textDiv = parent.querySelector(".message-text");
-    console.log(parent);
-    console.log(textDiv);
+    console.log(event);
     console.log(index);
-
-    /*
-    let text = parent.querySelector(".message-text").innerHTML;
-    console.log(text)
-
-    const textArea = document.createElement('textarea');
-    textArea.className = 'editableTextArea';
-    textArea.value = text;
-
-    textDiv.replaceWith(textArea)*/
-
+    /*let parent = event.target.parentElement;
+    let textDiv = parent.querySelector(".message-text");
+    console.log(event);
+    console.log(index);*/
   }
 
   /** feedback function when a user clicks the feedback button
@@ -341,14 +342,17 @@ export default class C4AIChat extends LitElement {
    * @param{index} selected message index within the messages array
    **/
   _handleFeedback(event, index, type, message){
-    let url = feedbackURL;
+    let url = this.feedbackURL;
     let requestOptions = {
       "type":type,
       "id":index,
       "message":message
-    }
-    fetch(url, requestOptions).then(response => response.json())
-    .then((response) => {console.log(response)});
+    };
+    console.log(event);
+    console.log(url);
+    console.log(requestOptions);
+    /*fetch(url, requestOptions).then(response => response.json())
+    .then((response) => {console.log(response)});*/
 
   }
 

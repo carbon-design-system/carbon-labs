@@ -1,0 +1,118 @@
+{
+  "version": "6.0",
+  "nxVersion": "17.1.3",
+  "deps": {
+    "@babel/runtime": "^7.23.2",
+    "@carbon/ai-utilities": "0.0.1-rc.1",
+    "@carbon/web-components": "2.0.1-canary.1",
+    "lit": "^3.0.0",
+    "uuid": "^9.0.1"
+  },
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {},
+    "nonProjectFiles": [
+      {
+        "file": "CHANGELOG.md",
+        "hash": "18195286384267127478"
+      },
+      {
+        "file": "__tests__/__snapshots__/test-input.test.snap.js",
+        "hash": "15586801296108052935"
+      },
+      {
+        "file": "__tests__/test-input.test.ts",
+        "hash": "3960923427343070138"
+      },
+      {
+        "file": "components/chat/__stories__/chat.stories.js",
+        "hash": "4991963422889151066"
+      },
+      {
+        "file": "components/chat/chat.ts",
+        "hash": "7211505333550683242"
+      },
+      {
+        "file": "components/chat/src/chat.scss",
+        "hash": "5829900212168824570"
+      },
+      {
+        "file": "components/chat/src/chat.template.ts",
+        "hash": "8440204438755138995"
+      },
+      {
+        "file": "components/chat/src/chat.ts",
+        "hash": "11696902108990502607"
+      },
+      {
+        "file": "components/feedback/__stories__/feedback.stories.js",
+        "hash": "7209366523796946012"
+      },
+      {
+        "file": "components/feedback/feedback.ts",
+        "hash": "13138406550207156863"
+      },
+      {
+        "file": "components/feedback/src/feedback.scss",
+        "hash": "16945296393946106975"
+      },
+      {
+        "file": "components/feedback/src/feedback.template.ts",
+        "hash": "8202097672805729047"
+      },
+      {
+        "file": "components/feedback/src/feedback.ts",
+        "hash": "10689597625249221274"
+      },
+      {
+        "file": "components/test-input/__stories__/test-input.stories.js",
+        "hash": "5169344535000456936"
+      },
+      {
+        "file": "components/test-input/src/test-input.template.ts",
+        "hash": "16827646721257528519"
+      },
+      {
+        "file": "components/test-input/src/test-input.ts",
+        "hash": "3323077862149473629"
+      },
+      {
+        "file": "components/test-input/test-input.ts",
+        "hash": "13984546731654741794"
+      },
+      {
+        "file": "index.ts",
+        "hash": "3041669175655231894"
+      },
+      {
+        "file": "package.json",
+        "hash": "5599794788391816530"
+      },
+      {
+        "file": "services/LlamaPlugin/LlamaPlugin.ts",
+        "hash": "2817775637469696669"
+      },
+      {
+        "file": "services/LlamaPlugin/index.ts",
+        "hash": "8197026664236892747"
+      },
+      {
+        "file": "services/SearchTypeahead/SearchTypeahead.ts",
+        "hash": "916150201733565414"
+      },
+      {
+        "file": "services/SearchTypeahead/index.ts",
+        "hash": "5769703435460527352"
+      },
+      {
+        "file": "services/feedback/FeedbackApi.ts",
+        "hash": "15102655879158410764"
+      },
+      {
+        "file": "services/feedback/index.ts",
+        "hash": "3062278518216565660"
+      }
+    ]
+  }
+}

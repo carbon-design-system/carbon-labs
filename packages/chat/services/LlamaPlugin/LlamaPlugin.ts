@@ -1,0 +1,203 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+/**
+ * @constant {string | string} key for the API calls
+ * @private
+ */
+const _bam_key = 
+//@ts-ignore
+    (import.meta.env && import.meta.env.VITE_BAM_KEY)
+
+const _watsonxai_key = 
+//@ts-ignore
+    (import.meta.env && import.meta.env.VITE_WATSONXAI_KEY)
+
+class LlamaPluginAPI {
+
+
+    static async sendMessageWatsonX(API_URL, model, temperature, userPrompt, messages, message, session, eventNumber){
+    console.log("sending to WatsonX...")
+    if(!_watsonxai_key){
+        return {"reply":"Error: No Watsonx-ai API key specified, please append your key to your .env root file in order to access the Watson service"}
+    }
+    let max_tokens =  10000;
+    let user_name = "user"
+    let agent_name = "bot"
+    let initial_prompt = `[INST] <<SYS>> You are Watson, you'll answer all my questions. <</SYS>> [/INST]
+    `;
+
+    let WATSONXAPI_URL = "https://us-south.ml.cloud.ibm.com/ml/v1-beta/generation/text?version=2023-05-29"
+    let model_id = "meta-llama/llama-2-70b-chat"
+    let parameters = {
+    "decoding_method": "greedy",
+    "max_new_tokens": max_tokens,
+    "min_new_tokens": 0,
+    "stop_sequences": [user_name ,agent_name],
+    "repetition_penalty": 1
+    }
+    let project_id = "89ba2198-b548-4b26-99f9-50d171e091a2"
+    
+
+    let history = messages.map((conv)=>{return conv.origin+":"+conv.text}).join("\n")
+
+    prompt = initial_prompt;
+
+    let completePrompt = initial_prompt + '\n' + history 
+
+    let watsonxPayload = {
+        "b64_encoded_inputs": true,
+        "hapEnabled": true,
+        "hapText": initial_prompt,
+        "locale": "en",
+        "projectId": project_id,
+        "promptData":{
+            "imput": history,
+            "modelId": model_id,
+            "modelParameters": parameters
+        }
+    }
+
+    console.log(watsonxPayload)
+    console.log(_watsonxai_key)
+
+    const requestOptions = {
+        method: 'POST',
+        mode: "cors",
+        credentials: "include",
+        headers: { 'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + _watsonxai_key},
+        body:    JSON.stringify(watsonxPayload)
+    };
+
+    try{
+        return await fetch(WATSONXAPI_URL, requestOptions).then(response => response.json()).then((response) => response);
+    } catch (error){
+        return {"reply":"Error reaching: "+WATSONXAPI_URL}
+    }
+  }
+
+
+  static async sendMessageBAM(API_URL, model, temperature, userPrompt, messages, message, session, eventNumber){
+    console.log("sending to BAM...")
+    if(!_bam_key){
+        return {"reply":"Error: No API key specified, please append your key to your .env root file in order to access the BAM service"}
+    }
+    let max_tokens =  10000;
+    let user_name = "user"
+    let agent_name = "bot"
+    let initial_prompt = `[INST] <<SYS>> You are Watson, you'll answer all my questions. <</SYS>> [/INST]
+    `;
+
+    let history = messages.map((conv)=>{return conv.origin+":"+conv.text}).join("\n")
+
+    prompt = initial_prompt;
+
+    let model_id = "meta-llama/"+model+"-70b-chat";
+
+    let completePrompt = initial_prompt + '\n' + history 
+    console.log(completePrompt)
+
+    let top_k = 50;
+    let top_p = 1.0;
+
+    let parameters = {
+            'decoding_method':   'sample',
+            'stream':            false,
+            'temperature':       temperature,
+            'top_k':             top_k,
+            'top_p':             top_p,
+            'max_new_tokens':    1024,
+            'stop_sequences':    [user_name ,agent_name ]
+            }
+
+    let bam_payload = {
+        'model_id'          : model_id,
+        'inputs'            : [completePrompt],
+        'parameters'        : parameters
+    }
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + _bam_key},
+        body:    JSON.stringify(bam_payload)
+    };
+
+    try{
+        return await fetch(API_URL, requestOptions).then(response => response.json()).then((response) => response);
+    } catch (error){
+        return {"reply":"Error reaching: "+API_URL}
+    }
+  }
+
+  /**
+   * Gets search results
+   *
+   * @param {string} model - selected model within the API
+   * @param {string} temperature - floating number ranging from 0 to 1, dictates how creative the response will be, 
+   * @param {string} userPrompt - additional behvaior prompt appended to the system prompt, given by the user as a component parameter
+   * @param {Object[]} messages - previous message history array for context
+   * @param {string} message - current message sent by the user
+   * @param {string} session -  unique ID to differentiate calls within the API
+   * @param {string} eventNumber - message count provided as an inner parameter of the chat component
+   * @returns {Promise<any>} Response data from the api
+   * @example
+   * import { LlamaPluginAPI } from '@carbon/ibmdotcom-services';
+   */
+
+  static async sendMessageLocal(API_URL, _model, temperature, userPrompt, messages, message, session, eventNumber){
+    console.log("sending to local...")
+    let max_tokens =  1000;
+    let user_name = "user";
+    let agent_name = "bot";
+    let initial_prompt = '[INST] <<SYS>> ' + userPrompt + ' If returning code of any kind you must use "```" delimiters<</SYS>> [/INST]';
+
+    let prompt = initial_prompt + messages.map((message)=>{ return message.type == "bot" ? "[INST]"+message.text+"[/INST]" : message.text}).join("\n")
+
+    let history = messages.map((conv)=>{return conv.type+":"+conv.text}).join("\n")
+
+    prompt = initial_prompt;
+
+    const reminder = "";
+    let context = history;
+    let entry = message;
+    const top_p = 0.0;
+    const frequency_penalty = 1.0;
+    const presence_penalty = 0.0;
+    const n = 1;
+    let user_id = "o.cornec@ibm.com";
+    let url = "http://localhost:5001";
+
+    var payload = {"user_id":user_id, 
+    "session":session, 
+    event:eventNumber, 
+    "prompt":prompt, 
+    "reminder":reminder, 
+    "context":context, 
+    "entry":entry, 
+    "temperature":temperature, 
+    "max_tokens":max_tokens, 
+    "top_p":top_p, "frequency_penalty":frequency_penalty, "presence_penalty":presence_penalty, "n":n, user_name: "user", agent_name: "bot", max_tries: 3};
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body:    JSON.stringify(payload)
+    };
+
+    try{
+        return await fetch(url+"/generate", requestOptions).then(response => response.json()).then((response) => response);
+    } catch (error){
+        return {"reply":"Error reaching: "+url}
+    }
+
+  }
+}
+export default LlamaPluginAPI;

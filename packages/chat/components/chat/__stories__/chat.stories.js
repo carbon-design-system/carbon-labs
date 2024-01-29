@@ -17,7 +17,12 @@ export default {
 };
 
 export const Default = {
-  render: () => html` 
+  /**
+   * Renders the template for Storybook
+   *
+   * @returns {TemplateResult<1>}
+   */
+  render: () => html`
     <c4ai-chat
       model="llama-2"
       userprompt="You are Watson, you will answer all my questions."
@@ -26,7 +31,6 @@ export const Default = {
       temperature="0.0"
       username="user"
       agentname="bot"
-      theme="light"
-    ></c4ai-chat>
-    `,
+      theme="light"></c4ai-chat>
+  `,
 };

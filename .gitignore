@@ -16,6 +16,7 @@ lib
 .env
 storybook-static
 custom-elements.json
+packages/chat/components/message
 
 # Editor directories and files
 .vscode/*

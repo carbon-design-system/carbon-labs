@@ -263,10 +263,9 @@ class LlamaPluginAPI {
     const frequency_penalty = 1.0;
     const presence_penalty = 0.0;
     const n = 1;
-    const user_id = 'o.cornec@ibm.com';
 
     const payload = {
-      user_id: user_id,
+      user_id: 'xxxxxx',
       session: session,
       event: eventNumber,
       prompt: prompt,

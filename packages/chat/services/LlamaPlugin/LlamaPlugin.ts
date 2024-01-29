@@ -229,7 +229,7 @@ class LlamaPluginAPI {
     session,
     eventNumber
   ) {
-    console.log('sending to local... '+model);
+    console.log('sending to local... ' + model);
     const max_tokens = 1000;
     const user_name = 'user';
     const agent_name = 'bot';

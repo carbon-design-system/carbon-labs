@@ -18,7 +18,7 @@ import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
 
 /**
- * Lit template for test-input
+ * Lit template for Chat interface
  *
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template

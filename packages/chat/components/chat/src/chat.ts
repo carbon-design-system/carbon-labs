@@ -107,16 +107,15 @@ export default class C4AIChat extends LitElement {
    */
   private _selectedapi = 'local';
 
-  /**
-   * updated - lit property to detect updates to the DOM tree, used to auto scroll the compoent
-   * @param{Object} changedProperties - returned inner DOM update object
+  /** lit property to detect updates to the DOM tree, used to auto scroll the compoent
+   * @param {Object} changedProperties - returned inner DOM update object
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
   }
 
   /** trigger API call upon text input
-   * @param{string} searchQuery - current message being sent
+   * @param {string} searchQuery - current message being sent
    **/
   async getResults(searchQuery) {
     let response;
@@ -160,7 +159,7 @@ export default class C4AIChat extends LitElement {
   }
 
   /** handle user inputs inside the input field, trigger a search upon an 'enter' key down event
-   * @param{event} event - lit event sent by the the text input object within the chat
+   * @param {event} event - lit event sent by the the text input object within the chat
    **/
   _handleInput(event) {
     const { value } = event.target;
@@ -171,7 +170,7 @@ export default class C4AIChat extends LitElement {
   }
 
   /** handle test selection to streamline API selection (will be removed soon once CORS errors are dealt with)
-   * @param{event} event - lit event sent by the the text input object within the chat
+   * @param {event} event - lit event sent by the the text input object within the chat
    **/
   _handleAPIselection(event) {
     console.log(event);
@@ -238,7 +237,7 @@ export default class C4AIChat extends LitElement {
   }
 
   /** check the returned model response for a specified code delimiter, split and package the string into multiple messages of type 'text' or 'code'
-   * @param{string} string - returned API call response
+   * @param {string} string - returned API call response
    **/
   _checkForCode(string) {
     console.log(string);
@@ -299,9 +298,9 @@ export default class C4AIChat extends LitElement {
   }
 
   /** handle hover event on any message, open up feedback buttons
-   * @param{Number} index - index of message within the messages array
-   * @param{event} event - lit hover event
-   * @param{string} type - type of message being hovered upon
+   * @param {Number} index - index of message within the messages array
+   * @param {event} event - lit hover event
+   * @param {string} type - type of message being hovered upon
    **/
   _handleHoverIn(index, event, type) {
     console.log(index);
@@ -316,9 +315,9 @@ export default class C4AIChat extends LitElement {
   }
 
   /** handle hover event on any message, open up feedback buttons
-   * @param{Number} index - index of message within the messages array
-   * @param{event} event - lit hover event
-   * @param{string} type - type of message being hovered upon
+   * @param {Number} index - index of message within the messages array
+   * @param {event} event - lit hover event
+   * @param {string} type - type of message being hovered upon
    **/
   _handleHoverOut(index, event, type) {
     const object = event.target;
@@ -356,8 +355,8 @@ export default class C4AIChat extends LitElement {
   }
 
   /** editing function when a user click the edit button
-   * @param{event} event - lit click event
-   * @param{Number} index - selected message index within the messages array
+   * @param {event} event - lit click event
+   * @param {Number} index - selected message index within the messages array
    **/
   _handleEdit(event, index) {
     console.log(event);
@@ -369,10 +368,10 @@ export default class C4AIChat extends LitElement {
   }
 
   /** feedback function when a user clicks the feedback button
-   * @param{event} event - lit click event
-   * @param{Number} index - selected message index within the messages array
-   * @param{string} type - type of selected div
-   * @param{string} message - string text inside div
+   * @param {event} event - lit click event
+   * @param {Number} index - selected message index within the messages array
+   * @param {string} type - type of selected div
+   * @param {string} message - string text inside div
    **/
   _handleFeedback(event, index, type, message) {
     const url = this.feedbackURL;

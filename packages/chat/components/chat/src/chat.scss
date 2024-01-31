@@ -1,0 +1,169 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '../../../../../globals/scss/vars' as *;
+
+@use '@carbon/styles/scss/theme' as *;
+
+:host(#{$c4ai-prefix}-chat) {
+  position: relative;
+  display: block;
+  block-size: 100%;
+  font-family: 'IBM Plex Sans', sans-serif;
+  inline-size: 420px;
+  max-block-size: 500px;
+  min-block-size: 500px;
+
+  .#{$c4ai-prefix}--chat-container {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    border-radius: 8px;
+    block-size: 100%;
+    inline-size: 420px;
+    max-block-size: 500px;
+    min-block-size: 500px;
+  }
+
+  .#{$c4ai-prefix}--chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #262626;
+    border-block-end: 1px solid #393939;
+
+    .#{$c4ai-prefix}--chat-header-icons {
+      display: flex;
+      gap: 0;
+      margin-inline-start: auto;
+    }
+
+    .#{$c4ai-prefix}--chat-header-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      block-size: 40px;
+      inline-size: 40px;
+    }
+
+    .#{$c4ai-prefix}--chat-header-icon svg {
+      fill: #f4f4f4;
+    }
+
+    .#{$c4ai-prefix}--chat-header-icon:hover {
+      background: #f4f4f4;
+    }
+
+    .#{$c4ai-prefix}--chat-header-icon:hover svg {
+      fill: #1b1b1b;
+    }
+
+    .#{$c4ai-prefix}--chat-header-icon-slug {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom right, #ffffff, #8a8a8a);
+      block-size: 40px;
+      inline-size: 40px;
+    }
+
+    .#{$c4ai-prefix}--chat-header-icon-slug svg {
+      fill: #1b1b1b;
+    }
+  }
+
+  .#{$c4ai-prefix}--chat-messages {
+    flex: 1;
+    background: linear-gradient(to bottom, #272727 80%, #2d3c55);
+    overflow-y: auto;
+  }
+
+  .#{$c4ai-prefix}--chat-footer {
+    display: flex;
+    align-items: center;
+    background: #272727;
+    block-size: 40px;
+    inline-size: 100%;
+
+    .#{$c4ai-prefix}--chat-footer-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      block-size: 40px;
+      inline-size: 40px;
+    }
+
+    .#{$c4ai-prefix}--chat-footer-button svg {
+      block-size: 20px;
+      fill: #8d8d8d;
+      inline-size: 20px;
+    }
+
+    .#{$c4ai-prefix}--chat-footer-button:hover svg {
+      fill: #f4f4f4;
+    }
+
+    .#{$c4ai-prefix}--chat-search-query {
+      flex: 3;
+      padding: 0;
+      border: none;
+      background: none;
+      block-size: 40px;
+      color: #f4f4f4;
+      font-size: 13px;
+    }
+
+    .#{$c4ai-prefix}--chat-search-query:focus {
+      outline: none;
+    }
+
+    .#{$c4ai-prefix}--chat-search-query::placeholder {
+      color: #c6c6c6;
+    }
+  }
+
+  .#{$c4ai-prefix}--chat-loading-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    background-color: #78a9ff;
+    block-size: 8px;
+    inline-size: 100%;
+  }
+  @media screen and (prefers-reduced-motion: reduce) {
+    .#{$c4ai-prefix}--chat-loading-bar {
+      position: absolute;
+      animation: none;
+      background-color: #4589ff;
+      block-size: 100%;
+      inset-block-start: 0;
+    }
+  }
+
+  .#{$c4ai-prefix}--chat-loading-bar {
+    position: absolute;
+    animation: loading-animation 1000ms linear infinite;
+    background-color: #4589ff;
+    block-size: 100%;
+    inset-block-start: 0;
+  }
+
+  @keyframes loading-animation {
+    0%,
+    100% {
+      inline-size: 0;
+    }
+
+    50% {
+      inline-size: 100%;
+    }
+  }
+
+  .#{$c4ai-prefix}--chat-hidden {
+    display: none;
+  }
+}

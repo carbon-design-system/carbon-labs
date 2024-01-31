@@ -1,0 +1,194 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '../../../../../globals/scss/vars' as *;
+
+@use '@carbon/styles/scss/theme' as *;
+
+:host(#{$c4ai-prefix}--chat-message) {
+  position: relative;
+  display: block;
+
+  border-radius: 10px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  padding-block-end: 16px;
+  padding-inline: 16px 24px;
+
+  .#{$c4ai-prefix}--chat-message-container {
+    display: inline-flex;
+    padding: 5px;
+    inline-size: 100%;
+  }
+
+  .#{$c4ai-prefix}--chat-message-bot-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom right, #aaaaaa, #000000);
+    block-size: 24px;
+    inline-size: 24px;
+
+    svg {
+      block-size: 20px;
+      fill: #fafafa;
+      inline-size: 20px;
+    }
+  }
+
+  .#{$c4ai-prefix}--chat-message-user-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #78a9ff;
+    block-size: 24px;
+    color: #f4f4f4;
+    inline-size: 24px;
+
+    svg {
+      block-size: 14px;
+      fill: #fafafa;
+      inline-size: 14px;
+    }
+  }
+
+  .#{$c4ai-prefix}--chat-message-user-message {
+    color: #c6c6c6;
+  }
+
+  .#{$c4ai-prefix}--chat-message-bot-message {
+    color: #e0e0e0;
+  }
+
+  .#{$c4ai-prefix}--chat-message-content {
+    overflow: hidden;
+    max-inline-size: 100%;
+    padding-block-start: 7px;
+    padding-inline-start: 10px;
+  }
+
+  .#{$c4ai-prefix}--chat-message-timestamp {
+    color: #8d8d8d;
+    font-size: 75%;
+  }
+
+  .#{$c4ai-prefix}--chat-message-response {
+    max-inline-size: 100%;
+    padding-block: 12px 6px;
+    padding-inline-end: 12px;
+  }
+
+  .#{$c4ai-prefix}--chat-message-piece {
+    padding-block-end: 12px;
+  }
+
+  .#{$c4ai-prefix}--chat-message-subsection-text {
+    line-height: 20px;
+  }
+
+  .#{$c4ai-prefix}--chat-message-subsection-code {
+    overflow: auto;
+    padding: 10px;
+    border: 1px solid #393939;
+    border-radius: 8px;
+    background-color: #1d1d1d;
+    color: #a9a9a9;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 24px;
+    max-block-size: 130px;
+    max-inline-size: 100%;
+    white-space: pre-line;
+  }
+
+  .#{$c4ai-prefix}--chat-message-subsection-error {
+    padding: 10px;
+    border: 1px solid #ff4444;
+    border-radius: 8px;
+    color: #ff4444;
+  }
+
+  .#{$c4ai-prefix}--chat-message-subsection-url {
+    .#{$c4ai-prefix}--chat-message-url-card {
+      box-sizing: border-box;
+      padding: 16px;
+      border: 1px solid #c6c6c6;
+      border-radius: 8px;
+      background: #f4f4f4;
+      color: #0f62fe;
+      inline-size: 100%;
+    }
+
+    .#{$c4ai-prefix}--chat-message-url-card-title {
+      overflow: hidden;
+      block-size: 60px;
+      color: #161616;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .#{$c4ai-prefix}--chat-message-url-card-link-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    a {
+      color: #0f62fe;
+      text-decoration: none;
+    }
+
+    .#{$c4ai-prefix}--chat-message-url-card-icon svg {
+      fill: #0f62fe;
+    }
+  }
+
+  .#{$c4ai-prefix}--chat-message-subsection-img {
+    overflow: hidden;
+    border: 1px solid #393939;
+    border-radius: 8px;
+    inline-size: 80%;
+  }
+
+  .#{$c4ai-prefix}--chat-message-img-card {
+    overflow: hidden;
+    inline-size: 100%;
+  }
+
+  .#{$c4ai-prefix}--chat-message-img-card img {
+    display: block;
+    block-size: auto;
+    inline-size: 100%;
+  }
+
+  .#{$c4ai-prefix}--chat-message-dropdown {
+    inline-size: 100%;
+    opacity: 1;
+  }
+
+  .#{$c4ai-prefix}--chat-message-small-button {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+
+    background: none;
+    cursor: pointer;
+
+    svg {
+      block-size: 16px;
+      color: #a8a8a8;
+      fill: #a8a8a8;
+      inline-size: 16px;
+    }
+
+    svg:hover {
+      color: #f4f4f4;
+      fill: #f4f4f4;
+    }
+  }
+}

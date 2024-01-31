@@ -13,8 +13,6 @@ import { LlamaPluginAPI } from '../../../services/LlamaPlugin/index.js';
 // @ts-ignore
 import styles from './chat.scss?inline';
 
-//const { stablePrefix: c4aiPrefix } = settings;
-
 /**
  * Input component using search typeahead api
  */
@@ -61,6 +59,12 @@ export default class C4AIChat extends LitElement {
   apiURL;
 
   /**
+   * string provided through playground for testing, otherwise .env is preferred
+   */
+  @property({ type: String, attribute: 'api-key' })
+  apiKey;
+
+  /**
    * string denoting which model to use, only 'llama-2' is available currently
    */
   @property({ type: String, attribute: 'feedback-url' })
@@ -81,20 +85,20 @@ export default class C4AIChat extends LitElement {
   /**
    * string denoting the user name, used for internal logic in the server to differentiate bot responses and user reseponses. default: 'user' but should be the user's real name based on IBM ID or any other data available
    */
-  @property({ type: String, attribute: 'username' })
-  username;
+  @property({ type: String, attribute: 'user-name' })
+  userName;
 
   /**
    * string denoting the bot name, default: 'bot' but can be changed to 'Watson' or 'client assistant' or any other name
    */
-  @property({ type: String, attribute: 'agentname' })
-  agentname;
+  @property({ type: String, attribute: 'agent-name' })
+  agentName;
 
   /**
    * string denoting the unique behavior of the model designated by the user, appended to the private system prompt
    */
-  @property({ type: String, attribute: 'userprompt' })
-  userprompt;
+  @property({ type: String, attribute: 'user-prompt' })
+  userPrompt;
 
   /**
    * string denoting whether to use a light of dark theme
@@ -103,15 +107,57 @@ export default class C4AIChat extends LitElement {
   theme;
 
   /**
+   * TESTING: case number to trigger auto generation
+   */
+  @property({ type: String, attribute: 'sample-query' })
+  sampleQuery;
+
+  /**
    * TEST OPTION FOR API CONNECTIONS
    */
-  private _selectedapi = 'local';
+  private _selectedApi = 'local';
 
-  /** lit property to detect updates to the DOM tree, used to auto scroll the compoent
+  /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
    * @param {Object} changedProperties - returned inner DOM update object
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
+    if (changedProperties.has('sampleQuery')) {
+      this.initializeExamples();
+    }
+  }
+
+  /** Initialize examples
+   */
+  initializeExamples() {
+    this._messages = [];
+    switch (this.sampleQuery) {
+      case 'Greetings':
+        this._messages.push({
+          text: 'Greetings, how may I help you today?',
+          origin: this.agentName,
+          hasError: false,
+          time: this._getCurrentTime(),
+        });
+        break;
+      case 'Python code with images':
+        this._messages.push({
+          text: 'Give me a function in python to find if a number is prime, then show me two Ulam spirals and annotate them.',
+          origin: this.userName,
+          hasError: false,
+          time: this._getCurrentTime(),
+        });
+        this._messages.push({
+          text: "Certainly, here's how to check if a number is prime in Python:\n```from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n```Source: https://www.geeksforgeeks.org/python-program-to-check-whether-a-number-is-prime-or-not/\nAnd here some sample images using Prime numbers to display Ulam Spirals taken from Wikipedia:\nhttps://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Ulam_spiral_10x.png/402px-Ulam_spiral_10x.png\nUlam spiral of size 201×201. Black dots represent prime numbers. Diagonal, vertical, and horizontal lines with a high density of prime numbers are clearly visible.\nhttps://upload.wikimedia.org/wikipedia/commons/e/e0/Randomly_black_odd_numbers.png\nFor comparison, a spiral with random odd numbers colored black (at the same density of primes in a 200x200 spiral).\n\nWhat else may I do for you?",
+          origin: this.agentName,
+          hasError: false,
+          time: this._getCurrentTime(),
+        });
+        break;
+    }
+    this._queryInProgress = false;
+    this.requestUpdate();
+    this._updateScroll();
   }
 
   /** trigger API call upon text input
@@ -119,36 +165,39 @@ export default class C4AIChat extends LitElement {
    **/
   async getResults(searchQuery) {
     let response;
-    if (this._selectedapi == 'local') {
+    if (this._selectedApi == 'local' || this.apiKey !== null) {
       response = await LlamaPluginAPI.sendMessageLocal(
         'http://localhost:5001',
+        this.apiKey,
         this.model,
         this.temperature,
-        this.userprompt,
+        this.userPrompt,
         this._messages,
         searchQuery,
         this._session,
         this._eventNumber
       );
     }
-    if (this._selectedapi == 'bam') {
+    if (this._selectedApi == 'bam') {
       response = await LlamaPluginAPI.sendMessageBAM(
         this.apiURL,
+        this.apiKey,
         this.model,
         this.temperature,
-        this.userprompt,
+        this.userPrompt,
         this._messages,
         searchQuery,
         this._session,
         this._eventNumber
       );
     }
-    if (this._selectedapi == 'watsonx-ai') {
+    if (this._selectedApi == 'watsonx-ai') {
       response = await LlamaPluginAPI.sendMessageWatsonX(
         'https://us-south.ml.cloud.ibm.com/ml/v1-beta/generation/text?version=2023-05-29',
+        this.apiKey,
         this.model,
         this.temperature,
-        this.userprompt,
+        this.userPrompt,
         this._messages,
         searchQuery,
         this._session,
@@ -176,7 +225,7 @@ export default class C4AIChat extends LitElement {
     console.log(event);
     const target = event.target.value;
     console.log(target);
-    this._selectedapi = target.value;
+    this._selectedApi = target.value;
   }
 
   /** send in the latest user message to the api, package it within the messages array and update the DOM
@@ -186,8 +235,8 @@ export default class C4AIChat extends LitElement {
     this._messageText = '';
     this._messages.push({
       text: value,
-      origin: this.username,
-      showButtons: false,
+      origin: this.userName,
+      hasError: false,
       time: this._getCurrentTime(),
     });
     this._queryInProgress = true;
@@ -196,27 +245,12 @@ export default class C4AIChat extends LitElement {
 
     this.getResults(value)
       .then((res) => {
-        console.log(res);
-        const reply = this._checkForCode(res.reply.split('\nundefined')[0]);
-        if (reply.length == 0 || res.reply == 'undefined') {
-          this._messages.push({
-            text: 'Error reaching the server, try again',
-            origin: this.agentname,
-            showButtons: false,
-            style: 'error',
-            time: this._getCurrentTime(),
-          });
-        } else {
-          for (const subreply of reply) {
-            this._messages.push({
-              text: subreply.text,
-              origin: this.agentname,
-              showButtons: false,
-              style: subreply.type,
-              time: this._getCurrentTime(),
-            });
-          }
-        }
+        this._messages.push({
+          text: res.reply,
+          origin: this.agentName,
+          hasError: false,
+          time: this._getCurrentTime(),
+        });
         this._queryInProgress = false;
         this.requestUpdate();
         this._updateScroll();
@@ -225,9 +259,8 @@ export default class C4AIChat extends LitElement {
         console.log(error);
         this._messages.push({
           text: 'Error reaching the model server, try again',
-          origin: this.agentname,
-          showButtons: false,
-          style: 'error',
+          origin: this.agentName,
+          hasError: true,
           time: this._getCurrentTime(),
         });
         this._queryInProgress = false;
@@ -236,42 +269,6 @@ export default class C4AIChat extends LitElement {
       });
   }
 
-  /** check the returned model response for a specified code delimiter, split and package the string into multiple messages of type 'text' or 'code'
-   * @param {string} string - returned API call response
-   **/
-  _checkForCode(string) {
-    console.log(string);
-    console.log(string.includes('```'));
-    if (!string.includes('```')) {
-      return [{ type: 'text', text: string }];
-    }
-    const strings = string.split('\n');
-    let mode = 'text';
-    const splitStrings: any[] = [];
-    let currentString: any[] = [];
-    let toggler = false;
-    for (const ss of strings) {
-      if (ss == '```' && mode == 'text') {
-        mode = 'code';
-        toggler = true;
-      } else if (ss == '```' && mode == 'code') {
-        mode = 'text';
-        toggler = true;
-      }
-      if (toggler) {
-        let subtype = 'text';
-        if (mode == 'text') {
-          subtype = 'code';
-        }
-        splitStrings.push({ type: subtype, text: currentString.join('\n') });
-        currentString = [];
-      } else {
-        currentString.push(ss);
-      }
-      toggler = false;
-    }
-    return splitStrings;
-  }
   /**
    * Set the message text value on input
    * @param {Object} event - event object
@@ -297,93 +294,15 @@ export default class C4AIChat extends LitElement {
     return currentTime;
   }
 
-  /** handle hover event on any message, open up feedback buttons
-   * @param {Number} index - index of message within the messages array
-   * @param {event} event - lit hover event
-   * @param {string} type - type of message being hovered upon
-   **/
-  _handleHoverIn(index, event, type) {
-    console.log(index);
-    const object = event.target;
-    if (object.className == 'message-container') {
-      const dropdown = object.parentElement.querySelector(
-        '.' + type + '-dropdown'
-      );
-      dropdown.style.height = '38px';
-      //this.requestUpdate();
-    }
-  }
-
-  /** handle hover event on any message, open up feedback buttons
-   * @param {Number} index - index of message within the messages array
-   * @param {event} event - lit hover event
-   * @param {string} type - type of message being hovered upon
-   **/
-  _handleHoverOut(index, event, type) {
-    const object = event.target;
-    //let target = event.target.firstElementChild;
-    const relatedTarget = event.relatedTarget;
-    console.log(index);
-
-    if (
-      relatedTarget &&
-      relatedTarget.className !== 'user-dropdown' &&
-      relatedTarget.className !== 'bot-dropdown' &&
-      relatedTarget.className !== 'message-container' &&
-      relatedTarget.className !== 'message-icon' &&
-      relatedTarget.className !== 'message-text' &&
-      relatedTarget.className !== 'small-button'
-    ) {
-      const dropdown = object.parentElement.querySelector(
-        '.' + type + '-dropdown'
-      );
-      dropdown.style.height = '0px';
-      //this.requestUpdate();
-    }
-  }
-
   /** auto-scroll chat-messages div when a new message has appeared
    **/
   _updateScroll() {
-    const scrollDiv = this.shadowRoot?.querySelector('.chat-messages');
+    const scrollDiv = this.shadowRoot?.querySelector('.c4ai--chat-messages');
     setTimeout(() => {
       scrollDiv?.scrollTo({
         top: scrollDiv?.scrollHeight,
         behavior: 'smooth',
       });
     }, 200);
-  }
-
-  /** editing function when a user click the edit button
-   * @param {event} event - lit click event
-   * @param {Number} index - selected message index within the messages array
-   **/
-  _handleEdit(event, index) {
-    console.log(event);
-    console.log(index);
-    /*let parent = event.target.parentElement;
-    let textDiv = parent.querySelector(".message-text");
-    console.log(event);
-    console.log(index);*/
-  }
-
-  /** feedback function when a user clicks the feedback button
-   * @param {event} event - lit click event
-   * @param {Number} index - selected message index within the messages array
-   * @param {string} type - type of selected div
-   * @param {string} message - string text inside div
-   **/
-  _handleFeedback(event, index, type, message) {
-    const url = this.feedbackURL;
-    const requestOptions = {
-      type: type,
-      id: index,
-      message: message,
-    };
-    console.log(event);
-    console.log(url);
-    console.log(requestOptions);
-    /*fetch(url, requestOptions).then(response => response.json())
-    .then((response) => {console.log(response)});*/
   }
 }

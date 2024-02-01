@@ -131,10 +131,39 @@ export default class C4AIChat extends LitElement {
    */
   initializeExamples() {
     this._messages = [];
+    this.requestUpdate();
     switch (this.sampleQuery) {
       case 'Greetings':
         this._messages.push({
           text: 'Greetings, how may I help you today?',
+          origin: this.agentName,
+          hasError: false,
+          time: this._getCurrentTime(),
+        });
+        break;
+      case 'List of flowers':
+        this._messages.push({
+          text: 'Can you give me a list of flower images?',
+          origin: this.userName,
+          hasError: false,
+          time: this._getCurrentTime(),
+        });
+        this._messages.push({
+          text: 'Of course, here is a list of flowers:\nCosmos: https://bouqs.com/blog/wp-content/uploads/2019/05/20_summer-cosmos.jpg Dahlia: https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg Zinnia: https://bouqs.com/blog/wp-content/uploads/2023/06/zinnia-gbcbfedd94_1280.jpg Chrysanthemum: https://bouqs.com/blog/wp-content/uploads/2021/09/chrysanthemum-5668882_1280.jpg Celosia: https://bouqs.com/blog/wp-content/uploads/2021/09/celosia-7299458_1280.jpg Sun flower: https://bouqs.com/blog/wp-content/uploads/2021/05/sunflower-fields.jpg Snapdragon: https://bouqs.com/blog/wp-content/uploads/2021/09/snapdragon-20809_1280.jpg Strawflower: https://bouqs.com/blog/wp-content/uploads/2021/09/strawflower-362280_1280.jpg Source: https://bouqs.com/blog/types-of-flowers-annual-perennial-biennial/',
+          origin: this.agentName,
+          hasError: false,
+          time: this._getCurrentTime(),
+        });
+        break;
+      case 'Chessboard in HTML/CSS':
+        this._messages.push({
+          text: 'How do I make a Chessboard in HTML/CSS ?',
+          origin: this.userName,
+          hasError: false,
+          time: this._getCurrentTime(),
+        });
+        this._messages.push({
+          text: 'You can make a chessboard in HTML/CSS by using a table element and applying CSS styling to it. Here is an example of how you can create a chessboard using these methods:\n \nHTML:\n```html\n<table>\n  <tbody>\n    <tr>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n    </tr>\n    <tr>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n    </tr>\n    <tr>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n    </tr>\n    <tr>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n    </tr>\n    <tr>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n    </tr>\n    <tr>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n    </tr>\n    <tr>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n    </tr>\n  </tbody>\n</table>\n```\nCSS:\n```css\ntable {\n  border-collapse: collapse;\n}\n \ntd {\n  width: 50px;\n  height: 50px;\n}\n \n.black {\n  background-color: #000;\n}\n \n.white {\n  background-color: #fff;\n}\n```\nThis will create a table with 8 rows and 8 columns, with each cell alternating between black and white. You can adjust the width and height of the cells as needed.\n \nNote: The `border-collapse: collapse;` property is used to remove the spacing between the table cells.',
           origin: this.agentName,
           hasError: false,
           time: this._getCurrentTime(),
@@ -148,7 +177,7 @@ export default class C4AIChat extends LitElement {
           time: this._getCurrentTime(),
         });
         this._messages.push({
-          text: "Certainly, here's how to check if a number is prime in Python:\n```from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n```Source: https://www.geeksforgeeks.org/python-program-to-check-whether-a-number-is-prime-or-not/\nAnd here some sample images using Prime numbers to display Ulam Spirals taken from Wikipedia:\nhttps://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Ulam_spiral_10x.png/402px-Ulam_spiral_10x.png\nUlam spiral of size 201×201. Black dots represent prime numbers. Diagonal, vertical, and horizontal lines with a high density of prime numbers are clearly visible.\nhttps://upload.wikimedia.org/wikipedia/commons/e/e0/Randomly_black_odd_numbers.png\nFor comparison, a spiral with random odd numbers colored black (at the same density of primes in a 200x200 spiral).\n\nWhat else may I do for you?",
+          text: "Certainly, here's how to check if a number is prime in Python:\n```from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n  #base condition\n  if itr == 1:\n    return True\n  #if given number divided by itr or not\n  if number % itr == 0:\n    return False\n  #Recursive function Call\n  if Prime(number,itr-1) == False:\n    return False\n  return True\n```Source: https://www.geeksforgeeks.org/python-program-to-check-whether-a-number-is-prime-or-not/\nAnd here some sample images using Prime numbers to display Ulam Spirals taken from Wikipedia:\nhttps://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Ulam_spiral_10x.png/402px-Ulam_spiral_10x.png\nUlam spiral of size 201×201. Black dots represent prime numbers. Diagonal, vertical, and horizontal lines with a high density of prime numbers are clearly visible.\nhttps://upload.wikimedia.org/wikipedia/commons/e/e0/Randomly_black_odd_numbers.png\nFor comparison, a spiral with random odd numbers colored black (at the same density of primes in a 200x200 spiral).\n\nWhat else may I do for you?",
           origin: this.agentName,
           hasError: false,
           time: this._getCurrentTime(),

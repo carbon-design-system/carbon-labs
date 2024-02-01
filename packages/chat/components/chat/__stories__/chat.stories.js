@@ -31,7 +31,13 @@ const controls = {
   sampleQuery: {
     control: 'select',
     description: 'Premade demo queries:',
-    options: ['None', 'Greetings', 'Python code with images'],
+    options: [
+      'None',
+      'Python code with images',
+      'Greetings',
+      'List of flowers',
+      'Chessboard in HTML/CSS',
+    ],
   },
   apiUrl: {
     control: 'text',

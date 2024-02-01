@@ -111,6 +111,7 @@ export default class message extends LitElement {
   _parseText() {
     const returnedText = this.rawText;
     const subMessages: { content: any; type: string }[] = [];
+    console.log(returnedText);
 
     if (this.errorState == false) {
       subMessages.push({ content: returnedText, type: 'error' });
@@ -138,8 +139,8 @@ export default class message extends LitElement {
         }
       }
     }
-    console.log(this._messageElements);
     this._messageElements = subMessages;
+    console.log(this._messageElements);
     this.requestUpdate();
   }
 

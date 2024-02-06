@@ -173,6 +173,7 @@ export default class message extends LitElement {
       }
     }
     this._messageElements = subMessages;
+    console.log(this._messageElements);
     this.requestUpdate();
   }
 

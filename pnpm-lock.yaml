@@ -8,18 +8,12 @@ importers:
 
   .:
     dependencies:
-      '@babel/runtime':
-        specifier: ^7.23.2
-        version: 7.23.2
       '@carbon/styles':
         specifier: ^1.45.0
         version: 1.45.0(sass@1.70.0)
       '@carbon/web-components':
         specifier: 2.1.2
         version: 2.1.2(sass@1.70.0)
-      lit:
-        specifier: ^3.0.0
-        version: 3.0.2
     devDependencies:
       '@carbon/grid':
         specifier: ^11.20.0
@@ -53,7 +47,7 @@ importers:
         version: 0.9.0
       '@lit/react':
         specifier: ^1.0.1
-        version: 1.0.1(@types/react@18.2.37)
+        version: 1.0.3(@types/react@18.2.37)
       '@open-wc/testing':
         specifier: ^4.0.0
         version: 4.0.0
@@ -3575,8 +3569,8 @@ packages:
   /@lit-labs/ssr-dom-shim@1.1.2:
     resolution: {integrity: sha512-jnOD+/+dSrfTWYfSXBXlo5l5f0q1UuJo3tkbMDCYA2lKUYq79jaxqtGEvnRoh049nt1vdo1+45RinipU6FGY2g==}
 
-  /@lit/react@1.0.1(@types/react@18.2.37):
-    resolution: {integrity: sha512-io4yIAl9ZFY5coI2ix+nSly4rmEKLFyZM66mxOr9xvxDqwtjdVU/g6Tchb7bo+A23+5Uu/1RZpLCpvHLCGi0rw==}
+  /@lit/react@1.0.3(@types/react@18.2.37):
+    resolution: {integrity: sha512-RGoPMrAPbFjQFXFbfmYdotw000DyChehTim+d562HRXvFGw//KxouI8jNOcc3Kw/1uqUA1SJqXFtKKxK0NUrww==}
     peerDependencies:
       '@types/react': 17 || 18
     dependencies:

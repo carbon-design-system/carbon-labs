@@ -8,7 +8,7 @@
  */
 
 import { LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 // @ts-ignore
 import styles from './message.scss?inline';
 
@@ -23,10 +23,22 @@ export default class message extends LitElement {
   private _messageElements: { content: any; type: string }[] = [];
 
   /**
+   * User-imported message sub-elements object, parsing is done on rawText here if none is provided
+   */
+  @property({ type: Object, attribute: 'sub-elements', reflect: true })
+  subElements;
+
+  /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
    */
   @property({ type: String, attribute: 'raw-text', reflect: true })
   rawText;
+
+  /**
+   * string variable edited by textArea
+   */
+  @state()
+  _editedMessage = '';
 
   /**
    * type property dictating if origin is from user or bot
@@ -47,15 +59,44 @@ export default class message extends LitElement {
   index;
 
   /**
-   * index indicating position in message list
+   * boolean error state indicating if an error occured at any time during fetching or parsing
    */
-  @property({ type: Boolean, attribute: 'error-state', reflect: true })
+  @property({ type: Boolean, attribute: 'error-state' })
   errorState;
+
+  /**
+   * boolean error state indicating if an error occured at any time during fetching or parsing
+   */
+  @property({ type: Boolean, attribute: 'loading-state', reflect: true })
+  loadingState;
+
+  /**
+   * editing state to replace text field with a textarea
+   */
+  @state()
+  _editing = false;
 
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
-    this._parseText();
+    if (this.loadingState) {
+      this._messageElements = [{ content: '', type: 'loading' }];
+      this.requestUpdate();
+      return;
+    }
+
+    if (this.errorState) {
+      this._messageElements = [{ content: this.rawText, type: 'error' }];
+      this.requestUpdate();
+      return;
+    }
+
+    if (this.subElements == null) {
+      this._parseText();
+    } else {
+      this._messageElements = this.subElements;
+      this.requestUpdate();
+    }
   }
 
   /** check the returned model response for a specified code delimiter, split and package the string into multiple messages of type 'text' or 'code'
@@ -111,14 +152,6 @@ export default class message extends LitElement {
   _parseText() {
     const returnedText = this.rawText;
     const subMessages: { content: any; type: string }[] = [];
-    console.log(returnedText);
-
-    if (this.errorState == false) {
-      subMessages.push({ content: returnedText, type: 'error' });
-      this._messageElements = subMessages;
-      this.requestUpdate();
-      return;
-    }
 
     const codeSplitter = this._checkForCode(returnedText);
 
@@ -140,7 +173,6 @@ export default class message extends LitElement {
       }
     }
     this._messageElements = subMessages;
-    console.log(this._messageElements);
     this.requestUpdate();
   }
 
@@ -151,12 +183,16 @@ export default class message extends LitElement {
     const splitParts: { content: any; type: string }[] = [];
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     const imageRegex = /\.(png|jpg|jpeg|gif)$/i;
+    const videoRegex = /\.(mp4|webm|mkv|mov|wmv|avi)$/i;
     const segments = inputText.split(urlRegex);
     for (const segment of segments) {
       const isURL = urlRegex.test(segment);
       const isImageURL = isURL && imageRegex.test(segment);
+      const isvideoURL = isURL && videoRegex.test(segment);
 
-      if (isImageURL) {
+      if (isvideoURL) {
+        splitParts.push({ content: segment, type: 'video' });
+      } else if (isImageURL) {
         splitParts.push({ content: segment, type: 'img' });
       } else if (isURL) {
         splitParts.push({ content: segment, type: 'url' });
@@ -168,12 +204,62 @@ export default class message extends LitElement {
   }
 
   /** editing function when a user click the edit button
-   * @param {event} event - lit click event
-   * @param {Number} index - selected message index within the messages array
    **/
-  _handleEdit(event, index) {
-    console.log(event);
-    console.log(index);
+  _handleEdit() {
+    this._editing = true;
+    this.requestUpdate();
+  }
+
+  /** record edited changes on message
+   * @param {event} event - lit input event
+   **/
+  _setEditedMessage(event) {
+    this._editedMessage = event.target.value;
+  }
+
+  /** editing function when a user click the edit button
+   **/
+  _cancelEdit() {
+    this._editing = false;
+    this._editedMessage = '';
+    this.requestUpdate();
+  }
+
+  /** editing function when a user click the edit button
+   **/
+  _validateEdit() {
+    this._editing = false;
+    this.rawText = this._editedMessage;
+    this._messageElements = [{ content: this._editedMessage, type: 'text' }];
+    const regenerationEvent = new CustomEvent('regenerate', {
+      detail: { index: this.index, message: this.rawText },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(regenerationEvent);
+    this.requestUpdate();
+  }
+
+  /** trigger regenerate response event
+   */
+  _handleRegenerate() {
+    const regenerationEvent = new CustomEvent('regenerate', {
+      detail: { index: this.index, message: null },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(regenerationEvent);
+  }
+
+  /** format text to properly display in HTML
+   * @param {string} inputText - text to be rendered in subelement
+   * @param {string} type - type of the text to be formatted such as plain text or code
+   */
+  _formatText(inputText, type) {
+    console.log(type);
+    let formattedText = inputText.replace(/\t/g, '&nbsp;&nbsp;');
+    formattedText = formattedText.replace(/\n/g, '<br>');
+    return formattedText;
   }
 
   /** feedback function when a user clicks the feedback button

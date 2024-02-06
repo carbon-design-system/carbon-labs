@@ -125,45 +125,4 @@
       color: #c6c6c6;
     }
   }
-
-  .#{$c4ai-prefix}--chat-loading-container {
-    position: relative;
-    overflow: hidden;
-    border-radius: 2px;
-    background-color: #78a9ff;
-    block-size: 8px;
-    inline-size: 100%;
-  }
-  @media screen and (prefers-reduced-motion: reduce) {
-    .#{$c4ai-prefix}--chat-loading-bar {
-      position: absolute;
-      animation: none;
-      background-color: #4589ff;
-      block-size: 100%;
-      inset-block-start: 0;
-    }
-  }
-
-  .#{$c4ai-prefix}--chat-loading-bar {
-    position: absolute;
-    animation: loading-animation 1000ms linear infinite;
-    background-color: #4589ff;
-    block-size: 100%;
-    inset-block-start: 0;
-  }
-
-  @keyframes loading-animation {
-    0%,
-    100% {
-      inline-size: 0;
-    }
-
-    50% {
-      inline-size: 100%;
-    }
-  }
-
-  .#{$c4ai-prefix}--chat-hidden {
-    display: none;
-  }
 }

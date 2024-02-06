@@ -19,46 +19,63 @@ export default {
 
 const defaultArgs = {
   sampleQuery: 'None',
-  apiUrl: 'https://cloud.ibm.com...',
-  apiKey: 'xxxxxx',
-  model: 'llama-2',
-  feedbackUrl: 'localhost:5001/feedback',
+  chosenHost: 'Local',
   userPrompt:
     'You are Watson, a helpful and polite assistant. You will answer all my questions to the best of your knowledge.',
+  apiUrl: 'http://localhost:5001/generate',
+  apiKey: '',
+  projectId: '',
+  model: 'llama-2',
+  temperature: '',
+  feedbackUrl: 'http://localhost:5001/feedback',
 };
 
 const controls = {
   sampleQuery: {
-    control: 'select',
+    control: { type: 'select' },
     description: 'Premade demo queries:',
     options: [
       'None',
+      'Moon landing',
       'Python code with images',
       'Greetings',
       'List of flowers',
       'Chessboard in HTML/CSS',
     ],
   },
-  apiUrl: {
-    control: 'text',
-    description: 'Specify custom API url:',
-  },
-  apiKey: {
-    control: 'text',
-    description: 'Specify API key:',
-  },
-  feedbackUrl: {
-    control: 'text',
-    description: 'Specify API url for feeback buttons:',
+  chosenHost: {
+    control: { type: 'select' },
+    description: 'Select between Watsonx.ai, Local or the BAM Research service',
+    options: ['Local', 'Watsonx.ai', 'BAM'],
   },
   userPrompt: {
-    control: 'text',
-    description: 'Specify additional system prompt for model:',
+    control: { type: 'text' },
+    description: 'Specify additional system prompt for model',
+  },
+  apiUrl: {
+    control: { type: 'text' },
+    description: 'Specify custom API url',
+  },
+  apiKey: {
+    control: { type: 'text' },
+    description: 'Specify API key',
+  },
+  projectId: {
+    control: { type: 'text' },
+    description: 'Specify IBM Cloud project ID (Only for Watsonx.ai)',
   },
   model: {
-    control: 'select',
-    description: 'Select model:',
+    control: { type: 'select' },
+    description: 'Select model',
     options: ['llama-2'],
+  },
+  temperature: {
+    control: { type: 'text' },
+    description: 'Specify Model temperature',
+  },
+  feedbackUrl: {
+    control: { type: 'text' },
+    description: 'Specify API url for feeback buttons',
   },
 };
 
@@ -71,10 +88,13 @@ export const Default = {
   render: () => html`
     <c4ai-chat
       model="llama-2"
-      user-prompt="You are Watson, you will answer all my questions."
-      api-url="https://bam-api.res.ibm.com/v1/generate"
-      feedback-url="https://localhost:5000/feeback"
+      user-prompt="You are Watson, you will answer all my questions to the best fo your knowledge."
+      chosen-host="local"
+      api-url="http://localhost:5001/generate"
+      api-key="xxx"
+      feedback-url="http://localhost:5001/feeback"
       temperature="0.0"
+      chosen-host="local"
       user-name="user"
       agent-name="bot"
       theme="light"
@@ -85,6 +105,11 @@ export const Default = {
 export const Playground = {
   argTypes: controls,
   args: defaultArgs,
+  parameters: {
+    controls: {
+      expanded: true,
+    },
+  },
   /**
    * Renders the template for Playground Storybook
    * @param {Object} args - arguments to be sent into the playbook
@@ -93,9 +118,21 @@ export const Playground = {
    * @param {string} args.feedbackUrl - feedback api url for buttons provided in playground
    * @param {string} args.userPrompt - user specific prompt provided in playground
    * @param {string} args.sampleQuery - preset to test and demo
+   * @param {string} args.temperature - model temperature
+   * @param {string} args.chosenHost - internal flag for packaging query
+   * @param {string} args.projectId - watsonX only, target instance ID
    * @returns {TemplateResult<1>}
    */
-  render: ({ apiUrl, apiKey, feedbackUrl, userPrompt, sampleQuery }) => html`
+  render: ({
+    apiUrl,
+    apiKey,
+    feedbackUrl,
+    userPrompt,
+    sampleQuery,
+    temperature,
+    chosenHost,
+    projectId,
+  }) => html`
     <c4ai-chat
       model="llama-2"
       user-prompt="${userPrompt}"
@@ -103,7 +140,9 @@ export const Playground = {
       api-key="${apiKey}"
       sample-query="${sampleQuery}"
       feedback-url="${feedbackUrl}"
-      temperature="0.0"
+      temperature="${temperature}"
+      chosen-host="${chosenHost}"
+      project-id="${projectId}"
       user-name="user"
       agent-name="bot"
       theme="light"

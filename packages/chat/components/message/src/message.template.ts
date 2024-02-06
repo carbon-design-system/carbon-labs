@@ -10,13 +10,15 @@
 import { html } from 'lit';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
-import AI16 from '@carbon/web-components/es/icons/AI/16';
-import User20 from '@carbon/web-components/es/icons/user/20';
-import Renew20 from '@carbon/web-components/es/icons/renew/20';
-import Edit16 from '@carbon/web-components/es/icons/edit/16';
-import ThumbsUp20 from '@carbon/web-components/es/icons/thumbs-up/20';
-import ThumbsDown20 from '@carbon/web-components/es/icons/thumbs-down/20';
-import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
+import AI16 from '@carbon/web-components/es/icons/AI/16.js';
+import User20 from '@carbon/web-components/es/icons/user/20.js';
+import Renew20 from '@carbon/web-components/es/icons/renew/20.js';
+import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
+import ThumbsUp20 from '@carbon/web-components/es/icons/thumbs-up/20.js';
+import ThumbsDown20 from '@carbon/web-components/es/icons/thumbs-down/20.js';
+import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16.js';
+import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16.js';
+import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
 
 /**
  * Lit template for message
@@ -30,8 +32,14 @@ export function messageTemplate(customElementClass) {
     origin: origin,
     timeStamp: timeStamp,
     index: index,
+    loadingState: loadingState,
+    _editing: editing,
     _handleEdit: handleEdit,
+    _cancelEdit: cancelEdit,
+    _setEditedMessage: setEditedMessage,
+    _validateEdit: validateEdit,
     _handleFeedback: handleFeedback,
+    _handleRegenerate: handleRegenerate,
     _getSiteName: getSiteName,
     _getShortenedURL: getShortenedURL,
   } = customElementClass;
@@ -78,6 +86,38 @@ export function messageTemplate(customElementClass) {
                       <img src="${message.content}" />
                     </div>
                   </div>`
+                : message.type === 'video'
+                ? html`<div
+                    class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                    <div class="${c4aiPrefix}--chat-message-video-card">
+                      <video controls>
+                        <source src="${message.content}" type="video/webm" />
+                      </video>
+                      <div class="${c4aiPrefix}--chat-message-video-title">
+                        Video Title
+                      </div>
+                    </div>
+                  </div>`
+                : message.type === 'text'
+                ? html`<div
+                    class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                    ${editing
+                      ? html`<textarea
+                          .value="${message.content}"
+                          @input="${setEditedMessage}"
+                          class="${c4aiPrefix}--chat-message-edit-area">
+${message.content}</textarea
+                        >`
+                      : message.content}
+                  </div>`
+                : message.type === 'loading'
+                ? html`<div
+                    class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                    <div class="${c4aiPrefix}--chat-message-loading-container">
+                      <div
+                        class="${c4aiPrefix}--chat-message-loading-bar"></div>
+                    </div>
+                  </div>`
                 : html`<div
                     class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
                     ${message.content}
@@ -85,39 +125,50 @@ export function messageTemplate(customElementClass) {
             `
           )}
         </div>
-        <div class="${c4aiPrefix}--chat-message-dropdown">
-          ${origin === 'user'
-            ? html` <div
-                class="${c4aiPrefix}--chat-message-small-button"
-                @click="${(e) => {
-                  handleEdit(e, index);
-                }}">
-                ${Edit16()}
-              </div>`
-            : html`
-                <div
-                  class="${c4aiPrefix}--chat-message-small-button"
-                  @click="${(e) => {
-                    handleFeedback(e, index, 'like', timeStamp);
-                  }}">
-                  ${ThumbsUp20()}
-                </div>
-                <div
-                  class="${c4aiPrefix}--chat-message-small-button"
-                  @click="${(e) => {
-                    handleFeedback(e, index, 'dislike', timeStamp);
-                  }}">
-                  ${ThumbsDown20()}
-                </div>
-                <div
-                  class="${c4aiPrefix}--chat-message-small-button"
-                  @click="${(e) => {
-                    handleEdit(e, index);
-                  }}">
-                  ${Renew20()}
-                </div>
-              `}
-        </div>
+        ${!loadingState
+          ? html`
+              <div class="${c4aiPrefix}--chat-message-dropdown">
+                ${origin === 'user'
+                  ? editing === true
+                    ? html` <div
+                          class="${c4aiPrefix}--chat-message-small-button"
+                          @click="${cancelEdit}">
+                          ${Undo16()}
+                        </div>
+                        <div
+                          class="${c4aiPrefix}--chat-message-small-button"
+                          @click="${validateEdit}">
+                          ${CheckMark16()}
+                        </div>`
+                    : html` <div
+                        class="${c4aiPrefix}--chat-message-small-button"
+                        @click="${handleEdit}">
+                        ${Edit16()}
+                      </div>`
+                  : html`
+                      <div
+                        class="${c4aiPrefix}--chat-message-small-button"
+                        @click="${(e) => {
+                          handleFeedback(e, index, 'like', timeStamp);
+                        }}">
+                        ${ThumbsUp20()}
+                      </div>
+                      <div
+                        class="${c4aiPrefix}--chat-message-small-button"
+                        @click="${(e) => {
+                          handleFeedback(e, index, 'dislike', timeStamp);
+                        }}">
+                        ${ThumbsDown20()}
+                      </div>
+                      <div
+                        class="${c4aiPrefix}--chat-message-small-button"
+                        @click="${handleRegenerate}">
+                        ${Renew20()}
+                      </div>
+                    `}
+              </div>
+            `
+          : html``}
       </div>
     </div>
   </div>`;

@@ -12,36 +12,36 @@ importers:
         specifier: ^7.23.2
         version: 7.23.2
       '@carbon/styles':
-        specifier: ^1.45.0
-        version: 1.45.0(sass@1.70.0)
+        specifier: 1.48.1
+        version: 1.48.1(sass@1.70.0)
       '@carbon/web-components':
-        specifier: 2.1.2
-        version: 2.1.2(sass@1.70.0)
+        specifier: 2.2.0
+        version: 2.2.0(sass@1.70.0)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
     devDependencies:
       '@carbon/grid':
-        specifier: ^11.20.0
-        version: 11.21.0
+        specifier: ^11.21.1
+        version: 11.21.1
       '@carbon/icon-helpers':
-        specifier: ^10.44.0
-        version: 10.45.0
+        specifier: 10.45.1
+        version: 10.45.1
       '@carbon/icons':
-        specifier: ^11.28.0
-        version: 11.30.0
+        specifier: 11.33.0
+        version: 11.33.0
       '@carbon/layout':
-        specifier: ^11.19.0
-        version: 11.20.0
+        specifier: 11.20.1
+        version: 11.20.1
       '@carbon/motion':
-        specifier: ^11.15.0
-        version: 11.16.0
+        specifier: 11.16.1
+        version: 11.16.1
       '@carbon/themes':
-        specifier: ^11.25.0
-        version: 11.27.0
+        specifier: 11.29.1
+        version: 11.29.1
       '@carbon/type':
-        specifier: ^11.24.0
-        version: 11.25.0
+        specifier: 11.25.1
+        version: 11.25.1
       '@commitlint/cli':
         specifier: ^18.0.0
         version: 18.4.1(typescript@5.2.2)
@@ -256,8 +256,8 @@ importers:
         specifier: 0.0.1-rc.1
         version: link:../utilities
       '@carbon/web-components':
-        specifier: 2.1.2
-        version: 2.1.2(sass@1.70.0)
+        specifier: 2.2.0
+        version: 2.2.0(sass@1.70.0)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -274,11 +274,11 @@ importers:
         specifier: 0.0.1-rc.1
         version: link:../utilities
       '@carbon/styles':
-        specifier: ^1.45.0
-        version: 1.45.0(sass@1.70.0)
+        specifier: 1.48.1
+        version: 1.48.1(sass@1.70.0)
       '@carbon/web-components':
-        specifier: 2.1.2
-        version: 2.1.2(sass@1.70.0)
+        specifier: 2.2.0
+        version: 2.2.0(sass@1.70.0)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -2532,27 +2532,27 @@ packages:
     resolution: {integrity: sha512-hCrfVZ6oVnPjjupelbvQX4D0i6GlZuKVverAf0LkOydXHrPjSyuEmg+czsylyCBg4r/hxtSTu91Tq6aqz/DsHg==}
     dev: false
 
-  /@carbon/grid@11.21.0:
-    resolution: {integrity: sha512-Zzhos2we+HqM0obdQgma+OvLoM9dNGq07YcLxFxrc/vEOn/D01sner6dyMMqS2y8036zIaoqVMGArSzPfoxrLA==}
+  /@carbon/grid@11.21.1:
+    resolution: {integrity: sha512-aNngNqGyJeWvu/X8anlI7N56na6+RZ0bRT3EsAtpWqnTDmG3apuXWn5skhorpPQpxEbGocbaou6Wjzt0f33Xbw==}
     dependencies:
-      '@carbon/layout': 11.20.0
+      '@carbon/layout': 11.20.1
 
-  /@carbon/icon-helpers@10.45.0:
-    resolution: {integrity: sha512-HP92JjZoccDXwucstEJ9Cx8jq2HHJM/U/vPmgfeXYIaegIGfu2zQkL+MDn/fSzIKvQ+ckK/GCrm89K/S8fbtBA==}
+  /@carbon/icon-helpers@10.45.1:
+    resolution: {integrity: sha512-B1HMJHJftzjoMaijkZ+lPkjg8Y5k1D/eLPZyOCKSaC+u2BG0LQjL7LFu4PUhVPrp5k9m8NCj2y1B4hXNi0UpCg==}
     dev: true
 
-  /@carbon/icons@11.30.0:
-    resolution: {integrity: sha512-+m5IueNAmRuXWaBZYhrJXz0KwDjh3sAeXMOh9KH6uYTzysgXT+DRQgXXBuv8xHP+Y27jbHgvw9Fhk1m6JTuy8w==}
+  /@carbon/icons@11.33.0:
+    resolution: {integrity: sha512-LV08flTWpzjtwNSLxwP6ioC1s5L/FJjpHupgCge/3DW4s6emOPSkihBxGgM7plHit3UI9aIVz9mFVsyY25X4kA==}
     dev: true
 
-  /@carbon/layout@11.20.0:
-    resolution: {integrity: sha512-G9eJE3xb/J98Id9VvTA/b4v+2i/c+IiHAhxNPc0PPpPN6C/r6U4gJsG4yPgQnbuIU42cP9L8OvCrQr0mbrCMlA==}
+  /@carbon/layout@11.20.1:
+    resolution: {integrity: sha512-l4Hh/lghptUykZ1r+6vHYGV3R8jEx2F5A3wcgUnMeAuw369/qwmy5VtTmSUqD8Krw7tsOb5v4S60FJaZLzBvXA==}
 
-  /@carbon/motion@11.16.0:
-    resolution: {integrity: sha512-gr2oijosvrbV8I8dT+s+KTAzHswQ7GE1ffgKxMWWkdg4b91hlJ0qJe1BlG7ZnaHCRpeHKS12QQgnS/dy4yx92Q==}
+  /@carbon/motion@11.16.1:
+    resolution: {integrity: sha512-e865DvKnoxg41/L3g2zaNc5+xA+OXk0dNfOmG9MpzWBMlViCYUnCYCVKuyhdT7YSbRJuBuXXsisAVIJzBkEQKQ==}
 
-  /@carbon/styles@1.45.0(sass@1.70.0):
-    resolution: {integrity: sha512-ihBjGeURX9BOyyesCQH7gAMS/BboPGXIp12gUIy0G9dBvDOjVJ3rJszF/iu/qatGMHLk0Gt53UQe2WL0i0Utvw==}
+  /@carbon/styles@1.48.1(sass@1.70.0):
+    resolution: {integrity: sha512-en2MVjRqyMPeRnmyRMPZKJGCTHkN+GlA2a7X0GNps24JP1pg1JuiB5BijPn2KmtuNhe26Vg8nKKBD01+acmCsA==}
     peerDependencies:
       sass: ^1.33.0
     peerDependenciesMeta:
@@ -2561,44 +2561,34 @@ packages:
     dependencies:
       '@carbon/colors': 11.20.0
       '@carbon/feature-flags': 0.16.0
-      '@carbon/grid': 11.21.0
-      '@carbon/layout': 11.20.0
-      '@carbon/motion': 11.16.0
-      '@carbon/themes': 11.28.0
-      '@carbon/type': 11.25.0
+      '@carbon/grid': 11.21.1
+      '@carbon/layout': 11.20.1
+      '@carbon/motion': 11.16.1
+      '@carbon/themes': 11.29.1
+      '@carbon/type': 11.25.1
       '@ibm/plex': 6.0.0-next.6
       sass: 1.70.0
     dev: false
 
-  /@carbon/themes@11.27.0:
-    resolution: {integrity: sha512-Xgl2Yxm6Cg4zxREl38rBJ6pHda/k7lfP8CLzMhpTn6lxI7o6+ufeBQTw9cafH7RVhqrEy6A5o6Gm022cIF9Cdw==}
+  /@carbon/themes@11.29.1:
+    resolution: {integrity: sha512-Urzcl7V8soDGUM4MrDbrOvmG7lhAi5KB/vr1fAhC7s8lnjqvUJoERUJE8F5TZ3pkW8hqXHtBSXszTMyUWTv9bQ==}
     dependencies:
       '@carbon/colors': 11.20.0
-      '@carbon/layout': 11.20.0
-      '@carbon/type': 11.25.0
+      '@carbon/layout': 11.20.1
+      '@carbon/type': 11.25.1
       color: 4.2.3
-    dev: true
 
-  /@carbon/themes@11.28.0:
-    resolution: {integrity: sha512-LvUFGXjsJ6csTrSjSOhkmvKHA0wcJOGchPaBrnWZB5J0UVCW+66P7lLuQBkTab7qgwRp4VgOSOkGdPPFQuchWQ==}
+  /@carbon/type@11.25.1:
+    resolution: {integrity: sha512-dNgDoiS44R192hJdTbiwvHQ3e5ReKmBxXvfZIwdy/uCOj1bvm/V+A0O9q9/GBF7Pm4+sdKKx+gxmCju97sMrrw==}
     dependencies:
-      '@carbon/colors': 11.20.0
-      '@carbon/layout': 11.20.0
-      '@carbon/type': 11.25.0
-      color: 4.2.3
-    dev: false
+      '@carbon/grid': 11.21.1
+      '@carbon/layout': 11.20.1
 
-  /@carbon/type@11.25.0:
-    resolution: {integrity: sha512-p3i5B0uANc2GwPBnbxRVg/KFMWkPV+5I52pkFCs87Bgx6T8r4jB0Y5iPPwsVn2aI5wOnDfiULwSC4JS0LCIgxA==}
-    dependencies:
-      '@carbon/grid': 11.21.0
-      '@carbon/layout': 11.20.0
-
-  /@carbon/web-components@2.1.2(sass@1.70.0):
-    resolution: {integrity: sha512-5AsKRDz8D7nc6MKiISws60NCNnyq4+PB6s7tXMael+VH0ibMe9YA9OB5gCLRpnwk1pGpy25zNTPTiB/y9JUZng==}
+  /@carbon/web-components@2.2.0(sass@1.70.0):
+    resolution: {integrity: sha512-dW5Rql8lp7fEaNrmKfvpgBkHEyZvDPWesAuy3uxQn5K5LbEOzjMxL482jEMTZ4cB1JHoz6zD7paibU6MWZvO2w==}
     dependencies:
       '@babel/runtime': 7.23.2
-      '@carbon/styles': 1.45.0(sass@1.70.0)
+      '@carbon/styles': 1.48.1(sass@1.70.0)
       flatpickr: 4.6.1
       lit: 2.8.0
       lodash-es: 4.17.21

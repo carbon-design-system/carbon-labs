@@ -10,15 +10,15 @@
 import { html } from 'lit';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
-import AI16 from '@carbon/web-components/es/icons/AI/16';
-import User20 from '@carbon/web-components/es/icons/user/20';
-import Renew20 from '@carbon/web-components/es/icons/renew/20';
-import Edit16 from '@carbon/web-components/es/icons/edit/16';
-import ThumbsUp20 from '@carbon/web-components/es/icons/thumbs-up/20';
-import ThumbsDown20 from '@carbon/web-components/es/icons/thumbs-down/20';
-import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
-import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16';
-import Undo16 from '@carbon/web-components/es/icons/undo/16';
+import AI16 from '@carbon/web-components/es/icons/AI/16.js';
+import User20 from '@carbon/web-components/es/icons/user/20.js';
+import Renew20 from '@carbon/web-components/es/icons/renew/20.js';
+import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
+import ThumbsUp20 from '@carbon/web-components/es/icons/thumbs-up/20.js';
+import ThumbsDown20 from '@carbon/web-components/es/icons/thumbs-down/20.js';
+import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16.js';
+import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16.js';
+import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
 
 /**
  * Lit template for message

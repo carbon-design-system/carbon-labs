@@ -32,6 +32,7 @@ export function chatTemplate(customElementClass) {
     _messages: messages,
     _messageText: messageText,
     _queryInProgress: queryInProgress,
+    _handleRegenerate: handleRegenerate,
   } = customElementClass;
 
   return html`<div class="${c4aiPrefix}--chat-container">
@@ -43,26 +44,33 @@ export function chatTemplate(customElementClass) {
     </div>
     <div class="${c4aiPrefix}--chat-messages">
       &nbsp;
-      ${messages.map(
-        (message, index) => html` <c4ai--chat-message
-          raw-text="${message.text}"
-          origin="${message.origin}"
-          time-stamp="${message.time}"
-          error-state="${message.hasError}"
-          index="${index}">
-        </c4ai--chat-message>`
+      ${messages.map((message, index) =>
+        message.hasError
+          ? html` <c4ai--chat-message
+              raw-text="${message.text}"
+              origin="${message.origin}"
+              time-stamp="${message.time}"
+              error-state
+              index="${index}"
+              @regenerate="${handleRegenerate}">
+            </c4ai--chat-message>`
+          : html` <c4ai--chat-message
+              raw-text="${message.text}"
+              origin="${message.origin}"
+              time-stamp="${message.time}"
+              index="${index}"
+              @regenerate="${handleRegenerate}">
+            </c4ai--chat-message>`
       )}
-
-      <div
-        class="${c4aiPrefix}--chat-bot-message ${queryInProgress
-          ? ''
-          : c4aiPrefix + '--chat-hidden'}">
-        <div class="${c4aiPrefix}--chat-message-container">
-          <div class="${c4aiPrefix}--chat-loading-container">
-            <div class="${c4aiPrefix}--chat-loading-bar"></div>
-          </div>
-        </div>
-      </div>
+      ${queryInProgress
+        ? html` <c4ai--chat-message
+            raw-text="loading"
+            origin="bot"
+            time-stamp=""
+            loading-state
+            error-state="false">
+          </c4ai--chat-message>`
+        : html``}
     </div>
 
     <div class="${c4aiPrefix}--chat-footer">

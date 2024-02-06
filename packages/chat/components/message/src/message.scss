@@ -67,28 +67,48 @@
 
   .#{$c4ai-prefix}--chat-message-content {
     overflow: hidden;
+    inline-size: 100%;
     max-inline-size: 100%;
     padding-block-start: 7px;
     padding-inline-start: 10px;
   }
 
   .#{$c4ai-prefix}--chat-message-timestamp {
-    color: #8d8d8d;
-    font-size: 75%;
+    color: #c6c6c6;
+    font-size: 80%;
   }
 
   .#{$c4ai-prefix}--chat-message-response {
     max-inline-size: 100%;
-    padding-block: 12px 6px;
+    padding-block: 6px 6px;
     padding-inline-end: 12px;
   }
 
   .#{$c4ai-prefix}--chat-message-piece {
-    padding-block-end: 12px;
+    margin-block: 6px;
   }
 
   .#{$c4ai-prefix}--chat-message-subsection-text {
-    line-height: 20px;
+    border: 1px solid transparent;
+    line-height: 22px;
+  }
+
+  .#{$c4ai-prefix}--chat-message-edit-area {
+    padding: 0;
+    border: 1px solid #393939;
+    border-radius: 6px;
+    background: none;
+    block-size: auto;
+    color: #f4f4f4;
+    font: inherit;
+    inline-size: 100%;
+    min-block-size: 84px;
+    overflow-x: hidden;
+    resize: none;
+  }
+
+  .#{$c4ai-prefix}--chat-message-edit-area:focus {
+    outline: none;
   }
 
   .#{$c4ai-prefix}--chat-message-subsection-code {
@@ -102,7 +122,7 @@
     line-height: 24px;
     max-block-size: 130px;
     max-inline-size: 100%;
-    white-space: pre-line;
+    white-space: pre-wrap;
   }
 
   .#{$c4ai-prefix}--chat-message-subsection-error {
@@ -110,6 +130,31 @@
     border: 1px solid #ff4444;
     border-radius: 8px;
     color: #ff4444;
+    line-height: 22px;
+  }
+
+  .#{$c4ai-prefix}--chat-message-subsection-video {
+    .#{$c4ai-prefix}--chat-message-video-card {
+      overflow: hidden;
+      box-sizing: border-box;
+      border: 1px solid #c6c6c6;
+      border-radius: 8px;
+      background: #e0e0e0;
+      color: #0f62fe;
+      inline-size: 248px;
+    }
+
+    .#{$c4ai-prefix}--chat-message-video-card video {
+      block-size: auto;
+      inline-size: 100%;
+    }
+
+    .#{$c4ai-prefix}--chat-message-video-title {
+      overflow: hidden;
+      padding: 16px;
+      color: #161616;
+      font-size: 20px;
+    }
   }
 
   .#{$c4ai-prefix}--chat-message-subsection-url {
@@ -118,17 +163,16 @@
       padding: 16px;
       border: 1px solid #c6c6c6;
       border-radius: 8px;
-      background: #f4f4f4;
+      background: #e0e0e0;
       color: #0f62fe;
-      inline-size: 100%;
+      inline-size: 248px;
     }
 
     .#{$c4ai-prefix}--chat-message-url-card-title {
       overflow: hidden;
       block-size: 60px;
       color: #161616;
-      font-size: 22px;
-      font-weight: bold;
+      font-size: 24px;
     }
 
     .#{$c4ai-prefix}--chat-message-url-card-link-container {
@@ -151,7 +195,7 @@
     overflow: hidden;
     border: 1px solid #393939;
     border-radius: 8px;
-    inline-size: 80%;
+    inline-size: 248px;
   }
 
   .#{$c4ai-prefix}--chat-message-img-card {
@@ -189,6 +233,43 @@
     svg:hover {
       color: #f4f4f4;
       fill: #f4f4f4;
+    }
+  }
+
+  .#{$c4ai-prefix}--chat-message-loading-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    background-color: #78a9ff;
+    block-size: 12px;
+    inline-size: 100%;
+  }
+  @media screen and (prefers-reduced-motion: reduce) {
+    .#{$c4ai-prefix}--chat-message--loading-bar {
+      position: absolute;
+      animation: none;
+      background-color: #4589ff;
+      block-size: 100%;
+      inset-block-start: 0;
+    }
+  }
+
+  .#{$c4ai-prefix}--chat-message-loading-bar {
+    position: absolute;
+    animation: loading-animation 1000ms linear infinite;
+    background-color: #4589ff;
+    block-size: 100%;
+    inset-block-start: 0;
+  }
+
+  @keyframes loading-animation {
+    0%,
+    100% {
+      inline-size: 0;
+    }
+
+    50% {
+      inline-size: 100%;
     }
   }
 }

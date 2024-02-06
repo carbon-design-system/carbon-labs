@@ -61,6 +61,7 @@ class LlamaPluginAPI {
     console.log(session);
     if (!_watsonxai_key && !apiKey) {
       return {
+        failed: true,
         reply:
           'Error: No Watsonx-ai API key specified, please append your key to your .env root file in order to access the Watson service',
       };
@@ -86,6 +87,7 @@ class LlamaPluginAPI {
     const project_id = _watsonxai_project_id;
     if (project_id == null) {
       return {
+        failed: true,
         reply:
           'No Watsonx-ai project id specified, please add it to your .env file',
       };
@@ -126,8 +128,11 @@ class LlamaPluginAPI {
       return await fetch(API_URL, requestOptions)
         .then((response) => response.json())
         .then((response) => response);
-    } catch (error) {
-      return { reply: 'Error reaching: ' + API_URL };
+    } catch (error: any) {
+      return {
+        reply: 'Error reaching: ' + API_URL + ' Details: ' + error.message,
+        failed: true,
+      };
     }
   }
 
@@ -165,6 +170,7 @@ class LlamaPluginAPI {
 
     if (!_bam_key && !apiKey) {
       return {
+        failed: true,
         reply:
           'Error: No API key specified, please append your key to your .env root file in order to access the BAM service',
       };
@@ -214,8 +220,11 @@ class LlamaPluginAPI {
       return await fetch(API_URL, requestOptions)
         .then((response) => response.json())
         .then((response) => response);
-    } catch (error) {
-      return { reply: 'Error reaching: ' + API_URL };
+    } catch (error: any) {
+      return {
+        reply: 'Error reaching: ' + API_URL + ' Details: ' + error.message,
+        failed: true,
+      };
     }
   }
 
@@ -245,7 +254,15 @@ class LlamaPluginAPI {
     session,
     eventNumber
   ) {
-    console.log('sending to local... ' + model);
+    console.log(
+      'querying ' +
+        API_URL +
+        ' with model:' +
+        model +
+        ' (temp: ' +
+        temperature +
+        ')'
+    );
     const max_tokens = 1000;
     const user_name = 'user';
     const agent_name = 'bot';
@@ -307,11 +324,19 @@ class LlamaPluginAPI {
     };
 
     try {
-      return await fetch(API_URL + '/generate', requestOptions)
+      return await fetch(API_URL, requestOptions)
         .then((response) => response.json())
-        .then((response) => response);
-    } catch (error) {
-      return { reply: 'Error reaching: ' + API_URL };
+        .then((response) => {
+          if (model == 'llama-2') {
+            response.reply = response.reply.split('undefined')[0];
+          }
+          return response;
+        });
+    } catch (error: any) {
+      return {
+        reply: 'Error reaching: ' + API_URL + ' Details: ' + error.message,
+        failed: true,
+      };
     }
   }
 }

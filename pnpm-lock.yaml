@@ -14,6 +14,9 @@ importers:
       '@carbon/web-components':
         specifier: 2.2.0
         version: 2.2.0(sass@1.70.0)
+      lit:
+        specifier: ^3.0.0
+        version: 3.0.2
     devDependencies:
       '@carbon/grid':
         specifier: ^11.21.1

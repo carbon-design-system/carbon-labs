@@ -23,7 +23,7 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build": "rm -rf packages/*/es && lerna run build --scope @carbon/ai-utilities && gulp build",
+    "build": "lerna run build --stream",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "build-storybook": "pnpm build && storybook build",
@@ -42,7 +42,6 @@
     "test:updateSnapshot": "pnpm build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
   },
   "dependencies": {
-    "@babel/runtime": "^7.23.2",
     "@carbon/styles": "1.48.1",
     "@carbon/web-components": "2.2.0",
     "lit": "^3.0.0"

@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@babel/runtime':
-        specifier: ^7.23.2
-        version: 7.23.2
       '@carbon/styles':
         specifier: 1.48.1
         version: 1.48.1(sass@1.70.0)

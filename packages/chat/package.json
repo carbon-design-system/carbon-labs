@@ -24,18 +24,22 @@
     "**/*.d.ts",
     "**/*.js",
     "**/*.js.map",
-    "custom-elements.json"
+    "custom-elements.json",
+    "telemetry.yml"
   ],
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
+    "build": "gulp build --option chat",
     "build:dist": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js",
-    "build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary"
+    "build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary",
+    "postinstall": "ibmtelemetry --config=telemetry.yml"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
     "@carbon/ai-utilities": "0.0.1-rc.1",
     "@carbon/web-components": "2.2.0",
+    "@ibm/telemetry-js": "^1.2.0",
     "lit": "^3.0.0",
     "uuid": "^9.0.1"
   }

@@ -258,6 +258,9 @@ importers:
       '@carbon/web-components':
         specifier: 2.2.0
         version: 2.2.0(sass@1.70.0)
+      '@ibm/telemetry-js':
+        specifier: ^1.2.0
+        version: 1.2.0
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -3371,6 +3374,12 @@ packages:
   /@ibm/plex@6.0.0-next.6:
     resolution: {integrity: sha512-B3uGruTn2rS5gweynLmfSe7yCawSRsJguJJQHVQiqf4rh2RNgJFu8YLE2Zd/JHV0ZXoVMOslcXP2k3hMkxKEyA==}
     engines: {node: '>=14'}
+    dev: false
+
+  /@ibm/telemetry-js@1.2.0:
+    resolution: {integrity: sha512-972XK1rRvZeVeSok4h2ILYV9bBq4YaJmRPRQP9oiinuI5ZdQwPbYJtXZa9KiZa9OD1At9b11pq3N1+J9VaJ0Mw==}
+    engines: {node: '>=16', npm: '>=8'}
+    hasBin: true
     dev: false
 
   /@isaacs/cliui@8.0.2:

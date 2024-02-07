@@ -1,6 +1,6 @@
 name: Release specific package
 run-name:
-  ${{ inputs.package }} ${{ inputs.type }} - dry-run:${{ inputs.dry-run }} by
+  ${{ inputs.package }} - ${{ inputs.type }} - dry-run:${{ inputs.dry-run }} by
   @${{ github.actor }}
 
 concurrency:
@@ -14,7 +14,7 @@ on:
         required: true
         description: 'Specify the package'
         type: choice
-        default:
+        default: utilities
         options:
           - chat
           - extended-button
@@ -67,10 +67,9 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Go into specific package
-        run: cd packages/${{ github.event.inputs.package }}
       - name: Build project
         run: pnpm build
+        working-directory: packages/${{ github.event.inputs.package }}
       - name: Set NPM token
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc

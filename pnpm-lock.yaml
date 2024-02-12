@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@carbon/styles':
-        specifier: 1.48.1
-        version: 1.48.1(sass@1.70.0)
+        specifier: 1.50.0
+        version: 1.50.0(sass@1.70.0)
       '@carbon/web-components':
         specifier: 2.2.0
         version: 2.2.0(sass@1.70.0)
@@ -274,8 +274,8 @@ importers:
         specifier: 0.0.1-rc.1
         version: link:../utilities
       '@carbon/styles':
-        specifier: 1.48.1
-        version: 1.48.1(sass@1.70.0)
+        specifier: 1.50.0
+        version: 1.50.0(sass@1.70.0)
       '@carbon/web-components':
         specifier: 2.2.0
         version: 2.2.0(sass@1.70.0)
@@ -2570,6 +2570,25 @@ packages:
       sass: 1.70.0
     dev: false
 
+  /@carbon/styles@1.50.0(sass@1.70.0):
+    resolution: {integrity: sha512-md1gIYPCl53FyNLQTXVItBWNFgt354hg2l6Gimbvp1yC9ew0XfwcywwNK1Tq7GZwCUfj3d7Wsfn93BObu+2E2Q==}
+    peerDependencies:
+      sass: ^1.33.0
+    peerDependenciesMeta:
+      sass:
+        optional: true
+    dependencies:
+      '@carbon/colors': 11.20.0
+      '@carbon/feature-flags': 0.16.0
+      '@carbon/grid': 11.21.1
+      '@carbon/layout': 11.20.1
+      '@carbon/motion': 11.16.1
+      '@carbon/themes': 11.31.0
+      '@carbon/type': 11.25.1
+      '@ibm/plex': 6.0.0-next.6
+      sass: 1.70.0
+    dev: false
+
   /@carbon/themes@11.29.1:
     resolution: {integrity: sha512-Urzcl7V8soDGUM4MrDbrOvmG7lhAi5KB/vr1fAhC7s8lnjqvUJoERUJE8F5TZ3pkW8hqXHtBSXszTMyUWTv9bQ==}
     dependencies:
@@ -2577,6 +2596,15 @@ packages:
       '@carbon/layout': 11.20.1
       '@carbon/type': 11.25.1
       color: 4.2.3
+
+  /@carbon/themes@11.31.0:
+    resolution: {integrity: sha512-oHSbYLKxjdGOmPRgJw6LyODiFeN1YkwrxdV6gtDnFYNc4jeCCQV4DitOZV2OeCZWTPP7/8CnB98b4Mai2EJ2Ug==}
+    dependencies:
+      '@carbon/colors': 11.20.0
+      '@carbon/layout': 11.20.1
+      '@carbon/type': 11.25.1
+      color: 4.2.3
+    dev: false
 
   /@carbon/type@11.25.1:
     resolution: {integrity: sha512-dNgDoiS44R192hJdTbiwvHQ3e5ReKmBxXvfZIwdy/uCOj1bvm/V+A0O9q9/GBF7Pm4+sdKKx+gxmCju97sMrrw==}

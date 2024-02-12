@@ -42,7 +42,7 @@
     "test:updateSnapshot": "pnpm build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
   },
   "dependencies": {
-    "@carbon/styles": "1.48.1",
+    "@carbon/styles": "1.50.0",
     "@carbon/web-components": "2.2.0",
     "lit": "^3.0.0"
   },

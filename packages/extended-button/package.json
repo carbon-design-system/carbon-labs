@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/runtime": "^7.23.2",
     "@carbon/ai-utilities": "0.0.1-rc.1",
-    "@carbon/styles": "1.48.1",
+    "@carbon/styles": "1.50.0",
     "@carbon/web-components": "2.2.0",
     "lit": "^3.0.0"
   }

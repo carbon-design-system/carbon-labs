@@ -34,8 +34,8 @@ importers:
         specifier: 11.16.1
         version: 11.16.1
       '@carbon/themes':
-        specifier: 11.29.1
-        version: 11.29.1
+        specifier: 11.31.0
+        version: 11.31.0
       '@carbon/type':
         specifier: 11.25.1
         version: 11.25.1
@@ -2577,6 +2577,16 @@ packages:
       '@carbon/layout': 11.20.1
       '@carbon/type': 11.25.1
       color: 4.2.3
+    dev: false
+
+  /@carbon/themes@11.31.0:
+    resolution: {integrity: sha512-oHSbYLKxjdGOmPRgJw6LyODiFeN1YkwrxdV6gtDnFYNc4jeCCQV4DitOZV2OeCZWTPP7/8CnB98b4Mai2EJ2Ug==}
+    dependencies:
+      '@carbon/colors': 11.20.0
+      '@carbon/layout': 11.20.1
+      '@carbon/type': 11.25.1
+      color: 4.2.3
+    dev: true
 
   /@carbon/type@11.25.1:
     resolution: {integrity: sha512-dNgDoiS44R192hJdTbiwvHQ3e5ReKmBxXvfZIwdy/uCOj1bvm/V+A0O9q9/GBF7Pm4+sdKKx+gxmCju97sMrrw==}

@@ -38,7 +38,7 @@
   "dependencies": {
     "@babel/runtime": "^7.23.2",
     "@carbon/ai-utilities": "0.0.1-rc.1",
-    "@carbon/web-components": "2.2.0",
+    "@carbon/web-components": "2.3.0",
     "@ibm/telemetry-js": "^1.2.0",
     "lit": "^3.0.0",
     "uuid": "^9.0.1"

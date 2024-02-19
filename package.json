@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@carbon/styles": "1.48.1",
-    "@carbon/web-components": "2.2.0",
+    "@carbon/web-components": "2.3.0",
     "lit": "^3.0.0"
   },
   "devDependencies": {

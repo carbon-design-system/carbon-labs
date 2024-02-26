@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@carbon/styles':
         specifier: 1.48.1
-        version: 1.48.1(sass@1.70.0)
+        version: 1.48.1(sass@1.71.1)
       '@carbon/web-components':
         specifier: 2.2.0
-        version: 2.2.0(sass@1.70.0)
+        version: 2.2.0(sass@1.71.1)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -25,8 +25,8 @@ importers:
         specifier: 10.46.0
         version: 10.46.0
       '@carbon/icons':
-        specifier: 11.33.0
-        version: 11.33.0
+        specifier: 11.36.0
+        version: 11.36.0
       '@carbon/layout':
         specifier: 11.20.1
         version: 11.20.1
@@ -83,7 +83,7 @@ importers:
         version: 7.5.3(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-styling':
         specifier: ^1.3.7
-        version: 1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)(typescript@5.2.2)(webpack@5.89.0)
+        version: 1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.71.1)(typescript@5.2.2)(webpack@5.89.0)
       '@storybook/blocks':
         specifier: ^7.5.1
         version: 7.5.3(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
@@ -217,8 +217,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0(rollup@4.5.0)
       sass:
-        specifier: ~1.70.0
-        version: 1.70.0
+        specifier: ~1.71.0
+        version: 1.71.1
       sinon:
         specifier: ^17.0.1
         version: 17.0.1
@@ -242,7 +242,7 @@ importers:
         version: 5.2.2
       vite:
         specifier: ^5.0.0
-        version: 5.0.12(@types/node@18.18.9)(less@4.2.0)(sass@1.70.0)
+        version: 5.0.12(@types/node@18.18.9)(less@4.2.0)(sass@1.71.1)
 
   packages/chat:
     dependencies:
@@ -254,7 +254,7 @@ importers:
         version: link:../utilities
       '@carbon/web-components':
         specifier: 2.2.0
-        version: 2.2.0(sass@1.70.0)
+        version: 2.2.0(sass@1.71.1)
       '@ibm/telemetry-js':
         specifier: ^1.2.0
         version: 1.2.0
@@ -275,10 +275,10 @@ importers:
         version: link:../utilities
       '@carbon/styles':
         specifier: 1.48.1
-        version: 1.48.1(sass@1.70.0)
+        version: 1.48.1(sass@1.71.1)
       '@carbon/web-components':
         specifier: 2.2.0
-        version: 2.2.0(sass@1.70.0)
+        version: 2.2.0(sass@1.71.1)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -2541,8 +2541,8 @@ packages:
     resolution: {integrity: sha512-2SYjOWdiR13iQ5s1job/ajYYIByqk+rCu6M+m5hmsytgFLf0TxRwGzQn7itHELwxKUQLC5XYJjZ4Sug6urWOMw==}
     dev: true
 
-  /@carbon/icons@11.33.0:
-    resolution: {integrity: sha512-LV08flTWpzjtwNSLxwP6ioC1s5L/FJjpHupgCge/3DW4s6emOPSkihBxGgM7plHit3UI9aIVz9mFVsyY25X4kA==}
+  /@carbon/icons@11.36.0:
+    resolution: {integrity: sha512-yBKgfOJYPiaB8uYuwmEemquU0fX4luYyKKO0jxE1XoQ6qf/mj6okek+7ouySdyBCiZwFJ+Y+92vw+uc7UgZTtA==}
     dev: true
 
   /@carbon/layout@11.20.1:
@@ -2551,7 +2551,7 @@ packages:
   /@carbon/motion@11.16.1:
     resolution: {integrity: sha512-e865DvKnoxg41/L3g2zaNc5+xA+OXk0dNfOmG9MpzWBMlViCYUnCYCVKuyhdT7YSbRJuBuXXsisAVIJzBkEQKQ==}
 
-  /@carbon/styles@1.48.1(sass@1.70.0):
+  /@carbon/styles@1.48.1(sass@1.71.1):
     resolution: {integrity: sha512-en2MVjRqyMPeRnmyRMPZKJGCTHkN+GlA2a7X0GNps24JP1pg1JuiB5BijPn2KmtuNhe26Vg8nKKBD01+acmCsA==}
     peerDependencies:
       sass: ^1.33.0
@@ -2567,7 +2567,7 @@ packages:
       '@carbon/themes': 11.29.1
       '@carbon/type': 11.25.1
       '@ibm/plex': 6.0.0-next.6
-      sass: 1.70.0
+      sass: 1.71.1
     dev: false
 
   /@carbon/themes@11.29.1:
@@ -2594,11 +2594,11 @@ packages:
       '@carbon/grid': 11.21.1
       '@carbon/layout': 11.20.1
 
-  /@carbon/web-components@2.2.0(sass@1.70.0):
+  /@carbon/web-components@2.2.0(sass@1.71.1):
     resolution: {integrity: sha512-dW5Rql8lp7fEaNrmKfvpgBkHEyZvDPWesAuy3uxQn5K5LbEOzjMxL482jEMTZ4cB1JHoz6zD7paibU6MWZvO2w==}
     dependencies:
       '@babel/runtime': 7.23.2
-      '@carbon/styles': 1.48.1(sass@1.70.0)
+      '@carbon/styles': 1.48.1(sass@1.71.1)
       flatpickr: 4.6.1
       lit: 2.8.0
       lodash-es: 4.17.21
@@ -5385,7 +5385,7 @@ packages:
       - '@types/react-dom'
     dev: true
 
-  /@storybook/addon-styling@1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)(typescript@5.2.2)(webpack@5.89.0):
+  /@storybook/addon-styling@1.3.7(@types/react@18.2.37)(less@4.2.0)(postcss@8.4.31)(react-dom@18.2.0)(react@18.2.0)(sass@1.71.1)(typescript@5.2.2)(webpack@5.89.0):
     resolution: {integrity: sha512-JSBZMOrSw/3rlq5YoEI7Qyq703KSNP0Jd+gxTWu3/tP6245mpjn2dXnR8FvqVxCi+FG4lt2kQyPzgsuwEw1SSA==}
     hasBin: true
     peerDependencies:
@@ -5426,7 +5426,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       resolve-url-loader: 5.0.0
-      sass-loader: 13.3.2(sass@1.70.0)(webpack@5.89.0)
+      sass-loader: 13.3.2(sass@1.71.1)(webpack@5.89.0)
       style-loader: 3.3.3(webpack@5.89.0)
       webpack: 5.89.0(esbuild@0.20.0)
     transitivePeerDependencies:
@@ -5602,7 +5602,7 @@ packages:
       magic-string: 0.30.5
       rollup: 3.29.4
       typescript: 5.2.2
-      vite: 5.0.12(@types/node@18.18.9)(less@4.2.0)(sass@1.70.0)
+      vite: 5.0.12(@types/node@18.18.9)(less@4.2.0)(sass@1.71.1)
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -17994,7 +17994,7 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
-  /sass-loader@13.3.2(sass@1.70.0)(webpack@5.89.0):
+  /sass-loader@13.3.2(sass@1.71.1)(webpack@5.89.0):
     resolution: {integrity: sha512-CQbKl57kdEv+KDLquhC+gE3pXt74LEAzm+tzywcA0/aHZuub8wTErbjAoNI57rPUWRYRNC5WUnNl8eGJNbDdwg==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
@@ -18014,12 +18014,12 @@ packages:
         optional: true
     dependencies:
       neo-async: 2.6.2
-      sass: 1.70.0
+      sass: 1.71.1
       webpack: 5.89.0(esbuild@0.20.0)
     dev: true
 
-  /sass@1.70.0:
-    resolution: {integrity: sha512-uUxNQ3zAHeAx5nRFskBnrWzDUJrrvpCPD5FNAoRvTi0WwremlheES3tg+56PaVtCs5QDRX5CBLxxKMDJMEa1WQ==}
+  /sass@1.71.1:
+    resolution: {integrity: sha512-wovtnV2PxzteLlfNzbgm1tFXPLoZILYAMJtvoXXkD7/+1uP41eKkIt1ypWq5/q2uT94qHjXehEYfmjKOvjL9sg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -20135,7 +20135,7 @@ packages:
       replace-ext: 1.0.1
     dev: true
 
-  /vite@5.0.12(@types/node@18.18.9)(less@4.2.0)(sass@1.70.0):
+  /vite@5.0.12(@types/node@18.18.9)(less@4.2.0)(sass@1.71.1):
     resolution: {integrity: sha512-4hsnEkG3q0N4Tzf1+t6NdN9dg/L3BM+q8SWgbSPnJvrgH2kgdyzfVJwbR1ic69/4uMJJ/3dqDZZE5/WwqW8U1w==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -20168,7 +20168,7 @@ packages:
       less: 4.2.0
       postcss: 8.4.32
       rollup: 4.5.0
-      sass: 1.70.0
+      sass: 1.71.1
     optionalDependencies:
       fsevents: 2.3.3
     dev: true

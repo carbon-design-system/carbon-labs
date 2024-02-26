@@ -19,7 +19,7 @@ jobs:
       - uses: fkirc/skip-duplicate-actions@v5.3.1
         with:
           github_token: ${{ github.token }}
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8.9.2
       - name: Use Node.js 18.x

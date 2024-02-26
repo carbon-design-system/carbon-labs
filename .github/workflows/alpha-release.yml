@@ -34,7 +34,7 @@ jobs:
       - run: |
           git config user.name carbon-bot
           git config user.email carbon@us.ibm.com
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8.9.2
       - name: Use Node.js 18.x

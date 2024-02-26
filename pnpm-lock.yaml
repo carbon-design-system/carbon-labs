@@ -25,8 +25,8 @@ importers:
         specifier: 10.46.0
         version: 10.46.0
       '@carbon/icons':
-        specifier: 11.33.0
-        version: 11.33.0
+        specifier: 11.36.0
+        version: 11.36.0
       '@carbon/layout':
         specifier: 11.20.1
         version: 11.20.1
@@ -2541,8 +2541,8 @@ packages:
     resolution: {integrity: sha512-2SYjOWdiR13iQ5s1job/ajYYIByqk+rCu6M+m5hmsytgFLf0TxRwGzQn7itHELwxKUQLC5XYJjZ4Sug6urWOMw==}
     dev: true
 
-  /@carbon/icons@11.33.0:
-    resolution: {integrity: sha512-LV08flTWpzjtwNSLxwP6ioC1s5L/FJjpHupgCge/3DW4s6emOPSkihBxGgM7plHit3UI9aIVz9mFVsyY25X4kA==}
+  /@carbon/icons@11.36.0:
+    resolution: {integrity: sha512-yBKgfOJYPiaB8uYuwmEemquU0fX4luYyKKO0jxE1XoQ6qf/mj6okek+7ouySdyBCiZwFJ+Y+92vw+uc7UgZTtA==}
     dev: true
 
   /@carbon/layout@11.20.1:

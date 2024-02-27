@@ -283,6 +283,27 @@ importers:
         specifier: ^3.0.0
         version: 3.0.2
 
+  packages/feedback:
+    dependencies:
+      '@babel/runtime':
+        specifier: ^7.23.2
+        version: 7.23.2
+      '@carbon/ai-utilities':
+        specifier: 0.0.1-rc.1
+        version: link:../utilities
+      '@carbon/grid':
+        specifier: ^11.21.0
+        version: 11.21.1
+      '@carbon/web-components':
+        specifier: 2.4.0
+        version: 2.4.0(@carbon/grid@11.21.1)(@carbon/layout@11.20.1)(@carbon/motion@11.16.1)(@carbon/themes@11.32.0)(@carbon/type@11.25.1)(sass@1.71.1)
+      lit:
+        specifier: ^3.0.0
+        version: 3.0.2
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
+
   packages/utilities:
     devDependencies:
       '@rollup/plugin-babel':
@@ -3567,19 +3588,11 @@ packages:
     dependencies:
       '@floating-ui/utils': 0.1.6
 
-  /@floating-ui/dom@1.5.3:
-    resolution: {integrity: sha512-ClAbQnEqJAKCJOEbbLo5IUlZHkNszqhuxS4fHAVxRPXPya6Ysf2G8KypnYcOTpx6I8xcgF9bbHb6g/2KpbV8qA==}
-    dependencies:
-      '@floating-ui/core': 1.5.0
-      '@floating-ui/utils': 0.1.6
-    dev: true
-
   /@floating-ui/dom@1.6.3:
     resolution: {integrity: sha512-RnDthu3mzPlQ31Ss/BTwQ1zjzIhr3lk1gZB1OC56h/1vEtaXkESrOqL5fQVMfXpwGtRwX+YsZBdyHtJMQnkArw==}
     dependencies:
       '@floating-ui/core': 1.5.0
       '@floating-ui/utils': 0.2.1
-    dev: false
 
   /@floating-ui/react-dom@2.0.4(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-CF8k2rgKeh/49UrnIBs4BdxPUV6vize/Db1d/YbCLyp9GiVZ0BEwf5AiDSxJRCr6yOkGqTFHtmrULxkEfYZ7dQ==}
@@ -3587,7 +3600,7 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
     dependencies:
-      '@floating-ui/dom': 1.5.3
+      '@floating-ui/dom': 1.6.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: true
@@ -3597,7 +3610,6 @@ packages:
 
   /@floating-ui/utils@0.2.1:
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
-    dev: false
 
   /@gar/promisify@1.1.3:
     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}

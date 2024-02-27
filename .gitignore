@@ -28,3 +28,4 @@ custom-elements.json
 *.sln
 *.sw?
 .nx/*
+agentic.stories.js

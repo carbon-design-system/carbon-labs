@@ -7,5 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import './components/test-input/test-input.js';
-import '../feedback/components/feedback/feedback.js';
+import './components/feedback/feedback.js';

@@ -184,10 +184,10 @@ function showSlug(customElementClass) {
   return html`
     <cds-slug size="2xs" alignment="bottom-left">
       <div slot="body-text">
-        <p class="secondary">AI Explained</p>
-        <h1>84%</h1>
-        <p class="secondary bold">Confidence score</p>
-        <hr />
+        <!-- <p class="secondary">AI Explained</p> -->
+        <!-- <h1>84%</h1>
+        <p class="secondary bold">Confidence score</p> -->
+        <!-- <hr /> -->
         <p class="secondary">Input</p>
         <p class="bold">${input}</p>
         ${model

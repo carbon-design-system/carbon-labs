@@ -45,7 +45,7 @@ export class Feedback extends HostListenerMixin(LitElement) {
    * ID generated For a particular input and output
    */
   @property({ attribute: 'generation-id', type: String, reflect: true })
-  generation_id;
+  generationId;
 
   @property()
   private feedbackList: FeedbackData[] = [];
@@ -68,7 +68,7 @@ export class Feedback extends HostListenerMixin(LitElement) {
   private selection;
 
   @state()
-  private disableSave = false;
+  disableSave = false;
 
   @state()
   private isUpdateMode = false;
@@ -88,22 +88,22 @@ export class Feedback extends HostListenerMixin(LitElement) {
    */
   @state()
   private formData: FeedbackData = {
-    feedback_id: '',
-    generation_id: '',
-    start_index: 0,
-    end_index: 0,
-    selected_text: '',
-    suggested_text: '',
-    feedback_type: [],
+    feedbackId: '',
+    generationId: '',
+    startIndex: 0,
+    endIndex: 0,
+    selectedText: '',
+    suggestedText: '',
+    feedbackType: [],
     comment: '',
   };
 
   /**
    * Array for storing checkbox values selected by user
    */
-  private _feedbacks: string[] = [];
-  private pageX = 0;
-  private pageY = 0;
+  feedbacks: string[] = [];
+  pageX = 0;
+  pageY = 0;
 
   /**
    * For Mounting the web component
@@ -115,7 +115,7 @@ export class Feedback extends HostListenerMixin(LitElement) {
         detail: {
           message: 'generated content',
           data: {
-            id: this.generation_id,
+            id: this.generationId,
             input_value: this._input,
             output_value: this._output,
             model: this._model_id,
@@ -137,7 +137,6 @@ export class Feedback extends HostListenerMixin(LitElement) {
   @HostListener('mouseup')
   _handleTextSelection(e) {
     if (this.isModelOpen) {
-      // this.selectionMode = false;
       this.selection = null;
       return;
     }
@@ -152,10 +151,10 @@ export class Feedback extends HostListenerMixin(LitElement) {
       this.resetFeedbackForm();
       const minOffset = Math.min(selection.anchorOffset, selection.focusOffset);
       const maxOffset = Math.max(selection.anchorOffset, selection.focusOffset);
-      this.formData.generation_id = this.generation_id;
-      this.formData.selected_text = selectedText;
-      this.formData.start_index = minOffset;
-      this.formData.end_index = maxOffset;
+      this.formData.generationId = this.generationId;
+      this.formData.selectedText = selectedText;
+      this.formData.startIndex = minOffset;
+      this.formData.endIndex = maxOffset;
       this.requestUpdate();
     } else {
       this.selection = null;
@@ -171,7 +170,7 @@ export class Feedback extends HostListenerMixin(LitElement) {
    */
   _handleTextInput({ target }: Event) {
     const { value } = target as HTMLInputElement;
-    this.formData.suggested_text = value;
+    this.formData.suggestedText = value;
   }
 
   /**
@@ -197,17 +196,17 @@ export class Feedback extends HostListenerMixin(LitElement) {
   _handleFormData() {
     if (this.isUpdateMode) {
       this.feedbackList = this.feedbackList.map((item) => {
-        if (item.feedback_id === this.formData.feedback_id) {
+        if (item.feedbackId === this.formData.feedbackId) {
           return { ...item, ...this.formData };
         }
         return item;
       });
     } else {
-      if (!this.formData.feedback_id) {
-        this.formData.feedback_id = uuidv4();
+      if (!this.formData.feedbackId) {
+        this.formData.feedbackId = uuidv4();
       }
-      if (!this.formData.suggested_text) {
-        this.formData.suggested_text = this.formData.selected_text;
+      if (!this.formData.suggestedText) {
+        this.formData.suggestedText = this.formData.selectedText;
       }
       this.feedbackList.push(this.formData);
     }
@@ -220,8 +219,9 @@ export class Feedback extends HostListenerMixin(LitElement) {
 
     this.selection = null;
     this.resetFeedbackForm();
-    this._feedbacks = [];
+    this.feedbacks = [];
     this.isModelOpen = false;
+    this.isEditable = false;
     this.requestUpdate('feedbackList', []);
   }
 
@@ -232,23 +232,23 @@ export class Feedback extends HostListenerMixin(LitElement) {
   handleFeedbackUpdate(data: FeedbackData) {
     const {
       comment,
-      end_index,
-      feedback_id,
-      feedback_type,
-      generation_id,
-      selected_text,
-      start_index,
-      suggested_text,
+      endIndex,
+      feedbackId,
+      feedbackType,
+      generationId,
+      selectedText,
+      startIndex,
+      suggestedText,
     } = data;
-    this.formData.feedback_id = feedback_id;
-    this.formData.generation_id = generation_id;
-    this.formData.selected_text = selected_text;
-    this.formData.suggested_text = suggested_text;
-    this.formData.feedback_type = feedback_type;
-    this.formData.start_index = start_index;
-    this.formData.end_index = end_index;
+    this.formData.feedbackId = feedbackId;
+    this.formData.generationId = generationId;
+    this.formData.selectedText = selectedText;
+    this.formData.suggestedText = suggestedText;
+    this.formData.feedbackType = feedbackType;
+    this.formData.startIndex = startIndex;
+    this.formData.endIndex = endIndex;
     this.formData.comment = comment;
-
+    this.isEditable = true;
     this.isUpdateMode = true;
     this.isModelOpen = true;
   }
@@ -262,14 +262,14 @@ export class Feedback extends HostListenerMixin(LitElement) {
    */
   _handleFeedback(event) {
     const feedback = event.target.value;
-    if (!this.formData.feedback_type.includes(feedback)) {
-      this.formData.feedback_type.push(feedback);
+    if (!this.formData.feedbackType.includes(feedback)) {
+      this.formData.feedbackType.push(feedback);
     } else {
-      this.formData.feedback_type = this.formData.feedback_type.filter(
+      this.formData.feedbackType = this.formData.feedbackType.filter(
         (item) => item != feedback
       );
     }
-    this.disableSave = this.formData.feedback_type.includes('OTHER');
+    this.disableSave = this.formData.feedbackType.includes('OTHER');
   }
 
   /**
@@ -278,6 +278,7 @@ export class Feedback extends HostListenerMixin(LitElement) {
   _toggle() {
     this.isModelOpen = !this.isModelOpen;
     this.isUpdateMode = false;
+    this.isEditable = false;
   }
 
   /**
@@ -294,10 +295,10 @@ export class Feedback extends HostListenerMixin(LitElement) {
    */
   handleFeedbackDelete(id) {
     this.feedbackList = this.feedbackList.filter(
-      (item) => item.feedback_id !== id
+      (item) => item.feedbackId !== id
     );
     const event = new CustomEvent('on-feedback-delete', {
-      detail: { feedback_id: id },
+      detail: { feedbackId: id },
     });
     this.dispatchEvent(event);
   }
@@ -307,13 +308,13 @@ export class Feedback extends HostListenerMixin(LitElement) {
    */
   resetFeedbackForm() {
     this.formData = {
-      feedback_id: '',
-      generation_id: '',
-      start_index: 0,
-      end_index: 0,
-      selected_text: '',
-      suggested_text: '',
-      feedback_type: [],
+      feedbackId: '',
+      generationId: '',
+      startIndex: 0,
+      endIndex: 0,
+      selectedText: '',
+      suggestedText: '',
+      feedbackType: [],
       comment: '',
     };
   }
@@ -335,10 +336,10 @@ export class Feedback extends HostListenerMixin(LitElement) {
     const positions: any[] = [];
     this.textPositions = [];
     if (textNode) {
-      for (const { start_index, end_index } of this.feedbackList) {
+      for (const { startIndex, endIndex } of this.feedbackList) {
         const range = document.createRange();
-        range.setStart(textNode, start_index);
-        range.setEnd(textNode, end_index);
+        range.setStart(textNode, startIndex);
+        range.setEnd(textNode, endIndex);
         const rect = range.getBoundingClientRect();
         positions.push(rect);
         this.textPositions.push(rect);
@@ -354,16 +355,16 @@ export class Feedback extends HostListenerMixin(LitElement) {
    */
   highlightedText(feedback: FeedbackData) {
     const text = this._output;
-    const { start_index, end_index } = feedback;
+    const { startIndex, endIndex } = feedback;
     if (
       text &&
-      start_index >= 0 &&
-      end_index <= text.length &&
-      end_index > start_index
+      startIndex >= 0 &&
+      endIndex <= text.length &&
+      endIndex > startIndex
     ) {
-      const beforeHighlight = text.substring(0, start_index);
-      const highlightedText = text.substring(start_index, end_index);
-      const afterHighlight = text.substring(end_index);
+      const beforeHighlight = text.substring(0, startIndex);
+      const highlightedText = text.substring(startIndex, endIndex);
+      const afterHighlight = text.substring(endIndex);
 
       this.highlighted = html`${beforeHighlight}<span
           class="highlight-selection"

@@ -90,7 +90,7 @@ function openModal(customElementClass) {
           <cds-form-group>
             <div class="label">Selected text</div>
             <p class="selected-text">
-              ${formData.selected_text}
+              ${formData.selectedText}
               <cds-icon-button @click=${toggleEdit} size="xs">
                 ${Edit16({ slot: 'icon' })}
                 <span slot="tooltip-content">Improved text</span>
@@ -105,7 +105,9 @@ function openModal(customElementClass) {
                 <cds-form-group style="margin-bottom-end:0.5rem">
                   <cds-text-input
                     label="Improved text"
-                    value=${formData.selected_text}
+                    value=${formData.suggestedText
+                      ? formData.suggestedText
+                      : formData.selectedText}
                     @input=${handleTextInput}>
                   </cds-text-input>
                 </cds-form-group>
@@ -123,7 +125,7 @@ function openModal(customElementClass) {
                 <cds-checkbox
                   value=${FEEDBACK_TYPE[item]}
                   label-text=${FeedbackDescription[item]}
-                  ?checked=${formData.feedback_type.includes(
+                  ?checked=${formData.feedbackType.includes(
                     FEEDBACK_TYPE[item]
                   )}></cds-checkbox>
               `;
@@ -146,7 +148,7 @@ function openModal(customElementClass) {
                 kind="danger"
                 @click=${handleFeedbackDelete.bind(
                   customElementClass,
-                  formData.feedback_id
+                  formData.feedbackId
                 )}
                 data-modal-close
                 >Delete</cds-modal-footer-button

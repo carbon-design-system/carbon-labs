@@ -17,13 +17,13 @@ export enum FEEDBACK_TYPE {
 }
 
 export type FeedbackData = {
-  feedback_id: string;
-  generation_id: string;
-  start_index: number;
-  end_index: number;
-  selected_text: string;
-  suggested_text: string;
-  feedback_type: string[];
+  feedbackId: string;
+  generationId: string;
+  startIndex: number;
+  endIndex: number;
+  selectedText: string;
+  suggestedText: string;
+  feedbackType: string[];
   comment: string;
 };
 

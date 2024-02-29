@@ -1,6 +1,7 @@
 # @carbon-labs
 
-> A collection of experimental components and patterns implemented utilizing the [Carbon Design System](https://carbondesignsystem.com/).
+> A collection of experimental components and patterns implemented utilizing the
+> [Carbon Design System](https://carbondesignsystem.com/).
 
 ## Getting started
 

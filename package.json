@@ -42,14 +42,14 @@
     "test:updateSnapshot": "pnpm build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
   },
   "dependencies": {
-    "@carbon/styles": "1.48.1",
-    "@carbon/web-components": "2.2.0",
+    "@carbon/styles": "1.51.0",
+    "@carbon/web-components": "2.4.0",
     "lit": "^3.0.0"
   },
   "devDependencies": {
     "@carbon/grid": "^11.21.1",
     "@carbon/icon-helpers": "10.46.0",
-    "@carbon/icons": "11.33.0",
+    "@carbon/icons": "11.36.0",
     "@carbon/layout": "11.20.1",
     "@carbon/motion": "11.16.1",
     "@carbon/themes": "11.31.0",
@@ -113,7 +113,7 @@
     "rollup-plugin-esbuild": "^6.1.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-postcss-lit": "^2.1.0",
-    "sass": "~1.70.0",
+    "sass": "~1.71.0",
     "sinon": "^17.0.1",
     "storybook": "^7.5.1",
     "strip-comments": "^2.0.1",

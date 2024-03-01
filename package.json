@@ -1,11 +1,11 @@
 {
-  "name": "@carbon/ai",
+  "name": "carbon-labs",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Carbon for AI",
+  "description": "Carbon Labs",
   "license": "Apache-2.0",
-  "repository": "https://github.com/carbon-design-system/carbon-for-ai",
+  "repository": "https://github.com/carbon-design-system/carbon-labs",
   "engines": {
     "node": ">=18.x"
   },

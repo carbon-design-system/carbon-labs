@@ -43,7 +43,7 @@ With that all in place, you're ready to start contributing to Carbon!
 ### 1. Fork the repo:
 
 Go to
-[Carbon for AI's repository on GitHub](https://github.com/carbon-design-system/carbon-for-ai)
+[Carbon for AI's repository on GitHub](https://github.com/carbon-design-system/carbon-labs)
 and click the `Fork` button in the top-right corner. This will create a copy
 repo of Carbon associated with your account.
 
@@ -69,12 +69,12 @@ details.
 When you clone your forked repo, running `git remote -v` will show that the
 `origin` is pointing to your forked repo by default.
 
-Now you need to add the `carbon-design-system/carbon-for-ai` repo as your
-upstream remote branch:
+Now you need to add the `carbon-design-system/carbon-labs` repo as your upstream
+remote branch:
 
 ```sh
 # Add the upstream remote to your repo
-git remote add upstream git@github.com:carbon-design-system/carbon-for-ai.git
+git remote add upstream git@github.com:carbon-design-system/carbon-labs.git
 
 # Verify the remote was added
 git remote -v
@@ -85,8 +85,8 @@ Your terminal should output something like this:
 ```sh
 origin  [your forked repo] (fetch)
 origin  [your forked repo] (push)
-upstream    git@github.com:carbon-design-system/carbon-for-ai.git (fetch)
-upstream    git@github.com:carbon-design-system/carbon-for-ai.git (push)
+upstream    git@github.com:carbon-design-system/carbon-labs.git (fetch)
+upstream    git@github.com:carbon-design-system/carbon-labs.git (push)
 ```
 
 Great job on getting to this point! Now it's time to code :computer:
@@ -97,10 +97,10 @@ Great job on getting to this point! Now it's time to code :computer:
 
 Before you start coding, if you have an issue in mind that you'd like to tackle,
 please first
-[search](https://github.com/carbon-design-system/carbon-for-ai/issues) the
-issues to see if a similar issue you'd like to work on has already been
-submitted. If a similar issue has been submitted, assign yourself or ask to be
-assigned to the issue by posting a comment.
+[search](https://github.com/carbon-design-system/carbon-labs/issues) the issues
+to see if a similar issue you'd like to work on has already been submitted. If a
+similar issue has been submitted, assign yourself or ask to be assigned to the
+issue by posting a comment.
 
 If the issue does not exist, please make a new issue. Issues give us context
 about what you are contributing and expedite the process to getting your
@@ -108,7 +108,7 @@ contributions merged into Carbon. It's a win for everybody :tada:
 
 If you have no idea what you'd like to contribute, take a look at our backlog of
 issues and take your pick! Our issues with the label
-[`good first issue`](https://github.com/carbon-design-system/carbon-for-ai/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue+%F0%9F%91%8B%22)
+[`good first issue`](https://github.com/carbon-design-system/carbon-labs/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue+%F0%9F%91%8B%22)
 are a great starting point. 👋
 
 ### 2. Work in a branch
@@ -185,7 +185,7 @@ git push -u origin { YOUR_BRANCH_NAME }
 ```
 
 In your browser, navigate to
-[carbon-design-system/carbon-for-ai](https://github.com/carbon-design-system/carbon-for-ai)
+[carbon-design-system/carbon-labs](https://github.com/carbon-design-system/carbon-labs)
 and click the button that reads `Compare & pull request`
 
 Write a title and description then click `Create pull request`

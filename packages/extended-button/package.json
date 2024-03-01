@@ -1,12 +1,12 @@
 {
-  "name": "@carbon-labs/ai-extended-button",
+  "name": "@carbon-labs/extended-button",
   "version": "0.0.1-rc.1",
   "private": true,
   "description": "Carbon for AI - extended-button component",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/carbon-design-system/carbon-for-ai",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/extended-button"
   },
   "main": "./src/index.js",

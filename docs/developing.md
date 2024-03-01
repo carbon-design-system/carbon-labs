@@ -21,7 +21,7 @@ contributing back to the repository. This includes regular team
 members/maintainers.
 
 1. Fork the project by navigating to the main
-   [repository](https://github.com/carbon-design-system/carbon-for-ai) and
+   [repository](https://github.com/carbon-design-system/carbon-labs) and
    clicking the **Fork** button on the top-right corner.
 
 2. Navigate to your forked repository and copy the **SSH url**. Clone your fork
@@ -40,7 +40,7 @@ members/maintainers.
    main `carbon-for-ai`:
 
    ```
-   $ git remote add upstream git@github.com:carbon-design-system/carbon-for-ai.git
+   $ git remote add upstream git@github.com:carbon-design-system/carbon-labs.git
    $ git remote -v
    ```
 
@@ -153,7 +153,7 @@ might want to run:
    ```
 
 7. In Github, navigate to
-   [carbon-design-system/carbon-for-ai](https://github.com/carbon-design-system/carbon-for-ai)
+   [carbon-design-system/carbon-labs](https://github.com/carbon-design-system/carbon-labs)
    and click the button that reads "Compare & pull request".
 
 8. Write a title and description, then click "Create pull request".

@@ -9,7 +9,7 @@ concurrency:
 
 jobs:
   automerge:
-    if: github.repository == 'carbon-design-system/carbon-for-ai'
+    if: github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4

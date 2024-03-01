@@ -15,7 +15,7 @@ on:
 
 jobs:
   build:
-    if: github.repository == 'carbon-design-system/carbon-for-ai'
+    if: github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

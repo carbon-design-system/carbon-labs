@@ -20,7 +20,8 @@ export default class message extends LitElement {
   /**
    * Array of subelements parsed from API reply
    */
-  private _messageElements: { content: any; type: string }[] = [];
+  @state()
+  _messageElements: { content: any; type: string }[] = [];
 
   /**
    * User-imported message sub-elements object, parsing is done on rawText here if none is provided
@@ -99,6 +100,21 @@ export default class message extends LitElement {
     }
   }
 
+  /** internal LIT function to detect updates to the DOM tree, used to auto update the messageElements attribute
+   * @param {Object} changedProperties - returned inner DOM update object
+   **/
+  updated(changedProperties) {
+    super.updated(changedProperties);
+    if (changedProperties.has('_messageElements')) {
+      const messageUpdateEvent = new CustomEvent('message-updated', {
+        detail: { index: this.index, messageElements: this._messageElements },
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(messageUpdateEvent);
+    }
+  }
+
   /** check the returned model response for a specified code delimiter, split and package the string into multiple messages of type 'text' or 'code'
    * @param {string} string - returned API call response
    **/
@@ -147,12 +163,12 @@ export default class message extends LitElement {
     }
   }
 
-  /** parse Raw text param into a sub array of o0bjects to display different elements in a single message block
+  /** parse Raw text param into a sub array of objects to display different elements in a single message block
    **/
   _parseText() {
     const returnedText = this.rawText;
     const subMessages: { content: any; type: string }[] = [];
-
+    console.log(returnedText);
     const codeSplitter = this._checkForCode(returnedText);
 
     if (codeSplitter.length == 0 || returnedText == 'undefined') {
@@ -167,14 +183,80 @@ export default class message extends LitElement {
         } else {
           const urlSplitter = this._checkForURLs(subReply.content);
           for (const subSubReply of urlSplitter) {
-            subMessages.push(subSubReply);
+            if (subSubReply.type == 'text') {
+              //subMessages.push(subSubReply);
+              const formattedList = this._checkForFormatting(
+                subSubReply.content
+              );
+              for (const subItem of formattedList) {
+                subMessages.push(subItem);
+              }
+            } else {
+              subMessages.push(subSubReply);
+            }
           }
         }
       }
     }
+    console.log(subMessages);
     this._messageElements = subMessages;
-    console.log(this._messageElements);
     this.requestUpdate();
+  }
+
+  /** _checkForFormatting analyze if text elements like lists are present and parse them out
+   * @param {string} inputText - text block to be checked
+   */
+  _checkForFormattingOld(inputText) {
+    const splitParts: { content: any; type: string }[] = [];
+    const listRegex =
+      /^(?:(- .+(?:\n|$))+|([\s\S]*?)(?:^(- .+(?:\n|$))+)$|^(- .+(?:\n|$))+)$/gm;
+    let listMatches = [];
+
+    while ((listMatches = listRegex.exec(inputText) !== null)) {
+      if (listMatches[1]) {
+        splitParts.push({ type: 'text', content: listMatches[1] });
+      }
+    }
+    console.log(splitParts);
+    return [{ content: inputText, type: 'text' }];
+  }
+
+  /** _checkForFormatting analyze if text elements like lists are present and parse them out
+   * @param {string} inputText - text block to be checked
+   */
+  _checkForFormatting(inputText) {
+    const splitParts: { content: any; type: string }[] = [];
+    //const listRegex = /^(?:\d+\.|[\u2022\u2023\u25E6\u2043\-]|(?:[a-zA-Z]|\d+)\s*=?)/;
+    //eslint-disable-next-line
+    const listRegex = /^(?:\d+\.|[\u2022\u2023\u25E6\u2043\-])/;
+    const splitMatches: string[] = inputText.split('\n');
+
+    let currentType = null;
+    let tempString = '';
+    console.log(inputText);
+    for (const match of splitMatches) {
+      const itemType = listRegex.test(match) ? 'list' : 'text';
+      console.log([match, itemType]);
+      if (currentType === null) {
+        currentType = itemType;
+        tempString += match;
+      } else if (itemType === currentType) {
+        tempString += '\n' + match;
+      } else {
+        splitParts.push({ type: currentType, content: tempString.trim() });
+        tempString = match;
+        currentType = itemType;
+      }
+    }
+
+    if (tempString !== '') {
+      splitParts.push({
+        type: listRegex.test(tempString) ? 'list' : 'text',
+        content: tempString,
+      });
+    }
+    console.log(splitParts);
+    return splitParts;
   }
 
   /** _checkForURLs extract plain and image urls from edxtracted text post code checking
@@ -254,11 +336,35 @@ export default class message extends LitElement {
 
   /** format text to properly display in HTML
    * @param {string} inputText - text to be rendered in subelement
-   * @param {string} type - type of the text to be formatted such as plain text or code
    */
-  _formatText(inputText, type) {
-    console.log(type);
+  _formatText(inputText) {
     let formattedText = inputText.replace(/\t/g, '&nbsp;&nbsp;');
+    formattedText = formattedText.replace(/\n/g, '<br>');
+    return formattedText;
+  }
+
+  /** format list text into html list object
+   * @param {string} inputText - text to be rendered in subelement
+   */
+  _formatList(inputText) {
+    console.log(inputText);
+    const items = inputText.split('\n');
+    return (
+      '<ul>' + items.map((item) => '<li>' + item + '</li>').join('') + '</ul>'
+    );
+  }
+
+  /** format code to properly display in HTML
+   * @param {string} inputText - text to be rendered in subelement
+   */
+  _formatCode(inputText) {
+    //const commentRegex = /\/\/;*|\/\*[^]*?\*\/|#.*|<!--[\s\S]*?-->/g;
+
+    let formattedText = inputText.replace(/\t/g, '&nbsp;&nbsp;');
+    /*formattedText = formattedText.replace(commentRegex, (match) => {
+      match = match.trim();
+      return '<div class="comment">' + match + '</div>';
+    });*/
     formattedText = formattedText.replace(/\n/g, '<br>');
     return formattedText;
   }

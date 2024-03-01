@@ -49,8 +49,8 @@ members/maintainers.
 
 ## Installing dependencies
 
-Carbon for AI is a collection of components, each as its own package, in the
-same git repository. You might have heard this setup described as a
+Carbon Labs is a collection of components, each as its own package, in the same
+git repository. You might have heard this setup described as a
 [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 As a result, we use two pieces of tooling to help us managing installing
@@ -100,7 +100,7 @@ making to components in Storybook.
 
 ## Common tasks
 
-While working on Carbon for AI, here are some of the top-level tasks that you
+While working on Carbon Labs, here are some of the top-level tasks that you
 might want to run:
 
 | Command                            | Usage                                                                                                       |
@@ -137,7 +137,7 @@ might want to run:
    [writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
    for more details on commit messages.
 
-   Carbon for AI also uses a commit format called
+   Carbon Labs also uses a commit format called
    [Conventional Commits](https://www.conventionalcommits.org). This format is
    used to help automate details about our project and how it changes. When
    committing changes, there will be a tool that automatically looks at commits

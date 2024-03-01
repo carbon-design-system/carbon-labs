@@ -43,7 +43,7 @@ With that all in place, you're ready to start contributing to Carbon!
 ### 1. Fork the repo:
 
 Go to
-[Carbon for AI's repository on GitHub](https://github.com/carbon-design-system/carbon-labs)
+[Carbon Labs's repository on GitHub](https://github.com/carbon-design-system/carbon-labs)
 and click the `Fork` button in the top-right corner. This will create a copy
 repo of Carbon associated with your account.
 
@@ -309,8 +309,8 @@ work:
 ### If I'm contributing code, am I required to contribute it as web components?
 
 If you've been working with Carbon for a while, you know that we have code
-assets in multiple frameworks. For the `Carbon for AI` initiative, the focus is
-to deliver reusable components and patterns in a framework-agnostic approach.
+assets in multiple frameworks. For the `Carbon Labs` initiative, the focus is to
+deliver reusable components and patterns in a framework-agnostic approach.
 
 ### How can I test-drive components or provide a bug reproduction?
 

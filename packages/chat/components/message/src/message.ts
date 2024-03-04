@@ -168,7 +168,6 @@ export default class message extends LitElement {
   _parseText() {
     const returnedText = this.rawText;
     const subMessages: { content: any; type: string }[] = [];
-    console.log(returnedText);
     const codeSplitter = this._checkForCode(returnedText);
 
     if (codeSplitter.length == 0 || returnedText == 'undefined') {
@@ -198,27 +197,8 @@ export default class message extends LitElement {
         }
       }
     }
-    console.log(subMessages);
     this._messageElements = subMessages;
     this.requestUpdate();
-  }
-
-  /** _checkForFormatting analyze if text elements like lists are present and parse them out
-   * @param {string} inputText - text block to be checked
-   */
-  _checkForFormattingOld(inputText) {
-    const splitParts: { content: any; type: string }[] = [];
-    const listRegex =
-      /^(?:(- .+(?:\n|$))+|([\s\S]*?)(?:^(- .+(?:\n|$))+)$|^(- .+(?:\n|$))+)$/gm;
-    let listMatches = [];
-
-    while ((listMatches = listRegex.exec(inputText) !== null)) {
-      if (listMatches[1]) {
-        splitParts.push({ type: 'text', content: listMatches[1] });
-      }
-    }
-    console.log(splitParts);
-    return [{ content: inputText, type: 'text' }];
   }
 
   /** _checkForFormatting analyze if text elements like lists are present and parse them out
@@ -233,10 +213,8 @@ export default class message extends LitElement {
 
     let currentType = null;
     let tempString = '';
-    console.log(inputText);
     for (const match of splitMatches) {
       const itemType = listRegex.test(match) ? 'list' : 'text';
-      console.log([match, itemType]);
       if (currentType === null) {
         currentType = itemType;
         tempString += match;
@@ -255,7 +233,6 @@ export default class message extends LitElement {
         content: tempString,
       });
     }
-    console.log(splitParts);
     return splitParts;
   }
 
@@ -347,7 +324,6 @@ export default class message extends LitElement {
    * @param {string} inputText - text to be rendered in subelement
    */
   _formatList(inputText) {
-    console.log(inputText);
     const items = inputText.split('\n');
     return (
       '<ul>' + items.map((item) => '<li>' + item + '</li>').join('') + '</ul>'

@@ -105,7 +105,7 @@
   }
 
   .#{$c4ai-prefix}--chat-message-piece {
-    margin-block: 6px;
+    margin-block: 3px;
   }
 
   .#{$c4ai-prefix}--chat-message-subsection-text {
@@ -156,9 +156,14 @@
 
   .#{$c4ai-prefix}--chat-message-subsection-list {
     border: 1px solid transparent;
-    font-size: 110%;
+    font-size: 105%;
     inline-size: 100%;
     line-height: 26px;
+  }
+
+  .#{$c4ai-prefix}--chat-message-subsection-list ul {
+    margin: 0;
+    padding-inline-start: 20px;
   }
 
   .#{$c4ai-prefix}--chat-message-subsection-img {

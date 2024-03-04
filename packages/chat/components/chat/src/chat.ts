@@ -142,7 +142,6 @@ export default class C4AIChat extends LitElement {
    * Initialize examples Object for when stories send in a 'conversation' object
    */
   initializeExamplesObject() {
-    console.log('init by object ' + this.conversation);
     switch (this.conversation) {
       case 'Nature of art':
         this._messages = [
@@ -461,9 +460,7 @@ export default class C4AIChat extends LitElement {
       (obj) => obj.index === selectedIndex
     );
     if (index > -1 && event.detail.messageElements) {
-      console.log(this._messages);
       this._messages[index].messageElements = event.detail.messageElements;
-      console.log('message ' + index + ' updated');
       console.log(this._messages);
     }
   }
@@ -497,7 +494,6 @@ export default class C4AIChat extends LitElement {
           index: this._messages.length,
         });
         this._queryInProgress = false;
-        console.log(this._messages);
         this.requestUpdate();
         this._updateScroll();
       })

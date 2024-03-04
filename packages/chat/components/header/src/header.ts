@@ -8,6 +8,7 @@
  */
 
 import { LitElement } from 'lit';
+import { property } from 'lit/decorators.js';
 // @ts-ignore
 import styles from './header.scss?inline';
 /**
@@ -16,11 +17,6 @@ import styles from './header.scss?inline';
 export default class header extends LitElement {
   static styles = styles;
 
-  private _title = 'Carbon for AI Chat component';
-
-  /** detect when component is rendered to process rawtext
-   */
-  firstUpdated() {
-    console.log('header');
-  }
+  @property({ type: String, reflect: true })
+  title = 'Carbon for AI Chat component';
 }

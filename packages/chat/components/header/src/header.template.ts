@@ -20,7 +20,7 @@ import '@carbon/web-components/es/components/slug/index.js';
  * @returns {TemplateResult<1>} Lit html template
  */
 export function headerTemplate(customElementClass) {
-  const { _title: title } = customElementClass;
+  const { title } = customElementClass;
   return html` <div class="${c4aiPrefix}--chat-header-icons">
     <div>
       <cds-slug kind="default" size="md">

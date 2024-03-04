@@ -1,10 +1,7 @@
 {
   "name": "@carbon-labs/ai-extended-button",
   "version": "0.0.1-rc.1",
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
+  "private": true,
   "description": "Carbon for AI - extended-button component",
   "license": "Apache-2.0",
   "repository": {

@@ -1,8 +1,7 @@
-# @carbon/ai
+# @carbon-labs
 
-> A collection of components and patterns implemented using
-> [Carbon Web Components](https://carbondesignsystem.com/developing/frameworks/web-components)
-> for the IBM AI experience.
+> A collection of experimental components and patterns implemented utilizing the
+> [Carbon Design System](https://carbondesignsystem.com/).
 
 ## Getting started
 

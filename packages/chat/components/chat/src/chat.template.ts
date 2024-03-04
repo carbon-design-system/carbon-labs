@@ -8,17 +8,9 @@
  */
 
 import { html } from 'lit';
-<<<<<<< HEAD
 import Search24 from '@carbon/web-components/es/icons/search/24';
 import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16';
 import Send16 from '@carbon/web-components/es/icons/send/16';
-=======
-import Search24 from '@carbon/web-components/es/icons/search/24.js';
-import Popup16 from '@carbon/web-components/es/icons/popup/16.js';
-import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
-import Send16 from '@carbon/web-components/es/icons/send/16.js';
-import AI24 from '@carbon/web-components/es/icons/AI/24.js';
->>>>>>> refs/remotes/origin/feat/chat-storybook-updates
 
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 import '../../message/message.ts';

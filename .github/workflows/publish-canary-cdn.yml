@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   build:
-    if: github.repository == 'carbon-design-system/carbon-for-ai'
+    if: github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
@@ -19,7 +19,7 @@ jobs:
       - uses: fkirc/skip-duplicate-actions@v5.3.1
         with:
           github_token: ${{ github.token }}
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8.9.2
       - name: Use Node.js 18.x
@@ -47,4 +47,4 @@ jobs:
           AWS_REGION: ${{ secrets.COMMON_COS_REGION }}
           AWS_S3_ENDPOINT: https://${{ secrets.COMMON_COS_ENDPOINT }}
           SOURCE_DIR: 'dist'
-          DEST_DIR: 'common/carbon/ai'
+          DEST_DIR: 'common/carbon/labs'

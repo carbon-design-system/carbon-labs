@@ -136,6 +136,15 @@ export default class C4AIChat extends LitElement {
     if (changedProperties.has('sampleQuery')) {
       this.initializeExamplesText();
     }
+    if (changedProperties.has('apiURL')) {
+      console.log('api change');
+      console.log(changedProperties);
+    }
+
+    if (changedProperties.has('apiURL')) {
+      console.log('url change');
+      console.log(changedProperties);
+    }
   }
 
   /**

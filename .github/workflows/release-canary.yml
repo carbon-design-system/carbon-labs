@@ -16,7 +16,7 @@ jobs:
       id-token: write
       contents: write
     if: |
-      github.repository == 'carbon-design-system/carbon-for-ai'
+      github.repository == 'carbon-design-system/carbon-labs'
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
@@ -25,7 +25,7 @@ jobs:
       - run: |
           git config user.name carbon-bot
           git config user.email carbon@us.ibm.com
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8.9.2
       - name: Use Node.js 18.x

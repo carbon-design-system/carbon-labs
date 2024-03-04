@@ -30,6 +30,12 @@ export default class message extends LitElement {
   subElements;
 
   /**
+   * User-imported message sub-elements object, parsing is done on rawText here if none is provided
+   */
+  @property({ type: Object, attribute: 'sub-elements', reflect: true })
+  subElements;
+
+  /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
    */
   @property({ type: String, attribute: 'raw-text', reflect: true })
@@ -168,6 +174,7 @@ export default class message extends LitElement {
   _parseText() {
     const returnedText = this.rawText;
     const subMessages: { content: any; type: string }[] = [];
+
     const codeSplitter = this._checkForCode(returnedText);
 
     if (codeSplitter.length == 0 || returnedText == 'undefined') {
@@ -198,6 +205,7 @@ export default class message extends LitElement {
       }
     }
     this._messageElements = subMessages;
+    console.log(this._messageElements);
     this.requestUpdate();
   }
 

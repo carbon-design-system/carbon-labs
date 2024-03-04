@@ -1,15 +1,12 @@
 {
-  "name": "@carbon-labs/ai-extended-button",
+  "name": "@carbon-labs/extended-button",
   "version": "0.0.1-rc.1",
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
-  "description": "Carbon for AI - extended-button component",
+  "private": true,
+  "description": "Carbon Labs - extended-button component",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/carbon-design-system/carbon-for-ai",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/extended-button"
   },
   "main": "./src/index.js",
@@ -29,14 +26,15 @@
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
+    "build": "gulp build --option extended-button",
     "build:dist": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js",
     "build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
     "@carbon/ai-utilities": "0.0.1-rc.1",
-    "@carbon/styles": "^1.45.0",
-    "@carbon/web-components": "2.1.2",
+    "@carbon/styles": "1.51.0",
+    "@carbon/web-components": "2.4.0",
     "lit": "^3.0.0"
   }
 }

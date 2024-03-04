@@ -37,40 +37,38 @@ const promisifyStream = promisify(asyncDone);
  * @private
  */
 const buildModulesCSS = ({ banner }) =>
-  gulp
-    .src([`packages/**/src/*.scss`])
-    .pipe(
-      sass({
-        includePaths: ['node_modules', '../../node_modules'],
-      })
-    )
-    .pipe(
-      postcss([
-        autoprefixer(),
-      ])
-    )
-    .pipe(cleanCSS())
-    .pipe(
-      through2.obj((file, enc, done) => {
-        file.contents = Buffer.from(`
-          import { css } from 'lit';
-          export default css([${JSON.stringify(String(file.contents))}]);
-        `);
-        file.path = replaceExtension(
-          file.path,
-        '.css.js'
-        );
-        done(null, file);
-      })
-    )
-    .pipe(prettier())
-    .pipe(header(banner))
-    .pipe(gulp.dest(function(file){
-      // output type files within the package folders itself (ie. packages/es/{component}/src/..)
-     const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
-     file.dirname = file.dirname.replace(`/${destPath}`, '')
-     return `packages/${destPath}/es`;
-   }));
+ gulp
+  .src([`packages/${process.argv[4]}/**/src/*.scss`])
+  .pipe(
+    sass({
+      includePaths: ['node_modules', '../../node_modules'],
+    })
+  )
+  .pipe(
+    postcss([
+      autoprefixer(),
+    ])
+  )
+  .pipe(cleanCSS())
+  .pipe(
+    through2.obj((file, enc, done) => {
+      file.contents = Buffer.from(`
+        import { css } from 'lit';
+        export default css([${JSON.stringify(String(file.contents))}]);
+      `);
+      file.path = replaceExtension(
+        file.path,
+      '.css.js'
+      );
+      done(null, file);
+    })
+  )
+  .pipe(prettier())
+  .pipe(header(banner))
+  .pipe(gulp.dest(function(file){
+   const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
+   return `packages/${destPath}/es/`;
+ }));
 
 /**
  * Builds the CSS

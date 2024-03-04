@@ -1,6 +1,7 @@
-name: Release
+name: Release specific package
 run-name:
-  ${{ inputs.type }} - dry-run:${{ inputs.dry-run }} by @${{ github.actor }}
+  ${{ inputs.package }} - ${{ inputs.type }} - dry-run:${{ inputs.dry-run }} by
+  @${{ github.actor }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -9,6 +10,15 @@ concurrency:
 on:
   workflow_dispatch:
     inputs:
+      package:
+        required: true
+        description: 'Specify the package'
+        type: choice
+        default: utilities
+        options:
+          - chat
+          - extended-button
+          - utilities
       type:
         required: true
         description: 'Specify the type of release'
@@ -59,6 +69,7 @@ jobs:
         run: pnpm install
       - name: Build project
         run: pnpm build
+        working-directory: packages/${{ github.event.inputs.package }}
       - name: Set NPM token
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc

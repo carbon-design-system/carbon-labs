@@ -30,12 +30,6 @@ export default class message extends LitElement {
   subElements;
 
   /**
-   * User-imported message sub-elements object, parsing is done on rawText here if none is provided
-   */
-  @property({ type: Object, attribute: 'sub-elements', reflect: true })
-  subElements;
-
-  /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
    */
   @property({ type: String, attribute: 'raw-text', reflect: true })
@@ -219,11 +213,11 @@ export default class message extends LitElement {
     const listRegex = /^(?:\d+\.|[\u2022\u2023\u25E6\u2043\-])/;
     const splitMatches: string[] = inputText.split('\n');
 
-    let currentType = null;
+    let currentType = '';
     let tempString = '';
     for (const match of splitMatches) {
       const itemType = listRegex.test(match) ? 'list' : 'text';
-      if (currentType === null) {
+      if (currentType === '') {
         currentType = itemType;
         tempString += match;
       } else if (itemType === currentType) {

@@ -8,7 +8,6 @@
 @use '../../../../../globals/scss/vars' as *;
 
 @use '@carbon/styles/scss/theme' as *;
-@use '@carbon/styles/scss/colors' as *;
 
 :host(#{$c4ai-prefix}--chat-message) {
   position: relative;

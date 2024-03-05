@@ -9,14 +9,14 @@
 
 These supported versions include the different discrete version numbers of
 individual packages as listed in the
-[release changelogs](https://github.com/carbon-design-system/carbon-for-ai/releases).
+[release changelogs](https://github.com/carbon-design-system/carbon-labs/releases).
 
 ## Reporting a Vulnerability
 
 _Please do not report security vulnerabilities through public GitHub issues._
 
 Instead, report a vulnerability through GitHub's security advisory feature at
-https://github.com/carbon-design-system/carbon-for-ai/security/advisories/new
+https://github.com/carbon-design-system/carbon-labs/security/advisories/new
 
 Please include a description of the issue, the steps you took to create the
 issue, affected versions, and, if known, mitigations for the issue. Our team
@@ -32,7 +32,7 @@ We prefer all communications to be in English.
 ## Comments on this policy
 
 If you have suggestions on how this process could be improved please
-[submit a pull request](https://github.com/carbon-design-system/carbon-for-ai/compare)
+[submit a pull request](https://github.com/carbon-design-system/carbon-labs/compare)
 or
-[file an issue](https://github.com/carbon-design-system/carbon-for-ai/issues/new)
+[file an issue](https://github.com/carbon-design-system/carbon-labs/issues/new)
 to discuss.

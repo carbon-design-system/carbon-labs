@@ -21,7 +21,7 @@ contributing back to the repository. This includes regular team
 members/maintainers.
 
 1. Fork the project by navigating to the main
-   [repository](https://github.com/carbon-design-system/carbon-for-ai) and
+   [repository](https://github.com/carbon-design-system/carbon-labs) and
    clicking the **Fork** button on the top-right corner.
 
 2. Navigate to your forked repository and copy the **SSH url**. Clone your fork
@@ -40,7 +40,7 @@ members/maintainers.
    main `carbon-for-ai`:
 
    ```
-   $ git remote add upstream git@github.com:carbon-design-system/carbon-for-ai.git
+   $ git remote add upstream git@github.com:carbon-design-system/carbon-labs.git
    $ git remote -v
    ```
 
@@ -49,8 +49,8 @@ members/maintainers.
 
 ## Installing dependencies
 
-Carbon for AI is a collection of components, each as its own package, in the
-same git repository. You might have heard this setup described as a
+Carbon Labs is a collection of components, each as its own package, in the same
+git repository. You might have heard this setup described as a
 [monorepo](https://en.wikipedia.org/wiki/Monorepo).
 
 As a result, we use two pieces of tooling to help us managing installing
@@ -100,7 +100,7 @@ making to components in Storybook.
 
 ## Common tasks
 
-While working on Carbon for AI, here are some of the top-level tasks that you
+While working on Carbon Labs, here are some of the top-level tasks that you
 might want to run:
 
 | Command                            | Usage                                                                                                       |
@@ -137,7 +137,7 @@ might want to run:
    [writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
    for more details on commit messages.
 
-   Carbon for AI also uses a commit format called
+   Carbon Labs also uses a commit format called
    [Conventional Commits](https://www.conventionalcommits.org). This format is
    used to help automate details about our project and how it changes. When
    committing changes, there will be a tool that automatically looks at commits
@@ -153,7 +153,7 @@ might want to run:
    ```
 
 7. In Github, navigate to
-   [carbon-design-system/carbon-for-ai](https://github.com/carbon-design-system/carbon-for-ai)
+   [carbon-design-system/carbon-labs](https://github.com/carbon-design-system/carbon-labs)
    and click the button that reads "Compare & pull request".
 
 8. Write a title and description, then click "Create pull request".

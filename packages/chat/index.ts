@@ -7,4 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import './components/test-input/test-input.js';
+import './components/chat/chat.js';
+import './components/message/message.js';
+import './components/card/card.js';
+import './components/header/header.js';

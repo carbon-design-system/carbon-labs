@@ -11,7 +11,7 @@ concurrency:
 jobs:
   publish-cdn:
     if: |
-      github.repository == 'carbon-design-system/carbon-for-ai'
+      github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 #v4.1.1
@@ -45,4 +45,4 @@ jobs:
           AWS_REGION: ${{ secrets.COMMON_COS_REGION }}
           AWS_S3_ENDPOINT: https://${{ secrets.COMMON_COS_ENDPOINT }}
           SOURCE_DIR: 'dist'
-          DEST_DIR: 'common/carbon/ai'
+          DEST_DIR: 'common/carbon/labs'

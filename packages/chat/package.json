@@ -5,11 +5,11 @@
     "access": "public",
     "provenance": true
   },
-  "description": "Carbon for AI - chat component",
+  "description": "Carbon Labs - chat component",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/carbon-design-system/carbon-for-ai",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/chat"
   },
   "main": "./src/index.js",

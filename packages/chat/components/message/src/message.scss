@@ -16,7 +16,7 @@
   border-radius: 10px;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
-  padding-block-end: 16px;
+  padding-block-end: 0;
   padding-inline: 16px 24px;
 
   .#{$c4ai-prefix}--chat-message-container {
@@ -41,7 +41,7 @@
   }
 
   .#{$c4ai-prefix}--chat-message-user-icon {
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -58,39 +58,59 @@
   }
 
   .#{$c4ai-prefix}--chat-message-user-message {
-    color: #c6c6c6;
+    color: #f4f4f4;
   }
 
   .#{$c4ai-prefix}--chat-message-bot-message {
-    color: #e0e0e0;
+    color: #f4f4f4;
   }
 
   .#{$c4ai-prefix}--chat-message-content {
     overflow: hidden;
     inline-size: 100%;
     max-inline-size: 100%;
-    padding-block-start: 7px;
+    padding-block-start: 6px;
     padding-inline-start: 10px;
   }
 
-  .#{$c4ai-prefix}--chat-message-timestamp {
+  .#{$c4ai-prefix}--chat-message-timestamp-bot {
     color: #c6c6c6;
-    font-size: 80%;
+    font-size: 75%;
   }
 
-  .#{$c4ai-prefix}--chat-message-response {
-    max-inline-size: 100%;
+  .#{$c4ai-prefix}--chat-message-timestamp-user {
+    clear: both;
+    color: #c6c6c6;
+    float: inline-end;
+    font-size: 75%;
+    padding-block-end: 5px;
+  }
+
+  .#{$c4ai-prefix}--chat-message-response-bot {
+    inline-size: 80%;
+    max-inline-size: 80%;
     padding-block: 6px 6px;
     padding-inline-end: 12px;
   }
 
+  .#{$c4ai-prefix}--chat-message-response-user {
+    padding: 0 8px;
+    border-radius: 8px;
+    background: #333333;
+    clear: both;
+    float: inline-end;
+    inline-size: 60%;
+    max-inline-size: 60%;
+  }
+
   .#{$c4ai-prefix}--chat-message-piece {
-    margin-block: 6px;
+    margin-block: 3px;
   }
 
   .#{$c4ai-prefix}--chat-message-subsection-text {
     border: 1px solid transparent;
-    line-height: 22px;
+    inline-size: 100%;
+    line-height: 24px;
   }
 
   .#{$c4ai-prefix}--chat-message-edit-area {
@@ -98,11 +118,8 @@
     border: 1px solid #393939;
     border-radius: 6px;
     background: none;
-    block-size: auto;
     color: #f4f4f4;
     font: inherit;
-    inline-size: 100%;
-    min-block-size: 84px;
     overflow-x: hidden;
     resize: none;
   }
@@ -122,7 +139,10 @@
     line-height: 24px;
     max-block-size: 130px;
     max-inline-size: 100%;
-    white-space: pre-wrap;
+
+    .comment {
+      color: #a9fab2;
+    }
   }
 
   .#{$c4ai-prefix}--chat-message-subsection-error {
@@ -133,62 +153,16 @@
     line-height: 22px;
   }
 
-  .#{$c4ai-prefix}--chat-message-subsection-video {
-    .#{$c4ai-prefix}--chat-message-video-card {
-      overflow: hidden;
-      box-sizing: border-box;
-      border: 1px solid #c6c6c6;
-      border-radius: 8px;
-      background: #e0e0e0;
-      color: #0f62fe;
-      inline-size: 248px;
-    }
-
-    .#{$c4ai-prefix}--chat-message-video-card video {
-      block-size: auto;
-      inline-size: 100%;
-    }
-
-    .#{$c4ai-prefix}--chat-message-video-title {
-      overflow: hidden;
-      padding: 16px;
-      color: #161616;
-      font-size: 20px;
-    }
+  .#{$c4ai-prefix}--chat-message-subsection-list {
+    border: 1px solid transparent;
+    font-size: 105%;
+    inline-size: 100%;
+    line-height: 26px;
   }
 
-  .#{$c4ai-prefix}--chat-message-subsection-url {
-    .#{$c4ai-prefix}--chat-message-url-card {
-      box-sizing: border-box;
-      padding: 16px;
-      border: 1px solid #c6c6c6;
-      border-radius: 8px;
-      background: #e0e0e0;
-      color: #0f62fe;
-      inline-size: 248px;
-    }
-
-    .#{$c4ai-prefix}--chat-message-url-card-title {
-      overflow: hidden;
-      block-size: 60px;
-      color: #161616;
-      font-size: 24px;
-    }
-
-    .#{$c4ai-prefix}--chat-message-url-card-link-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    a {
-      color: #0f62fe;
-      text-decoration: none;
-    }
-
-    .#{$c4ai-prefix}--chat-message-url-card-icon svg {
-      fill: #0f62fe;
-    }
+  .#{$c4ai-prefix}--chat-message-subsection-list ul {
+    margin: 0;
+    padding-inline-start: 20px;
   }
 
   .#{$c4ai-prefix}--chat-message-subsection-img {
@@ -209,8 +183,14 @@
     inline-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-message-dropdown {
+  .#{$c4ai-prefix}--chat-message-dropdown-bot {
     inline-size: 100%;
+    opacity: 1;
+  }
+
+  .#{$c4ai-prefix}--chat-message-dropdown-user {
+    clear: both;
+    float: inline-end;
     opacity: 1;
   }
 

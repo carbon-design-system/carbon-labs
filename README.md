@@ -8,10 +8,10 @@
 This monorepo houses a collection of components, each as their own package.
 Here's a full list of packages that we support!
 
-| Package name                                                                                                 | Description                              |
-| ------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
-| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-for-ai/tree/main/packages/chat)      | AI Chat component                        |
-| [`@carbon/ai-utilities`](https://github.com/carbon-design-system/carbon-for-ai/tree/main/packages/utilities) | Common utilities shared amongst packages |
+| Package name                                                                                               | Description                              |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/chat)      | AI Chat component                        |
+| [`@carbon/ai-utilities`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/utilities) | Common utilities shared amongst packages |
 
 A Storybook demo of all component packages is available here:
 https://ai.carbondesignsystem.com
@@ -22,12 +22,12 @@ We're always looking for contributors to help us fix bugs, build new features,
 or help us improve the project documentation. If you're interested, definitely
 check out our guides:
 
-- [Developer Guide](https://github.com/carbon-design-system/carbon-for-ai/blob/main/docs/developing.md)
+- [Developer Guide](https://github.com/carbon-design-system/carbon-labs/blob/main/docs/developing.md)
 
 ## 📝 License
 
 Licensed under the
-[Apache 2.0 License](https://github.com/carbon-design-system/carbon-for-ai/blob/main/LICENSE).
+[Apache 2.0 License](https://github.com/carbon-design-system/carbon-labs/blob/main/LICENSE).
 
 ## <picture><source height="20" width="20" media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ibm-telemetry/telemetry-js/main/docs/images/ibm-telemetry-dark.svg"><source height="20" width="20" media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/ibm-telemetry/telemetry-js/main/docs/images/ibm-telemetry-light.svg"><img height="20" width="20" alt="IBM Telemetry" src="https://raw.githubusercontent.com/ibm-telemetry/telemetry-js/main/docs/images/ibm-telemetry-light.svg"></picture> IBM Telemetry
 

@@ -26,15 +26,17 @@ body:
       value: '- `#carbon-react` for questions about the Carbon React library.'
   - type: markdown
     attributes:
-      value: '- `#carbon-web-components` for questions about the Carbon Web Components library.'
+      value:
+        '- `#carbon-web-components` for questions about the Carbon Web
+        Components library.'
   - type: markdown
     attributes:
-      value: '- `#carbon-for-ai` for questions about the Carbon for AI library.'
+      value: '- `#carbon-for-ai` for questions about the Carbon Labs library.'
   - type: markdown
     attributes:
       value:
         "For non-IBMer's, you can ask a question on our [GitHub Discussions
-        board](https://github.com/carbon-design-system/carbon-for-ai/discussions/new)."
+        board](https://github.com/carbon-design-system/carbon-labs/discussions/new)."
   - type: textarea
     id: summary
     attributes:
@@ -50,5 +52,5 @@ body:
       options:
         - label:
             I agree to follow this project's [Code of
-            Conduct](https://github.com/carbon-design-system/carbon-for-ai/blob/main/.github/CODE_OF_CONDUCT.md)
+            Conduct](https://github.com/carbon-design-system/carbon-labs/blob/main/.github/CODE_OF_CONDUCT.md)
           required: true

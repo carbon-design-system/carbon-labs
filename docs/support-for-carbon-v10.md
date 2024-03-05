@@ -35,26 +35,25 @@
 
 # Support for Carbon v10
 
-Carbon for AI is built on the latest major version of Carbon, v11. The most
-streamlined path for usage of Carbon for AI and related assets such as the
-`Slug` from `@carbon/react` is to have your project using v11. If your project
-is not on v11, we first and foremost recommend migrating to v11 as soon as
-possible.
+Carbon Labs is built on the latest major version of Carbon, v11. The most
+streamlined path for usage of Carbon Labs and related assets such as the `Slug`
+from `@carbon/react` is to have your project using v11. If your project is not
+on v11, we first and foremost recommend migrating to v11 as soon as possible.
 
 For projects using Carbon v10 that can not yet migrate to v11, this document
 outlines some "bridge solutions" - approaches a project can use to include
-Carbon for AI and Carbon v11 assets in a project still using Carbon v10.
+Carbon Labs and Carbon v11 assets in a project still using Carbon v10.
 
 <!-- prettier-ignore-start -->
 > [!IMPORTANT]
 > This guidance largely pertains to the consumption of AI features that are
 > enhancements of existing components in `@carbon/react` and
 > `@carbon/web-components`. AI patterns that do not exist in these core Carbon
-> libraries will be available as packages from the `Carbon for AI` library. If
+> libraries will be available as packages from the `Carbon Labs` library. If
 > your application is on Carbon v11 (regardless of front-end framework), you
-> will be able to consume the `Carbon for AI` components and patterns via NPM or
+> will be able to consume the `Carbon Labs` components and patterns via NPM or
 > IBM Akamai CDN. However, if your application is on Carbon v10 (regardless of
-> front-end framework), you will still be able to consume the `Carbon for AI`
+> front-end framework), you will still be able to consume the `Carbon Labs`
 > components via IBM Akamai CDN.
 
 > [!CAUTION]

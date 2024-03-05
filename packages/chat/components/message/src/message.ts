@@ -30,6 +30,12 @@ export default class message extends LitElement {
   subElements;
 
   /**
+   * Define name of specific bot or user
+   */
+  @property({ type: String, attribute: 'display-name' })
+  displayName;
+
+  /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
    */
   @property({ type: String, attribute: 'raw-text', reflect: true })
@@ -199,7 +205,6 @@ export default class message extends LitElement {
       }
     }
     this._messageElements = subMessages;
-    console.log(this._messageElements);
     this.requestUpdate();
   }
 

@@ -53,16 +53,22 @@ export default class C4AIChat extends LitElement {
   private _inputText = '';
 
   /**
+   * conversation object to display messages straight from the 'message' attribute, overrides any api_url system
+   */
+  @property({ type: Object, attribute: 'conversation', reflect: true })
+  conversation;
+
+  /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
    */
   @property({ type: String, attribute: 'api-url' })
   apiURL;
 
   /**
-   * conversation object to display messages straight from the 'message' attribute, overrides any api_url system
+   * conversation string that preselects a sample conversation
    */
-  @property({ type: String, attribute: 'conversation' })
-  conversation;
+  @property({ type: String, attribute: 'conversation-example' })
+  conversationExample;
 
   /**
    * string denoting which model to use, only 'llama-2' is available currently
@@ -123,6 +129,15 @@ export default class C4AIChat extends LitElement {
   @property({ type: String, attribute: 'sample-query' })
   sampleQuery;
 
+  /** detect when component is rendered to process rawtext
+   */
+  firstUpdated() {
+    if (this.conversation !== null) {
+      this._messages = this.conversation;
+      this.requestUpdate();
+    }
+  }
+
   /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
    * @param {Object} changedProperties - returned inner DOM update object
    **/
@@ -130,6 +145,15 @@ export default class C4AIChat extends LitElement {
     super.updated(changedProperties);
 
     if (changedProperties.has('conversation')) {
+      if (this.conversation !== null) {
+        this._messages = this.conversation;
+        this._queryInProgress = false;
+        this._updateScroll();
+        this.requestUpdate();
+      }
+    }
+
+    if (changedProperties.has('conversationExample')) {
       this.initializeExamplesObject();
     }
 
@@ -138,12 +162,10 @@ export default class C4AIChat extends LitElement {
     }
     if (changedProperties.has('apiURL')) {
       console.log('api change');
-      console.log(changedProperties);
     }
 
     if (changedProperties.has('apiURL')) {
       console.log('url change');
-      console.log(changedProperties);
     }
   }
 
@@ -151,7 +173,7 @@ export default class C4AIChat extends LitElement {
    * Initialize examples Object for when stories send in a 'conversation' object
    */
   initializeExamplesObject() {
-    switch (this.conversation) {
+    switch (this.conversationExample) {
       case 'Nature of art':
         this._messages = [
           {
@@ -470,7 +492,6 @@ export default class C4AIChat extends LitElement {
     );
     if (index > -1 && event.detail.messageElements) {
       this._messages[index].messageElements = event.detail.messageElements;
-      console.log(this._messages);
     }
   }
 
@@ -479,46 +500,60 @@ export default class C4AIChat extends LitElement {
   _sendInput() {
     const value = this._inputText;
     this._messageText = '';
-    this._messages.push({
+
+    const newMessage = {
       text: value,
       origin: this.userName,
       hasError: false,
       time: this._getCurrentTime(),
       index: this._messages.length,
-    });
-    this._queryInProgress = true;
-    this.requestUpdate();
-    this._updateScroll();
+    };
 
-    this.getResults(value)
-      .then((res) => {
-        const errorState =
-          Object.prototype.hasOwnProperty.call(res, 'failed') &&
-          res['failed'] === true;
-        this._messages.push({
-          text: res.reply,
-          origin: this.agentName,
-          hasError: errorState,
-          time: this._getCurrentTime(),
-          index: this._messages.length,
-        });
-        this._queryInProgress = false;
-        this.requestUpdate();
-        this._updateScroll();
-      })
-      .catch((error) => {
-        console.log(error);
-        this._messages.push({
-          text: 'Error reaching the model server, try again',
-          origin: this.agentName,
-          hasError: true,
-          time: this._getCurrentTime(),
-          index: this._messages.length,
-        });
-        this._queryInProgress = false;
-        this.requestUpdate();
-        this._updateScroll();
+    if (this.conversation !== undefined) {
+      const onSubmitEvent = new CustomEvent('on-submit', {
+        detail: { message: newMessage },
+        bubbles: true,
+        composed: true,
       });
+      this.dispatchEvent(onSubmitEvent);
+      this._queryInProgress = true;
+    } else {
+      this._messages.push(newMessage);
+
+      this._queryInProgress = true;
+      this.requestUpdate();
+      this._updateScroll();
+
+      this.getResults(value)
+        .then((res) => {
+          const errorState =
+            Object.prototype.hasOwnProperty.call(res, 'failed') &&
+            res['failed'] === true;
+          this._messages.push({
+            text: res.reply,
+            origin: this.agentName,
+            hasError: errorState,
+            time: this._getCurrentTime(),
+            index: this._messages.length,
+          });
+          this._queryInProgress = false;
+          this.requestUpdate();
+          this._updateScroll();
+        })
+        .catch((error) => {
+          console.log(error);
+          this._messages.push({
+            text: 'Error reaching the model server, try again',
+            origin: this.agentName,
+            hasError: true,
+            time: this._getCurrentTime(),
+            index: this._messages.length,
+          });
+          this._queryInProgress = false;
+          this.requestUpdate();
+          this._updateScroll();
+        });
+    }
   }
 
   /**

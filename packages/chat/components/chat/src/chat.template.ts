@@ -9,13 +9,12 @@
 
 import { html } from 'lit';
 import Search24 from '@carbon/web-components/es/icons/search/24.js';
-import Popup16 from '@carbon/web-components/es/icons/popup/16.js';
 import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
 import Send16 from '@carbon/web-components/es/icons/send/16.js';
-import AI24 from '@carbon/web-components/es/icons/AI/24.js';
 
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-import '../../message/message.ts';
+import '../../message/message.js';
+import '../../header/header.js';
 const { stablePrefix: c4aiPrefix } = settings;
 
 /**
@@ -33,15 +32,13 @@ export function chatTemplate(customElementClass) {
     _messageText: messageText,
     _queryInProgress: queryInProgress,
     _handleRegenerate: handleRegenerate,
+    _handleUpdate: handleUpdate,
   } = customElementClass;
 
   return html`<div class="${c4aiPrefix}--chat-container">
-    <div class="${c4aiPrefix}--chat-header">
-      <div class="${c4aiPrefix}--chat-header-icons">
-        <div class="${c4aiPrefix}--chat-header-icon-slug">${AI24()}</div>
-        <div class="${c4aiPrefix}--chat-header-icon">${Popup16()}</div>
-      </div>
-    </div>
+    <c4ai--chat-header>
+    </c4ai--chat-header>
+
     <div class="${c4aiPrefix}--chat-messages">
       &nbsp;
       ${messages.map((message, index) =>
@@ -59,29 +56,33 @@ export function chatTemplate(customElementClass) {
               origin="${message.origin}"
               time-stamp="${message.time}"
               index="${index}"
-              @regenerate="${handleRegenerate}">
+              @regenerate="${handleRegenerate}"
+              @message-updated=${handleUpdate}>
             </c4ai--chat-message>`
       )}
-      ${queryInProgress
-        ? html` <c4ai--chat-message
-            raw-text="loading"
-            origin="bot"
-            time-stamp=""
-            loading-state
-            error-state="false">
-          </c4ai--chat-message>`
-        : html``}
+      ${
+        queryInProgress
+          ? html` <c4ai--chat-message
+              raw-text="loading"
+              origin="bot"
+              time-stamp=""
+              loading-state
+              error-state="false">
+            </c4ai--chat-message>`
+          : html``
+      }
     </div>
 
     <div class="${c4aiPrefix}--chat-footer">
       <div class="${c4aiPrefix}--chat-footer-button">${Search24()}</div>
-      <input
+      <textarea
         class="${c4aiPrefix}--chat-search-query"
-        type="text"
+        rows="1"
         placeholder="Type something..."
         .value="${messageText}"
         @input="${setMessageText}"
         @keyup="${handleInput}" />
+        </textarea>
       <div class="${c4aiPrefix}--chat-footer-button">${MicrophoneOff16()}</div>
       <div class="${c4aiPrefix}--chat-footer-button" @click="${sendInput}">
         ${Send16()}

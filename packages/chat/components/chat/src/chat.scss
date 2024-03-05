@@ -10,13 +10,10 @@
 @use '@carbon/styles/scss/theme' as *;
 
 :host(#{$c4ai-prefix}-chat) {
-  position: relative;
   display: block;
+  overflow: hidden;
   block-size: 100%;
   font-family: 'IBM Plex Sans', sans-serif;
-  inline-size: 420px;
-  max-block-size: 500px;
-  min-block-size: 500px;
 
   .#{$c4ai-prefix}--chat-container {
     display: flex;
@@ -24,56 +21,7 @@
     flex-direction: column;
     border-radius: 8px;
     block-size: 100%;
-    inline-size: 420px;
-    max-block-size: 500px;
-    min-block-size: 500px;
-  }
-
-  .#{$c4ai-prefix}--chat-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #262626;
-    border-block-end: 1px solid #393939;
-
-    .#{$c4ai-prefix}--chat-header-icons {
-      display: flex;
-      gap: 0;
-      margin-inline-start: auto;
-    }
-
-    .#{$c4ai-prefix}--chat-header-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      block-size: 40px;
-      inline-size: 40px;
-    }
-
-    .#{$c4ai-prefix}--chat-header-icon svg {
-      fill: #f4f4f4;
-    }
-
-    .#{$c4ai-prefix}--chat-header-icon:hover {
-      background: #f4f4f4;
-    }
-
-    .#{$c4ai-prefix}--chat-header-icon:hover svg {
-      fill: #1b1b1b;
-    }
-
-    .#{$c4ai-prefix}--chat-header-icon-slug {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(to bottom right, #ffffff, #8a8a8a);
-      block-size: 40px;
-      inline-size: 40px;
-    }
-
-    .#{$c4ai-prefix}--chat-header-icon-slug svg {
-      fill: #1b1b1b;
-    }
+    max-block-size: 100%;
   }
 
   .#{$c4ai-prefix}--chat-messages {
@@ -86,8 +34,7 @@
     display: flex;
     align-items: center;
     background: #272727;
-    block-size: 40px;
-    inline-size: 100%;
+    min-block-size: 40px;
 
     .#{$c4ai-prefix}--chat-footer-button {
       display: flex;
@@ -108,13 +55,20 @@
     }
 
     .#{$c4ai-prefix}--chat-search-query {
+      box-sizing: border-box;
       flex: 3;
       padding: 0;
       border: none;
       background: none;
-      block-size: 40px;
+
+      block-size: auto;
       color: #f4f4f4;
+      font: inherit;
       font-size: 13px;
+      line-height: 16px;
+      min-block-size: 40px;
+      padding-block-start: 10px;
+      resize: none;
     }
 
     .#{$c4ai-prefix}--chat-search-query:focus {

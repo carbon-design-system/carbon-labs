@@ -17,7 +17,7 @@ import ThumbsUp20 from '@carbon/web-components/es/icons/thumbs-up/20';
 import ThumbsDown20 from '@carbon/web-components/es/icons/thumbs-down/20';
 import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16';
 import Undo16 from '@carbon/web-components/es/icons/undo/16';
-import '../../card/card.ts';
+import '../../card/card.js';
 import '@carbon/web-components/es/components/slug/index.js';
 
 /**

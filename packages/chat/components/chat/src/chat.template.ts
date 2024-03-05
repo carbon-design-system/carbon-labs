@@ -13,8 +13,8 @@ import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16'
 import Send16 from '@carbon/web-components/es/icons/send/16';
 
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-import '../../message/message.ts';
-import '../../header/header.ts';
+import '../../message/message.js';
+import '../../header/header.js';
 const { stablePrefix: c4aiPrefix } = settings;
 
 /**

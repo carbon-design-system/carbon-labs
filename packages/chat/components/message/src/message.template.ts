@@ -11,12 +11,12 @@ import { html } from 'lit';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import Renew20 from '@carbon/web-components/es/icons/renew/20';
-import Edit16 from '@carbon/web-components/es/icons/edit/16';
-import ThumbsUp20 from '@carbon/web-components/es/icons/thumbs-up/20';
-import ThumbsDown20 from '@carbon/web-components/es/icons/thumbs-down/20';
-import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16';
-import Undo16 from '@carbon/web-components/es/icons/undo/16';
+import Renew20 from '@carbon/web-components/es/icons/renew/20.js';
+import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
+import ThumbsUp20 from '@carbon/web-components/es/icons/thumbs-up/20.js';
+import ThumbsDown20 from '@carbon/web-components/es/icons/thumbs-down/20.js';
+import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16.js';
+import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
 import '../../card/card.js';
 import '@carbon/web-components/es/components/slug/index.js';
 

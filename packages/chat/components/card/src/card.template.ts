@@ -10,7 +10,7 @@
 import { html } from 'lit';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
-import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
+import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16.js';
 
 /**
  * Lit template for card

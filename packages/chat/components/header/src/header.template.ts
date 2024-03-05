@@ -10,7 +10,7 @@
 import { html } from 'lit';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
-import Popup16 from '@carbon/web-components/es/icons/popup/16';
+import Popup16 from '@carbon/web-components/es/icons/popup/16.js';
 import '@carbon/web-components/es/components/slug/index.js';
 
 /**

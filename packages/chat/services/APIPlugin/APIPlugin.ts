@@ -26,11 +26,10 @@ const _watsonxai_project_id =
 /**
  * LlamaPlugin piece to fetch data from user defined api url
  */
-class LlamaPluginAPI {
+class APIPlugin {
   /**
    * Gets WatsonX payload
    * @param {string} API_URL - user defined url for query
-   * @param {string} apiKey - user defined key provided in component (ill-advised, use .env instead)
    * @param {string} model - selected model within the API
    * @param {string} temperature - floating number ranging from 0 to 1, dictates how creative the response will be,
    * @param {string} userPrompt - additional behvaior prompt appended to the system prompt, given by the user as a component parameter
@@ -44,7 +43,6 @@ class LlamaPluginAPI {
    */
   static async sendMessageWatsonX(
     API_URL,
-    apiKey,
     model,
     temperature,
     userPrompt,
@@ -59,7 +57,7 @@ class LlamaPluginAPI {
     console.log(message);
     console.log(eventNumber);
     console.log(session);
-    if (!_watsonxai_key && !apiKey) {
+    if (!_watsonxai_key) {
       return {
         failed: true,
         reply:
@@ -139,7 +137,6 @@ class LlamaPluginAPI {
   /**
    * Gets BAM internal research resource payload
    * @param {string} API_URL - user defined url for query
-   * @param {string} apiKey - user defined key provided in component (ill-advised, use .env instead)
    * @param {string} model - selected model within the API
    * @param {string} temperature - floating number ranging from 0 to 1, dictates how creative the response will be,
    * @param {string} userPrompt - additional behvaior prompt appended to the system prompt, given by the user as a component parameter
@@ -153,7 +150,6 @@ class LlamaPluginAPI {
    */
   static async sendMessageBAM(
     API_URL,
-    apiKey,
     model,
     temperature,
     userPrompt,
@@ -168,11 +164,11 @@ class LlamaPluginAPI {
     console.log(eventNumber);
     console.log(session);
 
-    if (!_bam_key && !apiKey) {
+    if (!_bam_key) {
       return {
         failed: true,
         reply:
-          'Error: No API key specified, please append your key to your .env root file in order to access the BAM service',
+          'Error: No API key specified, please append your key to your .env root file or Vite file in order to access the BAM service',
       };
     }
     const user_name = 'user';
@@ -231,7 +227,6 @@ class LlamaPluginAPI {
   /**
    * Gets Static url payload
    * @param {string} API_URL - user defined url for query
-   * @param {string} apiKey - user defined key provided in component (ill-advised, use .env instead)
    * @param {string} model - selected model within the API
    * @param {string} temperature - floating number ranging from 0 to 1, dictates how creative the response will be,
    * @param {string} userPrompt - additional behvaior prompt appended to the system prompt, given by the user as a component parameter
@@ -245,7 +240,6 @@ class LlamaPluginAPI {
    */
   static async sendMessageLocal(
     API_URL,
-    apiKey,
     model,
     temperature,
     userPrompt,
@@ -314,7 +308,6 @@ class LlamaPluginAPI {
       user_name: user_name,
       agent_name: agent_name,
       max_tries: 3,
-      api_key: apiKey,
     };
 
     const requestOptions = {
@@ -340,4 +333,4 @@ class LlamaPluginAPI {
     }
   }
 }
-export default LlamaPluginAPI;
+export default APIPlugin;

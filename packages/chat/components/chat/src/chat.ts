@@ -9,7 +9,7 @@
 
 import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import { LlamaPluginAPI } from '../../../services/LlamaPlugin/index.js';
+import { APIPlugin } from '../../../services/APIPlugin/index.js';
 // @ts-ignore
 import styles from './chat.scss?inline';
 
@@ -59,10 +59,10 @@ export default class C4AIChat extends LitElement {
   apiURL;
 
   /**
-   * string provided through playground for testing, otherwise .env is preferred
+   * conversation object to display messages straight from the 'message' attribute, overrides any api_url system
    */
-  @property({ type: String, attribute: 'api-key' })
-  apiKey;
+  @property({ type: String, attribute: 'conversation' })
+  conversation;
 
   /**
    * string denoting which model to use, only 'llama-2' is available currently
@@ -115,8 +115,7 @@ export default class C4AIChat extends LitElement {
   /**
    * string denoting selected querying method
    */
-  @property({ type: String, attribute: 'chosen-host' })
-  chosenHost;
+  private chosenHost = 'Local';
 
   /**
    * TESTING: case number to trigger auto generation
@@ -129,10 +128,13 @@ export default class C4AIChat extends LitElement {
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
+
+    if (changedProperties.has('conversation')) {
+      this.initializeExamplesObject();
+    }
+
     if (changedProperties.has('sampleQuery')) {
-      console.log('changed sample');
-      console.log(this.sampleQuery);
-      this.initializeExamples();
+      this.initializeExamplesText();
     }
     if (changedProperties.has('apiURL')) {
       console.log('api change');
@@ -145,9 +147,125 @@ export default class C4AIChat extends LitElement {
     }
   }
 
-  /** Initialize examples
+  /**
+   * Initialize examples Object for when stories send in a 'conversation' object
    */
-  initializeExamples() {
+  initializeExamplesObject() {
+    switch (this.conversation) {
+      case 'Nature of art':
+        this._messages = [
+          {
+            text: 'what is the nature of art?',
+            origin: 'user',
+            hasError: false,
+            time: '8:51am',
+            index: 0,
+            elements: { content: 'what is the nature of art?', type: 'text' },
+          },
+          {
+            text: 'the nature of art is a complex and multifaceted topic that has been debated by philosophers, critics, and scholars for centuries. at its core, art is the creation of aesthetic objects or experiences that are intended to elicit an emotional response from the viewer. this can take many forms, including painting, sculpture, photography, music, and literature.\n\nart can serve a variety of purposes, including the expression of the artists personal vision, the exploration of complex social or political issues, or the simple enjoyment of beauty. the nature of art is also influenced by cultural and historical context, and can evolve over time as new techniques and materials are developed.\n\n',
+            origin: 'bot',
+            hasError: false,
+            time: '8:51am',
+            index: 1,
+            elements: {
+              content:
+                'the nature of art is a complex and multifaceted topic that has been debated by philosophers, critics, and scholars for centuries. at its core, art is the creation of aesthetic objects or experiences that are intended to elicit an emotional response from the viewer. this can take many forms, including painting, sculpture, photography, music, and literature.\n\nart can serve a variety of purposes, including the expression of the artists personal vision, the exploration of complex social or political issues, or the simple enjoyment of beauty. the nature of art is also influenced by cultural and historical context, and can evolve over time as new techniques and materials are developed.',
+              type: 'text',
+            },
+          },
+          {
+            text: 'how much do aesthetics play into it?',
+            origin: 'user',
+            hasError: false,
+            time: '8:52am',
+            index: 2,
+            elements: {
+              content: 'how much do aesthetics play into it?',
+              type: 'text',
+            },
+          },
+          {
+            text: 'aesthetics play a significant role in the creation and appreciation of art. the aesthetic qualities of a piece of art, such as its form, color, and composition, are often a key factor in determining its overall effectiveness and appeal. in addition, the aesthetic principles that underlie a work of art can influence its interpretation and meaning.\n\n\n',
+            origin: 'bot',
+            hasError: false,
+            time: '8:52am',
+            index: 3,
+            elements: {
+              content:
+                'aesthetics play a significant role in the creation and appreciation of art. the aesthetic qualities of a piece of art, such as its form, color, and composition, are often a key factor in determining its overall effectiveness and appeal. in addition, the aesthetic principles that underlie a work of art can influence its interpretation and meaning.',
+              type: 'text',
+            },
+          },
+          {
+            text: 'Should aesthetics not matter if its a purely subjective interpretation?',
+            origin: 'user',
+            hasError: false,
+            time: '8:53am',
+            index: 4,
+            elements: {
+              content:
+                'Should aesthetics not matter if its a purely subjective interpretation?',
+              type: 'text',
+            },
+          },
+          {
+            text: 'while aesthetic evaluations are subjective, they can still provide valuable insights into the ways in which art can be appreciated and understood. the aesthetic qualities of a piece of art can influence how it is experienced and interpreted, and can also reflect the cultural and historical context in which it was created.\n\n\n\n',
+            origin: 'bot',
+            hasError: false,
+            time: '8:53am',
+            index: 5,
+            elements: {
+              content:
+                'while aesthetic evaluations are subjective, they can still provide valuable insights into the ways in which art can be appreciated and understood. the aesthetic qualities of a piece of art can influence how it is experienced and interpreted, and can also reflect the cultural and historical context in which it was created.',
+              type: 'text',
+            },
+          },
+        ];
+        break;
+      case 'Hello':
+        this._messages = [
+          {
+            text: 'Hello friend',
+            origin: 'user',
+            hasError: false,
+            time: '4:51pm',
+            index: 0,
+            elements: { content: 'Hello friend', type: 'text' },
+          },
+        ];
+        break;
+      case 'None':
+        this._messages = [];
+        break;
+      case 'Flowers':
+        this._messages = [
+          {
+            text: 'Can you give me a list of flower images?',
+            origin: 'user',
+            hasError: false,
+            time: '4:56pm',
+            index: 0,
+          },
+          {
+            text: 'Of course, here is a list of flowers:\nCosmos: https://bouqs.com/blog/wp-content/uploads/2019/05/20_summer-cosmos.jpg Dahlia: https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg Zinnia: https://bouqs.com/blog/wp-content/uploads/2023/06/zinnia-gbcbfedd94_1280.jpg Chrysanthemum: https://bouqs.com/blog/wp-content/uploads/2021/09/chrysanthemum-5668882_1280.jpg Celosia: https://bouqs.com/blog/wp-content/uploads/2021/09/celosia-7299458_1280.jpg Sun flower: https://bouqs.com/blog/wp-content/uploads/2021/05/sunflower-fields.jpg Snapdragon: https://bouqs.com/blog/wp-content/uploads/2021/09/snapdragon-20809_1280.jpg Strawflower: https://bouqs.com/blog/wp-content/uploads/2021/09/strawflower-362280_1280.jpg Source: https://bouqs.com/blog/types-of-flowers-annual-perennial-biennial/',
+            origin: 'bot',
+            hasError: false,
+            time: '4:57pm',
+            index: 1,
+          },
+        ];
+        break;
+      default:
+        this._messages = [];
+        break;
+    }
+    this.requestUpdate();
+  }
+
+  /** Initialize examples for when stories send in a 'sampleQuery' string
+   */
+  initializeExamplesText() {
     switch (this.sampleQuery) {
       case 'Greetings':
         this._messages = [
@@ -159,6 +277,25 @@ export default class C4AIChat extends LitElement {
             index: 0,
           },
         ];
+        break;
+      case 'Top Websites':
+        this._messages = [
+          {
+            text: "Give me a list of the world's top websites by traffic",
+            origin: this.userName,
+            hasError: false,
+            time: this._getCurrentTime(),
+            index: 0,
+          },
+          {
+            text: 'Here are the top websites in the world based on traffic:\n1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)\n6. TikTok.com (US)\n7. QQ.com (China)\n8. Reddit.com (US)\n9. Weibo.com (China)\n10. Twitter.com (US)\n11. Instagram.com (US)\n12. Yahoo.com (US)\n13. Amazon.com (US)\n14. LinkedIn.com (US)\n15. Imgur.com (US)\nSource:\nhttp://www.alexa.org\nWhat else can I help you with?',
+            origin: this.agentName,
+            hasError: false,
+            time: this._getCurrentTime(),
+            index: 1,
+          },
+        ];
+
         break;
       case 'List of flowers':
         this._messages = [
@@ -188,7 +325,7 @@ export default class C4AIChat extends LitElement {
             index: 0,
           },
           {
-            text: 'You can make a chessboard in HTML/CSS by using a table element and applying CSS styling to it. Here is an example of how you can create a chessboard using these methods:\n \nHTML:\n```html\n<table>\n  <tbody>\n    <tr>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n    </tr>\n    <tr>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n    </tr>\n    <tr>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n    </tr>\n    <tr>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n    </tr>\n    <tr>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n    </tr>\n    <tr>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n    </tr>\n    <tr>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n      <td class="white"></td>\n      <td class="black"></td>\n    </tr>\n  </tbody>\n</table>\n```\nCSS:\n```css\ntable {\n  border-collapse: collapse;\n}\n \ntd {\n  width: 50px;\n  height: 50px;\n}\n \n.black {\n  background-color: #000;\n}\n \n.white {\n  background-color: #fff;\n}\n```\nThis will create a table with 8 rows and 8 columns, with each cell alternating between black and white. You can adjust the width and height of the cells as needed.\n \nNote: The `border-collapse: collapse;` property is used to remove the spacing between the table cells.',
+            text: 'You can make a chessboard in HTML/CSS by using a table element and applying CSS styling to it. Here is an example of how you can create a chessboard using these methods:\n \nHTML:\n```html\n<table>\n\t<tbody>\n\t\t<tr>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t\t<td class="white"></td>\n\t\t\t<td class="black"></td>\n\t\t</tr>\n\t</tbody>\n</table>\n```\nCSS:\n```css\ntable {\n\tborder-collapse: collapse;\n}\n \ntd {\n\twidth: 50px;\n\theight: 50px;\n}\n \n.black {\n\tbackground-color: #000;\n}\n \n.white {\n\tbackground-color: #fff;\n}\n```\nThis will create a table with 8 rows and 8 columns, with each cell alternating between black and white. You can adjust the width and height of the cells as needed.\n \nNote: The `border-collapse: collapse;` property is used to remove the spacing between the table cells.',
             origin: this.agentName,
             hasError: false,
             time: this._getCurrentTime(),
@@ -225,7 +362,7 @@ export default class C4AIChat extends LitElement {
             index: 0,
           },
           {
-            text: "Certainly, here's how to check if a number is prime in Python:\n```from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n  #base condition\n  if itr == 1:\n    return True\n  #if given number divided by itr or not\n  if number % itr == 0:\n    return False\n  #Recursive function Call\n  if Prime(number,itr-1) == False:\n    return False\n  return True\n```Source: https://www.geeksforgeeks.org/python-program-to-check-whether-a-number-is-prime-or-not/\nAnd here some sample images using Prime numbers to display Ulam Spirals taken from Wikipedia:\nhttps://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Ulam_spiral_10x.png/402px-Ulam_spiral_10x.png\nUlam spiral of size 201×201. Black dots represent prime numbers. Diagonal, vertical, and horizontal lines with a high density of prime numbers are clearly visible.\nhttps://upload.wikimedia.org/wikipedia/commons/e/e0/Randomly_black_odd_numbers.png\nFor comparison, a spiral with random odd numbers colored black (at the same density of primes in a 200x200 spiral).\n\nWhat else may I do for you?",
+            text: "Certainly, here's how to check if a number is prime in Python:\n```from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n```Source: https://www.geeksforgeeks.org/python-program-to-check-whether-a-number-is-prime-or-not/\nAnd here some sample images using Prime numbers to display Ulam Spirals taken from Wikipedia:\nhttps://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Ulam_spiral_10x.png/402px-Ulam_spiral_10x.png\nUlam spiral of size 201×201. Black dots represent prime numbers. Diagonal, vertical, and horizontal lines with a high density of prime numbers are clearly visible.\nhttps://upload.wikimedia.org/wikipedia/commons/e/e0/Randomly_black_odd_numbers.png\nFor comparison, a spiral with random odd numbers colored black (at the same density of primes in a 200x200 spiral).\n\nWhat else may I do for you?",
             origin: this.agentName,
             hasError: false,
             time: this._getCurrentTime(),
@@ -249,10 +386,9 @@ export default class C4AIChat extends LitElement {
    **/
   async getResults(searchQuery) {
     let response;
-    if (this.chosenHost == 'Local' || this.apiKey !== null) {
-      response = await LlamaPluginAPI.sendMessageLocal(
+    if (this.chosenHost == 'Local') {
+      response = await APIPlugin.sendMessageLocal(
         this.apiURL,
-        this.apiKey,
         this.model,
         this.temperature,
         this.userPrompt,
@@ -263,9 +399,8 @@ export default class C4AIChat extends LitElement {
       );
     }
     if (this.chosenHost == 'BAM') {
-      response = await LlamaPluginAPI.sendMessageBAM(
+      response = await APIPlugin.sendMessageBAM(
         this.apiURL,
-        this.apiKey,
         this.model,
         this.temperature,
         this.userPrompt,
@@ -276,9 +411,8 @@ export default class C4AIChat extends LitElement {
       );
     }
     if (this.chosenHost == 'Watsonx.ai') {
-      response = await LlamaPluginAPI.sendMessageWatsonX(
+      response = await APIPlugin.sendMessageWatsonX(
         'https://us-south.ml.cloud.ibm.com/ml/v1-beta/generation/text?version=2023-05-29',
-        this.apiKey,
         this.model,
         this.temperature,
         this.userPrompt,
@@ -303,7 +437,7 @@ export default class C4AIChat extends LitElement {
   }
 
   /** handle regeneration signal from message subcomponent, resend query and edit the message list
-   * @param {event} event - custom event from message subcomponent
+   * @param {event} event - custom regeneration event from message subcomponent
    */
   _handleRegenerate(event) {
     const cutIndex = event.detail.index;
@@ -318,13 +452,25 @@ export default class C4AIChat extends LitElement {
     if (event.detail.message == null) {
       deletionIndex--;
     }
-    console.log(originalMessage);
-    console.log(this._messages);
     if (deletionIndex > -1) {
       this._messages.length = deletionIndex;
       this._inputText = originalMessage;
       this.requestUpdate();
       this._sendInput();
+    }
+  }
+
+  /** handle update signal from message subcomponent, only triggered when only text is supplied in parent conversation object
+   * @param {event} event - custom update event from message subcomponent
+   */
+  _handleUpdate(event) {
+    const selectedIndex = event.detail.index;
+    const index = this._messages.findIndex(
+      (obj) => obj.index === selectedIndex
+    );
+    if (index > -1 && event.detail.messageElements) {
+      this._messages[index].messageElements = event.detail.messageElements;
+      console.log(this._messages);
     }
   }
 
@@ -346,7 +492,6 @@ export default class C4AIChat extends LitElement {
 
     this.getResults(value)
       .then((res) => {
-        console.log(res);
         const errorState =
           Object.prototype.hasOwnProperty.call(res, 'failed') &&
           res['failed'] === true;

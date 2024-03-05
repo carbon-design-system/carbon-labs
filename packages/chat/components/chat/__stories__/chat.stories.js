@@ -19,12 +19,11 @@ export default {
 
 const defaultArgs = {
   sampleQuery: 'None',
+  conversation: 'None',
   chosenHost: 'Local',
   userPrompt:
     'You are Watson, a helpful and polite assistant. You will answer all my questions to the best of your knowledge.',
   apiUrl: 'http://localhost:5001/generate',
-  apiKey: '',
-  projectId: '',
   model: 'llama-2',
   temperature: '',
   feedbackUrl: 'http://localhost:5001/feedback',
@@ -33,15 +32,21 @@ const defaultArgs = {
 const controls = {
   sampleQuery: {
     control: { type: 'select' },
-    description: 'Premade demo queries:',
+    description: 'Premade raw text queries:',
     options: [
       'None',
       'Moon landing',
+      'Top Websites',
       'Python code with images',
       'Greetings',
       'List of flowers',
       'Chessboard in HTML/CSS',
     ],
+  },
+  conversation: {
+    control: { type: 'select' },
+    description: 'Premade JSON object queries',
+    options: ['None', 'Nature of art', 'Flowers', 'Hello'],
   },
   chosenHost: {
     control: { type: 'select' },
@@ -55,14 +60,6 @@ const controls = {
   apiUrl: {
     control: { type: 'text' },
     description: 'Specify custom API url',
-  },
-  apiKey: {
-    control: { type: 'text' },
-    description: 'Specify API key',
-  },
-  projectId: {
-    control: { type: 'text' },
-    description: 'Specify IBM Cloud project ID (Only for Watsonx.ai)',
   },
   model: {
     control: { type: 'select' },
@@ -91,7 +88,6 @@ export const Default = {
       user-prompt="You are Watson, you will answer all my questions to the best fo your knowledge."
       chosen-host="local"
       api-url="http://localhost:5001/generate"
-      api-key="xxx"
       feedback-url="http://localhost:5001/feeback"
       temperature="0.0"
       chosen-host="local"
@@ -109,6 +105,10 @@ export const Playground = {
     controls: {
       expanded: true,
     },
+    layout: 'fullscreen',
+    viewport: {
+      defaultViewport: 'storybook-default',
+    },
   },
   /**
    * Renders the template for Playground Storybook
@@ -120,32 +120,32 @@ export const Playground = {
    * @param {string} args.sampleQuery - preset to test and demo
    * @param {string} args.temperature - model temperature
    * @param {string} args.chosenHost - internal flag for packaging query
-   * @param {string} args.projectId - watsonX only, target instance ID
+   * @param {Object} args.conversation - array of message object to render
    * @returns {TemplateResult<1>}
    */
   render: ({
     apiUrl,
-    apiKey,
     feedbackUrl,
     userPrompt,
     sampleQuery,
     temperature,
     chosenHost,
-    projectId,
+    conversation,
   }) => html`
-    <c4ai-chat
-      model="llama-2"
-      user-prompt="${userPrompt}"
-      api-url="${apiUrl}"
-      api-key="${apiKey}"
-      sample-query="${sampleQuery}"
-      feedback-url="${feedbackUrl}"
-      temperature="${temperature}"
-      chosen-host="${chosenHost}"
-      project-id="${projectId}"
-      user-name="user"
-      agent-name="bot"
-      theme="light"
-      sample-query="${sampleQuery}"></c4ai-chat>
+    <div style="height:calc(100vh - 84px); overflow:hidden;">
+      <c4ai-chat
+        model="llama-2"
+        user-prompt="${userPrompt}"
+        api-url="${apiUrl}"
+        sample-query="${sampleQuery}"
+        feedback-url="${feedbackUrl}"
+        temperature="${temperature}"
+        chosen-host="${chosenHost}"
+        conversation="${conversation}"
+        user-name="user"
+        agent-name="bot"
+        theme="light">
+      </c4ai-chat>
+    </div>
   `,
 };

@@ -507,6 +507,7 @@ export default class C4AIChat extends LitElement {
       hasError: false,
       time: this._getCurrentTime(),
       index: this._messages.length,
+
     };
 
     if (this.conversation !== undefined) {

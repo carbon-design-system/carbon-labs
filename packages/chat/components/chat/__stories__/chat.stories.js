@@ -84,17 +84,26 @@ export const Default = {
    */
   render: () => html`
     <c4ai-chat
-      model="llama-2"
-      user-prompt="You are Watson, you will answer all my questions to the best fo your knowledge."
-      chosen-host="local"
-      api-url="http://localhost:5001/generate"
-      feedback-url="http://localhost:5001/feeback"
-      temperature="0.0"
-      chosen-host="local"
       user-name="user"
       agent-name="bot"
-      theme="light"
-      sample-query="Greetings"></c4ai-chat>
+      .conversation="${[
+        {
+          text: 'Greetings, how may I help you?',
+          origin: 'bot',
+          hasError: false,
+          time: '4:56pm',
+          index: 0,
+          elements: [
+            {
+              content: 'Greetings, how may I help you?',
+              type: 'text',
+            },
+          ],
+        },
+      ]}"
+      @on-submit="${(event) => {
+        console.log(event);
+      }}"></c4ai-chat>
   `,
 };
 
@@ -141,7 +150,7 @@ export const Playground = {
         feedback-url="${feedbackUrl}"
         temperature="${temperature}"
         chosen-host="${chosenHost}"
-        conversation="${conversation}"
+        conversation-example="${conversation}"
         user-name="user"
         agent-name="bot"
         theme="light">

@@ -93,6 +93,7 @@ export const Default = {
           hasError: false,
           time: '4:56pm',
           index: 0,
+          disableButtons: true,
           elements: [
             {
               content: 'Greetings, how may I help you?',

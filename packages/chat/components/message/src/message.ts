@@ -36,6 +36,12 @@ export default class message extends LitElement {
   displayName;
 
   /**
+   * Define name of specific bot or user
+   */
+  @property({ type: Boolean, attribute: 'disable-buttons' })
+  disableButtons;
+
+  /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
    */
   @property({ type: String, attribute: 'raw-text', reflect: true })
@@ -86,6 +92,8 @@ export default class message extends LitElement {
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
+    console.log(this.disableButtons);
+
     if (this.loadingState) {
       this._messageElements = [{ content: '', type: 'loading' }];
       this.requestUpdate();

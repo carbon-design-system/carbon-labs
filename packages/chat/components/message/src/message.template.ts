@@ -34,6 +34,7 @@ export function messageTemplate(customElementClass) {
     index: index,
     loadingState: loadingState,
     displayName: displayName,
+    disableButtons: disableButtons,
     _editing: editing,
     _handleEdit: handleEdit,
     _cancelEdit: cancelEdit,
@@ -69,24 +70,26 @@ export function messageTemplate(customElementClass) {
                 </div>`
               )}
             </div>
-            <div class="${c4aiPrefix}--chat-message-dropdown-user">
-              ${editing === true
-                ? html` <div
-                      class="${c4aiPrefix}--chat-message-small-button"
-                      @click="${cancelEdit}">
-                      ${Undo16()}
-                    </div>
-                    <div
-                      class="${c4aiPrefix}--chat-message-small-button"
-                      @click="${validateEdit}">
-                      ${CheckMark16()}
-                    </div>`
-                : html` <div
-                    class="${c4aiPrefix}--chat-message-small-button"
-                    @click="${handleEdit}">
-                    ${Edit16()}
-                  </div>`}
-            </div>
+            ${!disableButtons
+              ? html` <div class="${c4aiPrefix}--chat-message-dropdown-user">
+                  ${editing === true
+                    ? html` <div
+                          class="${c4aiPrefix}--chat-message-small-button"
+                          @click="${cancelEdit}">
+                          ${Undo16()}
+                        </div>
+                        <div
+                          class="${c4aiPrefix}--chat-message-small-button"
+                          @click="${validateEdit}">
+                          ${CheckMark16()}
+                        </div>`
+                    : html` <div
+                        class="${c4aiPrefix}--chat-message-small-button"
+                        @click="${handleEdit}">
+                        ${Edit16()}
+                      </div>`}
+                </div>`
+              : html``}
           </div>`
         : html` <div class="${c4aiPrefix}--chat-message-icon">
               ${origin == 'user'
@@ -156,7 +159,7 @@ export function messageTemplate(customElementClass) {
                   `
                 )}
               </div>
-              ${!loadingState
+              ${!loadingState && !disableButtons
                 ? html`
                     <div class="${c4aiPrefix}--chat-message-dropdown-bot">
                       ${origin === 'user'

@@ -7,14 +7,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html } from 'lit';
-import Search24 from '@carbon/web-components/es/icons/search/24.js';
-import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
-import Send16 from '@carbon/web-components/es/icons/send/16.js';
+import { html, nothing } from 'lit';
+import Search24 from '@carbon/web-components/es/icons/search/24';
+import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16';
+import Send16 from '@carbon/web-components/es/icons/send/16';
 
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-import '../../message/message.js';
-import '../../header/header.js';
+import '../../message/message.ts';
+import '../../header/header.ts';
 const { stablePrefix: c4aiPrefix } = settings;
 
 /**
@@ -48,6 +48,7 @@ export function chatTemplate(customElementClass) {
               origin="${message.origin}"
               time-stamp="${message.time}"
               error-state
+              disable-buttons
               index="${index}"
               @regenerate="${handleRegenerate}">
             </c4ai--chat-message>`
@@ -55,7 +56,9 @@ export function chatTemplate(customElementClass) {
               raw-text="${message.text}"
               origin="${message.origin}"
               time-stamp="${message.time}"
+              disable-buttons="${message.disableButtons || nothing}"
               index="${index}"
+              display-name="${message.displayName || nothing}"
               @regenerate="${handleRegenerate}"
               @message-updated=${handleUpdate}>
             </c4ai--chat-message>`

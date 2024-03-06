@@ -13,7 +13,7 @@ importers:
         version: 1.51.0(sass@1.71.1)
       '@carbon/web-components':
         specifier: 2.4.0
-        version: 2.4.0(@carbon/grid@11.21.1)(@carbon/layout@11.20.1)(@carbon/motion@11.16.1)(@carbon/themes@11.31.0)(@carbon/type@11.25.1)(sass@1.71.1)
+        version: 2.4.0(@carbon/grid@11.21.1)(@carbon/layout@11.20.1)(@carbon/motion@11.16.1)(@carbon/themes@11.32.0)(@carbon/type@11.25.1)(sass@1.71.1)
       lit:
         specifier: ^3.0.0
         version: 3.0.2
@@ -34,8 +34,8 @@ importers:
         specifier: 11.16.1
         version: 11.16.1
       '@carbon/themes':
-        specifier: 11.31.0
-        version: 11.31.0
+        specifier: 11.32.0
+        version: 11.32.0
       '@carbon/type':
         specifier: 11.25.1
         version: 11.25.1
@@ -2540,22 +2540,6 @@ packages:
     dependencies:
       '@carbon/layout': 11.20.1
 
-  /@carbon/ibm-products-styles@2.27.1(@carbon/grid@11.21.1)(@carbon/layout@11.20.1)(@carbon/motion@11.16.1)(@carbon/themes@11.31.0)(@carbon/type@11.25.1):
-    resolution: {integrity: sha512-/tH9aEvMnPWSkD6E5k35xePdrSMqPy5MQBsP6eWSScsA6EKM2XE7hMdyzr9vZZ1EgaCEK8Mg2KIKYEKvFMtm3Q==}
-    peerDependencies:
-      '@carbon/grid': ^11.21.1
-      '@carbon/layout': ^11.20.1
-      '@carbon/motion': ^11.16.1
-      '@carbon/themes': ^11.32.0
-      '@carbon/type': ^11.25.1
-    dependencies:
-      '@carbon/grid': 11.21.1
-      '@carbon/layout': 11.20.1
-      '@carbon/motion': 11.16.1
-      '@carbon/themes': 11.31.0
-      '@carbon/type': 11.25.1
-    dev: false
-
   /@carbon/ibm-products-styles@2.27.1(@carbon/grid@11.21.1)(@carbon/layout@11.20.1)(@carbon/motion@11.16.1)(@carbon/themes@11.32.0)(@carbon/type@11.25.1):
     resolution: {integrity: sha512-/tH9aEvMnPWSkD6E5k35xePdrSMqPy5MQBsP6eWSScsA6EKM2XE7hMdyzr9vZZ1EgaCEK8Mg2KIKYEKvFMtm3Q==}
     peerDependencies:
@@ -2605,14 +2589,6 @@ packages:
       sass: 1.71.1
     dev: false
 
-  /@carbon/themes@11.31.0:
-    resolution: {integrity: sha512-oHSbYLKxjdGOmPRgJw6LyODiFeN1YkwrxdV6gtDnFYNc4jeCCQV4DitOZV2OeCZWTPP7/8CnB98b4Mai2EJ2Ug==}
-    dependencies:
-      '@carbon/colors': 11.20.0
-      '@carbon/layout': 11.20.1
-      '@carbon/type': 11.25.1
-      color: 4.2.3
-
   /@carbon/themes@11.32.0:
     resolution: {integrity: sha512-OpXya8wEgTO2aAgddVrb1aBmdnAEUf9NJFxrBTFBXzex83MN66u3mNfyCjKa85RkTVHsoXYuzafaS6X5VxVeTQ==}
     dependencies:
@@ -2620,32 +2596,12 @@ packages:
       '@carbon/layout': 11.20.1
       '@carbon/type': 11.25.1
       color: 4.2.3
-    dev: false
 
   /@carbon/type@11.25.1:
     resolution: {integrity: sha512-dNgDoiS44R192hJdTbiwvHQ3e5ReKmBxXvfZIwdy/uCOj1bvm/V+A0O9q9/GBF7Pm4+sdKKx+gxmCju97sMrrw==}
     dependencies:
       '@carbon/grid': 11.21.1
       '@carbon/layout': 11.20.1
-
-  /@carbon/web-components@2.4.0(@carbon/grid@11.21.1)(@carbon/layout@11.20.1)(@carbon/motion@11.16.1)(@carbon/themes@11.31.0)(@carbon/type@11.25.1)(sass@1.71.1):
-    resolution: {integrity: sha512-MmXtGrVWXhVqnmqIZpv+nR/89HMGpcAyheCXPqtvGL/AZQQyIQOlLV3TxVgWKchcpscXomXNZ855smrrKSDsFA==}
-    dependencies:
-      '@babel/runtime': 7.23.2
-      '@carbon/ibm-products-styles': 2.27.1(@carbon/grid@11.21.1)(@carbon/layout@11.20.1)(@carbon/motion@11.16.1)(@carbon/themes@11.31.0)(@carbon/type@11.25.1)
-      '@carbon/styles': 1.51.0(sass@1.71.1)
-      '@floating-ui/dom': 1.6.3
-      flatpickr: 4.6.1
-      lit: 2.8.0
-      lodash-es: 4.17.21
-    transitivePeerDependencies:
-      - '@carbon/grid'
-      - '@carbon/layout'
-      - '@carbon/motion'
-      - '@carbon/themes'
-      - '@carbon/type'
-      - sass
-    dev: false
 
   /@carbon/web-components@2.4.0(@carbon/grid@11.21.1)(@carbon/layout@11.20.1)(@carbon/motion@11.16.1)(@carbon/themes@11.32.0)(@carbon/type@11.25.1)(sass@1.71.1):
     resolution: {integrity: sha512-MmXtGrVWXhVqnmqIZpv+nR/89HMGpcAyheCXPqtvGL/AZQQyIQOlLV3TxVgWKchcpscXomXNZ855smrrKSDsFA==}

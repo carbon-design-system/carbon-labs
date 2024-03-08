@@ -105,7 +105,7 @@
     "lerna": "^8.0.0",
     "lint-staged": "^15.0.2",
     "postcss": "^8.4.31",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.0",
     "prettier-config-carbon": "^0.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

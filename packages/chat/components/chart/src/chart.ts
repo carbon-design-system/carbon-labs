@@ -59,7 +59,7 @@ export default class chart extends LitElement {
    * visualizationSpec -  parsed object from content string
    */
   @state()
-  _visualizationSpec = {
+  _visualizationSpec: VegaEmbed.VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
     description: 'Empty Specification',
     data: { values: [] },
@@ -101,7 +101,7 @@ export default class chart extends LitElement {
   async updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('_visualizationSpec')) {
-      if (this._visualizationSpec.data.values.length > 0) {
+      if (this._visualizationSpec?.data?.values?.length > 0) {
         this._renderedSVG = await this._displayVisualization();
         this.requestUpdate();
       }

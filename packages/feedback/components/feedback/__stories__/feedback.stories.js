@@ -13,8 +13,6 @@ import { html } from 'lit';
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
  */
 
-// const feedbackApi = FeedbackApi.getInstance();
-
 export default {
   title: 'Components/Feedback/Feedback',
   tags: ['autodocs'],
@@ -203,7 +201,6 @@ export const Playground = {
    */
   render: (args) =>
     html`
-      <!-- <h2>${args.input}</h2> -->
       <c4ai-feedback
         @on-feedback-delete=${args['on-feedback-delete']}
         @on-feedback-save=${args['on-feedback-save']}

@@ -9,24 +9,22 @@ $css--plex: true !default;
 
 @use '../../../../../globals/scss/vars' as *;
 @use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
 
 :host(#{$c4ai-prefix}-feedback) hr {
   border: 0;
-  background: var(--cds-border-subtle);
+  background: $border-subtle;
   block-size: 1px;
   margin-block: 1rem;
 }
 
 :host(#{$c4ai-prefix}-feedback) cds-slug .secondary {
-  color: var(--cds-text-secondary, #525252);
+  color: $text-secondary;
 }
 
 :host(#{$c4ai-prefix}-feedback) cds-slug p {
   margin: 0.25rem 0;
-  font-size: var(--cds-body-compact-01-font-size, 0.875rem);
-  font-weight: var(--cds-body-compact-01-font-weight, 400);
-  letter-spacing: var(--cds-body-compact-01-letter-spacing, 0.16px);
-  line-height: var(--cds-body-compact-01-line-height, 1.2857);
+  @include type-style('body-compact-01');
 }
 
 :host(#{$c4ai-prefix}-feedback) cds-slug .bold {

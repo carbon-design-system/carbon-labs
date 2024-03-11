@@ -186,10 +186,6 @@ function showSlug(customElementClass) {
   return html`
     <cds-slug size="2xs" alignment="bottom-left">
       <div slot="body-text">
-        <!-- <p class="secondary">AI Explained</p> -->
-        <!-- <h1>84%</h1>
-        <p class="secondary bold">Confidence score</p> -->
-        <!-- <hr /> -->
         <p class="secondary">Input</p>
         <p class="bold">${input}</p>
         ${model
@@ -203,7 +199,6 @@ function showSlug(customElementClass) {
           the portion of text you want to comment on.
         </p>
       </div>
-      <!-- <cds-slug-action-button>Submit</cds-slug-action-button> -->
     </cds-slug>
   `;
 }

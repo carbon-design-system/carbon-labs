@@ -8,13 +8,13 @@
  */
 
 import { html, nothing } from 'lit';
-import Search24 from '@carbon/web-components/es/icons/search/24';
-import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16';
-import Send16 from '@carbon/web-components/es/icons/send/16';
+import Search24 from '@carbon/web-components/es/icons/search/24.js';
+import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
+import Send16 from '@carbon/web-components/es/icons/send/16.js';
 
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-import '../../message/message.ts';
-import '../../header/header.ts';
+import '../../message/message.js';
+import '../../header/header.js';
 const { stablePrefix: c4aiPrefix } = settings;
 
 /**
@@ -64,17 +64,15 @@ export function chatTemplate(customElementClass) {
               @message-updated=${handleUpdate}>
             </c4ai--chat-message>`
       )}
-      ${
-        queryInProgress
-          ? html` <c4ai--chat-message
-              raw-text="loading"
-              origin="bot"
-              time-stamp=""
-              loading-state
-              error-state="false">
-            </c4ai--chat-message>`
-          : html``
-      }
+      ${queryInProgress
+        ? html` <c4ai--chat-message
+            raw-text="loading"
+            origin="bot"
+            time-stamp=""
+            loading-state
+            error-state="false">
+          </c4ai--chat-message>`
+        : html``}
     </div>
 
     <div class="${c4aiPrefix}--chat-footer">

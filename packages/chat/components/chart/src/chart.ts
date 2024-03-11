@@ -59,7 +59,7 @@ export default class chart extends LitElement {
    * visualizationSpec -  parsed object from content string
    */
   @state()
-  _visualizationSpec = {
+  _visualizationSpec: VegaEmbed.VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
     description: 'Empty Specification',
     data: { values: [] },
@@ -70,8 +70,8 @@ export default class chart extends LitElement {
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
-    this.resizeObserver = new ResizeObserver(() => {
-      this._renderedSVG = this._displayVisualization();
+    this.resizeObserver = new ResizeObserver(async () => {
+      this._renderedSVG = await this._displayVisualization();
       this.requestUpdate();
     });
     this.resizeObserver.observe(this.parentElement);
@@ -101,7 +101,7 @@ export default class chart extends LitElement {
   async updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('_visualizationSpec')) {
-      if (this._visualizationSpec.data.values.length > 0) {
+      if (this._visualizationSpec?.data?.values?.length > 0) {
         this._renderedSVG = await this._displayVisualization();
         this.requestUpdate();
       }
@@ -120,7 +120,7 @@ export default class chart extends LitElement {
    */
   async _displayVisualization() {
     const targetID = '#' + c4aiPrefix + '--chat-embed-vis-' + this._uniqueID;
-    const targetDiv = this.shadowRoot?.querySelector(targetID);
+    const targetDiv = this.shadowRoot?.querySelector<HTMLElement>(targetID);
     if (!targetDiv) {
       return '';
     } else {

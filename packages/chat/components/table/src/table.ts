@@ -58,7 +58,7 @@ export default class table extends LitElement {
    */
   _prepareTable() {
     const tableString = this.content;
-    let table = { headers: [], rows: [] };
+    const table = { headers: <any>[], rows: <any>[] };
     const rows = tableString.split('\n');
     const headers = rows.shift().split(',');
     table.headers = headers;

@@ -33,6 +33,7 @@ export function messageTemplate(customElementClass) {
     timeStamp: timeStamp,
     index: index,
     loadingState: loadingState,
+    displayName: displayName,
     _editing: editing,
     _handleEdit: handleEdit,
     _cancelEdit: cancelEdit,
@@ -96,7 +97,7 @@ export function messageTemplate(customElementClass) {
             </div>
             <div class="${c4aiPrefix}--chat-message-content">
               <div class="${c4aiPrefix}--chat-message-timestamp-${origin}">
-                ${origin == 'user' ? 'User' : 'AI'} ${timeStamp}
+                ${displayName == null ? 'AI' : displayName} ${timeStamp}
               </div>
               <div class="${c4aiPrefix}--chat-message-response-bot">
                 ${messageElements.map(

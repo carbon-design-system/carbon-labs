@@ -70,8 +70,8 @@ export default class chart extends LitElement {
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
-    this.resizeObserver = new ResizeObserver(() => {
-      this._renderedSVG = this._displayVisualization();
+    this.resizeObserver = new ResizeObserver(async () => {
+      this._renderedSVG = await this._displayVisualization();
       this.requestUpdate();
     });
     this.resizeObserver.observe(this.parentElement);
@@ -120,7 +120,7 @@ export default class chart extends LitElement {
    */
   async _displayVisualization() {
     const targetID = '#' + c4aiPrefix + '--chat-embed-vis-' + this._uniqueID;
-    const targetDiv = this.shadowRoot?.querySelector(targetID);
+    const targetDiv = this.shadowRoot?.querySelector<HTMLElement>(targetID);
     if (!targetDiv) {
       return '';
     } else {

@@ -46,7 +46,7 @@ const controls = {
   conversation: {
     control: { type: 'select' },
     description: 'Premade JSON object queries',
-    options: ['None', 'Nature of art', 'Flowers', 'Hello'],
+    options: ['None', 'Nature of art', 'Flowers', 'Hello', 'Visualization'],
   },
   chosenHost: {
     control: { type: 'select' },

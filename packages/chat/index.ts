@@ -12,3 +12,5 @@ import './components/chat/chat.js';
 import './components/message/message.js';
 import './components/card/card.js';
 import './components/header/header.js';
+import './components/chart/chart.js';
+import './components/table/table.js';

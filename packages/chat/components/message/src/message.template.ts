@@ -19,6 +19,8 @@ import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16.js';
 import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
 import '../../card/card.js';
 import '@carbon/web-components/es/components/slug/index.js';
+import '../../chart/chart.js';
+import '../../table/table.js';
 
 /**
  * Lit template for message
@@ -111,6 +113,20 @@ export function messageTemplate(customElementClass) {
                           <div class="${c4aiPrefix}--chat-message-img-card">
                             <img src="${message.content}" />
                           </div>
+                        </div>`
+                      : message.type === 'chart'
+                      ? html` <div
+                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                          <c4ai--chat-chart
+                            type="${message.type}"
+                            content="${message.content}">
+                          </c4ai--chat-chart>
+                        </div>`
+                      : message.type === 'table'
+                      ? html` <div
+                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                          <c4ai--chat-table content="${message.content}">
+                          </c4ai--chat-table>
                         </div>`
                       : message.type === 'url'
                       ? html` <div

@@ -1,0 +1,53 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '../../../../../globals/scss/vars' as *;
+
+@use '@carbon/styles/scss/theme' as *;
+
+:host(#{$c4ai-prefix}--chat-table) {
+  overflow: hidden;
+  inline-size: 100%;
+
+  .#{$c4ai-prefix}--chat-table-container {
+    overflow: scroll;
+    border: 1px solid #393939;
+    border-radius: 8px;
+    inline-size: 100%;
+  }
+
+  .#{$c4ai-prefix}--chat-table-error {
+    padding: 10px;
+    border: 1px solid #ff4444;
+    border-radius: 8px;
+    color: #ff4444;
+    line-height: 22px;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-family: inherit;
+    inline-size: 100%;
+  }
+
+  th,
+  td {
+    padding: 12px;
+    border: 1px solid #393939;
+    text-align: start;
+  }
+
+  th {
+    background-color: #393939;
+    font-weight: normal;
+  }
+
+  tr:nth-child(even) {
+    background-color: #262626;
+  }
+}

@@ -26,8 +26,8 @@ export default class message extends LitElement {
   /**
    * User-imported message sub-elements object, parsing is done on rawText here if none is provided
    */
-  @property({ type: Object, attribute: 'sub-elements', reflect: true })
-  subElements;
+  @property({ type: Object, attribute: 'elements' })
+  elements;
 
   /**
    * Define name of specific bot or user
@@ -92,7 +92,7 @@ export default class message extends LitElement {
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
-    console.log(this.disableButtons);
+    console.log(this.elements);
 
     if (this.loadingState) {
       this._messageElements = [{ content: '', type: 'loading' }];
@@ -106,10 +106,12 @@ export default class message extends LitElement {
       return;
     }
 
-    if (this.subElements == null) {
+    if (this.elements == null) {
       this._parseText();
+      console.log('no elements');
     } else {
-      this._messageElements = this.subElements;
+      console.log('elements provided');
+      this._messageElements = this.elements;
       this.requestUpdate();
     }
   }

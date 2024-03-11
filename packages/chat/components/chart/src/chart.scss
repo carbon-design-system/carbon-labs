@@ -1,0 +1,36 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '../../../../../globals/scss/vars' as *;
+
+@use '@carbon/styles/scss/theme' as *;
+
+:host(#{$c4ai-prefix}--chat-chart) {
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid #393939;
+  border-radius: 8px;
+  background: #262626;
+  inline-size: 100%;
+  min-block-size: 250px;
+
+  .#{$c4ai-prefix}--chat-chart-container {
+    overflow: hidden;
+    block-size: 250px;
+    inline-size: 100%;
+    min-block-size: 250px;
+  }
+
+  .#{$c4ai-prefix}--chat-chart-error {
+    padding: 10px;
+    border: 1px solid #ff4444;
+    border-radius: 8px;
+    color: #ff4444;
+    line-height: 22px;
+  }
+}

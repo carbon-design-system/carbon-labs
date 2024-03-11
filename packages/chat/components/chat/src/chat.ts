@@ -42,6 +42,12 @@ export default class C4AIChat extends LitElement {
   private _session = '' + Math.random();
 
   /**
+   * user-assigned boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message
+   */
+  @property({ type: Boolean, attribute: 'loading' })
+  loading;
+
+  /**
    * boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message
    */
   @state()
@@ -144,10 +150,13 @@ export default class C4AIChat extends LitElement {
   updated(changedProperties) {
     super.updated(changedProperties);
 
+    if (changedProperties.has('loading')) {
+      this._queryInProgress = this.loading;
+    }
+
     if (changedProperties.has('conversation')) {
       if (this.conversation !== null) {
         this._messages = this.conversation;
-        this._queryInProgress = false;
         this._updateScroll();
         this.requestUpdate();
       }
@@ -174,6 +183,46 @@ export default class C4AIChat extends LitElement {
    */
   initializeExamplesObject() {
     switch (this.conversationExample) {
+      case 'Visualization':
+        this._messages = [
+          {
+            text: '',
+            origin: this.agentName,
+            hasError: false,
+            time: this._getCurrentTime(),
+            index: 0,
+            elements: [
+              {
+                content: 'Here is your table:\n',
+                type: 'text',
+              },
+              {
+                content:
+                  'Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY',
+                type: 'table',
+              },
+              {
+                content: 'Here is your bar chart:\n',
+                type: 'text',
+              },
+              {
+                content:
+                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"A simple bar chart with embedded data.","data":{"values":[{"a":"A","b":28},{"a":"B","b":55},{"a":"C","b":43},{"a":"D","b":91},{"a":"E","b":81},{"a":"F","b":53},{"a":"G","b":19},{"a":"H","b":87},{"a":"I","b":52}]},"mark":"bar","encoding":{"x":{"field":"a","type":"nominal","axis":{"labelAngle":0}},"y":{"field":"b","type":"quantitative"}}}',
+                type: 'chart',
+              },
+              {
+                content: 'And here is your scatter plot:',
+                type: 'text',
+              },
+              {
+                content:
+                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"Scatter plot example","data":{"values":[{"x":46,"y":15,"c":1},{"x":24,"y":16,"c":1},{"x":12,"y":77,"c":1},{"x":54,"y":45,"c":2},{"x":44,"y":12,"c":2},{"x":22,"y":66,"c":2},{"x":25,"y":34,"c":3},{"x":28,"y":31,"c":4},{"x":38,"y":68,"c":5}]},"mark":"point","encoding":{"x":{"field":"x","type":"quantitative"},"y":{"field":"y","type":"quantitative"},"color":{"field":"c","type":"nominal"}}}',
+                type: 'chart',
+              },
+            ],
+          },
+        ];
+        break;
       case 'Nature of art':
         this._messages = [
           {
@@ -182,7 +231,7 @@ export default class C4AIChat extends LitElement {
             hasError: false,
             time: '8:51am',
             index: 0,
-            elements: { content: 'what is the nature of art?', type: 'text' },
+            elements: [{ content: 'what is the nature of art?', type: 'text' }],
           },
           {
             text: 'the nature of art is a complex and multifaceted topic that has been debated by philosophers, critics, and scholars for centuries. at its core, art is the creation of aesthetic objects or experiences that are intended to elicit an emotional response from the viewer. this can take many forms, including painting, sculpture, photography, music, and literature.\n\nart can serve a variety of purposes, including the expression of the artists personal vision, the exploration of complex social or political issues, or the simple enjoyment of beauty. the nature of art is also influenced by cultural and historical context, and can evolve over time as new techniques and materials are developed.\n\n',
@@ -190,11 +239,13 @@ export default class C4AIChat extends LitElement {
             hasError: false,
             time: '8:51am',
             index: 1,
-            elements: {
-              content:
-                'the nature of art is a complex and multifaceted topic that has been debated by philosophers, critics, and scholars for centuries. at its core, art is the creation of aesthetic objects or experiences that are intended to elicit an emotional response from the viewer. this can take many forms, including painting, sculpture, photography, music, and literature.\n\nart can serve a variety of purposes, including the expression of the artists personal vision, the exploration of complex social or political issues, or the simple enjoyment of beauty. the nature of art is also influenced by cultural and historical context, and can evolve over time as new techniques and materials are developed.',
-              type: 'text',
-            },
+            elements: [
+              {
+                content:
+                  'the nature of art is a complex and multifaceted topic that has been debated by philosophers, critics, and scholars for centuries. at its core, art is the creation of aesthetic objects or experiences that are intended to elicit an emotional response from the viewer. this can take many forms, including painting, sculpture, photography, music, and literature.\n\nart can serve a variety of purposes, including the expression of the artists personal vision, the exploration of complex social or political issues, or the simple enjoyment of beauty. the nature of art is also influenced by cultural and historical context, and can evolve over time as new techniques and materials are developed.',
+                type: 'text',
+              },
+            ],
           },
           {
             text: 'how much do aesthetics play into it?',
@@ -202,10 +253,12 @@ export default class C4AIChat extends LitElement {
             hasError: false,
             time: '8:52am',
             index: 2,
-            elements: {
-              content: 'how much do aesthetics play into it?',
-              type: 'text',
-            },
+            elements: [
+              {
+                content: 'how much do aesthetics play into it?',
+                type: 'text',
+              },
+            ],
           },
           {
             text: 'aesthetics play a significant role in the creation and appreciation of art. the aesthetic qualities of a piece of art, such as its form, color, and composition, are often a key factor in determining its overall effectiveness and appeal. in addition, the aesthetic principles that underlie a work of art can influence its interpretation and meaning.\n\n\n',
@@ -213,11 +266,13 @@ export default class C4AIChat extends LitElement {
             hasError: false,
             time: '8:52am',
             index: 3,
-            elements: {
-              content:
-                'aesthetics play a significant role in the creation and appreciation of art. the aesthetic qualities of a piece of art, such as its form, color, and composition, are often a key factor in determining its overall effectiveness and appeal. in addition, the aesthetic principles that underlie a work of art can influence its interpretation and meaning.',
-              type: 'text',
-            },
+            elements: [
+              {
+                content:
+                  'aesthetics play a significant role in the creation and appreciation of art. the aesthetic qualities of a piece of art, such as its form, color, and composition, are often a key factor in determining its overall effectiveness and appeal. in addition, the aesthetic principles that underlie a work of art can influence its interpretation and meaning.',
+                type: 'text',
+              },
+            ],
           },
           {
             text: 'Should aesthetics not matter if its a purely subjective interpretation?',
@@ -225,11 +280,13 @@ export default class C4AIChat extends LitElement {
             hasError: false,
             time: '8:53am',
             index: 4,
-            elements: {
-              content:
-                'Should aesthetics not matter if its a purely subjective interpretation?',
-              type: 'text',
-            },
+            elements: [
+              {
+                content:
+                  'Should aesthetics not matter if its a purely subjective interpretation?',
+                type: 'text',
+              },
+            ],
           },
           {
             text: 'while aesthetic evaluations are subjective, they can still provide valuable insights into the ways in which art can be appreciated and understood. the aesthetic qualities of a piece of art can influence how it is experienced and interpreted, and can also reflect the cultural and historical context in which it was created.\n\n\n\n',
@@ -237,11 +294,13 @@ export default class C4AIChat extends LitElement {
             hasError: false,
             time: '8:53am',
             index: 5,
-            elements: {
-              content:
-                'while aesthetic evaluations are subjective, they can still provide valuable insights into the ways in which art can be appreciated and understood. the aesthetic qualities of a piece of art can influence how it is experienced and interpreted, and can also reflect the cultural and historical context in which it was created.',
-              type: 'text',
-            },
+            elements: [
+              {
+                content:
+                  'while aesthetic evaluations are subjective, they can still provide valuable insights into the ways in which art can be appreciated and understood. the aesthetic qualities of a piece of art can influence how it is experienced and interpreted, and can also reflect the cultural and historical context in which it was created.',
+                type: 'text',
+              },
+            ],
           },
         ];
         break;
@@ -253,7 +312,7 @@ export default class C4AIChat extends LitElement {
             hasError: false,
             time: '4:51pm',
             index: 0,
-            elements: { content: 'Hello friend', type: 'text' },
+            elements: [{ content: 'Hello friend', type: 'text' }],
           },
         ];
         break;
@@ -516,7 +575,6 @@ export default class C4AIChat extends LitElement {
         composed: true,
       });
       this.dispatchEvent(onSubmitEvent);
-      this._queryInProgress = true;
     } else {
       this._messages.push(newMessage);
 

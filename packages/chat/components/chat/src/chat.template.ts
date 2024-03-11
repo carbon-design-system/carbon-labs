@@ -59,6 +59,7 @@ export function chatTemplate(customElementClass) {
               disable-buttons="${message.disableButtons || nothing}"
               index="${index}"
               display-name="${message.displayName || nothing}"
+              .elements="${message.elements || nothing}"
               @regenerate="${handleRegenerate}"
               @message-updated=${handleUpdate}>
             </c4ai--chat-message>`

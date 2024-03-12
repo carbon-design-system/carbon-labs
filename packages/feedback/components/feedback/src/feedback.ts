@@ -10,8 +10,8 @@
 import { LitElement, TemplateResult, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { v4 as uuidv4 } from 'uuid';
-import HostListener from '@carbon/web-components/es/globals/decorators/host-listener';
-import HostListenerMixin from '@carbon/web-components/es/globals/mixins/host-listener';
+import HostListener from '@carbon/web-components/es/globals/decorators/host-listener.js';
+import HostListenerMixin from '@carbon/web-components/es/globals/mixins/host-listener.js';
 
 // @ts-ignore
 import styles from './feedback.scss?inline';

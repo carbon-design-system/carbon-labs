@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          cache: yarn
+          cache: 'yarn'
       - name: Install dependencies
         run: yarn install
       - name: Run build
@@ -36,8 +36,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - name: Install yarn
-        run: npm install -g yarn@8
+          cache: 'yarn'
       - name: Install dependencies
         run: yarn install
       - name: Check formatting of project files (staged)
@@ -70,8 +69,6 @@ jobs:
         with:
           node-version: '20.x'
           cache: 'yarn'
-      - name: Install yarn
-        run: npm install -g yarn@8
       - name: Install dependencies
         run: yarn install
       - name: License check

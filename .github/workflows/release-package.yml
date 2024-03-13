@@ -57,18 +57,15 @@ jobs:
       - run: |
           git config user.name carbon-bot
           git config user.email carbon@us.ibm.com
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8.9.2
       - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
           node-version: '18.x'
-          cache: 'pnpm'
+          cache: 'yarn'
       - name: Install dependencies
-        run: pnpm install
+        run: yarn install
       - name: Build project
-        run: pnpm build
+        run: yarn build
         working-directory: packages/${{ github.event.inputs.package }}
       - name: Set NPM token
         run: |
@@ -88,28 +85,28 @@ jobs:
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
-          pnpm lerna publish minor --conventional-graduate $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
+          yarn lerna publish minor --conventional-graduate $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
       - name: Publish first minor RC (ie. v1.x.0-rc.0)
         if: github.event.inputs.type == 'first minor rc'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
-          pnpm lerna publish preminor --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
+          yarn lerna publish preminor --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
       - name: Publish full patch release (ie. v1.0.x)
         if: github.event.inputs.type == 'full patch release'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
-          pnpm lerna publish patch --conventional-graduate $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
+          yarn lerna publish patch --conventional-graduate $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
       - name: Publish first patch RC (ie. v1.0.x-rc.0)
         if: github.event.inputs.type == 'first patch rc'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
-          pnpm lerna publish prepatch --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
+          yarn lerna publish prepatch --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
       - name: Publish subsequent RC (ie. v1.0.0-rc.x)
         if: github.event.inputs.type == 'subsequent rc'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
           echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
-          pnpm lerna publish --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
+          yarn lerna publish --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")

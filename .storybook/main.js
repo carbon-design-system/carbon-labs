@@ -1,4 +1,3 @@
-import { dirname, join } from "path";
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 /**
  * @license
@@ -10,6 +9,7 @@ import { dirname, join } from "path";
  */
 
 import { mergeConfig } from 'vite';
+import { dirname, join } from "path";
 import postcss from 'rollup-plugin-postcss';
 import postcssLit from 'rollup-plugin-postcss-lit';
 import sass from 'sass';

@@ -2,12 +2,12 @@
   "**/*.js, !**/*.snap.js": [
     "prettier --cache --write",
     "eslint",
-    "pnpm lint:license:staged"
+    "yarn lint:license:staged"
   ],
   "**/*.scss": [
     "prettier --cache --write",
     "stylelint --report-needless-disables --report-invalid-scope-disables --allow-empty-input",
-    "pnpm lint:license:staged"
+    "yarn lint:license:staged"
   ],
   "*.md": ["prettier --cache --write"]
 }

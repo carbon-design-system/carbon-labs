@@ -9,24 +9,24 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-import chart from './src/chart.js';
-import { chartTemplate } from './src/chart.template.js';
+import tableElement from './src/tableElement.js';
+import { tableElementTemplate } from './src/tableElement.template.js';
 
 const { stablePrefix: c4aiPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}--chat-chart`)
-class C4AIChart extends chart {
+@customElement(`${c4aiPrefix}--chat-table`)
+class C4AITableElement extends tableElement {
   /**
    * Renders the template while passing in class functionality
    *
    * @returns {TemplateResult<1>}
    */
   render() {
-    return chartTemplate(this);
+    return tableElementTemplate(this);
   }
 }
 
-export default C4AIChart;
+export default C4AITableElement;

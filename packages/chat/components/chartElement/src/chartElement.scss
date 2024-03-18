@@ -26,6 +26,10 @@
     min-block-size: 250px;
   }
 
+  .#{$c4ai-prefix}--chat-chart-container svg {
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
   .#{$c4ai-prefix}--chat-chart-error {
     padding: 10px;
     border: 1px solid #ff4444;

@@ -186,11 +186,21 @@ export default class C4AIChat extends LitElement {
       case 'Visualization':
         this._messages = [
           {
+            origin: this.userName,
+            hasError: false,
+            time: this._getCurrentTime(),
+            index: 0,
+            elements: [
+              {content:"Hello, show me a simple table based on Seinfeld Characters then display the following charts with small mockup datasets: a bar chart, a pie chart then a matrix.",
+              type:"text"}
+            ]
+          },
+          {
             text: '',
             origin: this.agentName,
             hasError: false,
             time: this._getCurrentTime(),
-            index: 0,
+            index: 1,
             elements: [
               {
                 content: 'Here is your table:\n',
@@ -207,7 +217,7 @@ export default class C4AIChat extends LitElement {
               },
               {
                 content:
-                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"A simple bar chart with embedded data.","data":{"values":[{"a":"A","b":28},{"a":"B","b":55},{"a":"C","b":43},{"a":"D","b":91},{"a":"E","b":81},{"a":"F","b":53},{"a":"G","b":19},{"a":"H","b":87},{"a":"I","b":52}]},"mark":"bar","encoding":{"x":{"field":"a","type":"nominal","axis":{"labelAngle":0}},"y":{"field":"b","type":"quantitative"}}}',
+                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"A simple bar chart with embedded data","data":{"values":[{"x axis value":"A","y axis value":28},{"x axis value":"B","y axis value":55},{"x axis value":"C","y axis value":43},{"x axis value":"D","y axis value":91},{"x axis value":"E","y axis value":81},{"x axis value":"F","y axis value":53},{"x axis value":"G","y axis value":19},{"x axis value":"H","y axis value":87},{"x axis value":"I","y axis value":52}]},"mark":"bar","encoding":{"x":{"field":"x axis value","type":"nominal","axis":{"labelAngle":0}},"y":{"field":"y axis value","type":"quantitative"}}}',
                 type: 'chart',
               },
               {
@@ -219,6 +229,37 @@ export default class C4AIChat extends LitElement {
                   '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"Scatter plot example","data":{"values":[{"x":46,"y":15,"c":1},{"x":24,"y":16,"c":1},{"x":12,"y":77,"c":1},{"x":54,"y":45,"c":2},{"x":44,"y":12,"c":2},{"x":22,"y":66,"c":2},{"x":25,"y":34,"c":3},{"x":28,"y":31,"c":4},{"x":38,"y":68,"c":5}]},"mark":"point","encoding":{"x":{"field":"x","type":"quantitative"},"y":{"field":"y","type":"quantitative"},"color":{"field":"c","type":"nominal"}}}',
                 type: 'chart',
               },
+              {
+                content: 'And here is your pie chart:',
+                type: 'text',
+              },
+              {
+                content:
+                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"Pie chart example","data":{"values":[{"category":"A","value":18},{"category":"B","value":10},{"category":"C","value":2}]},"mark":{"type":"arc","innerRadius":0},"encoding":{"theta":{"field":"value","type":"quantitative"},"color":{"field":"category","type":"nominal"}}}',
+                type: 'chart',
+              },
+              {
+                content: 'And here is a matrix:',
+                type:"text"
+              },
+              {
+                content:
+                '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"values":[{"x":0,"y":0,"value":0.5},{"x":1,"y":0,"value":0.2},{"x":2,"y":0,"value":0.1},{"x":3,"y":0,"value":0.8},{"x":0,"y":1,"value":0.7},{"x":1,"y":1,"value":0.8},{"x":2,"y":1,"value":0.3},{"x":3,"y":1,"value":0.4},{"x":0,"y":2,"value":0.1},{"x":1,"y":2,"value":0.2},{"x":2,"y":2,"value":0.9},{"x":3,"y":2,"value":0.9},{"x":0,"y":3,"value":0.5},{"x":1,"y":3,"value":0.2},{"x":2,"y":3,"value":0.5},{"x":3,"y":3,"value":0.6}]},"title":"Matrix example","mark":"rect","encoding":{"x":{"field":"x","type":"ordinal","title":"x"},"y":{"field":"y","type":"ordinal","title":"y"},"color":{"field":"value","type":"quantitative"}}}',
+                type: "chart"
+              },
+              {
+                content:"And here is a wordcloud of business terms:",
+                "type":"text"
+              },
+              {
+                content:'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"A word cloud","data":{"values":[{"word":"Synergy","value":72},{"word":"Agile","value":24},{"word":"Blockchain","value":52},{"word":"Innovation","value":82},{"word":"Disrupt","value":66},{"word":"AI","value":90},{"word":"Leverage","value":35},{"word":"Big data","value":22},{"word":"Growth","value":72},{"word":"Inclusivity","value":59},{"word":"Integration","value":44}]},"transform":{"calculate":"datum.value","as":"size"},"mark":"text","encoding":{"text":{"field":"word","type":"nominal"},"size":{"field":"value","type":"quantitative","scale":{"range":[20,90]}},"color":{"field":"size","type":"quantitative"}}}',
+                type:"chart"
+              },
+              {
+                content:"What else can I help you with?",
+                "type":"text"
+              },
+
             ],
           },
         ];

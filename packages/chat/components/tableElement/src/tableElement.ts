@@ -11,11 +11,11 @@ import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
 // @ts-ignore
-import styles from './table.scss?inline';
+import styles from './tableElement.scss?inline';
 /**
  * Input component using search typeahead api
  */
-export default class table extends LitElement {
+export default class tableElement extends LitElement {
   static styles = styles;
   /**
    * Array of subelements parsed from API reply
@@ -32,7 +32,8 @@ export default class table extends LitElement {
   /**
    * tableObject - table object, contains headers and rows
    */
-  private _tableObject = { headers: [], rows: [] };
+  @state()
+  _tableObject = { headers: [], rows: [] };
 
   /** detect when component is rendered to process visualization specification object
    */

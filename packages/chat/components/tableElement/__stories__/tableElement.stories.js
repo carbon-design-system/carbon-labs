@@ -7,12 +7,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '../chart';
+import '../tableElement';
 import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chat/Chart',
+  title: 'Components/Chat/tableElement',
   tags: ['autodocs'],
 };
 
@@ -22,5 +22,5 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <c4ai-chart> </c4ai-chart>`,
+  render: () => html` <c4ai--chat-table> </c4ai--chat-table>`,
 };

@@ -17,7 +17,7 @@ const { stablePrefix: c4aiPrefix } = settings;
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export function tableTemplate(customElementClass) {
+export function tableElementTemplate(customElementClass) {
   const { _tableObject: tableObject, _invalid: invalid } = customElementClass;
 
   return html`<div class="${c4aiPrefix}--chat-table">

@@ -17,7 +17,7 @@ const { stablePrefix: c4aiPrefix } = settings;
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export function chartTemplate(customElementClass) {
+export function chartElementTemplate(customElementClass) {
   const {
     _invalid: invalid,
     _uniqueID: uniqueID,

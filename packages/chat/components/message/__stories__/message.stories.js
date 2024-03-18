@@ -24,7 +24,7 @@ export const Default = {
    */
   render: () => html` <c4ai--chat-message
     time-stamp="12:00"
-    raw-text="hello world"
+    text="hello world"
     origin="user">
   </c4ai--chat-message>`,
 };

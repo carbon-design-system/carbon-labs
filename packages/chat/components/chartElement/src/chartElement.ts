@@ -14,11 +14,11 @@ import * as VegaEmbed from 'vega-embed';
 const { stablePrefix: c4aiPrefix } = settings;
 
 // @ts-ignore
-import styles from './chart.scss?inline';
+import styles from './chartElement.scss?inline';
 /**
  * Input component using search typeahead api
  */
-export default class chart extends LitElement {
+export default class chartElement extends LitElement {
   static styles = styles;
   /**
    * resizeObserver - resize watcher of parent
@@ -62,7 +62,7 @@ export default class chart extends LitElement {
   _visualizationSpec: VegaEmbed.VisualizationSpec = {
     $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
     description: 'Empty Specification',
-    data: { values: [] },
+    data: { "values": [] },
     mark: 'point',
     encoding: {},
   };
@@ -101,7 +101,7 @@ export default class chart extends LitElement {
   async updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('_visualizationSpec')) {
-      if (this._visualizationSpec?.data?.values?.length > 0) {
+      if (this._visualizationSpec?.data?.["values"]?.length > 0) {
         this._renderedSVG = await this._displayVisualization();
         this.requestUpdate();
       }
@@ -125,7 +125,7 @@ export default class chart extends LitElement {
       return '';
     } else {
       try {
-        await VegaEmbed.default(targetDiv, this._visualizationSpec);
+        await VegaEmbed.default(targetDiv, this._visualizationSpec, {actions:false, renderer: 'svg'});
       } catch (error) {
         console.log('Error:', error);
       }
@@ -146,14 +146,12 @@ export default class chart extends LitElement {
       this.requestUpdate();
     }
 
-    console.log(spec);
-
     spec.width = 'container';
     spec.height = 'container';
 
-    spec.padding = 10;
+    spec.padding = 20;
 
-    const darkCarbonColors = [
+    const darkOrdinalColors = [
       '#893ffc',
       '#02bdba',
       '#b9e5ff',
@@ -161,9 +159,17 @@ export default class chart extends LitElement {
       '#fe7eb7',
     ];
 
+     const darkQuantitativeColors = [
+      '#ffffff',
+      '#decaff',
+      '#a36aff',
+      '#5a23a7',
+      '#1b1b1b'
+    ];
+
     const backgroundColor = '#262626';
     const gridColor = '#393939';
-    const textColor = '#c6c6c6';
+    const textColor = '#f4f4f4';
 
     spec.background = backgroundColor;
 
@@ -191,18 +197,22 @@ export default class chart extends LitElement {
       spec.encoding.y.axis.tickSize = 5;
     }
 
-    if (spec.encoding.color) {
-      if (spec.encoding.color.field) {
-        spec.encoding.color.scale = { range: darkCarbonColors };
-      } else if (spec.encoding.color.value) {
-        spec.encoding.color.value = '#0f62fe';
-      }
-    } else {
-      spec.encoding.color = {
-        scale: { range: darkCarbonColors },
-        value: '#0f62fe',
-      };
+    if(!spec.encoding){
+      spec.encoding = {}
     }
+
+    let colorScale = [];
+
+    let chartType = '';
+    console.log(spec.mark)
+    if(typeof spec.mark === 'string') {
+      chartType = spec.mark;
+      spec.mark = {"type":chartType};
+    } else if(typeof spec.mark === 'object' && 'type' in spec.mark) {
+      chartType = spec.mark.type;
+    }
+    console.log(chartType);
+
     if (spec.mark) {
       if (spec.mark.fill) {
         spec.mark.fill = '#0f62fe';
@@ -221,7 +231,14 @@ export default class chart extends LitElement {
       spec.title.color = textColor;
       spec.title.anchor = 'start';
       spec.title.fontWeight = 'bold';
-      spec.title.offset = 20;
+      spec.title.offset = 14;
+      spec.title.encode = {
+        update:{
+          x:{"value":15},
+          fontSize: {"value": 14},
+          fontWeight: {"value":"bold"}
+        }
+      }
     }
 
     spec['config'] = {
@@ -230,15 +247,34 @@ export default class chart extends LitElement {
         grid: true,
         gridColor: gridColor,
         titleFont: 'IBM Plex Sans',
-        titleFontSize: 14,
+        labelFont: 'IBM Plex Sans',
+        titleFontSize: 10,
         topColor: gridColor,
         rightColor: gridColor,
         bottomColor: textColor,
-        leftColor: textColor,
+        leftColor: gridColor,
+      },
+      view:{
+        stroke: gridColor
+      },
+      bar:{
+        discreteBandSize:10,
+      },
+      title:{
+        font: 'IBM Plex Sans',
       },
       legend: {
+        title: null,
+        symbolType:"square",
+        orient:"bottom",
         titleColor: textColor,
         labelColor: textColor,
+        titleFont: 'IBM Plex Sans',
+        labelFont: 'IBM Plex Sans',
+        titleFontSize: 10,
+      },
+      text:{
+        font: 'IBM Plex Sans',
       },
       tooltip: {
         background: textColor,
@@ -250,6 +286,73 @@ export default class chart extends LitElement {
         zindex: 99,
       },
     };
+
+    let isOrdinal:boolean;
+    switch(chartType){
+      case 'bar':
+        isOrdinal = true;
+        break;
+      case 'circle':
+        isOrdinal = false;
+        break;
+      case 'square':
+        isOrdinal = false;
+        break;
+      case 'tick':
+        isOrdinal = false;
+        break;
+      case 'line':
+        isOrdinal = false;
+        break;
+      case 'area':
+        isOrdinal = false;
+        break;
+      case 'point':
+        isOrdinal = false;
+        break;
+      case 'rule':
+        isOrdinal = false;
+        break;
+      case 'geoshape':
+        isOrdinal = true;
+        spec['config']['axis']['grid'] = false;
+        break;
+      case 'image':
+        isOrdinal = false;
+        break;
+      case 'trail':
+        isOrdinal = false;
+        break;
+      case 'rect':
+        isOrdinal = true;
+        spec['config']['axis']['grid'] = false;
+        break;
+      case 'arc':
+        isOrdinal = false;
+        break;
+      default:
+        isOrdinal = false;
+        break;
+    }
+
+    if(isOrdinal){
+      colorScale = darkQuantitativeColors;
+    }else{
+      colorScale = darkOrdinalColors;
+    }
+
+    if (spec.encoding.color) {
+      if (spec.encoding.color.field) {
+        spec.encoding.color.scale = { range: colorScale };
+      } else if (spec.encoding.color.value) {
+        spec.encoding.color.value = '#0f62fe';
+      }
+    } else {
+      spec.encoding.color = {
+        scale: { range: colorScale },
+        value: '#0f62fe',
+      };
+    }
     return spec;
   }
 }

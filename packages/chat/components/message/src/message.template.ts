@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import Renew20 from '@carbon/web-components/es/icons/renew/20.js';

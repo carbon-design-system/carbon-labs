@@ -103,13 +103,13 @@ making to components in Storybook.
 While working on Carbon Labs, here are some of the top-level tasks that you
 might want to run:
 
-| Command                            | Usage                                                                                                       |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `yarn build`                       | Runs the gulp `build` tasks and uses lerna to run the `build` script for the `@carbon/ai-utilities` package |
-| `yarn build:dist`                  | Runs the rollup `dist` config and generates the CDN artifacts                                               |
-| `yarn format`, `yarn format:write` | Check if files have been formatted, format files using prettier                                             |
-| `yarn ci-check`                    | Runs the ci-checks                                                                                          |
-| `yarn ci-check:build`              | Runs the ci-checks along with the build and build:dist commands                                             |
+| Command                            | Usage                                                                                                         |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `yarn build`                       | Runs the gulp `build` tasks and uses lerna to run the `build` script for the `@carbon-labs/utilities` package |
+| `yarn build:dist`                  | Runs the rollup `dist` config and generates the CDN artifacts                                                 |
+| `yarn format`, `yarn format:write` | Check if files have been formatted, format files using prettier                                               |
+| `yarn ci-check`                    | Runs the ci-checks                                                                                            |
+| `yarn ci-check:build`              | Runs the ci-checks along with the build and build:dist commands                                               |
 
 ## Submitting a Pull Request
 

@@ -8,7 +8,7 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { Feedback } from './src/feedback';
 import { TemplateResult } from 'lit';
 import { feedbackTemplate } from './src/feedback.template.js';

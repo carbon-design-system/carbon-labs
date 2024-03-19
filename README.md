@@ -12,7 +12,7 @@ Here's a full list of packages that we support!
 | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
 | [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/chat)         | AI Chat component                        |
 | [`@carbon-labs/ai-feedback`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/feedback) | AI Feedback component                    |
-| [`@carbon/ai-utilities`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/utilities)    | Common utilities shared amongst packages |
+| [`@carbon-labs/utilities`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/utilities)  | Common utilities shared amongst packages |
 
 A Storybook demo of all component packages is available here:
 https://ai.carbondesignsystem.com

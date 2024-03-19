@@ -2533,7 +2533,7 @@ __metadata:
   resolution: "@carbon-labs/ai-chat@workspace:packages/chat"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.2.0-rc.0"
+    "@carbon-labs/utilities": "npm:0.2.0"
     "@carbon/web-components": "npm:2.4.0"
     "@ibm/telemetry-js": "npm:^1.2.0"
     lit: "npm:^3.0.0"
@@ -2546,7 +2546,7 @@ __metadata:
   resolution: "@carbon-labs/ai-feedback@workspace:packages/feedback"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.2.0-rc.0"
+    "@carbon-labs/utilities": "npm:0.2.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.4.0"
     lit: "npm:^3.0.0"
@@ -2559,14 +2559,14 @@ __metadata:
   resolution: "@carbon-labs/extended-button@workspace:packages/extended-button"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.2.0-rc.0"
+    "@carbon-labs/utilities": "npm:0.2.0"
     "@carbon/styles": "npm:1.51.0"
     "@carbon/web-components": "npm:2.4.0"
     lit: "npm:^3.0.0"
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/utilities@npm:0.2.0-rc.0, @carbon-labs/utilities@workspace:packages/utilities":
+"@carbon-labs/utilities@npm:0.2.0, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/utilities@workspace:packages/utilities"
   dependencies:

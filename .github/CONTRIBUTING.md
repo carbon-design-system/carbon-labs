@@ -50,14 +50,14 @@ repo of Carbon associated with your account.
 ### 2. Clone your fork:
 
 1.  Go to your [GitHub Repositories](https://github.com/settings/repositories).
-1.  Click on `[your_github_username]/carbon-for-ai`.
+1.  Click on `[your_github_username]/carbon-labs`.
 1.  Click on the `Code` button and copy the URL from the `Clone with SSH`
     option. It should start with `git@github.com...`
 
 In your terminal:
 
 ```sh
-git clone git@github.com:[your_github_username]/carbon-for-ai.git
+git clone git@github.com:[your_github_username]/carbon-labs.git
 cd carbon
 ```
 
@@ -299,7 +299,7 @@ work:
   best to answer questions on slack, it's not always possible to answer
   everything. One of the easiest ways to help us it to jump in on slack
   conversations if there's something you know the answer to! Some of our most
-  popular slack channels include `#carbon-for-ai`, `#carbon-components`,
+  popular slack channels include `#carbon-labs`, `#carbon-components`,
   `#carbon-react`, `#carbon-design-system`, `#carbon-ng`, `#carbon-vue`,
   `#carbon-announcements`, `#carbon-community-components`.
 - **Report bugs.** Even if you don't have the time to contribute a bug fix,

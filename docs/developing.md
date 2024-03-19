@@ -28,8 +28,8 @@ members/maintainers.
    by running the following in your terminal:
 
    ```
-   $ git clone git@github.com:{ YOUR_USERNAME }/carbon-for-ai.git
-   $ cd carbon-for-ai
+   $ git clone git@github.com:{ YOUR_USERNAME }/carbon-labs.git
+   $ cd carbon-labs
    ```
 
    See [GitHub docs](https://help.github.com/articles/fork-a-repo/) for more
@@ -37,7 +37,7 @@ members/maintainers.
 
 3. Once cloned, you will see `origin` as your default remote, pointing to your
    personal forked repository. Add a remote named `upstream` pointing to the
-   main `carbon-for-ai`:
+   main `carbon-labs`:
 
    ```
    $ git remote add upstream git@github.com:carbon-design-system/carbon-labs.git

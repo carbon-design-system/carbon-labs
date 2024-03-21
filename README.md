@@ -15,7 +15,7 @@ Here's a full list of packages that we support!
 | [`@carbon-labs/utilities`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/utilities)  | Common utilities shared amongst packages |
 
 A Storybook demo of all component packages is available here:
-https://ai.carbondesignsystem.com
+https://labs-canary.carbondesignsystem.com/
 
 ## 🙌 Contributing
 

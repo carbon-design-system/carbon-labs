@@ -12,11 +12,11 @@
  *
  * @exports ibmdotcom.settings
  * @type {object} Settings object
- * @property {string} [stablePrefix=c4ai] stable prefix
+ * @property {string} [stablePrefix=clabs] stable prefix
  * @property {string} [prefix=cds] core Carbon prefix
  */
 const settings = {
-  stablePrefix: 'c4ai',
+  stablePrefix: 'clabs',
   prefix: 'cds',
 };
 

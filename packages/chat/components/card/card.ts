@@ -12,13 +12,13 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import card from './src/card.js';
 import { cardTemplate } from './src/card.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}--chat-card`)
-class C4AICard extends card {
+@customElement(`${clabsPrefix}--chat-card`)
+class CLABSCard extends card {
   /**
    * Renders the template while passing in class functionality
    *
@@ -29,4 +29,4 @@ class C4AICard extends card {
   }
 }
 
-export default C4AICard;
+export default CLABSCard;

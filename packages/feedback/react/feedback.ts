@@ -11,8 +11,8 @@ import React from 'react';
 import { createComponent } from '@lit/react';
 import Feedback from '../components/feedback/feedback.js';
 
-export const C4AIFeedback = createComponent({
-  tagName: 'c4ai-feedback',
+export const CLABSFeedback = createComponent({
+  tagName: 'clabs-feedback',
   elementClass: Feedback,
   react: React,
   events: {},

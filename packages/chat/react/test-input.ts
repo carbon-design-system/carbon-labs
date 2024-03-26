@@ -11,8 +11,8 @@ import React from 'react';
 import { createComponent } from '@lit/react';
 import TestInput from '../components/test-input/test-input.js';
 
-export const C4AITestInput = createComponent({
-  tagName: 'c4ai-test-input',
+export const CLABSTestInput = createComponent({
+  tagName: 'clabs-test-input',
   elementClass: TestInput,
   react: React,
   events: {},

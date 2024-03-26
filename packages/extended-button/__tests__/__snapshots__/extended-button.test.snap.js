@@ -2,8 +2,8 @@
 export const snapshots = {};
 
 snapshots[
-  'c4ai-extended-button should render with cds-button minimum attributes'
-] = `<c4ai-extended-button
+  'clabs-extended-button should render with cds-button minimum attributes'
+] = `<clabs-extended-button
   has-main-content=""
   kind="primary"
   size="lg"
@@ -12,6 +12,6 @@ snapshots[
   type="button"
 >
   button
-</c4ai-extended-button>
+</clabs-extended-button>
 `;
-/* end snapshot c4ai-extended-button should render with cds-button minimum attributes */
+/* end snapshot clabs-extended-button should render with cds-button minimum attributes */

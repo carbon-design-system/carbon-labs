@@ -1,7 +1,7 @@
 /* @web/test-runner snapshot v1 */
 export const snapshots = {};
 
-snapshots['c4ai-test-input should render with minimum attributes'] = `<div>
+snapshots['clabs-test-input should render with minimum attributes'] = `<div>
   <label for="typeahead">
     Search typeahead
     <input
@@ -11,9 +11,9 @@ snapshots['c4ai-test-input should render with minimum attributes'] = `<div>
   </label>
 </div>
 `;
-/* end snapshot c4ai-test-input should render with minimum attributes */
+/* end snapshot clabs-test-input should render with minimum attributes */
 
-snapshots['c4ai-test-input should render with search results'] = `<div>
+snapshots['clabs-test-input should render with search results'] = `<div>
   <label for="typeahead">
     Search typeahead
     <input
@@ -53,4 +53,4 @@ snapshots['c4ai-test-input should render with search results'] = `<div>
   </p>
 </div>
 `;
-/* end snapshot c4ai-test-input should render with search results */
+/* end snapshot clabs-test-input should render with search results */

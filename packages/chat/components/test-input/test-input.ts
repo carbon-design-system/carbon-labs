@@ -12,13 +12,13 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import testInput from './src/test-input.js';
 import { testInputTemplate } from './src/test-input.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}-test-input`)
-class C4AITestInput extends testInput {
+@customElement(`${clabsPrefix}-test-input`)
+class CLABSTestInput extends testInput {
   /**
    * Renders the template while passing in class functionality
    *
@@ -29,4 +29,4 @@ class C4AITestInput extends testInput {
   }
 }
 
-export default C4AITestInput;
+export default CLABSTestInput;

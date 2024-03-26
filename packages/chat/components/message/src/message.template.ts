@@ -9,7 +9,7 @@
 
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import Renew20 from '@carbon/web-components/es/icons/renew/20.js';
 import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
@@ -47,110 +47,111 @@ export function messageTemplate(customElementClass) {
   } = customElementClass;
 
   return html`<div
-    class="${c4aiPrefix}--chat-message ${c4aiPrefix}--chat-message-${origin}-message">
-    <div class="${c4aiPrefix}--chat-message-container">
+    class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-${origin}-message">
+    <div class="${clabsPrefix}--chat-message-container">
       ${origin === 'user'
-        ? html` <div class="${c4aiPrefix}--chat-message-content">
-            <div class="${c4aiPrefix}--chat-message-timestamp-${origin}">
+        ? html` <div class="${clabsPrefix}--chat-message-content">
+            <div class="${clabsPrefix}--chat-message-timestamp-${origin}">
               You ${timeStamp}
             </div>
-            <div class="${c4aiPrefix}--chat-message-response-user">
+            <div class="${clabsPrefix}--chat-message-response-user">
               ${messageElements.map(
                 (message) => html` <div
-                  class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                  class="${clabsPrefix}--chat-message-piece ${clabsPrefix}--chat-message-subsection-${message.type}">
                   ${editing
                     ? html`<textarea
                         .value="${message.content}"
                         @input="${setEditedMessage}"
-                        class="${c4aiPrefix}--chat-message-edit-area">
+                        class="${clabsPrefix}--chat-message-edit-area">
                             ${message.content}</textarea
                       >`
                     : unsafeHTML(formatText(message.content))}
                 </div>`
               )}
             </div>
-            <div class="${c4aiPrefix}--chat-message-dropdown-user">
+            <div class="${clabsPrefix}--chat-message-dropdown-user">
               ${editing === true
                 ? html` <div
-                      class="${c4aiPrefix}--chat-message-small-button"
+                      class="${clabsPrefix}--chat-message-small-button"
                       @click="${cancelEdit}">
                       ${Undo16()}
                     </div>
                     <div
-                      class="${c4aiPrefix}--chat-message-small-button"
+                      class="${clabsPrefix}--chat-message-small-button"
                       @click="${validateEdit}">
                       ${CheckMark16()}
                     </div>`
                 : html` <div
-                    class="${c4aiPrefix}--chat-message-small-button"
+                    class="${clabsPrefix}--chat-message-small-button"
                     @click="${handleEdit}">
                     ${Edit16()}
                   </div>`}
             </div>
           </div>`
-        : html` <div class="${c4aiPrefix}--chat-message-icon">
+        : html` <div class="${clabsPrefix}--chat-message-icon">
               ${origin == 'user'
-                ? html` <div class="${c4aiPrefix}--chat-message-${origin}-icon">
+                ? html` <div
+                    class="${clabsPrefix}--chat-message-${origin}-icon">
                     User20() : AI16()}
                   </div>`
                 : html`<cds-slug kind="default" size="2xs"></cds-slug>`}
             </div>
-            <div class="${c4aiPrefix}--chat-message-content">
-              <div class="${c4aiPrefix}--chat-message-timestamp-${origin}">
+            <div class="${clabsPrefix}--chat-message-content">
+              <div class="${clabsPrefix}--chat-message-timestamp-${origin}">
                 ${displayName == null ? 'AI' : displayName} ${timeStamp}
               </div>
-              <div class="${c4aiPrefix}--chat-message-response-bot">
+              <div class="${clabsPrefix}--chat-message-response-bot">
                 ${messageElements.map(
                   (message) => html`
                     ${message.type === 'img'
                       ? html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                          <div class="${c4aiPrefix}--chat-message-img-card">
+                          class="${clabsPrefix}--chat-message-piece ${clabsPrefix}--chat-message-subsection-${message.type}">
+                          <div class="${clabsPrefix}--chat-message-img-card">
                             <img src="${message.content}" />
                           </div>
                         </div>`
                       : message.type === 'url'
                       ? html` <div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                          <c4ai--chat-card
+                          class="${clabsPrefix}--chat-message-piece ${clabsPrefix}--chat-message-subsection-${message.type}">
+                          <clabs--chat-card
                             type="${message.type}"
                             content="${message.content}">
-                          </c4ai--chat-card>
+                          </clabs--chat-card>
                         </div>`
                       : message.type === 'video'
                       ? html` <div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                          <c4ai--chat-card
+                          class="${clabsPrefix}--chat-message-piece ${clabsPrefix}--chat-message-subsection-${message.type}">
+                          <clabs--chat-card
                             type="${message.type}"
                             content="${message.content}">
-                          </c4ai--chat-card>
+                          </clabs--chat-card>
                         </div>`
                       : message.type === 'text'
                       ? html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                          class="${clabsPrefix}--chat-message-piece ${clabsPrefix}--chat-message-subsection-${message.type}">
                           ${unsafeHTML(formatText(message.content))}
                         </div>`
                       : message.type === 'list'
                       ? html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                          class="${clabsPrefix}--chat-message-piece ${clabsPrefix}--chat-message-subsection-${message.type}">
                           ${unsafeHTML(formatList(message.content))}
                         </div>`
                       : message.type === 'loading'
                       ? html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                          class="${clabsPrefix}--chat-message-piece ${clabsPrefix}--chat-message-subsection-${message.type}">
                           <div
-                            class="${c4aiPrefix}--chat-message-loading-container">
+                            class="${clabsPrefix}--chat-message-loading-container">
                             <div
-                              class="${c4aiPrefix}--chat-message-loading-bar"></div>
+                              class="${clabsPrefix}--chat-message-loading-bar"></div>
                           </div>
                         </div>`
                       : message.type === 'code'
                       ? html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                          class="${clabsPrefix}--chat-message-piece ${clabsPrefix}--chat-message-subsection-${message.type}">
                           ${unsafeHTML(formatCode(message.content))}
                         </div>`
                       : html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                          class="${clabsPrefix}--chat-message-piece ${clabsPrefix}--chat-message-subsection-${message.type}">
                           ${message.content}
                         </div>`}
                   `
@@ -158,41 +159,41 @@ export function messageTemplate(customElementClass) {
               </div>
               ${!loadingState
                 ? html`
-                    <div class="${c4aiPrefix}--chat-message-dropdown-bot">
+                    <div class="${clabsPrefix}--chat-message-dropdown-bot">
                       ${origin === 'user'
                         ? editing === true
                           ? html` <div
-                                class="${c4aiPrefix}--chat-message-small-button"
+                                class="${clabsPrefix}--chat-message-small-button"
                                 @click="${cancelEdit}">
                                 ${Undo16()}
                               </div>
                               <div
-                                class="${c4aiPrefix}--chat-message-small-button"
+                                class="${clabsPrefix}--chat-message-small-button"
                                 @click="${validateEdit}">
                                 ${CheckMark16()}
                               </div>`
                           : html` <div
-                              class="${c4aiPrefix}--chat-message-small-button"
+                              class="${clabsPrefix}--chat-message-small-button"
                               @click="${handleEdit}">
                               ${Edit16()}
                             </div>`
                         : html`
                             <div
-                              class="${c4aiPrefix}--chat-message-small-button"
+                              class="${clabsPrefix}--chat-message-small-button"
                               @click="${(e) => {
                                 handleFeedback(e, index, 'like', timeStamp);
                               }}">
                               ${ThumbsUp20()}
                             </div>
                             <div
-                              class="${c4aiPrefix}--chat-message-small-button"
+                              class="${clabsPrefix}--chat-message-small-button"
                               @click="${(e) => {
                                 handleFeedback(e, index, 'dislike', timeStamp);
                               }}">
                               ${ThumbsDown20()}
                             </div>
                             <div
-                              class="${c4aiPrefix}--chat-message-small-button"
+                              class="${clabsPrefix}--chat-message-small-button"
                               @click="${handleRegenerate}">
                               ${Renew20()}
                             </div>

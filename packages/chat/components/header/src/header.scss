@@ -9,20 +9,20 @@
 
 @use '@carbon/styles/scss/theme' as *;
 
-:host(#{$c4ai-prefix}--chat-header) {
+:host(#{$clabs-prefix}--chat-header) {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: #262626;
   border-block-end: 1px solid #393939;
 
-  .#{$c4ai-prefix}--chat-header-icons {
+  .#{$clabs-prefix}--chat-header-icons {
     display: flex;
     gap: 0;
     margin-inline-start: auto;
   }
 
-  .#{$c4ai-prefix}--chat-header-icon {
+  .#{$clabs-prefix}--chat-header-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,19 +30,19 @@
     inline-size: 40px;
   }
 
-  .#{$c4ai-prefix}--chat-header-icon svg {
+  .#{$clabs-prefix}--chat-header-icon svg {
     fill: #f4f4f4;
   }
 
-  .#{$c4ai-prefix}--chat-header-icon:hover {
+  .#{$clabs-prefix}--chat-header-icon:hover {
     background: #f4f4f4;
   }
 
-  .#{$c4ai-prefix}--chat-header-icon:hover svg {
+  .#{$clabs-prefix}--chat-header-icon:hover svg {
     fill: #1b1b1b;
   }
 
-  .#{$c4ai-prefix}--chat-header-icon-slug {
+  .#{$clabs-prefix}--chat-header-icon-slug {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,7 +51,7 @@
     inline-size: 40px;
   }
 
-  .#{$c4ai-prefix}--chat-header-icon-slug svg {
+  .#{$clabs-prefix}--chat-header-icon-slug svg {
     fill: #1b1b1b;
   }
 }

@@ -12,13 +12,13 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import header from './src/header.js';
 import { headerTemplate } from './src/header.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}--chat-header`)
-class C4AIHeader extends header {
+@customElement(`${clabsPrefix}--chat-header`)
+class CLABSHeader extends header {
   /**
    * Renders the template while passing in class functionality
    *
@@ -29,4 +29,4 @@ class C4AIHeader extends header {
   }
 }
 
-export default C4AIHeader;
+export default CLABSHeader;

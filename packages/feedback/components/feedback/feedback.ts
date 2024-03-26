@@ -13,13 +13,13 @@ import { Feedback } from './src/feedback';
 import { TemplateResult } from 'lit';
 import { feedbackTemplate } from './src/feedback.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Component extending the Feedback component
  */
-@customElement(`${c4aiPrefix}-feedback`)
-class C4AIFeedback extends Feedback {
+@customElement(`${clabsPrefix}-feedback`)
+class CLABSFeedback extends Feedback {
   /**
    * Renders the template while passing in class functionality
    */
@@ -28,4 +28,4 @@ class C4AIFeedback extends Feedback {
   }
 }
 
-export default C4AIFeedback;
+export default CLABSFeedback;

@@ -12,13 +12,13 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import message from './src/message.js';
 import { messageTemplate } from './src/message.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the message custom element
  */
-@customElement(`${c4aiPrefix}--chat-message`)
-class C4AIMessage extends message {
+@customElement(`${clabsPrefix}--chat-message`)
+class CLABSMessage extends message {
   /**
    * Renders the template while passing in class functionality
    *
@@ -29,4 +29,4 @@ class C4AIMessage extends message {
   }
 }
 
-export default C4AIMessage;
+export default CLABSMessage;

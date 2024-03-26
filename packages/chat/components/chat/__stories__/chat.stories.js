@@ -83,7 +83,7 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: () => html`
-    <c4ai-chat
+    <clabs-chat
       user-name="user"
       agent-name="bot"
       .conversation="${[
@@ -103,7 +103,7 @@ export const Default = {
       ]}"
       @on-submit="${(event) => {
         console.log(event);
-      }}"></c4ai-chat>
+      }}"></clabs-chat>
   `,
 };
 
@@ -142,7 +142,7 @@ export const Playground = {
     conversation,
   }) => html`
     <div style="height:calc(100vh - 84px); overflow:hidden;">
-      <c4ai-chat
+      <clabs-chat
         model="llama-2"
         user-prompt="${userPrompt}"
         api-url="${apiUrl}"
@@ -154,7 +154,7 @@ export const Playground = {
         user-name="user"
         agent-name="bot"
         theme="light">
-      </c4ai-chat>
+      </clabs-chat>
     </div>
   `,
 };

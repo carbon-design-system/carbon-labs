@@ -16,12 +16,12 @@ import {
 } from '@open-wc/testing';
 import { stub } from 'sinon';
 import '@carbon-labs/ai-chat/es/components/test-input/test-input.js';
-import C4AITestInput from '../components/test-input/test-input.js';
+import CLABSTestInput from '../components/test-input/test-input.js';
 
-describe('c4ai-test-input', function () {
+describe('clabs-test-input', function () {
   it('should render with minimum attributes', async () => {
-    const el = await fixture<C4AITestInput>(
-      html`<c4ai-test-input></c4ai-test-input>`
+    const el = await fixture<CLABSTestInput>(
+      html`<clabs-test-input></clabs-test-input>`
     );
     await expect(el).shadowDom.to.equalSnapshot();
     await expect(el).shadowDom.to.be.accessible();
@@ -41,8 +41,8 @@ describe('c4ai-test-input', function () {
       'report',
     ];
 
-    const el = await fixture<C4AITestInput>(
-      html`<c4ai-test-input></c4ai-test-input>`
+    const el = await fixture<CLABSTestInput>(
+      html`<clabs-test-input></clabs-test-input>`
     );
     stub(el, 'getResults').returns(Promise.resolve(res));
     el.requestUpdate();

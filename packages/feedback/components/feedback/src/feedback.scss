@@ -11,27 +11,27 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$c4ai-prefix}-feedback) hr {
+:host(#{$clabs-prefix}-feedback) hr {
   border: 0;
   background: $border-subtle;
   block-size: 1px;
   margin-block: 1rem;
 }
 
-:host(#{$c4ai-prefix}-feedback) cds-slug .secondary {
+:host(#{$clabs-prefix}-feedback) cds-slug .secondary {
   color: $text-secondary;
 }
 
-:host(#{$c4ai-prefix}-feedback) cds-slug p {
+:host(#{$clabs-prefix}-feedback) cds-slug p {
   margin: 0.25rem 0;
   @include type-style('body-compact-01');
 }
 
-:host(#{$c4ai-prefix}-feedback) cds-slug .bold {
+:host(#{$clabs-prefix}-feedback) cds-slug .bold {
   font-weight: 600;
 }
 
-:host(#{$c4ai-prefix}-feedback) .label {
+:host(#{$clabs-prefix}-feedback) .label {
   display: inline-block;
   color: #525252;
   font-size: 12px;
@@ -40,7 +40,7 @@ $css--plex: true !default;
   margin-block-end: 0.5rem;
 }
 
-:host(#{$c4ai-prefix}-feedback) .selected-text {
+:host(#{$clabs-prefix}-feedback) .selected-text {
   display: flex;
   align-items: center;
   font-weight: 500;
@@ -49,38 +49,38 @@ $css--plex: true !default;
   margin-block-end: 0.25rem;
 }
 
-:host(#{$c4ai-prefix}-feedback) .feedback-icons {
+:host(#{$clabs-prefix}-feedback) .feedback-icons {
   display: flex;
   align-items: center;
 }
 
-:host(#{$c4ai-prefix}-feedback) .feedback-icons > span {
+:host(#{$clabs-prefix}-feedback) .feedback-icons > span {
   display: block;
   padding: 0.75rem 0.25rem;
   cursor: pointer;
 }
 
-:host(#{$c4ai-prefix}-feedback) .selected-text__edit {
+:host(#{$clabs-prefix}-feedback) .selected-text__edit {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-:host(#{$c4ai-prefix}-feedback) cds-slug {
+:host(#{$clabs-prefix}-feedback) cds-slug {
   display: contents;
 }
 
-:host(#{$c4ai-prefix}-feedback) .feedback-flag {
+:host(#{$clabs-prefix}-feedback) .feedback-flag {
   position: absolute;
   cursor: pointer;
 }
 
-:host(#{$c4ai-prefix}-feedback) .highlight-selection {
+:host(#{$clabs-prefix}-feedback) .highlight-selection {
   background-color: #ffff00;
   user-select: none;
 }
 
-:host(#{$c4ai-prefix}-feedback:hover) .highlight::after {
+:host(#{$clabs-prefix}-feedback:hover) .highlight::after {
   position: absolute;
   border-radius: 50%;
   background-color: #f08080;
@@ -91,11 +91,11 @@ $css--plex: true !default;
   inset-inline-end: 0;
 }
 
-:host(#{$c4ai-prefix}-feedback) .slug {
+:host(#{$clabs-prefix}-feedback) .slug {
   position: relative;
 }
 
-:host(#{$c4ai-prefix}-feedback) .notify {
+:host(#{$clabs-prefix}-feedback) .notify {
   position: absolute;
   z-index: 100;
   border-radius: 50%;
@@ -107,15 +107,15 @@ $css--plex: true !default;
   inset-inline-end: -5px;
 }
 
-:host(#{$c4ai-prefix}-feedback:hover) .notify {
+:host(#{$clabs-prefix}-feedback:hover) .notify {
   display: none;
 }
 
-:host(#{$c4ai-prefix}-feedback) .blink_me {
+:host(#{$clabs-prefix}-feedback) .blink_me {
   animation: blinker 2000ms linear infinite;
 }
 
-:host(#{$c4ai-prefix}-feedback) .blink_me:hover {
+:host(#{$clabs-prefix}-feedback) .blink_me:hover {
   animation-play-state: paused;
   cursor: pointer;
 }

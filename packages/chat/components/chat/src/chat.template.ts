@@ -15,7 +15,7 @@ import Send16 from '@carbon/web-components/es/icons/send/16.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import '../../message/message.ts';
 import '../../header/header.ts';
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Lit template for Chat interface
@@ -35,15 +35,15 @@ export function chatTemplate(customElementClass) {
     _handleUpdate: handleUpdate,
   } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-container">
-    <c4ai--chat-header>
-    </c4ai--chat-header>
+  return html`<div class="${clabsPrefix}--chat-container">
+    <clabs--chat-header>
+    </clabs--chat-header>
 
-    <div class="${c4aiPrefix}--chat-messages">
+    <div class="${clabsPrefix}--chat-messages">
       &nbsp;
       ${messages.map((message, index) =>
         message.hasError
-          ? html` <c4ai--chat-message
+          ? html` <clabs--chat-message
               raw-text="${message.text}"
               origin="${message.origin}"
               time-stamp="${message.time}"
@@ -51,8 +51,8 @@ export function chatTemplate(customElementClass) {
               disable-buttons
               index="${index}"
               @regenerate="${handleRegenerate}">
-            </c4ai--chat-message>`
-          : html` <c4ai--chat-message
+            </clabs--chat-message>`
+          : html` <clabs--chat-message
               raw-text="${message.text}"
               origin="${message.origin}"
               time-stamp="${message.time}"
@@ -62,33 +62,33 @@ export function chatTemplate(customElementClass) {
               .elements="${message.elements || nothing}"
               @regenerate="${handleRegenerate}"
               @message-updated=${handleUpdate}>
-            </c4ai--chat-message>`
+            </clabs--chat-message>`
       )}
       ${
         queryInProgress
-          ? html` <c4ai--chat-message
+          ? html` <clabs--chat-message
               raw-text="loading"
               origin="bot"
               time-stamp=""
               loading-state
               error-state="false">
-            </c4ai--chat-message>`
+            </clabs--chat-message>`
           : html``
       }
     </div>
 
-    <div class="${c4aiPrefix}--chat-footer">
-      <div class="${c4aiPrefix}--chat-footer-button">${Search24()}</div>
+    <div class="${clabsPrefix}--chat-footer">
+      <div class="${clabsPrefix}--chat-footer-button">${Search24()}</div>
       <textarea
-        class="${c4aiPrefix}--chat-search-query"
+        class="${clabsPrefix}--chat-search-query"
         rows="1"
         placeholder="Type something..."
         .value="${messageText}"
         @input="${setMessageText}"
         @keyup="${handleInput}" />
         </textarea>
-      <div class="${c4aiPrefix}--chat-footer-button">${MicrophoneOff16()}</div>
-      <div class="${c4aiPrefix}--chat-footer-button" @click="${sendInput}">
+      <div class="${clabsPrefix}--chat-footer-button">${MicrophoneOff16()}</div>
+      <div class="${clabsPrefix}--chat-footer-button" @click="${sendInput}">
         ${Send16()}
       </div>
     </div>

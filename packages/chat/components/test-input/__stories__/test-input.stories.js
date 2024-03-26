@@ -22,5 +22,5 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <c4ai-test-input> </c4ai-test-input>`,
+  render: () => html` <clabs-test-input> </clabs-test-input>`,
 };

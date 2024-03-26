@@ -11,12 +11,12 @@ import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import extendedButton from './src/extended-button.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Component extending the @carbon/web-components' button
  */
-@customElement(`${c4aiPrefix}-extended-button`)
-class C4AIExtendedButton extends extendedButton {}
+@customElement(`${clabsPrefix}-extended-button`)
+class CLABSExtendedButton extends extendedButton {}
 
-export default C4AIExtendedButton;
+export default CLABSExtendedButton;

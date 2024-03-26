@@ -159,7 +159,7 @@ export const Default = {
    */
   render: (args) =>
     html`
-      <c4ai-feedback
+      <clabs-feedback
         @on-feedback-delete=${args['on-feedback-delete']}
         @on-feedback-save=${args['on-feedback-save']}
         model=${args.model}
@@ -169,7 +169,7 @@ export const Default = {
         .feedbackList=${args['feedback-list']}
         icon=${args.icon}>
         ${Flag24({ slot: 'icon' })} ${args.output}
-      </c4ai-feedback>
+      </clabs-feedback>
     `,
 };
 
@@ -201,7 +201,7 @@ export const Playground = {
    */
   render: (args) =>
     html`
-      <c4ai-feedback
+      <clabs-feedback
         @on-feedback-delete=${args['on-feedback-delete']}
         @on-feedback-save=${args['on-feedback-save']}
         model=${args.model}
@@ -211,6 +211,6 @@ export const Playground = {
         .feedbackList=${args['feedback-list']}
         icon=${args.icon}>
         ${Flag24({ slot: 'icon' })} ${args.output}
-      </c4ai-feedback>
+      </clabs-feedback>
     `,
 };

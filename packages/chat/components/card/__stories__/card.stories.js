@@ -22,5 +22,5 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <c4ai-card> </c4ai-card>`,
+  render: () => html` <clabs-card> </clabs-card>`,
 };

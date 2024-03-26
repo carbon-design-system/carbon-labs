@@ -9,13 +9,13 @@
 
 @use '@carbon/styles/scss/theme' as *;
 
-:host(#{$c4ai-prefix}-chat) {
+:host(#{$clabs-prefix}-chat) {
   display: block;
   overflow: hidden;
   block-size: 100%;
   font-family: 'IBM Plex Sans', sans-serif;
 
-  .#{$c4ai-prefix}--chat-container {
+  .#{$clabs-prefix}--chat-container {
     display: flex;
     overflow: hidden;
     flex-direction: column;
@@ -24,19 +24,19 @@
     max-block-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-messages {
+  .#{$clabs-prefix}--chat-messages {
     flex: 1;
     background: linear-gradient(to bottom, #272727 80%, #2d3c55);
     overflow-y: auto;
   }
 
-  .#{$c4ai-prefix}--chat-footer {
+  .#{$clabs-prefix}--chat-footer {
     display: flex;
     align-items: center;
     background: #272727;
     min-block-size: 40px;
 
-    .#{$c4ai-prefix}--chat-footer-button {
+    .#{$clabs-prefix}--chat-footer-button {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -44,17 +44,17 @@
       inline-size: 40px;
     }
 
-    .#{$c4ai-prefix}--chat-footer-button svg {
+    .#{$clabs-prefix}--chat-footer-button svg {
       block-size: 20px;
       fill: #8d8d8d;
       inline-size: 20px;
     }
 
-    .#{$c4ai-prefix}--chat-footer-button:hover svg {
+    .#{$clabs-prefix}--chat-footer-button:hover svg {
       fill: #f4f4f4;
     }
 
-    .#{$c4ai-prefix}--chat-search-query {
+    .#{$clabs-prefix}--chat-search-query {
       box-sizing: border-box;
       flex: 3;
       padding: 0;
@@ -71,11 +71,11 @@
       resize: none;
     }
 
-    .#{$c4ai-prefix}--chat-search-query:focus {
+    .#{$clabs-prefix}--chat-search-query:focus {
       outline: none;
     }
 
-    .#{$c4ai-prefix}--chat-search-query::placeholder {
+    .#{$clabs-prefix}--chat-search-query::placeholder {
       color: #c6c6c6;
     }
   }

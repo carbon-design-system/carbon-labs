@@ -16,7 +16,7 @@ import styles from './chat.scss?inline';
 /**
  * Input component using search typeahead api
  */
-export default class C4AIChat extends LitElement {
+export default class CLABSChat extends LitElement {
   static styles = styles;
 
   /**
@@ -584,7 +584,7 @@ export default class C4AIChat extends LitElement {
   /** auto-scroll chat-messages div when a new message has appeared
    **/
   _updateScroll() {
-    const scrollDiv = this.shadowRoot?.querySelector('.c4ai--chat-messages');
+    const scrollDiv = this.shadowRoot?.querySelector('.clabs--chat-messages');
     setTimeout(() => {
       scrollDiv?.scrollTo({
         top: scrollDiv?.scrollHeight,

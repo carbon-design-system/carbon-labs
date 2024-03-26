@@ -35,7 +35,7 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: (args) =>
-    html` <c4ai-extended-button>
+    html` <clabs-extended-button>
       ${args.label}${ArrowRight16({ slot: 'icon' })}
-    </c4ai-extended-button>`,
+    </clabs-extended-button>`,
 };

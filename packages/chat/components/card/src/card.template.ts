@@ -9,7 +9,7 @@
 
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16.js';
 
 /**
@@ -24,45 +24,45 @@ export function cardTemplate(customElementClass) {
     type: type,
     content: content,
   } = customElementClass;
-  return html`<div class="${c4aiPrefix}--chat-card">
+  return html`<div class="${clabsPrefix}--chat-card">
     ${linkPreview !== null
       ? html` ${type === 'url' && linkPreview.image_url !== null
-            ? html` <div class="${c4aiPrefix}--chat-card-image-container">
+            ? html` <div class="${clabsPrefix}--chat-card-image-container">
                 <img
-                  class="${c4aiPrefix}--chat-card-image"
+                  class="${clabsPrefix}--chat-card-image"
                   src="${linkPreview.image_url}" />
               </div>`
             : type === 'video'
-            ? html` <div class="${c4aiPrefix}--chat-card-image-container">
+            ? html` <div class="${clabsPrefix}--chat-card-image-container">
                 <video controls>
                   <source src="${content}" type="video/webm" />
                 </video>
               </div>`
             : html``}
 
-          <div class="${c4aiPrefix}--chat-card-detail-container">
-            <div class="${c4aiPrefix}--chat-card-detail-title">
+          <div class="${clabsPrefix}--chat-card-detail-container">
+            <div class="${clabsPrefix}--chat-card-detail-title">
               ${linkPreview.title}
             </div>
-            <div class="${c4aiPrefix}--chat-card-detail-description">
+            <div class="${clabsPrefix}--chat-card-detail-description">
               ${linkPreview.description}
             </div>
-            <div class="${c4aiPrefix}--chat-card-detail-link-container">
+            <div class="${clabsPrefix}--chat-card-detail-link-container">
               <a
-                class="${c4aiPrefix}--chat-card-detail-link"
+                class="${clabsPrefix}--chat-card-detail-link"
                 href="${linkPreview.link}"
                 target="_blank"
                 >${linkPreview.shortenedUrl}</a
               >
 
-              <div class="${c4aiPrefix}--chat-card-detail-link-icon">
+              <div class="${clabsPrefix}--chat-card-detail-link-icon">
                 <a href="${linkPreview.link}" target="_blank"
                   >${ArrowRight16()}</a
                 >
               </div>
             </div>
           </div>`
-      : html`<div class="${c4aiPrefix}--chat-card-loader">
+      : html`<div class="${clabsPrefix}--chat-card-loader">
           Loading Media Card...
         </div>`}
   </div>`;

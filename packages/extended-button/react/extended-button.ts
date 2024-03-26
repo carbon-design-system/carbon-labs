@@ -11,8 +11,8 @@ import React from 'react';
 import { createComponent } from '@lit/react';
 import ExtendedButton from '../components/extended-button/extended-button.js';
 
-export const C4AIExtendedButton = createComponent({
-  tagName: 'c4ai-extended-button',
+export const CLABSExtendedButton = createComponent({
+  tagName: 'clabs-extended-button',
   elementClass: ExtendedButton,
   react: React,
   events: {},

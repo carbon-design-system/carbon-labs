@@ -12,13 +12,13 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import chat from './src/chat.js';
 import { chatTemplate } from './src/chat.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}-chat`)
-class C4AIChat extends chat {
+@customElement(`${clabsPrefix}-chat`)
+class CLABSChat extends chat {
   /**
    * Renders the template while passing in class functionality
    *
@@ -29,4 +29,4 @@ class C4AIChat extends chat {
   }
 }
 
-export default C4AIChat;
+export default CLABSChat;

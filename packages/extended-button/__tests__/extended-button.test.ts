@@ -9,12 +9,12 @@
 
 import { html, fixture, expect } from '@open-wc/testing';
 import '@carbon-labs/ai-extended-button/es/components/extended-button/extended-button.js';
-import C4AIExtendedButton from '../components/extended-button/extended-button.js';
+import CLABSExtendedButton from '../components/extended-button/extended-button.js';
 
-describe('c4ai-extended-button', function () {
+describe('clabs-extended-button', function () {
   it('should render with cds-button minimum attributes', async () => {
-    const el = await fixture<C4AIExtendedButton>(
-      html`<c4ai-extended-button> button </c4ai-extended-button>`
+    const el = await fixture<CLABSExtendedButton>(
+      html`<clabs-extended-button> button </clabs-extended-button>`
     );
 
     await expect(el).dom.to.equalSnapshot();

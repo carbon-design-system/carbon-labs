@@ -9,7 +9,7 @@
 
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 import Popup16 from '@carbon/web-components/es/icons/popup/16.js';
 import '@carbon/web-components/es/components/slug/index.js';
 
@@ -21,7 +21,7 @@ import '@carbon/web-components/es/components/slug/index.js';
  */
 export function headerTemplate(customElementClass) {
   const { title } = customElementClass;
-  return html` <div class="${c4aiPrefix}--chat-header-icons">
+  return html` <div class="${clabsPrefix}--chat-header-icons">
     <div>
       <cds-slug kind="default" size="md">
         <div slot="body-text">
@@ -29,6 +29,6 @@ export function headerTemplate(customElementClass) {
         </div>
       </cds-slug>
     </div>
-    <div class="${c4aiPrefix}--chat-header-icon">${Popup16()}</div>
+    <div class="${clabsPrefix}--chat-header-icon">${Popup16()}</div>
   </div>`;
 }

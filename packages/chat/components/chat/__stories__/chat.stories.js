@@ -115,9 +115,6 @@ export const Playground = {
       expanded: true,
     },
     layout: 'fullscreen',
-    viewport: {
-      defaultViewport: 'storybook-default',
-    },
   },
   /**
    * Renders the template for Playground Storybook

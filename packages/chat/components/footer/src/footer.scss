@@ -1,0 +1,83 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$c4ai-prefix}--chat-footer) {
+  position: absolute;
+  display: block;
+  margin: 0 auto;
+  background: none;
+  inset-block-end: 0;
+  inset-inline: 0;
+  max-inline-size: 672px;
+  min-block-size: 50px;
+
+  .#{$c4ai-prefix}--chat-footer-container {
+    display: flex;
+    align-items: center;
+    background: $ui-01;
+    min-block-size: 50px;
+  }
+
+  .#{$c4ai-prefix}--chat-footer-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 50px;
+    inline-size: 50px;
+  }
+
+  .#{$c4ai-prefix}--chat-footer-button svg {
+    block-size: 18px;
+    fill: #4589ff;
+    inline-size: 18px;
+  }
+
+  .#{$c4ai-prefix}--chat-footer-button.active svg {
+    fill: $text-01;
+  }
+
+  .#{$c4ai-prefix}--chat-footer-button:hover svg {
+    cursor: pointer;
+    fill: $text-01;
+  }
+
+  .#{$c4ai-prefix}--chat-footer-button.active:hover svg {
+    fill: #ffffff;
+  }
+
+  .#{$c4ai-prefix}--chat-search-query {
+    box-sizing: border-box;
+    flex: 3;
+    padding: 0;
+    border: none;
+    background: none;
+
+    block-size: auto;
+    color: $text-01;
+    font: inherit;
+    font-size: 13px;
+    line-height: 18px;
+    min-block-size: 30px;
+    overflow-y: hidden;
+    padding-block: 10px 10px;
+    resize: none;
+  }
+
+  .#{$c4ai-prefix}--chat-search-query:focus {
+    outline: none;
+  }
+
+  .#{$c4ai-prefix}--chat-search-query::placeholder {
+    color: $text-02;
+  }
+}

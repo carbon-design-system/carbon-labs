@@ -22,5 +22,6 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <c4ai--chat-header> </c4ai--chat-header>`,
+  render: () =>
+    html` <c4ai--chat-header title="Example Title"> </c4ai--chat-header>`,
 };

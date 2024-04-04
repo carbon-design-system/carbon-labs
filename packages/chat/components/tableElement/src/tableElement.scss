@@ -5,9 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '../../../../../globals/scss/vars' as *;
+$css--plex: true !default;
 
+@use '../../../../../globals/scss/vars' as *;
 @use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
 
 :host(#{$c4ai-prefix}--chat-table) {
   overflow: hidden;
@@ -15,16 +17,17 @@
 
   .#{$c4ai-prefix}--chat-table-container {
     overflow: scroll;
-    border: 1px solid #393939;
+    border: 1px solid $ui-05;
     border-radius: 8px;
+    background: $ui-background;
     inline-size: 100%;
   }
 
   .#{$c4ai-prefix}--chat-table-error {
     padding: 10px;
-    border: 1px solid #ff4444;
+    border: 1px solid $support-error;
     border-radius: 8px;
-    color: #ff4444;
+    color: $support-error;
     line-height: 22px;
   }
 
@@ -38,16 +41,16 @@
   th,
   td {
     padding: 12px;
-    border: 1px solid #393939;
+    border: 1px solid $ui-05;
     text-align: start;
   }
 
   th {
-    background-color: #393939;
+    background-color: $ui-05;
     font-weight: normal;
   }
 
   tr:nth-child(even) {
-    background-color: #262626;
+    background-color: $ui-background;
   }
 }

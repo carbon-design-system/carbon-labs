@@ -1,0 +1,108 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$c4ai-prefix}--chat-card) {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  padding: 0;
+  border: 1px solid #525252;
+  border-radius: 8px;
+
+  background: $ui-background;
+  inline-size: 246px;
+
+  .#{$c4ai-prefix}--chat-card-image-container {
+    overflow: hidden;
+    flex: 1;
+    block-size: 50%;
+    max-block-size: 120px;
+  }
+
+  .#{$c4ai-prefix}--chat-card-image-container img {
+    overflow: hidden;
+    background: #ccebff;
+    block-size: auto;
+    inline-size: 100%;
+    min-block-size: 120px;
+  }
+
+  .#{$c4ai-prefix}--chat-card-image-container video {
+    overflow: hidden;
+    background: #000000;
+    block-size: auto;
+    inline-size: 100%;
+    max-block-size: 120px;
+  }
+
+  .#{$c4ai-prefix}--chat-card-detail-container {
+    display: flex;
+    overflow: hidden;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 15px 10px;
+    block-size: 90px;
+  }
+
+  .#{$c4ai-prefix}--chat-card-detail-title {
+    align-self: flex-start;
+    color: $text-01;
+    font-size: 16px;
+    inline-size: 100%;
+    overflow-x: hidden;
+    white-space: nowrap;
+  }
+
+  .#{$c4ai-prefix}--chat-card-detail-description {
+    overflow: hidden;
+    flex-grow: 1;
+    color: $text-02;
+    font-size: 12px;
+    padding-block: 10px 28px;
+  }
+
+  .#{$c4ai-prefix}--chat-card-loader {
+    flex-grow: 2;
+    background-color: $interactive-01;
+    block-size: 240px;
+  }
+
+  .#{$c4ai-prefix}--chat-card-detail-link-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+
+  .#{$c4ai-prefix}--chat-card-detail-link {
+    overflow: hidden;
+    color: $interactive-01;
+    text-decoration: none;
+    white-space: nowrap;
+
+    a {
+      color: $interactive-01;
+      text-decoration: none;
+    }
+  }
+  .#{$c4ai-prefix}--chat-card-detail-link-icon {
+    padding: 3px;
+    color: $interactive-01;
+  }
+  .#{$c4ai-prefix}--chat-card-detail-link-icon svg {
+    block-size: 12px;
+    fill: $interactive-01;
+    inline-size: 12px;
+  }
+}

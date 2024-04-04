@@ -1,0 +1,32 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$c4ai-prefix}--chat-editable-text) {
+  .#{$c4ai-prefix}--chat-editable-text-area {
+    padding: 0;
+    border: 1px solid $ui-05;
+    border-radius: 6px;
+    margin: 0;
+    background: none;
+    color: $text-01;
+    font: inherit;
+    inline-size: 100%;
+    line-height: 22px;
+    overflow-x: hidden;
+    resize: none;
+  }
+
+  .#{$c4ai-prefix}--chat-editable-text-area:focus {
+    outline: none;
+  }
+}

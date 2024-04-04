@@ -5,36 +5,42 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '../../../../../globals/scss/vars' as *;
+$css--plex: true !default;
 
+@use '../../../../../globals/scss/vars' as *;
 @use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
 
 :host(#{$c4ai-prefix}--chat-chart) {
   display: block;
   overflow: hidden;
   padding: 0;
-  border: 1px solid #393939;
+  border: 1px solid $ui-05;
   border-radius: 8px;
-  background: #262626;
-  inline-size: 100%;
-  min-block-size: 250px;
+  background: $ui-background;
+  block-size: var(--chat-chart-element-height, '300px');
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  inline-size: var(--chat-chart-element-width, '100%');
+  min-block-size: 246px;
+  min-inline-size: 246px;
 
   .#{$c4ai-prefix}--chat-chart-container {
     overflow: hidden;
-    block-size: 250px;
+    block-size: 100%;
     inline-size: 100%;
-    min-block-size: 250px;
+    min-block-size: 100%;
+    min-inline-size: 100%;
   }
 
   .#{$c4ai-prefix}--chat-chart-container svg {
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
   }
 
   .#{$c4ai-prefix}--chat-chart-error {
     padding: 10px;
-    border: 1px solid #ff4444;
+    border: 1px solid $support-error;
     border-radius: 8px;
-    color: #ff4444;
+    color: $support-error;
     line-height: 22px;
   }
 }

@@ -22,7 +22,7 @@
     "./es/": "./es/"
   },
   "scripts": {
-    "build": "pnpm clean && babel src --quiet -d es",
+    "build": "yarn clean && babel src --quiet -d es",
     "clean": "rm -rf es"
   },
   "files": [

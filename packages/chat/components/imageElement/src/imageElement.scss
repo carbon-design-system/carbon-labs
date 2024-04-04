@@ -1,0 +1,28 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$c4ai-prefix}--chat-image) {
+  .#{$c4ai-prefix}--chat-image-container {
+    display: flex;
+    overflow: hidden;
+    max-block-size: 246px;
+  }
+
+  .#{$c4ai-prefix}--chat-image-img {
+    border-radius: 8px;
+    block-size: auto;
+    max-block-size: 246px;
+    max-inline-size: 100%;
+    object-fit: contain;
+  }
+}

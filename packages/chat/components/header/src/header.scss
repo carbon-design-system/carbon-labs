@@ -5,53 +5,59 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '../../../../../globals/scss/vars' as *;
+$css--plex: true !default;
 
+@use '../../../../../globals/scss/vars' as *;
 @use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
 
 :host(#{$c4ai-prefix}--chat-header) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #262626;
-  border-block-end: 1px solid #393939;
+  background: $ui-01;
+  block-size: 40px;
+  border-block-end: 1px solid $ui-05;
 
-  .#{$c4ai-prefix}--chat-header-icons {
+  .#{$c4ai-prefix}--chat-header-elements {
     display: flex;
-    gap: 0;
-    margin-inline-start: auto;
+    flex-grow: 1;
+    align-items: center;
+    block-size: 100%;
+    padding-inline: 10px;
   }
 
-  .#{$c4ai-prefix}--chat-header-icon {
+  .#{$c4ai-prefix}--chat-header-elements-left {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    block-size: 100%;
+    gap: 10px;
+  }
+
+  .#{$c4ai-prefix}--chat-header-elements-right {
+    display: flex;
+    align-items: center;
+    block-size: 100%;
+    gap: 20px;
+  }
+
+  .#{$c4ai-prefix}--chat-header-elements-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    block-size: 40px;
-    inline-size: 40px;
+    block-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-header-icon svg {
-    fill: #f4f4f4;
+  .#{$c4ai-prefix}--chat-header-title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    white-space: nowrap;
   }
 
-  .#{$c4ai-prefix}--chat-header-icon:hover {
-    background: #f4f4f4;
-  }
-
-  .#{$c4ai-prefix}--chat-header-icon:hover svg {
-    fill: #1b1b1b;
-  }
-
-  .#{$c4ai-prefix}--chat-header-icon-slug {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to bottom right, #ffffff, #8a8a8a);
-    block-size: 40px;
-    inline-size: 40px;
-  }
-
-  .#{$c4ai-prefix}--chat-header-icon-slug svg {
-    fill: #1b1b1b;
+  .#{$c4ai-prefix}--chat-header-elements-icon svg {
+    block-size: 24px;
+    inline-size: 24px;
   }
 }

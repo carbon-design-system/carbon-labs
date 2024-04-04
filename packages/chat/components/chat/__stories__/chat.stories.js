@@ -46,7 +46,14 @@ const controls = {
   conversation: {
     control: { type: 'select' },
     description: 'Premade JSON object queries',
-    options: ['None', 'Nature of art', 'Flowers', 'Hello', 'Visualization'],
+    options: [
+      'None',
+      'Showcase',
+      'Nature of art',
+      'Flowers',
+      'Hello',
+      'Visualization',
+    ],
   },
   chosenHost: {
     control: { type: 'select' },
@@ -83,28 +90,76 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: () => html`
-    <c4ai-chat
-      user-name="user"
-      agent-name="bot"
-      .conversation="${[
-        {
-          text: 'Greetings, how may I help you?',
-          origin: 'bot',
-          hasError: false,
-          time: '4:56pm',
-          index: 0,
-          disableButtons: true,
-          elements: [
-            {
-              content: 'Greetings, how may I help you?',
-              type: 'text',
-            },
-          ],
-        },
-      ]}"
-      @on-submit="${(event) => {
-        console.log(event);
-      }}"></c4ai-chat>
+    <div style="height:calc(100vh - 84px); overflow:hidden;">
+      <c4ai-chat
+        user-name="user"
+        agent-name="bot"
+        .conversation="${[
+          {
+            text: 'Greetings, how may I help you?',
+            origin: 'bot',
+            hasError: false,
+            time: '4:56pm',
+            index: 0,
+            disableButtons: true,
+            elements: [
+              {
+                content: 'Greetings, how may I help you?',
+                type: 'text',
+              },
+            ],
+          },
+        ]}"
+        @on-submit="${(event) => {
+          console.log(event);
+        }}"
+        @on-regeneration-request="${(event) => {
+          console.log(event);
+        }}"
+        @on-update-request="${(event) => {
+          console.log(event);
+        }}"></c4ai-chat>
+    </div>
+  `,
+};
+
+export const APICall = {
+  args: defaultArgs,
+  /**
+   * Renders the template for Playground Storybook
+   * @param {Object} args - arguments to be sent into the playbook
+   * @param {Object} args.conversation - array of message object to render
+   * @param {string} args.sampleQuery - preset to test and demo
+   * @param {string} args.apiUrl - api url provided in playground
+   * @param {string} args.chosenHost - internal flag for packaging query
+   * @param {string} args.apiKey - api key provided in playground
+   * @param {string} args.feedbackUrl - feedback api url for buttons provided in playground
+   * @param {string} args.userPrompt - user specific prompt provided in playground
+   * @param {string} args.temperature - model temperature
+   * @returns {TemplateResult<1>}
+   */
+  render: ({
+    sampleQuery,
+    apiUrl,
+    feedbackUrl,
+    chosenHost,
+    userPrompt,
+    temperature,
+  }) => html`
+    <div style="height:calc(100vh - 84px); overflow:hidden;">
+      <c4ai-chat
+        model="llama-2"
+        auto-update
+        user-prompt="${userPrompt}"
+        api-url="${apiUrl}"
+        sample-query="${sampleQuery}"
+        feedback-url="${feedbackUrl}"
+        temperature="${temperature}"
+        chosen-host="${chosenHost}"
+        user-name="user"
+        agent-name="bot">
+      </c4ai-chat>
+    </div>
   `,
 };
 
@@ -123,24 +178,24 @@ export const Playground = {
   /**
    * Renders the template for Playground Storybook
    * @param {Object} args - arguments to be sent into the playbook
+   * @param {Object} args.conversation - array of message object to render
+   * @param {string} args.sampleQuery - preset to test and demo
    * @param {string} args.apiUrl - api url provided in playground
+   * @param {string} args.chosenHost - internal flag for packaging query
    * @param {string} args.apiKey - api key provided in playground
    * @param {string} args.feedbackUrl - feedback api url for buttons provided in playground
    * @param {string} args.userPrompt - user specific prompt provided in playground
-   * @param {string} args.sampleQuery - preset to test and demo
    * @param {string} args.temperature - model temperature
-   * @param {string} args.chosenHost - internal flag for packaging query
-   * @param {Object} args.conversation - array of message object to render
    * @returns {TemplateResult<1>}
    */
   render: ({
+    conversation,
+    sampleQuery,
     apiUrl,
     feedbackUrl,
-    userPrompt,
-    sampleQuery,
-    temperature,
     chosenHost,
-    conversation,
+    userPrompt,
+    temperature,
   }) => html`
     <div style="height:calc(100vh - 84px); overflow:hidden;">
       <c4ai-chat
@@ -153,8 +208,7 @@ export const Playground = {
         chosen-host="${chosenHost}"
         conversation-example="${conversation}"
         user-name="user"
-        agent-name="bot"
-        theme="light">
+        agent-name="bot">
       </c4ai-chat>
     </div>
   `,

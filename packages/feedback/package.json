@@ -1,0 +1,44 @@
+{
+  "name": "@carbon-labs/ai-feedback",
+  "version": "0.0.1-rc.1",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "description": "Carbon for AI - feedback component",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-for-ai",
+    "directory": "packages/feedback"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "exports": {
+    ".": {
+      "default": "./src/index.js"
+    },
+    "./es/": "./es/"
+  },
+  "files": [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "custom-elements.json"
+  ],
+  "types": "./src/index.d.ts",
+  "customElements": "custom-elements.json",
+  "scripts": {
+    "build": "gulp build --option feedback",
+    "build:dist": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js",
+    "build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.23.2",
+    "@carbon/ai-utilities": "0.0.1-rc.1",
+    "@carbon/grid": "^11.21.0",
+    "@carbon/web-components": "2.4.0",
+    "lit": "^3.0.0",
+    "uuid": "^9.0.1"
+  }
+}

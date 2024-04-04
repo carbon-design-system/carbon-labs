@@ -1,0 +1,54 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$c4ai-prefix}--chat-loading) {
+  display: block;
+  overflow: hidden;
+
+  .#{$c4ai-prefix}--chat-loading-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: $hover-ui;
+    block-size: 10px;
+    inline-size: 100%;
+  }
+  @media screen and (prefers-reduced-motion: reduce) {
+    .#{$c4ai-prefix}--chat-loading-bar {
+      position: absolute;
+      animation: none;
+      background-color: $interactive-01;
+      block-size: 100%;
+      inset-block-start: 0;
+    }
+  }
+
+  .#{$c4ai-prefix}--chat-loading-bar {
+    position: absolute;
+    animation: loading-animation 1800ms linear infinite;
+    background-color: $interactive-01;
+    block-size: 100%;
+    inset-block-start: 0;
+  }
+
+  @keyframes loading-animation {
+    0%,
+    100% {
+      inline-size: 0;
+    }
+
+    50% {
+      inline-size: 100%;
+    }
+  }
+}

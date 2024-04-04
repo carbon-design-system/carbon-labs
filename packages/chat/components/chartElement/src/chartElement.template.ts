@@ -24,7 +24,7 @@ export function chartElementTemplate(customElementClass) {
     _errorMessage: errorMessage,
   } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-chart">
+  return html`
     ${invalid === true
       ? html` <div class="${c4aiPrefix}--chat-chart-error">
           ${errorMessage}
@@ -33,5 +33,5 @@ export function chartElementTemplate(customElementClass) {
           
           </div>
         </div>`}
-  </div>`;
+  `;
 }

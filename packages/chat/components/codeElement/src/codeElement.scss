@@ -1,0 +1,37 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$c4ai-prefix}--chat-code) {
+  .#{$c4ai-prefix}--chat-code-container {
+    display: flex;
+    padding: 10px;
+    border: 1px solid $ui-05;
+    border-radius: 8px;
+    background-color: $ui-background;
+    color: $text-01;
+    font-family: 'IBM Plex Mono', monospace;
+    line-height: 24px;
+    max-block-size: 176px;
+    overflow-y: auto;
+  }
+  .#{$c4ai-prefix}--chat-code-sidebar {
+    border-inline-end: 1px solid $ui-05;
+    inline-size: 50px;
+    padding-inline: 10px 2px;
+    user-select: none;
+  }
+  .#{$c4ai-prefix}--chat-code-text {
+    flex-grow: 1;
+    padding-inline-start: 20px;
+  }
+}

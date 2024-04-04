@@ -23,13 +23,8 @@ export default class C4AIChat extends LitElement {
    * Core array of message objects to display and interact with, invidual messages are currently described as:
    * {"message":"displayed text", "origin":"can be bot or user, depending on user-defined role names"}
    */
-  private _messages: any[] = [];
-
-  /**
-   * string variable edited by textInput, auto-updates at every keystroke and is sent to the api url on 'enter' or 'send' button click
-   */
   @state()
-  _messageText = '';
+  _messages: any[] = [];
 
   /**
    * server side integer denoting the number of messages sent in total
@@ -44,19 +39,20 @@ export default class C4AIChat extends LitElement {
   /**
    * user-assigned boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message
    */
-  @property({ type: Boolean, attribute: 'loading' })
+  @property({ type: Boolean, attribute: 'loading', reflect: true })
   loading;
+
+  /**
+   * user-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system
+   */
+  @property({ type: Boolean, attribute: 'auto-update', reflect: true })
+  autoUpdate;
 
   /**
    * boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message
    */
   @state()
   _queryInProgress = false;
-
-  /**
-   * current string returned by the input dom object
-   **/
-  private _inputText = '';
 
   /**
    * conversation object to display messages straight from the 'message' attribute, overrides any api_url system
@@ -113,12 +109,6 @@ export default class C4AIChat extends LitElement {
   userPrompt;
 
   /**
-   * string denoting whether to use a light of dark theme
-   */
-  @property({ type: String, attribute: 'theme' })
-  theme;
-
-  /**
    * string denoting Watsonx.ai project ID
    */
   @property({ type: String, attribute: 'project-id' })
@@ -138,10 +128,9 @@ export default class C4AIChat extends LitElement {
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
-    if (this.conversation !== null) {
-      this._messages = this.conversation;
-      this.requestUpdate();
-    }
+    this._messages = this.hasAttribute('conversation') ? this.conversation : [];
+    this._queryInProgress = this.hasAttribute('loading') ? this.loading : false;
+    console.log(this.autoUpdate);
   }
 
   /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
@@ -149,6 +138,13 @@ export default class C4AIChat extends LitElement {
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
+    console.log('loading ' + this.loading + '  query ' + this._queryInProgress);
+
+    if (changedProperties.has('apiURL')) {
+    }
+
+    if (changedProperties.has('apiURL')) {
+    }
 
     if (changedProperties.has('loading')) {
       this._queryInProgress = this.loading;
@@ -157,9 +153,12 @@ export default class C4AIChat extends LitElement {
     if (changedProperties.has('conversation')) {
       if (this.conversation !== null) {
         this._messages = this.conversation;
-        this._updateScroll();
         this.requestUpdate();
       }
+    }
+
+    if (changedProperties.has('_messages')) {
+      this.requestUpdate();
     }
 
     if (changedProperties.has('conversationExample')) {
@@ -169,13 +168,6 @@ export default class C4AIChat extends LitElement {
     if (changedProperties.has('sampleQuery')) {
       this.initializeExamplesText();
     }
-    if (changedProperties.has('apiURL')) {
-      console.log('api change');
-    }
-
-    if (changedProperties.has('apiURL')) {
-      console.log('url change');
-    }
   }
 
   /**
@@ -183,6 +175,140 @@ export default class C4AIChat extends LitElement {
    */
   initializeExamplesObject() {
     switch (this.conversationExample) {
+      case 'Showcase':
+        this._messages = [
+          {
+            origin: this.userName,
+            hasError: false,
+            time: this._getCurrentTime(),
+            index: 0,
+            elements: [
+              {
+                content:
+                  'Showcase every type of Element available in this Chat component.',
+                type: 'text',
+              },
+            ],
+          },
+          {
+            text: '',
+            origin: this.agentName,
+            hasError: false,
+            time: this._getCurrentTime(),
+            index: 1,
+            elements: [
+              {
+                content:
+                  'Here is an element of type "img" using the CardElement \n(Picture of a Dahlia from bougs.com):\n',
+                type: 'text',
+              },
+              {
+                content:
+                  'https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg',
+                type: 'img',
+              },
+              {
+                content:
+                  'Here is an element of type "url" using the CardElement \n(Apollo 11 Wikipedia Article):\n',
+                type: 'text',
+              },
+              {
+                content: 'https://www.wikipedia.org/wiki/Apollo_11',
+                type: 'url',
+              },
+              {
+                content:
+                  'Here is an element of type "video" using the CardElement \n(Apollo moon landing from Wikimedia):\n',
+                type: 'text',
+              },
+              {
+                content:
+                  'https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7d/Apollo_11._Television_clip_of_Buzz_descending_the_ladder_and_stepping_onto_the_moon%2C_1094228.ogv/Apollo_11._Television_clip_of_Buzz_descending_the_ladder_and_stepping_onto_the_moon%2C_1094228.ogv.360p.webm',
+                type: 'video',
+              },
+              {
+                content:
+                  'Here is an element of type "table" using the TableElement \n(Seinfeld characters):\n',
+                type: 'text',
+              },
+              {
+                content:
+                  'Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY',
+                type: 'table',
+              },
+              {
+                content:
+                  'Here is an element of type "code" using the CodeElement \n(Prime function in Python):\n',
+                type: 'text',
+              },
+              {
+                content:
+                  'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n',
+                type: 'code',
+              },
+              {
+                content:
+                  'Here is an element of type "error" using the ErrorElement\n',
+                type: 'text',
+              },
+              {
+                content:
+                  'SEGMENTATION ERROR: Failed to render the content provided. (example)',
+                type: 'error',
+              },
+              {
+                content:
+                  'Here is an element of type "loading" using the LoadingElement\n',
+                type: 'text',
+              },
+              {
+                content: '',
+                type: 'loading',
+              },
+              {
+                content:
+                  'Here is an element of type "tags" using the TagListElement \n(French philosophers):\n',
+                type: 'text',
+              },
+              {
+                content:
+                  '["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]',
+                type: 'tags',
+              },
+              {
+                content:
+                  'Here is an element of type "list" using the ListElement \n(Top 5 websites):\n',
+                type: 'text',
+              },
+              {
+                content:
+                  '1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)',
+                type: 'list',
+              },
+              {
+                content:
+                  'Here is an element of type "chart" using the ChartElement \n(Gradiented price line of IBMs stock price):\n',
+                type: 'text',
+              },
+              {
+                content:
+                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"IBM stock price over time.","data":{"values":[{"symbol":"IBM","date":"Jan 1 2000","price":100.52},{"symbol":"IBM","date":"Feb 1 2000","price":92.11},{"symbol":"IBM","date":"Mar 1 2000","price":106.11},{"symbol":"IBM","date":"Apr 1 2000","price":99.95},{"symbol":"IBM","date":"May 1 2000","price":96.31},{"symbol":"IBM","date":"Jun 1 2000","price":98.33},{"symbol":"IBM","date":"Jul 1 2000","price":100.74},{"symbol":"IBM","date":"Aug 1 2000","price":118.62},{"symbol":"IBM","date":"Sep 1 2000","price":101.19},{"symbol":"IBM","date":"Oct 1 2000","price":88.5},{"symbol":"IBM","date":"Nov 1 2000","price":84.12},{"symbol":"IBM","date":"Dec 1 2000","price":76.47},{"symbol":"IBM","date":"Jan 1 2001","price":100.76},{"symbol":"IBM","date":"Feb 1 2001","price":89.98},{"symbol":"IBM","date":"Mar 1 2001","price":86.63},{"symbol":"IBM","date":"Apr 1 2001","price":103.7},{"symbol":"IBM","date":"May 1 2001","price":100.82},{"symbol":"IBM","date":"Jun 1 2001","price":102.35},{"symbol":"IBM","date":"Jul 1 2001","price":94.87},{"symbol":"IBM","date":"Aug 1 2001","price":90.25},{"symbol":"IBM","date":"Sep 1 2001","price":82.82},{"symbol":"IBM","date":"Oct 1 2001","price":97.58},{"symbol":"IBM","date":"Nov 1 2001","price":104.5},{"symbol":"IBM","date":"Dec 1 2001","price":109.36},{"symbol":"IBM","date":"Jan 1 2002","price":97.54},{"symbol":"IBM","date":"Feb 1 2002","price":88.82},{"symbol":"IBM","date":"Mar 1 2002","price":94.15},{"symbol":"IBM","date":"Apr 1 2002","price":75.82},{"symbol":"IBM","date":"May 1 2002","price":72.97},{"symbol":"IBM","date":"Jun 1 2002","price":65.31},{"symbol":"IBM","date":"Jul 1 2002","price":63.86},{"symbol":"IBM","date":"Aug 1 2002","price":68.52},{"symbol":"IBM","date":"Sep 1 2002","price":53.01},{"symbol":"IBM","date":"Oct 1 2002","price":71.76},{"symbol":"IBM","date":"Nov 1 2002","price":79.16},{"symbol":"IBM","date":"Dec 1 2002","price":70.58},{"symbol":"IBM","date":"Jan 1 2003","price":71.22},{"symbol":"IBM","date":"Feb 1 2003","price":71.13},{"symbol":"IBM","date":"Mar 1 2003","price":71.57},{"symbol":"IBM","date":"Apr 1 2003","price":77.47},{"symbol":"IBM","date":"May 1 2003","price":80.48},{"symbol":"IBM","date":"Jun 1 2003","price":75.42},{"symbol":"IBM","date":"Jul 1 2003","price":74.28},{"symbol":"IBM","date":"Aug 1 2003","price":75.12},{"symbol":"IBM","date":"Sep 1 2003","price":80.91},{"symbol":"IBM","date":"Oct 1 2003","price":81.96},{"symbol":"IBM","date":"Nov 1 2003","price":83.08},{"symbol":"IBM","date":"Dec 1 2003","price":85.05},{"symbol":"IBM","date":"Jan 1 2004","price":91.06},{"symbol":"IBM","date":"Feb 1 2004","price":88.7},{"symbol":"IBM","date":"Mar 1 2004","price":84.41},{"symbol":"IBM","date":"Apr 1 2004","price":81.04},{"symbol":"IBM","date":"May 1 2004","price":81.59},{"symbol":"IBM","date":"Jun 1 2004","price":81.19},{"symbol":"IBM","date":"Jul 1 2004","price":80.19},{"symbol":"IBM","date":"Aug 1 2004","price":78.17},{"symbol":"IBM","date":"Sep 1 2004","price":79.13},{"symbol":"IBM","date":"Oct 1 2004","price":82.84},{"symbol":"IBM","date":"Nov 1 2004","price":87.15},{"symbol":"IBM","date":"Dec 1 2004","price":91.16},{"symbol":"IBM","date":"Jan 1 2005","price":86.39},{"symbol":"IBM","date":"Feb 1 2005","price":85.78},{"symbol":"IBM","date":"Mar 1 2005","price":84.66},{"symbol":"IBM","date":"Apr 1 2005","price":70.77},{"symbol":"IBM","date":"May 1 2005","price":70.18},{"symbol":"IBM","date":"Jun 1 2005","price":68.93},{"symbol":"IBM","date":"Jul 1 2005","price":77.53},{"symbol":"IBM","date":"Aug 1 2005","price":75.07},{"symbol":"IBM","date":"Sep 1 2005","price":74.7},{"symbol":"IBM","date":"Oct 1 2005","price":76.25},{"symbol":"IBM","date":"Nov 1 2005","price":82.98},{"symbol":"IBM","date":"Dec 1 2005","price":76.73},{"symbol":"IBM","date":"Jan 1 2006","price":75.89},{"symbol":"IBM","date":"Feb 1 2006","price":75.09},{"symbol":"IBM","date":"Mar 1 2006","price":77.17},{"symbol":"IBM","date":"Apr 1 2006","price":77.05},{"symbol":"IBM","date":"May 1 2006","price":75.04},{"symbol":"IBM","date":"Jun 1 2006","price":72.15},{"symbol":"IBM","date":"Jul 1 2006","price":72.7},{"symbol":"IBM","date":"Aug 1 2006","price":76.35},{"symbol":"IBM","date":"Sep 1 2006","price":77.26},{"symbol":"IBM","date":"Oct 1 2006","price":87.06},{"symbol":"IBM","date":"Nov 1 2006","price":86.95},{"symbol":"IBM","date":"Dec 1 2006","price":91.9},{"symbol":"IBM","date":"Jan 1 2007","price":93.79},{"symbol":"IBM","date":"Feb 1 2007","price":88.18},{"symbol":"IBM","date":"Mar 1 2007","price":89.44},{"symbol":"IBM","date":"Apr 1 2007","price":96.98},{"symbol":"IBM","date":"May 1 2007","price":101.54},{"symbol":"IBM","date":"Jun 1 2007","price":100.25},{"symbol":"IBM","date":"Jul 1 2007","price":105.4},{"symbol":"IBM","date":"Aug 1 2007","price":111.54},{"symbol":"IBM","date":"Sep 1 2007","price":112.6},{"symbol":"IBM","date":"Oct 1 2007","price":111},{"symbol":"IBM","date":"Nov 1 2007","price":100.9},{"symbol":"IBM","date":"Dec 1 2007","price":103.7},{"symbol":"IBM","date":"Jan 1 2008","price":102.75},{"symbol":"IBM","date":"Feb 1 2008","price":109.64},{"symbol":"IBM","date":"Mar 1 2008","price":110.87},{"symbol":"IBM","date":"Apr 1 2008","price":116.23},{"symbol":"IBM","date":"May 1 2008","price":125.14},{"symbol":"IBM","date":"Jun 1 2008","price":114.6},{"symbol":"IBM","date":"Jul 1 2008","price":123.74},{"symbol":"IBM","date":"Aug 1 2008","price":118.16},{"symbol":"IBM","date":"Sep 1 2008","price":113.53},{"symbol":"IBM","date":"Oct 1 2008","price":90.24},{"symbol":"IBM","date":"Nov 1 2008","price":79.65},{"symbol":"IBM","date":"Dec 1 2008","price":82.15},{"symbol":"IBM","date":"Jan 1 2009","price":89.46},{"symbol":"IBM","date":"Feb 1 2009","price":90.32},{"symbol":"IBM","date":"Mar 1 2009","price":95.09},{"symbol":"IBM","date":"Apr 1 2009","price":101.29},{"symbol":"IBM","date":"May 1 2009","price":104.85},{"symbol":"IBM","date":"Jun 1 2009","price":103.01},{"symbol":"IBM","date":"Jul 1 2009","price":116.34},{"symbol":"IBM","date":"Aug 1 2009","price":117},{"symbol":"IBM","date":"Sep 1 2009","price":118.55},{"symbol":"IBM","date":"Oct 1 2009","price":119.54},{"symbol":"IBM","date":"Nov 1 2009","price":125.79},{"symbol":"IBM","date":"Dec 1 2009","price":130.32},{"symbol":"IBM","date":"Jan 1 2010","price":121.85},{"symbol":"IBM","date":"Feb 1 2010","price":127.16},{"symbol":"IBM","date":"Mar 1 2010","price":125.55}]},"transform":[{"filter":"datum.symbol===\'IBM\'"}],"mark":{"type":"area","line":{"color":"darkgreen"},"color":{"x1":1,"y1":1,"x2":1,"y2":0,"gradient":"linear","stops":[{"offset":0,"color":"white"},{"offset":1,"color":"darkgreen"}]}},"encoding":{"x":{"field":"date","type":"temporal"},"y":{"field":"price","type":"quantitative"}}}',
+                type: 'chart',
+              },
+              {
+                content:
+                  'Here is an element of type "chart" using the ChartElement \n(US unemployment):\n',
+                type: 'text',
+              },
+              {
+                content:
+                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"US Unemployment by county","data":{"url":"https://vega.github.io/editor/data/us-10m.json","format":{"type":"topojson","feature":"counties"}},"transform":[{"lookup":"id","from":{"data":{"url":"https://vega.github.io/editor/data/unemployment.tsv"},"key":"id","fields":["rate"]}}],"projection":{"type":"albersUsa"},"mark":"geoshape","encoding":{"color":{"field":"rate","type":"quantitative"}}}',
+                type: 'chart',
+              },
+            ],
+          },
+        ];
+        break;
       case 'Visualization':
         this._messages = [
           {
@@ -191,9 +317,12 @@ export default class C4AIChat extends LitElement {
             time: this._getCurrentTime(),
             index: 0,
             elements: [
-              {content:"Hello, show me a simple table based on Seinfeld Characters then display the following charts with small mockup datasets: a bar chart, a pie chart then a matrix.",
-              type:"text"}
-            ]
+              {
+                content:
+                  'Hello, show me a simple table based on Seinfeld Characters then display the following charts with small mockup datasets: a bar chart, a scatter plot, a pie chart, a boxplot, a map, a matrix and a line chart.',
+                type: 'text',
+              },
+            ],
           },
           {
             text: '',
@@ -239,27 +368,45 @@ export default class C4AIChat extends LitElement {
                 type: 'chart',
               },
               {
-                content: 'And here is a matrix:',
-                type:"text"
+                content: 'And here is a Boxplot:',
+                type: 'text',
               },
               {
                 content:
-                '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"values":[{"x":0,"y":0,"value":0.5},{"x":1,"y":0,"value":0.2},{"x":2,"y":0,"value":0.1},{"x":3,"y":0,"value":0.8},{"x":0,"y":1,"value":0.7},{"x":1,"y":1,"value":0.8},{"x":2,"y":1,"value":0.3},{"x":3,"y":1,"value":0.4},{"x":0,"y":2,"value":0.1},{"x":1,"y":2,"value":0.2},{"x":2,"y":2,"value":0.9},{"x":3,"y":2,"value":0.9},{"x":0,"y":3,"value":0.5},{"x":1,"y":3,"value":0.2},{"x":2,"y":3,"value":0.5},{"x":3,"y":3,"value":0.6}]},"title":"Matrix example","mark":"rect","encoding":{"x":{"field":"x","type":"ordinal","title":"x"},"y":{"field":"y","type":"ordinal","title":"y"},"color":{"field":"value","type":"quantitative"}}}',
-                type: "chart"
+                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Boxplot example with random data","data":{"values":[{"group":"Group A","value":34},{"group":"Group A","value":28},{"group":"Group A","value":55},{"group":"Group B","value":91},{"group":"Group B","value":81},{"group":"Group B","value":67},{"group":"Group C","value":45},{"group":"Group C","value":66},{"group":"Group C","value":73},{"group":"Group D","value":28},{"group":"Group D","value":35},{"group":"Group D","value":56},{"group":"Group E","value":12},{"group":"Group E","value":45},{"group":"Group E","value":99}]},"mark":"boxplot","encoding":{"y":{"field":"group","type":"nominal"},"x":{"field":"value","type":"quantitative"}}}',
+                type: 'chart',
               },
               {
-                content:"And here is a wordcloud of business terms:",
-                "type":"text"
+                content: 'And here is a Map:',
+                type: 'text',
               },
               {
-                content:'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"A word cloud","data":{"values":[{"word":"Synergy","value":72},{"word":"Agile","value":24},{"word":"Blockchain","value":52},{"word":"Innovation","value":82},{"word":"Disrupt","value":66},{"word":"AI","value":90},{"word":"Leverage","value":35},{"word":"Big data","value":22},{"word":"Growth","value":72},{"word":"Inclusivity","value":59},{"word":"Integration","value":44}]},"transform":{"calculate":"datum.value","as":"size"},"mark":"text","encoding":{"text":{"field":"word","type":"nominal"},"size":{"field":"value","type":"quantitative","scale":{"range":[20,90]}},"color":{"field":"size","type":"quantitative"}}}',
-                type:"chart"
+                content:
+                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"US Unemployment by county","data":{"url":"https://vega.github.io/editor/data/us-10m.json","format":{"type":"topojson","feature":"counties"}},"transform":[{"lookup":"id","from":{"data":{"url":"https://vega.github.io/editor/data/unemployment.tsv"},"key":"id","fields":["rate"]}}],"projection":{"type":"albersUsa"},"mark":"geoshape","encoding":{"color":{"field":"rate","type":"quantitative"}}}',
+                type: 'chart',
               },
               {
-                content:"What else can I help you with?",
-                "type":"text"
+                content: 'And here is a matrix:',
+                type: 'text',
               },
-
+              {
+                content:
+                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"values":[{"x":0,"y":0,"value":0.5},{"x":1,"y":0,"value":0.2},{"x":2,"y":0,"value":0.1},{"x":3,"y":0,"value":0.8},{"x":0,"y":1,"value":0.7},{"x":1,"y":1,"value":0.8},{"x":2,"y":1,"value":0.3},{"x":3,"y":1,"value":0.4},{"x":0,"y":2,"value":0.1},{"x":1,"y":2,"value":0.2},{"x":2,"y":2,"value":0.9},{"x":3,"y":2,"value":0.9},{"x":0,"y":3,"value":0.5},{"x":1,"y":3,"value":0.2},{"x":2,"y":3,"value":0.5},{"x":3,"y":3,"value":0.6}]},"title":"Matrix example","mark":"rect","encoding":{"x":{"field":"x","type":"ordinal","title":"x"},"y":{"field":"y","type":"ordinal","title":"y"},"color":{"field":"value","type":"quantitative"}}}',
+                type: 'chart',
+              },
+              {
+                content: 'And here is an example of a gradiented price line:',
+                type: 'text',
+              },
+              {
+                content:
+                  '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"IBM stock price over time.","data":{"values":[{"symbol":"IBM","date":"Jan 1 2000","price":100.52},{"symbol":"IBM","date":"Feb 1 2000","price":92.11},{"symbol":"IBM","date":"Mar 1 2000","price":106.11},{"symbol":"IBM","date":"Apr 1 2000","price":99.95},{"symbol":"IBM","date":"May 1 2000","price":96.31},{"symbol":"IBM","date":"Jun 1 2000","price":98.33},{"symbol":"IBM","date":"Jul 1 2000","price":100.74},{"symbol":"IBM","date":"Aug 1 2000","price":118.62},{"symbol":"IBM","date":"Sep 1 2000","price":101.19},{"symbol":"IBM","date":"Oct 1 2000","price":88.5},{"symbol":"IBM","date":"Nov 1 2000","price":84.12},{"symbol":"IBM","date":"Dec 1 2000","price":76.47},{"symbol":"IBM","date":"Jan 1 2001","price":100.76},{"symbol":"IBM","date":"Feb 1 2001","price":89.98},{"symbol":"IBM","date":"Mar 1 2001","price":86.63},{"symbol":"IBM","date":"Apr 1 2001","price":103.7},{"symbol":"IBM","date":"May 1 2001","price":100.82},{"symbol":"IBM","date":"Jun 1 2001","price":102.35},{"symbol":"IBM","date":"Jul 1 2001","price":94.87},{"symbol":"IBM","date":"Aug 1 2001","price":90.25},{"symbol":"IBM","date":"Sep 1 2001","price":82.82},{"symbol":"IBM","date":"Oct 1 2001","price":97.58},{"symbol":"IBM","date":"Nov 1 2001","price":104.5},{"symbol":"IBM","date":"Dec 1 2001","price":109.36},{"symbol":"IBM","date":"Jan 1 2002","price":97.54},{"symbol":"IBM","date":"Feb 1 2002","price":88.82},{"symbol":"IBM","date":"Mar 1 2002","price":94.15},{"symbol":"IBM","date":"Apr 1 2002","price":75.82},{"symbol":"IBM","date":"May 1 2002","price":72.97},{"symbol":"IBM","date":"Jun 1 2002","price":65.31},{"symbol":"IBM","date":"Jul 1 2002","price":63.86},{"symbol":"IBM","date":"Aug 1 2002","price":68.52},{"symbol":"IBM","date":"Sep 1 2002","price":53.01},{"symbol":"IBM","date":"Oct 1 2002","price":71.76},{"symbol":"IBM","date":"Nov 1 2002","price":79.16},{"symbol":"IBM","date":"Dec 1 2002","price":70.58},{"symbol":"IBM","date":"Jan 1 2003","price":71.22},{"symbol":"IBM","date":"Feb 1 2003","price":71.13},{"symbol":"IBM","date":"Mar 1 2003","price":71.57},{"symbol":"IBM","date":"Apr 1 2003","price":77.47},{"symbol":"IBM","date":"May 1 2003","price":80.48},{"symbol":"IBM","date":"Jun 1 2003","price":75.42},{"symbol":"IBM","date":"Jul 1 2003","price":74.28},{"symbol":"IBM","date":"Aug 1 2003","price":75.12},{"symbol":"IBM","date":"Sep 1 2003","price":80.91},{"symbol":"IBM","date":"Oct 1 2003","price":81.96},{"symbol":"IBM","date":"Nov 1 2003","price":83.08},{"symbol":"IBM","date":"Dec 1 2003","price":85.05},{"symbol":"IBM","date":"Jan 1 2004","price":91.06},{"symbol":"IBM","date":"Feb 1 2004","price":88.7},{"symbol":"IBM","date":"Mar 1 2004","price":84.41},{"symbol":"IBM","date":"Apr 1 2004","price":81.04},{"symbol":"IBM","date":"May 1 2004","price":81.59},{"symbol":"IBM","date":"Jun 1 2004","price":81.19},{"symbol":"IBM","date":"Jul 1 2004","price":80.19},{"symbol":"IBM","date":"Aug 1 2004","price":78.17},{"symbol":"IBM","date":"Sep 1 2004","price":79.13},{"symbol":"IBM","date":"Oct 1 2004","price":82.84},{"symbol":"IBM","date":"Nov 1 2004","price":87.15},{"symbol":"IBM","date":"Dec 1 2004","price":91.16},{"symbol":"IBM","date":"Jan 1 2005","price":86.39},{"symbol":"IBM","date":"Feb 1 2005","price":85.78},{"symbol":"IBM","date":"Mar 1 2005","price":84.66},{"symbol":"IBM","date":"Apr 1 2005","price":70.77},{"symbol":"IBM","date":"May 1 2005","price":70.18},{"symbol":"IBM","date":"Jun 1 2005","price":68.93},{"symbol":"IBM","date":"Jul 1 2005","price":77.53},{"symbol":"IBM","date":"Aug 1 2005","price":75.07},{"symbol":"IBM","date":"Sep 1 2005","price":74.7},{"symbol":"IBM","date":"Oct 1 2005","price":76.25},{"symbol":"IBM","date":"Nov 1 2005","price":82.98},{"symbol":"IBM","date":"Dec 1 2005","price":76.73},{"symbol":"IBM","date":"Jan 1 2006","price":75.89},{"symbol":"IBM","date":"Feb 1 2006","price":75.09},{"symbol":"IBM","date":"Mar 1 2006","price":77.17},{"symbol":"IBM","date":"Apr 1 2006","price":77.05},{"symbol":"IBM","date":"May 1 2006","price":75.04},{"symbol":"IBM","date":"Jun 1 2006","price":72.15},{"symbol":"IBM","date":"Jul 1 2006","price":72.7},{"symbol":"IBM","date":"Aug 1 2006","price":76.35},{"symbol":"IBM","date":"Sep 1 2006","price":77.26},{"symbol":"IBM","date":"Oct 1 2006","price":87.06},{"symbol":"IBM","date":"Nov 1 2006","price":86.95},{"symbol":"IBM","date":"Dec 1 2006","price":91.9},{"symbol":"IBM","date":"Jan 1 2007","price":93.79},{"symbol":"IBM","date":"Feb 1 2007","price":88.18},{"symbol":"IBM","date":"Mar 1 2007","price":89.44},{"symbol":"IBM","date":"Apr 1 2007","price":96.98},{"symbol":"IBM","date":"May 1 2007","price":101.54},{"symbol":"IBM","date":"Jun 1 2007","price":100.25},{"symbol":"IBM","date":"Jul 1 2007","price":105.4},{"symbol":"IBM","date":"Aug 1 2007","price":111.54},{"symbol":"IBM","date":"Sep 1 2007","price":112.6},{"symbol":"IBM","date":"Oct 1 2007","price":111},{"symbol":"IBM","date":"Nov 1 2007","price":100.9},{"symbol":"IBM","date":"Dec 1 2007","price":103.7},{"symbol":"IBM","date":"Jan 1 2008","price":102.75},{"symbol":"IBM","date":"Feb 1 2008","price":109.64},{"symbol":"IBM","date":"Mar 1 2008","price":110.87},{"symbol":"IBM","date":"Apr 1 2008","price":116.23},{"symbol":"IBM","date":"May 1 2008","price":125.14},{"symbol":"IBM","date":"Jun 1 2008","price":114.6},{"symbol":"IBM","date":"Jul 1 2008","price":123.74},{"symbol":"IBM","date":"Aug 1 2008","price":118.16},{"symbol":"IBM","date":"Sep 1 2008","price":113.53},{"symbol":"IBM","date":"Oct 1 2008","price":90.24},{"symbol":"IBM","date":"Nov 1 2008","price":79.65},{"symbol":"IBM","date":"Dec 1 2008","price":82.15},{"symbol":"IBM","date":"Jan 1 2009","price":89.46},{"symbol":"IBM","date":"Feb 1 2009","price":90.32},{"symbol":"IBM","date":"Mar 1 2009","price":95.09},{"symbol":"IBM","date":"Apr 1 2009","price":101.29},{"symbol":"IBM","date":"May 1 2009","price":104.85},{"symbol":"IBM","date":"Jun 1 2009","price":103.01},{"symbol":"IBM","date":"Jul 1 2009","price":116.34},{"symbol":"IBM","date":"Aug 1 2009","price":117},{"symbol":"IBM","date":"Sep 1 2009","price":118.55},{"symbol":"IBM","date":"Oct 1 2009","price":119.54},{"symbol":"IBM","date":"Nov 1 2009","price":125.79},{"symbol":"IBM","date":"Dec 1 2009","price":130.32},{"symbol":"IBM","date":"Jan 1 2010","price":121.85},{"symbol":"IBM","date":"Feb 1 2010","price":127.16},{"symbol":"IBM","date":"Mar 1 2010","price":125.55}]},"transform":[{"filter":"datum.symbol===\'IBM\'"}],"mark":{"type":"area","line":{"color":"darkgreen"},"color":{"x1":1,"y1":1,"x2":1,"y2":0,"gradient":"linear","stops":[{"offset":0,"color":"white"},{"offset":1,"color":"darkgreen"}]}},"encoding":{"x":{"field":"date","type":"temporal"},"y":{"field":"price","type":"quantitative"}}}',
+                type: 'chart',
+              },
+              {
+                content: 'What else can I help you with?',
+                type: 'text',
+              },
             ],
           },
         ];
@@ -547,21 +694,12 @@ export default class C4AIChat extends LitElement {
     return response;
   }
 
-  /** handle user inputs inside the input field, trigger a search upon an 'enter' key down event
-   * @param {event} event - lit event sent by the the text input object within the chat
-   **/
-  _handleInput(event) {
-    const { value } = event.target;
-    this._inputText = value;
-    if (event.key == 'Enter') {
-      this._sendInput();
-    }
-  }
-
   /** handle regeneration signal from message subcomponent, resend query and edit the message list
    * @param {event} event - custom regeneration event from message subcomponent
    */
-  _handleRegenerate(event) {
+  _handleUserRegenerationRequest(event) {
+    console.log('chat: regen');
+    console.log(event);
     const cutIndex = event.detail.index;
     let deletionIndex = this._messages.findIndex(
       (obj) => obj.index === cutIndex
@@ -574,32 +712,67 @@ export default class C4AIChat extends LitElement {
     if (event.detail.message == null) {
       deletionIndex--;
     }
+
     if (deletionIndex > -1) {
-      this._messages.length = deletionIndex;
-      this._inputText = originalMessage;
-      this.requestUpdate();
-      this._sendInput();
+      if (!this.autoUpdate) {
+        const onRegenerationEvent = new CustomEvent('on-regeneration-request', {
+          detail: {
+            action: 'User requested regeneration of AI response',
+            deletionIndex: deletionIndex,
+            originalUserQuery: originalMessage,
+            originalObject: event.detail,
+            time: this._getCurrentTime(),
+          },
+          bubbles: true,
+          composed: true,
+        });
+        this.dispatchEvent(onRegenerationEvent);
+      } else {
+        this._messages.length = deletionIndex;
+        const inputEvent = new CustomEvent('user-input', {
+          detail: { textInputValue: originalMessage },
+          bubbles: true,
+          composed: true,
+        });
+        this.requestUpdate();
+        this.sendInput(inputEvent);
+      }
     }
   }
 
   /** handle update signal from message subcomponent, only triggered when only text is supplied in parent conversation object
    * @param {event} event - custom update event from message subcomponent
    */
-  _handleUpdate(event) {
+  _handleUserUpdateRequest(event) {
+    console.log('chat: update');
+    console.log(event);
     const selectedIndex = event.detail.index;
     const index = this._messages.findIndex(
       (obj) => obj.index === selectedIndex
     );
     if (index > -1 && event.detail.messageElements) {
-      this._messages[index].messageElements = event.detail.messageElements;
+      if (!this.autoUpdate) {
+        const onUpdateEvent = new CustomEvent('on-update-request', {
+          detail: {
+            action: 'User updated query message.',
+            messageIndex: index,
+            messageObject: event.detail.messageElements,
+            time: this._getCurrentTime(),
+          },
+          bubbles: true,
+          composed: true,
+        });
+        this.dispatchEvent(onUpdateEvent);
+      } else {
+        this._messages[index].messageElements = event.detail.messageElements;
+      }
     }
   }
 
   /** send in the latest user message to the api, package it within the messages array and update the DOM
    **/
-  _sendInput() {
-    const value = this._inputText;
-    this._messageText = '';
+  sendInput(event) {
+    let value = event.detail.textInputValue;
 
     const newMessage = {
       text: value,
@@ -609,7 +782,7 @@ export default class C4AIChat extends LitElement {
       index: this._messages.length,
     };
 
-    if (this.conversation !== undefined) {
+    if (!this.autoUpdate) {
       const onSubmitEvent = new CustomEvent('on-submit', {
         detail: { message: newMessage },
         bubbles: true,
@@ -617,50 +790,46 @@ export default class C4AIChat extends LitElement {
       });
       this.dispatchEvent(onSubmitEvent);
     } else {
-      this._messages.push(newMessage);
+      this._messages = [...this._messages, newMessage];
 
       this._queryInProgress = true;
       this.requestUpdate();
-      this._updateScroll();
 
       this.getResults(value)
         .then((res) => {
+          console.log(res);
           const errorState =
             Object.prototype.hasOwnProperty.call(res, 'failed') &&
             res['failed'] === true;
-          this._messages.push({
-            text: res.reply,
-            origin: this.agentName,
-            hasError: errorState,
-            time: this._getCurrentTime(),
-            index: this._messages.length,
-          });
+
+          this._messages = [
+            ...this._messages,
+            {
+              text: res.reply,
+              origin: this.agentName,
+              hasError: errorState,
+              time: this._getCurrentTime(),
+              index: this._messages.length,
+            },
+          ];
           this._queryInProgress = false;
           this.requestUpdate();
-          this._updateScroll();
         })
-        .catch((error) => {
-          console.log(error);
-          this._messages.push({
-            text: 'Error reaching the model server, try again',
-            origin: this.agentName,
-            hasError: true,
-            time: this._getCurrentTime(),
-            index: this._messages.length,
-          });
+        .catch(() => {
+          this._messages = [
+            ...this._messages,
+            {
+              text: 'Error reaching the model server, try again',
+              origin: this.agentName,
+              hasError: true,
+              time: this._getCurrentTime(),
+              index: this._messages.length,
+            },
+          ];
           this._queryInProgress = false;
           this.requestUpdate();
-          this._updateScroll();
         });
     }
-  }
-
-  /**
-   * Set the message text value on input
-   * @param {Object} event - event object
-   */
-  _setMessageText(event) {
-    this._messageText = event.target.value;
   }
 
   /** get time of message formatted as 1:23pm or 4:56am
@@ -669,26 +838,25 @@ export default class C4AIChat extends LitElement {
     const now = new Date();
     let hours: number = now.getHours();
     const minutes: number = now.getMinutes();
-    const amOrpm: string = hours >= 12 ? 'pm' : 'am';
 
-    hours = hours % 12 || 12;
-    const formattedMinutes: string =
-      minutes < 10 ? '0' + minutes : minutes.toString();
+    const militaryTime = true;
+    if (militaryTime) {
+      const formattedMinutes: string =
+        minutes < 10 ? '0' + minutes : minutes.toString();
 
-    const currentTime: string = hours + ':' + formattedMinutes + amOrpm;
+      const currentTime: string = hours + ':' + formattedMinutes;
 
-    return currentTime;
-  }
+      return currentTime;
+    } else {
+      const amOrpm: string = hours >= 12 ? 'pm' : 'am';
 
-  /** auto-scroll chat-messages div when a new message has appeared
-   **/
-  _updateScroll() {
-    const scrollDiv = this.shadowRoot?.querySelector('.c4ai--chat-messages');
-    setTimeout(() => {
-      scrollDiv?.scrollTo({
-        top: scrollDiv?.scrollHeight,
-        behavior: 'smooth',
-      });
-    }, 200);
+      hours = hours % 12 || 12;
+      const formattedMinutes: string =
+        minutes < 10 ? '0' + minutes : minutes.toString();
+
+      const currentTime: string = hours + ':' + formattedMinutes + amOrpm;
+
+      return currentTime;
+    }
   }
 }

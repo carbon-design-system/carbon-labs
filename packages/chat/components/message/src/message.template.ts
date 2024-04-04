@@ -10,17 +10,24 @@
 import { html } from 'lit';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import Renew20 from '@carbon/web-components/es/icons/renew/20.js';
 import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
 import ThumbsUp20 from '@carbon/web-components/es/icons/thumbs-up/20.js';
 import ThumbsDown20 from '@carbon/web-components/es/icons/thumbs-down/20.js';
 import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16.js';
 import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
-import '../../card/card.js';
 import '@carbon/web-components/es/components/slug/index.js';
 import '../../chartElement/chartElement.js';
 import '../../tableElement/tableElement.js';
+import '../../cardElement/cardElement.js';
+import '../../codeElement/codeElement.js';
+import '../../tagListElement/tagListElement.js';
+import '../../listElement/listElement.js';
+import '../../textElement/textElement.js';
+import '../../imageElement/imageElement.js';
+import '../../editableTextElement/editableTextElement.js';
+import '../../errorElement/errorElement.js';
+import '../../loadingElement/loadingElement.js';
 
 /**
  * Lit template for message
@@ -44,9 +51,7 @@ export function messageTemplate(customElementClass) {
     _validateEdit: validateEdit,
     _handleFeedback: handleFeedback,
     _handleRegenerate: handleRegenerate,
-    _formatCode: formatCode,
-    _formatText: formatText,
-    _formatList: formatList,
+    _onTagSelected: onTagSelected,
   } = customElementClass;
 
   return html`<div
@@ -59,17 +64,14 @@ export function messageTemplate(customElementClass) {
             </div>
             <div class="${c4aiPrefix}--chat-message-response-user">
               ${messageElements.map(
-                (message) => html` <div
-                  class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                  ${editing
-                    ? html`<textarea
-                        .value="${message.content}"
-                        @input="${setEditedMessage}"
-                        class="${c4aiPrefix}--chat-message-edit-area">
-                            ${message.content}</textarea
-                      >`
-                    : unsafeHTML(formatText(message.content))}
-                </div>`
+                (message) =>
+                  html` ${editing
+                    ? html` <c4ai--chat-editable-text
+                        content="${message.content}"
+                        @message-edited="${setEditedMessage}">
+                      </c4ai--chat-editable-text>`
+                    : html`<c4ai--chat-text content="${message.content}">
+                      </c4ai--chat-text>`}`
               )}
             </div>
             ${!disableButtons
@@ -98,7 +100,7 @@ export function messageTemplate(customElementClass) {
                 ? html` <div class="${c4aiPrefix}--chat-message-${origin}-icon">
                     User20() : AI16()}
                   </div>`
-                : html`<cds-slug kind="default" size="2xs"></cds-slug>`}
+                : html`<cds-slug kind="hollow" size="2xs"></cds-slug>`}
             </div>
             <div class="${c4aiPrefix}--chat-message-content">
               <div class="${c4aiPrefix}--chat-message-timestamp-${origin}">
@@ -106,73 +108,84 @@ export function messageTemplate(customElementClass) {
               </div>
               <div class="${c4aiPrefix}--chat-message-response-bot">
                 ${messageElements.map(
-                  (message) => html`
+                  (message) => html` <div
+                    class="${c4aiPrefix}--chat-message-section">
                     ${message.type === 'img'
-                      ? html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                          <div class="${c4aiPrefix}--chat-message-img-card">
-                            <img src="${message.content}" />
-                          </div>
-                        </div>`
+                      ? html`
+                          <c4ai--chat-image content="${message.content}">
+                          </c4ai--chat-image>
+                        `
                       : message.type === 'chart'
-                      ? html` <div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                          <c4ai--chat-chart
-                            type="${message.type}"
-                            content="${message.content}">
+                      ? html`
+                          <c4ai--chat-chart content="${message.content}">
                           </c4ai--chat-chart>
-                        </div>`
+                        `
                       : message.type === 'table'
-                      ? html` <div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                      ? html`
                           <c4ai--chat-table content="${message.content}">
                           </c4ai--chat-table>
-                        </div>`
+                        `
                       : message.type === 'url'
-                      ? html` <div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                      ? html`
                           <c4ai--chat-card
                             type="${message.type}"
                             content="${message.content}">
                           </c4ai--chat-card>
-                        </div>`
+                        `
                       : message.type === 'video'
-                      ? html` <div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
+                      ? html`
                           <c4ai--chat-card
                             type="${message.type}"
                             content="${message.content}">
                           </c4ai--chat-card>
-                        </div>`
+                        `
                       : message.type === 'text'
-                      ? html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                          ${unsafeHTML(formatText(message.content))}
-                        </div>`
+                      ? html`
+                          <c4ai--chat-text
+                            capitalize
+                            content="${message.content}">
+                          </c4ai--chat-text>
+                        `
                       : message.type === 'list'
-                      ? html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                          ${unsafeHTML(formatList(message.content))}
-                        </div>`
+                      ? html`
+                          <c4ai--chat-list content="${message.content}">
+                          </c4ai--chat-list>
+                        `
                       : message.type === 'loading'
-                      ? html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                          <div
-                            class="${c4aiPrefix}--chat-message-loading-container">
-                            <div
-                              class="${c4aiPrefix}--chat-message-loading-bar"></div>
-                          </div>
-                        </div>`
+                      ? html` <c4ai--chat-loading> </c4ai--chat-loading> `
                       : message.type === 'code'
-                      ? html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                          ${unsafeHTML(formatCode(message.content))}
-                        </div>`
-                      : html`<div
-                          class="${c4aiPrefix}--chat-message-piece ${c4aiPrefix}--chat-message-subsection-${message.type}">
-                          ${message.content}
-                        </div>`}
-                  `
+                      ? html`
+                          <c4ai--chat-code content="${message.content}">
+                          </c4ai--chat-code>
+                        `
+                      : message.type === 'tags'
+                      ? html`
+                          <c4ai--chat-tag-list
+                            content="${message.content}"
+                            @tag-selected="${onTagSelected}">
+                          </c4ai--chat-tag-list>
+                        `
+                      : message.type === 'error'
+                      ? html`
+                          <c4ai--chat-error
+                            content="${message.content}"
+                            capitalize>
+                          </c4ai--chat-error>
+                        `
+                      : html`
+                          <p class="${c4aiPrefix}--chat-message-warning">
+                            Warning: No valid type specified for message
+                            subelement in 'elements' array, available types are:
+                            'text', 'img', 'url', 'video', 'code', 'list',
+                            'table', 'chart', 'tags' and 'error'. Rendering as
+                            default: 'text'...
+                          </p>
+                          <c4ai--chat-text
+                            capitalize
+                            content="${message.content}">
+                          </c4ai--chat-text>
+                        `}
+                  </div>`
                 )}
               </div>
               ${!loadingState && !disableButtons

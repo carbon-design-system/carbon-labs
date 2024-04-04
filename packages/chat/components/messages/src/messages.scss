@@ -1,0 +1,25 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$c4ai-prefix}--chat-messages) {
+  overflow: hidden auto;
+  box-sizing: border-box;
+  flex: 1;
+  margin: auto;
+  inline-size: 100%;
+  max-inline-size: 672px;
+  min-block-size: 120px;
+  min-inline-size: 360px;
+  padding-block: 20px 60px;
+  padding-inline-end: 15px;
+}

@@ -65,7 +65,7 @@ export default class tableElement extends LitElement {
     table.headers = headers;
     for (const row of rows) {
       const cells = row.split(',');
-      table.rows.push(cells);
+      table.rows = [...table.rows, cells];
     }
     return table;
   }

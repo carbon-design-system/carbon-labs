@@ -1,0 +1,62 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$c4ai-prefix}--chat-tag-list) {
+  display: block;
+  max-inline-size: 100%;
+
+  .#{$c4ai-prefix}--chat-tag-list-container {
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+  }
+
+  .#{$c4ai-prefix}--chat-tag-list-container-cell {
+    box-sizing: border-box;
+    flex-basis: 40%;
+    flex-grow: 1;
+    padding: 2px;
+  }
+
+  .#{$c4ai-prefix}--chat-tag-list-title {
+    font-style: bold;
+    inline-size: 100%;
+  }
+
+  .#{$c4ai-prefix}--chat-tag-list-error {
+    padding: 10px;
+    border: 1px solid $support-error;
+    border-radius: 8px;
+    color: $support-error;
+    line-height: 22px;
+  }
+
+  .#{$c4ai-prefix}--chat-tag-list-custom-tag {
+    box-sizing: border-box;
+    padding: 7px 16px;
+    border: 1px solid #0f62fe;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 1e-5);
+    background-blend-mode: multiply;
+    color: #0f62fe;
+    font-size: 14px;
+    font-weight: 400;
+    inline-size: 100%;
+    text-align: center;
+  }
+  .#{$c4ai-prefix}--chat-tag-list-custom-tag:hover {
+    border: 1px solid $text-01;
+    color: $text-01;
+    cursor: pointer;
+  }
+}

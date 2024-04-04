@@ -131,9 +131,9 @@ From the root directory of your fork, run:
 
 ```sh
 # To install the project's dependencies
-pnpm install
+yarn install
 
-pnpm storybook
+yarn storybook
 ```
 
 This will start a development server where you can see any changes you are

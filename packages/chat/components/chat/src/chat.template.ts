@@ -7,14 +7,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, nothing } from 'lit';
-import Search24 from '@carbon/web-components/es/icons/search/24.js';
-import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
-import Send16 from '@carbon/web-components/es/icons/send/16.js';
-
+import { html } from 'lit';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-import '../../message/message.js';
+import '../../messages/messages.js';
 import '../../header/header.js';
+import '../../footer/footer.js';
 const { stablePrefix: c4aiPrefix } = settings;
 
 /**
@@ -25,70 +22,26 @@ const { stablePrefix: c4aiPrefix } = settings;
  */
 export function chatTemplate(customElementClass) {
   const {
-    _handleInput: handleInput,
-    _sendInput: sendInput,
-    _setMessageText: setMessageText,
     _messages: messages,
-    _messageText: messageText,
     _queryInProgress: queryInProgress,
-    _handleRegenerate: handleRegenerate,
-    _handleUpdate: handleUpdate,
+    _handleUserRegenerationRequest: handleUserRegenerationRequest,
+    _handleUserUpdateRequest: handleUserUpdateRequest,
+    sendInput,
+    userName,
+    agentName,
   } = customElementClass;
-
   return html`<div class="${c4aiPrefix}--chat-container">
-    <c4ai--chat-header>
-    </c4ai--chat-header>
+    <c4ai--chat-header> </c4ai--chat-header>
 
-    <div class="${c4aiPrefix}--chat-messages">
-      &nbsp;
-      ${messages.map((message, index) =>
-        message.hasError
-          ? html` <c4ai--chat-message
-              raw-text="${message.text}"
-              origin="${message.origin}"
-              time-stamp="${message.time}"
-              error-state
-              disable-buttons
-              index="${index}"
-              @regenerate="${handleRegenerate}">
-            </c4ai--chat-message>`
-          : html` <c4ai--chat-message
-              raw-text="${message.text}"
-              origin="${message.origin}"
-              time-stamp="${message.time}"
-              disable-buttons="${message.disableButtons || nothing}"
-              index="${index}"
-              display-name="${message.displayName || nothing}"
-              .elements="${message.elements || nothing}"
-              @regenerate="${handleRegenerate}"
-              @message-updated=${handleUpdate}>
-            </c4ai--chat-message>`
-      )}
-      ${queryInProgress
-        ? html` <c4ai--chat-message
-            raw-text="loading"
-            origin="bot"
-            time-stamp=""
-            loading-state
-            error-state="false">
-          </c4ai--chat-message>`
-        : html``}
-    </div>
+    <c4ai--chat-messages
+      .messages="${messages}"
+      user-name="${userName}"
+      agent-name="${agentName}"
+      ?loading="${queryInProgress}"
+      @user-regeneration-request="${handleUserRegenerationRequest}"
+      @user-update-request="${handleUserUpdateRequest}">
+    </c4ai--chat-messages>
 
-    <div class="${c4aiPrefix}--chat-footer">
-      <div class="${c4aiPrefix}--chat-footer-button">${Search24()}</div>
-      <textarea
-        class="${c4aiPrefix}--chat-search-query"
-        rows="1"
-        placeholder="Type something..."
-        .value="${messageText}"
-        @input="${setMessageText}"
-        @keyup="${handleInput}" />
-        </textarea>
-      <div class="${c4aiPrefix}--chat-footer-button">${MicrophoneOff16()}</div>
-      <div class="${c4aiPrefix}--chat-footer-button" @click="${sendInput}">
-        ${Send16()}
-      </div>
-    </div>
+    <c4ai--chat-footer @user-input="${sendInput}"> </c4ai--chat-footer>
   </div>`;
 }

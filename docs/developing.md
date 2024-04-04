@@ -56,17 +56,17 @@ git repository. You might have heard this setup described as a
 As a result, we use two pieces of tooling to help us managing installing
 dependencies and publishing our packages. These include:
 
-- [pnpm workspaces](https://pnpm.io/workspaces) for handling dependencies across
-  all packages
+- [Yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) for handling
+  dependencies across all packages
 - [Lerna](https://lerna.js.org/) for publishing packages, tagging versions, and
   more
 
 In order for you to install all the dependencies in this project, you'll need to
-[install Pnpm](https://pnpm.io/installation) and run the following command in
-your terminal:
+[install Yarn](https://yarnpkg.com/en/docs/install) and run the following
+command in your terminal:
 
 ```bash
-pnpm install
+yarn install
 ```
 
 This will install all of the dependencies for every package in our project. In
@@ -81,7 +81,7 @@ things don't fail while you are working on a package. To do this, you can run
 the following command:
 
 ```bash
-pnpm build
+yarn build
 ```
 
 Afterwards, you should be good to go!
@@ -92,7 +92,7 @@ To get your development server running and to start coding, you just have to
 run:
 
 ```bash
-pnpm storybook
+yarn storybook
 ```
 
 This will start a development server where you can see any changes you are
@@ -105,8 +105,11 @@ might want to run:
 
 | Command                            | Usage                                                                                                       |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `pnpm build`                       | Runs the gulp `build` tasks and uses lerna to run the `build` script for the `@carbon/ai-utilities` package |
-| `pnpm format`, `pnpm format:write` | Check if files have been formatted, format files using prettier                                             |
+| `yarn build`                       | Runs the gulp `build` tasks and uses lerna to run the `build` script for the `@carbon/ai-utilities` package |
+| `yarn build:dist`                  | Runs the rollup `dist` config and generates the CDN artifacts                                               |
+| `yarn format`, `yarn format:write` | Check if files have been formatted, format files using prettier                                             |
+| `yarn ci-check`                    | Runs the ci-checks                                                                                          |
+| `yarn ci-check:build`              | Runs the ci-checks along with the build and build:dist commands                                             |
 
 ## Submitting a Pull Request
 
@@ -145,7 +148,7 @@ might want to run:
    Conventional Commits.
 
 6. Once ready for feedback from other contributors and maintainers, **push your
-   commits to your fork** (be sure to run `pnpm ci-check` before pushing, to
+   commits to your fork** (be sure to run `yarn ci-check` before pushing, to
    make sure your code passes linting and unit tests):
 
    ```

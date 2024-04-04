@@ -92,8 +92,6 @@ export default class message extends LitElement {
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
-    console.log(this.elements);
-
     if (this.loadingState) {
       this._messageElements = [{ content: '', type: 'loading' }];
       this.requestUpdate();
@@ -108,9 +106,7 @@ export default class message extends LitElement {
 
     if (this.elements == null) {
       this._parseText();
-      console.log('no elements');
     } else {
-      console.log('elements provided');
       this._messageElements = this.elements;
       this.requestUpdate();
     }
@@ -154,29 +150,11 @@ export default class message extends LitElement {
     return splitParts;
   }
 
-  /** _formatURL - helper function to display a URL's name without
-   * @param {string} url - url text that needs to be trimmed for display in the card object
-   */
-  _getShortenedURL(url) {
-    try {
-      const host = new URL(url).host;
-      return host;
-    } catch (error) {
-      return 'Site url';
-    }
-  }
-
-  /** _formatURL - helper function to display a URL's name without
-   * @param {string} url - url text that needs to be trimmed for display in the card object
-   */
-  _getSiteName(url) {
-    try {
-      const domain = new URL(url).hostname.replace(/^www\./, '').split('.')[0];
-      const formattedName = domain.charAt(0).toUpperCase() + domain.slice(1);
-      return formattedName;
-    } catch (error) {
-      return 'Site name';
-    }
+  /** record tag selection
+   * @param {event} event - lit custom event from tagList
+   **/
+  _onTagSelected(event) {
+    console.log(event);
   }
 
   /** parse Raw text param into a sub array of objects to display different elements in a single message block
@@ -284,6 +262,7 @@ export default class message extends LitElement {
    **/
   _handleEdit() {
     this._editing = true;
+
     this.requestUpdate();
   }
 
@@ -326,40 +305,6 @@ export default class message extends LitElement {
       composed: true,
     });
     this.dispatchEvent(regenerationEvent);
-  }
-
-  /** format text to properly display in HTML
-   * @param {string} inputText - text to be rendered in subelement
-   */
-  _formatText(inputText) {
-    let formattedText = inputText.replace(/\t/g, '&nbsp;&nbsp;');
-    formattedText = formattedText.replace(/\n/g, '<br>');
-    return formattedText;
-  }
-
-  /** format list text into html list object
-   * @param {string} inputText - text to be rendered in subelement
-   */
-  _formatList(inputText) {
-    const items = inputText.split('\n');
-    return (
-      '<ul>' + items.map((item) => '<li>' + item + '</li>').join('') + '</ul>'
-    );
-  }
-
-  /** format code to properly display in HTML
-   * @param {string} inputText - text to be rendered in subelement
-   */
-  _formatCode(inputText) {
-    //const commentRegex = /\/\/;*|\/\*[^]*?\*\/|#.*|<!--[\s\S]*?-->/g;
-
-    let formattedText = inputText.replace(/\t/g, '&nbsp;&nbsp;');
-    /*formattedText = formattedText.replace(commentRegex, (match) => {
-      match = match.trim();
-      return '<div class="comment">' + match + '</div>';
-    });*/
-    formattedText = formattedText.replace(/\n/g, '<br>');
-    return formattedText;
   }
 
   /** feedback function when a user clicks the feedback button

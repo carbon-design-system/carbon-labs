@@ -119,7 +119,7 @@
     "rollup-plugin-esbuild": "^6.1.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-postcss-lit": "^2.1.0",
-    "sass": "~1.72.0",
+    "sass": "~1.74.0",
     "sinon": "^17.0.1",
     "storybook": "^8.0.0",
     "strip-comments": "^2.0.1",

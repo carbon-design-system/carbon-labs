@@ -32,6 +32,7 @@
     "build-storybook": "yarn build && storybook build",
     "ci-check": "yarn run format:staged && yarn lint:license && yarn lint && yarn lint:styles",
     "ci-check:build": "yarn build && yarn build:dist && yarn ci-check",
+    "clean": "rm -rf node_modules",
     "doctoc": "doctoc --title '## Table of Contents' docs",
     "format": "prettier --check '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:write": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
@@ -42,12 +43,13 @@
     "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
     "storybook": "storybook dev -p 6006",
     "prepare": "husky install",
+    "reset": "yarn cache clean && yarn clean && yarn install && yarn build",
     "test": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --playwright --browsers chromium firefox webkit",
     "test:updateSnapshot": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
   },
   "dependencies": {
-    "@carbon/styles": "1.51.0",
-    "@carbon/web-components": "2.4.0",
+    "@carbon/styles": "1.53.0",
+    "@carbon/web-components": "2.6.0",
     "lit": "^3.0.0"
   },
   "devDependencies": {

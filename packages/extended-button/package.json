@@ -34,7 +34,6 @@
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.3.0-rc.0",
     "@carbon/styles": "1.53.0",
-    "@carbon/web-components": "2.6.0",
-    "lit": "^3.0.0"
+    "@carbon/web-components": "2.6.0"
   }
 }

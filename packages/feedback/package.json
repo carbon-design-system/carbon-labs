@@ -37,7 +37,6 @@
     "@carbon-labs/utilities": "0.3.0-rc.0",
     "@carbon/grid": "^11.21.0",
     "@carbon/web-components": "2.6.0",
-    "lit": "^3.0.0",
     "uuid": "^9.0.1"
   }
 }

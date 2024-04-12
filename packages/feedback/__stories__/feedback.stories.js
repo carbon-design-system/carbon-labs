@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import '../feedback';
+import '../components/feedback/feedback';
 import Flag24 from '@carbon/web-components/es/icons/flag/24.js';
 import { html } from 'lit';
 /**
@@ -15,7 +15,6 @@ import { html } from 'lit';
 
 export default {
   title: 'Components/Feedback/Feedback',
-  tags: ['autodocs'],
 };
 
 const defaultArgs = {

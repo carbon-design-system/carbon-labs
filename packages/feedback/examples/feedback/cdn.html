@@ -1,0 +1,61 @@
+<!--
+@license
+
+Copyright IBM Corp. 2020
+
+This source code is licensed under the Apache-2.0 license found in the
+LICENSE file in the root directory of this source tree.
+-->
+
+<html>
+  <head>
+    <title>@carbon-labs/ai-feedback example</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/latest/plex.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon/web-components/tag/v2/latest/grid.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon/web-components/tag/v2/latest/themes.css"
+    />
+    <style>
+      /* Suppress custom element until styles are loaded */
+      clabs-feedback:not(:defined) {
+        display: none;
+      }
+    </style>
+    <script
+      type="module"
+      src="https://1.www.s81c.com/common/carbon/labs/feedback/v0.3.0/index.min.js"
+    ></script>
+  </head>
+  <body class="cds-theme-zone-white">
+    <clabs-feedback model="llama-2"
+      ><svg
+        focusable="false"
+        preserveAspectRatio="xMidYMid meet"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        aria-hidden="true"
+        width="24"
+        height="24"
+        viewBox="0 0 32 32"
+        slot="icon"
+      >
+        <!--?lit$372005272$-->
+        <path
+          d="M6,30H4V2H28l-5.8,9L28,20H6ZM6,18H24.33L19.8,11l4.53-7H6Z"
+        ></path></svg
+      >The standard chunk of Lorem Ipsum used since the 1500s is reproduced
+      below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus
+      Bonorum et Malorum" by Cicero are also reproduced in their exact original
+      form, accompanied by English versions from the 1914 translation by H.
+      Rackham.</clabs-feedback
+    >
+  </body>
+</html>

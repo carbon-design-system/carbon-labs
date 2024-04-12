@@ -37,7 +37,7 @@
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.2.0",
     "@carbon/grid": "^11.21.0",
-    "@carbon/web-components": "2.4.0",
+    "@carbon/web-components": "2.6.0",
     "lit": "^3.0.0",
     "uuid": "^9.0.1"
   }

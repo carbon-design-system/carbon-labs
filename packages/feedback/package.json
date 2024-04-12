@@ -5,6 +5,7 @@
     "access": "public",
     "provenance": true
   },
+  "type": "module",
   "description": "Carbon for AI - feedback component",
   "license": "Apache-2.0",
   "repository": {
@@ -21,9 +22,7 @@
     "./es/": "./es/"
   },
   "files": [
-    "**/*.d.ts",
-    "**/*.js",
-    "**/*.js.map",
+    "es/**/*",
     "custom-elements.json"
   ],
   "types": "./src/index.d.ts",

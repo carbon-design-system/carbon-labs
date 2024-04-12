@@ -21,9 +21,7 @@
     "./es/": "./es/"
   },
   "files": [
-    "**/*.d.ts",
-    "**/*.js",
-    "**/*.js.map",
+    "es/**/*",
     "custom-elements.json",
     "telemetry.yml"
   ],

@@ -2570,7 +2570,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.3.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.6.0"
+    "@carbon/web-components": "npm:2.7.0"
     force-graph: "npm:^1.43.5"
     lit: "npm:^3.0.0"
     uuid: "npm:^9.0.1"

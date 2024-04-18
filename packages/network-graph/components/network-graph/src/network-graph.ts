@@ -74,7 +74,7 @@ export class NetworkGraph extends LitElement {
   firstUpdated() {
     if (this.data && this.shadowRoot?.getElementById('graph-container')) {
       const graph = ForceGraph2D();
-      console.log("Hello")
+      console.log('Hello');
       graph(this.shadowRoot.getElementById('graph-container') as HTMLElement)
         .nodeLabel('id')
         .graphData(this.data)

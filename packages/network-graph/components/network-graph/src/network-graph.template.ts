@@ -12,13 +12,8 @@ import { html } from 'lit';
 /**
  * Lit template for Feedback component
  *
- * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export function networkGraphTemplate(customElementClass) {
-  const { label } = customElementClass;
-  return html`
-    <h1>${label}</h1>
-    <div id="graph-container"></div>
-  `;
+export function networkGraphTemplate() {
+  return html` <div id="graph-container"></div> `;
 }

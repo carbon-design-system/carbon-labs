@@ -1,11 +1,11 @@
 {
     "name": "@carbon-labs/network-graph",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publishConfig": {
         "access": "public",
         "provenance": true
     },
-    "description": "Carbon for AI - network-graph component",
+    "description": "Carbon Labs - network-graph component",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
@@ -21,9 +21,7 @@
         "./es/": "./es/"
     },
     "files": [
-        "**/*.d.ts",
-        "**/*.js",
-        "**/*.js.map",
+        "es/**/*",
         "custom-elements.json"
     ],
     "types": "./src/index.d.ts",

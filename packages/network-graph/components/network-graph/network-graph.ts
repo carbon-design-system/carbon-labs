@@ -24,7 +24,7 @@ class CLABSNetworkGraph extends NetworkGraph {
    * Renders the template while passing in class functionality
    */
   render(): TemplateResult<1> {
-    return networkGraphTemplate(this);
+    return networkGraphTemplate();
   }
 }
 

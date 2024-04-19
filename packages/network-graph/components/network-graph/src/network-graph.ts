@@ -15,57 +15,111 @@ import { CustomLinks, CustomNode } from '../defs';
  * Graph component to render graph based on nodes and links
  */
 export class NetworkGraph extends LitElement {
-  @property({ attribute: 'label', type: String })
-  label = '';
+  /**
+   * Property name from the graph data which user wants to display as node label
+   */
+  @property({ attribute: 'node-label', type: String })
+  nodeLabel = 'id';
 
+  /**
+   * Canvas width
+   */
   @property({ attribute: 'width', type: Number })
   canvasWidth = 1280;
 
+  /**
+   * Canvas height
+   */
   @property({ attribute: 'height', type: Number })
   canvasHeight = 720;
 
+  /**
+   * Minimum zoom which can be done on graph
+   */
   @property({ attribute: 'min-zoom', type: Number })
   minimumZoom = 1;
 
+  /**
+   * Maximum zoom which can be done on graph
+   */
   @property({ attribute: 'max-zoom', type: Number })
   maximumZoom = 1000;
 
+  /**
+   * Background color for the canvas
+   */
   @property({ attribute: 'background', type: String })
   canvasBgColor = 'transparent';
 
+  /**
+   * Link color for the graph link
+   */
   @property({ attribute: 'link-color', type: String })
   linkColor = '#fff';
 
+  /**
+   * Left border color for the nodes (by default set to yellow)
+   */
   @property({ attribute: 'border-accent-color', type: String })
   borderAccent = '#F1C21B';
 
+  /**
+   * Link Width
+   */
   @property({ attribute: 'link-width', type: Number })
   linkWidth = 1;
 
+  /**
+   * Color of label text inside the node
+   */
   @property({ attribute: 'node-text-color', type: String })
   nodeTextColor = '#fff';
 
+  /**
+   * Color of the nodes
+   */
   @property({ attribute: 'node-bg-color', type: String })
   nodeColor = '#262626';
 
+  /**
+   * Textsize of label text inside the node
+   */
   @property({ attribute: 'text-size', type: Number })
   textSize = 12;
 
+  /**
+   * Callback function executed when node is dragged
+   */
   @property({ attribute: 'nodeDrag', type: Function })
   nodeDrag;
 
+  /**
+   * Boolean to enable or disable dragging of nodes
+   */
   @property({ attribute: 'isNodeDraggable', type: Boolean })
   isNodeDraggable = true;
 
+  /**
+   * Boolean to enable or disable Pan Interaction on canvas
+   */
   @property({ attribute: 'isPanInteraction', type: Boolean })
   isPanInteraction = true;
 
+  /**
+   * Boolean to enable or disable zoom-in or zoom-out on canvas
+   */
   @property({ attribute: 'isZoomInteraction', type: Boolean })
   isZoomInteraction = true;
 
+  /**
+   * Boolean to enable or disable pointer interaction on canvas
+   */
   @property({ attribute: 'isPointerInteraction', type: Boolean })
   isPointerInteraction = true;
 
+  /**
+   * Object to take graph data
+   */
   @property() data = {} as GraphData;
 
   /**
@@ -74,9 +128,8 @@ export class NetworkGraph extends LitElement {
   firstUpdated() {
     if (this.data && this.shadowRoot?.getElementById('graph-container')) {
       const graph = ForceGraph2D();
-      console.log('Hello');
       graph(this.shadowRoot.getElementById('graph-container') as HTMLElement)
-        .nodeLabel('id')
+        .nodeLabel(this.nodeLabel)
         .graphData(this.data)
         .width(this.canvasWidth)
         .height(this.canvasHeight)
@@ -124,7 +177,7 @@ export class NetworkGraph extends LitElement {
         .nodeColor('red')
         .nodeCanvasObject((actualNode, ctx, globalScale) => {
           const node = actualNode as CustomNode;
-          const label = node.id as string;
+          const label = node[this.nodeLabel] as string;
           const fontSize = this.textSize / globalScale;
           ctx.font = `${fontSize}px Sans-Serif`;
           const textWidth = ctx.measureText(label).width;

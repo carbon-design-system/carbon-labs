@@ -357,14 +357,3 @@ export const triangleData = {
     { source: 'node3', target: 'node1' },
   ],
 };
-
-// export function coloredNodes() {
-// const newMiserableData = MiserableData['nodes'].map(node=>{
-//     if(node.group===2){
-//         node['borderAccent'] = 'red'
-//       }
-//       return node
-// })
-// console.log(newMiserableData)
-// return newMiserableData
-// }

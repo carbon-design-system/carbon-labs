@@ -7,15 +7,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '../network-graph';
+import '../components/network-graph/network-graph';
 import { html } from 'lit';
-import { MiserableData } from '../sampleData';
+import { MiserableData } from './sampleData';
 /**
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
  */
 export default {
   title: 'Components/Network graph/Network graph',
-  tags: ['autodocs'],
 };
 
 /**
@@ -51,7 +50,7 @@ export const Default = {
    */
   render: (args) =>
     html` <clabs-network-graph
-      label="Graph"
+      node-label="id"
       background=${args.background}
       .data=${args.graphData}
       .min-zoom=${args['min-zoom']}

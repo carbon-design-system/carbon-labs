@@ -39,26 +39,14 @@ that is implemented.
 ### HTML
 
 ```html
-<clabs-network-graph 
-        data={
-                nodes: [
-                    { id: 'node1', label: 'Node 1' },
-                    { id: 'node2', label: 'Node 2' },
-                    { id: 'node3', label: 'Node 3' },
-                ],
-                links: [
-                    { source: 'node1', target: 'node2' },
-                    { source: 'node2', target: 'node3' },
-                    { source: 'node3', target: 'node1' },
-                ],
-        }
+<clabs-network-graph id="graph"
         node-label="id"
         background="#161616"
-        width=1280
-        height=720
+        width=800
+        height=800
         min-zoom=1
         max-zoom=1000
-        text-size=4
+        text-size=14
         node-bg-color="#262626"
         node-text-color="#F4F4F4"
         border-accent-color="#F1C21B"
@@ -70,6 +58,24 @@ that is implemented.
         isPointerInteraction=true
         >
 </clabs-network-graph>
+
+
+<script>
+let data={
+            nodes: [
+                    { id: 'node1', label: 'Node 1' },
+                    { id: 'node2', label: 'Node 2' },
+                    { id: 'node3', label: 'Node 3' },
+            ],
+            links: [
+                    { source: 'node1', target: 'node2' },
+                    { source: 'node2', target: 'node3' },
+                    { source: 'node3', target: 'node1' },
+            ],
+        }
+
+    document.getElementById("graph").data = data;
+<script>
 ```
 
 <ArgTypes of="clabs-network-graph" />

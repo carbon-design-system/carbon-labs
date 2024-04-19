@@ -2647,17 +2647,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/extended-button@workspace:packages/extended-button":
-  version: 0.0.0-use.local
-  resolution: "@carbon-labs/extended-button@workspace:packages/extended-button"
-  dependencies:
-    "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.4.0"
-    "@carbon/styles": "npm:1.53.0"
-    "@carbon/web-components": "npm:2.7.0"
-  languageName: unknown
-  linkType: soft
-
 "@carbon-labs/network-graph@workspace:packages/network-graph":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/network-graph@workspace:packages/network-graph"

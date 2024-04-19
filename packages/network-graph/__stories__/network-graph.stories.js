@@ -36,6 +36,9 @@ export const Default = {
     'node-bg-color': '#262626',
     'min-zoom': 1,
     'max-zoom': 1000,
+    'particle-width': 4,
+    'number-of-particle': 1,
+    'particle-color': '#F1C21B',
     isNodeDraggable: true,
     isPanInteraction: true,
     isZoomInteraction: true,
@@ -63,6 +66,9 @@ export const Default = {
       border-accent-color=${args['border-accent-color']}
       width=${args.width}
       height=${args.height}
+      particle-width=${args['particle-width']}
+      number-of-particle=${args['number-of-particle']}
+      particle-color=${args['particle-color']}
       .isNodeDraggable=${args.isNodeDraggable}
       .isPanInteraction=${args.isPanInteraction}
       .isZoomInteraction=${args.isZoomInteraction}

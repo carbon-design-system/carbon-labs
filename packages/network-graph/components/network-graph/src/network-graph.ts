@@ -118,10 +118,29 @@ export class NetworkGraph extends LitElement {
   isPointerInteraction = true;
 
   /**
+   * Link Particle Width
+   */
+  @property({ attribute: 'particle-width', type: Number || Function })
+  particleWidth = 4;
+
+  /**
+   * Number of particles on link
+   */
+  @property({ attribute: 'number-of-particle', type: Number || Function })
+  numberOfParticles = 0;
+
+  /**
+   * particle color
+   */
+  @property({ attribute: 'particle-color', type: String || Function })
+  particleColor = '#F1C21B';
+
+  /**
    * Object to take graph data
    */
   @property({ attribute: 'data' })
   data: GraphData | null = null;
+
   /**
    * Lifecycles Method used to render nodes and links for the graph network on canvas
    */
@@ -225,6 +244,22 @@ export class NetworkGraph extends LitElement {
           ctx.fillText(label, node.x, node.y);
           //   node.__bckgDimensions = bckgDimensions; // to re-use in nodePointerAreaPaint
         });
+
+      if (this.numberOfParticles) {
+        graph.linkDirectionalParticles(this.numberOfParticles);
+
+        if (this.particleWidth) {
+          graph.linkDirectionalParticleWidth(this.particleWidth);
+        }
+
+        if (this.particleColor) {
+          if (typeof this.particleColor === 'string') {
+            graph.linkDirectionalParticleColor(() => this.particleColor);
+          } else if (typeof this.particleColor === 'function') {
+            graph.linkDirectionalParticleColor(this.particleColor);
+          }
+        }
+      }
     }
   }
 }

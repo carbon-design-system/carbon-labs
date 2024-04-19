@@ -120,8 +120,8 @@ export class NetworkGraph extends LitElement {
   /**
    * Object to take graph data
    */
-  @property() data = {} as GraphData;
-
+  @property({ attribute: 'data' })
+  data: GraphData | null = null;
   /**
    * Lifecycles Method used to render nodes and links for the graph network on canvas
    */

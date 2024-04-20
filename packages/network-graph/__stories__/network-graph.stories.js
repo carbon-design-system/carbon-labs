@@ -37,7 +37,7 @@ export const Default = {
     'min-zoom': 1,
     'max-zoom': 1000,
     'particle-width': 4,
-    'number-of-particle': 1,
+    'number-of-particle': 0,
     'particle-color': '#F1C21B',
     isNodeDraggable: true,
     isPanInteraction: true,
@@ -56,8 +56,8 @@ export const Default = {
       node-label="id"
       background=${args.background}
       .data=${args.graphData}
-      .min-zoom=${args['min-zoom']}
-      .max-zoom=${args['max-zoom']}
+      min-zoom=${args['min-zoom']}
+      max-zoom=${args['max-zoom']}
       link-color=${args['link-color']}
       link-width=${args['link-width']}
       node-text-color=${args['node-text-color']}

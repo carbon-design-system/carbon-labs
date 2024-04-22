@@ -60,7 +60,7 @@ export class NetworkGraph extends LitElement {
   /**
    * Left border color for the nodes (by default set to yellow)
    */
-  @property({ attribute: 'border-accent-color', type: String })
+  @property({ attribute: 'node-border-accent-color', type: String })
   borderAccent = '#F1C21B';
 
   /**

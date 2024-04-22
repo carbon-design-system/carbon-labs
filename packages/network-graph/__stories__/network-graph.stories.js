@@ -24,14 +24,13 @@ export default {
  */
 export const Default = {
   args: {
-    label: 'Graph',
     width: 1000,
     height: 1000,
     background: '#161616',
     'link-color': '#262626',
     'link-width': 4,
     'node-text-color': '#f4f4f4',
-    'border-accent-color': '#F1C21B',
+    'node-border-accent-color': '#F1C21B',
     'text-size': 14,
     'node-bg-color': '#262626',
     'min-zoom': 1,
@@ -43,7 +42,7 @@ export const Default = {
     isPanInteraction: true,
     isZoomInteraction: true,
     isPointerInteraction: true,
-    graphData: MiserableData,
+    data: MiserableData,
   },
 
   /**
@@ -55,7 +54,7 @@ export const Default = {
     html` <clabs-network-graph
       node-label="id"
       background=${args.background}
-      .data=${args.graphData}
+      .data=${args.data}
       min-zoom=${args['min-zoom']}
       max-zoom=${args['max-zoom']}
       link-color=${args['link-color']}
@@ -63,7 +62,7 @@ export const Default = {
       node-text-color=${args['node-text-color']}
       text-size=${args['text-size']}
       node-bg-color=${args['node-bg-color']}
-      border-accent-color=${args['border-accent-color']}
+      node-border-accent-color=${args['node-border-accent-color']}
       width=${args.width}
       height=${args.height}
       particle-width=${args['particle-width']}

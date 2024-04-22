@@ -14,6 +14,7 @@ export type CustomNode = NodeObject & {
   color?: string;
   bgColor?: string;
   borderAccent?: string;
+  __bckgDimensions?: number[];
 };
 
 export type CustomLinks = LinkObject & {

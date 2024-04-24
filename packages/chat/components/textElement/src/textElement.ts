@@ -25,6 +25,12 @@ export default class textElement extends LitElement {
   content;
 
   /**
+   * Content text to display in textElement
+   */
+  @property({ type: Boolean, attribute: 'align-right' })
+  alignRight;
+
+  /**
    * Capitalization boolean to edit AI returned text or not
    */
   @property({ type: Boolean, attribute: 'capitalize' })
@@ -55,9 +61,9 @@ export default class textElement extends LitElement {
       inputText = capitalizedLines.join('');
     }
 
-    let prunedText = inputText.replace(/^\s*\n|\n\s*$/g, '');
-    let formattedText = prunedText.replace(/\t/g, '&nbsp;&nbsp;');
-    let htmlText = formattedText.replace(/\n/g, '<br>');
+    const prunedText = inputText.replace(/^\s*\n|\n\s*$/g, '');
+    const formattedText = prunedText.replace(/\t/g, '&nbsp;&nbsp;');
+    const htmlText = formattedText.replace(/\n/g, '<br>');
     return htmlText;
   }
 }

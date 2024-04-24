@@ -27,13 +27,13 @@ export default class tagListElement extends LitElement {
    * Error state value
    */
   @state()
-  _invalid: boolean = false;
+  _invalid = false;
 
   /**
    * Error state value
    */
   @state()
-  _errorMessage: string = '';
+  _errorMessage = '';
 
   /**
    * Array of subelements parsed from API reply
@@ -64,14 +64,12 @@ export default class tagListElement extends LitElement {
 
   /**
    * _handleTagClick - send event to parent when tag is selected
-   * @param {string} value - string inside selected tag
-   * @param {Number} index - selected tag index within the tag array
+   * @param {object} event - tag click event
    */
   _handleTagClick(event) {
-    console.log(event);
     event.preventDefault();
     const value = event.explicitOriginalTarget.innerText;
-    const tagSelectedEvent = new CustomEvent('tag-selected', {
+    const tagSelectedEvent = new CustomEvent('on-tag-selected', {
       detail: { tagContent: value },
       bubbles: true,
       composed: true,

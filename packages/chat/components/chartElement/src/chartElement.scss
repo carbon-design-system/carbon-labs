@@ -5,19 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-$css--plex: true !default;
-
 @use '../../../../../globals/scss/vars' as *;
+
 @use '@carbon/styles/scss/theme' as *;
-@use '@carbon/styles/scss/type' as *;
 
 :host(#{$c4ai-prefix}--chat-chart) {
   display: block;
   overflow: hidden;
   padding: 0;
-  border: 1px solid $ui-05;
+  border: 1px solid $border-subtle-00;
   border-radius: 8px;
-  background: $ui-background;
+  background: $background;
   block-size: var(--chat-chart-element-height, '300px');
   font-family: 'IBM Plex Sans Condensed', sans-serif;
   inline-size: var(--chat-chart-element-width, '100%');
@@ -26,6 +24,7 @@ $css--plex: true !default;
 
   .#{$c4ai-prefix}--chat-chart-container {
     overflow: hidden;
+    box-sizing: border-box;
     block-size: 100%;
     inline-size: 100%;
     min-block-size: 100%;
@@ -36,11 +35,80 @@ $css--plex: true !default;
     font-family: 'IBM Plex Sans Condensed', sans-serif;
   }
 
-  .#{$c4ai-prefix}--chat-chart-error {
-    padding: 10px;
-    border: 1px solid $support-error;
-    border-radius: 8px;
+  .#{$c4ai-prefix}--chat-chart-loading-container {
+    position: relative;
+    display: block;
+
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 16px;
+    block-size: 100%;
+  }
+
+  .#{$c4ai-prefix}--chat-chart-loading-grid {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid transparent;
+    animation: loading-animation 8000ms linear infinite;
+    background: linear-gradient(
+      to right,
+      $border-subtle-00 0%,
+      $border-subtle-00 75%,
+      $text-secondary 87.5%,
+      $text-secondary 90%,
+      $text-secondary 92.5%,
+      $border-subtle-00 100%
+    );
+    background-size: 500% 100%;
+    block-size: 100%;
+    gap: 1px;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    inline-size: 100%;
+  }
+  .#{$c4ai-prefix}--chat-chart-loading-grid-cell {
+    background: $background;
+  }
+
+  .#{$c4ai-prefix}--chat-chart-loading-text {
+    position: absolute;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 16px;
+    block-size: 100%;
+    color: $border-subtle-01;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    inline-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    line-height: 14px;
+    overflow-y: auto;
+  }
+
+  .#{$c4ai-prefix}--chat-chart-error-text {
+    position: absolute;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 16px;
+    block-size: 100%;
     color: $support-error;
-    line-height: 22px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    inline-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    line-height: 18px;
+    overflow-y: auto;
+  }
+
+  @keyframes loading-animation {
+    from {
+      background-position: 0% 0;
+    }
+
+    to {
+      background-position: -400% 0;
+    }
   }
 }

@@ -5,11 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-$css--plex: true !default;
-
 @use '../../../../../globals/scss/vars' as *;
 @use '@carbon/styles/scss/theme' as *;
-@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
 
 :host(#{$c4ai-prefix}--chat-loading) {
   display: block;
@@ -18,16 +16,16 @@ $css--plex: true !default;
   .#{$c4ai-prefix}--chat-loading-container {
     position: relative;
     overflow: hidden;
-    border-radius: 10px;
-    background-color: $hover-ui;
-    block-size: 10px;
+    border-radius: 9px;
+    background-color: $background-hover;
+    block-size: 18px;
     inline-size: 100%;
   }
   @media screen and (prefers-reduced-motion: reduce) {
     .#{$c4ai-prefix}--chat-loading-bar {
       position: absolute;
       animation: none;
-      background-color: $interactive-01;
+      background-color: $blue-50;
       block-size: 100%;
       inset-block-start: 0;
     }
@@ -35,20 +33,21 @@ $css--plex: true !default;
 
   .#{$c4ai-prefix}--chat-loading-bar {
     position: absolute;
-    animation: loading-animation 1800ms linear infinite;
-    background-color: $interactive-01;
+    animation: loading-animation 2000ms linear infinite;
+    background-color: $blue-50;
     block-size: 100%;
+    inline-size: 100%;
     inset-block-start: 0;
   }
 
   @keyframes loading-animation {
     0%,
     100% {
-      inline-size: 0;
+      opacity: 0;
     }
 
     50% {
-      inline-size: 100%;
+      opacity: 1;
     }
   }
 }

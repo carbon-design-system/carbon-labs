@@ -10,6 +10,8 @@
 import { html } from 'lit';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import '../../errorElement/errorElement.js';
 
 /**
  * Lit template for card
@@ -19,19 +21,40 @@ const { stablePrefix: c4aiPrefix } = settings;
  */
 export function chartElementTemplate(customElementClass) {
   const {
-    _invalid: invalid,
     _uniqueID: uniqueID,
     _errorMessage: errorMessage,
+    loading,
+    content,
+    _buildLoader: buildLoader,
   } = customElementClass;
 
   return html`
-    ${invalid === true
-      ? html` <div class="${c4aiPrefix}--chat-chart-error">
-          ${errorMessage}
-        </div>`
-      : html` <div class="${c4aiPrefix}--chat-chart-container" id="${c4aiPrefix}--chat-embed-vis-${uniqueID}">
-          
+    <div
+      class="${c4aiPrefix}--chat-chart-container"
+      id="${c4aiPrefix}--chat-embed-vis-${uniqueID}">
+      ${loading
+        ? html`
+         <div class="${c4aiPrefix}--chat-chart-loading-container">
+          <div class="${c4aiPrefix}--chat-chart-loading-grid">
+           ${unsafeHTML(buildLoader())}
           </div>
-        </div>`}
+          <div class="${c4aiPrefix}--chat-chart-loading-text">
+            ${content}
+          </div>
+          </div>
+          </div>`
+        : html``}
+    </div>
+    ${errorMessage !== ''
+      ? html`
+          <div class="${c4aiPrefix}--chat-chart-container">
+            <div class="${c4aiPrefix}--chat-chart-loading-container">
+              <div class="${c4aiPrefix}--chat-chart-error-text">
+                ${errorMessage}
+              </div>
+            </div>
+          </div>
+        `
+      : html``}
   `;
 }

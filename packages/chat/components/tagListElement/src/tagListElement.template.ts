@@ -11,6 +11,8 @@ import { html } from 'lit';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
 import '@carbon/web-components/es/components/tag/index.js';
+import '@carbon/web-components/es/components/chat-button/index.js';
+import Add16 from '@carbon/web-components/es/icons/add/16';
 
 /**
  * Lit template for code
@@ -35,11 +37,12 @@ export function tagListElementTemplate(customElementClass) {
           ${tagList.map(
             (value) =>
               html` <div class="${c4aiPrefix}--chat-tag-list-container-cell">
-                <cds-tag
-                  interactive
-                  size="md"
-                  class="${c4aiPrefix}--chat-tag-list-custom-tag"
+                <cds-chat-button
+                  kind="ghost"
+                  size="sm"
+                  is-quick-action
                   @click="${handleTagClick}">
+                  ${Add16({ slot: 'icon' })}
                   ${value}
                 </cds-tag>
               </div>`

@@ -13,20 +13,33 @@ $css--plex: true !default;
 
 :host(#{$c4ai-prefix}--chat-editable-text) {
   .#{$c4ai-prefix}--chat-editable-text-area {
+    overflow: hidden;
     padding: 0;
-    border: 1px solid $ui-05;
-    border-radius: 6px;
+    border: none;
     margin: 0;
     background: none;
-    color: $text-01;
-    font: inherit;
-    inline-size: 100%;
-    line-height: 22px;
-    overflow-x: hidden;
+    block-size: 24px;
+    color: $text-primary;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.16px;
+    line-height: 24px;
     resize: none;
   }
 
   .#{$c4ai-prefix}--chat-editable-text-area:focus {
     outline: none;
+  }
+
+  #{$c4ai-prefix}--chat-editable-text--float-right {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  #{$c4ai-prefix}--chat-editable-text--float-left {
+    display: flex;
+    justify-content: flex-start;
   }
 }

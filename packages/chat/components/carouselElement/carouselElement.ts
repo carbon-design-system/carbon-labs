@@ -9,24 +9,24 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-import testInput from './src/test-input.js';
-import { testInputTemplate } from './src/test-input.template.js';
+import carouselElement from './src/carouselElement.js';
+import { carouselElementTemplate } from './src/carouselElement.template.js';
 
 const { stablePrefix: c4aiPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}-test-input`)
-class C4AITestInput extends testInput {
+@customElement(`${c4aiPrefix}--chat-carousel`)
+class C4AICarouselElement extends carouselElement {
   /**
    * Renders the template while passing in class functionality
    *
    * @returns {TemplateResult<1>}
    */
   render() {
-    return testInputTemplate(this);
+    return carouselElementTemplate(this);
   }
 }
 
-export default C4AITestInput;
+export default C4AICarouselElement;

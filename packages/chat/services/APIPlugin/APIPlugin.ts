@@ -260,10 +260,12 @@ class APIPlugin {
     const max_tokens = 1000;
     const user_name = 'user';
     const agent_name = 'bot';
-    const initial_prompt =
+    let initial_prompt =
       '[INST] <<SYS>> ' +
       userPrompt +
       ' If returning code of any kind you must use "```" delimiters<</SYS>> [/INST]';
+
+    initial_prompt = '[INST] <<SYS>> ' + userPrompt + ' <</SYS>> [/INST]';
 
     let prompt =
       initial_prompt +

@@ -37,6 +37,12 @@ export default class messages extends LitElement {
   loading;
 
   /**
+   * user-assigned boolean denoting when text content is streamed in token by token
+   */
+  @property({ type: Boolean, attribute: 'stream-responses', reflect: true })
+  _streamResponses;
+
+  /**
    * boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message
    */
   @state()
@@ -59,6 +65,7 @@ export default class messages extends LitElement {
   firstUpdated() {
     this._computedMessages = this.hasAttribute('messages') ? this.messages : [];
     this._queryInProgress = this.hasAttribute('loading') ? this.loading : false;
+    this._updateScroll();
   }
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
@@ -66,15 +73,14 @@ export default class messages extends LitElement {
    **/
   async updated(changedProperties) {
     super.updated(changedProperties);
-    console.log(changedProperties);
     if (changedProperties.has('_computedMessages')) {
       await this.updateComplete;
       this._updateScroll();
-      this.requestUpdate();
     }
 
     if (changedProperties.has('messages')) {
       this.computeMessages();
+      this._updateScroll();
       this.requestUpdate();
     }
 
@@ -82,6 +88,29 @@ export default class messages extends LitElement {
       this._queryInProgress = this.loading;
       this.requestUpdate();
     }
+    if (changedProperties.has('_streamResponses')) {
+      this._queryInProgress = this.loading;
+      this.requestUpdate();
+    }
+  }
+
+  /**
+   * handleSlotChange - handle edits to slots when an element is placed in it
+   * @param {event} event - tag click event sent by tagList element
+   */
+  _handleSlotchange(event) {
+    const slot = event.target;
+    /*const nodes = slot.assignedElements({ flatten: true });
+    this.needsRecompute = true;*/
+    console.log(slot);
+  }
+
+  /**
+   * handleInternalChange - handle event when children update
+   */
+  _handleInternalChange() {
+    //console.log("struct change")
+    this._updateScroll();
   }
 
   /**
@@ -91,59 +120,20 @@ export default class messages extends LitElement {
     this._computedMessages = this.messages;
   }
 
-  /** transfer message events to chat parent
-   */
-  connectedCallback() {
-    super.connectedCallback();
-    this.addEventListener('message-updated', this._handleUpdate);
-    this.addEventListener('regenerate', this._handleRegenerate);
-  }
-
-  /** disconnect when not needed
-   */
-  disconnectedCallback() {
-    this.removeEventListener('message-updated', this._handleUpdate);
-    this.removeEventListener('regenerate', this._handleRegenerate);
-    super.disconnectedCallback();
-  }
-
-  /** handle regeneration signal from message subcomponent, resend query and edit the message list
-   * @param {event} event - custom regeneration event from message subcomponent
-   */
-  _handleRegenerate(event) {
-    event.stopPropagation();
-    this.dispatchEvent(
-      new CustomEvent('user-regeneration-request', {
-        detail: event.detail,
-        bubbles: true,
-        composed: true,
-      })
-    );
-  }
-
-  /** handle update signal from message subcomponent, only triggered when only text is supplied in parent conversation object
-   * @param {event} event - custom update event from message subcomponent
-   */
-  _handleUpdate(event) {
-    event.stopPropagation();
-    this.dispatchEvent(
-      new CustomEvent('user-update-request', {
-        detail: event.detail,
-        bubbles: true,
-        composed: true,
-      })
-    );
-  }
-
   /** auto-scroll chat-messages div when a new message has appeared
    **/
   _updateScroll() {
-    const scrollDiv = this.shadowRoot?.querySelector('.c4ai--chat-messages');
-    setTimeout(() => {
-      scrollDiv?.scrollTo({
-        top: scrollDiv?.scrollHeight,
-        behavior: 'smooth',
-      });
-    }, 300);
+    const scrollDiv = this.shadowRoot?.querySelector(
+      '.c4ai--chat-messages-container'
+    );
+
+    if (scrollDiv instanceof HTMLElement) {
+      setTimeout(function () {
+        scrollDiv?.scrollTo({
+          top: scrollDiv?.scrollHeight,
+          behavior: 'smooth',
+        });
+      }, 200);
+    }
   }
 }

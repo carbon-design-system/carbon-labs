@@ -18,15 +18,25 @@ const { stablePrefix: c4aiPrefix } = settings;
  * @returns {TemplateResult<1>} Lit html template
  */
 export function editableTextElementTemplate(customElementClass) {
-  const { content, _setEditedMessage: setEditedMessage } = customElementClass;
+  const {
+    content,
+    _setEditedMessage: setEditedMessage,
+    alignRight,
+  } = customElementClass;
 
   return html`<div class="${c4aiPrefix}--chat-editable-text">
-    <textarea
-      .value="${content}"
-      @input="${setEditedMessage}"
-      class="${c4aiPrefix}--chat-editable-text-area">
-          ${content}
-      </textarea
-    >
+    <div
+      class="${c4aiPrefix}--chat-editable-text--float-${alignRight
+        ? 'right'
+        : 'left'}">
+      <textarea
+        .value="${content}"
+        @keydown="${setEditedMessage}"
+        @keyup="${setEditedMessage}"
+        class="${c4aiPrefix}--chat-editable-text-area">
+              ${content}
+          </textarea
+      >
+    </div>
   </div>`;
 }

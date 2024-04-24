@@ -18,7 +18,7 @@ export default class header extends LitElement {
   static styles = styles;
 
   @property({ type: String, attribute: 'title' })
-  title = 'Chat Component';
+  title;
 
   @property({ type: String, attribute: 'icon' })
   icon;

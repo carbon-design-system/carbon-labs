@@ -22,28 +22,32 @@ import '@carbon/web-components/es/components/slug/index.js';
  */
 export function headerTemplate(customElementClass) {
   const { title, icon } = customElementClass;
-  return html` <div class="${c4aiPrefix}--chat-header-elements">
-    <div class="${c4aiPrefix}--chat-header-elements-left">
-      ${icon
-        ? html` <div class="${c4aiPrefix}--chat-header-icon">${icon}</div> `
-        : null}
-      ${title
-        ? html` <span class="${c4aiPrefix}--chat-header-title">
-            ${title}
-          </span>`
-        : null}
-    </div>
+  return html` <div class="${c4aiPrefix}--chat-header-container">
+    <div class="${c4aiPrefix}--chat-header-content">
+      <div class="${c4aiPrefix}--chat-header-elements">
+        <div class="${c4aiPrefix}--chat-header-elements-left">
+          ${icon
+            ? html` <div class="${c4aiPrefix}--chat-header-icon">${icon}</div> `
+            : null}
+          ${title
+            ? html` <span class="${c4aiPrefix}--chat-header-title">
+                ${title}
+              </span>`
+            : null}
+        </div>
 
-    <div class="${c4aiPrefix}--chat-header-elements-right">
-      <div class="${c4aiPrefix}--chat-header-icon">
-        <cds-slug kind="hollow">
-          <div slot="body-text">
-            <p>${title}</p>
+        <div class="${c4aiPrefix}--chat-header-elements-right">
+          <div class="${c4aiPrefix}--chat-header-icon">
+            <cds-slug kind="hollow">
+              <div slot="body-text">
+                <p>${title}</p>
+              </div>
+            </cds-slug>
           </div>
-        </cds-slug>
+          <div class="${c4aiPrefix}--chat-header-icon">${Popup16()}</div>
+          <div class="${c4aiPrefix}--chat-header-icon">${Subtract16()}</div>
+        </div>
       </div>
-      <div class="${c4aiPrefix}--chat-header-icon">${Popup16()}</div>
-      <div class="${c4aiPrefix}--chat-header-icon">${Subtract16()}</div>
     </div>
   </div>`;
 }

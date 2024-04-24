@@ -14,24 +14,44 @@ $css--plex: true !default;
 :host(#{$c4ai-prefix}--chat-code) {
   .#{$c4ai-prefix}--chat-code-container {
     display: flex;
-    padding: 10px;
-    border: 1px solid $ui-05;
+    overflow: auto;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid $border-subtle-00;
     border-radius: 8px;
-    background-color: $ui-background;
-    color: $text-01;
+    background-color: $layer-01;
+    color: $text-primary;
     font-family: 'IBM Plex Mono', monospace;
-    line-height: 24px;
-    max-block-size: 176px;
-    overflow-y: auto;
+    font-size: 13px;
+    line-height: 18px;
   }
-  .#{$c4ai-prefix}--chat-code-sidebar {
-    border-inline-end: 1px solid $ui-05;
-    inline-size: 50px;
-    padding-inline: 10px 2px;
+
+  .#{$c4ai-prefix}--chat-code-line {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .#{$c4ai-prefix}--chat-code-line-tick {
+    box-sizing: border-box;
+    flex: 0 0 26px;
+    inline-size: 26px;
+    text-align: end;
     user-select: none;
   }
-  .#{$c4ai-prefix}--chat-code-text {
+
+  .#{$c4ai-prefix}--chat-code-line-divider {
+    flex: 0 0 20px;
+
+    inline-size: 20px;
+    user-select: none;
+  }
+
+  .#{$c4ai-prefix}--chat-code-line-text {
     flex-grow: 1;
-    padding-inline-start: 20px;
+    border-inline-start: 1px solid $border-subtle-01;
+  }
+
+  .#{$c4ai-prefix}--chat-code-line-comment {
+    color: $support-success;
   }
 }

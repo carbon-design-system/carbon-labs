@@ -29,7 +29,9 @@ export function chatTemplate(customElementClass) {
     sendInput,
     userName,
     agentName,
+    _streamResponses: streamResponses,
   } = customElementClass;
+
   return html`<div class="${c4aiPrefix}--chat-container">
     <c4ai--chat-header> </c4ai--chat-header>
 
@@ -38,8 +40,9 @@ export function chatTemplate(customElementClass) {
       user-name="${userName}"
       agent-name="${agentName}"
       ?loading="${queryInProgress}"
-      @user-regeneration-request="${handleUserRegenerationRequest}"
-      @user-update-request="${handleUserUpdateRequest}">
+      ?stream-responses="${streamResponses}"
+      @on-user-regeneration-request="${handleUserRegenerationRequest}"
+      @on-user-message-update-request="${handleUserUpdateRequest}">
     </c4ai--chat-messages>
 
     <c4ai--chat-footer @user-input="${sendInput}"> </c4ai--chat-footer>

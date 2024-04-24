@@ -52,13 +52,16 @@ export default class tableElement extends LitElement {
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
+    if (changedProperties.has('content')) {
+      this._tableObject = this._prepareTable();
+    }
   }
 
   /**
    * Prepare table object for rendering from content string
    */
   _prepareTable() {
-    const tableString = this.content;
+    const tableString = this.content.trim();
     const table = { headers: <any>[], rows: <any>[] };
     const rows = tableString.split('\n');
     const headers = rows.shift().split(',');

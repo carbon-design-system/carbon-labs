@@ -19,40 +19,42 @@ $css--plex: true !default;
   inset-block-end: 0;
   inset-inline: 0;
   max-inline-size: 672px;
-  min-block-size: 50px;
+  min-block-size: 56px;
 
   .#{$c4ai-prefix}--chat-footer-container {
+    background: none;
+    min-block-size: 56px;
+  }
+
+  .#{$c4ai-prefix}--chat-footer-prompt-items {
     display: flex;
     align-items: center;
-    background: $ui-01;
-    min-block-size: 50px;
+    padding: 0 8px;
+    border-radius: 8px;
+    background: $background;
+    border-block-end: 1px solid rgba(69, 137, 255, 0.2);
+    border-block-start: 1px solid $border-subtle;
+    border-inline-end: 1px solid rgba(69, 137, 255, 0.2);
+
+    border-inline-start: 1px solid rgba(69, 137, 255, 0.2);
+    min-block-size: 56px;
+  }
+
+  .#{$c4ai-prefix}--chat-footer-menu {
+    box-sizing: border-box;
+    padding: 16px;
+    border: 1px solid $border-subtle;
+    border-radius: 8px;
+    background: $background;
+    inline-size: 100%;
+    margin-block-end: 4px;
   }
 
   .#{$c4ai-prefix}--chat-footer-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    block-size: 50px;
-    inline-size: 50px;
-  }
-
-  .#{$c4ai-prefix}--chat-footer-button svg {
-    block-size: 18px;
-    fill: #4589ff;
-    inline-size: 18px;
-  }
-
-  .#{$c4ai-prefix}--chat-footer-button.active svg {
-    fill: $text-01;
-  }
-
-  .#{$c4ai-prefix}--chat-footer-button:hover svg {
-    cursor: pointer;
-    fill: $text-01;
-  }
-
-  .#{$c4ai-prefix}--chat-footer-button.active:hover svg {
-    fill: #ffffff;
+    block-size: 56px;
   }
 
   .#{$c4ai-prefix}--chat-search-query {
@@ -63,10 +65,10 @@ $css--plex: true !default;
     background: none;
 
     block-size: auto;
-    color: $text-01;
+    color: $text-primary;
     font: inherit;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 20px;
     min-block-size: 30px;
     overflow-y: hidden;
     padding-block: 10px 10px;
@@ -78,6 +80,6 @@ $css--plex: true !default;
   }
 
   .#{$c4ai-prefix}--chat-search-query::placeholder {
-    color: $text-02;
+    color: $text-secondary;
   }
 }

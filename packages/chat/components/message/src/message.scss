@@ -18,7 +18,7 @@ $css--plex: true !default;
   border-radius: 10px;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
-  padding-block-end: 0;
+  padding-block-end: 8px;
   padding-inline: 16px 24px;
 
   .#{$c4ai-prefix}--chat-message-container {
@@ -28,19 +28,23 @@ $css--plex: true !default;
   }
 
   .#{$c4ai-prefix}--chat-message-user-message {
-    color: $text-01;
+    color: $text-primary;
   }
 
   .#{$c4ai-prefix}--chat-message-content {
     overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border-inline-start: 1px solid
+      var(--chat-message-unique-display-color, none);
     inline-size: 100%;
     max-inline-size: 100%;
-    padding-block-start: 6px;
-    padding-inline-start: 10px;
+    padding-block-start: 4px;
+    padding-inline-start: 16px;
   }
 
   .#{$c4ai-prefix}--chat-message-section {
-    margin-block: 10px 10px;
+    margin-block: 16px 4px;
   }
 
   .#{$c4ai-prefix}--chat-message-warning {
@@ -52,37 +56,25 @@ $css--plex: true !default;
 
   .#{$c4ai-prefix}--chat-message-user-icon {
     display: none;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: $interactive-01;
-    block-size: 24px;
-    color: $text-01;
-    inline-size: 24px;
-
-    svg {
-      block-size: 14px;
-      fill: #fafafa;
-      inline-size: 14px;
-    }
   }
 
   .#{$c4ai-prefix}--chat-message-timestamp-user {
     clear: both;
-    color: $text-02;
+    color: $text-secondary;
     float: inline-end;
-    font-size: 75%;
-    padding-block-end: 5px;
+    font-size: 12px;
+    padding-block-end: 12px;
   }
 
   .#{$c4ai-prefix}--chat-message-response-user {
     padding: 6px 16px;
-    border-radius: 8px;
-    background: $ui-03;
+    background: $layer-accent-01;
+    border-end-end-radius: 8px;
+    border-end-start-radius: 8px;
+    border-start-start-radius: 8px;
     clear: both;
     float: inline-end;
-    inline-size: 75%;
-    max-inline-size: 75%;
+    max-inline-size: 65%;
   }
 
   .#{$c4ai-prefix}--chat-message-dropdown-user {
@@ -92,39 +84,48 @@ $css--plex: true !default;
   }
 
   .#{$c4ai-prefix}--chat-message-bot-message {
-    color: $text-01;
+    color: var(--chat-message-unique-display-color, $text-primary);
   }
 
   .#{$c4ai-prefix}--chat-message-bot-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to bottom right, #aaaaaa, #000000);
-    block-size: 24px;
-    inline-size: 24px;
+    block-size: 32px;
+    inline-size: 32px;
+  }
+
+  .#{$c4ai-prefix}--chat-message-agent-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 32px;
+    color: var(--chat-message-unique-display-color, $text-primary);
+    fill: var(--chat-message-unique-display-color, $text-primary);
+    inline-size: 42px;
+    opacity: 1;
 
     svg {
-      block-size: 20px;
-      fill: #fafafa;
-      inline-size: 20px;
+      fill: var(--chat-message-unique-display-color, $text-primary);
     }
   }
 
   .#{$c4ai-prefix}--chat-message-timestamp-bot {
-    color: $text-02;
-    font-size: 75%;
+    color: var(--chat-message-unique-display-color, $text-secondary);
+    font-size: 12px;
+    padding-block-start: 5px;
   }
 
   .#{$c4ai-prefix}--chat-message-response-bot {
-    inline-size: 90%;
-    max-inline-size: 90%;
-    padding-block: 6px 6px;
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    padding-block: 0 6px;
     padding-inline-end: 12px;
   }
 
   .#{$c4ai-prefix}--chat-message-dropdown-bot {
     inline-size: 100%;
-    opacity: 1;
   }
 
   .#{$c4ai-prefix}--chat-message-small-button {
@@ -132,20 +133,17 @@ $css--plex: true !default;
     align-items: center;
     justify-content: center;
     padding: 6px;
-
     background: none;
+    color: $text-primary;
     cursor: pointer;
 
     svg {
-      block-size: 16px;
-      color: $text-03;
-      fill: $text-03;
-      inline-size: 16px;
+      color: $text-primary;
+      fill: $text-primary;
     }
 
     svg:hover {
-      color: $text-01;
-      fill: $text-01;
+      fill: $link-primary;
     }
   }
 }

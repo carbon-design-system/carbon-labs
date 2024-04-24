@@ -12,17 +12,23 @@
 :host(#{$c4ai-prefix}-chat) {
   display: block;
   overflow: hidden;
+  border: 1px solid rgba(69, 137, 255, 0.2);
   border-radius: 8px;
-  background: linear-gradient(to bottom, $ui-background 80%, #2d3c55);
+  background: linear-gradient(
+    to bottom,
+    $background 80%,
+    rgba(69, 137, 255, 0.2)
+  );
+  background-blend-mode: multiply;
   block-size: 100%;
   font-family: 'IBM Plex Sans', sans-serif;
+  mix-blend-mode: normal;
 
   .#{$c4ai-prefix}--chat-container {
     position: relative;
     display: flex;
     overflow: hidden;
     flex-direction: column;
-    border-radius: 8px;
     block-size: 100%;
     max-block-size: 100%;
   }

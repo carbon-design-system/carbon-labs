@@ -12,7 +12,6 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$c4ai-prefix}--chat-tag-list) {
-  display: block;
   max-inline-size: 100%;
 
   .#{$c4ai-prefix}--chat-tag-list-container {
@@ -23,8 +22,7 @@ $css--plex: true !default;
 
   .#{$c4ai-prefix}--chat-tag-list-container-cell {
     box-sizing: border-box;
-    flex-basis: 40%;
-    flex-grow: 1;
+    flex-basis: 50%;
     padding: 2px;
   }
 
@@ -39,24 +37,5 @@ $css--plex: true !default;
     border-radius: 8px;
     color: $support-error;
     line-height: 22px;
-  }
-
-  .#{$c4ai-prefix}--chat-tag-list-custom-tag {
-    box-sizing: border-box;
-    padding: 7px 16px;
-    border: 1px solid #0f62fe;
-    border-radius: 32px;
-    background: rgba(255, 255, 255, 1e-5);
-    background-blend-mode: multiply;
-    color: #0f62fe;
-    font-size: 14px;
-    font-weight: 400;
-    inline-size: 100%;
-    text-align: center;
-  }
-  .#{$c4ai-prefix}--chat-tag-list-custom-tag:hover {
-    border: 1px solid $text-01;
-    color: $text-01;
-    cursor: pointer;
   }
 }

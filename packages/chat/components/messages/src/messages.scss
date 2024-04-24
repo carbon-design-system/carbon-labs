@@ -12,14 +12,20 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$c4ai-prefix}--chat-messages) {
-  overflow: hidden auto;
+  display: flex;
+  overflow: hidden;
   box-sizing: border-box;
-  flex: 1;
-  margin: auto;
+  margin: 40px auto 56px;
+  block-size: 100%;
+
   inline-size: 100%;
   max-inline-size: 672px;
   min-block-size: 120px;
   min-inline-size: 360px;
-  padding-block: 20px 60px;
-  padding-inline-end: 15px;
+
+  .#{$c4ai-prefix}--chat-messages-container {
+    overflow: hidden scroll;
+    flex: 1;
+    padding-block: 16px 16px;
+  }
 }

@@ -35,6 +35,9 @@ export default class listElement extends LitElement {
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
+    if (changedProperties.has('content')) {
+      this._formatList();
+    }
   }
 
   /** detect when component is rendered to process visualization specification object
@@ -51,7 +54,6 @@ export default class listElement extends LitElement {
    * @param {string} inputText - text to be rendered in subelement
    */
   _formatList() {
-    console.log(this.content);
     const items = this.content.split('\n');
     this._renderedList =
       '<ul>' + items.map((item) => '<li>' + item + '</li>').join('') + '</ul>';

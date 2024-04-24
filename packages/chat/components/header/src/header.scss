@@ -12,12 +12,30 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$c4ai-prefix}--chat-header) {
+  position: absolute;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background: $ui-01;
-  block-size: 40px;
-  border-block-end: 1px solid $ui-05;
+  justify-content: center;
+  background: $background;
+  border-block-end: 1px solid $border-subtle-01;
+  inset-block-start: 0;
+  inset-inline: 0;
+  min-block-size: 40px;
+
+  .#{$c4ai-prefix}--chat-header-container {
+    background: none;
+    inline-size: 100%;
+    max-inline-size: 672px;
+    min-block-size: 40px;
+  }
+
+  .#{$c4ai-prefix}--chat-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $background;
+    block-size: 40px;
+  }
 
   .#{$c4ai-prefix}--chat-header-elements {
     display: flex;

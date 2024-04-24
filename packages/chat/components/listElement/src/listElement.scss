@@ -12,13 +12,16 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$c4ai-prefix}--chat-list) {
-  font-size: 105%;
+  font-size: 16px;
   inline-size: 100%;
-  line-height: 26px;
+  line-height: 28px;
 
   .#{$c4ai-prefix}--chat-list ul {
     padding: 0;
     margin: 0;
     padding-inline-start: 20px;
+  }
+  .#{$c4ai-prefix}--chat-list li {
+    list-style-type: none;
   }
 }

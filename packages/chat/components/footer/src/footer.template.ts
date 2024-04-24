@@ -12,7 +12,9 @@ import { settings } from '@carbon/ai-utilities/es/settings/index.js';
 const { stablePrefix: c4aiPrefix } = settings;
 import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
 import Menu24 from '@carbon/web-components/es/icons/Menu/24.js';
-import Send16 from '@carbon/web-components/es/icons/send/16.js';
+import SendFilled16 from '@carbon/web-components/es/icons/Send--filled/16.js';
+import '@carbon/web-components/es/components/button/index.js';
+import '@carbon/web-components/es/components/file-uploader/index.js';
 
 /**
  * Lit template for card
@@ -26,22 +28,54 @@ export function footerTemplate(customElementClass) {
     _handleInput: handleInput,
     _setMessageText: setMessageText,
     _sendInputToParent: sendInputToParent,
+    _handleMenuToggle: handleMenuToggle,
+    _toggleMenu: toggleMenu,
+    _handleMenuFileUpload: handleMenuFileUpload,
   } = customElementClass;
 
   return html` 
-       <div class="${c4aiPrefix}--chat-footer-container">
-      <div class="${c4aiPrefix}--chat-footer-button active">${Menu24()}</div>
+    <div class="${c4aiPrefix}--chat-footer-container">
+    ${
+      toggleMenu
+        ? html` 
+      <div class="${c4aiPrefix}--chat-footer-menu">
+        <cds-file-uploader
+          label-description="File must be .csv or .xls"
+          @cds-file-uploader-changed="${handleMenuFileUpload}"
+          label-title="Upload your files here:">
+          <cds-file-uploader-button multiple>
+            Click to upload
+          </cds-file-drop-container>
+        </cds-file-uploader>
+      </div>
+      `
+        : ''
+    }
+      <div class="${c4aiPrefix}--chat-footer-prompt-items">
+      <div class="${c4aiPrefix}--chat-footer-button">
+        <cds-button kind="ghost" size="sm" @click="${handleMenuToggle}">
+            ${Menu24({ slot: 'icon' })}
+        </cds-button>
+      </div>
       <textarea
         class="${c4aiPrefix}--chat-search-query"
         rows="1"
         placeholder="Type something..."
         .value="${messageText}"
         @input="${setMessageText}"
+        @keydown="${handleInput}"
         @keyup="${handleInput}" />
         </textarea>
-      <div class="${c4aiPrefix}--chat-footer-button">${MicrophoneOff16()}</div>
-      <div class="${c4aiPrefix}--chat-footer-button" @click="${sendInputToParent}">
-        ${Send16()}
+      <div class="${c4aiPrefix}--chat-footer-button">
+        <cds-button kind="ghost" size="sm" disabled>
+          ${MicrophoneOff16({ slot: 'icon' })}
+        </cds-button>
+      </div>
+      <div class="${c4aiPrefix}--chat-footer-button">
+        <cds-button kind="ghost" size="sm" @click="${sendInputToParent}">
+            ${SendFilled16({ slot: 'icon' })}
+        </cds-button>
+      </div>
       </div>
       </div>
     `;

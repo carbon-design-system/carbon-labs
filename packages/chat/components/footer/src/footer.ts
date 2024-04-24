@@ -24,6 +24,12 @@ export default class footer extends LitElement {
   _messageText = '';
 
   /**
+   * state to see if menu is opened
+   */
+  @state()
+  _toggleMenu = false;
+
+  /**
    * current string returned by the input dom object
    **/
   private _inputText = '';
@@ -43,6 +49,22 @@ export default class footer extends LitElement {
       this.updateTextAreaHeight(event);
     }
   }
+
+  /** handle Menu opened/closed event
+   * @param {event} event - lit event sent by the menu button
+   **/
+  _handleMenuToggle() {
+    if (!this._toggleMenu) {
+      this._toggleMenu = true;
+    } else {
+      this._toggleMenu = false;
+    }
+  }
+
+  /** handleMenuFileUpload - upload event in footer menu
+   * @param {event} event - lit event sent by the file uploader in menu
+   **/
+  _handleMenuFileUpload() {}
 
   /**
    * Set the message text value on input

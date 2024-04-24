@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/ai-chat",
-  "version": "2.2.1-rc.1",
+  "version": "3.0.0-rc.1",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -38,6 +38,7 @@
   "dependencies": {
     "@babel/runtime": "^7.23.2",
     "@carbon/ai-utilities": "0.0.1-rc.1",
+    "@carbon/charts": "^1.15.5",
     "@carbon/web-components": "2.4.0",
     "@ibm/telemetry-js": "^1.2.0",
     "lit": "^3.0.0",

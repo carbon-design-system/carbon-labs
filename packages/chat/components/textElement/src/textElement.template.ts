@@ -19,9 +19,19 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
  * @returns {TemplateResult<1>} Lit html template
  */
 export function textElementTemplate(customElementClass) {
-  const { content, _formatText: formatText, capitalize } = customElementClass;
+  const {
+    content,
+    _formatText: formatText,
+    capitalize,
+    alignRight,
+  } = customElementClass;
 
   return html`<div class="${c4aiPrefix}--chat-text">
-    ${unsafeHTML(formatText(content, capitalize))}
+    <div
+      class="${c4aiPrefix}--chat-text--float-${alignRight ? 'right' : 'left'}">
+      <div class="${c4aiPrefix}--chat-text--content">
+        ${unsafeHTML(formatText(content, capitalize))}
+      </div>
+    </div>
   </div>`;
 }

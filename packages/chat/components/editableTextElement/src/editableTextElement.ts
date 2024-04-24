@@ -39,7 +39,11 @@ export default class editableTextElement extends LitElement {
 
   /** detect when component is rendered to process text object
    */
-  firstUpdated() {}
+  firstUpdated() {
+    if (this.content !== null) {
+      this._initiateTextAreaHeight();
+    }
+  }
 
   /** record edited changes on message
    * @param {event} event - lit input event
@@ -52,5 +56,39 @@ export default class editableTextElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(messageEditedEvent);
+    this.updateTextAreaHeight(event);
+  }
+
+  /**
+   * Set a new height based on the size of the text area
+   */
+  _initiateTextAreaHeight() {
+    const textArea: any = this.shadowRoot?.querySelector(
+      '.c4ai--chat-editable-text-area'
+    );
+
+    if (textArea instanceof HTMLElement) {
+      textArea.focus();
+      setTimeout(() => {
+        textArea.style.height = 'auto';
+        textArea.style.height = textArea.scrollHeight + 'px';
+        this.requestUpdate();
+      }, 1);
+    }
+  }
+
+  /**
+   * Set a new height based on the size of the text area
+   * @param {Object} event -- event object
+   */
+  updateTextAreaHeight(event) {
+    const textArea = event.target;
+    if (textArea instanceof HTMLElement) {
+      setTimeout(() => {
+        textArea.style.height = 'auto';
+        textArea.style.height = textArea.scrollHeight + 'px';
+        this.requestUpdate();
+      }, 1);
+    }
   }
 }

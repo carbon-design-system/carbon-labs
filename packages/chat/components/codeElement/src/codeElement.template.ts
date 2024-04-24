@@ -19,15 +19,11 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
  * @returns {TemplateResult<1>} Lit html template
  */
 export function codeElementTemplate(customElementClass) {
-  const { _renderTicks: renderTicks, _renderCode: renderCode } =
-    customElementClass;
+  const { _renderCode: renderCode } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-code">
+  return html` <div class="${c4aiPrefix}--chat-code">
     <div class="${c4aiPrefix}--chat-code-container">
-      <div class="${c4aiPrefix}--chat-code-sidebar">
-        ${unsafeHTML(renderTicks)}
-      </div>
-      <div class="${c4aiPrefix}--chat-code-text">${unsafeHTML(renderCode)}</div>
+      ${unsafeHTML(renderCode)}
     </div>
   </div>`;
 }

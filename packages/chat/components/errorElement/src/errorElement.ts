@@ -55,9 +55,9 @@ export default class errorElement extends LitElement {
       inputText = capitalizedLines.join('');
     }
 
-    let prunedText = inputText.replace(/^\s*\n|\n\s*$/g, '');
-    let formattedText = prunedText.replace(/\t/g, '&nbsp;&nbsp;');
-    let htmlText = formattedText.replace(/\n/g, '<br>');
+    const prunedText = inputText.replace(/^\s*\n|\n\s*$/g, '');
+    const formattedText = prunedText.replace(/\t/g, '&nbsp;&nbsp;');
+    const htmlText = formattedText.replace(/\n/g, '<br>');
     return htmlText;
   }
 }

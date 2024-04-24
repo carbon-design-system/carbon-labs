@@ -24,10 +24,38 @@ export default class cardElement extends LitElement {
   cardElements;
 
   /**
+   * file types with icons available
+   */
+  @state()
+  fileTypes = [
+    'csv',
+    'mp3',
+    'mp4',
+    'png',
+    'pdf',
+    'ppt',
+    'svg',
+    'xls',
+    'zip',
+    'wmv',
+    'txt',
+    'tsv',
+    'mov',
+    'jpg',
+    'gif',
+  ];
+
+  /**
    * url content from parent
    */
   @property({ type: String, attribute: 'content', reflect: true })
   content;
+
+  /**
+   * api to fetch link/video previews
+   */
+  @property({ type: String, attribute: 'api-url', reflect: true })
+  apiUrl = 'http://localhost:5001/get_preview';
 
   /**
    * card type to differentiate between url and videos
@@ -36,30 +64,75 @@ export default class cardElement extends LitElement {
   type;
 
   /**
+   * card type to differentiate between url and videos
+   */
+  @property({ type: String, attribute: 'file-type', reflect: true })
+  fileType;
+
+  /**
+   * loading attribute to delay card url generation
+   */
+  @property({ type: Boolean, attribute: 'loading', reflect: true })
+  loading;
+
+  /**
    * link preview object to be invoked when url object is rendered
    */
   @state()
-  _linkPreviewData: any = null;
+  _cardData: any = null;
+
+  @state()
+  _isAudioPlaying = false;
+
+  @state()
+  _audioProgress;
+
+  @state()
+  _audioDuration;
+
+  @state()
+  _audioRatio;
 
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
+    this._buildCard();
+  }
+
+  /**
+   * updated - check changed properties
+   * @param {object} changedProperties - LIT object denoting changed attributes
+   */
+  updated(changedProperties) {
+    if (changedProperties.has('content')) {
+      this._buildCard();
+    }
+  }
+
+  /**
+   * _buildCard - generates data to display in card if not specified
+   */
+  _buildCard() {
     if (this.cardElements == null) {
-      this._getSitePreviewData(this.content);
+      if (this.type === 'file') {
+        this._getFileData(this.content);
+      } else if (this.type === 'audio') {
+        this._getAudioData(this.content);
+      } else {
+        if (!this.loading) {
+          this._getSitePreviewData(this.content);
+        }
+      }
     } else {
-      this._linkPreviewData = this.cardElements;
+      this._cardData = this.cardElements;
+      if (this.fileType == null) {
+        this.fileType = this._getFileType(this.cardElements.link);
+      }
       this.requestUpdate();
     }
-
-    /*if (changedProperties.has('_messageElements')) {
-      const messageUpdateEvent = new CustomEvent('message-updated', {
-        detail: { index: this.index, messageElements: this._messageElements },
-        bubbles: true,
-        composed: true,
-      });
-      this.dispatchEvent(messageUpdateEvent);
-    }*/
   }
+
+  //URL FUNCTIONS
 
   /** _formatURL - helper function to display a URL's name without
    * @param {string} url - url text that needs to be trimmed for display in the card object
@@ -86,36 +159,169 @@ export default class cardElement extends LitElement {
     }
   }
 
+  //VIDEO FUNCTIONS
+
+  /** _getVideoFileName - helper function to display a URL's name without
+   * @param {string} url - url text that needs to be trimmed for description display in the card object
+   */
+  _getVideoFileName(url) {
+    try {
+      const videoFileName = url.split('/').slice(-1);
+      return videoFileName[0];
+    } catch (error) {
+      return 'Site name';
+    }
+  }
+
+  /** _getVideoTitle - helper function to display a URL's name without
+   * @param {string} url - url text that needs to be trimmed for title display in the card object
+   */
+  _getVideoTitle(url) {
+    try {
+      const videoFileName = url.split('/').slice(-1);
+      const videoTitle = videoFileName[0].split('.')[0];
+      return videoTitle.replace(/_/g, ' ');
+    } catch (error) {
+      return 'Site name';
+    }
+  }
+
+  //FILE FUNCTIONS
+
+  /** _getFileType - if no type type given find it
+   * @param {string} fileName -file name to be analyzed
+   */
+  _getFileType(fileName) {
+    const pieces: string[] = fileName.split('.');
+    let foundType: string = pieces[pieces.length - 1];
+    console.log(foundType);
+    if (this.fileTypes.indexOf(foundType) < 0) {
+      foundType = 'unknown';
+    }
+    return foundType;
+  }
+
+  /** extract inforamtion for url to auto-generate title, url preview and link
+   * @param {string} url -  desired URL for preview
+   */
+  _getFileData(url) {
+    const preview: any = {};
+    preview.title = url.split('/').slice(-1);
+    preview.shortenedUrl = this._getShortenedURL(url);
+    preview.link = url;
+    this.fileType = this._getFileType(url);
+    this._cardData = preview;
+    this.requestUpdate();
+  }
+
+  /** extract inforamtion for audio file to auto-generate title, url preview and link
+   * @param {string} url -  desired URL for preview
+   */
+  _getAudioData(url) {
+    const preview: any = {};
+    preview.title = this._getVideoTitle(url);
+    preview.shortenedUrl = this._getShortenedURL(url);
+    preview.link = url;
+    this.fileType = this._getFileType(url);
+    this._cardData = preview;
+    this._updateAudioDuration();
+    this._updateAudioProgress();
+    this.requestUpdate();
+  }
+
+  //AUDIO FUNCTIONS
+
+  /**
+   * _toggleAudio - triggered when play/pause in audio controls is selected
+   */
+  _toggleAudio() {
+    const audioElement = this.shadowRoot?.querySelector('audio');
+    if (audioElement instanceof HTMLElement) {
+      if (audioElement.paused) {
+        audioElement.play();
+        this._isAudioPlaying = true;
+      } else {
+        audioElement.pause();
+        this._isAudioPlaying = false;
+      }
+    }
+  }
+
+  /**
+   * _updateAudioDuration - sets _audioDuration value when audio element is loaded
+   */
+  _updateAudioDuration() {
+    const audioElement = this.shadowRoot?.querySelector('audio');
+    if (audioElement instanceof HTMLElement) {
+      this._audioDuration = audioElement.duration;
+    }
+    this._updateAudioProgress();
+  }
+
+  /**
+   * _updateAudioProgress - sets progress in time throught the audio file
+   */
+  _updateAudioProgress() {
+    const audioElement = this.shadowRoot?.querySelector('audio');
+    if (audioElement instanceof HTMLElement) {
+      this._audioProgress = audioElement.currentTime;
+    }
+  }
+
+  /**
+   * converts time values from HTML element into displayable strings such as 01:34
+   * @param {number} time - time value in seconds
+   **/
+  _formatAudioTime(time) {
+    if (!time) {
+      return '00:00';
+    }
+    const minutes = Math.floor(time / 60);
+    let minutesString = minutes.toString();
+    if (minutes < 10) {
+      minutesString = '0' + minutesString;
+    }
+    const seconds = Math.floor(time % 60);
+    let secondsString = seconds.toString();
+    if (seconds < 10) {
+      secondsString = '0' + secondsString;
+    }
+    return minutesString + ':' + secondsString;
+  }
+
   /** get url preview with title, desciption and og:image to preview site card object
    * @param {string} url -  desired URL for preview
    */
   async _getSitePreviewData(url) {
     try {
       let preview = await this._previewData(url);
-      console.log(preview);
-      if (!preview) {
-        preview = {
-          title: this._getSiteName(url),
-          shortenedUrl: this._getShortenedURL(url),
-        };
+      if (
+        !preview ||
+        (!preview.title && !preview.imageUrl && !preview.description)
+      ) {
+        preview = {};
+        if (this.type === 'video') {
+          preview.title = this._getVideoTitle(url);
+          //preview.description = this._getVideoFileName(url);
+        } else {
+          preview.title = this._getSiteName(url);
+        }
       }
 
       if (!preview.title) {
         preview.title = this._getSiteName(url);
       }
       preview.shortenedUrl = this._getShortenedURL(url);
-      this._linkPreviewData = preview;
+      this._cardData = preview;
       this.requestUpdate();
     } catch (error) {
-      console.log('card error');
       const backUpName = this._getSiteName(url);
-      this._linkPreviewData = {
+      this._cardData = {
         title: backUpName,
-        'img-url': null,
+        imageUrl: null,
         description: null,
         link: url,
       };
-      console.log(this._linkPreviewData);
       this.requestUpdate();
     }
   }
@@ -124,7 +330,7 @@ export default class cardElement extends LitElement {
    * @param {string} url - url to fetch
    */
   async _previewData(url) {
-    const API_URL = 'http://localhost:5001/get_preview';
+    const API_URL = this.apiUrl;
 
     const requestOptions = {
       method: 'POST',

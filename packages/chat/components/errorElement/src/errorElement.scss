@@ -12,9 +12,15 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$c4ai-prefix}--chat-error) {
-  padding: 10px;
-  border: 1px solid $support-error;
-  border-radius: 8px;
-  color: $support-error;
-  line-height: 22px;
+  .#{$c4ai-prefix}--chat-error-container {
+    display: flex;
+    padding: 10px;
+    border: 1px solid $support-error;
+    border-radius: 8px;
+    background-color: $background;
+    color: $support-error;
+    line-height: 22px;
+    max-block-size: 176px;
+    overflow-y: auto;
+  }
 }

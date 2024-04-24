@@ -17,9 +17,11 @@ $css--plex: true !default;
 
   .#{$c4ai-prefix}--chat-table-container {
     overflow: scroll;
-    border: 1px solid $ui-05;
+
+    box-sizing: border-box;
+    border: 1px solid $border-subtle-00;
     border-radius: 8px;
-    background: $ui-background;
+    background: $background;
     inline-size: 100%;
   }
 
@@ -41,16 +43,16 @@ $css--plex: true !default;
   th,
   td {
     padding: 12px;
-    border: 1px solid $ui-05;
+    border: 1px solid $border-subtle-00;
     text-align: start;
   }
 
   th {
-    background-color: $ui-05;
+    background-color: $border-subtle-00;
     font-weight: normal;
   }
 
   tr:nth-child(even) {
-    background-color: $ui-background;
+    background-color: $background;
   }
 }

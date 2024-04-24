@@ -24,12 +24,6 @@ export default class codeElement extends LitElement {
   content;
 
   /**
-   * tick html line count object to display alongside the code
-   */
-  @state()
-  _renderTicks = '';
-
-  /**
    * html code text
    */
   @state()
@@ -40,6 +34,10 @@ export default class codeElement extends LitElement {
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
+    if (changedProperties.has('content')) {
+      this._formatCode();
+      this.requestUpdate();
+    }
   }
 
   /** detect when component is rendered to process code object
@@ -56,13 +54,41 @@ export default class codeElement extends LitElement {
   /** format code to properly display in HTML
    */
   _formatCode() {
-    let formattedText = this.content.replace(/\t/g, '&nbsp;&nbsp;');
-    const lines = formattedText.split('\n');
+    const formattedText = this.content;
+    const htmlSafeText = formattedText
+      .replace(/```/g, '')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    const lines = htmlSafeText.trim().split('\n');
+    const tabWidth = 16;
+    const paddingLeft = 16;
     const tickValues: string[] = [];
+    const textValues: string[] = [];
     for (let i = 0; i < lines.length; i++) {
       tickValues.push(i.toString());
+      let lineType = '';
+      const trimmedLine = lines[i].replace(/\t/g, '');
+      if (trimmedLine.startsWith('#') || trimmedLine.startsWith('//')) {
+        lineType = 'c4ai--chat-code-line-comment';
+      }
+
+      let tabOffset = paddingLeft;
+      const tabMatch = lines[i].match(/^\t*/);
+      if (tabMatch) {
+        tabOffset += tabMatch[0].length * tabWidth;
+      }
+      textValues.push(
+        '<div class="c4ai--chat-code-line"><div class="c4ai--chat-code-line-tick">' +
+          i.toString() +
+          '</div><div class="c4ai--chat-code-line-divider"></div><div class="c4ai--chat-code-line-text ' +
+          lineType +
+          '" style="padding-left:' +
+          tabOffset +
+          'px">' +
+          lines[i].replace(/\t/g, '').replace(/\n/g, '') +
+          '</div></div>'
+      );
     }
-    this._renderTicks = tickValues.join('<br/>');
-    this._renderCode = formattedText.replace(/\n/g, '<br>');
+    this._renderCode = textValues.join('');
   }
 }

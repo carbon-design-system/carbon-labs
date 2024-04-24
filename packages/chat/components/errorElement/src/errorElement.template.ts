@@ -22,6 +22,8 @@ export function errorElementTemplate(customElementClass) {
   const { content, _formatText: formatText, capitalize } = customElementClass;
 
   return html`<div class="${c4aiPrefix}--chat-error">
-    ${unsafeHTML(formatText(content, capitalize))}
+    <div class="${c4aiPrefix}--chat-error-container">
+      ${unsafeHTML(formatText(content, capitalize))}
+    </div>
   </div>`;
 }

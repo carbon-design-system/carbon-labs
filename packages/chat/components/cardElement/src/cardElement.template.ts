@@ -210,7 +210,82 @@ export function cardElementTemplate(customElementClass) {
                     `}
               </div>
             </div>`
-        : html`<div class="${clabsPrefix}--chat-card-loader">&nbsp;</div>`}
+        : html`${type === 'url'
+              ? html` <div
+                  class="${clabsPrefix}--chat-card-image-container"></div>`
+              : type === 'video'
+              ? html` <div
+                  class="${clabsPrefix}--chat-card-video-container"></div>`
+              : html``}
+
+            <div
+              class="${clabsPrefix}--chat-card-detail-container${type ===
+              'video'
+                ? '-video'
+                : ''}">
+              ${type === 'file'
+                ? html` <div class="${clabsPrefix}--chat-card-detail-side-icon">
+                    ${documentBlank24()}
+                  </div>`
+                : html``}
+              ${type === 'video'
+                ? html` <div class="${clabsPrefix}--chat-card-detail-side-icon">
+                    ${videoPlayer24()}
+                  </div>`
+                : html``}
+              ${type === 'audio'
+                ? html` <div class="${clabsPrefix}--chat-card-detail-side-icon">
+                    ${music24()}
+                  </div>`
+                : html``}
+
+              <div
+                class="${clabsPrefix}--chat-card-detail-side-content${type ===
+                'video'
+                  ? '-video'
+                  : ''}">
+                <div class="${clabsPrefix}--chat-card-detail-title">&nbsp;</div>
+
+                <div class="${clabsPrefix}--chat-card-detail-description">
+                  &nbsp;
+                </div>
+                ${type !== 'audio'
+                  ? html`
+                      <div
+                        class="${clabsPrefix}--chat-card-detail-link-container">
+                        <div
+                          class="${clabsPrefix}--chat-card-detail-link-icon"></div>
+                      </div>
+                    `
+                  : html`
+                      <div
+                        class="${clabsPrefix}--chat-card-detail-audio-container">
+                        <div
+                          class="${clabsPrefix}--chat-card-detail-audio-item">
+                          ${isAudioPlaying
+                            ? html` <cds-button kind="ghost" disabled size="sm">
+                                ${PauseFilled16({ slot: 'icon' })}
+                              </cds-button>`
+                            : html` <cds-button kind="ghost" disabled size="sm">
+                                ${PlayFilledAlt16({ slot: 'icon' })}
+                              </cds-button>`}
+                        </div>
+                        <div
+                          class="${clabsPrefix}--chat-card-detail-audio-progress-bar">
+                          <div
+                            class="${clabsPrefix}--chat-card-detail-audio-progress"
+                            style="width:0%">
+                            &nbsp;
+                          </div>
+                        </div>
+                        <div
+                          class="${clabsPrefix}--chat-card-detail-audio-timer">
+                          00:00/00:00
+                        </div>
+                      </div>
+                    `}
+              </div>
+            </div>`}
     </div>
   </div>`;
 }

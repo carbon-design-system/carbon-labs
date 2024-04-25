@@ -129,8 +129,8 @@
     z-index: 99;
     background: linear-gradient(
       to right,
-      rgba(38, 38, 38, 0),
-      rgba(38, 38, 38, 1)
+      rgba($border-subtle-00, 0),
+      rgba($border-subtle-00, 1)
     );
     block-size: 100%;
     content: '';
@@ -156,8 +156,8 @@
     z-index: 99;
     background: linear-gradient(
       to right,
-      rgba(38, 38, 38, 0),
-      rgba(38, 38, 38, 1)
+      rgba($border-subtle-00, 0),
+      rgba($border-subtle-00, 1)
     );
     block-size: 100%;
     content: '';

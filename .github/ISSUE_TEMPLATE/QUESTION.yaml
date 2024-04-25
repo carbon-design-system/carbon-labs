@@ -31,7 +31,7 @@ body:
         Components library.'
   - type: markdown
     attributes:
-      value: '- `#carbon-for-ai` for questions about the Carbon Labs library.'
+      value: '- `#carbon-labs` for questions about the Carbon Labs library.'
   - type: markdown
     attributes:
       value:

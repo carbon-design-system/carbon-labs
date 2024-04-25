@@ -8,17 +8,17 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import loadingElement from './src/loadingElement.js';
 import { loadingElementTemplate } from './src/loadingElement.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}--chat-loading`)
-class C4AILoadingElement extends loadingElement {
+@customElement(`${clabsPrefix}--chat-loading`)
+class CLABSLoadingElement extends loadingElement {
   /**
    * Renders the template while passing in class functionality
    *
@@ -29,4 +29,4 @@ class C4AILoadingElement extends loadingElement {
   }
 }
 
-export default C4AILoadingElement;
+export default CLABSLoadingElement;

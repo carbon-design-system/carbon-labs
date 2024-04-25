@@ -8,11 +8,11 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import '../../messages/messages.js';
 import '../../header/header.js';
 import '../../footer/footer.js';
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Lit template for Chat interface
@@ -32,10 +32,10 @@ export function chatTemplate(customElementClass) {
     _streamResponses: streamResponses,
   } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-container">
-    <c4ai--chat-header> </c4ai--chat-header>
+  return html`<div class="${clabsPrefix}--chat-container">
+    <clabs--chat-header> </clabs--chat-header>
 
-    <c4ai--chat-messages
+    <clabs--chat-messages
       .messages="${messages}"
       user-name="${userName}"
       agent-name="${agentName}"
@@ -43,8 +43,8 @@ export function chatTemplate(customElementClass) {
       ?stream-responses="${streamResponses}"
       @on-user-regeneration-request="${handleUserRegenerationRequest}"
       @on-user-message-update-request="${handleUserUpdateRequest}">
-    </c4ai--chat-messages>
+    </clabs--chat-messages>
 
-    <c4ai--chat-footer @user-input="${sendInput}"> </c4ai--chat-footer>
+    <clabs--chat-footer @user-input="${sendInput}"> </clabs--chat-footer>
   </div>`;
 }

@@ -64,7 +64,7 @@ export default class editableTextElement extends LitElement {
    */
   _initiateTextAreaHeight() {
     const textArea: any = this.shadowRoot?.querySelector(
-      '.c4ai--chat-editable-text-area'
+      '.clabs--chat-editable-text-area'
     );
 
     if (textArea instanceof HTMLElement) {

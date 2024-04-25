@@ -11,8 +11,8 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$c4ai-prefix}--chat-error) {
-  .#{$c4ai-prefix}--chat-error-container {
+:host(#{$clabs-prefix}--chat-error) {
+  .#{$clabs-prefix}--chat-error-container {
     display: flex;
     padding: 10px;
     border: 1px solid $support-error;

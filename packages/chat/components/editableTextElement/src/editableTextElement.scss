@@ -11,8 +11,8 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$c4ai-prefix}--chat-editable-text) {
-  .#{$c4ai-prefix}--chat-editable-text-area {
+:host(#{$clabs-prefix}--chat-editable-text) {
+  .#{$clabs-prefix}--chat-editable-text-area {
     overflow: hidden;
     padding: 0;
     border: none;
@@ -29,16 +29,16 @@ $css--plex: true !default;
     resize: none;
   }
 
-  .#{$c4ai-prefix}--chat-editable-text-area:focus {
+  .#{$clabs-prefix}--chat-editable-text-area:focus {
     outline: none;
   }
 
-  #{$c4ai-prefix}--chat-editable-text--float-right {
+  #{$clabs-prefix}--chat-editable-text--float-right {
     display: flex;
     justify-content: flex-end;
   }
 
-  #{$c4ai-prefix}--chat-editable-text--float-left {
+  #{$clabs-prefix}--chat-editable-text--float-left {
     display: flex;
     justify-content: flex-start;
   }

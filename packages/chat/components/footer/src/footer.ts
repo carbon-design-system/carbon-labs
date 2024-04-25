@@ -90,7 +90,9 @@ export default class footer extends LitElement {
    * reset height of the text area
    */
   resetTextAreaHeight() {
-    const textArea = this.shadowRoot?.querySelector('.c4ai--chat-search-query');
+    const textArea = this.shadowRoot?.querySelector(
+      '.clabs--chat-search-query'
+    );
     if (textArea instanceof HTMLElement) {
       textArea.style.height = 'auto';
       textArea.style.height = '40px';

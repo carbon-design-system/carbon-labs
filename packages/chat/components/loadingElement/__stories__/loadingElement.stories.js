@@ -22,6 +22,6 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <c4ai--chat-loading content="Hello, how may I help you?">
-  </c4ai--chat-loading>`,
+  render: () => html` <clabs--chat-loading content="Hello, how may I help you?">
+  </clabs--chat-loading>`,
 };

@@ -1,6 +1,6 @@
 {
-  "name": "@carbon/ai-utilities",
-  "version": "0.0.1-rc.1",
+  "name": "@carbon-labs/utilities",
+  "version": "0.4.0",
   "publishConfig": {
     "access": "public",
     "provenance": true

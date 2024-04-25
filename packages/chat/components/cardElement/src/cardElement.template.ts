@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16.js';
 import PlayFilledAlt16 from '@carbon/web-components/es/icons/Play--filled/16.js';
 import PauseFilled16 from '@carbon/web-components/es/icons/Pause--filled/16.js';
@@ -55,17 +55,17 @@ export function cardElementTemplate(customElementClass) {
     _updateAudioProgress: updateAudioProgress,
     _formatAudioTime: formatAudioTime,
   } = customElementClass;
-  return html`<div class="${c4aiPrefix}--chat-card-container">
-    <div class="${c4aiPrefix}--chat-card-main-content">
+  return html`<div class="${clabsPrefix}--chat-card-container">
+    <div class="${clabsPrefix}--chat-card-main-content">
       ${cardData
         ? html` ${cardData.imageUrl && type === 'url'
-              ? html` <div class="${c4aiPrefix}--chat-card-image-container">
+              ? html` <div class="${clabsPrefix}--chat-card-image-container">
                   <img
-                    class="${c4aiPrefix}--chat-card-image"
+                    class="${clabsPrefix}--chat-card-image"
                     src="${cardData.imageUrl}" />
                 </div>`
               : type === 'video'
-              ? html` <div class="${c4aiPrefix}--chat-card-video-container">
+              ? html` <div class="${clabsPrefix}--chat-card-video-container">
                   <video controls>
                     <source src="${content}" type="video/webm" />
                   </video>
@@ -73,11 +73,12 @@ export function cardElementTemplate(customElementClass) {
               : html``}
 
             <div
-              class="${c4aiPrefix}--chat-card-detail-container${type === 'video'
+              class="${clabsPrefix}--chat-card-detail-container${type ===
+              'video'
                 ? '-video'
                 : ''}">
               ${fileType && type === 'file'
-                ? html` <div class="${c4aiPrefix}--chat-card-detail-side-icon">
+                ? html` <div class="${clabsPrefix}--chat-card-detail-side-icon">
                     ${fileType === 'mp3'
                       ? html`${mp324()}`
                       : fileType === 'mp4'
@@ -112,7 +113,7 @@ export function cardElementTemplate(customElementClass) {
                   </div>`
                 : html``}
               ${type === 'video'
-                ? html` <div class="${c4aiPrefix}--chat-card-detail-side-icon">
+                ? html` <div class="${clabsPrefix}--chat-card-detail-side-icon">
                     ${videoPlayer24()}
                   </div>`
                 : html``}
@@ -120,7 +121,7 @@ export function cardElementTemplate(customElementClass) {
                 ? html`
                     ${fileType !== 'unknown'
                       ? html` <div
-                          class="${c4aiPrefix}--chat-card-detail-side-icon">
+                          class="${clabsPrefix}--chat-card-detail-side-icon">
                           ${fileType === 'mp3'
                             ? html`${mp324()}`
                             : fileType === 'wmv'
@@ -132,29 +133,29 @@ export function cardElementTemplate(customElementClass) {
                 : html``}
 
               <div
-                class="${c4aiPrefix}--chat-card-detail-side-content${type ===
+                class="${clabsPrefix}--chat-card-detail-side-content${type ===
                 'video'
                   ? '-video'
                   : ''}">
-                <div class="${c4aiPrefix}--chat-card-detail-title">
+                <div class="${clabsPrefix}--chat-card-detail-title">
                   ${cardData.title}
                 </div>
 
-                <div class="${c4aiPrefix}--chat-card-detail-description">
+                <div class="${clabsPrefix}--chat-card-detail-description">
                   ${cardData.description ? cardData.description : ''}
                 </div>
                 ${type !== 'audio'
                   ? html`
                       <div
-                        class="${c4aiPrefix}--chat-card-detail-link-container">
+                        class="${clabsPrefix}--chat-card-detail-link-container">
                         <a
-                          class="${c4aiPrefix}--chat-card-detail-link"
+                          class="${clabsPrefix}--chat-card-detail-link"
                           href="${cardData.link}"
                           target="_blank"
                           >${cardData.shortenedUrl}</a
                         >
 
-                        <div class="${c4aiPrefix}--chat-card-detail-link-icon">
+                        <div class="${clabsPrefix}--chat-card-detail-link-icon">
                           <a href="${cardData.link}" target="_blank">
                             ${ArrowRight16()}
                           </a>
@@ -163,8 +164,9 @@ export function cardElementTemplate(customElementClass) {
                     `
                   : html`
                       <div
-                        class="${c4aiPrefix}--chat-card-detail-audio-container">
-                        <div class="${c4aiPrefix}--chat-card-detail-audio-item">
+                        class="${clabsPrefix}--chat-card-detail-audio-container">
+                        <div
+                          class="${clabsPrefix}--chat-card-detail-audio-item">
                           ${isAudioPlaying
                             ? html` <cds-button
                                 kind="ghost"
@@ -179,22 +181,22 @@ export function cardElementTemplate(customElementClass) {
                                 ${PlayFilledAlt16({ slot: 'icon' })}
                               </cds-button>`}
                         </div>
-                        <!-- <div class="${c4aiPrefix}--chat-card-detail-audio-item">
+                        <!-- <div class="${clabsPrefix}--chat-card-detail-audio-item">
                 <cds-button kind="ghost" size="sm" disabled>
                   ${VolumeMute16({ slot: 'icon' })}
                 </cds-button>
                 </div>-->
                         <div
-                          class="${c4aiPrefix}--chat-card-detail-audio-progress-bar">
+                          class="${clabsPrefix}--chat-card-detail-audio-progress-bar">
                           <div
-                            class="${c4aiPrefix}--chat-card-detail-audio-progress"
+                            class="${clabsPrefix}--chat-card-detail-audio-progress"
                             style="width:${(audioProgress / audioDuration) *
                             100}%">
                             &nbsp;
                           </div>
                         </div>
                         <div
-                          class="${c4aiPrefix}--chat-card-detail-audio-timer">
+                          class="${clabsPrefix}--chat-card-detail-audio-timer">
                           ${formatAudioTime(audioProgress)}/${formatAudioTime(
                             audioDuration
                           )}
@@ -208,7 +210,7 @@ export function cardElementTemplate(customElementClass) {
                     `}
               </div>
             </div>`
-        : html`<div class="${c4aiPrefix}--chat-card-loader">&nbsp;</div>`}
+        : html`<div class="${clabsPrefix}--chat-card-loader">&nbsp;</div>`}
     </div>
   </div>`;
 }

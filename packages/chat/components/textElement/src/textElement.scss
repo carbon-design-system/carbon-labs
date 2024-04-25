@@ -11,7 +11,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$c4ai-prefix}--chat-text) {
+:host(#{$clabs-prefix}--chat-text) {
   overflow: hidden;
 
   font-family: 'IBM Plex Sans', sans-serif;
@@ -21,16 +21,16 @@ $css--plex: true !default;
   letter-spacing: 0.16px;
   line-height: 24px;
 
-  #{$c4ai-prefix}--chat-text--float-right {
+  #{$clabs-prefix}--chat-text--float-right {
     display: flex;
     justify-content: flex-end;
   }
 
-  #{$c4ai-prefix}--chat-text--content {
+  #{$clabs-prefix}--chat-text--content {
     flex-grow: 1;
   }
 
-  #{$c4ai-prefix}--chat-text--float-left {
+  #{$clabs-prefix}--chat-text--float-left {
     display: flex;
     justify-content: flex-start;
   }

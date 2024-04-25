@@ -11,11 +11,11 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$c4ai-prefix}--chat-table) {
+:host(#{$clabs-prefix}--chat-table) {
   overflow: hidden;
   inline-size: 100%;
 
-  .#{$c4ai-prefix}--chat-table-container {
+  .#{$clabs-prefix}--chat-table-container {
     overflow: scroll;
 
     box-sizing: border-box;
@@ -25,7 +25,7 @@ $css--plex: true !default;
     inline-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-table-error {
+  .#{$clabs-prefix}--chat-table-error {
     padding: 10px;
     border: 1px solid $support-error;
     border-radius: 8px;

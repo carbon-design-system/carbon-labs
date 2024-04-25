@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 import '@carbon/web-components/es/components/tag/index.js';
 import '@carbon/web-components/es/components/chat-button/index.js';
 import Add16 from '@carbon/web-components/es/icons/add/16';
@@ -28,15 +28,15 @@ export function tagListElementTemplate(customElementClass) {
     _handleTagClick: handleTagClick,
   } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-tag-list">
+  return html`<div class="${clabsPrefix}--chat-tag-list">
     ${invalid === true
-      ? html` <div class="${c4aiPrefix}--chat-tag-list-error">
+      ? html` <div class="${clabsPrefix}--chat-tag-list-error">
           ${errorMessage}
         </div>`
-      : html` <div class="${c4aiPrefix}--chat-tag-list-container">
+      : html` <div class="${clabsPrefix}--chat-tag-list-container">
           ${tagList.map(
             (value) =>
-              html` <div class="${c4aiPrefix}--chat-tag-list-container-cell">
+              html` <div class="${clabsPrefix}--chat-tag-list-container-cell">
                 <cds-chat-button
                   kind="ghost"
                   size="sm"

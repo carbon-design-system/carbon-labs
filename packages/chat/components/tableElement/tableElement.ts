@@ -8,17 +8,17 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import tableElement from './src/tableElement.js';
 import { tableElementTemplate } from './src/tableElement.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}--chat-table`)
-class C4AITableElement extends tableElement {
+@customElement(`${clabsPrefix}--chat-table`)
+class CLABSTableElement extends tableElement {
   /**
    * Renders the template while passing in class functionality
    *
@@ -29,4 +29,4 @@ class C4AITableElement extends tableElement {
   }
 }
 
-export default C4AITableElement;
+export default CLABSTableElement;

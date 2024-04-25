@@ -52,8 +52,8 @@ export const Default = {
    */
   render: () => html` <div
     style="height:calc(100vh - 84px); overflow:hidden; display:flex;max-width:100%;width:100%;">
-    <c4ai--chat-carousel content="${carouselExamples[0].content}">
-    </c4ai--chat-carousel>
+    <clabs--chat-carousel content="${carouselExamples[0].content}">
+    </clabs--chat-carousel>
   </div>`,
 };
 
@@ -70,8 +70,8 @@ export const Showcase = {
         html`
           <div style="width:100%">
             <h5>${example.name}</h5>
-            <c4ai--chat-carousel content="${example.content}">
-            </c4ai--chat-carousel>
+            <clabs--chat-carousel content="${example.content}">
+            </clabs--chat-carousel>
           </div>
         `
     )}

@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Lit template for card
@@ -20,12 +20,12 @@ const { stablePrefix: c4aiPrefix } = settings;
 export function tableElementTemplate(customElementClass) {
   const { _tableObject: tableObject, _invalid: invalid } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-table">
+  return html`<div class="${clabsPrefix}--chat-table">
     ${invalid === true
-      ? html` <div class="${c4aiPrefix}--chat-table-error">
+      ? html` <div class="${clabsPrefix}--chat-table-error">
           <p>Error displaying table</p>
         </div>`
-      : html` <div class="${c4aiPrefix}--chat-table-container">
+      : html` <div class="${clabsPrefix}--chat-table-container">
           <table>
             <thead>
               <tr>

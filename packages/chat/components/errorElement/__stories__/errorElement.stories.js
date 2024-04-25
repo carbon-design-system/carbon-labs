@@ -22,6 +22,6 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <c4ai--chat-error content="Hello, how may I help you?">
-  </c4ai--chat-error>`,
+  render: () => html` <clabs--chat-error content="Hello, how may I help you?">
+  </clabs--chat-error>`,
 };

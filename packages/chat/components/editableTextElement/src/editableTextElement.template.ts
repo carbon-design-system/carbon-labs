@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Lit template for code
@@ -24,16 +24,16 @@ export function editableTextElementTemplate(customElementClass) {
     alignRight,
   } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-editable-text">
+  return html`<div class="${clabsPrefix}--chat-editable-text">
     <div
-      class="${c4aiPrefix}--chat-editable-text--float-${alignRight
+      class="${clabsPrefix}--chat-editable-text--float-${alignRight
         ? 'right'
         : 'left'}">
       <textarea
         .value="${content}"
         @keydown="${setEditedMessage}"
         @keyup="${setEditedMessage}"
-        class="${c4aiPrefix}--chat-editable-text-area">
+        class="${clabsPrefix}--chat-editable-text-area">
               ${content}
           </textarea
       >

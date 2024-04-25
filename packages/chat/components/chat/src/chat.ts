@@ -16,7 +16,7 @@ import styles from './chat.scss?inline';
 /**
  * Input component using search typeahead api
  */
-export default class C4AIChat extends LitElement {
+export default class CLABSChat extends LitElement {
   static styles = styles;
 
   /**

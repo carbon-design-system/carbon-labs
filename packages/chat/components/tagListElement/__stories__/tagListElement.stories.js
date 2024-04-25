@@ -22,7 +22,7 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <c4ai--chat-tag-list
+  render: () => html` <clabs--chat-tag-list
     content="${'["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'}">
-  </c4ai--chat-tag-list>`,
+  </clabs--chat-tag-list>`,
 };

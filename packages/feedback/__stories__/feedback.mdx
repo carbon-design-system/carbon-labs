@@ -1,0 +1,64 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import * as FeedbackStories from './feedback.stories';
+import packageJson from '../package.json';
+
+<Meta of={FeedbackStories} />
+
+# Feedback
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/feedback/examples/feedback)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/feedback/examples/feedback)
+
+## Overview
+
+The feedback component allows the user to highlight parts from the generated AI
+content and submit feedback.
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/ai-feedback/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['feedback'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+```html
+<clabs-feedback model="llama2">
+  <svg
+    focusable="false"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    aria-hidden="true"
+    width="24"
+    height="24"
+    viewBox="0 0 32 32"
+    slot="icon">
+    <path d="M6,30H4V2H28l-5.8,9L28,20H6ZM6,18H24.33L19.8,11l4.53-7H6Z"></path>
+  </svg>
+  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for
+  those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et
+  Malorum" by Cicero are also reproduced in their exact original form,
+  accompanied by English versions from the 1914 translation by H.
+  Rackham.</clabs-feedback
+>
+```
+
+<ArgTypes of="clabs-feedback" />

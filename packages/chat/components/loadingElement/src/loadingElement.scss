@@ -9,11 +9,11 @@
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/colors' as *;
 
-:host(#{$c4ai-prefix}--chat-loading) {
+:host(#{$clabs-prefix}--chat-loading) {
   display: block;
   overflow: hidden;
 
-  .#{$c4ai-prefix}--chat-loading-container {
+  .#{$clabs-prefix}--chat-loading-container {
     position: relative;
     overflow: hidden;
     border-radius: 9px;
@@ -22,7 +22,7 @@
     inline-size: 100%;
   }
   @media screen and (prefers-reduced-motion: reduce) {
-    .#{$c4ai-prefix}--chat-loading-bar {
+    .#{$clabs-prefix}--chat-loading-bar {
       position: absolute;
       animation: none;
       background-color: $blue-50;
@@ -31,7 +31,7 @@
     }
   }
 
-  .#{$c4ai-prefix}--chat-loading-bar {
+  .#{$clabs-prefix}--chat-loading-bar {
     position: absolute;
     animation: loading-animation 2000ms linear infinite;
     background-color: $blue-50;

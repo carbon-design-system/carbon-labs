@@ -271,7 +271,7 @@ export default class carouselElement extends LitElement {
    */
   _scrollSlideContainer() {
     const slidesDiv = this.shadowRoot?.querySelector(
-      '.c4ai--chat-carousel-slides'
+      '.clabs--chat-carousel-slides'
     );
     //const scrollPosition = Math.round((this._slideCounter/this._carouselContent.length) * slidesDiv?.scrollWidth + 8)
     const scrollPosition =

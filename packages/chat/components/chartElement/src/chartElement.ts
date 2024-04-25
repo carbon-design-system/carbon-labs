@@ -9,10 +9,10 @@
 
 import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import * as VegaEmbed from 'vega-embed';
 //import { getTheme, getPalettes } from 'carbon-charts/themes'
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 // @ts-ignore
 import styles from './chartElement.scss?inline';
@@ -206,7 +206,7 @@ export default class chartElement extends LitElement {
    */
   _buildLoader() {
     const cells = new Array(100).fill(
-      '<div class="' + c4aiPrefix + '--chat-chart-loading-grid-cell"></div>'
+      '<div class="' + clabsPrefix + '--chat-chart-loading-grid-cell"></div>'
     );
     return cells.join('');
   }
@@ -215,7 +215,7 @@ export default class chartElement extends LitElement {
    * _displayVisualization - get unique tag and generate vega lite
    */
   async _displayVisualization() {
-    const targetID = '#' + c4aiPrefix + '--chat-embed-vis-' + this._uniqueID;
+    const targetID = '#' + clabsPrefix + '--chat-embed-vis-' + this._uniqueID;
     const targetDiv = this.shadowRoot?.querySelector<HTMLElement>(targetID);
     if (!targetDiv) {
       return '';
@@ -320,7 +320,7 @@ export default class chartElement extends LitElement {
       const currentContainerHeight = this.clientHeight;
       /*
       const chartArea = this.shadowRoot?.querySelector(
-        '.c4ai--chat-chart-container'
+        '.clabs--chat-chart-container'
       );
       if (chartArea instanceof HTMLElement) {
         currentContainerHeight=chartArea.style.height;

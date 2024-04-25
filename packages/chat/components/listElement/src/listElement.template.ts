@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 /**
@@ -21,7 +21,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 export function listElementTemplate(customElementClass) {
   const { _renderedList: renderedList } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-list">
+  return html`<div class="${clabsPrefix}--chat-list">
     ${unsafeHTML(renderedList)}
   </div>`;
 }

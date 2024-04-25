@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 /**
@@ -26,10 +26,10 @@ export function textElementTemplate(customElementClass) {
     alignRight,
   } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-text">
+  return html`<div class="${clabsPrefix}--chat-text">
     <div
-      class="${c4aiPrefix}--chat-text--float-${alignRight ? 'right' : 'left'}">
-      <div class="${c4aiPrefix}--chat-text--content">
+      class="${clabsPrefix}--chat-text--float-${alignRight ? 'right' : 'left'}">
+      <div class="${clabsPrefix}--chat-text--content">
         ${unsafeHTML(formatText(content, capitalize))}
       </div>
     </div>

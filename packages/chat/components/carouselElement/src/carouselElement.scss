@@ -11,27 +11,27 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$c4ai-prefix}--chat-carousel) {
+:host(#{$clabs-prefix}--chat-carousel) {
   display: flex;
   overflow: hidden;
   background: none;
   inline-size: 100%;
 
-  .#{$c4ai-prefix}--chat-carousel-container {
+  .#{$clabs-prefix}--chat-carousel-container {
     display: flex;
     flex-direction: column;
     gap: 6px;
     inline-size: var(--chat-carousel-slides-width, '248px');
   }
 
-  .#{$c4ai-prefix}--chat-carousel-length {
+  .#{$clabs-prefix}--chat-carousel-length {
     block-size: 16px;
     color: $text-secondary;
     font-size: 12px;
     text-align: start;
   }
 
-  .#{$c4ai-prefix}--chat-carousel-slides {
+  .#{$clabs-prefix}--chat-carousel-slides {
     display: flex;
     overflow: hidden;
     flex-direction: row;
@@ -40,7 +40,7 @@ $css--plex: true !default;
     min-block-size: 0;
   }
 
-  .#{$c4ai-prefix}--chat-carousel-slide {
+  .#{$clabs-prefix}--chat-carousel-slide {
     display: flex;
     overflow: hidden;
     flex: 0 0 auto;
@@ -50,14 +50,14 @@ $css--plex: true !default;
     inline-size: 248px;
   }
 
-  .#{$c4ai-prefix}--chat-carousel-img {
+  .#{$clabs-prefix}--chat-carousel-img {
     block-size: 100%;
     inline-size: 100%;
     object-fit: cover;
     object-position: center;
   }
 
-  .#{$c4ai-prefix}--chat-carousel-controls {
+  .#{$clabs-prefix}--chat-carousel-controls {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -65,7 +65,7 @@ $css--plex: true !default;
     gap: 8px;
     inline-size: 100%;
   }
-  .#{$c4ai-prefix}--chat-carousel-control-item {
+  .#{$clabs-prefix}--chat-carousel-control-item {
     block-size: 32px;
     font-size: 14px;
     line-height: 30px;

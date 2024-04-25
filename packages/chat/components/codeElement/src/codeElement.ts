@@ -69,7 +69,7 @@ export default class codeElement extends LitElement {
       let lineType = '';
       const trimmedLine = lines[i].replace(/\t/g, '');
       if (trimmedLine.startsWith('#') || trimmedLine.startsWith('//')) {
-        lineType = 'c4ai--chat-code-line-comment';
+        lineType = 'clabs--chat-code-line-comment';
       }
 
       let tabOffset = paddingLeft;
@@ -78,9 +78,9 @@ export default class codeElement extends LitElement {
         tabOffset += tabMatch[0].length * tabWidth;
       }
       textValues.push(
-        '<div class="c4ai--chat-code-line"><div class="c4ai--chat-code-line-tick">' +
+        '<div class="clabs--chat-code-line"><div class="clabs--chat-code-line-tick">' +
           i.toString() +
-          '</div><div class="c4ai--chat-code-line-divider"></div><div class="c4ai--chat-code-line-text ' +
+          '</div><div class="clabs--chat-code-line-divider"></div><div class="clabs--chat-code-line-text ' +
           lineType +
           '" style="padding-left:' +
           tabOffset +

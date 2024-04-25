@@ -124,7 +124,7 @@ export default class messages extends LitElement {
    **/
   _updateScroll() {
     const scrollDiv = this.shadowRoot?.querySelector(
-      '.c4ai--chat-messages-container'
+      '.clabs--chat-messages-container'
     );
 
     if (scrollDiv instanceof HTMLElement) {

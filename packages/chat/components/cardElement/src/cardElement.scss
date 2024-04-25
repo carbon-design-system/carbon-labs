@@ -9,8 +9,8 @@
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/colors' as *;
 
-:host(#{$c4ai-prefix}--chat-card) {
-  .#{$c4ai-prefix}--chat-card-container {
+:host(#{$clabs-prefix}--chat-card) {
+  .#{$clabs-prefix}--chat-card-container {
     display: flex;
     overflow: hidden;
     box-sizing: border-box;
@@ -22,7 +22,7 @@
     inline-size: 248px;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-side-icon {
+  .#{$clabs-prefix}--chat-card-detail-side-icon {
     display: flex;
 
     box-sizing: border-box;
@@ -30,7 +30,7 @@
     padding-inline-end: 8px;
   }
 
-  .#{$c4ai-prefix}--chat-card-main-content {
+  .#{$clabs-prefix}--chat-card-main-content {
     display: flex;
     overflow: hidden;
     box-sizing: border-box;
@@ -38,14 +38,14 @@
     flex-grow: 1;
   }
 
-  .#{$c4ai-prefix}--chat-card-image-container {
+  .#{$clabs-prefix}--chat-card-image-container {
     overflow: hidden;
     background: $background;
     block-size: 124px;
     inline-size: 248px;
   }
 
-  .#{$c4ai-prefix}--chat-card-image-container img {
+  .#{$clabs-prefix}--chat-card-image-container img {
     overflow: hidden;
     background: $blue-10;
     block-size: auto;
@@ -53,7 +53,7 @@
     min-block-size: 124px;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-container {
+  .#{$clabs-prefix}--chat-card-detail-container {
     display: flex;
     overflow: hidden;
     box-sizing: border-box;
@@ -64,7 +64,7 @@
     inline-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-container-video {
+  .#{$clabs-prefix}--chat-card-detail-container-video {
     display: flex;
     overflow: hidden;
     box-sizing: border-box;
@@ -75,7 +75,7 @@
     inline-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-side-content {
+  .#{$clabs-prefix}--chat-card-detail-side-content {
     display: flex;
     overflow: hidden;
     box-sizing: border-box;
@@ -84,7 +84,7 @@
     gap: 4px;
     inline-size: 100%;
   }
-  .#{$c4ai-prefix}--chat-card-detail-side-content-video {
+  .#{$clabs-prefix}--chat-card-detail-side-content-video {
     display: flex;
     overflow: hidden;
     box-sizing: border-box;
@@ -94,7 +94,7 @@
     inline-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-card-video-container {
+  .#{$clabs-prefix}--chat-card-video-container {
     display: flex;
     overflow: hidden;
     align-items: center;
@@ -104,14 +104,14 @@
     inline-size: 248px;
   }
 
-  .#{$c4ai-prefix}--chat-card-video-container video {
+  .#{$clabs-prefix}--chat-card-video-container video {
     overflow: hidden;
     block-size: auto;
     inline-size: 100%;
     max-block-size: 164px;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-title {
+  .#{$clabs-prefix}--chat-card-detail-title {
     position: relative;
     overflow: hidden;
     block-size: 22px;
@@ -124,7 +124,7 @@
     white-space: nowrap;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-title::after {
+  .#{$clabs-prefix}--chat-card-detail-title::after {
     position: absolute;
     z-index: 99;
     background: linear-gradient(
@@ -140,7 +140,7 @@
     pointer-events: none;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-description {
+  .#{$clabs-prefix}--chat-card-detail-description {
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
@@ -151,7 +151,7 @@
     white-space: nowrap;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-description::after {
+  .#{$clabs-prefix}--chat-card-detail-description::after {
     position: absolute;
     z-index: 99;
     background: linear-gradient(
@@ -167,19 +167,19 @@
     pointer-events: none;
   }
 
-  .#{$c4ai-prefix}--chat-card-loader {
+  .#{$clabs-prefix}--chat-card-loader {
     flex-grow: 2;
     background-color: $link-primary;
     block-size: 248px;
   }
 
-  .#{$c4ai-prefix}--chat-card-loader-file {
+  .#{$clabs-prefix}--chat-card-loader-file {
     flex-grow: 2;
     background-color: $link-primary;
     block-size: 124px;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-link-container {
+  .#{$clabs-prefix}--chat-card-detail-link-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -187,7 +187,7 @@
     font-size: 12px;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-link {
+  .#{$clabs-prefix}--chat-card-detail-link {
     color: $link-primary;
     text-decoration: none;
     white-space: nowrap;
@@ -198,33 +198,33 @@
     }
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-link-icon {
+  .#{$clabs-prefix}--chat-card-detail-link-icon {
     color: $link-primary;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-link-icon svg {
+  .#{$clabs-prefix}--chat-card-detail-link-icon svg {
     fill: $link-primary;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-audio-container {
+  .#{$clabs-prefix}--chat-card-detail-audio-container {
     display: flex;
     box-sizing: border-box;
     flex-grow: 1;
     align-items: center;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-audio-item {
+  .#{$clabs-prefix}--chat-card-detail-audio-item {
     color: $text-secondary;
     font-size: 10px;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-audio-timer {
+  .#{$clabs-prefix}--chat-card-detail-audio-timer {
     color: $text-secondary;
     font-size: 10px;
     padding-inline: 8px 9px;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-audio-progress-bar {
+  .#{$clabs-prefix}--chat-card-detail-audio-progress-bar {
     position: relative;
     box-sizing: border-box;
     flex-grow: 1;
@@ -233,7 +233,7 @@
     block-size: 4px;
   }
 
-  .#{$c4ai-prefix}--chat-card-detail-audio-progress {
+  .#{$clabs-prefix}--chat-card-detail-audio-progress {
     background: $link-primary;
     block-size: 4px;
     inline-size: 0%;

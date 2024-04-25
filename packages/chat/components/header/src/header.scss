@@ -11,7 +11,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$c4ai-prefix}--chat-header) {
+:host(#{$clabs-prefix}--chat-header) {
   position: absolute;
   display: flex;
   align-items: center;
@@ -22,14 +22,14 @@ $css--plex: true !default;
   inset-inline: 0;
   min-block-size: 40px;
 
-  .#{$c4ai-prefix}--chat-header-container {
+  .#{$clabs-prefix}--chat-header-container {
     background: none;
     inline-size: 100%;
     max-inline-size: 672px;
     min-block-size: 40px;
   }
 
-  .#{$c4ai-prefix}--chat-header-content {
+  .#{$clabs-prefix}--chat-header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -37,7 +37,7 @@ $css--plex: true !default;
     block-size: 40px;
   }
 
-  .#{$c4ai-prefix}--chat-header-elements {
+  .#{$clabs-prefix}--chat-header-elements {
     display: flex;
     flex-grow: 1;
     align-items: center;
@@ -45,7 +45,7 @@ $css--plex: true !default;
     padding-inline: 10px;
   }
 
-  .#{$c4ai-prefix}--chat-header-elements-left {
+  .#{$clabs-prefix}--chat-header-elements-left {
     display: flex;
     flex-grow: 1;
     align-items: center;
@@ -53,28 +53,28 @@ $css--plex: true !default;
     gap: 10px;
   }
 
-  .#{$c4ai-prefix}--chat-header-elements-right {
+  .#{$clabs-prefix}--chat-header-elements-right {
     display: flex;
     align-items: center;
     block-size: 100%;
     gap: 20px;
   }
 
-  .#{$c4ai-prefix}--chat-header-elements-icon {
+  .#{$clabs-prefix}--chat-header-elements-icon {
     display: flex;
     align-items: center;
     justify-content: center;
     block-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-header-title {
+  .#{$clabs-prefix}--chat-header-title {
     font-size: 14px;
     font-weight: 600;
     line-height: 18px;
     white-space: nowrap;
   }
 
-  .#{$c4ai-prefix}--chat-header-elements-icon svg {
+  .#{$clabs-prefix}--chat-header-elements-icon svg {
     block-size: 24px;
     inline-size: 24px;
   }

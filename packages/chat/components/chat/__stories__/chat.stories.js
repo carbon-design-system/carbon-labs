@@ -26,7 +26,7 @@ export const Default = {
    */
   render: () => html`
     <div style="height:calc(100vh - 84px); overflow:hidden;">
-      <c4ai-chat
+      <clabs-chat
         user-name="user"
         agent-name="bot"
         .conversation="${[
@@ -53,7 +53,7 @@ export const Default = {
         }}"
         @on-update-request="${(event) => {
           console.log(event);
-        }}"></c4ai-chat>
+        }}"></clabs-chat>
     </div>
   `,
 };
@@ -100,9 +100,6 @@ export const APIPlayground = {
       expanded: true,
     },
     layout: 'fullscreen',
-    viewport: {
-      defaultViewport: 'storybook-default',
-    },
   },
   /**
    * Renders the template for Playground Storybook
@@ -115,7 +112,7 @@ export const APIPlayground = {
    */
   render: ({ apiUrl, feedbackUrl, userPrompt, temperature }) => html`
     <div style="height:calc(100vh - 84px);">
-      <c4ai-chat
+      <clabs-chat
         model="llama-2"
         auto-update
         user-prompt="${userPrompt}"
@@ -124,7 +121,7 @@ export const APIPlayground = {
         temperature="${temperature}"
         user-name="user"
         agent-name="bot">
-      </c4ai-chat>
+      </clabs-chat>
     </div>
   `,
 };
@@ -303,22 +300,22 @@ export const Slotting = {
    */
   render: ({ userName, agentName, conversation }) => html`
     <div style="height:calc(100vh - 84px); overflow:hidden;">
-      <c4ai-chat user-name="${userName}" agent-name="${agentName}" conversation="${conversation}">
-        <c4ai--chat-header> </c4ai--chat-header>
+      <clabs-chat user-name="${userName}" agent-name="${agentName}" conversation="${conversation}">
+        <clabs--chat-header> </clabs--chat-header>
 
-        <c4ai--chat-messages user-name="user" agent-name="bot">
+        <clabs--chat-messages user-name="user" agent-name="bot">
         
-          <c4ai--chat-message origin="user" time-stamp="9:02pm" index="0" @message-updated="${(
+          <clabs--chat-message origin="user" time-stamp="9:02pm" index="0" @message-updated="${(
             e
           ) => {
             console.log(e);
           }}">
             <slot name="message-elements">
-              <c4ai--chat-text content="Showcase every type of Element available in this Chat component."> <c4ai--chat-text/>
+              <clabs--chat-text content="Showcase every type of Element available in this Chat component."> <clabs--chat-text/>
             </slot>
-          </c4ai--chat-message>
+          </clabs--chat-message>
 
-          <c4ai--chat-message origin="bot" time-stamp="9:04pm" index="1" @regenerate="${(
+          <clabs--chat-message origin="bot" time-stamp="9:04pm" index="1" @regenerate="${(
             e
           ) => {
             console.log(e);
@@ -328,34 +325,34 @@ export const Slotting = {
     console.log(e);
   }}">
             <slot name="message-elements">
-              <c4ai--chat-text content='This is a textElement, and here the following elements: imageElement, cardElement (url), cardElement(video), tableElement, codeElement, errorElement, loadingElement, tagListElement, listElement and chartElement:' />
+              <clabs--chat-text content='This is a textElement, and here the following elements: imageElement, cardElement (url), cardElement(video), tableElement, codeElement, errorElement, loadingElement, tagListElement, listElement and chartElement:' />
 
-              <c4ai--chat-img content= 'https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg'/>
+              <clabs--chat-img content= 'https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg'/>
       
-              <c4ai--chat-card type="url" content='https://www.wikipedia.org/wiki/Apollo_11'/>
+              <clabs--chat-card type="url" content='https://www.wikipedia.org/wiki/Apollo_11'/>
       
-              <c4ai--chat-card type="video" content='https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7d/Apollo_11._Television_clip_of_Buzz_descending_the_ladder_and_stepping_onto_the_moon%2C_1094228.ogv/Apollo_11._Television_clip_of_Buzz_descending_the_ladder_and_stepping_onto_the_moon%2C_1094228.ogv.360p.webm'/>
+              <clabs--chat-card type="video" content='https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7d/Apollo_11._Television_clip_of_Buzz_descending_the_ladder_and_stepping_onto_the_moon%2C_1094228.ogv/Apollo_11._Television_clip_of_Buzz_descending_the_ladder_and_stepping_onto_the_moon%2C_1094228.ogv.360p.webm'/>
       
-              <c4ai--chat-table content='Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY'/>
+              <clabs--chat-table content='Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY'/>
       
-              <c4ai--chat-code content='from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n'/>
+              <clabs--chat-code content='from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n'/>
       
-              <c4ai--chat-error content='SEGMENTATION ERROR: Failed to render the content provided. (example)'/>
+              <clabs--chat-error content='SEGMENTATION ERROR: Failed to render the content provided. (example)'/>
       
-              <c4ai--chat-loading content=''/>
+              <clabs--chat-loading content=''/>
    
-              <c4ai--chat-tags content='["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'/>
+              <clabs--chat-tags content='["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'/>
       
-              <c4ai--chat-list content='1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)'/>
+              <clabs--chat-list content='1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)'/>
                 
-              <c4ai--chat-chart content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"US Unemployment by county","data":{"url":"https://vega.github.io/editor/data/us-10m.json","format":{"type":"topojson","feature":"counties"}},"transform":[{"lookup":"id","from":{"data":{"url":"https://vega.github.io/editor/data/unemployment.tsv"},"key":"id","fields":["rate"]}}],"projection":{"type":"albersUsa"},"mark":"geoshape","encoding":{"color":{"field":"rate","type":"quantitative"}}}'/>
+              <clabs--chat-chart content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"US Unemployment by county","data":{"url":"https://vega.github.io/editor/data/us-10m.json","format":{"type":"topojson","feature":"counties"}},"transform":[{"lookup":"id","from":{"data":{"url":"https://vega.github.io/editor/data/unemployment.tsv"},"key":"id","fields":["rate"]}}],"projection":{"type":"albersUsa"},"mark":"geoshape","encoding":{"color":{"field":"rate","type":"quantitative"}}}'/>
             </slot>
-          </c4ai--chat-message>
+          </clabs--chat-message>
 
-        </c4ai--chat-messages>
+        </clabs--chat-messages>
 
-        <c4ai--chat-footer> </c4ai--chat-footer>
-      </c4ai-chat>
+        <clabs--chat-footer> </clabs--chat-footer>
+      </clabs-chat>
     </div>
     
   `,
@@ -445,16 +442,16 @@ export const LLMTextPlayground = {
       style="height:calc(100vh - 132px); overflow:hidden; display:inline-flex;max-width:100%;">
       <div style="height:calc(100vh - 132px); flex:1;">
         ${queryMode == 'Examples'
-          ? html` <c4ai-chat
+          ? html` <clabs-chat
               sample-query="${rawTextExamples[sampleQuery]}"
               user-name="user"
               agent-name="bot">
-            </c4ai-chat>`
-          : html` <c4ai-chat
+            </clabs-chat>`
+          : html` <clabs-chat
               sample-query="${rawText}"
               user-name="user"
               agent-name="bot">
-            </c4ai-chat>`}
+            </clabs-chat>`}
       </div>
       ${sampleQuery !== 'None' && queryMode == 'Examples'
         ? html`
@@ -500,18 +497,18 @@ export const StreamTextPlayground = {
       style="height:calc(100vh - 132px); overflow:hidden; display:inline-flex;max-width:100%;">
       <div style="height:calc(100vh - 132px); flex:1;">
         ${queryMode == 'Examples'
-          ? html` <c4ai-chat
+          ? html` <clabs-chat
               sample-query="${rawTextExamples[sampleQuery]}"
               user-name="user"
               stream-responses
               agent-name="bot">
-            </c4ai-chat>`
-          : html` <c4ai-chat
+            </clabs-chat>`
+          : html` <clabs-chat
               sample-query="${rawText}"
               user-name="user"
               stream-responses
               agent-name="bot">
-            </c4ai-chat>`}
+            </clabs-chat>`}
       </div>
       ${sampleQuery !== 'None' && queryMode == 'Examples'
         ? html`
@@ -1089,7 +1086,7 @@ export const Playground = {
       style="height:calc(100vh - 84px); overflow:hidden; display:inline-flex;max-width:100%;width:100%;">
       <div style="height:calc(100vh - 84px); flex:1;">
         ${testMode === 'Examples'
-          ? html` <c4ai-chat
+          ? html` <clabs-chat
               .conversation="${conversationExamples[sampleConversation]}"
               @on-user-message-update-request="${(e) => {
                 console.log(e);
@@ -1108,8 +1105,8 @@ export const Playground = {
               }}"
               user-name="user"
               agent-name="bot">
-            </c4ai-chat>`
-          : html` <c4ai-chat
+            </clabs-chat>`
+          : html` <clabs-chat
               .conversation="${conversationJSON}"
               user-name="user"
               @on-user-message-update-request="${(e) => {
@@ -1128,7 +1125,7 @@ export const Playground = {
                 console.log(e);
               }}"
               agent-name="bot">
-            </c4ai-chat>`}
+            </clabs-chat>`}
       </div>
       ${testMode === 'Examples' &&
       sampleConversation !== 'None' &&

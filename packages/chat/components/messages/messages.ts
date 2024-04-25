@@ -8,17 +8,17 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import messages from './src/messages.js';
 import { messagesTemplate } from './src/messages.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}--chat-messages`)
-class C4AIMessages extends messages {
+@customElement(`${clabsPrefix}--chat-messages`)
+class CLABSMessages extends messages {
   /**
    * Renders the template while passing in class functionality
    *
@@ -28,5 +28,4 @@ class C4AIMessages extends messages {
     return messagesTemplate(this);
   }
 }
-
-export default C4AIMessages;
+export default CLABSMessages;

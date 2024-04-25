@@ -11,7 +11,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$c4ai-prefix}--chat-footer) {
+:host(#{$clabs-prefix}--chat-footer) {
   position: absolute;
   display: block;
   margin: 0 auto;
@@ -21,12 +21,12 @@ $css--plex: true !default;
   max-inline-size: 672px;
   min-block-size: 56px;
 
-  .#{$c4ai-prefix}--chat-footer-container {
+  .#{$clabs-prefix}--chat-footer-container {
     background: none;
     min-block-size: 56px;
   }
 
-  .#{$c4ai-prefix}--chat-footer-prompt-items {
+  .#{$clabs-prefix}--chat-footer-prompt-items {
     display: flex;
     align-items: center;
     padding: 0 8px;
@@ -40,7 +40,7 @@ $css--plex: true !default;
     min-block-size: 56px;
   }
 
-  .#{$c4ai-prefix}--chat-footer-menu {
+  .#{$clabs-prefix}--chat-footer-menu {
     box-sizing: border-box;
     padding: 16px;
     border: 1px solid $border-subtle;
@@ -50,14 +50,14 @@ $css--plex: true !default;
     margin-block-end: 4px;
   }
 
-  .#{$c4ai-prefix}--chat-footer-button {
+  .#{$clabs-prefix}--chat-footer-button {
     display: flex;
     align-items: center;
     justify-content: center;
     block-size: 56px;
   }
 
-  .#{$c4ai-prefix}--chat-search-query {
+  .#{$clabs-prefix}--chat-search-query {
     box-sizing: border-box;
     flex: 3;
     padding: 0;
@@ -75,11 +75,11 @@ $css--plex: true !default;
     resize: none;
   }
 
-  .#{$c4ai-prefix}--chat-search-query:focus {
+  .#{$clabs-prefix}--chat-search-query:focus {
     outline: none;
   }
 
-  .#{$c4ai-prefix}--chat-search-query::placeholder {
+  .#{$clabs-prefix}--chat-search-query::placeholder {
     color: $text-secondary;
   }
 }

@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
 import Menu24 from '@carbon/web-components/es/icons/Menu/24.js';
 import SendFilled16 from '@carbon/web-components/es/icons/Send--filled/16.js';
@@ -34,11 +34,11 @@ export function footerTemplate(customElementClass) {
   } = customElementClass;
 
   return html` 
-    <div class="${c4aiPrefix}--chat-footer-container">
+    <div class="${clabsPrefix}--chat-footer-container">
     ${
       toggleMenu
         ? html` 
-      <div class="${c4aiPrefix}--chat-footer-menu">
+      <div class="${clabsPrefix}--chat-footer-menu">
         <cds-file-uploader
           label-description="File must be .csv or .xls"
           @cds-file-uploader-changed="${handleMenuFileUpload}"
@@ -51,14 +51,14 @@ export function footerTemplate(customElementClass) {
       `
         : ''
     }
-      <div class="${c4aiPrefix}--chat-footer-prompt-items">
-      <div class="${c4aiPrefix}--chat-footer-button">
+      <div class="${clabsPrefix}--chat-footer-prompt-items">
+      <div class="${clabsPrefix}--chat-footer-button">
         <cds-button kind="ghost" size="sm" @click="${handleMenuToggle}">
             ${Menu24({ slot: 'icon' })}
         </cds-button>
       </div>
       <textarea
-        class="${c4aiPrefix}--chat-search-query"
+        class="${clabsPrefix}--chat-search-query"
         rows="1"
         placeholder="Type something..."
         .value="${messageText}"
@@ -66,12 +66,12 @@ export function footerTemplate(customElementClass) {
         @keydown="${handleInput}"
         @keyup="${handleInput}" />
         </textarea>
-      <div class="${c4aiPrefix}--chat-footer-button">
+      <div class="${clabsPrefix}--chat-footer-button">
         <cds-button kind="ghost" size="sm" disabled>
           ${MicrophoneOff16({ slot: 'icon' })}
         </cds-button>
       </div>
-      <div class="${c4aiPrefix}--chat-footer-button">
+      <div class="${clabsPrefix}--chat-footer-button">
         <cds-button kind="ghost" size="sm" @click="${sendInputToParent}">
             ${SendFilled16({ slot: 'icon' })}
         </cds-button>

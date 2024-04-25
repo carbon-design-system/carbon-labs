@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 
 import ChevronRight16 from '@carbon/web-components/es/icons/Chevron--right/16.js';
 import ChevronLeft16 from '@carbon/web-components/es/icons/Chevron--left/16.js';
@@ -35,28 +35,28 @@ export function carouselElementTemplate(customElementClass) {
     _renderedSlideCounter: renderedSlideCounter,
   } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-carousel-container">
+  return html`<div class="${clabsPrefix}--chat-carousel-container">
     ${carouselContent
-      ? html` <div class="${c4aiPrefix}--chat-carousel-length">
+      ? html` <div class="${clabsPrefix}--chat-carousel-length">
             ${carouselContent.length - 1}
             ${carouselContent.length === 1 ? 'item' : 'items'}
           </div>
-          <div class="${c4aiPrefix}--chat-carousel-slides">
+          <div class="${clabsPrefix}--chat-carousel-slides">
             ${carouselContent.map((item) =>
               item.type == 'img'
-                ? html` <div class="${c4aiPrefix}--chat-carousel-slide">
-                    <c4ai--chat-image content="${item.content}" />
+                ? html` <div class="${clabsPrefix}--chat-carousel-slide">
+                    <clabs--chat-image content="${item.content}" />
                   </div>`
                 : html`
-                  <div class="${c4aiPrefix}--chat-carousel-slide">
-                    <c4ai--chat-card content="${item.content}"" type="${item.type}">
-                    </c4ai--chat-card>
+                  <div class="${clabsPrefix}--chat-carousel-slide">
+                    <clabs--chat-card content="${item.content}"" type="${item.type}">
+                    </clabs--chat-card>
                   </div>
                 `
             )}
           </div>
-          <div class="${c4aiPrefix}--chat-carousel-controls">
-            <div class="${c4aiPrefix}--chat-carousel-control-item">
+          <div class="${clabsPrefix}--chat-carousel-controls">
+            <div class="${clabsPrefix}--chat-carousel-control-item">
               <cds-button
                 kind="ghost"
                 size="sm"
@@ -65,10 +65,10 @@ export function carouselElementTemplate(customElementClass) {
                 ${ChevronLeft16({ slot: 'icon' })}
               </cds-button>
             </div>
-            <div class="${c4aiPrefix}--chat-carousel-control-item">
+            <div class="${clabsPrefix}--chat-carousel-control-item">
               ${renderedSlideCounter + ' / ' + maxSlideCounter}
             </div>
-            <div class="${c4aiPrefix}--chat-carousel-control-item">
+            <div class="${clabsPrefix}--chat-carousel-control-item">
               <cds-button
                 kind="ghost"
                 size="sm"

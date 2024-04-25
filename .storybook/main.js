@@ -27,6 +27,9 @@ const config = {
   docs: {
     autodocs: 'tag',
   },
+  features: {
+    storyStoreV7: true,
+  },
   async viteFinal(config) {
     return mergeConfig(config, {
       css: {

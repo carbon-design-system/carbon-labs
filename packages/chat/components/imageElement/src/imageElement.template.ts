@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Lit template for code
@@ -20,7 +20,7 @@ const { stablePrefix: c4aiPrefix } = settings;
 export function imageElementTemplate(customElementClass) {
   const { content } = customElementClass;
 
-  return html`<div class="${c4aiPrefix}--chat-image-container">
-    <img class="${c4aiPrefix}--chat-image-img" src="${content}" />
+  return html`<div class="${clabsPrefix}--chat-image-container">
+    <img class="${clabsPrefix}--chat-image-img" src="${content}" />
   </div>`;
 }

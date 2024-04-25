@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
-const { stablePrefix: c4aiPrefix } = settings;
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import '../../errorElement/errorElement.js';
 
@@ -30,15 +30,15 @@ export function chartElementTemplate(customElementClass) {
 
   return html`
     <div
-      class="${c4aiPrefix}--chat-chart-container"
-      id="${c4aiPrefix}--chat-embed-vis-${uniqueID}">
+      class="${clabsPrefix}--chat-chart-container"
+      id="${clabsPrefix}--chat-embed-vis-${uniqueID}">
       ${loading
         ? html`
-         <div class="${c4aiPrefix}--chat-chart-loading-container">
-          <div class="${c4aiPrefix}--chat-chart-loading-grid">
+         <div class="${clabsPrefix}--chat-chart-loading-container">
+          <div class="${clabsPrefix}--chat-chart-loading-grid">
            ${unsafeHTML(buildLoader())}
           </div>
-          <div class="${c4aiPrefix}--chat-chart-loading-text">
+          <div class="${clabsPrefix}--chat-chart-loading-text">
             ${content}
           </div>
           </div>
@@ -47,9 +47,9 @@ export function chartElementTemplate(customElementClass) {
     </div>
     ${errorMessage !== ''
       ? html`
-          <div class="${c4aiPrefix}--chat-chart-container">
-            <div class="${c4aiPrefix}--chat-chart-loading-container">
-              <div class="${c4aiPrefix}--chat-chart-error-text">
+          <div class="${clabsPrefix}--chat-chart-container">
+            <div class="${clabsPrefix}--chat-chart-loading-container">
+              <div class="${clabsPrefix}--chat-chart-error-text">
                 ${errorMessage}
               </div>
             </div>

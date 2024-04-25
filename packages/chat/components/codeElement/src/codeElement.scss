@@ -11,8 +11,8 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$c4ai-prefix}--chat-code) {
-  .#{$c4ai-prefix}--chat-code-container {
+:host(#{$clabs-prefix}--chat-code) {
+  .#{$clabs-prefix}--chat-code-container {
     display: flex;
     overflow: auto;
     flex-direction: column;
@@ -26,12 +26,12 @@ $css--plex: true !default;
     line-height: 18px;
   }
 
-  .#{$c4ai-prefix}--chat-code-line {
+  .#{$clabs-prefix}--chat-code-line {
     display: flex;
     flex-direction: row;
   }
 
-  .#{$c4ai-prefix}--chat-code-line-tick {
+  .#{$clabs-prefix}--chat-code-line-tick {
     box-sizing: border-box;
     flex: 0 0 26px;
     inline-size: 26px;
@@ -39,19 +39,19 @@ $css--plex: true !default;
     user-select: none;
   }
 
-  .#{$c4ai-prefix}--chat-code-line-divider {
+  .#{$clabs-prefix}--chat-code-line-divider {
     flex: 0 0 20px;
 
     inline-size: 20px;
     user-select: none;
   }
 
-  .#{$c4ai-prefix}--chat-code-line-text {
+  .#{$clabs-prefix}--chat-code-line-text {
     flex-grow: 1;
     border-inline-start: 1px solid $border-subtle-01;
   }
 
-  .#{$c4ai-prefix}--chat-code-line-comment {
+  .#{$clabs-prefix}--chat-code-line-comment {
     color: $support-success;
   }
 }

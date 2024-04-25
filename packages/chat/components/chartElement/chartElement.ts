@@ -8,17 +8,17 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import chartElement from './src/chartElement.js';
 import { chartElementTemplate } from './src/chartElement.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}--chat-chart`)
-class C4AIChartElement extends chartElement {
+@customElement(`${clabsPrefix}--chat-chart`)
+class CLABSChartElement extends chartElement {
   /**
    * Renders the template while passing in class functionality
    *
@@ -29,4 +29,4 @@ class C4AIChartElement extends chartElement {
   }
 }
 
-export default C4AIChartElement;
+export default CLABSChartElement;

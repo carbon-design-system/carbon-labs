@@ -28,8 +28,8 @@ members/maintainers.
    by running the following in your terminal:
 
    ```
-   $ git clone git@github.com:{ YOUR_USERNAME }/carbon-for-ai.git
-   $ cd carbon-for-ai
+   $ git clone git@github.com:{ YOUR_USERNAME }/carbon-labs.git
+   $ cd carbon-labs
    ```
 
    See [GitHub docs](https://help.github.com/articles/fork-a-repo/) for more
@@ -37,7 +37,7 @@ members/maintainers.
 
 3. Once cloned, you will see `origin` as your default remote, pointing to your
    personal forked repository. Add a remote named `upstream` pointing to the
-   main `carbon-for-ai`:
+   main `carbon-labs`:
 
    ```
    $ git remote add upstream git@github.com:carbon-design-system/carbon-labs.git
@@ -103,13 +103,13 @@ making to components in Storybook.
 While working on Carbon Labs, here are some of the top-level tasks that you
 might want to run:
 
-| Command                            | Usage                                                                                                       |
-| ---------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `yarn build`                       | Runs the gulp `build` tasks and uses lerna to run the `build` script for the `@carbon/ai-utilities` package |
-| `yarn build:dist`                  | Runs the rollup `dist` config and generates the CDN artifacts                                               |
-| `yarn format`, `yarn format:write` | Check if files have been formatted, format files using prettier                                             |
-| `yarn ci-check`                    | Runs the ci-checks                                                                                          |
-| `yarn ci-check:build`              | Runs the ci-checks along with the build and build:dist commands                                             |
+| Command                            | Usage                                                                                                         |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `yarn build`                       | Runs the gulp `build` tasks and uses lerna to run the `build` script for the `@carbon-labs/utilities` package |
+| `yarn build:dist`                  | Runs the rollup `dist` config and generates the CDN artifacts                                                 |
+| `yarn format`, `yarn format:write` | Check if files have been formatted, format files using prettier                                               |
+| `yarn ci-check`                    | Runs the ci-checks                                                                                            |
+| `yarn ci-check:build`              | Runs the ci-checks along with the build and build:dist commands                                               |
 
 ## Submitting a Pull Request
 

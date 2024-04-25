@@ -9,7 +9,7 @@
 
 @use '@carbon/styles/scss/theme' as *;
 
-:host(#{$c4ai-prefix}--chat-chart) {
+:host(#{$clabs-prefix}--chat-chart) {
   display: block;
   overflow: hidden;
   padding: 0;
@@ -22,7 +22,7 @@
   min-block-size: 246px;
   min-inline-size: 246px;
 
-  .#{$c4ai-prefix}--chat-chart-container {
+  .#{$clabs-prefix}--chat-chart-container {
     overflow: hidden;
     box-sizing: border-box;
     block-size: 100%;
@@ -31,11 +31,11 @@
     min-inline-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-chart-container svg {
+  .#{$clabs-prefix}--chat-chart-container svg {
     font-family: 'IBM Plex Sans Condensed', sans-serif;
   }
 
-  .#{$c4ai-prefix}--chat-chart-loading-container {
+  .#{$clabs-prefix}--chat-chart-loading-container {
     position: relative;
     display: block;
 
@@ -45,7 +45,7 @@
     block-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-chart-loading-grid {
+  .#{$clabs-prefix}--chat-chart-loading-grid {
     display: grid;
     overflow: hidden;
     border: 1px solid transparent;
@@ -66,11 +66,11 @@
     grid-template-rows: repeat(5, 1fr);
     inline-size: 100%;
   }
-  .#{$c4ai-prefix}--chat-chart-loading-grid-cell {
+  .#{$clabs-prefix}--chat-chart-loading-grid-cell {
     background: $background;
   }
 
-  .#{$c4ai-prefix}--chat-chart-loading-text {
+  .#{$clabs-prefix}--chat-chart-loading-text {
     position: absolute;
     overflow: hidden;
     box-sizing: border-box;
@@ -86,7 +86,7 @@
     overflow-y: auto;
   }
 
-  .#{$c4ai-prefix}--chat-chart-error-text {
+  .#{$clabs-prefix}--chat-chart-error-text {
     position: absolute;
     overflow: hidden;
     box-sizing: border-box;

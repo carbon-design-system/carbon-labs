@@ -22,5 +22,5 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <c4ai--chat-list> </c4ai--chat-list>`,
+  render: () => html` <clabs--chat-list> </clabs--chat-list>`,
 };

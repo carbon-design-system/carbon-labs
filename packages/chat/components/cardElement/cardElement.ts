@@ -8,17 +8,17 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import cardElement from './src/cardElement.js';
 import { cardElementTemplate } from './src/cardElement.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}--chat-card`)
-class C4AICardElement extends cardElement {
+@customElement(`${clabsPrefix}--chat-card`)
+class CLABSCardElement extends cardElement {
   /**
    * Renders the template while passing in class functionality
    *
@@ -28,5 +28,4 @@ class C4AICardElement extends cardElement {
     return cardElementTemplate(this);
   }
 }
-
-export default C4AICardElement;
+export default CLABSCardElement;

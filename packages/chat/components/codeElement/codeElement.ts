@@ -8,17 +8,17 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import codeElement from './src/codeElement.js';
 import { codeElementTemplate } from './src/codeElement.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}--chat-code`)
-class C4AICodeElement extends codeElement {
+@customElement(`${clabsPrefix}--chat-code`)
+class CLABSCodeElement extends codeElement {
   /**
    * Renders the template while passing in class functionality
    *
@@ -29,4 +29,4 @@ class C4AICodeElement extends codeElement {
   }
 }
 
-export default C4AICodeElement;
+export default CLABSCodeElement;

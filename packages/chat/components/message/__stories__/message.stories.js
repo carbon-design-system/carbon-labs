@@ -22,9 +22,9 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <c4ai--chat-message
+  render: () => html` <clabs--chat-message
     time-stamp="12:00"
     text="hello world"
     origin="user">
-  </c4ai--chat-message>`,
+  </clabs--chat-message>`,
 };

@@ -8,17 +8,17 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon/ai-utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import imageElement from './src/imageElement.js';
 import { imageElementTemplate } from './src/imageElement.template.js';
 
-const { stablePrefix: c4aiPrefix } = settings;
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${c4aiPrefix}--chat-image`)
-class C4AIImageElement extends imageElement {
+@customElement(`${clabsPrefix}--chat-image`)
+class CLABSImageElement extends imageElement {
   /**
    * Renders the template while passing in class functionality
    *
@@ -29,4 +29,4 @@ class C4AIImageElement extends imageElement {
   }
 }
 
-export default C4AIImageElement;
+export default CLABSImageElement;

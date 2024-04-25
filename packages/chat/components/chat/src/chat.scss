@@ -9,7 +9,7 @@
 
 @use '@carbon/styles/scss/theme' as *;
 
-:host(#{$c4ai-prefix}-chat) {
+:host(#{$clabs-prefix}-chat) {
   display: block;
   overflow: hidden;
   border: 1px solid rgba(69, 137, 255, 0.2);
@@ -24,7 +24,7 @@
   font-family: 'IBM Plex Sans', sans-serif;
   mix-blend-mode: normal;
 
-  .#{$c4ai-prefix}--chat-container {
+  .#{$clabs-prefix}--chat-container {
     position: relative;
     display: flex;
     overflow: hidden;

@@ -11,7 +11,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$c4ai-prefix}--chat-message) {
+:host(#{$clabs-prefix}--chat-message) {
   position: relative;
   display: block;
 
@@ -21,17 +21,17 @@ $css--plex: true !default;
   padding-block-end: 8px;
   padding-inline: 16px 24px;
 
-  .#{$c4ai-prefix}--chat-message-container {
+  .#{$clabs-prefix}--chat-message-container {
     display: inline-flex;
     padding: 5px;
     inline-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-message-user-message {
+  .#{$clabs-prefix}--chat-message-user-message {
     color: $text-primary;
   }
 
-  .#{$c4ai-prefix}--chat-message-content {
+  .#{$clabs-prefix}--chat-message-content {
     overflow: hidden;
     box-sizing: border-box;
     border-radius: 8px;
@@ -43,22 +43,22 @@ $css--plex: true !default;
     padding-inline-start: 16px;
   }
 
-  .#{$c4ai-prefix}--chat-message-section {
+  .#{$clabs-prefix}--chat-message-section {
     margin-block: 16px 4px;
   }
 
-  .#{$c4ai-prefix}--chat-message-warning {
+  .#{$clabs-prefix}--chat-message-warning {
     padding: 10px;
     color: $support-error;
     font-style: italic;
     line-height: 22px;
   }
 
-  .#{$c4ai-prefix}--chat-message-user-icon {
+  .#{$clabs-prefix}--chat-message-user-icon {
     display: none;
   }
 
-  .#{$c4ai-prefix}--chat-message-timestamp-user {
+  .#{$clabs-prefix}--chat-message-timestamp-user {
     clear: both;
     color: $text-secondary;
     float: inline-end;
@@ -66,7 +66,7 @@ $css--plex: true !default;
     padding-block-end: 12px;
   }
 
-  .#{$c4ai-prefix}--chat-message-response-user {
+  .#{$clabs-prefix}--chat-message-response-user {
     padding: 6px 16px;
     background: $layer-accent-01;
     border-end-end-radius: 8px;
@@ -77,17 +77,17 @@ $css--plex: true !default;
     max-inline-size: 65%;
   }
 
-  .#{$c4ai-prefix}--chat-message-dropdown-user {
+  .#{$clabs-prefix}--chat-message-dropdown-user {
     clear: both;
     float: inline-end;
     opacity: 1;
   }
 
-  .#{$c4ai-prefix}--chat-message-bot-message {
+  .#{$clabs-prefix}--chat-message-bot-message {
     color: var(--chat-message-unique-display-color, $text-primary);
   }
 
-  .#{$c4ai-prefix}--chat-message-bot-icon {
+  .#{$clabs-prefix}--chat-message-bot-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -95,7 +95,7 @@ $css--plex: true !default;
     inline-size: 32px;
   }
 
-  .#{$c4ai-prefix}--chat-message-agent-icon {
+  .#{$clabs-prefix}--chat-message-agent-icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,13 +110,13 @@ $css--plex: true !default;
     }
   }
 
-  .#{$c4ai-prefix}--chat-message-timestamp-bot {
+  .#{$clabs-prefix}--chat-message-timestamp-bot {
     color: var(--chat-message-unique-display-color, $text-secondary);
     font-size: 12px;
     padding-block-start: 5px;
   }
 
-  .#{$c4ai-prefix}--chat-message-response-bot {
+  .#{$clabs-prefix}--chat-message-response-bot {
     box-sizing: border-box;
     inline-size: 100%;
     max-inline-size: 100%;
@@ -124,11 +124,11 @@ $css--plex: true !default;
     padding-inline-end: 12px;
   }
 
-  .#{$c4ai-prefix}--chat-message-dropdown-bot {
+  .#{$clabs-prefix}--chat-message-dropdown-bot {
     inline-size: 100%;
   }
 
-  .#{$c4ai-prefix}--chat-message-small-button {
+  .#{$clabs-prefix}--chat-message-small-button {
     display: inline-block;
     align-items: center;
     justify-content: center;

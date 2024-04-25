@@ -1,15 +1,16 @@
 {
   "name": "@carbon-labs/ai-feedback",
-  "version": "0.0.1-rc.1",
+  "version": "0.4.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
+  "type": "module",
   "description": "Carbon for AI - feedback component",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/carbon-design-system/carbon-for-ai",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/feedback"
   },
   "main": "./src/index.js",
@@ -21,9 +22,7 @@
     "./es/": "./es/"
   },
   "files": [
-    "**/*.d.ts",
-    "**/*.js",
-    "**/*.js.map",
+    "es/**/*",
     "custom-elements.json"
   ],
   "types": "./src/index.d.ts",
@@ -35,10 +34,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@carbon/ai-utilities": "0.0.1-rc.1",
+    "@carbon-labs/utilities": "0.4.0",
     "@carbon/grid": "^11.21.0",
-    "@carbon/web-components": "2.4.0",
-    "lit": "^3.0.0",
+    "@carbon/web-components": "2.7.0",
     "uuid": "^9.0.1"
   }
 }

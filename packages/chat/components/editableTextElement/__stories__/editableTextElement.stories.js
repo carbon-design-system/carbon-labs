@@ -22,7 +22,7 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <c4ai--chat-editable-text
+  render: () => html` <clabs--chat-editable-text
     content="Hello, how may I help you?">
-  </c4ai--chat-editable-text>`,
+  </clabs--chat-editable-text>`,
 };

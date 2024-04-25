@@ -8,7 +8,7 @@
  */
 
 import { LitElement } from 'lit';
-import { state } from 'lit/decorators.js';
+import { state, property } from 'lit/decorators.js';
 // @ts-ignore
 import styles from './footer.scss?inline';
 /**
@@ -28,6 +28,12 @@ export default class footer extends LitElement {
    */
   @state()
   _toggleMenu = false;
+
+  /**
+   * custom placeholder for input field
+   */
+  @property({ type: String, attribute: 'input-placeholder', reflect: true })
+  _inputPlaceholder;
 
   /**
    * current string returned by the input dom object
@@ -108,7 +114,7 @@ export default class footer extends LitElement {
     if (value.length > 0) {
       this._messageText = '';
 
-      const inputEvent = new CustomEvent('user-input', {
+      const inputEvent = new CustomEvent('on-user-text-input', {
         detail: { textInputValue: value },
         bubbles: true,
         composed: true,

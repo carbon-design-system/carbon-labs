@@ -31,6 +31,7 @@ export function footerTemplate(customElementClass) {
     _handleMenuToggle: handleMenuToggle,
     _toggleMenu: toggleMenu,
     _handleMenuFileUpload: handleMenuFileUpload,
+    _inputPlaceholder: inputPlaceholder,
   } = customElementClass;
 
   return html` 
@@ -60,7 +61,9 @@ export function footerTemplate(customElementClass) {
       <textarea
         class="${clabsPrefix}--chat-search-query"
         rows="1"
-        placeholder="Type something..."
+        placeholder="${
+          inputPlaceholder ? inputPlaceholder : 'Type something...'
+        }"
         .value="${messageText}"
         @input="${setMessageText}"
         @keydown="${handleInput}"

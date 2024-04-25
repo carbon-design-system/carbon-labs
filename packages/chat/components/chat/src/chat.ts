@@ -49,6 +49,12 @@ export default class CLABSChat extends LitElement {
   autoUpdate;
 
   /**
+   * custom placeholder for input field in footer
+   */
+  @property({ type: String, attribute: 'input-field-placeholder' })
+  inputFieldPlaceholder;
+
+  /**
    * user-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system
    */
   @property({ type: Boolean, attribute: 'stream-responses', reflect: true })
@@ -63,7 +69,7 @@ export default class CLABSChat extends LitElement {
   /**
    * conversation object to display messages straight from the 'message' attribute, overrides any api_url system
    */
-  @property({ type: Object, attribute: 'conversation', reflect: true })
+  @property({ type: Object, attribute: 'conversation' })
   conversation;
 
   /**
@@ -144,6 +150,12 @@ export default class CLABSChat extends LitElement {
     this._streamResponses = this.hasAttribute('stream-responses')
       ? this._streamResponses
       : false;
+    this.inputFieldPlaceholder = this.hasAttribute('input-field-placeholder')
+      ? this.inputFieldPlaceholder
+      : '';
+    this.autoUpdate = this.hasAttribute('auto-update')
+      ? this.autoUpdate
+      : false;
   }
 
   /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
@@ -154,12 +166,15 @@ export default class CLABSChat extends LitElement {
     if (changedProperties.has('loading')) {
       this._queryInProgress = this.loading;
     }
+    console.log(changedProperties);
 
     if (changedProperties.has('conversation')) {
-      if (this.conversation !== null) {
-        this._messages = [];
-        this._messages = this.conversation;
+      console.log(this.conversation);
+      if (this.conversation) {
+        this._messages = [...this.conversation];
         this.requestUpdate();
+      } else {
+        this._messages = [];
       }
     }
     if (changedProperties.has('_messages')) {
@@ -271,10 +286,10 @@ export default class CLABSChat extends LitElement {
    * @param {event} event - custom regeneration event from message subcomponent
    */
   _handleUserRegenerationRequest(event) {
-    const deletionIndex = event.detail.messageIndexInChat;
+    const deletionIndex = event.detail.messageIndexInChat - 1;
     const previousMessage = this._messages[deletionIndex - 1].text;
     if (this.autoUpdate || this.apiURL) {
-      this._messages.length = deletionIndex;
+      this._messages = this._messages.slice(0, deletionIndex);
       const inputEvent = new CustomEvent('user-input', {
         detail: { textInputValue: previousMessage },
         bubbles: true,
@@ -299,10 +314,10 @@ export default class CLABSChat extends LitElement {
    * @param {event} event - custom update event from message subcomponent
    */
   _handleUserUpdateRequest(event) {
-    const deletionIndex = event.detail.messageIndexInChat - 1;
+    const deletionIndex = event.detail.messageIndexInChat;
     const previousMessage = event.detail.newMessage;
     if (this.autoUpdate || this.apiURL) {
-      this._messages.length = deletionIndex;
+      this._messages = this._messages.slice(0, deletionIndex);
       const inputEvent = new CustomEvent('user-input', {
         detail: { textInputValue: previousMessage },
         bubbles: true,

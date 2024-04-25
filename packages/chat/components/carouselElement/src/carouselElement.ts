@@ -201,7 +201,6 @@ export default class carouselElement extends LitElement {
         content: url,
         type: this._checkURLType(url),
       }));
-      console.log(this._carouselContent);
     } catch (error) {
       if (this.content.endsWith(',')) {
         const fixedArray = this.content.slice(0, -1) + ']';
@@ -218,7 +217,9 @@ export default class carouselElement extends LitElement {
             ];
           }
         } catch (error) {
-          console.log(this.content.slice(0, -1) + ']');
+          console.log(
+            'Carousel: failed to parse:' + (this.content.slice(0, -1) + ']')
+          );
         }
       }
       /*if(this.content.charAt(this.content.length-1) === ','){

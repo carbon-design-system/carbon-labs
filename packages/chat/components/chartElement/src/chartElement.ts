@@ -292,15 +292,14 @@ export default class chartElement extends LitElement {
     if (!spec['repeat']) {
       spec.width = 'container';
       spec.height = 'container';
-      spec.autosize = {
-        type: 'fit',
-        contains: 'padding',
-      };
     } else {
       delete spec['height'];
       delete spec['width'];
-      delete spec['autosize'];
     }
+    spec.autosize = {
+      type: 'fit',
+      contains: 'padding',
+    };
 
     let layeredSpec;
     let repeatedSpec;
@@ -336,7 +335,7 @@ export default class chartElement extends LitElement {
       repeatedSpec['spec'] = this._prepareSpecification(
         JSON.parse(JSON.stringify(repeatedSpec['spec'])),
         true,
-        false
+        true
       );
       if (currentContainerWidth) {
         let rowCount;
@@ -354,11 +353,13 @@ export default class chartElement extends LitElement {
         }
 
         const paddingOffset = { vertical: 0, horizontal: 0 };
-        if (spec['padding']) {
+        if (repeatedSpec['spec']['padding']) {
           paddingOffset['vertical'] =
-            spec['padding']['top'] + spec['padding']['bottom'];
+            repeatedSpec['spec']['padding']['top'] +
+            repeatedSpec['spec']['padding']['bottom'];
           paddingOffset['horizontal'] =
-            spec['padding']['left'] + spec['padding']['right'];
+            repeatedSpec['spec']['padding']['left'] +
+            repeatedSpec['spec']['padding']['right'];
 
           paddingOffset['vertical'] = paddingOffset['vertical']
             ? paddingOffset['vertical']
@@ -373,28 +374,29 @@ export default class chartElement extends LitElement {
             ? paddingOffset['horizontal'] * columnCount
             : 0;
         }
+
+        console.log(paddingOffset);
         /*if(spec['config']['padding']){
           paddingOffset['vertical'] = spec['padding']['config']['top'] + spec['padding']['config']['bottom']
           paddingOffset['horizontal'] = spec['padding']['config']['left'] + spec['padding']['config']['right']
         }*/
-        subChartWidth =
-          Math.floor(currentContainerWidth / columnCount) - 36 * columnCount;
+        subChartWidth = Math.floor(currentContainerWidth / columnCount);
         subChartHeight = Math.floor(currentContainerHeight / rowCount);
-        /*if (paddingOffset['vertical']) {
-          //subChartHeight -= paddingOffset['vertical'];
+        if (paddingOffset['vertical']) {
+          subChartHeight -= paddingOffset['vertical'];
         }
         if (paddingOffset['horizontal']) {
-          //subChartWidth -= paddingOffset['horizontal'];
-        }*/
+          subChartWidth -= paddingOffset['horizontal'];
+        }
       }
 
       delete repeatedSpec['spec']['background'];
       delete repeatedSpec['spec']['padding'];
 
-      repeatedSpec['spec'].autosize = {
+      /*repeatedSpec['spec'].autosize = {
         type: 'fit',
         contains: 'padding',
-      };
+      };*/
 
       if (subChartWidth) {
         repeatedSpec['spec']['width'] = subChartWidth;

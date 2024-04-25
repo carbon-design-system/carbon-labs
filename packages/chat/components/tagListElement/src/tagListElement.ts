@@ -41,13 +41,6 @@ export default class tagListElement extends LitElement {
   @property({ type: String, attribute: 'content', reflect: true })
   content;
 
-  /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
-   * @param {Object} changedProperties - returned inner DOM update object
-   **/
-  updated(changedProperties) {
-    super.updated(changedProperties);
-  }
-
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
@@ -59,6 +52,16 @@ export default class tagListElement extends LitElement {
       this._invalid = true;
       this._errorMessage = 'TagList: Content is empty string.';
       this.requestUpdate();
+    }
+  }
+
+  /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
+   * @param {Object} changedProperties - returned inner DOM update object
+   **/
+  updated(changedProperties) {
+    super.updated(changedProperties);
+    if (changedProperties.has('content')) {
+      this._prepareTagList();
     }
   }
 
@@ -96,10 +99,9 @@ export default class tagListElement extends LitElement {
 
       this._tagList = tagList;
     } catch (error) {
-      console.log(
-        'TagList: failed to parse content string into an array of tags',
-        error
-      );
+      //attempt to fix array:
+      const items = this.content.replace(/"/g, '').replace('[', '').split(',');
+      this._tagList = items;
     }
   }
 }

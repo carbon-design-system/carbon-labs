@@ -9,7 +9,6 @@
  */
 
 import { mergeConfig } from 'vite';
-import { dirname, join } from "path";
 import postcss from 'rollup-plugin-postcss';
 import postcssLit from 'rollup-plugin-postcss-lit';
 import sass from 'sass';
@@ -19,9 +18,9 @@ const config = {
     '../packages/**/__stories__/*.mdx',
     '../packages/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
-  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-essentials")],
+  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   framework: {
-    name: getAbsolutePath("@storybook/web-components-vite"),
+    name: '@storybook/web-components-vite',
     options: {},
   },
   docs: {
@@ -53,7 +52,3 @@ const config = {
   },
 };
 export default config;
-
-function getAbsolutePath(value) {
-  return dirname(require.resolve(join(value, "package.json")));
-}

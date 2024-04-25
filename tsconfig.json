@@ -27,5 +27,5 @@
     "types": ["mocha", "sinon"]
   },
   "include": ["packages/**/*.ts", ".storybook/**/*.ts", "declarations.d.ts"],
-  "exclude": ["packages/**/__tests__","node_modules/vega-lite"]
+  "exclude": ["packages/**/__tests__"]
 }

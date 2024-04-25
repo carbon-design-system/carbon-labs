@@ -271,6 +271,7 @@ export default class message extends LitElement {
    * @param {event} event - lit custom event from sub element click
    **/
   _handleMessageElementClick(event) {
+    console.log(event);
     const messageDetails = this._prepareEventDetail();
     messageDetails['action'] = 'message: sub-element in message clicked';
     messageDetails['event'] = event;

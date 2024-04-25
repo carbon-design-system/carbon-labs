@@ -21,7 +21,7 @@ export default class messages extends LitElement {
   /**
    * conversation object to display messages straight from the 'message' attribute, overrides any api_url system
    */
-  @property({ type: Object, attribute: 'messages', reflect: true })
+  @property({ type: Object, attribute: 'messages' })
   messages;
 
   /**

@@ -29,6 +29,7 @@ export function chatTemplate(customElementClass) {
     sendInput,
     userName,
     agentName,
+    _inputFieldPlaceholder: inputFieldPlaceholder,
     _streamResponses: streamResponses,
   } = customElementClass;
 
@@ -45,6 +46,9 @@ export function chatTemplate(customElementClass) {
       @on-user-message-update-request="${handleUserUpdateRequest}">
     </clabs--chat-messages>
 
-    <clabs--chat-footer @user-input="${sendInput}"> </clabs--chat-footer>
+    <clabs--chat-footer
+      @on-user-text-input="${sendInput}"
+      input-placeholder="${inputFieldPlaceholder}">
+    </clabs--chat-footer>
   </div>`;
 }

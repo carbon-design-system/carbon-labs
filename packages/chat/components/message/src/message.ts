@@ -26,7 +26,7 @@ export default class message extends LitElement {
   /**
    * User-imported message sub-elements object, parsing is done on rawText here if none is provided
    */
-  @property({ type: Object, attribute: 'elements' })
+  @property({ type: Array, attribute: 'elements', reflect: true })
   elements;
 
   /**
@@ -271,7 +271,6 @@ export default class message extends LitElement {
    * @param {event} event - lit custom event from sub element click
    **/
   _handleMessageElementClick(event) {
-    console.log(event);
     const messageDetails = this._prepareEventDetail();
     messageDetails['action'] = 'message: sub-element in message clicked';
     messageDetails['event'] = event;
@@ -315,12 +314,12 @@ export default class message extends LitElement {
    */
   _checkBlockStart() {
     const regexPatterns = {
-      code: /```/,
-      json: /\{/,
-      table: /((\w+,\w+)(,[\w+]*)*[\r\n]+)+/,
-      array: /\[/,
-      url: /(http|ftp)/,
-      list: /(?:\d+\.\s+|[-*]\s)/,
+      code: new RegExp('```'),
+      json: new RegExp('\\{'),
+      table: new RegExp('((\\w+,\\w+)(,[\\w+]*)*[\\r\\n]+)+'),
+      array: new RegExp('\\['),
+      url: new RegExp('(http|ftp)'),
+      list: new RegExp('(?:\\d+\\.\\s+|[-*]\\s)'),
     };
 
     for (const type in regexPatterns) {
@@ -397,7 +396,7 @@ export default class message extends LitElement {
         let countIndex = 0;
         let nonCSVcount = 0;
         for (const line of CSVLines) {
-          if (!/^\w+(,\w+)*$/.test(line)) {
+          if (!new RegExp('^\\w+(,\\w+)*$').test(line)) {
             nonCSVcount++;
             if (nonCSVcount > 1) {
               stopIndex = countIndex;
@@ -415,7 +414,7 @@ export default class message extends LitElement {
         let listCharacterLength = 0;
         const listLines = this.bufferMessage.split('\n');
         for (const listItem of listLines) {
-          if (!/(?:\d+\.\s+|[-*]\s)/.test(listItem)) {
+          if (!new RegExp('(?:\\d+\\.\\s+|[-*]\\s)').test(listItem)) {
             nonListCount++;
             if (nonListCount > 1) {
               stopIndex = listCharacterLength;
@@ -486,17 +485,16 @@ export default class message extends LitElement {
       }
     }
     if (this.currentType === 'array') {
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const urlRegex = new RegExp('(https?:\\/\\/[^\\s]+)', 'g');
       const items = this.bufferMessage
         .replace('[', '')
-        .replace(/,\s*$/, '')
+        .replace(new RegExp(',\\s*$'), '')
         .split(',');
       if (items.length > 1) {
         const checkAllURLs = urlRegex.test(items[0]);
         if (checkAllURLs) {
           this.temporaryMessage.type = 'carousel';
           this.currentType = 'carousel';
-          console.log('CAROUSEL!!!');
         }
       }
     }
@@ -513,7 +511,7 @@ export default class message extends LitElement {
     this.bufferMessage = '';
     this.temporaryMessage = { content: '', type: 'text' };
     this.currentType = '';
-    const baseStreamingSpeed = 15;
+    const baseStreamingSpeed = 20;
     let streamingSpeed = baseStreamingSpeed;
 
     this.streamingInterval = setInterval(() => {
@@ -533,7 +531,6 @@ export default class message extends LitElement {
           if (blockSignal.status === 'started') {
             this.currentType = blockSignal.type;
             this.temporaryMessage.content = this.bufferMessage;
-            console.log('start: ' + this.currentType);
             if (blockSignal.type === 'url') {
               this.temporaryMessage.type = 'text';
             } else if (blockSignal.type === 'json') {
@@ -567,7 +564,6 @@ export default class message extends LitElement {
               ...this._messageElements,
               { content: blockSignal.content, type: blockSignal.type },
             ];
-            console.log(this._messageElements);
           }
         } else {
           this.temporaryMessage.content = this.bufferMessage;
@@ -584,19 +580,20 @@ export default class message extends LitElement {
 
       streamingSpeed =
         baseStreamingSpeed + (Math.random() - 0.5) * baseStreamingSpeed * 0.2;
-      switch (this.currentType) {
+
+      switch (this.temporaryMessage.type) {
         case 'code':
-          streamingSpeed = streamingSpeed * 5;
+          streamingSpeed *= 5;
           break;
         case 'table':
-          streamingSpeed = streamingSpeed * 5;
+          streamingSpeed *= 5;
           break;
         case 'carousel':
-          streamingSpeed = streamingSpeed * 5;
+          streamingSpeed *= 5;
           break;
         case 'json':
         case 'chart':
-          streamingSpeed = streamingSpeed * 50;
+          streamingSpeed *= 40;
           break;
       }
 
@@ -623,347 +620,12 @@ export default class message extends LitElement {
    * @param {string} inputText - text to be split into tokens
    */
   _tokenize(inputText) {
-    //const tokenizerRegex2 = /"[^"\\]*(?:\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*'|\b\d+\.?\d*|\b\w+|[{}[\]();,.<>+\/\-*&|!=%~]+/g;
-    const tokenizerRegex =
-      /(\s|,|#|\{|\}|"|\[|\]|%|'|\n|\t|\/|\.|_|<|>|:|-|\(|\)|\?|\||@|&|\*|\+|=|;|`|~)/;
+    const tokenizerRegex = new RegExp(
+      '(\\s|,|#|\\{|\\}|"|\\[|\\]|%|\'|\\n|\\t|\\/|\\.|_|<|>|:|-|\\(|\\)|\\?|\\||@|&|\\*|\\+|=|;|\\`|~)'
+    );
     const tokens = inputText.split(tokenizerRegex);
     return tokens;
   }
-
-  /*_checkBlockArray(array) {
-    console.log(array)
-    const regexPatterns = {
-      code: /```[\s\S]*?```/g,
-      object: /{[^{}]*}/g,
-      array: /\[[^\[\]]*]/g,
-      table: /(?:\r?\n|^)(?:(?:[^,\r\n]*,)+[^,\r\n]*)(?:\r?\n|$)/g,
-      btable: /^(?:"[^"]*"|[^"\n]*)+(?:(?:, ?)(?:"[^"]*"|[^"\n]*))+$/g,
-      url: /https?:\/\/(?:[\w-]+\.)+[\w-]+(?:\/[\w- ./?%&=]*)?/g,
-      img: /https?:\/\/.*\.(png|jpg|jpeg|gif|svg|bmp|webp|ico|tiff|tif)/g,
-      video: /https?:\/\/.*\.(mp4|avi|flv|mkv|mov|webm|m4v|ogv)/g,
-      audio: /https?:\/\/.*\.(mp3|flac|wav|mpa|wma|midi)/g,
-      file: /https?:\/\/.*\.(pdf|doc|docx|csv|xls|xlsx|ppt|pptx|txt|rtf|xml|odt|zip|rar|tar|gz)/g,
-      text: /[\p{L}]+/gu,
-    };
-
-    let result = null;
-    let deleteItems = [];
-    let listChecker = false;
-
-    let currentCommaCount = 0;
-    let pastCommaCount = -1;
-    let csvBuilder = [];
-    let minTableWidth = 2;
-    let isCSV = false;
-    let validText = false;
-    let multiText = 0;
-    let textChecker = [];
-
-    for (let [index, item] of array.entries()) {
-      if(multiText>1){
-        textChecker.push([index,item]);
-      }
-      if(item.type === 'text'){
-        multiText++;
-      }else{
-        multiText=0;
-        if(textChecker.length > 0){
-          textChecker=[];
-        }
-      }
-    }
-
-    for (let i = deleteItems.length; i >= 0; i--) {
-      array.splice(deleteItems[i], 1);
-    }
-    let deleteItems = [];
-
-    for (let [index, item] of array.entries()) {
-      const content = item.content;
-      const type = item.type;
-      if (item.type === 'code') {
-        result = { content: content.trim().replace(/```/g, ''), type: 'code' };
-      }
-      if (item.type === 'url') {
-        result = {
-          content: content.trim(),
-          type: this._checkURLType(content.trim()),
-        };
-      }
-      if (item.type === 'text'){
-        //result = {content: content.trim(), type: "text"}
-      }
-      if (item.type === 'json' || item.type === 'array') {
-        try {
-          const testJSON = JSON.parse(content);
-          let isArray = Array.isArray(testJSON);
-          result = {
-            content: content,
-            type: this._checkObjectType(testJSON),
-          };
-        } catch (error) {
-          result = {
-            content:
-              content,
-            type: 'code',
-          };
-        }
-      }
-      if (result) {
-        this._messageElements = [...this._messageElements, result];
-        deleteItems.push(index);
-      }
-    }
-    for (let i = deleteItems.length; i >= 0; i--) {
-      array.splice(deleteItems[i], 1);
-    }
-    return array;
-  }
-
-  _checkBufferedText(inputText) {
-    const categories = ['code', 'json', 'csv', 'url', 'list', 'text'];
-
-    for (let category of categories) {
-      let result;
-      switch (category) {
-        case 'code':
-          const found = inputText.match(/```([^']*)```/);
-          if (found) {
-            result = { content: found[0], index: found.index };
-          } else {
-            result = null;
-          }
-          break;
-        case 'json':
-          try {
-            const testJSON = JSON.parse(inputText);
-            let isArray = Array.isArray(testJSON);
-            result = {
-              content: inputText,
-              type: this._checkObjectType(testJSON),
-            };
-          } catch (error) {
-            result = null;
-          }
-          break;
-        case 'csv':
-          const lines = inputText.split('\n');
-          if (
-            lines.length > 1 &&
-            lines.every((line) => line.split(',').length > 1)
-          ) {
-            result = { content: inputText, type: 'table' };
-          } else {
-            result = null;
-          }
-          break;
-        case 'url':
-          const urlRegex = /(https?:\/\/[^\s]+)/g;
-          const isURL = urlRegex.test(inputText);
-          result = isURL
-            ? { content: inputText, type: this._checkURLType(inputText) }
-            : null;
-          break;
-        case 'list':
-          const listRegex = /^(?:\d+\.|[\u2022\u2023\u25E6\u2043\-])/;
-          const isList = listRegex.test(inputText);
-          result = isList ? { content: inputText, type: 'list' } : null;
-          break;
-      }
-
-      if (result) {
-        if (result.index !== undefined) {
-          inputText =
-            inputText.slice(0, result.index) +
-            inputText.slice(result.index + result.content.length);
-          return { content: inputText, type: 'code' };
-        }
-        //this.bufferMessage = inputText;
-        return result;
-      }
-    }
-    return { content: inputText, type: 'temporary' };
-  }
-
-
-  _checkBlockStart2(inputText) {
-    const lastItem = inputText.trim().slice(-1);
-    if (inputText.trim().slice(-3) === '```') {
-      return 'code';
-    }
-    switch (lastItem) {
-      case '{':
-        return 'json';
-        break;
-      case '[':
-        return 'array';
-        break;
-    }
-    if (inputText.startsWith('http')) {
-      return 'url';
-    }
-
-    return 'text';
-  }
-
-  _checkBlockEnd2(inputText, postCheck) {
-    const lastItem = inputText.trim().slice(-1);
-    let listRegex = /^(?:\d+\.|[\u2022\u2023\u25E6\u2043\-])/;
-    switch (postCheck) {
-      case 'code':
-        return inputText.trim().slice(-3) === '```';
-        break;
-      case 'json':
-        let offset = 0;
-        for (let char of inputText) {
-          if (char === '{') offset++;
-          if (char === '}') offset--;
-        }
-        return offset === 0;
-        break;
-      case 'array':
-        return lastItem === ']';
-        break;
-      case 'url':
-        return inputText.endsWith('\n');
-        break;
-      case 'text':
-        return inputText.endsWith('\n');
-        break;
-    }
-
-    return 'unknown';
-  }
-
-  _parseText3(inputText) {
-    const beginPatterns = {
-      beginCode: /```/,
-      beginObject: /{/,
-      beginArray: /\[/,
-      beginTable: /(?:\r?\n|^)(?:(?:[^,\r\n]*,)+[^,\r\n]*)(?:\r?\n|$)/g,
-      btable: /^(?:"[^"]*"|[^"\n]*)+(?:(?:, ?)(?:"[^"]*"|[^"\n]*))+$/g,
-      beginURL: /https|ftp:/,
-      beginList: /^\s*(?:\d+\.\s*|[\u2022\u2023\u25E6\u2043\-]\s*)/,
-    };
-
-    const regexPatterns = {
-      code: /```[\s\S]*?```/g,
-      object: /{[^{}]*}/g,
-      array: /\[[^\[\]]*]/g,
-      table: /(?:\r?\n|^)(?:(?:[^,\r\n]*,)+[^,\r\n]*)(?:\r?\n|$)/g,
-      btable: /^(?:"[^"]*"|[^"\n]*)+(?:(?:, ?)(?:"[^"]*"|[^"\n]*))+$/g,
-      url: /https?:\/\/(?:[\w-]+\.)+[\w-]+(?:\/[\w- ./?%&=]*)?/g,
-      img: /https?:\/\/.*\.(png|jpg|jpeg|gif|svg|bmp|webp|ico|tiff|tif)/g,
-      video: /https?:\/\/.*\.(mp4|avi|flv|mkv|mov|webm|m4v|ogv)/g,
-      audio: /https?:\/\/.*\.(mp3|flac|wav|mpa|wma|midi)/g,
-      file: /https?:\/\/.*\.(pdf|doc|docx|csv|xls|xlsx|ppt|pptx|txt|rtf|xml|odt|zip|rar|tar|gz)/g,
-      text: /[\p{L}]+/gu,
-    };
-
-    let unparsedText = inputText;
-    const analysisOrder = [
-      'code',
-      'object',
-      'array',
-      'table',
-      'img',
-      'video',
-      'audio',
-      'url',
-      'file',
-      'list',
-      'text',
-    ];
-    let subMessages = [];
-    for (let elementType of analysisOrder) {
-      let stringMatch: RegExpMatchArray | null;
-      stringMatch = regexPatterns[elementType].exec(unparsedText);
-      if (stringMatch) {
-        subMessages = [
-          ...subMessages,
-          {
-            content: stringMatch[0],
-            type: elementType,
-          },
-        ];
-        unparsedText =
-          unparsedText.substring(0, stringMatch.index) +
-          ' '.repeat(stringMatch[0].length) +
-          unparsedText.substring(stringMatch.index + stringMatch[0].length);
-        if(subMessages.length > 1){
-            subMessages = [...subMessages,{
-              content: unparsedText,
-              type: "unknown"
-            }];
-            return subMessages;
-          }
-      }
-    }
-    let finalOrder = subMessages.sort(
-      (a, b) => inputText.indexOf(a.content) - inputText.indexOf(b.content)
-    );
-    finalOrder = [
-      ...finalOrder,
-      {
-        content: unparsedText,
-        type: 'unparsed',
-      },
-    ];
-    return finalOrder;
-  }
-
-  _parseText2(inputText) {
-    let subMessages: { content: any; type: string }[] = [];
-    const regexPatterns = {
-      code: /```[\s\S]*?```/g,
-      object: /{[^{}]*}/g,
-      text: /[\W\s.,'"']+/g,
-      url: /https?:\/\/(?:[\w-]+\.)+[\w-]+(?:\/[\w- ./?%&=]*)?/g,
-      table: /(?:\r?\n|^)(?:(?:[^,\r\n]*,)+[^,\r\n]*)(?:\r?\n|$)/g,
-      array: /\[[^\[\]]*]/g,
-      img: /https?:\/\/.*\.(png|jpg|jpeg|gif|svg|bmp|webp|ico|tiff|tif)/g,
-      video: /https?:\/\/.*\.(mp4|avi|flv|mkv|mov|webm|m4v|ogv)/g,
-      audio: /https?:\/\/.*\.(mp3|flac|wav|mpa|wma|midi)/g,
-      file: /https?:\/\/.*\.(pdf|doc|docx|csv|xls|xlsx|ppt|pptx|txt|rtf|xml|odt|zip|rar|tar|gz)/g,
-    };
-
-    let unparsedText = inputText;
-    const analysisOrder = [
-      'code',
-      'object',
-      'array',
-      'table',
-      'img',
-      'video',
-      'audio',
-      'url',
-      'file',
-      'list',
-      'text',
-    ];
-    for (let elementType of analysisOrder) {
-      let foundItems: RegExpMatchArray | null;
-      while (
-        (foundItems = regexPatterns[elementType].exec(unparsedText)) !== null
-      ) {
-        subMessages = [
-          ...subMessages,
-          {
-            content: foundItems[0],
-            type: elementType,
-          },
-        ];
-        unparsedText =
-          unparsedText.substring(0, foundItems.index) +
-          ' '.repeat(foundItems[0].length) +
-          unparsedText.substring(foundItems.index + foundItems[0].length);
-      }
-    }
-    let finalOrder = subMessages.sort(
-      (a, b) =>
-        unparsedText.indexOf(a.content) - unparsedText.indexOf(b.content)
-    );
-  }*/
 
   /** parse Raw text param into a sub array of objects to display different elements in a single message block
    **/
@@ -1061,65 +723,14 @@ export default class message extends LitElement {
     return splitParts;
   }
 
-  /** _checkForObjects analyze if objects elements are present and parse them out
-   * @param {string} inputText - text block to be checked
-   */
-  _checkForObjects2(inputText) {
-    const splitParts: { content: any; type: string }[] = [];
-    //console.log("check object:"+inputText.substring(0,100));
-    //const objectRegex = /{[^{}]*}/g;
-    const objectRegex = /{[\s\S]*?}/g;
-    let match;
-    let lastIndex = 0;
-    while ((match = objectRegex.exec(inputText)) !== null) {
-      if (match.index > lastIndex) {
-        splitParts.push({
-          type: 'non-object',
-          content: inputText.slice(lastIndex, match.index),
-        });
-      }
-
-      try {
-        const testJSON = JSON.parse(match[0]);
-        const objectType = this._checkObjectType(testJSON);
-
-        if (objectType == 'multi-url') {
-          splitParts.concat(
-            testJSON.map((url) => ({ content: url, type: 'url' }))
-          );
-        } else {
-          splitParts.push({
-            type: objectType,
-            content: match[0],
-          });
-        }
-      } catch (error) {
-        splitParts.push({
-          type: 'non-object',
-          content: match[0],
-        });
-      }
-
-      lastIndex = match.index + match[0].length;
-    }
-
-    if (lastIndex < inputText.length) {
-      splitParts.push({
-        type: 'non-object',
-        content: inputText.slice(lastIndex),
-      });
-    }
-    return splitParts;
-  }
-
   /** _checkObjectType - check what category of JSON object it is
    * @param {object} jsonObject - JSON object to be analyzed and aasigned a type, if array check all objects inside to see if carousel or tags, if not make it code or a chart
    */
   _checkObjectType(jsonObject) {
     let jsonType = 'code';
     if (Array.isArray(jsonObject)) {
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      const imageRegex = /\.(png|jpg|jpeg|gif|svg)$/i;
+      const urlRegex = new RegExp('(https?://[^\\s]+)', 'g');
+      const imageRegex = new RegExp('\\.(png|jpg|jpeg|gif|svg)$', 'i');
 
       const checkAllImages = jsonObject.every(
         (item) => imageRegex.test(item) && typeof item === 'string'
@@ -1149,11 +760,21 @@ export default class message extends LitElement {
    * @param {object} urlObject - URL string to be parsed and assigned a type
    */
   _checkURLType(urlObject) {
-    const imageRegex = /\.(png|jpg|jpeg|gif|svg|bmp|webp|ico|tiff|tif)$/i;
-    const videoRegex = /\.(mp4|avi|flv|mkv|mov|webm|m4v|ogv)$/i;
-    const fileRegex =
-      /\.(pdf|doc|docx|csv|xls|xlsx|ppt|pptx|txt|rtf|xml|odt|zip|rar|tar|gz)$/i;
-    const audioRegex = /\.(mp3|flac|wav|mpa|wma|midi)$/i;
+    const imageRegex = new RegExp(
+      '\\.(png|jpg|jpeg|gif|svg|bmp|webp|ico|tiff|tif)$',
+      'i'
+    );
+    const videoRegex = new RegExp(
+      '\\.(mp4|avi|flv|mkv|mov|webm|m4v|ogv)$',
+      'i'
+    );
+    const fileRegex = new RegExp(
+      '\\.(pdf|doc|docx|csv|xls|xlsx|ppt|pptx|txt|rtf|xml|odt|zip|rar|tar|gz)$',
+      'i'
+    );
+    const audioRegex = new RegExp('\\.(mp3|flac|wav|mpa|wma|midi)$', 'i');
+
+    const urlRegex = new RegExp('(https?:\\/\\/[^\\s]+)', 'g');
 
     if (imageRegex.test(urlObject)) {
       return 'img';
@@ -1167,8 +788,11 @@ export default class message extends LitElement {
     if (fileRegex.test(urlObject)) {
       return 'file';
     }
+    if (urlRegex.test(urlObject)) {
+      return 'url';
+    }
 
-    return 'url';
+    return 'text';
   }
 
   /** _checkForFormatting analyze if text elements like lists are present and parse them out
@@ -1177,7 +801,7 @@ export default class message extends LitElement {
   _checkForFormatting(inputText) {
     const splitParts: { content: any; type: string }[] = [];
     //eslint-disable-next-line
-    const listRegex = /^(?:\d+\.|[\u2022\u2023\u25E6\u2043\-])/;
+    const listRegex = new RegExp('^(?:d+.|[\u2022\u2023\u25E6\u2043-])');
     const splitMatches: string[] = inputText.split('\n');
 
     let currentType = '';
@@ -1209,30 +833,13 @@ export default class message extends LitElement {
    * @param {string} inputText - text block to be checked for URLs
    */
   _checkForURLs(inputText) {
-    const splitParts: { content: any; type: string }[] = [];
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    const imageRegex = /\.(png|jpg|jpeg|gif|svg)$/i;
-    const videoRegex = /\.(mp4|webm|mkv|mov|wmv|avi)$/i;
-    const fileRegex = /\.(csv|mp3|pdf|ppt|xls|zip|txt|tsv)$/i;
+    let splitParts: { content: any; type: string }[] = [];
+    const urlRegex = new RegExp('(https?:\\/\\/[^\\s]+)', 'g');
     const segments = inputText.split(urlRegex);
-    for (const segment of segments) {
-      const isURL = urlRegex.test(segment);
-      const isImageURL = isURL && imageRegex.test(segment);
-      const isVideoURL = isURL && videoRegex.test(segment);
-      const isFileURL = isURL && fileRegex.test(segment);
-
-      if (isVideoURL) {
-        splitParts.push({ content: segment, type: 'video' });
-      } else if (isImageURL) {
-        splitParts.push({ content: segment, type: 'img' });
-      } else if (isFileURL) {
-        splitParts.push({ content: segment, type: 'file' });
-      } else if (isURL) {
-        splitParts.push({ content: segment, type: 'url' });
-      } else {
-        splitParts.push({ content: segment, type: 'text' });
-      }
-    }
+    splitParts = segments.map((item) => ({
+      content: item,
+      type: this._checkURLType(item),
+    }));
     return splitParts;
   }
 
@@ -1292,11 +899,11 @@ export default class message extends LitElement {
   _handleRegenerate(event) {
     const messageDetails = this._prepareEventDetail();
     messageDetails['action'] = 'message: user regenerated a chat response';
-    messageDetails['newMessage'] = this._editedMessage;
-    messageDetails['rawTextMessage'] = this.rawText;
+    //messageDetails['newMessage'] = this._editedMessage;
+    //messageDetails['rawTextMessage'] = this.rawText;
     messageDetails['messageElements'] = this._messageElements;
     event.preventDefault();
-    const regenerationEvent = new CustomEvent('on-user-regeneration-request', {
+    const regenerationEvent = new CustomEvent('on-message-regeneration', {
       detail: messageDetails,
       bubbles: true,
       composed: true,

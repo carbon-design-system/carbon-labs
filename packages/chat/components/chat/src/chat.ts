@@ -137,27 +137,6 @@ export default class CLABSChat extends LitElement {
   @property({ type: String, attribute: 'sample-query' })
   sampleQuery;
 
-  /** detect when component is rendered to process rawtext
-   */
-  firstUpdated() {
-    this.conversation = this.hasAttribute('conversation')
-      ? this.conversation
-      : [];
-    this._queryInProgress = this.hasAttribute('loading') ? this.loading : false;
-    this.sampleQuery = this.hasAttribute('sample-query')
-      ? this.sampleQuery
-      : '';
-    this._streamResponses = this.hasAttribute('stream-responses')
-      ? this._streamResponses
-      : false;
-    this.inputFieldPlaceholder = this.hasAttribute('input-field-placeholder')
-      ? this.inputFieldPlaceholder
-      : '';
-    this.autoUpdate = this.hasAttribute('auto-update')
-      ? this.autoUpdate
-      : false;
-  }
-
   /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
    * @param {Object} changedProperties - returned inner DOM update object
    **/
@@ -166,7 +145,6 @@ export default class CLABSChat extends LitElement {
     if (changedProperties.has('loading')) {
       this._queryInProgress = this.loading;
     }
-    console.log(changedProperties);
 
     if (changedProperties.has('conversation')) {
       console.log(this.conversation);
@@ -287,7 +265,8 @@ export default class CLABSChat extends LitElement {
    */
   _handleUserRegenerationRequest(event) {
     const deletionIndex = event.detail.messageIndexInChat - 1;
-    const previousMessage = this._messages[deletionIndex - 1].text;
+    const previousMessage = this._messages[deletionIndex].text;
+    console.log(previousMessage);
     if (this.autoUpdate || this.apiURL) {
       this._messages = this._messages.slice(0, deletionIndex);
       const inputEvent = new CustomEvent('user-input', {

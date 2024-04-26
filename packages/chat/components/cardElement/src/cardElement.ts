@@ -55,7 +55,7 @@ export default class cardElement extends LitElement {
    * api to fetch link/video previews
    */
   @property({ type: String, attribute: 'api-url', reflect: true })
-  apiUrl = 'http://localhost:5001/get_preview';
+  apiUrl; // = 'http://localhost:5001/get_preview';
 
   /**
    * card type to differentiate between url and videos
@@ -125,7 +125,7 @@ export default class cardElement extends LitElement {
       }
     } else {
       this._cardData = this.cardElements;
-      if (this.fileType == null) {
+      if (this.fileType == null && this.type !== 'url') {
         this.fileType = this._getFileType(this.cardElements.link);
       }
       this.requestUpdate();
@@ -151,9 +151,32 @@ export default class cardElement extends LitElement {
    */
   _getSiteName(url) {
     try {
-      const domain = new URL(url).hostname.replace(/^www\./, '').split('.')[0];
+      const urlObject = new URL(url);
+      const domain = urlObject.hostname
+        .replace(/^www\./, '')
+        .split('.')
+        .slice(-2, -1)[0];
       const formattedName = domain.charAt(0).toUpperCase() + domain.slice(1);
-      return formattedName;
+
+      const path = urlObject.pathname;
+      const pieces = path.split('/');
+      const longestTitle: string | undefined = pieces
+        .sort((a, b) => b.length - a.length)
+        .pop();
+      const candidateTitle = longestTitle
+        ? longestTitle.replace(new RegExp('[-_]+', 'g'), ' ')
+        : '';
+
+      if (candidateTitle !== '') {
+        return (
+          formattedName +
+          ': ' +
+          candidateTitle.charAt(0).toUpperCase() +
+          candidateTitle.slice(1)
+        );
+      } else {
+        return formattedName;
+      }
     } catch (error) {
       return 'Site name';
     }
@@ -194,7 +217,6 @@ export default class cardElement extends LitElement {
   _getFileType(fileName) {
     const pieces: string[] = fileName.split('.');
     let foundType: string = pieces[pieces.length - 1];
-    console.log(foundType);
     if (this.fileTypes.indexOf(foundType) < 0) {
       foundType = 'unknown';
     }
@@ -294,22 +316,30 @@ export default class cardElement extends LitElement {
    */
   async _getSitePreviewData(url) {
     try {
-      let preview = await this._previewData(url);
+      let preview: any = {};
+
+      if (this.apiUrl) {
+        preview = await this._previewData(url);
+      }
+
       if (
         !preview ||
         (!preview.title && !preview.imageUrl && !preview.description)
       ) {
-        preview = {};
         if (this.type === 'video') {
           preview.title = this._getVideoTitle(url);
           //preview.description = this._getVideoFileName(url);
         } else {
           preview.title = this._getSiteName(url);
+          preview.description = url;
         }
       }
 
       if (!preview.title) {
         preview.title = this._getSiteName(url);
+      }
+      if (!preview.link) {
+        preview.link = url;
       }
       preview.shortenedUrl = this._getShortenedURL(url);
       this._cardData = preview;
@@ -319,7 +349,7 @@ export default class cardElement extends LitElement {
       this._cardData = {
         title: backUpName,
         imageUrl: null,
-        description: null,
+        description: url,
         link: url,
       };
       this.requestUpdate();

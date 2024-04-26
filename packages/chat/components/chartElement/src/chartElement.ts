@@ -145,6 +145,28 @@ export default class chartElement extends LitElement {
     this.requestUpdate();
   }
 
+  /**
+   * TEMPORARY: get style of parent to set theme
+   */
+  _getTheme() {
+    /*const parentStyle = this.shadowRoot?.querySelector("."+clabsPrefix+"--chat-chart-container")
+    const backgroundColor = parentStyle?.style?.getPropertyValue("--cds-background");
+    console.log(backgroundColor)
+    if(backgroundColor){
+      const r = parseInt(backgroundColor.substring(1,2), 16);
+      const g = parseInt(backgroundColor.substring(3,2), 16);
+      const b = parseInt(backgroundColor.substring(5,2), 16);
+
+      if(r < 135 && g < 135 && b < 135){
+        console.log(backgroundColor+" dark")
+        return "dark";
+      }else{
+        console.log(backgroundColor+" light")
+        return "light"
+      }
+    }*/
+  }
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
@@ -221,7 +243,6 @@ export default class chartElement extends LitElement {
       return '';
     } else {
       try {
-        //this._invalid = false;
         await VegaEmbed.default(targetDiv, this._visualizationSpec, {
           actions: this.enableInspector || false,
           hover: this.enableTooltip,
@@ -317,15 +338,6 @@ export default class chartElement extends LitElement {
     } else if (spec['repeat']) {
       const currentContainerWidth = this.clientWidth;
       const currentContainerHeight = this.clientHeight;
-      /*
-      const chartArea = this.shadowRoot?.querySelector(
-        '.clabs--chat-chart-container'
-      );
-      if (chartArea instanceof HTMLElement) {
-        currentContainerHeight=chartArea.style.height;
-        currentContainerWidth=chartArea.style.width;
-      }
-      */
 
       repeatedSpec = this._prepareSpecification(
         JSON.parse(JSON.stringify(spec)),
@@ -360,22 +372,8 @@ export default class chartElement extends LitElement {
           paddingOffset['horizontal'] =
             repeatedSpec['spec']['padding']['left'] +
             repeatedSpec['spec']['padding']['right'];
-
-          paddingOffset['vertical'] = paddingOffset['vertical']
-            ? paddingOffset['vertical']
-            : 36;
-          paddingOffset['horizontal'] = paddingOffset['horizontal']
-            ? paddingOffset['horizontal']
-            : 36;
-          paddingOffset['vertical'] = paddingOffset['vertical']
-            ? paddingOffset['vertical'] * rowCount
-            : 0;
-          paddingOffset['horizontal'] = paddingOffset['horizontal']
-            ? paddingOffset['horizontal'] * columnCount
-            : 0;
         }
 
-        console.log(paddingOffset);
         /*if(spec['config']['padding']){
           paddingOffset['vertical'] = spec['padding']['config']['top'] + spec['padding']['config']['bottom']
           paddingOffset['horizontal'] = spec['padding']['config']['left'] + spec['padding']['config']['right']
@@ -590,7 +588,7 @@ export default class chartElement extends LitElement {
       }
 
       let titleOffset = -8;
-      const defaultPadding = 18;
+      const defaultPadding = 24;
 
       if (spec.description && !spec.title) {
         spec.title = spec.description;
@@ -644,6 +642,7 @@ export default class chartElement extends LitElement {
             tickColor: backgroundColor,
             titlePadding: 12,
             titleFont: defaultFont,
+            titleFontWeight: 400,
           },
           axisTop: {
             domainColor: gridColor,
@@ -652,6 +651,7 @@ export default class chartElement extends LitElement {
             tickColor: backgroundColor,
             titlePadding: 10,
             titleFont: defaultFont,
+            titleFontWeight: 400,
           },
           axisLeft: {
             domainColor: axisColor,
@@ -660,6 +660,7 @@ export default class chartElement extends LitElement {
             tickColor: backgroundColor,
             titlePadding: 6,
             titleFont: defaultFont,
+            titleFontWeight: 400,
           },
           axisRight: {
             domainColor: gridColor,
@@ -668,6 +669,7 @@ export default class chartElement extends LitElement {
             tickColor: backgroundColor,
             titlePadding: 10,
             titleFont: defaultFont,
+            titleFontWeight: 400,
           },
           view: {
             stroke: gridColor,

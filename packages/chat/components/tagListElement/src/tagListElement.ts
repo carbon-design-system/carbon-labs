@@ -44,7 +44,6 @@ export default class tagListElement extends LitElement {
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
-    console.log(this.content);
     if (this.content !== undefined) {
       this._prepareTagList();
       this.requestUpdate();

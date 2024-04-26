@@ -42,7 +42,7 @@ export function chatTemplate(customElementClass) {
       agent-name="${agentName}"
       ?loading="${queryInProgress}"
       ?stream-responses="${streamResponses}"
-      @on-user-regeneration-request="${handleUserRegenerationRequest}"
+      @on-message-regeneration="${handleUserRegenerationRequest}"
       @on-user-message-update-request="${handleUserUpdateRequest}">
     </clabs--chat-messages>
 

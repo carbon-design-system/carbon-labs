@@ -59,6 +59,7 @@ export function messageTemplate(customElementClass) {
     temporaryMessage,
     watsonIcon,
     displayColor,
+    currentlyStreaming,
   } = customElementClass;
 
   return html`<div
@@ -122,90 +123,90 @@ export function messageTemplate(customElementClass) {
               <div class="${clabsPrefix}--chat-message-response-bot">
                 ${messageElements.map(
                   (message) => html` <div
-                    class="${clabsPrefix}--chat-message-section @click="${handleMessageElementClick}">
-                    ${
-                      message.type === 'img'
-                        ? html`
-                            <clabs--chat-image content="${message.content}">
-                            </clabs--chat-image>
-                          `
-                        : message.type === 'chart'
-                        ? html`
-                            <clabs--chat-chart content="${message.content}">
-                            </clabs--chat-chart>
-                          `
-                        : message.type === 'carousel'
-                        ? html`
-                            <clabs--chat-carousel content="${message.content}">
-                            </clabs--chat-carousel>
-                          `
-                        : message.type === 'table'
-                        ? html`
-                            <clabs--chat-table content="${message.content}">
-                            </clabs--chat-table>
-                          `
-                        : message.type === 'url' ||
-                          message.type === 'video' ||
-                          message.type === 'file' ||
-                          message.type === 'audio'
-                        ? html`
-                            <clabs--chat-card
-                              type="${message.type}"
-                              content="${message.content}">
-                            </clabs--chat-card>
-                          `
-                        : message.type === 'text'
-                        ? html`
-                            <clabs--chat-text
-                              capitalize
-                              content="${message.content}">
-                            </clabs--chat-text>
-                          `
-                        : message.type === 'list'
-                        ? html`
-                            <clabs--chat-list content="${message.content}">
-                            </clabs--chat-list>
-                          `
-                        : message.type === 'loading'
-                        ? html` <clabs--chat-loading> </clabs--chat-loading> `
-                        : message.type === 'code'
-                        ? html`
-                            <clabs--chat-code content="${message.content}">
-                            </clabs--chat-code>
-                          `
-                        : message.type === 'tags'
-                        ? html`
-                            <clabs--chat-tag-list
-                              content="${message.content}"
-                              @tag-selected="${onTagSelected}">
-                            </clabs--chat-tag-list>
-                          `
-                        : message.type === 'error'
-                        ? html`
-                            <clabs--chat-error
-                              content="${message.content}"
-                              capitalize>
-                            </clabs--chat-error>
-                          `
-                        : html`
-                            <p class="${clabsPrefix}--chat-message-warning">
-                              Warning: No valid type specified for message
-                              subelement in 'elements' array, available types
-                              are: 'text', 'img', 'url', 'video', 'audio',
-                              'file', 'code', 'list', 'table', 'chart', 'tags'
-                              and 'error'. Rendering as default: 'text'...
-                            </p>
-                            <clabs--chat-text
-                              capitalize
-                              content="${message.content}">
-                            </clabs--chat-text>
-                          `
-                    }
+                    class="${clabsPrefix}--chat-message-section"
+                    @click="${handleMessageElementClick}">
+                    ${message.type === 'img'
+                      ? html`
+                          <clabs--chat-image content="${message.content}">
+                          </clabs--chat-image>
+                        `
+                      : message.type === 'chart'
+                      ? html`
+                          <clabs--chat-chart content="${message.content}">
+                          </clabs--chat-chart>
+                        `
+                      : message.type === 'carousel'
+                      ? html`
+                          <clabs--chat-carousel content="${message.content}">
+                          </clabs--chat-carousel>
+                        `
+                      : message.type === 'table'
+                      ? html`
+                          <clabs--chat-table content="${message.content}">
+                          </clabs--chat-table>
+                        `
+                      : message.type === 'url' ||
+                        message.type === 'video' ||
+                        message.type === 'file' ||
+                        message.type === 'audio'
+                      ? html`
+                          <clabs--chat-card
+                            type="${message.type}"
+                            content="${message.content}">
+                          </clabs--chat-card>
+                        `
+                      : message.type === 'text'
+                      ? html`
+                          <clabs--chat-text
+                            capitalize
+                            content="${message.content}">
+                          </clabs--chat-text>
+                        `
+                      : message.type === 'list'
+                      ? html`
+                          <clabs--chat-list content="${message.content}">
+                          </clabs--chat-list>
+                        `
+                      : message.type === 'loading'
+                      ? html` <clabs--chat-loading> </clabs--chat-loading> `
+                      : message.type === 'code'
+                      ? html`
+                          <clabs--chat-code content="${message.content}">
+                          </clabs--chat-code>
+                        `
+                      : message.type === 'tags'
+                      ? html`
+                          <clabs--chat-tag-list
+                            content="${message.content}"
+                            @tag-selected="${onTagSelected}">
+                          </clabs--chat-tag-list>
+                        `
+                      : message.type === 'error'
+                      ? html`
+                          <clabs--chat-error
+                            content="${message.content}"
+                            capitalize>
+                          </clabs--chat-error>
+                        `
+                      : html`
+                          <p class="${clabsPrefix}--chat-message-warning">
+                            Warning: No valid type specified for message
+                            subelement in 'elements' array, available types are:
+                            'text', 'img', 'url', 'video', 'audio', 'file',
+                            'code', 'list', 'table', 'chart', 'tags' and
+                            'error'. Rendering as default: 'text'...
+                          </p>
+                          <clabs--chat-text
+                            capitalize
+                            content="${message.content}">
+                          </clabs--chat-text>
+                        `}
                   </div>`
                 )}
-                ${temporaryMessage
+                ${currentlyStreaming
                   ? html`
-                      <div class="${clabsPrefix}--chat-message-section">
+                      <div
+                        class="${clabsPrefix}--chat-message-section-temporary">
                         ${temporaryMessage.type === 'table'
                           ? html`
                               <clabs--chat-table

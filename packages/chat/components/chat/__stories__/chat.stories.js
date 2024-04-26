@@ -62,7 +62,7 @@ const apiArgs = {
   chosenHost: 'Local',
   userPrompt:
     'You are Watson, a helpful and polite assistant. You will answer all my questions to the best of your knowledge.',
-  apiUrl: 'http://localhost:5001/generate',
+  apiUrl: 'http://localhost:5002/generate',
   model: 'llama-2',
   temperature: '',
   feedbackUrl: 'http://localhost:5001/feedback',

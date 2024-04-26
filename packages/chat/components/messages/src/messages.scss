@@ -26,6 +26,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-messages-container {
     overflow: hidden scroll;
     flex: 1;
+    inline-size: 100%;
     padding-block: 16px 16px;
   }
 }

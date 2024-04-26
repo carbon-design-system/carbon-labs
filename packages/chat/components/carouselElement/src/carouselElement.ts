@@ -94,6 +94,10 @@ export default class carouselElement extends LitElement {
       this._updateCarousel();
     }
 
+    if (this.hasAttribute('_carouselContent')) {
+      this._updateCarousel();
+    }
+
     this.resizeObserver = new ResizeObserver(async () => {
       this._updateCarousel();
       this.requestUpdate();
@@ -126,8 +130,9 @@ export default class carouselElement extends LitElement {
     if (this._carouselContent) {
       if (this.parentElement instanceof HTMLElement) {
         const parentWidth = this.parentElement?.clientWidth;
-        this._itemsPerSlide = Math.floor(
-          parentWidth / (this.contentWidth + this._slideGapSize)
+        this._itemsPerSlide = Math.max(
+          Math.floor(parentWidth / (this.contentWidth + this._slideGapSize)),
+          1
         );
         this.style.setProperty(
           '--chat-carousel-slides-width',
@@ -170,11 +175,19 @@ export default class carouselElement extends LitElement {
    * @param {string} urlObject - url text block to be checked
    */
   _checkURLType(urlObject) {
-    const imageRegex = /\.(png|jpg|jpeg|gif|svg|bmp|webp|ico|tiff|tif)$/i;
-    const videoRegex = /\.(mp4|avi|flv|mkv|mov|webm|m4v|ogv)$/i;
-    const fileRegex =
-      /\.(pdf|doc|docx|csv|xls|xlsx|ppt|pptx|txt|rtf|xml|odt|zip|rar|tar|gz)$/i;
-    const audioRegex = /\.(mp3|flac|wav|mpa|wma|midi|ogg)$/i;
+    const imageRegex = new RegExp(
+      '\\.(png|jpg|jpeg|gif|svg|bmp|webp|ico|tiff|tif)$',
+      'i'
+    );
+    const videoRegex = new RegExp(
+      '\\.(mp4|avi|flv|mkv|mov|webm|m4v|ogv)$',
+      'i'
+    );
+    const fileRegex = new RegExp(
+      '\\.(pdf|doc|docx|csv|xls|xlsx|ppt|pptx|txt|rtf|xml|odt|zip|rar|tar|gz)$',
+      'i'
+    );
+    const audioRegex = new RegExp('\\.(mp3|flac|wav|mpa|wma|midi|ogg)$', 'i');
 
     if (imageRegex.test(urlObject)) {
       return 'img';
@@ -222,14 +235,6 @@ export default class carouselElement extends LitElement {
           );
         }
       }
-      /*if(this.content.charAt(this.content.length-1) === ','){
-        const fixedCopy = this.content.replace(/.$/,']');
-        try{
-          this._carouselContent = fixedCopy.map( url => ({content:url, type: this._checkURLType(url)}));
-        }catch(subError){
-
-        }
-      }*/
     }
   }
 

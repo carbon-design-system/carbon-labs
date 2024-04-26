@@ -28,7 +28,7 @@ export default class messages extends LitElement {
    * computed message object
    */
   @state()
-  _computedMessages = [];
+  _computedMessages: any[] = [];
 
   /**
    * user-assigned boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message
@@ -60,37 +60,22 @@ export default class messages extends LitElement {
   @property({ type: String, attribute: 'agent-name' })
   agentName;
 
-  /** detect when component is rendered to process visualization specification object
-   */
-  firstUpdated() {
-    this._computedMessages = this.hasAttribute('messages') ? this.messages : [];
-    this._queryInProgress = this.hasAttribute('loading') ? this.loading : false;
-    this._updateScroll();
-  }
-
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
   async updated(changedProperties) {
     super.updated(changedProperties);
-    if (changedProperties.has('_computedMessages')) {
-      await this.updateComplete;
-      this._updateScroll();
-    }
 
     if (changedProperties.has('messages')) {
-      this.computeMessages();
+      this._computedMessages = [...this.messages];
       this._updateScroll();
-      this.requestUpdate();
     }
 
     if (changedProperties.has('loading')) {
       this._queryInProgress = this.loading;
-      this.requestUpdate();
     }
     if (changedProperties.has('_streamResponses')) {
       this._queryInProgress = this.loading;
-      this.requestUpdate();
     }
   }
 
@@ -117,7 +102,7 @@ export default class messages extends LitElement {
    * handle updating of inner messages object when parent updates
    */
   computeMessages() {
-    this._computedMessages = this.messages;
+    this._computedMessages = [...this.messages];
   }
 
   /** auto-scroll chat-messages div when a new message has appeared

@@ -44,7 +44,12 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-message-section {
+    margin-block: 16px 8px;
+  }
+
+  .#{$clabs-prefix}--chat-message-section-temporary {
     margin-block: 16px 4px;
+    min-block-size: 256px;
   }
 
   .#{$clabs-prefix}--chat-message-warning {
@@ -80,7 +85,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-message-dropdown-user {
     clear: both;
     float: inline-end;
-    opacity: 1;
+    padding-block-start: 8px;
   }
 
   .#{$clabs-prefix}--chat-message-bot-message {

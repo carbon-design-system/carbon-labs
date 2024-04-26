@@ -1,0 +1,78 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}--chat-carousel) {
+  display: flex;
+  overflow: hidden;
+  background: none;
+  inline-size: 100%;
+
+  .#{$clabs-prefix}--chat-carousel-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    inline-size: var(--chat-carousel-slides-width, '248px');
+  }
+
+  .#{$clabs-prefix}--chat-carousel-length {
+    block-size: 16px;
+    color: $text-secondary;
+    font-size: 12px;
+    text-align: start;
+  }
+
+  .#{$clabs-prefix}--chat-carousel-slides {
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    flex-grow: 1;
+    gap: 16px;
+    min-block-size: 0;
+  }
+
+  .#{$clabs-prefix}--chat-carousel-slide {
+    display: flex;
+    overflow: hidden;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    inline-size: 248px;
+  }
+
+  .#{$clabs-prefix}--chat-carousel-img {
+    block-size: 100%;
+    inline-size: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .#{$clabs-prefix}--chat-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    block-size: 32px;
+    gap: 8px;
+    inline-size: 100%;
+  }
+  .#{$clabs-prefix}--chat-carousel-control-item {
+    block-size: 32px;
+    font-size: 14px;
+    line-height: 30px;
+
+    svg {
+      color: $text-secondary;
+      fill: $text-secondary;
+    }
+  }
+}

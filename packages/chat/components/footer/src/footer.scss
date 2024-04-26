@@ -1,0 +1,85 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}--chat-footer) {
+  position: absolute;
+  display: block;
+  margin: 0 auto;
+  background: none;
+  inset-block-end: 0;
+  inset-inline: 0;
+  max-inline-size: 672px;
+  min-block-size: 56px;
+
+  .#{$clabs-prefix}--chat-footer-container {
+    background: none;
+    min-block-size: 56px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-items {
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    border-radius: 8px;
+    background: $background;
+    border-block-end: 1px solid rgba(69, 137, 255, 0.2);
+    border-block-start: 1px solid $border-subtle;
+    border-inline-end: 1px solid rgba(69, 137, 255, 0.2);
+
+    border-inline-start: 1px solid rgba(69, 137, 255, 0.2);
+    min-block-size: 56px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu {
+    box-sizing: border-box;
+    padding: 16px;
+    border: 1px solid $border-subtle;
+    border-radius: 8px;
+    background: $background;
+    inline-size: 100%;
+    margin-block-end: 4px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 56px;
+  }
+
+  .#{$clabs-prefix}--chat-search-query {
+    box-sizing: border-box;
+    flex: 3;
+    padding: 0;
+    border: none;
+    background: none;
+
+    block-size: auto;
+    color: $text-primary;
+    font: inherit;
+    font-size: 14px;
+    line-height: 20px;
+    min-block-size: 30px;
+    overflow-y: hidden;
+    padding-block: 10px 10px;
+    resize: none;
+  }
+
+  .#{$clabs-prefix}--chat-search-query:focus {
+    outline: none;
+  }
+
+  .#{$clabs-prefix}--chat-search-query::placeholder {
+    color: $text-secondary;
+  }
+}

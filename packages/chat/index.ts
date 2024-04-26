@@ -8,6 +8,20 @@
  */
 
 import './components/chat/chat.js';
-import './components/message/message.js';
-import './components/card/card.js';
 import './components/header/header.js';
+import './components/footer/footer.js';
+import './components/message/message.js';
+import './components/messages/messages.js';
+
+import './components/editableTextElement/editableTextElement.js';
+import './components/textElement/textElement.js';
+import './components/cardElement/cardElement.js';
+import './components/chartElement/chartElement.js';
+import './components/tableElement/tableElement.js';
+import './components/codeElement/codeElement.js';
+import './components/tagListElement/tagListElement.js';
+import './components/listElement/listElement.js';
+import './components/imageElement/imageElement.js';
+import './components/loadingElement/loadingElement.js';
+import './components/errorElement/errorElement.js';
+import './components/carouselElement/carouselElement.js';

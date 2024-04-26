@@ -15,6 +15,7 @@ import cssnano from 'cssnano';
 import path from 'path';
 import postcss from 'postcss';
 import replace from '@rollup/plugin-replace';
+import json from '@rollup/plugin-json';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import alias from '@rollup/plugin-alias';
@@ -119,6 +120,7 @@ export default (commandLineArgs) => {
         include: [/node_modules/],
         sourceMap: true,
       }),
+      json(),
       esbuild({ sourceMap: false, tsconfig: '../tsconfig.json' }),
       rollupPluginLitSCSS({
         includePaths: [path.resolve(__dirname, '../node_modules')],

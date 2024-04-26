@@ -12,71 +12,24 @@
 :host(#{$clabs-prefix}-chat) {
   display: block;
   overflow: hidden;
+  border: 1px solid rgba(69, 137, 255, 0.2);
+  border-radius: 8px;
+  background: linear-gradient(
+    to bottom,
+    $background 80%,
+    rgba(69, 137, 255, 0.2)
+  );
+  background-blend-mode: multiply;
   block-size: 100%;
   font-family: 'IBM Plex Sans', sans-serif;
+  mix-blend-mode: normal;
 
   .#{$clabs-prefix}--chat-container {
+    position: relative;
     display: flex;
     overflow: hidden;
     flex-direction: column;
-    border-radius: 8px;
     block-size: 100%;
     max-block-size: 100%;
-  }
-
-  .#{$clabs-prefix}--chat-messages {
-    flex: 1;
-    background: linear-gradient(to bottom, #272727 80%, #2d3c55);
-    overflow-y: auto;
-  }
-
-  .#{$clabs-prefix}--chat-footer {
-    display: flex;
-    align-items: center;
-    background: #272727;
-    min-block-size: 40px;
-
-    .#{$clabs-prefix}--chat-footer-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      block-size: 40px;
-      inline-size: 40px;
-    }
-
-    .#{$clabs-prefix}--chat-footer-button svg {
-      block-size: 20px;
-      fill: #8d8d8d;
-      inline-size: 20px;
-    }
-
-    .#{$clabs-prefix}--chat-footer-button:hover svg {
-      fill: #f4f4f4;
-    }
-
-    .#{$clabs-prefix}--chat-search-query {
-      box-sizing: border-box;
-      flex: 3;
-      padding: 0;
-      border: none;
-      background: none;
-
-      block-size: auto;
-      color: #f4f4f4;
-      font: inherit;
-      font-size: 13px;
-      line-height: 16px;
-      min-block-size: 40px;
-      padding-block-start: 10px;
-      resize: none;
-    }
-
-    .#{$clabs-prefix}--chat-search-query:focus {
-      outline: none;
-    }
-
-    .#{$clabs-prefix}--chat-search-query::placeholder {
-      color: #c6c6c6;
-    }
   }
 }

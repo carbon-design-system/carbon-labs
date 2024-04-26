@@ -17,6 +17,9 @@ import styles from './header.scss?inline';
 export default class header extends LitElement {
   static styles = styles;
 
-  @property({ type: String, reflect: true })
-  title = 'Carbon for AI Chat component';
+  @property({ type: String, attribute: 'title' })
+  title;
+
+  @property({ type: String, attribute: 'icon' })
+  icon;
 }

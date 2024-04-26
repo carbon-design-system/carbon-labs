@@ -1,0 +1,53 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+
+:host(#{$clabs-prefix}--chat-loading) {
+  display: block;
+  overflow: hidden;
+
+  .#{$clabs-prefix}--chat-loading-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 9px;
+    background-color: $background-hover;
+    block-size: 18px;
+    inline-size: 100%;
+  }
+  @media screen and (prefers-reduced-motion: reduce) {
+    .#{$clabs-prefix}--chat-loading-bar {
+      position: absolute;
+      animation: none;
+      background-color: $blue-50;
+      block-size: 100%;
+      inset-block-start: 0;
+    }
+  }
+
+  .#{$clabs-prefix}--chat-loading-bar {
+    position: absolute;
+    animation: loading-animation 2000ms linear infinite;
+    background-color: $blue-50;
+    block-size: 100%;
+    inline-size: 100%;
+    inset-block-start: 0;
+  }
+
+  @keyframes loading-animation {
+    0%,
+    100% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+  }
+}

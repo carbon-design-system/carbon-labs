@@ -1,0 +1,57 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}--chat-code) {
+  .#{$clabs-prefix}--chat-code-container {
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+    padding: 16px;
+    border: 1px solid $border-subtle-00;
+    border-radius: 8px;
+    background-color: $layer-01;
+    color: $text-primary;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .#{$clabs-prefix}--chat-code-line {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-tick {
+    box-sizing: border-box;
+    flex: 0 0 26px;
+    inline-size: 26px;
+    text-align: end;
+    user-select: none;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-divider {
+    flex: 0 0 20px;
+
+    inline-size: 20px;
+    user-select: none;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-text {
+    flex-grow: 1;
+    border-inline-start: 1px solid $border-subtle-01;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-comment {
+    color: $support-success;
+  }
+}

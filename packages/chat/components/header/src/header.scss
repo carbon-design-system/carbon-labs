@@ -5,53 +5,77 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '../../../../../globals/scss/vars' as *;
+$css--plex: true !default;
 
+@use '../../../../../globals/scss/vars' as *;
 @use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}--chat-header) {
+  position: absolute;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background: #262626;
-  border-block-end: 1px solid #393939;
+  justify-content: center;
+  background: $background;
+  border-block-end: 1px solid $border-subtle-00;
+  inset-block-start: 0;
+  inset-inline: 0;
+  min-block-size: 40px;
 
-  .#{$clabs-prefix}--chat-header-icons {
-    display: flex;
-    gap: 0;
-    margin-inline-start: auto;
+  .#{$clabs-prefix}--chat-header-container {
+    background: none;
+    inline-size: 100%;
+    max-inline-size: 672px;
+    min-block-size: 40px;
   }
 
-  .#{$clabs-prefix}--chat-header-icon {
+  .#{$clabs-prefix}--chat-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $background;
+    block-size: 40px;
+  }
+
+  .#{$clabs-prefix}--chat-header-elements {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    block-size: 100%;
+    padding-inline: 10px;
+  }
+
+  .#{$clabs-prefix}--chat-header-elements-left {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    block-size: 100%;
+    gap: 10px;
+  }
+
+  .#{$clabs-prefix}--chat-header-elements-right {
+    display: flex;
+    align-items: center;
+    block-size: 100%;
+    gap: 20px;
+  }
+
+  .#{$clabs-prefix}--chat-header-elements-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    block-size: 40px;
-    inline-size: 40px;
+    block-size: 100%;
   }
 
-  .#{$clabs-prefix}--chat-header-icon svg {
-    fill: #f4f4f4;
+  .#{$clabs-prefix}--chat-header-title {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    white-space: nowrap;
   }
 
-  .#{$clabs-prefix}--chat-header-icon:hover {
-    background: #f4f4f4;
-  }
-
-  .#{$clabs-prefix}--chat-header-icon:hover svg {
-    fill: #1b1b1b;
-  }
-
-  .#{$clabs-prefix}--chat-header-icon-slug {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to bottom right, #ffffff, #8a8a8a);
-    block-size: 40px;
-    inline-size: 40px;
-  }
-
-  .#{$clabs-prefix}--chat-header-icon-slug svg {
-    fill: #1b1b1b;
+  .#{$clabs-prefix}--chat-header-elements-icon svg {
+    block-size: 24px;
+    inline-size: 24px;
   }
 }

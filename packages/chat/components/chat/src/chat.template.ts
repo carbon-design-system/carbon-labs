@@ -7,14 +7,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, nothing } from 'lit';
-import Search24 from '@carbon/web-components/es/icons/search/24.js';
-import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
-import Send16 from '@carbon/web-components/es/icons/send/16.js';
-
+import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import '../../message/message.ts';
-import '../../header/header.ts';
+import '../../messages/messages.js';
+import '../../header/header.js';
+import '../../footer/footer.js';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
@@ -25,72 +22,33 @@ const { stablePrefix: clabsPrefix } = settings;
  */
 export function chatTemplate(customElementClass) {
   const {
-    _handleInput: handleInput,
-    _sendInput: sendInput,
-    _setMessageText: setMessageText,
     _messages: messages,
-    _messageText: messageText,
     _queryInProgress: queryInProgress,
-    _handleRegenerate: handleRegenerate,
-    _handleUpdate: handleUpdate,
+    _handleUserRegenerationRequest: handleUserRegenerationRequest,
+    _handleUserUpdateRequest: handleUserUpdateRequest,
+    sendInput,
+    userName,
+    agentName,
+    _inputFieldPlaceholder: inputFieldPlaceholder,
+    _streamResponses: streamResponses,
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-container">
-    <clabs--chat-header>
-    </clabs--chat-header>
+    <clabs--chat-header> </clabs--chat-header>
 
-    <div class="${clabsPrefix}--chat-messages">
-      &nbsp;
-      ${messages.map((message, index) =>
-        message.hasError
-          ? html` <clabs--chat-message
-              raw-text="${message.text}"
-              origin="${message.origin}"
-              time-stamp="${message.time}"
-              error-state
-              disable-buttons
-              index="${index}"
-              @regenerate="${handleRegenerate}">
-            </clabs--chat-message>`
-          : html` <clabs--chat-message
-              raw-text="${message.text}"
-              origin="${message.origin}"
-              time-stamp="${message.time}"
-              disable-buttons="${message.disableButtons || nothing}"
-              index="${index}"
-              display-name="${message.displayName || nothing}"
-              .elements="${message.elements || nothing}"
-              @regenerate="${handleRegenerate}"
-              @message-updated=${handleUpdate}>
-            </clabs--chat-message>`
-      )}
-      ${
-        queryInProgress
-          ? html` <clabs--chat-message
-              raw-text="loading"
-              origin="bot"
-              time-stamp=""
-              loading-state
-              error-state="false">
-            </clabs--chat-message>`
-          : html``
-      }
-    </div>
+    <clabs--chat-messages
+      .messages="${messages}"
+      user-name="${userName}"
+      agent-name="${agentName}"
+      ?loading="${queryInProgress}"
+      ?stream-responses="${streamResponses}"
+      @on-message-regeneration="${handleUserRegenerationRequest}"
+      @on-user-message-update-request="${handleUserUpdateRequest}">
+    </clabs--chat-messages>
 
-    <div class="${clabsPrefix}--chat-footer">
-      <div class="${clabsPrefix}--chat-footer-button">${Search24()}</div>
-      <textarea
-        class="${clabsPrefix}--chat-search-query"
-        rows="1"
-        placeholder="Type something..."
-        .value="${messageText}"
-        @input="${setMessageText}"
-        @keyup="${handleInput}" />
-        </textarea>
-      <div class="${clabsPrefix}--chat-footer-button">${MicrophoneOff16()}</div>
-      <div class="${clabsPrefix}--chat-footer-button" @click="${sendInput}">
-        ${Send16()}
-      </div>
-    </div>
+    <clabs--chat-footer
+      @on-user-text-input="${sendInput}"
+      input-placeholder="${inputFieldPlaceholder}">
+    </clabs--chat-footer>
   </div>`;
 }

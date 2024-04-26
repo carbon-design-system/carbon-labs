@@ -5,9 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '../../../../../globals/scss/vars' as *;
+$css--plex: true !default;
 
+@use '../../../../../globals/scss/vars' as *;
 @use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}--chat-message) {
   position: relative;
@@ -16,7 +18,7 @@
   border-radius: 10px;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
-  padding-block-end: 0;
+  padding-block-end: 8px;
   padding-inline: 16px 24px;
 
   .#{$clabs-prefix}--chat-message-container {
@@ -25,173 +27,110 @@
     inline-size: 100%;
   }
 
-  .#{$clabs-prefix}--chat-message-bot-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to bottom right, #aaaaaa, #000000);
-    block-size: 24px;
-    inline-size: 24px;
-
-    svg {
-      block-size: 20px;
-      fill: #fafafa;
-      inline-size: 20px;
-    }
-  }
-
-  .#{$clabs-prefix}--chat-message-user-icon {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background-color: #78a9ff;
-    block-size: 24px;
-    color: #f4f4f4;
-    inline-size: 24px;
-
-    svg {
-      block-size: 14px;
-      fill: #fafafa;
-      inline-size: 14px;
-    }
-  }
-
   .#{$clabs-prefix}--chat-message-user-message {
-    color: #f4f4f4;
-  }
-
-  .#{$clabs-prefix}--chat-message-bot-message {
-    color: #f4f4f4;
+    color: $text-primary;
   }
 
   .#{$clabs-prefix}--chat-message-content {
     overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 8px;
+    border-inline-start: 1px solid
+      var(--chat-message-unique-display-color, none);
     inline-size: 100%;
     max-inline-size: 100%;
-    padding-block-start: 6px;
-    padding-inline-start: 10px;
+    padding-block-start: 4px;
+    padding-inline-start: 16px;
   }
 
-  .#{$clabs-prefix}--chat-message-timestamp-bot {
-    color: #c6c6c6;
-    font-size: 75%;
+  .#{$clabs-prefix}--chat-message-section {
+    margin-block: 16px 8px;
+  }
+
+  .#{$clabs-prefix}--chat-message-section-temporary {
+    margin-block: 16px 4px;
+    min-block-size: 256px;
+  }
+
+  .#{$clabs-prefix}--chat-message-warning {
+    padding: 10px;
+    color: $support-error;
+    font-style: italic;
+    line-height: 22px;
+  }
+
+  .#{$clabs-prefix}--chat-message-user-icon {
+    display: none;
   }
 
   .#{$clabs-prefix}--chat-message-timestamp-user {
     clear: both;
-    color: #c6c6c6;
+    color: $text-secondary;
     float: inline-end;
-    font-size: 75%;
-    padding-block-end: 5px;
-  }
-
-  .#{$clabs-prefix}--chat-message-response-bot {
-    inline-size: 80%;
-    max-inline-size: 80%;
-    padding-block: 6px 6px;
-    padding-inline-end: 12px;
+    font-size: 12px;
+    padding-block-end: 12px;
   }
 
   .#{$clabs-prefix}--chat-message-response-user {
-    padding: 0 8px;
-    border-radius: 8px;
-    background: #333333;
+    padding: 6px 16px;
+    background: $layer-accent-01;
+    border-end-end-radius: 8px;
+    border-end-start-radius: 8px;
+    border-start-start-radius: 8px;
     clear: both;
     float: inline-end;
-    inline-size: 60%;
-    max-inline-size: 60%;
-  }
-
-  .#{$clabs-prefix}--chat-message-piece {
-    margin-block: 3px;
-  }
-
-  .#{$clabs-prefix}--chat-message-subsection-text {
-    border: 1px solid transparent;
-    inline-size: 100%;
-    line-height: 24px;
-  }
-
-  .#{$clabs-prefix}--chat-message-edit-area {
-    padding: 0;
-    border: 1px solid #393939;
-    border-radius: 6px;
-    background: none;
-    color: #f4f4f4;
-    font: inherit;
-    overflow-x: hidden;
-    resize: none;
-  }
-
-  .#{$clabs-prefix}--chat-message-edit-area:focus {
-    outline: none;
-  }
-
-  .#{$clabs-prefix}--chat-message-subsection-code {
-    overflow: auto;
-    padding: 10px;
-    border: 1px solid #393939;
-    border-radius: 8px;
-    background-color: #1d1d1d;
-    color: #a9a9a9;
-    font-family: 'IBM Plex Mono', monospace;
-    line-height: 24px;
-    max-block-size: 130px;
-    max-inline-size: 100%;
-
-    .comment {
-      color: #a9fab2;
-    }
-  }
-
-  .#{$clabs-prefix}--chat-message-subsection-error {
-    padding: 10px;
-    border: 1px solid #ff4444;
-    border-radius: 8px;
-    color: #ff4444;
-    line-height: 22px;
-  }
-
-  .#{$clabs-prefix}--chat-message-subsection-list {
-    border: 1px solid transparent;
-    font-size: 105%;
-    inline-size: 100%;
-    line-height: 26px;
-  }
-
-  .#{$clabs-prefix}--chat-message-subsection-list ul {
-    margin: 0;
-    padding-inline-start: 20px;
-  }
-
-  .#{$clabs-prefix}--chat-message-subsection-img {
-    overflow: hidden;
-    border: 1px solid #393939;
-    border-radius: 8px;
-    inline-size: 248px;
-  }
-
-  .#{$clabs-prefix}--chat-message-img-card {
-    overflow: hidden;
-    inline-size: 100%;
-  }
-
-  .#{$clabs-prefix}--chat-message-img-card img {
-    display: block;
-    block-size: auto;
-    inline-size: 100%;
-  }
-
-  .#{$clabs-prefix}--chat-message-dropdown-bot {
-    inline-size: 100%;
-    opacity: 1;
+    max-inline-size: 65%;
   }
 
   .#{$clabs-prefix}--chat-message-dropdown-user {
     clear: both;
     float: inline-end;
+    padding-block-start: 8px;
+  }
+
+  .#{$clabs-prefix}--chat-message-bot-message {
+    color: var(--chat-message-unique-display-color, $text-primary);
+  }
+
+  .#{$clabs-prefix}--chat-message-bot-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 32px;
+    inline-size: 32px;
+  }
+
+  .#{$clabs-prefix}--chat-message-agent-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 32px;
+    color: var(--chat-message-unique-display-color, $text-primary);
+    fill: var(--chat-message-unique-display-color, $text-primary);
+    inline-size: 42px;
     opacity: 1;
+
+    svg {
+      fill: var(--chat-message-unique-display-color, $text-primary);
+    }
+  }
+
+  .#{$clabs-prefix}--chat-message-timestamp-bot {
+    color: var(--chat-message-unique-display-color, $text-secondary);
+    font-size: 12px;
+    padding-block-start: 5px;
+  }
+
+  .#{$clabs-prefix}--chat-message-response-bot {
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    padding-block: 0 6px;
+    padding-inline-end: 12px;
+  }
+
+  .#{$clabs-prefix}--chat-message-dropdown-bot {
+    inline-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-message-small-button {
@@ -199,57 +138,17 @@
     align-items: center;
     justify-content: center;
     padding: 6px;
-
     background: none;
+    color: $text-primary;
     cursor: pointer;
 
     svg {
-      block-size: 16px;
-      color: #a8a8a8;
-      fill: #a8a8a8;
-      inline-size: 16px;
+      color: $text-primary;
+      fill: $text-primary;
     }
 
     svg:hover {
-      color: #f4f4f4;
-      fill: #f4f4f4;
-    }
-  }
-
-  .#{$clabs-prefix}--chat-message-loading-container {
-    position: relative;
-    overflow: hidden;
-    border-radius: 6px;
-    background-color: #78a9ff;
-    block-size: 12px;
-    inline-size: 100%;
-  }
-  @media screen and (prefers-reduced-motion: reduce) {
-    .#{$clabs-prefix}--chat-message--loading-bar {
-      position: absolute;
-      animation: none;
-      background-color: #4589ff;
-      block-size: 100%;
-      inset-block-start: 0;
-    }
-  }
-
-  .#{$clabs-prefix}--chat-message-loading-bar {
-    position: absolute;
-    animation: loading-animation 1000ms linear infinite;
-    background-color: #4589ff;
-    block-size: 100%;
-    inset-block-start: 0;
-  }
-
-  @keyframes loading-animation {
-    0%,
-    100% {
-      inline-size: 0;
-    }
-
-    50% {
-      inline-size: 100%;
+      fill: $link-primary;
     }
   }
 }

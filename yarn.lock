@@ -2632,8 +2632,6 @@ __metadata:
     "@carbon/charts": "npm:^1.15.5"
     "@carbon/web-components": "npm:2.7.0"
     "@ibm/telemetry-js": "npm:^1.2.0"
-    lit: "npm:^3.0.0"
-    uuid: "npm:^9.0.1"
     vega: "npm:^5.28.0"
     vega-embed: "npm:^6.24.0"
     vega-lite: "npm:^5.17.0"
@@ -2661,8 +2659,6 @@ __metadata:
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.7.0"
     force-graph: "npm:^1.43.5"
-    lit: "npm:^3.0.0"
-    uuid: "npm:^9.0.1"
   languageName: unknown
   linkType: soft
 
@@ -5264,6 +5260,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/plugin-json@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@rollup/plugin-json@npm:6.1.0"
+  dependencies:
+    "@rollup/pluginutils": "npm:^5.1.0"
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 10c0/9400c431b5e0cf3088ba2eb2d038809a2b0fb2a84ed004997da85582f48cd64958ed3168893c4f2c8109e38652400ed68282d0c92bf8ec07a3b2ef2e1ceab0b7
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-node-resolve@npm:^15.0.1, @rollup/plugin-node-resolve@npm:^15.2.3":
   version: 15.2.3
   resolution: "@rollup/plugin-node-resolve@npm:15.2.3"
@@ -5314,7 +5324,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.0.2, @rollup/pluginutils@npm:^5.0.5":
+"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.0.2, @rollup/pluginutils@npm:^5.0.5, @rollup/pluginutils@npm:^5.1.0":
   version: 5.1.0
   resolution: "@rollup/pluginutils@npm:5.1.0"
   dependencies:
@@ -9608,6 +9618,7 @@ __metadata:
     "@playwright/test": "npm:^1.39.0"
     "@rollup/plugin-alias": "npm:^5.1.0"
     "@rollup/plugin-commonjs": "npm:^25.0.7"
+    "@rollup/plugin-json": "npm:^6.1.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     "@rollup/plugin-replace": "npm:^5.0.5"
     "@rollup/plugin-terser": "npm:^0.4.4"

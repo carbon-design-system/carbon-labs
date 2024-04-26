@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/ai-chat",
-  "version": "3.1.0-rc.1",
+  "version": "0.4.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -39,8 +39,6 @@
     "@carbon/charts": "^1.15.5",
     "@carbon/web-components": "2.7.0",
     "@ibm/telemetry-js": "^1.2.0",
-    "lit": "^3.0.0",
-    "uuid": "^9.0.1",
     "vega": "^5.28.0",
     "vega-embed": "^6.24.0",
     "vega-lite": "^5.17.0"

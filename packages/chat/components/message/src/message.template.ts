@@ -17,7 +17,7 @@ import ThumbsUp16 from '@carbon/web-components/es/icons/thumbs-up/16.js';
 import ThumbsDown16 from '@carbon/web-components/es/icons/thumbs-down/16.js';
 import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16.js';
 import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
-import WatsonxData24 from '@carbon/web-components/es/icons/Watsonx-data/24.js';
+import WatsonxData24 from '@carbon/web-components/es/icons/watsonx-data/24.js';
 import '@carbon/web-components/es/components/slug/index.js';
 import '../../chartElement/chartElement.js';
 import '../../tableElement/tableElement.js';

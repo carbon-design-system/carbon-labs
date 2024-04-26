@@ -11,8 +11,8 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
-import ChevronRight16 from '@carbon/web-components/es/icons/Chevron--right/16.js';
-import ChevronLeft16 from '@carbon/web-components/es/icons/Chevron--left/16.js';
+import ChevronRight16 from '@carbon/web-components/es/icons/chevron--right/16.js';
+import ChevronLeft16 from '@carbon/web-components/es/icons/chevron--left/16.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '../../tableElement/tableElement.js';
 import '../../cardElement/cardElement.js';

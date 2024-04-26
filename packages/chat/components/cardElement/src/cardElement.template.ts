@@ -11,29 +11,29 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16.js';
-import PlayFilledAlt16 from '@carbon/web-components/es/icons/Play--filled/16.js';
-import PauseFilled16 from '@carbon/web-components/es/icons/Pause--filled/16.js';
-import VolumeMute16 from '@carbon/web-components/es/icons/Volume--mute/16.js';
+import PlayFilledAlt16 from '@carbon/web-components/es/icons/play--filled/16.js';
+import PauseFilled16 from '@carbon/web-components/es/icons/pause--filled/16.js';
+import VolumeMute16 from '@carbon/web-components/es/icons/volume--mute/16.js';
 import '@carbon/web-components/es/components/button/index.js';
 
-import mp324 from '@carbon/web-components/es/icons/mp3/24.js';
-import mp424 from '@carbon/web-components/es/icons/mp4/24.js';
-import png24 from '@carbon/web-components/es/icons/png/24.js';
-import pdf24 from '@carbon/web-components/es/icons/pdf/24.js';
-import ppt24 from '@carbon/web-components/es/icons/ppt/24.js';
-import svg24 from '@carbon/web-components/es/icons/svg/24.js';
-import xls24 from '@carbon/web-components/es/icons/xls/24.js';
-import zip24 from '@carbon/web-components/es/icons/zip/24.js';
-import wmv24 from '@carbon/web-components/es/icons/wmv/24.js';
-import txt24 from '@carbon/web-components/es/icons/txt/24.js';
-import tsv24 from '@carbon/web-components/es/icons/tsv/24.js';
-import mov24 from '@carbon/web-components/es/icons/mov/24.js';
-import jpg24 from '@carbon/web-components/es/icons/jpg/24.js';
-import gif24 from '@carbon/web-components/es/icons/gif/24.js';
-import csv24 from '@carbon/web-components/es/icons/csv/24.js';
+import mp324 from '@carbon/web-components/es/icons/MP3/24.js';
+import mp424 from '@carbon/web-components/es/icons/MP4/24.js';
+import png24 from '@carbon/web-components/es/icons/PNG/24.js';
+import pdf24 from '@carbon/web-components/es/icons/PDF/24.js';
+import ppt24 from '@carbon/web-components/es/icons/PPT/24.js';
+import svg24 from '@carbon/web-components/es/icons/SVG/24.js';
+import xls24 from '@carbon/web-components/es/icons/XLS/24.js';
+import zip24 from '@carbon/web-components/es/icons/ZIP/24.js';
+import wmv24 from '@carbon/web-components/es/icons/WMV/24.js';
+import txt24 from '@carbon/web-components/es/icons/TXT/24.js';
+import tsv24 from '@carbon/web-components/es/icons/TSV/24.js';
+import mov24 from '@carbon/web-components/es/icons/MOV/24.js';
+import jpg24 from '@carbon/web-components/es/icons/JPG/24.js';
+import gif24 from '@carbon/web-components/es/icons/GIF/24.js';
+import csv24 from '@carbon/web-components/es/icons/CSV/24.js';
 import videoPlayer24 from '@carbon/web-components/es/icons/video-player/24.js';
 import documentBlank24 from '@carbon/web-components/es/icons/document--blank/24.js';
-import music24 from '@carbon/web-components/es/icons/Music/24.js';
+import music24 from '@carbon/web-components/es/icons/music/24.js';
 
 /**
  * Lit template for card

@@ -11,8 +11,9 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
-import Menu24 from '@carbon/web-components/es/icons/Menu/24.js';
-import SendFilled16 from '@carbon/web-components/es/icons/Send--filled/16.js';
+import Menu24 from '@carbon/web-components/es/icons/menu/24.js';
+import SendFilled16 from '@carbon/web-components/es/icons/send--filled/16.js';
+
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/file-uploader/index.js';
 

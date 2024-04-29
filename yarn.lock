@@ -2631,7 +2631,7 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.5.0"
     "@carbon/charts": "npm:^1.15.5"
     "@carbon/web-components": "npm:2.7.0"
-    "@ibm/telemetry-js": "npm:^1.2.0"
+    "@ibm/telemetry-js": "npm:^1.5.0"
     vega: "npm:^5.28.0"
     vega-embed: "npm:^6.24.0"
     vega-lite: "npm:^5.17.0"
@@ -4000,15 +4000,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ibm/telemetry-js@npm:^1.2.0":
-  version: 1.2.1
-  resolution: "@ibm/telemetry-js@npm:1.2.1"
-  bin:
-    ibmtelemetry: dist/collect.js
-  checksum: 10c0/15d7e8ff82042c96f3ea6599056e18ec7f38eb06cf16dced77c1222d9aa9a494a3b7ef457b9dc6770aa388b52d4c47a78d14972bb4e2a0895886a201f3e946fe
-  languageName: node
-  linkType: hard
-
 "@ibm/telemetry-js@npm:^1.2.1":
   version: 1.3.0
   resolution: "@ibm/telemetry-js@npm:1.3.0"
@@ -4024,6 +4015,15 @@ __metadata:
   bin:
     ibmtelemetry: dist/collect.js
   checksum: 10c0/69ae6df36f6433700b48cee76bfaff78f87c91c00ef7cedc29cd6ad3317b5149520436b3cbb97df38077f4b35fd557321d0647a4f51025ec7bec896ac39a5f76
+  languageName: node
+  linkType: hard
+
+"@ibm/telemetry-js@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "@ibm/telemetry-js@npm:1.5.0"
+  bin:
+    ibmtelemetry: dist/collect.js
+  checksum: 10c0/40c7ad6e34fb5f6756bfd086be08f6f038dcf7a56000689378f1201749811556300a2a4882eecda6178dcbf13f6fcc9045cd4db23d347aaafe7a15c36eaa358c
   languageName: node
   linkType: hard
 

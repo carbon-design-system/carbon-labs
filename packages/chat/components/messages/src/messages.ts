@@ -87,7 +87,7 @@ export default class messages extends LitElement {
     /*const slot = event.target;
     const nodes = slot.assignedElements({ flatten: true });*/
     console.log(event);
-    this.needsRecompute = true;
+    //this.needsRecompute = true;
   }
 
   /**

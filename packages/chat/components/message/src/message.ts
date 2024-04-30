@@ -222,7 +222,7 @@ export default class message extends LitElement {
     /*const slot = event.target;
     const nodes = slot.assignedElements({ flatten: true });*/
     console.log(event);
-    this.needsRecompute = true;
+    //this.needsRecompute = true;
   }
 
   /** check the returned model response for a specified code delimiter, split and package the string into multiple messages of type 'text' or 'code'

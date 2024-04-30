@@ -119,7 +119,7 @@ export default class chartElement extends LitElement {
       }*/
     }
 
-    this.resizeObserver = new ResizeObserver(async () => {
+    /*this.resizeObserver = new ResizeObserver(async () => {
       if (this._visualizationSpec) {
         if (this._visualizationSpec['repeat']) {
           //await this._reRenderVisualization(true);
@@ -127,7 +127,7 @@ export default class chartElement extends LitElement {
         }
       }
     });
-    this.resizeObserver.observe(this.parentElement);
+    this.resizeObserver.observe(this.parentElement);*/
   }
 
   /**
@@ -416,6 +416,7 @@ export default class chartElement extends LitElement {
     }
 
     this._visualizationSpec = finalSpec;
+    return '';
   }
 
   /**

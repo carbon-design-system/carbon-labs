@@ -174,7 +174,7 @@ export default class CLABSChat extends LitElement {
   _handleSlotChange(event) {
     /*const slot = event.target;
     const nodes = slot.assignedElements({ flatten: true });*/
-    this.needsRecompute = true;
+    //this.needsRecompute = true;
     console.log(event);
   }
 

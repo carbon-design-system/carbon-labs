@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/ai-chat",
-  "version": "3.2.0",
+  "version": "0.5.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -34,13 +34,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.4.0",
+    "@carbon-labs/utilities": "0.5.0",
     "@carbon/charts": "^1.15.5",
     "@carbon/web-components": "2.7.0",
     "@ibm/telemetry-js": "^1.2.0",
     "uuid": "^9.0.1",
     "vega": "^5.28.0",
-    "vega-embed": "^6.25.0",
-    "vega-lite": "^5.18.0"
+    "vega-embed": "^6.24.0",
+    "vega-lite": "^5.17.0"
   }
 }

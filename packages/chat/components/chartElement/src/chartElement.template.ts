@@ -23,38 +23,38 @@ export function chartElementTemplate(customElementClass) {
   const {
     _uniqueID: uniqueID,
     _errorMessage: errorMessage,
-    loading,
+    chartLoading,
     content,
     _buildLoader: buildLoader,
   } = customElementClass;
 
-  return html`
-    <div
-      class="${clabsPrefix}--chat-chart-container"
-      id="${clabsPrefix}--chat-embed-vis-${uniqueID}">
-      ${loading
-        ? html`
-         <div class="${clabsPrefix}--chat-chart-loading-container">
-          <div class="${clabsPrefix}--chat-chart-loading-grid">
-           ${unsafeHTML(buildLoader())}
-          </div>
-          <div class="${clabsPrefix}--chat-chart-loading-text">
-            ${content}
-          </div>
-          </div>
-          </div>`
-        : html``}
-    </div>
+  return html` <div
+    class="${clabsPrefix}--chat-chart-container"
+    id="${clabsPrefix}--chat-embed-vis-${uniqueID}">
     ${errorMessage !== ''
-      ? html`
-          <div class="${clabsPrefix}--chat-chart-container">
-            <div class="${clabsPrefix}--chat-chart-loading-container">
-              <div class="${clabsPrefix}--chat-chart-error-text">
-                ${errorMessage}
-              </div>
-            </div>
+      ? html` <div class="${clabsPrefix}--chat-chart-loading-container">
+          <div class="${clabsPrefix}--chat-chart-error-grid">
+            ${unsafeHTML(buildLoader())}
           </div>
-        `
-      : html``}
-  `;
+          <div class="${clabsPrefix}--chat-chart-error-text">
+            ${errorMessage}
+          </div>
+        </div>`
+      : html`
+            ${
+              chartLoading
+                ? html` <div
+                    class="${clabsPrefix}--chat-chart-loading-container">
+                    <div class="${clabsPrefix}--chat-chart-loading-grid">
+                      ${unsafeHTML(buildLoader())}
+                    </div>
+                    <div class="${clabsPrefix}--chat-chart-loading-text">
+                      ${content}
+                    </div>
+                  </div>`
+                : html``
+            }
+          </div>
+        `}
+  </div>`;
 }

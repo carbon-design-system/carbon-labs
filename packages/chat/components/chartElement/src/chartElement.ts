@@ -73,7 +73,7 @@ export default class chartElement extends LitElement {
    * errorMessage - specifies error when debugging
    */
   @state()
-  _errorMessage;
+  _errorMessage = '';
 
   /**
    * uniqueID - unique ID egenrated in this component to target correct div when rendering
@@ -82,16 +82,10 @@ export default class chartElement extends LitElement {
   _uniqueID;
 
   /**
-   * _renderedSVG - SVG string produced from visulization engine
-   */
-  @state()
-  _renderedSVG = '';
-
-  /**
    * loading boolean to show skeleton and info about loading
    */
-  @property({ type: Boolean, attribute: 'loading', reflect: true })
-  loading;
+  @property({ type: Boolean, attribute: 'loading' })
+  chartLoading = true;
 
   /**
    * visualizationSpec -  parsed object from content string
@@ -102,6 +96,7 @@ export default class chartElement extends LitElement {
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
+    this.generateUniqueId();
     if (this.hasAttribute('containerWidth')) {
       this.style.setProperty('--chat-chart-element-width', this.containerWidth);
     }
@@ -113,36 +108,40 @@ export default class chartElement extends LitElement {
       );
     }
 
-    if (!this.loading) {
-      if (this.content !== null) {
-        this.generateUniqueId();
-        try {
-          this._visualizationSpec = this._prepareVisualization();
-          this.requestUpdate();
-        } catch (error) {
-          this._invalid = false;
-          this._errorMessage =
-            'ERROR: Failed to parse Visualization Specification';
-          this.requestUpdate();
-        }
-        this.requestUpdate();
-      } else {
-        this._errorMessage = "ERROR: No Schema provided in 'content' attribute";
-        this.requestUpdate();
-      }
+    if (this.content) {
+      setTimeout(() => {
+        this._prepareVisualization();
+      }, 100 + Math.round(Math.random() * 200));
+    } else {
+      /*if (!this.chartLoading) {
+        this._errorMessage =
+          "CARBON CHART ERROR: No Schema provided in 'content' attribute";
+      }*/
     }
+
+    this.resizeObserver = new ResizeObserver(async () => {
+      if (this._visualizationSpec) {
+        if (this._visualizationSpec['repeat']) {
+          //await this._reRenderVisualization(true);
+          this._prepareVisualization();
+        }
+      }
+    });
+    this.resizeObserver.observe(this.parentElement);
   }
 
   /**
    * Render visualization again when resizing or parameters updates
    * @param {Boolean} updateSpecification - flag to check if specification needs to be reprepared
    */
-  async reRenderVisualization(updateSpecification) {
+  async _reRenderVisualization(updateSpecification) {
     if (updateSpecification) {
-      this._visualizationSpec = this._prepareVisualization();
+      //console.log(this._visualizationSpec)
+      this._prepareVisualization();
+      //this._renderedSVG = await this._displayVisualization();
+      //this.requestUpdate();
     }
-    this._renderedSVG = await this._displayVisualization();
-    this.requestUpdate();
+    //this._renderedSVG = await this._displayVisualization();
   }
 
   /**
@@ -172,25 +171,20 @@ export default class chartElement extends LitElement {
    **/
   async updated(changedProperties) {
     super.updated(changedProperties);
-
     if (changedProperties.has('content')) {
-      this._invalid = false;
-      if (!this.loading) {
-        this.generateUniqueId();
+      if (!this.chartLoading) {
         try {
-          this._visualizationSpec = this._prepareVisualization();
-          this.requestUpdate();
+          this._prepareVisualization();
         } catch (error) {
           //this._invalid = true;
           this._errorMessage =
             'ERROR: Failed to parse Visualization Specification';
-          this.requestUpdate();
         }
+      } else {
+        this._errorMessage = '';
       }
     }
-    if (changedProperties.has('_visualizationSpec')) {
-      this._renderedSVG = await this._displayVisualization();
-    }
+
     if (changedProperties.has('containerWidth')) {
       this.style.setProperty('--chat-chart-element-width', this.containerWidth);
     }
@@ -202,16 +196,22 @@ export default class chartElement extends LitElement {
       );
     }
 
-    if (changedProperties.has('carbonify')) {
-      this._visualizationSpec = this._prepareVisualization();
+    if (changedProperties.has('_visualizationSpec')) {
+      await this._displayVisualization();
     }
 
-    if (changedProperties.has('enableInspector')) {
-      this._visualizationSpec = this._prepareVisualization();
-    }
+    if (!this.chartLoading) {
+      if (changedProperties.has('carbonify')) {
+        this._prepareVisualization();
+      }
 
-    if (changedProperties.has('theme')) {
-      this._visualizationSpec = this._prepareVisualization();
+      if (changedProperties.has('enableInspector')) {
+        this._prepareVisualization();
+      }
+
+      if (changedProperties.has('theme')) {
+        this._prepareVisualization();
+      }
     }
   }
 
@@ -238,37 +238,28 @@ export default class chartElement extends LitElement {
    */
   async _displayVisualization() {
     const targetID = '#' + clabsPrefix + '--chat-embed-vis-' + this._uniqueID;
-    const targetDiv = this.shadowRoot?.querySelector<HTMLElement>(targetID);
-    if (!targetDiv) {
-      return '';
-    } else {
+    const targetDiv = this.shadowRoot?.querySelector(targetID);
+    console.log(this._visualizationSpec);
+    if (targetDiv instanceof HTMLElement) {
       try {
         await VegaEmbed.default(targetDiv, this._visualizationSpec, {
           actions: this.enableInspector || false,
           hover: this.enableTooltip,
-          tooltip: { theme: 'custom' }, //this._buildToolTip,
-          renderer: 'svg',
+          //tooltip: { theme: 'custom' }, //this._buildToolTip,
+          renderer: 'canvas',
         }).catch((error) => {
-          console.log(error);
+          this._errorMessage = 'VEGA-LITE rendering error: ' + error;
         });
+        //this.chartLoading = false;
       } catch (error) {
-        this._errorMessage = 'ERROR: VegaEmbed failed to render';
-        //this._invalid = true;
-        this.requestUpdate();
+        this._errorMessage = 'VEGA-LITE ERROR: VegaEmbed failed to render';
       }
+    } else {
+      this._errorMessage =
+        'CARBON CHART ERROR: Failed to retrieve chart container div: ' +
+        targetID;
     }
-    return '';
   }
-
-  /**
-   * custom tooltip creation in html
-   */
-  /*_buildToolTip(handler, event, item, value) {
-    console.log(event)
-    if(item){
-      this._toolTipValue = JSON.stringify(value);
-    }
-  }*/
 
   /**
    * _resolveLayerConfigs - search through config and apply 'share' value to force sublayers into adopting core styles
@@ -300,13 +291,19 @@ export default class chartElement extends LitElement {
    * prepareVisualization - Prepare and adapt Vega visualization spec to be more Carbon adjacent
    */
   _prepareVisualization() {
+    this._errorMessage = '';
     let spec: any = {};
     try {
       spec = JSON.parse(this.content);
     } catch (e) {
-      this._errorMessage = 'ERROR: JSON failed to parse specification';
-      //this._invalid = true;
-      this.requestUpdate();
+      this._errorMessage =
+        'CARBON CHART ERROR: JSON parse() failed, specification is not valid JSON';
+      return '';
+    }
+
+    if (!spec['$schema']) {
+      this._errorMessage =
+        'CARBON CHART ERROR: JSON is valid but not a valid schema, missing "$schema" field';
       return '';
     }
 
@@ -316,6 +313,7 @@ export default class chartElement extends LitElement {
     } else {
       delete spec['height'];
       delete spec['width'];
+      delete spec['autosize'];
     }
     spec.autosize = {
       type: 'fit',
@@ -328,73 +326,69 @@ export default class chartElement extends LitElement {
     let subChartWidth;
     let subChartHeight;
     if ('layer' in spec) {
-      layeredSpec = this._prepareSpecification(spec, false, true);
-      for (const [index, subSpec] of spec['layer'].entries()) {
-        const tempSubSpec = this._prepareSpecification(subSpec, false, true);
+      layeredSpec = this._prepareSpecification(spec, false, true, 0);
+      /*for (const [index, subSpec] of spec['layer'].entries()) {
+        const tempSubSpec = this._prepareSpecification(subSpec, true, false, index);
         delete tempSubSpec['background'];
         delete tempSubSpec['padding'];
         layeredSpec['layer'][index] = tempSubSpec;
-      }
+      }*/
     } else if (spec['repeat']) {
-      const currentContainerWidth = this.clientWidth;
-      const currentContainerHeight = this.clientHeight;
-
+      let currentContainerWidth = this.clientWidth;
+      let currentContainerHeight = this.clientHeight;
       repeatedSpec = this._prepareSpecification(
         JSON.parse(JSON.stringify(spec)),
         false,
-        true
+        true,
+        0
       );
       repeatedSpec['spec'] = this._prepareSpecification(
-        JSON.parse(JSON.stringify(repeatedSpec['spec'])),
+        repeatedSpec['spec'],
         true,
-        true
+        false,
+        0
       );
       if (currentContainerWidth) {
         let rowCount;
         let columnCount;
-        if (Array.isArray(spec['repeat'])) {
-          columnCount = spec.columns ? spec.columns : 1;
-          rowCount = Math.ceil(spec['repeat'].length / columnCount);
+        if (Array.isArray(repeatedSpec['repeat'])) {
+          columnCount = repeatedSpec.columns ? repeatedSpec.columns : 1;
+          rowCount = Math.ceil(repeatedSpec['repeat'].length / columnCount);
         } else {
-          if (spec['repeat']['row']) {
-            rowCount = spec['repeat']['row'].length;
+          if (repeatedSpec['repeat']['row']) {
+            rowCount = repeatedSpec['repeat']['row'].length;
           }
-          if (spec['repeat']['column']) {
-            columnCount = spec['repeat']['column'].length;
+          if (repeatedSpec['repeat']['column']) {
+            columnCount = repeatedSpec['repeat']['column'].length;
           }
         }
+
+        const legendHeight = 50;
 
         const paddingOffset = { vertical: 0, horizontal: 0 };
         if (repeatedSpec['spec']['padding']) {
           paddingOffset['vertical'] =
-            repeatedSpec['spec']['padding']['top'] +
-            repeatedSpec['spec']['padding']['bottom'];
+            (repeatedSpec['spec']['padding']['top'] +
+              repeatedSpec['spec']['padding']['bottom']) *
+            rowCount;
           paddingOffset['horizontal'] =
-            repeatedSpec['spec']['padding']['left'] +
-            repeatedSpec['spec']['padding']['right'];
+            (repeatedSpec['spec']['padding']['left'] +
+              repeatedSpec['spec']['padding']['right']) *
+            columnCount;
         }
-
-        /*if(spec['config']['padding']){
-          paddingOffset['vertical'] = spec['padding']['config']['top'] + spec['padding']['config']['bottom']
-          paddingOffset['horizontal'] = spec['padding']['config']['left'] + spec['padding']['config']['right']
-        }*/
-        subChartWidth = Math.floor(currentContainerWidth / columnCount);
-        subChartHeight = Math.floor(currentContainerHeight / rowCount);
         if (paddingOffset['vertical']) {
-          subChartHeight -= paddingOffset['vertical'];
+          currentContainerHeight -= paddingOffset['vertical'];
         }
         if (paddingOffset['horizontal']) {
-          subChartWidth -= paddingOffset['horizontal'];
+          currentContainerWidth -= paddingOffset['horizontal'];
         }
+        subChartWidth = Math.floor(currentContainerWidth / columnCount);
+        subChartHeight =
+          Math.floor(currentContainerHeight / rowCount) - legendHeight;
       }
 
       delete repeatedSpec['spec']['background'];
       delete repeatedSpec['spec']['padding'];
-
-      /*repeatedSpec['spec'].autosize = {
-        type: 'fit',
-        contains: 'padding',
-      };*/
 
       if (subChartWidth) {
         repeatedSpec['spec']['width'] = subChartWidth;
@@ -402,29 +396,29 @@ export default class chartElement extends LitElement {
       if (subChartHeight) {
         repeatedSpec['spec']['height'] = subChartHeight;
       }
+      console.log(repeatedSpec);
     } else {
       if (!spec['data']) {
         plainSpec = {};
       } else {
-        plainSpec = this._prepareSpecification(spec, true, true);
+        //spec, editMarks, addConfig, layerIndex
+        plainSpec = this._prepareSpecification(spec, true, true, 0);
+        console.log(plainSpec);
       }
     }
 
     let finalSpec;
 
-    if ('layer' in spec) {
+    if (spec['layer']) {
       finalSpec = layeredSpec;
+      //finalSpec['resolve'] = this._resolveLayerConfigs(JSON.parse(JSON.stringify(finalSpec.config)), "shared");
     } else if (spec['repeat']) {
       finalSpec = repeatedSpec;
     } else {
       finalSpec = plainSpec;
     }
 
-    /*if(finalSpec.config){
-      finalSpec['resolve'] = this._resolveLayerConfigs(JSON.parse(JSON.stringify(finalSpec.config)), "shared");
-    }*/
-
-    return finalSpec;
+    this._visualizationSpec = finalSpec;
   }
 
   /**
@@ -432,8 +426,9 @@ export default class chartElement extends LitElement {
    * @param {object} spec - vega sepcification JSON
    * @param {boolean} editMarks - boolean to change mark values
    * @param {boolean} addConfig - boolean to edit config attribute of spec with Carbon styles
+   * @param {number} layerIndex - index of layer, enabled to switch default colors and handle z-indexing
    */
-  _prepareSpecification(spec, editMarks, addConfig) {
+  _prepareSpecification(spec, editMarks, addConfig, layerIndex) {
     let ordinalColors: string[] = [];
     let quantitativeColors: string[] = [];
 
@@ -529,7 +524,17 @@ export default class chartElement extends LitElement {
     let defaultColor = darkOrdinalColors[darkOrdinalColors.length - 1];
 
     ordinalColors = darkOrdinalColors;
-    quantitativeColors = sequentialScales[2];
+    quantitativeColors = sequentialScales[1];
+
+    if (layerIndex) {
+      quantitativeColors = sequentialScales[2];
+      defaultColor =
+        darkOrdinalColors[
+          layerIndex < darkOrdinalColors.length
+            ? layerIndex
+            : layerIndex % darkOrdinalColors.length
+        ];
+    }
 
     if (this.theme == 'light') {
       backgroundColor = '#ffffff';
@@ -545,6 +550,16 @@ export default class chartElement extends LitElement {
 
       ordinalColors = lightOrdinalColors;
       quantitativeColors = sequentialScales[1];
+
+      if (layerIndex) {
+        quantitativeColors = sequentialScales[2];
+        defaultColor =
+          lightOrdinalColors[
+            layerIndex < lightOrdinalColors.length
+              ? layerIndex
+              : layerIndex % lightOrdinalColors.length
+          ];
+      }
     }
 
     /*if (spec.data?.values?.length > 0) {
@@ -679,7 +694,7 @@ export default class chartElement extends LitElement {
             strokeWidth: 1,
           },
           bar: {
-            discreteBandSize: 16,
+            discreteBandSize: 12,
           },
           title: {
             font: titleFont,
@@ -745,6 +760,10 @@ export default class chartElement extends LitElement {
           break;
         case 'line':
           isOrdinal = false;
+          break;
+        case 'text':
+          isOrdinal = false;
+          //spec['config']['text'] = { strokeColor: textColor };
           break;
         case 'boxplot':
           isOrdinal = false;

@@ -1,11 +1,12 @@
 {
   "name": "@carbon-labs/ai-chat",
-  "version": "3.1.0-rc.1",
+  "version": "3.2.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "description": "Carbon Labs - chat component",
+  "type": "module",
+  "description": "Carbon for AI - chat component",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -22,16 +23,14 @@
   },
   "files": [
     "es/**/*",
-    "custom-elements.json",
-    "telemetry.yml"
+    "custom-elements.json"
   ],
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
-    "build": "gulp build --option chat",
+    "build": "gulp build --option feedback",
     "build:dist": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js",
-    "build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary",
-    "postinstall": "ibmtelemetry --config=telemetry.yml"
+    "build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
@@ -39,10 +38,9 @@
     "@carbon/charts": "^1.15.5",
     "@carbon/web-components": "2.7.0",
     "@ibm/telemetry-js": "^1.2.0",
-    "lit": "^3.0.0",
     "uuid": "^9.0.1",
     "vega": "^5.28.0",
-    "vega-embed": "^6.24.0",
-    "vega-lite": "^5.17.0"
+    "vega-embed": "^6.25.0",
+    "vega-lite": "^5.18.0"
   }
 }

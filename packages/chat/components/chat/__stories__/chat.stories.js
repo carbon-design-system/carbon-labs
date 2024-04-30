@@ -301,57 +301,36 @@ export const Slotting = {
   render: ({ userName, agentName, conversation }) => html`
     <div style="height:calc(100vh - 84px); overflow:hidden;">
       <clabs-chat user-name="${userName}" agent-name="${agentName}" conversation="${conversation}">
-        <clabs--chat-header> </clabs--chat-header>
 
-        <clabs--chat-messages user-name="user" agent-name="bot">
-        
-          <clabs--chat-message origin="user" time-stamp="9:02pm" index="0" @message-updated="${(
-            e
-          ) => {
-            console.log(e);
-          }}">
-            <slot name="message-elements">
-              <clabs--chat-text content="Showcase every type of Element available in this Chat component."> <clabs--chat-text/>
-            </slot>
+        <clabs--chat-messages slot="messages" user-name="user" agent-name="bot">
+          <clabs--chat-message slot="message-list" origin="user" time-stamp="9:02pm" index="0">
+              <clabs--chat-text slot="message-content" content="Showcase every type of Element available in this Chat component."> <clabs--chat-text/>
           </clabs--chat-message>
 
-          <clabs--chat-message origin="bot" time-stamp="9:04pm" index="1" @regenerate="${(
-            e
-          ) => {
-            console.log(e);
-          }}" @message-updated="${(e) => {
-    console.log(e);
-  }}" @tag-selected="${(e) => {
-    console.log(e);
-  }}">
-            <slot name="message-elements">
-              <clabs--chat-text content='This is a textElement, and here the following elements: imageElement, cardElement (url), cardElement(video), tableElement, codeElement, errorElement, loadingElement, tagListElement, listElement and chartElement:' />
+          <clabs--chat-message slot="message-list" origin="bot" time-stamp="9:04pm" index="1">
+              <div slot="message-content" style="font-family: 'Comic Sans MS', 'Comic Sans', cursive; color:#FF69B4;font-size:22px;">
+                My custom div is here!
+              </div>
 
-              <clabs--chat-img content= 'https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg'/>
+              <clabs--chat-text slot="message-content" content='This is a textElement, and here the following elements: imageElement, cardElement (url), cardElement(video), tableElement, codeElement, errorElement, loadingElement, tagListElement, listElement and chartElement:'></clabs--chat-text>
+
+              <clabs--chat-image slot="message-content" content= 'https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg'></clabs--chat-image>
       
-              <clabs--chat-card type="url" content='https://www.wikipedia.org/wiki/Apollo_11'/>
+              <clabs--chat-card slot="message-content" type="url" content='https://www.wikipedia.org/wiki/Apollo_11'></clabs--chat-card>
       
-              <clabs--chat-card type="video" content='https://upload.wikimedia.org/wikipedia/commons/transcoded/d/da/Paris_lockdown_-_Vimeo.webm/Paris_lockdown_-_Vimeo.webm.1080p.vp9.webm'/>
+              <clabs--chat-card slot="message-content" type="video" content='https://upload.wikimedia.org/wikipedia/commons/transcoded/d/da/Paris_lockdown_-_Vimeo.webm/Paris_lockdown_-_Vimeo.webm.1080p.vp9.webm'></clabs--chat-card>
       
-              <clabs--chat-table content='Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY'/>
+              <clabs--chat-table slot="message-content" content='Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY'></clabs--chat-table>
       
-              <clabs--chat-code content='from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n'/>
-      
-              <clabs--chat-error content='SEGMENTATION ERROR: Failed to render the content provided. (example)'/>
-      
-              <clabs--chat-loading content=''/>
+              <clabs--chat-code slot="message-content" content='from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n'></clabs--chat-code>
    
-              <clabs--chat-tags content='["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'/>
+              <clabs--chat-tags slot="message-content" content='["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'></<clabs--chat-tags>
       
-              <clabs--chat-list content='1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)'/>
+              <clabs--chat-list slot="message-content" content='1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)'></clabs--chat-list>
                 
-              <clabs--chat-chart content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"US Unemployment by county","data":{"url":"https://vega.github.io/editor/data/us-10m.json","format":{"type":"topojson","feature":"counties"}},"transform":[{"lookup":"id","from":{"data":{"url":"https://vega.github.io/editor/data/unemployment.tsv"},"key":"id","fields":["rate"]}}],"projection":{"type":"albersUsa"},"mark":"geoshape","encoding":{"color":{"field":"rate","type":"quantitative"}}}'/>
-            </slot>
+              <clabs--chat-chart slot="message-content" content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"US Unemployment by county","data":{"url":"https://vega.github.io/editor/data/us-10m.json","format":{"type":"topojson","feature":"counties"}},"transform":[{"lookup":"id","from":{"data":{"url":"https://vega.github.io/editor/data/unemployment.tsv"},"key":"id","fields":["rate"]}}],"projection":{"type":"albersUsa"},"mark":"geoshape","encoding":{"color":{"field":"rate","type":"quantitative"}}}'></clabs--chat-chart>
           </clabs--chat-message>
-
         </clabs--chat-messages>
-
-        <clabs--chat-footer> </clabs--chat-footer>
       </clabs-chat>
     </div>
     

@@ -18,7 +18,6 @@ $css--plex: true !default;
   border-radius: 10px;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
-  padding-block-end: 8px;
   padding-inline: 16px 24px;
 
   .#{$clabs-prefix}--chat-message-container {
@@ -49,7 +48,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-message-section-temporary {
     margin-block: 16px 4px;
-    min-block-size: 256px;
+    min-block-size: 156px;
   }
 
   .#{$clabs-prefix}--chat-message-warning {

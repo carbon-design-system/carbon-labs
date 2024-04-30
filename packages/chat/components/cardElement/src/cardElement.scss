@@ -24,7 +24,6 @@
 
   .#{$clabs-prefix}--chat-card-detail-side-icon {
     display: flex;
-
     box-sizing: border-box;
     justify-content: center;
     padding-inline-end: 8px;
@@ -47,7 +46,7 @@
 
   .#{$clabs-prefix}--chat-card-image-container img {
     overflow: hidden;
-    background: $blue-10;
+    background: $blue-20;
     block-size: auto;
     inline-size: 100%;
     min-block-size: 124px;
@@ -169,13 +168,13 @@
 
   .#{$clabs-prefix}--chat-card-loader {
     flex-grow: 2;
-    background-color: $link-primary;
+    background-color: $blue-20;
     block-size: 248px;
   }
 
   .#{$clabs-prefix}--chat-card-loader-file {
     flex-grow: 2;
-    background-color: $link-primary;
+    background-color: $blue-20;
     block-size: 124px;
   }
 

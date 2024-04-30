@@ -147,7 +147,6 @@ export default class CLABSChat extends LitElement {
     }
 
     if (changedProperties.has('conversation')) {
-      console.log(this.conversation);
       if (this.conversation) {
         this._messages = [...this.conversation];
         this.requestUpdate();
@@ -173,6 +172,9 @@ export default class CLABSChat extends LitElement {
    * @param {event} event - slot change detection event
    */
   _handleSlotChange(event) {
+    /*const slot = event.target;
+    const nodes = slot.assignedElements({ flatten: true });*/
+    //this.needsRecompute = true;
     console.log(event);
   }
 
@@ -266,7 +268,6 @@ export default class CLABSChat extends LitElement {
   _handleUserRegenerationRequest(event) {
     const deletionIndex = event.detail.messageIndexInChat - 1;
     const previousMessage = this._messages[deletionIndex].text;
-    console.log(previousMessage);
     if (this.autoUpdate || this.apiURL) {
       this._messages = this._messages.slice(0, deletionIndex);
       const inputEvent = new CustomEvent('user-input', {

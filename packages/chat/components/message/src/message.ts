@@ -177,12 +177,16 @@ export default class message extends LitElement {
 
     if (this.elements == null) {
       if (this.origin === 'user') {
-        this._parseText();
+        if (this.rawText) {
+          this._parseText();
+        }
       } else {
         if (this._streamContent) {
           this._streamText();
         } else {
-          this._parseText();
+          if (this.rawText) {
+            this._parseText();
+          }
         }
       }
     } else {
@@ -208,6 +212,17 @@ export default class message extends LitElement {
     /*if (changedProperties.has('temporaryMessage')) {
       this._updateScroll();
     }*/
+  }
+
+  /**
+   * handleSlotchange - handle edits to slots when an element is placed in it
+   * @param {event} event - tag click event sent by tagList element
+   */
+  _handleSlotchange(event) {
+    /*const slot = event.target;
+    const nodes = slot.assignedElements({ flatten: true });*/
+    console.log(event);
+    //this.needsRecompute = true;
   }
 
   /** check the returned model response for a specified code delimiter, split and package the string into multiple messages of type 'text' or 'code'
@@ -396,7 +411,7 @@ export default class message extends LitElement {
         let countIndex = 0;
         let nonCSVcount = 0;
         for (const line of CSVLines) {
-          if (!new RegExp('^\\w+(,\\w+)*$').test(line)) {
+          if (!new RegExp('^[\\w\\s]+(,[\\w\\s]+)*$').test(line)) {
             nonCSVcount++;
             if (nonCSVcount > 1) {
               stopIndex = countIndex;

@@ -49,15 +49,14 @@
     display: grid;
     overflow: hidden;
     border: 1px solid transparent;
-    animation: loading-animation 8000ms linear infinite;
+    animation: loading-animation 6000ms linear infinite;
     background: linear-gradient(
       to right,
-      $border-subtle-00 0%,
-      $border-subtle-00 75%,
-      $text-secondary 87.5%,
-      $text-secondary 90%,
-      $text-secondary 92.5%,
-      $border-subtle-00 100%
+      $layer-01 0%,
+      $layer-01 45%,
+      $background-active 50%,
+      $layer-01 55%,
+      $layer-01 100%
     );
     background-size: 500% 100%;
     block-size: 100%;
@@ -66,15 +65,12 @@
     grid-template-rows: repeat(5, 1fr);
     inline-size: 100%;
   }
-  .#{$clabs-prefix}--chat-chart-loading-grid-cell {
-    background: $background;
-  }
 
   .#{$clabs-prefix}--chat-chart-loading-text {
     position: absolute;
     overflow: hidden;
     box-sizing: border-box;
-    padding: 16px;
+    padding: 18px;
     block-size: 100%;
     color: $text-placeholder;
     font-family: 'IBM Plex Mono', monospace;
@@ -86,11 +82,36 @@
     overflow-y: auto;
   }
 
+  .#{$clabs-prefix}--chat-chart-error-grid {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid transparent;
+    animation: loading-animation 12000ms linear infinite;
+    background: linear-gradient(
+      to right,
+      $layer-01 0%,
+      $layer-01 45%,
+      $support-error 50%,
+      $layer-01 55%,
+      $layer-01 100%
+    );
+    background-size: 500% 100%;
+    block-size: 100%;
+    gap: 1px;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-chart-loading-grid-cell {
+    background: $background;
+  }
+
   .#{$clabs-prefix}--chat-chart-error-text {
     position: absolute;
     overflow: hidden;
     box-sizing: border-box;
-    padding: 16px;
+    padding: 20px;
     block-size: 100%;
     color: $support-error;
     font-family: 'IBM Plex Mono', monospace;
@@ -104,11 +125,11 @@
 
   @keyframes loading-animation {
     from {
-      background-position: 0% 0;
+      background-position: 200% 0;
     }
 
     to {
-      background-position: -400% 0;
+      background-position: -200% 0;
     }
   }
 }

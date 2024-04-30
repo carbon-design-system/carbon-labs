@@ -24,44 +24,47 @@ export function messagesTemplate(customElementClass) {
     _queryInProgress: queryInProgress,
     _streamResponses: streamResponses,
     _handleInternalChange: handleInternalChange,
+    _handleSlotchange,
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-messages-container">
-    ${computedMessages
-      ? html`
-          ${computedMessages.map((message, index) =>
-            message.hasError
+    <slot name="message-list" @slotchange="${_handleSlotchange}">
+      ${computedMessages
+        ? html`
+            ${computedMessages.map((message, index) =>
+              message.hasError
+                ? html` <clabs--chat-message
+                    raw-text="${message.text}"
+                    origin="${message.origin}"
+                    time-stamp="${message.time}"
+                    error-state
+                    disable-buttons
+                    index="${index}">
+                  </clabs--chat-message>`
+                : html` <clabs--chat-message
+                    raw-text="${message.text}"
+                    origin="${message.origin}"
+                    time-stamp="${message.time}"
+                    disable-buttons="${message.disableButtons || nothing}"
+                    index="${index}"
+                    @on-structure-change="${handleInternalChange}"
+                    ?stream-content="${streamResponses}"
+                    display-name="${message.displayName || nothing}"
+                    display-color="${message.displayColor || nothing}"
+                    .elements="${message.elements || nothing}">
+                  </clabs--chat-message>`
+            )}
+            ${queryInProgress
               ? html` <clabs--chat-message
-                  raw-text="${message.text}"
-                  origin="${message.origin}"
-                  time-stamp="${message.time}"
-                  error-state
-                  disable-buttons
-                  index="${index}">
+                  raw-text="loading"
+                  origin="bot"
+                  time-stamp=""
+                  loading-state
+                  error-state="false">
                 </clabs--chat-message>`
-              : html` <clabs--chat-message
-                  raw-text="${message.text}"
-                  origin="${message.origin}"
-                  time-stamp="${message.time}"
-                  disable-buttons="${message.disableButtons || nothing}"
-                  index="${index}"
-                  @on-structure-change="${handleInternalChange}"
-                  ?stream-content="${streamResponses}"
-                  display-name="${message.displayName || nothing}"
-                  display-color="${message.displayColor || nothing}"
-                  .elements="${message.elements || nothing}">
-                </clabs--chat-message>`
-          )}
-          ${queryInProgress
-            ? html` <clabs--chat-message
-                raw-text="loading"
-                origin="bot"
-                time-stamp=""
-                loading-state
-                error-state="false">
-              </clabs--chat-message>`
-            : html``}
-        `
-      : html``}
+              : html``}
+          `
+        : html``}
+    </slot>
   </div>`;
 }

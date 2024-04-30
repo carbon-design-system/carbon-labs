@@ -14,7 +14,7 @@ $css--plex: true !default;
 :host(#{$clabs-prefix}--chat-list) {
   font-size: 16px;
   inline-size: 100%;
-  line-height: 26px;
+  line-height: 22px;
 
   .#{$clabs-prefix}--chat-list ul {
     padding: 0;

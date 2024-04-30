@@ -5,6 +5,7 @@
     "access": "public",
     "provenance": true
   },
+  "type": "module",
   "description": "Carbon Labs - chat component",
   "license": "Apache-2.0",
   "repository": {
@@ -22,8 +23,8 @@
   },
   "files": [
     "es/**/*",
-    "custom-elements.json",
-    "telemetry.yml"
+    "telemetry.yml",
+    "custom-elements.json"
   ],
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",

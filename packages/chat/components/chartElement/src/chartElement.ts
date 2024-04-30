@@ -239,7 +239,6 @@ export default class chartElement extends LitElement {
   async _displayVisualization() {
     const targetID = '#' + clabsPrefix + '--chat-embed-vis-' + this._uniqueID;
     const targetDiv = this.shadowRoot?.querySelector(targetID);
-    console.log(this._visualizationSpec);
     if (targetDiv instanceof HTMLElement) {
       try {
         await VegaEmbed.default(targetDiv, this._visualizationSpec, {
@@ -396,14 +395,12 @@ export default class chartElement extends LitElement {
       if (subChartHeight) {
         repeatedSpec['spec']['height'] = subChartHeight;
       }
-      console.log(repeatedSpec);
     } else {
       if (!spec['data']) {
         plainSpec = {};
       } else {
         //spec, editMarks, addConfig, layerIndex
         plainSpec = this._prepareSpecification(spec, true, true, 0);
-        console.log(plainSpec);
       }
     }
 

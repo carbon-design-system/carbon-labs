@@ -27,6 +27,7 @@ $css--plex: true !default;
     letter-spacing: 0.16px;
     line-height: 24px;
     resize: none;
+    word-break: break-word;
   }
 
   .#{$clabs-prefix}--chat-editable-text-area:focus {

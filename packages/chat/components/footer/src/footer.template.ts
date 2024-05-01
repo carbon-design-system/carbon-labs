@@ -11,6 +11,8 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
+import MicrophoneFilled16 from '@carbon/web-components/es/icons/microphone--filled/16.js';
+import Microphone16 from '@carbon/web-components/es/icons/microphone/16.js';
 import Menu24 from '@carbon/web-components/es/icons/menu/24.js';
 import SendFilled16 from '@carbon/web-components/es/icons/send--filled/16.js';
 
@@ -27,12 +29,17 @@ export function footerTemplate(customElementClass) {
   const {
     _messageText: messageText,
     _handleInput: handleInput,
-    _setMessageText: setMessageText,
     _sendInputToParent: sendInputToParent,
     _handleMenuToggle: handleMenuToggle,
     _toggleMenu: toggleMenu,
     _handleMenuFileUpload: handleMenuFileUpload,
     _inputPlaceholder: inputPlaceholder,
+    _disableMenu: disableMenu,
+    _disableInput: disableInput,
+    _isListening: isListening,
+    _voiceAPIAvailable: voiceAPIAvailable,
+    _startRecording: startRecording,
+    _endRecording: endRecording,
   } = customElementClass;
 
   return html` 
@@ -55,25 +62,45 @@ export function footerTemplate(customElementClass) {
     }
       <div class="${clabsPrefix}--chat-footer-prompt-items">
       <div class="${clabsPrefix}--chat-footer-button">
-        <cds-button kind="ghost" size="sm" @click="${handleMenuToggle}">
+        <cds-button kind="ghost" size="sm" ?disabled="${disableMenu}" @click="${handleMenuToggle}">
             ${Menu24({ slot: 'icon' })}
         </cds-button>
       </div>
       <textarea
         class="${clabsPrefix}--chat-search-query"
         rows="1"
+        ?disabled="${disableInput}"
         placeholder="${
           inputPlaceholder ? inputPlaceholder : 'Type something...'
         }"
         .value="${messageText}"
-        @input="${setMessageText}"
-        @keydown="${handleInput}"
-        @keyup="${handleInput}" />
+        @input="${handleInput}"
+        @keydown="${handleInput}"/>
         </textarea>
       <div class="${clabsPrefix}--chat-footer-button">
-        <cds-button kind="ghost" size="sm" disabled>
-          ${MicrophoneOff16({ slot: 'icon' })}
-        </cds-button>
+        ${
+          !voiceAPIAvailable
+            ? html`
+                <cds-button disabled kind="ghost" size="sm">
+                  ${MicrophoneOff16({ slot: 'icon' })}
+                </cds-button>
+              `
+            : html` ${!isListening
+                ? html` <cds-button
+                    kind="ghost"
+                    tooltip-text="start recording"
+                    size="sm"
+                    @click="${startRecording}">
+                    ${Microphone16({ slot: 'icon' })}
+                  </cds-button>`
+                : html` <cds-button
+                    kind="danger"
+                    tooltip-text="end recording"
+                    size="sm"
+                    @click="${endRecording}">
+                    ${MicrophoneFilled16({ slot: 'icon' })}
+                  </cds-button>`}`
+        }
       </div>
       <div class="${clabsPrefix}--chat-footer-button">
         <cds-button kind="ghost" size="sm" @click="${sendInputToParent}">

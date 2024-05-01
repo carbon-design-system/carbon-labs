@@ -37,6 +37,7 @@ $css--plex: true !default;
     border-inline-end: 1px solid rgba(69, 137, 255, 0.2);
 
     border-inline-start: 1px solid rgba(69, 137, 255, 0.2);
+    gap: 6px;
     min-block-size: 56px;
   }
 
@@ -68,6 +69,7 @@ $css--plex: true !default;
     color: $text-primary;
     font: inherit;
     font-size: 14px;
+    letter-spacing: 0.16px;
     line-height: 20px;
     min-block-size: 30px;
     overflow-y: hidden;

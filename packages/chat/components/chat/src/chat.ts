@@ -347,7 +347,6 @@ export default class CLABSChat extends LitElement {
 
       this.getResults(value)
         .then((res) => {
-          console.log(res);
           const errorState =
             Object.prototype.hasOwnProperty.call(res, 'failed') &&
             res['failed'] === true;

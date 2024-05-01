@@ -20,6 +20,7 @@ $css--plex: true !default;
   font-weight: 400;
   letter-spacing: 0.16px;
   line-height: 24px;
+  word-break: break-word;
 
   #{$clabs-prefix}--chat-text--float-right {
     display: flex;

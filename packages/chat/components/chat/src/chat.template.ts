@@ -29,6 +29,7 @@ export function chatTemplate(customElementClass) {
     sendInput,
     userName,
     agentName,
+    loading,
     _inputFieldPlaceholder: inputFieldPlaceholder,
     _streamResponses: streamResponses,
   } = customElementClass;
@@ -49,6 +50,7 @@ export function chatTemplate(customElementClass) {
     </slot>
 
     <clabs--chat-footer
+      ?disable-input="${loading}"
       @on-user-text-input="${sendInput}"
       input-placeholder="${inputFieldPlaceholder}">
     </clabs--chat-footer>

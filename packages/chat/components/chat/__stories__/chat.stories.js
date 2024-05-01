@@ -15,7 +15,6 @@ import '@carbon/web-components/es/components/button/index.js';
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
   title: 'Components/Chat/Chat',
-  tags: ['autodocs'],
 };
 
 export const Default = {
@@ -300,6 +299,7 @@ export const Slotting = {
    */
   render: ({ userName, agentName, conversation }) => html`
     <div style="height:calc(100vh - 84px); overflow:hidden;">
+
       <clabs-chat user-name="${userName}" agent-name="${agentName}" conversation="${conversation}">
 
         <clabs--chat-messages slot="messages" user-name="user" agent-name="bot">
@@ -308,12 +308,14 @@ export const Slotting = {
           </clabs--chat-message>
 
           <clabs--chat-message slot="message-list" origin="bot" time-stamp="9:04pm" index="1">
-              <div slot="message-content" style="font-family: 'Comic Sans MS', 'Comic Sans', cursive; color:#FF69B4;font-size:22px;">
-                Your custom slotted div is here! Just place any custom div in a message element and add slot='message-content' so it renders as part of this message.
-              </div>
 
               <clabs--chat-text slot="message-content" content='This is a textElement, displays text following Carbon design guidelines.'></clabs--chat-text>
               <clabs--chat-text slot="message-content" content='TextElement can also render simple HTML as such:\n <h2>This is using a h2 tag</h2>\n'></clabs--chat-text>
+
+              <clabs--chat-text slot="message-content" content='You can also specify a simple slotted div with any content: (Youtube embed example)\n'></clabs--chat-text>
+              <div slot="message-content">
+                <iframe width="256" height="256" src="https://www.youtube.com/embed/oSCX78-8-q0?si=kCcIHjehhVn-4PSO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
               
               <clabs--chat-text slot="message-content" content='You can also show files, tables, code, action buttons or lists:'></clabs--chat-text>
               <clabs--chat-card slot="message-content" type="file" content='https://arxiv.org/pdf/2312.05688.pdf'></clabs--chat-card>
@@ -325,13 +327,16 @@ export const Slotting = {
       
               <clabs--chat-list slot="message-content" content='1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)'></clabs--chat-list>
               <clabs--chat-text slot="message-content" content='And finally any chart you wish!'></clabs--chat-text>
+              
               <clabs--chat-chart container-height="400px" slot="message-content" content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"US Unemployment by county","data":{"url":"https://vega.github.io/editor/data/us-10m.json","format":{"type":"topojson","feature":"counties"}},"transform":[{"lookup":"id","from":{"data":{"url":"https://vega.github.io/editor/data/unemployment.tsv"},"key":"id","fields":["rate"]}}],"projection":{"type":"albersUsa"},"mark":"geoshape","encoding":{"color":{"field":"rate","type":"quantitative"}}}'></clabs--chat-chart>
               <clabs--chat-chart container-height="600px" slot="message-content" content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Deaths by natural disasters","data":{"url":"https://vega.github.io/vega-lite/examples/data/disasters.csv"},"width":600,"height":400,"mark":{"type":"circle","opacity":0.8,"stroke":"black","strokeWidth":1},"encoding":{"x":{"field":"Year","type":"temporal","axis":{"grid":false}},"y":{"field":"Entity","type":"nominal","axis":{"title":""}},"size":{"field":"Deaths","type":"quantitative","title":"Annual Global Deaths","legend":{"clipHeight":30},"scale":{"rangeMax":5000}},"color":{"field":"Entity","type":"nominal","legend":null}}}'></clabs--chat-chart>
               <clabs--chat-chart container-height="200px" slot="message-content" content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Boxplot example with random data","data":{"values":[{"group":"Group A","value":34},{"group":"Group A","value":28},{"group":"Group A","value":55},{"group":"Group B","value":91},{"group":"Group B","value":81},{"group":"Group B","value":67},{"group":"Group C","value":45},{"group":"Group C","value":66},{"group":"Group C","value":73},{"group":"Group D","value":28},{"group":"Group D","value":35},{"group":"Group D","value":56},{"group":"Group E","value":12},{"group":"Group E","value":45},{"group":"Group E","value":99}]},"mark":"boxplot","encoding":{"y":{"field":"group","type":"nominal"},"x":{"field":"value","type":"quantitative"}}}'></clabs--chat-chart>
               <clabs--chat-chart container-height="350px" slot="message-content" content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"url":"https://vega.github.io/vega-lite/data/barley.json"},"mark":"bar","encoding":{"x":{"aggregate":"sum","field":"yield"},"y":{"field":"variety"},"color":{"field":"site"}}}'></clabs--chat-chart>              
               <clabs--chat-chart container-height="250px" slot="message-content" content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Stock prices of 5 Tech Companies over Time.","data":{"url":"https://vega.github.io/vega-lite/examples/data/stocks.csv"},"mark":"line","encoding":{"x":{"field":"date","type":"temporal"},"y":{"field":"price","type":"quantitative"},"color":{"field":"symbol","type":"nominal"}}}'></clabs--chat-chart>
           </clabs--chat-message>
+
         </clabs--chat-messages>
+
       </clabs-chat>
     </div>
     

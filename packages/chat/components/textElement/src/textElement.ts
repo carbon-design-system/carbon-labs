@@ -52,18 +52,21 @@ export default class textElement extends LitElement {
    * @param {boolean} capitalize - capitalization flag
    */
   _formatText(inputText, capitalize) {
-    if (capitalize) {
-      const lines = inputText.split(/(?<=[.!?]\s)|(?<=\n)/g);
-      const capitalizedLines = lines.map(
-        (line) =>
-          line.trimStart().charAt(0).toUpperCase() + line.trimStart().slice(1)
-      );
-      inputText = capitalizedLines.join('');
-    }
+    let htmlText = '';
+    if (inputText) {
+      if (capitalize) {
+        const lines = inputText.split(/(?<=[.!?]\s)|(?<=\n)/g);
+        const capitalizedLines = lines.map(
+          (line) =>
+            line.trimStart().charAt(0).toUpperCase() + line.trimStart().slice(1)
+        );
+        inputText = capitalizedLines.join('');
+      }
 
-    const prunedText = inputText.replace(/^\s*\n|\n\s*$/g, '');
-    const formattedText = prunedText.replace(/\t/g, '&nbsp;&nbsp;');
-    const htmlText = formattedText.replace(/\n/g, '<br>');
+      const prunedText = inputText.replace(/^\s*\n|\n\s*$/g, '');
+      const formattedText = prunedText.replace(/\t/g, '&nbsp;&nbsp;');
+      htmlText = formattedText.replace(/\n/g, '<br>');
+    }
     return htmlText;
   }
 }

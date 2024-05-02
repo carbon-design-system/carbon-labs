@@ -22,9 +22,9 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs--chat-message
+  render: () => html` <clabs-chat-message
     time-stamp="12:00"
     text="hello world"
     origin="user">
-  </clabs--chat-message>`,
+  </clabs-chat-message>`,
 };

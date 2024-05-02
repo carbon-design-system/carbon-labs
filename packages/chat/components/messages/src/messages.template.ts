@@ -28,20 +28,20 @@ export function messagesTemplate(customElementClass) {
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-messages-container">
-    <slot name="message-list" @slotchange="${_handleSlotchange}">
+    <slot name="message-items" @slotchange="${_handleSlotchange}">
       ${computedMessages
         ? html`
             ${computedMessages.map((message, index) =>
               message.hasError
-                ? html` <clabs--chat-message
+                ? html` <clabs-chat-message
                     raw-text="${message.text}"
                     origin="${message.origin}"
                     time-stamp="${message.time}"
                     error-state
                     disable-buttons
                     index="${index}">
-                  </clabs--chat-message>`
-                : html` <clabs--chat-message
+                  </clabs-chat-message>`
+                : html` <clabs-chat-message
                     raw-text="${message.text}"
                     origin="${message.origin}"
                     time-stamp="${message.time}"
@@ -52,16 +52,16 @@ export function messagesTemplate(customElementClass) {
                     display-name="${message.displayName || nothing}"
                     display-color="${message.displayColor || nothing}"
                     .elements="${message.elements || nothing}">
-                  </clabs--chat-message>`
+                  </clabs-chat-message>`
             )}
             ${queryInProgress
-              ? html` <clabs--chat-message
+              ? html` <clabs-chat-message
                   raw-text="loading"
                   origin="bot"
                   time-stamp=""
                   loading-state
                   error-state="false">
-                </clabs--chat-message>`
+                </clabs-chat-message>`
               : html``}
           `
         : html``}

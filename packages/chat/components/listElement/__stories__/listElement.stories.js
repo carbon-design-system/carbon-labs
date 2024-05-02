@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chat/Message Components/BulletList',
+  title: 'Components/Chat/BulletList',
   tags: ['autodocs'],
 };
 
@@ -22,5 +22,5 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs--chat-list> </clabs--chat-list>`,
+  render: () => html` <clabs-chat-list> </clabs-chat-list>`,
 };

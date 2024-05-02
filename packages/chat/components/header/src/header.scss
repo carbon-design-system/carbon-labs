@@ -11,7 +11,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$clabs-prefix}--chat-header) {
+:host(#{$clabs-prefix}-chat-header) {
   position: absolute;
   display: flex;
   align-items: center;

@@ -312,6 +312,8 @@ class APIPlugin {
       max_tries: 3,
     };
 
+    console.log(payload);
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

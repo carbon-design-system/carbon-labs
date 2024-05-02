@@ -11,7 +11,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$clabs-prefix}--chat-messages) {
+:host(#{$clabs-prefix}-chat-messages) {
   display: flex;
   overflow: hidden;
   box-sizing: border-box;
@@ -28,5 +28,7 @@ $css--plex: true !default;
     flex: 1;
     inline-size: 100%;
     padding-block: 16px 16px;
+
+    padding-block-end: 64px;
   }
 }

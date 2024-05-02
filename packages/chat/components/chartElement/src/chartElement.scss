@@ -9,7 +9,7 @@
 
 @use '@carbon/styles/scss/theme' as *;
 
-:host(#{$clabs-prefix}--chat-chart) {
+:host(#{$clabs-prefix}-chat-chart) {
   display: block;
   overflow: hidden;
   padding: 0;
@@ -18,7 +18,7 @@
   background: $background;
   block-size: var(--chat-chart-element-height, '300px');
   font-family: 'IBM Plex Sans Condensed', sans-serif;
-  inline-size: var(--chat-chart-element-width, '100%');
+  inline-size: 100%;
   min-block-size: 246px;
   min-inline-size: 246px;
 

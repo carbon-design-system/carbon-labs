@@ -11,7 +11,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$clabs-prefix}--chat-code) {
+:host(#{$clabs-prefix}-chat-code) {
   .#{$clabs-prefix}--chat-code-container {
     display: flex;
     overflow: auto;

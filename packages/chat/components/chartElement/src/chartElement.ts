@@ -27,6 +27,8 @@ export default class chartElement extends LitElement {
   @property({ type: String, attribute: 'content', reflect: true })
   content;
 
+  private intersectionObserver;
+
   /**
    * CSS string for container height
    */
@@ -97,11 +99,22 @@ export default class chartElement extends LitElement {
    */
   firstUpdated() {
     this.generateUniqueId();
-    if (this.hasAttribute('containerWidth')) {
+
+    /*this.resizeObserver = new ResizeObserver(async () => {
+      this._renderedSVG = await this._displayVisualization();
+      this.requestUpdate();
+    });*/
+
+    this.intersectionObserver = new IntersectionObserver(async () => {
+      await this._displayVisualization();
+    });
+    this.intersectionObserver.observe(this.parentElement);
+
+    if (this.hasAttribute('container-width')) {
       this.style.setProperty('--chat-chart-element-width', this.containerWidth);
     }
 
-    if (this.hasAttribute('containerHeight')) {
+    if (this.hasAttribute('container-height')) {
       this.style.setProperty(
         '--chat-chart-element-height',
         this.containerHeight
@@ -109,9 +122,9 @@ export default class chartElement extends LitElement {
     }
 
     if (this.content) {
-      setTimeout(() => {
-        this._prepareVisualization();
-      }, 100 + Math.round(Math.random() * 200));
+      //setTimeout(() => {
+      this._prepareVisualization();
+      //}, 100 + Math.round(Math.random() * 200));
     } else {
       /*if (!this.chartLoading) {
         this._errorMessage =
@@ -120,11 +133,12 @@ export default class chartElement extends LitElement {
     }
 
     /*this.resizeObserver = new ResizeObserver(async () => {
+      console.log(this.parentElement)
       if (this._visualizationSpec) {
-        if (this._visualizationSpec['repeat']) {
+        //if (this._visualizationSpec['repeat']) {
           //await this._reRenderVisualization(true);
           this._prepareVisualization();
-        }
+        //}
       }
     });
     this.resizeObserver.observe(this.parentElement);*/
@@ -144,28 +158,6 @@ export default class chartElement extends LitElement {
     //this._renderedSVG = await this._displayVisualization();
   }
 
-  /**
-   * TEMPORARY: get style of parent to set theme
-   */
-  _getTheme() {
-    /*const parentStyle = this.shadowRoot?.querySelector("."+clabsPrefix+"--chat-chart-container")
-    const backgroundColor = parentStyle?.style?.getPropertyValue("--cds-background");
-    console.log(backgroundColor)
-    if(backgroundColor){
-      const r = parseInt(backgroundColor.substring(1,2), 16);
-      const g = parseInt(backgroundColor.substring(3,2), 16);
-      const b = parseInt(backgroundColor.substring(5,2), 16);
-
-      if(r < 135 && g < 135 && b < 135){
-        console.log(backgroundColor+" dark")
-        return "dark";
-      }else{
-        console.log(backgroundColor+" light")
-        return "light"
-      }
-    }*/
-  }
-
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
@@ -177,8 +169,7 @@ export default class chartElement extends LitElement {
           this._prepareVisualization();
         } catch (error) {
           //this._invalid = true;
-          this._errorMessage =
-            'ERROR: Failed to parse Visualization Specification';
+          //this._errorMessage = 'ERROR: Failed to parse Visualization Specification';
         }
       } else {
         this._errorMessage = '';
@@ -197,6 +188,15 @@ export default class chartElement extends LitElement {
     }
 
     if (changedProperties.has('_visualizationSpec')) {
+      const specificationFinalizedEvent = new CustomEvent(
+        'on-specification-ready',
+        {
+          detail: { spec: this._visualizationSpec },
+          bubbles: true,
+          composed: true,
+        }
+      );
+      this.dispatchEvent(specificationFinalizedEvent);
       await this._displayVisualization();
     }
 
@@ -245,7 +245,7 @@ export default class chartElement extends LitElement {
           actions: this.enableInspector || false,
           hover: this.enableTooltip,
           //tooltip: { theme: 'custom' }, //this._buildToolTip,
-          renderer: 'canvas',
+          renderer: 'svg',
         }).catch((error) => {
           this._errorMessage = 'VEGA-LITE rendering error: ' + error;
         });
@@ -299,6 +299,7 @@ export default class chartElement extends LitElement {
         'CARBON CHART ERROR: JSON parse() failed, specification is not valid JSON';
       return '';
     }
+    console.log(spec);
 
     if (!spec['$schema']) {
       this._errorMessage =
@@ -312,12 +313,13 @@ export default class chartElement extends LitElement {
     } else {
       delete spec['height'];
       delete spec['width'];
-      delete spec['autosize'];
     }
-    spec.autosize = {
+    /*spec.autosize = {
       type: 'fit',
+      resize:true,
       contains: 'padding',
-    };
+    };*/
+    delete spec['autosize'];
 
     let layeredSpec;
     let repeatedSpec;
@@ -333,8 +335,8 @@ export default class chartElement extends LitElement {
         layeredSpec['layer'][index] = tempSubSpec;
       }*/
     } else if (spec['repeat']) {
-      let currentContainerWidth = this.clientWidth;
-      let currentContainerHeight = this.clientHeight;
+      const currentContainerWidth = this.clientWidth;
+      const currentContainerHeight = this.clientHeight;
       repeatedSpec = this._prepareSpecification(
         JSON.parse(JSON.stringify(spec)),
         false,
@@ -355,35 +357,34 @@ export default class chartElement extends LitElement {
           rowCount = Math.ceil(repeatedSpec['repeat'].length / columnCount);
         } else {
           if (repeatedSpec['repeat']['row']) {
-            rowCount = repeatedSpec['repeat']['row'].length;
+            rowCount = repeatedSpec['repeat']['row'].length + 1;
           }
           if (repeatedSpec['repeat']['column']) {
-            columnCount = repeatedSpec['repeat']['column'].length;
+            columnCount = repeatedSpec['repeat']['column'].length + 1;
           }
         }
 
-        const legendHeight = 50;
+        console.log(currentContainerWidth + ' ' + currentContainerHeight);
+        console.log(columnCount + ' ' + rowCount);
+        console.log(repeatedSpec['padding']);
+
+        const legendHeight = 100;
 
         const paddingOffset = { vertical: 0, horizontal: 0 };
-        if (repeatedSpec['spec']['padding']) {
+        if (repeatedSpec['padding']) {
           paddingOffset['vertical'] =
-            (repeatedSpec['spec']['padding']['top'] +
-              repeatedSpec['spec']['padding']['bottom']) *
-            rowCount;
+            repeatedSpec['padding']['top'] + repeatedSpec['padding']['bottom'];
           paddingOffset['horizontal'] =
-            (repeatedSpec['spec']['padding']['left'] +
-              repeatedSpec['spec']['padding']['right']) *
-            columnCount;
+            repeatedSpec['padding']['left'] + repeatedSpec['padding']['right'];
         }
-        if (paddingOffset['vertical']) {
-          currentContainerHeight -= paddingOffset['vertical'];
-        }
-        if (paddingOffset['horizontal']) {
-          currentContainerWidth -= paddingOffset['horizontal'];
-        }
-        subChartWidth = Math.floor(currentContainerWidth / columnCount);
-        subChartHeight =
-          Math.floor(currentContainerHeight / rowCount) - legendHeight;
+
+        subChartWidth = Math.floor(
+          (currentContainerWidth - paddingOffset['horizontal']) / columnCount
+        );
+        subChartHeight = Math.floor(
+          (currentContainerHeight - paddingOffset['vertical'] - legendHeight) /
+            rowCount
+        ); // - legendHeight;
       }
 
       delete repeatedSpec['spec']['background'];
@@ -874,6 +875,7 @@ export default class chartElement extends LitElement {
         }
       }
     }
+    console.log(spec);
 
     return spec;
   }

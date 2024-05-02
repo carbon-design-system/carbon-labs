@@ -22,5 +22,5 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs--chat-footer> </clabs--chat-footer>`,
+  render: () => html` <clabs-chat-footer> </clabs-chat-footer>`,
 };

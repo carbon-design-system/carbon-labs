@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chat/Message Components/Carousel',
+  title: 'Components/Chat/Carousel',
   tags: ['autodocs'],
 };
 
@@ -57,8 +57,8 @@ export const Default = {
    */
   render: () => html` <div
     style="height:calc(100vh - 84px); overflow:hidden; display:flex;max-width:100%;width:100%;">
-    <clabs--chat-carousel content="${carouselExamples[0].content}">
-    </clabs--chat-carousel>
+    <clabs-chat-carousel content="${carouselExamples[0].content}">
+    </clabs-chat-carousel>
   </div>`,
 };
 
@@ -75,8 +75,8 @@ export const Showcase = {
         html`
           <div style="width:100%">
             <h5>${example.name}</h5>
-            <clabs--chat-carousel content="${example.content}">
-            </clabs--chat-carousel>
+            <clabs-chat-carousel content="${example.content}">
+            </clabs-chat-carousel>
           </div>
         `
     )}

@@ -17,7 +17,7 @@ const { stablePrefix: clabsPrefix } = settings;
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${clabsPrefix}--chat-chart`)
+@customElement(`${clabsPrefix}-chat-chart`)
 class CLABSChartElement extends chartElement {
   /**
    * Renders the template while passing in class functionality

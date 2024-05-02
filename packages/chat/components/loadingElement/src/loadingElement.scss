@@ -9,7 +9,7 @@
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/colors' as *;
 
-:host(#{$clabs-prefix}--chat-loading) {
+:host(#{$clabs-prefix}-chat-loading) {
   display: block;
   overflow: hidden;
 
@@ -18,7 +18,7 @@
     overflow: hidden;
     border-radius: 9px;
     background-color: $background-hover;
-    block-size: 18px;
+    block-size: 8px;
     inline-size: 100%;
   }
   @media screen and (prefers-reduced-motion: reduce) {

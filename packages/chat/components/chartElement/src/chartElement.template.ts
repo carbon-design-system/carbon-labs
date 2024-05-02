@@ -28,11 +28,11 @@ export function chartElementTemplate(customElementClass) {
     _buildLoader: buildLoader,
   } = customElementClass;
 
-  return html` <div
+  return html`<div
     class="${clabsPrefix}--chat-chart-container"
     id="${clabsPrefix}--chat-embed-vis-${uniqueID}">
     ${errorMessage !== ''
-      ? html` <div class="${clabsPrefix}--chat-chart-loading-container">
+      ? html`<div class="${clabsPrefix}--chat-chart-loading-container">
           <div class="${clabsPrefix}--chat-chart-error-grid">
             ${unsafeHTML(buildLoader())}
           </div>
@@ -43,7 +43,7 @@ export function chartElementTemplate(customElementClass) {
       : html`
             ${
               chartLoading
-                ? html` <div
+                ? html`<div
                     class="${clabsPrefix}--chat-chart-loading-container">
                     <div class="${clabsPrefix}--chat-chart-loading-grid">
                       ${unsafeHTML(buildLoader())}

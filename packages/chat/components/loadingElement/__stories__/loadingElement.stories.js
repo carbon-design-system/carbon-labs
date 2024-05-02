@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chat/Message Components/Loading',
+  title: 'Components/Chat/Loading',
   tags: ['autodocs'],
 };
 
@@ -22,6 +22,6 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs--chat-loading content="Hello, how may I help you?">
-  </clabs--chat-loading>`,
+  render: () => html` <clabs-chat-loading content="Hello, how may I help you?">
+  </clabs-chat-loading>`,
 };

@@ -45,12 +45,13 @@ export function carouselElementTemplate(customElementClass) {
             ${carouselContent.map((item) =>
               item.type == 'img'
                 ? html` <div class="${clabsPrefix}--chat-carousel-slide">
-                    <clabs--chat-image content="${item.content}" />
+                    <clabs-chat-image content="${item.content}">
+                    </clabs-chat-image>
                   </div>`
                 : html`
                   <div class="${clabsPrefix}--chat-carousel-slide">
-                    <clabs--chat-card content="${item.content}"" type="${item.type}">
-                    </clabs--chat-card>
+                    <clabs-chat-card content="${item.content}"" type="${item.type}">
+                    </clabs-chat-card>
                   </div>
                 `
             )}

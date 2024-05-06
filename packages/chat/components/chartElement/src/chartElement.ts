@@ -789,7 +789,7 @@ export default class chartElement extends LitElement {
         if (typeof spec.title === 'string') {
           spec.title = { text: spec.title };
         }
-      } else if (addConfig) {
+      } else if (addConfig && !this.disableOptions) {
         spec.title = { text: '   ' };
       }
 

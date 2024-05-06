@@ -46,6 +46,7 @@
   }
 
   .#{$clabs-prefix}--chat-chart-modal-custom {
+    z-index: 9999;
     padding: 0;
     pointer-events: all;
   }

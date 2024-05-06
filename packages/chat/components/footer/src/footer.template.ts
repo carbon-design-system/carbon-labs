@@ -62,7 +62,11 @@ export function footerTemplate(customElementClass) {
     }
       <div class="${clabsPrefix}--chat-footer-prompt-items">
       <div class="${clabsPrefix}--chat-footer-button">
-        <cds-button kind="ghost" size="sm" ?disabled="${disableMenu}" @click="${handleMenuToggle}">
+        <cds-button 
+          kind="ghost" 
+          size="sm" 
+          ?disabled="${disableMenu}" 
+          @click="${handleMenuToggle}">
             ${Menu24({ slot: 'icon' })}
         </cds-button>
       </div>
@@ -81,7 +85,13 @@ export function footerTemplate(customElementClass) {
         ${
           !voiceAPIAvailable
             ? html`
-                <cds-button disabled kind="ghost" size="sm">
+                <cds-button
+                  disabled
+                  kind="ghost"
+                  size="sm"
+                  tooltip-text="Microphone unavailable"
+                  tooltip-position="left"
+                  tooltip-alignment="end">
                   ${MicrophoneOff16({ slot: 'icon' })}
                 </cds-button>
               `
@@ -89,6 +99,8 @@ export function footerTemplate(customElementClass) {
                 ? html` <cds-button
                     kind="ghost"
                     tooltip-text="start recording"
+                    tooltip-position="left"
+                    tooltip-alignment="end"
                     size="sm"
                     @click="${startRecording}">
                     ${Microphone16({ slot: 'icon' })}
@@ -96,6 +108,8 @@ export function footerTemplate(customElementClass) {
                 : html` <cds-button
                     kind="danger"
                     tooltip-text="end recording"
+                    tooltip-position="left"
+                    tooltip-alignment="end"
                     size="sm"
                     @click="${endRecording}">
                     ${MicrophoneFilled16({ slot: 'icon' })}
@@ -103,7 +117,11 @@ export function footerTemplate(customElementClass) {
         }
       </div>
       <div class="${clabsPrefix}--chat-footer-button">
-        <cds-button kind="ghost" size="sm" @click="${sendInputToParent}">
+        <cds-button 
+            kind="ghost"
+            size="sm" 
+
+            @click="${sendInputToParent}">
             ${SendFilled16({ slot: 'icon' })}
         </cds-button>
       </div>

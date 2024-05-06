@@ -10,6 +10,7 @@
 @use '@carbon/styles/scss/theme' as *;
 
 :host(#{$clabs-prefix}-chat-chart) {
+  position: relative;
   display: block;
   overflow: hidden;
   padding: 0;
@@ -23,12 +24,51 @@
   min-inline-size: 246px;
 
   .#{$clabs-prefix}--chat-chart-container {
+    z-index: 2;
+    display: block;
     overflow: hidden;
     box-sizing: border-box;
     block-size: 100%;
     inline-size: 100%;
     min-block-size: 100%;
     min-inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-chart-options {
+    position: absolute;
+    z-index: 999;
+    display: flex;
+    flex-direction: row;
+    background: $background;
+    gap: 8px;
+    inset-block-start: 16px;
+    inset-inline-end: 24px;
+  }
+
+  .#{$clabs-prefix}--chat-chart-modal-custom {
+    padding: 0;
+    pointer-events: all;
+  }
+
+  .#{$clabs-prefix}--chat-chart-modal-body {
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    overflow-y: scroll;
+    pointer-events: all;
+  }
+
+  .#{$clabs-prefix}--chat-chart-modal-container {
+    padding: 0;
+    block-size: 100%;
+    inline-size: 100%;
+    min-block-size: calc(100vh - 64px - 58px);
+    min-inline-size: calc(100vw - 64px);
+    pointer-events: all;
+  }
+
+  .#{$clabs-prefix}--chat-chart-options svg {
+    fill: $text-primary;
   }
 
   .#{$clabs-prefix}--chat-chart-container svg {

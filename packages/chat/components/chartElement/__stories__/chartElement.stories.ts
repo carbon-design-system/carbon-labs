@@ -13,7 +13,6 @@ import { html } from 'lit';
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
   title: 'Components/Chat/Chart',
-  tags: ['autodocs'],
 };
 
 const defaultArgs = {
@@ -210,6 +209,14 @@ export const Showcase = {
       container-height="500px">
     </clabs-chat-chart>
     <br />
+    <br />
+    <h4>30 day rolling average</h4>
+    <clabs-chat-chart
+      theme="${chartTheme}"
+      content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Plot showing a 30 day rolling average with raw values in the background.","width":400,"height":300,"data":{"url":"https://vega.github.io/vega-lite/data/seattle-weather.csv"},"transform":[{"window":[{"field":"temp_max","op":"mean","as":"rolling_mean"}],"frame":[-15,15]}],"encoding":{"x":{"field":"date","type":"temporal","title":"Date"},"y":{"type":"quantitative","axis":{"title":"Max Temperature and Rolling Mean"}}},"layer":[{"mark":{"type":"point","opacity":0.3},"encoding":{"y":{"field":"temp_max","title":"Max Temperature"}}},{"mark":{"type":"line","color":"red","size":3},"encoding":{"y":{"field":"rolling_mean","title":"Rolling Mean of Max Temperature"}}}]}'}"
+      container-height="350px">
+    </clabs-chat-chart>
+    <br />
     <h4>Candle stick chart</h4>
     <br />
     <clabs-chat-chart
@@ -296,6 +303,14 @@ export const MultiLayerCharts = {
       content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","width":400,"description":"A candlestick chart","data":{"url":"https://vega.github.io/vega-lite/examples/data/ohlc.json"},"encoding":{"x":{"field":"date","type":"temporal","title":"Date in 2009","axis":{"format":"%m/%d","labelAngle":-45,"title":"Date in 2009"}},"y":{"type":"quantitative","scale":{"zero":false},"axis":{"title":"Price"}},"color":{"condition":{"test":"datum.open < datum.close","value":"#06982d"},"value":"#ae1325"}},"layer":[{"mark":"rule","encoding":{"y":{"field":"low"},"y2":{"field":"high"}}},{"mark":"bar","encoding":{"y":{"field":"open"},"y2":{"field":"close"}}}]}'}"
       container-height="350px">
     </clabs-chat-chart>
+    <br />
+    <h4>30 day rolling average</h4>
+    <br />
+    <clabs-chat-chart
+      content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Plot showing a 30 day rolling average with raw values in the background.","width":400,"height":300,"data":{"url":"https://vega.github.io/vega-lite/data/seattle-weather.csv"},"transform":[{"window":[{"field":"temp_max","op":"mean","as":"rolling_mean"}],"frame":[-15,15]}],"encoding":{"x":{"field":"date","type":"temporal","title":"Date"},"y":{"type":"quantitative","axis":{"title":"Max Temperature and Rolling Mean"}}},"layer":[{"mark":{"type":"point","opacity":0.3},"encoding":{"y":{"field":"temp_max","title":"Max Temperature"}}},{"mark":{"type":"line","color":"red","size":3},"encoding":{"y":{"field":"rolling_mean","title":"Rolling Mean of Max Temperature"}}}]}'}"
+      container-height="350px">
+    </clabs-chat-chart>
+    <br />
   `,
 };
 

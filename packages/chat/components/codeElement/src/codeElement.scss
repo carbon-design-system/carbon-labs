@@ -51,6 +51,23 @@ $css--plex: true !default;
     border-inline-start: 1px solid $border-subtle-01;
   }
 
+  .#{$clabs-prefix}--chat-code-line-text-area {
+    box-sizing: border-box;
+    flex-grow: 1;
+    padding: 0;
+
+    border: none;
+    background: none;
+    block-size: auto;
+    border-inline-start: 1px solid $border-subtle-01;
+    color: $text-primary;
+    font: inherit;
+    font-size: 13px;
+    letter-spacing: 0.16px;
+    overflow-y: hidden;
+    resize: none;
+  }
+
   .#{$clabs-prefix}--chat-code-line-comment {
     color: $support-success;
   }

@@ -27,6 +27,9 @@ export default class chartElement extends LitElement {
   @property({ type: String, attribute: 'content', reflect: true })
   content;
 
+  /**
+   * event listener to check if component is made visible to auto-render (for exmaple in a tab)
+   */
   private intersectionObserver;
 
   /**
@@ -48,28 +51,58 @@ export default class chartElement extends LitElement {
   carbonify = true;
 
   /**
-   * Enable vega inspector to be shown
+   * Use svg or canvas to render Vega chart
    */
-  @property({ type: Boolean, attribute: 'enable-inspector', reflect: true })
-  enableInspector;
+  @property({ type: String, attribute: 'render-method' })
+  renderMethod = 'canvas';
 
   /**
    * Array of subelements parsed from API reply
    */
-  @property({ type: String, attribute: 'theme', reflect: true })
+  @property({ type: String, attribute: 'theme' })
   theme = 'dark';
 
   /**
-   * invalid - if spec fails to render or is missing, an error will be displayed
+   * disable all export/fullscreen/editing options
    */
-  @state()
-  _invalid = false;
+  @property({ type: Boolean, attribute: 'disable-options' })
+  disableOptions = false;
+
+  /**
+   * Disable fullscreen button
+   */
+  @property({ type: Boolean, attribute: 'disable-fullscreen' })
+  disableFullscreen = false;
+
+  /**
+   * Disable image export button
+   */
+  @property({ type: Boolean, attribute: 'disable-export' })
+  disableExport = false;
+
+  /**
+   * Disable code inspector button
+   */
+  @property({ type: Boolean, attribute: 'disable-code-inspector' })
+  disableCodeInspector = false;
+
+  /**
+   * Disable editor button
+   */
+  @property({ type: Boolean, attribute: 'disable-editor' })
+  disableEditor = false;
 
   /**
    * enableTooltip - show tooltip in charts by default
    */
   @state()
   enableTooltip = true;
+
+  /**
+   * Enable post-hoc carbon charts styling
+   */
+  @property({ type: Boolean, attribute: 'enable-zooming' })
+  enableZooming;
 
   /**
    * errorMessage - specifies error when debugging
@@ -95,10 +128,32 @@ export default class chartElement extends LitElement {
   @state()
   _visualizationSpec;
 
+  /**
+   * boolean to display fullscreen chart and code
+   */
+  @state()
+  showModal = false;
+
+  /**
+   * modal mode value "code" or "fullscreen" to properly seperate HTML content rendered
+   */
+  @state()
+  modalMode;
+
+  /**
+   * switchable HTML content to display code and chart in a modal
+   */
+  @state()
+  modalContent;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
     this.generateUniqueId();
+
+    if (this.renderMethod !== 'svg' && this.renderMethod !== 'canvas') {
+      this.renderMethod = 'canvas';
+    }
 
     /*this.resizeObserver = new ResizeObserver(async () => {
       this._renderedSVG = await this._displayVisualization();
@@ -168,7 +223,6 @@ export default class chartElement extends LitElement {
         try {
           this._prepareVisualization();
         } catch (error) {
-          //this._invalid = true;
           //this._errorMessage = 'ERROR: Failed to parse Visualization Specification';
         }
       } else {
@@ -205,7 +259,7 @@ export default class chartElement extends LitElement {
         this._prepareVisualization();
       }
 
-      if (changedProperties.has('enableInspector')) {
+      if (changedProperties.has('disableOptions')) {
         this._prepareVisualization();
       }
 
@@ -241,11 +295,14 @@ export default class chartElement extends LitElement {
     const targetDiv = this.shadowRoot?.querySelector(targetID);
     if (targetDiv instanceof HTMLElement) {
       try {
+        let renderMode = 'svg';
+        if (this.renderMethod === 'canvas') {
+          renderMode = 'canvas';
+        }
         await VegaEmbed.default(targetDiv, this._visualizationSpec, {
-          actions: this.enableInspector || false,
+          actions: false,
           hover: this.enableTooltip,
-          //tooltip: { theme: 'custom' }, //this._buildToolTip,
-          renderer: 'svg',
+          renderer: renderMode as 'canvas' | 'svg',
         }).catch((error) => {
           this._errorMessage = 'VEGA-LITE rendering error: ' + error;
         });
@@ -287,6 +344,114 @@ export default class chartElement extends LitElement {
   }
 
   /**
+   * _openEditorView -
+   */
+  _openEditorView() {
+    const vegaURL = 'https://vega.github.io/editor/';
+    const openNewWindow = window?.open(vegaURL, '_blank');
+    if (openNewWindow) {
+      setTimeout(() => {
+        console.log(this._visualizationSpec);
+        const payload = {
+          spec: JSON.stringify(this._visualizationSpec, null, '\t'),
+          mode: 'vega-lite',
+        };
+
+        openNewWindow.postMessage(payload, '*');
+      }, 500);
+    } else {
+      console.log('window is undefined');
+    }
+  }
+
+  /**
+   * _openFullscreenView -
+   */
+  _openFullscreenView() {
+    this.modalMode = 'fullscreen';
+    window.setTimeout(async () => {
+      this.showModal = true;
+      const modalDiv = this.shadowRoot?.querySelector(
+        '.' + clabsPrefix + '--chat-chart-modal-container'
+      );
+      if (modalDiv instanceof HTMLElement) {
+        let renderMode = 'svg';
+        if (this.renderMethod === 'canvas') {
+          renderMode = 'canvas';
+        }
+        try {
+          await VegaEmbed.default(modalDiv, this._visualizationSpec, {
+            actions: false,
+            hover: this.enableTooltip,
+            renderer: renderMode as 'canvas' | 'svg',
+          });
+        } catch (modalError) {
+          console.log(modalError);
+        }
+      }
+    }, 200);
+  }
+
+  /**
+   * closeModal - invoked by modal subcomponent when close button is clicked inside
+   */
+  closeModal() {
+    this.showModal = false;
+    this.modalMode = null;
+  }
+
+  /**
+   * _exportToImage - if canvas, get image object from data url and auto-download
+   */
+  _exportToImage() {
+    window.setTimeout(async () => {
+      const container = this.shadowRoot?.querySelector(
+        '.' + clabsPrefix + '--chat-chart-container'
+      );
+
+      if (container instanceof HTMLElement) {
+        const canvasDiv = container?.querySelector('canvas');
+        console.log(canvasDiv);
+        if (canvasDiv instanceof HTMLElement) {
+          const imageUrl = canvasDiv.toDataURL('image/png');
+          const canvasDownloadLink = document.createElement('a');
+          let exportedFileName = 'chart';
+          if (this._visualizationSpec?.title?.text.trim()) {
+            exportedFileName = this._visualizationSpec?.title?.text;
+          }
+          canvasDownloadLink.download = exportedFileName + '.png';
+          canvasDownloadLink.href = imageUrl;
+          canvasDownloadLink.click();
+        }
+      }
+    }, 200);
+  }
+
+  /**
+   * _openCodeView -
+   */
+  _openCodeView() {
+    this.modalMode = 'code';
+    window.setTimeout(async () => {
+      this.showModal = true;
+
+      const modalDiv = this.shadowRoot?.querySelector(
+        '.' + clabsPrefix + '--chat-chart-modal-container'
+      );
+      if (modalDiv instanceof HTMLElement) {
+        try {
+          this.modalContent =
+            "<clabs-chat-code content='" +
+            JSON.stringify(this._visualizationSpec, null, '\t') +
+            "'><clabs-chat-code>";
+        } catch (modalError) {
+          console.error(modalError);
+        }
+      }
+    }, 200);
+  }
+
+  /**
    * prepareVisualization - Prepare and adapt Vega visualization spec to be more Carbon adjacent
    */
   _prepareVisualization() {
@@ -299,7 +464,6 @@ export default class chartElement extends LitElement {
         'CARBON CHART ERROR: JSON parse() failed, specification is not valid JSON';
       return '';
     }
-    console.log(spec);
 
     if (!spec['$schema']) {
       this._errorMessage =
@@ -354,7 +518,7 @@ export default class chartElement extends LitElement {
         let columnCount;
         if (Array.isArray(repeatedSpec['repeat'])) {
           columnCount = repeatedSpec.columns ? repeatedSpec.columns : 1;
-          rowCount = Math.ceil(repeatedSpec['repeat'].length / columnCount);
+          rowCount = Math.ceil(repeatedSpec['repeat'].length / columnCount) + 1;
         } else {
           if (repeatedSpec['repeat']['row']) {
             rowCount = repeatedSpec['repeat']['row'].length + 1;
@@ -364,18 +528,23 @@ export default class chartElement extends LitElement {
           }
         }
 
-        console.log(currentContainerWidth + ' ' + currentContainerHeight);
-        console.log(columnCount + ' ' + rowCount);
-        console.log(repeatedSpec['padding']);
+        //console.log(currentContainerWidth + ' ' + currentContainerHeight);
+        //console.log(columnCount + ' ' + rowCount);
+        //console.log(repeatedSpec['padding']);
 
         const legendHeight = 100;
 
         const paddingOffset = { vertical: 0, horizontal: 0 };
+
         if (repeatedSpec['padding']) {
           paddingOffset['vertical'] =
             repeatedSpec['padding']['top'] + repeatedSpec['padding']['bottom'];
           paddingOffset['horizontal'] =
             repeatedSpec['padding']['left'] + repeatedSpec['padding']['right'];
+        }
+
+        if (Array.isArray(repeatedSpec['repeat'])) {
+          //paddingOffset['horizontal']= paddingOffset['horizontal']columnCount;
         }
 
         subChartWidth = Math.floor(
@@ -385,6 +554,8 @@ export default class chartElement extends LitElement {
           (currentContainerHeight - paddingOffset['vertical'] - legendHeight) /
             rowCount
         ); // - legendHeight;
+
+        currentContainerWidth;
       }
 
       delete repeatedSpec['spec']['background'];
@@ -402,6 +573,14 @@ export default class chartElement extends LitElement {
       } else {
         //spec, editMarks, addConfig, layerIndex
         plainSpec = this._prepareSpecification(spec, true, true, 0);
+      }
+
+      if (this.enableZooming) {
+        plainSpec.selection = plainSpec.selection || {};
+        plainSpec.selection.grid = {
+          type: 'interval',
+          bind: 'scales',
+        };
       }
     }
 
@@ -511,7 +690,7 @@ export default class chartElement extends LitElement {
       ['#081a1c', '#d9fbfb'],
     ];
 
-    let backgroundColor = '#0f0e0e';
+    let backgroundColor = '#161616';
     let gridColor = '#3d3d3d';
     let textColor = '#f4f4f4';
     let labelColor = '#c6c6c6';
@@ -569,21 +748,18 @@ export default class chartElement extends LitElement {
       if (!spec.data?.url) {
         this._errorMessage =
           'ERROR: Schema is missing "values" and/or "url" in the "data" field';
-        this._invalid = true;
         this.requestUpdate();
       }
     }*/
     /*if(!spec['data']){
       this._errorMessage =
           'ERROR: Schema is missing "data" filed';
-        this._invalid = true;
         this.requestUpdate();
         return '';
     }*/
     /*if(!spec['data'] && !spec['layer'] && !spec['repeat']){
       this._errorMessage =
           'ERROR: Schema "data" field is empty, missing: values or url or layers or file';
-        this._invalid = true;
         this.requestUpdate();
         return '';
     }*/
@@ -613,6 +789,8 @@ export default class chartElement extends LitElement {
         if (typeof spec.title === 'string') {
           spec.title = { text: spec.title };
         }
+      } else if (addConfig) {
+        spec.title = { text: '   ' };
       }
 
       if (spec.encoding?.y?.axis?.label || spec.encoding?.y?.field) {
@@ -726,6 +904,7 @@ export default class chartElement extends LitElement {
             strokeWidth: 1, //fontWeight: 'bold',
             offset: 20,
             symbolSize: 160,
+            symbolBaseFillColor: null,
             gradientLength: 246,
             gradientThickness: 8,
             gradientLabelOffset: 8,
@@ -873,9 +1052,25 @@ export default class chartElement extends LitElement {
             value: defaultColor,
           };
         }
+
+        //if(chartType === "point"){
+        /*if (spec.encoding) {
+        spec.encoding = {
+          ...spec.encoding,
+          color:{
+            ...spec.encoding.color,
+            condition: {
+              selction: {not: 'legend'},
+              value: spec.encoding.color.field ? undefined : 'transparent'
+            }
+          },
+          fill: {value: spec.encoding.color.field ? undefined : 'transparent'},
+          stroke: {value: spec.encoding.color.field ? undefined : 'transparent'}
+        }
+      //}
+      }*/
       }
     }
-    console.log(spec);
 
     return spec;
   }

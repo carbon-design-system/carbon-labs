@@ -121,12 +121,6 @@ export default class CLABSChat extends LitElement {
   userPrompt;
 
   /**
-   * string denoting Watsonx.ai project ID
-   */
-  @property({ type: String, attribute: 'project-id' })
-  projectId;
-
-  /**
    * string denoting selected querying method
    */
   private chosenHost = 'Local';

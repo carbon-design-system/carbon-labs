@@ -35,8 +35,7 @@ export function chatTemplate(customElementClass) {
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-container">
-    <clabs-chat-header>
-    </clabs-chat-header>
+    <clabs-chat-header> </clabs-chat-header>
 
     <slot name="messages">
       <clabs-chat-messages
@@ -46,17 +45,14 @@ export function chatTemplate(customElementClass) {
         ?loading="${queryInProgress}"
         ?stream-responses="${streamResponses}"
         @on-message-regeneration="${handleUserRegenerationRequest}"
-        @on-user-message-update-request="${handleUserUpdateRequest}"
-      >
+        @on-user-message-update-request="${handleUserUpdateRequest}">
       </clabs-chat-messages>
     </slot>
 
     <clabs-chat-footer
       ?disable-input="${loading}"
       @on-user-text-input="${sendInput}"
-      input-placeholder="${inputFieldPlaceholder}"
-    >
-
+      input-placeholder="${inputFieldPlaceholder}">
     </clabs-chat-footer>
   </div>`;
 }

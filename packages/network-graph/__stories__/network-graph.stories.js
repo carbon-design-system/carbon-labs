@@ -84,7 +84,7 @@ export const Default = {
       .isPointerInteraction=${args.isPointerInteraction}
       @on-node-click=${(e) => console.log(e)}
       @on-node-right-click=${(e) => console.log(e)}
-      @on-node-hover=${(e) => {}}
+      @on-node-hover=${(e) => console.log(e)}
       .nodeDrag=${(node) => console.log(node)}>
     </clabs-network-graph>`,
 };

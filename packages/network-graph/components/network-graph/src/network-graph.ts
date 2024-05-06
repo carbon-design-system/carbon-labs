@@ -22,6 +22,12 @@ export class NetworkGraph extends LitElement {
   nodeLabel = 'id';
 
   /**
+   * Property name from the graph data which user wants to display as node tooltip label
+   */
+  @property({ attribute: 'node-tooltip-label', type: String })
+  nodeTooltipLabel = 'id';
+
+  /**
    * Canvas width
    */
   @property({ attribute: 'width', type: Number })
@@ -142,13 +148,20 @@ export class NetworkGraph extends LitElement {
   data: GraphData | null = null;
 
   /**
+   * Object to take tooltip styling
+   */
+  @property({ attribute: 'tooltipStyles' })
+  tooltipStyles = null;
+
+  /**
    * Lifecycles Method used to render nodes and links for the graph network on canvas
    */
   firstUpdated() {
     if (this.data && this.shadowRoot?.getElementById('graph-container')) {
       const graph = ForceGraph2D();
       graph(this.shadowRoot.getElementById('graph-container') as HTMLElement)
-        .nodeLabel(this.nodeLabel)
+        .nodeId(this.nodeLabel)
+        .nodeLabel(this.nodeTooltipLabel)
         .graphData(this.data)
         .width(this.canvasWidth)
         .height(this.canvasHeight)
@@ -175,6 +188,20 @@ export class NetworkGraph extends LitElement {
         })
         .onNodeDrag(this.nodeDrag)
         .onNodeHover((node, prevNode) => {
+          const tooltip = this.shadowRoot?.querySelector(
+            '.graph-tooltip'
+          ) as HTMLElement;
+          if (tooltip) {
+            tooltip.style.position = 'absolute';
+            tooltip.style.backgroundColor = '#fff';
+            tooltip.style.padding = '8px';
+            tooltip.style.color = '#000';
+            if (this.tooltipStyles) {
+              for (const [key, value] of Object.entries(this.tooltipStyles)) {
+                tooltip.style[key] = value;
+              }
+            }
+          }
           const event = new CustomEvent('on-node-hover', {
             detail: { node, prevNode },
           });

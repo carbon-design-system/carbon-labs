@@ -153,6 +153,18 @@ export default class message extends LitElement {
   @state()
   streamingInterval;
 
+  /**
+   * streaming speed in milliseconds
+   */
+  @state()
+  streamingSpeed;
+
+  /**
+   * base streaming speed
+   */
+  @state()
+  baseStreamingSpeed = 10;
+
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
@@ -526,10 +538,20 @@ export default class message extends LitElement {
     this.bufferMessage = '';
     this.temporaryMessage = { content: '', type: 'text' };
     this.currentType = '';
-    const baseStreamingSpeed = 20;
-    let streamingSpeed = baseStreamingSpeed;
+    this.streamingSpeed = this.baseStreamingSpeed;
 
-    this.streamingInterval = setInterval(() => {
+    this._beginStreaming();
+  }
+
+  /**
+   * Begin stream animation
+   */
+  _beginStreaming() {
+    if (this.streamingInterval !== null) {
+      clearInterval(this.streamingInterval);
+    }
+
+    this.streamingInterval = setTimeout(() => {
       const token = this.tokens[this.streamingIndex];
       this.streamingIndex++;
       this.bufferMessage += token;
@@ -593,22 +615,26 @@ export default class message extends LitElement {
         this.temporaryMessage.content += '...';
       }
 
-      streamingSpeed =
-        baseStreamingSpeed + (Math.random() - 0.5) * baseStreamingSpeed * 0.2;
+      this.streamingSpeed =
+        this.baseStreamingSpeed +
+        (Math.random() - 0.5) * this.baseStreamingSpeed * 0.2;
 
       switch (this.temporaryMessage.type) {
         case 'code':
-          streamingSpeed *= 5;
+          this.streamingSpeed = this.baseStreamingSpeed / 2;
           break;
         case 'table':
-          streamingSpeed *= 5;
+          this.streamingSpeed = this.baseStreamingSpeed / 2;
           break;
         case 'carousel':
-          streamingSpeed *= 5;
+          this.streamingSpeed = this.baseStreamingSpeed / 4;
           break;
         case 'json':
         case 'chart':
-          streamingSpeed *= 40;
+          this.streamingSpeed = this.baseStreamingSpeed / 8;
+          break;
+        case 'text':
+          this.streamingSpeed = this.baseStreamingSpeed;
           break;
       }
 
@@ -626,8 +652,10 @@ export default class message extends LitElement {
         }
         this.temporaryMessage.content = '';
         this.streamingIndex = 0;
+      } else {
+        this._beginStreaming();
       }
-    }, streamingSpeed);
+    }, this.streamingSpeed);
   }
 
   /**

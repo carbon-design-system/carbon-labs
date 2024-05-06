@@ -11,10 +11,9 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$clabs-prefix}--chat-message) {
+:host(#{$clabs-prefix}-chat-message) {
   position: relative;
   display: block;
-
   border-radius: 10px;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
@@ -40,10 +39,6 @@ $css--plex: true !default;
     max-inline-size: 100%;
     padding-block-start: 4px;
     padding-inline-start: 16px;
-  }
-
-  .#{$clabs-prefix}--chat-message-section {
-    margin-block: 16px 8px;
   }
 
   .#{$clabs-prefix}--chat-message-section-temporary {
@@ -95,8 +90,9 @@ $css--plex: true !default;
     display: flex;
     align-items: center;
     justify-content: center;
-    block-size: 32px;
-    inline-size: 32px;
+    block-size: 24px;
+    inline-size: 24px;
+    padding-block-start: 4px;
   }
 
   .#{$clabs-prefix}--chat-message-agent-icon {
@@ -121,11 +117,13 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-message-response-bot {
+    display: flex;
     box-sizing: border-box;
+    flex-direction: column;
+    padding: 8px 0;
+    gap: 16px;
     inline-size: 100%;
     max-inline-size: 100%;
-    padding-block: 0 6px;
-    padding-inline-end: 12px;
   }
 
   .#{$clabs-prefix}--chat-message-dropdown-bot {

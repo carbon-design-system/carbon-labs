@@ -5,19 +5,11 @@ import packageJson from '../../../package.json';
 
 <Meta of={ChatStories} />
 
-# Chat
-
-> 💡 Check our
-> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/chat/examples/chat)
-> example implementation.
-
-[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/chat/examples/chat)
-
 ## Overview
 
-The Chat component is a collaboration between the IBM Research Visual AI Lab and the Carbon team to provide an easily expandable chat interface to interact with large language models.
+The Chat component is a collaboration between the IBM Research Visual AI Lab (VAIL) and the Carbon team to provide an easily expandable chat interface to interact with large language models. We chose LIT web components as these can be used directly in any framework or transpiled into React. It is part of the Carbon labs initiative, where anyone can create and test out new ways to interact with AI.
 
-## Getting started
+## Installation
 
 Here's a quick example to get you started.
 
@@ -27,7 +19,55 @@ Here's a quick example to get you started.
 import '@carbon-labs/ai-chat/es/index.js';
 ```
 
-### API call example
+### Chat component with all attributes
+```html
+<clabs-chat
+  <!-- string: user-name in LLM conversation -->
+  user-name="user" 
+  <!-- string: agent name in LLM conversation -->
+  agent-name="bot"
+  <!-- (optional) string: api url to send user queries to -->
+  api-url="localhost:5000/generate_response"
+  <!-- (optional) boolean: whether to autoparse responses from LLM -->
+  auto-update
+  <!-- (optional) boolean: show loading state while model is thinking -->
+  loading
+  <!-- (optional) boolean: enable token streaming mode from specified api -->
+  stream-content
+  <!-- (optional) string: specify desired model -->
+  model="llama-2"
+  <!-- (optional) string: specify custom system prompt for LLM -->
+  user-prompt="You are Watson, a helpful assistant"
+  <!-- (optional) float: specify temperature for LLM responses -->
+  temperature="0.15"
+  >
+</clabs-chat>
+```
+
+## Implementation and attribute selection
+
+#### There are three core values for this Component: ease of use, open-source flexibility and in-depth customization, therefore you can:
+* 1 - connect to a proxy server and auto-parse raw LLM responses
+* 2 - take over the conversation/events from a parent application
+* 3 - slot/customise every piece of the chat component
+
+#### 1: Auto-rendering with an API: specify a URL in the api-url attribute to query a proxy server
+    - return a **reply** field with raw LLM text: auto-rendering will parse and display subcomponents
+    - return a **reply** field with a message JSON object: items will be rendered as-is (see format below)
+    - enable **stream-contents**: token streaming will be interpreted and automatically parsed and rendered
+#### 2: API-less complete control with JSON object in **conversation** attribute:
+    - All automatic behavior is disabled. You will be required to provide your own conversation object as well as handle all events such as users submitting/editing/regenerating messages, handling api responses outside the chat, enabling loading and handling feedback events 
+    - Create an array of messages with origin/timestamp/displayname, then in **elements** add objects containing **type** and **content**: **content** is a stringified object containing strings for plain text, URLs, arrays or a complex JSON objects. **type** denotes the component to be rendered in the message list such as **text**, **code**, **chart**, **image**, **table**, **carousel** etc
+#### 3: Slotting: fully customize the chat by inserting custom divs and components:
+    - Place all components directly in the chat tag and import any component you wish to use with the appropriate slot name
+    - additionally, place custom div or external iframes/components directly into the message response
+    - like section 2, all events must be handled by the parent application
+
+
+
+
+## 1. Auto-rendering with an API
+### HTML implementation
 ```html
 <clabs-chat
   user-name="user"
@@ -40,7 +80,49 @@ import '@carbon-labs/ai-chat/es/index.js';
 </clabs-chat>
 ```
 
-### API stream example
+### Object sent from chat to api-url:
+```js
+{
+  "user_id": "xxxxxx",
+  "session": "af90-dfgs-ek2a-vld9-wej",
+  "event": 0,
+  "prompt": "You are Watson, a helpful and polite assistant. You will answer all my questions to the best of your knowledge.",
+  "context": "user:hi\nbot:hello how are you?",
+  "entry": "I'm fine thank you",
+  "temperature": 0.15,
+  "max_tokens": 1000,
+  "top_p": 0,
+  "frequency_penalty": 1,
+  "presence_penalty": 0,
+  "n": 1,
+  "user_name": "user",
+  "agent_name": "bot",
+  "max_tries": 3
+}
+```
+
+#### If API returns **reply** field with raw LLM text:
+Auto-parsing will kick in and slice/convert text into visual elements.
+
+#### If API returns **reply** with valid JSON message object:
+Objects are rendered in order using list of elements, subelement of type **type** is rendered using **content** field
+
+### Message format:
+```js
+[
+  {type: 'text', content: 'Hello World!'},
+  {type: 'url', content: 'http://www.ibm.com'},
+  {type: 'image', content: 'http://www.gallery.come/image.png'},
+  {type: 'video', content: 'http://www.wikimedia.org/example_video.mp4'},
+  {type: 'file', content: 'ftp:spreadsheet.csv'},
+  {type: 'carousel', content: '["http://www.google.com", "http://www.facebook.com", "http://www.wikipedia.org"]',
+  {type: 'table', content: 'header1,hedaer2,header3\n300,500,600\nNY,AK,MI'},
+  {type: 'tags', content: '["new chat","save chat","create chart"]'},
+  {type: 'chart', content: '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":[...],"config":{...}}'
+]
+```
+
+### Streaming option: response must be a string token and subcomponents will accept incomplete streamed text:
 ```html
 <clabs-chat
   user-name="user"
@@ -50,78 +132,112 @@ import '@carbon-labs/ai-chat/es/index.js';
 </clabs-chat>
 ```
 
-### External control example
+## API-less full control example using **conversation** attribute 
+#### Specifiy a **conversation** object and specify the loading state and every interaction outside the chat, then update the **conversation** object to see an update:
+
 ```html
  <clabs-chat
   user-name="user"
   agent-name="bot"
   loading={false}
   .conversation="{conversationJSON}"
+  @on-user-text-input="${(e) => {
+    //user sent a message request through the text input footer
+  }}"
   @on-user-message-update-request="${(e) => {
-    console.log(e);
+    //user edited a message in the chat
   }}"
   @on-user-regeneration-request="${(e) => {
-    console.log(e);
+    //user clicked 'regenerate' in a bot response
   }}"
   @on-user-feedback-request="${(e) => {
-    console.log(e);
-  }}"
-  @on-user-text-input="${(e) => {
-    console.log(e);
+    //user clicked thumbs up or thumbs down on a bot response
   }}"
   @on-message-element-tag-selected="${(e) => {
-    console.log(e);
+    //user clicked a tag action element in the chat
   }}"
   @on-message-element-selected="${(e) => {
-    console.log(e);
+    //user clicked on a subelement in the chat
   }}">
 </clabs-chat>
 ```
 
-### Slotting example
+### Conversation format:
+```js
+[
+  {
+    origin: 'bot',
+    time: '4:51pm',
+    disableButtons: true,
+    displayName: "Watson",
+    elements: [{ content: 'Hello friend', type: 'text' }] //message format
+  },
+  {
+    origin: 'user',
+    time: '4:56pm',
+    displayName: "Owen",
+    disableButtons: false,
+    elements: [
+      { content: 'Hello, how are you? I have a file to analyze:', type: 'text' },
+      { content: 'ftp:spreadsheet.csv','file'}]  //message format
+  },
+  {
+    origin: 'bot',
+    time: '4:59pm',
+    disableButtons: true,
+    displayName: "Watson",
+    elements: [
+      { content: 'Here is your table:', type: 'text' },
+      { content: 'age,name,state\n39,george,NY\n42,Mike,AK\n25,Linda,IL', type: 'table' }
+      ]
+  }
+]
+```
+
+## Slotting example
 ```html
  <clabs-chat user-name="user" agent-name="bot" conversation="{conversation}">
-  <clabs--chat-messages slot="messages">
+  <clabs-chat-messages slot="messages">
 
-    <clabs--chat-message slot="message-list" origin="user" time-stamp="9:02pm" index="0">
-      <clabs--chat-text slot="message-content" content="Showcase every type of Element available in this Chat component.">
-      </clabs--chat-text>
-    </clabs--chat-message>
+    <clabs-chat-message slot="message-items" origin="user" time-stamp="9:02pm" index="0">
+      <clabs-chat-text slot="message-item-content" content="Showcase every type of Element available in this Chat component.">
+      </clabs-chat-text>
+    </clabs-chat-message>
 
-    <clabs--chat-message slot="message-list" origin="bot" time-stamp="9:04pm" index="1">
+    <clabs-chat-message slot="message-items" origin="bot" time-stamp="9:04pm" index="1">
 
       <!-- Display a text element -->
-      <clabs--chat-text slot="message-content" content='This is a textElement, displays text following Carbon design guidelines.'></clabs--chat-text>
+      <clabs-chat-text slot="message-item-content" content='This is a textElement, displays text following Carbon design guidelines.'></clabs-chat-text>
 
       <!-- Display a text element with HTML included -->
-      <clabs--chat-text slot="message-content" content='TextElement can also render simple HTML as such:\n <h2>This is using a h2 tag</h2>\n'></clabs--chat-text>
+      <clabs-chat-text slot="message-item-content" content='TextElement can also render simple HTML as such:\n <h2>This is using a h2 tag</h2>\n'></clabs-chat-text>
 
       <!-- Custom slotted div with any content -->
-      <div slot="message-content">
+      <div slot="message-item-content">
         <iframe width="256" height="256" src="https://www.youtube.com/embed/oSCX78-8-q0?si=kCcIHjehhVn-4PSO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
 
       <!-- File Card -->
-      <clabs--chat-card slot="message-content" type="file" content='https://arxiv.org/pdf/2312.05688.pdf'></clabs--chat-card>
+      <clabs-chat-card slot="message-item-content" type="file" content='https://arxiv.org/pdf/2312.05688.pdf'></clabs-chat-card>
 
       <!-- Show a CSV table -->
-      <clabs--chat-table slot="message-content" content='Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY'></clabs--chat-table>
+      <clabs-chat-table slot="message-item-content" content='Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY'></clabs-chat-table>
       
       <!-- Show code -->
-      <clabs--chat-code slot="message-content" content='from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n'></clabs--chat-code>
+      <clabs-chat-code slot="message-item-content" content='from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n'></clabs-chat-code>
    
       <!-- Action buttons -->
-      <clabs--chat-tags slot="message-content" content='["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'></<clabs--chat-tags>
+      <clabs-chat-tags slot="message-item-content" content='["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'></<clabs-chat-tags>
       
       <!-- Text lists -->
-      <clabs--chat-list slot="message-content" content='1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)'></clabs--chat-list>
+      <clabs-chat-list slot="message-item-content" content='1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)'></clabs-chat-list>
       
       <!-- Charts -->
-      <clabs--chat-chart container-height="200px" slot="message-content" content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Boxplot example with random data","data":{"values":[{"group":"Group A","value":34},{"group":"Group A","value":28},{"group":"Group A","value":55},{"group":"Group B","value":91},{"group":"Group B","value":81},{"group":"Group B","value":67}]},"mark":"boxplot","encoding":{"y":{"field":"group","type":"nominal"},"x":{"field":"value","type":"quantitative"}}}'></clabs--chat-chart>
+      <clabs-chat-chart container-height="200px" slot="message-item-content" content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Boxplot example with random data","data":{"values":[{"group":"Group A","value":34},{"group":"Group A","value":28},{"group":"Group A","value":55},{"group":"Group B","value":91},{"group":"Group B","value":81},{"group":"Group B","value":67}]},"mark":"boxplot","encoding":{"y":{"field":"group","type":"nominal"},"x":{"field":"value","type":"quantitative"}}}'></clabs-chat-chart>
 
-    </clabs--chat-message>
+    </clabs-chat-message>
 
-  </clabs--chat-messages>
+  </clabs-chat-messages>
 
 </clabs-chat>
 ```

@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chat/Message Components/Image',
+  title: 'Components/Chat/Image',
   tags: ['autodocs'],
 };
 
@@ -22,7 +22,7 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs--chat-image
+  render: () => html` <clabs-chat-image
     content="'https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg'">
-  </clabs--chat-image>`,
+  </clabs-chat-image>`,
 };

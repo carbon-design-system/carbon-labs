@@ -18,10 +18,16 @@ import styles from './codeElement.scss?inline';
 export default class codeElement extends LitElement {
   static styles = styles;
   /**
-   * Array of subelements parsed from API reply
+   * Code string to be parsed into lines and displayed
    */
   @property({ type: String, attribute: 'content', reflect: true })
   content;
+
+  /**
+   * Array of subelements parsed from API reply
+   */
+  @property({ type: String, attribute: 'editable', reflect: true })
+  editable;
 
   /**
    * html code text
@@ -51,6 +57,10 @@ export default class codeElement extends LitElement {
     }
   }
 
+  /**
+   * _exportCode - when an edit is detected, send back an event to notify the parent of changes
+   */
+
   /** format code to properly display in HTML
    */
   _formatCode() {
@@ -77,17 +87,32 @@ export default class codeElement extends LitElement {
       if (tabMatch) {
         tabOffset += tabMatch[0].length * tabWidth;
       }
-      textValues.push(
+
+      let lineString =
         '<div class="clabs--chat-code-line"><div class="clabs--chat-code-line-tick">' +
-          i.toString() +
-          '</div><div class="clabs--chat-code-line-divider"></div><div class="clabs--chat-code-line-text ' +
+        i.toString() +
+        '</div><div class="clabs--chat-code-line-divider"></div>';
+
+      if (this.editable) {
+        lineString +=
+          '<div class="clabs--chat-code-line-text ' +
           lineType +
           '" style="padding-left:' +
           tabOffset +
-          'px">' +
-          lines[i].replace(/\t/g, '').replace(/\n/g, '') +
-          '</div></div>'
-      );
+          'px">';
+        lineString += lines[i].replace(/\t/g, '').replace(/\n/g, '');
+        lineString += '</div></div>';
+      } else {
+        lineString +=
+          '<textarea rows="1" class="clabs--chat-code-line-text-area ' +
+          lineType +
+          '" style="padding-left:' +
+          tabOffset +
+          'px">';
+        lineString += lines[i].replace(/\t/g, '').replace(/\n/g, '');
+        lineString += '</textarea></div>';
+      }
+      textValues.push(lineString);
     }
     this._renderCode = textValues.join('');
   }

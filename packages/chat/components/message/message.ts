@@ -17,7 +17,7 @@ const { stablePrefix: clabsPrefix } = settings;
 /**
  * Constructed class functionality for the message custom element
  */
-@customElement(`${clabsPrefix}--chat-message`)
+@customElement(`${clabsPrefix}-chat-message`)
 class CLABSMessage extends message {
   /**
    * Renders the template while passing in class functionality

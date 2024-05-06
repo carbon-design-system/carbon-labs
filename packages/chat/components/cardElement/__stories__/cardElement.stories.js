@@ -13,7 +13,7 @@ import '@carbon/web-components/es/components/button/index.js';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chat/Message Components/Card',
+  title: 'Components/Chat/Card',
   tags: ['autodocs'],
 };
 
@@ -33,11 +33,11 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs--chat-card
+  render: () => html` <clabs-chat-card
     .cardElements=${defaultCardElements}
     type="url"
     content="https://en.wikipedia.org/wiki/Artificial_intelligence">
-  </clabs--chat-card>`,
+  </clabs-chat-card>`,
 };
 
 const defaultPlaygroundArgs = {
@@ -140,9 +140,9 @@ export const Playground = {
     link,
   }) => html`
     ${autoGeneration
-      ? html` <clabs--chat-card type="${type}" content="${content}" /> `
+      ? html` <clabs-chat-card type="${type}" content="${content}" /> `
       : html`
-          <clabs--chat-card
+          <clabs-chat-card
             type="${type}"
             .cardElements=${{
               title: title,
@@ -238,59 +238,59 @@ export const Showcase = {
     <h4>URL Cards</h4>
     <br />
     <div style="display:inline-flex; gap:10px;">
-      <clabs--chat-card .cardElements=${urlExamples[0]} type="url">
-      </clabs--chat-card>
-      <clabs--chat-card
+      <clabs-chat-card .cardElements=${urlExamples[0]} type="url">
+      </clabs-chat-card>
+      <clabs-chat-card
         content="https://en.wikipedia.org/wiki/Apollo_11"
         type="url">
-      </clabs--chat-card>
-      <clabs--chat-card .cardElements=${urlExamples[2]} type="url">
-      </clabs--chat-card>
+      </clabs-chat-card>
+      <clabs-chat-card .cardElements=${urlExamples[2]} type="url">
+      </clabs-chat-card>
     </div>
     <br />
     <br />
     <h4>Video Cards</h4>
     <br />
     <div style="display:inline-flex; gap:10px;">
-      <clabs--chat-card
+      <clabs-chat-card
         content="https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7d/Apollo_11._Television_clip_of_Buzz_descending_the_ladder_and_stepping_onto_the_moon%2C_1094228.ogv/Apollo_11._Television_clip_of_Buzz_descending_the_ladder_and_stepping_onto_the_moon%2C_1094228.ogv.360p.webm"
         type="video">
-      </clabs--chat-card>
+      </clabs-chat-card>
 
-      <clabs--chat-card
+      <clabs-chat-card
         content="https://upload.wikimedia.org/wikipedia/commons/transcoded/6/6c/Polar_orbit.ogv/Polar_orbit.ogv.360p.vp9.webm"
         type="video">
-      </clabs--chat-card>
-      <clabs--chat-card
+      </clabs-chat-card>
+      <clabs-chat-card
         content="https://upload.wikimedia.org/wikipedia/commons/transcoded/d/da/Paris_lockdown_-_Vimeo.webm/Paris_lockdown_-_Vimeo.webm.1080p.vp9.webm"
         type="video">
-      </clabs--chat-card>
+      </clabs-chat-card>
     </div>
     <br />
     <br />
     <h4>File Cards</h4>
     <br />
     <div style="display:inline-flex; gap:10px;">
-      <clabs--chat-card .cardElements=${fileExamples[0]} type="file">
-      </clabs--chat-card>
-      <clabs--chat-card .cardElements=${fileExamples[1]} type="file">
-      </clabs--chat-card>
-      <clabs--chat-card
+      <clabs-chat-card .cardElements=${fileExamples[0]} type="file">
+      </clabs-chat-card>
+      <clabs-chat-card .cardElements=${fileExamples[1]} type="file">
+      </clabs-chat-card>
+      <clabs-chat-card
         content="https://github.com/vega/vega-datasets/blob/main/data/co2-concentration.csv"
         type="file">
-      </clabs--chat-card>
+      </clabs-chat-card>
     </div>
     <br />
     <br />
     <h4>Audio Cards</h4>
     <br />
     <div style="display:inline-flex; gap:10px;">
-      <clabs--chat-card .cardElements=${audioExamples[0]} type="audio">
-      </clabs--chat-card>
-      <clabs--chat-card .cardElements=${audioExamples[1]} type="audio">
-      </clabs--chat-card>
-      <clabs--chat-card .cardElements=${audioExamples[2]} type="audio">
-      </clabs--chat-card>
+      <clabs-chat-card .cardElements=${audioExamples[0]} type="audio">
+      </clabs-chat-card>
+      <clabs-chat-card .cardElements=${audioExamples[1]} type="audio">
+      </clabs-chat-card>
+      <clabs-chat-card .cardElements=${audioExamples[2]} type="audio">
+      </clabs-chat-card>
     </div>
   `,
 };

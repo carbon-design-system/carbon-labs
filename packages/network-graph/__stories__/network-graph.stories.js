@@ -42,7 +42,15 @@ export const Default = {
     isPanInteraction: true,
     isZoomInteraction: true,
     isPointerInteraction: true,
-    data: MiserableData,
+    data: {
+      nodes: MiserableData.nodes.map((item) => ({
+        id: item.id,
+        group: item.group,
+        tooltip: `${item.id} belongs to group ${item.group}`,
+      })),
+      links: MiserableData.links,
+    },
+    tooltipStyles: { color: '#262626', padding: '4px' },
   },
 
   /**
@@ -52,6 +60,8 @@ export const Default = {
    */
   render: (args) =>
     html` <clabs-network-graph
+      .tooltipStyles=${args.tooltipStyles}
+      node-tooltip-label="tooltip"
       node-label="id"
       background=${args.background}
       .data=${args.data}

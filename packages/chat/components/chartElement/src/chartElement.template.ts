@@ -11,7 +11,15 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+
 import '../../errorElement/errorElement.js';
+import '@carbon/web-components/es/components/button/index.js';
+import '@carbon/web-components/es/components/modal/index.js';
+
+import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
+import Download16 from '@carbon/web-components/es/icons/download/16.js';
+import Launch16 from '@carbon/web-components/es/icons/launch/16.js';
+import Code16 from '@carbon/web-components/es/icons/code/16.js';
 
 /**
  * Lit template for card
@@ -25,25 +33,75 @@ export function chartElementTemplate(customElementClass) {
     _errorMessage: errorMessage,
     chartLoading,
     content,
+    renderMethod,
     _buildLoader: buildLoader,
+    _openFullscreenView: openFullscreenView,
+    _exportToImage: exportToImage,
+    _openCodeView: openCodeView,
+    showModal,
+    _openEditorView: openEditorView,
+    closeModal,
+    modalContent,
+    disableOptions,
+    disableEditor,
+    disableExport,
+    disableFullscreen,
+    disableCodeInspector,
+    modalMode,
   } = customElementClass;
 
-  return html` <div
-    class="${clabsPrefix}--chat-chart-container"
-    id="${clabsPrefix}--chat-embed-vis-${uniqueID}">
-    ${errorMessage !== ''
-      ? html` <div class="${clabsPrefix}--chat-chart-loading-container">
-          <div class="${clabsPrefix}--chat-chart-error-grid">
-            ${unsafeHTML(buildLoader())}
-          </div>
-          <div class="${clabsPrefix}--chat-chart-error-text">
-            ${errorMessage}
-          </div>
-        </div>`
-      : html`
+  return html` ${modalMode === 'fullscreen'
+      ? html` <cds-modal
+          size="lg"
+          passive-modal
+          ?open="${showModal}"
+          @cds-modal-closed="${closeModal}"
+          class="${clabsPrefix}--chat-chart-modal-custom">
+          <cds-modal-header>
+            <cds-modal-close-button></cds-modal-close-button>
+            <cds-modal-heading>Fullscreen specification</cds-modal-heading>
+          </cds-modal-header>
+          <cds-modal-body class="${clabsPrefix}--chat-chart-modal-body">
+            <div class="${clabsPrefix}--chat-chart-modal-container">
+              ${unsafeHTML(modalContent)}
+            </div>
+          </cds-modal-body>
+        </cds-modal>`
+      : modalMode === 'code'
+      ? html` <cds-modal
+          size="lg"
+          passive-modal
+          ?open="${showModal}"
+          @cds-modal-closed="${closeModal}"
+          class="${clabsPrefix}--chat-chart-modal-custom">
+          <cds-modal-header>
+            <cds-modal-close-button></cds-modal-close-button>
+            <cds-modal-heading>Specification inspector</cds-modal-heading>
+          </cds-modal-header>
+          <cds-modal-body class="${clabsPrefix}--chat-chart-modal-body">
+            <div class="${clabsPrefix}--chat-chart-modal-container">
+              ${unsafeHTML(modalContent)}
+            </div>
+          </cds-modal-body>
+        </cds-modal>`
+      : html``}
+
+    <div
+      class="${clabsPrefix}--chat-chart-container"
+      id="${clabsPrefix}--chat-embed-vis-${uniqueID}">
+      ${errorMessage !== ''
+        ? html`<div class="${clabsPrefix}--chat-chart-loading-container">
+            <div class="${clabsPrefix}--chat-chart-error-grid">
+              ${unsafeHTML(buildLoader())}
+            </div>
+            <div class="${clabsPrefix}--chat-chart-error-text">
+              ${errorMessage}
+            </div>
+          </div>`
+        : html`
             ${
               chartLoading
-                ? html` <div
+                ? html`<div
                     class="${clabsPrefix}--chat-chart-loading-container">
                     <div class="${clabsPrefix}--chat-chart-loading-grid">
                       ${unsafeHTML(buildLoader())}
@@ -56,5 +114,62 @@ export function chartElementTemplate(customElementClass) {
             }
           </div>
         `}
-  </div>`;
+    </div>
+
+    ${disableOptions
+      ? html``
+      : html` <div class="${clabsPrefix}--chat-chart-options">
+          ${!disableExport && renderMethod === 'canvas'
+            ? html`
+                <cds-button
+                  kind="ghost"
+                  size="sm"
+                  tooltip-text="Export to PNG"
+                  tooltip-position="left"
+                  tooltip-alignment="end"
+                  @click="${exportToImage}">
+                  ${Download16({ slot: 'icon' })}
+                </cds-button>
+              `
+            : html``}
+          ${!disableEditor
+            ? html`
+                <cds-button
+                  kind="ghost"
+                  size="sm"
+                  tooltip-text="Open in Vega editor"
+                  tooltip-position="left"
+                  tooltip-alignment="end"
+                  @click="${openEditorView}">
+                  ${Launch16({ slot: 'icon' })}
+                </cds-button>
+              `
+            : html``}
+          ${!disableCodeInspector
+            ? html`
+                <cds-button
+                  kind="ghost"
+                  size="sm"
+                  tooltip-text="Show specification"
+                  tooltip-position="left"
+                  tooltip-alignment="end"
+                  @click="${openCodeView}">
+                  ${Code16({ slot: 'icon' })}
+                </cds-button>
+              `
+            : html``}
+          ${!disableFullscreen
+            ? html`
+                <cds-button
+                  kind="ghost"
+                  size="sm"
+                  tooltip-text="Fullscreen"
+                  tooltip-position="left"
+                  tooltip-alignment="end"
+                  @click="${openFullscreenView}">
+                  ${Maximize16({ slot: 'icon' })}
+                </cds-button>
+              `
+            : html``}
+        </div>`}`;
 }

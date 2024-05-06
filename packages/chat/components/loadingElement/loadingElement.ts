@@ -17,7 +17,7 @@ const { stablePrefix: clabsPrefix } = settings;
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${clabsPrefix}--chat-loading`)
+@customElement(`${clabsPrefix}-chat-loading`)
 class CLABSLoadingElement extends loadingElement {
   /**
    * Renders the template while passing in class functionality

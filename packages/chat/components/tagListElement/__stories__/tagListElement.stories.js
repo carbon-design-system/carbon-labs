@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chat/Message Components/TagList',
+  title: 'Components/Chat/TagList',
   tags: ['autodocs'],
 };
 
@@ -22,7 +22,7 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs--chat-tag-list
+  render: () => html` <clabs-chat-tag-list
     content="${'["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'}">
-  </clabs--chat-tag-list>`,
+  </clabs-chat-tag-list>`,
 };

@@ -11,7 +11,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$clabs-prefix}--chat-table) {
+:host(#{$clabs-prefix}-chat-table) {
   overflow: hidden;
   inline-size: 100%;
 
@@ -45,6 +45,7 @@ $css--plex: true !default;
     padding: 12px;
     border: 1px solid $border-subtle-00;
     text-align: start;
+    white-space: nowrap;
   }
 
   th {

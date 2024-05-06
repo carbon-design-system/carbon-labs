@@ -9,7 +9,7 @@
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/colors' as *;
 
-:host(#{$clabs-prefix}--chat-card) {
+:host(#{$clabs-prefix}-chat-card) {
   .#{$clabs-prefix}--chat-card-container {
     display: flex;
     overflow: hidden;

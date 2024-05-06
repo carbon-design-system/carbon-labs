@@ -17,7 +17,7 @@ const { stablePrefix: clabsPrefix } = settings;
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${clabsPrefix}--chat-error`)
+@customElement(`${clabsPrefix}-chat-error`)
 class CLABSErrorElement extends errorElement {
   /**
    * Renders the template while passing in class functionality

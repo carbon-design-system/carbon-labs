@@ -29,11 +29,11 @@ export function tagListElementTemplate(customElementClass) {
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-tag-list">
-    ${invalid === true
-      ? html` <div class="${clabsPrefix}--chat-tag-list-error">
+    ${invalid
+      ? html`<div class="${clabsPrefix}--chat-tag-list-error">
           ${errorMessage}
         </div>`
-      : html` <div class="${clabsPrefix}--chat-tag-list-container">
+      : html`<div class="${clabsPrefix}--chat-tag-list-container">
           ${tagList.map(
             (value) =>
               html` <div class="${clabsPrefix}--chat-tag-list-container-cell">
@@ -42,13 +42,10 @@ export function tagListElementTemplate(customElementClass) {
                   size="sm"
                   is-quick-action
                   @click="${handleTagClick}">
-                  ${Add16({ slot: 'icon' })}
-                  ${value}
-                </cds-tag>
+                  ${Add16({ slot: 'icon' })} ${value}
+                </cds-chat-button>
               </div>`
           )}
-          
-          </div>
         </div>`}
   </div>`;
 }

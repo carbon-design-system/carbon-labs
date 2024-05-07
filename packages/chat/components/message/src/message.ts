@@ -163,7 +163,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 10;
+  baseStreamingSpeed = 20;
 
   /** detect when component is rendered to process rawtext
    */
@@ -231,10 +231,18 @@ export default class message extends LitElement {
    * @param {event} event - tag click event sent by tagList element
    */
   _handleSlotchange(event) {
-    /*const slot = event.target;
-    const nodes = slot.assignedElements({ flatten: true });*/
-    console.log(event);
-    //this.needsRecompute = true;
+    const messageDetails = this._prepareEventDetail();
+    messageDetails['action'] = 'message: slotted content added';
+    event.preventDefault();
+    const messageSlotUpdateEvent = new CustomEvent(
+      'on-message-element-slot-update',
+      {
+        detail: messageDetails,
+        bubbles: true,
+        composed: true,
+      }
+    );
+    this.dispatchEvent(messageSlotUpdateEvent);
   }
 
   /** check the returned model response for a specified code delimiter, split and package the string into multiple messages of type 'text' or 'code'
@@ -952,6 +960,38 @@ export default class message extends LitElement {
       composed: true,
     });
     this.dispatchEvent(regenerationEvent);
+  }
+
+  /** trigger message editing start event
+   * @param {event} event - message editing from subelement
+   */
+  _handleMessageEditStart(event) {
+    const messageDetails = this._prepareEventDetail();
+    messageDetails['action'] = 'message: user edited their message';
+    messageDetails['messageElements'] = this._messageElements;
+    event.preventDefault();
+    const messageEditStartEvent = new CustomEvent('on-message-edit-start', {
+      detail: messageDetails,
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(messageEditStartEvent);
+  }
+
+  /** trigger message editing cancel event
+   * @param {event} event - message cancel edit from subelement
+   */
+  _handleMessageEditCancel(event) {
+    const messageDetails = this._prepareEventDetail();
+    messageDetails['action'] = 'message: user canceled their message edit';
+    messageDetails['messageElements'] = this._messageElements;
+    event.preventDefault();
+    const messageEditCancelEvent = new CustomEvent('on-message-edit-cancel', {
+      detail: messageDetails,
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(messageEditCancelEvent);
   }
 
   /** feedback function when a user clicks the feedback button

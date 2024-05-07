@@ -33,7 +33,7 @@ const defaultArgs = {
   disableFullscreen: false,
 };
 
-export const controls = {
+const controls = {
   content: {
     control: { type: 'text' },
     default: '',

@@ -13,13 +13,14 @@
   position: relative;
   display: block;
   overflow: hidden;
+  box-sizing: border-box;
   padding: 0;
   border: 1px solid $border-subtle-00;
   border-radius: 8px;
   background: $background;
   block-size: var(--chat-chart-element-height, '300px');
   font-family: 'IBM Plex Sans Condensed', sans-serif;
-  inline-size: 100%;
+  inline-size: var(--chat-chart-element-width, '100%');
   min-block-size: 246px;
   min-inline-size: 246px;
 
@@ -46,6 +47,7 @@
   }
 
   .#{$clabs-prefix}--chat-chart-modal-custom {
+    z-index: 9999;
     padding: 0;
     pointer-events: all;
   }

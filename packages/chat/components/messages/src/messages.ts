@@ -84,10 +84,13 @@ export default class messages extends LitElement {
    * @param {event} event - tag click event sent by tagList element
    */
   _handleSlotchange(event) {
-    /*const slot = event.target;
-    const nodes = slot.assignedElements({ flatten: true });*/
-    console.log(event);
-    //this.needsRecompute = true;
+    event.preventDefault();
+    const messageSlotUpdateEvent = new CustomEvent('on-messages-slot-update', {
+      detail: { action: 'Messages slot had updated' },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(messageSlotUpdateEvent);
   }
 
   /**

@@ -1,4 +1,4 @@
-import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+import { ArgTypes, Markdown, Meta, ArgsTable } from '@storybook/blocks';
 import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
 import * as ChatStories from './chat.stories';
 import packageJson from '../../../package.json';
@@ -44,6 +44,8 @@ import '@carbon-labs/ai-chat/es/index.js';
 </clabs-chat>
 ```
 
+### &lt;clabs-chat&gt; attributes and properties
+<ArgsTable story="Playground" />
 ## Implementation and attribute selection
 
 #### There are three core values for this Component: ease of use, open-source flexibility and in-depth customization, therefore you can:
@@ -250,5 +252,3 @@ that is implemented.
 
 <Markdown>{`${cdnJs({ components: ['chat'] }, packageJson)}`}</Markdown>
 <Markdown>{`${cdnCss()}`}</Markdown>
-
-<ArgTypes of="clabs-chat"/>

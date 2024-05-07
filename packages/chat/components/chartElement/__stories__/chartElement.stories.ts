@@ -19,37 +19,92 @@ const defaultArgs = {
   content:
     '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"IBM stock price over time.","data":{"values":[{"symbol":"IBM","date":"Jan 1 2000","price":100.52},{"symbol":"IBM","date":"Feb 1 2000","price":92.11},{"symbol":"IBM","date":"Mar 1 2000","price":106.11},{"symbol":"IBM","date":"Apr 1 2000","price":99.95},{"symbol":"IBM","date":"May 1 2000","price":96.31},{"symbol":"IBM","date":"Jun 1 2000","price":98.33},{"symbol":"IBM","date":"Jul 1 2000","price":100.74},{"symbol":"IBM","date":"Aug 1 2000","price":118.62},{"symbol":"IBM","date":"Sep 1 2000","price":101.19},{"symbol":"IBM","date":"Oct 1 2000","price":88.5},{"symbol":"IBM","date":"Nov 1 2000","price":84.12},{"symbol":"IBM","date":"Dec 1 2000","price":76.47},{"symbol":"IBM","date":"Jan 1 2001","price":100.76},{"symbol":"IBM","date":"Feb 1 2001","price":89.98},{"symbol":"IBM","date":"Mar 1 2001","price":86.63},{"symbol":"IBM","date":"Apr 1 2001","price":103.7},{"symbol":"IBM","date":"May 1 2001","price":100.82},{"symbol":"IBM","date":"Jun 1 2001","price":102.35},{"symbol":"IBM","date":"Jul 1 2001","price":94.87},{"symbol":"IBM","date":"Aug 1 2001","price":90.25},{"symbol":"IBM","date":"Sep 1 2001","price":82.82},{"symbol":"IBM","date":"Oct 1 2001","price":97.58},{"symbol":"IBM","date":"Nov 1 2001","price":104.5},{"symbol":"IBM","date":"Dec 1 2001","price":109.36},{"symbol":"IBM","date":"Jan 1 2002","price":97.54},{"symbol":"IBM","date":"Feb 1 2002","price":88.82},{"symbol":"IBM","date":"Mar 1 2002","price":94.15},{"symbol":"IBM","date":"Apr 1 2002","price":75.82},{"symbol":"IBM","date":"May 1 2002","price":72.97},{"symbol":"IBM","date":"Jun 1 2002","price":65.31},{"symbol":"IBM","date":"Jul 1 2002","price":63.86},{"symbol":"IBM","date":"Aug 1 2002","price":68.52},{"symbol":"IBM","date":"Sep 1 2002","price":53.01},{"symbol":"IBM","date":"Oct 1 2002","price":71.76},{"symbol":"IBM","date":"Nov 1 2002","price":79.16},{"symbol":"IBM","date":"Dec 1 2002","price":70.58},{"symbol":"IBM","date":"Jan 1 2003","price":71.22},{"symbol":"IBM","date":"Feb 1 2003","price":71.13},{"symbol":"IBM","date":"Mar 1 2003","price":71.57},{"symbol":"IBM","date":"Apr 1 2003","price":77.47},{"symbol":"IBM","date":"May 1 2003","price":80.48},{"symbol":"IBM","date":"Jun 1 2003","price":75.42},{"symbol":"IBM","date":"Jul 1 2003","price":74.28},{"symbol":"IBM","date":"Aug 1 2003","price":75.12},{"symbol":"IBM","date":"Sep 1 2003","price":80.91},{"symbol":"IBM","date":"Oct 1 2003","price":81.96},{"symbol":"IBM","date":"Nov 1 2003","price":83.08},{"symbol":"IBM","date":"Dec 1 2003","price":85.05},{"symbol":"IBM","date":"Jan 1 2004","price":91.06},{"symbol":"IBM","date":"Feb 1 2004","price":88.7},{"symbol":"IBM","date":"Mar 1 2004","price":84.41},{"symbol":"IBM","date":"Apr 1 2004","price":81.04},{"symbol":"IBM","date":"May 1 2004","price":81.59},{"symbol":"IBM","date":"Jun 1 2004","price":81.19},{"symbol":"IBM","date":"Jul 1 2004","price":80.19},{"symbol":"IBM","date":"Aug 1 2004","price":78.17},{"symbol":"IBM","date":"Sep 1 2004","price":79.13},{"symbol":"IBM","date":"Oct 1 2004","price":82.84},{"symbol":"IBM","date":"Nov 1 2004","price":87.15},{"symbol":"IBM","date":"Dec 1 2004","price":91.16},{"symbol":"IBM","date":"Jan 1 2005","price":86.39},{"symbol":"IBM","date":"Feb 1 2005","price":85.78},{"symbol":"IBM","date":"Mar 1 2005","price":84.66},{"symbol":"IBM","date":"Apr 1 2005","price":70.77},{"symbol":"IBM","date":"May 1 2005","price":70.18},{"symbol":"IBM","date":"Jun 1 2005","price":68.93},{"symbol":"IBM","date":"Jul 1 2005","price":77.53},{"symbol":"IBM","date":"Aug 1 2005","price":75.07},{"symbol":"IBM","date":"Sep 1 2005","price":74.7},{"symbol":"IBM","date":"Oct 1 2005","price":76.25},{"symbol":"IBM","date":"Nov 1 2005","price":82.98},{"symbol":"IBM","date":"Dec 1 2005","price":76.73},{"symbol":"IBM","date":"Jan 1 2006","price":75.89},{"symbol":"IBM","date":"Feb 1 2006","price":75.09},{"symbol":"IBM","date":"Mar 1 2006","price":77.17},{"symbol":"IBM","date":"Apr 1 2006","price":77.05},{"symbol":"IBM","date":"May 1 2006","price":75.04},{"symbol":"IBM","date":"Jun 1 2006","price":72.15},{"symbol":"IBM","date":"Jul 1 2006","price":72.7},{"symbol":"IBM","date":"Aug 1 2006","price":76.35},{"symbol":"IBM","date":"Sep 1 2006","price":77.26},{"symbol":"IBM","date":"Oct 1 2006","price":87.06},{"symbol":"IBM","date":"Nov 1 2006","price":86.95},{"symbol":"IBM","date":"Dec 1 2006","price":91.9},{"symbol":"IBM","date":"Jan 1 2007","price":93.79},{"symbol":"IBM","date":"Feb 1 2007","price":88.18},{"symbol":"IBM","date":"Mar 1 2007","price":89.44},{"symbol":"IBM","date":"Apr 1 2007","price":96.98},{"symbol":"IBM","date":"May 1 2007","price":101.54},{"symbol":"IBM","date":"Jun 1 2007","price":100.25},{"symbol":"IBM","date":"Jul 1 2007","price":105.4},{"symbol":"IBM","date":"Aug 1 2007","price":111.54},{"symbol":"IBM","date":"Sep 1 2007","price":112.6},{"symbol":"IBM","date":"Oct 1 2007","price":111},{"symbol":"IBM","date":"Nov 1 2007","price":100.9},{"symbol":"IBM","date":"Dec 1 2007","price":103.7},{"symbol":"IBM","date":"Jan 1 2008","price":102.75},{"symbol":"IBM","date":"Feb 1 2008","price":109.64},{"symbol":"IBM","date":"Mar 1 2008","price":110.87},{"symbol":"IBM","date":"Apr 1 2008","price":116.23},{"symbol":"IBM","date":"May 1 2008","price":125.14},{"symbol":"IBM","date":"Jun 1 2008","price":114.6},{"symbol":"IBM","date":"Jul 1 2008","price":123.74},{"symbol":"IBM","date":"Aug 1 2008","price":118.16},{"symbol":"IBM","date":"Sep 1 2008","price":113.53},{"symbol":"IBM","date":"Oct 1 2008","price":90.24},{"symbol":"IBM","date":"Nov 1 2008","price":79.65},{"symbol":"IBM","date":"Dec 1 2008","price":82.15},{"symbol":"IBM","date":"Jan 1 2009","price":89.46},{"symbol":"IBM","date":"Feb 1 2009","price":90.32},{"symbol":"IBM","date":"Mar 1 2009","price":95.09},{"symbol":"IBM","date":"Apr 1 2009","price":101.29},{"symbol":"IBM","date":"May 1 2009","price":104.85},{"symbol":"IBM","date":"Jun 1 2009","price":103.01},{"symbol":"IBM","date":"Jul 1 2009","price":116.34},{"symbol":"IBM","date":"Aug 1 2009","price":117},{"symbol":"IBM","date":"Sep 1 2009","price":118.55},{"symbol":"IBM","date":"Oct 1 2009","price":119.54},{"symbol":"IBM","date":"Nov 1 2009","price":125.79},{"symbol":"IBM","date":"Dec 1 2009","price":130.32},{"symbol":"IBM","date":"Jan 1 2010","price":121.85},{"symbol":"IBM","date":"Feb 1 2010","price":127.16},{"symbol":"IBM","date":"Mar 1 2010","price":125.55}]},"transform":[{"filter":"datum.symbol===\'IBM\'"}],"mark":{"type":"area","line":{"color":"darkgreen"},"color":{"x1":1,"y1":1,"x2":1,"y2":0,"gradient":"linear","stops":[{"offset":0,"color":"white"},{"offset":1,"color":"darkgreen"}]}},"encoding":{"x":{"field":"date","type":"temporal"},"y":{"field":"price","type":"quantitative"}}}',
   carbonify: true,
-  enableInspector: false,
   containerHeight: '300px',
   containerWidth: '100%',
   chartTheme: 'dark',
+  renderMethod: 'canvas',
+  loading: true,
+  enableZooming: false,
+  enableTooltip: true,
+  disableOptions: false,
+  disableEditor: false,
+  disableCodeInspector: false,
+  disableExport: false,
+  disableFullscreen: false,
 };
 
 const controls = {
   content: {
     control: { type: 'text' },
-    description: 'Specification string including data.values',
+    default: '',
+    description: 'content - Specification string including data.values',
   },
   carbonify: {
     control: { type: 'boolean' },
-    description: 'Enable post-hoc carbon charts styling',
-  },
-  enableInspector: {
-    control: { type: 'boolean' },
-    description: 'Enable chart inspector',
+    default: true,
+    description: 'carbonify - Enable post-hoc carbon charts styling',
   },
   containerHeight: {
     control: { type: 'text' },
-    description: 'Container height (must be valid CSS)',
+    default: '246px',
+    description: 'container-height - Must be valid CSS',
   },
   containerWidth: {
     control: { type: 'text' },
-    description: 'Container height (must be valid CSS)',
+    default: '100%',
+    description: 'container-width - Must be valid CSS',
   },
   chartTheme: {
     control: { type: 'select' },
-    description: 'Chart theme',
+    default: 'light',
+    description: 'theme - Chart color theme',
     options: ['light', 'dark'],
+  },
+  renderMethod: {
+    control: { type: 'select' },
+    default: 'canvas',
+    description: 'canvas - Chart rendering mode',
+    options: ['canvas', 'svg'],
+  },
+  loading: {
+    control: { type: 'boolean' },
+    default: true,
+    description: 'loading - enabled by default until spec is displayed',
+  },
+  enableZooming: {
+    control: { type: 'boolean' },
+    default: false,
+    description: 'enable-zooming - Enable zooming in charts',
+  },
+  enableTooltip: {
+    control: { type: 'boolean' },
+    default: false,
+    description: 'enable-tooltip - Enable tooltip in charts',
+  },
+  disableOptions: {
+    control: { type: 'boolean' },
+    default: false,
+    description: 'disable-options - Hide button in options',
+  },
+  disableEditor: {
+    control: { type: 'boolean' },
+    default: false,
+    description: 'disable-editor - Hide button in options',
+  },
+  disableFullscreen: {
+    control: { type: 'boolean' },
+    default: false,
+    description: 'disable-fullscreen - Hide button in options',
+  },
+  disableCodeInspector: {
+    control: { type: 'boolean' },
+    default: false,
+    description: 'disable-code-inspector - Hide button in options',
+  },
+  disableExport: {
+    control: { type: 'boolean' },
+    default: false,
+    description: 'disable-export - Hide button in options',
   },
 };
 
@@ -71,9 +126,6 @@ export const Showcase = {
       expanded: true,
     },
     layout: 'fullscreen',
-    viewport: {
-      defaultViewport: 'storybook-default',
-    },
   },
   /**
    * Renders the template for Showcase Storybook
@@ -236,31 +288,22 @@ export const RepeatingLayerCharts = {
     <br />
     <clabs-chat-chart
       content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
-      container-height="650px">
-    </clabs-chat-chart>
-    <br />
-    <br />
-    <clabs-chat-chart
-      content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
-      container-height="650px">
+      container-height="450px"
+      container-width="600px">
     </clabs-chat-chart>
     <br />
     <clabs-chat-chart
       content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
-      container-height="650px">
+      container-height="950px">
     </clabs-chat-chart>
-
-    <clabs-chat-chart
-      content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":["Miles_per_Gallon","Cylinders","Displacement","horsepower","Weight_in_lbs","Acceleration"],"columns":3,"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"bar","encoding":{"y":{"field":{"repeat":"repeat"},"bin":true},"x":{"aggregate":"count"},"color":{"field":"Origin"}}}}'}"
-      container-height="400px">
-    </clabs-chat-chart>
+    <br />
+    <br />
     <h4>Multi histogram</h4>
     <br />
-    haha
     <clabs-chat-chart
       content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":["Horsepower","Miles_per_Gallon","Acceleration","Displacement"],"columns":2,"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"bar","encoding":{"x":{"field":{"repeat":"repeat"},"bin":true},"y":{"aggregate":"count"},"color":{"field":"Origin"}}}}'}"
-      container-height="400px"
-      container-width="600px">
+      container-height="450px"
+      container-width="800px">
     </clabs-chat-chart>
     <br />
     <clabs-chat-chart
@@ -271,8 +314,7 @@ export const RepeatingLayerCharts = {
     <br />
     <clabs-chat-chart
       content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":["Horsepower","Miles_per_Gallon","Acceleration","Displacement"],"columns":2,"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"bar","encoding":{"x":{"field":{"repeat":"repeat"},"bin":true},"y":{"aggregate":"count"},"color":{"field":"Origin"}}}}'}"
-      container-height="500px"
-      container-height="500px">
+      container-height="1000px">
     </clabs-chat-chart>
     <br />`,
 };
@@ -322,34 +364,57 @@ export const Playground = {
       expanded: true,
     },
     layout: 'fullscreen',
-    viewport: {
-      defaultViewport: 'storybook-default',
-    },
   },
   /**
    * Renders the template for Playground Storybook
    * @param {Object} args - arguments to be sent into the playbook
    * @param {string} args.content - vega specification as a string
    * @param {boolean} args.carbonify - enable post-hoc carbon charts styling
-   * @param {boolean} args.enableInspector - enable vegalite inspector to be shown
    * @param {string} args.containerHeight - CSS string for container height
    * @param {string} args.containerWidth - CSS string for container width
+   * @param {boolean} args.chartTheme - string to apply theme
+   * @param {boolean} args.renderMethod - string to pick rendering
+   * @param {boolean} args.loading - boolean to disable loading animation
+   * @param {boolean} args.enableZooming - boolean to enable chart zooming
+   * @param {boolean} args.enableTooltip - boolean to enable tooltip in chart
+   * @param {boolean} args.disableOptions - hide option buttons
+   * @param {boolean} args.disableEditor - hide edit button
+   * @param {boolean} args.disableCodeInspector - hide inspector button
+   * @param {boolean} args.disableExport - hide export button
+   * @param {boolean} args.disableFullscreen - hide fullscreen button
    * @returns {TemplateResult<1>}
    */
   render: ({
     content,
     carbonify,
-    enableInspector,
     containerHeight,
     containerWidth,
+    chartTheme,
+    renderMethod,
+    loading,
+    enableZooming,
+    enableTooltip,
+    disableOptions,
+    disableEditor,
+    disableCodeInspector,
+    disableExport,
+    disableFullscreen,
   }) => html`
     <clabs-chat-chart
       content="${content}"
       ?carbonify="${carbonify}"
-      ?enable-inspector="${enableInspector}"
       container-height="${containerHeight}"
       container-width="${containerWidth}"
-      theme="dark">
+      theme="${chartTheme}"
+      render-method="${renderMethod}"
+      ?loading="${loading}"
+      ?enable-zooming="${enableZooming}"
+      ?enable-tooltip="${enableTooltip}"
+      ?disable-options="${disableOptions}"
+      ?disable-editor="${disableEditor}"
+      ?disable-code-inspector="${disableCodeInspector}"
+      ?disable-export="${disableExport}"
+      ?disable-fullscreen="${disableFullscreen}">
     </clabs-chat-chart>
   `,
 };
@@ -368,8 +433,5 @@ export const ChartError = {
    * Renders the template for Showcase Storybook
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-chart
-    theme="dark"
-    content="${'{empty spec}'}">
-  </clabs-chat-chart>`,
+  render: () => html` <clabs-chat-chart content="${'{}'}"> </clabs-chat-chart>`,
 };

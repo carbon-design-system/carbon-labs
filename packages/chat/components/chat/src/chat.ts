@@ -166,10 +166,13 @@ export default class CLABSChat extends LitElement {
    * @param {event} event - slot change detection event
    */
   _handleSlotChange(event) {
-    /*const slot = event.target;
-    const nodes = slot.assignedElements({ flatten: true });*/
-    //this.needsRecompute = true;
-    console.log(event);
+    event.preventDefault();
+    const chatSlotUpdateEvent = new CustomEvent('on-chat-slot-update', {
+      detail: { action: 'Chat slot subcomponent had updated' },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(chatSlotUpdateEvent);
   }
 
   /** Initialize examples for when stories send in a 'sampleQuery' string

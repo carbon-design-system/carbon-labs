@@ -51,6 +51,7 @@ export const Default = {
       links: MiserableData.links,
     },
     tooltipStyles: { color: '#262626', padding: '4px' },
+    zoomToFit: false,
   },
 
   /**
@@ -78,6 +79,7 @@ export const Default = {
       particle-width=${args['particle-width']}
       number-of-particle=${args['number-of-particle']}
       particle-color=${args['particle-color']}
+      ?zoomToFit=${args.zoomToFit}
       .isNodeDraggable=${args.isNodeDraggable}
       .isPanInteraction=${args.isPanInteraction}
       .isZoomInteraction=${args.isZoomInteraction}

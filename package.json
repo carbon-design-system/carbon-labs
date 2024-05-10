@@ -26,13 +26,14 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build": "lerna run build --stream",
+    "build": "lerna run build --stream && yarn custom-elements",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "build-storybook": "yarn build && storybook build",
     "ci-check": "yarn run format:staged && yarn lint:license && yarn lint && yarn lint:styles",
     "ci-check:build": "yarn build && yarn build:dist && yarn ci-check",
     "clean": "rm -rf node_modules",
+    "custom-elements": "cem analyze --config ./custom-elements-manifest.config.js",
     "doctoc": "doctoc --title '## Table of Contents' docs",
     "format": "prettier --check '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:write": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
@@ -132,5 +133,5 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.2.1"
 }

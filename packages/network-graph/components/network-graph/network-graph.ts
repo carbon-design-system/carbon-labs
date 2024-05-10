@@ -16,7 +16,9 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Component extending the Feedback component
+ * Network graph component
+ *
+ * @element clabs-network-graph
  */
 @customElement(`${clabsPrefix}-network-graph`)
 class CLABSNetworkGraph extends NetworkGraph {

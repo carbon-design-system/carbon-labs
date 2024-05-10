@@ -14,6 +14,10 @@ import containerStyles from './_container.scss?inline';
 import { white, g10, g90, g100 } from '@carbon/themes';
 import { breakpoints } from '@carbon/layout';
 import theme from './theme';
+import { setCustomElementsManifest } from '@storybook/web-components';
+import customElements from '../custom-elements.json';
+
+setCustomElementsManifest(customElements);
 
 export const globalTypes = {
   locale: {

@@ -1,4 +1,4 @@
-import { ArgTypes, Markdown, Meta, ArgsTable } from '@storybook/blocks';
+import { ArgsTable, Markdown, Meta } from '@storybook/blocks';
 import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
 import * as ChatStories from './chat.stories';
 import packageJson from '../../../package.json';
@@ -7,7 +7,12 @@ import packageJson from '../../../package.json';
 
 ## Overview
 
-The Chat component is a collaboration between the IBM Research Visual AI Lab (VAIL) and the Carbon team to provide an easily expandable chat interface to interact with large language models. We chose LIT web components as these can be used directly in any framework or transpiled into React. It is part of the Carbon labs initiative, where anyone can create and test out new ways to interact with AI.
+The Chat component is a collaboration between the IBM Research Visual AI Lab
+(VAIL) and the Carbon team to provide an easily expandable chat interface to
+interact with large language models. We chose LIT web components as these can be
+used directly in any framework or transpiled into React. It is part of the
+Carbon labs initiative, where anyone can create and test out new ways to
+interact with AI.
 
 ## Installation
 
@@ -20,10 +25,11 @@ import '@carbon-labs/ai-chat/es/index.js';
 ```
 
 ### Chat component with all attributes
+
 ```html
 <clabs-chat
   <!-- string: user-name in LLM conversation -->
-  user-name="user" 
+  user-name="user"
   <!-- string: agent name in LLM conversation -->
   agent-name="bot"
   <!-- (optional) string: api url to send user queries to -->
@@ -45,31 +51,38 @@ import '@carbon-labs/ai-chat/es/index.js';
 ```
 
 ### &lt;clabs-chat&gt; attributes and properties
-<ArgsTable story="Playground" />
+
+<ArgsTable of="clabs-chat" />
+
 ## Implementation and attribute selection
 
 #### There are three core values for this Component: ease of use, open-source flexibility and in-depth customization, therefore you can:
-* 1 - connect to a proxy server and auto-parse raw LLM responses
-* 2 - take over the conversation/events from a parent application
-* 3 - slot/customise every piece of the chat component
+
+- 1 - connect to a proxy server and auto-parse raw LLM responses
+- 2 - take over the conversation/events from a parent application
+- 3 - slot/customise every piece of the chat component
 
 #### 1: Auto-rendering with an API: specify a URL in the api-url attribute to query a proxy server
+
     - return a **reply** field with raw LLM text: auto-rendering will parse and display subcomponents
     - return a **reply** field with a message JSON object: items will be rendered as-is (see format below)
     - enable **stream-contents**: token streaming will be interpreted and automatically parsed and rendered
+
 #### 2: API-less complete control with JSON object in **conversation** attribute:
-    - All automatic behavior is disabled. You will be required to provide your own conversation object as well as handle all events such as users submitting/editing/regenerating messages, handling api responses outside the chat, enabling loading and handling feedback events 
+
+    - All automatic behavior is disabled. You will be required to provide your own conversation object as well as handle all events such as users submitting/editing/regenerating messages, handling api responses outside the chat, enabling loading and handling feedback events
     - Create an array of messages with origin/timestamp/displayname, then in **elements** add objects containing **type** and **content**: **content** is a stringified object containing strings for plain text, URLs, arrays or a complex JSON objects. **type** denotes the component to be rendered in the message list such as **text**, **code**, **chart**, **image**, **table**, **carousel** etc
+
 #### 3: Slotting: fully customize the chat by inserting custom divs and components:
+
     - Place all components directly in the chat tag and import any component you wish to use with the appropriate slot name
     - additionally, place custom div or external iframes/components directly into the message response
     - like section 2, all events must be handled by the parent application
 
-
-
-
 ## 1. Auto-rendering with an API
+
 ### HTML implementation
+
 ```html
 <clabs-chat
   user-name="user"
@@ -83,6 +96,7 @@ import '@carbon-labs/ai-chat/es/index.js';
 ```
 
 ### Object sent from chat to api-url:
+
 ```js
 {
   "user_id": "xxxxxx",
@@ -104,12 +118,16 @@ import '@carbon-labs/ai-chat/es/index.js';
 ```
 
 #### If API returns **reply** field with raw LLM text:
+
 Auto-parsing will kick in and slice/convert text into visual elements.
 
 #### If API returns **reply** with valid JSON message object:
-Objects are rendered in order using list of elements, subelement of type **type** is rendered using **content** field
+
+Objects are rendered in order using list of elements, subelement of type
+**type** is rendered using **content** field
 
 ### Message format:
+
 ```js
 [
   {type: 'text', content: 'Hello World!'},
@@ -125,6 +143,7 @@ Objects are rendered in order using list of elements, subelement of type **type*
 ```
 
 ### Streaming option: response must be a string token and subcomponents will accept incomplete streamed text:
+
 ```html
 <clabs-chat
   user-name="user"
@@ -134,14 +153,15 @@ Objects are rendered in order using list of elements, subelement of type **type*
 </clabs-chat>
 ```
 
-## API-less full control example using **conversation** attribute 
+## API-less full control example using **conversation** attribute
+
 #### Specifiy a **conversation** object and specify the loading state and every interaction outside the chat, then update the **conversation** object to see an update:
 
 ```html
- <clabs-chat
+<clabs-chat
   user-name="user"
   agent-name="bot"
-  loading={false}
+  loading="{false}"
   .conversation="{conversationJSON}"
   @on-user-text-input="${(e) => {
     //user sent a message request through the text input footer
@@ -165,6 +185,7 @@ Objects are rendered in order using list of elements, subelement of type **type*
 ```
 
 ### Conversation format:
+
 ```js
 [
   {
@@ -197,6 +218,7 @@ Objects are rendered in order using list of elements, subelement of type **type*
 ```
 
 ## Slotting example
+
 ```html
  <clabs-chat user-name="user" agent-name="bot" conversation="{conversation}">
   <clabs-chat-messages slot="messages">
@@ -224,16 +246,16 @@ Objects are rendered in order using list of elements, subelement of type **type*
 
       <!-- Show a CSV table -->
       <clabs-chat-table slot="message-item-content" content='Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY'></clabs-chat-table>
-      
+
       <!-- Show code -->
       <clabs-chat-code slot="message-item-content" content='from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n'></clabs-chat-code>
-   
+
       <!-- Action buttons -->
       <clabs-chat-tags slot="message-item-content" content='["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'></<clabs-chat-tags>
-      
+
       <!-- Text lists -->
       <clabs-chat-list slot="message-item-content" content='1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)'></clabs-chat-list>
-      
+
       <!-- Charts -->
       <clabs-chat-chart container-height="200px" slot="message-item-content" content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Boxplot example with random data","data":{"values":[{"group":"Group A","value":34},{"group":"Group A","value":28},{"group":"Group A","value":55},{"group":"Group B","value":91},{"group":"Group B","value":81},{"group":"Group B","value":67}]},"mark":"boxplot","encoding":{"y":{"field":"group","type":"nominal"},"x":{"field":"value","type":"quantitative"}}}'></clabs-chat-chart>
 

@@ -13,8 +13,9 @@ import { html } from 'lit';
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
  */
 
-export default {
+const meta = {
   title: 'Components/Feedback/Feedback',
+  component: 'CLABSFeedback',
 };
 
 const defaultArgs = {
@@ -213,3 +214,5 @@ export const Playground = {
       </clabs-feedback>
     `,
 };
+
+export default meta;

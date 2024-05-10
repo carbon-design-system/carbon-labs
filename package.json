@@ -26,7 +26,7 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build": "lerna run build --stream",
+    "build": "lerna run build --stream && yarn custom-elements",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "build-storybook": "yarn build && storybook build",

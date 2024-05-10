@@ -12,13 +12,10 @@ import { html } from 'lit';
 import '@carbon/web-components/es/components/code-snippet/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 
-// More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
-const meta = {
+export default {
   title: 'Components/Chat/Chat',
   component: 'clabs-chat',
 };
-
-export default meta;
 
 export const Default = {
   /**

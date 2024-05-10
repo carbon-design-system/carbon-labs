@@ -15,6 +15,7 @@ import { MiserableData } from './sampleData';
  */
 export default {
   title: 'Components/Network graph/Network graph',
+  component: 'clabs-network-graph',
 };
 
 /**

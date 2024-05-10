@@ -17,6 +17,8 @@ const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Component extending the Feedback component
+ *
+ * @element clabs-feedback
  */
 @customElement(`${clabsPrefix}-feedback`)
 class CLABSFeedback extends Feedback {

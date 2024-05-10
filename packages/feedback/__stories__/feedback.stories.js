@@ -9,12 +9,10 @@
 import '../components/feedback/feedback';
 import Flag24 from '@carbon/web-components/es/icons/flag/24.js';
 import { html } from 'lit';
-/**
- * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
- */
 
 export default {
   title: 'Components/Feedback/Feedback',
+  component: 'clabs-feedback',
 };
 
 const defaultArgs = {

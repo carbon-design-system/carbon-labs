@@ -194,7 +194,7 @@ export class NetworkGraph extends LitElement {
         .minZoom(this.minimumZoom)
         .maxZoom(this.maximumZoom)
         .backgroundColor(this.canvasBgColor)
-        .enableNodeDrag(true) //this property is being true to test out node drag issue reported
+        .enableNodeDrag(this.isNodeDraggable)
         .enablePanInteraction(this.isPanInteraction)
         .cooldownTicks(100)
         .enableZoomInteraction(this.isZoomInteraction)
@@ -327,7 +327,7 @@ export class NetworkGraph extends LitElement {
         }
       }
       if (this.zoomToFit) {
-        graph.onEngineStop(() => graph.zoomToFit(400, 32));
+        graph.onEngineStop(() => graph.zoomToFit(400, 20));
       }
     }
   }

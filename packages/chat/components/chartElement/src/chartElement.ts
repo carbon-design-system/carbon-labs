@@ -22,53 +22,53 @@ import styles from './chartElement.scss?inline';
 export default class chartElement extends LitElement {
   static styles = styles;
   /**
-   * Array of subelements parsed from API reply
+   * Stringified JSON object defining a Vega-lite V5 chart specification. Specifications must contain $schema, data and encoding
    */
   @property({ type: String, attribute: 'content', reflect: true })
   content;
 
   /**
-   * event listener to check if component is made visible to auto-render (for exmaple in a tab)
+   * Event listener to check if parent visibility changed
    */
   private intersectionObserver;
 
   /**
-   * event listener to check if component has resized
+   * Event listener to check if component has resized
    */
   private resizeObserver;
 
   /**
-   * CSS string for container height
+   * Valid CSS string to define chart height, applied to chart container while specification is automatically set to height="container" to fill the parent container height
    */
   @property({ type: String, attribute: 'container-height', reflect: true })
   containerHeight = '300px';
 
   /**
-   * CSS string for container width
+   * Same as container-height, a CSS string to define the width, applied to chart container
    */
   @property({ type: String, attribute: 'container-width', reflect: true })
   containerWidth = '100%';
 
   /**
-   * Enable post-hoc carbon charts styling
+   * Extensively redefine the "config" field of the specification to apply Carbon Chart styling to chart defined in the specification (may override user-defined color/gradient/scale selections)
    */
   @property({ type: Boolean, attribute: 'carbonify', reflect: true })
   carbonify = true;
 
   /**
-   * Use svg or canvas to render Vega chart
+   * Render using "svg" (easier to inspect in the DOM) or "canvas" (better performance)
    */
   @property({ type: String, attribute: 'render-method' })
   renderMethod = 'canvas';
 
   /**
-   * Array of subelements parsed from API reply
+   * This value is either "dark" or "light" and displays the chart using Carbon Chart theme colors
    */
   @property({ type: String, attribute: 'theme' })
   theme = 'dark';
 
   /**
-   * disable all export/fullscreen/editing options
+   * Disable all chart option buttons, supercedes all other individual button options
    */
   @property({ type: Boolean, attribute: 'disable-options' })
   disableOptions = false;
@@ -98,25 +98,25 @@ export default class chartElement extends LitElement {
   disableEditor = false;
 
   /**
-   * enableTooltip - show tooltip in charts by default
+   * Enable tooltip in the chart component
    */
   @state()
   enableTooltip = true;
 
   /**
-   * Enable post-hoc carbon charts styling
+   * Enable user-zooming in the chart component
    */
   @property({ type: Boolean, attribute: 'enable-zooming' })
   enableZooming = false;
 
   /**
-   * Enable legend filtering
+   * Enable filtering of data points when clicking legend
    */
   @property({ type: Boolean, attribute: 'enable-legend-filtering' })
   enableLegendFiltering = true;
 
   /**
-   * EnableBrushing
+   * Enable user-brush selection to fetch groups of elements to make targeted query
    */
   @property({ type: Boolean, attribute: 'enable-brushing' })
   enableBrushing = false;
@@ -134,7 +134,7 @@ export default class chartElement extends LitElement {
   _uniqueID;
 
   /**
-   * loading boolean to show skeleton and info about loading
+   * Show a loading animation that fills the container. When providing a complete string, the chart will auto-render and this will be set to false. If streaming: raw json text data will be incrementally displayed here until complete and validated, then the chart is rendered
    */
   @property({ type: Boolean, attribute: 'loading' })
   chartLoading = true;

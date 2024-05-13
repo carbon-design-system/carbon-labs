@@ -54,6 +54,7 @@
     content: '';
     inline-size: 30px;
     pointer-events: none;
+    visibility: hidden;
   }
 
   .#{$clabs-prefix}--chat-chart-options-prefade-light {
@@ -66,6 +67,7 @@
     content: '';
     inline-size: 30px;
     pointer-events: none;
+    visibility: hidden;
   }
 
   .#{$clabs-prefix}--chat-chart-options-buttons {

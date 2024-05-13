@@ -73,6 +73,7 @@ export default class messages extends LitElement {
 
     if (changedProperties.has('loading')) {
       this._queryInProgress = this.loading;
+      this._updateScroll();
     }
     if (changedProperties.has('_streamResponses')) {
       this._queryInProgress = this.loading;

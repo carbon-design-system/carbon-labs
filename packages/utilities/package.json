@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/utilities",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "publishConfig": {
     "access": "public",
     "provenance": true

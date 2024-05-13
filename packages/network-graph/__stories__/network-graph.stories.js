@@ -15,6 +15,7 @@ import { MiserableData } from './sampleData';
  */
 export default {
   title: 'Components/Network graph/Network graph',
+  component: 'clabs-network-graph',
 };
 
 /**
@@ -24,8 +25,8 @@ export default {
  */
 export const Default = {
   args: {
-    width: 1000,
-    height: 1000,
+    width: 800,
+    height: 800,
     background: '#161616',
     'link-color': '#262626',
     'link-width': 4,

@@ -12,9 +12,9 @@ import { html } from 'lit';
 import '@carbon/web-components/es/components/code-snippet/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 
-// More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
   title: 'Components/Chat/Chat',
+  component: 'clabs-chat',
 };
 
 export const Default = {
@@ -1122,6 +1122,7 @@ const conversationExamples = {
 };
 
 export const Playground = {
+  component: 'clabs-chat',
   argTypes: objectPlaygroundControls,
   args: objectPlaygroundArgs,
   parameters: {

@@ -11,9 +11,19 @@ The Chart component renders a large variety of Charts by consuming Vega-lite V5 
 
 Like all other components here it lives inside the core Chat component but can easily be imported separately and used independently of the Chat. By default the `carbonify` attribute is enabled which extensively edits the specification styling through the `config` field in order to recreate Carbon Charts styling. This overrides and edits all axis/legend/title/encoding/gradient/colorscale values to display the specification as a clone of classic Carbon Charts.
 
-Vega-lite reference: <a target="_blank" href="https://vega.github.io/vega-lite/">vega.github.io</a>
+Vega-lite reference:
 
-Carbon Charts reference: <a target="_blank" href="https://charts.carbondesignsystem.com/?path=/story/docs--welcome">charts.carbondesignsystem.com</a>
+<a target="_blank" href="https://vega.github.io/vega-lite/">
+  vega.github.io
+</a>
+
+Carbon Charts reference:
+
+<a
+  target="_blank"
+  href="https://charts.carbondesignsystem.com/?path=/story/docs--welcome">
+  charts.carbondesignsystem.com
+</a>
 
 ## Installation
 
@@ -32,6 +42,7 @@ import '@carbon-labs/ai-chat-chart/es/index.js';
 
 ### Vega formatting for content:
 Vega specifications (i.e specs) are JSON objects containing everything needed to render charts in one shot:
+
 ```json
 {
   "$schema":"https://vega.github.io/schema/vega-lite/v5.json", //link to Vega-lite schema to interpret attributes (Only V5 is supported)
@@ -46,6 +57,7 @@ Vega specifications (i.e specs) are JSON objects containing everything needed to
 ```
 
 ### Independent Usage:
+
 ```html
 <clabs-chat-chart
   content <!-- string: (default: empty) - Stringified JSON object defining a Vega-lite V5 chart specification. Specifications must contain $schema, data and encoding -->
@@ -75,21 +87,21 @@ If specified within a valid JSON `conversation` attribute:
 <clabs-chat
 conversation = '[
   {
-  "origin":"user", 
-  "timestamp":"7:01pm", 
+  "origin":"user",
+  "timestamp":"7:01pm",
   "elements":
       [
         {"type": "text", "content": "Give me line chart using price over time"}
       ]
   },
   {
-  "origin":"bot", 
-  "timestamp":"7:06pm", 
+  "origin":"bot",
+  "timestamp":"7:06pm",
   "elements":
       [
         {"type": "text", "content": "Here is the chart your requested:"}
         ,
-        {"type": "chart", 
+        {"type": "chart",
         "content":'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data": ..., "encoding": ...}'}
       ]
   }
@@ -99,18 +111,19 @@ conversation = '[
 
 ### Usage as plain text response:
 If streaming or using plain `rawText` field, simply place the JSON specification in you message item using a \\n then auto-parsing will identify it.
+
 ```html
 <clabs-chat
 conversation = [
   {
-  "origin":"user", 
+  "origin":"user",
   "timestamp":"7:01pm",
   "rawText": "Give me line chart using price over time"
   },
   {
-  "origin":"bot", 
+  "origin":"bot",
   "timestamp":"7:06pm",
-  "rawText": 'Here is the chart you requested\n {"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data": ..., "encoding": ...}' 
+  "rawText": 'Here is the chart you requested\n {"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data": ..., "encoding": ...}'
   }
 ]>
 </clabs-chat>

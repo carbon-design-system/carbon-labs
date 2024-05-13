@@ -31,13 +31,13 @@ export class NetworkGraph extends LitElement {
    * Canvas width
    */
   @property({ attribute: 'width', type: Number })
-  canvasWidth = 1280;
+  canvasWidth;
 
   /**
    * Canvas height
    */
   @property({ attribute: 'height', type: Number })
-  canvasHeight = 720;
+  canvasHeight;
 
   /**
    * Minimum zoom which can be done on graph
@@ -102,25 +102,25 @@ export class NetworkGraph extends LitElement {
   /**
    * Boolean to enable or disable dragging of nodes
    */
-  @property({ attribute: 'isNodeDraggable', type: Boolean })
+  @property({ type: Boolean })
   isNodeDraggable = true;
 
   /**
    * Boolean to enable or disable Pan Interaction on canvas
    */
-  @property({ attribute: 'isPanInteraction', type: Boolean })
+  @property({ type: Boolean })
   isPanInteraction = true;
 
   /**
    * Boolean to enable or disable zoom-in or zoom-out on canvas
    */
-  @property({ attribute: 'isZoomInteraction', type: Boolean })
+  @property({ type: Boolean })
   isZoomInteraction = true;
 
   /**
    * Boolean to enable or disable pointer interaction on canvas
    */
-  @property({ attribute: 'isPointerInteraction', type: Boolean })
+  @property({ type: Boolean })
   isPointerInteraction = true;
 
   /**
@@ -154,22 +154,49 @@ export class NetworkGraph extends LitElement {
   tooltipStyles = null;
 
   /**
+   * Boolean for enabling zoomToFit for canvas
+   */
+  @property({ type: Boolean })
+  zoomToFit = true;
+
+  /**
    * Lifecycles Method used to render nodes and links for the graph network on canvas
    */
   firstUpdated() {
+    const graphContainer = this.shadowRoot?.getElementById('graph-container');
+    const parentHeight = graphContainer?.offsetParent?.clientHeight;
+    const parentWidth = graphContainer?.offsetParent?.clientHeight;
+
+    const canvasHeight = this.canvasHeight
+      ? this.canvasHeight
+      : parentHeight
+      ? parentHeight
+      : null;
+    const canvasWidth = this.canvasWidth
+      ? this.canvasWidth
+      : parentWidth
+      ? parentWidth
+      : null;
+
     if (this.data && this.shadowRoot?.getElementById('graph-container')) {
       const graph = ForceGraph2D();
+      if (canvasWidth) {
+        graph.width(canvasWidth);
+      }
+      if (canvasHeight) {
+        graph.height(canvasHeight);
+      }
+
       graph(this.shadowRoot.getElementById('graph-container') as HTMLElement)
         .nodeId(this.nodeLabel)
         .nodeLabel(this.nodeTooltipLabel)
         .graphData(this.data)
-        .width(this.canvasWidth)
-        .height(this.canvasHeight)
         .minZoom(this.minimumZoom)
         .maxZoom(this.maximumZoom)
         .backgroundColor(this.canvasBgColor)
         .enableNodeDrag(this.isNodeDraggable)
         .enablePanInteraction(this.isPanInteraction)
+        .cooldownTicks(100)
         .enableZoomInteraction(this.isZoomInteraction)
         .enablePointerInteraction(this.isPointerInteraction)
         .onNodeClick((node) => {
@@ -298,6 +325,9 @@ export class NetworkGraph extends LitElement {
             graph.linkDirectionalParticleColor(this.particleColor);
           }
         }
+      }
+      if (this.zoomToFit) {
+        graph.onEngineStop(() => graph.zoomToFit(400, 20));
       }
     }
   }

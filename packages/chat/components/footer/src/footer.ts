@@ -77,6 +77,12 @@ export default class footer extends LitElement {
   _voiceAPIAvailable = true;
 
   /**
+   * see if text area is currently focused or not
+   */
+  @state()
+  _isPromptFocused = false;
+
+  /**
    * speechRecognition object to interface with text input
    */
   private _speechRecognition: any = null;
@@ -239,7 +245,7 @@ export default class footer extends LitElement {
    * @param {event} event - lit event sent by textarea focus
    */
   _textAreaIsFocused(event) {
-    console.log(event);
+    this._isPromptFocused = event?.type === 'focus';
   }
 
   /**

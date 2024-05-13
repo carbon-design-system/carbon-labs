@@ -199,8 +199,6 @@ export default class CLABSChat extends LitElement {
     const exampleMessageArray = this.sampleQuery.split('bot:');
     const userMessage = exampleMessageArray[0].replace('user:', '');
     const botMessage = exampleMessageArray[1];
-    console.log(userMessage);
-    console.log(botMessage);
     this._messages = [
       {
         text: userMessage,
@@ -210,7 +208,6 @@ export default class CLABSChat extends LitElement {
         index: 0,
       },
     ];
-    console.log(this._messages);
     if (botMessage) {
       this._messages = [
         ...this._messages,
@@ -398,7 +395,6 @@ export default class CLABSChat extends LitElement {
    */
   _handleFullscreenMode(event) {
     const mode = event.detail?.fullscreen;
-    console.log(event.detail);
     this.enableFullscreen = mode;
   }
 

@@ -30,29 +30,40 @@ export function chatTemplate(customElementClass) {
     userName,
     agentName,
     loading,
+    disableHeaderMenu,
+    enableFullscreen,
+    _handleFullscreenMode: handleFullscreenMode,
     _inputFieldPlaceholder: inputFieldPlaceholder,
     _streamResponses: streamResponses,
   } = customElementClass;
 
-  return html`<div class="${clabsPrefix}--chat-container">
-    <clabs-chat-header> </clabs-chat-header>
+  return html`<div
+    class="${clabsPrefix}--chat-container ${enableFullscreen
+      ? clabsPrefix + '--chat-fullscreen'
+      : ''}">
+    <div class="${clabsPrefix}--chat-content-container">
+      <clabs-chat-header
+        @on-chat-fullscreen-change="${handleFullscreenMode}"
+        ?disable-header-menu="${disableHeaderMenu}">
+      </clabs-chat-header>
 
-    <slot name="messages">
-      <clabs-chat-messages
-        .messages="${messages}"
-        user-name="${userName}"
-        agent-name="${agentName}"
-        ?loading="${queryInProgress}"
-        ?stream-responses="${streamResponses}"
-        @on-message-regeneration="${handleUserRegenerationRequest}"
-        @on-user-message-update-request="${handleUserUpdateRequest}">
-      </clabs-chat-messages>
-    </slot>
+      <slot name="messages">
+        <clabs-chat-messages
+          .messages="${messages}"
+          user-name="${userName}"
+          agent-name="${agentName}"
+          ?loading="${queryInProgress}"
+          ?stream-responses="${streamResponses}"
+          @on-message-regeneration="${handleUserRegenerationRequest}"
+          @on-user-message-update-request="${handleUserUpdateRequest}">
+        </clabs-chat-messages>
+      </slot>
 
-    <clabs-chat-footer
-      ?disable-input="${loading}"
-      @on-user-text-input="${sendInput}"
-      input-placeholder="${inputFieldPlaceholder}">
-    </clabs-chat-footer>
+      <clabs-chat-footer
+        ?disable-input="${loading}"
+        @on-user-text-input="${sendInput}"
+        input-placeholder="${inputFieldPlaceholder}">
+      </clabs-chat-footer>
+    </div>
   </div>`;
 }

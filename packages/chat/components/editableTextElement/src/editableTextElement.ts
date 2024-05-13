@@ -30,6 +30,18 @@ export default class editableTextElement extends LitElement {
   @state()
   _editedMessage;
 
+  /**
+   * Preset width from source text
+   */
+  @property({ type: Number, attribute: 'preset-width' })
+  _presetWidth;
+
+  /**
+   * Preset height from source text
+   */
+  @property({ type: Number, attribute: 'preset-height' })
+  _presetHeight;
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
@@ -41,7 +53,11 @@ export default class editableTextElement extends LitElement {
    */
   firstUpdated() {
     if (this.content !== null) {
-      this._initiateTextAreaHeight();
+      if (this._presetWidth && this._presetHeight) {
+        this._presetTextAreaSize();
+      } else {
+        this._initiateTextAreaHeight();
+      }
     }
   }
 
@@ -74,6 +90,22 @@ export default class editableTextElement extends LitElement {
         textArea.style.height = textArea.scrollHeight + 'px';
         this.requestUpdate();
       }, 1);
+    }
+  }
+
+  /**
+   * Set a new height based on the size of the text area
+   */
+  _presetTextAreaSize() {
+    const textArea: any = this.shadowRoot?.querySelector(
+      '.clabs--chat-editable-text-area'
+    );
+
+    if (textArea instanceof HTMLElement) {
+      textArea.focus();
+      textArea.style.height = this._presetHeight + 'px';
+      textArea.style.height = this._presetWidth + 'px';
+      this.requestUpdate();
     }
   }
 

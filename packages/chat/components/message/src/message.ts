@@ -220,10 +220,6 @@ export default class message extends LitElement {
       });
       this.dispatchEvent(messageUpdateEvent);
     }
-
-    /*if (changedProperties.has('temporaryMessage')) {
-      this._updateScroll();
-    }*/
   }
 
   /**

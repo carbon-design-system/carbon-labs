@@ -38,7 +38,7 @@ export function carouselElementTemplate(customElementClass) {
   return html`<div class="${clabsPrefix}--chat-carousel-container">
     ${carouselContent
       ? html` <div class="${clabsPrefix}--chat-carousel-length">
-            ${carouselContent.length - 1}
+            ${carouselContent.length}
             ${carouselContent.length === 1 ? 'item' : 'items'}
           </div>
           <div class="${clabsPrefix}--chat-carousel-slides">
@@ -57,27 +57,31 @@ export function carouselElementTemplate(customElementClass) {
             )}
           </div>
           <div class="${clabsPrefix}--chat-carousel-controls">
-            <div class="${clabsPrefix}--chat-carousel-control-item">
-              <cds-button
-                kind="ghost"
-                size="sm"
-                @click="${handlePreviousSlide}"
-                ?disabled="${slideCounter === 0}">
-                ${ChevronLeft16({ slot: 'icon' })}
-              </cds-button>
-            </div>
-            <div class="${clabsPrefix}--chat-carousel-control-item">
-              ${renderedSlideCounter + ' / ' + maxSlideCounter}
-            </div>
-            <div class="${clabsPrefix}--chat-carousel-control-item">
-              <cds-button
-                kind="ghost"
-                size="sm"
-                @click="${handleNextSlide}"
-                ?disabled="${slideCounter === carouselContent.length - 1}">
-                ${ChevronRight16({ slot: 'icon' })}
-              </cds-button>
-            </div>
+            ${maxSlideCounter !== 1
+              ? html`
+                  <div class="${clabsPrefix}--chat-carousel-control-item">
+                    <cds-button
+                      kind="ghost"
+                      size="sm"
+                      @click="${handlePreviousSlide}"
+                      ?disabled="${slideCounter === 0}">
+                      ${ChevronLeft16({ slot: 'icon' })}
+                    </cds-button>
+                  </div>
+                  <div class="${clabsPrefix}--chat-carousel-control-item">
+                    ${renderedSlideCounter + ' / ' + maxSlideCounter}
+                  </div>
+                  <div class="${clabsPrefix}--chat-carousel-control-item">
+                    <cds-button
+                      kind="ghost"
+                      size="sm"
+                      @click="${handleNextSlide}"
+                      ?disabled="${renderedSlideCounter === maxSlideCounter}">
+                      ${ChevronRight16({ slot: 'icon' })}
+                    </cds-button>
+                  </div>
+                `
+              : html``}
           </div>`
       : html``}
   </div>`;

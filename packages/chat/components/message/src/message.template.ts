@@ -122,7 +122,7 @@ export function messageTemplate(customElementClass) {
             </div>
             <div class="${clabsPrefix}--chat-message-content">
               <div class="${clabsPrefix}--chat-message-timestamp-bot">
-                ${displayName == null ? 'AI' : displayName} ${timeStamp}
+                ${displayName == null ? 'watsonx' : displayName} ${timeStamp}
               </div>
               <div class="${clabsPrefix}--chat-message-response-bot">
                 <slot
@@ -205,7 +205,7 @@ export function messageTemplate(customElementClass) {
                               capitalize
                               content="${message.content}">
                             </clabs-chat-text>
-                          `}
+                          </div>`}
                     `
                   )}
                 </slot>

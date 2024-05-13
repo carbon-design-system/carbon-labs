@@ -11,8 +11,11 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import Popup16 from '@carbon/web-components/es/icons/popup/16.js';
+import Menu24 from '@carbon/web-components/es/icons/menu/16.js';
 import Subtract16 from '@carbon/web-components/es/icons/subtract/16.js';
+
 import '@carbon/web-components/es/components/slug/index.js';
+import '@carbon/web-components/es/components/button/index.js';
 
 /**
  * Lit template for card
@@ -21,16 +24,25 @@ import '@carbon/web-components/es/components/slug/index.js';
  * @returns {TemplateResult<1>} Lit html template
  */
 export function headerTemplate(customElementClass) {
-  const { title, icon } = customElementClass;
+  const {
+    title,
+    _handlePopup: handlePopup,
+    _handleSubtract: handleSubtract,
+    _handleMenuToggle: handleMenuToggle,
+    enableFullscreen,
+    disableMenu,
+  } = customElementClass;
   return html` <div class="${clabsPrefix}--chat-header-container">
     <div class="${clabsPrefix}--chat-header-content">
       <div class="${clabsPrefix}--chat-header-elements">
         <div class="${clabsPrefix}--chat-header-elements-left">
-          ${icon
-            ? html`
-                <div class="${clabsPrefix}--chat-header-icon">${icon}</div>
-              `
-            : null}
+          ${!disableMenu
+            ? html` <div class="${clabsPrefix}--chat-header-elements-icon">
+                <cds-button kind="ghost" size="sm" @click="${handleMenuToggle}">
+                  ${Menu24({ slot: 'icon' })}
+                </cds-button>
+              </div>`
+            : html``}
           ${title
             ? html` <span class="${clabsPrefix}--chat-header-title">
                 ${title}
@@ -39,15 +51,35 @@ export function headerTemplate(customElementClass) {
         </div>
 
         <div class="${clabsPrefix}--chat-header-elements-right">
-          <div class="${clabsPrefix}--chat-header-icon">
+          <div class="${clabsPrefix}--chat-header-elements-icon">
             <cds-slug kind="hollow">
               <div slot="body-text">
                 <p>${title}</p>
               </div>
             </cds-slug>
           </div>
-          <div class="${clabsPrefix}--chat-header-icon">${Popup16()}</div>
-          <div class="${clabsPrefix}--chat-header-icon">${Subtract16()}</div>
+
+          ${!enableFullscreen
+            ? html`
+                <div class="${clabsPrefix}--chat-header-elements-icon">
+                  <cds-button kind="ghost" size="sm" @click="${handlePopup}">
+                    ${Popup16({ slot: 'icon' })}
+                  </cds-button>
+                </div>
+              `
+            : html`
+                <div class="${clabsPrefix}--chat-header-elements-icon">
+                  <cds-button kind="ghost" size="sm" @click="${handleSubtract}">
+                    ${Subtract16({ slot: 'icon' })}
+                  </cds-button>
+                </div>
+              `}
+
+          <div class="${clabsPrefix}--chat-header-elements-icon">
+            <cds-button kind="ghost" size="sm" @click="${handleSubtract}">
+              ${Subtract16({ slot: 'icon' })}
+            </cds-button>
+          </div>
         </div>
       </div>
     </div>

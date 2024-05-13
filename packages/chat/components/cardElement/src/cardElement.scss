@@ -128,8 +128,8 @@
     z-index: 99;
     background: linear-gradient(
       to right,
-      rgba($border-subtle-00, 0),
-      rgba($border-subtle-00, 1)
+      rgba(38, 38, 38, 0),
+      rgba(38, 38, 38, 1)
     );
     block-size: 100%;
     content: '';
@@ -137,6 +137,7 @@
     inset-block-start: 0;
     inset-inline-end: 0;
     pointer-events: none;
+    visibility: hidden;
   }
 
   .#{$clabs-prefix}--chat-card-detail-description {
@@ -155,8 +156,8 @@
     z-index: 99;
     background: linear-gradient(
       to right,
-      rgba($border-subtle-00, 0),
-      rgba($border-subtle-00, 1)
+      rgba(38, 38, 38, 0),
+      rgba(38, 38, 38, 1)
     );
     block-size: 100%;
     content: '';
@@ -164,6 +165,7 @@
     inset-block-start: 0;
     inset-inline-end: 0;
     pointer-events: none;
+    visibility: hidden;
   }
 
   .#{$clabs-prefix}--chat-card-loader {

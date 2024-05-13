@@ -49,6 +49,12 @@ export default class CLABSChat extends LitElement {
   autoUpdate;
 
   /**
+   * disable header hamburger menu
+   */
+  @property({ type: Boolean, attribute: 'disable-header-menu' })
+  disableHeaderMenu;
+
+  /**
    * custom placeholder for input field in footer
    */
   @property({ type: String, attribute: 'input-field-placeholder' })
@@ -109,7 +115,7 @@ export default class CLABSChat extends LitElement {
   userName;
 
   /**
-   * string denoting the bot name, default: 'bot' but can be changed to 'Watson' or 'client assistant' or any other name
+   * string denoting the bot name, default: 'external' but can be changed to 'Watson' or 'client assistant' or any other name
    */
   @property({ type: String, attribute: 'agent-name' })
   agentName;
@@ -130,6 +136,12 @@ export default class CLABSChat extends LitElement {
    */
   @property({ type: String, attribute: 'sample-query' })
   sampleQuery;
+
+  /**
+   * fullscreen boolean dictated by header child
+   */
+  @state()
+  enableFullscreen = false;
 
   /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
    * @param {Object} changedProperties - returned inner DOM update object
@@ -187,7 +199,6 @@ export default class CLABSChat extends LitElement {
     const exampleMessageArray = this.sampleQuery.split('bot:');
     const userMessage = exampleMessageArray[0].replace('user:', '');
     const botMessage = exampleMessageArray[1];
-
     this._messages = [
       {
         text: userMessage,
@@ -376,6 +387,15 @@ export default class CLABSChat extends LitElement {
           this.requestUpdate();
         });
     }
+  }
+
+  /**
+   * handle fullscreen event when header fullscreen event is called
+   * @param {event} event - click event from cds button
+   */
+  _handleFullscreenMode(event) {
+    const mode = event.detail?.fullscreen;
+    this.enableFullscreen = mode;
   }
 
   /** get time of message formatted as 1:23pm or 4:56am

@@ -31,6 +31,7 @@ export function chatTemplate(customElementClass) {
     agentName,
     loading,
     disableHeaderMenu,
+    disableHeaderButtons,
     enableFullscreen,
     _handleFullscreenMode: handleFullscreenMode,
     _inputFieldPlaceholder: inputFieldPlaceholder,
@@ -44,7 +45,8 @@ export function chatTemplate(customElementClass) {
     <div class="${clabsPrefix}--chat-content-container">
       <clabs-chat-header
         @on-chat-fullscreen-change="${handleFullscreenMode}"
-        ?disable-header-menu="${disableHeaderMenu}">
+        ?disable-header-menu="${disableHeaderMenu}"
+        ?disable-header-buttons="${disableHeaderButtons}">
       </clabs-chat-header>
 
       <slot name="messages">

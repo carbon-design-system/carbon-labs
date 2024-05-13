@@ -127,6 +127,12 @@ export default class CLABSChat extends LitElement {
   userPrompt;
 
   /**
+   * TEMPORARY: disable all buttons except slug
+   */
+  @property({ type: Boolean, attribute: 'disable-header-buttons' })
+  disableHeaderButtons;
+
+  /**
    * string denoting selected querying method
    */
   private chosenHost = 'Local';

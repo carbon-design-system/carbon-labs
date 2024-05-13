@@ -30,13 +30,14 @@ export function headerTemplate(customElementClass) {
     _handleSubtract: handleSubtract,
     _handleMenuToggle: handleMenuToggle,
     enableFullscreen,
+    disableHeaderButtons,
     disableMenu,
   } = customElementClass;
   return html` <div class="${clabsPrefix}--chat-header-container">
     <div class="${clabsPrefix}--chat-header-content">
       <div class="${clabsPrefix}--chat-header-elements">
         <div class="${clabsPrefix}--chat-header-elements-left">
-          ${!disableMenu
+          ${!disableMenu && !disableHeaderButtons
             ? html` <div class="${clabsPrefix}--chat-header-elements-icon">
                 <cds-button kind="ghost" size="sm" @click="${handleMenuToggle}">
                   ${Menu24({ slot: 'icon' })}
@@ -59,27 +60,37 @@ export function headerTemplate(customElementClass) {
             </cds-slug>
           </div>
 
-          ${!enableFullscreen
+          ${!disableHeaderButtons
             ? html`
-                <div class="${clabsPrefix}--chat-header-elements-icon">
-                  <cds-button kind="ghost" size="sm" @click="${handlePopup}">
-                    ${Popup16({ slot: 'icon' })}
-                  </cds-button>
-                </div>
-              `
-            : html`
+                ${!enableFullscreen
+                  ? html`
+                      <div class="${clabsPrefix}--chat-header-elements-icon">
+                        <cds-button
+                          kind="ghost"
+                          size="sm"
+                          @click="${handlePopup}">
+                          ${Popup16({ slot: 'icon' })}
+                        </cds-button>
+                      </div>
+                    `
+                  : html`
+                      <div class="${clabsPrefix}--chat-header-elements-icon">
+                        <cds-button
+                          kind="ghost"
+                          size="sm"
+                          @click="${handleSubtract}">
+                          ${Subtract16({ slot: 'icon' })}
+                        </cds-button>
+                      </div>
+                    `}
+
                 <div class="${clabsPrefix}--chat-header-elements-icon">
                   <cds-button kind="ghost" size="sm" @click="${handleSubtract}">
                     ${Subtract16({ slot: 'icon' })}
                   </cds-button>
                 </div>
-              `}
-
-          <div class="${clabsPrefix}--chat-header-elements-icon">
-            <cds-button kind="ghost" size="sm" @click="${handleSubtract}">
-              ${Subtract16({ slot: 'icon' })}
-            </cds-button>
-          </div>
+              `
+            : html``}
         </div>
       </div>
     </div>

@@ -36,6 +36,12 @@ export default class header extends LitElement {
   enableFullscreen = false;
 
   /**
+   * disable header hamburger menu
+   */
+  @property({ type: Boolean, attribute: 'disable-header-buttons' })
+  disableHeaderButtons;
+
+  /**
    * fullscreen event when popup button is clicked
    * @param {event} event - click event when fullscreening chat
    */

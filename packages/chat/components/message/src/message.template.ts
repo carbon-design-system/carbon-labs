@@ -107,7 +107,8 @@ export function messageTemplate(customElementClass) {
                         ${Edit16()}
                       </div>`}
                 </div>`
-              : html``}
+              : html` <div
+                  class="${clabsPrefix}--chat-message-dropdown-user"></div>`}
           </div>`
         : html` <div class="${clabsPrefix}--chat-message-icon">
               ${displayColor
@@ -296,7 +297,8 @@ export function messageTemplate(customElementClass) {
                           `}
                     </div>
                   `
-                : html``}
+                : html`<div
+                    class="${clabsPrefix}--chat-message-dropdown-bot"></div>`}
             </div>`}
     </div>
   </div>`;

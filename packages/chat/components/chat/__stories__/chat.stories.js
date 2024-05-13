@@ -1149,6 +1149,7 @@ export const Playground = {
         <clabs-chat
           user-name="user"
           agent-name="bot"
+          ?disable-header-buttons=${true}
           input-field-placeholder="What can I assist you with today?"
           .conversation="${testMode === 'Examples'
             ? conversationExamples[sampleConversation]

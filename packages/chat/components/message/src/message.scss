@@ -78,6 +78,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-message-dropdown-user {
     clear: both;
     float: inline-end;
+    min-block-size: 16px;
     padding-block-start: 8px;
   }
 
@@ -117,7 +118,6 @@ $css--plex: true !default;
     color: var(--chat-message-unique-display-color, $text-secondary);
     font-size: 12px;
     gap: 16px;
-    padding-block-end: 8px;
   }
 
   .#{$clabs-prefix}--chat-message-response-bot {
@@ -132,6 +132,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-message-dropdown-bot {
     inline-size: 100%;
+    min-block-size: 16px;
     padding-block-start: 8px;
   }
 

@@ -25,7 +25,7 @@
   min-inline-size: 246px;
 
   .#{$clabs-prefix}--chat-chart-container {
-    z-index: 2;
+    z-index: 10;
     display: block;
     overflow: hidden;
     box-sizing: border-box;
@@ -37,18 +37,49 @@
 
   .#{$clabs-prefix}--chat-chart-options {
     position: absolute;
-    z-index: 999;
+    z-index: 20;
+    display: flex;
+    flex-direction: row;
+    inset-block-start: 16px;
+    inset-inline-end: 0;
+  }
+
+  .#{$clabs-prefix}--chat-chart-options-prefade-dark {
+    background: linear-gradient(
+      to right,
+      rgba(22, 22, 22, 0),
+      rgba(22, 22, 22, 1)
+    );
+    block-size: 32px;
+    content: '';
+    inline-size: 30px;
+    pointer-events: none;
+  }
+
+  .#{$clabs-prefix}--chat-chart-options-prefade-light {
+    background: linear-gradient(
+      to right,
+      rgba(244, 244, 244, 0),
+      rgba(244, 244, 244, 1)
+    );
+    block-size: 32px;
+    content: '';
+    inline-size: 30px;
+    pointer-events: none;
+  }
+
+  .#{$clabs-prefix}--chat-chart-options-buttons {
     display: flex;
     flex-direction: row;
     background: $background;
-    gap: 8px;
-    inset-block-start: 16px;
-    inset-inline-end: 24px;
+    gap: 4px;
+    padding-inline-end: 20px;
   }
 
   .#{$clabs-prefix}--chat-chart-modal-custom {
-    z-index: 9999;
+    z-index: 90;
     padding: 0;
+    background: $background;
     pointer-events: all;
   }
 

@@ -91,6 +91,7 @@ export default class messages extends LitElement {
       composed: true,
     });
     this.dispatchEvent(messageSlotUpdateEvent);
+    this._updateScroll();
   }
 
   /**

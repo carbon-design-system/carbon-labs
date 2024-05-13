@@ -12,8 +12,10 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}-chat-editable-text) {
+  overflow: hidden;
   .#{$clabs-prefix}--chat-editable-text-area {
     overflow: hidden;
+    flex-grow: 1;
     padding: 0;
     border: none;
     margin: 0;
@@ -21,11 +23,11 @@ $css--plex: true !default;
     block-size: 24px;
     color: $text-primary;
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
     letter-spacing: 0.16px;
-    line-height: 24px;
+    line-height: 20px;
     resize: none;
     word-break: break-word;
   }

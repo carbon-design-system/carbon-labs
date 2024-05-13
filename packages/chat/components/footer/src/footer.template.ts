@@ -15,6 +15,7 @@ import MicrophoneFilled16 from '@carbon/web-components/es/icons/microphone--fill
 import Microphone16 from '@carbon/web-components/es/icons/microphone/16.js';
 import Menu24 from '@carbon/web-components/es/icons/menu/24.js';
 import SendFilled16 from '@carbon/web-components/es/icons/send--filled/16.js';
+import Send16 from '@carbon/web-components/es/icons/send/16.js';
 
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/file-uploader/index.js';
@@ -40,36 +41,63 @@ export function footerTemplate(customElementClass) {
     _voiceAPIAvailable: voiceAPIAvailable,
     _startRecording: startRecording,
     _endRecording: endRecording,
+    _expandedWidth: expandedWidth,
+    _expandedHeight: expandedHeight,
+    _textAreaIsFocused: textAreaIsFocused,
   } = customElementClass;
 
   return html` 
-    <div class="${clabsPrefix}--chat-footer-container">
+    <div class="${clabsPrefix}--chat-footer-container${
+    expandedHeight ? '-expanded' : ''
+  }">
     ${
       toggleMenu
-        ? html` 
-      <div class="${clabsPrefix}--chat-footer-menu">
-        <cds-file-uploader
-          label-description="File must be .csv or .xls"
-          @cds-file-uploader-changed="${handleMenuFileUpload}"
-          label-title="Upload your files here:">
-          <cds-file-uploader-button multiple>
-            Click to upload
-          </cds-file-drop-container>
-        </cds-file-uploader>
-      </div>
-      `
+        ? html`
+            <div class="${clabsPrefix}--chat-footer-menu">
+              <div class="${clabsPrefix}--chat-footer-menu-container">
+                <div class="${clabsPrefix}--chat-footer-menu-container-item">
+                  <cds-file-uploader
+                    label-title="Upload your files here:"
+                    @cds-file-uploader-changed="${handleMenuFileUpload}">
+                    <cds-file-uploader-button multiple size="sm">
+                      Click to upload
+                    </cds-file-uploader-button>
+                  </cds-file-uploader>
+                </div>
+
+                <div class="${clabsPrefix}--chat-footer-menu-container-item">
+                  <cds-file-uploader
+                    label-title="Or drag & drop here:"
+                    @cds-file-uploader-changed="${handleMenuFileUpload}">
+                    <cds-file-uploader-drop-container
+                      name="Drop files here"
+                      @cds-file-uploader-drop-container-changed="${handleMenuFileUpload}">
+                    </cds-file-uploader-drop-container>
+                  </cds-file-uploader>
+                </div>
+              </div>
+            </div>
+          `
         : ''
     }
-      <div class="${clabsPrefix}--chat-footer-prompt-items">
-      <div class="${clabsPrefix}--chat-footer-button">
-        <cds-button 
-          kind="ghost" 
-          size="sm" 
-          ?disabled="${disableMenu}" 
-          @click="${handleMenuToggle}">
-            ${Menu24({ slot: 'icon' })}
-        </cds-button>
-      </div>
+      <div class="${clabsPrefix}--chat-footer-prompt-items${
+    expandedWidth ? '-expanded' : ''
+  }">
+      ${
+        !disableMenu
+          ? html`
+              <div class="${clabsPrefix}--chat-footer-button">
+                <cds-button
+                  kind="ghost"
+                  size="sm"
+                  ?disabled="${disableMenu}"
+                  @click="${handleMenuToggle}">
+                  ${Menu24({ slot: 'icon' })}
+                </cds-button>
+              </div>
+            `
+          : html``
+      }
       <textarea
         class="${clabsPrefix}--chat-search-query"
         rows="1"
@@ -77,6 +105,8 @@ export function footerTemplate(customElementClass) {
         placeholder="${
           inputPlaceholder ? inputPlaceholder : 'Type something...'
         }"
+        @focus="${textAreaIsFocused}"
+        @blur="${textAreaIsFocused}"
         .value="${messageText}"
         @input="${handleInput}"
         @keydown="${handleInput}"/>
@@ -120,9 +150,13 @@ export function footerTemplate(customElementClass) {
         <cds-button 
             kind="ghost"
             size="sm" 
-
+            ?disabled="${messageText === ''}"
             @click="${sendInputToParent}">
-            ${SendFilled16({ slot: 'icon' })}
+            ${
+              messageText === ''
+                ? Send16({ slot: 'icon' })
+                : SendFilled16({ slot: 'icon' })
+            }
         </cds-button>
       </div>
       </div>

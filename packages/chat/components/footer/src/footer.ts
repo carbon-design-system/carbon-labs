@@ -18,6 +18,11 @@ export default class footer extends LitElement {
   static styles = styles;
 
   /**
+   * resizeobserver for when parent is larger then 672px
+   */
+  private _resizeObserver;
+
+  /**
    * custom placeholder for input field
    */
   @property({ type: String, attribute: 'input-placeholder', reflect: true })
@@ -33,7 +38,19 @@ export default class footer extends LitElement {
    * disable hamburger menu
    */
   @property({ type: Boolean, attribute: 'disable-menu' })
-  _disableMenu;
+  _disableMenu = true;
+
+  /**
+   * expanded mode when chat width is large
+   */
+  @state()
+  _expandedHeight;
+
+  /**
+   * expanded mode when chat height is large
+   */
+  @state()
+  _expandedWidth;
 
   /**
    * string variable edited by textInput, auto-updates at every keystroke and is sent to the api url on 'enter' or 'send' button click
@@ -68,6 +85,12 @@ export default class footer extends LitElement {
    * LIT firstUpdated cycle to define initial parameters on first render
    */
   firstUpdated() {
+    this._checkSize();
+    this._resizeObserver = new ResizeObserver(async () => {
+      this._checkSize();
+    });
+    this._resizeObserver.observe(this.parentElement);
+
     const SpeechRecognition =
       (window as any).SpeechRecognition ||
       (window as any).webkitSpeechRecognition;
@@ -101,6 +124,18 @@ export default class footer extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has('_messageText')) {
       this.updateTextAreaHeight();
+    }
+  }
+
+  /** checkSize - see if width/height warrant changing the footer mode
+   */
+  _checkSize() {
+    const parentWidth = this.parentElement?.clientWidth;
+    const parentHeight = this.parentElement?.clientHeight;
+    if (parentWidth && parentHeight) {
+      this._expandedWidth = this.parentElement?.clientWidth > 672;
+      this._expandedHeight =
+        this._expandedWidth && this.parentElement?.clientHeight > 672;
     }
   }
 
@@ -160,7 +195,10 @@ export default class footer extends LitElement {
   /** handleMenuFileUpload - upload event in footer menu
    * @param {event} event - lit event sent by the file uploader in menu
    **/
-  _handleMenuFileUpload() {}
+  _handleMenuFileUpload(event) {
+    const files = event.detail?.addedFiles;
+    console.log(files[0]);
+  }
 
   /**
    * Set the message text value on input
@@ -194,6 +232,14 @@ export default class footer extends LitElement {
       textArea.style.height = 'auto';
       textArea.style.height = '40px';
     }
+  }
+
+  /**
+   * set focus on component when text area is focused
+   * @param {event} event - lit event sent by textarea focus
+   */
+  _textAreaIsFocused(event) {
+    console.log(event);
   }
 
   /**

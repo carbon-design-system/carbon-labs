@@ -26,29 +26,55 @@ $css--plex: true !default;
     min-block-size: 56px;
   }
 
+  .#{$clabs-prefix}--chat-footer-container-expanded {
+    background: none;
+    margin-block-end: 16px;
+    min-block-size: 56px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-items-expanded {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    background: $background;
+    gap: 4px;
+    min-block-size: 56px;
+    padding-inline: 16px 8px;
+  }
+
   .#{$clabs-prefix}--chat-footer-prompt-items {
     display: flex;
     align-items: center;
-    padding: 0 8px;
-    border-radius: 8px;
+    border-radius: 0 0 8px 8px;
     background: $background;
-    border-block-end: 1px solid rgba(69, 137, 255, 0.2);
     border-block-start: 1px solid $border-subtle;
-    border-inline-end: 1px solid rgba(69, 137, 255, 0.2);
-
-    border-inline-start: 1px solid rgba(69, 137, 255, 0.2);
-    gap: 6px;
+    gap: 4px;
     min-block-size: 56px;
+    padding-inline: 16px 8px;
   }
 
   .#{$clabs-prefix}--chat-footer-menu {
     box-sizing: border-box;
     padding: 16px;
     border: 1px solid $border-subtle;
-    border-radius: 8px;
     background: $background;
     inline-size: 100%;
     margin-block-end: 4px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container {
+    z-index: 100;
+    display: flex;
+    gap: 16px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container cds-file-uploader {
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container-item {
+    display: inline-flex;
+    flex: 1;
   }
 
   .#{$clabs-prefix}--chat-footer-button {

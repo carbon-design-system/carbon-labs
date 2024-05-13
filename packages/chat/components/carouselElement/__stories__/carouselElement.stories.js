@@ -75,6 +75,7 @@ export const Showcase = {
         html`
           <div style="width:100%">
             <h5>${example.name}</h5>
+            <br />
             <clabs-chat-carousel content="${example.content}">
             </clabs-chat-carousel>
           </div>

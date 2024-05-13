@@ -33,7 +33,7 @@ export const Default = {
             text: 'Greetings, how may I help you?',
             origin: 'bot',
             hasError: false,
-            time: '4:56pm',
+            time: '16:56',
             index: 0,
             disableButtons: true,
             elements: [
@@ -132,7 +132,7 @@ const slottingArgs = {
     {
       origin: 'user',
       hasError: false,
-      time: '2:06pm',
+      time: '14:06',
       index: 0,
       elements: [
         {
@@ -146,7 +146,7 @@ const slottingArgs = {
       text: '',
       origin: 'bot',
       hasError: false,
-      time: '2:07pm',
+      time: '14:07',
       index: 1,
       elements: [
         {
@@ -307,7 +307,7 @@ export const Slotting = {
           <clabs-chat-message
             slot="message-items"
             origin="user"
-            time-stamp="9:02pm"
+            time-stamp="9:02"
             index="0">
             <clabs-chat-text
               slot="message-item-content"
@@ -318,7 +318,7 @@ export const Slotting = {
           <clabs-chat-message
             slot="message-items"
             origin="bot"
-            time-stamp="9:04pm"
+            time-stamp="9:04"
             index="1">
             <clabs-chat-text
               slot="message-item-content"
@@ -625,7 +625,7 @@ const conversationExamples = {
     {
       origin: 'bot',
       hasError: false,
-      time: '4:51pm',
+      time: '16:51',
       index: 0,
       elements: [
         {
@@ -676,7 +676,7 @@ const conversationExamples = {
     {
       origin: 'user',
       hasError: false,
-      time: '0:00am',
+      time: '10:32',
       index: 0,
       elements: [
         {
@@ -690,7 +690,7 @@ const conversationExamples = {
       text: '',
       origin: 'bot',
       hasError: false,
-      time: '0:00am',
+      time: '10:33',
       index: 1,
       elements: [
         {
@@ -838,12 +838,12 @@ const conversationExamples = {
     {
       origin: 'user',
       hasError: false,
-      time: '0:00am',
+      time: '10:32',
       index: 0,
       elements: [
         {
           content:
-            'Hello, show me a simple table based on Seinfeld Characters then display the following charts with small mockup datasets: a bar chart, a scatter plot, a pie chart, a boxplot, a map, a matrix and a line chart.',
+            'Hello, show me a simple table based on Seinfeld Characters then display the following charts with small mockup datasets: a horizontal bar chart, a scatter plot, a pie chart, a boxplot, a map, a matrix and a line chart.',
           type: 'text',
         },
       ],
@@ -852,7 +852,7 @@ const conversationExamples = {
       text: '',
       origin: 'bot',
       hasError: false,
-      time: '0:00am',
+      time: '10:34',
       index: 1,
       elements: [
         {
@@ -865,12 +865,12 @@ const conversationExamples = {
           type: 'table',
         },
         {
-          content: 'Here is your bar chart:\n',
+          content: 'Here is your horizontal layered bar chart:\n',
           type: 'text',
         },
         {
           content:
-            '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"A simple bar chart with embedded data","data":{"values":[{"x axis value":"A","y axis value":28},{"x axis value":"B","y axis value":55},{"x axis value":"C","y axis value":43},{"x axis value":"D","y axis value":91},{"x axis value":"E","y axis value":81},{"x axis value":"F","y axis value":53},{"x axis value":"G","y axis value":19},{"x axis value":"H","y axis value":87},{"x axis value":"I","y axis value":52}]},"mark":"bar","encoding":{"x":{"field":"x axis value","type":"nominal","axis":{"labelAngle":0}},"y":{"field":"y axis value","type":"quantitative"}}}',
+            '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"url":"https://vega.github.io/vega-lite/data/seattle-weather.csv"},"title":"Daily Max Temperatures (C) in Cleveland, OH","config":{"view":{"strokeWidth":0,"step":13},"axis":{"domain":false}},"mark":"rect","encoding":{"x":{"field":"date","timeUnit":"date","type":"ordinal","title":"Day","axis":{"labelAngle":0,"format":"%e"}},"y":{"field":"date","timeUnit":"month","type":"ordinal","title":"Month"},"color":{"field":"temp_max","aggregate":"max","type":"quantitative","legend":{"title":null}}}}',
           type: 'chart',
         },
         {
@@ -939,7 +939,7 @@ const conversationExamples = {
       text: 'what is the nature of art?',
       origin: 'user',
       hasError: false,
-      time: '8:51am',
+      time: '8:51',
       index: 0,
       elements: [{ content: 'what is the nature of art?', type: 'text' }],
     },
@@ -947,7 +947,7 @@ const conversationExamples = {
       text: 'the nature of art is a complex and multifaceted topic that has been debated by philosophers, critics, and scholars for centuries. at its core, art is the creation of aesthetic objects or experiences that are intended to elicit an emotional response from the viewer. this can take many forms, including painting, sculpture, photography, music, and literature.\n\nart can serve a variety of purposes, including the expression of the artists personal vision, the exploration of complex social or political issues, or the simple enjoyment of beauty. the nature of art is also influenced by cultural and historical context, and can evolve over time as new techniques and materials are developed.\n\n',
       origin: 'bot',
       hasError: false,
-      time: '8:51am',
+      time: '8:51',
       index: 1,
       elements: [
         {
@@ -961,7 +961,7 @@ const conversationExamples = {
       text: 'how much do aesthetics play into it?',
       origin: 'user',
       hasError: false,
-      time: '8:52am',
+      time: '8:52',
       index: 2,
       elements: [
         {
@@ -974,7 +974,7 @@ const conversationExamples = {
       text: 'aesthetics play a significant role in the creation and appreciation of art. the aesthetic qualities of a piece of art, such as its form, color, and composition, are often a key factor in determining its overall effectiveness and appeal. in addition, the aesthetic principles that underlie a work of art can influence its interpretation and meaning.\n\n\n',
       origin: 'bot',
       hasError: false,
-      time: '8:52am',
+      time: '8:52',
       index: 3,
       elements: [
         {
@@ -988,7 +988,7 @@ const conversationExamples = {
       text: 'Should aesthetics not matter if its a purely subjective interpretation?',
       origin: 'user',
       hasError: false,
-      time: '8:53am',
+      time: '8:53',
       index: 4,
       elements: [
         {
@@ -1002,7 +1002,7 @@ const conversationExamples = {
       text: 'while aesthetic evaluations are subjective, they can still provide valuable insights into the ways in which art can be appreciated and understood. the aesthetic qualities of a piece of art can influence how it is experienced and interpreted, and can also reflect the cultural and historical context in which it was created.\n\n\n\n',
       origin: 'bot',
       hasError: false,
-      time: '8:53am',
+      time: '8:53',
       index: 5,
       elements: [
         {
@@ -1018,7 +1018,7 @@ const conversationExamples = {
       text: 'Hello friend',
       origin: 'user',
       hasError: false,
-      time: '4:51pm',
+      time: '16:51',
       index: 0,
       elements: [{ content: 'Hello friend', type: 'text' }],
     },
@@ -1028,14 +1028,14 @@ const conversationExamples = {
       text: 'Can you give me a list of flower images?',
       origin: 'user',
       hasError: false,
-      time: '4:56pm',
+      time: '16:56',
       index: 0,
     },
     {
       text: 'Of course, here is a list of flowers:\nCosmos: https://bouqs.com/blog/wp-content/uploads/2019/05/20_summer-cosmos.jpg Dahlia: https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg Zinnia: https://bouqs.com/blog/wp-content/uploads/2023/06/zinnia-gbcbfedd94_1280.jpg Chrysanthemum: https://bouqs.com/blog/wp-content/uploads/2021/09/chrysanthemum-5668882_1280.jpg Celosia: https://bouqs.com/blog/wp-content/uploads/2021/09/celosia-7299458_1280.jpg Sun flower: https://bouqs.com/blog/wp-content/uploads/2021/05/sunflower-fields.jpg Snapdragon: https://bouqs.com/blog/wp-content/uploads/2021/09/snapdragon-20809_1280.jpg Strawflower: https://bouqs.com/blog/wp-content/uploads/2021/09/strawflower-362280_1280.jpg Source: https://bouqs.com/blog/types-of-flowers-annual-perennial-biennial/',
       origin: 'bot',
       hasError: false,
-      time: '4:57pm',
+      time: '16:57',
       index: 1,
     },
   ],
@@ -1043,14 +1043,14 @@ const conversationExamples = {
     {
       text: 'Find me a dataset about the weather in Ohio circa 2015',
       origin: 'user',
-      time: '4:56pm',
+      time: '16:56',
       index: 0,
     },
     {
       origin: 'bot',
       displayName: 'Agent: George',
       displayColor: '#a3fffc',
-      time: '4:57pm',
+      time: '16:57',
       index: 1,
       elements: [
         { content: 'I found the relevent file for you:', type: 'text' },
@@ -1066,7 +1066,7 @@ const conversationExamples = {
       origin: 'bot',
       displayName: 'Agent: Micheal',
       displayColor: '#d0b2fe',
-      time: '5:07pm',
+      time: '17:07',
       index: 2,
       elements: [
         {
@@ -1104,7 +1104,7 @@ const conversationExamples = {
       origin: 'bot',
       displayName: 'Agent: Sophia',
       displayColor: '#ade0ff',
-      time: '5:09pm',
+      time: '17:09',
       index: 3,
       elements: [
         {
@@ -1144,7 +1144,7 @@ export const Playground = {
   render: ({ testMode, sampleConversation, conversationJSON }) => html`
     <div
       style="height:calc(100vh - 84px); overflow:hidden; display:inline-flex;max-width:100%;width:100%;">
-      <div style="height:calc(100vh - 84px); flex:1;">
+      <div style="height:calc(100vh - 86px); flex:1;">
         <clabs-chat
           user-name="user"
           agent-name="bot"
@@ -1176,7 +1176,7 @@ export const Playground = {
       sampleConversation !== 'None' &&
       sampleConversation !== 'Conversation tutorial'
         ? html` <div
-            style="height:calc(100vh - 84px); flex:1; padding-left:20px;max-width:100%;overflow-y:auto;">
+            style="height:calc(100vh - 86px); flex:1; padding-left:20px;max-width:100%;overflow-y:auto;">
             <h4>JSON conversation object</h4>
             <cds-code-snippet
               wrap-text

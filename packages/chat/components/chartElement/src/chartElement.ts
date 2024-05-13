@@ -107,7 +107,19 @@ export default class chartElement extends LitElement {
    * Enable post-hoc carbon charts styling
    */
   @property({ type: Boolean, attribute: 'enable-zooming' })
-  enableZooming;
+  enableZooming = false;
+
+  /**
+   * Enable legend filtering
+   */
+  @property({ type: Boolean, attribute: 'enable-legend-filtering' })
+  enableLegendFiltering = true;
+
+  /**
+   * EnableBrushing
+   */
+  @property({ type: Boolean, attribute: 'enable-brushing' })
+  enableBrushing = false;
 
   /**
    * errorMessage - specifies error when debugging
@@ -150,6 +162,18 @@ export default class chartElement extends LitElement {
    */
   @state()
   modalContent;
+
+  /**
+   * tooltip value from tooltip event that targets the custom div in the component
+   */
+  @state()
+  toolTipValues;
+
+  /**
+   * internal brush selection value
+   */
+  @state()
+  _enableBrushSelection = false;
 
   /** detect when component is rendered to process visualization specification object
    */
@@ -275,7 +299,8 @@ export default class chartElement extends LitElement {
    * _displayVisualization - get unique tag and generate vega lite
    */
   async _displayVisualization() {
-    const targetID = '#' + clabsPrefix + '--chat-embed-vis-' + this._uniqueID;
+    //const targetID = '#' + clabsPrefix + '--chat-embed-vis-' + this._uniqueID;
+    const targetID = '.' + clabsPrefix + '--chat-chart-container';
     const targetDiv = this.shadowRoot?.querySelector(targetID);
     if (targetDiv instanceof HTMLElement) {
       try {
@@ -286,10 +311,37 @@ export default class chartElement extends LitElement {
         await VegaEmbed.default(targetDiv, this._visualizationSpec, {
           actions: false,
           hover: this.enableTooltip,
+          tooltip: {
+            /**
+             * custom tooltip renderer for vega
+             * @param {object} value - object containing speech result
+             * @param {function} sanitize - sanitize html to present malicious attacks
+             */
+            formatTooltip: (value, sanitize) => {
+              return this._toolTipBuilder(value, sanitize);
+            },
+          },
           renderer: renderMode as 'canvas' | 'svg',
-        }).catch((error) => {
-          this._errorMessage = 'VEGA-LITE rendering error: ' + error;
-        });
+        })
+          .then(({ view }) => {
+            if (this._enableBrushSelection) {
+              try {
+                view.addSignalListener('brush', (_, brush) => {
+                  const data = view.data('brush_store');
+                  console.log(data);
+                  console.log(brush);
+                });
+              } catch (brushError) {
+                console.log(brushError);
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            this._visualizationSpec = null;
+            this.chartLoading = false;
+            this._errorMessage = 'VEGA-LITE rendering error: ' + error;
+          });
         this.chartLoading = false;
       } catch (error) {
         this._errorMessage = 'VEGA-LITE ERROR: VegaEmbed failed to render';
@@ -298,6 +350,73 @@ export default class chartElement extends LitElement {
       this._errorMessage =
         'CARBON CHART ERROR: Failed to retrieve chart container div: ' +
         targetID;
+    }
+  }
+
+  /**
+   * internal vega tooltip dom generator
+   * @param {object} value - column/value dictionary inside hovered data point
+   * @param {function} _sanitize - santization function to previous mailicious HTML
+   */
+  _toolTipBuilder(value, _sanitize) {
+    const tooltip = document.querySelector('#vg-tooltip-element');
+    //tooltip.classList.add(clabsPrefix + '--chat-chart-tooltip-styles')
+    //console.log(value)
+    //this.toolTipValues = value
+    //console.log(this.toolTipValues)
+    if (tooltip instanceof HTMLElement) {
+      let backgroundColor = '#161616';
+      let textColor = '#f4f4f4';
+      //let titleFont = 'IBM Plex Sans, sans-serif';
+      const defaultFont = 'IBM Plex Sans Condensed, Arial, sans-serif';
+      let gridColor = '#3d3d3d';
+      if (this.theme === 'light') {
+        backgroundColor = '#ffffff';
+        textColor = '#161616';
+        //labelColor = '#777677';
+        gridColor = '#e0e0e0';
+      }
+
+      tooltip.style.color = textColor;
+      //tooltip.style.border = '1px solid '+gridColor;
+      tooltip.style.border = 'none';
+      tooltip.style.padding = '0px';
+      tooltip.style.borderRadius = '0px';
+      tooltip.style.background = backgroundColor;
+      tooltip.style.fontFamily = defaultFont;
+      //tooltip.style.height = 'auto';
+      //tooltip.style.
+
+      let toolTipHTML =
+        '<div style="background:' +
+        backgroundColor +
+        '; display: flex; flex-direction: column; align-items: start; height:auto; width:100%;">';
+      let sectionBorder = '1px solid ' + gridColor;
+      const entrySize = Object.keys(value).length;
+      let entryCount = 0;
+      for (const [key, dataValue] of Object.entries(value)) {
+        if (entryCount >= entrySize - 1) {
+          sectionBorder = 'none';
+        }
+        toolTipHTML +=
+          '<div style="display: flex; justify-content: space-between; align-items: center; width:100%; border-bottom: ' +
+          sectionBorder +
+          '; padding:6px; box-sizing: border-box;">';
+        toolTipHTML +=
+          '<span style="text-align: left; flex:1;font-size:10px; white-space: nowrap;">' +
+          key +
+          '</span>';
+        toolTipHTML +=
+          '<span style="text-align: right; flex:1;font-size:12px; white-space: nowrap; padding-left:16px;">' +
+          dataValue +
+          '</span>';
+        toolTipHTML += '</div>';
+        entryCount++;
+      }
+      toolTipHTML += '</div>';
+      return toolTipHTML;
+    } else {
+      return '';
     }
   }
 
@@ -366,7 +485,14 @@ export default class chartElement extends LitElement {
           await VegaEmbed.default(modalDiv, this._visualizationSpec, {
             actions: false,
             hover: this.enableTooltip,
+            tooltip: { formatTooltip: this._toolTipBuilder },
             renderer: renderMode as 'canvas' | 'svg',
+          }).catch((error) => {
+            console.log(error);
+            //this._visualizationSpec = null;
+            this._errorMessage = 'VEGA-LITE rendering error: ' + error;
+            console.log(this._errorMessage);
+            this.requestUpdate();
           });
         } catch (modalError) {
           console.log(modalError);
@@ -508,12 +634,6 @@ export default class chartElement extends LitElement {
             columnCount = repeatedSpec['repeat']['column'].length;
           }
         }
-
-        console.log(
-          'w:' + currentContainerWidth + ' - h:' + currentContainerHeight
-        );
-        console.log(columnCount + ' ' + rowCount);
-        console.log(repeatedSpec['padding']);
 
         const legendHeight = 16 * 3;
 
@@ -861,6 +981,9 @@ export default class chartElement extends LitElement {
           bar: {
             discreteBandSize: 12,
           },
+          line: {
+            interpolate: 'monotone',
+          },
           title: {
             font: titleFont,
             color: textColor,
@@ -891,7 +1014,6 @@ export default class chartElement extends LitElement {
             labelFontSize: 12, //fillOpacity: 1,
             strokeWidth: 1, //fontWeight: 'bold',
             offset: 20,
-            symbolSize: 160,
             symbolBaseFillColor: null,
             gradientLength: 246,
             gradientThickness: 8,
@@ -904,19 +1026,27 @@ export default class chartElement extends LitElement {
       switch (chartType) {
         case 'bar':
           isOrdinal = false;
+          this._enableBrushSelection = true;
           break;
-        case 'point':
+        case 'scatter':
           isOrdinal = false;
-          /*spec['config']['point'] = {
-            fillOpacity: 0.3,
-            strokeWidth: 2,
-            filled: true,
-            strokeOpacity: 1.0,
-            size: 100,
-          };*/
+          this._enableBrushSelection = true;
           break;
         case 'circle':
+        case 'point':
           isOrdinal = false;
+          this._enableBrushSelection = true;
+          /*if(spec['config']){
+          spec['config'][chartType] = {
+            fillOpacity: 0.3,
+            fill: backgroundColor,
+            strokeWidth: 1,
+            filled: true,
+            strokeOpacity: 1.0,
+          };
+          }*/
+          isOrdinal = false;
+          this._enableBrushSelection = true;
           break;
         case 'square':
           isOrdinal = false;
@@ -926,6 +1056,7 @@ export default class chartElement extends LitElement {
           break;
         case 'line':
           isOrdinal = false;
+          this._enableBrushSelection = true;
           break;
         case 'text':
           isOrdinal = false;
@@ -956,6 +1087,7 @@ export default class chartElement extends LitElement {
           break;
         case 'area':
           isOrdinal = false;
+          this._enableBrushSelection = true;
           break;
         case 'rule':
           isOrdinal = false;
@@ -1058,6 +1190,60 @@ export default class chartElement extends LitElement {
         }
       //}
       }*/
+      }
+
+      if (!this.enableBrushing) {
+        this._enableBrushSelection = false;
+      }
+
+      if (this._enableBrushSelection) {
+        spec['params'] = [
+          {
+            name: 'brush',
+            select: { type: 'interval' },
+          },
+        ];
+      }
+
+      if (this.enableLegendFiltering) {
+        if (spec.encoding?.color?.field) {
+          const fieldName = spec.encoding?.color?.field;
+
+          spec['params'] = [
+            {
+              name: 'hover',
+              select: { type: chartType, on: 'mouseover', fields: [fieldName] },
+              bind: 'legend',
+            },
+            {
+              name: 'select',
+              select: { type: chartType, toggle: true, fields: [fieldName] },
+              bind: 'legend',
+            },
+            {
+              name: 'brush',
+              select: { type: 'interval' },
+            },
+          ];
+
+          spec['params'] = [{ name: 'brush', select: { type: 'interval' } }];
+
+          spec.selection = {
+            LegendClicked: {
+              type: 'single',
+              fields: [spec.encoding.color.field],
+              bind: 'legend',
+              empty: false,
+            },
+          };
+          if (chartType !== 'geoshape') {
+            spec.transform = [
+              {
+                filter: { selection: 'LegendClicked' },
+              },
+            ];
+          }
+        }
       }
     }
 

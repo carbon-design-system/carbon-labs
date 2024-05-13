@@ -148,7 +148,7 @@ export default class carouselElement extends LitElement {
         );
       }
 
-      this._maxSlideCounter = Math.floor(
+      this._maxSlideCounter = Math.ceil(
         this._carouselContent.length / this._itemsPerSlide
       );
 

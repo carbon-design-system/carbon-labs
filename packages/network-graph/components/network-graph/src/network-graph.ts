@@ -157,7 +157,7 @@ export class NetworkGraph extends LitElement {
    * Boolean for enabling zoomToFit for canvas
    */
   @property({ type: Boolean })
-  zoomToFit = false;
+  zoomToFit = true;
 
   /**
    * Lifecycles Method used to render nodes and links for the graph network on canvas
@@ -196,6 +196,7 @@ export class NetworkGraph extends LitElement {
         .backgroundColor(this.canvasBgColor)
         .enableNodeDrag(this.isNodeDraggable)
         .enablePanInteraction(this.isPanInteraction)
+        .cooldownTicks(100)
         .enableZoomInteraction(this.isZoomInteraction)
         .enablePointerInteraction(this.isPointerInteraction)
         .onNodeClick((node) => {
@@ -326,7 +327,7 @@ export class NetworkGraph extends LitElement {
         }
       }
       if (this.zoomToFit) {
-        graph.onEngineStop(() => graph.zoomToFit(400));
+        graph.onEngineStop(() => graph.zoomToFit(400, 20));
       }
     }
   }

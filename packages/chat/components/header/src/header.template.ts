@@ -39,7 +39,11 @@ export function headerTemplate(customElementClass) {
         <div class="${clabsPrefix}--chat-header-elements-left">
           ${!disableMenu && !disableHeaderButtons
             ? html` <div class="${clabsPrefix}--chat-header-elements-icon">
-                <cds-button kind="ghost" size="sm" @click="${handleMenuToggle}">
+                <cds-button
+                  kind="ghost"
+                  ?disabled="${true}"
+                  size="sm"
+                  @click="${handleMenuToggle}">
                   ${Menu24({ slot: 'icon' })}
                 </cds-button>
               </div>`
@@ -52,11 +56,15 @@ export function headerTemplate(customElementClass) {
         </div>
 
         <div class="${clabsPrefix}--chat-header-elements-right">
-          <div class="${clabsPrefix}--chat-header-elements-icon">
-            <cds-slug kind="hollow">
-              <div slot="body-text">
-                <p>${title}</p>
-              </div>
+          <div
+            class="${clabsPrefix}--chat-header-elements-icon"
+            style="pointer-events:none;">
+            <cds-slug
+              size="xs"
+              alignment="bottom-right"
+              slot="slug"
+              kind="hollow"
+              has-actions="">
             </cds-slug>
           </div>
 
@@ -85,7 +93,11 @@ export function headerTemplate(customElementClass) {
                     `}
 
                 <div class="${clabsPrefix}--chat-header-elements-icon">
-                  <cds-button kind="ghost" size="sm" @click="${handleSubtract}">
+                  <cds-button
+                    kind="ghost"
+                    size="sm"
+                    ?disabled="${true}"
+                    @click="${handleSubtract}">
                     ${Subtract16({ slot: 'icon' })}
                   </cds-button>
                 </div>

@@ -36,8 +36,7 @@ $css--plex: true !default;
       var(--chat-message-unique-display-color, none);
     inline-size: 100%;
     max-inline-size: 100%;
-    padding-block-start: 4px;
-    padding-inline-start: 10px;
+    padding-inline-start: 16px;
   }
 
   .#{$clabs-prefix}--chat-message-section-temporary {
@@ -92,7 +91,6 @@ $css--plex: true !default;
     justify-content: center;
     block-size: 32px;
     inline-size: 32px;
-    padding-block-start: 4px;
   }
 
   .#{$clabs-prefix}--chat-message-agent-icon {

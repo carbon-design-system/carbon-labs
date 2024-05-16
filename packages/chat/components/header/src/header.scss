@@ -13,7 +13,6 @@ $css--plex: true !default;
 
 :host(#{$clabs-prefix}-chat-header) {
   position: absolute;
-  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +46,6 @@ $css--plex: true !default;
     flex-grow: 1;
     align-items: center;
     block-size: 100%;
-    padding-inline: 10px;
   }
 
   .#{$clabs-prefix}--chat-header-elements-left {
@@ -62,7 +60,6 @@ $css--plex: true !default;
     display: flex;
     align-items: center;
     block-size: 100%;
-    gap: 10px;
   }
 
   .#{$clabs-prefix}--chat-header-elements-icon {
@@ -70,6 +67,7 @@ $css--plex: true !default;
     align-items: center;
     justify-content: center;
     block-size: 100%;
+    inline-size: 40px;
   }
 
   .#{$clabs-prefix}--chat-header-title {

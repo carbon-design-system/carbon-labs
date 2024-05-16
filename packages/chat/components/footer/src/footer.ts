@@ -35,12 +35,6 @@ export default class footer extends LitElement {
   _disableInput;
 
   /**
-   * disable hamburger menu
-   */
-  @property({ type: Boolean, attribute: 'disable-menu' })
-  _disableMenu = true;
-
-  /**
    * expanded mode when chat width is large
    */
   @state()
@@ -253,6 +247,7 @@ export default class footer extends LitElement {
    **/
   _sendInputToParent() {
     const value = this._messageText;
+    this._endRecording();
 
     if (value.length > 0) {
       this._messageText = '';

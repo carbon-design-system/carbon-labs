@@ -68,7 +68,7 @@ export function messageTemplate(customElementClass) {
       ${origin === 'user'
         ? html` <div class="${clabsPrefix}--chat-message-content">
             <div class="${clabsPrefix}--chat-message-timestamp-user">
-              you ${timeStamp}
+              ${displayName ? displayName : 'You'} ${timeStamp}
             </div>
             <div class="${clabsPrefix}--chat-message-response-user">
               <slot

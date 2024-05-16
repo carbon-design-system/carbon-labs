@@ -627,8 +627,7 @@ export default class message extends LitElement {
       }
 
       this.streamingSpeed =
-        this.baseStreamingSpeed +
-        Math.random() * Math.random() * 50;
+        this.baseStreamingSpeed + Math.random() * Math.random() * 50;
 
       switch (this.temporaryMessage.type) {
         case 'code':

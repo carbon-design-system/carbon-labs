@@ -2628,7 +2628,7 @@ __metadata:
   resolution: "@carbon-labs/ai-chat@workspace:packages/chat"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.7.0"
+    "@carbon-labs/utilities": "npm:0.8.0-rc.0"
     "@carbon/charts": "npm:^1.15.5"
     "@carbon/web-components": "npm:2.7.0"
     "@ibm/telemetry-js": "npm:^1.5.0"
@@ -2643,7 +2643,7 @@ __metadata:
   resolution: "@carbon-labs/ai-feedback@workspace:packages/feedback"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.7.0"
+    "@carbon-labs/utilities": "npm:0.8.0-rc.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.7.0"
     uuid: "npm:^9.0.1"
@@ -2655,14 +2655,14 @@ __metadata:
   resolution: "@carbon-labs/network-graph@workspace:packages/network-graph"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.7.0"
+    "@carbon-labs/utilities": "npm:0.8.0-rc.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.7.0"
     force-graph: "npm:^1.43.5"
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/utilities@npm:0.7.0, @carbon-labs/utilities@workspace:packages/utilities":
+"@carbon-labs/utilities@npm:0.8.0-rc.0, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/utilities@workspace:packages/utilities"
   dependencies:

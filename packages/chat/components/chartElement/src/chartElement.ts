@@ -28,6 +28,12 @@ export default class chartElement extends LitElement {
   content;
 
   /**
+   * Enable debugger to inspect spec and show error messages in the component
+   */
+  @property({ type: Boolean, attribute: 'debug-mode' })
+  debugMode;
+
+  /**
    * Event listener to check if parent visibility changed
    */
   private intersectionObserver;
@@ -71,55 +77,73 @@ export default class chartElement extends LitElement {
    * Disable all chart option buttons, supercedes all other individual button options
    */
   @property({ type: Boolean, attribute: 'disable-options' })
-  disableOptions = false;
+  disableOptions;
 
   /**
    * Disable fullscreen button
    */
   @property({ type: Boolean, attribute: 'disable-fullscreen' })
-  disableFullscreen = false;
+  disableFullscreen;
 
   /**
    * Disable image export button
    */
   @property({ type: Boolean, attribute: 'disable-export' })
-  disableExport = false;
+  disableExport;
 
   /**
    * Disable code inspector button
    */
   @property({ type: Boolean, attribute: 'disable-code-inspector' })
-  disableCodeInspector = false;
+  disableCodeInspector;
 
   /**
    * Disable editor button
    */
   @property({ type: Boolean, attribute: 'disable-editor' })
-  disableEditor = false;
+  disableEditor;
 
   /**
    * Enable tooltip in the chart component
    */
   @state()
-  enableTooltip = true;
+  enableTooltip;
 
   /**
    * Enable user-zooming in the chart component
    */
   @property({ type: Boolean, attribute: 'enable-zooming' })
-  enableZooming = false;
+  enableZooming;
 
   /**
    * Enable filtering of data points when clicking legend
    */
   @property({ type: Boolean, attribute: 'enable-legend-filtering' })
-  enableLegendFiltering = true;
+  enableLegendFiltering;
 
   /**
    * Enable user-brush selection to fetch groups of elements to make targeted query
    */
-  @property({ type: Boolean, attribute: 'enable-brushing' })
-  enableBrushing = false;
+  @property({ type: Boolean, attribute: 'enable-multi-selections' })
+  enableMultiSelections;
+
+  /**
+   * internal brush selection value
+   */
+  @state()
+  _authorizeMultiSelection = false;
+
+  /**
+   * Enable user-brush selection to fetch groups of elements to make targeted query
+   */
+  @property({ type: Boolean, attribute: 'enable-single-selections' })
+  enableSingleSelections;
+
+  /**
+   * internal hover/click selection value
+   */
+  @state()
+  _authorizeSingleSelection = false;
 
   /**
    * errorMessage - specifies error when debugging
@@ -140,10 +164,22 @@ export default class chartElement extends LitElement {
   chartLoading = true;
 
   /**
-   * visualizationSpec -  parsed object from content string
+   * _previousSpec -  original parsed Specification from content
+   */
+  @state()
+  _previousSpec;
+
+  /**
+   * _visualizationSpec -  parsed object from content string
    */
   @state()
   _visualizationSpec;
+
+  /**
+   * _brokenSpec -  specification causing errors
+   */
+  @state()
+  _brokenSpec;
 
   /**
    * boolean to display fullscreen chart and code
@@ -170,10 +206,10 @@ export default class chartElement extends LitElement {
   toolTipValues;
 
   /**
-   * internal brush selection value
+   * streaming - flag to denote streaming is enabled
    */
   @state()
-  _enableBrushSelection = false;
+  streaming;
 
   /** detect when component is rendered to process visualization specification object
    */
@@ -240,6 +276,9 @@ export default class chartElement extends LitElement {
 
     if (changedProperties.has('containerWidth')) {
       this.style.setProperty('--chat-chart-element-width', this.containerWidth);
+      if (!this.chartLoading && this._visualizationSpec) {
+        await this._displayVisualization();
+      }
     }
 
     if (changedProperties.has('containerHeight')) {
@@ -247,12 +286,15 @@ export default class chartElement extends LitElement {
         '--chat-chart-element-height',
         this.containerHeight
       );
+      if (!this.chartLoading && this._visualizationSpec) {
+        await this._displayVisualization();
+      }
     }
 
     if (changedProperties.has('_visualizationSpec')) {
       this._errorMessage = null;
       const specificationFinalizedEvent = new CustomEvent(
-        'on-specification-ready',
+        'on-chart-specification-ready',
         {
           detail: { spec: this._visualizationSpec },
           bubbles: true,
@@ -263,6 +305,22 @@ export default class chartElement extends LitElement {
       await this._displayVisualization();
     }
 
+    if (changedProperties.has('_errorMessage')) {
+      if (this._errorMessage !== '') {
+        const renderErrorEvent = new CustomEvent('on-chart-error', {
+          detail: {
+            action: 'CHART: error detected',
+            message: this._errorMessage,
+            content: this.content || 'unavailable',
+            parsedSpec: this._visualizationSpec || 'unavailable',
+          },
+          bubbles: true,
+          composed: true,
+        });
+        this.dispatchEvent(renderErrorEvent);
+      }
+    }
+
     if (!this.chartLoading) {
       if (
         changedProperties.has('containerHeight') ||
@@ -270,7 +328,9 @@ export default class chartElement extends LitElement {
         changedProperties.has('carbonify') ||
         changedProperties.has('theme') ||
         changedProperties.has('enableTooltip') ||
-        changedProperties.has('enableZooming')
+        changedProperties.has('enableZooming') ||
+        changedProperties.has('enableMultiSelections') ||
+        changedProperties.has('enableLegendFiltering')
       ) {
         this._prepareVisualization();
       }
@@ -299,8 +359,8 @@ export default class chartElement extends LitElement {
    * _displayVisualization - get unique tag and generate vega lite
    */
   async _displayVisualization() {
-    //const targetID = '#' + clabsPrefix + '--chat-embed-vis-' + this._uniqueID;
-    const targetID = '.' + clabsPrefix + '--chat-chart-container';
+    const targetID = '#' + clabsPrefix + '--chat-embed-vis-' + this._uniqueID;
+    //const targetID = '.' + clabsPrefix + '--chat-chart-container';
     const targetDiv = this.shadowRoot?.querySelector(targetID);
     if (targetDiv instanceof HTMLElement) {
       try {
@@ -324,33 +384,91 @@ export default class chartElement extends LitElement {
           renderer: renderMode as 'canvas' | 'svg',
         })
           .then(({ view }) => {
-            if (this._enableBrushSelection) {
+            this._previousSpec = this._visualizationSpec;
+            if (this._authorizeSingleSelection) {
+              try {
+                view.addSignalListener('picker', (_, value) => {
+                  this._singleDataSelected(value);
+                });
+              } catch (selectError) {
+                console.log(selectError);
+              }
+            }
+            if (this._authorizeMultiSelection) {
               try {
                 view.addSignalListener('brush', (_, brush) => {
-                  const data = view.data('brush_store');
-                  console.log(data);
-                  console.log(brush);
+                  this._multiDataSelected(brush);
                 });
               } catch (brushError) {
                 console.log(brushError);
               }
             }
           })
-          .catch((error) => {
-            console.log(error);
+          .catch(async (error) => {
+            console.log(error.message);
+            this._brokenSpec = this._visualizationSpec;
             this._visualizationSpec = null;
-            this.chartLoading = false;
-            this._errorMessage = 'VEGA-LITE rendering error: ' + error;
+            if (this._previousSpec) {
+              this.chartLoading = true;
+              this._errorMessage = '';
+              this._visualizationSpec = JSON.parse(
+                JSON.stringify(this._previousSpec)
+              );
+              await this._displayVisualization();
+            } else {
+              this.chartLoading = false;
+              this._errorMessage = 'RENDER ERROR: ' + error.message;
+            }
           });
         this.chartLoading = false;
       } catch (error) {
-        this._errorMessage = 'VEGA-LITE ERROR: VegaEmbed failed to render';
+        this._errorMessage = 'RENDER ERROR: failed to render';
       }
     } else {
       this._errorMessage =
-        'CARBON CHART ERROR: Failed to retrieve chart container div: ' +
+        'CHART COMPONENT ERROR: Failed to retrieve chart container id: ' +
         targetID;
     }
+  }
+
+  /**
+   * single data selection event to send to parent for processing
+   * @param {object} data - selected points from view event
+   */
+  _singleDataSelected(data) {
+    const singleSelectionEvent = new CustomEvent('on-chart-single-selection', {
+      detail: {
+        action: 'CHART: multiple data points selected',
+        selections: [data],
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(singleSelectionEvent);
+  }
+
+  /**
+   * multi data selection event from brush to send to parent for processing
+   * @param {object} data - selected points from view event
+   */
+  _multiDataSelected(data) {
+    const selectionPayload: { field: string; values: object }[] = [];
+    for (const field in data) {
+      const selection: { field: string; values: object } = {
+        field: field,
+        values: data[field],
+      };
+      selectionPayload.push(selection);
+    }
+    const multiSelectionEvent = new CustomEvent('on-chart-multi-selection', {
+      detail: {
+        action: 'CHART: multiple data points selected',
+        selections: selectionPayload,
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(multiSelectionEvent);
   }
 
   /**
@@ -454,8 +572,11 @@ export default class chartElement extends LitElement {
     const openNewWindow = window?.open(vegaURL, '_blank');
     if (openNewWindow) {
       setTimeout(() => {
+        const specPayload = this._visualizationSpec
+          ? this._visualizationSpec
+          : this._brokenSpec;
         const payload = {
-          spec: JSON.stringify(this._visualizationSpec, null, '\t'),
+          spec: JSON.stringify(specPayload, null, '\t'),
           mode: 'vega-lite',
         };
 
@@ -489,9 +610,10 @@ export default class chartElement extends LitElement {
             renderer: renderMode as 'canvas' | 'svg',
           }).catch((error) => {
             console.log(error);
+            //this._brokenSpec = this._visualizationSpec;
             //this._visualizationSpec = null;
-            this._errorMessage = 'VEGA-LITE rendering error: ' + error;
-            console.log(this._errorMessage);
+            //this._errorMessage = 'VEGA-LITE rendering error: ' + error;
+            //console.log(this._errorMessage);
             this.requestUpdate();
           });
         } catch (modalError) {
@@ -567,14 +689,14 @@ export default class chartElement extends LitElement {
     try {
       spec = JSON.parse(this.content);
     } catch (e) {
-      /*this._errorMessage =
-        'CARBON CHART ERROR: JSON parse() failed, specification is not valid JSON';*/
+      //this._errorMessage =
+      //'CARBON CHART ERROR: JSON parse() failed, specification is not valid JSON';
       return '';
     }
 
     if (!spec['$schema']) {
       this._errorMessage =
-        'CARBON CHART ERROR: JSON is valid but not a valid schema, missing "$schema" field';
+        'CHART COMPONENT ERROR: JSON is valid but not a valid schema, missing "$schema" field';
       return '';
     }
 
@@ -600,7 +722,7 @@ export default class chartElement extends LitElement {
     if ('layer' in spec) {
       layeredSpec = this._prepareSpecification(spec, false, true, 0);
       /*for (const [index, subSpec] of spec['layer'].entries()) {
-        const tempSubSpec = this._prepareSpecification(subSpec, true, false, index);
+        const tempSubSpec = this._prepareSpecification(JSON.parse(JSON.stringify(subSpec)), true, false, index+1);
         delete tempSubSpec['background'];
         delete tempSubSpec['padding'];
         layeredSpec['layer'][index] = tempSubSpec;
@@ -681,14 +803,6 @@ export default class chartElement extends LitElement {
       } else {
         //spec, editMarks, addConfig, layerIndex
         plainSpec = this._prepareSpecification(spec, true, true, 0);
-      }
-
-      if (this.enableZooming) {
-        plainSpec.selection = plainSpec.selection || {};
-        plainSpec.selection.grid = {
-          type: 'interval',
-          bind: 'scales',
-        };
       }
     }
 
@@ -848,30 +962,6 @@ export default class chartElement extends LitElement {
       }
     }
 
-    /*if (spec.data?.values?.length > 0) {
-      delete spec['data']['url'];
-      delete spec['data']['format'];
-      delete spec['data']['file'];
-    } else {
-      if (!spec.data?.url) {
-        this._errorMessage =
-          'ERROR: Schema is missing "values" and/or "url" in the "data" field';
-        this.requestUpdate();
-      }
-    }*/
-    /*if(!spec['data']){
-      this._errorMessage =
-          'ERROR: Schema is missing "data" filed';
-        this.requestUpdate();
-        return '';
-    }*/
-    /*if(!spec['data'] && !spec['layer'] && !spec['repeat']){
-      this._errorMessage =
-          'ERROR: Schema "data" field is empty, missing: values or url or layers or file';
-        this.requestUpdate();
-        return '';
-    }*/
-
     if (this.carbonify) {
       spec.background = backgroundColor;
 
@@ -883,6 +973,18 @@ export default class chartElement extends LitElement {
         spec.mark = { type: chartType };
       } else if (typeof spec.mark === 'object' && 'type' in spec.mark) {
         chartType = spec.mark.type;
+      } else if (spec['spec']) {
+        if (typeof spec.spec?.mark === 'string') {
+          chartType = spec.spec?.mark;
+          spec['spec'].mark = { type: chartType };
+        } else {
+          if (
+            typeof spec['spec'].mark === 'object' &&
+            'type' in spec['spec'].mark
+          ) {
+            chartType = spec['spec'].mark.type;
+          }
+        }
       }
 
       let titleOffset = -8;
@@ -958,7 +1060,7 @@ export default class chartElement extends LitElement {
             labelColor: labelColor,
             titleColor: textColor,
             tickColor: backgroundColor,
-            titlePadding: 6,
+            titlePadding: 4,
             titleFont: defaultFont,
             titleFontWeight: 400,
           },
@@ -973,16 +1075,6 @@ export default class chartElement extends LitElement {
           },
           view: {
             stroke: gridColor,
-          },
-          arc: {
-            stroke: gridColor,
-            strokeWidth: 1,
-          },
-          bar: {
-            discreteBandSize: 12,
-          },
-          line: {
-            interpolate: 'monotone',
           },
           title: {
             font: titleFont,
@@ -1022,44 +1114,49 @@ export default class chartElement extends LitElement {
         };
       }
 
+      this._authorizeSingleSelection = true;
+      this._authorizeMultiSelection = true;
       let isOrdinal: boolean;
       switch (chartType) {
         case 'bar':
           isOrdinal = false;
-          this._enableBrushSelection = true;
+          if (spec.config) {
+            spec.config.bar = {
+              discreteBandSize: 12,
+            };
+          }
           break;
         case 'scatter':
           isOrdinal = false;
-          this._enableBrushSelection = true;
           break;
         case 'circle':
         case 'point':
           isOrdinal = false;
-          this._enableBrushSelection = true;
-          /*if(spec['config']){
-          spec['config'][chartType] = {
-            fillOpacity: 0.3,
-            fill: backgroundColor,
-            strokeWidth: 1,
-            filled: true,
-            strokeOpacity: 1.0,
-          };
-          }*/
+          if (spec['config']) {
+            spec['config'][chartType] = {
+              fillOpacity: 1.0,
+              size: 40,
+              strokeOpacity: 1.0,
+              strokeWidth: 1.0,
+            };
+          }
           isOrdinal = false;
-          this._enableBrushSelection = true;
           break;
         case 'square':
           isOrdinal = false;
+          this._authorizeMultiSelection = false;
           break;
         case 'tick':
           isOrdinal = false;
+          this._authorizeMultiSelection = false;
           break;
         case 'line':
           isOrdinal = false;
-          this._enableBrushSelection = true;
+          spec.config.line = { interpolate: 'monotone' };
           break;
         case 'text':
           isOrdinal = false;
+          this._authorizeMultiSelection = false;
           //spec['config']['text'] = { strokeColor: textColor };
           break;
         case 'boxplot':
@@ -1084,13 +1181,15 @@ export default class chartElement extends LitElement {
             rule: { stroke: defaultColor, strokeOpacity: 1, strokeWidth: 1 },
             ticks: { stroke: defaultColor, strokeOpacity: 1, strokeWidth: 1 },
           };
+          this._authorizeSingleSelection = false;
+          this._authorizeMultiSelection = false;
           break;
         case 'area':
           isOrdinal = false;
-          this._enableBrushSelection = true;
           break;
         case 'rule':
           isOrdinal = false;
+          this._authorizeMultiSelection = false;
           break;
         case 'geoshape':
           isOrdinal = true;
@@ -1108,12 +1207,15 @@ export default class chartElement extends LitElement {
             top: 128,
             bottom: 128,
           };
+          this._authorizeMultiSelection = false;
           break;
         case 'image':
           isOrdinal = false;
+          this._authorizeMultiSelection = false;
           break;
         case 'trail':
           isOrdinal = false;
+          this._authorizeMultiSelection = false;
           break;
         case 'rect':
           isOrdinal = true;
@@ -1142,12 +1244,23 @@ export default class chartElement extends LitElement {
               fontSize: 12,
             };
           }
+          spec.config.arc = {
+            stroke: gridColor,
+            strokeWidth: 1,
+          };
           isOrdinal = false;
+          this._authorizeMultiSelection = false;
           break;
         default:
           isOrdinal = false;
+          this._authorizeMultiSelection = false;
           break;
       }
+
+      this._authorizeSingleSelection =
+        this._authorizeSingleSelection && this.enableSingleSelections;
+      this._authorizeMultiSelection =
+        this._authorizeMultiSelection && this.enableMultiSelections;
 
       if (!isOrdinal) {
         colorScale = ordinalColors;
@@ -1174,79 +1287,111 @@ export default class chartElement extends LitElement {
         }
         delete spec.encoding.color.legend;
 
-        //if(chartType === "point"){
-        /*if (spec.encoding) {
-        spec.encoding = {
-          ...spec.encoding,
-          color:{
-            ...spec.encoding.color,
-            condition: {
-              selction: {not: 'legend'},
-              value: spec.encoding.color.field ? undefined : 'transparent'
-            }
-          },
-          fill: {value: spec.encoding.color.field ? undefined : 'transparent'},
-          stroke: {value: spec.encoding.color.field ? undefined : 'transparent'}
-        }
-      //}
-      }*/
-      }
-
-      if (!this.enableBrushing) {
-        this._enableBrushSelection = false;
-      }
-
-      if (this._enableBrushSelection) {
-        spec['params'] = [
-          {
-            name: 'brush',
-            select: { type: 'interval' },
-          },
-        ];
-      }
-
-      if (this.enableLegendFiltering) {
-        if (spec.encoding?.color?.field) {
-          const fieldName = spec.encoding?.color?.field;
-
-          spec['params'] = [
-            {
-              name: 'hover',
-              select: { type: chartType, on: 'mouseover', fields: [fieldName] },
-              bind: 'legend',
-            },
-            {
-              name: 'select',
-              select: { type: chartType, toggle: true, fields: [fieldName] },
-              bind: 'legend',
-            },
-            {
-              name: 'brush',
-              select: { type: 'interval' },
-            },
-          ];
-
-          spec['params'] = [{ name: 'brush', select: { type: 'interval' } }];
-
-          spec.selection = {
-            LegendClicked: {
-              type: 'single',
-              fields: [spec.encoding.color.field],
-              bind: 'legend',
-              empty: false,
-            },
-          };
-          if (chartType !== 'geoshape') {
-            spec.transform = [
-              {
-                filter: { selection: 'LegendClicked' },
-              },
-            ];
-          }
-        }
+        this._addInteractions(spec, 'point');
       }
     }
 
     return spec;
+  }
+  /**
+   * _addToEncoding - modify encoding values without calling an empty field or overwriting predefined values
+   * @param {object} spec - specification JSON to edit
+   * @param {string} field - encoding field name
+   * @param {object} appendedValues - new styling/behavior to append
+   */
+  _addToEncoding(spec, field, appendedValues) {
+    const currentData = spec.encoding[field] || {};
+    const preExistingCondition = currentData.condition;
+    const checkArray = Array.isArray(preExistingCondition);
+    const mergeConditions = preExistingCondition
+      ? checkArray
+        ? preExistingCondition
+        : [preExistingCondition]
+      : [];
+    spec.encoding[field] = {
+      ...currentData,
+      ...appendedValues,
+      condition: mergeConditions,
+    };
+  }
+
+  /**
+   * _addInteractions - modify encoding, selection and signals to apply interactions (zoom, filtering, brush, hover, click)
+   * @param {object} spec - specification JSON to edit
+   * @param {string} chartType - mark found in spec denoting chart type to dictate/remove custom behavior
+   */
+  _addInteractions(spec, chartType) {
+    if (!this.enableMultiSelections) {
+      this._authorizeMultiSelection = false;
+    }
+    const params: { name: string; select: object }[] = [];
+    const paramCombinations: {
+      param: string;
+      empty: boolean;
+      value: number;
+    }[] = [];
+
+    if (this._authorizeSingleSelection) {
+      const hoverInteraction: { name: string; select: object } = {
+        name: 'hover',
+        select: { type: chartType, on: 'mouseover' },
+      };
+      params.push(hoverInteraction);
+      paramCombinations.push({ param: 'hover', empty: false, value: 1 });
+
+      //this._addToEncoding(spec, "opacity", {condition: [{selection: "hover", value:1}]});
+      const selectInteraction: { name: string; select: object } = {
+        name: 'picker',
+        select: { type: chartType, toggle: true },
+      };
+      params.push(selectInteraction);
+      //this._addToEncoding(spec, "color", { condition: [{selection: "picker", value: "red"}]})
+      paramCombinations.push({ param: 'picker', empty: false, value: 1 });
+    }
+
+    if (this._authorizeMultiSelection) {
+      const brushInteraction: { name: string; select: object } = {
+        name: 'brush',
+        select: { type: 'interval' },
+      };
+      params.push(brushInteraction);
+      paramCombinations.push({ param: 'brush', empty: false, value: 1 });
+    }
+
+    if (this.enableLegendFiltering) {
+      if (spec.encoding?.color?.field) {
+        const fieldName = spec.encoding?.color?.field;
+        const legendInteraction: { name: string; select: object } = {
+          name: 'legendFilter',
+          //bind: { legend: 'color' },
+          select: { type: chartType, fields: [fieldName] },
+        };
+        params.push(legendInteraction);
+        //paramCombinations.push({param: "legendFilter", value:1})
+
+        //this._addToEncoding(spec, "opacity", {condition: [{selection: "legendFilter",value:1}]})
+      }
+    }
+
+    if (params.length > 0) {
+      spec.params = spec.params || [];
+      spec.params = [...spec.params, ...params];
+    }
+
+    //this._addToEncoding(spec, "opacity", {condition: conditions, value:0.3})
+
+    if (paramCombinations.length > 0) {
+      //const internalTesting = paramCombinations.map(param => `{"test": "`+param.param+`_isActive", "value": 1 }`).join(' || ')
+      //const internalTesting = paramCombinations.map(param => param.param+`_isActive`).join(' || ')
+      //console.log(interactionConditions)
+      /*const conditions =
+        (spec.encoding['opacity'] = {
+          condition: paramCombinations,
+          value: 0.6,
+        });*/
+      //this._addToEncoding(spec, "opacity", {condition: interactionConditions, value:0.3})
+    } else {
+      //spec.encoding["opacity"] = {value:1.0}
+    }
   }
 }

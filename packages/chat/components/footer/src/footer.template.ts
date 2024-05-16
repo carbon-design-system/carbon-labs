@@ -13,7 +13,6 @@ const { stablePrefix: clabsPrefix } = settings;
 import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
 import MicrophoneFilled16 from '@carbon/web-components/es/icons/microphone--filled/16.js';
 import Microphone16 from '@carbon/web-components/es/icons/microphone/16.js';
-import Menu24 from '@carbon/web-components/es/icons/menu/24.js';
 import SendFilled16 from '@carbon/web-components/es/icons/send--filled/16.js';
 import Send16 from '@carbon/web-components/es/icons/send/16.js';
 
@@ -31,11 +30,9 @@ export function footerTemplate(customElementClass) {
     _messageText: messageText,
     _handleInput: handleInput,
     _sendInputToParent: sendInputToParent,
-    _handleMenuToggle: handleMenuToggle,
     _toggleMenu: toggleMenu,
     _handleMenuFileUpload: handleMenuFileUpload,
     _inputPlaceholder: inputPlaceholder,
-    _disableMenu: disableMenu,
     _disableInput: disableInput,
     _isListening: isListening,
     _voiceAPIAvailable: voiceAPIAvailable,
@@ -83,27 +80,18 @@ export function footerTemplate(customElementClass) {
       <div class="${clabsPrefix}--chat-footer-prompt-items${
     expandedWidth ? '-expanded' : ''
   }">
-      ${
-        !disableMenu
-          ? html`
-              <div class="${clabsPrefix}--chat-footer-button">
-                <cds-button
-                  kind="ghost"
-                  size="sm"
-                  ?disabled="${disableMenu}"
-                  @click="${handleMenuToggle}">
-                  ${Menu24({ slot: 'icon' })}
-                </cds-button>
-              </div>
-            `
-          : html``
-      }
       <textarea
-        class="${clabsPrefix}--chat-search-query"
+        class="${clabsPrefix}--chat-search-query ${
+    disableInput ? clabsPrefix + '--chat-search-query-disabled' : ''
+  }"
         rows="1"
         ?disabled="${disableInput}"
         placeholder="${
-          inputPlaceholder ? inputPlaceholder : 'Type something...'
+          !disableInput
+            ? inputPlaceholder
+              ? inputPlaceholder
+              : 'Type something...'
+            : 'Thinking...'
         }"
         @focus="${textAreaIsFocused}"
         @blur="${textAreaIsFocused}"
@@ -128,7 +116,7 @@ export function footerTemplate(customElementClass) {
             : html` ${!isListening
                 ? html` <cds-button
                     kind="ghost"
-                    tooltip-text="start recording"
+                    tooltip-text="Start recording"
                     tooltip-position="left"
                     tooltip-alignment="end"
                     size="sm"
@@ -137,7 +125,7 @@ export function footerTemplate(customElementClass) {
                   </cds-button>`
                 : html` <cds-button
                     kind="danger"
-                    tooltip-text="end recording"
+                    tooltip-text="End recording"
                     tooltip-position="left"
                     tooltip-alignment="end"
                     size="sm"

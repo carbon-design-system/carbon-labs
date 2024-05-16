@@ -56,7 +56,7 @@ export function messageTemplate(customElementClass) {
     _handleRegenerate: handleRegenerate,
     _onTagSelected: onTagSelected,
     temporaryMessage,
-    watsonIcon,
+    watsonIconDark,
     displayColor,
     currentlyStreaming,
     _handleSlotchange,
@@ -68,7 +68,7 @@ export function messageTemplate(customElementClass) {
       ${origin === 'user'
         ? html` <div class="${clabsPrefix}--chat-message-content">
             <div class="${clabsPrefix}--chat-message-timestamp-user">
-              You ${timeStamp}
+              you ${timeStamp}
             </div>
             <div class="${clabsPrefix}--chat-message-response-user">
               <slot
@@ -117,13 +117,13 @@ export function messageTemplate(customElementClass) {
                   </div>`
                 : html`
                     <div class="${clabsPrefix}--chat-message-bot-icon">
-                      ${unsafeHTML(watsonIcon)}
+                      ${unsafeHTML(watsonIconDark)}
                     </div>
                   `}
             </div>
             <div class="${clabsPrefix}--chat-message-content">
               <div class="${clabsPrefix}--chat-message-timestamp-bot">
-                ${displayName == null ? 'watsonx' : displayName} ${timeStamp}
+                ${displayName == null ? 'watson' : displayName} ${timeStamp}
               </div>
               <div class="${clabsPrefix}--chat-message-response-bot">
                 <slot
@@ -233,7 +233,7 @@ export function messageTemplate(customElementClass) {
                         : temporaryMessage.type === 'chart'
                         ? html`
                             <clabs-chat-chart
-                              loading
+                              ?streaming="${true}"
                               content="${temporaryMessage.content}">
                             </clabs-chat-chart>
                           `

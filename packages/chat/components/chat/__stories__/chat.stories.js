@@ -500,8 +500,8 @@ export const LLMTextPlayground = {
    */
   render: ({ queryMode, sampleQuery, rawText }) => html`
     <div
-      style="height:calc(100vh - 132px); overflow:hidden; display:inline-flex;max-width:100%;">
-      <div style="height:calc(100vh - 132px); flex:1;">
+      style="height:calc(100vh - 84px); overflow:hidden; display:inline-flex; width:100%;">
+      <div style="height:calc(100vh - 84px); flex:2;">
         ${queryMode == 'Examples'
           ? html` <clabs-chat
               sample-query="${rawTextExamples[sampleQuery]}"
@@ -517,7 +517,7 @@ export const LLMTextPlayground = {
       ${sampleQuery !== 'None' && queryMode == 'Examples'
         ? html`
             <div
-              style="height:calc(100vh - 132px); flex:1; padding-left:20px;max-width:100%;overflow-y:auto;">
+              style="height:calc(100vh - 84px); flex:1; padding-left:20px;overflow-y:auto;">
               <h4>Raw LLM text</h4>
               <cds-code-snippet
                 wrap-text
@@ -553,9 +553,8 @@ export const StreamTextPlayground = {
    * @returns {TemplateResult<1>}
    */
   render: ({ queryMode, sampleQuery, rawText }) => html`
-    <div
-      style="height:calc(100vh - 132px); overflow:hidden; display:inline-flex;width:100%;max-width:100%;">
-      <div style="height:calc(100vh - 132px); flex:1;">
+    <div style="height:calc(100vh - 84px); display:flex; width:100%; gap:20px;">
+      <div style="flex:2;">
         ${queryMode == 'Examples'
           ? html` <clabs-chat
               sample-query="${rawTextExamples[sampleQuery]}"
@@ -572,8 +571,7 @@ export const StreamTextPlayground = {
       </div>
       ${sampleQuery !== 'None' && queryMode == 'Examples'
         ? html`
-            <div
-              style="height:calc(100vh - 132px); flex:1; padding-left:20px;max-width:100%;overflow-y:auto;">
+            <div style="flex:1; overflow-y:auto;">
               <h4>Raw LLM text</h4>
               <cds-code-snippet
                 wrap-text
@@ -1143,9 +1141,8 @@ export const Playground = {
    * @returns {TemplateResult<1>}
    */
   render: ({ testMode, sampleConversation, conversationJSON }) => html`
-    <div
-      style="height:calc(100vh - 84px); overflow:hidden; display:inline-flex;max-width:100%;width:100%;">
-      <div style="height:calc(100vh - 86px); flex:1;">
+    <div style="height:calc(100vh - 84px); display:flex; width:100%; gap:20px;">
+      <div style="flex:2;">
         <clabs-chat
           user-name="user"
           agent-name="bot"
@@ -1177,8 +1174,7 @@ export const Playground = {
       ${testMode === 'Examples' &&
       sampleConversation !== 'None' &&
       sampleConversation !== 'Conversation tutorial'
-        ? html` <div
-            style="height:calc(100vh - 86px); flex:1; padding-left:20px;max-width:100%;overflow-y:auto;">
+        ? html` <div style="flex:1; overflow-y:auto;">
             <h4>JSON conversation object</h4>
             <cds-code-snippet
               wrap-text

@@ -32,6 +32,7 @@ export function chartElementTemplate(customElementClass) {
     _errorMessage: errorMessage,
     chartLoading,
     content,
+    debugMode,
     renderMethod,
     _buildLoader: buildLoader,
     _openFullscreenView: openFullscreenView,
@@ -49,6 +50,7 @@ export function chartElementTemplate(customElementClass) {
     disableCodeInspector,
     modalMode,
     theme,
+    _uniqueID: uniqueID,
   } = customElementClass;
 
   return html`
@@ -61,6 +63,7 @@ export function chartElementTemplate(customElementClass) {
           class="${clabsPrefix}--chat-chart-modal-custom">
           <cds-modal-header>
             <cds-modal-close-button></cds-modal-close-button>
+            <cds-modal-label>Chart Viewer</cds-modal-label>
           </cds-modal-header>
           <cds-modal-body class="${clabsPrefix}--chat-chart-modal-body">
             <div class="${clabsPrefix}--chat-chart-modal-container">
@@ -77,6 +80,7 @@ export function chartElementTemplate(customElementClass) {
           class="${clabsPrefix}--chat-chart-modal-custom">
           <cds-modal-header>
             <cds-modal-close-button></cds-modal-close-button>
+            <cds-modal-label>Vega specification Viewer</cds-modal-label>
           </cds-modal-header>
           <cds-modal-body class="${clabsPrefix}--chat-chart-modal-body">
             <div class="${clabsPrefix}--chat-chart-modal-container">
@@ -86,7 +90,9 @@ export function chartElementTemplate(customElementClass) {
         </cds-modal>`
       : html``}
     ${_visualizationSpec
-      ? html` <div class="${clabsPrefix}--chat-chart-container"></div>`
+      ? html` <div
+          class="${clabsPrefix}--chat-chart-container"
+          id="${clabsPrefix + '--chat-embed-vis-' + uniqueID}"></div>`
       : html` <div class="${clabsPrefix}--chat-chart-container">
           <div class="${clabsPrefix}--chat-chart-loading-container">
             ${errorMessage
@@ -94,7 +100,19 @@ export function chartElementTemplate(customElementClass) {
                     ${unsafeHTML(buildLoader())}
                   </div>
                   <div class="${clabsPrefix}--chat-chart-error-text">
-                    ${errorMessage}
+                    ${debugMode
+                      ? errorMessage
+                      : 'Chart failed to render, see console for more details.'}
+                    <br />
+                    <br />
+                    ${debugMode
+                      ? html` <cds-button
+                          kind="danger--tertiary"
+                          size="sm"
+                          @click="${openEditorView}">
+                          ${Launch16({ slot: 'icon' })} Investigate in Editor
+                        </cds-button>`
+                      : html``}
                   </div>`
               : html` <div class="${clabsPrefix}--chat-chart-loading-grid">
                     ${unsafeHTML(buildLoader())}
@@ -111,12 +129,15 @@ export function chartElementTemplate(customElementClass) {
             &nbsp;
           </div>
           <div class="${clabsPrefix}--chat-chart-options-buttons">
-            ${!disableExport && renderMethod === 'canvas'
+            ${!disableExport
               ? html`
                   <cds-button
                     kind="ghost"
                     size="sm"
-                    tooltip-text="Export to PNG"
+                    ?disabled="${renderMethod !== 'canvas'}"
+                    tooltip-text="${renderMethod === 'canvas'
+                      ? 'Export to PNG'
+                      : 'SVG export unavailable'}"
                     tooltip-position="left"
                     tooltip-alignment="end"
                     @click="${exportToImage}">
@@ -124,7 +145,7 @@ export function chartElementTemplate(customElementClass) {
                   </cds-button>
                 `
               : html``}
-            ${!disableEditor
+            ${!disableEditor && debugMode
               ? html`
                   <cds-button
                     kind="ghost"

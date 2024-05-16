@@ -25,7 +25,6 @@
   min-inline-size: 246px;
 
   .#{$clabs-prefix}--chat-chart-container {
-    z-index: 10;
     display: block;
     overflow: hidden;
     box-sizing: border-box;
@@ -37,7 +36,6 @@
 
   .#{$clabs-prefix}--chat-chart-options {
     position: absolute;
-    z-index: 20;
     display: flex;
     flex-direction: row;
     inset-block-start: 16px;
@@ -79,7 +77,6 @@
   }
 
   .#{$clabs-prefix}--chat-chart-modal-custom {
-    z-index: 9999;
     padding: 0;
     background: $background;
     pointer-events: all;
@@ -89,6 +86,7 @@
     overflow: hidden;
     padding: 0;
     margin: 0;
+    margin-block-start: 5px;
     overflow-y: scroll;
     pointer-events: all;
   }
@@ -97,8 +95,7 @@
     padding: 0;
     block-size: 100%;
     inline-size: 100%;
-    min-block-size: calc(100vh - 64px - 58px);
-    min-inline-size: calc(100vw - 64px);
+    min-block-size: calc(100vh - 64px - 52px);
     pointer-events: all;
   }
 

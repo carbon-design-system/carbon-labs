@@ -91,7 +91,7 @@ export default class carouselElement extends LitElement {
       this._updateCarousel();
     } else if (this.hasAttribute('content')) {
       this._buildCarousel();
-      this._updateCarousel();
+      //this._updateCarousel();
     }
 
     if (this.hasAttribute('_carouselContent')) {
@@ -132,7 +132,7 @@ export default class carouselElement extends LitElement {
   _updateCarousel() {
     if (this._carouselContent) {
       if (this.parentElement instanceof HTMLElement) {
-        const parentWidth = this.parentElement?.clientWidth;
+        const parentWidth = this.clientWidth;
         this._itemsPerSlide = Math.max(
           Math.floor(parentWidth / (this.contentWidth + this._slideGapSize)),
           1

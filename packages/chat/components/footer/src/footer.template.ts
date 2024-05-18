@@ -116,7 +116,7 @@ export function footerTemplate(customElementClass) {
             : html` ${!isListening
                 ? html` <cds-button
                     kind="ghost"
-                    tooltip-text="Start recording"
+                    tooltip-text="Start listening"
                     tooltip-position="left"
                     tooltip-alignment="end"
                     size="sm"
@@ -125,7 +125,7 @@ export function footerTemplate(customElementClass) {
                   </cds-button>`
                 : html` <cds-button
                     kind="danger"
-                    tooltip-text="End recording"
+                    tooltip-text="Stop listening"
                     tooltip-position="left"
                     tooltip-alignment="end"
                     size="sm"

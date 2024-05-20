@@ -680,9 +680,59 @@ export default class message extends LitElement {
     return tokens;
   }
 
+  /**
+   * Parse Raw Text buffer into elements
+   */
+  _parseText() {
+    this.tokens = this._tokenize(this.rawText);
+    this.currentType = '';
+    this.bufferMessage = '';
+
+    for(const token of this.tokens){
+      this.bufferMessage += token;
+
+      const blockSignal: {
+        content: any;
+        type: string;
+        preBlockText: string;
+        status: string;
+      } = this._checkStreamForBlocks();
+
+      if (blockSignal) {
+        if (blockSignal.type !== '') {
+          if (blockSignal.status === 'started') {
+            this.currentType = blockSignal.type;
+            if (blockSignal.preBlockText.length > 0) {
+              if (blockSignal.preBlockText.trim() !== '') {
+                this._messageElements = [
+                  ...this._messageElements,
+                  { content: blockSignal.preBlockText, type: 'text' },
+                ];
+              }
+            }
+          }
+          if (blockSignal.status === 'incomplete') {
+            this._checkAmbiguousBlock();
+          }
+          if (blockSignal.status === 'ended') {
+            this.currentType = '';
+            if (blockSignal.type === 'url') {
+              blockSignal.type = this._checkURLType(blockSignal.content);
+            }
+            this._messageElements = [
+              ...this._messageElements,
+              { content: blockSignal.content, type: blockSignal.type },
+            ];
+          }
+        }
+      }
+      this.streamingIndex ++;
+    }
+  }
+
   /** parse Raw text param into a sub array of objects to display different elements in a single message block
    **/
-  _parseText() {
+  _parseTextOld() {
     const returnedText = this.rawText;
     const subMessages: { content: any; type: string }[] = [];
 

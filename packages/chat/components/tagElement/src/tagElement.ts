@@ -8,6 +8,7 @@
  */
 
 import { LitElement } from 'lit';
+// @ts-ignore
 import styles from './tagElement.scss?inline';
 /**
  * Input component using search typeahead api

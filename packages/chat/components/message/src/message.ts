@@ -39,7 +39,7 @@ export default class message extends LitElement {
    * Define name of specific bot or user
    */
   @property({ type: Boolean, attribute: 'disable-buttons' })
-  disableButtons = true;
+  disableButtons;
 
   /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
@@ -688,7 +688,7 @@ export default class message extends LitElement {
     this.currentType = '';
     this.bufferMessage = '';
 
-    for(const token of this.tokens){
+    for (const token of this.tokens) {
       this.bufferMessage += token;
 
       const blockSignal: {
@@ -726,7 +726,15 @@ export default class message extends LitElement {
           }
         }
       }
-      this.streamingIndex ++;
+      this.streamingIndex++;
+      if (this.streamingIndex === this.tokens.length) {
+        if (this.bufferMessage) {
+          this._messageElements = [
+            ...this._messageElements,
+            { content: this.bufferMessage, type: 'text' },
+          ];
+        }
+      }
     }
   }
 

@@ -8,6 +8,8 @@
  */
 
 import { LitElement } from 'lit';
+import { property } from 'lit/decorators.js';
+
 // @ts-ignore
 import styles from './tagElement.scss?inline';
 /**
@@ -15,4 +17,18 @@ import styles from './tagElement.scss?inline';
  */
 export default class tagElement extends LitElement {
   static styles = styles;
+
+  /**
+   * Content inside the tag
+   */
+  @property({ type: String, attribute: 'content', reflect: true })
+  content;
+
+  /**
+   * _handleClick - fire event when tag is clicked
+   */
+  _handleClick() {
+    console.log('tag clicked');
+    // Tag click event logic here
+  }
 }

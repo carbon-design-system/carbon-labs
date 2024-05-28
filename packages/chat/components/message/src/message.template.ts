@@ -57,6 +57,8 @@ export function messageTemplate(customElementClass) {
     _onTagSelected: onTagSelected,
     temporaryMessage,
     watsonIconDark,
+    watsonIconLight,
+    _parentTheme: parentTheme,
     displayColor,
     currentlyStreaming,
     _handleSlotchange,
@@ -117,7 +119,9 @@ export function messageTemplate(customElementClass) {
                   </div>`
                 : html`
                     <div class="${clabsPrefix}--chat-message-bot-icon">
-                      ${unsafeHTML(watsonIconDark)}
+                      ${parentTheme === 'white'
+                        ? unsafeHTML(watsonIconLight)
+                        : unsafeHTML(watsonIconDark)}
                     </div>
                   `}
             </div>

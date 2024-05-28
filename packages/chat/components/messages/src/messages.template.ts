@@ -25,6 +25,7 @@ export function messagesTemplate(customElementClass) {
     _streamResponses: streamResponses,
     _handleInternalChange: handleInternalChange,
     _handleSlotchange,
+    _parentTheme: parentTheme,
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-messages-container">
@@ -47,6 +48,7 @@ export function messagesTemplate(customElementClass) {
                     time-stamp="${message.time}"
                     disable-buttons="${message.disableButtons || nothing}"
                     index="${index}"
+                    parent-theme="${parentTheme}"
                     @on-structure-change="${handleInternalChange}"
                     ?stream-content="${streamResponses}"
                     display-name="${message.displayName || nothing}"
@@ -58,6 +60,7 @@ export function messagesTemplate(customElementClass) {
               ? html` <clabs-chat-message
                   raw-text="loading"
                   origin="bot"
+                  parent-theme="${parentTheme}"
                   time-stamp=""
                   loading-state
                   error-state="false">

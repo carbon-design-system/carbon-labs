@@ -53,12 +53,6 @@ export default class footer extends LitElement {
   _messageText = '';
 
   /**
-   * state to see if menu is opened
-   */
-  @state()
-  _toggleMenu = false;
-
-  /**
    * boolean denoting if recording is in progress
    */
   @state()
@@ -75,6 +69,24 @@ export default class footer extends LitElement {
    */
   @state()
   _isPromptFocused = false;
+
+  /**
+   * add context meesage above prompt
+   */
+  @property({ type: String, attribute: 'context-message' })
+  _contextMessage;
+
+  /**
+   * type context meesage above prompt
+   */
+  @property({ type: String, attribute: 'context-message-type' })
+  _contextMessageType;
+
+  /**
+   * type context meesage above prompt
+   */
+  @property({ type: Boolean, attribute: 'currently-streaming' })
+  _currentlyStreaming;
 
   /**
    * speechRecognition object to interface with text input
@@ -153,17 +165,6 @@ export default class footer extends LitElement {
     }
   }
 
-  /** handle Menu opened/closed event
-   * @param {event} event - lit event sent by the menu button
-   **/
-  _handleMenuToggle() {
-    if (!this._toggleMenu) {
-      this._toggleMenu = true;
-    } else {
-      this._toggleMenu = false;
-    }
-  }
-
   /** handle voice recording start click event
    */
   _startRecording() {
@@ -176,6 +177,18 @@ export default class footer extends LitElement {
   _endRecording() {
     this._speechRecognition?.stop();
     this._isListening = false;
+  }
+
+  /** handle stop button click event to end streaming
+   */
+  _endStreaming() {
+    const stopStreamEvent = new CustomEvent('on-user-stream-interrupt', {
+      detail: { action: 'FOOTER: user requested to end text streaming' },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(stopStreamEvent);
+    this._currentlyStreaming = false;
   }
 
   /** handle voice input from speech recognition

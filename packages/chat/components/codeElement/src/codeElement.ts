@@ -24,16 +24,51 @@ export default class codeElement extends LitElement {
   content;
 
   /**
-   * Array of subelements parsed from API reply
+   * Editable boolean flag to let users know lines can be changed
    */
-  @property({ type: String, attribute: 'editable', reflect: true })
+  @property({ type: Boolean, attribute: 'editable', reflect: true })
   editable;
 
   /**
-   * html code text
+   * Editable boolean flag to let users know lines can be changed
+   */
+  @property({ type: Boolean, attribute: 'disable-line-ticks' })
+  disableLineTicks;
+
+  /**
+   * Editable boolean flag to let users know lines can be changed
+   */
+  @property({ type: Boolean, attribute: 'disable-copy-button', reflect: true })
+  disableCopyButton = false;
+
+  /**
+   * Editable boolean flag to let users know lines can be changed
+   */
+  @property({ type: Boolean, attribute: 'disable-edit-button', reflect: true })
+  disableEditButton = true;
+
+  /**
+   * Source content - save original code text content
    */
   @state()
-  _renderCode = '';
+  _originalContent;
+
+  /**
+   * Edited content - update edited code
+   */
+  @state()
+  _editedContent;
+
+  /**
+   * Array of lines parsed from content attribute
+   */
+  @state()
+  _renderLines: {
+    content: string;
+    type: string;
+    paddingLeft: string;
+    enableEditing: boolean;
+  }[] = [];
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
@@ -41,6 +76,7 @@ export default class codeElement extends LitElement {
   updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('content')) {
+      this._originalContent = this.content;
       this._formatCode();
       this.requestUpdate();
     }
@@ -50,32 +86,48 @@ export default class codeElement extends LitElement {
    */
   firstUpdated() {
     if (this.content !== undefined) {
+      this._originalContent = this.content;
       this._formatCode();
       this.requestUpdate();
     } else {
-      this._renderCode = 'codeElement: error rendering code, content is empty';
+      this._renderLines = [
+        {
+          content: 'CodeElement ERROR: content is empty',
+          type: '',
+          enableEditing: false,
+          paddingLeft: '8px',
+        },
+      ];
     }
   }
 
-  /**
-   * _exportCode - when an edit is detected, send back an event to notify the parent of changes
+  /** copy current code to clipboard when copy event is triggered
    */
+  async _copyCode() {
+    try {
+      await navigator.clipboard.writeText(this._originalContent);
+    } catch (error) {
+      console.error('CodeElement ERROR:', error);
+    }
+  }
 
   /** format code to properly display in HTML
    */
   _formatCode() {
     const formattedText = this.content;
-    const htmlSafeText = formattedText
-      .replace(/```/g, '')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    const htmlSafeText = formattedText.replace(/```/g, '');
+    //.replace(/</g, '&lt;')
+    //.replace(/>/g, '&gt;');
     const lines = htmlSafeText.trim().split('\n');
     const tabWidth = 16;
-    const paddingLeft = 16;
-    const tickValues: string[] = [];
-    const textValues: string[] = [];
+    const paddingLeft = 8;
+    const textValues: {
+      content: string;
+      type: string;
+      paddingLeft: string;
+      enableEditing: boolean;
+    }[] = [];
     for (let i = 0; i < lines.length; i++) {
-      tickValues.push(i.toString());
       let lineType = '';
       const trimmedLine = lines[i].replace(/\t/g, '');
       if (trimmedLine.startsWith('#') || trimmedLine.startsWith('//')) {
@@ -88,32 +140,18 @@ export default class codeElement extends LitElement {
         tabOffset += tabMatch[0].length * tabWidth;
       }
 
-      let lineString =
-        '<div class="clabs--chat-code-line"><div class="clabs--chat-code-line-tick">' +
-        i.toString() +
-        '</div><div class="clabs--chat-code-line-divider"></div>';
-
-      if (this.editable) {
-        lineString +=
-          '<div class="clabs--chat-code-line-text ' +
-          lineType +
-          '" style="padding-left:' +
-          tabOffset +
-          'px">';
-        lineString += lines[i].replace(/\t/g, '').replace(/\n/g, '');
-        lineString += '</div></div>';
-      } else {
-        lineString +=
-          '<textarea rows="1" class="clabs--chat-code-line-text-area ' +
-          lineType +
-          '" style="padding-left:' +
-          tabOffset +
-          'px">';
-        lineString += lines[i].replace(/\t/g, '').replace(/\n/g, '');
-        lineString += '</textarea></div>';
-      }
-      textValues.push(lineString);
+      textValues.push({
+        content: lines[i].replace(/\t/g, '').replace(/\n/g, ''),
+        type: lineType,
+        enableEditing: false,
+        paddingLeft: tabOffset.toString() + 'px',
+      });
     }
-    this._renderCode = textValues.join('');
+    this._renderLines = textValues;
+    const tickWidth = 13 * lines.length.toString().length;
+    this.style.setProperty(
+      '--chat-code-tick-width',
+      tickWidth.toString() + 'px'
+    );
   }
 }

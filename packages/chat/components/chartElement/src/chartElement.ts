@@ -65,13 +65,13 @@ export default class chartElement extends LitElement {
    * Render using "svg" (easier to inspect in the DOM) or "canvas" (better performance)
    */
   @property({ type: String, attribute: 'render-method' })
-  renderMethod = 'canvas';
+  renderMethod = 'svg';
 
   /**
    * This value is either "dark" or "light" and displays the chart using Carbon Chart theme colors
    */
   @property({ type: String, attribute: 'theme' })
-  theme = 'dark';
+  theme = 'g100';
 
   /**
    * Disable all chart option buttons, supercedes all other individual button options
@@ -107,7 +107,7 @@ export default class chartElement extends LitElement {
    * Enable tooltip in the chart component
    */
   @state()
-  enableTooltip;
+  enableTooltip = true;
 
   /**
    * Enable user-zooming in the chart component
@@ -125,7 +125,7 @@ export default class chartElement extends LitElement {
    * Enable user-brush selection to fetch groups of elements to make targeted query
    */
   @property({ type: Boolean, attribute: 'enable-multi-selections' })
-  enableMultiSelections;
+  enableMultiSelections = true;
 
   /**
    * internal brush selection value
@@ -137,13 +137,13 @@ export default class chartElement extends LitElement {
    * Enable user-brush selection to fetch groups of elements to make targeted query
    */
   @property({ type: Boolean, attribute: 'enable-single-selections' })
-  enableSingleSelections;
+  enableSingleSelections = true;
 
   /**
    * internal hover/click selection value
    */
   @state()
-  _authorizeSingleSelection = false;
+  _authorizeSingleSelection = true;
 
   /**
    * errorMessage - specifies error when debugging
@@ -296,7 +296,12 @@ export default class chartElement extends LitElement {
       const specificationFinalizedEvent = new CustomEvent(
         'on-chart-specification-ready',
         {
-          detail: { spec: this._visualizationSpec },
+          detail: {
+            action: 'CHART: rendering successful',
+            uniqueID: this._uniqueID,
+            originalSpec: this.content,
+            finalizedSpec: this._visualizationSpec,
+          },
           bubbles: true,
           composed: true,
         }
@@ -310,6 +315,7 @@ export default class chartElement extends LitElement {
         const renderErrorEvent = new CustomEvent('on-chart-error', {
           detail: {
             action: 'CHART: error detected',
+            uniqueID: this._uniqueID,
             message: this._errorMessage,
             content: this.content || 'unavailable',
             parsedSpec: this._visualizationSpec || 'unavailable',
@@ -438,8 +444,9 @@ export default class chartElement extends LitElement {
   _singleDataSelected(data) {
     const singleSelectionEvent = new CustomEvent('on-chart-single-selection', {
       detail: {
-        action: 'CHART: multiple data points selected',
-        selections: [data],
+        uniqueID: this._uniqueID,
+        action: 'CHART: single data point selected',
+        selection: [data],
       },
       bubbles: true,
       composed: true,
@@ -460,8 +467,10 @@ export default class chartElement extends LitElement {
       };
       selectionPayload.push(selection);
     }
+
     const multiSelectionEvent = new CustomEvent('on-chart-multi-selection', {
       detail: {
+        uniqueID: this._uniqueID,
         action: 'CHART: multiple data points selected',
         selections: selectionPayload,
       },
@@ -488,7 +497,7 @@ export default class chartElement extends LitElement {
       //let titleFont = 'IBM Plex Sans, sans-serif';
       const defaultFont = 'IBM Plex Sans Condensed, Arial, sans-serif';
       let gridColor = '#3d3d3d';
-      if (this.theme === 'light') {
+      if (this.theme === 'white') {
         backgroundColor = '#ffffff';
         textColor = '#161616';
         //labelColor = '#777677';
@@ -936,7 +945,7 @@ export default class chartElement extends LitElement {
         ];
     }
 
-    if (this.theme == 'light') {
+    if (this.theme == 'white') {
       backgroundColor = '#ffffff';
       gridColor = '#e0e0e0';
       textColor = '#161616';
@@ -986,9 +995,8 @@ export default class chartElement extends LitElement {
           }
         }
       }
-
       let titleOffset = -8;
-      const defaultPadding = 24;
+      const defaultPadding = 16;
 
       if (spec.description && !spec.title) {
         spec.title = spec.description;
@@ -1001,6 +1009,10 @@ export default class chartElement extends LitElement {
         }
       } else if (addConfig && !this.disableOptions) {
         spec.title = { text: '   ' };
+      }
+
+      if (spec?.encoding?.size?.legend) {
+        spec.encoding.size.legend = null;
       }
 
       if (spec.encoding?.y?.axis?.label || spec.encoding?.y?.field) {
@@ -1095,6 +1107,7 @@ export default class chartElement extends LitElement {
             title: null,
             symbolType: 'square',
             orient: 'bottom',
+            anchor: 'start',
             symbolOpacity: 1,
             direction: 'horizontal',
             titleColor: textColor,
@@ -1200,13 +1213,15 @@ export default class chartElement extends LitElement {
             gradientColorBottom,
             gradientColorTop,
           ];
-
-          spec['config']['padding'] = {
-            left: defaultPadding,
-            right: defaultPadding,
-            top: 128,
-            bottom: 128,
-          };
+          /*if(!spec['view']){
+            spec['view'] = {"padding":{}}
+          }
+          spec['view']['padding'] = {
+            top: 124,
+            bottom: 124,
+            left:0,
+            right:0
+          };*/
           this._authorizeMultiSelection = false;
           break;
         case 'image':
@@ -1334,7 +1349,7 @@ export default class chartElement extends LitElement {
     if (this._authorizeSingleSelection) {
       const hoverInteraction: { name: string; select: object } = {
         name: 'hover',
-        select: { type: chartType, on: 'mouseover' },
+        select: { type: chartType, on: 'mouseover', clear: 'mouseout' },
       };
       params.push(hoverInteraction);
       paramCombinations.push({ param: 'hover', empty: false, value: 1 });
@@ -1389,6 +1404,10 @@ export default class chartElement extends LitElement {
           condition: paramCombinations,
           value: 0.6,
         });*/
+      spec.encoding['opacity'] = {
+        condition: paramCombinations,
+        value: 0.85,
+      };
       //this._addToEncoding(spec, "opacity", {condition: interactionConditions, value:0.3})
     } else {
       //spec.encoding["opacity"] = {value:1.0}

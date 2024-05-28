@@ -17,6 +17,7 @@ $css--plex: true !default;
   border-radius: 10px;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
+  padding-block: 8px 16px;
   padding-inline: 16px 24px;
 
   .#{$clabs-prefix}--chat-message-container {

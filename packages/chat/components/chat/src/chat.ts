@@ -63,8 +63,14 @@ export default class CLABSChat extends LitElement {
   /**
    * user-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system
    */
-  @property({ type: Boolean, attribute: 'stream-responses', reflect: true })
+  @property({ type: Boolean, attribute: 'stream-responses' })
   _streamResponses;
+
+  /**
+   * boolean denoting when a user triggered a stop-streaming event
+   */
+  @state()
+  _interruptStreaming;
 
   /**
    * boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message
@@ -144,6 +150,18 @@ export default class CLABSChat extends LitElement {
   sampleQuery;
 
   /**
+   * string denoting message to append above prompt
+   */
+  @property({ type: String, attribute: 'prompt-notification-message' })
+  promptNotificationMessage;
+
+  /**
+   * string denoting type of appended prompt message (error, information, file)
+   */
+  @property({ type: String, attribute: 'prompt-notification-type' })
+  promptNotificationType;
+
+  /**
    * fullscreen boolean dictated by header child
    */
   @state()
@@ -159,6 +177,7 @@ export default class CLABSChat extends LitElement {
     }
 
     if (changedProperties.has('conversation')) {
+      console.log(this.conversation);
       if (this.conversation) {
         this._messages = [...this.conversation];
         this.requestUpdate();
@@ -191,6 +210,21 @@ export default class CLABSChat extends LitElement {
       composed: true,
     });
     this.dispatchEvent(chatSlotUpdateEvent);
+  }
+
+  /**
+   * handle stream-end event from footer
+   * @param {event} event - slot change detection event
+   */
+  _endStreaming(event) {
+    event.preventDefault();
+    const chatEndStreamingEvent = new CustomEvent('on-chat-end-streaming', {
+      detail: { action: 'Streaming interrupted by user' },
+      bubbles: true,
+      composed: true,
+    });
+    this._streamResponses = false;
+    this.dispatchEvent(chatEndStreamingEvent);
   }
 
   /** Initialize examples for when stories send in a 'sampleQuery' string

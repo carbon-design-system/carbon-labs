@@ -1,35 +1,117 @@
-import { Markdown, Meta} from '@storybook/blocks';
+import { Markdown, Meta, ArgTypes} from '@storybook/blocks';
 import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
 import * as ChatStories from './chat.stories';
 import packageJson from '../../../package.json';
 
-<Meta of={ChatStories} />
 
-## Overview
+# Chat Handbook
 
-The Chat component is a collaboration between the IBM Research Visual AI Lab
-(VAIL) and the Carbon team to provide an easily expandable chat interface to
-interact with large language models. We chose LIT web components as these can be
-used directly in any framework or transpiled into React. It is part of the
-Carbon labs initiative, where anyone can create and test out new ways to
-interact with AI.
+## Table of Contents
 
-**Feel free to contact Owen Cornec (on Slack or o.cornec@ibm.com) if you have any issues/questions**
+[Overview](#overview)
+  [Attributes and Properties](#attributes-and-properties)
+  [Events](#events)
+  [Troubleshooting](#troubleshooting)
+[Installation](#installation)
+  [JS via import](#js-via-import)
+[Implementation](#implementation)
+  [Preface](#preface)
+  [Basic implementation](#basic-implementation)
+  [Render with any API](#render-with-any-api)
+  [Render from Parent](#render-from-parent)
+  [Full Customization with Slotting](#full-customization-with-slotting)
+[Styles](#styles)
+
+## Overview 
+<a id="overview"></a>
+
+The Chat component is a collaboration between the **IBM Research Visual AI Lab (VAIL)** and the **Carbon Design Team** to provide an open-source, easily expandable chat interface to interact with large language models. Our core values are: open-source collaboration, universal support, ease of use and the in-depth customization Carbon is known for.
+
+It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LLM-enabled components. We chose LIT **web-components** as these can be used directly in **Vanilla**, **Svelte** and **React**. Our primary goal is to provide a space for novel and experimental features/components to be used in and out of Chat interfaces. By fully adhering to the latest design/safety/formatting guidelines, **Labs** can accelerate and streamline adoption across IBM to respond to the fast-moving field of AI and Large Language Models.
+
+### Attributes and Properties 
+<a id="attributes-and-properties"></a>
+
+<ArgTypes story="Playground"/>
+
+### Events 
+<a id="events"></a>
+
+<table>
+    <tr>
+        <td>**Event name**</td>
+        <td>**Exclusive to chat mode**</td>
+        <td>**Triggering logic**</td>
+    </tr>
+    <tr>
+        <td>on-chat-slot-update</td>
+        <td>Carbon slotting in use</td>
+        <td>Return child update status</td>
+    </tr>
+    <tr>
+        <td>on-user-regeneration-request</td>
+        <td>API mode in use</td>
+        <td>Return when user requested regeneration on any bot message</td>
+    </tr>
+    <tr>
+        <td>on-user-message-update-request</td>
+        <td>API mode in use</td>
+        <td>Return when user requested an edit on any user message</td>
+    </tr>
+    <tr>
+        <td>on-submit</td>
+        <td>All</td>
+        <td>Return when user submits a query in the footer</td>
+    </tr>
+</table>
+
+### Troubleshooting 
+<a id="troubleshooting"></a> 
+
+Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests regarding general information, installation, trouble-shooting and custom features.
 
 
-## Installation
+## Installation 
+<a id="installation"></a>
 
 Here's a quick example to get you started.
 
-### JS (via import)
+### JS via import 
+<a id="js-via-import"></a>
 
 ```javascript
 import '@carbon-labs/ai-chat/es/index.js';
 ```
 
-### Chat component with all attributes
+## Implementation 
+<a id="inplementation"></a>
 
-```html
+### Preface 
+<a id="preface"></a>
+
+There are three ways to implement Chat: Add an API and directly auto-parse raw LLM responses, ingest your own conversation object from a parent application or specify every layer of the chat component and slot in custom components
+
+#### 1: Auto-rendering with an API: specify a URL in the api-url attribute to query a proxy server
+
+    - return a **reply string** containing raw LLM text: auto-rendering will parse and display subcomponents
+    - return a **reply object** with a message JSON: items will be rendered as-is (see format below)
+    - enable **stream-contents** : token streaming will be interpreted and automatically parsed then rendered
+
+#### 2: API-less control with JSON object in **conversation** attribute:
+
+    - All automatic behavior is disabled. You will be required to provide your own conversation object as well as handle all events such as users submitting/editing/regenerating messages, handling api responses outside the chat, enabling loading and handling feedback events
+    - Create an array of messages with origin/timestamp/displayname, then in **elements** add objects containing **type** and **content**: **content** is a stringified object containing strings for plain text, URLs, arrays or a complex JSON objects. **type** denotes the component to be rendered in the message list such as **text**, **code**, **chart**, **image**, **table**, **carousel** etc
+
+#### 3: Slotting: fully customize the chat by inserting custom divs and components:
+
+    - Place all components directly in the chat tag and import any component you wish to use with the appropriate slot name
+    - additionally, place custom div or external iframes/components directly into the message response
+    - like section 2, all events must be handled by the parent application
+
+### Basic implementation 
+<a id="basic-implementation"></a>
+
+```
 <clabs-chat
   <!-- string: user-name in LLM conversation -->
   user-name="user"
@@ -53,42 +135,13 @@ import '@carbon-labs/ai-chat/es/index.js';
 </clabs-chat>
 ```
 
+### 1: Auto-rendering with an API 
+<a id="render-with-any-api"></a>
 
-
-## Implementation and attribute selection
-
-#### There are three core values for this Component: ease of use, open-source flexibility and in-depth customization, therefore you can:
-
-- 1 - connect to a proxy server and auto-parse raw LLM responses
-- 2 - take over the conversation/events from a parent application
-- 3 - slot/customise every piece of the chat component
-
-#### 1: Auto-rendering with an API: specify a URL in the api-url attribute to query a proxy server
-
-    - return a **reply** field with raw LLM text: auto-rendering will parse and display subcomponents
-    - return a **reply** field with a message JSON object: items will be rendered as-is (see format below)
-    - enable **stream-contents**: token streaming will be interpreted and automatically parsed and rendered
-
-#### 2: API-less complete control with JSON object in **conversation** attribute:
-
-    - All automatic behavior is disabled. You will be required to provide your own conversation object as well as handle all events such as users submitting/editing/regenerating messages, handling api responses outside the chat, enabling loading and handling feedback events
-    - Create an array of messages with origin/timestamp/displayname, then in **elements** add objects containing **type** and **content**: **content** is a stringified object containing strings for plain text, URLs, arrays or a complex JSON objects. **type** denotes the component to be rendered in the message list such as **text**, **code**, **chart**, **image**, **table**, **carousel** etc
-
-#### 3: Slotting: fully customize the chat by inserting custom divs and components:
-
-    - Place all components directly in the chat tag and import any component you wish to use with the appropriate slot name
-    - additionally, place custom div or external iframes/components directly into the message response
-    - like section 2, all events must be handled by the parent application
-
-## 1. Auto-rendering with an API
-
-### HTML implementation
+#### Basic usage
 
 ```html
 <clabs-chat
-  user-name="user"
-  agent-name="bot"
-  auto-update
   model="llama-2"
   user-prompt="You are Watson, a helpful assistant"
   api-url="localhost:5001/generate_response"
@@ -96,9 +149,9 @@ import '@carbon-labs/ai-chat/es/index.js';
 </clabs-chat>
 ```
 
-### Object sent from chat to api-url:
+All events/interactions are executed internally, any user query sent to the `api-url` and packaged as such:
 
-```js
+```json
 {
   "user_id": "xxxxxx",
   "session": "af90-dfgs-ek2a-vld9-wej",
@@ -117,17 +170,11 @@ import '@carbon-labs/ai-chat/es/index.js';
   "max_tries": 3
 }
 ```
+#### Raw text response
+If API returns raw LLM text in a `reply` of type `string`, auto-parsing will be used to slice/classify text into subcompoments within a message.
 
-#### If API returns **reply** field with raw LLM text:
-
-Auto-parsing will kick in and slice/convert text into visual elements.
-
-#### If API returns **reply** with valid JSON message object:
-
-Objects are rendered in order using list of elements, subelement of type
-**type** is rendered using **content** field
-
-### Message format:
+#### Object response
+If API returns a `reply` of type `object/json`, objects are rendered as-is in order of appearance, each containing a subelement containing a`type` string which render a `content` field:
 
 ```js
 [
@@ -143,7 +190,7 @@ Objects are rendered in order using list of elements, subelement of type
 ]
 ```
 
-### Streaming option: response must be a string token and subcomponents will accept incomplete streamed text:
+#### Streaming option: response must be a string token and subcomponents will accept incomplete streamed text:
 
 ```html
 <clabs-chat
@@ -154,7 +201,8 @@ Objects are rendered in order using list of elements, subelement of type
 </clabs-chat>
 ```
 
-## API-less full control example using **conversation** attribute
+### 2: API-less control with JSON object 
+<a id="render-from-parent"></a>
 
 #### Specifiy a **conversation** object and specify the loading state and every interaction outside the chat, then update the **conversation** object to see an update:
 
@@ -185,7 +233,7 @@ Objects are rendered in order using list of elements, subelement of type
 </clabs-chat>
 ```
 
-### Conversation format:
+#### Conversation format:
 
 ```js
 [
@@ -218,7 +266,8 @@ Objects are rendered in order using list of elements, subelement of type
 ]
 ```
 
-## Slotting example
+### Full Customization with Slotting 
+<a id="full-customization-with-slotting"></a>
 
 ```html
  <clabs-chat user-name="user" agent-name="bot" conversation="{conversation}">

@@ -60,6 +60,12 @@ export default class messages extends LitElement {
   @property({ type: String, attribute: 'agent-name' })
   agentName;
 
+  /**
+   * string denoting parent theme
+   */
+  @state()
+  _parentTheme;
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/

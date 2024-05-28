@@ -36,6 +36,9 @@ export function chatTemplate(customElementClass) {
     _handleFullscreenMode: handleFullscreenMode,
     _inputFieldPlaceholder: inputFieldPlaceholder,
     _streamResponses: streamResponses,
+    _endStreaming: endStreaming,
+    promptNotificationType,
+    promptNotificationMessage,
   } = customElementClass;
 
   return html`<div
@@ -57,13 +60,18 @@ export function chatTemplate(customElementClass) {
           ?loading="${queryInProgress}"
           ?stream-responses="${streamResponses}"
           @on-message-regeneration="${handleUserRegenerationRequest}"
-          @on-user-message-update-request="${handleUserUpdateRequest}">
+          @on-user-message-update-request="${handleUserUpdateRequest}"
+          @on-message-streaming-done="${endStreaming}">
         </clabs-chat-messages>
       </slot>
 
       <clabs-chat-footer
         ?disable-input="${loading}"
         @on-user-text-input="${sendInput}"
+        @on-user-stream-interrupt="${endStreaming}"
+        context-message="${promptNotificationMessage}"
+        context-message-type="${promptNotificationType}"
+        ?currently-streaming="${streamResponses}"
         input-placeholder="${inputFieldPlaceholder}">
       </clabs-chat-footer>
     </div>

@@ -119,7 +119,7 @@ export default class codeElement extends LitElement {
     //.replace(/</g, '&lt;')
     //.replace(/>/g, '&gt;');
     const lines = htmlSafeText.trim().split('\n');
-    const tabWidth = 16;
+    const tabWidth = 24;
     const paddingLeft = 8;
     const textValues: {
       content: string;
@@ -127,6 +127,7 @@ export default class codeElement extends LitElement {
       paddingLeft: string;
       enableEditing: boolean;
     }[] = [];
+
     for (let i = 0; i < lines.length; i++) {
       let lineType = '';
       const trimmedLine = lines[i].replace(/\t/g, '');
@@ -141,7 +142,7 @@ export default class codeElement extends LitElement {
       }
 
       textValues.push({
-        content: lines[i].replace(/\t/g, '').replace(/\n/g, ''),
+        content: lines[i].trim().replace(/\t/g, ''),
         type: lineType,
         enableEditing: false,
         paddingLeft: tabOffset.toString() + 'px',

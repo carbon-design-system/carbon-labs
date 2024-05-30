@@ -56,10 +56,7 @@ export function footerTemplate(customElementClass) {
     ${
       contextMessage
         ? html`
-            <div
-              class="${clabsPrefix}--chat-footer-menu${isPromptFocused
-                ? '-focused'
-                : ''}">
+            <div class="${clabsPrefix}--chat-footer-menu">
               <div class="${clabsPrefix}--chat-footer-menu-container">
                 <div class="${clabsPrefix}--chat-footer-menu-container-item">
                   <cds-button
@@ -90,7 +87,7 @@ export function footerTemplate(customElementClass) {
     }
       <div class="${clabsPrefix}--chat-footer-prompt-items${
     expandedWidth ? '-expanded' : ''
-  }">
+  } ${isPromptFocused ? clabsPrefix + '--chat-footer-prompt-focused' : ''}">
       <textarea
         class="${clabsPrefix}--chat-search-query ${
     disableInput ? clabsPrefix + '--chat-search-query-disabled' : ''
@@ -135,8 +132,9 @@ export function footerTemplate(customElementClass) {
                     ${Microphone16({ slot: 'icon' })}
                   </cds-button>`
                 : html` <cds-button
-                    kind="danger"
+                    kind="ghost"
                     tooltip-text="Stop listening"
+                    class="${clabsPrefix}--chat-footer-button-danger"
                     tooltip-position="left"
                     tooltip-alignment="end"
                     size="sm"
@@ -161,8 +159,9 @@ export function footerTemplate(customElementClass) {
               `
             : html`
                 <cds-button
-                  kind="danger"
+                  kind="ghost"
                   size="sm"
+                  class="${clabsPrefix}--chat-footer-button-danger"
                   tooltip-text="Stop generating"
                   tooltip-position="left"
                   tooltip-alignment="end"

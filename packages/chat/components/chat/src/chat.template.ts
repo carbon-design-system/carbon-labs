@@ -30,25 +30,41 @@ export function chatTemplate(customElementClass) {
     userName,
     agentName,
     loading,
+    closed,
     disableHeaderMenu,
     disableHeaderButtons,
+    disableHeaderClose,
+    disableHeaderMinimize,
+    disableHeaderFullscreen,
     enableFullscreen,
+    enableDocking,
     _handleFullscreenMode: handleFullscreenMode,
+    _handleChatClosed: handleChatClosed,
+    _handleDockingMode: handleDockingMode,
     _inputFieldPlaceholder: inputFieldPlaceholder,
     _streamResponses: streamResponses,
+    _interruptStreaming: interruptStreaming,
     _endStreaming: endStreaming,
+    _streamDelay: streamDelay,
     promptNotificationType,
     promptNotificationMessage,
   } = customElementClass;
 
   return html`<div
-    class="${clabsPrefix}--chat-container ${enableFullscreen
-      ? clabsPrefix + '--chat-fullscreen'
-      : ''}">
+    class="${clabsPrefix}--chat-container ${closed
+      ? clabsPrefix + '--chat-closed'
+      : ''} ${enableDocking
+      ? clabsPrefix + '--chat-docked'
+      : ''} ${enableFullscreen ? clabsPrefix + '--chat-fullscreen' : ''}">
     <div class="${clabsPrefix}--chat-content-container">
       <clabs-chat-header
         @on-chat-fullscreen-change="${handleFullscreenMode}"
+        @on-chat-docking-change="${handleDockingMode}"
+        @on-chat-closed="${handleChatClosed}"
         ?disable-header-menu="${disableHeaderMenu}"
+        ?disable-header-close="${disableHeaderClose}"
+        ?disable-header-fullscreen="${disableHeaderFullscreen}"
+        ?disable-header-minimize="${disableHeaderMinimize}"
         ?disable-header-buttons="${disableHeaderButtons}">
       </clabs-chat-header>
 
@@ -57,8 +73,11 @@ export function chatTemplate(customElementClass) {
           .messages="${messages}"
           user-name="${userName}"
           agent-name="${agentName}"
+          ?docking-enabled="${enableDocking}"
           ?loading="${queryInProgress}"
           ?stream-responses="${streamResponses}"
+          stream-delay="${streamDelay}"
+          ?user-interrupted-streaming="${interruptStreaming}"
           @on-message-regeneration="${handleUserRegenerationRequest}"
           @on-user-message-update-request="${handleUserUpdateRequest}"
           @on-message-streaming-done="${endStreaming}">
@@ -71,7 +90,7 @@ export function chatTemplate(customElementClass) {
         @on-user-stream-interrupt="${endStreaming}"
         context-message="${promptNotificationMessage}"
         context-message-type="${promptNotificationType}"
-        ?currently-streaming="${streamResponses}"
+        ?currently-streaming="${streamResponses && !interruptStreaming}"
         input-placeholder="${inputFieldPlaceholder}">
       </clabs-chat-footer>
     </div>

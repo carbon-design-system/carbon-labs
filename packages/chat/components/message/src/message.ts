@@ -24,6 +24,12 @@ export default class message extends LitElement {
   _messageElements: { content: any; type: string }[] = [];
 
   /**
+   * Boolean denoting if user submitted the message or not
+   */
+  @property({ type: Boolean, attribute: 'user-submitted' })
+  userSubmitted;
+
+  /**
    * User-imported message sub-elements object, parsing is done on rawText here if none is provided
    */
   @property({ type: Array, attribute: 'elements', reflect: true })
@@ -88,6 +94,18 @@ export default class message extends LitElement {
    */
   @property({ type: Boolean, attribute: 'loading-state', reflect: true })
   loadingState;
+
+  /**
+   * boolean denoting whether to hide icon on the left
+   */
+  @property({ type: Boolean, attribute: 'disable-icon' })
+  disableIcon;
+
+  /**
+   * number value in milliseconds to throttle streaming response
+   */
+  @property({ type: Number, attribute: 'stream-delay' })
+  _streamDelay;
 
   /**
    * editing state to replace text field with a textarea
@@ -207,7 +225,7 @@ export default class message extends LitElement {
     }
 
     if (this.elements == null) {
-      if (this.origin === 'user') {
+      if (this.userSubmitted) {
         if (this.rawText) {
           this._parseText();
         }
@@ -573,7 +591,7 @@ export default class message extends LitElement {
     this.bufferMessage = '';
     this.temporaryMessage = { content: '', type: 'text' };
     this.currentType = '';
-    this.streamingSpeed = this.baseStreamingSpeed;
+    this.baseStreamingSpeed = this._streamDelay || this.baseStreamingSpeed;
 
     this._beginStreaming();
   }
@@ -587,7 +605,7 @@ export default class message extends LitElement {
     }
 
     this.streamingInterval = setTimeout(() => {
-      const token = this.tokens[this.streamingIndex];
+      const token = this.tokens[this.streamingIndex] || '';
       this.streamingIndex++;
       this.bufferMessage += token;
 
@@ -686,20 +704,24 @@ export default class message extends LitElement {
       this.streamingSpeed = Math.max(1, this.streamingSpeed);
 
       if (this.streamingIndex >= this.tokens.length || this._forceStreamEnd) {
-        this.currentlyStreaming = false;
-        if (this.temporaryMessage.content.length > 0) {
-          const trailingContent = this.temporaryMessage.content;
-          this._messageElements = [
-            ...this._messageElements,
-            {
-              content: trailingContent.replace(/\.\.\.$/, ''),
-              type: this.temporaryMessage.type,
-            },
-          ];
+        if (this.currentlyStreaming) {
+          this.currentlyStreaming = false;
+          this._beginStreaming();
+        } else {
+          if (this.temporaryMessage.content.length > 0) {
+            const trailingContent = this.temporaryMessage.content;
+            this._messageElements = [
+              ...this._messageElements,
+              {
+                content: trailingContent.replace(/\.\.\.$/, ''),
+                type: this.temporaryMessage.type,
+              },
+            ];
+          }
+          this.temporaryMessage.content = '';
+          this.streamingIndex = 0;
+          this._signalEndOfStreaming();
         }
-        this.temporaryMessage.content = '';
-        this.streamingIndex = 0;
-        this._signalEndOfStreaming();
       } else {
         this._beginStreaming();
       }

@@ -43,6 +43,24 @@ export default class messages extends LitElement {
   _streamResponses;
 
   /**
+   * number value in milliseconds to throttle streaming response
+   */
+  @property({ type: Number, attribute: 'stream-delay' })
+  _streamDelay;
+
+  /**
+   * docked - boolean denoted if parent chat is docked to tell children to minimize
+   */
+  @property({ type: Boolean, attribute: 'docking-enabled' })
+  _dockingEnabled;
+
+  /**
+   * userInterruptedStreaming - boolean denoted the parent chat received an event from it's footer that streaming was canceled
+   */
+  @property({ type: Boolean, attribute: 'user-interrupted-streaming' })
+  userInterruptedStreaming;
+
+  /**
    * boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message
    */
   @state()

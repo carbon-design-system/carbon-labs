@@ -78,21 +78,18 @@ export function codeElementTemplate(customElementClass) {
                 : html``}
               ${!editable
                 ? html`<div
-                    custom-index="${index}"
                     class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-line-${editable
                       ? 'editable'
                       : ''} ${lineObject.type}"
-                    style="padding-left:${lineObject.paddingLeft}">
+                    style="padding-left: ${lineObject.paddingLeft}">
                     ${lineObject.content}
                   </div>`
                 : html`
                     <textarea
                       rows="1"
-                      custom-index="${index}"
                       class="${clabsPrefix}--chat-code-line-text-area ${lineObject.type}"
-                      style="padding-left:${lineObject.paddingLeft}">
-                        ${lineObject.content}
-                </textarea
+                      style="padding-left: ${lineObject.paddingLeft}">
+${lineObject.content}</textarea
                     >
                   `}
             </div>

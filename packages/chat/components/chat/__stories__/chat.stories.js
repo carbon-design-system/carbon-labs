@@ -134,10 +134,14 @@ export const APIPlayground = {
         auto-update
         user-prompt="${userPrompt}"
         api-url="${apiUrl}"
+        stream-responses
+        stream-delay="${2}"
+        default-viewing-mode="minimized"
+        disable-header-minimize
         feedback-url="${feedbackUrl}"
         temperature="${temperature}"
-        user-name="user"
-        agent-name="bot">
+        user-name="Sherlock"
+        agent-name="Dr Watson">
       </clabs-chat>
     </div>
   `,
@@ -325,6 +329,7 @@ export const Slotting = {
           <clabs-chat-message
             slot="message-items"
             origin="user"
+            user-submitted
             time-stamp="9:02"
             index="0">
             <clabs-chat-text

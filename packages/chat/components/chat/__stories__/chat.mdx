@@ -55,6 +55,11 @@ It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LL
         <td>Return when user requested regeneration on any bot message</td>
     </tr>
     <tr>
+        <td>on-chat-close</td>
+        <td>All</td>
+        <td>Return when user clicked close in the header</td>
+    </tr>
+    <tr>
         <td>on-user-message-update-request</td>
         <td>API mode in use</td>
         <td>Return when user requested an edit on any user message</td>
@@ -181,6 +186,8 @@ If API returns a `reply` of type `object/json`, objects are rendered as-is in or
 [
   {type: 'text', content: 'Hello World!'},
   {type: 'url', content: 'http://www.ibm.com'},
+  {type: 'code', content: 'python\ndef Prime(number,itr):\n\t#base condition\n\tif ...'},
+  {type: 'error', content: 'ERROR: API failed to respond, try again'},
   {type: 'image', content: 'http://www.gallery.come/image.png'},
   {type: 'video', content: 'http://www.wikimedia.org/example_video.mp4'},
   {type: 'file', content: 'ftp:spreadsheet.csv'},

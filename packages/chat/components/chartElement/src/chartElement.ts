@@ -229,7 +229,6 @@ export default class chartElement extends LitElement {
       //this.requestUpdate();
     });
     this.resizeObserver.observe(this.parentElement);
-    console.log(this.parentElement);
 
     this.intersectionObserver = new IntersectionObserver(async () => {
       if (!this.chartLoading) {

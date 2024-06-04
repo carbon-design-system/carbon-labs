@@ -54,10 +54,11 @@ export class Tag extends LitElement {
   }
 
   /**
-   * _handleClick - fire event when tag is clicked
+   * fire event when tag is clicked
    */
-  _handleClick() {
-    console.log('tag clicked');
-    // Tag click event logic here
+  handleClick() {
+    this.dispatchEvent(
+      new CustomEvent('tag-click', { detail: { message: 'Tag clicked' } })
+    );
   }
 }

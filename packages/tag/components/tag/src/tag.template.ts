@@ -25,7 +25,7 @@ export function tagTemplate(customElementClass) {
     color: color,
     tooltipPosition: tooltipPosition,
     tooltipText: tooltipText,
-    _handleClick: handleClick,
+    handleClick: handleClick,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--tag">

@@ -11,6 +11,8 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
+import '@carbon/web-components/es/components/tooltip/index.js';
+
 /**
  * Lit template for card
  *
@@ -19,17 +21,27 @@ const { stablePrefix: clabsPrefix } = settings;
  */
 export function tagElementTemplate(customElementClass) {
   const {
-    content: content,
+    text: text,
     color: color,
+    tooltipPosition: tooltipPosition,
+    tooltipText: tooltipText,
     _handleClick: handleClick,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-tag">
     <div class="${clabsPrefix}--chat-tag-container">
-      <button class="tag" .color=${color} @click="${handleClick}">
-        <slot>${content}</slot>
-      </button>
-      <div class="tooltip">Default tooltip text.</div>
+      <cds-tooltip align="${tooltipPosition}">
+        <button
+          class="tag sb-tooltip-trigger"
+          .color=${color}
+          .tooltipPosition=${tooltipPosition}
+          @click="${handleClick}">
+          <slot>${text}</slot>
+        </button>
+        <cds-tooltip-content id="content"> ${tooltipText} </cds-tooltip-content>
+      </cds-tooltip>
     </div>
   </div>`;
 }
+
+//      <div class="tooltip">Default tooltip text.</div>

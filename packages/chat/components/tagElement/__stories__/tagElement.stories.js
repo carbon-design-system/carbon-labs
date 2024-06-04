@@ -17,18 +17,29 @@ export default {
 };
 
 const defaultArgs = {
-  content: 'My tag text',
+  text: 'Default tag text',
   color: '#67ba6e',
+  tooltipPosition: 'bottom',
+  tooltipText: 'Default tooltip text',
 };
 
 const defaultControls = {
-  content: {
+  text: {
     control: { type: 'text' },
     description: 'Text inside the tag',
   },
   color: {
     control: { type: 'color' },
     description: 'Left border color',
+  },
+  tooltipPosition: {
+    control: { type: 'radio' },
+    options: ['top', 'left', 'right', 'bottom'],
+    description: 'Tooltip position relative to the tag',
+  },
+  toolTipText: {
+    control: { type: 'text' },
+    description: 'Text inside the tooltip',
   },
 };
 
@@ -49,6 +60,11 @@ export const Default = {
    * @param {string} args.content - content to generate from
    * @returns {TemplateResult<1>}
    */
-  render: ({ content, color }) =>
-    html` <clabs-chat-tag .color=${color}>${content}</clabs-chat-tag>`,
+  render: ({ text, color, tooltipPosition, tooltipText }) =>
+    html` <clabs-chat-tag
+      .color=${color}
+      .tooltipPosition=${tooltipPosition}
+      .tooltipText="${tooltipText}"
+      >${text}</clabs-chat-tag
+    >`,
 };

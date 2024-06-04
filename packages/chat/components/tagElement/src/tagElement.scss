@@ -12,7 +12,8 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}-chat-tag) {
-  display: block;
+  display: flex;
+  justify-content: center;
   padding: 96px 48px;
   background-color: #222222;
 

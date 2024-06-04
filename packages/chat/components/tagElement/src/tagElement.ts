@@ -19,10 +19,10 @@ export default class tagElement extends LitElement {
   static styles = styles;
 
   /**
-   * Content inside the tag
+   * Text inside the tag
    */
-  @property({ type: String, attribute: 'content', reflect: true })
-  content;
+  @property({ type: String, attribute: 'text', reflect: true })
+  text;
 
   /**
    * Left border color
@@ -31,10 +31,23 @@ export default class tagElement extends LitElement {
   color;
 
   /**
+   * Tooltip position
+   */
+  @property({ type: String, attribute: 'tooltipPosition' })
+  tooltipPosition;
+
+  /**
+   * Tooltip text
+   */
+  @property({ type: String, attribute: 'tooltipText' })
+  tooltipText;
+
+  /**
    * updated - check changed properties
    * @param {object} changedProperties - LIT object denoting changed attributes
    */
   updated(changedProperties) {
+    super.updated(changedProperties);
     if (changedProperties.has('color')) {
       this.style.setProperty('--border-color', this.color);
     }

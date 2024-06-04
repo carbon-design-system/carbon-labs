@@ -25,6 +25,22 @@ export default class tagElement extends LitElement {
   content;
 
   /**
+   * Left border color
+   */
+  @property({ type: String, attribute: 'color' })
+  color;
+
+  /**
+   * updated - check changed properties
+   * @param {object} changedProperties - LIT object denoting changed attributes
+   */
+  updated(changedProperties) {
+    if (changedProperties.has('color')) {
+      this.style.setProperty('--border-color', this.color);
+    }
+  }
+
+  /**
    * _handleClick - fire event when tag is clicked
    */
   _handleClick() {

@@ -30,7 +30,7 @@ $css--plex: true !default;
     background-color: #525252;
     block-size: 48px;
     border-image: none;
-    border-inline-start: 4px solid #67ba6e;
+    border-inline-start: 4px solid var(--border-color, #67ba6e);
     color: #ffffff;
     font-size: 18px;
     line-height: inherit;

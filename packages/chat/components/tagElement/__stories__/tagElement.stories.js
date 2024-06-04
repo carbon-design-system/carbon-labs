@@ -18,12 +18,17 @@ export default {
 
 const defaultArgs = {
   content: 'My tag text',
+  color: '#67ba6e',
 };
 
 const defaultControls = {
   content: {
     control: { type: 'text' },
     description: 'Text inside the tag',
+  },
+  color: {
+    control: { type: 'color' },
+    description: 'Left border color',
   },
 };
 
@@ -44,5 +49,6 @@ export const Default = {
    * @param {string} args.content - content to generate from
    * @returns {TemplateResult<1>}
    */
-  render: ({ content }) => html` <clabs-chat-tag>${content}</clabs-chat-tag>`,
+  render: ({ content, color }) =>
+    html` <clabs-chat-tag .color=${color}>${content}</clabs-chat-tag>`,
 };

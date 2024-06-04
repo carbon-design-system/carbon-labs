@@ -18,11 +18,15 @@ const { stablePrefix: clabsPrefix } = settings;
  * @returns {TemplateResult<1>} Lit html template
  */
 export function tagElementTemplate(customElementClass) {
-  const { content: content, _handleClick: handleClick } = customElementClass;
+  const {
+    content: content,
+    color: color,
+    _handleClick: handleClick,
+  } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-tag">
     <div class="${clabsPrefix}--chat-tag-container">
-      <button class="tag" @click="${handleClick}">
+      <button class="tag" .color=${color} @click="${handleClick}">
         <slot>${content}</slot>
       </button>
       <div class="tooltip">Default tooltip text.</div>

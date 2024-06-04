@@ -11,35 +11,35 @@ import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
 // @ts-ignore
-import styles from './tagElement.scss?inline';
+import styles from './tag.scss?inline';
 /**
  * Input component using search typeahead api
  */
-export default class tagElement extends LitElement {
+export class Tag extends LitElement {
   static styles = styles;
 
   /**
    * Text inside the tag
    */
-  @property({ type: String, attribute: 'text', reflect: true })
+  @property({ attribute: 'text', type: String })
   text;
 
   /**
    * Left border color
    */
-  @property({ type: String, attribute: 'color' })
+  @property({ attribute: 'color', type: String })
   color;
 
   /**
    * Tooltip position
    */
-  @property({ type: String, attribute: 'tooltipPosition' })
+  @property({ attribute: 'tooltipPosition', type: String })
   tooltipPosition;
 
   /**
    * Tooltip text
    */
-  @property({ type: String, attribute: 'tooltipText' })
+  @property({ attribute: 'tooltipText', type: String })
   tooltipText;
 
   /**

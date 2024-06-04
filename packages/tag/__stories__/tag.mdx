@@ -1,0 +1,49 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import * as TagStories from './tag.stories';
+import packageJson from '../package.json';
+
+<Meta of={TagStories} />
+
+# Tag
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/tag/examples/tag)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/tag/examples/tag)
+
+## Overview
+
+The tag component.
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/ai-tag/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['tag'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+```html
+<clabs-tag color="#67ba6e" tooltipPosition="bottom" tooltipText="Tooltip text">
+  Tag text
+</clabs-tag>
+```
+
+### &lt;clabs-tag&gt; attributes and properties
+
+<ArgTypes of="clabs-tag" />

@@ -11,13 +11,13 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
 
-:host(#{$clabs-prefix}-chat-tag) {
+:host(#{$clabs-prefix}-tag) {
   display: flex;
   justify-content: center;
   padding: 96px 48px;
   background-color: #222222;
 
-  .#{$clabs-prefix}--chat-tag-container {
+  .#{$clabs-prefix}--tag-container {
     position: relative;
     display: inline-block;
   }
@@ -84,7 +84,7 @@ $css--plex: true !default;
     transform: scaleY(-1);
   }
 
-  .#{$clabs-prefix}--chat-tag-container:hover .tooltip {
+  .#{$clabs-prefix}--tag-container:hover .tooltip {
     opacity: 1;
     visibility: visible;
   }

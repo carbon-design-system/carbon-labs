@@ -9,24 +9,25 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import tagElement from './src/tagElement.js';
-import { tagElementTemplate } from './src/tagElement.template.js';
+import { Tag } from './src/tag.js';
+import { TemplateResult } from 'lit';
+import { tagTemplate } from './src/tag.template.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Constructed class functionality for the test input custom element
+ * Component extending the Tag component
+ *
+ * @element clabs-tag
  */
-@customElement(`${clabsPrefix}-chat-tag`)
-class CLABSTagElement extends tagElement {
+@customElement(`${clabsPrefix}-tag`)
+class CLABSTag extends Tag {
   /**
    * Renders the template while passing in class functionality
-   *
-   * @returns {TemplateResult<1>}
    */
-  render() {
-    return tagElementTemplate(this);
+  render(): TemplateResult<1> {
+    return tagTemplate(this);
   }
 }
 
-export default CLABSTagElement;
+export default CLABSTag;

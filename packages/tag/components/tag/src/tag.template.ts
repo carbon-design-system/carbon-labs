@@ -19,7 +19,7 @@ import '@carbon/web-components/es/components/tooltip/index.js';
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export function tagElementTemplate(customElementClass) {
+export function tagTemplate(customElementClass) {
   const {
     text: text,
     color: color,
@@ -28,8 +28,8 @@ export function tagElementTemplate(customElementClass) {
     _handleClick: handleClick,
   } = customElementClass;
 
-  return html` <div class="${clabsPrefix}--chat-tag">
-    <div class="${clabsPrefix}--chat-tag-container">
+  return html` <div class="${clabsPrefix}--tag">
+    <div class="${clabsPrefix}--tag-container">
       <cds-tooltip align="${tooltipPosition}">
         <button
           class="tag sb-tooltip-trigger"
@@ -43,5 +43,3 @@ export function tagElementTemplate(customElementClass) {
     </div>
   </div>`;
 }
-
-//      <div class="tooltip">Default tooltip text.</div>

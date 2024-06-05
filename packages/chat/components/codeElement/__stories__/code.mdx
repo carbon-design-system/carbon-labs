@@ -1,0 +1,56 @@
+import { Markdown, Meta, ArgTypes} from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
+import * as CodeElementStories from './codeElement.stories';
+import packageJson from '../../../package.json';
+
+<Meta of={CodeElementStories} />
+
+# Carbon-Labs Code Handbook
+
+## Table of Contents
+
+- [Overview](#overview)
+  - [Attributes and Properties](#attributes-and-properties)
+  - [Events](#events)
+  - [Troubleshooting](#troubleshooting)
+- [Installation](#installation)
+  - [JS via import](#js-via-import)
+- [Styles](#styles)
+
+## Overview 
+<a id="overview"></a>
+
+The Chat component is a collaboration between the **IBM Research Visual AI Lab (VAIL)** and the **Carbon Design Team** to provide an open-source, easily expandable chat interface to interact with large language models. Our core values are: open-source collaboration, universal support, ease of use and the in-depth customization Carbon is known for.
+
+It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LLM-enabled components. We chose LIT **web-components** as these can be used directly in **Vanilla**, **Svelte** and **React**. Our primary goal is to provide a space for novel and experimental features/components to be used in and out of Chat interfaces. By fully adhering to the latest design/safety/formatting guidelines, **Labs** can accelerate and streamline adoption across IBM to respond to the fast-moving field of AI and Large Language Models.
+
+### Attributes and Properties 
+<a id="attributes-and-properties"></a>
+<ArgTypes of="clabs-chat-code"/>
+
+### Troubleshooting 
+<a id="troubleshooting"></a> 
+
+Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests regarding general information, installation, trouble-shooting and custom features.
+
+
+## Installation 
+<a id="installation"></a>
+
+Here's a quick example to get you started.
+
+### JS via import 
+<a id="js-via-import"></a>
+
+```javascript
+import '@carbon-labs/ai-chat-code/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['chat'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>

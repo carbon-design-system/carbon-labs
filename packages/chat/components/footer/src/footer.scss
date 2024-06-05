@@ -44,36 +44,55 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-footer-prompt-items {
     display: flex;
-    align-items: center;
+    border: 1px solid transparent;
     border-radius: 0 0 8px 8px;
     background: $background;
     border-block-start: 1px solid $border-subtle;
     gap: 4px;
     min-block-size: 56px;
     padding-inline: 16px 8px;
+    transition: border-color 0.15s linear;
   }
 
   .#{$clabs-prefix}--chat-footer-menu {
     box-sizing: border-box;
-    padding: 16px;
+
+    padding: 6px 8px;
     border: 1px solid $border-subtle;
     background: $background;
+    border-block-end: none;
     inline-size: 100%;
-    margin-block-end: 4px;
+    margin-block-end: 0;
   }
 
   .#{$clabs-prefix}--chat-footer-menu-container {
     display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    color: $link-primary;
     gap: 16px;
-  }
-
-  .#{$clabs-prefix}--chat-footer-menu-container cds-file-uploader {
     inline-size: 100%;
   }
 
+  .#{$clabs-prefix}--chat-footer-menu-type-error {
+    color: $support-error;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-type-information {
+    color: $link-primary;
+  }
+
   .#{$clabs-prefix}--chat-footer-menu-container-item {
-    display: inline-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 32px;
+    max-inline-size: 32px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container-message {
     flex: 1;
+    font-size: 14px;
   }
 
   .#{$clabs-prefix}--chat-footer-button {
@@ -95,11 +114,18 @@ $css--plex: true !default;
     font: inherit;
     font-size: 14px;
     letter-spacing: 0.16px;
-    line-height: 20px;
+    line-height: 26px;
     min-block-size: 30px;
     overflow-y: hidden;
-    padding-block: 10px 10px;
+    padding-block: 12px 12px;
     resize: none;
+  }
+  .#{$clabs-prefix}--chat-footer-button-danger svg {
+    fill: $support-error;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-focused {
+    border: 1px solid $text-primary;
   }
 
   .#{$clabs-prefix}--chat-search-query-disabled {

@@ -43,6 +43,12 @@ export default class CLABSChat extends LitElement {
   loading;
 
   /**
+   * closed state to denote if chart is hidden
+   */
+  @property({ type: Boolean, attribute: 'closed' })
+  closed;
+
+  /**
    * user-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system
    */
   @property({ type: Boolean, attribute: 'auto-update', reflect: true })
@@ -63,8 +69,20 @@ export default class CLABSChat extends LitElement {
   /**
    * user-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system
    */
-  @property({ type: Boolean, attribute: 'stream-responses', reflect: true })
+  @property({ type: Boolean, attribute: 'stream-responses' })
   _streamResponses;
+
+  /**
+   * number value in milliseconds to throttle streaming response
+   */
+  @property({ type: Number, attribute: 'stream-delay' })
+  _streamDelay;
+
+  /**
+   * boolean denoting when a user triggered a stop-streaming event
+   */
+  @state()
+  _interruptStreaming = true;
 
   /**
    * boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message
@@ -127,10 +145,34 @@ export default class CLABSChat extends LitElement {
   userPrompt;
 
   /**
+   * string denoting default viewing mode, can be "container" (default), "fullscreen" or "minimized"
+   */
+  @property({ type: String, attribute: 'default-viewing-mode' })
+  defaultViewingMode;
+
+  /**
    * TEMPORARY: disable all buttons except slug
    */
   @property({ type: Boolean, attribute: 'disable-header-buttons' })
   disableHeaderButtons;
+
+  /**
+   * Remove header fullscreen button option
+   */
+  @property({ type: Boolean, attribute: 'disable-header-fullscreen' })
+  disableHeaderFullscreen;
+
+  /**
+   * Remove header closing button option
+   */
+  @property({ type: Boolean, attribute: 'disable-header-close' })
+  disableHeaderClose;
+
+  /**
+   * Remove fullscreen button option
+   */
+  @property({ type: Boolean, attribute: 'disable-header-minimize' })
+  disableHeaderMinimize;
 
   /**
    * string denoting selected querying method
@@ -144,10 +186,40 @@ export default class CLABSChat extends LitElement {
   sampleQuery;
 
   /**
+   * string denoting message to append above prompt
+   */
+  @property({ type: String, attribute: 'prompt-notification-message' })
+  promptNotificationMessage;
+
+  /**
+   * string denoting type of appended prompt message (error, information, file)
+   */
+  @property({ type: String, attribute: 'prompt-notification-type' })
+  promptNotificationType;
+
+  /**
    * fullscreen boolean dictated by header child
    */
   @state()
   enableFullscreen = false;
+
+  /**
+   * docking boolean dictated by header child
+   */
+  @state()
+  enableDocking = false;
+
+  /**
+   * x-axis placement of minimized chat
+   */
+  @property({ type: String, attribute: 'horizontal-dock-direction' })
+  horizontalDockDirection;
+
+  /**
+   * y-axis placement of minimized chat
+   */
+  @property({ type: String, attribute: 'vertical-dock-direction' })
+  verticalDockDirection;
 
   /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
    * @param {Object} changedProperties - returned inner DOM update object
@@ -164,6 +236,16 @@ export default class CLABSChat extends LitElement {
         this.requestUpdate();
       } else {
         this._messages = [];
+      }
+    }
+    if (changedProperties.has('defaultViewingMode')) {
+      if (this.defaultViewingMode === 'fullscreen') {
+        this.enableDocking = false;
+        this.enableFullscreen = true;
+      }
+      if (this.defaultViewingMode === 'minimized') {
+        this.enableDocking = true;
+        this.enableFullscreen = false;
       }
     }
     if (changedProperties.has('_messages')) {
@@ -193,6 +275,21 @@ export default class CLABSChat extends LitElement {
     this.dispatchEvent(chatSlotUpdateEvent);
   }
 
+  /**
+   * handle stream-end event from footer
+   * @param {event} event - slot change detection event
+   */
+  _endStreaming(event) {
+    event.preventDefault();
+    const chatEndStreamingEvent = new CustomEvent('on-chat-end-streaming', {
+      detail: { action: 'Streaming interrupted by user' },
+      bubbles: true,
+      composed: true,
+    });
+    this._interruptStreaming = true;
+    this.dispatchEvent(chatEndStreamingEvent);
+  }
+
   /** Initialize examples for when stories send in a 'sampleQuery' string
    */
   initializeExamplesText() {
@@ -201,6 +298,7 @@ export default class CLABSChat extends LitElement {
       this._messages.length = 0;
       return;
     }
+    this._interruptStreaming = !this._streamResponses;
     this._messages.length = 0;
     const exampleMessageArray = this.sampleQuery.split('bot:');
     const userMessage = exampleMessageArray[0].replace('user:', '');
@@ -338,12 +436,16 @@ export default class CLABSChat extends LitElement {
   sendInput(event) {
     const value = event.detail.textInputValue;
 
+    //if streaming is enabled and previously interrupted
+    this._interruptStreaming = !this._streamResponses;
+
     const newMessage = {
       text: value,
       origin: this.userName,
       hasError: false,
       time: this._getCurrentTime(),
       index: this._messages.length,
+      userSubmitted: true,
     };
 
     if (!this.autoUpdate) {
@@ -401,7 +503,29 @@ export default class CLABSChat extends LitElement {
    */
   _handleFullscreenMode(event) {
     const mode = event.detail?.fullscreen;
+    this.enableDocking = false;
+    if (!mode && this.defaultViewingMode === 'minimized') {
+      this.enableDocking = true;
+    }
     this.enableFullscreen = mode;
+  }
+
+  /**
+   * handle docking event when header docking event is called
+   * @param {event} event - click event from cds button
+   */
+  _handleDockingMode(event) {
+    const mode = event.detail?.docking;
+    this.enableFullscreen = false;
+    this.enableDocking = mode;
+  }
+
+  /**
+   * handle closing event when header close event is called
+   */
+  _handleChatClosed() {
+    this.closed = true;
+    this.requestUpdate();
   }
 
   /** get time of message formatted as 1:23pm or 4:56am

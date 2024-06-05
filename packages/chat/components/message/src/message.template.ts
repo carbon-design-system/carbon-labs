@@ -41,7 +41,7 @@ import '../../carouselElement/carouselElement.js';
 export function messageTemplate(customElementClass) {
   const {
     _messageElements: messageElements,
-    origin: origin,
+    userSubmitted,
     timeStamp: timeStamp,
     loadingState: loadingState,
     displayName: displayName,
@@ -57,15 +57,18 @@ export function messageTemplate(customElementClass) {
     _onTagSelected: onTagSelected,
     temporaryMessage,
     watsonIconDark,
+    watsonIconLight,
+    _parentTheme: parentTheme,
     displayColor,
     currentlyStreaming,
     _handleSlotchange,
+    disableIcon,
   } = customElementClass;
 
   return html`<div
     class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
     <div class="${clabsPrefix}--chat-message-container">
-      ${origin === 'user'
+      ${userSubmitted
         ? html` <div class="${clabsPrefix}--chat-message-content">
             <div class="${clabsPrefix}--chat-message-timestamp-user">
               ${displayName ? displayName : 'You'} ${timeStamp}
@@ -110,17 +113,22 @@ export function messageTemplate(customElementClass) {
               : html` <div
                   class="${clabsPrefix}--chat-message-dropdown-user"></div>`}
           </div>`
-        : html` <div class="${clabsPrefix}--chat-message-icon">
-              ${displayColor
-                ? html` <div class="${clabsPrefix}--chat-message-agent-icon">
-                    ${WatsonxData24()}
-                  </div>`
-                : html`
-                    <div class="${clabsPrefix}--chat-message-bot-icon">
-                      ${unsafeHTML(watsonIconDark)}
-                    </div>
-                  `}
-            </div>
+        : html` ${!disableIcon
+              ? html`<div class="${clabsPrefix}--chat-message-icon">
+                  ${displayColor
+                    ? html` <div
+                        class="${clabsPrefix}--chat-message-agent-icon">
+                        ${WatsonxData24()}
+                      </div>`
+                    : html`
+                        <div class="${clabsPrefix}--chat-message-bot-icon">
+                          ${parentTheme === 'white'
+                            ? unsafeHTML(watsonIconLight)
+                            : unsafeHTML(watsonIconDark)}
+                        </div>
+                      `}
+                </div> `
+              : html``}
             <div class="${clabsPrefix}--chat-message-content">
               <div class="${clabsPrefix}--chat-message-timestamp-bot">
                 ${displayName == null ? 'watson' : displayName} ${timeStamp}
@@ -261,7 +269,7 @@ export function messageTemplate(customElementClass) {
               ${!loadingState && !disableButtons && !currentlyStreaming
                 ? html`
                     <div class="${clabsPrefix}--chat-message-dropdown-bot">
-                      ${origin === 'user'
+                      ${userSubmitted
                         ? editing === true
                           ? html` <div
                                 class="${clabsPrefix}--chat-message-small-button"

@@ -10,7 +10,11 @@
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+
+import '@carbon/web-components/es/components/button/index.js';
+
+import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
+import Copy16 from '@carbon/web-components/es/icons/copy/16.js';
 
 /**
  * Lit template for code
@@ -19,11 +23,78 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
  * @returns {TemplateResult<1>} Lit html template
  */
 export function codeElementTemplate(customElementClass) {
-  const { _renderCode: renderCode } = customElementClass;
+  const {
+    _renderLines,
+    disableLineTicks,
+    disableCopyButton,
+    disableEditButton,
+    _copyCode: copyCode,
+    editable,
+  } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-code">
     <div class="${clabsPrefix}--chat-code-container">
-      ${unsafeHTML(renderCode)}
+      <div class="${clabsPrefix}--chat-code-options">
+        <div class="${clabsPrefix}--chat-code-options-buttons">
+          ${!disableEditButton
+            ? html`
+                <cds-button
+                  size="sm"
+                  kind="ghost"
+                  tooltip-text="Enable editing"
+                  tooltip-position="left"
+                  tooltip-alignment="end">
+                  ${Edit16({ slot: 'icon' })}
+                </cds-button>
+              `
+            : html``}
+          ${!disableCopyButton
+            ? html`
+                <cds-button
+                  size="sm"
+                  kind="ghost"
+                  tooltip-text="Copy code"
+                  tooltip-position="left"
+                  tooltip-alignment="end"
+                  @click="${copyCode}">
+                  ${Copy16({ slot: 'icon' })}
+                </cds-button>
+              `
+            : html``}
+        </div>
+      </div>
+
+      ${_renderLines.map(
+        (lineObject, index) =>
+          html`
+            <div class="${clabsPrefix}--chat-code-line">
+              ${!disableLineTicks
+                ? html`
+                    <div class="${clabsPrefix}--chat-code-line-tick">
+                      ${index}
+                    </div>
+                    <div class="${clabsPrefix}--chat-code-line-divider"></div>
+                  `
+                : html``}
+              ${!editable
+                ? html`<div
+                    class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-line-${editable
+                      ? 'editable'
+                      : ''} ${lineObject.type}"
+                    style="padding-left: ${lineObject.paddingLeft}">
+                    ${lineObject.content}
+                  </div>`
+                : html`
+                    <textarea
+                      rows="1"
+                      class="${clabsPrefix}--chat-code-line-text-area ${lineObject.type}"
+                      style="padding-left: ${lineObject.paddingLeft}">
+${lineObject.content}</textarea
+                    >
+                  `}
+            </div>
+          `
+      )}
     </div>
   </div>`;
 }

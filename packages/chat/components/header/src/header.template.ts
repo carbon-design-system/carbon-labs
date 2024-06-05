@@ -13,6 +13,9 @@ const { stablePrefix: clabsPrefix } = settings;
 import Popup16 from '@carbon/web-components/es/icons/popup/16.js';
 import Menu24 from '@carbon/web-components/es/icons/menu/16.js';
 import Subtract16 from '@carbon/web-components/es/icons/subtract/16.js';
+import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
+import Minimize16 from '@carbon/web-components/es/icons/minimize/16.js';
+import Close16 from '@carbon/web-components/es/icons/close/16.js';
 
 import '@carbon/web-components/es/components/slug/index.js';
 import '@carbon/web-components/es/components/button/index.js';
@@ -28,10 +31,17 @@ export function headerTemplate(customElementClass) {
     title,
     _handlePopup: handlePopup,
     _handleSubtract: handleSubtract,
+    _handleMaximize: handleMaximize,
+    _handleMinimize: handleMinimize,
     _handleMenuToggle: handleMenuToggle,
+    _handleClosed: handleClosed,
     enableFullscreen,
+    enableDocking,
     disableHeaderButtons,
     disableMenu,
+    disableFullscreen,
+    disableClose,
+    disableMinimize,
   } = customElementClass;
   return html` <div class="${clabsPrefix}--chat-header-container">
     <div class="${clabsPrefix}--chat-header-content">
@@ -70,37 +80,72 @@ export function headerTemplate(customElementClass) {
 
           ${!disableHeaderButtons
             ? html`
-                ${!enableFullscreen
+                ${!disableFullscreen
+                  ? html`
+                      ${!enableFullscreen
+                        ? html`
+                            <div
+                              class="${clabsPrefix}--chat-header-elements-icon">
+                              <cds-button
+                                kind="ghost"
+                                size="sm"
+                                @click="${handleMaximize}">
+                                ${Maximize16({ slot: 'icon' })}
+                              </cds-button>
+                            </div>
+                          `
+                        : html`
+                            <div
+                              class="${clabsPrefix}--chat-header-elements-icon">
+                              <cds-button
+                                kind="ghost"
+                                size="sm"
+                                @click="${handleMinimize}">
+                                ${Minimize16({ slot: 'icon' })}
+                              </cds-button>
+                            </div>
+                          `}
+                    `
+                  : html``}
+                ${!disableMinimize
+                  ? html`
+                      ${!enableDocking
+                        ? html`
+                            <div
+                              class="${clabsPrefix}--chat-header-elements-icon">
+                              <cds-button
+                                kind="ghost"
+                                size="sm"
+                                @click="${handlePopup}">
+                                ${Subtract16({ slot: 'icon' })}
+                              </cds-button>
+                            </div>
+                          `
+                        : html`
+                            <div
+                              class="${clabsPrefix}--chat-header-elements-icon">
+                              <cds-button
+                                kind="ghost"
+                                size="sm"
+                                @click="${handleSubtract}">
+                                ${Popup16({ slot: 'icon' })}
+                              </cds-button>
+                            </div>
+                          `}
+                    `
+                  : html``}
+                ${!disableClose
                   ? html`
                       <div class="${clabsPrefix}--chat-header-elements-icon">
                         <cds-button
                           kind="ghost"
                           size="sm"
-                          @click="${handlePopup}">
-                          ${Popup16({ slot: 'icon' })}
+                          @click="${handleClosed}">
+                          ${Close16({ slot: 'icon' })}
                         </cds-button>
                       </div>
                     `
-                  : html`
-                      <div class="${clabsPrefix}--chat-header-elements-icon">
-                        <cds-button
-                          kind="ghost"
-                          size="sm"
-                          @click="${handleSubtract}">
-                          ${Subtract16({ slot: 'icon' })}
-                        </cds-button>
-                      </div>
-                    `}
-
-                <div class="${clabsPrefix}--chat-header-elements-icon">
-                  <cds-button
-                    kind="ghost"
-                    size="sm"
-                    ?disabled="${true}"
-                    @click="${handleSubtract}">
-                    ${Subtract16({ slot: 'icon' })}
-                  </cds-button>
-                </div>
+                  : html``}
               `
             : html``}
         </div>

@@ -24,6 +24,24 @@ export default class header extends LitElement {
   disableMenu;
 
   /**
+   * disable header minimize button
+   */
+  @property({ type: Boolean, attribute: 'disable-header-minimize' })
+  disableMinimize;
+
+  /**
+   * disable header minimize button
+   */
+  @property({ type: Boolean, attribute: 'disable-header-fullscreen' })
+  disableFullscreen;
+
+  /**
+   * disable header close button
+   */
+  @property({ type: Boolean, attribute: 'disable-header-close' })
+  disableClose;
+
+  /**
    * provided title string to display in header
    */
   @property({ type: String, attribute: 'title' })
@@ -36,20 +54,56 @@ export default class header extends LitElement {
   enableFullscreen = false;
 
   /**
+   * state value denoting docking mode, changed by button selection
+   */
+  @state()
+  enableDocking = false;
+
+  /**
    * disable header hamburger menu
    */
   @property({ type: Boolean, attribute: 'disable-header-buttons' })
   disableHeaderButtons;
 
   /**
+   * docking event when popup button is clicked
+   * @param {event} event - click event when docking chat
+   */
+  _handlePopup(event) {
+    this.enableDocking = true;
+    this.enableFullscreen = false;
+    const dockingEvent = new CustomEvent('on-chat-docking-change', {
+      detail: { docking: true, originalEvent: event },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(dockingEvent);
+  }
+
+  /**
+   * undo docking mode when minimize is clicked
+   * @param {event} event - click event when minimizing chat
+   */
+  _handleSubtract(event) {
+    this.enableDocking = false;
+    this.enableFullscreen = false;
+    const minimizeEvent = new CustomEvent('on-chat-docking-change', {
+      detail: { docking: false, originalEvent: event },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(minimizeEvent);
+  }
+
+  /**
    * fullscreen event when popup button is clicked
    * @param {event} event - click event when fullscreening chat
    */
-  _handlePopup(event) {
-    console.log(event);
+  _handleMaximize(event) {
     this.enableFullscreen = true;
+    this.enableDocking = false;
     const fullscreenEvent = new CustomEvent('on-chat-fullscreen-change', {
-      detail: { fullscreen: true },
+      detail: { fullscreen: true, originalEvent: event },
       bubbles: true,
       composed: true,
     });
@@ -57,14 +111,27 @@ export default class header extends LitElement {
   }
 
   /**
+   * closing event when popup button is clicked
+   * @param {event} event - click event when fullscreening chat
+   */
+  _handleClosed(event) {
+    const closeEvent = new CustomEvent('on-chat-closed', {
+      detail: { action: 'chat was closed', originalEvent: event },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(closeEvent);
+  }
+
+  /**
    * undo fullscreen mode when minimize is clicked
    * @param {event} event - click event when minimizing chat
    */
-  _handleSubtract(event) {
-    console.log(event);
+  _handleMinimize(event) {
     this.enableFullscreen = false;
+    this.enableDocking = false;
     const minimizeEvent = new CustomEvent('on-chat-fullscreen-change', {
-      detail: { fullscreen: false },
+      detail: { fullscreen: false, originalEvent: event },
       bubbles: true,
       composed: true,
     });

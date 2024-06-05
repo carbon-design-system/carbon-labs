@@ -2524,7 +2524,7 @@ __metadata:
   resolution: "@carbon-labs/ai-chat@workspace:packages/chat"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.8.0"
+    "@carbon-labs/utilities": "npm:0.9.0"
     "@carbon/charts": "npm:^1.15.5"
     "@carbon/web-components": "npm:2.7.0"
     "@ibm/telemetry-js": "npm:^1.5.0"
@@ -2539,7 +2539,7 @@ __metadata:
   resolution: "@carbon-labs/ai-feedback@workspace:packages/feedback"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.8.0"
+    "@carbon-labs/utilities": "npm:0.9.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.7.0"
     uuid: "npm:^9.0.1"
@@ -2563,14 +2563,14 @@ __metadata:
   resolution: "@carbon-labs/network-graph@workspace:packages/network-graph"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.8.0"
+    "@carbon-labs/utilities": "npm:0.9.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.7.0"
     force-graph: "npm:^1.43.5"
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/utilities@npm:0.8.0, @carbon-labs/utilities@workspace:packages/utilities":
+"@carbon-labs/utilities@npm:0.9.0, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/utilities@workspace:packages/utilities"
   dependencies:
@@ -2688,7 +2688,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/motion@npm:11.17.0":
+"@carbon/motion@npm:11.18.0":
+  version: 11.18.0
+  resolution: "@carbon/motion@npm:11.18.0"
+  dependencies:
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  checksum: 10c0/c8c58094b7f8ee352f41e1b712406c5fd8f05605cc772a48b5cb3b34f770776b1644929c439516584208c56be960187949a5a7c2e7a55f8a6ad4446ba5a07d4d
+  languageName: node
+  linkType: hard
+
+"@carbon/motion@npm:^11.17.0":
   version: 11.17.0
   resolution: "@carbon/motion@npm:11.17.0"
   dependencies:
@@ -9374,7 +9383,7 @@ __metadata:
     "@carbon/icon-helpers": "npm:10.47.0"
     "@carbon/icons": "npm:11.40.0"
     "@carbon/layout": "npm:11.21.0"
-    "@carbon/motion": "npm:11.17.0"
+    "@carbon/motion": "npm:11.18.0"
     "@carbon/styles": "npm:1.53.0"
     "@carbon/themes": "npm:11.34.0"
     "@carbon/type": "npm:11.26.0"

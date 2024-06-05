@@ -7,4 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export { default as APIPlugin } from './APIPlugin';
+export { default as APIPlugin } from './APIPlugin.js';

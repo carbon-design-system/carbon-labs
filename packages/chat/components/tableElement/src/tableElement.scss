@@ -23,6 +23,9 @@ $css--plex: true !default;
     border-radius: 8px;
     background: $background;
     inline-size: 100%;
+
+    max-block-size: 246px;
+    overflow-y: scroll;
   }
 
   .#{$clabs-prefix}--chat-table-error {
@@ -42,18 +45,24 @@ $css--plex: true !default;
 
   th,
   td {
+    box-sizing: border-box;
     padding: 12px;
-    border: 1px solid $border-subtle-00;
     text-align: start;
     white-space: nowrap;
   }
 
-  th {
-    background-color: $border-subtle-00;
-    font-weight: normal;
+  tr {
+    background-color: $layer-01;
+    border-block-start: 1px solid $border-subtle-01;
   }
 
-  tr:nth-child(even) {
-    background-color: $background;
+  th {
+    border: none;
+    background-color: $layer-selected;
+    font-weight: bold;
+  }
+
+  tr:hover {
+    background-color: $layer-selected;
   }
 }

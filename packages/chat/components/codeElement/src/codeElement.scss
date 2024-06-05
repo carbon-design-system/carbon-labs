@@ -13,59 +13,87 @@ $css--plex: true !default;
 
 :host(#{$clabs-prefix}-chat-code) {
   .#{$clabs-prefix}--chat-code-container {
+    position: relative;
     display: flex;
     overflow: auto;
     flex-direction: column;
     padding: 16px;
     border: 1px solid $border-subtle-00;
     border-radius: 8px;
-    background-color: $layer-01;
+    background-color: $background;
     color: $text-primary;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
-    line-height: 18px;
+    letter-spacing: 0.64px;
+    line-height: 20px;
+    padding-inline-start: 12px;
   }
 
   .#{$clabs-prefix}--chat-code-line {
     display: flex;
     flex-direction: row;
   }
+  .#{$clabs-prefix}--chat-code-options {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    inset-block-start: 8px;
+    inset-inline-end: 0;
+  }
+  .#{$clabs-prefix}--chat-code-options-buttons {
+    display: flex;
+    flex-direction: row;
+    background: $background;
+    gap: 4px;
+    padding-inline-end: 8px;
+  }
+  .#{$clabs-prefix}--chat-code-options-buttons svg {
+    fill: $text-secondary;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-editable:hover {
+    background: $layer-01;
+    cursor: pointer;
+  }
 
   .#{$clabs-prefix}--chat-code-line-tick {
     box-sizing: border-box;
-    flex: 0 0 26px;
-    inline-size: 26px;
+    flex: 0 0 var(--chat-code-tick-width, '13px');
+    inline-size: var(--chat-code-tick-width, '13px');
+    padding-inline-end: 8px;
     text-align: end;
     user-select: none;
   }
 
   .#{$clabs-prefix}--chat-code-line-divider {
-    flex: 0 0 20px;
-
-    inline-size: 20px;
+    box-sizing: border-box;
+    flex: 0 0 2px;
+    border-inline-start: 1px solid $border-subtle-01;
+    inline-size: 2px;
     user-select: none;
   }
 
   .#{$clabs-prefix}--chat-code-line-text {
     flex-grow: 1;
-    border-inline-start: 1px solid $border-subtle-01;
   }
 
   .#{$clabs-prefix}--chat-code-line-text-area {
     box-sizing: border-box;
-    flex-grow: 1;
+    flex: 1;
     padding: 0;
-
     border: none;
     background: none;
     block-size: auto;
-    border-inline-start: 1px solid $border-subtle-01;
     color: $text-primary;
     font: inherit;
     font-size: 13px;
     letter-spacing: 0.16px;
     overflow-y: hidden;
     resize: none;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-text-area:focus {
+    outline: none;
   }
 
   .#{$clabs-prefix}--chat-code-line-comment {

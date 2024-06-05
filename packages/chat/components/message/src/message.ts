@@ -24,6 +24,12 @@ export default class message extends LitElement {
   _messageElements: { content: any; type: string }[] = [];
 
   /**
+   * Boolean denoting if user submitted the message or not
+   */
+  @property({ type: Boolean, attribute: 'user-submitted' })
+  userSubmitted;
+
+  /**
    * User-imported message sub-elements object, parsing is done on rawText here if none is provided
    */
   @property({ type: Array, attribute: 'elements', reflect: true })
@@ -52,6 +58,12 @@ export default class message extends LitElement {
    */
   @state()
   _editedMessage = '';
+
+  /**
+   * TEMPORARY: parent theme string to denote current theme used
+   */
+  @property({ type: String, attribute: 'parent-theme' })
+  _parentTheme;
 
   /**
    * type property dictating if origin is from user or bot
@@ -84,6 +96,18 @@ export default class message extends LitElement {
   loadingState;
 
   /**
+   * boolean denoting whether to hide icon on the left
+   */
+  @property({ type: Boolean, attribute: 'disable-icon' })
+  disableIcon;
+
+  /**
+   * number value in milliseconds to throttle streaming response
+   */
+  @property({ type: Number, attribute: 'stream-delay' })
+  _streamDelay;
+
+  /**
    * editing state to replace text field with a textarea
    */
   @state()
@@ -114,6 +138,12 @@ export default class message extends LitElement {
    */
   @property({ type: Boolean, attribute: 'stream-content' })
   _streamContent;
+
+  /**
+   * Force interruption boolean set when parent changes stream-content attribute to false;
+   */
+  @state()
+  _forceStreamEnd = false;
 
   /**
    * Temporary element that can morph based on type to preview streaming content
@@ -170,7 +200,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 10;
+  baseStreamingSpeed = 15;
 
   /** detect when component is rendered to process rawtext
    */
@@ -195,7 +225,7 @@ export default class message extends LitElement {
     }
 
     if (this.elements == null) {
-      if (this.origin === 'user') {
+      if (this.userSubmitted) {
         if (this.rawText) {
           this._parseText();
         }
@@ -226,6 +256,9 @@ export default class message extends LitElement {
         composed: true,
       });
       this.dispatchEvent(messageUpdateEvent);
+    }
+    if (changedProperties.has('_streamContent')) {
+      this._forceStreamEnd = !this._streamContent;
     }
   }
 
@@ -358,6 +391,7 @@ export default class message extends LitElement {
       array: new RegExp('\\['),
       url: new RegExp('(http|ftp)'),
       list: new RegExp('(?:\\d+\\.\\s+|[-*]\\s)'),
+      //list: new RegExp('(^|\\n)\\s*(?:[-*\\u2022\\u25E6\\u25AA\\u25CF]\\s|\\s1\\.\\s)','m')
     };
 
     for (const type in regexPatterns) {
@@ -433,15 +467,17 @@ export default class message extends LitElement {
         const CSVLines = this.bufferMessage.split('\n');
         let countIndex = 0;
         let nonCSVcount = 0;
+        let previousLength = 9;
         for (const line of CSVLines) {
           if (!new RegExp('^[\\w\\s]+(,[\\w\\s]+)*$').test(line)) {
             nonCSVcount++;
             if (nonCSVcount > 1) {
-              stopIndex = countIndex;
+              stopIndex = countIndex - previousLength;
               break;
             }
           }
-          countIndex += line.length + 2;
+          previousLength = line.length + 1;
+          countIndex += previousLength;
         }
         break;
       }
@@ -450,16 +486,22 @@ export default class message extends LitElement {
         //stopIndex = listEnd ? listEnd.index : -1;
         let nonListCount = 0;
         let listCharacterLength = 0;
+        let previousLength = 0;
         const listLines = this.bufferMessage.split('\n');
         for (const listItem of listLines) {
-          if (!new RegExp('(?:\\d+\\.\\s+|[-*]\\s)').test(listItem)) {
+          if (
+            !new RegExp(
+              '\\s*(?:[-*\\u2022\\u25E6\\u25AA\\u25CF]\\s|\\d+\\.\\s)'
+            ).test(listItem)
+          ) {
             nonListCount++;
             if (nonListCount > 1) {
-              stopIndex = listCharacterLength;
+              stopIndex = listCharacterLength - previousLength;
               break;
             }
           }
-          listCharacterLength += listItem.length + 2;
+          previousLength = listItem.length + 1;
+          listCharacterLength += previousLength;
         }
         break;
       }
@@ -545,11 +587,11 @@ export default class message extends LitElement {
     console.log('streaming...');
     this.currentlyStreaming = true;
     this.tokens = this._tokenize(this.rawText);
-    this.tokens.push(' ');
+    //this.tokens = [...this.tokens,...['\n  ','\n  ']]
     this.bufferMessage = '';
     this.temporaryMessage = { content: '', type: 'text' };
     this.currentType = '';
-    this.streamingSpeed = this.baseStreamingSpeed;
+    this.baseStreamingSpeed = this._streamDelay || this.baseStreamingSpeed;
 
     this._beginStreaming();
   }
@@ -563,7 +605,7 @@ export default class message extends LitElement {
     }
 
     this.streamingInterval = setTimeout(() => {
-      const token = this.tokens[this.streamingIndex];
+      const token = this.tokens[this.streamingIndex] || '';
       this.streamingIndex++;
       this.bufferMessage += token;
 
@@ -608,10 +650,22 @@ export default class message extends LitElement {
             if (blockSignal.type === 'url') {
               blockSignal.type = this._checkURLType(blockSignal.content);
             }
-            this._messageElements = [
-              ...this._messageElements,
-              { content: blockSignal.content, type: blockSignal.type },
-            ];
+            if (blockSignal.type === 'text') {
+              const splitLines = blockSignal.content.split('\n');
+              const splitLineElements = splitLines.map((line) => ({
+                content: line,
+                type: 'text',
+              }));
+              this._messageElements = [
+                ...this._messageElements,
+                ...splitLineElements,
+              ];
+            } else {
+              this._messageElements = [
+                ...this._messageElements,
+                { content: blockSignal.content, type: blockSignal.type },
+              ];
+            }
           }
         } else {
           this.temporaryMessage.content = this.bufferMessage;
@@ -647,25 +701,43 @@ export default class message extends LitElement {
           this.streamingSpeed = this.baseStreamingSpeed;
           break;
       }
+      this.streamingSpeed = Math.max(1, this.streamingSpeed);
 
-      if (this.streamingIndex === this.tokens.length) {
-        clearInterval(this.streamingInterval);
-        this.currentlyStreaming = false;
-        if (this.temporaryMessage.content.length > 0) {
-          this._messageElements = [
-            ...this._messageElements,
-            {
-              content: this.temporaryMessage.content,
-              type: this.temporaryMessage.type,
-            },
-          ];
+      if (this.streamingIndex >= this.tokens.length || this._forceStreamEnd) {
+        if (this.currentlyStreaming) {
+          this.currentlyStreaming = false;
+          this._beginStreaming();
+        } else {
+          if (this.temporaryMessage.content.length > 0) {
+            const trailingContent = this.temporaryMessage.content;
+            this._messageElements = [
+              ...this._messageElements,
+              {
+                content: trailingContent.replace(/\.\.\.$/, ''),
+                type: this.temporaryMessage.type,
+              },
+            ];
+          }
+          this.temporaryMessage.content = '';
+          this.streamingIndex = 0;
+          this._signalEndOfStreaming();
         }
-        this.temporaryMessage.content = '';
-        this.streamingIndex = 0;
       } else {
         this._beginStreaming();
       }
     }, this.streamingSpeed);
+  }
+
+  /**
+   * _signalEndOfStreaming - send custom event to all parents to signal streaming has been finalized
+   */
+  _signalEndOfStreaming() {
+    const endOfStreamingEvent = new CustomEvent('on-message-streaming-done', {
+      detail: { action: 'message component reported end of streaming' },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(endOfStreamingEvent);
   }
 
   /**

@@ -25,6 +25,11 @@ export function messagesTemplate(customElementClass) {
     _streamResponses: streamResponses,
     _handleInternalChange: handleInternalChange,
     _handleSlotchange,
+    _parentTheme: parentTheme,
+    _dockingEnabled: dockingEnabled,
+    _streamDelay: streamDelay,
+    userInterruptedStreaming,
+    userName,
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-messages-container">
@@ -36,19 +41,26 @@ export function messagesTemplate(customElementClass) {
                 ? html` <clabs-chat-message
                     raw-text="${message.text}"
                     origin="${message.origin}"
+                    ?user-submitted="${message.origin === userName}"
                     time-stamp="${message.time}"
                     error-state
-                    disable-buttons
+                    stream-delay="${streamDelay}"
+                    ?disable-icon="${dockingEnabled}"
                     index="${index}">
                   </clabs-chat-message>`
                 : html` <clabs-chat-message
                     raw-text="${message.text}"
                     origin="${message.origin}"
                     time-stamp="${message.time}"
+                    ?user-submitted="${message.origin === userName}"
                     disable-buttons="${message.disableButtons || nothing}"
                     index="${index}"
+                    stream-delay="${streamDelay}"
+                    parent-theme="${parentTheme}"
                     @on-structure-change="${handleInternalChange}"
-                    ?stream-content="${streamResponses}"
+                    ?disable-icon="${dockingEnabled}"
+                    ?stream-content="${streamResponses &&
+                    !userInterruptedStreaming}"
                     display-name="${message.displayName || nothing}"
                     display-color="${message.displayColor || nothing}"
                     .elements="${message.elements || nothing}">
@@ -57,7 +69,8 @@ export function messagesTemplate(customElementClass) {
             ${queryInProgress
               ? html` <clabs-chat-message
                   raw-text="loading"
-                  origin="bot"
+                  parent-theme="${parentTheme}"
+                  ?disable-icon="${dockingEnabled}"
                   time-stamp=""
                   loading-state
                   error-state="false">

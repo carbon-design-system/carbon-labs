@@ -22,7 +22,7 @@ $css--plex: true !default;
     display: inline-block;
   }
 
-  .tag {
+  .#{$clabs-prefix}--tag-button {
     display: inline-block;
     box-sizing: border-box;
     padding: 16px;
@@ -37,22 +37,22 @@ $css--plex: true !default;
     line-height: inherit;
   }
 
-  .tag:focus,
-  .tag:active {
+  .#{$clabs-prefix}--tag-button:focus,
+  .#{$clabs-prefix}--tag-button:active {
     outline: 2px solid #ffffff;
     outline-offset: -2px;
   }
 
-  .tag:hover {
+  .#{$clabs-prefix}--tag-button:hover {
     background-color: #393939;
   }
 
-  .tag:active {
+  .#{$clabs-prefix}--tag-button:active {
     background-color: #262626;
   }
 
-  .tag:hover,
-  .tag:focus {
+  .#{$clabs-prefix}--tag-button:hover,
+  .#{$clabs-prefix}--tag-button:focus {
     cursor: pointer;
   }
 

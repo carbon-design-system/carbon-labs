@@ -67,9 +67,9 @@ export const Default = {
    */
   render: ({ text, color, tooltipPosition, tooltipText, onClick }) =>
     html` <clabs-tag
-      .color=${color}
-      .tooltipPosition=${tooltipPosition}
-      .tooltipText=${tooltipText}
+      color=${color}
+      tooltip-position=${tooltipPosition}
+      tooltip-text=${tooltipText}
       @tag-click=${onClick}
       >${text}</clabs-tag
     >`,

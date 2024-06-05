@@ -32,7 +32,7 @@ export function tagTemplate(customElementClass) {
     <div class="${clabsPrefix}--tag-container">
       <cds-tooltip align="${tooltipPosition}">
         <button
-          class="tag sb-tooltip-trigger"
+          class="${clabsPrefix}--tag-button ${clabsPrefix}--tag-tooltip-trigger"
           .color=${color}
           .tooltipPosition=${tooltipPosition}
           @click="${handleClick}">

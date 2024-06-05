@@ -29,4 +29,3 @@ custom-elements.json
 *.sw?
 .nx/*
 agentic.stories.js
-/.history

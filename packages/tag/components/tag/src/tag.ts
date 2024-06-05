@@ -33,13 +33,13 @@ export class Tag extends LitElement {
   /**
    * Tooltip position
    */
-  @property({ attribute: 'tooltipPosition', type: String })
+  @property({ attribute: 'tooltip-position', type: String })
   tooltipPosition;
 
   /**
    * Tooltip text
    */
-  @property({ attribute: 'tooltipText', type: String })
+  @property({ attribute: 'tooltip-text', type: String })
   tooltipText;
 
   /**

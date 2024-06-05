@@ -2554,7 +2554,6 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.8.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.7.0"
-    uuid: "npm:^9.0.1"
   languageName: unknown
   linkType: soft
 
@@ -2569,6 +2568,13 @@ __metadata:
     force-graph: "npm:^1.43.5"
   languageName: unknown
   linkType: soft
+
+"@carbon-labs/utilities@npm:0.8.0":
+  version: 0.8.0
+  resolution: "@carbon-labs/utilities@npm:0.8.0"
+  checksum: 10c0/f163a6e0367d43f463be787b6561454805c307f7ebacb8f9ff0a7c37ff13b1b854a763bebbef7a47069d8c37cbd8ddccb1cecd72ba75fe422d91bb154e796dd8
+  languageName: node
+  linkType: hard
 
 "@carbon-labs/utilities@npm:0.9.0, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
@@ -2688,25 +2694,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/motion@npm:11.18.0":
-  version: 11.18.0
-  resolution: "@carbon/motion@npm:11.18.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/c8c58094b7f8ee352f41e1b712406c5fd8f05605cc772a48b5cb3b34f770776b1644929c439516584208c56be960187949a5a7c2e7a55f8a6ad4446ba5a07d4d
-  languageName: node
-  linkType: hard
-
-"@carbon/motion@npm:^11.17.0":
-  version: 11.17.0
-  resolution: "@carbon/motion@npm:11.17.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.2.1"
-  checksum: 10c0/7e159dad977d7846efcb8411d415d354255098feb945171ac5108d122120608c66d42771f3bb127d2b2ff21e0656b947ede2b77fac3d3d93e3152c081183e115
-  languageName: node
-  linkType: hard
-
-"@carbon/motion@npm:^11.17.0":
+"@carbon/motion@npm:11.18.0, @carbon/motion@npm:^11.17.0":
   version: 11.18.0
   resolution: "@carbon/motion@npm:11.18.0"
   dependencies:

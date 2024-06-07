@@ -116,7 +116,7 @@ export function footerTemplate(customElementClass) {
                   kind="ghost"
                   size="sm"
                   tooltip-text="Microphone unavailable"
-                  tooltip-position="left"
+                  tooltip-position="top-right"
                   tooltip-alignment="end">
                   ${MicrophoneOff16({ slot: 'icon' })}
                 </cds-button>
@@ -125,7 +125,7 @@ export function footerTemplate(customElementClass) {
                 ? html` <cds-button
                     kind="ghost"
                     tooltip-text="Start listening"
-                    tooltip-position="left"
+                    tooltip-position="top-right"
                     tooltip-alignment="end"
                     size="sm"
                     @click="${startRecording}">
@@ -135,7 +135,7 @@ export function footerTemplate(customElementClass) {
                     kind="ghost"
                     tooltip-text="Stop listening"
                     class="${clabsPrefix}--chat-footer-button-danger"
-                    tooltip-position="left"
+                    tooltip-position="top-right"
                     tooltip-alignment="end"
                     size="sm"
                     @click="${endRecording}">
@@ -150,6 +150,8 @@ export function footerTemplate(customElementClass) {
                 <cds-button
                   kind="ghost"
                   size="sm"
+                  tooltip-text="Send response"
+                  tooltip-position="top-right"
                   ?disabled="${messageText === ''}"
                   @click="${sendInputToParent}">
                   ${messageText === ''
@@ -163,7 +165,7 @@ export function footerTemplate(customElementClass) {
                   size="sm"
                   class="${clabsPrefix}--chat-footer-button-danger"
                   tooltip-text="Stop generating"
-                  tooltip-position="left"
+                  tooltip-position="top-right"
                   tooltip-alignment="end"
                   @click="${endStreaming}">
                   ${Stop16({ slot: 'icon' })}

@@ -53,6 +53,9 @@ export function headerTemplate(customElementClass) {
                   kind="ghost"
                   ?disabled="${true}"
                   size="sm"
+                  tooltip-text="Open menu"
+                  tooltip-position="bottom-left"
+                  tooltip-alignment="end"
                   @click="${handleMenuToggle}">
                   ${Menu24({ slot: 'icon' })}
                 </cds-button>
@@ -89,6 +92,9 @@ export function headerTemplate(customElementClass) {
                               <cds-button
                                 kind="ghost"
                                 size="sm"
+                                tooltip-text="Fullscreen mode"
+                                tooltip-position="bottom-right"
+                                tooltip-alignment="end"
                                 @click="${handleMaximize}">
                                 ${Maximize16({ slot: 'icon' })}
                               </cds-button>
@@ -100,6 +106,9 @@ export function headerTemplate(customElementClass) {
                               <cds-button
                                 kind="ghost"
                                 size="sm"
+                                tooltip-text="Exit fullscreen"
+                                tooltip-position="bottom-right"
+                                tooltip-alignment="end"
                                 @click="${handleMinimize}">
                                 ${Minimize16({ slot: 'icon' })}
                               </cds-button>
@@ -115,6 +124,9 @@ export function headerTemplate(customElementClass) {
                               class="${clabsPrefix}--chat-header-elements-icon">
                               <cds-button
                                 kind="ghost"
+                                tooltip-text="Pop out chat"
+                                tooltip-position="bottom-right"
+                                tooltip-alignment="end"
                                 size="sm"
                                 @click="${handlePopup}">
                                 ${Subtract16({ slot: 'icon' })}
@@ -127,6 +139,9 @@ export function headerTemplate(customElementClass) {
                               <cds-button
                                 kind="ghost"
                                 size="sm"
+                                tooltip-text="Expand chat"
+                                tooltip-position="bottom-right"
+                                tooltip-alignment="end"
                                 @click="${handleSubtract}">
                                 ${Popup16({ slot: 'icon' })}
                               </cds-button>
@@ -140,6 +155,9 @@ export function headerTemplate(customElementClass) {
                         <cds-button
                           kind="ghost"
                           size="sm"
+                          tooltip-text="Close chat"
+                          tooltip-position="bottom-right"
+                          tooltip-alignment="end"
                           @click="${handleClosed}">
                           ${Close16({ slot: 'icon' })}
                         </cds-button>

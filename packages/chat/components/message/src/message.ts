@@ -13,7 +13,7 @@ import { property, state } from 'lit/decorators.js';
 import styles from './message.scss?inline';
 
 /**
- * Input component using search typeahead api
+ * Core message component to display a single message
  */
 export default class message extends LitElement {
   static styles = styles;
@@ -200,11 +200,12 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 15;
+  baseStreamingSpeed = 80;
 
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
+    this._getTheme();
     if (this.hasAttribute('display-color')) {
       this.style.setProperty(
         '--chat-message-unique-display-color',
@@ -259,6 +260,20 @@ export default class message extends LitElement {
     }
     if (changedProperties.has('_streamContent')) {
       this._forceStreamEnd = !this._streamContent;
+    }
+  }
+
+  /**
+   * _getTheme - find current theme by checking parent background color
+   */
+  _getTheme() {
+    if (this.parentElement instanceof HTMLElement) {
+      const parentStyle = getComputedStyle(this.parentElement);
+      const backgroundColor = parentStyle.getPropertyValue('--cds-background');
+      const darkMode =
+        backgroundColor.startsWith('#') &&
+        parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2;
+      this._parentTheme = darkMode ? 'g100' : 'white';
     }
   }
 
@@ -381,9 +396,10 @@ export default class message extends LitElement {
   }
 
   /**
-   * _checkBlockStart - scan incoming stream of tokens to see if a typed block has started
+   * _checkBlock - scan incoming stream of tokens to see the type of block detected
+   * @param {string} blockToCheck - string block to check type of to finalize rendering
    */
-  _checkBlockStart() {
+  _checkBlockType(blockToCheck) {
     const regexPatterns = {
       code: new RegExp('```'),
       json: new RegExp('\\{'),
@@ -391,6 +407,35 @@ export default class message extends LitElement {
       array: new RegExp('\\['),
       url: new RegExp('(http|ftp)'),
       list: new RegExp('(?:\\d+\\.\\s+|[-*]\\s)'),
+      //list: new RegExp('(^|\\n)\\s*(?:[-*\\u2022\\u25E6\\u25AA\\u25CF]\\s|\\s1\\.\\s)','m')
+    };
+
+    for (const type in regexPatterns) {
+      const match: RegExpMatchArray | null = blockToCheck.match(
+        regexPatterns[type]
+      );
+      if (match) {
+        const matchIndex: number = match.index ? match.index : -1;
+        if (matchIndex > -1) {
+          return type;
+        }
+      }
+    }
+    return 'text';
+  }
+
+  /**
+   * _checkBlockStart - scan incoming stream of tokens to see if a typed block has started
+   */
+  _checkBlockStart() {
+    const regexPatterns = {
+      code: new RegExp('```'),
+      json: new RegExp('\\{'),
+      table: new RegExp('((\\w+,\\w+)(,[\\w+]*)*[\\r\\n]+)+'),
+      array: new RegExp('(?<!\\))\\['),
+      url: new RegExp('(http|ftp)'),
+      list: new RegExp('(?:1\\.\\s+[-*]\\s|\\d{2,}\\.\\s+[-*]\\s)'),
+      //list: new RegExp('(?:\\d+\\.\\s+|[-*]\\s)'),
       //list: new RegExp('(^|\\n)\\s*(?:[-*\\u2022\\u25E6\\u25AA\\u25CF]\\s|\\s1\\.\\s)','m')
     };
 
@@ -632,10 +677,7 @@ export default class message extends LitElement {
             }
             if (blockSignal.preBlockText.length > 0) {
               if (blockSignal.preBlockText.trim() !== '') {
-                this._messageElements = [
-                  ...this._messageElements,
-                  { content: blockSignal.preBlockText, type: 'text' },
-                ];
+                this._cutPlainText(blockSignal.preBlockText.trim());
               }
             }
           }
@@ -646,20 +688,11 @@ export default class message extends LitElement {
           if (blockSignal.status === 'ended') {
             this.currentType = '';
             this.temporaryMessage.type = 'text';
-
             if (blockSignal.type === 'url') {
               blockSignal.type = this._checkURLType(blockSignal.content);
             }
             if (blockSignal.type === 'text') {
-              const splitLines = blockSignal.content.split('\n');
-              const splitLineElements = splitLines.map((line) => ({
-                content: line,
-                type: 'text',
-              }));
-              this._messageElements = [
-                ...this._messageElements,
-                ...splitLineElements,
-              ];
+              this._cutPlainText(blockSignal.content);
             } else {
               this._messageElements = [
                 ...this._messageElements,
@@ -710,13 +743,34 @@ export default class message extends LitElement {
         } else {
           if (this.temporaryMessage.content.length > 0) {
             const trailingContent = this.temporaryMessage.content;
-            this._messageElements = [
-              ...this._messageElements,
-              {
-                content: trailingContent.replace(/\.\.\.$/, ''),
-                type: this.temporaryMessage.type,
-              },
-            ];
+            const finalSegments = trailingContent.trim().split('\n');
+            const lastLine = finalSegments.pop();
+            const lastBlockType = this._checkBlockType(lastLine);
+
+            if (lastBlockType !== this.temporaryMessage.type) {
+              this._messageElements = [
+                ...this._messageElements,
+                {
+                  content: finalSegments.join('\n').replace(/\.\.\.$/, ''),
+                  type: this.temporaryMessage.type,
+                },
+              ];
+              this._messageElements = [
+                ...this._messageElements,
+                {
+                  content: lastLine,
+                  type: lastBlockType,
+                },
+              ];
+            } else {
+              this._messageElements = [
+                ...this._messageElements,
+                {
+                  content: trailingContent.replace(/\.\.\.$/, ''),
+                  type: this.temporaryMessage.type,
+                },
+              ];
+            }
           }
           this.temporaryMessage.content = '';
           this.streamingIndex = 0;
@@ -726,6 +780,18 @@ export default class message extends LitElement {
         this._beginStreaming();
       }
     }, this.streamingSpeed);
+  }
+
+  /** _cutPlainText - cut normal text into subelements to display them as unique items
+   * @param {string} plainText - text to parse
+   */
+  _cutPlainText(plainText) {
+    const splitLines = plainText.split('\n');
+    const splitLineElements = splitLines.map((line) => ({
+      content: line,
+      type: 'text',
+    }));
+    this._messageElements = [...this._messageElements, ...splitLineElements];
   }
 
   /**

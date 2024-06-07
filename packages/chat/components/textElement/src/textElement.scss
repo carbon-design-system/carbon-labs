@@ -22,16 +22,64 @@ $css--plex: true !default;
   line-height: 20px;
   word-break: break-word;
 
-  #{$clabs-prefix}--chat-text--float-right {
+  .#{$clabs-prefix}--chat-text--float-right {
     display: flex;
     justify-content: flex-end;
   }
 
-  #{$clabs-prefix}--chat-text--content {
+  .#{$clabs-prefix}--chat-text-content {
     flex-grow: 1;
   }
 
-  #{$clabs-prefix}--chat-text--float-left {
+  .#{$clabs-prefix}--chat-text-content-chevron {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0;
+    border-radius: 8px;
+    margin: 0;
+    background: $layer-accent-01;
+    block-size: 16px;
+    cursor: pointer;
+    inline-size: 20px;
+    margin-inline: 2px;
+
+    vertical-align: bottom;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-chevron:hover {
+    cursor: pointer;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-chevron svg {
+    fill: $text-secondary;
+    padding-inline-start: 2px;
+    pointer-events: none;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-annotation {
+    text-decoration: underline;
+    text-decoration-color: $text-secondary;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    vertical-align: bottom;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-annotation-element {
+    padding: 16px;
+    transition: height 0.3s linear;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-link {
+    text-decoration: underline;
+    text-decoration-color: $text-secondary;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    vertical-align: bottom;
+  }
+
+  .#{$clabs-prefix}--chat-text--float-left {
     display: flex;
     justify-content: flex-start;
   }

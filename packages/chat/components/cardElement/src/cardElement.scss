@@ -128,8 +128,8 @@
     z-index: 99;
     background: linear-gradient(
       to right,
-      rgba(38, 38, 38, 0),
-      rgba(38, 38, 38, 1)
+      var(--chat-card-theme-bottom, 'rgba(0,0,0,0)'),
+      var(--chat-card-theme-top, 'rgba(0,0,0,0)')
     );
     block-size: 100%;
     content: '';
@@ -137,7 +137,6 @@
     inset-block-start: 0;
     inset-inline-end: 0;
     pointer-events: none;
-    visibility: hidden;
   }
 
   .#{$clabs-prefix}--chat-card-detail-description {
@@ -156,8 +155,8 @@
     z-index: 99;
     background: linear-gradient(
       to right,
-      rgba(38, 38, 38, 0),
-      rgba(38, 38, 38, 1)
+      var(--chat-card-theme-bottom, 'rgba(0,0,0,0)'),
+      var(--chat-card-theme-top, 'rgba(0,0,0,0)')
     );
     block-size: 100%;
     content: '';
@@ -165,7 +164,6 @@
     inset-block-start: 0;
     inset-inline-end: 0;
     pointer-events: none;
-    visibility: hidden;
   }
 
   .#{$clabs-prefix}--chat-card-loader {

@@ -22,5 +22,12 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-table> </clabs-chat-table>`,
+  render: () =>
+    html` <clabs-chat-table
+      content="Name,Age,Occupation,Location,State
+Jerry,35,Comedian,Upper east side,NY
+George,35,Unemployed,Queens,NY
+Elaine,32,Publisher,Midtown,NY
+Kramer,36,Unknown,Upper east side,NY">
+    </clabs-chat-table>`,
 };

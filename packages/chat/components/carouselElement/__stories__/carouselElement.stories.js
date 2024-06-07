@@ -20,7 +20,7 @@ const carouselExamples = [
   {
     name: 'urls',
     content:
-      '["https://www.wikipedia.org","https://www.ibm.com","https://www.google.com","https://www.reddit.com","https://www.github.com","https://www.arxiv.org","https://www.archive.org","https://www.instagram.com"]',
+      '["https://www.wikipedia.org","https://www.ibm.com","https://www.reddit.com","https://www.github.com","https://www.instagram.com"]',
   },
   {
     name: 'images',

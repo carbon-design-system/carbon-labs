@@ -176,6 +176,22 @@ export function messageTemplate(customElementClass) {
                               content="${message.content}">
                             </clabs-chat-text>
                           `
+                        : message.type === 'annotated-text'
+                        ? html`
+                            <clabs-chat-text
+                              capitalize
+                              enable-annotations
+                              content="${message.content}">
+                            </clabs-chat-text>
+                          `
+                        : message.type === 'html-text'
+                        ? html`
+                            <clabs-chat-text
+                              capitalize
+                              enable-html-rendering
+                              content="${message.content}">
+                            </clabs-chat-text>
+                          `
                         : message.type === 'list'
                         ? html`
                             <clabs-chat-list content="${message.content}">

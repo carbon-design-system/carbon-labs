@@ -96,6 +96,7 @@ export default class cardElement extends LitElement {
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
+    this._getTheme();
     this._buildCard();
   }
 
@@ -106,6 +107,35 @@ export default class cardElement extends LitElement {
   updated(changedProperties) {
     if (changedProperties.has('content')) {
       this._buildCard();
+    }
+  }
+
+  /**
+   * _getTheme - find current theme by checking parent background color
+   */
+  _getTheme() {
+    if (this.parentElement instanceof HTMLElement) {
+      const parentStyle = getComputedStyle(this.parentElement);
+      const backgroundColor = parentStyle.getPropertyValue('--cds-background');
+      const darkMode =
+        backgroundColor.startsWith('#') &&
+        parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2;
+      if (darkMode) {
+        this.style.setProperty(
+          '--chat-card-theme-bottom',
+          ' rgba(38, 38, 38, 0)'
+        );
+        this.style.setProperty('--chat-card-theme-top', ' rgba(38, 38, 38, 1)');
+      } else {
+        this.style.setProperty(
+          '--chat-card-theme-bottom',
+          ' rgba(244, 244, 244, 0)'
+        );
+        this.style.setProperty(
+          '--chat-card-theme-top',
+          ' rgba(244, 244, 244, 1)'
+        );
+      }
     }
   }
 

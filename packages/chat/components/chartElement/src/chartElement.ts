@@ -215,6 +215,7 @@ export default class chartElement extends LitElement {
    */
   firstUpdated() {
     this.generateUniqueId();
+    this._getTheme();
 
     if (this.renderMethod !== 'svg' && this.renderMethod !== 'canvas') {
       this.renderMethod = 'canvas';
@@ -250,6 +251,20 @@ export default class chartElement extends LitElement {
 
     if (this.content) {
       this._prepareVisualization();
+    }
+  }
+
+  /**
+   * _getTheme - find current theme by checking parent background color
+   */
+  _getTheme() {
+    if (this.parentElement instanceof HTMLElement) {
+      const parentStyle = getComputedStyle(this.parentElement);
+      const backgroundColor = parentStyle.getPropertyValue('--cds-background');
+      const darkMode =
+        backgroundColor.startsWith('#') &&
+        parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2;
+      this.theme = darkMode ? 'g100' : 'white';
     }
   }
 

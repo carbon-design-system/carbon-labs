@@ -200,7 +200,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 80;
+  baseStreamingSpeed = 20;
 
   /** detect when component is rendered to process rawtext
    */
@@ -404,7 +404,7 @@ export default class message extends LitElement {
       code: new RegExp('```'),
       json: new RegExp('\\{'),
       table: new RegExp('((\\w+,\\w+)(,[\\w+]*)*[\\r\\n]+)+'),
-      array: new RegExp('\\['),
+      array: new RegExp('(?<!\\))\\['),
       url: new RegExp('(http|ftp)'),
       list: new RegExp('(?:\\d+\\.\\s+|[-*]\\s)'),
       //list: new RegExp('(^|\\n)\\s*(?:[-*\\u2022\\u25E6\\u25AA\\u25CF]\\s|\\s1\\.\\s)','m')
@@ -432,8 +432,9 @@ export default class message extends LitElement {
       code: new RegExp('```'),
       json: new RegExp('\\{'),
       table: new RegExp('((\\w+,\\w+)(,[\\w+]*)*[\\r\\n]+)+'),
-      array: new RegExp('(?<!\\))\\['),
-      url: new RegExp('(http|ftp)'),
+      array: new RegExp('\\[\\"'),
+      annotation: new RegExp('\\[[^\\]]*,'),
+      url: new RegExp('(?<!\\()(http|ftp)'),
       list: new RegExp('(?:1\\.\\s+[-*]\\s|\\d{2,}\\.\\s+[-*]\\s)'),
       //list: new RegExp('(?:\\d+\\.\\s+|[-*]\\s)'),
       //list: new RegExp('(^|\\n)\\s*(?:[-*\\u2022\\u25E6\\u25AA\\u25CF]\\s|\\s1\\.\\s)','m')
@@ -502,6 +503,9 @@ export default class message extends LitElement {
       case 'tags':
       case 'carousel':
         stopIndex = this.bufferMessage.indexOf(']');
+        break;
+      case 'annotation':
+        stopIndex = this.bufferMessage.indexOf(')');
         break;
       case 'url':
         stopIndex = this.bufferMessage.indexOf('\n');
@@ -664,6 +668,7 @@ export default class message extends LitElement {
       if (blockSignal) {
         if (blockSignal.type !== '') {
           if (blockSignal.status === 'started') {
+            console.log('start ' + blockSignal.type);
             this.currentType = blockSignal.type;
             this.temporaryMessage.content = this.bufferMessage;
             if (blockSignal.type === 'url') {
@@ -686,6 +691,7 @@ export default class message extends LitElement {
             this.temporaryMessage.content = this.bufferMessage;
           }
           if (blockSignal.status === 'ended') {
+            console.log('end ' + blockSignal.type);
             this.currentType = '';
             this.temporaryMessage.type = 'text';
             if (blockSignal.type === 'url') {

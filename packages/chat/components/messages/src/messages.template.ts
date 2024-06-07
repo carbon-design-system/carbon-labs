@@ -43,6 +43,7 @@ export function messagesTemplate(customElementClass) {
                     origin="${message.origin}"
                     ?user-submitted="${message.userSubmitted ||
                     message.origin === userName}"
+                    ?user-submitted="${message.origin === userName}"
                     time-stamp="${message.time}"
                     error-state
                     stream-delay="${streamDelay}"
@@ -53,8 +54,7 @@ export function messagesTemplate(customElementClass) {
                     raw-text="${message.text}"
                     origin="${message.origin}"
                     time-stamp="${message.time}"
-                    ?user-submitted="${message.userSubmitted ||
-                    message.origin === userName}"
+                    ?user-submitted="${message.userSubmitted || message.origin === userName}"
                     disable-buttons="${message.disableButtons || nothing}"
                     index="${index}"
                     stream-delay="${streamDelay}"

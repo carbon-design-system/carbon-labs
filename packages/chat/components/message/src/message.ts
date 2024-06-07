@@ -13,7 +13,7 @@ import { property, state } from 'lit/decorators.js';
 import styles from './message.scss?inline';
 
 /**
- * Input component using search typeahead api
+ * Core message component to display a single message
  */
 export default class message extends LitElement {
   static styles = styles;

@@ -55,7 +55,7 @@
   }
 
   .#{$clabs-prefix}--chat-docked {
-    position: fixed;
+    position: absolute;
     z-index: 1000;
     block-size: 640px;
     inline-size: 320px;

@@ -668,7 +668,6 @@ export default class message extends LitElement {
       if (blockSignal) {
         if (blockSignal.type !== '') {
           if (blockSignal.status === 'started') {
-            console.log('start ' + blockSignal.type);
             this.currentType = blockSignal.type;
             this.temporaryMessage.content = this.bufferMessage;
             if (blockSignal.type === 'url') {
@@ -691,7 +690,6 @@ export default class message extends LitElement {
             this.temporaryMessage.content = this.bufferMessage;
           }
           if (blockSignal.status === 'ended') {
-            console.log('end ' + blockSignal.type);
             this.currentType = '';
             this.temporaryMessage.type = 'text';
             if (blockSignal.type === 'url') {

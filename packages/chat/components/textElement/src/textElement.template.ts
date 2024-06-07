@@ -69,10 +69,7 @@ export function textElementTemplate(customElementClass) {
                   class="${clabsPrefix}--chat-text-content-${textPiece.type}"
                   >${unsafeHTML(textPiece.text)}</span
                 >`
-              : html` <span
-                  class="${clabsPrefix}--chat-text-content-${textPiece.type}"
-                  >${textPiece.text}</span
-                >`}`
+              : html` ${textPiece.text}`}`
         )}
       </div>
     </div>

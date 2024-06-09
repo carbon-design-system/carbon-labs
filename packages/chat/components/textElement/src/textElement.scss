@@ -35,19 +35,24 @@ $css--plex: true !default;
     display: inline-block;
     box-sizing: border-box;
     padding: 0;
+    border: 1px solid $border-subtle-01;
     border-radius: 8px;
     margin: 0;
     background: $layer-accent-01;
     block-size: 16px;
     cursor: pointer;
     inline-size: 20px;
-    margin-inline: 2px;
+    margin-inline: 1px;
 
     vertical-align: bottom;
   }
 
   .#{$clabs-prefix}--chat-text-content-chevron:hover {
     cursor: pointer;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-chevron--focused {
+    border: 1px solid $link-primary;
   }
 
   .#{$clabs-prefix}--chat-text-content-chevron svg {
@@ -57,6 +62,7 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-text-content-annotation {
+    cursor: pointer;
     text-decoration: underline;
     text-decoration-color: $text-secondary;
     text-decoration-style: dotted;
@@ -66,11 +72,14 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-text-content-annotation-element {
-    padding: 16px;
-    transition: height 0.3s linear;
+    overflow: hidden;
+    block-size: var(--chat-text-content-annotation-element-height);
+    padding-block-start: 8px;
+    transition: height 0.5s ease-in;
   }
 
   .#{$clabs-prefix}--chat-text-content-link {
+    cursor: pointer;
     text-decoration: underline;
     text-decoration-color: $text-secondary;
     text-decoration-style: dotted;

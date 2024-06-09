@@ -25,3 +25,4 @@ import './components/imageElement/imageElement.js';
 import './components/loadingElement/loadingElement.js';
 import './components/errorElement/errorElement.js';
 import './components/carouselElement/carouselElement.js';
+import './components/linkListElement/linkListElement.js';

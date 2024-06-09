@@ -69,7 +69,7 @@ export default class textElement extends LitElement {
    * highlightCard data url
    */
   @state()
-  _annotationURL;
+  _annotationURLs;
 
   /**
    * targest div index
@@ -93,6 +93,10 @@ export default class textElement extends LitElement {
     if (this.content) {
       this._formatText();
     }
+    this.style.setProperty(
+      '--chat-text-content-annotation-element-height',
+      '0px'
+    );
   }
 
   /** _handleAnnotationClick - open and load Card element when annotation dropdown clicked
@@ -100,32 +104,48 @@ export default class textElement extends LitElement {
    */
   _handleAnnotationClick(event) {
     const source = event?.originalTarget?.dataset?.source;
+    this.style.setProperty(
+      '--chat-text-content-annotation-element-height',
+      '0px'
+    );
 
     const index = event?.originalTarget?.dataset?.index;
     if (index) {
+      this._textElements.forEach((element, elementIndex) => {
+        if (elementIndex !== parseInt(index)) {
+          element.active = false;
+        }
+      });
       this._textElements[parseInt(index)].active =
         !this._textElements[parseInt(index)].active;
 
-      /*this._textElements.forEach((element, elementIndex) => {
-        if(elementIndex !== index){
-          element.active = false;
-        }
-      })*/
-
       if (this._textElements[parseInt(index)].active) {
         if (source) {
-          this._annotationURL = source;
+          this._annotationURLs = this._arrangeSources(source);
+          setTimeout(() => {
+            this.style.setProperty(
+              '--chat-text-content-annotation-element-height',
+              '254px'
+            );
+          }, 20);
           this._annotationIndex = parseInt(index);
         } else {
-          this._annotationURL = null;
+          this._annotationURLs = null;
           this._annotationIndex = null;
         }
       } else {
-        this._annotationURL = null;
+        this._annotationURLs = null;
         this._annotationIndex = null;
       }
       this.requestUpdate();
     }
+  }
+
+  /** _arrangeSources - cut content into array of sources
+   * @param {string} content - string content to be sliced
+   */
+  _arrangeSources(content) {
+    return content.split(',');
   }
 
   /** _capitalizeText - capitalize incoming string when flag is enabled
@@ -152,6 +172,7 @@ export default class textElement extends LitElement {
     //const annotationRegex = new RegExp('(.*?)\\[([^\\[]+)\\]\\(([^\\)]+)\\)','g');
     //const annotationRegex = new RegExp("(.*?)(?:\\[([^\\[]+)\\])\\(([^)]+)\\)","g");
     const annotationRegex = new RegExp('\\[([^\\]]+)\\]\\(([^)]+)\\)', 'g');
+    //const annotationRegex = new RegExp('\\[([^\\]]+)\\]\\(((?:[^)(]+|\\([^)]+\\))*)\\)', 'g');
     const inputText = this.content;
     const slicedTextArray = this.disableNewLines
       ? [inputText]

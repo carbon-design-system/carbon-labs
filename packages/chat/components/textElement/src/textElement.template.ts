@@ -15,6 +15,7 @@ import ChevronDown16 from '@carbon/web-components/es/icons/chevron--down/16.js';
 import ChevronUp16 from '@carbon/web-components/es/icons/chevron--up/16.js';
 import '@carbon/web-components/es/components/tag/index.js';
 import '../../cardElement/cardElement.js';
+import '../../linkListElement/linkListElement.js';
 
 /**
  * Lit template for code
@@ -27,7 +28,7 @@ export function textElementTemplate(customElementClass) {
     _textElements: textElements,
     alignRight,
     enableHtmlRendering,
-    _annotationURL: annotationURL,
+    _annotationURLs: annotationURLs,
     _annotationIndex: annotationIndex,
     _handleAnnotationClick,
   } = customElementClass;
@@ -41,11 +42,17 @@ export function textElementTemplate(customElementClass) {
             html` ${textPiece.type === 'annotation' || textPiece.type === 'link'
               ? html`
                   <span
-                    class="${clabsPrefix}--chat-text-content-${textPiece.type}">
+                    class="${clabsPrefix}--chat-text-content-${textPiece.type}"
+                    data-index="${index}"
+                    data-source="${textPiece.content}"
+                    @click="${_handleAnnotationClick}">
                     ${textPiece.text}
                   </span>
                   <span
-                    class="${clabsPrefix}--chat-text-content-chevron"
+                    class="${clabsPrefix}--chat-text-content-chevron ${index ===
+                    annotationIndex
+                      ? clabsPrefix + '--chat-text-content-chevron--focused'
+                      : ''}"
                     data-index="${index}"
                     data-source="${textPiece.content}"
                     @click="${_handleAnnotationClick}">
@@ -57,9 +64,18 @@ export function textElementTemplate(customElementClass) {
                     ? html`
                         <div
                           class="${clabsPrefix}--chat-text-content-annotation-element">
-                          <clabs-chat-card
-                            type="url"
-                            content="${annotationURL}"></clabs-chat-card>
+                          ${annotationURLs.length > 1
+                            ? html`
+                                <clabs-chat-link-list
+                                  content="${annotationURLs.join(',')}">
+                                </clabs-chat-link-list>
+                              `
+                            : html`
+                                <clabs-chat-card
+                                  type="url"
+                                  content="${annotationURLs[0]}">
+                                </clabs-chat-card>
+                              `}
                         </div>
                       `
                     : html``}

@@ -1,0 +1,55 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-link-list) {
+  display: block;
+  box-sizing: border-box;
+  background: $background;
+  inline-size: 100%;
+  max-block-size: 246px;
+
+  .#{$clabs-prefix}--chat-link-list-header {
+    color: $text-secondary;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    line-height: 16px;
+    padding-block-end: 8px;
+    text-align: start;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-li {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: space-between;
+    block-size: 20px;
+    border-block-start: 1px solid $border-subtle-01;
+    color: $link-primary;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    padding-block: 6px;
+    white-space: nowrap;
+  }
+  .#{$clabs-prefix}--chat-link-list-li svg {
+    cursor: pointer;
+    fill: $link-primary;
+  }
+}

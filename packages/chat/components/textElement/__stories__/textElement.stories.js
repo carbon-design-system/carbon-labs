@@ -37,14 +37,16 @@ export const Showcase = {
     <br />
     <clabs-chat-text
       content="hello, I'm Watson.
- how how may I help you?"></clabs-chat-text>
+ how how may I help you?">
+    </clabs-chat-text>
     <br />
     <h4>Capitalized</h4>
     <br />
     <clabs-chat-text
       content="hello, I'm Watson.
  how how may I help you?"
-      capitalize="${true}"></clabs-chat-text>
+      capitalize="${true}">
+    </clabs-chat-text>
     <br />
     <h4>Annotations</h4>
     <br />

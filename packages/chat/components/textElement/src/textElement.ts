@@ -171,8 +171,12 @@ export default class textElement extends LitElement {
     }[] = [];
     //const annotationRegex = new RegExp('(.*?)\\[([^\\[]+)\\]\\(([^\\)]+)\\)','g');
     //const annotationRegex = new RegExp("(.*?)(?:\\[([^\\[]+)\\])\\(([^)]+)\\)","g");
-    const annotationRegex = new RegExp('\\[([^\\]]+)\\]\\(([^)]+)\\)', 'g');
-    //const annotationRegex = new RegExp('\\[([^\\]]+)\\]\\(((?:[^)(]+|\\([^)]+\\))*)\\)', 'g');
+    //const annotationRegex = new RegExp('\\[([^\\]]+)\\]\\(([^)]+)\\)', 'g');
+    const annotationRegex = new RegExp(
+      '\\[([^\\]]+)\\]\\(((?:[^)(]+|\\([^)]+\\))*)\\)',
+      'g'
+    );
+    //const annotationRegex = new RegExp('\\[([^\\]]+)\\]\\(([^)]+)\\)','g')
     const inputText = this.content;
     const slicedTextArray = this.disableNewLines
       ? [inputText]
@@ -182,7 +186,6 @@ export default class textElement extends LitElement {
       let match;
       const annotatedSentence = slicedTextArray[k];
       let lastIndex = 0;
-
       while ((match = annotationRegex.exec(annotatedSentence)) !== null) {
         if (match.index > lastIndex) {
           const finalizedText = annotatedSentence.slice(lastIndex, match.index);
@@ -203,10 +206,6 @@ export default class textElement extends LitElement {
           content: match[2],
           active: false,
         });
-
-        //previousIndex = annotationRegex.lastIndex;
-        //console.log(previousIndex)
-        //annotatedSentence =  annotatedSentence.substring(match.index + match[0].length)
         lastIndex = annotationRegex.lastIndex;
       }
       if (lastIndex < annotatedSentence.length) {

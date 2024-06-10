@@ -73,9 +73,9 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-text-content-annotation-element {
     overflow: hidden;
-    block-size: var(--chat-text-content-annotation-element-height);
-    padding-block-start: 8px;
-    transition: height 0.5s ease-in;
+    max-block-size: var(--chat-text-content-annotation-element-height);
+    padding-block: 16px;
+    transition: max-height 0.3s linear;
   }
 
   .#{$clabs-prefix}--chat-text-content-link {

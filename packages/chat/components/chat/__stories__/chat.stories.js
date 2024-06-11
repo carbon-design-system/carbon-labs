@@ -320,12 +320,11 @@ export const Slotting = {
    * @returns {TemplateResult<1>}
    */
   render: ({ userName, agentName, conversation }) => html`
-    <div style="height:calc(800vh - 84px); overflow:hidden;">
+    <div style="height:calc(100vh - 84px); overflow:hidden;">
       <clabs-chat
         user-name="${userName}"
         agent-name="${agentName}"
-        conversation="${conversation}"
-        input-field-placeholder="${'helloooooo'}">
+        conversation="${conversation}">
         <clabs-chat-messages slot="messages" user-name="user" agent-name="bot">
           <clabs-chat-message
             slot="message-items"

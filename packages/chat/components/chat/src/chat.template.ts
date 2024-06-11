@@ -41,7 +41,7 @@ export function chatTemplate(customElementClass) {
     _handleFullscreenMode: handleFullscreenMode,
     _handleChatClosed: handleChatClosed,
     _handleDockingMode: handleDockingMode,
-    _inputFieldPlaceholder: inputFieldPlaceholder,
+    inputFieldPlaceholder,
     _streamResponses: streamResponses,
     _interruptStreaming: interruptStreaming,
     _endStreaming: endStreaming,

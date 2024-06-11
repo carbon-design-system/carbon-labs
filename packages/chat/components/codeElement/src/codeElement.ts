@@ -60,10 +60,27 @@ export default class codeElement extends LitElement {
   _editedContent;
 
   /**
+   * currentlyEdited - flag if any content was changed
+   */
+  @state()
+  _currentlyEdited = false;
+
+  /**
    * Array of lines parsed from content attribute
    */
   @state()
   _renderLines: {
+    content: string;
+    type: string;
+    paddingLeft: string;
+    enableEditing: boolean;
+  }[] = [];
+
+  /**
+   * Copied array of lines when edited
+   */
+  @state()
+  _editedLines: {
     content: string;
     type: string;
     paddingLeft: string;
@@ -111,9 +128,42 @@ export default class codeElement extends LitElement {
     }
   }
 
+  /**
+   * _handleCodeEdit - textarea input event to record and feedback edits to content
+   * @param {event} event - textarea input event
+   */
+  _handleCodeEdit(event) {
+    this._currentlyEdited = true;
+    if (event?.explicitOriginalTarget?.codeIndex) {
+      if (event?.explicitOriginalTarget?.value) {
+        const editedValue = event.explicitOriginalTarget.value;
+        const lineIndex = parseInt(event.explicitOriginalTarget.codeIndex);
+        this._editedLines[lineIndex]['content'] = editedValue;
+      }
+    }
+  }
+
+  /**
+   * _handleEditValidation - button event when user confirms edit of code
+   */
+  _handleEditValidation() {
+    this._currentlyEdited = false;
+    const codeEditedEvent = new CustomEvent('on-code-edit-validation', {
+      detail: {
+        previousLineData: this._renderLines,
+        newLineData: this._editedLines,
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(codeEditedEvent);
+    this._renderLines = this._editedLines;
+  }
+
   /** format code to properly display in HTML
    */
   _formatCode() {
+    this._currentlyEdited = false;
     const formattedText = this.content;
     const htmlSafeText = formattedText.replace(/```/g, '');
     //.replace(/</g, '&lt;')
@@ -149,6 +199,7 @@ export default class codeElement extends LitElement {
       });
     }
     this._renderLines = textValues;
+    this._editedLines = textValues;
     const tickWidth = 13 * lines.length.toString().length;
     this.style.setProperty(
       '--chat-code-tick-width',

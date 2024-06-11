@@ -29,7 +29,10 @@ export function codeElementTemplate(customElementClass) {
     disableCopyButton,
     disableEditButton,
     _copyCode: copyCode,
+    _handleCodeEdit: handleCodeEdit,
+    _handleEditValidation: handleEditValidation,
     editable,
+    _currentlyEdited: currentlyEdited,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-code">
@@ -86,7 +89,10 @@ export function codeElementTemplate(customElementClass) {
                   </div>`
                 : html`
                     <textarea
+                      @input="${handleCodeEdit}"
+                      @keydown="${handleCodeEdit}"
                       rows="1"
+                      data-code-index="${index}"
                       class="${clabsPrefix}--chat-code-line-text-area ${lineObject.type}"
                       style="padding-left: ${lineObject.paddingLeft}">
 ${lineObject.content}</textarea
@@ -95,6 +101,21 @@ ${lineObject.content}</textarea
             </div>
           `
       )}
+      ${currentlyEdited
+        ? html`
+            <div class="${clabsPrefix}--chat-code-validate-edit">
+              <cds-button
+                size="sm"
+                kind="ghost"
+                tooltip-text="Validate edit"
+                tooltip-position="left"
+                tooltip-alignment="end"
+                @click="${handleEditValidation}">
+                Validate edit
+              </cds-button>
+            </div>
+          `
+        : html``}
     </div>
   </div>`;
 }

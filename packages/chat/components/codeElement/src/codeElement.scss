@@ -99,4 +99,9 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-code-line-comment {
     color: $support-success;
   }
+  .#{$clabs-prefix}--chat-code-validate-edit {
+    position: absolute;
+    inset-block-end: 16px;
+    inset-inline-end: 16px;
+  }
 }

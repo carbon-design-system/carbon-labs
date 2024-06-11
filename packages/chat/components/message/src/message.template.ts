@@ -131,7 +131,7 @@ export function messageTemplate(customElementClass) {
               : html``}
             <div class="${clabsPrefix}--chat-message-content">
               <div class="${clabsPrefix}--chat-message-timestamp-bot">
-                ${displayName == null ? 'watson' : displayName} ${timeStamp}
+                ${displayName == null ? 'watsonx' : displayName} ${timeStamp}
               </div>
               <div class="${clabsPrefix}--chat-message-response-bot">
                 <slot

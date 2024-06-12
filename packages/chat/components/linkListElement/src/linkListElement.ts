@@ -93,7 +93,6 @@ export default class linkListElement extends LitElement {
   _formatList() {
     if (this.content.indexOf('[') > -1) {
       const linkArray = this.content.split(',');
-      console.log(linkArray);
       const markdownLinkRegex = new RegExp('\\[(.*?)\\]\\((.*?)\\)');
       this._linkList = linkArray.map((link) => {
         const match = link.match(markdownLinkRegex);
@@ -102,7 +101,6 @@ export default class linkListElement extends LitElement {
         }
         return null;
       });
-      console.log(this._linkList);
       this.trimmedList = this._linkList.slice(0, 4);
     } else {
       const splitList = this.content.split(',');

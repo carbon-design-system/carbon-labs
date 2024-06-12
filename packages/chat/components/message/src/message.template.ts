@@ -31,6 +31,7 @@ import '../../editableTextElement/editableTextElement.js';
 import '../../errorElement/errorElement.js';
 import '../../loadingElement/loadingElement.js';
 import '../../carouselElement/carouselElement.js';
+import '../../linkListElement/linkListElement.js';
 
 /**
  * Lit template for message
@@ -148,6 +149,11 @@ export function messageTemplate(customElementClass) {
                         ? html`
                             <clabs-chat-chart content="${message.content}">
                             </clabs-chat-chart>
+                          `
+                        : message.type === 'link-list'
+                        ? html`
+                            <clabs-chat-link-list content="${message.content}">
+                            </clabs-chat-link-list>
                           `
                         : message.type === 'carousel'
                         ? html`

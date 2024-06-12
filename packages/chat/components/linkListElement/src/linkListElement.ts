@@ -91,11 +91,24 @@ export default class linkListElement extends LitElement {
    * @param {string} inputText - text to be rendered in subelement
    */
   _formatList() {
-    const splitList = this.content.split(',');
-    this._linkList = splitList.map((link) => ({
-      title: this._getSiteTitle(link),
-      url: link,
-    }));
-    this.trimmedList = this._linkList.slice(0, 4);
+    if (this.content.indexOf('[') > -1) {
+      const linkArray = this.content.split(',');
+      const markdownLinkRegex = new RegExp('\\[(.*?)\\]\\((.*?)\\)');
+      this._linkList = linkArray.map((link) => {
+        const match = link.match(markdownLinkRegex);
+        if (match) {
+          return { title: match[1], url: match[2] };
+        }
+        return null;
+      });
+      this.trimmedList = this._linkList.slice(0, 4);
+    } else {
+      const splitList = this.content.split(',');
+      this._linkList = splitList.map((link) => ({
+        title: this._getSiteTitle(link),
+        url: link,
+      }));
+      this.trimmedList = this._linkList.slice(0, 4);
+    }
   }
 }

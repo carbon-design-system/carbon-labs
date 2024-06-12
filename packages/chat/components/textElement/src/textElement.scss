@@ -29,6 +29,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-text-content {
     flex-grow: 1;
+    max-inline-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-text-content-chevron {
@@ -67,13 +68,15 @@ $css--plex: true !default;
     text-decoration-color: $text-secondary;
     text-decoration-style: dotted;
     text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
+    text-underline-offset: 2px;
     vertical-align: bottom;
   }
 
   .#{$clabs-prefix}--chat-text-content-annotation-element {
     overflow: hidden;
+    inline-size: 100%;
     max-block-size: var(--chat-text-content-annotation-element-height);
+    max-inline-size: 100%;
     padding-block: 16px;
     transition: max-height 0.3s linear;
   }

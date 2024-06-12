@@ -73,7 +73,7 @@
     flex-direction: row;
     background: $background;
     gap: 4px;
-    padding-inline-end: 20px;
+    padding-inline-end: 8px;
   }
 
   .#{$clabs-prefix}--chat-chart-modal-custom {
@@ -95,8 +95,21 @@
     padding: 0;
     block-size: 100%;
     inline-size: 100%;
-    min-block-size: calc(100vh - 64px - 52px);
+    min-block-size: calc(100vh - 68px - 52px);
     pointer-events: all;
+  }
+
+  .#{$clabs-prefix}--chat-editor-modal-container {
+    display: flex;
+    box-sizing: border-box;
+    padding: 8px;
+    block-size: 100%;
+    gap: 8px;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-editor-modal-section {
+    flex: 1;
   }
 
   .#{$clabs-prefix}--chat-chart-options svg {

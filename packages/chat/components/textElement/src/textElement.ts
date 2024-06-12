@@ -125,7 +125,7 @@ export default class textElement extends LitElement {
           setTimeout(() => {
             this.style.setProperty(
               '--chat-text-content-annotation-element-height',
-              '254px'
+              '400px'
             );
           }, 20);
           this._annotationIndex = parseInt(index);

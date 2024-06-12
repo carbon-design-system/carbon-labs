@@ -724,7 +724,7 @@ const conversationExamples = {
         },
         {
           content:
-            'Abraham Lincoln was an American lawyer, politician, and statesman who served as the 16th [president of the United States](https://en.wikipedia.org/wiki/President_of_the_United_States) from 1861 until his [assassination](https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln) in 1865. Lincoln led the United States through the [American Civil War](https://en.wikipedia.org/wiki/American_Civil_War), defending the nation as a constitutional [union](https://en.wikipedia.org/wiki/Union_(American_Civil_War)), defeating the insurgent [Confederacy](https://en.wikipedia.org/wiki/Confederate_States_of_America), playing a major role in the [abolition of slavery](https://en.wikipedia.org/wiki/Abolitionism_in_the_United_States), expanding the power of the [federal government](https://en.wikipedia.org/wiki/Federal_government_of_the_United_States), and modernizing the [U.S. economy](https://en.wikipedia.org/wiki/Economy_of_the_United_States). Lincoln was born into poverty in a [log cabin](https://en.wikipedia.org/wiki/Log_cabin) in [Kentucky](https://en.wikipedia.org/wiki/Kentucky) and was raised on the [frontier](https://en.wikipedia.org/wiki/American_frontier), mainly in [Indiana](https://en.wikipedia.org/wiki/Indiana). ',
+            'Abraham Lincoln was an American lawyer, politician, and statesman who served as the 16th [president of the United States](https://en.wikipedia.org/wiki/President_of_the_United_States) from 1861 until his [assassination](https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln) in 1865. Lincoln led the United States through the [American Civil War](https://en.wikipedia.org/wiki/American_Civil_War), defending the nation as a constitutional [union](https://en.wikipedia.org/wiki/Union_(American_Civil_War)), defeating the insurgent [Confederacy](https://en.wikipedia.org/wiki/Confederate_States_of_America), playing a major role in the [abolition of slavery](https://en.wikipedia.org/wiki/Abolitionism_in_the_United_States), expanding the power of the [federal government](https://en.wikipedia.org/wiki/Federal_government_of_the_United_States), and modernizing the [U.S. economy](https://en.wikipedia.org/wiki/Economy_of_the_United_States).\n [Many more links are available in this article](https://en.wikipedia.org/wiki/Log_cabin,https://en.wikipedia.org/wiki/Kentucky,https://en.wikipedia.org/wiki/American_frontier,https://en.wikipedia.org/wiki/Indiana). ',
           type: 'annotated-text',
         },
         {
@@ -748,7 +748,17 @@ const conversationExamples = {
         },
         {
           content:
-            'Here is an element of type "url" using the Card element (Apollo 11 Wikipedia article):\n',
+            'Here is an element of type "link-list" using the LinkList element:\n',
+          type: 'text',
+        },
+        {
+          content:
+            '[IBM Cloud Home](https://www.ibm.com/cloud),[Cloud Solutions](https://www.ibm.com/cloud/solutions),[Cloud products](https://www.ibm.com/cloud/products),[Cloud Docs](https://cloud.ibm.com/docs)',
+          type: 'link-list',
+        },
+        {
+          content:
+            'Here are Card elements of type url, video, file and audio:\n',
           type: 'text',
         },
         {
@@ -757,23 +767,18 @@ const conversationExamples = {
         },
         {
           content:
-            'Here is an element of type "video" using the Card element (Apollo moon landing from Wikimedia):\n',
-          type: 'text',
-        },
-        {
-          content:
             'https://upload.wikimedia.org/wikipedia/commons/transcoded/7/7d/Apollo_11._Television_clip_of_Buzz_descending_the_ladder_and_stepping_onto_the_moon%2C_1094228.ogv/Apollo_11._Television_clip_of_Buzz_descending_the_ladder_and_stepping_onto_the_moon%2C_1094228.ogv.360p.webm',
           type: 'video',
         },
         {
           content:
-            'Here is an element of type "file" using the Card element:\n',
-          type: 'text',
+            'https://github.com/vega/vega-datasets/blob/main/data/co2-concentration.csv',
+          type: 'file',
         },
         {
           content:
-            'https://github.com/vega/vega-datasets/blob/main/data/co2-concentration.csv',
-          type: 'file',
+            'https://upload.wikimedia.org/wikipedia/commons/f/f5/Giovanni_Giuseppe_Cambini_-_Quintet_No._1_in_Bb_major%2C_movement_2.ogg',
+          type: 'audio',
         },
         {
           content:

@@ -378,9 +378,12 @@ export default class chartElement extends LitElement {
 
   /**
    * _displayVisualization - get unique tag and generate vega lite
+   * @param {string} predefinedTarget - target div to initialize chart in
    */
-  async _displayVisualization() {
-    const targetID = '#' + clabsPrefix + '--chat-embed-vis-' + this._uniqueID;
+  async _displayVisualization(predefinedTarget?: string) {
+    const targetID =
+      predefinedTarget ||
+      '#' + clabsPrefix + '--chat-embed-vis-' + this._uniqueID;
     //const targetID = '.' + clabsPrefix + '--chat-chart-container';
     const targetDiv = this.shadowRoot?.querySelector(targetID);
     if (targetDiv instanceof HTMLElement) {
@@ -682,6 +685,24 @@ export default class chartElement extends LitElement {
   }
 
   /**
+   * _handleModelEditorValidation -  event from code subcomponent
+   * @param {event} event - custom event from chat code component
+   */
+  _handleModelEditorValidation(event) {
+    console.log(event);
+    if (event?.detail?.newLineText) {
+      this.content = event.detail.newLineText;
+      this._prepareVisualization();
+      const editedChartID =
+        clabsPrefix + '--chat-editor-embed-vis-' + this._uniqueID;
+      window.setTimeout(async () => {
+        await this._displayVisualization('.' + editedChartID);
+      }, 200);
+      //this.requestUpdate();
+    }
+  }
+
+  /**
    * _openCodeView -
    */
   _openCodeView() {
@@ -694,10 +715,11 @@ export default class chartElement extends LitElement {
       );
       if (modalDiv instanceof HTMLElement) {
         try {
-          this.modalContent =
-            "<clabs-chat-code content='" +
-            JSON.stringify(this._visualizationSpec, null, '\t') +
-            "'><clabs-chat-code>";
+          const editedChartID =
+            clabsPrefix + '--chat-editor-embed-vis-' + this._uniqueID;
+          window.setTimeout(async () => {
+            await this._displayVisualization('.' + editedChartID);
+          }, 400);
         } catch (modalError) {
           console.error(modalError);
         }

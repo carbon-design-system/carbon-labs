@@ -41,7 +41,7 @@
   }
 
   .#{$clabs-prefix}--chat-fullscreen {
-    position: absolute;
+    position: fixed;
     z-index: 9999;
     block-size: 100%;
     inline-size: 100%;

@@ -48,6 +48,7 @@ export function chartElementTemplate(customElementClass) {
     disableExport,
     disableFullscreen,
     disableCodeInspector,
+    _handleModelEditorValidation: handleModelEditorValidation,
     modalMode,
     theme,
     _uniqueID: uniqueID,
@@ -63,7 +64,7 @@ export function chartElementTemplate(customElementClass) {
           class="${clabsPrefix}--chat-chart-modal-custom">
           <cds-modal-header>
             <cds-modal-close-button></cds-modal-close-button>
-            <cds-modal-label>Chart Viewer</cds-modal-label>
+            <cds-modal-title>Chart Viewer</cds-modal-title>
           </cds-modal-header>
           <cds-modal-body class="${clabsPrefix}--chat-chart-modal-body">
             <div class="${clabsPrefix}--chat-chart-modal-container">
@@ -80,11 +81,21 @@ export function chartElementTemplate(customElementClass) {
           class="${clabsPrefix}--chat-chart-modal-custom">
           <cds-modal-header>
             <cds-modal-close-button></cds-modal-close-button>
-            <cds-modal-label>Vega specification Viewer</cds-modal-label>
+            <cds-modal-title>Vega specification Editor</cds-modal-title>
           </cds-modal-header>
           <cds-modal-body class="${clabsPrefix}--chat-chart-modal-body">
             <div class="${clabsPrefix}--chat-chart-modal-container">
-              ${unsafeHTML(modalContent)}
+              <div class="${clabsPrefix}--chat-editor-modal-container">
+                <div
+                  class="${clabsPrefix}--chat-editor-modal-section ${clabsPrefix}--chat-editor-embed-vis-${uniqueID}"></div>
+                <div class="${clabsPrefix}--chat-editor-modal-section">
+                  <clabs-chat-code
+                    editable
+                    @on-code-edit-validation="${handleModelEditorValidation}"
+                    content="${JSON.stringify(_visualizationSpec, null, '\t')}">
+                  </clabs-chat-code>
+                </div>
+              </div>
             </div>
           </cds-modal-body>
         </cds-modal>`

@@ -15,7 +15,7 @@ import ChevronDown16 from '@carbon/web-components/es/icons/chevron--down/16.js';
 import ChevronUp16 from '@carbon/web-components/es/icons/chevron--up/16.js';
 import '@carbon/web-components/es/components/tag/index.js';
 import '../../cardElement/cardElement.js';
-import '../../linkListElement/linkListElement.js';
+import '../../carouselElement/carouselElement.js';
 
 /**
  * Lit template for code
@@ -66,9 +66,9 @@ export function textElementTemplate(customElementClass) {
                           class="${clabsPrefix}--chat-text-content-annotation-element">
                           ${annotationURLs.length > 1
                             ? html`
-                                <clabs-chat-link-list
-                                  content="${annotationURLs.join(',')}">
-                                </clabs-chat-link-list>
+                                <clabs-chat-carousel
+                                  content=${JSON.stringify(annotationURLs)}>
+                                </clabs-chat-carousel>
                               `
                             : html`
                                 <clabs-chat-card

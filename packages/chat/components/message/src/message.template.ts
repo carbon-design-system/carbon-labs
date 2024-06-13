@@ -31,6 +31,7 @@ import '../../editableTextElement/editableTextElement.js';
 import '../../errorElement/errorElement.js';
 import '../../loadingElement/loadingElement.js';
 import '../../carouselElement/carouselElement.js';
+import '../../linkListElement/linkListElement.js';
 
 /**
  * Lit template for message
@@ -131,7 +132,7 @@ export function messageTemplate(customElementClass) {
               : html``}
             <div class="${clabsPrefix}--chat-message-content">
               <div class="${clabsPrefix}--chat-message-timestamp-bot">
-                ${displayName == null ? 'watson' : displayName} ${timeStamp}
+                ${displayName == null ? 'watsonx' : displayName} ${timeStamp}
               </div>
               <div class="${clabsPrefix}--chat-message-response-bot">
                 <slot
@@ -148,6 +149,11 @@ export function messageTemplate(customElementClass) {
                         ? html`
                             <clabs-chat-chart content="${message.content}">
                             </clabs-chat-chart>
+                          `
+                        : message.type === 'link-list'
+                        ? html`
+                            <clabs-chat-link-list content="${message.content}">
+                            </clabs-chat-link-list>
                           `
                         : message.type === 'carousel'
                         ? html`
@@ -173,6 +179,22 @@ export function messageTemplate(customElementClass) {
                         ? html`
                             <clabs-chat-text
                               capitalize
+                              content="${message.content}">
+                            </clabs-chat-text>
+                          `
+                        : message.type === 'annotated-text'
+                        ? html`
+                            <clabs-chat-text
+                              capitalize
+                              enable-annotations
+                              content="${message.content}">
+                            </clabs-chat-text>
+                          `
+                        : message.type === 'html-text'
+                        ? html`
+                            <clabs-chat-text
+                              capitalize
+                              enable-html-rendering
                               content="${message.content}">
                             </clabs-chat-text>
                           `

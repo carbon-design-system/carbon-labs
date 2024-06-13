@@ -15,7 +15,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-code-container {
     position: relative;
     display: flex;
-    overflow: auto;
+    overflow: hidden scroll;
     flex-direction: column;
     padding: 16px;
     border: 1px solid $border-subtle-00;
@@ -26,6 +26,7 @@ $css--plex: true !default;
     font-size: 13px;
     letter-spacing: 0.64px;
     line-height: 20px;
+    max-block-size: 492px;
     padding-inline-start: 12px;
   }
 
@@ -92,11 +93,16 @@ $css--plex: true !default;
     resize: none;
   }
 
-  .#{$clabs-prefix}--chat-code-line-text-area:focus {
-    outline: none;
-  }
-
   .#{$clabs-prefix}--chat-code-line-comment {
     color: $support-success;
+  }
+
+  .#{$clabs-prefix}--chat-code-editing-controls {
+    position: sticky;
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    inset-block-end: 0;
+    inset-inline-end: 0;
   }
 }

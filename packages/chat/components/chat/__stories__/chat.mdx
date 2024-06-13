@@ -39,11 +39,14 @@ It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LL
 <a id="events"></a>
 
 <table>
+  <thead>
     <tr>
         <td>**Event name**</td>
         <td>**Exclusive to chat mode**</td>
         <td>**Triggering logic**</td>
     </tr>
+  </thead>
+  <tbody>
     <tr>
         <td>on-chat-slot-update</td>
         <td>Carbon slotting in use</td>
@@ -69,6 +72,7 @@ It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LL
         <td>All</td>
         <td>Return when user submits a query in the footer</td>
     </tr>
+  </tbody>
 </table>
 
 ### Troubleshooting 
@@ -117,7 +121,7 @@ There are three ways to implement Chat: Add an API and directly auto-parse raw L
 ### Basic implementation 
 <a id="basic-implementation"></a>
 
-```
+```html
 <clabs-chat
   <!-- string: user-name in LLM conversation -->
   user-name="user"
@@ -182,19 +186,21 @@ If API returns raw LLM text in a `reply` of type `string`, auto-parsing will be 
 #### Object response
 If API returns a `reply` of type `object/json`, objects are rendered as-is in order of appearance, each containing a subelement containing a`type` string which render a `content` field:
 
-```js
+```json
 [
-  {type: 'text', content: 'Hello World!'},
-  {type: 'url', content: 'http://www.ibm.com'},
-  {type: 'code', content: 'python\ndef Prime(number,itr):\n\t#base condition\n\tif ...'},
-  {type: 'error', content: 'ERROR: API failed to respond, try again'},
-  {type: 'image', content: 'http://www.gallery.come/image.png'},
-  {type: 'video', content: 'http://www.wikimedia.org/example_video.mp4'},
-  {type: 'file', content: 'ftp:spreadsheet.csv'},
-  {type: 'carousel', content: '["http://www.google.com", "http://www.facebook.com", "http://www.wikipedia.org"]',
-  {type: 'table', content: 'header1,hedaer2,header3\n300,500,600\nNY,AK,MI'},
-  {type: 'tags', content: '["new chat","save chat","create chart"]'},
-  {type: 'chart', content: '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":[...],"config":{...}}'
+  {"type": "text", "content": "Hello World!"},
+  {"type": "html-text", "content": "<h2>Title</h2>"},
+  {"type": "annotated-text", "content": "The link your requested is [here](http://www.google.com)"},
+  {"type": "url", "content": "http://www.ibm.com"},
+  {"type": "code", "content": "python\ndef Prime(number,itr):\n\t#base condition\n\tif ..."},
+  {"type": "error", "content": "ERROR: API failed to respond, try again"},
+  {"type": "image", "content": "http://www.gallery.come/image.png"},
+  {"type": "video", "content": "http://www.wikimedia.org/example_video.mp4"},
+  {"type": "file", "content": "ftp:spreadsheet.csv"},
+  {"type": "carousel", "content": "['http://www.google.com', 'http://www.facebook.com', 'http://www.wikipedia.org']"},
+  {"type": "table", "content": "header1,hedaer2,header3\n300,500,600\nNY,AK,MI"},
+  {"type": "tags", "content": "['new chat','save chat','create chart']"},
+  {"type": "chart", "content": "PLACE STRINGIFIED VEGA SCHEME HERE"}
 ]
 ```
 

@@ -41,10 +41,10 @@
   }
 
   .#{$clabs-prefix}--chat-fullscreen {
-    position: absolute;
-    z-index: 1000;
-    block-size: 100vh;
-    inline-size: 100vw;
+    position: fixed;
+    z-index: 9999;
+    block-size: 100%;
+    inline-size: 100%;
     inset-block-start: 0;
     inset-inline-start: 0;
   }
@@ -55,7 +55,7 @@
   }
 
   .#{$clabs-prefix}--chat-docked {
-    position: absolute;
+    position: fixed;
     z-index: 1000;
     block-size: 640px;
     inline-size: 320px;

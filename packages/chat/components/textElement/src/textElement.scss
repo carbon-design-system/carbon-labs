@@ -22,16 +22,76 @@ $css--plex: true !default;
   line-height: 20px;
   word-break: break-word;
 
-  #{$clabs-prefix}--chat-text--float-right {
+  .#{$clabs-prefix}--chat-text--float-right {
     display: flex;
     justify-content: flex-end;
   }
 
-  #{$clabs-prefix}--chat-text--content {
+  .#{$clabs-prefix}--chat-text-content {
     flex-grow: 1;
+    max-inline-size: 100%;
   }
 
-  #{$clabs-prefix}--chat-text--float-left {
+  .#{$clabs-prefix}--chat-text-content-chevron {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0;
+    border: 1px solid $border-subtle-01;
+    border-radius: 8px;
+    margin: 0;
+    background: $layer-accent-01;
+    block-size: 16px;
+    cursor: pointer;
+    inline-size: 20px;
+    margin-inline: 1px;
+
+    vertical-align: bottom;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-chevron:hover {
+    cursor: pointer;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-chevron--focused {
+    border: 1px solid $link-primary;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-chevron svg {
+    fill: $text-secondary;
+    padding-inline-start: 2px;
+    pointer-events: none;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-annotation {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: $text-secondary;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+    vertical-align: bottom;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-annotation-element {
+    overflow: hidden;
+    inline-size: 100%;
+    max-block-size: var(--chat-text-content-annotation-element-height);
+    max-inline-size: 100%;
+    padding-block: 16px;
+    transition: max-height 0.3s linear;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-link {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: $text-secondary;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    vertical-align: bottom;
+  }
+
+  .#{$clabs-prefix}--chat-text--float-left {
     display: flex;
     justify-content: flex-start;
   }

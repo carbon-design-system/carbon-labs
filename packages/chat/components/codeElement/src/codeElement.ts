@@ -60,14 +60,39 @@ export default class codeElement extends LitElement {
   _editedContent;
 
   /**
+   * currentlyEdited - flag if any content was changed
+   */
+  @state()
+  _currentlyEdited = false;
+
+  /**
    * Array of lines parsed from content attribute
    */
   @state()
-  _renderLines: {
+  _renderedLines: {
     content: string;
     type: string;
     paddingLeft: string;
-    enableEditing: boolean;
+  }[] = [];
+
+  /**
+   * Copied array of lines when edited
+   */
+  @state()
+  _editedLines: {
+    content: string;
+    type: string;
+    paddingLeft: string;
+  }[] = [];
+
+  /**
+   * Original array of lines from content field
+   */
+  @state()
+  _originalLines: {
+    content: string;
+    type: string;
+    paddingLeft: string;
   }[] = [];
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
@@ -90,11 +115,10 @@ export default class codeElement extends LitElement {
       this._formatCode();
       this.requestUpdate();
     } else {
-      this._renderLines = [
+      this._renderedLines = [
         {
           content: 'CodeElement ERROR: content is empty',
           type: '',
-          enableEditing: false,
           paddingLeft: '8px',
         },
       ];
@@ -111,9 +135,78 @@ export default class codeElement extends LitElement {
     }
   }
 
+  /**
+   * _handleCodeEdit - textarea input event to record and feedback edits to content
+   * @param {event} event - textarea input event
+   */
+  _handleCodeEdit(event) {
+    this._currentlyEdited = true;
+    if (event?.explicitOriginalTarget?.dataset?.codeIndex) {
+      const key = event.code;
+      const lineIndex = parseInt(
+        event.explicitOriginalTarget.dataset.codeIndex
+      );
+      const editedValue = event.explicitOriginalTarget.value;
+      this._editedLines[lineIndex]['content'] = editedValue;
+      if (key == 'deleteContentBackward' || key == 'Backspace') {
+        if (editedValue.length < 1) {
+          event.preventDefault();
+          this._editedLines.splice(lineIndex, 1);
+        }
+      } else if (key == 'Enter') {
+        event.preventDefault();
+        const newLineObject = {
+          content: '',
+          type: '',
+          paddingLeft: this._editedLines[lineIndex].paddingLeft,
+        };
+        this._editedLines.splice(lineIndex + 1, 0, newLineObject);
+      }
+    }
+
+    this._renderedLines = this._editedLines;
+    this.requestUpdate();
+  }
+
+  /**
+   * _packageSpecFromArray
+   */
+  _packageSpecFromArray() {
+    return this._editedLines.map((line) => line.content).join('\n');
+  }
+
+  /**
+   * _handleEditValidation - button event when user confirms edit of code
+   */
+  _handleEditValidation() {
+    const codeEditedEvent = new CustomEvent('on-code-edit-validation', {
+      detail: {
+        previousLineData: this._renderedLines,
+        newLineData: this._editedLines,
+        newLineText: this._packageSpecFromArray(),
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(codeEditedEvent);
+    this._renderedLines = this._editedLines;
+    this._currentlyEdited = false;
+    this.requestUpdate();
+  }
+
+  /**
+   * _handleCancellation - button event when user aborts edit of code
+   */
+  _handleEditCancellation() {
+    this._currentlyEdited = false;
+    //this._renderedLines = this._originalLines;
+    this._formatCode();
+  }
+
   /** format code to properly display in HTML
    */
   _formatCode() {
+    this._currentlyEdited = false;
     const formattedText = this.content;
     const htmlSafeText = formattedText.replace(/```/g, '');
     //.replace(/</g, '&lt;')
@@ -125,7 +218,6 @@ export default class codeElement extends LitElement {
       content: string;
       type: string;
       paddingLeft: string;
-      enableEditing: boolean;
     }[] = [];
 
     for (let i = 0; i < lines.length; i++) {
@@ -144,11 +236,13 @@ export default class codeElement extends LitElement {
       textValues.push({
         content: lines[i].trim().replace(/\t/g, ''),
         type: lineType,
-        enableEditing: false,
         paddingLeft: tabOffset.toString() + 'px',
       });
     }
-    this._renderLines = textValues;
+
+    this._editedLines = JSON.parse(JSON.stringify(textValues));
+    this._originalLines = JSON.parse(JSON.stringify(textValues));
+    this._renderedLines = JSON.parse(JSON.stringify(this._originalLines));
     const tickWidth = 13 * lines.length.toString().length;
     this.style.setProperty(
       '--chat-code-tick-width',

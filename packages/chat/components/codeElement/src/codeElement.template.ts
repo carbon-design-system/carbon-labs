@@ -24,12 +24,16 @@ import Copy16 from '@carbon/web-components/es/icons/copy/16.js';
  */
 export function codeElementTemplate(customElementClass) {
   const {
-    _renderLines,
+    _renderedLines,
     disableLineTicks,
     disableCopyButton,
     disableEditButton,
     _copyCode: copyCode,
+    _handleCodeEdit: handleCodeEdit,
+    _handleEditValidation: handleEditValidation,
+    _handleEditCancellation: handleEditCancellation,
     editable,
+    _currentlyEdited: currentlyEdited,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-code">
@@ -64,7 +68,7 @@ export function codeElementTemplate(customElementClass) {
         </div>
       </div>
 
-      ${_renderLines.map(
+      ${_renderedLines.map(
         (lineObject, index) =>
           html`
             <div class="${clabsPrefix}--chat-code-line">
@@ -86,7 +90,9 @@ export function codeElementTemplate(customElementClass) {
                   </div>`
                 : html`
                     <textarea
+                      @keydown="${handleCodeEdit}"
                       rows="1"
+                      data-code-index="${index}"
                       class="${clabsPrefix}--chat-code-line-text-area ${lineObject.type}"
                       style="padding-left: ${lineObject.paddingLeft}">
 ${lineObject.content}</textarea
@@ -95,6 +101,21 @@ ${lineObject.content}</textarea
             </div>
           `
       )}
+      ${currentlyEdited
+        ? html`
+            <div class="${clabsPrefix}--chat-code-editing-controls">
+              <cds-button
+                size="sm"
+                kind="danger"
+                @click="${handleEditCancellation}">
+                Cancel edit
+              </cds-button>
+              <cds-button size="sm" @click="${handleEditValidation}">
+                Validate edit
+              </cds-button>
+            </div>
+          `
+        : html``}
     </div>
   </div>`;
 }

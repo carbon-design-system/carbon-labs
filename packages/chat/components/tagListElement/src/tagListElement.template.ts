@@ -12,7 +12,6 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import '@carbon/web-components/es/components/tag/index.js';
 import '@carbon/web-components/es/components/chat-button/index.js';
-import Add16 from '@carbon/web-components/es/icons/add/16.js';
 
 /**
  * Lit template for code
@@ -41,8 +40,8 @@ export function tagListElementTemplate(customElementClass) {
                   kind="ghost"
                   size="sm"
                   is-quick-action
-                  @click="${handleTagClick}">
-                  ${Add16({ slot: 'icon' })} ${value}
+                  @click="${handleTagClick}"
+                  >${value}
                 </cds-chat-button>
               </div>`
           )}

@@ -50,16 +50,16 @@
   },
   "dependencies": {
     "@carbon/styles": "1.53.0",
-    "@carbon/web-components": "2.7.0",
+    "@carbon/web-components": "2.9.0",
     "lit": "^3.0.0"
   },
   "devDependencies": {
     "@carbon/grid": "^11.21.1",
-    "@carbon/icon-helpers": "10.47.0",
-    "@carbon/icons": "11.40.0",
-    "@carbon/layout": "11.21.0",
+    "@carbon/icon-helpers": "10.48.0",
+    "@carbon/icons": "11.43.0",
+    "@carbon/layout": "11.22.0",
     "@carbon/motion": "11.18.0",
-    "@carbon/themes": "11.34.0",
+    "@carbon/themes": "11.36.0",
     "@carbon/type": "11.26.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
@@ -133,5 +133,5 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
   },
-  "packageManager": "yarn@4.2.1"
+  "packageManager": "yarn@4.2.2"
 }

@@ -25,7 +25,7 @@ export default class footer extends LitElement {
   /**
    * custom placeholder for input field
    */
-  @property({ type: String, attribute: 'input-placeholder', reflect: true })
+  @property({ type: String, attribute: 'input-placeholder' })
   _inputPlaceholder;
 
   /**

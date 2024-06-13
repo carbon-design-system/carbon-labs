@@ -49,7 +49,29 @@ export class Tag extends LitElement {
   updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('color')) {
-      this.style.setProperty('--border-color', this.color);
+      if (this.color === 'red') {
+        this.style.setProperty('--border-color', '#fa4d56');
+      } else if (this.color === 'magenta') {
+        this.style.setProperty('--border-color', '#ee5396');
+      } else if (this.color === 'purple') {
+        this.style.setProperty('--border-color', '#a56eff');
+      } else if (this.color === 'blue') {
+        this.style.setProperty('--border-color', '#4589ff');
+      } else if (this.color === 'cyan') {
+        this.style.setProperty('--border-color', '#1192e8');
+      } else if (this.color === 'teal') {
+        this.style.setProperty('--border-color', '#009d9a');
+      } else if (this.color === 'green') {
+        this.style.setProperty('--border-color', '#24a148');
+      } else if (this.color === 'gray') {
+        this.style.setProperty('--border-color', '#8d8d8d');
+      } else if (this.color === 'cool-gray') {
+        this.style.setProperty('--border-color', '#878d96');
+      } else if (this.color === 'warm-gray') {
+        this.style.setProperty('--border-color', '#8f8b8b');
+      } else {
+        this.style.setProperty('--border-color', '#24a148');
+      }
     }
   }
 

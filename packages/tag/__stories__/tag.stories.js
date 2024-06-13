@@ -17,7 +17,7 @@ export default {
 
 const defaultArgs = {
   text: 'Default tag text',
-  color: '#67ba6e',
+  color: 'green',
   tooltipPosition: 'bottom',
   tooltipText: 'Default tooltip text',
   /**
@@ -34,7 +34,19 @@ const defaultControls = {
     description: 'Text inside the tag',
   },
   color: {
-    control: { type: 'color' },
+    control: { type: 'select' },
+    options: [
+      'red',
+      'magenta',
+      'purple',
+      'blue',
+      'cyan',
+      'teal',
+      'green',
+      'gray',
+      'cool-gray',
+      'warm-gray',
+    ],
     description: 'Left border color',
   },
   tooltipPosition: {

@@ -33,8 +33,8 @@ export function tagTemplate(customElementClass) {
       <cds-tooltip align="${tooltipPosition}">
         <button
           class="${clabsPrefix}--tag-button ${clabsPrefix}--tag-tooltip-trigger"
-          .color=${color}
-          .tooltipPosition=${tooltipPosition}
+          color="${color}"
+          tooltip-position="${tooltipPosition}"
           @click="${handleClick}">
           <slot>${text}</slot>
         </button>

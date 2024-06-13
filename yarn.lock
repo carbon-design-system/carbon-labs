@@ -2650,6 +2650,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/ai-tag@workspace:packages/tag":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/ai-tag@workspace:packages/tag"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.8.0"
+    "@carbon/grid": "npm:^11.21.0"
+    "@carbon/web-components": "npm:2.9.0"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/network-graph@workspace:packages/network-graph":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/network-graph@workspace:packages/network-graph"
@@ -2670,6 +2681,13 @@ __metadata:
     babel-cli: "npm:^6.26.0"
   languageName: unknown
   linkType: soft
+
+"@carbon-labs/utilities@npm:0.8.0":
+  version: 0.8.0
+  resolution: "@carbon-labs/utilities@npm:0.8.0"
+  checksum: 10c0/f163a6e0367d43f463be787b6561454805c307f7ebacb8f9ff0a7c37ff13b1b854a763bebbef7a47069d8c37cbd8ddccb1cecd72ba75fe422d91bb154e796dd8
+  languageName: node
+  linkType: hard
 
 "@carbon/charts@npm:^1.15.5":
   version: 1.15.5

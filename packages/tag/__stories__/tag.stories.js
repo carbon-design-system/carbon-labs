@@ -46,6 +46,16 @@ const defaultControls = {
     control: { type: 'text' },
     description: 'Text inside the tooltip',
   },
+  'tooltip-position': {
+    table: {
+      disable: true,
+    },
+  },
+  'tooltip-text': {
+    table: {
+      disable: true,
+    },
+  },
   onClick: {
     table: {
       disable: true,

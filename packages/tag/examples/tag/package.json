@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "@carbon/styles": "^1.53.0",
-    "@carbon-labs/ai-tag": "0.0.2-canary.242"
+    "@carbon-labs/ai-tag": "latest"
   }
 }

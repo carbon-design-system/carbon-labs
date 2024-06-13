@@ -9,7 +9,6 @@
  */
 
 import { html } from 'lit';
-import '@carbon/web-components/es/components/skip-to-content/skip-to-content.js';
 import containerStyles from './_container.scss?inline';
 import { white, g10, g90, g100 } from '@carbon/themes';
 import { breakpoints } from '@carbon/layout';
@@ -165,9 +164,6 @@ export const decorators = [
     return html` <style>
         ${containerStyles}
       </style>
-      <cds-skip-to-content href="#main-content"
-        >Skip to main content</cds-skip-to-content
-      >
       <div
         id="main-content"
         name="main-content"

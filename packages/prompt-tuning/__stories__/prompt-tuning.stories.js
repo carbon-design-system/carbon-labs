@@ -17,7 +17,7 @@ export default {
 };
 
 const defaultArgs = {
-  text: 'Default prompt-tuning text',
+  text: ' ',
 };
 
 /* Default controls */

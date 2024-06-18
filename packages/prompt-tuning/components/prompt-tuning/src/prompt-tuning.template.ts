@@ -17,6 +17,10 @@ import '@carbon/web-components/es/components/button/index.js';
 import Edit16 from '@carbon/web-components/es/icons/edit/16';
 import TrashCan16 from '@carbon/web-components/es/icons/trash-can/16';
 
+import '@carbon/web-components/es/components/text-input/index.js';
+import '@carbon/web-components/es/components/select/index.js';
+import '@carbon/web-components/es/components/form/index.js';
+
 /**
  * Lit template for prompt tuning
  *
@@ -31,12 +35,14 @@ export function promptTuningTemplate(customElementClass) {
     _onEditButtonClick: onEditButtonClick,
     isEditModalOpen,
     _onEditModalClose: onEditModalClose,
+    _onEditModalCancel: onEditModalCancel,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--prompt-tuning">
     <cds-modal
       id="modal-prompt-list"
       size="lg"
+      ?has-scrolling-content=${true}
       ?open=${isListModalOpen}
       @cds-modal-closed=${onListModalClose}>
       <cds-modal-header>
@@ -113,12 +119,83 @@ export function promptTuningTemplate(customElementClass) {
       @cds-modal-closed=${onEditModalClose}>
       <cds-modal-header>
         <cds-modal-close-button></cds-modal-close-button>
-        <cds-modal-label>Label (Optional)</cds-modal-label>
-        <cds-modal-heading>Modal Title</cds-modal-heading>
+        <cds-modal-heading>Edit prompt</cds-modal-heading>
       </cds-modal-header>
-      <cds-modal-body><p>Modal text description</p></cds-modal-body>
+      <cds-modal-body>
+        <div class="${clabsPrefix}--prompt-edit-form">
+          <div class="${clabsPrefix}--edit-input">
+            <cds-form-item>
+              <cds-text-input
+                class="${clabsPrefix}--edit-form-item"
+                label="Sample prompt"
+                invalid-text="Error message"
+                placeholder="Enter sample prompt..."
+                helper-text=" ">
+              </cds-text-input>
+            </cds-form-item>
+
+            <cds-form-item>
+              <cds-text-input
+                class="${clabsPrefix}--edit-form-item"
+                label="Table IDs"
+                invalid-text="Error message"
+                placeholder="Enter sample value...">
+              </cds-text-input>
+            </cds-form-item>
+
+            <cds-form-item>
+              <cds-text-input
+                class="${clabsPrefix}--edit-form-item"
+                label="Keyword"
+                invalid-text="Error message"
+                placeholder="Enter sample value...">
+              </cds-text-input>
+            </cds-form-item>
+          </div>
+
+          <div class="${clabsPrefix}--edit-output">
+            <cds-form-item>
+              <cds-text-input
+                class="${clabsPrefix}--edit-form-item"
+                label="Expected message"
+                invalid-text="Error message"
+                placeholder="Enter expected generated message...">
+              </cds-text-input>
+            </cds-form-item>
+
+            <cds-form-item>
+              <cds-select
+                class="${clabsPrefix}--edit-form-item"
+                helper-text=" "
+                label-text="Select"
+                placeholder="Optional placeholder text">
+                <cds-select-item-group label="Category 1">
+                  <cds-select-item value="all">Option 1</cds-select-item>
+                  <cds-select-item value="cloudFoundry"
+                    >Option 2</cds-select-item
+                  >
+                </cds-select-item-group>
+                <cds-select-item-group label="Category 2">
+                  <cds-select-item value="staging">Option 3</cds-select-item>
+                  <cds-select-item value="dea">Option 4</cds-select-item>
+                  <cds-select-item value="router">Option 5</cds-select-item>
+                </cds-select-item-group>
+              </cds-select>
+            </cds-form-item>
+
+            <cds-form-item>
+              <cds-text-input
+                class="${clabsPrefix}--edit-form-item"
+                label="Keyword"
+                invalid-text="Error message"
+                placeholder="Enter expected value...">
+              </cds-text-input>
+            </cds-form-item>
+          </div>
+        </div>
+      </cds-modal-body>
       <cds-modal-footer>
-        <cds-modal-footer-button kind="secondary" data-modal-close
+        <cds-modal-footer-button kind="secondary" @click=${onEditModalCancel}
           >Cancel</cds-modal-footer-button
         >
         <cds-modal-footer-button kind="primary">Save</cds-modal-footer-button>

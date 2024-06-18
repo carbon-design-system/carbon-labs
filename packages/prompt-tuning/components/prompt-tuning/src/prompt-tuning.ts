@@ -41,7 +41,6 @@ export class PromptTuning extends LitElement {
    */
   _onListModalClose() {
     this.isListModalOpen = false;
-    console.log(`after close: this.isListModalOpen=${this.isListModalOpen}`);
   }
 
   /**
@@ -49,14 +48,20 @@ export class PromptTuning extends LitElement {
    */
   _onEditModalClose() {
     this.isEditModalOpen = false;
-    console.log(`after close: this.isEditModalOpen=${this.isEditModalOpen}`);
+  }
+
+  /**
+   * Method for clicking the Cancel button on the Prompt Edit Modal
+   */
+  _onEditModalCancel() {
+    this.isEditModalOpen = false;
+    this.isListModalOpen = true;
   }
 
   /**
    * Method for clicking a table row Edit button
    */
   _onEditButtonClick() {
-    console.log(`edit button click`);
     this.isListModalOpen = false;
     this.isEditModalOpen = true;
   }

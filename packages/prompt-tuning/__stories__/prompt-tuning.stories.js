@@ -41,18 +41,19 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: ({ text }) =>
-    html` <cds-button id="modal-example-button"> Open Modal </cds-button>
+    html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
 
       <clabs-prompt-tuning>${text}</clabs-prompt-tuning>
 
       <script type="text/javascript">
-        const button = document.getElementById('modal-example-button');
+        const button = document.getElementById('modal-open-button');
         const component = document.getElementsByTagName(
           'clabs-prompt-tuning'
         )[0];
         button.addEventListener('click', () => {
-          const modal = component.shadowRoot.getElementById('modal-example');
-          modal.open = true;
+          // const modal =
+          //   component.shadowRoot.getElementById('modal-prompt-list');
+          component.isListModalOpen = true;
         });
       </script>`,
 };

@@ -8,7 +8,7 @@
  */
 
 import { LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 
 // @ts-ignore
 import styles from './prompt-tuning.scss?inline';
@@ -23,4 +23,54 @@ export class PromptTuning extends LitElement {
    */
   @property({ attribute: 'text', type: String })
   text;
+
+  /**
+   * Whether the prompt list modal is open or not
+   */
+  @property({ type: Boolean })
+  isListModalOpen = false;
+
+  /**
+   * Whether the prompt edit modal is open or not
+   */
+  @property({ type: Boolean })
+  isEditModalOpen = false;
+
+  /**
+   * Method for closing the Prompt List Modal
+   */
+  _onListModalClose() {
+    this.isListModalOpen = false;
+    console.log(`after close: this.isListModalOpen=${this.isListModalOpen}`);
+  }
+
+  /**
+   * Method for closing the Prompt Edit Modal
+   */
+  _onEditModalClose() {
+    this.isEditModalOpen = false;
+    console.log(`after close: this.isEditModalOpen=${this.isEditModalOpen}`);
+  }
+
+  /**
+   * Method for clicking a table row Edit button
+   */
+  _onEditButtonClick() {
+    console.log(`edit button click`);
+    this.isListModalOpen = false;
+    this.isEditModalOpen = true;
+  }
+
+  // /**
+  //  * updated - check changed properties
+  //  * @param {object} changedProperties - LIT object denoting changed attributes
+  //  */
+  // updated(changedProperties) {
+  //   console.log(`updated`);
+  //   super.updated(changedProperties);
+  //   if (changedProperties.has('isListModalOpen')) {
+  //     console.log(`updated isListModalOpen: ${this.isListModalOpen}`);
+  //     // this.isListModalOpen = this.isListModalOpen;
+  //   }
+  // }
 }

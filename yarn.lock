@@ -2628,7 +2628,7 @@ __metadata:
   resolution: "@carbon-labs/ai-chat@workspace:packages/chat"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.10.0"
+    "@carbon-labs/utilities": "npm:0.11.0"
     "@carbon/charts": "npm:^1.15.5"
     "@carbon/web-components": "npm:2.9.0"
     "@ibm/telemetry-js": "npm:^1.5.0"
@@ -2643,10 +2643,21 @@ __metadata:
   resolution: "@carbon-labs/ai-feedback@workspace:packages/feedback"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.10.0"
+    "@carbon-labs/utilities": "npm:0.11.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.9.0"
     uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/ai-tag@workspace:packages/tag":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/ai-tag@workspace:packages/tag"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.8.0"
+    "@carbon/grid": "npm:^11.21.0"
+    "@carbon/web-components": "npm:2.9.0"
   languageName: unknown
   linkType: soft
 
@@ -2655,14 +2666,14 @@ __metadata:
   resolution: "@carbon-labs/network-graph@workspace:packages/network-graph"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.10.0"
+    "@carbon-labs/utilities": "npm:0.11.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.9.0"
     force-graph: "npm:^1.43.5"
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/utilities@npm:0.10.0, @carbon-labs/utilities@workspace:packages/utilities":
+"@carbon-labs/utilities@npm:0.11.0, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/utilities@workspace:packages/utilities"
   dependencies:
@@ -2670,6 +2681,13 @@ __metadata:
     babel-cli: "npm:^6.26.0"
   languageName: unknown
   linkType: soft
+
+"@carbon-labs/utilities@npm:0.8.0":
+  version: 0.8.0
+  resolution: "@carbon-labs/utilities@npm:0.8.0"
+  checksum: 10c0/f163a6e0367d43f463be787b6561454805c307f7ebacb8f9ff0a7c37ff13b1b854a763bebbef7a47069d8c37cbd8ddccb1cecd72ba75fe422d91bb154e796dd8
+  languageName: node
+  linkType: hard
 
 "@carbon/charts@npm:^1.15.5":
   version: 1.15.5
@@ -9974,7 +9992,6 @@ __metadata:
     "@carbon/styles": "npm:1.53.0"
     "@carbon/themes": "npm:11.36.0"
     "@carbon/type": "npm:11.26.0"
-    "@carbon/web-components": "npm:2.9.0"
     "@commitlint/cli": "npm:^19.0.0"
     "@commitlint/config-conventional": "npm:^19.0.0"
     "@custom-elements-manifest/analyzer": "npm:^0.9.0"

@@ -50,7 +50,6 @@
   },
   "dependencies": {
     "@carbon/styles": "1.53.0",
-    "@carbon/web-components": "2.9.0",
     "lit": "^3.0.0"
   },
   "devDependencies": {

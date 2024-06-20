@@ -238,7 +238,6 @@ export default class CLABSChat extends LitElement {
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
-    console.log(this.headerMenuItems);
     if (changedProperties.has('loading')) {
       this._queryInProgress = this.loading;
     }

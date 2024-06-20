@@ -200,7 +200,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 20;
+  baseStreamingSpeed = 10;
 
   /** detect when component is rendered to process rawtext
    */
@@ -434,7 +434,8 @@ export default class message extends LitElement {
       table: new RegExp('((\\w+,\\w+)(,[\\w+]*)*[\\r\\n]+)+'),
       array: new RegExp('\\[\\"'),
       annotation: new RegExp('\\[[^\\]]*,'),
-      url: new RegExp('(?<!\\()(http|ftp)'),
+      url: new RegExp('(?<!\\(|,)\\b(http|ftp)\\S+'),
+      //url: new RegExp('(?<!\\()(http|ftp)'),
       list: new RegExp('(?:1\\.\\s+[-*]\\s|\\d{2,}\\.\\s+[-*]\\s)'),
       //list: new RegExp('(?:\\d+\\.\\s+|[-*]\\s)'),
       //list: new RegExp('(^|\\n)\\s*(?:[-*\\u2022\\u25E6\\u25AA\\u25CF]\\s|\\s1\\.\\s)','m')

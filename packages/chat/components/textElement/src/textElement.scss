@@ -72,6 +72,11 @@ $css--plex: true !default;
     vertical-align: bottom;
   }
 
+  .#{$clabs-prefix}--chat-text-highlighted {
+    background: var(--chat-text-element-highlight-color, $background-hover);
+    text-decoration: none;
+  }
+
   .#{$clabs-prefix}--chat-text-content-annotation-element {
     overflow: hidden;
     inline-size: 100%;

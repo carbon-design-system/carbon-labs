@@ -152,6 +152,12 @@ export default class chartElement extends LitElement {
   _errorMessage;
 
   /**
+   * warningMessage - underlying warning to be appended to error
+   */
+  @state()
+  _warningMessage;
+
+  /**
    * uniqueID - unique ID egenrated in this component to target correct div when rendering
    */
   @state()
@@ -210,6 +216,12 @@ export default class chartElement extends LitElement {
    */
   @state()
   streaming;
+
+  /**
+   * editOriginalSpecification - choose whether to edit the inserted spec or the edited sped
+   */
+  @state()
+  editOriginalSpecification = true;
 
   /** detect when component is rendered to process visualization specification object
    */
@@ -415,7 +427,7 @@ export default class chartElement extends LitElement {
                   this._singleDataSelected(value);
                 });
               } catch (selectError) {
-                console.log(selectError);
+                this._warningMessage = selectError;
               }
             }
             if (this._authorizeMultiSelection) {
@@ -424,7 +436,7 @@ export default class chartElement extends LitElement {
                   this._multiDataSelected(brush);
                 });
               } catch (brushError) {
-                console.log(brushError);
+                this._warningMessage = brushError;
               }
             }
           })
@@ -725,6 +737,14 @@ export default class chartElement extends LitElement {
         }
       }
     }, 200);
+  }
+
+  /**
+   * _switchEditedSpecSelection
+   * @param {event} event - button switch event
+   */
+  _switchEditedSpecSelection(event) {
+    console.log(event);
   }
 
   /**

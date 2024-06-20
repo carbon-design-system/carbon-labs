@@ -72,14 +72,14 @@ export function codeElementTemplate(customElementClass) {
         (lineObject, index) =>
           html`
             <div class="${clabsPrefix}--chat-code-line">
-              ${!disableLineTicks
-                ? html`
+              ${disableLineTicks || _renderedLines.length < 2
+                ? html``
+                : html`
                     <div class="${clabsPrefix}--chat-code-line-tick">
-                      ${index}
+                      ${index + 1}
                     </div>
                     <div class="${clabsPrefix}--chat-code-line-divider"></div>
-                  `
-                : html``}
+                  `}
               ${!editable
                 ? html`<div
                     class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-line-${editable

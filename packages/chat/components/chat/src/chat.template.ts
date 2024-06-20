@@ -31,6 +31,7 @@ export function chatTemplate(customElementClass) {
     agentName,
     loading,
     closed,
+    maxCharacterCount,
     disableHeaderMenu,
     disableHeaderButtons,
     disableHeaderClose,
@@ -91,7 +92,8 @@ export function chatTemplate(customElementClass) {
         context-message="${promptNotificationMessage}"
         context-message-type="${promptNotificationType}"
         ?currently-streaming="${streamResponses && !interruptStreaming}"
-        input-placeholder="${inputFieldPlaceholder}">
+        input-placeholder="${inputFieldPlaceholder}"
+        character-limit="${maxCharacterCount}">
       </clabs-chat-footer>
     </div>
   </div>`;

@@ -15,6 +15,8 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import '../../errorElement/errorElement.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/modal/index.js';
+import '@carbon/web-components/es/components/checkbox/index.js';
+import '@carbon/web-components/es/components/content-switcher/index.js';
 
 import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
 import Download16 from '@carbon/web-components/es/icons/download/16.js';
@@ -52,6 +54,8 @@ export function chartElementTemplate(customElementClass) {
     modalMode,
     theme,
     _uniqueID: uniqueID,
+    editOriginalSpecification,
+    _switchEditedSpecSelection: switchEditedSpecSelection,
   } = customElementClass;
 
   return html`
@@ -87,13 +91,48 @@ export function chartElementTemplate(customElementClass) {
             <div class="${clabsPrefix}--chat-chart-modal-container">
               <div class="${clabsPrefix}--chat-editor-modal-container">
                 <div
-                  class="${clabsPrefix}--chat-editor-modal-section ${clabsPrefix}--chat-editor-embed-vis-${uniqueID}"></div>
-                <div class="${clabsPrefix}--chat-editor-modal-section">
-                  <clabs-chat-code
-                    editable
-                    @on-code-edit-validation="${handleModelEditorValidation}"
-                    content="${JSON.stringify(_visualizationSpec, null, '\t')}">
-                  </clabs-chat-code>
+                  class="${clabsPrefix}--chat-editor-modal-section-chart ${clabsPrefix}--chat-editor-embed-vis-${uniqueID}"></div>
+                <div class="${clabsPrefix}--chat-editor-modal-section-code">
+                  <div class="${clabsPrefix}--chat-editor-modal-header">
+                    <cds-content-switcher value="all">
+                      <cds-content-switcher-item
+                        value="original"
+                        selected
+                        data-selection="original"
+                        @click="${switchEditedSpecSelection}">
+                        Edit Original Spec
+                      </cds-content-switcher-item>
+                      <cds-content-switcher-item
+                        value="carbonified"
+                        data-selection="carbonified"
+                        @click="${switchEditedSpecSelection}">
+                        Edit Carbonified Spec
+                      </cds-content-switcher-item>
+                    </cds-content-switcher>
+                  </div>
+                  ${editOriginalSpecification
+                    ? html`
+                        <clabs-chat-code
+                          editable
+                          @on-code-edit-validation="${handleModelEditorValidation}"
+                          content="${JSON.stringify(
+                            _visualizationSpec,
+                            null,
+                            '\t'
+                          )}">
+                        </clabs-chat-code>
+                      `
+                    : html`
+                        <clabs-chat-code
+                          editable
+                          @on-code-edit-validation="${handleModelEditorValidation}"
+                          content="${JSON.stringify(
+                            _visualizationSpec,
+                            null,
+                            '\t'
+                          )}">
+                        </clabs-chat-code>
+                      `}
                 </div>
               </div>
             </div>

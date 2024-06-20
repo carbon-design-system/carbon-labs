@@ -155,7 +155,7 @@ export function headerTemplate(customElementClass) {
                         <cds-button
                           kind="ghost"
                           size="sm"
-                          tooltip-text="Close chat"
+                          tooltip-text="Close"
                           tooltip-position="bottom-right"
                           tooltip-alignment="end"
                           @click="${handleClosed}">

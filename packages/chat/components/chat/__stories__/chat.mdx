@@ -33,7 +33,35 @@ It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LL
 ### Attributes and Properties 
 <a id="attributes-and-properties"></a>
 
-<ArgTypes story="Playground"/>
+<table>
+<thead>
+  <tr><td>**Type**</td><td>**Attribute name**</td><td>**Usage**</td></tr>
+</thead>
+<tbody>
+<tr><td>Boolean</td><td>loading</td><td>user-assigned boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message</td></tr>
+<tr><td>Boolean</td><td>closed</td><td>closed state to denote if chart is hidden</td></tr>
+<tr><td>Object</td><td>conversation</td><td>conversation object to display messages straight from the 'message' attribute, overrides any api_url system</td></tr>
+<tr><td>Boolean</td><td>stream-responses</td><td>user-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system</td></tr>
+<tr><td>Number</td><td>stream-delay</td><td>number value in milliseconds to throttle streaming response </td></tr>
+<tr><td>String</td><td>user-name</td><td>string denoting the user name, used for internal logic in the server to differentiate bot responses and user reseponses. default: 'user' but should be the user's real name based on IBM ID or any other data available</td></tr>
+<tr><td>String</td><td>agent-name</td><td>string denoting the bot name, default: 'external' but can be changed to 'Watson' or 'client assistant' or any other name</td></tr>
+<tr><td>String</td><td>default-viewing-mode</td><td>string denoting default viewing mode, can be "container" (default), "fullscreen" or "minimized"</td></tr>
+<tr><td>Boolean</td><td>disable-header-buttons</td><td>disable all buttons except slug</td></tr>
+<tr><td>Boolean</td><td>disable-header-fullscreen</td><td>remove header fullscreen button option</td></tr>
+<tr><td>Boolean</td><td>disable-header-close</td><td>remove header closing button option</td></tr>
+<tr><td>Boolean</td><td>disable-header-minimize</td><td>Remove fullscreen button option</td></tr>
+<tr><td>Boolean</td><td>disable-header-menu</td><td>disable header hamburger menu</td></tr>
+<tr><td>String</td><td>prompt-notification-message</td><td>string denoting message to append above prompt</td></tr>
+<tr><td>String</td><td>prompt-notification-type</td><td>string denoting type of appended prompt message (error, info, warning)</td></tr>
+<tr><td>String</td><td>input-field-placeholder</td><td>custom placeholder for input field in footer</td></tr>
+<tr><td>Number</td><td>max-character-count</td><td>max character counter specified by developer to prevent large queries</td></tr>
+<tr><td>String</td><td>api-url</td><td>string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service</td></tr>
+<tr><td>String</td><td>model</td><td>string denoting which model to use in your backend</td></tr>
+<tr><td>Boolean</td><td>auto-update</td><td>user-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system</td></tr>
+<tr><td>String</td><td>user-prompt</td><td>string denoting the unique behavior of the model designated by the user, appended to the private system prompt</td></tr>
+<tr><td>Number</td><td>temperature</td><td>float varying from 0.0 to 1.0, denotes how 'creative' the model's response will be. 0.0 (default) is the most safe and predictable while 1.0 is hightly creative but unpredictable (not advised for operations returning code or JSON objects)</td></tr>
+</tbody>
+</table>
 
 ### Events 
 <a id="events"></a>
@@ -279,6 +307,32 @@ If API returns a `reply` of type `object/json`, objects are rendered as-is in or
   }
 ]
 ```
+
+#### Handling thumbs up/down feedback events
+Use the `on-user-feedback-request` event which returns in`event.detail`:
+```json
+{
+  "messageOrigin": "bot",
+  "messageTime": "16:51",
+  "displayName": "not-specified",
+  "messageIndexInChat": 0,
+  "action": "message: user gave feedback to response",
+  "type": "positive",
+  "rawTextMessage": "",
+  "messageElements": [] //complete message structure here
+}
+```
+`event.detail.type` can be `positive` or `negative`
+
+#### Handling user regeneration requests
+Use the `on-user-regeneration-request` which returns `event.detail.cutConversationIndex`. This is the index of the previous user's message that generated the dissastisfactory model response.
+As such you need to:
+```js
+const deletionIndex = event.detail.cutConversationIndex;
+const previousMessage = conversation[deletionIndex].text;
+displayConversation = conversation.slice(0, deletionIndex+1);
+postMessage(previousMessage); //handle mimicking a real user request here to fetch the response from your chosen API 
+````
 
 ### Full Customization with Slotting 
 <a id="full-customization-with-slotting"></a>

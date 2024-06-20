@@ -97,6 +97,12 @@ export default class CLABSChat extends LitElement {
   conversation;
 
   /**
+   * max character counter specified by developer to prevent large queries
+   */
+  @property({ type: Number, attribute: 'max-character-count' })
+  maxCharacterCount;
+
+  /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
    */
   @property({ type: String, attribute: 'api-url' })

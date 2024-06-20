@@ -99,6 +99,10 @@
     pointer-events: all;
   }
 
+  .#{$clabs-prefix}--chat-editor-modal-header {
+    inline-size: 100%;
+  }
+
   .#{$clabs-prefix}--chat-editor-modal-container {
     display: flex;
     box-sizing: border-box;
@@ -108,8 +112,16 @@
     inline-size: 100%;
   }
 
-  .#{$clabs-prefix}--chat-editor-modal-section {
+  .#{$clabs-prefix}--chat-editor-modal-section-code {
     flex: 1;
+  }
+
+  .#{$clabs-prefix}--chat-editor-modal-section-chart {
+    overflow: hidden;
+    flex: 1;
+    border: 1px solid $border-subtle-00;
+    border-radius: 8px;
+    background: $background;
   }
 
   .#{$clabs-prefix}--chat-chart-options svg {

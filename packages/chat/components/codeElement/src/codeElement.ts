@@ -36,6 +36,12 @@ export default class codeElement extends LitElement {
   disableLineTicks;
 
   /**
+   * Set max height for code piece
+   */
+  @property({ type: String, attribute: 'max-height' })
+  maxHeight;
+
+  /**
    * Editable boolean flag to let users know lines can be changed
    */
   @property({ type: Boolean, attribute: 'disable-copy-button', reflect: true })
@@ -110,6 +116,9 @@ export default class codeElement extends LitElement {
   /** detect when component is rendered to process code object
    */
   firstUpdated() {
+    if (this.hasAttribute('max-height')) {
+      this.style.setProperty('--chat-code-height', this.maxHeight);
+    }
     if (this.content !== undefined) {
       this._originalContent = this.content;
       this._formatCode();

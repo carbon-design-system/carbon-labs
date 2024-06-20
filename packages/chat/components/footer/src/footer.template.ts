@@ -14,12 +14,15 @@ import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.
 import MicrophoneFilled16 from '@carbon/web-components/es/icons/microphone--filled/16.js';
 import Microphone16 from '@carbon/web-components/es/icons/microphone/16.js';
 import SendFilled16 from '@carbon/web-components/es/icons/send--filled/16.js';
-import WarningFilled16 from '@carbon/web-components/es/icons/warning--filled/24.js';
+import WarningFilled16 from '@carbon/web-components/es/icons/warning--filled/16.js';
+import InformationFilled16 from '@carbon/web-components/es/icons/information--filled/16.js';
+
 import Send16 from '@carbon/web-components/es/icons/send/16.js';
 import Close16 from '@carbon/web-components/es/icons/close/24.js';
 import Stop16 from '@carbon/web-components/es/icons/stop--filled/16.js';
 
 import '@carbon/web-components/es/components/button/index.js';
+import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/file-uploader/index.js';
 
 /**
@@ -35,6 +38,7 @@ export function footerTemplate(customElementClass) {
     _sendInputToParent: sendInputToParent,
     _inputPlaceholder: inputPlaceholder,
     _disableInput: disableInput,
+    _forceDisableInput: forceDisableInput,
     _isListening: isListening,
     _voiceAPIAvailable: voiceAPIAvailable,
     _startRecording: startRecording,
@@ -54,36 +58,72 @@ export function footerTemplate(customElementClass) {
     expandedHeight ? '-expanded' : ''
   }">
     ${
-      contextMessage
-        ? html`
-            <div class="${clabsPrefix}--chat-footer-menu">
-              <div class="${clabsPrefix}--chat-footer-menu-container">
-                <div class="${clabsPrefix}--chat-footer-menu-container-item">
-                  <cds-button
-                    kind="${contextMessageType === 'error'
-                      ? 'danger'
-                      : 'ghost'}"
-                    size="sm">
-                    ${WarningFilled16({ slot: 'icon' })}
-                  </cds-button>
-                </div>
+      isPromptFocused
+        ? html` ${contextMessage
+            ? html`
+                <div
+                  class="${clabsPrefix}--chat-footer-menu ${clabsPrefix}--chat-footer-menu${contextMessageType ===
+                  'error'
+                    ? '-error'
+                    : contextMessageType === 'info'
+                    ? '-info'
+                    : contextMessageType === 'warning'
+                    ? '-warning'
+                    : ''}">
+                  <div class="${clabsPrefix}--chat-footer-menu-container">
+                    <div
+                      class="${clabsPrefix}--chat-footer-menu-container-item">
+                      ${contextMessageType === 'error'
+                        ? html`<div
+                            class="${clabsPrefix}--chat-footer-menu-container-item-icon-error">
+                            ${WarningFilled16()}
+                          </div>`
+                        : contextMessageType === 'info'
+                        ? html`<div
+                            class="${clabsPrefix}--chat-footer-menu-container-item-icon-info">
+                            ${InformationFilled16()}
+                          </div>`
+                        : contextMessageType === 'warning'
+                        ? html`<div
+                            class="${clabsPrefix}--chat-footer-menu-container-item-icon-warning">
+                            ${WarningFilled16()}
+                          </div>`
+                        : html``}
+                    </div>
 
-                <div class="${clabsPrefix}--chat-footer-menu-container-message">
-                  ${contextMessage}
+                    <div
+                      class="${clabsPrefix}--chat-footer-menu-container-message${contextMessageType ===
+                      'error'
+                        ? '-error'
+                        : contextMessageType === 'info'
+                        ? '-info'
+                        : contextMessageType === 'warning'
+                        ? '-warning'
+                        : ''}">
+                      ${contextMessage}
+                    </div>
+                    <div
+                      class="${clabsPrefix}--chat-footer-menu-container-item">
+                      ${contextMessageType === 'error'
+                        ? html``
+                        : html`
+                            <cds-icon-button
+                              kind="${contextMessageType === 'error'
+                                ? 'danger'
+                                : 'ghost'}"
+                              size="sm">
+                              ${Close16({ slot: 'icon' })}
+                              <span slot="tooltip-content">
+                                Close warning
+                              </span>
+                            </cds-icon-button>
+                          `}
+                    </div>
+                  </div>
                 </div>
-                <div class="${clabsPrefix}--chat-footer-menu-container-item">
-                  <cds-button
-                    kind="${contextMessageType === 'error'
-                      ? 'danger'
-                      : 'ghost'}"
-                    size="sm">
-                    ${Close16({ slot: 'icon' })}
-                  </cds-button>
-                </div>
-              </div>
-            </div>
-          `
-        : ''
+              `
+            : ''}`
+        : html``
     }
       <div class="${clabsPrefix}--chat-footer-prompt-items${
     expandedWidth ? '-expanded' : ''
@@ -111,65 +151,66 @@ export function footerTemplate(customElementClass) {
         ${
           !voiceAPIAvailable
             ? html`
-                <cds-button
+                <cds-icon-button
                   disabled
                   kind="ghost"
                   size="sm"
-                  tooltip-text="Microphone unavailable"
-                  tooltip-position="top-right"
-                  tooltip-alignment="end">
+                  align="top-right">
                   ${MicrophoneOff16({ slot: 'icon' })}
-                </cds-button>
+                  <span slot="tooltip-content">Microphone unavailable</span>
+                </cds-icon-button>
               `
             : html` ${!isListening
-                ? html` <cds-button
+                ? html` <cds-icon-button
                     kind="ghost"
-                    tooltip-text="Start listening"
-                    tooltip-position="top-right"
-                    tooltip-alignment="end"
+                    align="top-right"
                     size="sm"
                     @click="${startRecording}">
                     ${Microphone16({ slot: 'icon' })}
-                  </cds-button>`
-                : html` <cds-button
+                    <span slot="tooltip-content">Start listening</span>
+                  </cds-icon-button>`
+                : html` <cds-icon-button
                     kind="ghost"
-                    tooltip-text="Stop listening"
                     class="${clabsPrefix}--chat-footer-button-danger"
-                    tooltip-position="top-right"
-                    tooltip-alignment="end"
+                    align="top-right"
                     size="sm"
                     @click="${endRecording}">
                     ${MicrophoneFilled16({ slot: 'icon' })}
-                  </cds-button>`}`
+                    <span slot="tooltip-content">Stop listening</span>
+                  </cds-icon-button>`}`
         }
       </div>
       <div class="${clabsPrefix}--chat-footer-button">
         ${
           !currentlyStreaming
             ? html`
-                <cds-button
+                <cds-icon-button
                   kind="ghost"
                   size="sm"
-                  tooltip-text="Send response"
-                  tooltip-position="top-right"
-                  ?disabled="${messageText === ''}"
+                  align="top-right"
+                  ?disabled="${messageText === '' || forceDisableInput}"
                   @click="${sendInputToParent}">
                   ${messageText === ''
                     ? Send16({ slot: 'icon' })
-                    : SendFilled16({ slot: 'icon' })}
-                </cds-button>
+                    : SendFilled16({
+                        slot: 'icon',
+                        class: clabsPrefix + '--chat-footer-send-active',
+                      })}
+                  <span slot="tooltip-content">Send response</span>
+                </cds-icon-button>
               `
             : html`
-                <cds-button
+                <cds-icon-button
                   kind="ghost"
                   size="sm"
-                  class="${clabsPrefix}--chat-footer-button-danger"
-                  tooltip-text="Stop generating"
-                  tooltip-position="top-right"
-                  tooltip-alignment="end"
+                  align="top-right"
                   @click="${endStreaming}">
-                  ${Stop16({ slot: 'icon' })}
-                </cds-button>
+                  ${Stop16({
+                    slot: 'icon',
+                    class: clabsPrefix + '--chat-footer-button-danger',
+                  })}
+                  <span slot="tooltip-content">Stop generating</span>
+                </cds-icon-button>
               `
         }
       </div>

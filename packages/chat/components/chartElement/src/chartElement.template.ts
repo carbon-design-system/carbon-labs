@@ -14,7 +14,10 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import '../../errorElement/errorElement.js';
 import '@carbon/web-components/es/components/button/index.js';
+import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/modal/index.js';
+import '@carbon/web-components/es/components/checkbox/index.js';
+import '@carbon/web-components/es/components/content-switcher/index.js';
 
 import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
 import Download16 from '@carbon/web-components/es/icons/download/16.js';
@@ -51,7 +54,10 @@ export function chartElementTemplate(customElementClass) {
     _handleModelEditorValidation: handleModelEditorValidation,
     modalMode,
     theme,
+    _handleResize,
     _uniqueID: uniqueID,
+    editOriginalSpecification,
+    _switchEditedSpecSelection: switchEditedSpecSelection,
   } = customElementClass;
 
   return html`
@@ -87,13 +93,49 @@ export function chartElementTemplate(customElementClass) {
             <div class="${clabsPrefix}--chat-chart-modal-container">
               <div class="${clabsPrefix}--chat-editor-modal-container">
                 <div
-                  class="${clabsPrefix}--chat-editor-modal-section ${clabsPrefix}--chat-editor-embed-vis-${uniqueID}"></div>
-                <div class="${clabsPrefix}--chat-editor-modal-section">
-                  <clabs-chat-code
-                    editable
-                    @on-code-edit-validation="${handleModelEditorValidation}"
-                    content="${JSON.stringify(_visualizationSpec, null, '\t')}">
-                  </clabs-chat-code>
+                  class="${clabsPrefix}--chat-editor-modal-section-chart ${clabsPrefix}--chat-editor-embed-vis-${uniqueID}"></div>
+                <div class="${clabsPrefix}--chat-editor-modal-section-code">
+                  <div class="${clabsPrefix}--chat-editor-modal-header">
+                    <cds-content-switcher value="all">
+                      <cds-content-switcher-item
+                        value="original"
+                        selected
+                        data-selection="original"
+                        @click="${switchEditedSpecSelection}">
+                        Edit Original Spec
+                      </cds-content-switcher-item>
+                      <cds-content-switcher-item
+                        value="carbonified"
+                        data-selection="carbonified"
+                        @click="${switchEditedSpecSelection}">
+                        Edit Carbonified Spec
+                      </cds-content-switcher-item>
+                    </cds-content-switcher>
+                  </div>
+                  ${editOriginalSpecification
+                    ? html`
+                        <clabs-chat-code
+                          editable
+                          max-height="${'640px'}"
+                          @on-code-edit-validation="${handleModelEditorValidation}"
+                          content="${JSON.stringify(
+                            _visualizationSpec,
+                            null,
+                            '\t'
+                          )}">
+                        </clabs-chat-code>
+                      `
+                    : html`
+                        <clabs-chat-code
+                          editable
+                          @on-code-edit-validation="${handleModelEditorValidation}"
+                          content="${JSON.stringify(
+                            _visualizationSpec,
+                            null,
+                            '\t'
+                          )}">
+                        </clabs-chat-code>
+                      `}
                 </div>
               </div>
             </div>
@@ -103,6 +145,7 @@ export function chartElementTemplate(customElementClass) {
     ${_visualizationSpec
       ? html` <div
           class="${clabsPrefix}--chat-chart-container"
+          @resize="${_handleResize}"
           id="${clabsPrefix + '--chat-embed-vis-' + uniqueID}"></div>`
       : html` <div class="${clabsPrefix}--chat-chart-container">
           <div class="${clabsPrefix}--chat-chart-loading-container">
@@ -120,6 +163,10 @@ export function chartElementTemplate(customElementClass) {
                       ? html` <cds-button
                           kind="danger--tertiary"
                           size="sm"
+                          tooltip-position="left"
+                          tooltip-alignment="end"
+                          tooltip-position="left"
+                          tooltip-text="Investigate in editor"
                           @click="${openEditorView}">
                           ${Launch16({ slot: 'icon' })} Investigate in Editor
                         </cds-button>`
@@ -142,57 +189,55 @@ export function chartElementTemplate(customElementClass) {
           <div class="${clabsPrefix}--chat-chart-options-buttons">
             ${!disableExport
               ? html`
-                  <cds-button
+                  <cds-icon-button
                     kind="ghost"
                     size="sm"
                     ?disabled="${renderMethod !== 'canvas'}"
-                    tooltip-text="${renderMethod === 'canvas'
-                      ? 'Export to PNG'
-                      : 'SVG export unavailable'}"
-                    tooltip-position="left"
-                    tooltip-alignment="end"
+                    align="bottom-right"
                     @click="${exportToImage}">
                     ${Download16({ slot: 'icon' })}
-                  </cds-button>
+                    <span slot="tooltip-content"
+                      >${renderMethod === 'canvas'
+                        ? 'Export to PNG'
+                        : 'SVG export unavailable'}</span
+                    >
+                  </cds-icon-button>
                 `
               : html``}
             ${!disableEditor && debugMode
               ? html`
-                  <cds-button
+                  <cds-icon-button
                     kind="ghost"
                     size="sm"
-                    tooltip-text="Open in Vega editor"
-                    tooltip-position="left"
-                    tooltip-alignment="end"
+                    align="bottom-right"
                     @click="${openEditorView}">
                     ${Launch16({ slot: 'icon' })}
-                  </cds-button>
+                    <span slot="tooltip-content">Open in Vega editor</span>
+                  </cds-icon-button>
                 `
               : html``}
             ${!disableCodeInspector
               ? html`
-                  <cds-button
+                  <cds-icon-button
                     kind="ghost"
                     size="sm"
-                    tooltip-text="Show specification"
-                    tooltip-position="left"
-                    tooltip-alignment="end"
+                    align="bottom-right"
                     @click="${openCodeView}">
                     ${Code16({ slot: 'icon' })}
-                  </cds-button>
+                    <span slot="tooltip-content">Show specification</span>
+                  </cds-icon-button>
                 `
               : html``}
             ${!disableFullscreen
               ? html`
-                  <cds-button
+                  <cds-icon-button
                     kind="ghost"
                     size="sm"
-                    tooltip-text="Fullscreen"
-                    tooltip-position="left"
-                    tooltip-alignment="end"
+                    align="bottom-right"
                     @click="${openFullscreenView}">
                     ${Maximize16({ slot: 'icon' })}
-                  </cds-button>
+                    <span slot="tooltip-content">Fullscreen</span>
+                  </cds-icon-button>
                 `
               : html``}
           </div>

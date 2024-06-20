@@ -35,6 +35,18 @@ export default class footer extends LitElement {
   _disableInput;
 
   /**
+   * force disable input because of internal error state
+   */
+  @state()
+  _forceDisableInput = false;
+
+  /**
+   * maximum character count for input, show warning and disable input
+   */
+  @property({ type: Number, attribute: 'character-limit' })
+  _characterLimit;
+
+  /**
    * expanded mode when chat width is large
    */
   @state()
@@ -136,6 +148,23 @@ export default class footer extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has('_messageText')) {
       this.updateTextAreaHeight();
+      this._checkLimit();
+    }
+  }
+
+  /** _checkLimit - show warning message if character limit is exceeded
+   */
+  _checkLimit() {
+    const limit = this._characterLimit || Number.MAX_SAFE_INTEGER;
+    if (this._messageText.length > limit) {
+      this._contextMessage =
+        'Character limit of ' + limit.toString() + ' exceeded';
+      this._contextMessageType = 'error';
+      this._forceDisableInput = true;
+    } else {
+      this._contextMessage = null;
+      this._contextMessageType = null;
+      this._forceDisableInput = false;
     }
   }
 
@@ -253,7 +282,6 @@ export default class footer extends LitElement {
    */
   _textAreaIsFocused(event) {
     this._isPromptFocused = event?.type === 'focus';
-    console.log(this._isPromptFocused);
   }
 
   /**

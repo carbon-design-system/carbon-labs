@@ -97,6 +97,12 @@ export default class CLABSChat extends LitElement {
   conversation;
 
   /**
+   * max character counter specified by developer to prevent large queries
+   */
+  @property({ type: Number, attribute: 'max-character-count' })
+  maxCharacterCount;
+
+  /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
    */
   @property({ type: String, attribute: 'api-url' })
@@ -173,6 +179,12 @@ export default class CLABSChat extends LitElement {
    */
   @property({ type: Boolean, attribute: 'disable-header-minimize' })
   disableHeaderMinimize;
+
+  /**
+   * JSON array of menu items to be display in header dropdown menu
+   */
+  @property({ type: Object, attribute: 'headerMenuItems' })
+  headerMenuItems;
 
   /**
    * string denoting selected querying method

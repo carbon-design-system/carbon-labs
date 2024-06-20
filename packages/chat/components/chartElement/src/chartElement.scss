@@ -83,20 +83,26 @@
   }
 
   .#{$clabs-prefix}--chat-chart-modal-body {
+    display: flex;
     overflow: hidden;
     padding: 0;
     margin: 0;
-    margin-block-start: 5px;
-    overflow-y: scroll;
+    max-block-size: 100%;
     pointer-events: all;
   }
 
   .#{$clabs-prefix}--chat-chart-modal-container {
-    padding: 0;
+    box-sizing: border-box;
+    padding: 16px;
     block-size: 100%;
     inline-size: 100%;
     min-block-size: calc(100vh - 68px - 52px);
     pointer-events: all;
+  }
+
+  .#{$clabs-prefix}--chat-editor-modal-header {
+    inline-size: 100%;
+    padding-block: 6px 12px;
   }
 
   .#{$clabs-prefix}--chat-editor-modal-container {
@@ -108,8 +114,19 @@
     inline-size: 100%;
   }
 
-  .#{$clabs-prefix}--chat-editor-modal-section {
+  .#{$clabs-prefix}--chat-editor-modal-section-code {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    max-block-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-editor-modal-section-chart {
+    overflow: hidden;
     flex: 1;
+    border: 1px solid $border-subtle-00;
+    border-radius: 8px;
+    background: $background;
   }
 
   .#{$clabs-prefix}--chat-chart-options svg {

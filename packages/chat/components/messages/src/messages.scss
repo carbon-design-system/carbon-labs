@@ -29,4 +29,11 @@ $css--plex: true !default;
     inline-size: 100%;
     padding-block: 32px 32px;
   }
+
+  .#{$clabs-prefix}--chat-messages-container-docked {
+    overflow: hidden scroll;
+    flex: 1;
+    inline-size: 100%;
+    padding-block: 16px 16px;
+  }
 }

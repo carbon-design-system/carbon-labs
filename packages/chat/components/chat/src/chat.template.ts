@@ -31,11 +31,13 @@ export function chatTemplate(customElementClass) {
     agentName,
     loading,
     closed,
+    maxCharacterCount,
     disableHeaderMenu,
     disableHeaderButtons,
     disableHeaderClose,
     disableHeaderMinimize,
     disableHeaderFullscreen,
+    headerMenuItems,
     enableFullscreen,
     enableDocking,
     _handleFullscreenMode: handleFullscreenMode,
@@ -61,6 +63,7 @@ export function chatTemplate(customElementClass) {
         @on-chat-fullscreen-change="${handleFullscreenMode}"
         @on-chat-docking-change="${handleDockingMode}"
         @on-chat-closed="${handleChatClosed}"
+        .menuItems="${headerMenuItems}"
         ?disable-header-menu="${disableHeaderMenu}"
         ?disable-header-close="${disableHeaderClose}"
         ?disable-header-fullscreen="${disableHeaderFullscreen}"
@@ -91,7 +94,8 @@ export function chatTemplate(customElementClass) {
         context-message="${promptNotificationMessage}"
         context-message-type="${promptNotificationType}"
         ?currently-streaming="${streamResponses && !interruptStreaming}"
-        input-placeholder="${inputFieldPlaceholder}">
+        input-placeholder="${inputFieldPlaceholder}"
+        character-limit="${maxCharacterCount}">
       </clabs-chat-footer>
     </div>
   </div>`;

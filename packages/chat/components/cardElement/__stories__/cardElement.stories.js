@@ -14,7 +14,7 @@ import '@carbon/web-components/es/components/button/index.js';
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
   title: 'Components/Chat/Card',
-  tags: ['autodocs'],
+  component: 'clabs-chat-card',
 };
 
 const defaultCardElements = {

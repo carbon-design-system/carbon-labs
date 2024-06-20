@@ -84,6 +84,7 @@ export const Showcase = {
     <br />
     <clabs-chat-code
       ?editable="${true}"
+      max-height="492px"
       content="${codeExamples['carbon datatable']}">
     </clabs-chat-code>`,
 };

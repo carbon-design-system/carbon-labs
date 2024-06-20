@@ -39,11 +39,6 @@ export default class chartElement extends LitElement {
   private intersectionObserver;
 
   /**
-   * Event listener to check if component has resized
-   */
-  private resizeObserver;
-
-  /**
    * Valid CSS string to define chart height, applied to chart container while specification is automatically set to height="container" to fill the parent container height
    */
   @property({ type: String, attribute: 'container-height', reflect: true })

@@ -37,6 +37,7 @@ export function chatTemplate(customElementClass) {
     disableHeaderClose,
     disableHeaderMinimize,
     disableHeaderFullscreen,
+    headerMenuItems,
     enableFullscreen,
     enableDocking,
     _handleFullscreenMode: handleFullscreenMode,
@@ -62,6 +63,7 @@ export function chatTemplate(customElementClass) {
         @on-chat-fullscreen-change="${handleFullscreenMode}"
         @on-chat-docking-change="${handleDockingMode}"
         @on-chat-closed="${handleChatClosed}"
+        .menuItems="${headerMenuItems}"
         ?disable-header-menu="${disableHeaderMenu}"
         ?disable-header-close="${disableHeaderClose}"
         ?disable-header-fullscreen="${disableHeaderFullscreen}"

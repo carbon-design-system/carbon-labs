@@ -130,14 +130,16 @@ export const APIPlayground = {
   render: ({ apiUrl, feedbackUrl, userPrompt, temperature }) => html`
     <div style="height:calc(100vh - 84px);">
       <clabs-chat
+        .headerMenuItems="${headerMenuItems}"
+        @on-header-menu-item-selected="${(e) => {
+          console.log(e);
+        }}"
         model="llama-2"
         auto-update
         user-prompt="${userPrompt}"
         api-url="${apiUrl}"
         stream-responses
         stream-delay="${2}"
-        default-viewing-mode="minimized"
-        disable-header-minimize
         feedback-url="${feedbackUrl}"
         temperature="${temperature}"
         user-name="Sherlock"
@@ -1269,6 +1271,11 @@ const conversationExamples = {
   ],
 };
 
+const headerMenuItems = [
+  { title: 'Clear history', action: 'clear-chat-history' },
+  { title: 'Save history', action: 'save-chat-history' },
+  { title: 'Report issue', action: 'report-issue' },
+];
 export const Playground = {
   component: 'clabs-chat',
   argTypes: objectPlaygroundControls,
@@ -1313,6 +1320,9 @@ export const Playground = {
             console.log(e);
           }}"
           @on-message-element-tag-selected="${(e) => {
+            console.log(e);
+          }}"
+          @on-header-menu-item-selected="${(e) => {
             console.log(e);
           }}"
           @on-message-element-selected="${(e) => {

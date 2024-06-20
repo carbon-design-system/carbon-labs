@@ -31,7 +31,7 @@ export default class chartElement extends LitElement {
    * Enable debugger to inspect spec and show error messages in the component
    */
   @property({ type: Boolean, attribute: 'debug-mode' })
-  debugMode;
+  debugMode = true;
 
   /**
    * Event listener to check if parent visibility changed
@@ -233,16 +233,6 @@ export default class chartElement extends LitElement {
       this.renderMethod = 'canvas';
     }
 
-    this.resizeObserver = new ResizeObserver(async () => {
-      if (!this.chartLoading) {
-        if (this._visualizationSpec?.repeat) {
-          this._prepareVisualization();
-        }
-      }
-      //this.requestUpdate();
-    });
-    this.resizeObserver.observe(this.parentElement);
-
     this.intersectionObserver = new IntersectionObserver(async () => {
       if (!this.chartLoading) {
         await this._displayVisualization();
@@ -263,6 +253,17 @@ export default class chartElement extends LitElement {
 
     if (this.content) {
       this._prepareVisualization();
+    }
+  }
+
+  /**
+   * _handleResize - target resize on component itself
+   */
+  _handleResize() {
+    if (!this.chartLoading) {
+      if (this._visualizationSpec?.repeat) {
+        this._prepareVisualization();
+      }
     }
   }
 

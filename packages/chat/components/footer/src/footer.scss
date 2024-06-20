@@ -96,19 +96,24 @@ $css--plex: true !default;
     max-inline-size: 32px;
   }
 
-  .#{$clabs-prefix}-chat-footer-menu-container-item-icon-error svg {
+  .#{$clabs-prefix}--chat-footer-menu-container-item-icon-error svg {
     color: $support-error;
     fill: $support-error;
   }
 
-  .#{$clabs-prefix}-chat-footer-menu-container-item-icon-warning svg {
+  .#{$clabs-prefix}--chat-footer-menu-container-item-icon-warning svg {
     color: $support-warning;
     fill: $support-warning;
   }
 
-  .#{$clabs-prefix}-chat-footer-menu-container-item-icon-info svg {
-    color: $link-secondary;
-    fill: $link-secondary;
+  .#{$clabs-prefix}--chat-footer-menu-container-item-icon-info svg {
+    color: $link-primary;
+    fill: $link-primary;
+  }
+
+  .#{$clabs-prefix}--chat-footer-send-active {
+    color: $link-primary;
+    fill: $link-primary;
   }
 
   .#{$clabs-prefix}--chat-footer-menu-container-message-error {

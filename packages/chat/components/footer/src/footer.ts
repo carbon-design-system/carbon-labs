@@ -282,7 +282,6 @@ export default class footer extends LitElement {
    */
   _textAreaIsFocused(event) {
     this._isPromptFocused = event?.type === 'focus';
-    console.log(this._isPromptFocused);
   }
 
   /**

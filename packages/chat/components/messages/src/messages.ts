@@ -84,6 +84,16 @@ export default class messages extends LitElement {
   @state()
   _parentTheme;
 
+  /**
+   * detect when component is rendered to process rawtext
+   */
+  firstUpdated() {
+    this.addEventListener('scroll', (e) => {
+      console.log('scroll');
+      e.preventDefault();
+    });
+  }
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/

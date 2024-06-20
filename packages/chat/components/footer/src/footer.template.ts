@@ -22,6 +22,7 @@ import Close16 from '@carbon/web-components/es/icons/close/24.js';
 import Stop16 from '@carbon/web-components/es/icons/stop--filled/16.js';
 
 import '@carbon/web-components/es/components/button/index.js';
+import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/file-uploader/index.js';
 
 /**
@@ -106,13 +107,16 @@ export function footerTemplate(customElementClass) {
                       ${contextMessageType === 'error'
                         ? html``
                         : html`
-                            <cds-button
+                            <cds-icon-button
                               kind="${contextMessageType === 'error'
                                 ? 'danger'
                                 : 'ghost'}"
                               size="sm">
                               ${Close16({ slot: 'icon' })}
-                            </cds-button>
+                              <span slot="tooltip-content">
+                                Close warning
+                              </span>
+                            </cds-icon-button>
                           `}
                     </div>
                   </div>
@@ -147,65 +151,66 @@ export function footerTemplate(customElementClass) {
         ${
           !voiceAPIAvailable
             ? html`
-                <cds-button
+                <cds-icon-button
                   disabled
                   kind="ghost"
                   size="sm"
-                  tooltip-text="Microphone unavailable"
-                  tooltip-position="top-right"
-                  tooltip-alignment="end">
+                  align="top-right">
                   ${MicrophoneOff16({ slot: 'icon' })}
-                </cds-button>
+                  <span slot="tooltip-content">Microphone unavailable</span>
+                </cds-icon-button>
               `
             : html` ${!isListening
-                ? html` <cds-button
+                ? html` <cds-icon-button
                     kind="ghost"
-                    tooltip-text="Start listening"
-                    tooltip-position="top-right"
-                    tooltip-alignment="end"
+                    align="top-right"
                     size="sm"
                     @click="${startRecording}">
                     ${Microphone16({ slot: 'icon' })}
-                  </cds-button>`
-                : html` <cds-button
+                    <span slot="tooltip-content">Start listening</span>
+                  </cds-icon-button>`
+                : html` <cds-icon-button
                     kind="ghost"
-                    tooltip-text="Stop listening"
                     class="${clabsPrefix}--chat-footer-button-danger"
-                    tooltip-position="top-right"
-                    tooltip-alignment="end"
+                    align="top-right"
                     size="sm"
                     @click="${endRecording}">
                     ${MicrophoneFilled16({ slot: 'icon' })}
-                  </cds-button>`}`
+                    <span slot="tooltip-content">Stop listening</span>
+                  </cds-icon-button>`}`
         }
       </div>
       <div class="${clabsPrefix}--chat-footer-button">
         ${
           !currentlyStreaming
             ? html`
-                <cds-button
+                <cds-icon-button
                   kind="ghost"
                   size="sm"
-                  tooltip-text="Send response"
-                  tooltip-position="top-right"
+                  align="top-right"
                   ?disabled="${messageText === '' || forceDisableInput}"
                   @click="${sendInputToParent}">
                   ${messageText === ''
                     ? Send16({ slot: 'icon' })
-                    : SendFilled16({ slot: 'icon' })}
-                </cds-button>
+                    : SendFilled16({
+                        slot: 'icon',
+                        class: clabsPrefix + '--chat-footer-send-active',
+                      })}
+                  <span slot="tooltip-content">Send response</span>
+                </cds-icon-button>
               `
             : html`
-                <cds-button
+                <cds-icon-button
                   kind="ghost"
                   size="sm"
-                  class="${clabsPrefix}--chat-footer-button-danger"
-                  tooltip-text="Stop generating"
-                  tooltip-position="top-right"
-                  tooltip-alignment="end"
+                  align="top-right"
                   @click="${endStreaming}">
-                  ${Stop16({ slot: 'icon' })}
-                </cds-button>
+                  ${Stop16({
+                    slot: 'icon',
+                    class: clabsPrefix + '--chat-footer-button-danger',
+                  })}
+                  <span slot="tooltip-content">Stop generating</span>
+                </cds-icon-button>
               `
         }
       </div>

@@ -207,7 +207,9 @@ export function messageTemplate(customElementClass) {
                         ? html` <clabs-chat-loading> </clabs-chat-loading> `
                         : message.type === 'code'
                         ? html`
-                            <clabs-chat-code content="${message.content}">
+                            <clabs-chat-code
+                              content="${message.content}"
+                              max-height="246px">
                             </clabs-chat-code>
                           `
                         : message.type === 'tags'

@@ -22,8 +22,7 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-file-upload
-    content="Hello, how may I help you?">
+  render: () => html` <clabs-chat-file-upload content="Test_file.pdf">
   </clabs-chat-file-upload>`,
 };
 

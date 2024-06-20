@@ -181,6 +181,12 @@ export default class CLABSChat extends LitElement {
   disableHeaderMinimize;
 
   /**
+   * JSON array of menu items to be display in header dropdown menu
+   */
+  @property({ type: Object, attribute: 'headerMenuItems' })
+  headerMenuItems;
+
+  /**
    * string denoting selected querying method
    */
   private chosenHost = 'Local';
@@ -232,6 +238,7 @@ export default class CLABSChat extends LitElement {
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
+    console.log(this.headerMenuItems);
     if (changedProperties.has('loading')) {
       this._queryInProgress = this.loading;
     }

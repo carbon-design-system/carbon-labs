@@ -11,6 +11,7 @@ import { html } from 'lit';
 
 import '@carbon/web-components/es/components/button/index.js';
 import task_view from './task_view.json';
+import semantic_search_view from './semantic_search_view.json';
 
 export default {
   title: 'Components/Prompt Tuning/Prompt Tuning',
@@ -19,7 +20,7 @@ export default {
 
 const defaultArgs = {
   text: ' ',
-  data: task_view.samples, //array of objects
+  data: 'task_view',
 };
 
 /* Default controls */
@@ -28,7 +29,28 @@ const defaultControls = {
     control: { type: 'text' },
     description: 'Text inside the prompt-tuning',
   },
+  data: {
+    control: { type: 'select' },
+    options: ['task_view', 'semantic_search_view'],
+    description: 'Current view',
+  },
 };
+
+/**
+ * Return view data from string
+ * @param {string} str string of view name
+ */
+function getView(str) {
+  if (!str) {
+    return task_view.samples;
+  } else {
+    if (str === 'task_view') {
+      return task_view.samples;
+    } else if (str === 'semantic_search_view') {
+      return semantic_search_view.samples;
+    }
+  }
+}
 /**
  * More on writing stories with args: https://storybook.js.org/docs/web-components/writing-stories/args
  *
@@ -45,7 +67,7 @@ export const Default = {
   render: ({ text, data }) =>
     html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
 
-      <clabs-prompt-tuning .data=${data}>${text}</clabs-prompt-tuning>
+      <clabs-prompt-tuning .data=${getView(data)}>${text}</clabs-prompt-tuning>
 
       <script type="text/javascript">
         const button = document.getElementById('modal-open-button');

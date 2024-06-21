@@ -36,7 +36,24 @@ function getHTMLRows(customElementClass) {
     ${data.map(
       (item) =>
         html`<cds-table-row>
-          <cds-table-cell>${item.input.input}</cds-table-cell>
+          <cds-table-cell
+            >${item.input.input}
+            ${Object.keys(item.input.context_variables).length > 0
+              ? html`${Object.values(item.input.context_variables).map((item) =>
+                  (item as string).length > 0
+                    ? html`
+                        <cds-tag type="gray" title=${item}
+                          ><span
+                            class="${clabsPrefix}--truncated-text"
+                            title=${item}
+                            >${item}</span
+                          ></cds-tag
+                        >
+                      `
+                    : html``
+                )}`
+              : html``}
+          </cds-table-cell>
           <cds-table-cell>${item.output.output}</cds-table-cell>
           <cds-table-cell
             >${item.output.view_id}

@@ -16,10 +16,57 @@ import '@carbon/web-components/es/components/data-table/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 import Edit16 from '@carbon/web-components/es/icons/edit/16';
 import TrashCan16 from '@carbon/web-components/es/icons/trash-can/16';
+import '@carbon/web-components/es/components/tag/index.js';
 
 import '@carbon/web-components/es/components/text-input/index.js';
 import '@carbon/web-components/es/components/select/index.js';
 import '@carbon/web-components/es/components/form/index.js';
+
+/**
+ * Render HTML rows
+ *
+ * @param {object} customElementClass Class functionality for the custom element
+ * @returns {TemplateResult<1>} Lit html template
+ */
+function getHTMLRows(customElementClass) {
+  const { data: data, _onEditButtonClick: onEditButtonClick } =
+    customElementClass;
+
+  return html`
+    ${data.map(
+      (item) =>
+        html`<cds-table-row>
+          <cds-table-cell>${item.input.input}</cds-table-cell>
+          <cds-table-cell>${item.output.output}</cds-table-cell>
+          <cds-table-cell
+            >${item.output.view_id}
+            ${Object.keys(item.output.parameters).length > 0
+              ? html`${Object.values(item.output.parameters).map((item) =>
+                  (item as string).length > 0
+                    ? html`
+                        <cds-tag type="gray" title=${item}
+                          ><span
+                            class="${clabsPrefix}--truncated-text"
+                            title=${item}
+                            >${item}</span
+                          ></cds-tag
+                        >
+                      `
+                    : html``
+                )}`
+              : html``}
+          </cds-table-cell>
+          <cds-table-cell class="${clabsPrefix}--table-actions"
+            ><cds-button @click=${onEditButtonClick} kind="ghost">
+              ${Edit16({ slot: 'icon' })} </cds-button
+            ><cds-button kind="danger--ghost">
+              ${TrashCan16({ slot: 'icon' })}
+            </cds-button></cds-table-cell
+          >
+        </cds-table-row>`
+    )}
+  `;
+}
 
 /**
  * Lit template for prompt tuning
@@ -30,6 +77,7 @@ import '@carbon/web-components/es/components/form/index.js';
 export function promptTuningTemplate(customElementClass) {
   const {
     text: text,
+    data: data,
     isListModalOpen,
     _onListModalClose: onListModalClose,
     _onEditButtonClick: onEditButtonClick,
@@ -37,6 +85,9 @@ export function promptTuningTemplate(customElementClass) {
     _onEditModalClose: onEditModalClose,
     _onEditModalCancel: onEditModalCancel,
   } = customElementClass;
+
+  const viewName = data[0].input.view_id;
+  const numRows = data.length;
 
   return html` <div class="${clabsPrefix}--prompt-tuning">
     <cds-modal
@@ -47,7 +98,7 @@ export function promptTuningTemplate(customElementClass) {
       @cds-modal-closed=${onListModalClose}>
       <cds-modal-header>
         <cds-modal-close-button></cds-modal-close-button>
-        <cds-modal-heading>Tune prompts</cds-modal-heading>
+        <cds-modal-heading>Tune prompts for ${viewName}</cds-modal-heading>
       </cds-modal-header>
       <cds-modal-body>
         <cds-table>
@@ -59,44 +110,8 @@ export function promptTuningTemplate(customElementClass) {
               <cds-table-header-cell>Actions</cds-table-header-cell>
             </cds-table-header-row>
           </cds-table-head>
-          <cds-table-body>
-            <cds-table-row>
-              <cds-table-cell>Load Balancer 1</cds-table-cell>
-              <cds-table-cell>Disabled</cds-table-cell>
-              <cds-table-cell>Something view</cds-table-cell>
-              <cds-table-cell
-                ><cds-button @click=${onEditButtonClick} kind="ghost">
-                  ${Edit16({ slot: 'icon' })} </cds-button
-                ><cds-button kind="danger--ghost">
-                  ${TrashCan16({ slot: 'icon' })}
-                </cds-button></cds-table-cell
-              >
-            </cds-table-row>
-            <cds-table-row>
-              <cds-table-cell>Load Balancer 1</cds-table-cell>
-              <cds-table-cell>Disabled</cds-table-cell>
-              <cds-table-cell>Something view</cds-table-cell>
-              <cds-table-cell
-                ><cds-button @click=${onEditButtonClick} kind="ghost">
-                  ${Edit16({ slot: 'icon' })} </cds-button
-                ><cds-button kind="danger--ghost">
-                  ${TrashCan16({ slot: 'icon' })}
-                </cds-button></cds-table-cell
-              >
-            </cds-table-row>
-            <cds-table-row>
-              <cds-table-cell>Load Balancer 1</cds-table-cell>
-              <cds-table-cell>Disabled</cds-table-cell>
-              <cds-table-cell>Something view</cds-table-cell>
-              <cds-table-cell
-                ><cds-button @click=${onEditButtonClick} kind="ghost">
-                  ${Edit16({ slot: 'icon' })} </cds-button
-                ><cds-button kind="danger--ghost">
-                  ${TrashCan16({ slot: 'icon' })}
-                </cds-button></cds-table-cell
-              >
-            </cds-table-row>
-          </cds-table-body>
+
+          <cds-table-body> ${getHTMLRows(customElementClass)} </cds-table-body>
         </cds-table>
       </cds-modal-body>
       <cds-modal-footer>

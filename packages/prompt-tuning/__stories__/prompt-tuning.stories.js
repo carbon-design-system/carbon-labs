@@ -10,6 +10,7 @@ import '../components/prompt-tuning/prompt-tuning';
 import { html } from 'lit';
 
 import '@carbon/web-components/es/components/button/index.js';
+import task_view from './task_view.json';
 
 export default {
   title: 'Components/Prompt Tuning/Prompt Tuning',
@@ -18,6 +19,7 @@ export default {
 
 const defaultArgs = {
   text: ' ',
+  data: task_view.samples, //array of objects
 };
 
 /* Default controls */
@@ -40,10 +42,10 @@ export const Default = {
    * @param {string} args.content - content to generate from
    * @returns {TemplateResult<1>}
    */
-  render: ({ text }) =>
+  render: ({ text, data }) =>
     html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
 
-      <clabs-prompt-tuning>${text}</clabs-prompt-tuning>
+      <clabs-prompt-tuning .data=${data}>${text}</clabs-prompt-tuning>
 
       <script type="text/javascript">
         const button = document.getElementById('modal-open-button');
@@ -51,8 +53,6 @@ export const Default = {
           'clabs-prompt-tuning'
         )[0];
         button.addEventListener('click', () => {
-          // const modal =
-          //   component.shadowRoot.getElementById('modal-prompt-list');
           component.isListModalOpen = true;
         });
       </script>`,

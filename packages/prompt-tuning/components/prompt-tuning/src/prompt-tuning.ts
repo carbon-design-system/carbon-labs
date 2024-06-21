@@ -8,7 +8,7 @@
  */
 
 import { LitElement } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 
 // @ts-ignore
 import styles from './prompt-tuning.scss?inline';
@@ -23,6 +23,12 @@ export class PromptTuning extends LitElement {
    */
   @property({ attribute: 'text', type: String })
   text;
+
+  /**
+   * Model ID or Model Name for which feedback is recording
+   */
+  @property({ attribute: 'data', type: Array })
+  data;
 
   /**
    * Whether the prompt list modal is open or not

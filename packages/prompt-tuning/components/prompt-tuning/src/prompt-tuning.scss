@@ -12,6 +12,17 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}-prompt-tuning) {
+  .#{$clabs-prefix}--truncated-text {
+    display: inline-block;
+    overflow: hidden;
+    cursor: default;
+    max-inline-size: 25ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .#{$clabs-prefix}--table-actions {
+    min-inline-size: 96px;
+  }
   .#{$clabs-prefix}--prompt-edit-form {
     display: flex;
     justify-content: space-between;

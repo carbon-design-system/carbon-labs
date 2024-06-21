@@ -1,0 +1,439 @@
+{
+  "samples": [
+    {
+      "id": 20117,
+      "user_id": "demo",
+      "input": {
+        "input": "Hey Watson, what's up?",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Hey $user.first_name 👋, how can I help you?",
+        "view_id": "task_view",
+        "parameters": {}
+      }
+    },
+    {
+      "id": 20118,
+      "user_id": "demo",
+      "input": {
+        "input": "I'd like to see if customer churn can be explained by economic data.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "I think you're interested in customer churn. Let's see if we find data on this topic in the Lakehouse. 🌊",
+        "view_id": "semantic_search_view",
+        "parameters": {
+          "keyword": "customer churn"
+        }
+      }
+    },
+    {
+      "id": 20119,
+      "user_id": "demo",
+      "input": {
+        "input": "I'd like to see the glossaries.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Here is a list of glossaries that are currently in the Lakehouse. 🏡",
+        "view_id": "glossary_view",
+        "parameters": {}
+      }
+    },
+    {
+      "id": 20120,
+      "user_id": "demo",
+      "input": {
+        "input": "I want to add residence location information to CSTINSIGHT.INDIVIDUAL_CST_CHURN_FACT. ",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Got it, I think I can help you with that 👍. Pulling up tables to join with table ID CSTINSIGHT.INDIVIDUAL_CST_CHURN_FACT.",
+        "view_id": "table_expansion_view",
+        "parameters": {
+          "keyword": "residence location",
+          "table_ids": "[CSTINSIGHT.INDIVIDUAL_CST_CHURN_FACT]"
+        }
+      }
+    },
+    {
+      "id": 20121,
+      "user_id": "demo",
+      "input": {
+        "input": "Show me tables about traffic collisions in Ontario.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Here are some tables on traffic collisions in this location 👀.",
+        "view_id": "semantic_search_view",
+        "parameters": {
+          "keyword": "traffic collisions in Ontario"
+        }
+      }
+    },
+    {
+      "id": 20122,
+      "user_id": "demo",
+      "input": {
+        "input": "I would like to predict business incorporations.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Alright, let's start by retrieving some data on this topic 🔍.",
+        "view_id": "semantic_search_view",
+        "parameters": {
+          "keyword": "business incorporations"
+        }
+      }
+    },
+    {
+      "id": 20130,
+      "user_id": "demo",
+      "input": {
+        "input": "Show me the quality of CSTINSIGHT.PRODUCT.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "No problem, here are the Data Quality metrics for this table ✨.",
+        "view_id": "table_details_view",
+        "parameters": {
+          "mode": "quality",
+          "question": "",
+          "table_ids": "[CSTINSIGHT.PRODUCT]"
+        }
+      }
+    },
+    {
+      "id": 20140,
+      "user_id": "demo",
+      "input": {
+        "input": "I don't know how you could help me. what can you do?",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Take a look at the right to check out some examples on what I could help you with. I am a Conversational AI 🤖 trained to assist in Semantic Data Science on your Lakehouse. ",
+        "view_id": "task_view",
+        "parameters": {}
+      }
+    },
+    {
+      "id": 20141,
+      "user_id": "demo",
+      "input": {
+        "input": "I wonder if airplanes are usually late or early when they arrive in Ontario.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Alright, I think you're interested in airplanes in Ontario. Let's see if we find some data on this topic. 👀",
+        "view_id": "semantic_search_view",
+        "parameters": {
+          "keyword": "airplanes in Ontario"
+        }
+      }
+    },
+    {
+      "id": 20144,
+      "user_id": "demo",
+      "input": {
+        "input": "Visualize CSTINSIGHT.AGREEMENT, CSTINSIGHT.PERSON and CSTINSIGHT.PRODUCT.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Here is a graph showing these tables in context of the Lakehouse 🔬.",
+        "view_id": "table_graph_view",
+        "parameters": {
+          "table_ids": "[CSTINSIGHT.AGREEMENT,CSTINSIGHT.PERSON,CSTINSIGHT.PRODUCT]"
+        }
+      }
+    },
+    {
+      "id": 20145,
+      "user_id": "demo",
+      "input": {
+        "input": "Hey Watson, I'd like to import data to the Lakehouse.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Alright, just select one or multiple *.csv files from your file system. I will then add them to the Lakehouse and kick off the ingestion 🪄.",
+        "view_id": "table_upload_view",
+        "parameters": {}
+      }
+    },
+    {
+      "id": 20146,
+      "user_id": "demo",
+      "input": {
+        "input": "Hey Watson, show me my collections.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Alright, I am pulling up your table collections 📚.",
+        "view_id": "collections_view",
+        "parameters": {}
+      }
+    },
+    {
+      "id": 20147,
+      "user_id": "demo",
+      "input": {
+        "input": "I would like to add custom data.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Sure, here you can upload *.csv file(s) to the Lakehouse. This will also start the enrichment 🪄.",
+        "view_id": "table_upload_view",
+        "parameters": {}
+      }
+    },
+    {
+      "id": 20150,
+      "user_id": "demo",
+      "input": {
+        "input": "Hey Watson, I'd like to compare CSTINSIGHT.CUSTOMER with CSTINSIGHT.PERSON.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "No problem, here is the data of your requested table. You can also create simple graphs to compare them visually 📊.",
+        "view_id": "table_comparison_view",
+        "parameters": {
+          "table_ids": "[CSTINSIGHT.CUSTOMER,CSTINSIGHT.PERSON]",
+          "column_ids": ""
+        }
+      }
+    },
+    {
+      "id": 20152,
+      "user_id": "demo",
+      "input": {
+        "input": "Hey Watson, I'd like to annotate CSTINSIGHT.CUSTOMER and CSTINSIGHT.PERSON.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Alright, here you can provide your feedback on the automatic table annotations 🐝.",
+        "view_id": "collection_annotation_view",
+        "parameters": {
+          "table_ids": "[CSTINSIGHT.CUSTOMER,CSTINSIGHT.PERSON]"
+        }
+      }
+    },
+    {
+      "id": 20158,
+      "user_id": "demo",
+      "input": {
+        "input": "What's in my Lakehouse?",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Let's take a look. The following visualization provides some insights into the Lakehouse and the Semantic Layer.",
+        "view_id": "ingestion_view",
+        "parameters": {}
+      }
+    },
+    {
+      "id": 20160,
+      "user_id": "demo",
+      "input": {
+        "input": "I’m trying to understand how high net worth customers buy products.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Please review which data collection to work with before proceeding with your questions. I have aggregated relevant concepts and tables for you.",
+        "view_id": "semantic_querying_view",
+        "parameters": {
+          "question": "I’m trying to understand how high net worth customers buy products.",
+          "mode": "collection"
+        }
+      }
+    },
+    {
+      "id": 20165,
+      "user_id": "demo",
+      "input": {
+        "input": "I would like to review the user feedback.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Sure, here is the user feedback on my generated responses. You can accept or decline samples to be respected in my next training cycle. You can also modify my expected behavior.",
+        "view_id": "feedback_triage_view",
+        "parameters": {}
+      }
+    },
+    {
+      "id": 20169,
+      "user_id": "demo",
+      "input": {
+        "input": "Show me a visualization of table CSTINSIGHT.CUSTOMER.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "No problem, just a second...",
+        "view_id": "visualization_view",
+        "parameters": {
+          "question": "Visualize this data please.",
+          "table_ids": "CSTINSIGHT.CUSTOMER",
+          "table_data": ""
+        }
+      }
+    },
+    {
+      "id": 20172,
+      "user_id": "demo",
+      "input": {
+        "input": "I'm trying to understand my high net worth customers and the product details of their transactions.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Please review which data collection to work with before proceeding with your questions. I have aggregated relevant concepts and tables for you.",
+        "view_id": "semantic_querying_view",
+        "parameters": {
+          "question": "I'm trying to understand my high net worth customers and the product details of their transactions.",
+          "mode": "collection"
+        }
+      }
+    },
+    {
+      "id": 20173,
+      "user_id": "demo",
+      "input": {
+        "input": "I am trying to understand my customers, their transactions, the products they buy, and methods of payment.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Please review which data collection to work with before proceeding with your questions. I have aggregated relevant concepts and tables for you.",
+        "view_id": "semantic_querying_view",
+        "parameters": {
+          "question": "I am trying to understand my customers, their transactions, the products they buy, and methods of payment.",
+          "mode": "collection"
+        }
+      }
+    },
+    {
+      "id": 20174,
+      "user_id": "demo",
+      "input": {
+        "input": "I'm trying to understand how high net worth customers buy products.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Please review which data collection to work with before proceeding with your questions. I have aggregated relevant concepts and tables for you.",
+        "view_id": "semantic_querying_view",
+        "parameters": {
+          "question": "I'm trying to understand how high net worth customers buy products.",
+          "mode": "collection"
+        }
+      }
+    },
+    {
+      "id": 20175,
+      "user_id": "demo",
+      "input": {
+        "input": "I'm trying to understand how high net worth customers buy products along with product details.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Please review which data collection to work with before proceeding with your questions. I have aggregated relevant concepts and tables for you.",
+        "view_id": "semantic_querying_view",
+        "parameters": {
+          "question": "I'm trying to understand how high net worth customers buy products along with product details.",
+          "mode": "collection"
+        }
+      }
+    },
+    {
+      "id": 20176,
+      "user_id": "demo",
+      "input": {
+        "input": "I want to run prescriptive analytics on CSTSINSIGHT.CUSTOMER.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "No problem, my friends in research taught me how to help you with that.",
+        "view_id": "causal_inference_view",
+        "parameters": {
+          "question": "I want to run prescriptive analytics this.",
+          "table_ids": "[CSTSINSIGHT.CUSTOMER]"
+        }
+      }
+    },
+    {
+      "id": 20191,
+      "user_id": "demo",
+      "input": {
+        "input": "I am looking for data about transactions",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "I see, maybe some of these tables could be of interest to you.",
+        "view_id": "semantic_search_view",
+        "parameters": {
+          "question": "",
+          "mode": "",
+          "table_ids": "",
+          "keyword": "transactions"
+        }
+      }
+    },
+    {
+      "id": 20194,
+      "user_id": "demo",
+      "input": {
+        "input": "I’m trying to analyze how high net worth customers buy product.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "Please review which data collection to work with before proceeding with your questions. I have aggregated relevant concepts and tables for you.",
+        "view_id": "semantic_querying_view",
+        "parameters": {
+          "table_ids": "",
+          "mode": "collection",
+          "question": "I’m trying to analyze how high net worth customers buy product."
+        }
+      }
+    },
+    {
+      "id": 20195,
+      "user_id": "demo",
+      "input": {
+        "input": "I'm interested in analyzing product purchase patterns made by all my customers for increasing revenue we get from them.",
+        "view_id": "task_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "\tPlease review which data collection to work with before proceeding with your questions. I have aggregated relevant concepts and tables for you.",
+        "view_id": "semantic_querying_view",
+        "parameters": {
+          "table_ids": "",
+          "mode": "collection",
+          "question": "I'm interested in analyzing product purchase patterns made by all my customers for increasing revenue we get from them."
+        }
+      }
+    }
+  ]
+}

@@ -38,18 +38,19 @@ function getHTMLRows(customElementClass) {
           <cds-table-cell
             >${item.input.input}
             ${Object.keys(item.input.context_variables).length > 0
-              ? html`${Object.values(item.input.context_variables).map((item) =>
-                  (item as string).length > 0
-                    ? html`
-                        <cds-tag type="gray" title=${item}
-                          ><span
-                            class="${clabsPrefix}--truncated-text"
-                            title=${item}
-                            >${item}</span
-                          ></cds-tag
-                        >
-                      `
-                    : html``
+              ? html`${Object.entries(item.input.context_variables).map(
+                  (item) =>
+                    item.length > 0
+                      ? html`
+                          <cds-tag type="gray" title=${item}
+                            ><span
+                              class="${clabsPrefix}--truncated-text"
+                              title="${item[0]}: ${item[1]}"
+                              >${item[1]}</span
+                            ></cds-tag
+                          >
+                        `
+                      : html``
                 )}`
               : html``}
           </cds-table-cell>
@@ -57,14 +58,14 @@ function getHTMLRows(customElementClass) {
           <cds-table-cell
             >${item.output.view_id}
             ${Object.keys(item.output.parameters).length > 0
-              ? html`${Object.values(item.output.parameters).map((item) =>
-                  (item as string).length > 0
+              ? html`${Object.entries(item.output.parameters).map((item) =>
+                  item.length > 0
                     ? html`
                         <cds-tag type="gray" title=${item}
                           ><span
                             class="${clabsPrefix}--truncated-text"
-                            title=${item}
-                            >${item}</span
+                            title="${item[0]}: ${item[1]}"
+                            >${item[1]}</span
                           ></cds-tag
                         >
                       `
@@ -133,11 +134,10 @@ export function promptTuningTemplate(customElementClass) {
         <cds-modal-close-button></cds-modal-close-button>
         <cds-modal-heading
           >Tune prompts for
-          <cds-select
-            inline=true
-            value=${viewName}>
-              ${getSelectViews(customElementClass)}
+          <cds-select inline="true" value=${viewName}>
+            ${getSelectViews(customElementClass)} ></cds-select
           >
+          Edit ${viewName}:
         </cds-modal-heading>
       </cds-modal-header>
       <cds-modal-body>
@@ -155,14 +155,8 @@ export function promptTuningTemplate(customElementClass) {
         </cds-table>
       </cds-modal-body>
       <cds-modal-footer>
-        <cds-modal-footer-button kind="secondary" data-modal-close
-          >Import from Daniel...</cds-modal-footer-button
-        >
-        <cds-modal-footer-button kind="secondary" data-modal-close
-          >Review feedback</cds-modal-footer-button
-        >
         <cds-modal-footer-button kind="primary"
-          >New prompt edit</cds-modal-footer-button
+          >Add new prompt</cds-modal-footer-button
         >
       </cds-modal-footer>
     </cds-modal>

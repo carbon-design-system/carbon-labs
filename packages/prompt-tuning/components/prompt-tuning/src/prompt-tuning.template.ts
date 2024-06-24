@@ -10,7 +10,6 @@
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
-
 import '@carbon/web-components/es/components/modal/index.js';
 import '@carbon/web-components/es/components/data-table/index.js';
 import '@carbon/web-components/es/components/button/index.js';
@@ -86,6 +85,22 @@ function getHTMLRows(customElementClass) {
 }
 
 /**
+ * Render views for select
+ *
+ * @param {object} customElementClass Class functionality for the custom element
+ * @returns {TemplateResult<1>} Lit html template
+ */
+function getSelectViews(customElementClass) {
+  const { viewList: viewList } = customElementClass;
+
+  const views = viewList.map((view) => {
+    return html`<cds-select-item value="${view}">${view}</cds-select-item>`;
+  });
+
+  return views;
+}
+
+/**
  * Lit template for prompt tuning
  *
  * @param {object} customElementClass Class functionality for the custom element
@@ -95,6 +110,8 @@ export function promptTuningTemplate(customElementClass) {
   const {
     text: text,
     data: data,
+    viewName: viewName,
+    viewList: viewList,
     isListModalOpen,
     _onListModalClose: onListModalClose,
     _onEditButtonClick: onEditButtonClick,
@@ -103,7 +120,6 @@ export function promptTuningTemplate(customElementClass) {
     _onEditModalCancel: onEditModalCancel,
   } = customElementClass;
 
-  const viewName = data[0].input.view_id;
   const numRows = data.length;
 
   return html` <div class="${clabsPrefix}--prompt-tuning">
@@ -115,7 +131,14 @@ export function promptTuningTemplate(customElementClass) {
       @cds-modal-closed=${onListModalClose}>
       <cds-modal-header>
         <cds-modal-close-button></cds-modal-close-button>
-        <cds-modal-heading>Tune prompts for ${viewName}</cds-modal-heading>
+        <cds-modal-heading
+          >Tune prompts for
+          <cds-select
+            inline=true
+            value=${viewName}>
+              ${getSelectViews(customElementClass)}
+          >
+        </cds-modal-heading>
       </cds-modal-header>
       <cds-modal-body>
         <cds-table>

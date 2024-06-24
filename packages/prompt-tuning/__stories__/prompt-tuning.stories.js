@@ -20,7 +20,9 @@ export default {
 
 const defaultArgs = {
   text: ' ',
-  data: 'task_view',
+  data: 'semantic_search_view',
+  viewName: 'semantic_search_view',
+  viewList: ['task_view', 'semantic_search_view'],
 };
 
 /* Default controls */
@@ -32,7 +34,15 @@ const defaultControls = {
   data: {
     control: { type: 'select' },
     options: ['task_view', 'semantic_search_view'],
-    description: 'Current view',
+    description: 'Current view data',
+  },
+  viewName: {
+    control: { type: 'text' },
+    description: 'Name of the current view',
+  },
+  viewList: {
+    control: { type: 'object' },
+    description: 'List of views',
   },
 };
 
@@ -64,10 +74,15 @@ export const Default = {
    * @param {string} args.content - content to generate from
    * @returns {TemplateResult<1>}
    */
-  render: ({ text, data }) =>
+  render: ({ text, data, viewName, viewList }) =>
     html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
 
-      <clabs-prompt-tuning .data=${getView(data)}>${text}</clabs-prompt-tuning>
+      <clabs-prompt-tuning
+        .data=${getView(data)}
+        .viewName=${viewName}
+        .viewList=${viewList}
+        >${text}</clabs-prompt-tuning
+      >
 
       <script type="text/javascript">
         const button = document.getElementById('modal-open-button');

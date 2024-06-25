@@ -194,13 +194,12 @@ function getEditModal(customElementClass) {
               label-text="View"
               placeholder="Optional placeholder text"
               value=${currentResponseView}>
-              <cds-select-item value=${currentResponseView}
-                >${currentResponseView}</cds-select-item
-              >
-              <cds-select-item value="cloudFoundry">Option 2</cds-select-item>
-              <cds-select-item value="staging">Option 3</cds-select-item>
-              <cds-select-item value="dea">Option 4</cds-select-item>
-              <cds-select-item value="router">Option 5</cds-select-item>
+              ${viewList.map(
+                (view) =>
+                  html`<cds-select-item value="${view}"
+                    >${view}</cds-select-item
+                  >`
+              )}
             </cds-select>
           </cds-form-item>
 

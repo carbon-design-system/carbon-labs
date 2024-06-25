@@ -23,7 +23,19 @@ const defaultArgs = {
   text: ' ',
   data: 'semantic_search_view',
   viewName: 'semantic_search_view',
-  viewList: ['task_view', 'semantic_search_view', 'collections_view'],
+  viewList: [
+    'task_view',
+    'semantic_search_view',
+    'collections_view',
+    'semantic_querying_view',
+    'table_details_view',
+    'table_upload_view',
+    'visualization_view',
+    'table_expansion_view',
+    'glossary_view',
+    'table_comparison_view',
+    'causal_interference_view',
+  ],
 };
 
 /* Default controls */

@@ -124,7 +124,9 @@ export class Feedback extends HostListenerMixin(LitElement) {
       });
       this.dispatchEvent(event);
     }
+
     window.addEventListener('mousedown', () => {
+      this.setUserSelect('auto');
       this.selection = null;
     });
   }
@@ -378,5 +380,26 @@ export class Feedback extends HostListenerMixin(LitElement) {
    */
   resetHiglightedText() {
     this.highlighted = null;
+  }
+
+  /**
+   * To Reset the selection text
+   * @param {object} event Event object of the button clicked
+   */
+  resetSelection(event) {
+    event.preventDefault();
+    this.setUserSelect('none');
+    this.selection = null;
+  }
+
+  /**
+   * To remove the text selection
+   * @param {string} value value for `user-select` css property
+   */
+  setUserSelect(value: string) {
+    const element = this.shadowRoot?.getElementById('container');
+    if (element) {
+      element.style.userSelect = value;
+    }
   }
 }

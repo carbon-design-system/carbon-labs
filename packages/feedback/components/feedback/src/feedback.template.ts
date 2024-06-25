@@ -239,11 +239,12 @@ export function feedbackTemplate(customElementClass) {
     handleSlotchange,
     highlighted,
     calculateTextPosition,
+    resetSelection,
   } = customElementClass;
   return html`
     <div
       style="display:flex; justify-content: space-between; align-items: center; padding: 0.5rem 0;position:relative">
-      <div class="slug">
+      <div class="slug" @click=${resetSelection}>
         ${feedbackList.length !== 0
           ? html`<span class="notify"></span>`
           : null}${showSlug(customElementClass)}

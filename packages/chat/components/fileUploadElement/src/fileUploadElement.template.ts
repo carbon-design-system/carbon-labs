@@ -23,31 +23,40 @@ import '@carbon/web-components/es/components/loading/index.js';
  */
 export function fileUploadElementTemplate(customElementClass) {
   const {
-    alignRight,
     content,
-    _loadingStatus: loadingStatus,
+    _status: status,
+    _errorMessage: errorMessage,
   } = customElementClass;
 
-  return html`<div class="${clabsPrefix}--chat-file-upload">
-    <div
-      class="${clabsPrefix}--chat-file-upload--float-${alignRight
-        ? 'right'
-        : 'left'}">
-      <div class="${clabsPrefix}--chat-file-upload-container">
-        <div class="${clabsPrefix}--chat-file-upload-container-file-type">
-          ${PDF16()}
-        </div>
-        <div class="${clabsPrefix}--chat-file-upload-container-file-name">
-          ${content}
-        </div>
-        <div class="${clabsPrefix}--chat-file-upload-container-file-status">
-          ${loadingStatus === 'loading'
-            ? html` <cds-loading></cds-loading> `
-            : loadingStatus === 'success'
-            ? html` ${CheckMarkOutline16()} `
-            : html` ${Close16()}`}
-        </div>
+  return html` <div
+    class="${clabsPrefix}--chat-file-upload-container ${status === 'error'
+      ? clabsPrefix + '--chat-file-upload-container-error'
+      : ''}">
+    <div class="${clabsPrefix}--chat-file-upload-top-container">
+      <div class="${clabsPrefix}--chat-file-upload-container-file-type">
+        ${PDF16()}
+      </div>
+      <div class="${clabsPrefix}--chat-file-upload-container-file-name">
+        ${content}
+      </div>
+      <div
+        class="${clabsPrefix}--chat-file-upload-container-file-status${status ===
+        'success'
+          ? '-success'
+          : ''}">
+        ${status === 'loading'
+          ? html` <cds-loading type="small"></cds-loading> `
+          : status === 'success'
+          ? html` ${CheckMarkOutline16()} `
+          : html` ${Close16()}`}
       </div>
     </div>
+    ${status === 'error'
+      ? html`
+          <div class="${clabsPrefix}--chat-file-upload-bottom-container">
+            ${errorMessage ? errorMessage : 'Default error message'}
+          </div>
+        `
+      : html``}
   </div>`;
 }

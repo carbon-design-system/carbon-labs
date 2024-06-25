@@ -21,20 +21,20 @@ export default class fileUploadElement extends LitElement {
   /**
    * Content text to display in textElement
    */
-  @property({ type: String, attribute: 'content', reflect: true })
+  @property({ type: String, attribute: 'content' })
   content;
 
   /**
-   * Content alignment
+   * Content text to display in textElement
    */
-  @property({ type: Boolean, attribute: 'align-right' })
-  alignRight;
+  @property({ type: String, attribute: 'error-message' })
+  _errorMessage;
 
   /**
    * Content loading/success status
    */
   @property({ type: String, attribute: 'status' })
-  _loadingStatus = 'loading';
+  _status = 'loading';
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object

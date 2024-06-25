@@ -1,0 +1,79 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-molecule) {
+  overflow: hidden;
+
+  .#{$clabs-prefix}--chat-molecule-container {
+    position: relative;
+    display: flex;
+    overflow: scroll;
+
+    box-sizing: border-box;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid $border-subtle-01;
+    border-radius: 8px;
+    background: $background;
+    block-size: var(--chat-molecule-height, 'auto');
+    inline-size: var(--chat-molecule-width, 'auto');
+    min-block-size: 246px;
+    min-inline-size: 246px;
+  }
+
+  .#{$clabs-prefix}--chat-molecule-light .element {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .#{$clabs-prefix}--chat-molecule-dark .element {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .#{$clabs-prefix}--chat-molecule-error {
+    padding: 10px;
+    border: 1px solid $support-error;
+    border-radius: 8px;
+    color: $support-error;
+    line-height: 22px;
+  }
+  .#{$clabs-prefix}--chat-molecule-tester {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+  .#{$clabs-prefix}--chat-molecule-stream-text-container {
+    position: absolute;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    inline-size: 100%;
+    inset-block-end: 8px;
+    inset-inline-end: 0;
+    line-height: 18px;
+    max-inline-size: 100%;
+    padding-inline: 8px;
+  }
+  .#{$clabs-prefix}--chat-molecule-stream-text-content {
+    box-sizing: border-box;
+    color: $text-placeholder;
+    letter-spacing: 0.16px;
+    max-inline-size: 100%;
+    white-space: nowrap;
+  }
+}

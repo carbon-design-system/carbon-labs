@@ -26,3 +26,4 @@ import './components/loadingElement/loadingElement.js';
 import './components/errorElement/errorElement.js';
 import './components/carouselElement/carouselElement.js';
 import './components/linkListElement/linkListElement.js';
+import './components/molecularElement/molecularElement.js';

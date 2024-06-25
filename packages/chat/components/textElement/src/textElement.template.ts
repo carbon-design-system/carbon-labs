@@ -46,6 +46,9 @@ export function textElementTemplate(customElementClass) {
                     class="${clabsPrefix}--chat-text-content-${textPiece.type} ${enableTextHighlighting
                       ? clabsPrefix + '--chat-text-highlighted'
                       : ''}"
+                    style="${textPiece.color
+                      ? 'background-color:' + textPiece.color + ';'
+                      : html``}"
                     data-index="${index}"
                     data-source="${textPiece.content}"
                     @click="${_handleAnnotationClick}">

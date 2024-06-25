@@ -43,6 +43,36 @@ export class PromptTuning extends LitElement {
   isEditModalOpen = false;
 
   /**
+   * Current prompt
+   */
+  @property({ type: String })
+  private _currentPrompt = '';
+
+  /**
+   * Current context variables
+   */
+  @property({ type: Object })
+  private _currentContextVariables = {};
+
+  /**
+   * Current response
+   */
+  @property({ type: String })
+  private _currentResponse = '';
+
+  /**
+   * Current response view
+   */
+  @property({ type: String })
+  private _currentResponseView = '';
+
+  /**
+   * Current parameters
+   */
+  @property({ type: Object })
+  private _currentParameters = {};
+
+  /**
    * Method for closing the Prompt List Modal
    */
   _onListModalClose() {
@@ -66,10 +96,26 @@ export class PromptTuning extends LitElement {
 
   /**
    * Method for clicking a table row Edit button
+   * @param {string} prompt prompt
+   * @param {Object} contextVariables context variables
+   * @param {string} response response
+   * @param {string} responseView response view
+   * @param {Object} parameters parameters
    */
-  _onEditButtonClick() {
+  _onEditButtonClick(
+    prompt,
+    contextVariables,
+    response,
+    responseView,
+    parameters
+  ) {
     this.isListModalOpen = false;
     this.isEditModalOpen = true;
+    this._currentPrompt = prompt;
+    this._currentContextVariables = contextVariables;
+    this._currentResponse = response;
+    this._currentResponseView = responseView;
+    this._currentParameters = parameters;
   }
 
   // /**

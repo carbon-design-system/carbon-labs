@@ -1,0 +1,126 @@
+{
+  "samples": [
+    {
+      "id": 20148,
+      "user_id": "demo",
+      "input": {
+        "input": "Show me the details of this table.",
+        "view_id": "collections_view",
+        "context_variables": {
+          "table_ids": "[CSTINSIGHT.EMPLOYEE_PROFILE]"
+        }
+      },
+      "output": {
+        "output": "Here are the details of this table.",
+        "view_id": "table_details_view",
+        "parameters": {
+          "mode": "schema",
+          "question": "",
+          "table_ids": "[CSTINSIGHT.EMPLOYEE_PROFILE]"
+        }
+      }
+    },
+    {
+      "id": 20166,
+      "user_id": "demo",
+      "input": {
+        "input": "Remove the table CSTINSIGHT.PRODUCT.",
+        "view_id": "collections_view",
+        "context_variables": {
+          "collection_ids": "",
+          "table_ids": ""
+        }
+      },
+      "output": {
+        "output": "Please first select a collection.",
+        "view_id": "collections_view",
+        "parameters": {
+          "table_ids": "",
+          "action": ""
+        }
+      }
+    },
+    {
+      "id": 20167,
+      "user_id": "demo",
+      "input": {
+        "input": "I would like to remove this table.",
+        "view_id": "collections_view",
+        "context_variables": {
+          "collection_ids": "[940]",
+          "table_ids": ""
+        }
+      },
+      "output": {
+        "output": "Please also tell me which table to remove.",
+        "view_id": "collections_view",
+        "parameters": {
+          "table_ids": "",
+          "action": ""
+        }
+      }
+    },
+    {
+      "id": 20168,
+      "user_id": "demo",
+      "input": {
+        "input": "Please remove table CSTINSIGHT.PRODUCT from this collection.",
+        "view_id": "collections_view",
+        "context_variables": {
+          "collection_ids": "[940]",
+          "table_ids": ""
+        }
+      },
+      "output": {
+        "output": "Alright, I will remove the table for you.",
+        "view_id": "collections_view",
+        "parameters": {
+          "table_ids": "[CSTINSIGHT.PRODUCT]",
+          "action": "remove_table_from_collection"
+        }
+      }
+    },
+    {
+      "id": 20192,
+      "user_id": "demo",
+      "input": {
+        "input": "Who is the customer with highest net worth?",
+        "view_id": "collections_view",
+        "context_variables": {
+          "collection_ids": "[4922]",
+          "table_ids": "[CSTINSIGHT.ORGANIZATION_CST_LOYALTY_FACT,CSTINSIGHT.INDIVIDUAL_CST_LOYALTY_FACT,CSTINSIGHT.CUSTOMER]"
+        }
+      },
+      "output": {
+        "output": "Let me try to inquire about this in the lakehouse.",
+        "view_id": "semantic_querying_view",
+        "parameters": {
+          "table_ids": "[CSTINSIGHT.ORGANIZATION_CST_LOYALTY_FACT,CSTINSIGHT.INDIVIDUAL_CST_LOYALTY_FACT,CSTINSIGHT.CUSTOMER]",
+          "question": "Who is the customer with highest net worth?",
+          "mode": "sql"
+        }
+      }
+    },
+    {
+      "id": 20193,
+      "user_id": "demo",
+      "input": {
+        "input": "I would like to know something about these tables.",
+        "view_id": "collections_view",
+        "context_variables": {
+          "collection_ids": "[2389]",
+          "table_ids": "[CSTINSIGHT.CUSTOMER,CSTINSIGHT.PRODUCT]"
+        }
+      },
+      "output": {
+        "output": "Sure, what would you like to know?",
+        "view_id": "collections_view",
+        "parameters": {
+          "table_ids": "[CSTINSIGHT.CUSTOMER,CSTINSIGHT.PRODUCT]",
+          "question": "I have a question about these tables.",
+          "mode": "collection"
+        }
+      }
+    }
+  ]
+}

@@ -74,10 +74,19 @@ function getHTMLRows(customElementClass) {
               : html``}
           </cds-table-cell>
           <cds-table-cell class="${clabsPrefix}--table-actions"
-            ><cds-button @click=${onEditButtonClick} kind="ghost">
-              ${Edit16({ slot: 'icon' })} </cds-button
+            ><cds-button
+              @click=${onEditButtonClick.bind(
+                customElementClass,
+                item.input.input,
+                item.input.context_variables,
+                item.output.output,
+                item.output.view_id,
+                item.output.parameters
+              )}
+              kind="ghost">
+              ${Edit16()} </cds-button
             ><cds-button kind="danger--ghost">
-              ${TrashCan16({ slot: 'icon' })}
+              ${TrashCan16()}
             </cds-button></cds-table-cell
           >
         </cds-table-row>`
@@ -102,6 +111,126 @@ function getSelectViews(customElementClass) {
 }
 
 /**
+ * Render HTML rows
+ *
+ * @param {object} customElementClass Class functionality for the custom element
+ * @returns {TemplateResult<1>} Lit html template
+ */
+function getEditModal(customElementClass) {
+  const {
+    text: text,
+    data: data,
+    viewName: viewName,
+    viewList: viewList,
+    _currentPrompt: currentPrompt,
+    _currentContextVariables: currentContextVariables,
+    _currentResponse: currentResponse,
+    _currentResponseView: currentResponseView,
+    _currentParameters: currentParameters,
+    isListModalOpen,
+    _onListModalClose: onListModalClose,
+    _onEditButtonClick: onEditButtonClick,
+    isEditModalOpen,
+    _onEditModalClose: onEditModalClose,
+    _onEditModalCancel: onEditModalCancel,
+  } = customElementClass;
+
+  return html`<cds-modal
+    id="modal-edit-prompt"
+    size="lg"
+    ?open=${isEditModalOpen}
+    @cds-modal-closed=${onEditModalClose}>
+    <cds-modal-header>
+      <cds-modal-close-button></cds-modal-close-button>
+      <cds-modal-heading>Edit prompt</cds-modal-heading>
+    </cds-modal-header>
+    <cds-modal-body>
+      <div class="${clabsPrefix}--prompt-edit-form">
+        <div class="${clabsPrefix}--edit-input">
+          <cds-form-item>
+            <cds-text-input
+              class="${clabsPrefix}--edit-form-item"
+              label="Sample prompt"
+              invalid-text="Error message"
+              placeholder="Enter sample prompt..."
+              helper-text=" "
+              value=${currentPrompt}>
+            </cds-text-input>
+          </cds-form-item>
+
+          <h4>Context variables</h4>
+
+          ${Object.keys(currentContextVariables).length <= 0
+            ? html`<div>This view does not provide any context variables.</div>`
+            : Object.entries(currentContextVariables).map(
+                ([key, value]) => html`<cds-form-item
+                  class="${clabsPrefix}--edit-context-variable">
+                  <cds-text-input
+                    class="${clabsPrefix}--edit-form-item"
+                    label=${key}
+                    invalid-text="Error message"
+                    placeholder="Enter sample value..."
+                    value=${value}>
+                  </cds-text-input>
+                </cds-form-item>`
+              )}
+        </div>
+
+        <div class="${clabsPrefix}--edit-output">
+          <cds-form-item>
+            <cds-text-input
+              class="${clabsPrefix}--edit-form-item"
+              label="Expected message"
+              invalid-text="Error message"
+              placeholder="Enter expected generated message..."
+              value=${currentResponse}>
+            </cds-text-input>
+          </cds-form-item>
+
+          <cds-form-item>
+            <cds-select
+              class="${clabsPrefix}--edit-form-item"
+              helper-text=" "
+              label-text="View"
+              placeholder="Optional placeholder text"
+              value=${currentResponseView}>
+              <cds-select-item value=${currentResponseView}
+                >${currentResponseView}</cds-select-item
+              >
+              <cds-select-item value="cloudFoundry">Option 2</cds-select-item>
+              <cds-select-item value="staging">Option 3</cds-select-item>
+              <cds-select-item value="dea">Option 4</cds-select-item>
+              <cds-select-item value="router">Option 5</cds-select-item>
+            </cds-select>
+          </cds-form-item>
+
+          <h4>Expected view parameters</h4>
+          ${Object.keys(currentParameters).length <= 0
+            ? html`<div>This view does not provide any parameters.</div>`
+            : Object.entries(currentParameters).map(
+                ([key, value]) => html`<cds-form-item>
+                  <cds-text-input
+                    class="${clabsPrefix}--edit-form-item"
+                    label=${key}
+                    invalid-text="Error message"
+                    placeholder="Enter expected value..."
+                    value=${value}>
+                  </cds-text-input>
+                </cds-form-item>`
+              )}
+        </div>
+      </div>
+    </cds-modal-body>
+    <cds-modal-footer>
+      <cds-modal-footer-button kind="secondary" @click=${onEditModalCancel}
+        >Cancel</cds-modal-footer-button
+      >
+      <cds-modal-footer-button kind="primary">Save</cds-modal-footer-button>
+    </cds-modal-footer>
+  </cds-modal>`;
+}
+
+/**
  * Lit template for prompt tuning
  *
  * @param {object} customElementClass Class functionality for the custom element
@@ -113,6 +242,8 @@ export function promptTuningTemplate(customElementClass) {
     data: data,
     viewName: viewName,
     viewList: viewList,
+    _currentPrompt: currentPrompt,
+    _currentContextVariables: currentContextVariables,
     isListModalOpen,
     _onListModalClose: onListModalClose,
     _onEditButtonClick: onEditButtonClick,
@@ -161,95 +292,7 @@ export function promptTuningTemplate(customElementClass) {
       </cds-modal-footer>
     </cds-modal>
 
-    <cds-modal
-      id="modal-edit-prompt"
-      size="lg"
-      ?open=${isEditModalOpen}
-      @cds-modal-closed=${onEditModalClose}>
-      <cds-modal-header>
-        <cds-modal-close-button></cds-modal-close-button>
-        <cds-modal-heading>Edit prompt</cds-modal-heading>
-      </cds-modal-header>
-      <cds-modal-body>
-        <div class="${clabsPrefix}--prompt-edit-form">
-          <div class="${clabsPrefix}--edit-input">
-            <cds-form-item>
-              <cds-text-input
-                class="${clabsPrefix}--edit-form-item"
-                label="Sample prompt"
-                invalid-text="Error message"
-                placeholder="Enter sample prompt..."
-                helper-text=" ">
-              </cds-text-input>
-            </cds-form-item>
-
-            <cds-form-item>
-              <cds-text-input
-                class="${clabsPrefix}--edit-form-item"
-                label="Table IDs"
-                invalid-text="Error message"
-                placeholder="Enter sample value...">
-              </cds-text-input>
-            </cds-form-item>
-
-            <cds-form-item>
-              <cds-text-input
-                class="${clabsPrefix}--edit-form-item"
-                label="Keyword"
-                invalid-text="Error message"
-                placeholder="Enter sample value...">
-              </cds-text-input>
-            </cds-form-item>
-          </div>
-
-          <div class="${clabsPrefix}--edit-output">
-            <cds-form-item>
-              <cds-text-input
-                class="${clabsPrefix}--edit-form-item"
-                label="Expected message"
-                invalid-text="Error message"
-                placeholder="Enter expected generated message...">
-              </cds-text-input>
-            </cds-form-item>
-
-            <cds-form-item>
-              <cds-select
-                class="${clabsPrefix}--edit-form-item"
-                helper-text=" "
-                label-text="Select"
-                placeholder="Optional placeholder text">
-                <cds-select-item-group label="Category 1">
-                  <cds-select-item value="all">Option 1</cds-select-item>
-                  <cds-select-item value="cloudFoundry"
-                    >Option 2</cds-select-item
-                  >
-                </cds-select-item-group>
-                <cds-select-item-group label="Category 2">
-                  <cds-select-item value="staging">Option 3</cds-select-item>
-                  <cds-select-item value="dea">Option 4</cds-select-item>
-                  <cds-select-item value="router">Option 5</cds-select-item>
-                </cds-select-item-group>
-              </cds-select>
-            </cds-form-item>
-
-            <cds-form-item>
-              <cds-text-input
-                class="${clabsPrefix}--edit-form-item"
-                label="Keyword"
-                invalid-text="Error message"
-                placeholder="Enter expected value...">
-              </cds-text-input>
-            </cds-form-item>
-          </div>
-        </div>
-      </cds-modal-body>
-      <cds-modal-footer>
-        <cds-modal-footer-button kind="secondary" @click=${onEditModalCancel}
-          >Cancel</cds-modal-footer-button
-        >
-        <cds-modal-footer-button kind="primary">Save</cds-modal-footer-button>
-      </cds-modal-footer>
-    </cds-modal>
+    ${getEditModal(customElementClass)}
 
     <slot>${text}</slot>
   </div>`;

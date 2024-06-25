@@ -27,6 +27,15 @@ $css--plex: true !default;
     display: flex;
     justify-content: space-between;
 
+    h4 {
+      padding: 0;
+      margin: 1rem 0 0.5rem;
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.4;
+    }
+
     .#{$clabs-prefix}--edit-form-item {
       margin-block-end: 10px;
     }

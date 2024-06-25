@@ -43,6 +43,12 @@ export class PromptTuning extends LitElement {
   isEditModalOpen = false;
 
   /**
+   * New view name
+   */
+  @property({ type: String })
+  private _newName = '';
+
+  /**
    * Current prompt
    */
   @property({ type: String })
@@ -155,6 +161,27 @@ export class PromptTuning extends LitElement {
    */
   _toggleAddParameter() {
     this._showAddParameter = !this._showAddParameter;
+  }
+
+  /**
+   * Event handler to update the value property
+   * @param {event} event event
+   */
+  _handleNameInput(event) {
+    this._newName = event.target.value;
+  }
+
+  /**
+   * fire event when view rename is saved
+   *
+   */
+  onSaveRename() {
+    this.dispatchEvent(
+      new CustomEvent('save-rename', {
+        detail: { message: `Rename saved: ${this._newName}` },
+      })
+    );
+    this._toggleRename();
   }
 
   // /**

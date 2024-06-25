@@ -8,6 +8,7 @@
  */
 import '../components/prompt-tuning/prompt-tuning';
 import { html } from 'lit';
+import { action } from '@storybook/addon-actions';
 
 import '@carbon/web-components/es/components/button/index.js';
 import task_view from './task_view.json';
@@ -38,6 +39,7 @@ const defaultArgs = {
   ],
   viewContextVariables: ['table_ids'],
   viewParameters: ['mode', 'question', 'table_ids'],
+  onSaveRename: action('save-rename'),
 };
 
 /* Default controls */
@@ -105,6 +107,7 @@ export const Default = {
     viewList,
     viewContextVariables,
     viewParameters,
+    onSaveRename,
   }) =>
     html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
 
@@ -114,6 +117,7 @@ export const Default = {
         .viewList=${viewList}
         .viewContextVariables=${viewContextVariables}
         .viewParameters=${viewParameters}
+        @save-rename=${onSaveRename}
         >${text}</clabs-prompt-tuning
       >
 

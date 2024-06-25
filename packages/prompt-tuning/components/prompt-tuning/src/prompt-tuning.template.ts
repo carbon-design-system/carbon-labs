@@ -275,9 +275,9 @@ export function promptTuningTemplate(customElementClass) {
     _toggleRename: toggleRename,
     _toggleAddContextVariable: toggleAddContextVariable,
     _toggleAddParameter: toggleAddParameter,
+    onSaveRename: onSaveRename,
+    _handleNameInput: handleNameInput,
   } = customElementClass;
-
-  const numRows = data.length;
 
   return html` <div class="${clabsPrefix}--prompt-tuning">
     <cds-modal
@@ -304,7 +304,7 @@ export function promptTuningTemplate(customElementClass) {
                   <cds-tooltip align="bottom">
                     <div class="sb-tooltip-trigger" aria-labelledby="content">
                       <cds-button @click=${toggleRename} kind="ghost">
-                        ${RequestQuote16({ slot: 'icon' })}
+                        ${RequestQuote16()}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -318,14 +318,15 @@ export function promptTuningTemplate(customElementClass) {
                         class="${clabsPrefix}--rename-text"
                         invalid-text="Error message"
                         placeholder="Enter new view name..."
-                        value=${viewName}>
+                        value=${viewName}
+                        @input=${handleNameInput}>
                       </cds-text-input>
                     </cds-form-item>
                   </div>
                   <cds-tooltip align="bottom">
                     <div class="sb-tooltip-trigger" aria-labelledby="content">
                       <cds-button @click=${toggleRename} kind="danger--ghost">
-                        ${Close16({ slot: 'icon' })}
+                        ${Close16()}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -334,8 +335,8 @@ export function promptTuningTemplate(customElementClass) {
                   </cds-tooltip>
                   <cds-tooltip align="bottom">
                     <div class="sb-tooltip-trigger" aria-labelledby="content">
-                      <cds-button @click=${toggleRename} kind="ghost">
-                        ${Checkmark16({ slot: 'icon' })}
+                      <cds-button @click=${onSaveRename} kind="ghost">
+                        ${Checkmark16()}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -354,8 +355,11 @@ export function promptTuningTemplate(customElementClass) {
                 </cds-tag>`
               )}
           ${!showAddContextVariable
-            ? html`<cds-tag @click=${toggleAddContextVariable} type="gray"
-                >${Add16({ slot: 'icon' })} Add context variable
+            ? html` <cds-tag
+                class="${clabsPrefix}--add-context-variable-tag"
+                @click=${toggleAddContextVariable}
+                type="gray">
+                ${Add16({ slot: 'icon' })} Add context variable
               </cds-tag>`
             : html`
                 <div class="${clabsPrefix}--enter-new">
@@ -371,7 +375,7 @@ export function promptTuningTemplate(customElementClass) {
                       <cds-button
                         @click=${toggleAddContextVariable}
                         kind="danger--ghost">
-                        ${Close16({ slot: 'icon' })}
+                        ${Close16()}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -383,7 +387,7 @@ export function promptTuningTemplate(customElementClass) {
                       <cds-button
                         @click=${toggleAddContextVariable}
                         kind="ghost">
-                        ${Checkmark16({ slot: 'icon' })}
+                        ${Checkmark16()}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -402,8 +406,11 @@ export function promptTuningTemplate(customElementClass) {
                 </cds-tag>`
               )}
           ${!showAddParameter
-            ? html`<cds-tag @click=${toggleAddParameter} type="gray"
-                >${Add16({ slot: 'icon' })} Add parameter
+            ? html`<cds-tag
+                class="${clabsPrefix}--add-parameter-tag"
+                @click=${toggleAddParameter}
+                type="gray"
+                >${Add16()} Add parameter
               </cds-tag>`
             : html`<div class="${clabsPrefix}--enter-new">
                 <cds-form-item>
@@ -418,7 +425,7 @@ export function promptTuningTemplate(customElementClass) {
                     <cds-button
                       @click=${toggleAddParameter}
                       kind="danger--ghost">
-                      ${Close16({ slot: 'icon' })}
+                      ${Close16()}
                     </cds-button>
                   </div>
                   <cds-tooltip-content id="content">
@@ -428,7 +435,7 @@ export function promptTuningTemplate(customElementClass) {
                 <cds-tooltip align="bottom">
                   <div class="sb-tooltip-trigger" aria-labelledby="content">
                     <cds-button @click=${toggleAddParameter} kind="ghost">
-                      ${Checkmark16({ slot: 'icon' })}
+                      ${Checkmark16()}
                     </cds-button>
                   </div>
                   <cds-tooltip-content id="content">

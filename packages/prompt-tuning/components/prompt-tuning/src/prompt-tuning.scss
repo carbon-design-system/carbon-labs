@@ -25,6 +25,16 @@ $css--plex: true !default;
   .#{$clabs-prefix}--rename {
     flex-grow: 1;
   }
+  .#{$clabs-prefix}--add-context-variable-tag,
+  .#{$clabs-prefix}--add-parameter-tag {
+    cursor: pointer;
+  }
+
+  .#{$clabs-prefix}--add-context-variable-tag:hover,
+  .#{$clabs-prefix}--add-parameter-tag:hover {
+    background-color: #636363;
+  }
+
   .#{$clabs-prefix}--table-actions {
     min-inline-size: 96px;
   }

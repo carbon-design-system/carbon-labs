@@ -26,6 +26,93 @@ export const Default = {
   </clabs-chat-text>`,
 };
 
+const subElementsExample = [
+  {
+    text: 'Abraham Lincoln was an American lawyer, politician, and statesman who served as the 16th ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'president of the United States',
+    type: 'annotation',
+    color: '#FF00FF',
+    content: 'https://en.wikipedia.org/wiki/President_of_the_United_States',
+    active: false,
+  },
+  {
+    text: ' from 1861 until his ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'assassination',
+    type: 'annotation',
+    color: '#00FFFF',
+    content: 'https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln',
+    active: true,
+  },
+  {
+    text: ' in 1865.',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: ' Lincoln led the United States through the ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'American Civil War',
+    type: 'annotation',
+    color: '#00FFFF',
+    content: 'https://en.wikipedia.org/wiki/American_Civil_War',
+    active: false,
+  },
+  {
+    text: ', defending the nation as a constitutional ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'union',
+    type: 'annotation',
+    color: '#FF00FF',
+    content: 'https://en.wikipedia.org/wiki/Union_(American_Civil_War',
+    active: false,
+  },
+  {
+    text: '), defeating the insurgent ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'Confederacy',
+    type: 'annotation',
+    color: '#00DDDD',
+    content: 'https://en.wikipedia.org/wiki/Confederate_States_of_America',
+    active: false,
+  },
+  {
+    text: ', playing a major role in the ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'abolition of slavery',
+    type: 'annotation',
+    color: '#DDFFDD',
+    content: 'https://en.wikipedia.org/wiki/Abolitionism_in_the_United_States',
+    active: false,
+  },
+];
+
 export const Showcase = {
   /**
    * Renders the template for Storybook
@@ -71,6 +158,20 @@ Lincoln was born into poverty in a [log cabin](https://en.wikipedia.org/wiki/Log
           Slotted div placed here
         </div>
       </div>
+    </clabs-chat-text>
+    <br />
+    <br />
+    <h4>Text with text-sub-elements JSON Object</h4>
+    <br />
+    <p style="font-style:italic; font-size:14px;">
+      JSON array containing: text (plain text), type (default or annotated),
+      active (false by default), content (link url or inner-text to be
+      returned), color (Background Color)
+    </p>
+    <br />
+    <clabs-chat-text
+      enable-text-highlighting
+      .textSubElements="${subElementsExample}">
     </clabs-chat-text>
     <br />
     <br />

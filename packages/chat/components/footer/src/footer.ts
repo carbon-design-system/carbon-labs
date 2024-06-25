@@ -186,10 +186,15 @@ export default class footer extends LitElement {
   _handleInput(event) {
     const { value } = event.target;
     this._messageText = value;
-    if (event.key == 'Enter' && !event.shiftKey) {
+
+    if (this._forceDisableInput) {
       event.preventDefault();
-      if (value.length > 0) {
-        this._sendInputToParent();
+    } else {
+      if (event.key == 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        if (value.length > 0) {
+          this._sendInputToParent();
+        }
       }
     }
   }

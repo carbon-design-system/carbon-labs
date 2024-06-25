@@ -36,6 +36,8 @@ const defaultArgs = {
     'table_comparison_view',
     'causal_interference_view',
   ],
+  viewContextVariables: ['table_ids'],
+  viewParameters: ['mode', 'question', 'table_ids'],
 };
 
 /* Default controls */
@@ -56,6 +58,14 @@ const defaultControls = {
   viewList: {
     control: { type: 'object' },
     description: 'List of views',
+  },
+  viewContextVariables: {
+    control: { type: 'array' },
+    description: 'View context variables',
+  },
+  viewParameters: {
+    control: { type: 'array' },
+    description: 'View parameters',
   },
 };
 
@@ -88,13 +98,22 @@ export const Default = {
    * @param {string} args.content - content to generate from
    * @returns {TemplateResult<1>}
    */
-  render: ({ text, data, viewName, viewList }) =>
+  render: ({
+    text,
+    data,
+    viewName,
+    viewList,
+    viewContextVariables,
+    viewParameters,
+  }) =>
     html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
 
       <clabs-prompt-tuning
         .data=${getView(data)}
         .viewName=${viewName}
         .viewList=${viewList}
+        .viewContextVariables=${viewContextVariables}
+        .viewParameters=${viewParameters}
         >${text}</clabs-prompt-tuning
       >
 

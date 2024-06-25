@@ -73,6 +73,24 @@ export class PromptTuning extends LitElement {
   private _currentParameters = {};
 
   /**
+   * Current response view
+   */
+  @property({ type: Boolean })
+  private _showRename = false;
+
+  /**
+   * Show add context variable
+   */
+  @property({ type: Boolean })
+  private _showAddContextVariable = false;
+
+  /**
+   * Show add parameter
+   */
+  @property({ type: Boolean })
+  private _showAddParameter = false;
+
+  /**
    * Method for closing the Prompt List Modal
    */
   _onListModalClose() {
@@ -116,6 +134,27 @@ export class PromptTuning extends LitElement {
     this._currentResponse = response;
     this._currentResponseView = responseView;
     this._currentParameters = parameters;
+  }
+
+  /**
+   * Method for toggling view rename
+   */
+  _toggleRename() {
+    this._showRename = !this._showRename;
+  }
+
+  /**
+   * Method for toggling view rename
+   */
+  _toggleAddContextVariable() {
+    this._showAddContextVariable = !this._showAddContextVariable;
+  }
+
+  /**
+   * Method for toggling view rename
+   */
+  _toggleAddParameter() {
+    this._showAddParameter = !this._showAddParameter;
   }
 
   // /**

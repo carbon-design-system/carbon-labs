@@ -15,6 +15,11 @@ import '@carbon/web-components/es/components/data-table/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 import Edit16 from '@carbon/web-components/es/icons/edit/16';
 import TrashCan16 from '@carbon/web-components/es/icons/trash-can/16';
+import Add16 from '@carbon/web-components/es/icons/add/16';
+import RequestQuote16 from '@carbon/web-components/es/icons/request-quote/16';
+import Close16 from '@carbon/web-components/es/icons/close/16';
+import Checkmark16 from '@carbon/web-components/es/icons/checkmark/16';
+
 import '@carbon/web-components/es/components/tag/index.js';
 
 import '@carbon/web-components/es/components/text-input/index.js';
@@ -254,6 +259,8 @@ export function promptTuningTemplate(customElementClass) {
     data: data,
     viewName: viewName,
     viewList: viewList,
+    viewContextVariables: viewContextVariables,
+    viewParameters: viewParameters,
     _currentPrompt: currentPrompt,
     _currentContextVariables: currentContextVariables,
     isListModalOpen,
@@ -262,6 +269,12 @@ export function promptTuningTemplate(customElementClass) {
     isEditModalOpen,
     _onEditModalClose: onEditModalClose,
     _onEditModalCancel: onEditModalCancel,
+    _showRename: showRename,
+    _showAddContextVariable: showAddContextVariable,
+    _showAddParameter: showAddParameter,
+    _toggleRename: toggleRename,
+    _toggleAddContextVariable: toggleAddContextVariable,
+    _toggleAddParameter: toggleAddParameter,
   } = customElementClass;
 
   const numRows = data.length;
@@ -280,46 +293,149 @@ export function promptTuningTemplate(customElementClass) {
             <div class="${clabsPrefix}--heading-tune-prompts">
               Tune prompts for
             </div>
+            ${!showRename
+              ? html`<cds-select
+                    class="${clabsPrefix}--view-dropdown"
+                    inline="true"
+                    value=${viewName}>
+                    ${getSelectViews(customElementClass)}
+                  </cds-select>
 
-            <cds-select inline="true" value=${viewName}>
-              ${getSelectViews(customElementClass)}
-            </cds-select>
+                  <cds-tooltip align="bottom">
+                    <div class="sb-tooltip-trigger" aria-labelledby="content">
+                      <cds-button @click=${toggleRename} kind="ghost">
+                        ${RequestQuote16({ slot: 'icon' })}
+                      </cds-button>
+                    </div>
+                    <cds-tooltip-content id="content">
+                      Rename intent/view</cds-tooltip-content
+                    >
+                  </cds-tooltip>`
+              : html`
+                  <div class="${clabsPrefix}--rename">
+                    <cds-form-item>
+                      <cds-text-input
+                        class="${clabsPrefix}--rename-text"
+                        invalid-text="Error message"
+                        placeholder="Enter new view name..."
+                        value=${viewName}>
+                      </cds-text-input>
+                    </cds-form-item>
+                  </div>
+                  <cds-tooltip align="bottom">
+                    <div class="sb-tooltip-trigger" aria-labelledby="content">
+                      <cds-button @click=${toggleRename} kind="danger--ghost">
+                        ${Close16({ slot: 'icon' })}
+                      </cds-button>
+                    </div>
+                    <cds-tooltip-content id="content">
+                      Cancel rename</cds-tooltip-content
+                    >
+                  </cds-tooltip>
+                  <cds-tooltip align="bottom">
+                    <div class="sb-tooltip-trigger" aria-labelledby="content">
+                      <cds-button @click=${toggleRename} kind="ghost">
+                        ${Checkmark16({ slot: 'icon' })}
+                      </cds-button>
+                    </div>
+                    <cds-tooltip-content id="content">
+                      Save rename</cds-tooltip-content
+                    >
+                  </cds-tooltip>
+                `}
           </div>
 
-          Edit ${viewName}:
+          <h6 style="margin:0;">Context Variables:</h6>
+          ${viewContextVariables.length <= 0
+            ? html`<div>This intent/view does not provide any parameters.</div>`
+            : viewContextVariables.map(
+                (variable) => html`<cds-tag filter type="gray">
+                  ${variable}
+                </cds-tag>`
+              )}
+          ${!showAddContextVariable
+            ? html`<cds-tag @click=${toggleAddContextVariable} type="gray"
+                >${Add16({ slot: 'icon' })} Add context variable
+              </cds-tag>`
+            : html`
+                <div class="${clabsPrefix}--enter-new">
+                  <cds-form-item>
+                    <cds-text-input
+                      class="${clabsPrefix}--new-context-variable"
+                      invalid-text="Error message"
+                      placeholder="Enter new context variable name...">
+                    </cds-text-input>
+                  </cds-form-item>
+                  <cds-tooltip align="bottom">
+                    <div class="sb-tooltip-trigger" aria-labelledby="content">
+                      <cds-button
+                        @click=${toggleAddContextVariable}
+                        kind="danger--ghost">
+                        ${Close16({ slot: 'icon' })}
+                      </cds-button>
+                    </div>
+                    <cds-tooltip-content id="content">
+                      Cancel rename</cds-tooltip-content
+                    >
+                  </cds-tooltip>
+                  <cds-tooltip align="bottom">
+                    <div class="sb-tooltip-trigger" aria-labelledby="content">
+                      <cds-button
+                        @click=${toggleAddContextVariable}
+                        kind="ghost">
+                        ${Checkmark16({ slot: 'icon' })}
+                      </cds-button>
+                    </div>
+                    <cds-tooltip-content id="content">
+                      Save rename</cds-tooltip-content
+                    >
+                  </cds-tooltip>
+                </div>
+              `}
 
-          <cds-form-item>
-            <cds-text-input
-              inline="true"
-              class="${clabsPrefix}--rename-view"
-              label="Rename"
-              invalid-text="Error message"
-              placeholder="Enter expected generated message..."
-              value=${viewName}>
-            </cds-text-input>
-          </cds-form-item>
-
-          Context Variables: List...
-          <cds-form-item>
-            <cds-text-input
-              inline="true"
-              class="${clabsPrefix}--add-context-variable"
-              label="Add context variable"
-              invalid-text="Error message"
-              placeholder="Enter new context variable name...">
-            </cds-text-input>
-          </cds-form-item>
-
-          Parameters List...
-          <cds-form-item>
-            <cds-text-input
-              inline="true"
-              class="${clabsPrefix}--add-parameter"
-              label="Add parameter"
-              invalid-text="Error message"
-              placeholder="Enter parameter name...">
-            </cds-text-input>
-          </cds-form-item>
+          <h6 style="margin:0;">Parameters:</h6>
+          ${viewParameters.length <= 0
+            ? html`<div>This intent/view does not provide any parameters.</div>`
+            : viewParameters.map(
+                (parameter) => html`<cds-tag filter type="gray">
+                  ${parameter}
+                </cds-tag>`
+              )}
+          ${!showAddParameter
+            ? html`<cds-tag @click=${toggleAddParameter} type="gray"
+                >${Add16({ slot: 'icon' })} Add parameter
+              </cds-tag>`
+            : html`<div class="${clabsPrefix}--enter-new">
+                <cds-form-item>
+                  <cds-text-input
+                    class="${clabsPrefix}--new-parameter"
+                    invalid-text="Error message"
+                    placeholder="Enter new parameter name...">
+                  </cds-text-input>
+                </cds-form-item>
+                <cds-tooltip align="bottom">
+                  <div class="sb-tooltip-trigger" aria-labelledby="content">
+                    <cds-button
+                      @click=${toggleAddParameter}
+                      kind="danger--ghost">
+                      ${Close16({ slot: 'icon' })}
+                    </cds-button>
+                  </div>
+                  <cds-tooltip-content id="content">
+                    Cancel rename</cds-tooltip-content
+                  >
+                </cds-tooltip>
+                <cds-tooltip align="bottom">
+                  <div class="sb-tooltip-trigger" aria-labelledby="content">
+                    <cds-button @click=${toggleAddParameter} kind="ghost">
+                      ${Checkmark16({ slot: 'icon' })}
+                    </cds-button>
+                  </div>
+                  <cds-tooltip-content id="content">
+                    Save rename</cds-tooltip-content
+                  >
+                </cds-tooltip>
+              </div>`}
         </cds-modal-heading>
       </cds-modal-header>
       <cds-modal-body>

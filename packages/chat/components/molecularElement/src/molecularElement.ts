@@ -9,7 +9,7 @@
 
 import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import 'smiles-drawer';
+import SmileDrawer from 'smiles-drawer';
 
 // @ts-ignore
 import styles from './molecularElement.scss?inline';
@@ -151,8 +151,8 @@ export default class molecularElement extends LitElement {
         },
       },
     };
-    this.molecularRenderer = new SmiDrawer(options);
-    this.temporaryMolecularRenderer = new SmiDrawer(options);
+    this.molecularRenderer = new SmileDrawer.SmiDrawer(options);
+    this.temporaryMolecularRenderer = new SmileDrawer.SmiDrawer(options);
     if (!this.theme) {
       this._getTheme();
     }

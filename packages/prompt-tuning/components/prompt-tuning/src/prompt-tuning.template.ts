@@ -20,6 +20,7 @@ import '@carbon/web-components/es/components/tag/index.js';
 import '@carbon/web-components/es/components/text-input/index.js';
 import '@carbon/web-components/es/components/select/index.js';
 import '@carbon/web-components/es/components/form/index.js';
+import '@carbon/web-components/es/components/tooltip/index.js';
 
 /**
  * Render HTML rows
@@ -42,13 +43,18 @@ function getHTMLRows(customElementClass) {
                   (item) =>
                     item.length > 0
                       ? html`
-                          <cds-tag type="gray" title=${item}
-                            ><span
-                              class="${clabsPrefix}--truncated-text"
-                              title="${item[0]}: ${item[1]}"
-                              >${item[1]}</span
-                            ></cds-tag
-                          >
+                          <cds-tooltip align="bottom">
+                            <div
+                              class="sb-tooltip-trigger"
+                              aria-labelledby="content">
+                              <cds-tag type="gray"
+                                ><span>${item[1]}</span></cds-tag
+                              >
+                            </div>
+                            <cds-tooltip-content id="content">
+                              ${item[0]}: ${item[1]}
+                            </cds-tooltip-content>
+                          </cds-tooltip>
                         `
                       : html``
                 )}`
@@ -61,13 +67,18 @@ function getHTMLRows(customElementClass) {
               ? html`${Object.entries(item.output.parameters).map((item) =>
                   item.length > 0
                     ? html`
-                        <cds-tag type="gray" title=${item}
-                          ><span
-                            class="${clabsPrefix}--truncated-text"
-                            title="${item[0]}: ${item[1]}"
-                            >${item[1]}</span
-                          ></cds-tag
-                        >
+                        <cds-tooltip align="bottom">
+                          <div
+                            class="sb-tooltip-trigger"
+                            aria-labelledby="content">
+                            <cds-tag type="gray"
+                              ><span>${item[1]}</span></cds-tag
+                            >
+                          </div>
+                          <cds-tooltip-content id="content">
+                            ${item[0]}: ${item[1]}
+                          </cds-tooltip-content>
+                        </cds-tooltip>
                       `
                     : html``
                 )}`
@@ -161,7 +172,9 @@ function getEditModal(customElementClass) {
           <h4>Context variables</h4>
 
           ${Object.keys(currentContextVariables).length <= 0
-            ? html`<div>This view does not provide any context variables.</div>`
+            ? html`<div>
+                This intent/view does not provide any context variables.
+              </div>`
             : Object.entries(currentContextVariables).map(
                 ([key, value]) => html`<cds-form-item
                   class="${clabsPrefix}--edit-context-variable">
@@ -191,7 +204,7 @@ function getEditModal(customElementClass) {
             <cds-select
               class="${clabsPrefix}--edit-form-item"
               helper-text=" "
-              label-text="View"
+              label-text="Intent/View"
               placeholder="Optional placeholder text"
               value=${currentResponseView}>
               ${viewList.map(
@@ -203,9 +216,9 @@ function getEditModal(customElementClass) {
             </cds-select>
           </cds-form-item>
 
-          <h4>Expected view parameters</h4>
+          <h4>Expected intent/view parameters</h4>
           ${Object.keys(currentParameters).length <= 0
-            ? html`<div>This view does not provide any parameters.</div>`
+            ? html`<div>This intent/view does not provide any parameters.</div>`
             : Object.entries(currentParameters).map(
                 ([key, value]) => html`<cds-form-item>
                   <cds-text-input
@@ -262,12 +275,51 @@ export function promptTuningTemplate(customElementClass) {
       @cds-modal-closed=${onListModalClose}>
       <cds-modal-header>
         <cds-modal-close-button></cds-modal-close-button>
-        <cds-modal-heading
-          >Tune prompts for
-          <cds-select inline="true" value=${viewName}>
-            ${getSelectViews(customElementClass)} ></cds-select
-          >
+        <cds-modal-heading>
+          <div class="${clabsPrefix}--heading">
+            <div class="${clabsPrefix}--heading-tune-prompts">
+              Tune prompts for
+            </div>
+
+            <cds-select inline="true" value=${viewName}>
+              ${getSelectViews(customElementClass)}
+            </cds-select>
+          </div>
+
           Edit ${viewName}:
+
+          <cds-form-item>
+            <cds-text-input
+              inline="true"
+              class="${clabsPrefix}--rename-view"
+              label="Rename"
+              invalid-text="Error message"
+              placeholder="Enter expected generated message..."
+              value=${viewName}>
+            </cds-text-input>
+          </cds-form-item>
+
+          Context Variables: List...
+          <cds-form-item>
+            <cds-text-input
+              inline="true"
+              class="${clabsPrefix}--add-context-variable"
+              label="Add context variable"
+              invalid-text="Error message"
+              placeholder="Enter new context variable name...">
+            </cds-text-input>
+          </cds-form-item>
+
+          Parameters List...
+          <cds-form-item>
+            <cds-text-input
+              inline="true"
+              class="${clabsPrefix}--add-parameter"
+              label="Add parameter"
+              invalid-text="Error message"
+              placeholder="Enter parameter name...">
+            </cds-text-input>
+          </cds-form-item>
         </cds-modal-heading>
       </cds-modal-header>
       <cds-modal-body>
@@ -276,7 +328,7 @@ export function promptTuningTemplate(customElementClass) {
             <cds-table-header-row>
               <cds-table-header-cell>Prompt</cds-table-header-cell>
               <cds-table-header-cell>Response</cds-table-header-cell>
-              <cds-table-header-cell>Result view</cds-table-header-cell>
+              <cds-table-header-cell>Intent/View</cds-table-header-cell>
               <cds-table-header-cell>Actions</cds-table-header-cell>
             </cds-table-header-row>
           </cds-table-head>

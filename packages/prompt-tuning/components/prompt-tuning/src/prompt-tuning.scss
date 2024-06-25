@@ -12,6 +12,12 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}-prompt-tuning) {
+  .#{$clabs-prefix}--heading {
+    display: flex;
+  }
+  .#{$clabs-prefix}--heading-tune-prompts {
+    min-inline-size: max-content;
+  }
   .#{$clabs-prefix}--truncated-text {
     display: inline-block;
     overflow: hidden;

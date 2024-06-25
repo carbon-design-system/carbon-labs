@@ -40,7 +40,6 @@ $css--plex: true !default;
     display: flex;
     justify-content: flex-start;
   }
-
   .#{$clabs-prefix}--chat-file-upload-top-container {
     display: flex;
     box-sizing: border-box;
@@ -76,6 +75,7 @@ $css--plex: true !default;
     block-size: 20px;
     inline-size: 20px;
   }
+
   .#{$clabs-prefix}--chat-file-upload-container-file-name {
     overflow: hidden;
     flex: 3;

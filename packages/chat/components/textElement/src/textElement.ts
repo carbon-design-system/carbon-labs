@@ -67,7 +67,7 @@ export default class textElement extends LitElement {
   disableNewLines = false;
 
   /**
-   * Element array to be rendered
+   * Internal element array to be rendered
    */
   @state()
   _textElements: {
@@ -75,6 +75,18 @@ export default class textElement extends LitElement {
     type: string;
     active: boolean;
     content: string;
+  }[] = [];
+
+  /**
+   * External element array to be rendered
+   */
+  @property({ type: Array, attribute: 'textSubElements' })
+  textSubElements: {
+    text: string;
+    type: string;
+    active: boolean;
+    content: string;
+    color: string;
   }[] = [];
 
   /**
@@ -89,21 +101,15 @@ export default class textElement extends LitElement {
   @state()
   _annotationIndex;
 
-  /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
-   * @param {Object} changedProperties - returned inner DOM update object
-   **/
-  updated(changedProperties) {
-    super.updated(changedProperties);
-    if (changedProperties.has('content')) {
-      this._formatText();
-    }
-  }
-
   /** detect when component is rendered to process text object
    */
   firstUpdated() {
-    if (this.content) {
-      this._formatText();
+    if (this.textSubElements?.length > 1) {
+      this._textElements = this.textSubElements;
+    } else {
+      if (this.content) {
+        this._formatText();
+      }
     }
 
     if (this.hasAttribute('text-highlight-color')) {
@@ -119,10 +125,24 @@ export default class textElement extends LitElement {
     );
   }
 
+  /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
+   * @param {Object} changedProperties - returned inner DOM update object
+   **/
+  updated(changedProperties) {
+    super.updated(changedProperties);
+    if (
+      changedProperties.has('content') &&
+      !(this.textSubElements.length > 0)
+    ) {
+      this._formatText();
+    }
+  }
+
   /** _handleAnnotationClick - open and load Card element when annotation dropdown clicked
    * @param {event} event - click event
    */
   _handleAnnotationClick(event) {
+    console.log(this._textElements);
     const source = event?.originalTarget?.dataset?.source;
     this.style.setProperty(
       '--chat-text-content-annotation-element-height',

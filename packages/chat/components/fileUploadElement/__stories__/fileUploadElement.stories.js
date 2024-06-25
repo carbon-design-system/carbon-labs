@@ -35,14 +35,21 @@ export const Showcase = {
   render: () => html`
     <h4>Loading</h4>
     <br />
-    <clabs-chat-file-upload content="Test_file.pdf"> </clabs-chat-file-upload>
+    <clabs-chat-file-upload content="Filename.pdf"> </clabs-chat-file-upload>
     <h4>Success</h4>
     <br />
-    <clabs-chat-file-upload status="success" content="Test_file.pdf">
+    <clabs-chat-file-upload status="success" content="Filename.pdf">
     </clabs-chat-file-upload>
     <h4>Close</h4>
     <br />
-    <clabs-chat-file-upload status="close" content="Test_file.pdf">
+    <clabs-chat-file-upload status="close" content="Filename.pdf">
+    </clabs-chat-file-upload>
+    <h4>Error</h4>
+    <br />
+    <clabs-chat-file-upload
+      status="error"
+      error-message="File exceeds size limit"
+      content="Filename.pdf">
     </clabs-chat-file-upload>
   `,
 };

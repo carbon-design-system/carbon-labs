@@ -19,9 +19,7 @@ export default {
 };
 
 const defaultArgs = {
-  text: ' ',
   promptSamples: semantic_search_view.samples,
-  viewName: 'semantic_search_view',
   viewList: [
     'task_view',
     'semantic_search_view',
@@ -35,8 +33,11 @@ const defaultArgs = {
     'table_comparison_view',
     'causal_interference_view',
   ],
-  viewContextVariables: ['table_ids'],
-  viewParameters: ['mode', 'question', 'table_ids'],
+  currentView: {
+    name: 'semantic_search_view',
+    contextVariables: ['table_ids'],
+    parameters: ['mode', 'question', 'table_ids'],
+  },
   onSaveRename: action('save-rename'),
   onCloseTag: action('close-tag'),
   onAddContextVariable: action('add-context-variable'),
@@ -48,29 +49,17 @@ const defaultArgs = {
 
 /* Default controls */
 const defaultControls = {
-  text: {
-    control: { type: 'text' },
-    description: 'Text inside the prompt-tuning',
-  },
   promptSamples: {
     control: { type: 'object' },
     description: 'Current view data',
   },
-  viewName: {
-    control: { type: 'text' },
-    description: 'Name of the current view',
+  currentView: {
+    control: { type: 'object' },
+    description: 'Name, context variables, and parameters in the current view',
   },
   viewList: {
     control: { type: 'object' },
     description: 'List of views',
-  },
-  viewContextVariables: {
-    control: { type: 'array' },
-    description: 'View context variables',
-  },
-  viewParameters: {
-    control: { type: 'array' },
-    description: 'View parameters',
   },
 };
 
@@ -88,12 +77,9 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: ({
-    text,
     promptSamples,
-    viewName,
     viewList,
-    viewContextVariables,
-    viewParameters,
+    currentView,
     onSaveRename,
     onCloseTag,
     onAddContextVariable,
@@ -106,19 +92,15 @@ export const Default = {
 
       <clabs-prompt-tuning
         .promptSamples=${promptSamples}
-        .viewName=${viewName}
+        .currentView=${currentView}
         .viewList=${viewList}
-        .viewContextVariables=${viewContextVariables}
-        .viewParameters=${viewParameters}
         @save-rename=${onSaveRename}
         @close-tag=${onCloseTag}
         @add-context-variable=${onAddContextVariable}
         @add-parameter=${onAddParameter}
         @save-prompt=${onSavePrompt}
         @delete-prompt=${onDeletePrompt}
-        @change-view=${onChangeView}
-        >${text}</clabs-prompt-tuning
-      >
+        @change-view=${onChangeView}></clabs-prompt-tuning>
 
       <script type="text/javascript">
         const button = document.getElementById('modal-open-button');

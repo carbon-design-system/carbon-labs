@@ -21,12 +21,6 @@ export class PromptTuning extends LitElement {
   static styles = styles;
 
   /**
-   * Text inside the prompt-tuning
-   */
-  @property({ attribute: 'text', type: String })
-  text;
-
-  /**
    * Prompt samples data
    */
   @property({ attribute: 'promptSamples', type: Array })
@@ -269,7 +263,10 @@ export class PromptTuning extends LitElement {
   onSaveRename() {
     this.dispatchEvent(
       new CustomEvent('save-rename', {
-        detail: { message: `Rename saved: ${this._newName}` },
+        detail: {
+          message: `Rename saved: ${this._newName}`,
+          newName: this._newName,
+        },
       })
     );
     this._toggleRename();
@@ -283,7 +280,8 @@ export class PromptTuning extends LitElement {
     this.dispatchEvent(
       new CustomEvent('close-tag', {
         detail: {
-          message: `Tag closed. ${event.detail.triggeredBy.ariaLabel}`,
+          message: `Tag closed: ${event.detail.triggeredBy.ariaLabel}`,
+          closedTag: event.detail.triggeredBy.ariaLabel,
         },
       })
     );
@@ -298,6 +296,7 @@ export class PromptTuning extends LitElement {
       new CustomEvent('add-context-variable', {
         detail: {
           message: `Add context variable: ${this._newContextVariable}`,
+          newContextVariable: this._newContextVariable,
         },
       })
     );
@@ -313,6 +312,7 @@ export class PromptTuning extends LitElement {
       new CustomEvent('add-parameter', {
         detail: {
           message: `Add parameter: ${this._newParameter}`,
+          newParameter: this._newParameter,
         },
       })
     );

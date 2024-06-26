@@ -147,7 +147,6 @@ function getSelectViews(customElementClass) {
  */
 function getEditModal(customElementClass) {
   const {
-    viewName: viewName,
     viewList: viewList,
     _currentPrompt: currentPrompt,
     _currentContextVariables: currentContextVariables,
@@ -163,21 +162,20 @@ function getEditModal(customElementClass) {
     onSavePrompt: onSavePrompt,
     triggerSubmit: triggerSubmit,
     _isNewPrompt: isNewPrompt,
-    viewContextVariables: viewContextVariables,
-    viewParameters: viewParameters,
+    currentView: currentView,
   } = customElementClass;
 
   let modalHeader, selectedView, contextVariables, parameters;
 
   if (isNewPrompt) {
-    modalHeader = `Add new prompt for ${viewName}`;
-    selectedView = viewName;
+    modalHeader = `Add new prompt for ${currentView.name}`;
+    selectedView = currentView.name;
     contextVariables =
-      viewContextVariables.length <= 0
+      currentView.contextVariables.length <= 0
         ? html`<div>
             This intent/view does not provide any context variables.
           </div>`
-        : viewContextVariables.map(
+        : currentView.contextVariables.map(
             (variable) => html` <cds-text-input
               class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
               label=${variable}
@@ -186,9 +184,9 @@ function getEditModal(customElementClass) {
             </cds-text-input>`
           );
     parameters =
-      viewParameters.length <= 0
+      currentView.parameters.length <= 0
         ? html`<div>This intent/view does not provide any parameters.</div>`
-        : viewParameters.map(
+        : currentView.parameters.map(
             (parameter) => html` <cds-text-input
               class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
               label=${parameter}
@@ -303,11 +301,8 @@ function getEditModal(customElementClass) {
  */
 export function promptTuningTemplate(customElementClass) {
   const {
-    text: text,
-    viewName: viewName,
     viewList: viewList,
-    viewContextVariables: viewContextVariables,
-    viewParameters: viewParameters,
+    currentView: currentView,
     _currentPrompt: currentPrompt,
     _currentContextVariables: currentContextVariables,
     isListModalOpen,
@@ -352,7 +347,7 @@ export function promptTuningTemplate(customElementClass) {
               ? html`<cds-select
                     class="${clabsPrefix}--view-dropdown"
                     inline="true"
-                    value=${viewName}
+                    value=${currentView.name}
                     @cds-select-selected=${onChangeView}>
                     ${getSelectViews(customElementClass)}
                   </cds-select>
@@ -374,7 +369,7 @@ export function promptTuningTemplate(customElementClass) {
                         class="${clabsPrefix}--rename-text"
                         invalid-text="Error message"
                         placeholder="Enter new view name..."
-                        value=${viewName}
+                        value=${currentView.name}
                         @input=${handleNameInput}>
                       </cds-text-input>
                     </cds-form-item>
@@ -403,9 +398,9 @@ export function promptTuningTemplate(customElementClass) {
           </div>
 
           <h6 style="margin:0;">Context Variables:</h6>
-          ${viewContextVariables.length <= 0
+          ${currentView.contextVariables.length <= 0
             ? html`<div>This intent/view does not provide any parameters.</div>`
-            : viewContextVariables.map(
+            : currentView.contextVariables.map(
                 (variable) => html`<cds-tag
                   filter
                   type="gray"
@@ -457,9 +452,9 @@ export function promptTuningTemplate(customElementClass) {
               `}
 
           <h6 style="margin:0;">Parameters:</h6>
-          ${viewParameters.length <= 0
+          ${currentView.parameters.length <= 0
             ? html`<div>This intent/view does not provide any parameters.</div>`
-            : viewParameters.map(
+            : currentView.parameters.map(
                 (parameter) => html`<cds-tag
                   filter
                   type="gray"
@@ -532,7 +527,5 @@ export function promptTuningTemplate(customElementClass) {
     </cds-modal>
 
     ${getEditModal(customElementClass)}
-
-    <slot>${text}</slot>
   </div>`;
 }

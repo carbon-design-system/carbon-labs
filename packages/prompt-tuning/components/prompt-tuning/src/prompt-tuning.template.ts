@@ -36,13 +36,13 @@ import '@carbon/web-components/es/components/tooltip/index.js';
  */
 function getHTMLRows(customElementClass) {
   const {
-    data: data,
+    promptSamples: promptSamples,
     _onEditButtonClick: onEditButtonClick,
     onDeleteButtonClick: onDeleteButtonClick,
   } = customElementClass;
 
   return html`
-    ${data.map(
+    ${promptSamples.map(
       (item) =>
         html`<cds-table-row>
           <cds-table-cell
@@ -147,8 +147,6 @@ function getSelectViews(customElementClass) {
  */
 function getEditModal(customElementClass) {
   const {
-    text: text,
-    data: data,
     viewName: viewName,
     viewList: viewList,
     _currentPrompt: currentPrompt,
@@ -306,7 +304,6 @@ function getEditModal(customElementClass) {
 export function promptTuningTemplate(customElementClass) {
   const {
     text: text,
-    data: data,
     viewName: viewName,
     viewList: viewList,
     viewContextVariables: viewContextVariables,

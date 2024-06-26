@@ -11,9 +11,7 @@ import { html } from 'lit';
 import { action } from '@storybook/addon-actions';
 
 import '@carbon/web-components/es/components/button/index.js';
-import task_view from './task_view.json';
 import semantic_search_view from './semantic_search_view.json';
-import collections_view from './collections_view.json';
 
 export default {
   title: 'Components/Prompt Tuning/Prompt Tuning',
@@ -22,7 +20,7 @@ export default {
 
 const defaultArgs = {
   text: ' ',
-  data: 'semantic_search_view',
+  promptSamples: semantic_search_view.samples,
   viewName: 'semantic_search_view',
   viewList: [
     'task_view',
@@ -54,9 +52,8 @@ const defaultControls = {
     control: { type: 'text' },
     description: 'Text inside the prompt-tuning',
   },
-  data: {
-    control: { type: 'select' },
-    options: ['task_view', 'semantic_search_view', 'collections_view'],
+  promptSamples: {
+    control: { type: 'object' },
     description: 'Current view data',
   },
   viewName: {
@@ -78,22 +75,6 @@ const defaultControls = {
 };
 
 /**
- * Return view data from string
- * @param {string} str string of view name
- */
-function getView(str) {
-  switch (str) {
-    case 'task_view':
-      return task_view.samples;
-    case 'semantic_search_view':
-      return semantic_search_view.samples;
-    case 'collections_view':
-      return collections_view.samples;
-    default:
-      return semantic_search_view.samples;
-  }
-}
-/**
  * More on writing stories with args: https://storybook.js.org/docs/web-components/writing-stories/args
  *
  * @type {{args: {label: string}, render: (function(*): TemplateResult<1>)}}
@@ -108,7 +89,7 @@ export const Default = {
    */
   render: ({
     text,
-    data,
+    promptSamples,
     viewName,
     viewList,
     viewContextVariables,
@@ -124,7 +105,7 @@ export const Default = {
     html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
 
       <clabs-prompt-tuning
-        .data=${getView(data)}
+        .promptSamples=${promptSamples}
         .viewName=${viewName}
         .viewList=${viewList}
         .viewContextVariables=${viewContextVariables}

@@ -27,10 +27,10 @@ export class PromptTuning extends LitElement {
   text;
 
   /**
-   * Model ID or Model Name for which feedback is recording
+   * Prompt samples data
    */
-  @property({ attribute: 'data', type: Array })
-  data;
+  @property({ attribute: 'promptSamples', type: Array })
+  promptSamples;
 
   /**
    * Whether the prompt list modal is open or not

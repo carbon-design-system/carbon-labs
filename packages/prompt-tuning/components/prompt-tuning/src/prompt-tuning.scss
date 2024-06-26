@@ -12,6 +12,9 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}-prompt-tuning) {
+  .#{$clabs-prefix}--heading-container {
+    padding: 0;
+  }
   .#{$clabs-prefix}--heading,
   .#{$clabs-prefix}--enter-new {
     display: flex;
@@ -25,6 +28,16 @@ $css--plex: true !default;
   .#{$clabs-prefix}--rename {
     flex-grow: 1;
   }
+  .#{$clabs-prefix}--header-view-info {
+    display: flex;
+  }
+  .#{$clabs-prefix}--header-context-variables {
+    flex: 1 1 50%;
+  }
+  .#{$clabs-prefix}--header-parameters {
+    flex: 1 1 25%;
+  }
+
   .#{$clabs-prefix}--add-context-variable-tag,
   .#{$clabs-prefix}--add-parameter-tag {
     cursor: pointer;

@@ -338,7 +338,7 @@ export function promptTuningTemplate(customElementClass) {
       @cds-modal-closed=${onListModalClose}>
       <cds-modal-header>
         <cds-modal-close-button></cds-modal-close-button>
-        <cds-modal-heading>
+        <cds-modal-heading class="${clabsPrefix}--heading-container">
           <div class="${clabsPrefix}--heading">
             <div class="${clabsPrefix}--heading-tune-prompts">
               Tune prompts for
@@ -397,112 +397,126 @@ export function promptTuningTemplate(customElementClass) {
                 `}
           </div>
 
-          <h6 style="margin:0;">Context Variables:</h6>
-          ${currentView.contextVariables.length <= 0
-            ? html`<div>This intent/view does not provide any parameters.</div>`
-            : currentView.contextVariables.map(
-                (variable) => html`<cds-tag
-                  filter
-                  type="gray"
-                  title="Context variable: ${variable}"
-                  textContent="Context variable ${variable}">
-                  ${variable}
-                </cds-tag>`
-              )}
-          ${!showAddContextVariable
-            ? html` <cds-tag
-                class="${clabsPrefix}--add-context-variable-tag"
-                @click=${toggleAddContextVariable}
-                type="gray">
-                ${Add16({ slot: 'icon' })} Add context variable
-              </cds-tag>`
-            : html`
-                <div class="${clabsPrefix}--enter-new">
-                  <cds-form-item>
-                    <cds-text-input
-                      class="${clabsPrefix}--new-context-variable"
-                      invalid-text="Error message"
-                      placeholder="Enter new context variable name..."
-                      @input=${handleContextVariableInput}>
-                    </cds-text-input>
-                  </cds-form-item>
-                  <cds-tooltip align="bottom">
-                    <div class="sb-tooltip-trigger" aria-labelledby="content">
-                      <cds-button
-                        @click=${toggleAddContextVariable}
-                        kind="danger--ghost">
-                        ${Close16()}
-                      </cds-button>
+          <div class="${clabsPrefix}--header-view-info">
+            <div class="${clabsPrefix}--header-context-variables">
+              <h6 style="margin:0;">Context Variables:</h6>
+              ${currentView.contextVariables.length <= 0
+                ? html`<div>
+                    This intent/view does not provide any parameters.
+                  </div>`
+                : currentView.contextVariables.map(
+                    (variable) => html`<cds-tag
+                      filter
+                      type="gray"
+                      title="Context variable: ${variable}"
+                      textContent="Context variable ${variable}">
+                      ${variable}
+                    </cds-tag>`
+                  )}
+              ${!showAddContextVariable
+                ? html` <cds-tag
+                    class="${clabsPrefix}--add-context-variable-tag"
+                    @click=${toggleAddContextVariable}
+                    type="gray">
+                    ${Add16({ slot: 'icon' })} Add context variable
+                  </cds-tag>`
+                : html`
+                    <div class="${clabsPrefix}--enter-new">
+                      <cds-form-item>
+                        <cds-text-input
+                          class="${clabsPrefix}--new-context-variable"
+                          invalid-text="Error message"
+                          placeholder="Enter new context variable name..."
+                          @input=${handleContextVariableInput}>
+                        </cds-text-input>
+                      </cds-form-item>
+                      <cds-tooltip align="bottom">
+                        <div
+                          class="sb-tooltip-trigger"
+                          aria-labelledby="content">
+                          <cds-button
+                            @click=${toggleAddContextVariable}
+                            kind="danger--ghost">
+                            ${Close16()}
+                          </cds-button>
+                        </div>
+                        <cds-tooltip-content id="content">
+                          Cancel</cds-tooltip-content
+                        >
+                      </cds-tooltip>
+                      <cds-tooltip align="bottom">
+                        <div
+                          class="sb-tooltip-trigger"
+                          aria-labelledby="content">
+                          <cds-button @click=${addContextVariable} kind="ghost">
+                            ${Checkmark16()}
+                          </cds-button>
+                        </div>
+                        <cds-tooltip-content id="content">
+                          Save new context variable</cds-tooltip-content
+                        >
+                      </cds-tooltip>
                     </div>
-                    <cds-tooltip-content id="content">
-                      Cancel</cds-tooltip-content
-                    >
-                  </cds-tooltip>
-                  <cds-tooltip align="bottom">
-                    <div class="sb-tooltip-trigger" aria-labelledby="content">
-                      <cds-button @click=${addContextVariable} kind="ghost">
-                        ${Checkmark16()}
-                      </cds-button>
-                    </div>
-                    <cds-tooltip-content id="content">
-                      Save new context variable</cds-tooltip-content
-                    >
-                  </cds-tooltip>
-                </div>
-              `}
+                  `}
+            </div>
+            <div class="${clabsPrefix}--header-parameters">
+              <h6 style="margin:0;">Parameters:</h6>
 
-          <h6 style="margin:0;">Parameters:</h6>
-          ${currentView.parameters.length <= 0
-            ? html`<div>This intent/view does not provide any parameters.</div>`
-            : currentView.parameters.map(
-                (parameter) => html`<cds-tag
-                  filter
-                  type="gray"
-                  title="Parameter: ${parameter}"
-                  textContent="Parameter: ${parameter}"
-                  aria-labelledBy="test">
-                  ${parameter}
-                </cds-tag>`
-              )}
-          ${!showAddParameter
-            ? html`<cds-tag
-                class="${clabsPrefix}--add-parameter-tag"
-                @click=${toggleAddParameter}
-                type="gray"
-                >${Add16()} Add parameter
-              </cds-tag>`
-            : html`<div class="${clabsPrefix}--enter-new">
-                <cds-form-item>
-                  <cds-text-input
-                    class="${clabsPrefix}--new-parameter"
-                    invalid-text="Error message"
-                    placeholder="Enter new parameter name..."
-                    @input=${handleParameterInput}>
-                  </cds-text-input>
-                </cds-form-item>
-                <cds-tooltip align="bottom">
-                  <div class="sb-tooltip-trigger" aria-labelledby="content">
-                    <cds-button
-                      @click=${toggleAddParameter}
-                      kind="danger--ghost">
-                      ${Close16()}
-                    </cds-button>
-                  </div>
-                  <cds-tooltip-content id="content">
-                    Cancel</cds-tooltip-content
-                  >
-                </cds-tooltip>
-                <cds-tooltip align="bottom">
-                  <div class="sb-tooltip-trigger" aria-labelledby="content">
-                    <cds-button @click=${addParameter} kind="ghost">
-                      ${Checkmark16()}
-                    </cds-button>
-                  </div>
-                  <cds-tooltip-content id="content">
-                    Save new parameter</cds-tooltip-content
-                  >
-                </cds-tooltip>
-              </div>`}
+              ${currentView.parameters.length <= 0
+                ? html`<div>
+                    This intent/view does not provide any parameters.
+                  </div>`
+                : currentView.parameters.map(
+                    (parameter) => html`<cds-tag
+                      filter
+                      type="gray"
+                      title="Parameter: ${parameter}"
+                      textContent="Parameter: ${parameter}"
+                      aria-labelledBy="test">
+                      ${parameter}
+                    </cds-tag>`
+                  )}
+              ${!showAddParameter
+                ? html`<cds-tag
+                    class="${clabsPrefix}--add-parameter-tag"
+                    @click=${toggleAddParameter}
+                    type="gray"
+                    >${Add16()} Add parameter
+                  </cds-tag>`
+                : html`<div class="${clabsPrefix}--enter-new">
+                    <cds-form-item>
+                      <cds-text-input
+                        class="${clabsPrefix}--new-parameter"
+                        invalid-text="Error message"
+                        placeholder="Enter new parameter name..."
+                        @input=${handleParameterInput}>
+                      </cds-text-input>
+                    </cds-form-item>
+                    <cds-tooltip align="bottom">
+                      <div class="sb-tooltip-trigger" aria-labelledby="content">
+                        <cds-button
+                          @click=${toggleAddParameter}
+                          kind="danger--ghost">
+                          ${Close16()}
+                        </cds-button>
+                      </div>
+                      <cds-tooltip-content id="content">
+                        Cancel</cds-tooltip-content
+                      >
+                    </cds-tooltip>
+                    <cds-tooltip align="bottom">
+                      <div class="sb-tooltip-trigger" aria-labelledby="content">
+                        <cds-button @click=${addParameter} kind="ghost">
+                          ${Checkmark16()}
+                        </cds-button>
+                      </div>
+                      <cds-tooltip-content id="content">
+                        Save new parameter</cds-tooltip-content
+                      >
+                    </cds-tooltip>
+                  </div>`}
+            </div>
+          </div>
         </cds-modal-heading>
       </cds-modal-header>
       <cds-modal-body>

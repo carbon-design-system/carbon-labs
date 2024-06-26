@@ -52,16 +52,18 @@ $css--plex: true !default;
     }
 
     .#{$clabs-prefix}--edit-form-item {
-      margin-block-end: 10px;
+      display: inline-block;
+      margin-block-start: 10px;
     }
 
     .#{$clabs-prefix}--edit-input {
-      flex-grow: 1;
-      margin-inline-end: 48px;
+      flex: 1 1 50%;
+      margin-inline-end: 24px;
     }
 
     .#{$clabs-prefix}--edit-output {
-      flex-grow: 1;
+      flex: 1 1 50%;
+      margin-inline-start: 24px;
     }
   }
 }

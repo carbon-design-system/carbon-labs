@@ -9,6 +9,8 @@
 
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 
 // @ts-ignore
 import styles from './prompt-tuning.scss?inline';
@@ -181,21 +183,21 @@ export class PromptTuning extends LitElement {
   }
 
   /**
-   * Method for toggling view rename
+   * Method for toggling if add context variable is clicked
    */
   _toggleAddContextVariable() {
     this._showAddContextVariable = !this._showAddContextVariable;
   }
 
   /**
-   * Method for toggling view rename
+   * Method for toggling if add parameter is clicked
    */
   _toggleAddParameter() {
     this._showAddParameter = !this._showAddParameter;
   }
 
   /**
-   * Event handler to update the value property
+   * Event handler to handle new view name input field updates
    * @param {event} event event
    */
   _handleNameInput(event) {
@@ -261,7 +263,7 @@ export class PromptTuning extends LitElement {
   }
 
   /**
-   * Event handler to update the value property
+   * Event handler to handle new context variable name
    * @param {event} event event
    */
   _handleContextVariableInput(event) {
@@ -269,11 +271,67 @@ export class PromptTuning extends LitElement {
   }
 
   /**
-   * Event handler to update the value property
+   * Event handler to handle new parameter name
    * @param {event} event event
    */
   _handleParameterInput(event) {
     this._newParameter = event.target.value;
+  }
+
+  /**
+   * fire event when save button when editing prompt is triggered
+   *
+   */
+  triggerSubmit() {
+    const form = this.shadowRoot?.getElementById(
+      `${clabsPrefix}--edit-prompt-form`
+    );
+    if (form) {
+      form.dispatchEvent(new Event('submit'));
+    }
+    this._onEditModalCancel();
+  }
+
+  /**
+   * Event handler when prompt edit is saved
+   * @param {event} event event
+   */
+  onSavePrompt(event) {
+    event.preventDefault();
+    const form = event.target;
+
+    if (form) {
+      const className = `.${clabsPrefix}--edit-form-item`;
+      const items = form.querySelectorAll(className);
+      const data = {};
+      items.forEach((item) => {
+        let key = '';
+
+        if (item.classList.contains(`${clabsPrefix}--edit-context-variable`)) {
+          console.log(`context-variable`);
+          key += '(context variable) ';
+        } else if (item.classList.contains(`${clabsPrefix}--edit-parameter`)) {
+          console.log('parameter');
+          key += '(parameter) ';
+        }
+
+        if (item.tagName === 'CDS-TEXT-INPUT') {
+          key += item.__label;
+          data[key] = item._value;
+        } else if (item.tagName === 'CDS-SELECT') {
+          key += item.__labelText;
+          data[key] = item.__value;
+        } else {
+          key += item.__label;
+          data[key] = item._value;
+        }
+      });
+      this.dispatchEvent(
+        new CustomEvent('save-prompt', {
+          detail: { formData: data },
+        })
+      );
+    }
   }
 
   // /**

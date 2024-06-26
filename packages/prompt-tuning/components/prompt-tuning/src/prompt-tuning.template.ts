@@ -13,6 +13,7 @@ const { stablePrefix: clabsPrefix } = settings;
 import '@carbon/web-components/es/components/modal/index.js';
 import '@carbon/web-components/es/components/data-table/index.js';
 import '@carbon/web-components/es/components/button/index.js';
+import '@carbon/web-components/es/components/form-group/index.js';
 import Edit16 from '@carbon/web-components/es/icons/edit/16';
 import TrashCan16 from '@carbon/web-components/es/icons/trash-can/16';
 import Add16 from '@carbon/web-components/es/icons/add/16';
@@ -149,6 +150,8 @@ function getEditModal(customElementClass) {
     isEditModalOpen,
     _onEditModalClose: onEditModalClose,
     _onEditModalCancel: onEditModalCancel,
+    onSavePrompt: onSavePrompt,
+    triggerSubmit: triggerSubmit,
   } = customElementClass;
 
   return html`<cds-modal
@@ -161,88 +164,86 @@ function getEditModal(customElementClass) {
       <cds-modal-heading>Edit prompt</cds-modal-heading>
     </cds-modal-header>
     <cds-modal-body>
-      <div class="${clabsPrefix}--prompt-edit-form">
-        <div class="${clabsPrefix}--edit-input">
-          <cds-form-item>
-            <cds-text-input
-              class="${clabsPrefix}--edit-form-item"
-              label="Sample prompt"
-              invalid-text="Error message"
-              placeholder="Enter sample prompt..."
-              helper-text=" "
-              value=${currentPrompt}>
-            </cds-text-input>
-          </cds-form-item>
+      <cds-form-group
+        id="${clabsPrefix}--edit-prompt-form"
+        @submit=${onSavePrompt}>
+        <cds-stack gap="10">
+          <div class="${clabsPrefix}--prompt-edit-form">
+            <div class="${clabsPrefix}--edit-input">
+              <cds-text-input
+                class="${clabsPrefix}--edit-form-item"
+                label="Sample prompt"
+                invalid-text="Error message"
+                placeholder="Enter sample prompt..."
+                helper-text=" "
+                value=${currentPrompt}>
+              </cds-text-input>
 
-          <h4>Context variables</h4>
+              <h4>Context variables</h4>
 
-          ${Object.keys(currentContextVariables).length <= 0
-            ? html`<div>
-                This intent/view does not provide any context variables.
-              </div>`
-            : Object.entries(currentContextVariables).map(
-                ([key, value]) => html`<cds-form-item
-                  class="${clabsPrefix}--edit-context-variable">
-                  <cds-text-input
-                    class="${clabsPrefix}--edit-form-item"
-                    label=${key}
-                    invalid-text="Error message"
-                    placeholder="Enter sample value..."
-                    value=${value}>
-                  </cds-text-input>
-                </cds-form-item>`
-              )}
-        </div>
+              ${Object.keys(currentContextVariables).length <= 0
+                ? html`<div>
+                    This intent/view does not provide any context variables.
+                  </div>`
+                : Object.entries(currentContextVariables).map(
+                    ([key, value]) => html` <cds-text-input
+                      class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
+                      label=${key}
+                      invalid-text="Error message"
+                      placeholder="Enter sample value..."
+                      value=${value}>
+                    </cds-text-input>`
+                  )}
+            </div>
+            <div class="${clabsPrefix}--edit-output">
+              <cds-text-input
+                class="${clabsPrefix}--edit-form-item"
+                label="Expected message"
+                invalid-text="Error message"
+                placeholder="Enter expected generated message..."
+                value=${currentResponse}>
+              </cds-text-input>
 
-        <div class="${clabsPrefix}--edit-output">
-          <cds-form-item>
-            <cds-text-input
-              class="${clabsPrefix}--edit-form-item"
-              label="Expected message"
-              invalid-text="Error message"
-              placeholder="Enter expected generated message..."
-              value=${currentResponse}>
-            </cds-text-input>
-          </cds-form-item>
+              <cds-select
+                class="${clabsPrefix}--edit-form-item"
+                helper-text=" "
+                label-text="Intent/View"
+                placeholder="Optional placeholder text"
+                value=${currentResponseView}>
+                ${viewList.map(
+                  (view) =>
+                    html`<cds-select-item value="${view}"
+                      >${view}</cds-select-item
+                    >`
+                )}
+              </cds-select>
 
-          <cds-form-item>
-            <cds-select
-              class="${clabsPrefix}--edit-form-item"
-              helper-text=" "
-              label-text="Intent/View"
-              placeholder="Optional placeholder text"
-              value=${currentResponseView}>
-              ${viewList.map(
-                (view) =>
-                  html`<cds-select-item value="${view}"
-                    >${view}</cds-select-item
-                  >`
-              )}
-            </cds-select>
-          </cds-form-item>
-
-          <h4>Expected intent/view parameters</h4>
-          ${Object.keys(currentParameters).length <= 0
-            ? html`<div>This intent/view does not provide any parameters.</div>`
-            : Object.entries(currentParameters).map(
-                ([key, value]) => html`<cds-form-item>
-                  <cds-text-input
-                    class="${clabsPrefix}--edit-form-item"
-                    label=${key}
-                    invalid-text="Error message"
-                    placeholder="Enter expected value..."
-                    value=${value}>
-                  </cds-text-input>
-                </cds-form-item>`
-              )}
-        </div>
-      </div>
+              <h4>Expected intent/view parameters</h4>
+              ${Object.keys(currentParameters).length <= 0
+                ? html`<div>
+                    This intent/view does not provide any parameters.
+                  </div>`
+                : Object.entries(currentParameters).map(
+                    ([key, value]) => html` <cds-text-input
+                      class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
+                      label=${key}
+                      invalid-text="Error message"
+                      placeholder="Enter expected value..."
+                      value=${value}>
+                    </cds-text-input>`
+                  )}
+            </div>
+          </div>
+        </cds-stack>
+      </cds-form-group>
     </cds-modal-body>
     <cds-modal-footer>
       <cds-modal-footer-button kind="secondary" @click=${onEditModalCancel}
         >Cancel</cds-modal-footer-button
       >
-      <cds-modal-footer-button kind="primary">Save</cds-modal-footer-button>
+      <cds-modal-footer-button @click=${triggerSubmit} kind="primary"
+        >Save</cds-modal-footer-button
+      >
     </cds-modal-footer>
   </cds-modal>`;
 }

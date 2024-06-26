@@ -97,6 +97,18 @@ export class PromptTuning extends LitElement {
   private _showAddParameter = false;
 
   /**
+   * New context variable to add
+   */
+  @property({ type: String })
+  private _newContextVariable = '';
+
+  /**
+   * New parameter to add
+   */
+  @property({ type: String })
+  private _newParameter = '';
+
+  /**
    * Called when added to the document
    */
   connectedCallback() {
@@ -216,6 +228,52 @@ export class PromptTuning extends LitElement {
         },
       })
     );
+  }
+
+  /**
+   * fire event when new context variable is added to the view
+   *
+   */
+  addContextVariable() {
+    this.dispatchEvent(
+      new CustomEvent('add-context-variable', {
+        detail: {
+          message: `Add context variable: ${this._newContextVariable}`,
+        },
+      })
+    );
+    this._toggleAddContextVariable();
+  }
+
+  /**
+   * fire event when new parameter is added to the view
+   *
+   */
+  addParameter() {
+    this.dispatchEvent(
+      new CustomEvent('add-parameter', {
+        detail: {
+          message: `Add parameter: ${this._newParameter}`,
+        },
+      })
+    );
+    this._toggleAddParameter();
+  }
+
+  /**
+   * Event handler to update the value property
+   * @param {event} event event
+   */
+  _handleContextVariableInput(event) {
+    this._newContextVariable = event.target.value;
+  }
+
+  /**
+   * Event handler to update the value property
+   * @param {event} event event
+   */
+  _handleParameterInput(event) {
+    this._newParameter = event.target.value;
   }
 
   // /**

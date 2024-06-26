@@ -275,6 +275,12 @@ export function promptTuningTemplate(customElementClass) {
     _toggleRename: toggleRename,
     _toggleAddContextVariable: toggleAddContextVariable,
     _toggleAddParameter: toggleAddParameter,
+    addContextVariable: addContextVariable,
+    addParameter: addParameter,
+    _newContextVariable: newContextVariable,
+    _newParameter: newParameter,
+    _handleContextVariableInput: handleContextVariableInput,
+    _handleParameterInput: handleParameterInput,
     onSaveRename: onSaveRename,
     _handleNameInput: handleNameInput,
   } = customElementClass;
@@ -371,7 +377,8 @@ export function promptTuningTemplate(customElementClass) {
                     <cds-text-input
                       class="${clabsPrefix}--new-context-variable"
                       invalid-text="Error message"
-                      placeholder="Enter new context variable name...">
+                      placeholder="Enter new context variable name..."
+                      @input=${handleContextVariableInput}>
                     </cds-text-input>
                   </cds-form-item>
                   <cds-tooltip align="bottom">
@@ -383,19 +390,17 @@ export function promptTuningTemplate(customElementClass) {
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
-                      Cancel rename</cds-tooltip-content
+                      Cancel</cds-tooltip-content
                     >
                   </cds-tooltip>
                   <cds-tooltip align="bottom">
                     <div class="sb-tooltip-trigger" aria-labelledby="content">
-                      <cds-button
-                        @click=${toggleAddContextVariable}
-                        kind="ghost">
+                      <cds-button @click=${addContextVariable} kind="ghost">
                         ${Checkmark16()}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
-                      Save rename</cds-tooltip-content
+                      Save new context variable</cds-tooltip-content
                     >
                   </cds-tooltip>
                 </div>
@@ -426,7 +431,8 @@ export function promptTuningTemplate(customElementClass) {
                   <cds-text-input
                     class="${clabsPrefix}--new-parameter"
                     invalid-text="Error message"
-                    placeholder="Enter new parameter name...">
+                    placeholder="Enter new parameter name..."
+                    @input=${handleParameterInput}>
                   </cds-text-input>
                 </cds-form-item>
                 <cds-tooltip align="bottom">
@@ -438,17 +444,17 @@ export function promptTuningTemplate(customElementClass) {
                     </cds-button>
                   </div>
                   <cds-tooltip-content id="content">
-                    Cancel rename</cds-tooltip-content
+                    Cancel</cds-tooltip-content
                   >
                 </cds-tooltip>
                 <cds-tooltip align="bottom">
                   <div class="sb-tooltip-trigger" aria-labelledby="content">
-                    <cds-button @click=${toggleAddParameter} kind="ghost">
+                    <cds-button @click=${addParameter} kind="ghost">
                       ${Checkmark16()}
                     </cds-button>
                   </div>
                   <cds-tooltip-content id="content">
-                    Save rename</cds-tooltip-content
+                    Save new parameter</cds-tooltip-content
                   >
                 </cds-tooltip>
               </div>`}

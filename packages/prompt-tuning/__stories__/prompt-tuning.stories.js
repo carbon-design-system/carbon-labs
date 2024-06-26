@@ -41,6 +41,8 @@ const defaultArgs = {
   viewParameters: ['mode', 'question', 'table_ids'],
   onSaveRename: action('save-rename'),
   onCloseTag: action('close-tag'),
+  onAddContextVariable: action('add-context-variable'),
+  onAddParameter: action('add-parameter'),
 };
 
 /* Default controls */
@@ -110,6 +112,8 @@ export const Default = {
     viewParameters,
     onSaveRename,
     onCloseTag,
+    onAddContextVariable,
+    onAddParameter,
   }) =>
     html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
 
@@ -121,6 +125,8 @@ export const Default = {
         .viewParameters=${viewParameters}
         @save-rename=${onSaveRename}
         @close-tag=${onCloseTag}
+        @add-context-variable=${onAddContextVariable}
+        @add-parameter=${onAddParameter}
         >${text}</clabs-prompt-tuning
       >
 

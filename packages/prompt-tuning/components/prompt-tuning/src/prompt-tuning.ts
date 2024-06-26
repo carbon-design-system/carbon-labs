@@ -381,11 +381,20 @@ export class PromptTuning extends LitElement {
           data[key] = item._value;
         }
       });
-      this.dispatchEvent(
-        new CustomEvent('save-prompt', {
-          detail: { formData: data },
-        })
-      );
+
+      if (this._isNewPrompt) {
+        this.dispatchEvent(
+          new CustomEvent('add-prompt', {
+            detail: { formData: data },
+          })
+        );
+      } else {
+        this.dispatchEvent(
+          new CustomEvent('save-prompt', {
+            detail: { formData: data },
+          })
+        );
+      }
     }
   }
 

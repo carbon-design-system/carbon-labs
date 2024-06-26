@@ -45,6 +45,7 @@ const defaultArgs = {
   onSavePrompt: action('save-prompt'),
   onDeletePrompt: action('delete-prompt'),
   onChangeView: action('change-view'),
+  onAddPrompt: action('add-prompt'),
   isListModalOpen: true,
 };
 
@@ -146,6 +147,14 @@ const defaultControls = {
       defaultValue: { summary: 'function' },
     },
   },
+  onAddPrompt: {
+    action: 'save-rename',
+    description: 'Fires when user adds a new prompt',
+    table: {
+      category: 'Events',
+      defaultValue: { summary: 'function' },
+    },
+  },
 
   isEditModalOpen: {
     table: {
@@ -184,6 +193,7 @@ export const Default = {
     onSavePrompt,
     onDeletePrompt,
     onChangeView,
+    onAddPrompt,
   }) =>
     html` <clabs-prompt-tuning
       .isListModalOpen=${isListModalOpen}
@@ -196,5 +206,6 @@ export const Default = {
       @add-parameter=${onAddParameter}
       @save-prompt=${onSavePrompt}
       @delete-prompt=${onDeletePrompt}
-      @change-view=${onChangeView}></clabs-prompt-tuning>`,
+      @change-view=${onChangeView}
+      @add-prompt=${onAddPrompt}></clabs-prompt-tuning>`,
 };

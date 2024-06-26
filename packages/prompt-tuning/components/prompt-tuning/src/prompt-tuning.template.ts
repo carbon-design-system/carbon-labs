@@ -327,6 +327,7 @@ export function promptTuningTemplate(customElementClass) {
     _handleNameInput: handleNameInput,
     onChangeView: onChangeView,
     _onNewPrompt: onNewPrompt,
+    handleCloseTag: handleCloseTag,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--prompt-tuning">
@@ -408,8 +409,10 @@ export function promptTuningTemplate(customElementClass) {
                     (variable) => html`<cds-tag
                       filter
                       type="gray"
-                      title="Context variable: ${variable}"
-                      textContent="Context variable ${variable}">
+                      title="${variable}"
+                      textContent="${variable}"
+                      aria-label="Context variable"
+                      @cds-tag-closed=${handleCloseTag}>
                       ${variable}
                     </cds-tag>`
                   )}
@@ -470,9 +473,10 @@ export function promptTuningTemplate(customElementClass) {
                     (parameter) => html`<cds-tag
                       filter
                       type="gray"
-                      title="Parameter: ${parameter}"
-                      textContent="Parameter: ${parameter}"
-                      aria-labelledBy="test">
+                      title="${parameter}"
+                      textContent="${parameter}"
+                      aria-label="Parameter"
+                      @cds-tag-closed=${handleCloseTag}>
                       ${parameter}
                     </cds-tag>`
                   )}

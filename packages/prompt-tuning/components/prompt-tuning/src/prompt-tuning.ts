@@ -111,6 +111,12 @@ export class PromptTuning extends LitElement {
   private _newParameter = '';
 
   /**
+   * Whether to show new prompt as opposed to edit prompt
+   */
+  @property({ type: Boolean })
+  private _isNewPrompt = false;
+
+  /**
    * Called when added to the document
    */
   connectedCallback() {
@@ -140,15 +146,27 @@ export class PromptTuning extends LitElement {
    * Method for closing the Prompt Edit Modal
    */
   _onEditModalClose() {
+    this._currentPrompt = '';
+    this._currentContextVariables = {};
+    this._currentResponse = '';
+    this._currentResponseView = '';
+    this._currentParameters = {};
     this.isEditModalOpen = false;
+    this._isNewPrompt = false;
   }
 
   /**
    * Method for clicking the Cancel button on the Prompt Edit Modal
    */
   _onEditModalCancel() {
+    this._currentPrompt = '';
+    this._currentContextVariables = {};
+    this._currentResponse = '';
+    this._currentResponseView = '';
+    this._currentParameters = {};
     this.isEditModalOpen = false;
     this.isListModalOpen = true;
+    this._isNewPrompt = false;
   }
 
   /**
@@ -173,6 +191,15 @@ export class PromptTuning extends LitElement {
     this._currentResponse = response;
     this._currentResponseView = responseView;
     this._currentParameters = parameters;
+  }
+
+  /**
+   * Method when Add new prompt is clicked
+   */
+  _onNewPrompt() {
+    this.isListModalOpen = false;
+    this.isEditModalOpen = true;
+    this._isNewPrompt = true;
   }
 
   /**
@@ -338,10 +365,8 @@ export class PromptTuning extends LitElement {
         let key = '';
 
         if (item.classList.contains(`${clabsPrefix}--edit-context-variable`)) {
-          console.log(`context-variable`);
           key += '(context variable) ';
         } else if (item.classList.contains(`${clabsPrefix}--edit-parameter`)) {
-          console.log('parameter');
           key += '(parameter) ';
         }
 

@@ -164,7 +164,70 @@ function getEditModal(customElementClass) {
     _onEditModalCancel: onEditModalCancel,
     onSavePrompt: onSavePrompt,
     triggerSubmit: triggerSubmit,
+    _isNewPrompt: isNewPrompt,
+    viewContextVariables: viewContextVariables,
+    viewParameters: viewParameters,
   } = customElementClass;
+
+  let modalHeader, selectedView, contextVariables, parameters;
+
+  if (isNewPrompt) {
+    modalHeader = `Add new prompt for ${viewName}`;
+    selectedView = viewName;
+    contextVariables =
+      viewContextVariables.length <= 0
+        ? html`<div>
+            This intent/view does not provide any context variables.
+          </div>`
+        : viewContextVariables.map(
+            (variable) => html` <cds-text-input
+              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
+              label=${variable}
+              invalid-text="Error message"
+              placeholder="Enter sample value...">
+            </cds-text-input>`
+          );
+    parameters =
+      viewParameters.length <= 0
+        ? html`<div>This intent/view does not provide any parameters.</div>`
+        : viewParameters.map(
+            (parameter) => html` <cds-text-input
+              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
+              label=${parameter}
+              invalid-text="Error message"
+              placeholder="Enter expected value...">
+            </cds-text-input>`
+          );
+  } else {
+    modalHeader = 'Edit prompt';
+    selectedView = currentResponseView;
+    contextVariables =
+      Object.keys(currentContextVariables).length <= 0
+        ? html`<div>
+            This intent/view does not provide any context variables.
+          </div>`
+        : Object.entries(currentContextVariables).map(
+            ([key, value]) => html` <cds-text-input
+              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
+              label=${key}
+              invalid-text="Error message"
+              placeholder="Enter sample value..."
+              value=${value}>
+            </cds-text-input>`
+          );
+    parameters =
+      Object.keys(currentParameters).length <= 0
+        ? html`<div>This intent/view does not provide any parameters.</div>`
+        : Object.entries(currentParameters).map(
+            ([key, value]) => html` <cds-text-input
+              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
+              label=${key}
+              invalid-text="Error message"
+              placeholder="Enter expected value..."
+              value=${value}>
+            </cds-text-input>`
+          );
+  }
 
   return html`<cds-modal
     id="modal-edit-prompt"
@@ -173,7 +236,7 @@ function getEditModal(customElementClass) {
     @cds-modal-closed=${onEditModalClose}>
     <cds-modal-header>
       <cds-modal-close-button></cds-modal-close-button>
-      <cds-modal-heading>Edit prompt</cds-modal-heading>
+      <cds-modal-heading>${modalHeader}</cds-modal-heading>
     </cds-modal-header>
     <cds-modal-body>
       <cds-form-group
@@ -192,20 +255,7 @@ function getEditModal(customElementClass) {
               </cds-text-input>
 
               <h4>Context variables</h4>
-
-              ${Object.keys(currentContextVariables).length <= 0
-                ? html`<div>
-                    This intent/view does not provide any context variables.
-                  </div>`
-                : Object.entries(currentContextVariables).map(
-                    ([key, value]) => html` <cds-text-input
-                      class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
-                      label=${key}
-                      invalid-text="Error message"
-                      placeholder="Enter sample value..."
-                      value=${value}>
-                    </cds-text-input>`
-                  )}
+              ${contextVariables}
             </div>
             <div class="${clabsPrefix}--edit-output">
               <cds-text-input
@@ -220,8 +270,7 @@ function getEditModal(customElementClass) {
                 class="${clabsPrefix}--edit-form-item"
                 helper-text=" "
                 label-text="Intent/View"
-                placeholder="Optional placeholder text"
-                value=${currentResponseView}>
+                value=${selectedView}>
                 ${viewList.map(
                   (view) =>
                     html`<cds-select-item value="${view}"
@@ -231,19 +280,7 @@ function getEditModal(customElementClass) {
               </cds-select>
 
               <h4>Expected intent/view parameters</h4>
-              ${Object.keys(currentParameters).length <= 0
-                ? html`<div>
-                    This intent/view does not provide any parameters.
-                  </div>`
-                : Object.entries(currentParameters).map(
-                    ([key, value]) => html` <cds-text-input
-                      class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
-                      label=${key}
-                      invalid-text="Error message"
-                      placeholder="Enter expected value..."
-                      value=${value}>
-                    </cds-text-input>`
-                  )}
+              ${parameters}
             </div>
           </div>
         </cds-stack>
@@ -297,6 +334,7 @@ export function promptTuningTemplate(customElementClass) {
     onSaveRename: onSaveRename,
     _handleNameInput: handleNameInput,
     onChangeView: onChangeView,
+    _onNewPrompt: onNewPrompt,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--prompt-tuning">
@@ -490,7 +528,7 @@ export function promptTuningTemplate(customElementClass) {
         </cds-table>
       </cds-modal-body>
       <cds-modal-footer>
-        <cds-modal-footer-button kind="primary"
+        <cds-modal-footer-button @click=${onNewPrompt} kind="primary"
           >Add new prompt</cds-modal-footer-button
         >
       </cds-modal-footer>

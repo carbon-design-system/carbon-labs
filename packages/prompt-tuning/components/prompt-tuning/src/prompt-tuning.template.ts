@@ -350,7 +350,11 @@ export function promptTuningTemplate(customElementClass) {
           ${viewContextVariables.length <= 0
             ? html`<div>This intent/view does not provide any parameters.</div>`
             : viewContextVariables.map(
-                (variable) => html`<cds-tag filter type="gray">
+                (variable) => html`<cds-tag
+                  filter
+                  type="gray"
+                  title="Context variable: ${variable}"
+                  textContent="Context variable ${variable}">
                   ${variable}
                 </cds-tag>`
               )}
@@ -401,7 +405,12 @@ export function promptTuningTemplate(customElementClass) {
           ${viewParameters.length <= 0
             ? html`<div>This intent/view does not provide any parameters.</div>`
             : viewParameters.map(
-                (parameter) => html`<cds-tag filter type="gray">
+                (parameter) => html`<cds-tag
+                  filter
+                  type="gray"
+                  title="Parameter: ${parameter}"
+                  textContent="Parameter: ${parameter}"
+                  aria-labelledBy="test">
                   ${parameter}
                 </cds-tag>`
               )}

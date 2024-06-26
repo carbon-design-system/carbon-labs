@@ -97,6 +97,25 @@ export class PromptTuning extends LitElement {
   private _showAddParameter = false;
 
   /**
+   * Called when added to the document
+   */
+  connectedCallback() {
+    super.connectedCallback();
+    document.addEventListener('cds-tag-closed', this.handleCloseTag.bind(this));
+  }
+
+  /**
+   * Called when removed from the document
+   */
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    document.removeEventListener(
+      'cds-tag-closed',
+      this.handleCloseTag.bind(this)
+    );
+  }
+
+  /**
    * Method for closing the Prompt List Modal
    */
   _onListModalClose() {
@@ -182,6 +201,21 @@ export class PromptTuning extends LitElement {
       })
     );
     this._toggleRename();
+  }
+
+  /**
+   * Handle when close button on tag is clicked
+   * @param {event} event event
+   */
+  handleCloseTag(event) {
+    console.log('Custom event triggered:', event.detail.triggeredBy);
+    this.dispatchEvent(
+      new CustomEvent('close-tag', {
+        detail: {
+          message: `Tag closed. ${event.detail.triggeredBy.ariaLabel}`,
+        },
+      })
+    );
   }
 
   // /**

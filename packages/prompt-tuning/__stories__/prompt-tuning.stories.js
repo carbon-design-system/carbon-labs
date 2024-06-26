@@ -45,21 +45,117 @@ const defaultArgs = {
   onSavePrompt: action('save-prompt'),
   onDeletePrompt: action('delete-prompt'),
   onChangeView: action('change-view'),
+  isListModalOpen: true,
 };
 
 /* Default controls */
 const defaultControls = {
+  isListModalOpen: {
+    name: 'open',
+    control: { type: 'boolean' },
+    description: 'Whether the tuning prompts modal is open or not',
+    table: {
+      category: '',
+      defaultValue: { summary: true },
+    },
+  },
   promptSamples: {
     control: { type: 'object' },
     description: 'Current view data',
+    table: {
+      defaultValue: {
+        summary: 'Using a JSON example from semantic search view for storybook',
+      },
+    },
   },
   currentView: {
     control: { type: 'object' },
     description: 'Name, context variables, and parameters in the current view',
+    table: {
+      defaultValue: {
+        summary: 'Using a JSON example with semantic search view for storybook',
+      },
+    },
   },
   viewList: {
     control: { type: 'object' },
     description: 'List of views',
+    table: {
+      defaultValue: {
+        summary: 'Using an example of a list of views for storybook',
+      },
+    },
+  },
+  onAddContextVariable: {
+    action: 'add-context-variable',
+    description:
+      'Fires when user saves new context variable for the current view',
+    table: {
+      category: 'Events',
+      defaultValue: { summary: 'function' },
+    },
+  },
+  onAddParameter: {
+    action: 'add-parameter',
+    description: 'Fires when user saves new parameter for the current view',
+    table: {
+      category: 'Events',
+      defaultValue: { summary: 'function' },
+    },
+  },
+  onChangeView: {
+    action: 'change-view',
+    description:
+      'Fires when user chooses a different view in the select dropdown',
+    table: {
+      category: 'Events',
+      defaultValue: { summary: 'function' },
+    },
+  },
+  onCloseTag: {
+    action: 'change-view',
+    description:
+      'Fires when user clicks the X for the current view context variable or parameter',
+    table: {
+      category: 'Events',
+      defaultValue: { summary: 'function' },
+    },
+  },
+  onDeletePrompt: {
+    action: 'delete-prompt',
+    description:
+      'Fires when user clicks the trash icon next to a prompt table row',
+    table: {
+      category: 'Events',
+      defaultValue: { summary: 'function' },
+    },
+  },
+  onSavePrompt: {
+    action: 'save-prompt',
+    description: 'Fires when user edits a prompt and saves the changes',
+    table: {
+      category: 'Events',
+      defaultValue: { summary: 'function' },
+    },
+  },
+  onSaveRename: {
+    action: 'save-rename',
+    description: 'Fires when user renames the current view and saves changes',
+    table: {
+      category: 'Events',
+      defaultValue: { summary: 'function' },
+    },
+  },
+
+  isEditModalOpen: {
+    table: {
+      disable: true,
+    },
+  },
+  text: {
+    table: {
+      disable: true,
+    },
   },
 };
 
@@ -77,6 +173,7 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: ({
+    isListModalOpen,
     promptSamples,
     viewList,
     currentView,
@@ -88,27 +185,16 @@ export const Default = {
     onDeletePrompt,
     onChangeView,
   }) =>
-    html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
-
-      <clabs-prompt-tuning
-        .promptSamples=${promptSamples}
-        .currentView=${currentView}
-        .viewList=${viewList}
-        @save-rename=${onSaveRename}
-        @close-tag=${onCloseTag}
-        @add-context-variable=${onAddContextVariable}
-        @add-parameter=${onAddParameter}
-        @save-prompt=${onSavePrompt}
-        @delete-prompt=${onDeletePrompt}
-        @change-view=${onChangeView}></clabs-prompt-tuning>
-
-      <script type="text/javascript">
-        const button = document.getElementById('modal-open-button');
-        const component = document.getElementsByTagName(
-          'clabs-prompt-tuning'
-        )[0];
-        button.addEventListener('click', () => {
-          component.isListModalOpen = true;
-        });
-      </script>`,
+    html` <clabs-prompt-tuning
+      .isListModalOpen=${isListModalOpen}
+      .promptSamples=${promptSamples}
+      .currentView=${currentView}
+      .viewList=${viewList}
+      @save-rename=${onSaveRename}
+      @close-tag=${onCloseTag}
+      @add-context-variable=${onAddContextVariable}
+      @add-parameter=${onAddParameter}
+      @save-prompt=${onSavePrompt}
+      @delete-prompt=${onDeletePrompt}
+      @change-view=${onChangeView}></clabs-prompt-tuning>`,
 };

@@ -30,7 +30,7 @@ export class PromptTuning extends LitElement {
    * Whether the prompt list modal is open or not
    */
   @property({ type: Boolean })
-  isListModalOpen = false;
+  isListModalOpen = true;
 
   /**
    * Whether the prompt edit modal is open or not

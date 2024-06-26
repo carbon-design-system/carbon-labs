@@ -35,8 +35,11 @@ import '@carbon/web-components/es/components/tooltip/index.js';
  * @returns {TemplateResult<1>} Lit html template
  */
 function getHTMLRows(customElementClass) {
-  const { data: data, _onEditButtonClick: onEditButtonClick } =
-    customElementClass;
+  const {
+    data: data,
+    _onEditButtonClick: onEditButtonClick,
+    onDeleteButtonClick: onDeleteButtonClick,
+  } = customElementClass;
 
   return html`
     ${data.map(
@@ -102,7 +105,16 @@ function getHTMLRows(customElementClass) {
               )}
               kind="ghost">
               ${Edit16()} </cds-button
-            ><cds-button kind="danger--ghost">
+            ><cds-button
+              @click=${onDeleteButtonClick.bind(
+                customElementClass,
+                item.input.input,
+                item.input.context_variables,
+                item.output.output,
+                item.output.view_id,
+                item.output.parameters
+              )}
+              kind="danger--ghost">
               ${TrashCan16()}
             </cds-button></cds-table-cell
           >

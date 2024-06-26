@@ -176,6 +176,39 @@ export class PromptTuning extends LitElement {
   }
 
   /**
+   * Method for clicking a table row Delete button
+   * @param {string} prompt prompt
+   * @param {Object} contextVariables context variables
+   * @param {string} response response
+   * @param {string} responseView response view
+   * @param {Object} parameters parameters
+   */
+  onDeleteButtonClick(
+    prompt,
+    contextVariables,
+    response,
+    responseView,
+    parameters
+  ) {
+    console.log('on delete button clicked');
+
+    this.dispatchEvent(
+      new CustomEvent('delete-prompt', {
+        detail: {
+          message: `Deleting prompt.`,
+          prompt: {
+            prompt: prompt,
+            contextVariables: contextVariables,
+            response: response,
+            intentView: responseView,
+            parameters: parameters,
+          },
+        },
+      })
+    );
+  }
+
+  /**
    * Method for toggling view rename
    */
   _toggleRename() {

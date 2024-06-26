@@ -44,6 +44,7 @@ const defaultArgs = {
   onAddContextVariable: action('add-context-variable'),
   onAddParameter: action('add-parameter'),
   onSavePrompt: action('save-prompt'),
+  onDeletePrompt: action('delete-prompt'),
 };
 
 /* Default controls */
@@ -116,6 +117,7 @@ export const Default = {
     onAddContextVariable,
     onAddParameter,
     onSavePrompt,
+    onDeletePrompt,
   }) =>
     html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
 
@@ -130,6 +132,7 @@ export const Default = {
         @add-context-variable=${onAddContextVariable}
         @add-parameter=${onAddParameter}
         @save-prompt=${onSavePrompt}
+        @delete-prompt=${onDeletePrompt}
         >${text}</clabs-prompt-tuning
       >
 

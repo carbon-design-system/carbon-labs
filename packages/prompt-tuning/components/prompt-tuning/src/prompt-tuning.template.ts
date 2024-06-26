@@ -296,6 +296,7 @@ export function promptTuningTemplate(customElementClass) {
     _handleParameterInput: handleParameterInput,
     onSaveRename: onSaveRename,
     _handleNameInput: handleNameInput,
+    onChangeView: onChangeView,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--prompt-tuning">
@@ -316,7 +317,8 @@ export function promptTuningTemplate(customElementClass) {
               ? html`<cds-select
                     class="${clabsPrefix}--view-dropdown"
                     inline="true"
-                    value=${viewName}>
+                    value=${viewName}
+                    @cds-select-selected=${onChangeView}>
                     ${getSelectViews(customElementClass)}
                   </cds-select>
 

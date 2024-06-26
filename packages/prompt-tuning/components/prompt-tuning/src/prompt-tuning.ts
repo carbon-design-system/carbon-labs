@@ -190,8 +190,6 @@ export class PromptTuning extends LitElement {
     responseView,
     parameters
   ) {
-    console.log('on delete button clicked');
-
     this.dispatchEvent(
       new CustomEvent('delete-prompt', {
         detail: {
@@ -255,7 +253,6 @@ export class PromptTuning extends LitElement {
    * @param {event} event event
    */
   handleCloseTag(event) {
-    console.log('Custom event triggered:', event.detail.triggeredBy);
     this.dispatchEvent(
       new CustomEvent('close-tag', {
         detail: {
@@ -365,6 +362,18 @@ export class PromptTuning extends LitElement {
         })
       );
     }
+  }
+
+  /**
+   * Event handler to handle user changing current view
+   * @param {event} event event
+   */
+  onChangeView(event) {
+    this.dispatchEvent(
+      new CustomEvent('change-view', {
+        detail: { newView: event.target.value },
+      })
+    );
   }
 
   // /**

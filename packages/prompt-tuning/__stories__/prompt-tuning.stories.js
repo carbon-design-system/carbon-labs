@@ -45,6 +45,7 @@ const defaultArgs = {
   onAddParameter: action('add-parameter'),
   onSavePrompt: action('save-prompt'),
   onDeletePrompt: action('delete-prompt'),
+  onChangeView: action('change-view'),
 };
 
 /* Default controls */
@@ -118,6 +119,7 @@ export const Default = {
     onAddParameter,
     onSavePrompt,
     onDeletePrompt,
+    onChangeView,
   }) =>
     html` <cds-button id="modal-open-button"> Tune prompts </cds-button>
 
@@ -133,6 +135,7 @@ export const Default = {
         @add-parameter=${onAddParameter}
         @save-prompt=${onSavePrompt}
         @delete-prompt=${onDeletePrompt}
+        @change-view=${onChangeView}
         >${text}</clabs-prompt-tuning
       >
 

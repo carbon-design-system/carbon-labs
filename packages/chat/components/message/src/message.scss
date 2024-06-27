@@ -32,7 +32,6 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-message-content {
     overflow: hidden;
     box-sizing: border-box;
-    border-radius: 8px;
     border-inline-start: 1px solid
       var(--chat-message-unique-display-color, none);
     inline-size: 100%;

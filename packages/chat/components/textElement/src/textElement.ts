@@ -37,6 +37,12 @@ export default class textElement extends LitElement {
   capitalize;
 
   /**
+   * Highlight color chosen by user
+   */
+  @property({ type: String, attribute: 'text-highlight-color' })
+  textHighlightColor;
+
+  /**
    * Annotation boolean to append citation events/styling
    */
   @property({ type: Boolean, attribute: 'enable-annotations' })
@@ -49,13 +55,19 @@ export default class textElement extends LitElement {
   enableHtmlRendering;
 
   /**
+   * enableTextHighlighting - show colored background for text
+   */
+  @property({ type: Boolean, attribute: 'enable-text-highlighting' })
+  enableTextHighlighting;
+
+  /**
    * Newline boolean to disable splitting text by newlines
    */
   @property({ type: Boolean, attribute: 'disable-new-lines' })
   disableNewLines = false;
 
   /**
-   * Element array to be rendered
+   * Internal element array to be rendered
    */
   @state()
   _textElements: {
@@ -63,6 +75,18 @@ export default class textElement extends LitElement {
     type: string;
     active: boolean;
     content: string;
+  }[] = [];
+
+  /**
+   * External element array to be rendered
+   */
+  @property({ type: Array, attribute: 'textSubElements' })
+  textSubElements: {
+    text: string;
+    type: string;
+    active: boolean;
+    content: string;
+    color: string;
   }[] = [];
 
   /**
@@ -77,32 +101,48 @@ export default class textElement extends LitElement {
   @state()
   _annotationIndex;
 
-  /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
-   * @param {Object} changedProperties - returned inner DOM update object
-   **/
-  updated(changedProperties) {
-    super.updated(changedProperties);
-    if (changedProperties.has('content')) {
-      this._formatText();
-    }
-  }
-
   /** detect when component is rendered to process text object
    */
   firstUpdated() {
-    if (this.content) {
-      this._formatText();
+    if (this.textSubElements?.length > 1) {
+      this._textElements = this.textSubElements;
+    } else {
+      if (this.content) {
+        this._formatText();
+      }
     }
+
+    if (this.hasAttribute('text-highlight-color')) {
+      this.style.setProperty(
+        '--chat-text-element-highlight-color',
+        this.textHighlightColor
+      );
+    }
+
     this.style.setProperty(
       '--chat-text-content-annotation-element-height',
       '0px'
     );
   }
 
+  /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
+   * @param {Object} changedProperties - returned inner DOM update object
+   **/
+  updated(changedProperties) {
+    super.updated(changedProperties);
+    if (
+      changedProperties.has('content') &&
+      !(this.textSubElements.length > 0)
+    ) {
+      this._formatText();
+    }
+  }
+
   /** _handleAnnotationClick - open and load Card element when annotation dropdown clicked
    * @param {event} event - click event
    */
   _handleAnnotationClick(event) {
+    console.log(this._textElements);
     const source = event?.originalTarget?.dataset?.source;
     this.style.setProperty(
       '--chat-text-content-annotation-element-height',
@@ -110,6 +150,13 @@ export default class textElement extends LitElement {
     );
 
     const index = event?.originalTarget?.dataset?.index;
+
+    const annotationClickEventDetails = {
+      originalEvent: event,
+      annotationContent: source,
+      indexInElementsArray: index,
+      elementsArray: this._textElements,
+    };
     if (index) {
       this._textElements.forEach((element, elementIndex) => {
         if (elementIndex !== parseInt(index)) {
@@ -118,6 +165,16 @@ export default class textElement extends LitElement {
       });
       this._textElements[parseInt(index)].active =
         !this._textElements[parseInt(index)].active;
+
+      if (this._textElements[parseInt(index)].active) {
+        annotationClickEventDetails['action'] = 'annotation popup closed';
+      } else {
+        annotationClickEventDetails['action'] = 'annotation popup opened';
+      }
+      annotationClickEventDetails['isOpened'] =
+        this._textElements[parseInt(index)].active;
+      annotationClickEventDetails['textContent'] =
+        this._textElements[parseInt(index)].text;
 
       if (this._textElements[parseInt(index)].active) {
         if (source) {
@@ -139,6 +196,13 @@ export default class textElement extends LitElement {
       }
       this.requestUpdate();
     }
+
+    const annotationClickEvent = new CustomEvent('on-text-annotation-click', {
+      detail: annotationClickEventDetails,
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(annotationClickEvent);
   }
 
   /** _arrangeSources - cut content into array of sources
@@ -163,6 +227,58 @@ export default class textElement extends LitElement {
   /** _formatText - slice text content when markdowns are detected
    */
   _formatText() {
+    const annotationRegex = new RegExp(
+      '(\\[([^\\]]+)\\]\\(([^)]+)\\))|([^\\[]+)',
+      'g'
+    );
+    const temporaryTextArray: {
+      text: string;
+      type: string;
+      active: boolean;
+      content: string;
+    }[] = [];
+    let regexResult;
+    const inputText = this.content;
+    const newLines = inputText.split('\n');
+    for (const newLine of newLines) {
+      while ((regexResult = annotationRegex.exec(newLine)) != null) {
+        if (regexResult[1]) {
+          temporaryTextArray.push({
+            text: regexResult[2],
+            type: 'annotation',
+            content: regexResult[3],
+            active: false,
+          });
+        } else if (regexResult[4]) {
+          const checkHtmlContent = this._checkForHTML(regexResult[4]);
+          const textType = checkHtmlContent ? 'html' : 'default';
+          temporaryTextArray.push({
+            text: this.capitalize
+              ? this._capitalizeText(regexResult[4])
+              : regexResult[4],
+            type: textType,
+            active: false,
+            content: '',
+          });
+        }
+      }
+    }
+    this._textElements = temporaryTextArray;
+  }
+  /**
+   * _checkForHTML - see if complete html is present in text block
+   * @param {string} text - text to be checked for html tags
+   */
+  _checkForHTML(text) {
+    //const HTMlRegex = new RegExp('^<([a-z]+)([^<]+)*(?:>(.*)<\\/\\1>|\\s+\\/>)$');
+    //const HTMlRegex = new RegExp('^<\s*[a-zA-Z]+,*?>')
+    const HTMlRegex = new RegExp('<[^>]+>', 'g');
+    //const HTMlRegex = new RegExp('^([a-zA-Z][a-zA-Z0-9]*)\\b[^>]*>(?:[^<]*(?:[^<]*(?:<([a-zA-Z][a-zA-Z0-9]*)\\b[^>]|*>[^<]*<\\/\\2>)*[^<]*)*<\\/\\1>$')
+    return HTMlRegex.test(text);
+  }
+  /** _formatTextOld - slice text content when markdowns are detected
+   */
+  _formatTextOld() {
     const temporaryTextArray: {
       text: string;
       type: string;

@@ -32,7 +32,10 @@ export function messagesTemplate(customElementClass) {
     userName,
   } = customElementClass;
 
-  return html`<div class="${clabsPrefix}--chat-messages-container">
+  return html`<div
+    class="${clabsPrefix}--chat-messages-container ${dockingEnabled
+      ? clabsPrefix + '--chat-messages-container-docked'
+      : ''}">
     <slot name="message-items" @slotchange="${_handleSlotchange}">
       ${computedMessages
         ? html`

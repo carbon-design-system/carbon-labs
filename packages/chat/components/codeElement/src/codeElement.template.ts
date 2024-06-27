@@ -12,6 +12,7 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
 import '@carbon/web-components/es/components/button/index.js';
+import '@carbon/web-components/es/components/icon-button/index.js';
 
 import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
 import Copy16 from '@carbon/web-components/es/icons/copy/16.js';
@@ -42,27 +43,22 @@ export function codeElementTemplate(customElementClass) {
         <div class="${clabsPrefix}--chat-code-options-buttons">
           ${!disableEditButton
             ? html`
-                <cds-button
-                  size="sm"
-                  kind="ghost"
-                  tooltip-text="Enable editing"
-                  tooltip-position="left"
-                  tooltip-alignment="end">
+                <cds-icon-button size="sm" kind="ghost" align="left">
                   ${Edit16({ slot: 'icon' })}
-                </cds-button>
+                  <span slot="tooltip-content">Enable editing</span>
+                </cds-icon-button>
               `
             : html``}
           ${!disableCopyButton
             ? html`
-                <cds-button
+                <cds-icon-button
                   size="sm"
                   kind="ghost"
-                  tooltip-text="Copy code"
-                  tooltip-position="left"
-                  tooltip-alignment="end"
+                  align="left"
                   @click="${copyCode}">
                   ${Copy16({ slot: 'icon' })}
-                </cds-button>
+                  <span slot="tooltip-content">Copy code</span>
+                </cds-icon-button>
               `
             : html``}
         </div>
@@ -72,14 +68,14 @@ export function codeElementTemplate(customElementClass) {
         (lineObject, index) =>
           html`
             <div class="${clabsPrefix}--chat-code-line">
-              ${!disableLineTicks
-                ? html`
+              ${disableLineTicks || _renderedLines.length < 2
+                ? html``
+                : html`
                     <div class="${clabsPrefix}--chat-code-line-tick">
-                      ${index}
+                      ${index + 1}
                     </div>
                     <div class="${clabsPrefix}--chat-code-line-divider"></div>
-                  `
-                : html``}
+                  `}
               ${!editable
                 ? html`<div
                     class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-line-${editable
@@ -107,10 +103,18 @@ ${lineObject.content}</textarea
               <cds-button
                 size="sm"
                 kind="danger"
+                tooltip-text="Cancel edit"
+                tooltip-position="left"
+                tooltip-alignment="end"
                 @click="${handleEditCancellation}">
                 Cancel edit
               </cds-button>
-              <cds-button size="sm" @click="${handleEditValidation}">
+              <cds-button
+                size="sm"
+                tooltip-text="Validate edit"
+                tooltip-position="left"
+                tooltip-alignment="end"
+                @click="${handleEditValidation}">
                 Validate edit
               </cds-button>
             </div>

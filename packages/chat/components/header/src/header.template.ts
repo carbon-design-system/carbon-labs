@@ -16,9 +16,10 @@ import Subtract16 from '@carbon/web-components/es/icons/subtract/16.js';
 import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
 import Minimize16 from '@carbon/web-components/es/icons/minimize/16.js';
 import Close16 from '@carbon/web-components/es/icons/close/16.js';
+import '@carbon/web-components/es/components/overflow-menu/index.js';
 
 import '@carbon/web-components/es/components/slug/index.js';
-import '@carbon/web-components/es/components/button/index.js';
+import '@carbon/web-components/es/components/icon-button/index.js';
 
 /**
  * Lit template for card
@@ -35,6 +36,7 @@ export function headerTemplate(customElementClass) {
     _handleMinimize: handleMinimize,
     _handleMenuToggle: handleMenuToggle,
     _handleClosed: handleClosed,
+    menuItems: menuItems,
     enableFullscreen,
     enableDocking,
     disableHeaderButtons,
@@ -42,6 +44,7 @@ export function headerTemplate(customElementClass) {
     disableFullscreen,
     disableClose,
     disableMinimize,
+    handleMenuItemSelected,
   } = customElementClass;
   return html` <div class="${clabsPrefix}--chat-header-container">
     <div class="${clabsPrefix}--chat-header-content">
@@ -49,16 +52,35 @@ export function headerTemplate(customElementClass) {
         <div class="${clabsPrefix}--chat-header-elements-left">
           ${!disableMenu && !disableHeaderButtons
             ? html` <div class="${clabsPrefix}--chat-header-elements-icon">
-                <cds-button
+                ${!menuItems
+                  ? html`
+                <cds-icon-button
                   kind="ghost"
-                  ?disabled="${true}"
+                  disabled=""
                   size="sm"
-                  tooltip-text="Open menu"
-                  tooltip-position="bottom-left"
-                  tooltip-alignment="end"
+                  align="bottom-left"
                   @click="${handleMenuToggle}">
                   ${Menu24({ slot: 'icon' })}
-                </cds-button>
+                  <span slot="tooltip-content"> Open Menu </span>
+                </cds-iconbutton>
+                `
+                  : html`
+                      <cds-overflow-menu align="bottom-left">
+                        ${Menu24({ slot: 'icon' })}
+                        <span slot="tooltip-content"> Open Menu </span>
+
+                        <cds-overflow-menu-body>
+                          ${menuItems.map(
+                            (menuItem) => html`
+                              <cds-overflow-menu-item
+                                @click="${handleMenuItemSelected}"
+                                >${menuItem.title}</cds-overflow-menu-item
+                              >
+                            `
+                          )}
+                        </cds-overflow-menu-body>
+                      </cds-overflow-menu>
+                    `}
               </div>`
             : html``}
           ${title
@@ -89,29 +111,31 @@ export function headerTemplate(customElementClass) {
                         ? html`
                             <div
                               class="${clabsPrefix}--chat-header-elements-icon">
-                              <cds-button
+                              <cds-icon-button
                                 kind="ghost"
                                 size="sm"
-                                tooltip-text="Fullscreen mode"
-                                tooltip-position="bottom-right"
-                                tooltip-alignment="end"
+                                align="bottom-right"
                                 @click="${handleMaximize}">
                                 ${Maximize16({ slot: 'icon' })}
-                              </cds-button>
+                                <span slot="tooltip-content"
+                                  >Fullscreen mode</span
+                                >
+                              </cds-icon-button>
                             </div>
                           `
                         : html`
                             <div
                               class="${clabsPrefix}--chat-header-elements-icon">
-                              <cds-button
+                              <cds-icon-button
                                 kind="ghost"
                                 size="sm"
-                                tooltip-text="Exit fullscreen"
-                                tooltip-position="bottom-right"
-                                tooltip-alignment="end"
+                                align="bottom-right"
                                 @click="${handleMinimize}">
                                 ${Minimize16({ slot: 'icon' })}
-                              </cds-button>
+                                <span slot="tooltip-content"
+                                  >Exit fullscreen</span
+                                >
+                              </cds-icon-button>
                             </div>
                           `}
                     `
@@ -122,29 +146,27 @@ export function headerTemplate(customElementClass) {
                         ? html`
                             <div
                               class="${clabsPrefix}--chat-header-elements-icon">
-                              <cds-button
+                              <cds-icon-button
                                 kind="ghost"
-                                tooltip-text="Pop out chat"
-                                tooltip-position="bottom-right"
-                                tooltip-alignment="end"
+                                align="bottom-right"
                                 size="sm"
                                 @click="${handlePopup}">
                                 ${Subtract16({ slot: 'icon' })}
-                              </cds-button>
+                                <span slot="tooltip-content">Pop out chat</span>
+                              </cds-icon-button>
                             </div>
                           `
                         : html`
                             <div
                               class="${clabsPrefix}--chat-header-elements-icon">
-                              <cds-button
+                              <cds-icon-button
                                 kind="ghost"
                                 size="sm"
-                                tooltip-text="Expand chat"
-                                tooltip-position="bottom-right"
-                                tooltip-alignment="end"
+                                align="bottom-right"
                                 @click="${handleSubtract}">
                                 ${Popup16({ slot: 'icon' })}
-                              </cds-button>
+                                <span slot="tooltip-content">Expand chat</span>
+                              </cds-icon-button>
                             </div>
                           `}
                     `
@@ -152,15 +174,14 @@ export function headerTemplate(customElementClass) {
                 ${!disableClose
                   ? html`
                       <div class="${clabsPrefix}--chat-header-elements-icon">
-                        <cds-button
+                        <cds-icon-button
                           kind="ghost"
                           size="sm"
-                          tooltip-text="Close chat"
-                          tooltip-position="bottom-right"
-                          tooltip-alignment="end"
+                          align="bottom-right"
                           @click="${handleClosed}">
                           ${Close16({ slot: 'icon' })}
-                        </cds-button>
+                          <span slot="tooltip-content">Close</span>
+                        </cds-icon-button>
                       </div>
                     `
                   : html``}

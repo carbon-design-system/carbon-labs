@@ -31,17 +31,12 @@ export default class chartElement extends LitElement {
    * Enable debugger to inspect spec and show error messages in the component
    */
   @property({ type: Boolean, attribute: 'debug-mode' })
-  debugMode;
+  debugMode = true;
 
   /**
    * Event listener to check if parent visibility changed
    */
   private intersectionObserver;
-
-  /**
-   * Event listener to check if component has resized
-   */
-  private resizeObserver;
 
   /**
    * Valid CSS string to define chart height, applied to chart container while specification is automatically set to height="container" to fill the parent container height
@@ -152,6 +147,12 @@ export default class chartElement extends LitElement {
   _errorMessage;
 
   /**
+   * warningMessage - underlying warning to be appended to error
+   */
+  @state()
+  _warningMessage;
+
+  /**
    * uniqueID - unique ID egenrated in this component to target correct div when rendering
    */
   @state()
@@ -211,6 +212,12 @@ export default class chartElement extends LitElement {
   @state()
   streaming;
 
+  /**
+   * editOriginalSpecification - choose whether to edit the inserted spec or the edited sped
+   */
+  @state()
+  editOriginalSpecification = true;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
@@ -220,16 +227,6 @@ export default class chartElement extends LitElement {
     if (this.renderMethod !== 'svg' && this.renderMethod !== 'canvas') {
       this.renderMethod = 'canvas';
     }
-
-    this.resizeObserver = new ResizeObserver(async () => {
-      if (!this.chartLoading) {
-        if (this._visualizationSpec?.repeat) {
-          this._prepareVisualization();
-        }
-      }
-      //this.requestUpdate();
-    });
-    this.resizeObserver.observe(this.parentElement);
 
     this.intersectionObserver = new IntersectionObserver(async () => {
       if (!this.chartLoading) {
@@ -251,6 +248,17 @@ export default class chartElement extends LitElement {
 
     if (this.content) {
       this._prepareVisualization();
+    }
+  }
+
+  /**
+   * _handleResize - target resize on component itself
+   */
+  _handleResize() {
+    if (!this.chartLoading) {
+      if (this._visualizationSpec?.repeat) {
+        this._prepareVisualization();
+      }
     }
   }
 
@@ -415,7 +423,7 @@ export default class chartElement extends LitElement {
                   this._singleDataSelected(value);
                 });
               } catch (selectError) {
-                console.log(selectError);
+                this._warningMessage = selectError;
               }
             }
             if (this._authorizeMultiSelection) {
@@ -424,7 +432,7 @@ export default class chartElement extends LitElement {
                   this._multiDataSelected(brush);
                 });
               } catch (brushError) {
-                console.log(brushError);
+                this._warningMessage = brushError;
               }
             }
           })
@@ -725,6 +733,14 @@ export default class chartElement extends LitElement {
         }
       }
     }, 200);
+  }
+
+  /**
+   * _switchEditedSpecSelection
+   * @param {event} event - button switch event
+   */
+  _switchEditedSpecSelection(event) {
+    console.log(event);
   }
 
   /**

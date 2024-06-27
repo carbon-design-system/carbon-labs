@@ -12,6 +12,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}-chat-code) {
+  display: flex;
   .#{$clabs-prefix}--chat-code-container {
     position: relative;
     display: flex;
@@ -26,8 +27,8 @@ $css--plex: true !default;
     font-size: 13px;
     letter-spacing: 0.64px;
     line-height: 20px;
-    max-block-size: 492px;
-    padding-inline-start: 12px;
+    max-block-size: var(--chat-code-height, '100%');
+    padding-inline: 12px 32px;
   }
 
   .#{$clabs-prefix}--chat-code-line {
@@ -38,15 +39,16 @@ $css--plex: true !default;
     position: absolute;
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
+    inline-size: 100%;
     inset-block-start: 8px;
-    inset-inline-end: 0;
+    inset-inline-end: 8px;
   }
   .#{$clabs-prefix}--chat-code-options-buttons {
     display: flex;
     flex-direction: row;
     background: $background;
     gap: 4px;
-    padding-inline-end: 8px;
   }
   .#{$clabs-prefix}--chat-code-options-buttons svg {
     fill: $text-secondary;

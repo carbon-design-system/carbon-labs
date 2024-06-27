@@ -42,6 +42,12 @@ export default class header extends LitElement {
   disableClose;
 
   /**
+   * header menu item list
+   */
+  @property({ type: Object, attribute: 'menuItems' })
+  menuItems;
+
+  /**
    * provided title string to display in header
    */
   @property({ type: String, attribute: 'title' })
@@ -78,6 +84,29 @@ export default class header extends LitElement {
       composed: true,
     });
     this.dispatchEvent(dockingEvent);
+  }
+
+  /**
+   * menu item selection event
+   * @param {event} event - click event when item is chosen
+   */
+  handleMenuItemSelected(event) {
+    const index = event.detail;
+    if (this.menuItems[index]) {
+      const menuSelectionEvent = new CustomEvent(
+        'on-header-menu-item-selected',
+        {
+          detail: {
+            index: 1,
+            menuItem: this.menuItems[index],
+            originalEvent: event,
+          },
+          bubbles: true,
+          composed: true,
+        }
+      );
+      this.dispatchEvent(menuSelectionEvent);
+    }
   }
 
   /**

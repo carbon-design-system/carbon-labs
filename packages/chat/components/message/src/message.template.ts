@@ -32,6 +32,7 @@ import '../../errorElement/errorElement.js';
 import '../../loadingElement/loadingElement.js';
 import '../../carouselElement/carouselElement.js';
 import '../../linkListElement/linkListElement.js';
+import '../../molecularElement/molecularElement.js';
 
 /**
  * Lit template for message
@@ -160,6 +161,14 @@ export function messageTemplate(customElementClass) {
                             <clabs-chat-carousel content="${message.content}">
                             </clabs-chat-carousel>
                           `
+                        : message.type === 'molecule'
+                        ? html`
+                            <clabs-chat-molecule
+                              width="246"
+                              height="246"
+                              content="${message.content}">
+                            </clabs-chat-molecule>
+                          `
                         : message.type === 'table'
                         ? html`
                             <clabs-chat-table content="${message.content}">
@@ -207,7 +216,9 @@ export function messageTemplate(customElementClass) {
                         ? html` <clabs-chat-loading> </clabs-chat-loading> `
                         : message.type === 'code'
                         ? html`
-                            <clabs-chat-code content="${message.content}">
+                            <clabs-chat-code
+                              content="${message.content}"
+                              max-height="246px">
                             </clabs-chat-code>
                           `
                         : message.type === 'tags'
@@ -272,6 +283,15 @@ export function messageTemplate(customElementClass) {
                             <clabs-chat-carousel
                               content="${temporaryMessage.content}">
                             </clabs-chat-carousel>
+                          `
+                        : temporaryMessage.type === 'molecule'
+                        ? html`
+                            <clabs-chat-molecule
+                              streaming
+                              width="246"
+                              height="246"
+                              content="${temporaryMessage.content}">
+                            </clabs-chat-molecule>
                           `
                         : temporaryMessage.type === 'tags'
                         ? html`

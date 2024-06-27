@@ -2632,6 +2632,7 @@ __metadata:
     "@carbon/charts": "npm:^1.15.5"
     "@carbon/web-components": "npm:2.9.0"
     "@ibm/telemetry-js": "npm:^1.5.0"
+    smiles-drawer: "npm:^2.1.7"
     vega: "npm:^5.28.0"
     vega-embed: "npm:^6.24.0"
     vega-lite: "npm:^5.17.0"
@@ -10251,6 +10252,13 @@ __metadata:
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
   checksum: 10c0/594754e1303672171cc04e50f6c398ae16128eb134a88f801bf5354fd96f205320f23536a045d9abd8b51024a149696e51231565891d4efdab8846021ecf88e6
+  languageName: node
+  linkType: hard
+
+"chroma-js@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "chroma-js@npm:2.4.2"
+  checksum: 10c0/5657cd10892538c4a41e8bd95524d018c3a43318b26dfb20d572b2084bc6d5af742457a6d5701ddecb4d4eceb99995873b22293c1b396ab0b35ef55a264550c8
   languageName: node
   linkType: hard
 
@@ -23161,6 +23169,15 @@ __metadata:
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
   checksum: 10c0/a16775323e1404dd43fabafe7460be13a471e021637bc7889468eb45ce6a6b207261f454e4e530a19500cc962c4cc5348583520843b363f4193cee5c00e1e539
+  languageName: node
+  linkType: hard
+
+"smiles-drawer@npm:^2.1.7":
+  version: 2.1.7
+  resolution: "smiles-drawer@npm:2.1.7"
+  dependencies:
+    chroma-js: "npm:^2.4.2"
+  checksum: 10c0/08a21d2b5ea6fd2f7ad771a5665dd09cb56eadf3f3cbcdbe4e21225a7ed7ad1f6b57d73d8ac900b4a87231192b058d4bfb9e9173dbb270784c672b3cf89d9079
   languageName: node
   linkType: hard
 

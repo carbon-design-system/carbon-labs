@@ -1,0 +1,90 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-file-upload) {
+  .#{$clabs-prefix}--chat-file-upload-container {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 8px;
+    background: $layer-accent-01;
+    background-blend-mode: multiply;
+
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+
+    inline-size: 177px;
+    letter-spacing: 0.16px;
+    line-height: 18px;
+  }
+
+  .#{$clabs-prefix}--chat-file-upload--float-right {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .#{$clabs-prefix}--chat-file-upload--float-left {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .#{$clabs-prefix}--chat-file-upload-top-container {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: row;
+    padding: 8px 16px;
+    block-size: 32px;
+    gap: 8px;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-file-upload-bottom-container {
+    display: flex;
+    padding: 8px 16px;
+    border-block-start: 2px solid $border-subtle-01;
+    color: $support-error;
+  }
+
+  .#{$clabs-prefix}--chat-file-upload-container-error {
+    border: 2px solid $support-error;
+  }
+
+  .#{$clabs-prefix}--chat-file-upload-container-file-status {
+    block-size: 16px;
+    inline-size: 16px;
+    padding-block-start: 2px;
+  }
+
+  .#{$clabs-prefix}--chat-file-upload-container-file-status-success svg {
+    fill: $link-primary;
+  }
+
+  .#{$clabs-prefix}--chat-file-upload-container-file-type svg {
+    block-size: 20px;
+    inline-size: 20px;
+  }
+
+  .#{$clabs-prefix}--chat-file-upload-container-file-name {
+    overflow: hidden;
+    flex: 3;
+    white-space: nowrap;
+  }
+
+  .#{$clabs-prefix}--chat-file-upload-container-loader {
+    overflow: hidden;
+    block-size: 32px;
+    inline-size: 32px;
+  }
+}

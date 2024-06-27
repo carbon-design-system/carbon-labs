@@ -31,6 +31,7 @@ export function textElementTemplate(customElementClass) {
     _annotationURLs: annotationURLs,
     _annotationIndex: annotationIndex,
     _handleAnnotationClick,
+    enableTextHighlighting,
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-text">
@@ -42,45 +43,57 @@ export function textElementTemplate(customElementClass) {
             html` ${textPiece.type === 'annotation' || textPiece.type === 'link'
               ? html`
                   <span
-                    class="${clabsPrefix}--chat-text-content-${textPiece.type}"
+                    class="${clabsPrefix}--chat-text-content-${textPiece.type} ${enableTextHighlighting
+                      ? clabsPrefix + '--chat-text-highlighted'
+                      : ''}"
+                    style="${textPiece.color
+                      ? 'background-color:' + textPiece.color + ';'
+                      : html``}"
                     data-index="${index}"
                     data-source="${textPiece.content}"
                     @click="${_handleAnnotationClick}">
                     ${textPiece.text}
                   </span>
-                  <span
-                    class="${clabsPrefix}--chat-text-content-chevron ${index ===
-                    annotationIndex
-                      ? clabsPrefix + '--chat-text-content-chevron--focused'
-                      : ''}"
-                    data-index="${index}"
-                    data-source="${textPiece.content}"
-                    @click="${_handleAnnotationClick}">
-                    ${!textPiece.active
-                      ? html` ${ChevronDown16({ slot: 'icon' })} `
-                      : html` ${ChevronUp16({ slot: 'icon' })} `}
-                  </span>
+                  ${!enableTextHighlighting
+                    ? html`
+                        <span
+                          class="${clabsPrefix}--chat-text-content-chevron ${index ===
+                          annotationIndex
+                            ? clabsPrefix +
+                              '--chat-text-content-chevron--focused'
+                            : ''}"
+                          data-index="${index}"
+                          data-source="${textPiece.content}"
+                          @click="${_handleAnnotationClick}">
+                          ${!textPiece.active
+                            ? html` ${ChevronDown16({ slot: 'icon' })} `
+                            : html` ${ChevronUp16({ slot: 'icon' })} `}
+                        </span>
+                      `
+                    : html``}
                   ${index === annotationIndex
                     ? html`
-                        <div
-                          class="${clabsPrefix}--chat-text-content-annotation-element">
-                          ${annotationURLs.length > 1
-                            ? html`
-                                <clabs-chat-carousel
-                                  content=${JSON.stringify(annotationURLs)}>
-                                </clabs-chat-carousel>
-                              `
-                            : html`
-                                <clabs-chat-card
-                                  type="url"
-                                  content="${annotationURLs[0]}">
-                                </clabs-chat-card>
-                              `}
-                        </div>
+                        <slot name="custom-highlight-component">
+                          <div
+                            class="${clabsPrefix}--chat-text-content-annotation-element">
+                            ${annotationURLs.length > 1
+                              ? html`
+                                  <clabs-chat-carousel
+                                    content=${JSON.stringify(annotationURLs)}>
+                                  </clabs-chat-carousel>
+                                `
+                              : html`
+                                  <clabs-chat-card
+                                    type="url"
+                                    content="${annotationURLs[0]}">
+                                  </clabs-chat-card>
+                                `}
+                          </div>
+                        </slot>
                       `
                     : html``}
                 `
-              : enableHtmlRendering
+              : enableHtmlRendering || textPiece.type === 'html'
               ? html` <span
                   class="${clabsPrefix}--chat-text-content-${textPiece.type}"
                   >${unsafeHTML(textPiece.text)}</span

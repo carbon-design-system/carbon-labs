@@ -200,7 +200,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 20;
+  baseStreamingSpeed = 15;
 
   /** detect when component is rendered to process rawtext
    */
@@ -428,19 +428,37 @@ export default class message extends LitElement {
    * _checkBlockStart - scan incoming stream of tokens to see if a typed block has started
    */
   _checkBlockStart() {
+    const analysisPriority = [
+      'code',
+      'json',
+      'table',
+      'array',
+      'molecule',
+      'url',
+      'list',
+    ];
     const regexPatterns = {
       code: new RegExp('```'),
       json: new RegExp('\\{'),
       table: new RegExp('((\\w+,\\w+)(,[\\w+]*)*[\\r\\n]+)+'),
       array: new RegExp('\\[\\"'),
-      annotation: new RegExp('\\[[^\\]]*,'),
-      url: new RegExp('(?<!\\()(http|ftp)'),
+      //molecule: new RegExp('^[A-Za-z0-9@+\\-\\[\\]\\(\\)=#%$]+$'),
+      //molecule: new RegExp('^[CNOSPFIBrcln=#$%@\\-+\\[\\]()\\/0-9]+$'),
+      //molecule: new RegExp('^([BCOHNSPKFYIWcl][a-zA-Z0-9@+\\-\\[\\]\\(\\)=#$%]*)+'),
+      //molecule: new RegExp('A-Za-z0-9@#=\\+\\-\\(\\)\\[\\]]+'),
+      //annotation: new RegExp('\\[[^\\]]*,'),
+      annotation: new RegExp('\\(.*?\\)\\[.*?\\]'),
+      //molecule: new RegExp('(?:^|\\s)([BCNOPSFIbcnopsdi0-9@+\\-\\[\\]=#%$\\\\()/.]+)(?=\\s|$)'),
+      //molecule: new RegExp('[A-Za-z0-9@+\\-=#$%&\\\\\\/()\\[\\]{}]*$'),
+      //molecule: new RegExp('^[A-Za-z0-9@+\\-=#$%&\\\\\\/()\\[\\]{}]*$','g'),
+      url: new RegExp('(?<!\\(|,)\\b(http|ftp)\\S+'),
+      //url: new RegExp('(?<!\\()(http|ftp)'),
       list: new RegExp('(?:1\\.\\s+[-*]\\s|\\d{2,}\\.\\s+[-*]\\s)'),
       //list: new RegExp('(?:\\d+\\.\\s+|[-*]\\s)'),
       //list: new RegExp('(^|\\n)\\s*(?:[-*\\u2022\\u25E6\\u25AA\\u25CF]\\s|\\s1\\.\\s)','m')
     };
 
-    for (const type in regexPatterns) {
+    for (const type of analysisPriority) {
       const match: RegExpMatchArray | null = this.bufferMessage.match(
         regexPatterns[type]
       );
@@ -507,6 +525,7 @@ export default class message extends LitElement {
       case 'annotation':
         stopIndex = this.bufferMessage.indexOf(')');
         break;
+      case 'molecule':
       case 'url':
         stopIndex = this.bufferMessage.indexOf('\n');
         break;
@@ -607,6 +626,19 @@ export default class message extends LitElement {
    * _checkAmbiguousBlock - change type of block if subtype confirmed
    */
   _checkAmbiguousBlock() {
+    if (this.currentType === 'code') {
+      const smilesRegex = new RegExp(
+        '^[CNOSPFIBrcln=#$%@\\-+\\[\\]()\\/0-9]+$'
+      );
+      //molecule: new RegExp('^[A-Za-z0-9@+\\-\\[\\]\\(\\)=#%$]+$'),
+      //molecule: new RegExp('^[CNOSPFIBrcln=#$%@\\-+\\[\\]()\\/0-9]+$'),
+      //molecule: new RegExp('^([BCOHNSPKFYIWcl][a-zA-Z0-9@+\\-\\[\\]\\(\\)=#$%]*)+'),
+      //molecule: new RegExp('A-Za-z0-9@#=\\+\\-\\(\\)\\[\\]]+'),
+      if (smilesRegex.test(this.bufferMessage.replace('```', ''))) {
+        this.currentType = 'molecule';
+        this.temporaryMessage.type = 'molecule';
+      }
+    }
     if (this.currentType === 'json') {
       if (this.bufferMessage.indexOf('$schema') > -1) {
         this.currentType = 'chart';
@@ -718,11 +750,16 @@ export default class message extends LitElement {
       }
 
       this.streamingSpeed =
-        this.baseStreamingSpeed + Math.random() * Math.random() * 50;
+        this.baseStreamingSpeed +
+        Math.random() *
+          Math.random() *
+          Math.random() *
+          this.baseStreamingSpeed *
+          10;
 
       switch (this.temporaryMessage.type) {
         case 'code':
-          this.streamingSpeed = this.baseStreamingSpeed / 2;
+          this.streamingSpeed = this.baseStreamingSpeed / 4;
           break;
         case 'table':
           this.streamingSpeed = this.baseStreamingSpeed / 2;

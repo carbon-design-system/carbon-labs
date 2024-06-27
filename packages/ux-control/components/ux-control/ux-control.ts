@@ -9,25 +9,25 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { PromptTuning } from './src/prompt-tuning.js';
+import { UXControl } from './src/ux-control.js';
 import { TemplateResult } from 'lit';
-import { promptTuningTemplate } from './src/prompt-tuning.template.js';
+import { uxControlTemplate } from './src/ux-control.template.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Component extending the PromptTuning component
+ * Component extending the UXControl component
  *
- * @element clabs-prompt-tuning
+ * @element clabs-ux-control
  */
-@customElement(`${clabsPrefix}-prompt-tuning`)
-class CLABSPromptTuning extends PromptTuning {
+@customElement(`${clabsPrefix}-ux-control`)
+class CLABSUXControl extends UXControl {
   /**
    * Renders the template while passing in class functionality
    */
   render(): TemplateResult<1> {
-    return promptTuningTemplate(this);
+    return uxControlTemplate(this);
   }
 }
 
-export default CLABSPromptTuning;
+export default CLABSUXControl;

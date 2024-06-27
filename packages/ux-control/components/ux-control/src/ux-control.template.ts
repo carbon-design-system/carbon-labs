@@ -291,15 +291,15 @@ function getEditModal(customElementClass) {
 }
 
 /**
- * Lit template for prompt tuning
+ * Lit template for UX Control
  *
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export function promptTuningTemplate(customElementClass) {
+export function uxControlTemplate(customElementClass) {
   const {
     currentView: currentView,
-    isListModalOpen,
+    open,
     _onListModalClose: onListModalClose,
     _showRename: showRename,
     _showAddContextVariable: showAddContextVariable,
@@ -318,12 +318,12 @@ export function promptTuningTemplate(customElementClass) {
     handleCloseTag: handleCloseTag,
   } = customElementClass;
 
-  return html` <div class="${clabsPrefix}--prompt-tuning">
+  return html` <div class="${clabsPrefix}--ux-control">
     <cds-modal
       id="modal-prompt-list"
       size="lg"
       ?has-scrolling-content=${true}
-      ?open=${isListModalOpen}
+      ?open=${open}
       @cds-modal-closed=${onListModalClose}>
       <cds-modal-header>
         <cds-modal-close-button></cds-modal-close-button>

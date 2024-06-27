@@ -1,17 +1,17 @@
 {
-  "name": "@carbon-labs/ai-prompt-tuning",
-  "version": "0.1.0",
+  "name": "@carbon-labs/ai-ux-control",
+  "version": "0.0.1",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
   "type": "module",
-  "description": "Carbon for AI - prompt-tuning component",
+  "description": "Carbon for AI - UX Control component",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/carbon-design-system/carbon-labs",
-    "directory": "packages/prompt-tuning"
+    "directory": "packages/ux-control"
   },
   "main": "./src/index.js",
   "module": "./src/index.js",
@@ -28,7 +28,7 @@
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
-    "build": "gulp build --option prompt-tuning",
+    "build": "gulp build --option ux-control",
     "build:dist": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js",
     "build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary"
   },

@@ -13,24 +13,40 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
 // @ts-ignore
-import styles from './prompt-tuning.scss?inline';
+import styles from './ux-control.scss?inline';
 /**
  * Input component using search typeahead api
  */
-export class PromptTuning extends LitElement {
+export class UXControl extends LitElement {
   static styles = styles;
 
   /**
    * Prompt samples data
    */
-  @property({ attribute: 'promptSamples', type: Array })
+  @property({ attribute: 'prompt-samples', type: Array })
   promptSamples;
 
   /**
    * Whether the prompt list modal is open or not
    */
   @property({ type: Boolean })
-  isListModalOpen = true;
+  open = true;
+
+  /**
+   * Prompt samples data
+   */
+  @property({ attribute: 'current-view', type: Object })
+  currentView = {
+    name: '',
+    contextVariables: [],
+    parameters: [],
+  };
+
+  /**
+   * Prompt samples data
+   */
+  @property({ attribute: 'view-list', type: Array })
+  viewList = [];
 
   /**
    * Whether the prompt edit modal is open or not
@@ -119,7 +135,7 @@ export class PromptTuning extends LitElement {
    * Method for closing the Prompt List Modal
    */
   _onListModalClose() {
-    this.isListModalOpen = false;
+    this.open = false;
   }
 
   /**
@@ -145,7 +161,7 @@ export class PromptTuning extends LitElement {
     this._currentResponseView = '';
     this._currentParameters = {};
     this.isEditModalOpen = false;
-    this.isListModalOpen = true;
+    this.open = true;
     this._isNewPrompt = false;
   }
 
@@ -164,7 +180,7 @@ export class PromptTuning extends LitElement {
     responseView,
     parameters
   ) {
-    this.isListModalOpen = false;
+    this.open = false;
     this.isEditModalOpen = true;
     this._currentPrompt = prompt;
     this._currentContextVariables = contextVariables;
@@ -177,7 +193,7 @@ export class PromptTuning extends LitElement {
    * Method when Add new prompt is clicked
    */
   _onNewPrompt() {
-    this.isListModalOpen = false;
+    this.open = false;
     this.isEditModalOpen = true;
     this._isNewPrompt = true;
   }
@@ -396,17 +412,4 @@ export class PromptTuning extends LitElement {
       })
     );
   }
-
-  // /**
-  //  * updated - check changed properties
-  //  * @param {object} changedProperties - LIT object denoting changed attributes
-  //  */
-  // updated(changedProperties) {
-  //   console.log(`updated`);
-  //   super.updated(changedProperties);
-  //   if (changedProperties.has('isListModalOpen')) {
-  //     console.log(`updated isListModalOpen: ${this.isListModalOpen}`);
-  //     // this.isListModalOpen = this.isListModalOpen;
-  //   }
-  // }
 }

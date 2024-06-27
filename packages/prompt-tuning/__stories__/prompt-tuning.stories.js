@@ -196,7 +196,7 @@ export const Default = {
     onAddPrompt,
   }) =>
     html` <clabs-prompt-tuning
-      .isListModalOpen=${isListModalOpen}
+      ?isListModalOpen="${isListModalOpen}"
       .promptSamples=${promptSamples}
       .currentView=${currentView}
       .viewList=${viewList}

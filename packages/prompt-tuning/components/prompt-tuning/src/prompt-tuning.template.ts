@@ -14,12 +14,12 @@ import '@carbon/web-components/es/components/modal/index.js';
 import '@carbon/web-components/es/components/data-table/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/form-group/index.js';
-import Edit16 from '@carbon/web-components/es/icons/edit/16';
-import TrashCan16 from '@carbon/web-components/es/icons/trash-can/16';
-import Add16 from '@carbon/web-components/es/icons/add/16';
-import RequestQuote16 from '@carbon/web-components/es/icons/request-quote/16';
-import Close16 from '@carbon/web-components/es/icons/close/16';
-import Checkmark16 from '@carbon/web-components/es/icons/checkmark/16';
+import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
+import TrashCan16 from '@carbon/web-components/es/icons/trash-can/16.js';
+import Add16 from '@carbon/web-components/es/icons/add/16.js';
+import RequestQuote16 from '@carbon/web-components/es/icons/request-quote/16.js';
+import Close16 from '@carbon/web-components/es/icons/close/16.js';
+import Checkmark16 from '@carbon/web-components/es/icons/checkmark/16.js';
 
 import '@carbon/web-components/es/components/tag/index.js';
 

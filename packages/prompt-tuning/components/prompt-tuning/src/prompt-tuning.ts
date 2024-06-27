@@ -48,30 +48,35 @@ export class PromptTuning extends LitElement {
    * Current prompt
    */
   @property({ type: String })
+  // @ts-ignore: Used in template.ts
   private _currentPrompt = '';
 
   /**
    * Current context variables
    */
   @property({ type: Object })
+  // @ts-ignore: Used in template.ts
   private _currentContextVariables = {};
 
   /**
    * Current response
    */
   @property({ type: String })
+  // @ts-ignore: Used in template.ts
   private _currentResponse = '';
 
   /**
    * Current response view
    */
   @property({ type: String })
+  // @ts-ignore: Used in template.ts
   private _currentResponseView = '';
 
   /**
    * Current parameters
    */
   @property({ type: Object })
+  // @ts-ignore: Used in template.ts
   private _currentParameters = {};
 
   /**

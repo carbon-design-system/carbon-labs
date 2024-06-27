@@ -78,7 +78,7 @@ const defaultControls = {
     },
   },
   viewList: {
-    control: { type: 'object' },
+    control: { type: 'array' },
     description: 'List of views',
     table: {
       defaultValue: {

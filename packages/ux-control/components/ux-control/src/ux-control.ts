@@ -35,14 +35,18 @@ export class UXControl extends LitElement {
   /**
    * Prompt samples data
    */
-  @property({ attribute: 'current-view', type: Array })
-  currentView;
+  @property({ attribute: 'current-view', type: Object })
+  currentView = {
+    name: '',
+    contextVariables: [],
+    parameters: [],
+  };
 
   /**
    * Prompt samples data
    */
   @property({ attribute: 'view-list', type: Array })
-  viewList;
+  viewList = [];
 
   /**
    * Whether the prompt edit modal is open or not

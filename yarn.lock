@@ -2651,6 +2651,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/ai-prompt-tuning@workspace:packages/prompt-tuning":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/ai-prompt-tuning@workspace:packages/prompt-tuning"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.8.0"
+    "@carbon/grid": "npm:^11.21.0"
+    "@carbon/web-components": "npm:2.9.0"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/ai-tag@workspace:packages/tag":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/ai-tag@workspace:packages/tag"

@@ -2651,9 +2651,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/ai-prompt-tuning@workspace:packages/prompt-tuning":
+"@carbon-labs/ai-tag@workspace:packages/tag":
   version: 0.0.0-use.local
-  resolution: "@carbon-labs/ai-prompt-tuning@workspace:packages/prompt-tuning"
+  resolution: "@carbon-labs/ai-tag@workspace:packages/tag"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.8.0"
@@ -2662,9 +2662,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/ai-tag@workspace:packages/tag":
+"@carbon-labs/ai-ux-control@workspace:packages/ux-control":
   version: 0.0.0-use.local
-  resolution: "@carbon-labs/ai-tag@workspace:packages/tag"
+  resolution: "@carbon-labs/ai-ux-control@workspace:packages/ux-control"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.8.0"

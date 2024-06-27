@@ -1,17 +1,17 @@
 {
-  "name": "@carbon-labs/ai-feedback",
-  "version": "0.12.0",
+  "name": "@carbon-labs/ai-prompt-tuning",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
   "type": "module",
-  "description": "Carbon for AI - feedback component",
+  "description": "Carbon for AI - prompt-tuning component",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/carbon-design-system/carbon-labs",
-    "directory": "packages/feedback"
+    "directory": "packages/prompt-tuning"
   },
   "main": "./src/index.js",
   "module": "./src/index.js",
@@ -28,15 +28,14 @@
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
-    "build": "gulp build --option feedback",
+    "build": "gulp build --option prompt-tuning",
     "build:dist": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js",
     "build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.12.0",
+    "@carbon-labs/utilities": "0.8.0",
     "@carbon/grid": "^11.21.0",
-    "@carbon/web-components": "2.9.0",
-    "uuid": "^9.0.1"
+    "@carbon/web-components": "2.9.0"
   }
 }

@@ -51,7 +51,7 @@ export const Default = {
    */
   render: () =>
     html` <clabs-chat-formula
-      content="x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.">
+      content="\\(x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.\\)">
     </clabs-chat-formula>`,
 };
 

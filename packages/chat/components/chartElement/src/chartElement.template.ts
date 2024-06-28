@@ -36,7 +36,6 @@ export function chartElementTemplate(customElementClass) {
     chartLoading,
     content,
     debugMode,
-    renderMethod,
     _buildLoader: buildLoader,
     _openFullscreenView: openFullscreenView,
     _exportToImage: exportToImage,
@@ -192,15 +191,10 @@ export function chartElementTemplate(customElementClass) {
                   <cds-icon-button
                     kind="ghost"
                     size="sm"
-                    ?disabled="${renderMethod !== 'canvas'}"
                     align="bottom-right"
                     @click="${exportToImage}">
                     ${Download16({ slot: 'icon' })}
-                    <span slot="tooltip-content"
-                      >${renderMethod === 'canvas'
-                        ? 'Export to PNG'
-                        : 'SVG export unavailable'}</span
-                    >
+                    <span slot="tooltip-content">Export to PNG</span>
                   </cds-icon-button>
                 `
               : html``}

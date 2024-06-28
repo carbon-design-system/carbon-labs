@@ -18,6 +18,8 @@ $css--plex: true !default;
     display: flex;
     box-sizing: border-box;
     flex-wrap: wrap;
+
+    align-items: center;
   }
 
   .#{$clabs-prefix}--chat-tag-list-container-cell {

@@ -9,7 +9,9 @@
 
 import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import 'smiles-drawer';
+import SmileDrawer from 'smiles-drawer';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 
 // @ts-ignore
 import styles from './molecularElement.scss?inline';
@@ -23,6 +25,12 @@ export default class molecularElement extends LitElement {
    */
   @property({ type: String, attribute: 'content', reflect: true })
   content;
+
+  /**
+   * Title to be displayed top-left
+   */
+  @property({ type: String, attribute: 'title' })
+  title;
 
   /**
    * width - preassigned width from parent
@@ -49,6 +57,30 @@ export default class molecularElement extends LitElement {
   streaming;
 
   /**
+   * Disable all chart option buttons, supercedes all other individual button options
+   */
+  @property({ type: Boolean, attribute: 'disable-options' })
+  disableOptions;
+
+  /**
+   * Disable fullscreen button
+   */
+  @property({ type: Boolean, attribute: 'disable-fullscreen' })
+  disableFullscreen;
+
+  /**
+   * Disable image export button
+   */
+  @property({ type: Boolean, attribute: 'disable-export' })
+  disableExport;
+
+  /**
+   * Disable code inspector button
+   */
+  @property({ type: Boolean, attribute: 'disable-code-inspector' })
+  disableCodeInspector;
+
+  /**
    * uniqueID - unique ID egenrated in this component to target correct div when rendering
    */
   @state()
@@ -65,6 +97,18 @@ export default class molecularElement extends LitElement {
    */
   @state()
   drawer;
+
+  /**
+   * loading - initial state to show loading icon until error or successful render occurs
+   */
+  @state()
+  loading = true;
+
+  /**
+   * fullscreenMode - boolean to denote with fullscreen active
+   */
+  @state()
+  fullscreenMode = false;
 
   /**
    * smilesContent -  content string to render
@@ -95,12 +139,13 @@ export default class molecularElement extends LitElement {
     if (this.width) {
       this.style.setProperty('--chat-molecule-width', this.width + 'px');
     }
+
     if (this.height) {
       this.style.setProperty('--chat-molecule-height', this.height + 'px');
     }
 
     const options = {
-      bondThickness: 0.5,
+      bondThickness: 0.7,
       bondLength: 15,
       shortBondLength: 0.85,
       bondSpacing: 0.18 * 15,
@@ -111,14 +156,14 @@ export default class molecularElement extends LitElement {
       explicitHydrogens: false,
       overlapSensitivity: 0.42,
       overlapResolutionIterations: 3,
-      compactDrawing: true,
+      compactDrawing: false,
       fontSizeLarge: 5,
       fontSizeSmall: 3,
       padding: 0.0,
       experimental: false,
       themes: {
         dark: {
-          C: '#f4f4f4',
+          C: '#c6c6c6',
           O: '#f45d56',
           N: '#33b1ff',
           F: '#42be65',
@@ -129,12 +174,12 @@ export default class molecularElement extends LitElement {
           S: '#fdd13a',
           B: '#f1c21b',
           SI: '#f1c21b',
-          H: '#f4f4f4',
+          H: '#c6c6c6',
           BACKGROUND: '#161616',
           BONDS: '#3d3d3d',
         },
         light: {
-          C: '#121619',
+          C: '#525252',
           O: '#fa4d56',
           N: '#33b1ff',
           F: '#42be65',
@@ -145,22 +190,23 @@ export default class molecularElement extends LitElement {
           S: '#fdd13a',
           B: '#f1c21b',
           SI: '#f1c21b',
-          H: '#121619',
+          H: '#525252',
           BACKGROUND: '#f4f4f4',
           BONDS: '#e0e0e0',
         },
       },
     };
-    this.molecularRenderer = new SmiDrawer(options);
-    this.temporaryMolecularRenderer = new SmiDrawer(options);
+    this.molecularRenderer = new SmileDrawer.SmiDrawer(options);
+    this.temporaryMolecularRenderer = new SmileDrawer.SmiDrawer(options);
     if (!this.theme) {
       this._getTheme();
     }
     if (!this.streaming) {
       window.setTimeout(() => {
         this._smilesContent = this.content;
-        this._prepareMolecule();
-      }, 500);
+        const targetID = 'clabs--chat-molecule-' + this._uniqueID;
+        this._prepareMolecule(targetID);
+      }, 200);
     }
   }
 
@@ -178,7 +224,11 @@ export default class molecularElement extends LitElement {
   async updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('content')) {
-      this._prepareMolecule();
+      const targetID = 'clabs--chat-molecule-' + this._uniqueID;
+      this._prepareMolecule(targetID);
+    }
+    if (changedProperties.has('_smilesContent')) {
+      this._scrollStreamArea();
     }
   }
 
@@ -197,11 +247,110 @@ export default class molecularElement extends LitElement {
   }
 
   /**
-   * Prepare molecular object for rendering from content string
+   * _scrollStreamArea - scroll div to display latest token added
    */
-  _prepareMolecule() {
-    const targetID = 'clabs-chat-molecule-' + this._uniqueID;
-    const testTargetID = 'clabs-chat-molecule-test-' + this._uniqueID;
+  _scrollStreamArea() {
+    const textArea = this.shadowRoot?.querySelector(
+      '.clabs--chat-molecule-stream-text-content'
+    );
+    if (textArea instanceof HTMLElement) {
+      textArea.scrollLeft = textArea.scrollWidth;
+    }
+  }
+
+  /**
+   * _openFullscreenView -
+   */
+  _openFullscreenView() {
+    this.fullscreenMode = true;
+    window.setTimeout(() => {
+      const targetID = 'clabs--chat-molecule-fullscreen-' + this._uniqueID;
+      this._prepareMolecule(targetID);
+    }, 200);
+  }
+
+  /**
+   * _openFullscreenView -
+   */
+  _closeFullscreenView() {
+    this.fullscreenMode = false;
+  }
+
+  /**
+   * _openEditorView -
+   */
+  async _openEditorView() {
+    try {
+      const pubChemResponse = await fetch(
+        'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/' +
+          encodeURIComponent(this.content) +
+          '/cids/JSON'
+      );
+      const data = await pubChemResponse.json();
+
+      if (
+        data['IdentifierList'] &&
+        data['IdentifierList']['CID'] &&
+        data['IdentifierList']['CID'].length > 0
+      ) {
+        const cid = data['IdentifierList']['CID'][0];
+        if (cid) {
+          const CIDUrl = 'https://pubchem.ncbi.nlm.nih.gov/compound/' + cid;
+          window?.open(CIDUrl, '_blank');
+        } else {
+          this.disableCodeInspector = true;
+        }
+      } else {
+        this.disableCodeInspector = true;
+        console.error('Compound not found');
+      }
+    } catch (error) {
+      this.disableCodeInspector = true;
+      console.error('Compound not found', error);
+    }
+  }
+
+  /**
+   * _exportImage - if svg, get image object from svg and auto-download
+   */
+  _exportToImage() {
+    window.setTimeout(async () => {
+      const svgDiv = this.shadowRoot?.querySelector(
+        '#' + clabsPrefix + '--chat-molecule-' + this._uniqueID
+      );
+      if (svgDiv instanceof SVGElement) {
+        const svgData = new XMLSerializer().serializeToString(svgDiv);
+        const tempCanvas = document.createElement('canvas');
+        const context = tempCanvas.getContext('2d');
+        const svgSize = svgDiv.getBoundingClientRect();
+        tempCanvas.height = svgSize.height;
+        tempCanvas.width = svgSize.width;
+
+        const tempImage = new Image();
+        /**
+         * loading function when image is finalized and reqady to download
+         */
+        tempImage.onload = () => {
+          context?.drawImage(tempImage, 0, 0);
+          const imageData = tempCanvas.toDataURL('image/png');
+          const canvasDownloadLink = document.createElement('a');
+          const fileName = this.title ? this.title : 'molecule';
+          canvasDownloadLink.download = fileName;
+          canvasDownloadLink.href = imageData;
+          canvasDownloadLink.click();
+        };
+        tempImage.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+      }
+    }, 200);
+  }
+
+  /**
+   * Prepare molecular object for rendering from content string
+   * @param {String} targetID - target div ID to render with smilesDrawer
+   */
+  _prepareMolecule(targetID) {
+    this.loading = false;
+    const testTargetID = 'clabs--chat-molecule-test-' + this._uniqueID;
     const canvas = this.shadowRoot?.getElementById(targetID);
     const testCanvas = this.shadowRoot?.getElementById(testTargetID);
     const smilesString = this.content.replace(new RegExp('```', 'g'), '');

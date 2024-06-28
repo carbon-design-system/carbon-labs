@@ -200,7 +200,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 15;
+  baseStreamingSpeed = 12;
 
   /** detect when component is rendered to process rawtext
    */
@@ -431,6 +431,7 @@ export default class message extends LitElement {
     const analysisPriority = [
       'code',
       'json',
+      'formula',
       'table',
       'array',
       'molecule',
@@ -442,6 +443,7 @@ export default class message extends LitElement {
       json: new RegExp('\\{'),
       table: new RegExp('((\\w+,\\w+)(,[\\w+]*)*[\\r\\n]+)+'),
       array: new RegExp('\\[\\"'),
+      formula: new RegExp('\\\\\\('),
       //molecule: new RegExp('^[A-Za-z0-9@+\\-\\[\\]\\(\\)=#%$]+$'),
       //molecule: new RegExp('^[CNOSPFIBrcln=#$%@\\-+\\[\\]()\\/0-9]+$'),
       //molecule: new RegExp('^([BCOHNSPKFYIWcl][a-zA-Z0-9@+\\-\\[\\]\\(\\)=#$%]*)+'),
@@ -526,6 +528,7 @@ export default class message extends LitElement {
         stopIndex = this.bufferMessage.indexOf(')');
         break;
       case 'molecule':
+      case 'formula':
       case 'url':
         stopIndex = this.bufferMessage.indexOf('\n');
         break;
@@ -656,6 +659,9 @@ export default class message extends LitElement {
         if (checkAllURLs) {
           this.temporaryMessage.type = 'carousel';
           this.currentType = 'carousel';
+        } else {
+          this.temporaryMessage.type = 'tags';
+          this.currentType = 'tags';
         }
       }
     }
@@ -745,9 +751,9 @@ export default class message extends LitElement {
         this.temporaryMessage.type = 'text';
       }
 
-      if (this.temporaryMessage.type === 'text') {
-        this.temporaryMessage.content += '...';
-      }
+      /*if (this.temporaryMessage.type === 'text') {
+        this.temporaryMessage.content += '/';
+      }*/
 
       this.streamingSpeed =
         this.baseStreamingSpeed +
@@ -755,7 +761,7 @@ export default class message extends LitElement {
           Math.random() *
           Math.random() *
           this.baseStreamingSpeed *
-          10;
+          5;
 
       switch (this.temporaryMessage.type) {
         case 'code':
@@ -769,6 +775,7 @@ export default class message extends LitElement {
           break;
         case 'json':
         case 'chart':
+        case 'molecule':
           this.streamingSpeed = this.baseStreamingSpeed / 8;
           break;
         case 'text':
@@ -830,9 +837,20 @@ export default class message extends LitElement {
     const splitLines = plainText.split('\n');
     const splitLineElements = splitLines.map((line) => ({
       content: line,
-      type: 'text',
+      type: this._checkLinks(line) ? 'link-list' : 'text',
     }));
     this._messageElements = [...this._messageElements, ...splitLineElements];
+  }
+
+  /** _checkLinks - see if annotated markdown text is strictly a link list
+   * @param {string} blockText - text to parse
+   */
+  _checkLinks(blockText) {
+    //const linkListRegex = new RegExp('^\\s*(?:\\[[^\\]]+\\]\\([^\\)+\\)|[^[]+)*\\s*$');
+    const linkListRegex = new RegExp(
+      '^\\[.*?\\]\\(.*?\\)(,\\[.*?\\]\\(.*?\\))*$'
+    );
+    return linkListRegex.test(blockText.trim());
   }
 
   /**
@@ -1062,7 +1080,7 @@ export default class message extends LitElement {
       '\\.(pdf|doc|docx|csv|xls|xlsx|ppt|pptx|txt|rtf|xml|odt|zip|rar|tar|gz)$',
       'i'
     );
-    const audioRegex = new RegExp('\\.(mp3|flac|wav|mpa|wma|midi)$', 'i');
+    const audioRegex = new RegExp('\\.(mp3|flac|wav|ogg|mpa|wma|midi)$', 'i');
 
     const urlRegex = new RegExp('(https?:\\/\\/[^\\s]+)', 'g');
 

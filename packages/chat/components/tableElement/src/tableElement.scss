@@ -51,6 +51,13 @@ $css--plex: true !default;
     white-space: nowrap;
   }
 
+  td {
+    overflow: hidden;
+    max-inline-size: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   tr {
     background-color: $layer-01;
     border-block-start: 1px solid $border-subtle-01;

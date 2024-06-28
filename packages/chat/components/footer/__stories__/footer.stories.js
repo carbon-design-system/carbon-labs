@@ -42,10 +42,10 @@ export const Showcase = {
     <br />
     <br />
     <br />
-    <h4>Character limit of 100</h4>
+    <h4>Character limit of 20</h4>
     <br />
     <div style="position:relative; top:40px;">
-      <clabs-chat-footer character-limit="10"> </clabs-chat-footer>
+      <clabs-chat-footer character-limit="20"> </clabs-chat-footer>
     </div>
     <br />
     <br />

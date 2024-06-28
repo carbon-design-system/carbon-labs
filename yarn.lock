@@ -2632,6 +2632,7 @@ __metadata:
     "@carbon/charts": "npm:^1.15.5"
     "@carbon/web-components": "npm:2.9.0"
     "@ibm/telemetry-js": "npm:^1.5.0"
+    mathjax: "npm:^3.2.2"
     smiles-drawer: "npm:^2.1.7"
     vega: "npm:^5.28.0"
     vega-embed: "npm:^6.24.0"
@@ -18201,6 +18202,13 @@ __metadata:
   version: 1.0.4
   resolution: "math-random@npm:1.0.4"
   checksum: 10c0/7b0ddc17f5dfe3b426c1e92505122e6a32f884dd50f5e0bb3898e5ce2da60b4ffb47c9b607809cf0beb5b8bf253b9dcc3b6f7331b20ce59b8bd7e8dbbbb1e347
+  languageName: node
+  linkType: hard
+
+"mathjax@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "mathjax@npm:3.2.2"
+  checksum: 10c0/26c8557f948d1ef76ce2b0bc1ad66128c9a78a7e4f3d96587f90b23dd25cfbf14c9b58a1c75a7d8d35f92b72bab054eab61873443babe646b7bfd6b40bb717e6
   languageName: node
   linkType: hard
 

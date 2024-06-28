@@ -1,0 +1,53 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import * as UXControlStories from './ux-control.stories';
+import packageJson from '../package.json';
+
+<Meta of={UXControlStories} />
+
+# UX Control
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/ux-control/examples/ux-control)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/ux-control/examples/ux-control)
+
+## Overview
+
+The ux-control component.
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/ai-ux-control/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+{/* prettier-ignore */}
+<Markdown>{`${cdnJs({ components: ['ux-control'] },packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+```html
+<clabs-ux-control
+  color="green"
+  tooltip-position="bottom"
+  tooltip-text="Tooltip text">
+  UXControl text
+</clabs-ux-control>
+```
+
+### &lt;clabs-ux-control&gt; attributes and properties
+
+<ArgTypes of="clabs-ux-control" />

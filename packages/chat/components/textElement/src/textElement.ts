@@ -142,6 +142,7 @@ export default class textElement extends LitElement {
    * @param {event} event - click event
    */
   _handleAnnotationClick(event) {
+    console.log(this._textElements);
     const source = event?.originalTarget?.dataset?.source;
     this.style.setProperty(
       '--chat-text-content-annotation-element-height',

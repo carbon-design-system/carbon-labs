@@ -670,26 +670,30 @@ export default class chartElement extends LitElement {
    * _exportToImage - if canvas, get image object from data url and auto-download
    */
   _exportToImage() {
-    window.setTimeout(async () => {
-      const container = this.shadowRoot?.querySelector(
-        '.' + clabsPrefix + '--chat-chart-container'
-      );
+    if (this.renderMethod === 'svg') {
+      this._exportSvgToImage();
+    } else {
+      window.setTimeout(async () => {
+        const container = this.shadowRoot?.querySelector(
+          '.' + clabsPrefix + '--chat-chart-container'
+        );
 
-      if (container instanceof HTMLElement) {
-        const canvasDiv = container?.querySelector('canvas');
-        if (canvasDiv instanceof HTMLElement) {
-          const imageUrl = canvasDiv.toDataURL('image/png');
-          const canvasDownloadLink = document.createElement('a');
-          let exportedFileName = 'chart';
-          if (this._visualizationSpec?.title?.text.trim()) {
-            exportedFileName = this._visualizationSpec?.title?.text;
+        if (container instanceof HTMLElement) {
+          const canvasDiv = container?.querySelector('canvas');
+          if (canvasDiv instanceof HTMLElement) {
+            const imageUrl = canvasDiv.toDataURL('image/png');
+            const canvasDownloadLink = document.createElement('a');
+            let exportedFileName = 'chart';
+            if (this._visualizationSpec?.title?.text.trim()) {
+              exportedFileName = this._visualizationSpec?.title?.text;
+            }
+            canvasDownloadLink.download = exportedFileName + '.png';
+            canvasDownloadLink.href = imageUrl;
+            canvasDownloadLink.click();
           }
-          canvasDownloadLink.download = exportedFileName + '.png';
-          canvasDownloadLink.href = imageUrl;
-          canvasDownloadLink.click();
         }
-      }
-    }, 200);
+      }, 200);
+    }
   }
 
   /**
@@ -697,7 +701,6 @@ export default class chartElement extends LitElement {
    * @param {event} event - custom event from chat code component
    */
   _handleModelEditorValidation(event) {
-    console.log(event);
     if (event?.detail?.newLineText) {
       this.content = event.detail.newLineText;
       this._prepareVisualization();
@@ -741,6 +744,46 @@ export default class chartElement extends LitElement {
    */
   _switchEditedSpecSelection(event) {
     console.log(event);
+  }
+
+  /**
+   * _exportSvgToImage - if svg, get image object from svg and auto-download
+   */
+  _exportSvgToImage() {
+    window.setTimeout(async () => {
+      const container = this.shadowRoot?.querySelector(
+        '.' + clabsPrefix + '--chat-chart-container'
+      );
+      if (container instanceof HTMLElement) {
+        const svgDiv = container?.querySelector('svg');
+        if (svgDiv instanceof SVGElement) {
+          const svgData = new XMLSerializer().serializeToString(svgDiv);
+          const tempCanvas = document.createElement('canvas');
+          const context = tempCanvas.getContext('2d');
+          const svgSize = svgDiv.getBoundingClientRect();
+          tempCanvas.height = svgSize.height;
+          tempCanvas.width = svgSize.width;
+
+          const tempImage = new Image();
+          /**
+           * handles the onload event when image is done rendering
+           */
+          tempImage.onload = () => {
+            context?.drawImage(tempImage, 0, 0);
+            const imageData = tempCanvas.toDataURL('image/png');
+            const canvasDownloadLink = document.createElement('a');
+            let exportedFileName = 'chart';
+            if (this._visualizationSpec?.title?.text.trim()) {
+              exportedFileName = this._visualizationSpec?.title?.text;
+            }
+            canvasDownloadLink.download = exportedFileName + '.png';
+            canvasDownloadLink.href = imageData;
+            canvasDownloadLink.click();
+          };
+          tempImage.src = 'data:image/svg+xml;base64,' + btoa(svgData);
+        }
+      }
+    }, 200);
   }
 
   /**

@@ -55,7 +55,7 @@ export default class cardElement extends LitElement {
    * api to fetch link/video previews
    */
   @property({ type: String, attribute: 'api-url', reflect: true })
-  apiUrl = 'http://localhost:5001/get_preview';
+  apiUrl = 'http://localhost:5002/get_preview';
 
   /**
    * card type to differentiate between url and videos
@@ -262,6 +262,7 @@ export default class cardElement extends LitElement {
     preview.shortenedUrl = this._getShortenedURL(url);
     preview.link = url;
     this.fileType = this._getFileType(url);
+    preview.description = this.fileType + ' file from: ' + url;
     this._cardData = preview;
     this.requestUpdate();
   }
@@ -275,6 +276,10 @@ export default class cardElement extends LitElement {
     preview.shortenedUrl = this._getShortenedURL(url);
     preview.link = url;
     this.fileType = this._getFileType(url);
+    preview.description =
+      this.fileType !== 'unknown'
+        ? this.fileType.toUpperCase()
+        : '' + ' file from: ' + url;
     this._cardData = preview;
     this._updateAudioDuration();
     this._updateAudioProgress();

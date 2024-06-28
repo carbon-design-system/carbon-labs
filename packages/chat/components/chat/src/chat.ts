@@ -210,6 +210,12 @@ export default class CLABSChat extends LitElement {
   promptNotificationType;
 
   /**
+   * string denoting type of appended prompt message (error, information, file)
+   */
+  @property({ type: Boolean, attribute: 'use-watson-assistant-protocol' })
+  useWatsonAssistantProtocol;
+
+  /**
    * fullscreen boolean dictated by header child
    */
   @state()
@@ -479,16 +485,21 @@ export default class CLABSChat extends LitElement {
             Object.prototype.hasOwnProperty.call(res, 'failed') &&
             res['failed'] === true;
 
-          this._messages = [
-            ...this._messages,
-            {
-              text: res.reply,
-              origin: this.agentName,
-              hasError: errorState,
-              time: this._getCurrentTime(),
-              index: this._messages.length,
-            },
-          ];
+          if (this.useWatsonAssistantProtocol) {
+            const newElements = this._translateWxA(res.reply);
+            this._messages = [...this._messages, ...newElements];
+          } else {
+            this._messages = [
+              ...this._messages,
+              {
+                text: res.reply,
+                origin: this.agentName,
+                hasError: errorState,
+                time: this._getCurrentTime(),
+                index: this._messages.length,
+              },
+            ];
+          }
           this._queryInProgress = false;
           this.requestUpdate();
         })
@@ -507,6 +518,61 @@ export default class CLABSChat extends LitElement {
           this.requestUpdate();
         });
     }
+  }
+
+  /** _translateWxA - protocol conversation when querying WxA
+   * @param {Object} replyObject - returned API response
+   */
+  _translateWxA(replyObject) {
+    const temporaryMessageElements: any[] = [];
+    for (const subElement of replyObject.generic) {
+      switch (subElement['response_type']) {
+        case 'text':
+          /*const mergedText = subElement['values']['concat'].reduce(
+            (acc, item) => {
+              if (item.hasOwnProperty('scalar')) {
+                acc += item['scalar'];
+              }
+              return acc;
+            },
+            ''
+          );
+          if (mergedText !== '') {
+            temporaryMessageElements.push({
+              type: 'text',
+              content: mergedText,
+            });
+          } else {
+            temporaryMessageElements.push({
+              type: 'error',
+              content:
+                'Failed to parse text response: ' + JSON.stringify(subElement),
+            });
+          }*/
+          break;
+        case 'audio':
+          temporaryMessageElements.push({
+            type: 'audio',
+            cardElements: {
+              link: subElement.source,
+              description: subElement.description,
+              title: subElement.title,
+            },
+          });
+          break;
+        case 'card':
+          temporaryMessageElements.push({
+            type: 'audio',
+            cardElements: {
+              link: subElement.source,
+              description: subElement.description,
+              title: subElement.title,
+            },
+          });
+          break;
+      }
+    }
+    return temporaryMessageElements;
   }
 
   /**

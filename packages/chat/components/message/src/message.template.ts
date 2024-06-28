@@ -33,6 +33,8 @@ import '../../loadingElement/loadingElement.js';
 import '../../carouselElement/carouselElement.js';
 import '../../linkListElement/linkListElement.js';
 import '../../molecularElement/molecularElement.js';
+import '../../formulaElement/formulaElement.js';
+import '../../fileUploadElement/fileUploadElement.js';
 
 /**
  * Lit template for message
@@ -163,11 +165,19 @@ export function messageTemplate(customElementClass) {
                           `
                         : message.type === 'molecule'
                         ? html`
-                            <clabs-chat-molecule
-                              width="246"
-                              height="246"
-                              content="${message.content}">
+                            <clabs-chat-molecule content="${message.content}">
                             </clabs-chat-molecule>
+                          `
+                        : message.type === 'formula'
+                        ? html`
+                            <clabs-chat-formula content="${message.content}">
+                            </clabs-chat-formula>
+                          `
+                        : message.type === 'file-upload'
+                        ? html`
+                            <clabs-chat-file-upload
+                              content="${message.content}">
+                            </clabs-chat-file-upload>
                           `
                         : message.type === 'table'
                         ? html`
@@ -184,6 +194,11 @@ export function messageTemplate(customElementClass) {
                               content="${message.content}">
                             </clabs-chat-card>
                           `
+                        : message.type === 'card'
+                        ? html`
+                            <clabs-chat-card content="${message.content}">
+                            </clabs-chat-card>
+                          `
                         : message.type === 'text'
                         ? html`
                             <clabs-chat-text
@@ -196,6 +211,13 @@ export function messageTemplate(customElementClass) {
                             <clabs-chat-text
                               capitalize
                               enable-annotations
+                              content="${message.content}">
+                            </clabs-chat-text>
+                          `
+                        : message.type === 'highlight-text'
+                        ? html`
+                            <clabs-chat-text
+                              enable-text-highlighting
                               content="${message.content}">
                             </clabs-chat-text>
                           `
@@ -288,10 +310,14 @@ export function messageTemplate(customElementClass) {
                         ? html`
                             <clabs-chat-molecule
                               streaming
-                              width="246"
-                              height="246"
                               content="${temporaryMessage.content}">
                             </clabs-chat-molecule>
+                          `
+                        : temporaryMessage.type === 'formula'
+                        ? html`
+                            <clabs-chat-formula
+                              content="${temporaryMessage.content}">
+                            </clabs-chat-formula>
                           `
                         : temporaryMessage.type === 'tags'
                         ? html`

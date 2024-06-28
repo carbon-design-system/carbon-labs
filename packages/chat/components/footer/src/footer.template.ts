@@ -190,7 +190,7 @@ export function footerTemplate(customElementClass) {
                   align="top-right"
                   ?disabled="${messageText === '' || forceDisableInput}"
                   @click="${sendInputToParent}">
-                  ${messageText === ''
+                  ${messageText === '' || forceDisableInput || !isPromptFocused
                     ? Send16({ slot: 'icon' })
                     : SendFilled16({
                         slot: 'icon',

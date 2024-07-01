@@ -41,7 +41,7 @@ jobs:
       github.repository == 'carbon-design-system/carbon-labs'
     timeout-minutes: 60
     env:
-      GITHUB_TOKEN: ${{ secrets.MERGE_ACTION }}
+      GH_TOKEN: ${{ secrets.MERGE_ACTION }}
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:

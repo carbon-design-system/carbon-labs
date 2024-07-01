@@ -9,8 +9,8 @@
 
 import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
-// import 'mathjax/es5/tex-svg-full.js';
-import { MathJax } from 'mathjax/es5/tex-mml-chtml.js';
+//import 'mathjax/es5/tex-svg-full.js';
+import 'mathjax/es5/tex-mml-chtml.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -68,6 +68,7 @@ export default class formulaElement extends LitElement {
 
     if (targetDiv instanceof HTMLElement) {
       try {
+        // @ts-ignore
         await MathJax.typesetPromise([targetDiv])
           .then(() => {
             console.log('success');
@@ -90,6 +91,7 @@ export default class formulaElement extends LitElement {
     );
     if (targetDiv instanceof HTMLElement) {
       try {
+        // @ts-ignore
         MathJax.tex2svgPromise(this.content, { display: true })
           .then((node) => {
             const svg = node.querySelector('svg');

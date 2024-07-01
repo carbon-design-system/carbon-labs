@@ -28,7 +28,9 @@ import packageJson from '../../../package.json';
 
 The Chat component is a collaboration between the **IBM Research Visual AI Lab (VAIL)** and the **Carbon Design Team** to provide an open-source, easily expandable chat interface to interact with large language models. Our core values are: open-source collaboration, universal support, ease of use and the in-depth customization Carbon is known for.
 
-It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LLM-enabled components. We chose LIT **web-components** as these can be used directly in **Vanilla**, **Svelte** and **React**. Our primary goal is to provide a space for novel and experimental features/components to be used in and out of Chat interfaces. By fully adhering to the latest design/safety/formatting guidelines, **Labs** can accelerate and streamline adoption across IBM to respond to the fast-moving field of AI and Large Language Models.
+It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LLM-enabled components. We chose LIT **web-components** as these can be used directly in **Vanilla**, **Svelte**, **Vue** and **React**. Our primary goal is to provide a space for novel and experimental features/components to be used in and out of Chat interfaces. By fully adhering to the latest design/safety/formatting guidelines, **Labs** can accelerate and streamline adoption across IBM to respond to the fast-moving field of AI and Large Language Models.
+
+All children components (Text, Code, Charts, Carousel etc) can be imported individually outside of the Chat context, fully resiable and composable.
 
 ### Attributes and Properties 
 <a id="attributes-and-properties"></a>
@@ -224,11 +226,16 @@ If API returns a `reply` of type `object/json`, objects are rendered as-is in or
   {"type": "error", "content": "ERROR: API failed to respond, try again"},
   {"type": "image", "content": "http://www.gallery.come/image.png"},
   {"type": "video", "content": "http://www.wikimedia.org/example_video.mp4"},
+  {"type": "image", "content": "http://www.gallery.come/image.png"},
+  {"type": "audio", "content": "https://wikimedia....Second_Hungarian_Rhapsody.ogg"},
   {"type": "file", "content": "ftp:spreadsheet.csv"},
   {"type": "carousel", "content": "['http://www.google.com', 'http://www.facebook.com', 'http://www.wikipedia.org']"},
+  {"type": "link-list", "content":"https://en.wikipedia.org/wiki/President_of_the_United_States,https://en..."},
   {"type": "table", "content": "header1,hedaer2,header3\n300,500,600\nNY,AK,MI"},
   {"type": "tags", "content": "['new chat','save chat','create chart']"},
-  {"type": "chart", "content": "PLACE STRINGIFIED VEGA SCHEME HERE"}
+  {"type": "chart", "content": "PLACE STRINGIFIED VEGA SCHEME HERE"},
+  {"type": "formula", "content": "\\(1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+..."},
+  {"type": "molecule", "content": "OC[C@@H](O1)[C@@H](O)[C@H](O)[C@@H]2[C@@H]..."}
 ]
 ```
 

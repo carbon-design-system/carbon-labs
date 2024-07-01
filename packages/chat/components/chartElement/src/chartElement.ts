@@ -60,7 +60,7 @@ export default class chartElement extends LitElement {
    * Render using "svg" (easier to inspect in the DOM) or "canvas" (better performance)
    */
   @property({ type: String, attribute: 'render-method' })
-  renderMethod = 'svg';
+  renderMethod = 'canvas';
 
   /**
    * This value is either "dark" or "light" and displays the chart using Carbon Chart theme colors
@@ -700,10 +700,26 @@ export default class chartElement extends LitElement {
    * _handleModelEditorValidation -  event from code subcomponent
    * @param {event} event - custom event from chat code component
    */
-  _handleModelEditorValidation(event) {
+  _handleOriginalEditorValidation(event) {
     if (event?.detail?.newLineText) {
       this.content = event.detail.newLineText;
       this._prepareVisualization();
+      const editedChartID =
+        clabsPrefix + '--chat-editor-embed-vis-' + this._uniqueID;
+      window.setTimeout(async () => {
+        await this._displayVisualization('.' + editedChartID);
+      }, 200);
+      //this.requestUpdate();
+    }
+  }
+
+  /**
+   * _handleModelEditorValidation -  event from code subcomponent
+   * @param {event} event - custom event from chat code component
+   */
+  _handleCarbonEditorValidation(event) {
+    if (event?.detail?.newLineText) {
+      this.content = event.detail.newLineText;
       const editedChartID =
         clabsPrefix + '--chat-editor-embed-vis-' + this._uniqueID;
       window.setTimeout(async () => {
@@ -739,11 +755,17 @@ export default class chartElement extends LitElement {
   }
 
   /**
-   * _switchEditedSpecSelection
-   * @param {event} event - button switch event
+   * _showCarbonSpec - Code editor toggling to show post-hoc spec
    */
-  _switchEditedSpecSelection(event) {
-    console.log(event);
+  _showCarbonSpec() {
+    this.editOriginalSpecification = false;
+  }
+
+  /**
+   * _showOriginalSpec - Code editor toggling to show original valid spec
+   */
+  _showOriginalSpec() {
+    this.editOriginalSpecification = true;
   }
 
   /**
@@ -812,11 +834,11 @@ export default class chartElement extends LitElement {
       delete spec['height'];
       delete spec['width'];
     }
-    /*spec.autosize = {
+    spec.autosize = {
       type: 'fit',
-      resize:true,
+      resize: true,
       contains: 'padding',
-    };*/
+    };
     delete spec['autosize'];
 
     let layeredSpec;

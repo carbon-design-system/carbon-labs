@@ -35,16 +35,16 @@ const coreExamples = [
     'Abraham Lincoln article on Wikipedia',
   ],
   [
-    'link-list',
-    '[IBM Cloud Home](https://www.ibm.com/cloud),[Cloud Solutions](https://www.ibm.com/cloud/solutions),[Cloud products](https://www.ibm.com/cloud/products),[Cloud Docs](https://cloud.ibm.com/docs)',
-    '',
-    'List of links in IBM Cloud',
-  ],
-  [
     'code',
     '```<clabs-chat \n\tuser-name="Owen" \n\tagent-name="Watson"\n\tconversation={conversationJSON}\n\tstream-responses={streamEnabled}\n\tloading={loading}\n\tdefault-viewing-mode="docked"\n\ton:on-user-message-update-request={handleUpdatedMessage}\n\ton:on-user-regeneration-request={handleRegeneration}\n\ton:on-user-text-input={handleNewMessage}\n\ton:on-message-element-selected={handleElementClicked}\n\ton:on-user-feedback-request={handleUserFeedback}\n\ton:on-message-element-tag-selected={handleTagClicked}>\n</clabs-chat>```',
     '',
     'Prime function in python',
+  ],
+  [
+    'link-list',
+    '[IBM Cloud Home](https://www.ibm.com/cloud),[Cloud Solutions](https://www.ibm.com/cloud/solutions),[Cloud products](https://www.ibm.com/cloud/products),[Cloud Docs](https://cloud.ibm.com/docs)',
+    '',
+    'List of links in IBM Cloud',
   ],
   [
     'formula',

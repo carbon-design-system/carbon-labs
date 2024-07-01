@@ -12,22 +12,27 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}-chat-code) {
-  display: flex;
+  display: block;
   .#{$clabs-prefix}--chat-code-container {
     position: relative;
-    display: flex;
+    display: block;
     overflow: hidden scroll;
+    box-sizing: border-box;
     flex-direction: column;
     padding: 16px;
     border: 1px solid $border-subtle-00;
     border-radius: 8px;
     background-color: $background;
+    block-size: 100%;
     color: $text-primary;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
+    inline-size: 100%;
     letter-spacing: 0.64px;
     line-height: 20px;
     max-block-size: var(--chat-code-height, '100%');
+    min-block-size: 100%;
+    min-inline-size: 100%;
     padding-inline: 12px 32px;
   }
 
@@ -91,6 +96,7 @@ $css--plex: true !default;
     font: inherit;
     font-size: 13px;
     letter-spacing: 0.16px;
+    outline: none;
     overflow-y: hidden;
     resize: none;
   }

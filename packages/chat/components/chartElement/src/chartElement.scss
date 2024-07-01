@@ -118,7 +118,10 @@
     display: flex;
     overflow: hidden;
     flex-direction: column;
-    max-block-size: 100%;
+  }
+  .#{$clabs-prefix}--chat-editor-modal-code-container {
+    overflow: hidden scroll;
+    flex: 1;
   }
 
   .#{$clabs-prefix}--chat-editor-modal-section-chart {

@@ -12,7 +12,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}-chat-list) {
-  font-size: 14px;
+  font-size: 15px;
   inline-size: 100%;
   line-height: 20px;
 
@@ -23,6 +23,6 @@ $css--plex: true !default;
   }
   .#{$clabs-prefix}--chat-list li {
     list-style-type: none;
-    padding-block-start: 8px;
+    padding-block-start: 4px;
   }
 }

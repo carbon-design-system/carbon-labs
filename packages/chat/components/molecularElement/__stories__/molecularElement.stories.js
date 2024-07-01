@@ -25,7 +25,7 @@ const examples = [
       'OC[C@@H](O1)[C@@H](O)[C@H](O)[C@@H]2[C@@H]1c3c(O)c(OC)c(O)cc3C(=O)O2',
   },
   {
-    title: 'custom',
+    title: 'Custom Molecule',
     width: 492,
     height: 492,
     smiles:
@@ -112,14 +112,20 @@ export const Showcase = {
     html` ${examples.map(
       (example) =>
         html`
-          <h3>${example.title}</h3>
           ${example.width && example.height
             ? html`<p style="font-style:italic;font-size:14px;">
                 (${example.width}px x ${example.height}px)
               </p>`
             : ``}
           <br />
+          <clabs-chat-code
+            ?disable-line-ticks="${true}"
+            ?disable-copy-button="${true}"
+            content="SMILES String: ${example.smiles}">
+          </clabs-chat-code>
+
           <clabs-chat-molecule
+            title="${example.title}"
             width="${example.width}"
             height="${example.height}"
             content="${example.smiles}">

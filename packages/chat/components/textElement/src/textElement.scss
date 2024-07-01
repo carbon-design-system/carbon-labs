@@ -73,7 +73,7 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-text-highlighted {
-    background: var(--chat-text-element-highlight-color, $background-hover);
+    background: var(--chat-text-element-highlight-color, $link-inverse);
     text-decoration: none;
   }
 

@@ -85,9 +85,22 @@ export default class messages extends LitElement {
   _parentTheme;
 
   /**
+   * target scrollable to div to avoid fetching DOM
+   */
+  private scrollDiv;
+
+  /**
+   * timeout function to scroll
+   */
+  private scrollTimeout;
+
+  /**
    * detect when component is rendered to process rawtext
    */
   firstUpdated() {
+    this.scrollDiv = this.shadowRoot?.querySelector(
+      '.clabs--chat-messages-container'
+    );
     this.addEventListener('scroll', (e) => {
       console.log('scroll');
       e.preventDefault();
@@ -147,17 +160,17 @@ export default class messages extends LitElement {
   /** auto-scroll chat-messages div when a new message has appeared
    **/
   _updateScroll() {
-    const scrollDiv = this.shadowRoot?.querySelector(
-      '.clabs--chat-messages-container'
-    );
-
-    if (scrollDiv instanceof HTMLElement) {
-      setTimeout(function () {
-        scrollDiv?.scrollTo({
-          top: scrollDiv?.scrollHeight,
-          behavior: 'smooth',
-        });
-      }, 200);
+    if (this.scrollDiv instanceof HTMLElement) {
+      if (!this.scrollTimeout) {
+        this.scrollTimeout = setTimeout(() => {
+          this.scrollDiv?.scrollTo({
+            top: this.scrollDiv?.scrollHeight,
+            behavior: 'smooth',
+          });
+          clearTimeout(this.scrollTimeout);
+          this.scrollTimeout = null;
+        }, 200);
+      }
     }
   }
 }

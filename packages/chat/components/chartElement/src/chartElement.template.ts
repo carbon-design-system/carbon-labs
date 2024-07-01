@@ -19,6 +19,8 @@ import '@carbon/web-components/es/components/modal/index.js';
 import '@carbon/web-components/es/components/checkbox/index.js';
 import '@carbon/web-components/es/components/content-switcher/index.js';
 
+import '../../codeElement/codeElement.js';
+
 import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
 import Download16 from '@carbon/web-components/es/icons/download/16.js';
 import Launch16 from '@carbon/web-components/es/icons/launch/16.js';
@@ -50,13 +52,15 @@ export function chartElementTemplate(customElementClass) {
     disableExport,
     disableFullscreen,
     disableCodeInspector,
-    _handleModelEditorValidation: handleModelEditorValidation,
+    _handleOriginalEditorValidation: handleOriginalEditorValidation,
+    _handleCarbonEditorValidation: handleCarbonEditorValidation,
     modalMode,
     theme,
     _handleResize,
     _uniqueID: uniqueID,
     editOriginalSpecification,
-    _switchEditedSpecSelection: switchEditedSpecSelection,
+    _showOriginalSpec: showOriginalSpec,
+    _showCarbonSpec: showCarbonSpec,
   } = customElementClass;
 
   return html`
@@ -100,41 +104,42 @@ export function chartElementTemplate(customElementClass) {
                         value="original"
                         selected
                         data-selection="original"
-                        @click="${switchEditedSpecSelection}">
+                        @click="${showOriginalSpec}">
                         Edit Original Spec
                       </cds-content-switcher-item>
                       <cds-content-switcher-item
                         value="carbonified"
                         data-selection="carbonified"
-                        @click="${switchEditedSpecSelection}">
+                        @click="${showCarbonSpec}">
                         Edit Carbonified Spec
                       </cds-content-switcher-item>
                     </cds-content-switcher>
                   </div>
-                  ${editOriginalSpecification
-                    ? html`
-                        <clabs-chat-code
-                          editable
-                          max-height="${'640px'}"
-                          @on-code-edit-validation="${handleModelEditorValidation}"
-                          content="${JSON.stringify(
-                            _visualizationSpec,
-                            null,
-                            '\t'
-                          )}">
-                        </clabs-chat-code>
-                      `
-                    : html`
-                        <clabs-chat-code
-                          editable
-                          @on-code-edit-validation="${handleModelEditorValidation}"
-                          content="${JSON.stringify(
-                            _visualizationSpec,
-                            null,
-                            '\t'
-                          )}">
-                        </clabs-chat-code>
-                      `}
+                  <div class="${clabsPrefix}--chat-editor-modal-code-container">
+                    ${editOriginalSpecification
+                      ? html`
+                          <clabs-chat-code
+                            editable
+                            @on-code-edit-validation="${handleOriginalEditorValidation}"
+                            content="${JSON.stringify(
+                              JSON.parse(content),
+                              null,
+                              '\t'
+                            )}">
+                          </clabs-chat-code>
+                        `
+                      : html`
+                          <clabs-chat-code
+                            editable
+                            @on-code-edit-validation="${handleCarbonEditorValidation}"
+                            content="${JSON.stringify(
+                              _visualizationSpec,
+                              null,
+                              '\t'
+                            )}">
+                          </clabs-chat-code>
+                        `}
+                  </div>
                 </div>
               </div>
             </div>

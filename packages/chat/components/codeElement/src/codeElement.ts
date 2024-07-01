@@ -173,7 +173,7 @@ export default class codeElement extends LitElement {
       }
     }
 
-    this._renderedLines = this._editedLines;
+    ///this._renderedLines = this._editedLines;
     this.requestUpdate();
   }
 
@@ -208,8 +208,11 @@ export default class codeElement extends LitElement {
    */
   _handleEditCancellation() {
     this._currentlyEdited = false;
+    //this._renderedLines.length = 0;
     //this._renderedLines = this._originalLines;
+
     this._formatCode();
+    this.requestUpdate();
   }
 
   /** format code to properly display in HTML
@@ -251,7 +254,7 @@ export default class codeElement extends LitElement {
 
     this._editedLines = JSON.parse(JSON.stringify(textValues));
     this._originalLines = JSON.parse(JSON.stringify(textValues));
-    this._renderedLines = JSON.parse(JSON.stringify(this._originalLines));
+    this._renderedLines = JSON.parse(JSON.stringify(textValues));
     const tickWidth = 13 * lines.length.toString().length;
     this.style.setProperty(
       '--chat-code-tick-width',

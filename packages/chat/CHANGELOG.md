@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0-rc.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.12.0...@carbon-labs/ai-chat@0.13.0-rc.0) (2024-07-01)
+
+
+### Features
+
+* **Math formulas:** Math formulas molecules and core fixes ([#205](https://github.com/carbon-design-system/carbon-labs/issues/205)) ([edfc623](https://github.com/carbon-design-system/carbon-labs/commit/edfc623969b0757b9e31fdad80d52a5e5ff0d7d5))
+
+
+
+
+
 # [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.12.0-rc.0...@carbon-labs/ai-chat@0.12.0) (2024-06-27)
 
 **Note:** Version bump only for package @carbon-labs/ai-chat

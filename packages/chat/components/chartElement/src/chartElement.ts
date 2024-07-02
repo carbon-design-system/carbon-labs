@@ -809,6 +809,20 @@ export default class chartElement extends LitElement {
   }
 
   /**
+   * _lightenSpec - remove any large data objects before rendering in code element
+   * @param {Object} specification - spec JSON to be check and lightened
+   */
+  _lightenSpec(specification) {
+    const newSpecification = JSON.parse(JSON.stringify(specification));
+    if (newSpecification?.data?.values?.length > 20) {
+      newSpecification.data = 'Dataset not rendered for performance';
+      return newSpecification;
+    } else {
+      return newSpecification;
+    }
+  }
+
+  /**
    * prepareVisualization - Prepare and adapt Vega visualization spec to be more Carbon adjacent
    */
   _prepareVisualization() {

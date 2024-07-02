@@ -32,6 +32,7 @@ export function textElementTemplate(customElementClass) {
     _annotationIndex: annotationIndex,
     _handleAnnotationClick,
     enableTextHighlighting,
+    disableChevrons,
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-text">
@@ -54,7 +55,7 @@ export function textElementTemplate(customElementClass) {
                     @click="${_handleAnnotationClick}">
                     ${textPiece.text}
                   </span>
-                  ${!enableTextHighlighting
+                  ${!disableChevrons
                     ? html`
                         <span
                           class="${clabsPrefix}--chat-text-content-chevron ${index ===

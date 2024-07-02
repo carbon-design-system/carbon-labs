@@ -67,6 +67,12 @@ export default class textElement extends LitElement {
   disableNewLines = false;
 
   /**
+   * Hide chevron buttons
+   */
+  @property({ type: Boolean, attribute: 'disable-chevrons' })
+  disableChevrons;
+
+  /**
    * Internal element array to be rendered
    */
   @state()

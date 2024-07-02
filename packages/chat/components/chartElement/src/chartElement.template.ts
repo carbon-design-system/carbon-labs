@@ -46,6 +46,7 @@ export function chartElementTemplate(customElementClass) {
     _openEditorView: openEditorView,
     closeModal,
     modalContent,
+    _lightenSpec: lightenSpec,
     _visualizationSpec,
     disableOptions,
     disableEditor,
@@ -122,7 +123,7 @@ export function chartElementTemplate(customElementClass) {
                             editable
                             @on-code-edit-validation="${handleOriginalEditorValidation}"
                             content="${JSON.stringify(
-                              JSON.parse(content),
+                              lightenSpec(JSON.parse(content)),
                               null,
                               '\t'
                             )}">
@@ -133,7 +134,7 @@ export function chartElementTemplate(customElementClass) {
                             editable
                             @on-code-edit-validation="${handleCarbonEditorValidation}"
                             content="${JSON.stringify(
-                              _visualizationSpec,
+                              lightenSpec(_visualizationSpec),
                               null,
                               '\t'
                             )}">

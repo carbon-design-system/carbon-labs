@@ -191,7 +191,10 @@ export function footerTemplate(customElementClass) {
                   ?disabled="${messageText === '' || forceDisableInput}"
                   @click="${sendInputToParent}">
                   ${messageText === '' || forceDisableInput || !isPromptFocused
-                    ? Send16({ slot: 'icon' })
+                    ? Send16({
+                        slot: 'icon',
+                        class: clabsPrefix + '--chat-footer-send-inactive',
+                      })
                     : SendFilled16({
                         slot: 'icon',
                         class: clabsPrefix + '--chat-footer-send-active',

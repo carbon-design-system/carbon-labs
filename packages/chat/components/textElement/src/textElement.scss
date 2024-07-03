@@ -42,7 +42,7 @@ $css--plex: true !default;
     background: $layer-accent-01;
     block-size: 16px;
     cursor: pointer;
-    inline-size: 20px;
+    inline-size: 18px;
     margin-inline: 1px;
 
     vertical-align: bottom;
@@ -58,7 +58,6 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-text-content-chevron svg {
     fill: $text-secondary;
-    padding-inline-start: 2px;
     pointer-events: none;
   }
 

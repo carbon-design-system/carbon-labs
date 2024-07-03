@@ -41,6 +41,18 @@ export default class tagListElement extends LitElement {
   @property({ type: String, attribute: 'content', reflect: true })
   content;
 
+  /**
+   * ActionIcon - dictate which icon to use for action
+   */
+  @property({ type: String, attribute: 'action-icon' })
+  actionIcon;
+
+  /**
+   * MonoLabel - singulat label for all buttons
+   */
+  @property({ type: String, attribute: 'mono-label' })
+  monoLabel;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
@@ -71,8 +83,9 @@ export default class tagListElement extends LitElement {
   _handleTagClick(event) {
     event.preventDefault();
     const value = event.explicitOriginalTarget.innerText;
+    const source = event.explicitOriginalTarget.dataset.content;
     const tagSelectedEvent = new CustomEvent('on-tag-selected', {
-      detail: { tagContent: value },
+      detail: { tagContent: source, tagLabel: value },
       bubbles: true,
       composed: true,
     });

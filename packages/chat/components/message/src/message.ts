@@ -200,7 +200,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 16;
+  baseStreamingSpeed = 8;
 
   /** detect when component is rendered to process rawtext
    */

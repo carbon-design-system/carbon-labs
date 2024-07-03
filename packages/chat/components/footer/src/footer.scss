@@ -114,6 +114,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-footer-send-active {
     color: $link-primary;
     fill: $link-primary;
+    pointer-events: none;
   }
 
   .#{$clabs-prefix}--chat-footer-menu-container-message-error {

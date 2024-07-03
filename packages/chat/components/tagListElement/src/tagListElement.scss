@@ -28,6 +28,10 @@ $css--plex: true !default;
     padding: 2px;
   }
 
+  .#{$clabs-prefix}--chat-tag-list-container-cell svg {
+    pointer-events: none;
+  }
+
   .#{$clabs-prefix}--chat-tag-list-title {
     font-style: bold;
     inline-size: 100%;

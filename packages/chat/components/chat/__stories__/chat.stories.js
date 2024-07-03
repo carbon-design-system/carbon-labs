@@ -30,7 +30,7 @@ const coreExamples = [
   ],
   [
     'text',
-    'Abraham Lincoln was an American lawyer, politician, and statesman who served as the 16th [president of the United States](https://en.wikipedia.org/wiki/President_of_the_United_States) from 1861 until his [assassination](https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln) in 1865. Lincoln led the United States through the [American Civil War](https://en.wikipedia.org/wiki/American_Civil_War), defending the nation as a constitutional [union](https://en.wikipedia.org/wiki/Union_(American_Civil_War)), defeating the insurgent [Confederacy](https://en.wikipedia.org/wiki/Confederate_States_of_America), playing a major role in the [abolition of slavery](https://en.wikipedia.org/wiki/Abolitionism_in_the_United_States), expanding the power of the [federal government](https://en.wikipedia.org/wiki/Federal_government_of_the_United_States), and modernizing the [U.S. economy](https://en.wikipedia.org/wiki/Economy_of_the_United_States).\n [Many more links are available in this article](https://en.wikipedia.org/wiki/Log_cabin,https://en.wikipedia.org/wiki/Kentucky,https://en.wikipedia.org/wiki/American_frontier,https://en.wikipedia.org/wiki/Indiana). ',
+    'Abraham Lincoln was an American lawyer, politician, and statesman who served as the 16th [president of the United States](https://en.wikipedia.org/wiki/President_of_the_United_States) from 1861 until his [assassination](https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln) in 1865. Lincoln led the United States through the [American Civil War](https://en.wikipedia.org/wiki/American_Civil_War), defending the nation as a constitutional [union](https://en.wikipedia.org/wiki/Union_(American_Civil_War)\n [Many more links are available in this article](https://en.wikipedia.org/wiki/Log_cabin,https://en.wikipedia.org/wiki/Kentucky,https://en.wikipedia.org/wiki/American_frontier,https://en.wikipedia.org/wiki/Indiana). ',
     'annotated-text',
     'Abraham Lincoln article on Wikipedia',
   ],
@@ -53,16 +53,10 @@ const coreExamples = [
     'Rogers-Ramanujan Identity equation in tex',
   ],
   [
-    'chart',
-    '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"US Unemployment by county","data":{"url":"https://vega.github.io/editor/data/us-10m.json","format":{"type":"topojson","feature":"counties"}},"transform":[{"lookup":"id","from":{"data":{"url":"https://vega.github.io/editor/data/unemployment.tsv"},"key":"id","fields":["rate"]}}],"projection":{"type":"albersUsa"},"mark":"geoshape","encoding":{"color":{"field":"rate","type":"quantitative"}}}',
+    'formula',
+    "\\( S = -\\frac{1}{2}\\int d^2\\sigma \\sqrt{-h} h^{ab}\\partial_a X^\\mu \\partial_b X^\\mu \\\\ \\frac{1}{4 \\pi \\alpha'} \\int d^2\\sigma \\sqrt{-h} \\left( h^{ab} \\partial_a X^\\mu \\partial_b X_\\mu + \\alpha' R \\Phi(X) \\right  \\\\ [\\alpha_m^\\mu, \\alpha_n^\\nu] = m \\delta_{m+n,0} \\eta^{\\mu \\nu}  \\)",
     '',
-    'Map example from vega-lite',
-  ],
-  [
-    'chart',
-    '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"A scatterplot showing body mass and flipper lengths of penguins.","data":{"url":"https://vega.github.io/vega-lite/examples/data/penguins.json"},"mark":"point","encoding":{"x":{"field":"Flipper Length (mm)","type":"quantitative","scale":{"zero":false}},"y":{"field":"Body Mass (g)","type":"quantitative","scale":{"zero":false}},"color":{"field":"Species","type":"nominal"}}}',
-    '',
-    'Scatter plot example from vega-lite',
+    'String Theory Action',
   ],
   [
     'table',
@@ -88,12 +82,18 @@ const coreExamples = [
     '',
     'Smiles representation of Cephalostatin-1 from PubChem',
   ],
+  [
+    'molecule',
+    '```C1=NC(=C2C(=N1)N(C=N2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O)O)N.C1=NC(=C2C(=N1)N(C=N2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O)O)N```',
+    '',
+    'Smiles representation of ATP (Adenosine Triphosphate) from PubChem',
+  ],
   ['file-upload', 'Test_file.pdf'],
   [
     'card',
-    'https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg',
+    'https://dhjhkxawhe8q4.cloudfront.net/yup-wp/wp-content/uploads/2022/11/04134700/31_426_WMAA_Early-Sunday-Morning.jpg',
     'img',
-    'Picture of Dahlia from bouqs.com',
+    'Edward Hopper, Early Sunday Morning, 1930. Oil on canvas',
   ],
   [
     'card',
@@ -130,6 +130,24 @@ const coreExamples = [
     '["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]',
     '',
     'List of famous french philosophers',
+  ],
+  [
+    'chart',
+    '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","title":"US Unemployment by county","data":{"url":"https://vega.github.io/editor/data/us-10m.json","format":{"type":"topojson","feature":"counties"}},"transform":[{"lookup":"id","from":{"data":{"url":"https://vega.github.io/editor/data/unemployment.tsv"},"key":"id","fields":["rate"]}}],"projection":{"type":"albersUsa"},"mark":"geoshape","encoding":{"color":{"field":"rate","type":"quantitative"}}}',
+    '',
+    'Map example from vega-lite',
+  ],
+  [
+    'chart',
+    '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"A scatterplot showing body mass and flipper lengths of penguins.","data":{"url":"https://vega.github.io/vega-lite/examples/data/penguins.json"},"mark":"point","encoding":{"x":{"field":"Flipper Length (mm)","type":"quantitative","scale":{"zero":false}},"y":{"field":"Body Mass (g)","type":"quantitative","scale":{"zero":false}},"color":{"field":"Species","type":"nominal"}}}',
+    '',
+    'Scatter plot example from vega-lite',
+  ],
+  [
+    'chart',
+    '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","width":300,"height":200,"data":{"url":"https://vega.github.io/vega-lite/data/unemployment-across-industries.json"},"mark":"area","encoding":{"x":{"timeUnit":"yearmonth","field":"date","axis":{"domain":false,"format":"%Y","tickSize":0}},"y":{"aggregate":"sum","field":"count","axis":null,"stack":"center"},"color":{"field":"series","scale":{"scheme":"category20b"}}}}',
+    '',
+    'Stream graph example from vega-lite',
   ],
 ];
 /*
@@ -587,8 +605,13 @@ const rawTextExamples = {
         '.</b> Here is a <b>&lt;clabs-chat-' +
         item[0] +
         '&gt;</b> element' +
-        (item[2] ? ' of type <i><b>' + item[2] : '</b></i>') +
-        ':\n' +
+        (item[2] ? ' of type <i><b>' + item[2] + '</b></i>' : '') +
+        ':<br/> ' +
+        (item[3]
+          ? '<span style="font-size:12px;font-style:italic;">' +
+            item[3] +
+            '</span>\n'
+          : '\n') +
         item[1] +
         '\n';
       return acc;

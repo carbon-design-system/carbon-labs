@@ -291,6 +291,7 @@ export default class footer extends LitElement {
    **/
   _sendInputToParent() {
     const value = this._messageText;
+    console.log(value);
     this._endRecording();
 
     if (value.length > 0) {

@@ -53,6 +53,12 @@ const coreExamples = [
     'Rogers-Ramanujan Identity equation in tex',
   ],
   [
+    'formula',
+    "\\( S = -\\frac{1}{2}\\int d^2\\sigma \\sqrt{-h} h^{ab}\\partial_a X^\\mu \\partial_b X^\\mu \\\\ \\frac{1}{4 \\pi \\alpha'} \\int d^2\\sigma \\sqrt{-h} \\left( h^{ab} \\partial_a X^\\mu \\partial_b X_\\mu + \\alpha' R \\Phi(X) \\right  \\\\ [\\alpha_m^\\mu, \\alpha_n^\\nu] = m \\delta_{m+n,0} \\eta^{\\mu \\nu}  \\)",
+    '',
+    'String Theory Action',
+  ],
+  [
     'table',
     'Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY',
     '',
@@ -76,12 +82,18 @@ const coreExamples = [
     '',
     'Smiles representation of Cephalostatin-1 from PubChem',
   ],
+  [
+    'molecule',
+    '```C1=NC(=C2C(=N1)N(C=N2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O)O)N.C1=NC(=C2C(=N1)N(C=N2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O)O)N```',
+    '',
+    'Smiles representation of ATP (Adenosine Triphosphate) from PubChem',
+  ],
   ['file-upload', 'Test_file.pdf'],
   [
     'card',
-    'https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg',
+    'https://dhjhkxawhe8q4.cloudfront.net/yup-wp/wp-content/uploads/2022/11/04134700/31_426_WMAA_Early-Sunday-Morning.jpg',
     'img',
-    'Picture of Dahlia from bouqs.com',
+    'Edward Hopper, Early Sunday Morning, 1930. Oil on canvas',
   ],
   [
     'card',
@@ -130,6 +142,12 @@ const coreExamples = [
     '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"A scatterplot showing body mass and flipper lengths of penguins.","data":{"url":"https://vega.github.io/vega-lite/examples/data/penguins.json"},"mark":"point","encoding":{"x":{"field":"Flipper Length (mm)","type":"quantitative","scale":{"zero":false}},"y":{"field":"Body Mass (g)","type":"quantitative","scale":{"zero":false}},"color":{"field":"Species","type":"nominal"}}}',
     '',
     'Scatter plot example from vega-lite',
+  ],
+  [
+    'chart',
+    '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","width":300,"height":200,"data":{"url":"https://vega.github.io/vega-lite/data/unemployment-across-industries.json"},"mark":"area","encoding":{"x":{"timeUnit":"yearmonth","field":"date","axis":{"domain":false,"format":"%Y","tickSize":0}},"y":{"aggregate":"sum","field":"count","axis":null,"stack":"center"},"color":{"field":"series","scale":{"scheme":"category20b"}}}}',
+    '',
+    'Stream graph example from vega-lite',
   ],
 ];
 /*
@@ -587,8 +605,13 @@ const rawTextExamples = {
         '.</b> Here is a <b>&lt;clabs-chat-' +
         item[0] +
         '&gt;</b> element' +
-        (item[2] ? ' of type <i><b>' + item[2] : '</b></i>') +
-        ':\n' +
+        (item[2] ? ' of type <i><b>' + item[2] + '</b></i>' : '') +
+        ':<br/> ' +
+        (item[3]
+          ? '<span style="font-size:12px;font-style:italic;">' +
+            item[3] +
+            '</span>\n'
+          : '\n') +
         item[1] +
         '\n';
       return acc;

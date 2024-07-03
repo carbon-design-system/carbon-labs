@@ -27,7 +27,7 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-header-container {
-    background: none;
+    background: $background;
     inline-size: 100%;
     max-inline-size: 672px;
     min-block-size: 40px;

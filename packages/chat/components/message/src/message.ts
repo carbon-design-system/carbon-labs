@@ -428,7 +428,16 @@ export default class message extends LitElement {
    * _checkBlockStart - scan incoming stream of tokens to see if a typed block has started
    */
   _checkBlockStart() {
-    const analysisPriority = ['code','json','formula','table','array','molecule','url','list'];
+    const analysisPriority = [
+      'code',
+      'json',
+      'formula',
+      'table',
+      'array',
+      'molecule',
+      'url',
+      'list',
+    ];
     const regexPatterns = {
       code: new RegExp('```'),
       json: new RegExp('\\{'),
@@ -621,12 +630,14 @@ export default class message extends LitElement {
    */
   _checkAmbiguousBlock() {
     if (this.currentType === 'code') {
-      const smilesRegex = new RegExp('^[CNOSPFIBrcln=#$%@\\-+\\[\\]()\\/0-9]+$')
-       //molecule: new RegExp('^[A-Za-z0-9@+\\-\\[\\]\\(\\)=#%$]+$'),
+      const smilesRegex = new RegExp(
+        '^[CNOSPFIBrcln=#$%@\\-+\\[\\]()\\/0-9]+$'
+      );
+      //molecule: new RegExp('^[A-Za-z0-9@+\\-\\[\\]\\(\\)=#%$]+$'),
       //molecule: new RegExp('^[CNOSPFIBrcln=#$%@\\-+\\[\\]()\\/0-9]+$'),
       //molecule: new RegExp('^([BCOHNSPKFYIWcl][a-zA-Z0-9@+\\-\\[\\]\\(\\)=#$%]*)+'),
       //molecule: new RegExp('A-Za-z0-9@#=\\+\\-\\(\\)\\[\\]]+'),
-      if (smilesRegex.test(this.bufferMessage.replace('```',''))) {
+      if (smilesRegex.test(this.bufferMessage.replace('```', ''))) {
         this.currentType = 'molecule';
         this.temporaryMessage.type = 'molecule';
       }
@@ -648,7 +659,7 @@ export default class message extends LitElement {
         if (checkAllURLs) {
           this.temporaryMessage.type = 'carousel';
           this.currentType = 'carousel';
-        }else{
+        } else {
           this.temporaryMessage.type = 'tags';
           this.currentType = 'tags';
         }
@@ -723,7 +734,7 @@ export default class message extends LitElement {
               blockSignal.type = this._checkURLType(blockSignal.content);
             }
             if (blockSignal.type === 'text') {
-                this._cutPlainText(blockSignal.content);
+              this._cutPlainText(blockSignal.content);
             } else {
               this._messageElements = [
                 ...this._messageElements,
@@ -745,7 +756,12 @@ export default class message extends LitElement {
       }*/
 
       this.streamingSpeed =
-        this.baseStreamingSpeed + Math.random() * Math.random() * Math.random() * this.baseStreamingSpeed*5;
+        this.baseStreamingSpeed +
+        Math.random() *
+          Math.random() *
+          Math.random() *
+          this.baseStreamingSpeed *
+          5;
 
       switch (this.temporaryMessage.type) {
         case 'code':
@@ -821,7 +837,7 @@ export default class message extends LitElement {
     const splitLines = plainText.split('\n');
     const splitLineElements = splitLines.map((line) => ({
       content: line,
-      type: this._checkLinks(line)? 'link-list':'text',
+      type: this._checkLinks(line) ? 'link-list' : 'text',
     }));
     this._messageElements = [...this._messageElements, ...splitLineElements];
   }
@@ -829,9 +845,11 @@ export default class message extends LitElement {
   /** _checkLinks - see if annotated markdown text is strictly a link list
    * @param {string} blockText - text to parse
    */
-  _checkLinks(blockText){
+  _checkLinks(blockText) {
     //const linkListRegex = new RegExp('^\\s*(?:\\[[^\\]]+\\]\\([^\\)+\\)|[^[]+)*\\s*$');
-    const linkListRegex = new RegExp('^\\[.*?\\]\\(.*?\\)(,\\[.*?\\]\\(.*?\\))*$');
+    const linkListRegex = new RegExp(
+      '^\\[.*?\\]\\(.*?\\)(,\\[.*?\\]\\(.*?\\))*$'
+    );
     return linkListRegex.test(blockText.trim());
   }
 

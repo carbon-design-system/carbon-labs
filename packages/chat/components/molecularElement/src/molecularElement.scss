@@ -35,6 +35,11 @@ $css--plex: true !default;
     inline-size: var(--chat-molecule-width, 'auto');
   }
 
+  .#{$clabs-prefix}--chat-molecule-target-fullscreen {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
   .#{$clabs-prefix}--chat-molecule-container-loader {
     display: flex;
     align-items: center;
@@ -153,7 +158,7 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-molecule-fullscreen-container {
-    position: absolute;
+    position: fixed;
     z-index: 9999;
     display: flex;
     align-items: center;

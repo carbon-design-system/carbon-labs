@@ -165,7 +165,7 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-footer-prompt-focused {
-    border: 2px solid $text-primary;
+    border: 2px solid $focus;
   }
 
   .#{$clabs-prefix}--chat-search-query-disabled {

@@ -848,11 +848,11 @@ export default class chartElement extends LitElement {
       delete spec['height'];
       delete spec['width'];
     }
-    spec.autosize = {
+    /*spec.autosize = {
       type: 'fit',
-      resize: true,
+      resize:true,
       contains: 'padding',
-    };
+    };*/
     delete spec['autosize'];
 
     let layeredSpec;

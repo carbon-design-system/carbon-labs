@@ -44,16 +44,17 @@ $css--plex: true !default;
     cursor: pointer;
     inline-size: 18px;
     margin-inline: 1px;
-
-    vertical-align: bottom;
+    transition: border-color 0.15s linear;
+    vertical-align: middle;
   }
 
   .#{$clabs-prefix}--chat-text-content-chevron:hover {
+    border: 1px solid $focus;
     cursor: pointer;
   }
 
   .#{$clabs-prefix}--chat-text-content-chevron--focused {
-    border: 1px solid $link-primary;
+    border: 1px solid $focus;
   }
 
   .#{$clabs-prefix}--chat-text-content-chevron svg {

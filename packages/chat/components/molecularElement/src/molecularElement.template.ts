@@ -14,6 +14,7 @@ import '@carbon/web-components/es/components/loading/index.js';
 import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
 import Download16 from '@carbon/web-components/es/icons/download/16.js';
 import Launch16 from '@carbon/web-components/es/icons/launch/16.js';
+import Close16 from '@carbon/web-components/es/icons/close/16.js';
 
 /**
  * Lit template for card
@@ -115,6 +116,20 @@ export function molecularElementTemplate(customElementClass) {
     <div class="${clabsPrefix}--chat-molecule-tester">
       <svg id="clabs--chat-molecule-test-${uniqueID}"></svg>
     </div>
+
+    ${fullscreenMode
+      ? html` <div
+          class="${clabsPrefix}--chat-molecule-fullscreen-container-close">
+          <cds-icon-button
+            kind="danger"
+            size="lg"
+            align="bottom-right"
+            @click="${openFullscreenView}">
+            ${Close16({ slot: 'icon' })}
+            <span slot="tooltip-content">Fullscreen</span>
+          </cds-icon-button>
+        </div>`
+      : ''}
 
     <div
       class="${clabsPrefix}--chat-molecule-fullscreen-container"

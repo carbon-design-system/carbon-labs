@@ -57,7 +57,6 @@ export function chartElementTemplate(customElementClass) {
     _handleCarbonEditorValidation: handleCarbonEditorValidation,
     modalMode,
     theme,
-    _handleResize,
     _uniqueID: uniqueID,
     editOriginalSpecification,
     _showOriginalSpec: showOriginalSpec,
@@ -150,7 +149,6 @@ export function chartElementTemplate(customElementClass) {
     ${_visualizationSpec
       ? html` <div
           class="${clabsPrefix}--chat-chart-container"
-          @resize="${_handleResize}"
           id="${clabsPrefix + '--chat-embed-vis-' + uniqueID}"></div>`
       : html` <div class="${clabsPrefix}--chat-chart-container">
           <div class="${clabsPrefix}--chat-chart-loading-container">

@@ -58,17 +58,23 @@ export function textElementTemplate(customElementClass) {
                   ${!disableChevrons
                     ? html`
                         <span
-                          class="${clabsPrefix}--chat-text-content-chevron ${index ===
-                          annotationIndex
-                            ? clabsPrefix +
-                              '--chat-text-content-chevron--focused'
-                            : ''}"
-                          data-index="${index}"
-                          data-source="${textPiece.content}"
-                          @click="${_handleAnnotationClick}">
-                          ${!textPiece.active
-                            ? html` ${ChevronDown16({ slot: 'icon' })} `
-                            : html` ${ChevronUp16({ slot: 'icon' })} `}
+                          class="${clabsPrefix}--chat-text-content-chevron-container"
+                          style="${textPiece.color
+                            ? 'background-color:' + textPiece.color + ';'
+                            : html``}">
+                          <span
+                            class="${clabsPrefix}--chat-text-content-chevron ${index ===
+                            annotationIndex
+                              ? clabsPrefix +
+                                '--chat-text-content-chevron--focused'
+                              : ''}"
+                            data-index="${index}"
+                            data-source="${textPiece.content}"
+                            @click="${_handleAnnotationClick}">
+                            ${!textPiece.active
+                              ? html` ${ChevronDown16({ slot: 'icon' })} `
+                              : html` ${ChevronUp16({ slot: 'icon' })} `}
+                          </span>
                         </span>
                       `
                     : html``}

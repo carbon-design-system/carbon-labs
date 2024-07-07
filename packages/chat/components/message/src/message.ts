@@ -200,7 +200,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 8;
+  baseStreamingSpeed = 4;
 
   /** detect when component is rendered to process rawtext
    */
@@ -765,18 +765,18 @@ export default class message extends LitElement {
 
       switch (this.temporaryMessage.type) {
         case 'code':
-          this.streamingSpeed = this.baseStreamingSpeed / 4;
+          this.streamingSpeed = this.baseStreamingSpeed / 2;
           break;
         case 'table':
           this.streamingSpeed = this.baseStreamingSpeed / 2;
           break;
         case 'carousel':
-          this.streamingSpeed = this.baseStreamingSpeed / 4;
+          this.streamingSpeed = this.baseStreamingSpeed / 2;
           break;
         case 'json':
         case 'chart':
         case 'molecule':
-          this.streamingSpeed = this.baseStreamingSpeed / 8;
+          this.streamingSpeed = this.baseStreamingSpeed / 4;
           break;
         case 'text':
           this.streamingSpeed = this.baseStreamingSpeed;

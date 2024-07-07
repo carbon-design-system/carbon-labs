@@ -20,8 +20,11 @@
     border-radius: 8px;
     background: $layer-01;
     inline-size: 248px;
+    transition: border-color 0.15s linear;
   }
-
+  .#{$clabs-prefix}--chat-card-container:hover {
+    border: 2px solid $focus;
+  }
   .#{$clabs-prefix}--chat-card-detail-side-icon {
     display: flex;
     box-sizing: border-box;

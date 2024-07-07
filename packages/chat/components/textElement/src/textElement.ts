@@ -148,14 +148,15 @@ export default class textElement extends LitElement {
    * @param {event} event - click event
    */
   _handleAnnotationClick(event) {
-    console.log(this._textElements);
-    const source = event?.originalTarget?.dataset?.source;
+    const targetElement =
+      event?.originalTarget || event?.target || event?.srcElement;
+    const source = targetElement?.dataset?.source;
     this.style.setProperty(
       '--chat-text-content-annotation-element-height',
       '0px'
     );
 
-    const index = event?.originalTarget?.dataset?.index;
+    const index = targetElement?.dataset?.index;
 
     const annotationClickEventDetails = {
       originalEvent: event,

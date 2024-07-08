@@ -102,7 +102,11 @@ export default class carouselElement extends LitElement {
       this._updateCarousel();
       this.requestUpdate();
     });
-    this.resizeObserver.observe(this.parentElement);
+
+    const slidesContainer = this.shadowRoot?.querySelector(
+      '.clabs--chat-carousel-container'
+    );
+    this.resizeObserver.observe(slidesContainer);
   }
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute

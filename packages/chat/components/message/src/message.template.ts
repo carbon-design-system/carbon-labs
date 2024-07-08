@@ -181,7 +181,9 @@ export function messageTemplate(customElementClass) {
                           `
                         : message.type === 'table'
                         ? html`
-                            <clabs-chat-table content="${message.content}">
+                            <clabs-chat-table
+                              max-height="246px"
+                              content="${message.content}">
                             </clabs-chat-table>
                           `
                         : message.type === 'url' ||
@@ -278,6 +280,7 @@ export function messageTemplate(customElementClass) {
                       ${temporaryMessage.type === 'table'
                         ? html`
                             <clabs-chat-table
+                              max-height="246px"
                               content="${temporaryMessage.content}">
                             </clabs-chat-table>
                           `

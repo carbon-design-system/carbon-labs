@@ -230,14 +230,14 @@ export default class CLABSChat extends LitElement {
   /**
    * x-axis placement of minimized chat
    */
-  @property({ type: String, attribute: 'horizontal-dock-direction' })
-  horizontalDockDirection;
+  @property({ type: String, attribute: 'horizontal-dock-position' })
+  horizontalDockDirection = 'right';
 
   /**
    * y-axis placement of minimized chat
    */
-  @property({ type: String, attribute: 'vertical-dock-direction' })
-  verticalDockDirection;
+  @property({ type: String, attribute: 'vertical-dock-position' })
+  verticalDockDirection = 'bottom';
 
   /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
    * @param {Object} changedProperties - returned inner DOM update object

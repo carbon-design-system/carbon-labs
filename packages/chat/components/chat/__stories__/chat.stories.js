@@ -736,7 +736,8 @@ export const StreamTextPlayground = {
    * @returns {TemplateResult<1>}
    */
   render: ({ queryMode, sampleQuery, rawText }) => html`
-    <div style="height:calc(100vh - 84px); display:flex; width:100%; gap:20px;">
+    <div
+      style="height:calc(100vh - 84px); display:flex; max-width:100%; overflow:hidden; gap:20px;">
       <div style="flex:2;">
         ${queryMode == 'Examples'
           ? html` <clabs-chat
@@ -870,7 +871,7 @@ const conversationExamples = {
         {
           type: 'table',
           content:
-            'Component,Type,Auto-detection\nText,text,Any normal text\nImage,img,URLs ending in png/jpeg/bmp/...\nCard (video),video,URLs ending in mp4/webm/mov/...\nCard (file),file,URLs/paths ending in csv/pdf/xls/...\nCard (url),url,URLs ending in com/org/net/...\nTable,table,Csv-type text using commas and linebreaks\nCode,code,Text between a predefined delimiter\nCarousel,carousel,Array of image URLs\nTagList,tags,Array of any non-image text\nList,list,Text blocks with any markers like bullets/numbers\nChart,chart,JSON object beginning with {"$schema"...\nError,error,Error text\nLoading,loading,None (empty)\nEditableText,editable-text,Any text',
+            'Component,Type,Auto-detection\nText,text,Any normal text\nImage,img,URLs ending in png/jpeg/bmp/...\nCard (video),video,URLs ending in mp4/webm/mov/...\nCard (file),file,URLs/paths ending in csv/pdf/xls/...\nCard (url),url,URLs ending in com/org/net/...\nTable,table,Csv-type text using commas and linebreaks\nCode,code,Text between a predefined delimiter\nCarousel,carousel,Array of image URLs\nTagList,tags,Array of any non-image text\nList,list,Text blocks with any markers like bullets/numbers\nText,html-text,valid closed HTML markers included\nText,annotated-text,markdowns with such as [link](http://..)\nLinkList,link-list,multi-link markdowns\nChart,chart,JSON object beginning with {"$schema"...\nFormula,formula,Code with Tex markdown markers\nError,error,Error text\nMolecule,molecule,code block with ``` and SMILES strings\nLoading,loading,None (empty)\nEditableText,editable-text,Any text',
         },
         {
           type: 'text',
@@ -1471,7 +1472,8 @@ export const Playground = {
    * @returns {TemplateResult<1>}
    */
   render: ({ testMode, sampleConversation, conversationJSON }) => html`
-    <div style="height:calc(100vh - 84px); display:flex; width:100%; gap:20px;">
+    <div
+      style="height:calc(100vh - 84px); display:flex; max-width:100%; gap:20px;">
       <div style="flex:2;">
         <clabs-chat
           user-name="user"

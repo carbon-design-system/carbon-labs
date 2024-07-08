@@ -35,9 +35,18 @@ export default class tableElement extends LitElement {
   @state()
   _tableObject = { headers: [], rows: [] };
 
+  /**
+   * Set max height for code piece
+   */
+  @property({ type: String, attribute: 'max-height' })
+  maxHeight;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
+    if (this.hasAttribute('max-height')) {
+      this.style.setProperty('--chat-table-height', this.maxHeight);
+    }
     if (this.content !== null) {
       this._tableObject = this._prepareTable();
       this.requestUpdate();

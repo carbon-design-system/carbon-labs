@@ -42,6 +42,17 @@ export const Showcase = {
     <br />
     <br />
     <br />
+    <h4>Custom PlaceHolder</h4>
+    <br />
+    <br />
+    <div style="position:relative; top:40px;">
+      <clabs-chat-footer
+        input-placeholder="Place any custom text here with input-placeholder">
+      </clabs-chat-footer>
+    </div>
+    <br />
+    <br />
+    <br />
     <h4>Character limit of 20</h4>
     <br />
     <div style="position:relative; top:40px;">
@@ -53,8 +64,8 @@ export const Showcase = {
     <br />
     <div style="position:relative; top:40px;">
       <clabs-chat-footer
-        context-message="CLick the AI icon above for more details"
-        context-message-type="info">
+        context-message="${'Click the AI icon above for more details'}"
+        context-message-type="${'info'}">
       </clabs-chat-footer>
     </div>
     <br />
@@ -63,8 +74,8 @@ export const Showcase = {
     <br />
     <div style="position:relative; top:40px;">
       <clabs-chat-footer
-        context-message="Server error: querying is unavailable"
-        context-message-type="error">
+        context-message="${'Server error: querying is unavailable'}"
+        context-message-type="${'error'}">
       </clabs-chat-footer>
     </div>
     <br />
@@ -73,8 +84,8 @@ export const Showcase = {
     <br />
     <div style="position:relative; top:40px;">
       <clabs-chat-footer
-        context-message="Your next request may take over a minute to process"
-        context-message-type="warning">
+        context-message="${'Your next request may take over a minute to process'}"
+        context-message-type="${'warning'}">
       </clabs-chat-footer>
     </div>`,
 };

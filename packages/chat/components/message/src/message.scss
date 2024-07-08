@@ -41,6 +41,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-message-section-temporary {
     margin-block: 16px 4px;
+    margin-block-end: 64px;
     min-block-size: 156px;
   }
 

@@ -17,7 +17,8 @@ import packageJson from '../../../package.json';
    - [JS via import](#js-via-import)
  - [Implementation](#implementation)
    - [Preface](#preface)
-   - [Basic implementation](#basic-implementation)
+   - [Vanilla, Svelte, Vue, Web-components](#all-implementation)
+   - [React](#react-implementation)
    - [Render with any API](#render-with-any-api)
    - [Render from Parent](#render-from-parent)
    - [Full Customization with Slotting](#full-customization-with-slotting)
@@ -26,11 +27,16 @@ import packageJson from '../../../package.json';
 ## Overview 
 <a id="overview"></a>
 
-The Chat component is a collaboration between the **IBM Research Visual AI Lab (VAIL)** and the **Carbon Design Team** to provide an open-source, easily expandable chat interface to interact with large language models. Our core values are: open-source collaboration, universal support, ease of use and the in-depth customization Carbon is known for.
+The Chat component is a collaboration between the **IBM Research Visual AI Lab (VAIL)** and the **Carbon Design Team** to provide an open-source, easily expandable chat interface to interact with large language models. Our core values are: **open-source collaboration**, **universal support**, **compasability** and the **in-depth customization** Carbon is known for.
 
-It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LLM-enabled components. We chose LIT **web-components** as these can be used directly in **Vanilla**, **Svelte**, **Vue** and **React**. Our primary goal is to provide a space for novel and experimental features/components to be used in and out of Chat interfaces. By fully adhering to the latest design/safety/formatting guidelines, **Labs** can accelerate and streamline adoption across IBM to respond to the fast-moving field of AI and Large Language Models.
+It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LLM-enabled components. We chose **LIT web-components** as these are the bedrock of the web and guarantee longevity, thus can be used instantly in **Vanilla**, **Svelte** and **Vue**. Meanwhile **React** requires on simple step, [see here](#react-implementation) 
+
+Our primary goal is to provide a space for novel and experimental features/components to be used in and out of Chat interfaces. By fully adhering to the latest design/safety/formatting guidelines, **Labs** can accelerate and streamline adoption across IBM to respond to the fast-moving field of AI and Large Language Models.
 
 All children components (Text, Code, Charts, Carousel etc) can be imported individually outside of the Chat context, fully resiable and composable.
+
+
+
 
 ### Attributes and Properties 
 <a id="attributes-and-properties"></a>
@@ -148,8 +154,10 @@ There are three ways to implement Chat: Add an API and directly auto-parse raw L
     - additionally, place custom div or external iframes/components directly into the message response
     - like section 2, all events must be handled by the parent application
 
-### Basic implementation 
-<a id="basic-implementation"></a>
+### Usage in non-React framworks:
+<a id="all-implementation"></a>
+
+In Svelte, Vue, LIT and vanilla: simply use the tag to get going:
 
 ```html
 <clabs-chat
@@ -173,6 +181,39 @@ There are three ways to implement Chat: Add an API and directly auto-parse raw L
   temperature="0.15"
   >
 </clabs-chat>
+```
+
+### Usage in React:
+<a id="react-implementation"></a>
+For React, one extra step is needed:
+```js
+//ChatComponent.js
+import {createComponent} from '@lit/react';
+import React from 'react';
+import CLABSChat from '@carbon-labs/ai-chat/es/components/chat/chat.js';
+
+export const Chat = createComponent({
+  tagName: 'clabs-chat',
+  elementClass: CLABSChat,
+  react: React,
+  events: {
+  },
+});
+```
+
+Then import like any other React Component:
+```js
+//App.js
+import './App.css';
+import {Chat} from './ChatComponent';
+const conversationExample = [] //place your message structure here
+
+function App() {
+  return (
+      <Chat conversation={conversationExample}> 
+  );
+}
+export default App;
 ```
 
 ### 1: Auto-rendering with an API 

@@ -57,7 +57,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-footer-menu {
     box-sizing: border-box;
 
-    padding: 12px 8px;
+    padding: 6px 2px;
     border: 2px solid $border-subtle;
     background: $background;
     border-block-end: none;
@@ -67,17 +67,14 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-footer-menu-error {
     border: 2px solid $support-error;
-    border-block-end: 1px solid $border-subtle;
   }
 
   .#{$clabs-prefix}--chat-footer-menu-warning {
     border: 2px solid $support-warning;
-    border-block-end: 1px solid $border-subtle;
   }
 
   .#{$clabs-prefix}--chat-footer-menu-info {
     border: 2px solid $support-info;
-    border-block-end: 1px solid $border-subtle;
   }
 
   .#{$clabs-prefix}--chat-footer-menu-container {
@@ -135,7 +132,7 @@ $css--plex: true !default;
     flex: 1;
     color: $link-secondary;
     font-size: 14px;
-    line-height: 14px;
+    line-height: 16px;
   }
 
   .#{$clabs-prefix}--chat-footer-button {
@@ -165,7 +162,7 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-footer-prompt-focused {
-    border: 2px solid $text-primary;
+    border: 2px solid $focus;
   }
 
   .#{$clabs-prefix}--chat-search-query-disabled {

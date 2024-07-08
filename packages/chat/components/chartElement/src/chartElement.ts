@@ -218,6 +218,12 @@ export default class chartElement extends LitElement {
   @state()
   editOriginalSpecification = true;
 
+  /**
+   * chartResizing - flag to notify when chart is resizing
+   */
+  @state()
+  chartResizing = false;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
@@ -255,9 +261,11 @@ export default class chartElement extends LitElement {
    * _handleResize - target resize on component itself
    */
   _handleResize() {
-    if (!this.chartLoading) {
+    this.chartResizing = true;
+    if (this.chartResizing) {
       if (this._visualizationSpec?.repeat) {
         this._prepareVisualization();
+        this.chartResizing = false;
       }
     }
   }
@@ -481,6 +489,75 @@ export default class chartElement extends LitElement {
   }
 
   /**
+   * _checkIfDate - check if date
+   * @param {object} intervalValue - domain to check
+   */
+  _checkIfDate(intervalValue: string | number): string | null {
+    let date: Date;
+
+    if (typeof intervalValue === 'number') {
+      if (!isNaN(intervalValue)) {
+        if (Math.abs(intervalValue) > 1000000) {
+          date = new Date(intervalValue);
+        } else if (intervalValue % 1 !== 0) {
+          return intervalValue.toFixed(3);
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } else if (typeof intervalValue === 'string' && intervalValue.length > 8) {
+      date = new Date(intervalValue);
+      if (isNaN(date.getTime())) {
+        return null;
+      }
+    } else {
+      return null;
+    }
+
+    if (date instanceof Date && !isNaN(date.getTime())) {
+      return date.toLocaleDateString();
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * _formatMultiSelection - convert any selection into a readable text format
+   * @param {object} selection - dict of axis names and domains
+   */
+  _formatMultiSelection(selection) {
+    const tooltipString: string[] = [];
+    for (const domain of selection) {
+      const values = domain.values;
+      if (values.length === 2 && this._checkIfDate(values[0])) {
+        const startDate = this._checkIfDate(values[0]);
+        const endDate = this._checkIfDate(values[1]);
+        if (startDate && endDate) {
+          tooltipString.push(
+            domain.field + ': ' + startDate + ' to ' + endDate
+          );
+        } else {
+          tooltipString.push(
+            domain.field + ': ' + values[0] + ' to ' + values[1]
+          );
+        }
+      } else {
+        tooltipString.push(
+          domain.field +
+            ': ' +
+            values.slice(0, 5).join(', ') +
+            (values.length - 5 > 0
+              ? ' and ' + (values.length - 5) + ' more'
+              : '')
+        );
+      }
+    }
+    return tooltipString;
+  }
+
+  /**
    * multi data selection event from brush to send to parent for processing
    * @param {object} data - selected points from view event
    */
@@ -494,11 +571,16 @@ export default class chartElement extends LitElement {
       selectionPayload.push(selection);
     }
 
+    const selectionSummary = this._formatMultiSelection(selectionPayload);
+
     const multiSelectionEvent = new CustomEvent('on-chart-multi-selection', {
       detail: {
         uniqueID: this._uniqueID,
         action: 'CHART: multiple data points selected',
+        dataEvent: data,
         selections: selectionPayload,
+        selectionTextArray: selectionSummary,
+        selectionSummary: selectionSummary.join('\n'),
       },
       bubbles: true,
       composed: true,
@@ -513,10 +595,6 @@ export default class chartElement extends LitElement {
    */
   _toolTipBuilder(value, _sanitize) {
     const tooltip = document.querySelector('#vg-tooltip-element');
-    //tooltip.classList.add(clabsPrefix + '--chat-chart-tooltip-styles')
-    //console.log(value)
-    //this.toolTipValues = value
-    //console.log(this.toolTipValues)
     if (tooltip instanceof HTMLElement) {
       let backgroundColor = '#161616';
       let textColor = '#f4f4f4';
@@ -538,7 +616,6 @@ export default class chartElement extends LitElement {
       tooltip.style.background = backgroundColor;
       tooltip.style.fontFamily = defaultFont;
       //tooltip.style.height = 'auto';
-      //tooltip.style.
 
       let toolTipHTML =
         '<div style="background:' +
@@ -850,9 +927,10 @@ export default class chartElement extends LitElement {
     }
     /*spec.autosize = {
       type: 'fit',
-      resize:true,
       contains: 'padding',
     };*/
+    //delete spec['height'];
+    //delete spec['width'];
     delete spec['autosize'];
 
     let layeredSpec;

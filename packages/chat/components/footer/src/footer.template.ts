@@ -51,6 +51,8 @@ export function footerTemplate(customElementClass) {
     _currentlyStreaming: currentlyStreaming,
     _endStreaming: endStreaming,
     _isPromptFocused: isPromptFocused,
+    hideContextMessage,
+    _handleContextMessageClose: handleContextMessageClose,
   } = customElementClass;
 
   return html` 
@@ -58,11 +60,41 @@ export function footerTemplate(customElementClass) {
     expandedHeight ? '-expanded' : ''
   }">
     ${
-      isPromptFocused
-        ? html` ${contextMessage
-            ? html`
+      !hideContextMessage &&
+      ((contextMessageType === 'error' && isPromptFocused && contextMessage) ||
+        (contextMessageType !== 'error' && contextMessage))
+        ? html`
+            <div
+              class="${clabsPrefix}--chat-footer-menu ${clabsPrefix}--chat-footer-menu${contextMessageType ===
+              'error'
+                ? '-error'
+                : contextMessageType === 'info'
+                ? '-info'
+                : contextMessageType === 'warning'
+                ? '-warning'
+                : ''}">
+              <div class="${clabsPrefix}--chat-footer-menu-container">
+                <div class="${clabsPrefix}--chat-footer-menu-container-item">
+                  ${contextMessageType === 'error'
+                    ? html`<div
+                        class="${clabsPrefix}--chat-footer-menu-container-item-icon-error">
+                        ${WarningFilled16()}
+                      </div>`
+                    : contextMessageType === 'info'
+                    ? html`<div
+                        class="${clabsPrefix}--chat-footer-menu-container-item-icon-info">
+                        ${InformationFilled16()}
+                      </div>`
+                    : contextMessageType === 'warning'
+                    ? html`<div
+                        class="${clabsPrefix}--chat-footer-menu-container-item-icon-warning">
+                        ${WarningFilled16()}
+                      </div>`
+                    : html``}
+                </div>
+
                 <div
-                  class="${clabsPrefix}--chat-footer-menu ${clabsPrefix}--chat-footer-menu${contextMessageType ===
+                  class="${clabsPrefix}--chat-footer-menu-container-message${contextMessageType ===
                   'error'
                     ? '-error'
                     : contextMessageType === 'info'
@@ -70,60 +102,28 @@ export function footerTemplate(customElementClass) {
                     : contextMessageType === 'warning'
                     ? '-warning'
                     : ''}">
-                  <div class="${clabsPrefix}--chat-footer-menu-container">
-                    <div
-                      class="${clabsPrefix}--chat-footer-menu-container-item">
-                      ${contextMessageType === 'error'
-                        ? html`<div
-                            class="${clabsPrefix}--chat-footer-menu-container-item-icon-error">
-                            ${WarningFilled16()}
-                          </div>`
-                        : contextMessageType === 'info'
-                        ? html`<div
-                            class="${clabsPrefix}--chat-footer-menu-container-item-icon-info">
-                            ${InformationFilled16()}
-                          </div>`
-                        : contextMessageType === 'warning'
-                        ? html`<div
-                            class="${clabsPrefix}--chat-footer-menu-container-item-icon-warning">
-                            ${WarningFilled16()}
-                          </div>`
-                        : html``}
-                    </div>
-
-                    <div
-                      class="${clabsPrefix}--chat-footer-menu-container-message${contextMessageType ===
-                      'error'
-                        ? '-error'
-                        : contextMessageType === 'info'
-                        ? '-info'
-                        : contextMessageType === 'warning'
-                        ? '-warning'
-                        : ''}">
-                      ${contextMessage}
-                    </div>
-                    <div
-                      class="${clabsPrefix}--chat-footer-menu-container-item">
-                      ${contextMessageType === 'error'
-                        ? html``
-                        : html`
-                            <cds-icon-button
-                              kind="${contextMessageType === 'error'
-                                ? 'danger'
-                                : 'ghost'}"
-                              size="sm">
-                              ${Close16({ slot: 'icon' })}
-                              <span slot="tooltip-content">
-                                Close warning
-                              </span>
-                            </cds-icon-button>
-                          `}
-                    </div>
-                  </div>
+                  ${contextMessage}
                 </div>
-              `
-            : ''}`
-        : html``
+                <div
+                  class="${clabsPrefix}--chat-footer-menu-container-item-icon-${contextMessageType}">
+                  ${contextMessageType === 'unknown'
+                    ? html``
+                    : html`
+                        <cds-icon-button
+                          kind="ghost"
+                          size="sm"
+                          @click="${handleContextMessageClose}">
+                          ${Close16({ slot: 'icon' })}
+                          <span slot="tooltip-content">
+                            Close ${contextMessageType}
+                          </span>
+                        </cds-icon-button>
+                      `}
+                </div>
+              </div>
+            </div>
+          `
+        : ''
     }
       <div class="${clabsPrefix}--chat-footer-prompt-items${
     expandedWidth ? '-expanded' : ''

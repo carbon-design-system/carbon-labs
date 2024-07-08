@@ -68,6 +68,9 @@ export function textElementTemplate(customElementClass) {
                               ? clabsPrefix +
                                 '--chat-text-content-chevron--focused'
                               : ''}"
+                            style="${textPiece.color
+                              ? 'background-color:' + textPiece.color + ';'
+                              : html``}"
                             data-index="${index}"
                             data-source="${textPiece.content}"
                             @click="${_handleAnnotationClick}">

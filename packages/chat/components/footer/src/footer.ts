@@ -83,6 +83,12 @@ export default class footer extends LitElement {
   _isPromptFocused = false;
 
   /**
+   * triggered when close icon is selected
+   */
+  @state()
+  hideContextMessage = false;
+
+  /**
    * add context meesage above prompt
    */
   @property({ type: String, attribute: 'context-message' })
@@ -148,7 +154,9 @@ export default class footer extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has('_messageText')) {
       this.updateTextAreaHeight();
-      this._checkLimit();
+      if (this._characterLimit) {
+        this._checkLimit();
+      }
     }
   }
 
@@ -284,6 +292,14 @@ export default class footer extends LitElement {
    */
   _textAreaIsFocused(event) {
     this._isPromptFocused = event?.type === 'focus';
+    this.hideContextMessage = false;
+  }
+
+  /**
+   * handle when context message above prompt is closed
+   */
+  _handleContextMessageClose() {
+    this.hideContextMessage = true;
   }
 
   /**
@@ -291,7 +307,6 @@ export default class footer extends LitElement {
    **/
   _sendInputToParent() {
     const value = this._messageText;
-    console.log(value);
     this._endRecording();
 
     if (value.length > 0) {

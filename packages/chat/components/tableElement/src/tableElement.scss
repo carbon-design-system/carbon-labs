@@ -23,6 +23,7 @@ $css--plex: true !default;
     border-radius: 8px;
     background: $background;
     inline-size: 100%;
+    max-block-size: var(--chat-table-height, 100%);
 
     overflow-y: scroll;
   }

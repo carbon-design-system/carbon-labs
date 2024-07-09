@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Copyright IBM Corp. 2023
+ * Copyright IBM Corp. 2023, 2024
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -12,12 +12,14 @@
 const fs = require('fs');
 const { promisify } = require('util');
 const { program } = require('commander');
+const { exec } = require('child_process');
 const gitignoreToGlob = require('gitignore-to-glob');
 const path = require('path');
 const reLicense = require('./license-text.cjs');
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
+const execPromise = promisify(exec);
 const {
   currentYear,
   reLicenseTextCurrentYear,
@@ -75,10 +77,13 @@ const check = async (paths, options) => {
         ['**/*.{js,ts,tsx,scss,html}','!**/*.snap.js'],
       )
     );
+  } else if (options.writeCurrentYear) {
+    // Get the list of staged files 
+    const { stdout } = await execPromise('git diff --cached --name-only');
+    checkPaths = stdout.split('\n').filter(Boolean);
   }
 
-  const checkFiles = options.checkAllFiles ? checkPaths : paths;
-
+  const checkFiles = checkPaths || paths;
   const filesWithErrors = (
     await Promise.all(
       checkFiles.map(async (item) => {

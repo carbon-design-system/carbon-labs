@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Copyright IBM Corp. 2023, 2024
+ * Copyright IBM Corp. 2023
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -59,9 +59,9 @@ const options = program.opts();
  */
 const check = async (paths, options) => {
   let checkPaths = [];
+  const { globby } = await import ('globby');
 
   if (options.checkAllFiles) {
-    const { globby } = await import ('globby');
 
     const gitIgnorePath = await globby(
       path.resolve(__dirname, '../.gitignore'),
@@ -80,7 +80,19 @@ const check = async (paths, options) => {
   } else if (options.writeCurrentYear) {
     // Get the list of staged files 
     const { stdout } = await execPromise('git diff --cached --name-only');
-    checkPaths = stdout.split('\n').filter(Boolean);
+    const allPaths = stdout.split('\n').filter(Boolean);
+
+    checkPaths = await globby(
+      allPaths.map(file => path.relative(__dirname, file)),
+      {
+        cwd: path.resolve(__dirname, '..'),
+        gitignore: true,
+        expandDirectories: {
+          files: ['**/*.{js,ts,tsx,scss,html}'],
+          exclude: ['**/*.snap.js'],
+        },
+      }
+    );
   }
 
   const checkFiles = checkPaths || paths;

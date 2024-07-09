@@ -1,6 +1,7 @@
 {
   "name": "@carbon-labs/network-graph",
   "version": "0.10.0-rc.0",
+  "private": true,
   "publishConfig": {
     "access": "public",
     "provenance": true

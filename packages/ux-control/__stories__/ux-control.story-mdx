@@ -1,6 +1,6 @@
 import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
 import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
-import * as UXControlStories from './ux-control.story';
+import * as UXControlStories from './ux-control.stories';
 import packageJson from '../package.json';
 
 <Meta of={UXControlStories} />

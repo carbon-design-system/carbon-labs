@@ -49,12 +49,14 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-molecule-light .element {
+    fill: none;
     font-family: 'IBM Plex Sans', sans-serif;
     font-style: normal;
     font-weight: 400;
   }
 
   .#{$clabs-prefix}--chat-molecule-dark .element {
+    fill: none;
     font-family: 'IBM Plex Sans', sans-serif;
     font-style: normal;
     font-weight: 400;

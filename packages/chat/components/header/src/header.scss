@@ -49,6 +49,7 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-header-elements-left {
+    position: relative;
     display: flex;
     flex-grow: 1;
     align-items: center;
@@ -63,6 +64,7 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-header-elements-icon {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;

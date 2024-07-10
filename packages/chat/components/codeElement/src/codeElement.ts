@@ -66,6 +66,12 @@ export default class codeElement extends LitElement {
   _editedContent;
 
   /**
+   * _currentEditIndex - target line index
+   */
+  @state()
+  _currentEditIndex = 0;
+
+  /**
    * currentlyEdited - flag if any content was changed
    */
   @state()
@@ -150,12 +156,13 @@ export default class codeElement extends LitElement {
    */
   _handleCodeEdit(event) {
     this._currentlyEdited = true;
-    if (event?.explicitOriginalTarget?.dataset?.codeIndex) {
+
+    const targetElement = event?.target;
+    const codeIndex = targetElement.getAttribute('data-codeindex');
+    if (codeIndex) {
       const key = event.code;
-      const lineIndex = parseInt(
-        event.explicitOriginalTarget.dataset.codeIndex
-      );
-      const editedValue = event.explicitOriginalTarget.value;
+      const lineIndex = parseInt(codeIndex);
+      const editedValue = targetElement.value;
       this._editedLines[lineIndex]['content'] = editedValue;
       if (key == 'deleteContentBackward' || key == 'Backspace') {
         if (editedValue.length < 1) {
@@ -173,8 +180,8 @@ export default class codeElement extends LitElement {
       }
     }
 
-    ///this._renderedLines = this._editedLines;
-    this.requestUpdate();
+    this._renderedLines = [...this._editedLines];
+    //this.requestUpdate();
   }
 
   /**
@@ -182,6 +189,18 @@ export default class codeElement extends LitElement {
    */
   _packageSpecFromArray() {
     return this._editedLines.map((line) => line.content).join('\n');
+  }
+
+  /**
+   * _setCurrentIndex
+   * @param {event} event - textarea click event
+   */
+  _setCurrentIndex(event) {
+    const targetElement = event?.target;
+    const codeIndex = targetElement?.getAttribute('data-codeindex');
+    if (codeIndex) {
+      this._currentEditIndex = codeIndex;
+    }
   }
 
   /**
@@ -198,7 +217,8 @@ export default class codeElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(codeEditedEvent);
-    this._renderedLines = this._editedLines;
+    this._renderedLines = [...this._editedLines];
+    this._originalLines = [...this._editedLines];
     this._currentlyEdited = false;
     this.requestUpdate();
   }
@@ -210,6 +230,7 @@ export default class codeElement extends LitElement {
     this._currentlyEdited = false;
     //this._renderedLines.length = 0;
     //this._renderedLines = this._originalLines;
+    this._renderedLines = [...this._originalLines];
 
     this._formatCode();
     this.requestUpdate();

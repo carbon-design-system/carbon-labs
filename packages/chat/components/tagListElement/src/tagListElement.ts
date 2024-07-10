@@ -82,10 +82,9 @@ export default class tagListElement extends LitElement {
    */
   _handleTagClick(event) {
     event.preventDefault();
-    const value = event.explicitOriginalTarget.innerText;
-    const source = event.explicitOriginalTarget.dataset.content;
+    const source = event.target.getAttribute('data-content');
     const tagSelectedEvent = new CustomEvent('on-tag-selected', {
-      detail: { tagContent: source, tagLabel: value },
+      detail: { tagContent: source, tagLabel: source },
       bubbles: true,
       composed: true,
     });

@@ -99,6 +99,12 @@ export default class molecularElement extends LitElement {
   drawer;
 
   /**
+   * renderSuccessful - flag when a render operation has succeeded to begin post-hoc editing
+   */
+  @state()
+  renderSuccessful = false;
+
+  /**
    * loading - initial state to show loading icon until error or successful render occurs
    */
   @state()
@@ -155,9 +161,9 @@ export default class molecularElement extends LitElement {
       terminalCarbons: true,
       explicitHydrogens: false,
       overlapSensitivity: 0.42,
-      overlapResolutionIterations: 3,
+      overlapResolutionIterations: this.streaming ? 1 : 10,
       compactDrawing: false,
-      fontSizeLarge: 5,
+      fontSizeLarge: 6,
       fontSizeSmall: 3,
       padding: 0.0,
       experimental: false,
@@ -230,6 +236,9 @@ export default class molecularElement extends LitElement {
     if (changedProperties.has('_smilesContent')) {
       this._scrollStreamArea();
     }
+    if (changedProperties.has('renderSuccessful')) {
+      this._appendCustomStyles();
+    }
   }
 
   /**
@@ -243,6 +252,47 @@ export default class molecularElement extends LitElement {
         backgroundColor.startsWith('#') &&
         parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2;
       this.theme = darkMode ? 'dark' : 'light';
+    }
+  }
+
+  /**
+   * _appendCustomStyles - change smiles-drawer atom rendering
+   */
+  _appendCustomStyles() {
+    const enableTextStyling = false;
+    const enableCircleStyling = true;
+
+    if (enableTextStyling) {
+      const textElements = this.shadowRoot?.querySelectorAll('text');
+      if (textElements) {
+        textElements.forEach((text) => {
+          //text.style.fill = 'red';
+          //text.style.textShadow = 'red'
+          text.style.textShadow = '0 0 5px rgba(255, 255, 255, 0.8)';
+          //text.style.stroke = 'black';
+          //text.style.strokeWidth = '3px';
+          //text.style.background = 'none';
+
+          const tspans = text.querySelectorAll('tspan');
+          //console.log(tspans);
+          tspans.forEach((tspan) => {
+            tspan.style.stroke = 'rgba(255, 255, 255)';
+            tspan.style.fontWeight = '900';
+            //tspan.style.fill='white';
+            tspan.style.strokeWidth = '0.5px';
+            //tspan.style.textShadow='0 0 5px rgba(255, 255, 255, 0.8)'
+          });
+        });
+      }
+    }
+    if (enableCircleStyling) {
+      const mask = this.shadowRoot?.querySelector('mask');
+      if (mask) {
+        const circles = mask.querySelectorAll('circle');
+        circles.forEach((circle) => {
+          circle.style.opacity = '0.5';
+        });
+      }
     }
   }
 
@@ -366,6 +416,7 @@ export default class molecularElement extends LitElement {
           this.theme,
           () => {
             renderTest = true;
+            this.renderSuccessful = true;
           },
           () => {
             renderTest = false;

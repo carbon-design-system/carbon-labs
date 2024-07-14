@@ -251,8 +251,8 @@ export default class carouselElement extends LitElement {
           if (incompleteArray.length > this._carouselContent.length) {
             const url = incompleteArray[incompleteArray.length - 1];
             this._carouselContent = [
-              ...this._carouselContent,
               { content: url, type: this._checkURLType(url) },
+              ...this._carouselContent,
             ];
           }
         } catch (error) {

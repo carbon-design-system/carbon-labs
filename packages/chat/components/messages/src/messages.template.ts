@@ -33,9 +33,11 @@ export function messagesTemplate(customElementClass) {
   } = customElementClass;
 
   return html`<div
-    class="${clabsPrefix}--chat-messages-container ${dockingEnabled
-      ? clabsPrefix + '--chat-messages-container-docked'
-      : ''}">
+    class="${clabsPrefix}--chat-messages-container ${streamResponses
+      ? clabsPrefix + '--chat-messages-container-streaming'
+      : ''} 
+
+    ${dockingEnabled ? clabsPrefix + '--chat-messages-container-docked' : ''}">
     <slot name="message-items" @slotchange="${_handleSlotchange}">
       ${computedMessages
         ? html`

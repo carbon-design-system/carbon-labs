@@ -16,13 +16,25 @@ $css--plex: true !default;
   inline-size: 100%;
   line-height: 20px;
 
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
   .#{$clabs-prefix}--chat-list ul {
     padding: 0;
     margin: 0;
     padding-inline-start: 16px;
   }
   .#{$clabs-prefix}--chat-list li {
+    animation: fade-in 600ms forwards;
     list-style-type: none;
+    opacity: 0;
     padding-block-start: 4px;
   }
 }

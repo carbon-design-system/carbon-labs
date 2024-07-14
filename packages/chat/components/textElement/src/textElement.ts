@@ -400,6 +400,10 @@ export default class textElement extends LitElement {
     if (this.streaming) {
       this._animateFadeIn(temporaryTextArray);
     } else {
+      if (this._annotationList.length > 0) {
+        this.enableSummarization = true;
+        this.disableChevrons = true;
+      }
       this._textElements = temporaryTextArray;
     }
   }

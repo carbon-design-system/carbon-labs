@@ -64,6 +64,16 @@ $css--plex: true !default;
   @media screen and (prefers-reduced-motion: reduce) {
     td {
       overflow: hidden;
+      animation: fade-in 600ms forwards;
+      max-inline-size: 100%;
+      opacity: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  @media screen and (prefers-reduced-motion: reduce) {
+    td {
+      overflow: hidden;
       animation: none;
       max-inline-size: 100%;
       opacity: 0;
@@ -77,7 +87,7 @@ $css--plex: true !default;
     animation: fade-in 600ms forwards;
     max-inline-size: 100%;
     opacity: 0;
-    overflow-x: scroll;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 

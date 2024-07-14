@@ -17,6 +17,14 @@ export default {
   component: 'clabs-chat',
 };
 
+/*
+  [
+    'text',
+    '<b>Abraham Lincoln was an American lawyer</b>, politician, and statesman who served as the 16th [president of the United States](https://en.wikipedia.org/wiki/President_of_the_United_States) from 1861 until his [assassination](https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln) in 1865. Lincoln led the United States through the [American Civil War](https://en.wikipedia.org/wiki/American_Civil_War), defending the nation as a constitutional [union](https://en.wikipedia.org/wiki/Union_(American_Civil_War)\n [Many more links are available in this article](https://en.wikipedia.org/wiki/Log_cabin,https://en.wikipedia.org/wiki/Kentucky,https://en.wikipedia.org/wiki/American_frontier,https://en.wikipedia.org/wiki/Indiana). ',
+    'annotated-text',
+    'Abraham Lincoln article on Wikipedia',
+  ],
+*/
 const coreExamples = [
   [
     'text',
@@ -24,15 +32,15 @@ const coreExamples = [
   ],
   [
     'carousel',
-    '["https://bouqs.com/blog/wp-content/uploads/2021/09/snapdragon-20809_1280.jpg","https://bouqs.com/blog/wp-content/uploads/2019/05/20_summer-cosmos.jpg","https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg","https://bouqs.com/blog/wp-content/uploads/2023/06/zinnia-gbcbfedd94_1280.jpg","https://bouqs.com/blog/wp-content/uploads/2021/09/chrysanthemum-5668882_1280.jpg","https://bouqs.com/blog/wp-content/uploads/2021/09/celosia-7299458_1280.jpg","https://bouqs.com/blog/wp-content/uploads/2021/05/sunflower-fields.jpg","https://bouqs.com/blog/wp-content/uploads/2021/09/strawflower-362280_1280.jpg"]',
+    '["https://bouqs.com/blog/wp-content/uploads/2019/05/20_summer-cosmos.jpg","https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg","https://bouqs.com/blog/wp-content/uploads/2023/06/zinnia-gbcbfedd94_1280.jpg","https://bouqs.com/blog/wp-content/uploads/2021/09/chrysanthemum-5668882_1280.jpg","https://bouqs.com/blog/wp-content/uploads/2021/09/celosia-7299458_1280.jpg","https://bouqs.com/blog/wp-content/uploads/2021/05/sunflower-fields.jpg","https://bouqs.com/blog/wp-content/uploads/2021/09/strawflower-362280_1280.jpg"]',
     '',
     'Flower images from bouqs.com',
   ],
   [
     'text',
-    '<b>Abraham Lincoln was an American lawyer</b>, politician, and statesman who served as the 16th [president of the United States](https://en.wikipedia.org/wiki/President_of_the_United_States) from 1861 until his [assassination](https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln) in 1865. Lincoln led the United States through the [American Civil War](https://en.wikipedia.org/wiki/American_Civil_War), defending the nation as a constitutional [union](https://en.wikipedia.org/wiki/Union_(American_Civil_War)\n [Many more links are available in this article](https://en.wikipedia.org/wiki/Log_cabin,https://en.wikipedia.org/wiki/Kentucky,https://en.wikipedia.org/wiki/American_frontier,https://en.wikipedia.org/wiki/Indiana). ',
-    'annotated-text',
-    'Abraham Lincoln article on Wikipedia',
+    "<strong>Galileo di Vincenzo Bonaiuti de' Galilei</strong> (15 February 1564 – 8 January 1642), commonly referred to as <strong>Galileo Galilei</strong> (<i>ɡælɪˈleɪoʊ ɡælɪˈleɪ GAL-il-AY-oh GAL-il-AY</i>) or simply <strong>Galileo</strong>, was an Italian [astronomer](https://en.wikipedia.org/wiki/Astronomer), [physicist](https://en.wikipedia.org/wiki/Physicist) and [engineer](https://en.wikipedia.org/wiki/Engineer), sometimes described as a [polymath](https://en.wikipedia.org/wiki/Polymath). He was born in the city of [Pisa](https://en.wikipedia.org/wiki/Pisa), then part of the [Duchy of Florence](https://en.wikipedia.org/wiki/Duchy_of_Florence). Galileo has been called the father of [observational astronomy](https://en.wikipedia.org/wiki/Observational_astronomy), modern-era classical physics, the [scientific method](https://en.wikipedia.org/wiki/Scientific_method), and [modern science](https://en.wikipedia.org/wiki/Modern_science).",
+    'summarized-text',
+    'Galileo Galilei article on Wikipedia',
   ],
   [
     'code',
@@ -48,33 +56,21 @@ const coreExamples = [
   ],
   [
     'formula',
-    '\\(1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots =    \\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})},     \\quad\\quad \\text{for $|q| < 1$}.\\)',
-    '',
-    'Rogers-Ramanujan Identity equation in tex',
-  ],
-  [
-    'formula',
     "\\( S = -\\frac{1}{2}\\int d^2\\sigma \\sqrt{-h} h^{ab}\\partial_a X^\\mu \\partial_b X^\\mu \\\\ \\frac{1}{4 \\pi \\alpha'} \\int d^2\\sigma \\sqrt{-h} \\left( h^{ab} \\partial_a X^\\mu \\partial_b X_\\mu + \\alpha' R \\Phi(X) \\right  \\\\ [\\alpha_m^\\mu, \\alpha_n^\\nu] = m \\delta_{m+n,0} \\eta^{\\mu \\nu}  \\)",
     '',
     'String Theory Action',
   ],
   [
-    'text',
-    "<strong>Galileo di Vincenzo Bonaiuti de' Galilei</strong> (15 February 1564 – 8 January 1642), commonly referred to as <strong>Galileo Galilei</strong> (<i>ɡælɪˈleɪoʊ ɡælɪˈleɪ GAL-il-AY-oh GAL-il-AY</i>) or simply <strong>Galileo</strong>, was an Italian [astronomer](https://en.wikipedia.org/wiki/Astronomer), [physicist](https://en.wikipedia.org/wiki/Physicist) and [engineer](https://en.wikipedia.org/wiki/Engineer), sometimes described as a [polymath](https://en.wikipedia.org/wiki/Polymath). He was born in the city of [Pisa](https://en.wikipedia.org/wiki/Pisa), then part of the [Duchy of Florence](https://en.wikipedia.org/wiki/Duchy_of_Florence). Galileo has been called the father of [observational astronomy](https://en.wikipedia.org/wiki/Observational_astronomy), modern-era classical physics, the [scientific method](https://en.wikipedia.org/wiki/Scientific_method), and [modern science](https://en.wikipedia.org/wiki/Modern_science).",
-    'summarized-text',
-    'Galileo Galilei article on Wikipedia',
+    'formula',
+    '\\(\\frac{1}{(\\sqrt{\\phi \\sqrt{5}}-\\phi) e^{\\frac25 \\pi}} = \\\\ 1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}} \\\\ {1+\\frac{e^{-8\\pi}} {1+\\ldots} } } }\\)',
+    '',
+    'An Identity of Ramanujan',
   ],
   [
     'table',
     'Name,Age,Occupation,Location,State\nJerry,35,Comedian,Upper east side,NY\nGeorge,35,Unemployed,Queens,NY\nElaine,32,Publisher,Midtown,NY\nKramer,36,Unknown,Upper east side,NY',
     '',
     'Seinfeld characters',
-  ],
-  [
-    'list',
-    '1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)',
-    '',
-    'Top sites in the United States',
   ],
   [
     'text',
@@ -90,9 +86,9 @@ const coreExamples = [
   ],
   [
     'molecule',
-    '```C1=NC(=C2C(=N1)N(C=N2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O)O)N.C1=NC(=C2C(=N1)N(C=N2)C3C(C(C(O3)COP(=O)(O)OP(=O)(O)OP(=O)(O)O)O)O)N```',
+    '```C1=C(C=C(C(=C1I)OC2=CC(=C(C(=C2)I)O)I)I)C[C@@H](C(=O)O)N```',
     '',
-    'Smiles representation of ATP (Adenosine Triphosphate) from PubChem',
+    'Smiles representation of Thyroxine from PubChem',
   ],
   ['file-upload', 'Test_file.pdf'],
   [
@@ -133,6 +129,12 @@ const coreExamples = [
   [
     'html-text',
     "<p style=\"font-family: 'Comic Sans MS', 'Comic Sans', cursive; font-size:20px; color: GoldenRod;\"> This is using a p tag, styled with Comic Sans, sized at 20px and colored in GoldenRod</p>",
+  ],
+  [
+    'list',
+    '1. Google.com (United States)\n2. YouTube.com (US)\n3. Facebook.com (US)\n4. Baidu.com (China)\n5. Wikipedia.org (US)',
+    '',
+    'Top sites in the United States',
   ],
   [
     'tags',
@@ -286,8 +288,6 @@ export const APIPlayground = {
         auto-update
         user-prompt="${userPrompt}"
         api-url="${apiUrl}"
-        stream-responses
-        stream-delay="${2}"
         feedback-url="${feedbackUrl}"
         temperature="${temperature}"
         user-name="Sherlock"
@@ -759,12 +759,14 @@ export const StreamTextPlayground = {
               sample-query="${rawTextExamples[sampleQuery]}"
               user-name="user"
               stream-responses
+              default-viewing-mode="fullscreen"
               agent-name="bot">
             </clabs-chat>`
           : html` <clabs-chat
               sample-query="${rawText}"
               user-name="user"
               stream-responses
+              default-viewing-mode="fullscreen"
               agent-name="bot">
             </clabs-chat>`}
       </div>

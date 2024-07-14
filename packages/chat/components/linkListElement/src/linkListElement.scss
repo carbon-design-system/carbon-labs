@@ -14,9 +14,11 @@ $css--plex: true !default;
 :host(#{$clabs-prefix}-chat-link-list) {
   display: block;
   box-sizing: border-box;
+  animation: fade-in 600ms forwards;
   background: $background;
   inline-size: 100%;
   max-block-size: 246px;
+  opacity: 0;
 
   .#{$clabs-prefix}--chat-link-list-header {
     color: $text-secondary;
@@ -28,12 +30,6 @@ $css--plex: true !default;
     text-align: start;
   }
 
-  .#{$clabs-prefix}--chat-link-list-ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -42,6 +38,12 @@ $css--plex: true !default;
     to {
       opacity: 1;
     }
+  }
+
+  .#{$clabs-prefix}--chat-link-list-ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
   }
 
   .#{$clabs-prefix}--chat-link-list-li {

@@ -130,7 +130,10 @@ const coreExamples = [
     'SEGMENTATION ERROR: Failed to render the content provided. (example)',
   ],
   ['loading', ''],
-  ['html-text', '<h2>This is using a h2 tag</h2>'],
+  [
+    'html-text',
+    "<p style=\"font-family: 'Comic Sans MS', 'Comic Sans', cursive; font-size:20px; color: GoldenRod;\"> This is using a p tag, styled with Comic Sans, sized at 20px and colored in GoldenRod</p>",
+  ],
   [
     'tags',
     '["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]',

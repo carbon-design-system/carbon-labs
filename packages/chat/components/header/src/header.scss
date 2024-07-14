@@ -48,6 +48,13 @@ $css--plex: true !default;
     block-size: 100%;
   }
 
+  .#{$clabs-prefix}--chat-header-elements-menu-list {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    inset-block-start: 40px;
+  }
+
   .#{$clabs-prefix}--chat-header-elements-left {
     position: relative;
     display: flex;

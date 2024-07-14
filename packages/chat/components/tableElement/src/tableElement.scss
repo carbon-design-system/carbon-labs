@@ -40,7 +40,6 @@ $css--plex: true !default;
     border-spacing: 0;
     font-family: inherit;
     inline-size: 100%;
-    table-layout: fixed;
   }
 
   th,
@@ -78,7 +77,7 @@ $css--plex: true !default;
     animation: fade-in 600ms forwards;
     max-inline-size: 100%;
     opacity: 0;
-    text-overflow: ellipsis;
+    overflow-x: scroll;
     white-space: nowrap;
   }
 
@@ -88,6 +87,7 @@ $css--plex: true !default;
   }
 
   th {
+    overflow: hidden;
     border: none;
     background-color: $layer-selected;
     font-weight: bold;

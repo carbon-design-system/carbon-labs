@@ -137,7 +137,10 @@ export function messageTemplate(customElementClass) {
               <div class="${clabsPrefix}--chat-message-timestamp-bot">
                 ${displayName == null ? 'watsonx' : displayName} ${timeStamp}
               </div>
-              <div class="${clabsPrefix}--chat-message-response-bot">
+              <div
+                class="${clabsPrefix}--chat-message-response-bot ${currentlyStreaming
+                  ? clabsPrefix + '--chat-message-streaming'
+                  : ''}">
                 <slot
                   name="message-item-content"
                   @slotchange="${_handleSlotchange}">
@@ -165,7 +168,9 @@ export function messageTemplate(customElementClass) {
                           `
                         : message.type === 'molecule'
                         ? html`
-                            <clabs-chat-molecule content="${message.content}">
+                            <clabs-chat-molecule
+                              height="${369}"
+                              content="${message.content}">
                             </clabs-chat-molecule>
                           `
                         : message.type === 'formula'
@@ -220,6 +225,13 @@ export function messageTemplate(customElementClass) {
                         ? html`
                             <clabs-chat-text
                               enable-text-highlighting
+                              content="${message.content}">
+                            </clabs-chat-text>
+                          `
+                        : message.type === 'summarized-text'
+                        ? html`
+                            <clabs-chat-text
+                              enable-summarization
                               content="${message.content}">
                             </clabs-chat-text>
                           `
@@ -313,6 +325,7 @@ export function messageTemplate(customElementClass) {
                         ? html`
                             <clabs-chat-molecule
                               streaming
+                              height="${369}"
                               content="${temporaryMessage.content}">
                             </clabs-chat-molecule>
                           `
@@ -331,6 +344,7 @@ export function messageTemplate(customElementClass) {
                           `
                         : html`
                             <clabs-chat-text
+                              streaming
                               content="${temporaryMessage.content}">
                             </clabs-chat-text>
                           `}

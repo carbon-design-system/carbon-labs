@@ -19,15 +19,39 @@ export default {
 const examples = [
   {
     title: 'Bergenin',
-    width: 492,
-    height: 492,
+    width: 126,
+    height: 126,
+    thumbnail: true,
     smiles:
       'OC[C@@H](O1)[C@@H](O)[C@H](O)[C@@H]2[C@@H]1c3c(O)c(OC)c(O)cc3C(=O)O2',
   },
   {
     title: 'Custom Molecule',
-    width: 492,
-    height: 492,
+    width: 126,
+    height: 126,
+    thumbnail: true,
+    smiles:
+      'OC(C(=O)O[C@H]1C[N+]2(CCC0C3=CC=CC=C3)CCC1CC2)(C1=CC=CS1)C1=CC=CS1',
+  },
+  {
+    title: 'Cephalostatin-1',
+    width: 126,
+    height: 126,
+    thumbnail: true,
+    smiles:
+      'CC(C)(O1)C[C@@H](O)[C@@]1(O2)[C@@H](C)[C@@H]3CC=C4[C@]3(C2)C(=O)C[C@H]5[C@H]4CC[C@@H](C6)[C@]5(C)Cc(n7)c6nc(C[C@@]89(C))c7C[C@@H]8CC[C@@H]%10[C@@H]9C[C@@H](O)[C@@]%11(C)C%10=C[C@H](O%12)[C@]%11(O)[C@H](C)[C@]%12(O%13)[C@H](O)C[C@@]%13(C)CO',
+  },
+  {
+    title: 'Bergenin',
+    width: 246,
+    height: 246,
+    smiles:
+      'OC[C@@H](O1)[C@@H](O)[C@H](O)[C@@H]2[C@@H]1c3c(O)c(OC)c(O)cc3C(=O)O2',
+  },
+  {
+    title: 'Custom Molecule',
+    width: 446,
+    height: 446,
     smiles:
       'OC(C(=O)O[C@H]1C[N+]2(CCC0C3=CC=CC=C3)CCC1CC2)(C1=CC=CS1)C1=CC=CS1',
   },
@@ -53,6 +77,8 @@ const examples = [
   },
   {
     title: 'Thyroxine',
+    width: 496,
+    height: 496,
     smiles: 'C1=C(C=C(C(=C1I)OC2=CC(=C(C(=C2)I)O)I)I)C[C@@H](C(=O)O)N',
   },
   {
@@ -115,6 +141,7 @@ export const Showcase = {
           ${example.width && example.height
             ? html`<p style="font-style:italic;font-size:14px;">
                 (${example.width}px x ${example.height}px)
+                ${example.thumbnail ? '- thumbail-mode enabled' : ''}
               </p>`
             : ``}
           <br />
@@ -128,6 +155,7 @@ export const Showcase = {
             title="${example.title}"
             width="${example.width}"
             height="${example.height}"
+            ?thumbnail-mode=${example.thumbnail}
             content="${example.smiles}">
           </clabs-chat-molecule>
           <br />

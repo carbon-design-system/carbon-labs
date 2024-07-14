@@ -66,6 +66,7 @@ export function headerTemplate(customElementClass) {
                 `
                   : html`
                       <cds-overflow-menu
+                        style="position:relative;"
                         id="${clabsPrefix}--chat-header-id"
                         align="bottom-left">
                         ${Menu24({ slot: 'icon' })}

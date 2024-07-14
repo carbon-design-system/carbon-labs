@@ -46,7 +46,6 @@ export function messagesTemplate(customElementClass) {
                     origin="${message.origin}"
                     ?user-submitted="${message.userSubmitted ||
                     message.origin === userName}"
-                    ?user-submitted="${message.origin === userName}"
                     time-stamp="${message.time}"
                     error-state
                     stream-delay="${streamDelay}"

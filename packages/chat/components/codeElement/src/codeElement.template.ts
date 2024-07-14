@@ -68,7 +68,8 @@ export function codeElementTemplate(customElementClass) {
       ${_renderedLines.map(
         (lineObject, index) =>
           html`
-            <div class="${clabsPrefix}--chat-code-line">
+            <div
+              class="${clabsPrefix}--chat-code-line ${clabsPrefix}--chat-code-line-fade-in">
               ${disableLineTicks || _renderedLines.length < 2
                 ? html``
                 : html`

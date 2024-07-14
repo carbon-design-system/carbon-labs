@@ -18,12 +18,23 @@ const { stablePrefix: clabsPrefix } = settings;
  * @returns {TemplateResult<1>} Lit html template
  */
 export function loadingElementTemplate(customElementClass) {
-  const { content } = customElementClass;
-
-  return html`<div class="${clabsPrefix}--chat-loading">
+  const { _loadingMessage: loadingMessage } = customElementClass;
+  return html`
+  </div>
+    ${loadingMessage ? '' : ''}
     <div class="${clabsPrefix}--chat-loading-container">
-      ${content}
-      <div class="${clabsPrefix}--chat-loading-bar"></div>
+      <div class="${clabsPrefix}--chat-loading-dot-container">
+        <div
+          class="${clabsPrefix}--chat-loading-dot ${clabsPrefix}--chat-loading-dot-first"></div>
+      </div>
+      <div class="${clabsPrefix}--chat-loading-dot-container">
+        <div
+          class="${clabsPrefix}--chat-loading-dot ${clabsPrefix}--chat-loading-dot-second"></div>
+      </div>
+      <div class="${clabsPrefix}--chat-loading-dot-container">
+        <div
+          class="${clabsPrefix}--chat-loading-dot ${clabsPrefix}--chat-loading-dot-third"></div>
+      </div>
     </div>
   </div>`;
 }

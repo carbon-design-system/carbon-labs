@@ -36,6 +36,18 @@ export default class carouselElement extends LitElement {
   elements;
 
   /**
+   * Maximum number of slides to display
+   */
+  @property({ type: Number, attribute: 'max-slides' })
+  maxSlides;
+
+  /**
+   * Current slide defined by the attribute
+   */
+  @property({ type: Number, attribute: 'selected-slide' })
+  selectedSlide = 0;
+
+  /**
    * Predefined width for carousel container
    */
   @property({ type: String, attribute: 'content-width', reflect: true })
@@ -100,13 +112,13 @@ export default class carouselElement extends LitElement {
 
     this.resizeObserver = new ResizeObserver(async () => {
       this._updateCarousel();
-      this.requestUpdate();
     });
 
     const slidesContainer = this.shadowRoot?.querySelector(
       '.clabs--chat-carousel-container'
     );
     this.resizeObserver.observe(slidesContainer);
+    this.resizeObserver.observe(this.parentElement);
   }
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
@@ -116,17 +128,20 @@ export default class carouselElement extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has('content')) {
       this._buildCarousel();
-      //this.requestUpdate();
     }
     if (changedProperties.has('elements')) {
       this._checkElements();
-      //this.requestUpdate();
     }
     if (changedProperties.has('contentWidth')) {
       this._buildCarousel();
     }
     if (changedProperties.has('_carouselContent')) {
       this._updateCarousel();
+    }
+    if (changedProperties.has('selectedSlide')) {
+      if (this._carouselContent) {
+        this._handleSlideSelection();
+      }
     }
   }
 
@@ -141,6 +156,9 @@ export default class carouselElement extends LitElement {
           Math.floor(parentWidth / (this.contentWidth + this._slideGapSize)),
           1
         );
+        if (this.maxSlides) {
+          this._itemsPerSlide = Math.min(this._itemsPerSlide, this.maxSlides);
+        }
         this.style.setProperty(
           '--chat-carousel-slides-width',
           this._itemsPerSlide * (this.contentWidth + this._slideGapSize) + 'px'
@@ -263,6 +281,7 @@ export default class carouselElement extends LitElement {
     this._renderedSlideCounter =
       Math.floor(this._slideCounter / this._itemsPerSlide) + 1;
     this._scrollSlideContainer();
+    this._notifyIndexChange();
   }
 
   /**
@@ -278,6 +297,37 @@ export default class carouselElement extends LitElement {
     this._renderedSlideCounter =
       Math.floor(this._slideCounter / this._itemsPerSlide) + 1;
     this._scrollSlideContainer();
+    this._notifyIndexChange();
+  }
+
+  /**
+   * handle external slide selection
+   */
+  _handleSlideSelection() {
+    if (
+      this.selectedSlide >= 0 &&
+      this.selectedSlide <= this._carouselContent.length
+    ) {
+      this._slideCounter = this.selectedSlide;
+    }
+    this._renderedSlideCounter =
+      Math.floor(this._slideCounter / this._itemsPerSlide) + 1;
+    this._scrollSlideContainer();
+  }
+
+  /**
+   * _notifyIndexChange - send an event that the slide index has changed
+   */
+  _notifyIndexChange() {
+    const indexUpdateEvent = new CustomEvent('on-carousel-index-change', {
+      detail: {
+        action: 'CAROUSEL: user changed the current slide',
+        currentIndex: this._slideCounter,
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(indexUpdateEvent);
   }
 
   /**

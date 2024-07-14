@@ -48,6 +48,21 @@ $css--plex: true !default;
     vertical-align: middle;
   }
 
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .#{$clabs-prefix}--chat-text-fade-in {
+    animation: fade-in 600ms forwards;
+    opacity: 0;
+  }
+
   .#{$clabs-prefix}--chat-text-content-chevron:hover {
     border: 1px solid $focus;
     cursor: pointer;
@@ -68,13 +83,17 @@ $css--plex: true !default;
     text-decoration-color: $text-secondary;
     text-decoration-style: dotted;
     text-decoration-thickness: 2px;
-    text-underline-offset: 2px;
+    text-underline-offset: 3px;
     vertical-align: bottom;
   }
 
   .#{$clabs-prefix}--chat-text-highlighted {
-    background: var(--chat-text-element-highlight-color, $link-inverse);
+    background: var(--chat-text-element-highlight-color, $highlight);
     text-decoration: none;
+  }
+
+  .#{$clabs-prefix}--chat-text-highlight-active {
+    background: var(--chat-text-element-highlight-color, $highlight);
   }
 
   .#{$clabs-prefix}--chat-text-content-annotation-element {
@@ -82,7 +101,15 @@ $css--plex: true !default;
     inline-size: 100%;
     max-block-size: var(--chat-text-content-annotation-element-height);
     max-inline-size: 100%;
-    padding-block: 16px;
+    padding-block: 8px;
+    transition: max-height 0.3s linear;
+  }
+  .#{$clabs-prefix}--chat-text-content-summarization-element {
+    overflow: hidden;
+    inline-size: 100%;
+    max-block-size: var(--chat-text-content-annotation-element-height);
+    max-inline-size: 100%;
+    padding-block: 8px;
     transition: max-height 0.3s linear;
   }
 
@@ -92,7 +119,7 @@ $css--plex: true !default;
     text-decoration-color: $text-secondary;
     text-decoration-style: dotted;
     text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
+    text-underline-offset: 3px;
     vertical-align: bottom;
   }
 

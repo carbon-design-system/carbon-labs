@@ -8,6 +8,7 @@
  */
 
 import { LitElement } from 'lit';
+import { state } from 'lit/decorators.js';
 
 // @ts-ignore
 import styles from './loadingElement.scss?inline';
@@ -16,6 +17,12 @@ import styles from './loadingElement.scss?inline';
  */
 export default class loadingElement extends LitElement {
   static styles = styles;
+
+  /**
+   * _loadingMessage - add message to loader
+   */
+  @state()
+  _loadingMessage;
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object

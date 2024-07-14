@@ -200,7 +200,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 4;
+  baseStreamingSpeed = 5;
 
   /** detect when component is rendered to process rawtext
    */
@@ -726,6 +726,20 @@ export default class message extends LitElement {
           if (blockSignal.status === 'incomplete') {
             this._checkAmbiguousBlock();
             this.temporaryMessage.content = this.bufferMessage;
+
+            if (blockSignal.type === 'text') {
+              const splitter = blockSignal.content.split('\n');
+              if (splitter.length > 0) {
+                for (let i = 0; i < splitter.length - 1; i++) {
+                  const subLine = splitter[i];
+                  this._messageElements = [
+                    ...this._messageElements,
+                    { content: subLine, type: 'text' },
+                  ];
+                  this.bufferMessage = splitter[splitter.length];
+                }
+              }
+            }
           }
           if (blockSignal.status === 'ended') {
             this.currentType = '';
@@ -765,18 +779,20 @@ export default class message extends LitElement {
 
       switch (this.temporaryMessage.type) {
         case 'code':
-          this.streamingSpeed = this.baseStreamingSpeed / 2;
+          this.streamingSpeed = this.baseStreamingSpeed / 1;
           break;
         case 'table':
-          this.streamingSpeed = this.baseStreamingSpeed / 2;
+          this.streamingSpeed = this.baseStreamingSpeed / 1;
           break;
         case 'carousel':
-          this.streamingSpeed = this.baseStreamingSpeed / 2;
+          this.streamingSpeed = this.baseStreamingSpeed / 1;
           break;
         case 'json':
         case 'chart':
-        case 'molecule':
           this.streamingSpeed = this.baseStreamingSpeed / 4;
+          break;
+        case 'molecule':
+          this.streamingSpeed = this.baseStreamingSpeed * 4;
           break;
         case 'text':
           this.streamingSpeed = this.baseStreamingSpeed;

@@ -49,6 +49,12 @@ export default class textElement extends LitElement {
   enableAnnotations;
 
   /**
+   * remove all chevrons and dropdowns, put carousel at the end
+   */
+  @property({ type: Boolean, attribute: 'enable-summarization' })
+  enableSummarization;
+
+  /**
    * html boolean to render html content (TEMPORARY, for experimental use only)
    */
   @property({ type: Boolean, attribute: 'enable-html-rendering' })
@@ -102,10 +108,53 @@ export default class textElement extends LitElement {
   _annotationURLs;
 
   /**
-   * targest div index
+   * annotation url list
+   */
+  @state()
+  _annotationList;
+
+  /**
+   * target annotation index
    */
   @state()
   _annotationIndex;
+
+  /**
+   * show summarizations or not
+   */
+  @state()
+  _showSummarization = false;
+
+  /**
+   * translate textpiece ids to annotation IDs
+   */
+  @state()
+  _translationRegistry: { annotationIndex: number; subElementIndex: number }[] =
+    [];
+
+  /**
+   * selected annotation index in order of appearence
+   */
+  @state()
+  selectedAnnotationIndex;
+
+  /**
+   * Streaming flag from message parent
+   */
+  @property({ type: Boolean, attribute: 'streaming' })
+  streaming;
+
+  /**
+   * Spliced sub element list of plain text to fade in text
+   */
+  @state()
+  _animationList: {
+    text: string;
+    type: string;
+    active: boolean;
+    content: string;
+    color: string;
+  }[] = [];
 
   /** detect when component is rendered to process text object
    */
@@ -116,6 +165,10 @@ export default class textElement extends LitElement {
       if (this.content) {
         this._formatText();
       }
+    }
+
+    if (this.hasAttribute('enable-summarization')) {
+      this.disableChevrons = true;
     }
 
     if (this.hasAttribute('text-highlight-color')) {
@@ -141,6 +194,62 @@ export default class textElement extends LitElement {
       !(this.textSubElements.length > 0)
     ) {
       this._formatText();
+    }
+  }
+
+  /** updateHighlightTarget - when the carousel element returns a change event, update current highlight
+   * @param {event} event - slide event
+   */
+  _updateHighlightTarget(event) {
+    const carouselIndex = event?.detail?.currentIndex;
+    if (carouselIndex >= 0) {
+      const foundItem = this._translationRegistry.find(
+        (item) => item.annotationIndex === carouselIndex + 1
+      );
+
+      this._textElements.forEach((element) => {
+        element.active = false;
+      });
+      if (foundItem || foundItem === 0) {
+        const registryID = foundItem.subElementIndex;
+        if (typeof registryID === 'number') {
+          this._textElements[registryID - 1].active = true;
+        }
+      }
+
+      this.requestUpdate();
+    }
+  }
+
+  /**
+   * _toggleSummarization - toggle whether to show summarization or not
+   */
+  _toggleSummarization() {
+    this._showSummarization = !this._showSummarization;
+    if (!this._showSummarization) {
+      this._textElements.forEach((element) => {
+        element.active = false;
+      });
+    } else {
+      if (!this.selectedAnnotationIndex) {
+        this.selectedAnnotationIndex = 0;
+      }
+      const trueAnnotationIndex = this.selectedAnnotationIndex + 1;
+      const foundItem = this._translationRegistry.find(
+        (item) => item.annotationIndex === trueAnnotationIndex
+      );
+      if (foundItem) {
+        const registryID = foundItem.subElementIndex;
+        if (typeof registryID === 'number') {
+          this._textElements[registryID - 1].active = true;
+          setTimeout(() => {
+            this.style.setProperty(
+              '--chat-text-content-annotation-element-height',
+              '400px'
+            );
+          }, 20);
+        }
+      }
     }
   }
 
@@ -175,8 +284,10 @@ export default class textElement extends LitElement {
 
       if (this._textElements[parseInt(index)].active) {
         annotationClickEventDetails['action'] = 'annotation popup closed';
+        this._showSummarization = true;
       } else {
         annotationClickEventDetails['action'] = 'annotation popup opened';
+        this._showSummarization = false;
       }
       annotationClickEventDetails['isOpened'] =
         this._textElements[parseInt(index)].active;
@@ -201,7 +312,16 @@ export default class textElement extends LitElement {
         this._annotationURLs = null;
         this._annotationIndex = null;
       }
-      this.requestUpdate();
+
+      const foundItem = this._translationRegistry.find(
+        (item) => item.subElementIndex === parseInt(index) + 1
+      );
+      if (typeof foundItem?.annotationIndex === 'number') {
+        if (foundItem) {
+          this.selectedAnnotationIndex = foundItem.annotationIndex - 1;
+          this.requestUpdate();
+        }
+      }
     }
 
     const annotationClickEvent = new CustomEvent('on-text-annotation-click', {
@@ -238,6 +358,7 @@ export default class textElement extends LitElement {
       '(\\[([^\\]]+)\\]\\(([^)]+)\\))|([^\\[]+)',
       'g'
     );
+    const temporaryAnnotationList: string[] = [];
     const temporaryTextArray: {
       text: string;
       type: string;
@@ -256,6 +377,11 @@ export default class textElement extends LitElement {
             content: regexResult[3],
             active: false,
           });
+          temporaryAnnotationList.push(regexResult[3]);
+          this._translationRegistry.push({
+            annotationIndex: temporaryAnnotationList.length,
+            subElementIndex: temporaryTextArray.length,
+          });
         } else if (regexResult[4]) {
           const checkHtmlContent = this._checkForHTML(regexResult[4]);
           const textType = checkHtmlContent ? 'html' : 'default';
@@ -270,8 +396,43 @@ export default class textElement extends LitElement {
         }
       }
     }
-    this._textElements = temporaryTextArray;
+    this._annotationList = temporaryAnnotationList;
+    if (this.streaming) {
+      this._animateFadeIn(temporaryTextArray);
+    } else {
+      this._textElements = temporaryTextArray;
+    }
   }
+
+  /**
+   * _animateFadeIn() - bring in new text one by one
+   * @param { object } temporaryTextArray - array of text elements
+   */
+  _animateFadeIn(temporaryTextArray) {
+    const animationList: {
+      text: string;
+      type: string;
+      active: boolean;
+      content: string;
+    }[] = [];
+    for (const item of temporaryTextArray) {
+      if (item.type === 'default') {
+        const words = item.text.split(' ');
+        for (const word of words) {
+          animationList.push({
+            text: word + ' ',
+            type: 'default',
+            content: '',
+            active: false,
+          });
+        }
+      } else {
+        animationList.push(item);
+      }
+    }
+    this._textElements = animationList;
+  }
+
   /**
    * _checkForHTML - see if complete html is present in text block
    * @param {string} text - text to be checked for html tags

@@ -18,12 +18,12 @@
     padding: 0;
     border: 1px solid $border-subtle-00;
     border-radius: 8px;
-    background: $layer-01;
+    background: $background;
     inline-size: 248px;
     transition: border-color 0.15s linear;
   }
   .#{$clabs-prefix}--chat-card-container:hover {
-    border: 2px solid $focus;
+    border: 1px solid $focus;
   }
   .#{$clabs-prefix}--chat-card-detail-side-icon {
     display: flex;

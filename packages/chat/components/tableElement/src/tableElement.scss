@@ -16,11 +16,10 @@ $css--plex: true !default;
   inline-size: 100%;
 
   .#{$clabs-prefix}--chat-table-container {
-    overflow: scroll;
+    overflow: hidden;
 
     box-sizing: border-box;
     border: 1px solid $border-subtle-00;
-    border-radius: 8px;
     background: $background;
     inline-size: 100%;
     max-block-size: var(--chat-table-height, 100%);
@@ -41,26 +40,51 @@ $css--plex: true !default;
     border-spacing: 0;
     font-family: inherit;
     inline-size: 100%;
+    table-layout: fixed;
   }
 
   th,
   td {
     box-sizing: border-box;
-    padding: 12px;
+    padding: 8px;
+    font-size: 14px;
+    padding-inline: 16px;
     text-align: start;
     white-space: nowrap;
   }
 
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+  @media screen and (prefers-reduced-motion: reduce) {
+    td {
+      overflow: hidden;
+      animation: none;
+      max-inline-size: 100%;
+      opacity: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
   td {
     overflow: hidden;
+    animation: fade-in 600ms forwards;
     max-inline-size: 100%;
+    opacity: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   tr {
     background-color: $layer-01;
-    border-block-start: 1px solid $border-subtle-01;
+    border-block-start: 1px solid $border-subtle-00;
   }
 
   th {

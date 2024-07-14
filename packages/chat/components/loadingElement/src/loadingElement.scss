@@ -10,44 +10,51 @@
 @use '@carbon/styles/scss/colors' as *;
 
 :host(#{$clabs-prefix}-chat-loading) {
-  display: block;
-  overflow: hidden;
-
   .#{$clabs-prefix}--chat-loading-container {
-    position: relative;
-    overflow: hidden;
-    border-radius: 9px;
-    background-color: $background-hover;
-    block-size: 8px;
-    inline-size: 100%;
-  }
-  @media screen and (prefers-reduced-motion: reduce) {
-    .#{$clabs-prefix}--chat-loading-bar {
-      position: absolute;
-      animation: none;
-      background-color: $blue-50;
-      block-size: 100%;
-      inset-block-start: 0;
-    }
+    display: flex;
+    justify-content: space-between;
+    inline-size: 40px;
   }
 
-  .#{$clabs-prefix}--chat-loading-bar {
-    position: absolute;
-    animation: loading-animation 2000ms linear infinite;
-    background-color: $blue-50;
-    block-size: 100%;
-    inline-size: 100%;
-    inset-block-start: 0;
-  }
-
-  @keyframes loading-animation {
+  @keyframes loading-dots {
     0%,
+    20%,
     100% {
-      opacity: 0;
+      block-size: 0;
+      inline-size: 0;
     }
 
-    50% {
-      opacity: 1;
+    10% {
+      block-size: 6px;
+      inline-size: 6px;
     }
+  }
+
+  .#{$clabs-prefix}--chat-loading-dot-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 16px;
+    inline-size: 10px;
+  }
+  .#{$clabs-prefix}--chat-loading-dot {
+    border: 2px solid $text-primary;
+    border-radius: 50%;
+    animation: loading-dots 1000ms infinite;
+    background: $background;
+    block-size: 0;
+    inline-size: 0;
+  }
+
+  .#{$clabs-prefix}--chat-loading-dot-first {
+    animation-delay: 0ms;
+  }
+
+  .#{$clabs-prefix}--chat-loading-dot-second {
+    animation-delay: 100ms;
+  }
+
+  .#{$clabs-prefix}--chat-loading-dot-third {
+    animation-delay: 200ms;
   }
 }

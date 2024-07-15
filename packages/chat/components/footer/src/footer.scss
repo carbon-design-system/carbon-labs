@@ -35,11 +35,13 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-footer-prompt-items-expanded {
     display: flex;
     align-items: center;
+    border: 2px solid $background;
     border-radius: 8px;
     background: $background;
     gap: 4px;
     min-block-size: 56px;
     padding-inline: 16px 8px;
+    transition: border-color 150ms linear;
   }
 
   .#{$clabs-prefix}--chat-footer-prompt-items {
@@ -51,7 +53,17 @@ $css--plex: true !default;
     gap: 4px;
     min-block-size: 56px;
     padding-inline: 16px 8px;
-    transition: border-color 0.15s linear;
+    transition: border-color 150ms linear;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 
   .#{$clabs-prefix}--chat-footer-menu {
@@ -59,22 +71,27 @@ $css--plex: true !default;
 
     padding: 6px 2px;
     border: 2px solid $border-subtle;
+    animation: fade-in 600ms forwards;
     background: $background;
     border-block-end: none;
     inline-size: 100%;
     margin-block-end: 0;
+    opacity: 0;
   }
 
   .#{$clabs-prefix}--chat-footer-menu-error {
     border: 2px solid $support-error;
+    border-block-end: none;
   }
 
   .#{$clabs-prefix}--chat-footer-menu-warning {
     border: 2px solid $support-warning;
+    border-block-end: none;
   }
 
   .#{$clabs-prefix}--chat-footer-menu-info {
     border: 2px solid $support-info;
+    border-block-end: none;
   }
 
   .#{$clabs-prefix}--chat-footer-menu-container {
@@ -114,6 +131,11 @@ $css--plex: true !default;
     pointer-events: none;
   }
 
+  .#{$clabs-prefix}--chat-footer-button-danger {
+    color: $support-error;
+    fill: $support-error;
+  }
+
   .#{$clabs-prefix}--chat-footer-menu-container-message-error {
     flex: 1;
     color: $support-error;
@@ -139,7 +161,7 @@ $css--plex: true !default;
     display: flex;
     align-items: center;
     justify-content: center;
-    block-size: 56px;
+    block-size: auto;
   }
 
   .#{$clabs-prefix}--chat-search-query {
@@ -163,6 +185,21 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-footer-prompt-focused {
     border: 2px solid $focus;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-focused-error {
+    border: 2px solid $support-error;
+    border-block-start: 1px solid $border-subtle;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-focused-info {
+    border: 2px solid $support-info;
+    border-block-start: 1px solid $border-subtle;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-focused-warning {
+    border: 2px solid $support-warning;
+    border-block-start: 1px solid $border-subtle;
   }
 
   .#{$clabs-prefix}--chat-search-query-disabled {

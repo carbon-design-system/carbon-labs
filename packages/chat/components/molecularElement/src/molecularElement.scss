@@ -30,9 +30,8 @@ $css--plex: true !default;
     min-inline-size: var(--chat-molecule-width, '246px');
   }
   .#{$clabs-prefix}--chat-molecule-target {
-    aspect-ratio: 16 / 9;
-    block-size: auto;
     inline-size: var(--chat-molecule-width, 'auto');
+    pointer-events: none;
   }
 
   .#{$clabs-prefix}--chat-molecule-target-fullscreen {
@@ -49,12 +48,14 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-molecule-light .element {
+    fill: none;
     font-family: 'IBM Plex Sans', sans-serif;
     font-style: normal;
     font-weight: 400;
   }
 
   .#{$clabs-prefix}--chat-molecule-dark .element {
+    fill: none;
     font-family: 'IBM Plex Sans', sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -70,7 +71,6 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-molecule-tester {
     display: none;
     opacity: 0;
-    pointer-events: none;
     visibility: hidden;
   }
   .#{$clabs-prefix}--chat-molecule-stream-text-container {
@@ -107,6 +107,10 @@ $css--plex: true !default;
     inset-inline-end: 0;
   }
 
+  .#{$clabs-prefix}--chat-molecule-options-hidden {
+    visibility: hidden;
+  }
+
   .#{$clabs-prefix}--chat-molecule-title {
     position: absolute;
     display: flex;
@@ -116,11 +120,18 @@ $css--plex: true !default;
       '.SFNSText-Regular', sans-serif;
     font-size: 16px;
     font-weight: 600;
-    inset-block-start: 8px;
+    inset-block-end: 16px;
     inset-inline-start: 16px;
     line-height: 24px;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .#{$clabs-prefix}--chat-molecule-title-thumbnail {
+    font-size: 14px;
+    font-weight: 400;
+    inset-block-end: 8px;
+    inset-inline-start: 8px;
   }
 
   .#{$clabs-prefix}--chat-molecule-options-prefade-dark {

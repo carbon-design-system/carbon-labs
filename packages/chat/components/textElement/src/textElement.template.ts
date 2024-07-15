@@ -28,11 +28,18 @@ export function textElementTemplate(customElementClass) {
     _textElements: textElements,
     alignRight,
     enableHtmlRendering,
+    enableSummarization,
+    _updateHighlightTarget: updateHighlightTarget,
     _annotationURLs: annotationURLs,
     _annotationIndex: annotationIndex,
+    _annotationList: annotationList,
     _handleAnnotationClick,
     enableTextHighlighting,
+    selectedAnnotationIndex,
     disableChevrons,
+    _toggleSummarization,
+    streaming,
+    _showSummarization: showSummarization,
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-text">
@@ -44,9 +51,13 @@ export function textElementTemplate(customElementClass) {
             html` ${textPiece.type === 'annotation' || textPiece.type === 'link'
               ? html`
                   <span
-                    class="${clabsPrefix}--chat-text-content-${textPiece.type} ${enableTextHighlighting
+                    class="${clabsPrefix}--chat-text-content-${textPiece.type} ${streaming
+                      ? clabsPrefix + '--chat-text-fade-in'
+                      : ''} ${enableTextHighlighting
                       ? clabsPrefix + '--chat-text-highlighted'
-                      : ''}"
+                      : textPiece.active
+                      ? clabsPrefix + '--chat-text-highlight-active'
+                      : ''} "
                     style="${textPiece.color
                       ? 'background-color:' + textPiece.color + ';'
                       : html``}"
@@ -81,7 +92,7 @@ export function textElementTemplate(customElementClass) {
                         </span>
                       `
                     : html``}
-                  ${index === annotationIndex
+                  ${index === annotationIndex && !enableSummarization
                     ? html`
                         <slot name="custom-highlight-component">
                           <div
@@ -108,8 +119,40 @@ export function textElementTemplate(customElementClass) {
                   class="${clabsPrefix}--chat-text-content-${textPiece.type}"
                   >${unsafeHTML(textPiece.text)}</span
                 >`
+              : textPiece.type === 'default'
+              ? html` <span
+                  class="${streaming
+                    ? clabsPrefix + '--chat-text-fade-in'
+                    : ''}"
+                  >${textPiece.text}</span
+                >`
               : html` ${textPiece.text}`}`
         )}
+        ${enableSummarization
+          ? html`
+              <span class="${clabsPrefix}--chat-text-content-chevron-container">
+                <span
+                  class="${clabsPrefix}--chat-text-content-chevron ${showSummarization
+                    ? clabsPrefix + '--chat-text-content-chevron--focused'
+                    : ''}"
+                  @click="${_toggleSummarization}">
+                  ${!showSummarization
+                    ? html` ${ChevronDown16({ slot: 'icon' })} `
+                    : html` ${ChevronUp16({ slot: 'icon' })} `}
+                </span>
+              </span>
+              <div
+                class="${clabsPrefix}--chat-text-content-summarization-element"
+                style="${!showSummarization ? 'display:none;' : ''}">
+                <clabs-chat-carousel
+                  selected-slide="${selectedAnnotationIndex}"
+                  max-slides="${1}"
+                  @on-carousel-index-change=${updateHighlightTarget}
+                  content=${JSON.stringify(annotationList)}>
+                </clabs-chat-carousel>
+              </div>
+            `
+          : html``}
       </div>
     </div>
   </div>`;

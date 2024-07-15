@@ -129,6 +129,10 @@ $css--plex: true !default;
     max-inline-size: 100%;
   }
 
+  .#{$clabs-prefix}--chat-message-streaming {
+    padding-block-end: 64px;
+  }
+
   .#{$clabs-prefix}--chat-message-dropdown-bot {
     inline-size: 100%;
     min-block-size: 16px;

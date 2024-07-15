@@ -37,12 +37,19 @@ export function molecularElementTemplate(customElementClass) {
     _openFullscreenView: openFullscreenView,
     _closeFullscreenView: closeFullscreenView,
     disableExport,
+    thumbNailMode,
+    _handleMouseOver: handleMouseOver,
+    _handleMouseOut: handleMouseOut,
+    isHovered,
     _exportToImage: exportToImage,
     disableCodeInspector,
+    pubChemUrl,
   } = customElementClass;
 
   return html`
     <div
+      @mouseout="${handleMouseOut}"
+      @mouseover="${handleMouseOver}"
       class="${clabsPrefix}--chat-molecule-container ${clabsPrefix}--chat-molecule-${theme}">
       ${loading
         ? html`
@@ -63,12 +70,21 @@ export function molecularElementTemplate(customElementClass) {
             </div>
           </div>`
         : ``}
-      ${title
-        ? html`<div class="${clabsPrefix}--chat-molecule-title">${title}</div>`
+      ${title && !(!isHovered && thumbNailMode)
+        ? html`<div
+            class="${clabsPrefix}--chat-molecule-title ${thumbNailMode
+              ? clabsPrefix + '--chat-molecule-title-thumbnail'
+              : ''}">
+            ${title}
+          </div>`
         : html``}
       ${disableOptions || loading || streaming
         ? html``
-        : html` <div class="${clabsPrefix}--chat-molecule-options">
+        : html` <div
+            class="${clabsPrefix}--chat-molecule-options ${thumbNailMode &&
+            !isHovered
+              ? clabsPrefix + '--chat-molecule-options-hidden'
+              : ''}">
             <div class="${clabsPrefix}--chat-molecule-options-prefade-${theme}">
               &nbsp;
             </div>
@@ -91,6 +107,7 @@ export function molecularElementTemplate(customElementClass) {
                       kind="ghost"
                       size="sm"
                       align="bottom-right"
+                      disabled="${!pubChemUrl}"
                       @click="${openEditorView}">
                       ${Launch16({ slot: 'icon' })}
                       <span slot="tooltip-content">Open in PubChem</span>
@@ -121,8 +138,8 @@ export function molecularElementTemplate(customElementClass) {
       ? html` <div
           class="${clabsPrefix}--chat-molecule-fullscreen-container-close">
           <cds-icon-button
-            kind="danger"
-            size="lg"
+            kind="tertiary"
+            size="md"
             align="bottom-right"
             @click="${openFullscreenView}">
             ${Close16({ slot: 'icon' })}

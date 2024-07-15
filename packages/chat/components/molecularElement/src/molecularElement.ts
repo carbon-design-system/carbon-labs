@@ -75,6 +75,18 @@ export default class molecularElement extends LitElement {
   disableExport;
 
   /**
+   * Thumbnail mode
+   */
+  @property({ type: Boolean, attribute: 'thumbnail-mode' })
+  thumbNailMode;
+
+  /**
+   * is the component hovered upon
+   */
+  @state()
+  isHovered = false;
+
+  /**
    * Disable code inspector button
    */
   @property({ type: Boolean, attribute: 'disable-code-inspector' })
@@ -99,6 +111,12 @@ export default class molecularElement extends LitElement {
   drawer;
 
   /**
+   * renderSuccessful - flag when a render operation has succeeded to begin post-hoc editing
+   */
+  @state()
+  renderSuccessful = false;
+
+  /**
    * loading - initial state to show loading icon until error or successful render occurs
    */
   @state()
@@ -117,6 +135,12 @@ export default class molecularElement extends LitElement {
   _smilesContent;
 
   /**
+   * scaling - zoom scaling value;
+   */
+  @state()
+  _scaling = 1;
+
+  /**
    * SmilesDrawer rendering object that targets the visible inner SVG
    */
   private molecularRenderer: any;
@@ -125,6 +149,17 @@ export default class molecularElement extends LitElement {
    * SmilesDrawer rendering test object that targets an invisible test object, used to check if content is valid
    */
   private temporaryMolecularRenderer: any;
+
+  /**
+   * SmilesDrawer rendering for fullscreen
+   */
+  private fullscreenMolecularRenderer: any;
+
+  /**
+   * pubChemUrl - pubchem url to inspect molecule
+   */
+  @state()
+  pubChemUrl;
 
   /**
    * renderInProgress - render state while streaming to avoid over-rendering
@@ -144,22 +179,75 @@ export default class molecularElement extends LitElement {
       this.style.setProperty('--chat-molecule-height', this.height + 'px');
     }
 
+    this.molecularRenderer = new SmileDrawer.SmiDrawer(
+      this._buildOptions('default')
+    );
+    this.temporaryMolecularRenderer = new SmileDrawer.SmiDrawer(
+      this._buildOptions('default')
+    );
+    this.fullscreenMolecularRenderer = new SmileDrawer.SmiDrawer(
+      this._buildOptions('fullscreen')
+    );
+    if (!this.theme) {
+      this._getTheme();
+    }
+    if (!this.streaming) {
+      window.setTimeout(() => {
+        this._smilesContent = this.content;
+        this._prepareMolecule('default');
+      }, 200);
+    }
+  }
+
+  /** _buildOptions
+   * @param {String} mode - fullscreen, test or default
+   */
+  _buildOptions(mode) {
+    let fontSizeLarge = 6;
+    let fontSizeSmall = 3;
+    let bondThickness = 0.7;
+    let compactDrawing = false;
+    let scale: any = null;
+    let padding = 32;
+    let bondSpacing = 0.18 * 15;
+    let bondLength = 15;
+
+    if (mode === 'fullscreen') {
+      fontSizeLarge = 5;
+      fontSizeSmall = 3;
+      bondThickness = 0.5;
+      padding = 0;
+      bondSpacing = 0.18 * 20;
+      bondLength = 22;
+      compactDrawing = false;
+    } else if (this.thumbNailMode) {
+      fontSizeLarge = 12;
+      fontSizeSmall = 8;
+      bondThickness = 2.2;
+      bondSpacing = 0.18 * 20;
+      compactDrawing = true;
+      bondLength = 15;
+      padding = 2;
+      scale = 1.2;
+    }
+
     const options = {
-      bondThickness: 0.7,
-      bondLength: 15,
+      scale: scale,
+      compactDrawing: compactDrawing,
+      fontSizeLarge: fontSizeLarge,
+      fontSizeSmall: fontSizeSmall,
+      bondThickness: bondThickness,
+      padding: padding,
+      bondLength: bondLength,
       shortBondLength: 0.85,
-      bondSpacing: 0.18 * 15,
+      bondSpacing: bondSpacing,
       atomVisualization: 'default',
       isomeric: true,
       debug: false,
       terminalCarbons: true,
       explicitHydrogens: false,
       overlapSensitivity: 0.42,
-      overlapResolutionIterations: 3,
-      compactDrawing: false,
-      fontSizeLarge: 5,
-      fontSizeSmall: 3,
-      padding: 0.0,
+      overlapResolutionIterations: this.streaming ? 1 : 10,
       experimental: false,
       themes: {
         dark: {
@@ -196,18 +284,7 @@ export default class molecularElement extends LitElement {
         },
       },
     };
-    this.molecularRenderer = new SmileDrawer.SmiDrawer(options);
-    this.temporaryMolecularRenderer = new SmileDrawer.SmiDrawer(options);
-    if (!this.theme) {
-      this._getTheme();
-    }
-    if (!this.streaming) {
-      window.setTimeout(() => {
-        this._smilesContent = this.content;
-        const targetID = 'clabs--chat-molecule-' + this._uniqueID;
-        this._prepareMolecule(targetID);
-      }, 200);
-    }
+    return options;
   }
 
   /**
@@ -224,11 +301,14 @@ export default class molecularElement extends LitElement {
   async updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('content')) {
-      const targetID = 'clabs--chat-molecule-' + this._uniqueID;
-      this._prepareMolecule(targetID);
+      this._prepareMolecule('default');
     }
     if (changedProperties.has('_smilesContent')) {
       this._scrollStreamArea();
+    }
+    if (changedProperties.has('renderSuccessful')) {
+      this.checkPubChemAvailability();
+      //this._appendCustomStyles();
     }
   }
 
@@ -243,6 +323,79 @@ export default class molecularElement extends LitElement {
         backgroundColor.startsWith('#') &&
         parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2;
       this.theme = darkMode ? 'dark' : 'light';
+    }
+  }
+
+  /**
+   * _zoomIn - zooming event on scroll to expand svg element
+   * @param {event} event - mousewheel event
+   */
+  _zoomIn(event) {
+    event.preventDefault();
+    const zoomValue = 0.1;
+    const minZoom = 0.1;
+    const maxZoom = 2;
+    const delta = Math.sign(event.deltaY) * zoomValue;
+    this._scaling = Math.min(minZoom, Math.max(this._scaling - delta), maxZoom);
+    const allSvg = this.shadowRoot?.querySelector(
+      '#' + clabsPrefix + '--chat-molecule-' + this._uniqueID
+    );
+    if (allSvg) {
+      allSvg.setAttribute(
+        'transform',
+        'translate(0, 0, scale(' + this._scaling + '))'
+      );
+    }
+  }
+
+  /**
+   * _appendCustomStyles - change smiles-drawer atom rendering
+   */
+  _appendCustomStyles() {
+    const enableTextStyling = false;
+    const enableCircleStyling = false;
+    const enableZooming = false;
+
+    if (enableZooming) {
+      const finalizedSvg = this.shadowRoot?.querySelector('svg');
+      if (finalizedSvg instanceof SVGElement) {
+        finalizedSvg.addEventListener('wheel', (e) => {
+          this._zoomIn(e);
+        });
+      }
+    }
+
+    if (enableTextStyling) {
+      const textElements = this.shadowRoot?.querySelectorAll('text');
+      if (textElements) {
+        textElements.forEach((text) => {
+          //text.style.fill = 'red';
+          //text.style.textShadow = 'red'
+          text.style.textShadow = '0 0 5px rgba(255, 255, 255, 0.8)';
+          //text.style.stroke = 'black';
+          //text.style.strokeWidth = '3px';
+          //text.style.background = 'none';
+
+          const tspans = text.querySelectorAll('tspan');
+          //console.log(tspans);
+          tspans.forEach((tspan) => {
+            tspan.style.stroke = 'rgba(255, 255, 255)';
+            tspan.style.fontWeight = '900';
+            //tspan.style.fill='white';
+            tspan.style.strokeWidth = '0.5px';
+            //tspan.style.textShadow='0 0 5px rgba(255, 255, 255, 0.8)'
+          });
+        });
+      }
+    }
+    if (enableCircleStyling) {
+      const mask = this.shadowRoot?.querySelector('mask');
+      if (mask) {
+        const circles = mask.querySelectorAll('circle');
+        circles.forEach((circle) => {
+          circle.style.opacity = '0.5';
+        });
+      }
     }
   }
 
@@ -264,8 +417,7 @@ export default class molecularElement extends LitElement {
   _openFullscreenView() {
     this.fullscreenMode = true;
     window.setTimeout(() => {
-      const targetID = 'clabs--chat-molecule-fullscreen-' + this._uniqueID;
-      this._prepareMolecule(targetID);
+      this._prepareMolecule('fullscreen');
     }, 200);
   }
 
@@ -274,12 +426,37 @@ export default class molecularElement extends LitElement {
    */
   _closeFullscreenView() {
     this.fullscreenMode = false;
+    //this._prepareMolecule("default");
+  }
+
+  /**
+   * _handleMouseOut - see if component lost mouse content
+   */
+  _handleMouseOut() {
+    this.isHovered = false;
+  }
+
+  /**
+   * _handleMouseOut - see if component lost mouse content
+   */
+  _handleMouseOver() {
+    console.log('over');
+    this.isHovered = true;
   }
 
   /**
    * _openEditorView -
    */
   async _openEditorView() {
+    if (this.pubChemUrl) {
+      window?.open(this.pubChemUrl, '_blank');
+    }
+  }
+
+  /**
+   * _checkPubChemAvailability - make a call to see if smiles string is available
+   */
+  async checkPubChemAvailability() {
     try {
       const pubChemResponse = await fetch(
         'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/' +
@@ -295,18 +472,11 @@ export default class molecularElement extends LitElement {
       ) {
         const cid = data['IdentifierList']['CID'][0];
         if (cid) {
-          const CIDUrl = 'https://pubchem.ncbi.nlm.nih.gov/compound/' + cid;
-          window?.open(CIDUrl, '_blank');
-        } else {
-          this.disableCodeInspector = true;
+          this.pubChemUrl = 'https://pubchem.ncbi.nlm.nih.gov/compound/' + cid;
         }
-      } else {
-        this.disableCodeInspector = true;
-        console.error('Compound not found');
       }
-    } catch (error) {
-      this.disableCodeInspector = true;
-      console.error('Compound not found', error);
+    } catch (pubChemError) {
+      console.error(pubChemError);
     }
   }
 
@@ -346,11 +516,17 @@ export default class molecularElement extends LitElement {
 
   /**
    * Prepare molecular object for rendering from content string
-   * @param {String} targetID - target div ID to render with smilesDrawer
+   * @param {String} mode - which mode to render with smilesDrawer
    */
-  _prepareMolecule(targetID) {
+  _prepareMolecule(mode) {
     this.loading = false;
+
+    let targetID = 'clabs--chat-molecule-' + this._uniqueID;
     const testTargetID = 'clabs--chat-molecule-test-' + this._uniqueID;
+    if (mode === 'fullscreen') {
+      targetID = 'clabs--chat-molecule-fullscreen-' + this._uniqueID;
+    }
+
     const canvas = this.shadowRoot?.getElementById(targetID);
     const testCanvas = this.shadowRoot?.getElementById(testTargetID);
     const smilesString = this.content.replace(new RegExp('```', 'g'), '');
@@ -358,14 +534,13 @@ export default class molecularElement extends LitElement {
     let renderTest = false;
     if (canvas instanceof SVGElement && testCanvas instanceof SVGElement) {
       try {
-        //this.temporaryMolecularRenderer.innerHTML = "";
-        //canvas.innerHTML = '';
         this.temporaryMolecularRenderer.draw(
           smilesString,
           testCanvas,
           this.theme,
           () => {
             renderTest = true;
+            this.renderSuccessful = true;
           },
           () => {
             renderTest = false;
@@ -385,17 +560,31 @@ export default class molecularElement extends LitElement {
           return '';
         }
       }
-      this.molecularRenderer.draw(
-        smilesString,
-        canvas,
-        this.theme,
-        () => {
-          this.renderInProgress = false;
-        },
-        () => {
-          this.renderInProgress = false;
-        }
-      );
+      if (mode === 'fullscreen') {
+        this.fullscreenMolecularRenderer.draw(
+          smilesString,
+          canvas,
+          this.theme,
+          () => {
+            this.renderInProgress = false;
+          },
+          () => {
+            this.renderInProgress = false;
+          }
+        );
+      } else {
+        this.molecularRenderer.draw(
+          smilesString,
+          canvas,
+          this.theme,
+          () => {
+            this.renderInProgress = false;
+          },
+          () => {
+            this.renderInProgress = false;
+          }
+        );
+      }
       this.requestUpdate();
     }
     return '';

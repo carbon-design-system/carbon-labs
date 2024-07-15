@@ -45,44 +45,42 @@ export function headerTemplate(customElementClass) {
     disableClose,
     disableMinimize,
     handleMenuItemSelected,
+    menuOpened,
   } = customElementClass;
   return html` <div class="${clabsPrefix}--chat-header-container">
     <div class="${clabsPrefix}--chat-header-content">
       <div class="${clabsPrefix}--chat-header-elements">
+        ${menuOpened
+          ? html`
+              <div class="${clabsPrefix}--chat-header-elements-menu-list">
+                ${menuItems.map(
+                  (menuItem) => html`
+                    <cds-button
+                      kind="danger-tertiary"
+                      size="sm"
+                      @click="${handleMenuItemSelected}">
+                      ${menuItem.title}
+                    </cds-button>
+                  `
+                )}
+              </div>
+            `
+          : html``}
         <div class="${clabsPrefix}--chat-header-elements-left">
           ${!disableMenu && !disableHeaderButtons
             ? html` <div class="${clabsPrefix}--chat-header-elements-icon">
-                ${!menuItems
+                ${menuItems
                   ? html`
                 <cds-icon-button
                   kind="ghost"
-                  disabled=""
                   size="sm"
-                  align="bottom-left"
+                  align="right"
                   @click="${handleMenuToggle}">
                   ${Menu24({ slot: 'icon' })}
                   <span slot="tooltip-content"> Open Menu </span>
                 </cds-iconbutton>
                 `
-                  : html`
-                      <cds-overflow-menu
-                        id="${clabsPrefix}--chat-header-id"
-                        align="bottom-left">
-                        ${Menu24({ slot: 'icon' })}
-                        <span slot="tooltip-content"> Open Menu </span>
-
-                        <cds-overflow-menu-body>
-                          ${menuItems.map(
-                            (menuItem) => html`
-                              <cds-overflow-menu-item
-                                @click="${handleMenuItemSelected}"
-                                >${menuItem.title}</cds-overflow-menu-item
-                              >
-                            `
-                          )}
-                        </cds-overflow-menu-body>
-                      </cds-overflow-menu>
-                    `}
+                  : html``}
               </div>`
             : html``}
           ${title

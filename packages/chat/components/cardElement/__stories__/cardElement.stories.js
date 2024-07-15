@@ -188,7 +188,7 @@ const urlExamples = [
 
 const fileExamples = [
   {
-    title: 'Arxiv_ai_papers.csv',
+    title: 'Arxiv_ai_papers.pdf',
     link: 'https://arxiv.org/pdf/2312.05688.pdf',
     shortenedUrl: 'arxiv.org',
   },

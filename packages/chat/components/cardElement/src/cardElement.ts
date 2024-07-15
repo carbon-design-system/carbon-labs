@@ -55,7 +55,7 @@ export default class cardElement extends LitElement {
    * api to fetch link/video previews
    */
   @property({ type: String, attribute: 'api-url', reflect: true })
-  apiUrl = 'http://localhost:5002/get_preview';
+  apiUrl = 'http://localhost:5001/get_preview';
 
   /**
    * card type to differentiate between url and videos
@@ -123,17 +123,17 @@ export default class cardElement extends LitElement {
       if (darkMode) {
         this.style.setProperty(
           '--chat-card-theme-bottom',
-          ' rgba(38, 38, 38, 0)'
+          ' rgba(22, 22, 22, 0)'
         );
-        this.style.setProperty('--chat-card-theme-top', ' rgba(38, 38, 38, 1)');
+        this.style.setProperty('--chat-card-theme-top', ' rgba(22, 22, 22, 1)');
       } else {
         this.style.setProperty(
           '--chat-card-theme-bottom',
-          ' rgba(244, 244, 244, 0)'
+          ' rgba(255, 255, 255, 0)'
         );
         this.style.setProperty(
           '--chat-card-theme-top',
-          ' rgba(244, 244, 244, 1)'
+          ' rgba(255, 255, 255, 1)'
         );
       }
     }
@@ -172,7 +172,7 @@ export default class cardElement extends LitElement {
       const host = new URL(url).host;
       return host;
     } catch (error) {
-      return 'Site url';
+      return '';
     }
   }
 
@@ -208,7 +208,7 @@ export default class cardElement extends LitElement {
         return formattedName;
       }
     } catch (error) {
-      return 'Site name';
+      return '';
     }
   }
 
@@ -222,7 +222,7 @@ export default class cardElement extends LitElement {
       const videoFileName = url.split('/').slice(-1);
       return videoFileName[0];
     } catch (error) {
-      return 'Site name';
+      return '';
     }
   }
 
@@ -235,7 +235,7 @@ export default class cardElement extends LitElement {
       const videoTitle = videoFileName[0].split('.')[0];
       return videoTitle.replace(/_/g, ' ');
     } catch (error) {
-      return 'Site name';
+      return '';
     }
   }
 

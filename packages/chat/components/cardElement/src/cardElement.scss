@@ -10,6 +10,16 @@
 @use '@carbon/styles/scss/colors' as *;
 
 :host(#{$clabs-prefix}-chat-card) {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
   .#{$clabs-prefix}--chat-card-container {
     display: flex;
     overflow: hidden;
@@ -18,12 +28,14 @@
     padding: 0;
     border: 1px solid $border-subtle-00;
     border-radius: 8px;
-    background: $layer-01;
+    animation: fade-in 600ms forwards;
+    background: $background;
     inline-size: 248px;
+    opacity: 0;
     transition: border-color 0.15s linear;
   }
   .#{$clabs-prefix}--chat-card-container:hover {
-    border: 2px solid $focus;
+    border: 1px solid $focus;
   }
   .#{$clabs-prefix}--chat-card-detail-side-icon {
     display: flex;

@@ -72,6 +72,12 @@ export default class header extends LitElement {
   disableHeaderButtons;
 
   /**
+   * menuOpened - boolean to see if menu is opened
+   */
+  @state()
+  menuOpened = false;
+
+  /**
    * docking event when popup button is clicked
    * @param {event} event - click event when docking chat
    */
@@ -91,6 +97,7 @@ export default class header extends LitElement {
    * @param {event} event - click event when item is chosen
    */
   handleMenuItemSelected(event) {
+    this.menuOpened = false;
     const index = event.detail;
     if (this.menuItems[index]) {
       const menuSelectionEvent = new CustomEvent(
@@ -172,6 +179,7 @@ export default class header extends LitElement {
    * @param {event} event - click event when toggling menu
    */
   _handleMenuToggle(event) {
-    console.log(event);
+    event.preventDefault();
+    this.menuOpened = !this.menuOpened;
   }
 }

@@ -60,9 +60,7 @@ export function footerTemplate(customElementClass) {
     expandedHeight ? '-expanded' : ''
   }">
     ${
-      !hideContextMessage &&
-      ((contextMessageType === 'error' && isPromptFocused && contextMessage) ||
-        (contextMessageType !== 'error' && contextMessage))
+      !hideContextMessage && isPromptFocused && contextMessage
         ? html`
             <div
               class="${clabsPrefix}--chat-footer-menu ${clabsPrefix}--chat-footer-menu${contextMessageType ===
@@ -127,7 +125,11 @@ export function footerTemplate(customElementClass) {
     }
       <div class="${clabsPrefix}--chat-footer-prompt-items${
     expandedWidth ? '-expanded' : ''
-  } ${isPromptFocused ? clabsPrefix + '--chat-footer-prompt-focused' : ''}">
+  } ${isPromptFocused ? clabsPrefix + '--chat-footer-prompt-focused' : ''} ${
+    isPromptFocused && contextMessageType
+      ? clabsPrefix + '--chat-footer-prompt-focused' + '-' + contextMessageType
+      : ''
+  }">
       <textarea
         class="${clabsPrefix}--chat-search-query ${
     disableInput ? clabsPrefix + '--chat-search-query-disabled' : ''

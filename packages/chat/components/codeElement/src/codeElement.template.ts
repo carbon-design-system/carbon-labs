@@ -34,6 +34,7 @@ export function codeElementTemplate(customElementClass) {
     _handleEditValidation: handleEditValidation,
     _handleEditCancellation: handleEditCancellation,
     editable,
+    _setCurrentIndex: setCurrentIndex,
     _currentlyEdited: currentlyEdited,
   } = customElementClass;
 
@@ -67,7 +68,8 @@ export function codeElementTemplate(customElementClass) {
       ${_renderedLines.map(
         (lineObject, index) =>
           html`
-            <div class="${clabsPrefix}--chat-code-line">
+            <div
+              class="${clabsPrefix}--chat-code-line ${clabsPrefix}--chat-code-line-fade-in">
               ${disableLineTicks || _renderedLines.length < 2
                 ? html``
                 : html`
@@ -88,7 +90,8 @@ export function codeElementTemplate(customElementClass) {
                     <textarea
                       @keydown="${handleCodeEdit}"
                       rows="1"
-                      data-code-index="${index}"
+                      @click="${setCurrentIndex}"
+                      data-codeindex="${index}"
                       class="${clabsPrefix}--chat-code-line-text-area ${lineObject.type}"
                       style="padding-left: ${lineObject.paddingLeft}">
 ${lineObject.content}</textarea

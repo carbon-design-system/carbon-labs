@@ -107,6 +107,7 @@ export function molecularElementTemplate(customElementClass) {
                       kind="ghost"
                       size="sm"
                       align="bottom-right"
+                      disabled="${!pubChemUrl}"
                       @click="${openEditorView}">
                       ${Launch16({ slot: 'icon' })}
                       <span slot="tooltip-content">Open in PubChem</span>

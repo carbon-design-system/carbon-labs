@@ -98,13 +98,13 @@ export default class header extends LitElement {
    */
   handleMenuItemSelected(event) {
     this.menuOpened = false;
-    const index = event.detail;
+    const index = event.detail - 1;
     if (this.menuItems[index]) {
       const menuSelectionEvent = new CustomEvent(
         'on-header-menu-item-selected',
         {
           detail: {
-            index: 1,
+            index: index,
             menuItem: this.menuItems[index],
             originalEvent: event,
           },
@@ -114,6 +114,13 @@ export default class header extends LitElement {
       );
       this.dispatchEvent(menuSelectionEvent);
     }
+  }
+
+  /**
+   * hide menu on button blur
+   */
+  hideMenu() {
+    this.menuOpened = false;
   }
 
   /**

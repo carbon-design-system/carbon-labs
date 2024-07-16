@@ -50,6 +50,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-header-elements-menu-list {
     position: absolute;
+    z-index: 99;
     display: flex;
     flex-direction: column;
     inset-block-start: 40px;

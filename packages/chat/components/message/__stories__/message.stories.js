@@ -69,7 +69,10 @@ export const Default = {
     <i>raw-text="Hello world"</i><br />
     <i>Only recommended for plain text responses</i>
     <h4>Result:</h4>
-    <clabs-chat-message time-stamp="12:00" raw-text="hello world" origin="user">
+    <clabs-chat-message
+      time-stamp="12:00"
+      raw-text="The new features in Guardium Insights Version 3.3.4 include support for the Universal Connector plugin for Amazon Neptune, which is temporarily paused but will be fully supported in a future version. Additionally, Guardium Insights now requires backup and restore information when installing, and there are new Markdown (.md file) output format options. For more information, see the release notes for Version 3.3.4.l"
+      origin="user">
     </clabs-chat-message>
     <h2></h2>
     <h4>With complex raw-text:</h4>

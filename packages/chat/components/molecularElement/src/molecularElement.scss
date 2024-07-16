@@ -31,12 +31,29 @@ $css--plex: true !default;
   }
   .#{$clabs-prefix}--chat-molecule-target {
     inline-size: var(--chat-molecule-width, 'auto');
-    pointer-events: none;
+  }
+
+  .#{$clabs-prefix}--chat-molecule-target tspan {
+    font-weight: 700;
+    stroke: $background;
+    stroke-width: 0.3;
+    text-shadow: $background 0 0 6px;
+  }
+
+  .#{$clabs-prefix}--chat-molecule-target .element {
+    text-shadow: $background 0 0 6px;
   }
 
   .#{$clabs-prefix}--chat-molecule-target-fullscreen {
     block-size: 100%;
     inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-molecule-target-fullscreen tspan {
+    font-weight: 700;
+    stroke: $background;
+    stroke-width: 0.3;
+    text-shadow: $background 0 0 6px;
   }
 
   .#{$clabs-prefix}--chat-molecule-container-loader {
@@ -173,7 +190,6 @@ $css--plex: true !default;
     z-index: 999;
     display: flex;
     align-items: center;
-    padding: 32px;
     background: $background;
     block-size: 100%;
     inline-size: 100%;

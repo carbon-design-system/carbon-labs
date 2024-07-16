@@ -101,13 +101,12 @@ export function molecularElementTemplate(customElementClass) {
                     </cds-icon-button>
                   `
                 : html``}
-              ${!disableCodeInspector
+              ${!disableCodeInspector && pubChemUrl
                 ? html`
                     <cds-icon-button
                       kind="ghost"
                       size="sm"
                       align="bottom-right"
-                      disabled="${!pubChemUrl}"
                       @click="${openEditorView}">
                       ${Launch16({ slot: 'icon' })}
                       <span slot="tooltip-content">Open in PubChem</span>

@@ -208,27 +208,25 @@ export default class molecularElement extends LitElement {
     let bondThickness = 0.7;
     let compactDrawing = false;
     let scale: any = null;
-    let padding = 32;
+    let padding = 16;
     let bondSpacing = 0.18 * 15;
     let bondLength = 15;
+    let atomVisualization = 'default';
 
     if (mode === 'fullscreen') {
       fontSizeLarge = 5;
       fontSizeSmall = 3;
-      bondThickness = 0.5;
-      padding = 0;
-      bondSpacing = 0.18 * 20;
-      bondLength = 22;
       compactDrawing = false;
     } else if (this.thumbNailMode) {
       fontSizeLarge = 12;
       fontSizeSmall = 8;
-      bondThickness = 2.2;
+      bondThickness = 1.6;
       bondSpacing = 0.18 * 20;
       compactDrawing = true;
+      atomVisualization = 'balls';
       bondLength = 15;
-      padding = 2;
-      scale = 1.2;
+      padding = 8;
+      scale = 1.1;
     }
 
     const options = {
@@ -241,12 +239,12 @@ export default class molecularElement extends LitElement {
       bondLength: bondLength,
       shortBondLength: 0.85,
       bondSpacing: bondSpacing,
-      atomVisualization: 'default',
+      atomVisualization: atomVisualization,
       isomeric: true,
       debug: false,
       terminalCarbons: true,
       explicitHydrogens: false,
-      overlapSensitivity: 0.42,
+      overlapSensitivity: 0.1,
       overlapResolutionIterations: this.streaming ? 1 : 10,
       experimental: false,
       themes: {
@@ -268,12 +266,12 @@ export default class molecularElement extends LitElement {
         },
         light: {
           C: '#525252',
-          O: '#fa4d56',
-          N: '#33b1ff',
-          F: '#42be65',
-          CL: '#08bdba',
-          BR: '#ff832b',
-          I: '#be95ff',
+          O: '#da1e28',
+          N: '#1192e8',
+          F: '#24a148',
+          CL: '#009d9a',
+          BR: '#ba4e00',
+          I: '#8a3ffc',
           P: '#ff932b',
           S: '#fdd13a',
           B: '#f1c21b',
@@ -307,8 +305,8 @@ export default class molecularElement extends LitElement {
       this._scrollStreamArea();
     }
     if (changedProperties.has('renderSuccessful')) {
-      this.checkPubChemAvailability();
-      //this._appendCustomStyles();
+      await this.checkPubChemAvailability();
+      this._appendCustomStyles();
     }
   }
 
@@ -332,19 +330,37 @@ export default class molecularElement extends LitElement {
    */
   _zoomIn(event) {
     event.preventDefault();
-    const zoomValue = 0.1;
-    const minZoom = 0.1;
-    const maxZoom = 2;
+    const zoomValue = 0.01;
+    const minZoom = 1.0;
+    const maxZoom = 3.0;
     const delta = Math.sign(event.deltaY) * zoomValue;
-    this._scaling = Math.min(minZoom, Math.max(this._scaling - delta), maxZoom);
-    const allSvg = this.shadowRoot?.querySelector(
-      '#' + clabsPrefix + '--chat-molecule-' + this._uniqueID
+
+    this._scaling = Math.min(
+      maxZoom,
+      Math.max(this._scaling - delta, minZoom, minZoom)
     );
-    if (allSvg) {
-      allSvg.setAttribute(
-        'transform',
-        'translate(0, 0, scale(' + this._scaling + '))'
-      );
+    const allSvg = this.shadowRoot?.getElementById(
+      'clabs--chat-molecule-' + this._uniqueID
+    );
+    if (allSvg instanceof SVGElement) {
+      /*const mouseX = event.clientX - this.getBoundingClientRect().left;
+      const mouseY = event.clientY - this.getBoundingClientRect().top;
+      const viewBox = allSvg.viewBox.baseVal;
+      const newWidth = viewBox.width*this._scaling;
+      const newHeight = viewBox.height*this._scaling;
+      const viewX = mouseX - (mouseX - x) * (newWidth / viewBox.width);
+      const viewY = mouseY - (mouseY - y) * (newHeight / viewBox.height);
+      const viewX = -mouseX * (this._scaling-1)
+      const viewY = -mouseY * (this._scaling-1)
+      
+      const viewX = 0
+      const viewY = 0*/
+
+      const subElements = allSvg.querySelectorAll('g');
+      for (const subElement of subElements) {
+        //allSvg.setAttribute('viewBox', viewX+' '+viewY+' '+newWidth+' '+newHeight);//translate('+viewX+' '+viewY+')
+        subElement.setAttribute('transform', ' scale(' + this._scaling + ')');
+      }
     }
   }
 
@@ -353,15 +369,15 @@ export default class molecularElement extends LitElement {
    */
   _appendCustomStyles() {
     const enableTextStyling = false;
-    const enableCircleStyling = false;
-    const enableZooming = false;
+    const enableCircleStyling = true;
+    const enableZooming = true;
 
     if (enableZooming) {
-      const finalizedSvg = this.shadowRoot?.querySelector('svg');
+      const finalizedSvg = this.shadowRoot?.getElementById(
+        'clabs--chat-molecule-' + this._uniqueID
+      );
       if (finalizedSvg instanceof SVGElement) {
-        finalizedSvg.addEventListener('wheel', (e) => {
-          this._zoomIn(e);
-        });
+        finalizedSvg.addEventListener('wheel', (e) => this._zoomIn(e));
       }
     }
 
@@ -377,7 +393,6 @@ export default class molecularElement extends LitElement {
           //text.style.background = 'none';
 
           const tspans = text.querySelectorAll('tspan');
-          //console.log(tspans);
           tspans.forEach((tspan) => {
             tspan.style.stroke = 'rgba(255, 255, 255)';
             tspan.style.fontWeight = '900';
@@ -393,7 +408,8 @@ export default class molecularElement extends LitElement {
       if (mask) {
         const circles = mask.querySelectorAll('circle');
         circles.forEach((circle) => {
-          circle.style.opacity = '0.5';
+          //circle.style.opacity='0';
+          circle.setAttribute('r', '1');
         });
       }
     }
@@ -440,7 +456,6 @@ export default class molecularElement extends LitElement {
    * _handleMouseOut - see if component lost mouse content
    */
   _handleMouseOver() {
-    console.log('over');
     this.isHovered = true;
   }
 

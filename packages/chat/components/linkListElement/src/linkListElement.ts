@@ -31,6 +31,12 @@ export default class linkListElement extends LitElement {
   expanded = false;
 
   /**
+   * max items before cutoff
+   */
+  @state()
+  maxItems = 3;
+
+  /**
    * full list of link strings
    */
   @state()

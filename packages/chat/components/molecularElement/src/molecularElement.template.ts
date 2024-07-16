@@ -101,7 +101,7 @@ export function molecularElementTemplate(customElementClass) {
                     </cds-icon-button>
                   `
                 : html``}
-              ${!disableCodeInspector
+              ${!disableCodeInspector && pubChemUrl
                 ? html`
                     <cds-icon-button
                       kind="ghost"

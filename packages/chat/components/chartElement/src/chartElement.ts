@@ -99,6 +99,12 @@ export default class chartElement extends LitElement {
   disableEditor;
 
   /**
+   * Thumbnail mode
+   */
+  @property({ type: Boolean, attribute: 'thumbnail-mode' })
+  thumbNailMode;
+
+  /**
    * Enable tooltip in the chart component
    */
   @state()

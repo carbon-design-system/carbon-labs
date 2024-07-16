@@ -1495,6 +1495,7 @@ export const Playground = {
         <clabs-chat
           user-name="user"
           agent-name="bot"
+          .headerMenuItems="${headerMenuItems}"
           input-field-placeholder="${'What can I assist you with today?'}"
           .conversation="${testMode === 'Examples'
             ? conversationExamples[sampleConversation]

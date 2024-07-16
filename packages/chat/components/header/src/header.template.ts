@@ -45,6 +45,7 @@ export function headerTemplate(customElementClass) {
     disableClose,
     disableMinimize,
     handleMenuItemSelected,
+    hideMenu,
     menuOpened,
   } = customElementClass;
   return html` <div class="${clabsPrefix}--chat-header-container">
@@ -75,6 +76,7 @@ export function headerTemplate(customElementClass) {
                   kind="ghost"
                   size="sm"
                   align="right"
+                  @blur="${hideMenu}"
                   @click="${handleMenuToggle}">
                   ${Menu24({ slot: 'icon' })}
                   <span slot="tooltip-content"> Open Menu </span>

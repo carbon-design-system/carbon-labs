@@ -23,69 +23,44 @@ import '@carbon/web-components/es/components/link/index.js';
 export function linkListElementTemplate(customElementClass) {
   const {
     _linkList: linkList,
-    trimmedList,
     expanded,
     expandList,
     collapseList,
+    maxItems,
   } = customElementClass;
 
   return html`
     <div class="${clabsPrefix}--chat-link-list-header">
       References (${linkList.length})
     </div>
-    ${linkList.length > 4
-      ? html` ${expanded
-          ? html` <ul class="${clabsPrefix}--chat-link-list-ul">
-              ${linkList.map(
-                (linkObject) =>
-                  html`
-                    <li class="${clabsPrefix}--chat-link-list-li">
-                      <cds-link href="${linkObject.url}" target="_blank"
-                        >${linkObject.title}</cds-link
-                      >
-                      <cds-link href="${linkObject.url}" target="_blank"
-                        >${ArrowRight16()}</cds-link
-                      >
-                    </li>
-                  `
-              )}
-              <li class="${clabsPrefix}--chat-link-list-li">
+    <div class="${clabsPrefix}--chat-link-list-container">
+      ${linkList.map((linkObject, index) =>
+        index < maxItems || expanded
+          ? html` <div class="${clabsPrefix}--chat-link-list-item">
+              <div class="${clabsPrefix}--chat-link-list-item-text">
+                <cds-link href="${linkObject.url}" target="_blank"
+                  >${linkObject.title}</cds-link
+                >
+              </div>
+              <div>
+                <cds-link href="${linkObject.url}" target="_blank"
+                  >${ArrowRight16()}</cds-link
+                >
+              </div>
+            </div>`
+          : html``
+      )}
+    </div>
+    ${linkList.length > maxItems
+      ? html`<div class="${clabsPrefix}--chat-link-list-item">
+          ${expanded
+            ? html` <div class="${clabsPrefix}--chat-link-list-item-text">
                 <cds-link @click="${collapseList}"> Collapse list </cds-link>
-              </li>
-            </ul>`
-          : html` <ul class="${clabsPrefix}--chat-link-list-ul">
-              ${trimmedList.map(
-                (linkObject) =>
-                  html`
-                    <li class="${clabsPrefix}--chat-link-list-li">
-                      <cds-link href="${linkObject.url}" target="_blank"
-                        >${linkObject.title}</cds-link
-                      >
-                      ${ArrowRight16()}
-                    </li>
-                  `
-              )}
-
-              <li class="${clabsPrefix}--chat-link-list-li">
+              </div>`
+            : html` <div class="${clabsPrefix}--chat-link-list-item-text">
                 <cds-link @click="${expandList}"> View all </cds-link>
-              </li>
-            </ul>`}`
-      : html`
-          <ul class="${clabsPrefix}--chat-link-list-ul">
-            ${linkList.map(
-              (linkObject) =>
-                html`
-                  <li class="${clabsPrefix}--chat-link-list-li">
-                    <cds-link href="${linkObject.url}" target="_blank"
-                      >${linkObject.title}</cds-link
-                    >
-                    <cds-link href="${linkObject.url}" target="_blank"
-                      >${ArrowRight16()}</cds-link
-                    >
-                  </li>
-                `
-            )}
-          </ul>
-        `}
+              </div>`}
+        </div>`
+      : html``}
   `;
 }

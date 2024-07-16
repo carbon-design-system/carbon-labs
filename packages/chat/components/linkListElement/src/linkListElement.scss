@@ -13,12 +13,10 @@ $css--plex: true !default;
 
 :host(#{$clabs-prefix}-chat-link-list) {
   display: block;
+  overflow: hidden;
   box-sizing: border-box;
-  animation: fade-in 600ms forwards;
   background: $background;
   inline-size: 100%;
-  max-block-size: 246px;
-  opacity: 0;
 
   .#{$clabs-prefix}--chat-link-list-header {
     color: $text-secondary;
@@ -40,30 +38,26 @@ $css--plex: true !default;
     }
   }
 
-  .#{$clabs-prefix}--chat-link-list-ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
+  .#{$clabs-prefix}--chat-link-list-container {
+    overflow: hidden;
+    transition: height 800ms ease;
   }
 
-  .#{$clabs-prefix}--chat-link-list-li {
+  .#{$clabs-prefix}--chat-link-list-item {
     display: flex;
     overflow: hidden;
+    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
     animation: fade-in 600ms forwards;
-    block-size: 20px;
     border-block-start: 1px solid $border-subtle-01;
-    color: $link-primary;
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 20px;
+    gap: 8px;
     opacity: 0;
-    padding-block: 6px;
-    white-space: nowrap;
+    padding-block: 4px;
   }
-  .#{$clabs-prefix}--chat-link-list-li svg {
-    cursor: pointer;
-    fill: $link-primary;
+
+  .#{$clabs-prefix}--chat-link-list-item-text {
+    overflow: hidden;
+    flex: 1;
+    white-space: nowrap;
   }
 }

@@ -267,7 +267,6 @@ export default class chartElement extends LitElement {
    * _handleResize - target resize on component itself
    */
   _handleResize() {
-    console.log('reee');
     this.chartResizing = true;
     this._displayVisualization();
   }

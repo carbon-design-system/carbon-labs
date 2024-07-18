@@ -42,7 +42,7 @@ export default class chartElement extends LitElement {
    * Valid CSS string to define chart height, applied to chart container while specification is automatically set to height="container" to fill the parent container height
    */
   @property({ type: String, attribute: 'container-height', reflect: true })
-  containerHeight = '300px';
+  containerHeight = '246px';
 
   /**
    * Same as container-height, a CSS string to define the width, applied to chart container
@@ -60,7 +60,7 @@ export default class chartElement extends LitElement {
    * Render using "svg" (easier to inspect in the DOM) or "canvas" (better performance)
    */
   @property({ type: String, attribute: 'render-method' })
-  renderMethod = 'canvas';
+  renderMethod = 'svg';
 
   /**
    * This value is either "dark" or "light" and displays the chart using Carbon Chart theme colors
@@ -267,13 +267,9 @@ export default class chartElement extends LitElement {
    * _handleResize - target resize on component itself
    */
   _handleResize() {
+    console.log('reee');
     this.chartResizing = true;
-    if (this.chartResizing) {
-      if (this._visualizationSpec?.repeat) {
-        this._prepareVisualization();
-        this.chartResizing = false;
-      }
-    }
+    this._displayVisualization();
   }
 
   /**
@@ -931,13 +927,10 @@ export default class chartElement extends LitElement {
       delete spec['height'];
       delete spec['width'];
     }
-    /*spec.autosize = {
-      type: 'fit',
-      contains: 'padding',
-    };*/
+
     //delete spec['height'];
     //delete spec['width'];
-    delete spec['autosize'];
+    //delete spec['autosize'];
 
     let layeredSpec;
     let repeatedSpec;

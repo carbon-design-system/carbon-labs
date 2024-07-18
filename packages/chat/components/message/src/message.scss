@@ -17,7 +17,7 @@ $css--plex: true !default;
   border-radius: 10px;
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
-  padding-block: 8px 16px;
+  padding-block: 0 12px;
   padding-inline: 16px 24px;
 
   .#{$clabs-prefix}--chat-message-container {
@@ -92,6 +92,28 @@ $css--plex: true !default;
     justify-content: center;
     block-size: 32px;
     inline-size: 32px;
+  }
+
+  .#{$clabs-prefix}--chat-message-header-bot-compact {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-block-end: 12px;
+  }
+  .#{$clabs-prefix}--chat-message-bot-icon-compact {
+    position: absolute;
+    block-size: 28px;
+    inline-size: 28px;
+    inset-inline-start: -12px;
+  }
+
+  .#{$clabs-prefix}--chat-message-timestamp-bot-compact {
+    block-size: 32px;
+    color: $text-secondary;
+    font-size: 12px;
+    line-height: 30px;
+    padding-inline-start: 22px;
   }
 
   .#{$clabs-prefix}--chat-message-agent-icon {

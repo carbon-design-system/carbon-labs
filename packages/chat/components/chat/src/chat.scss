@@ -23,6 +23,7 @@
     box-shadow: 0 23px 40px -24px rgba(0, 0, 0, 0.28);
     font-family: 'IBM Plex Sans', sans-serif;
     mix-blend-mode: normal;
+    transition: border-color 600ms ease;
   }
 
   .#{$clabs-prefix}--chat-content-container {
@@ -59,8 +60,14 @@
     z-index: 1000;
     block-size: 640px;
     inline-size: 320px;
-    inset-block-end: 16px;
-    inset-inline-end: 16px;
+    inset-block-end: var(--chat-docked-bottom-position, 16px);
+    inset-inline-end: var(--chat-docked-right-position, 16px);
     max-block-size: calc(100% - 32px);
+  }
+
+  .#{$clabs-prefix}--chat-docked-dragging {
+    border: 2px dashed $focus;
+    cursor: -moz-grabbing;
+    opacity: 0.7;
   }
 }

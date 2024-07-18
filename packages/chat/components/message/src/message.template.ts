@@ -66,7 +66,7 @@ export function messageTemplate(customElementClass) {
     displayColor,
     currentlyStreaming,
     _handleSlotchange,
-    disableIcon,
+    compactIcon,
   } = customElementClass;
 
   return html`<div
@@ -117,7 +117,7 @@ export function messageTemplate(customElementClass) {
               : html` <div
                   class="${clabsPrefix}--chat-message-dropdown-user"></div>`}
           </div>`
-        : html` ${!disableIcon
+        : html` ${!compactIcon
               ? html`<div class="${clabsPrefix}--chat-message-icon">
                   ${displayColor
                     ? html` <div
@@ -137,6 +137,7 @@ export function messageTemplate(customElementClass) {
               <div class="${clabsPrefix}--chat-message-timestamp-bot">
                 ${displayName == null ? 'watsonx' : displayName} ${timeStamp}
               </div>
+
               <div
                 class="${clabsPrefix}--chat-message-response-bot ${currentlyStreaming
                   ? clabsPrefix + '--chat-message-streaming'
@@ -168,9 +169,7 @@ export function messageTemplate(customElementClass) {
                           `
                         : message.type === 'molecule'
                         ? html`
-                            <clabs-chat-molecule
-                              height="${369}"
-                              content="${message.content}">
+                            <clabs-chat-molecule content="${message.content}">
                             </clabs-chat-molecule>
                           `
                         : message.type === 'formula'

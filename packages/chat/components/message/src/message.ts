@@ -98,8 +98,8 @@ export default class message extends LitElement {
   /**
    * boolean denoting whether to hide icon on the left
    */
-  @property({ type: Boolean, attribute: 'disable-icon' })
-  disableIcon;
+  @property({ type: Boolean, attribute: 'compact-icon' })
+  compactIcon;
 
   /**
    * number value in milliseconds to throttle streaming response

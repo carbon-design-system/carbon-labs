@@ -48,22 +48,26 @@ export function chatTemplate(customElementClass) {
     _interruptStreaming: interruptStreaming,
     _endStreaming: endStreaming,
     _streamDelay: streamDelay,
+    _handleHeaderDragStart: handleHeaderDragStart,
     promptNotificationType,
     promptNotificationMessage,
+    _isDragging: isDragging,
   } = customElementClass;
 
   return html`<div
     class="${clabsPrefix}--chat-container ${closed
       ? clabsPrefix + '--chat-closed'
-      : ''} ${enableDocking
-      ? clabsPrefix + '--chat-docked'
-      : ''} ${enableFullscreen ? clabsPrefix + '--chat-fullscreen' : ''}">
+      : ''} ${enableDocking ? clabsPrefix + '--chat-docked' : ''} ${isDragging
+      ? clabsPrefix + '--chat-docked-dragging'
+      : ''}  ${enableFullscreen ? clabsPrefix + '--chat-fullscreen' : ''}">
     <div class="${clabsPrefix}--chat-content-container">
       <clabs-chat-header
         @on-chat-fullscreen-change="${handleFullscreenMode}"
         @on-chat-docking-change="${handleDockingMode}"
         @on-chat-closed="${handleChatClosed}"
+        @on-header-drag-initiated="${handleHeaderDragStart}"
         .menuItems="${headerMenuItems}"
+        ?docking-enabled="${enableDocking}"
         ?disable-header-menu="${disableHeaderMenu}"
         ?disable-header-close="${disableHeaderClose}"
         ?disable-header-fullscreen="${disableHeaderFullscreen}"

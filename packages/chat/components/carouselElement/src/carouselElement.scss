@@ -21,7 +21,8 @@ $css--plex: true !default;
     display: flex;
     flex-direction: column;
     gap: 6px;
-    inline-size: var(--chat-carousel-slides-width, '248px');
+    inline-size: 100%;
+    max-inline-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-carousel-length {

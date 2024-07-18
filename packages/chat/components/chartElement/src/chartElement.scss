@@ -11,16 +11,16 @@
 
 :host(#{$clabs-prefix}-chat-chart) {
   position: relative;
-  display: block;
+  display: flex;
   overflow: hidden;
   box-sizing: border-box;
   padding: 0;
   border: 1px solid $border-subtle-00;
   border-radius: 8px;
   background: $background;
-  block-size: var(--chat-chart-element-height, '300px');
+  block-size: var(--chat-chart-element-height, '123px');
   font-family: 'IBM Plex Sans Condensed', sans-serif;
-  inline-size: var(--chat-chart-element-width, '100%');
+  inline-size: var(--chat-chart-element-width, '123px');
   min-block-size: 246px;
   min-inline-size: 246px;
 
@@ -48,11 +48,24 @@
       rgba(22, 22, 22, 0),
       rgba(22, 22, 22, 1)
     );
+
     block-size: 32px;
     content: '';
     inline-size: 30px;
     pointer-events: none;
     visibility: hidden;
+  }
+
+  .#{$clabs-prefix}--chat-chart-options-prefade {
+    background: linear-gradient(
+      to right,
+      rgba($background, 0),
+      rgba($background, 1)
+    );
+    block-size: 32px;
+    content: '';
+    inline-size: 30px;
+    pointer-events: none;
   }
 
   .#{$clabs-prefix}--chat-chart-options-prefade-light {

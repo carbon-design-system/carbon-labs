@@ -50,17 +50,17 @@ export function linkListElementTemplate(customElementClass) {
             </div>`
           : html``
       )}
+      ${linkList.length > maxItems
+        ? html`<div class="${clabsPrefix}--chat-link-list-item">
+            ${expanded
+              ? html` <div class="${clabsPrefix}--chat-link-list-item-text">
+                  <cds-link @click="${collapseList}"> Collapse list </cds-link>
+                </div>`
+              : html` <div class="${clabsPrefix}--chat-link-list-item-text">
+                  <cds-link @click="${expandList}"> View all </cds-link>
+                </div>`}
+          </div>`
+        : html``}
     </div>
-    ${linkList.length > maxItems
-      ? html`<div class="${clabsPrefix}--chat-link-list-item">
-          ${expanded
-            ? html` <div class="${clabsPrefix}--chat-link-list-item-text">
-                <cds-link @click="${collapseList}"> Collapse list </cds-link>
-              </div>`
-            : html` <div class="${clabsPrefix}--chat-link-list-item-text">
-                <cds-link @click="${expandList}"> View all </cds-link>
-              </div>`}
-        </div>`
-      : html``}
   `;
 }

@@ -56,7 +56,6 @@ export function chartElementTemplate(customElementClass) {
     _handleOriginalEditorValidation: handleOriginalEditorValidation,
     _handleCarbonEditorValidation: handleCarbonEditorValidation,
     modalMode,
-    theme,
     _uniqueID: uniqueID,
     editOriginalSpecification,
     _showOriginalSpec: showOriginalSpec,
@@ -186,9 +185,7 @@ export function chartElementTemplate(customElementClass) {
     ${disableOptions || errorMessage || chartLoading
       ? html``
       : html` <div class="${clabsPrefix}--chat-chart-options">
-          <div class="${clabsPrefix}--chat-chart-options-prefade-${theme}">
-            &nbsp;
-          </div>
+          <div class="${clabsPrefix}--chat-chart-options-prefade">&nbsp;</div>
           <div class="${clabsPrefix}--chat-chart-options-buttons">
             ${!disableExport
               ? html`

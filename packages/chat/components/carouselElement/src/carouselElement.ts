@@ -152,6 +152,7 @@ export default class carouselElement extends LitElement {
     if (this._carouselContent) {
       if (this.parentElement instanceof HTMLElement) {
         const parentWidth = this.clientWidth;
+        console.log(this.clientWidth);
         this._itemsPerSlide = Math.max(
           Math.floor(parentWidth / (this.contentWidth + this._slideGapSize)),
           1

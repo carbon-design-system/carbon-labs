@@ -45,59 +45,46 @@ export function headerTemplate(customElementClass) {
     disableClose,
     disableMinimize,
     dockingEnabled,
-    _handleMenuItemSelected: handleMenuItemSelected,
+    _handleMenuItemSelected:handleMenuItemSelected,
     hideMenu,
-    _handleHeaderMouseDown: handleHeaderMouseDown,
-    _handleHeaderMouseUp: handleHeaderMouseUp,
-    _handleHeaderMouseMove: handleHeaderMouseMove,
+    _handleHeaderMouseDown:handleHeaderMouseDown,
+    _handleHeaderMouseUp:handleHeaderMouseUp,
+    _handleHeaderMouseMove:handleHeaderMouseMove,
     menuOpened,
+    
   } = customElementClass;
   return html` <div class="${clabsPrefix}--chat-header-container">
-    <div
-      class="${clabsPrefix}--chat-header-content"
-      @mouseup="${handleHeaderMouseUp}"
-      @mousemove="${handleHeaderMouseMove}">
+    <div class="${clabsPrefix}--chat-header-content" @mouseup="${handleHeaderMouseUp}" @mousemove="${handleHeaderMouseMove}">
       <div class="${clabsPrefix}--chat-header-elements">
         ${menuOpened
           ? html`
               <div class="${clabsPrefix}--chat-header-elements-menu-list">
                 ${menuItems.map(
                   (menuItem, index) => html`
-                    <div
-                      class="${clabsPrefix}--chat-header-elements-menu-list-item"
-                      data-menuindex="${index}"
-                      @mousedown="${handleMenuItemSelected}">
+                   <div class="${clabsPrefix}--chat-header-elements-menu-list-item" data-menuindex="${index}" @mousedown="${handleMenuItemSelected}" >
                       ${menuItem.title}
-                    </div>
+                  </div>
                   `
                 )}
               </div>
             `
           : html``}
 
-        <div
-          class="${clabsPrefix}--chat-header-elements-left ${dockingEnabled
-            ? clabsPrefix + '--chat-header-elements-left-docked'
-            : ''}"
-          @mousedown="${handleHeaderMouseDown}">
+        <div class="${clabsPrefix}--chat-header-elements-left ${dockingEnabled? clabsPrefix+'--chat-header-elements-left-docked':''}" @mousedown="${handleHeaderMouseDown}">
           ${!disableMenu && !disableHeaderButtons
             ? html` <div class="${clabsPrefix}--chat-header-elements-icon">
                 ${menuItems
                   ? html`
-                      <cds-icon-button
-                        kind="ghost"
-                        size="sm"
-                        align="right"
-                        @blur="${hideMenu}"
-                        @click="${handleMenuToggle}">
-                        ${!menuOpened
-                          ? Menu24({ slot: 'icon' })
-                          : Close16({ slot: 'icon' })}
-                        <span slot="tooltip-content">
-                          ${menuOpened ? 'Close Menu' : 'Open Menu'}
-                        </span>
-                      </cds-icon-button>
-                    `
+                <cds-icon-button
+                  kind="ghost"
+                  size="sm"
+                  align="right"
+                  @blur="${hideMenu}"
+                  @click="${handleMenuToggle}">
+                  ${!menuOpened? Menu24({ slot: 'icon' }) : Close16({ slot: 'icon' })}
+                  <span slot="tooltip-content"> ${menuOpened?"Close Menu" : "Open Menu"} </span>
+                </cds-icon-button>
+                `
                   : html``}
               </div>`
             : html``}

@@ -208,6 +208,13 @@ export default class header extends LitElement {
   }
 
   /**
+   * hide menu on button blur
+   */
+  hideMenu() {
+    this.menuOpened = false;
+  }
+
+  /**
    * undo docking mode when minimize is clicked
    * @param {event} event - click event when minimizing chat
    */

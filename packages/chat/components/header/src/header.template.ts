@@ -44,44 +44,60 @@ export function headerTemplate(customElementClass) {
     disableFullscreen,
     disableClose,
     disableMinimize,
-    handleMenuItemSelected,
+    dockingEnabled,
+    _handleMenuItemSelected: handleMenuItemSelected,
     hideMenu,
+    _handleHeaderMouseDown: handleHeaderMouseDown,
+    _handleHeaderMouseUp: handleHeaderMouseUp,
+    _handleHeaderMouseMove: handleHeaderMouseMove,
     menuOpened,
   } = customElementClass;
   return html` <div class="${clabsPrefix}--chat-header-container">
-    <div class="${clabsPrefix}--chat-header-content">
+    <div
+      class="${clabsPrefix}--chat-header-content"
+      @mouseup="${handleHeaderMouseUp}"
+      @mousemove="${handleHeaderMouseMove}">
       <div class="${clabsPrefix}--chat-header-elements">
         ${menuOpened
           ? html`
               <div class="${clabsPrefix}--chat-header-elements-menu-list">
                 ${menuItems.map(
-                  (menuItem) => html`
-                    <cds-button
-                      kind="danger-tertiary"
-                      size="sm"
-                      @click="${handleMenuItemSelected}">
+                  (menuItem, index) => html`
+                    <div
+                      class="${clabsPrefix}--chat-header-elements-menu-list-item"
+                      data-menuindex="${index}"
+                      @mousedown="${handleMenuItemSelected}">
                       ${menuItem.title}
-                    </cds-button>
+                    </div>
                   `
                 )}
               </div>
             `
           : html``}
-        <div class="${clabsPrefix}--chat-header-elements-left">
+
+        <div
+          class="${clabsPrefix}--chat-header-elements-left ${dockingEnabled
+            ? clabsPrefix + '--chat-header-elements-left-docked'
+            : ''}"
+          @mousedown="${handleHeaderMouseDown}">
           ${!disableMenu && !disableHeaderButtons
             ? html` <div class="${clabsPrefix}--chat-header-elements-icon">
                 ${menuItems
                   ? html`
-                <cds-icon-button
-                  kind="ghost"
-                  size="sm"
-                  align="right"
-                  @blur="${hideMenu}"
-                  @click="${handleMenuToggle}">
-                  ${Menu24({ slot: 'icon' })}
-                  <span slot="tooltip-content"> Open Menu </span>
-                </cds-iconbutton>
-                `
+                      <cds-icon-button
+                        kind="ghost"
+                        size="sm"
+                        align="right"
+                        @blur="${hideMenu}"
+                        @click="${handleMenuToggle}">
+                        ${!menuOpened
+                          ? Menu24({ slot: 'icon' })
+                          : Close16({ slot: 'icon' })}
+                        <span slot="tooltip-content">
+                          ${menuOpened ? 'Close Menu' : 'Open Menu'}
+                        </span>
+                      </cds-icon-button>
+                    `
                   : html``}
               </div>`
             : html``}
@@ -89,7 +105,7 @@ export function headerTemplate(customElementClass) {
             ? html` <span class="${clabsPrefix}--chat-header-title">
                 ${title}
               </span>`
-            : null}
+            : ''}
         </div>
 
         <div class="${clabsPrefix}--chat-header-elements-right">

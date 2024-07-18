@@ -51,7 +51,7 @@ export function messagesTemplate(customElementClass) {
                     time-stamp="${message.time}"
                     error-state
                     stream-delay="${streamDelay}"
-                    ?disable-icon="${dockingEnabled}"
+                    ?compact-icon="${dockingEnabled}"
                     index="${index}">
                   </clabs-chat-message>`
                 : html` <clabs-chat-message
@@ -65,7 +65,7 @@ export function messagesTemplate(customElementClass) {
                     stream-delay="${streamDelay}"
                     parent-theme="${parentTheme}"
                     @on-structure-change="${handleInternalChange}"
-                    ?disable-icon="${dockingEnabled}"
+                    ?compact-icon="${dockingEnabled}"
                     ?stream-content="${streamResponses &&
                     !userInterruptedStreaming}"
                     display-name="${message.displayName || nothing}"
@@ -77,7 +77,7 @@ export function messagesTemplate(customElementClass) {
               ? html` <clabs-chat-message
                   raw-text="loading"
                   parent-theme="${parentTheme}"
-                  ?disable-icon="${dockingEnabled}"
+                  ?compact-icon="${dockingEnabled}"
                   time-stamp=""
                   loading-state
                   error-state="false">

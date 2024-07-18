@@ -13,6 +13,9 @@ import { APIPlugin } from '../../../services/APIPlugin/index.js';
 // @ts-ignore
 import styles from './chat.scss?inline';
 
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Input component using search typeahead api
  */
@@ -239,6 +242,21 @@ export default class CLABSChat extends LitElement {
   @property({ type: String, attribute: 'vertical-dock-position' })
   verticalDockDirection = 'bottom';
 
+  /**
+   * vertical docking position with drag event
+   */
+  @state()
+  verticalDockPosition;
+
+  /**
+   * horizontal docking position with drag event
+   */
+  @state()
+  horizontalDockPosition;
+
+  @state()
+  _isDragging = false;
+
   /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
    * @param {Object} changedProperties - returned inner DOM update object
    **/
@@ -306,6 +324,81 @@ export default class CLABSChat extends LitElement {
     });
     this._interruptStreaming = true;
     this.dispatchEvent(chatEndStreamingEvent);
+  }
+
+  /**
+   * handle when header sends dragstart event
+   * @param {event} event - drag start event
+   */
+  _handleHeaderDragStart(event) {
+    const originalOffset = event.detail.offset;
+    if (this.enableDocking) {
+      this._isDragging = true;
+      this.parentElement?.addEventListener('mousemove', (e) => {
+        this._dragChat(e, originalOffset);
+      });
+      this.parentElement?.addEventListener('mouseup', (e) => {
+        this._dragEnd(e);
+      });
+    }
+  }
+
+  /**
+   * drag chat event
+   * @param {event} event - core mousemove event
+   * @param {object} originalOffset - x/y click values from header
+   */
+  _dragChat(event, originalOffset) {
+    if (this._isDragging) {
+      const chatReference = this.shadowRoot?.querySelector(
+        '.' + clabsPrefix + '--chat-container'
+      );
+      if (chatReference instanceof HTMLElement) {
+        const chatHeight = chatReference.clientHeight;
+        const chatWidth = chatReference.clientWidth;
+        const mininumPadding = { top: 16, bottom: 16, left: 16, right: 16 };
+
+        let newPositionX =
+          window.innerWidth - (event.clientX - originalOffset.x) - chatWidth;
+        let newPositionY =
+          window.innerHeight - (event.clientY - originalOffset.y) - chatHeight;
+
+        newPositionX = Math.min(
+          Math.max(mininumPadding.right, newPositionX),
+          window.innerWidth - mininumPadding.left - chatWidth
+        );
+        newPositionY = Math.min(
+          Math.max(mininumPadding.bottom, newPositionY),
+          window.innerHeight - mininumPadding.top - chatHeight
+        );
+
+        if (newPositionX && newPositionY) {
+          this.style.setProperty(
+            '--chat-docked-bottom-position',
+            newPositionY + 'px'
+          );
+          this.style.setProperty(
+            '--chat-docked-right-position',
+            newPositionX + 'px'
+          );
+        }
+      }
+    }
+  }
+
+  /**
+   * drag chat event
+   * @param {event} event - core mousemove event
+   */
+  _dragEnd(event) {
+    this._isDragging = false;
+    try {
+      //this.parentElement?.removeEventListener('mousemove', this._dragChat);
+      //this.parentElement?.removeEventListener('mouseup', this._dragEnd);
+    } catch (removalError) {
+      console.error(removalError);
+      console.log(event);
+    }
   }
 
   /** Initialize examples for when stories send in a 'sampleQuery' string
@@ -586,6 +679,7 @@ export default class CLABSChat extends LitElement {
       this.enableDocking = true;
     }
     this.enableFullscreen = mode;
+    //this.parentElement.dispatchEvent(new Event('resize'));
   }
 
   /**
@@ -596,6 +690,7 @@ export default class CLABSChat extends LitElement {
     const mode = event.detail?.docking;
     this.enableFullscreen = false;
     this.enableDocking = mode;
+    //this.parentElement.dispatchEvent(new Event('resize'));
   }
 
   /**

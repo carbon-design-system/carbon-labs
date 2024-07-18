@@ -39,32 +39,31 @@ export function codeElementTemplate(customElementClass) {
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-code">
-    <div class="${clabsPrefix}--chat-code-container">
-      <div class="${clabsPrefix}--chat-code-options">
-        <div class="${clabsPrefix}--chat-code-options-buttons">
-          ${!disableEditButton
-            ? html`
-                <cds-icon-button size="sm" kind="ghost" align="left">
-                  ${Edit16({ slot: 'icon' })}
-                  <span slot="tooltip-content">Enable editing</span>
-                </cds-icon-button>
-              `
-            : html``}
-          ${!disableCopyButton
-            ? html`
-                <cds-icon-button
-                  size="sm"
-                  kind="ghost"
-                  align="left"
-                  @click="${copyCode}">
-                  ${Copy16({ slot: 'icon' })}
-                  <span slot="tooltip-content">Copy code</span>
-                </cds-icon-button>
-              `
-            : html``}
-        </div>
+    <div class="${clabsPrefix}--chat-code-options">
+      <div class="${clabsPrefix}--chat-code-options-buttons">
+        ${!disableEditButton
+          ? html`
+              <cds-icon-button size="sm" kind="ghost" align="left">
+                ${Edit16({ slot: 'icon' })}
+                <span slot="tooltip-content">Enable editing</span>
+              </cds-icon-button>
+            `
+          : html``}
+        ${!disableCopyButton
+          ? html`
+              <cds-icon-button
+                size="sm"
+                kind="ghost"
+                align="left"
+                @click="${copyCode}">
+                ${Copy16({ slot: 'icon' })}
+                <span slot="tooltip-content">Copy code</span>
+              </cds-icon-button>
+            `
+          : html``}
       </div>
-
+    </div>
+    <div class="${clabsPrefix}--chat-code-container">
       ${_renderedLines.map(
         (lineObject, index) =>
           html`
@@ -80,8 +79,8 @@ export function codeElementTemplate(customElementClass) {
                   `}
               ${!editable
                 ? html`<div
-                    class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-line-${editable
-                      ? 'editable'
+                    class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-line${editable
+                      ? '-editable'
                       : ''} ${lineObject.type}"
                     style="padding-left: ${lineObject.paddingLeft}">
                     ${lineObject.content}

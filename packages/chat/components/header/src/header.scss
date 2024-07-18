@@ -18,13 +18,12 @@ $css--plex: true !default;
   justify-content: center;
   background: $background;
   border-block-end: 1px solid $border-subtle-00;
+  cursor: var(--chat-header-cursor-mode, auto) svg {
+    fill: $text-primary;
+  }
   inset-block-start: 0;
   inset-inline: 0;
   min-block-size: 40px;
-
-  svg {
-    fill: $text-primary;
-  }
 
   .#{$clabs-prefix}--chat-header-container {
     background: $background;
@@ -53,7 +52,30 @@ $css--plex: true !default;
     z-index: 99;
     display: flex;
     flex-direction: column;
+    border: 1px solid $border-subtle-00;
+    border-block-start: none;
     inset-block-start: 40px;
+    inset-inline-start: -2px;
+    transition: height 600ms ease;
+  }
+  .#{$clabs-prefix}--chat-header-elements-menu-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 12px;
+    background: $background;
+    color: $text-secondary;
+    cursor: pointer;
+    font-size: 16px;
+    max-inline-size: 288px;
+    padding-inline: 16px;
+    transition: border-color 300ms ease;
+  }
+
+  .#{$clabs-prefix}--chat-header-elements-menu-list-item:hover {
+    background: $layer-hover-02;
+    color: $text-primary;
   }
 
   .#{$clabs-prefix}--chat-header-elements-left {
@@ -63,6 +85,10 @@ $css--plex: true !default;
     align-items: center;
     block-size: 100%;
     gap: 10px;
+  }
+
+  .#{$clabs-prefix}--chat-header-elements-left-docked {
+    cursor: move;
   }
 
   .#{$clabs-prefix}--chat-header-elements-right {
@@ -77,6 +103,7 @@ $css--plex: true !default;
     align-items: center;
     justify-content: center;
     block-size: 100%;
+    cursor: pointer;
     inline-size: 40px;
   }
 

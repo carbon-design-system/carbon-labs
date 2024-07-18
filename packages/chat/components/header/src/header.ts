@@ -42,6 +42,12 @@ export default class header extends LitElement {
   disableClose;
 
   /**
+   * disable header close button
+   */
+  @property({ type: Boolean, attribute: 'docking-enabled' })
+  dockingEnabled;
+
+  /**
    * header menu item list
    */
   @property({ type: Object, attribute: 'menuItems' })
@@ -78,10 +84,29 @@ export default class header extends LitElement {
   menuOpened = false;
 
   /**
+   * mouseHeldDown - check if mouse is down
+   */
+  @state()
+  mouseHeldDown = false;
+
+  /**
+   * dragStart - check if drag is starting
+   */
+  @state()
+  dragStart = false;
+
+  /**
+   * dragTimeout - drag event to make sure double clicks don't trigger drag
+   */
+  @state()
+  dragTimeout;
+
+  /**
    * docking event when popup button is clicked
    * @param {event} event - click event when docking chat
    */
   _handlePopup(event) {
+    event.stopPropagation();
     this.enableDocking = true;
     this.enableFullscreen = false;
     const dockingEvent = new CustomEvent('on-chat-docking-change', {
@@ -93,27 +118,86 @@ export default class header extends LitElement {
   }
 
   /**
+   * initial click event to check if dragging is initiated
+   * @param {event} event - click event when chat is dicked
+   */
+  _handleHeaderMouseDown(event) {
+    this.mouseHeldDown = true;
+    if (this.mouseHeldDown) {
+      this.dragTimeout = window.setTimeout(() => {
+        if (this.mouseHeldDown) {
+          this.initiateDragging(event);
+        }
+      }, 1500);
+    }
+  }
+
+  /**
+   * docking event when mouseup event happens to undo drag mode
+   */
+  _handleHeaderMouseUp() {
+    this.mouseHeldDown = false;
+    clearTimeout(this.dragTimeout);
+    this.dragTimeout = null;
+  }
+
+  /**
+   * mousemove event to trigger drag is click is held
+   * @param {event} event - mousemove on empty parts of header
+   */
+  _handleHeaderMouseMove(event) {
+    if (this.mouseHeldDown) {
+      this.initiateDragging(event);
+    }
+  }
+
+  /**
+   * drag trigger event if click held or click+mousemove happened
+   * @param {event} event - click event when docking chat
+   */
+  initiateDragging(event) {
+    const mouseX = event.clientX - this.getBoundingClientRect().left;
+    const mouseY = event.clientY - this.getBoundingClientRect().top;
+    this.mouseHeldDown = false;
+    const dragEvent = new CustomEvent('on-header-drag-initiated', {
+      detail: {
+        action: 'user initiated drag event',
+        offset: { x: mouseX, y: mouseY },
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(dragEvent);
+  }
+
+  /**
    * menu item selection event
    * @param {event} event - click event when item is chosen
    */
-  handleMenuItemSelected(event) {
-    this.menuOpened = false;
-    const index = event.detail - 1;
-    if (this.menuItems[index]) {
-      const menuSelectionEvent = new CustomEvent(
-        'on-header-menu-item-selected',
-        {
-          detail: {
-            index: index,
-            menuItem: this.menuItems[index],
-            originalEvent: event,
-          },
-          bubbles: true,
-          composed: true,
-        }
-      );
-      this.dispatchEvent(menuSelectionEvent);
+  _handleMenuItemSelected(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const targetElement = event?.target;
+    const index = targetElement?.getAttribute('data-menuindex');
+    if (index) {
+      if (this.menuItems[index]) {
+        const menuSelectionEvent = new CustomEvent(
+          'on-header-menu-item-selected',
+          {
+            detail: {
+              index: index,
+              menuItem: this.menuItems[index],
+              originalEvent: event,
+            },
+            bubbles: true,
+            composed: true,
+          }
+        );
+        this.dispatchEvent(menuSelectionEvent);
+      }
     }
+    this.menuOpened = false;
   }
 
   /**
@@ -128,6 +212,7 @@ export default class header extends LitElement {
    * @param {event} event - click event when minimizing chat
    */
   _handleSubtract(event) {
+    event.stopPropagation();
     this.enableDocking = false;
     this.enableFullscreen = false;
     const minimizeEvent = new CustomEvent('on-chat-docking-change', {
@@ -143,6 +228,7 @@ export default class header extends LitElement {
    * @param {event} event - click event when fullscreening chat
    */
   _handleMaximize(event) {
+    event.stopPropagation();
     this.enableFullscreen = true;
     this.enableDocking = false;
     const fullscreenEvent = new CustomEvent('on-chat-fullscreen-change', {
@@ -158,6 +244,7 @@ export default class header extends LitElement {
    * @param {event} event - click event when fullscreening chat
    */
   _handleClosed(event) {
+    event.stopPropagation();
     const closeEvent = new CustomEvent('on-chat-closed', {
       detail: { action: 'chat was closed', originalEvent: event },
       bubbles: true,
@@ -171,6 +258,7 @@ export default class header extends LitElement {
    * @param {event} event - click event when minimizing chat
    */
   _handleMinimize(event) {
+    event.stopPropagation();
     this.enableFullscreen = false;
     this.enableDocking = false;
     const minimizeEvent = new CustomEvent('on-chat-fullscreen-change', {
@@ -186,7 +274,7 @@ export default class header extends LitElement {
    * @param {event} event - click event when toggling menu
    */
   _handleMenuToggle(event) {
-    event.preventDefault();
+    event.stopPropagation();
     this.menuOpened = !this.menuOpened;
   }
 }

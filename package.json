@@ -67,7 +67,7 @@
     "@open-wc/testing": "^4.0.0",
     "@playwright/test": "^1.39.0",
     "@rollup/plugin-alias": "^5.1.0",
-    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-commonjs": "^26.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.5",

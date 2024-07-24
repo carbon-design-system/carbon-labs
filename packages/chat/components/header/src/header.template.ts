@@ -76,6 +76,7 @@ export function headerTemplate(customElementClass) {
           : html``}
 
         <div
+          role="banner"
           class="${clabsPrefix}--chat-header-elements-left ${dockingEnabled
             ? clabsPrefix + '--chat-header-elements-left-docked'
             : ''}"

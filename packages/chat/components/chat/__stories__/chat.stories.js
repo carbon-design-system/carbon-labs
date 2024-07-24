@@ -715,7 +715,7 @@ export const LLMTextPlayground = {
       ${sampleQuery !== 'None' && queryMode == 'Examples'
         ? html`
             <div
-              style="height:calc(100vh - 84px); flex:1; padding-left:20px;overflow-y:auto;">
+              style="height:calc(100vh - 84px); width:400px; padding-left:20px;overflow-y:auto;">
               <h4>Raw LLM text</h4>
               <cds-code-snippet
                 wrap-text
@@ -772,7 +772,7 @@ export const StreamTextPlayground = {
       </div>
       ${sampleQuery === 'None' && queryMode == 'Examples'
         ? html`
-            <div style="flex:1; overflow-y:auto;">
+            <div style="width:400px; overflow-y:auto;">
               <h4>Raw LLM text</h4>
               <cds-code-snippet
                 wrap-text
@@ -1490,8 +1490,8 @@ export const Playground = {
       </div>
       ${testMode === 'Examples' &&
       sampleConversation !== 'None' &&
-      sampleConversation !== 'Conversation tutorial'
-        ? html` <div style="flex:1; overflow-y:auto;">
+      sampleConversation !== 'ShowAll'
+        ? html` <div style="width:400px; overflow-y:auto;">
             <h4>JSON conversation object</h4>
             <cds-code-snippet
               wrap-text

@@ -55,7 +55,7 @@ export default class cardElement extends LitElement {
    * api to fetch link/video previews
    */
   @property({ type: String, attribute: 'api-url', reflect: true })
-  apiUrl = 'http://localhost:5001/get_preview';
+  apiUrl; // = 'http://localhost:5001/get_preview';
 
   /**
    * card type to differentiate between url and videos

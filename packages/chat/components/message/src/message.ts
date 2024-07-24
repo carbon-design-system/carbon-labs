@@ -358,6 +358,29 @@ export default class message extends LitElement {
     this.dispatchEvent(tagSelectionEvent);
   }
 
+  /**
+   * _childLinkClicked - record when link clicked in linkList
+   * @param {event} event - lit custom event from linkList
+   **/
+  _childLinkClicked(event) {
+    const messageDetails = this._prepareEventDetail();
+    messageDetails['action'] = 'message: link-sub-element in message clicked';
+    messageDetails['event'] = event;
+
+    messageDetails['selectedURL'] = event.detail.selectedURL;
+    messageDetails['selectedTitle'] = event.detail.selectedTitle;
+
+    const linkClickedEvent = new CustomEvent(
+      'on-message-link-list-item-click',
+      {
+        detail: messageDetails,
+        bubbles: true,
+        composed: true,
+      }
+    );
+    this.dispatchEvent(linkClickedEvent);
+  }
+
   /** record element click
    * @param {event} event - lit custom event from sub element click
    **/

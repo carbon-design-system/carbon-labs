@@ -14,6 +14,9 @@ import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/link/index.js';
 
+import ChevronDown16 from '@carbon/web-components/es/icons/chevron--down/16.js';
+import ChevronUp16 from '@carbon/web-components/es/icons/chevron--up/16.js';
+
 /**
  * Lit template for code
  *
@@ -26,7 +29,9 @@ export function linkListElementTemplate(customElementClass) {
     expanded,
     expandList,
     collapseList,
+    disableRedirection,
     maxItems,
+    _handleLinkFeedback: handleLinkFeedback,
   } = customElementClass;
 
   return html`
@@ -37,15 +42,25 @@ export function linkListElementTemplate(customElementClass) {
       ${linkList.map((linkObject, index) =>
         index < maxItems || expanded
           ? html` <div class="${clabsPrefix}--chat-link-list-item">
-              <div class="${clabsPrefix}--chat-link-list-item-text">
-                <cds-link href="${linkObject.url}" target="_blank"
+              <div
+                class="${clabsPrefix}--chat-link-list-item-text"
+                @click="${handleLinkFeedback}">
+                <cds-link
+                  data-index="${index}"
+                  ${!disableRedirection
+                    ? 'href="' + linkObject.url + '" target="_blank"'
+                    : ''}
                   >${linkObject.title}</cds-link
                 >
               </div>
-              <div>
-                <cds-link href="${linkObject.url}" target="_blank"
-                  >${ArrowRight16()}</cds-link
-                >
+              <div @click="${handleLinkFeedback}">
+                <cds-link
+                  data-index="${index}"
+                  ${!disableRedirection
+                    ? 'href="' + linkObject.url + '" target="_blank"'
+                    : ''}
+                  >${ArrowRight16({ slot: 'icon' })}
+                </cds-link>
               </div>
             </div>`
           : html``
@@ -54,10 +69,14 @@ export function linkListElementTemplate(customElementClass) {
         ? html`<div class="${clabsPrefix}--chat-link-list-item">
             ${expanded
               ? html` <div class="${clabsPrefix}--chat-link-list-item-text">
-                  <cds-link @click="${collapseList}"> Collapse list </cds-link>
+                  <cds-link @click="${collapseList}">
+                    Collapse list ${ChevronUp16({ slot: 'icon' })}</cds-link
+                  >
                 </div>`
               : html` <div class="${clabsPrefix}--chat-link-list-item-text">
-                  <cds-link @click="${expandList}"> View all </cds-link>
+                  <cds-link @click="${expandList}">
+                    View all ${ChevronDown16({ slot: 'icon' })}</cds-link
+                  >
                 </div>`}
           </div>`
         : html``}

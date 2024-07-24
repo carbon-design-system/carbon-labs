@@ -55,7 +55,6 @@ $css--plex: true !default;
     border: 1px solid $border-subtle-00;
     border-block-start: none;
     inset-block-start: 40px;
-    inset-inline-start: -2px;
     transition: height 600ms ease;
   }
   .#{$clabs-prefix}--chat-header-elements-menu-list-item {

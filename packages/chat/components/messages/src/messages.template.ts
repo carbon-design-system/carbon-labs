@@ -75,11 +75,11 @@ export function messagesTemplate(customElementClass) {
             )}
             ${queryInProgress
               ? html` <clabs-chat-message
-                  raw-text="loading"
                   parent-theme="${parentTheme}"
                   ?compact-icon="${dockingEnabled}"
                   time-stamp=""
                   loading-state
+                  .elements="${[{ type: 'loading', content: '' }]}"
                   error-state="false">
                 </clabs-chat-message>`
               : html``}

@@ -34,7 +34,7 @@ $css--plex: true !default;
     max-block-size: var(--chat-code-height, '100%');
     min-block-size: 100%;
     min-inline-size: 100%;
-    padding-inline: 12px 32px;
+    padding-inline: 12px 16px;
     word-break: break-word;
   }
 
@@ -100,6 +100,23 @@ $css--plex: true !default;
     user-select: none;
   }
 
+  .#{$clabs-prefix}--chat-code-container-full-elements {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-ticks-full {
+    inline-size: 26px;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-divider-full {
+    box-sizing: border-box;
+    flex: 0 0 2px;
+    border-inline-start: 1px solid $border-subtle-01;
+    inline-size: 2px;
+    user-select: none;
+  }
+
   .#{$clabs-prefix}--chat-code-line-text {
     flex-grow: 1;
     padding-block-end: 2px;
@@ -119,6 +136,30 @@ $css--plex: true !default;
     outline: none;
     overflow-y: hidden;
     resize: none;
+    word-break: break-word;
+  }
+
+  .#{$clabs-prefix}--chat-code-edit-area {
+    display: block;
+    overflow: hidden scroll;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    background: none;
+    block-size: var(--chat-code-height, 100%);
+
+    color: $text-primary;
+    font: inherit;
+    font-size: 13px;
+    inline-size: 100%;
+    letter-spacing: 0.16px;
+    line-height: 22px;
+    outline: none;
+    padding-block-end: 46px;
+    padding-inline-start: 8px;
+    resize: none;
+    tab-size: 2;
+    word-break: break-word;
   }
 
   .#{$clabs-prefix}--chat-code-line-comment {
@@ -126,10 +167,13 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-code-editing-controls {
-    position: sticky;
+    position: absolute;
+    z-index: 999;
     display: flex;
     justify-content: flex-end;
-    gap: 16px;
+    background: $background;
+    border-block-start: 1px solid $border-subtle-00;
+    gap: 8px;
     inset-block-end: 0;
     inset-inline-end: 0;
   }

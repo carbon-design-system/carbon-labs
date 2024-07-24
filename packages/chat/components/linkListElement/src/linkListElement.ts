@@ -34,7 +34,12 @@ export default class linkListElement extends LitElement {
    * max items before cutoff
    */
   @state()
-  maxItems = 3;
+  maxItems = 2;
+
+  /** enableReditection -  whether open black new page
+   */
+  @property({ type: Boolean, attribute: 'disable-redirection' })
+  disableRedirection = false;
 
   /**
    * full list of link strings
@@ -90,6 +95,40 @@ export default class linkListElement extends LitElement {
       return siteTitle.replace(/_/g, ' ');
     } catch (error) {
       return url;
+    }
+  }
+
+  /**
+   * _handleLinkFeedback - when link element is click, send even to message element
+   * @param {event} event - link click event
+   */
+  _handleLinkFeedback(event) {
+    const targetElement = event?.target;
+    if (targetElement instanceof HTMLElement) {
+      if (targetElement.hasAttribute('data-index')) {
+        const targetIndex: any = targetElement.getAttribute('data-index');
+        if (
+          targetIndex !== null &&
+          targetIndex >= 0 &&
+          targetIndex < this._linkList.length
+        ) {
+          const targetLink = this._linkList[targetIndex];
+          const linkClickedEvent = new CustomEvent(
+            'on-link-list-item-selected',
+            {
+              detail: {
+                action: 'LinkList.ts: link list item was clicked',
+                selectedURL: targetLink.url,
+                selectedTitle: targetLink.title,
+                originalEvent: event,
+              },
+              bubbles: true,
+              composed: true,
+            }
+          );
+          this.dispatchEvent(linkClickedEvent);
+        }
+      }
     }
   }
 

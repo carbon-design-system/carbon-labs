@@ -11,7 +11,6 @@ import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import * as VegaEmbed from 'vega-embed';
-//import { getTheme, getPalettes } from 'carbon-charts/themes'
 const { stablePrefix: clabsPrefix } = settings;
 
 // @ts-ignore
@@ -39,6 +38,11 @@ export default class chartElement extends LitElement {
   private intersectionObserver;
 
   /**
+   * Event listener to check if parent visibility changed
+   */
+  private resizeObserver;
+
+  /**
    * Valid CSS string to define chart height, applied to chart container while specification is automatically set to height="container" to fill the parent container height
    */
   @property({ type: String, attribute: 'container-height', reflect: true })
@@ -60,7 +64,7 @@ export default class chartElement extends LitElement {
    * Render using "svg" (easier to inspect in the DOM) or "canvas" (better performance)
    */
   @property({ type: String, attribute: 'render-method' })
-  renderMethod = 'svg';
+  renderMethod = 'canvas';
 
   /**
    * This value is either "dark" or "light" and displays the chart using Carbon Chart theme colors
@@ -101,8 +105,14 @@ export default class chartElement extends LitElement {
   /**
    * Thumbnail mode
    */
-  @property({ type: Boolean, attribute: 'thumbnail-mode' })
-  thumbNailMode;
+  @property({ type: Boolean, attribute: 'thumbnail' })
+  thumbNail;
+
+  /**
+   * thumbnail image dataurl
+   */
+  @state()
+  exportedImageURL;
 
   /**
    * Enable tooltip in the chart component
@@ -189,6 +199,18 @@ export default class chartElement extends LitElement {
   _brokenSpec;
 
   /**
+   * _editedSpec -  temporary spec for editing mode
+   */
+  @state()
+  _editedSpec;
+
+  /**
+   * _editedContent - temporary string spec in editing mode
+   */
+  @state()
+  _editedContent;
+
+  /**
    * boolean to display fullscreen chart and code
    */
   @state()
@@ -201,12 +223,6 @@ export default class chartElement extends LitElement {
   modalMode;
 
   /**
-   * switchable HTML content to display code and chart in a modal
-   */
-  @state()
-  modalContent;
-
-  /**
    * tooltip value from tooltip event that targets the custom div in the component
    */
   @state()
@@ -215,14 +231,14 @@ export default class chartElement extends LitElement {
   /**
    * streaming - flag to denote streaming is enabled
    */
-  @state()
+  @property({ type: Boolean, attribute: 'streaming' })
   streaming;
 
   /**
    * editOriginalSpecification - choose whether to edit the inserted spec or the edited sped
    */
   @state()
-  editOriginalSpecification = true;
+  editOriginalSpecification = false;
 
   /**
    * chartResizing - flag to notify when chart is resizing
@@ -230,11 +246,28 @@ export default class chartElement extends LitElement {
   @state()
   chartResizing = false;
 
+  /**
+   * _resizeTimeout - timeout signature for resize calls
+   */
+  @state()
+  _resizeTimeout;
+
+  /**
+   * isHovered - state to detect when core chart is hovered upon
+   */
+  @state()
+  isHovered = false;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
     this.generateUniqueId();
     this._getTheme();
+
+    if (this.thumbNail) {
+      this.disableCodeInspector = true;
+      this.disableEditor = true;
+    }
 
     if (this.renderMethod !== 'svg' && this.renderMethod !== 'canvas') {
       this.renderMethod = 'canvas';
@@ -246,6 +279,15 @@ export default class chartElement extends LitElement {
       }
     });
     this.intersectionObserver.observe(this.parentElement);
+
+    this.resizeObserver = new ResizeObserver(async () => {
+      clearTimeout(this._resizeTimeout);
+      this._resizeTimeout = await setTimeout(async () => {
+        await this._handleResize();
+      }, 200);
+    });
+
+    this.resizeObserver.observe(this);
 
     if (this.hasAttribute('container-width')) {
       this.style.setProperty('--chat-chart-element-width', this.containerWidth);
@@ -259,6 +301,7 @@ export default class chartElement extends LitElement {
     }
 
     if (this.content) {
+      this._editedContent = this.content;
       this._prepareVisualization();
     }
   }
@@ -266,10 +309,10 @@ export default class chartElement extends LitElement {
   /**
    * _handleResize - target resize on component itself
    */
-  _handleResize() {
-    console.log('reee');
+  async _handleResize() {
     this.chartResizing = true;
-    this._displayVisualization();
+    this.chartLoading = true;
+    await this._displayVisualization();
   }
 
   /**
@@ -296,15 +339,64 @@ export default class chartElement extends LitElement {
     }
   }
 
+  /** _findStructuralChanges - return all JSON changes as edit actions strings
+   * @param {Object} originalJSON - source JSON pre-edit
+   * @param {Object} updatedJSON - new spec post-edit
+   */
+  _findStructuralChanges(originalJSON, updatedJSON) {
+    const userEdits: { path: string; previousValue: any; updatedValue: any }[] =
+      [];
+    const changes = {};
+
+    /** _recursiveComparison
+     * @param {string} path - current json path
+     * @param {object} firstElement - subleaf to compare
+     * @param {object} secondElement - next subleaf to compare
+     */
+    function _recursiveComparison(path, firstElement, secondElement) {
+      if (firstElement === secondElement) {
+        return;
+      }
+      if (
+        firstElement === null ||
+        secondElement === null ||
+        typeof firstElement !== 'object' ||
+        typeof secondElement !== 'object'
+      ) {
+        changes[path] = secondElement;
+        userEdits.push({
+          path: path,
+          previousValue: firstElement,
+          updatedValue: secondElement,
+        });
+        return;
+      }
+      const keys = new Set([
+        ...Object.keys(firstElement),
+        ...Object.keys(secondElement),
+      ]);
+      for (const key of keys) {
+        const nextPath = path ? path + '.' + key : key;
+        _recursiveComparison(nextPath, firstElement[key], secondElement[key]);
+      }
+    }
+    _recursiveComparison('', originalJSON, updatedJSON);
+
+    return { changeObject: changes, actions: userEdits };
+  }
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
   async updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('content')) {
+      this._editedContent = this.content;
       this._errorMessage = null;
       this.chartLoading = true;
-      this._prepareVisualization();
+      if (!this.streaming) {
+        this._prepareVisualization();
+      }
     }
 
     if (changedProperties.has('containerWidth')) {
@@ -362,8 +454,8 @@ export default class chartElement extends LitElement {
 
     if (!this.chartLoading) {
       if (
-        changedProperties.has('containerHeight') ||
-        changedProperties.has('containerWidth') ||
+        //changedProperties.has('containerHeight') ||
+        //changedProperties.has('containerWidth') ||
         changedProperties.has('carbonify') ||
         changedProperties.has('theme') ||
         changedProperties.has('enableTooltip') ||
@@ -398,19 +490,39 @@ export default class chartElement extends LitElement {
    * _displayVisualization - get unique tag and generate vega lite
    * @param {string} predefinedTarget - target div to initialize chart in
    */
-  async _displayVisualization(predefinedTarget?: string) {
-    const targetID =
-      predefinedTarget ||
-      '#' + clabsPrefix + '--chat-embed-vis-' + this._uniqueID;
-    //const targetID = '.' + clabsPrefix + '--chat-chart-container';
+  async _displayVisualization() {
+    const targetID = this._getTargetRenderCanvasId();
+    if (!this._editedSpec) {
+      this._editedSpec = this._visualizationSpec;
+    }
+
     const targetDiv = this.shadowRoot?.querySelector(targetID);
+    const chosenSpec =
+      this.modalMode !== 'edit' ? this._visualizationSpec : this._editedSpec;
     if (targetDiv instanceof HTMLElement) {
+      //const currentHeight = this.shadowRoot.host.clientHeight;
+      //const currentWidth = this.shadowRoot.host.clientWidth;
+
+      //const padding = chosenSpec.padding;
+      chosenSpec.height = 'container'; //currentHeight;// - (padding.top + padding.bottom)*2;
+      chosenSpec.width = 'container'; // - (padding.right + padding.left)*2;
+
+      chosenSpec.autosize = { resize: false };
+      if (this.thumbNail) {
+        chosenSpec.width = 400;
+        chosenSpec.height = 300;
+      }
+
+      //chosenSpec.height = currentHeight - (padding.top + padding.bottom)*2;
+      //chosenSpec.width =  currentWidth - (padding.right + padding.left)*2;
+      //console.log("post: h - "+chosenSpec.height+", w - "+chosenSpec.width)
+
       try {
         let renderMode = 'svg';
         if (this.renderMethod === 'canvas') {
           renderMode = 'canvas';
         }
-        await VegaEmbed.default(targetDiv, this._visualizationSpec, {
+        await VegaEmbed.default(targetDiv, chosenSpec, {
           actions: false,
           hover: this.enableTooltip,
           tooltip: {
@@ -445,6 +557,11 @@ export default class chartElement extends LitElement {
                 this._warningMessage = brushError;
               }
             }
+            if (this.thumbNail) {
+              setTimeout(() => {
+                this._generateImage();
+              }, 200);
+            }
           })
           .catch(async (error) => {
             console.log(error.message);
@@ -456,7 +573,7 @@ export default class chartElement extends LitElement {
               this._visualizationSpec = JSON.parse(
                 JSON.stringify(this._previousSpec)
               );
-              await this._displayVisualization();
+              //await this._displayVisualization(mode);
             } else {
               this.chartLoading = false;
               this._errorMessage = 'RENDER ERROR: ' + error.message;
@@ -682,6 +799,7 @@ export default class chartElement extends LitElement {
    * _openEditorView -
    */
   _openEditorView() {
+    this.showModal = true;
     const vegaURL = 'https://vega.github.io/editor/';
     const openNewWindow = window?.open(vegaURL, '_blank');
     if (openNewWindow) {
@@ -705,36 +823,9 @@ export default class chartElement extends LitElement {
    * _openFullscreenView -
    */
   _openFullscreenView() {
+    this.showModal = true;
     this.modalMode = 'fullscreen';
-    window.setTimeout(async () => {
-      this.showModal = true;
-      const modalDiv = this.shadowRoot?.querySelector(
-        '.' + clabsPrefix + '--chat-chart-modal-container'
-      );
-      if (modalDiv instanceof HTMLElement) {
-        let renderMode = 'svg';
-        if (this.renderMethod === 'canvas') {
-          renderMode = 'canvas';
-        }
-        try {
-          await VegaEmbed.default(modalDiv, this._visualizationSpec, {
-            actions: false,
-            hover: this.enableTooltip,
-            tooltip: { formatTooltip: this._toolTipBuilder },
-            renderer: renderMode as 'canvas' | 'svg',
-          }).catch((error) => {
-            console.log(error);
-            //this._brokenSpec = this._visualizationSpec;
-            //this._visualizationSpec = null;
-            //this._errorMessage = 'VEGA-LITE rendering error: ' + error;
-            //console.log(this._errorMessage);
-            this.requestUpdate();
-          });
-        } catch (modalError) {
-          console.log(modalError);
-        }
-      }
-    }, 200);
+    this._displayVisualization();
   }
 
   /**
@@ -743,6 +834,7 @@ export default class chartElement extends LitElement {
   closeModal() {
     this.showModal = false;
     this.modalMode = null;
+    this._displayVisualization();
   }
 
   /**
@@ -753,9 +845,8 @@ export default class chartElement extends LitElement {
       this._exportSvgToImage();
     } else {
       window.setTimeout(async () => {
-        const container = this.shadowRoot?.querySelector(
-          '.' + clabsPrefix + '--chat-chart-container'
-        );
+        const targetID = this._getTargetRenderCanvasId();
+        const container = this.shadowRoot?.querySelector(targetID);
 
         if (container instanceof HTMLElement) {
           const canvasDiv = container?.querySelector('canvas');
@@ -776,19 +867,98 @@ export default class chartElement extends LitElement {
   }
 
   /**
-   * _handleModelEditorValidation -  event from code subcomponent
-   * @param {event} event - custom event from chat code component
+   * _getTargetRenderCanvasId
    */
-  _handleOriginalEditorValidation(event) {
-    if (event?.detail?.newLineText) {
-      this.content = event.detail.newLineText;
-      this._prepareVisualization();
-      const editedChartID =
-        clabsPrefix + '--chat-editor-embed-vis-' + this._uniqueID;
+  _getTargetRenderCanvasId() {
+    let targetID =
+      '#' + clabsPrefix + '--chat-chart-embed-vis-' + this._uniqueID;
+
+    if (this.modalMode === 'edit') {
+      targetID =
+        '#' + clabsPrefix + '--chat-chart-editor-embed-vis-' + this._uniqueID;
+    }
+    if (this.modalMode === 'fullscreen') {
+      targetID =
+        '#' +
+        clabsPrefix +
+        '--chat-chart-fullscreen-embed-vis-' +
+        this._uniqueID;
+    }
+    return targetID;
+  }
+
+  /**
+   * _generateImage - if canvas, get image object from data url and create img tag
+   */
+  _generateImage() {
+    if (this.renderMethod === 'svg') {
+      //this._exportSvgToImage()
+    } else {
       window.setTimeout(async () => {
-        await this._displayVisualization('.' + editedChartID);
+        const targetID = this._getTargetRenderCanvasId();
+        const container = this.shadowRoot?.querySelector(targetID);
+
+        if (container instanceof HTMLElement) {
+          const canvasDiv = container?.querySelector('canvas');
+          if (canvasDiv instanceof HTMLElement) {
+            this.exportedImageURL = canvasDiv.toDataURL('image/png');
+          }
+        }
       }, 200);
-      //this.requestUpdate();
+    }
+  }
+
+  /**
+   * _handleLiveRawEditorChange - handle live changes coming from code subelement being edited
+   * @param {event} event - custom codelement live change event
+   */
+  _handleLiveRawEditorChange(event) {
+    if (event?.detail?.newLineText) {
+      const previousData = this._visualizationSpec.data;
+
+      try {
+        this.chartLoading = false;
+        this._errorMessage = '';
+        const newSpec: any = JSON.parse(event.detail.newLineText);
+        newSpec.data = previousData;
+
+        //this.content = JSON.stringify(newSpec);
+        this._editedSpec = newSpec;
+        this._prepareVisualization(newSpec);
+      } catch (error) {
+        console.error(error);
+        this.chartLoading = true;
+        this._errorMessage = 'CHART COMPONENT ERROR: edited spec is invalid';
+      }
+    }
+  }
+
+  /**
+   * _handleLiveCarbonEditorChange - handle live changes coming from code subelement being edited
+   * @param {event} event - custom codelement live change event
+   */
+  _handleLiveCarbonEditorChange(event) {
+    if (event?.detail?.newLineText) {
+      const previousData = this._visualizationSpec.data;
+
+      try {
+        const newSpec: any = JSON.parse(event.detail.newLineText);
+        newSpec['data'] = previousData;
+        this.chartLoading = false;
+        this._errorMessage = '';
+
+        //this.content = JSON.stringify(newSpec);
+        //this._prepareVisualization(newSpec)
+        this._editedSpec = newSpec;
+
+        window.setTimeout(async () => {
+          await this._displayVisualization();
+        }, 200);
+      } catch (error) {
+        console.error(error);
+        this.chartLoading = true;
+        this._errorMessage = 'CHART COMPONENT ERROR: edited spec is invalid';
+      }
     }
   }
 
@@ -798,39 +968,83 @@ export default class chartElement extends LitElement {
    */
   _handleCarbonEditorValidation(event) {
     if (event?.detail?.newLineText) {
-      this.content = event.detail.newLineText;
-      const editedChartID =
-        clabsPrefix + '--chat-editor-embed-vis-' + this._uniqueID;
-      window.setTimeout(async () => {
-        await this._displayVisualization('.' + editedChartID);
-      }, 200);
-      //this.requestUpdate();
+      this._errorMessage = '';
+      const previousData = this._visualizationSpec.data;
+      try {
+        this.modalMode = null;
+        this.showModal = false;
+        //this._visualizationSpec = JSON.parse(event.detail.newLineText);
+        //this._visualizationSpec.data = previousData;
+
+        const newSpec: any = JSON.parse(event.detail.newLineText);
+        newSpec.data = previousData;
+
+        const changes = this._findStructuralChanges(
+          this._visualizationSpec,
+          newSpec
+        );
+
+        const specificationEditedEvent = new CustomEvent(
+          'on-chart-specification-edit-validation',
+          {
+            detail: {
+              action: 'CHART: rendering successful',
+              changes: changes,
+              originalSpec: this._visualizationSpec,
+              newSpec: newSpec,
+            },
+            bubbles: true,
+            composed: true,
+          }
+        );
+
+        this._visualizationSpec = newSpec;
+        this.chartLoading = false;
+        this._errorMessage = '';
+
+        this.dispatchEvent(specificationEditedEvent);
+
+        window.setTimeout(async () => {
+          await this._displayVisualization();
+        }, 200);
+      } catch (error) {
+        console.error(error);
+        this._errorMessage = 'CHART COMPONENT ERROR: edited spec is invalid';
+      }
     }
   }
 
   /**
-   * _openCodeView -
+   * _handleModelEditorValidation -  event from code subcomponent
+   * @param {event} event - custom event from chat code component
+   */
+  _handleOriginalEditorValidation(event) {
+    if (event?.detail?.newLineText) {
+      const previousData = this._visualizationSpec.data;
+      try {
+        const newSpec: any = JSON.parse(event.detail.newLineText);
+        newSpec.data = previousData;
+        this._editedSpec = newSpec;
+
+        this._prepareSpecification(JSON.stringify(newSpec), true, true, 0);
+
+        window.setTimeout(async () => {
+          await this._displayVisualization();
+        }, 200);
+      } catch (error) {
+        console.error(error);
+        this._errorMessage = 'CHART COMPONENT ERROR: edited spec is invalid';
+      }
+    }
+  }
+
+  /**
+   * _openCodeView - open editor modal
    */
   _openCodeView() {
-    this.modalMode = 'code';
-    window.setTimeout(async () => {
-      this.showModal = true;
-
-      const modalDiv = this.shadowRoot?.querySelector(
-        '.' + clabsPrefix + '--chat-chart-modal-container'
-      );
-      if (modalDiv instanceof HTMLElement) {
-        try {
-          const editedChartID =
-            clabsPrefix + '--chat-editor-embed-vis-' + this._uniqueID;
-          window.setTimeout(async () => {
-            await this._displayVisualization('.' + editedChartID);
-          }, 400);
-        } catch (modalError) {
-          console.error(modalError);
-        }
-      }
-    }, 200);
+    this.modalMode = 'edit';
+    this.showModal = true;
+    this._displayVisualization();
   }
 
   /**
@@ -848,13 +1062,26 @@ export default class chartElement extends LitElement {
   }
 
   /**
+   * _handleMouseOut - see if component lost mouse content
+   */
+  _handleMouseOut() {
+    this.isHovered = false;
+  }
+
+  /**
+   * _handleMouseOut - see if component lost mouse content
+   */
+  _handleMouseOver() {
+    this.isHovered = true;
+  }
+
+  /**
    * _exportSvgToImage - if svg, get image object from svg and auto-download
    */
   _exportSvgToImage() {
     window.setTimeout(async () => {
-      const container = this.shadowRoot?.querySelector(
-        '.' + clabsPrefix + '--chat-chart-container'
-      );
+      const targetID = this._getTargetRenderCanvasId();
+      const container = this.shadowRoot?.querySelector(targetID);
       if (container instanceof HTMLElement) {
         const svgDiv = container?.querySelector('svg');
         if (svgDiv instanceof SVGElement) {
@@ -903,15 +1130,20 @@ export default class chartElement extends LitElement {
 
   /**
    * prepareVisualization - Prepare and adapt Vega visualization spec to be more Carbon adjacent
+   * @param {object} premadeSpec - Vega specification sent in optionally when pre-parsed
    */
-  _prepareVisualization() {
+  _prepareVisualization(premadeSpec?: object) {
     let spec: any = {};
-    try {
-      spec = JSON.parse(this.content);
-    } catch (e) {
-      //this._errorMessage =
-      //'CARBON CHART ERROR: JSON parse() failed, specification is not valid JSON';
-      return '';
+    if (!premadeSpec) {
+      try {
+        spec = JSON.parse(this.content);
+      } catch (e) {
+        this._errorMessage =
+          'CARBON CHART ERROR: JSON parse() failed, specification is not valid JSON';
+        return '';
+      }
+    } else {
+      spec = JSON.parse(JSON.stringify(premadeSpec));
     }
 
     if (!spec['$schema']) {
@@ -921,16 +1153,16 @@ export default class chartElement extends LitElement {
     }
 
     if (!spec['repeat']) {
-      spec.width = 'container';
-      spec.height = 'container';
+      //spec.width = 'container';
+      //spec.height = 'container';
     } else {
       delete spec['height'];
       delete spec['width'];
     }
 
-    //delete spec['height'];
-    //delete spec['width'];
-    //delete spec['autosize'];
+    delete spec['height'];
+    delete spec['width'];
+    delete spec['autosize'];
 
     let layeredSpec;
     let repeatedSpec;

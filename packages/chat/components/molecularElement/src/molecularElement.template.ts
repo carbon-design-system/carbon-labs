@@ -50,6 +50,7 @@ export function molecularElementTemplate(customElementClass) {
     <div
       @mouseout="${handleMouseOut}"
       @mouseover="${handleMouseOver}"
+      id="${clabsPrefix}--chat-molecule-container-id-${uniqueID}"
       class="${clabsPrefix}--chat-molecule-container ${clabsPrefix}--chat-molecule-${theme}">
       ${loading
         ? html`

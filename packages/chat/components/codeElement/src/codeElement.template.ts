@@ -16,6 +16,8 @@ import '@carbon/web-components/es/components/icon-button/index.js';
 
 import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
 import Copy16 from '@carbon/web-components/es/icons/copy/16.js';
+import Checkmark16 from '@carbon/web-components/es/icons/checkmark/16.js';
+import Close16 from '@carbon/web-components/es/icons/close/16.js';
 
 /**
  * Lit template for code
@@ -26,14 +28,17 @@ import Copy16 from '@carbon/web-components/es/icons/copy/16.js';
 export function codeElementTemplate(customElementClass) {
   const {
     _renderedLines,
+    _editedContent,
     disableLineTicks,
     disableCopyButton,
     disableEditButton,
+    _handleFullCodeEdit: handleFullCodeEdit,
     _copyCode: copyCode,
     _handleCodeEdit: handleCodeEdit,
     _handleEditValidation: handleEditValidation,
     _handleEditCancellation: handleEditCancellation,
     editable,
+    _currentlyFullyEdited: currentlyFullyEdited,
     _setCurrentIndex: setCurrentIndex,
     _currentlyEdited: currentlyEdited,
   } = customElementClass;
@@ -64,64 +69,86 @@ export function codeElementTemplate(customElementClass) {
       </div>
     </div>
     <div class="${clabsPrefix}--chat-code-container">
-      ${_renderedLines.map(
-        (lineObject, index) =>
-          html`
-            <div
-              class="${clabsPrefix}--chat-code-line ${clabsPrefix}--chat-code-line-fade-in">
-              ${disableLineTicks || _renderedLines.length < 2
-                ? html``
-                : html`
-                    <div class="${clabsPrefix}--chat-code-line-tick">
-                      ${index + 1}
-                    </div>
-                    <div class="${clabsPrefix}--chat-code-line-divider"></div>
-                  `}
-              ${!editable
-                ? html`<div
-                    class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-line${editable
-                      ? '-editable'
-                      : ''} ${lineObject.type}"
-                    style="padding-left: ${lineObject.paddingLeft}">
-                    ${lineObject.content}
-                  </div>`
-                : html`
-                    <textarea
-                      @keydown="${handleCodeEdit}"
-                      rows="1"
-                      @click="${setCurrentIndex}"
-                      data-codeindex="${index}"
-                      class="${clabsPrefix}--chat-code-line-text-area ${lineObject.type}"
-                      style="padding-left: ${lineObject.paddingLeft}">
-${lineObject.content}</textarea
-                    >
-                  `}
-            </div>
-          `
-      )}
-      ${currentlyEdited
+      ${currentlyFullyEdited && !disableLineTicks
         ? html`
-            <div class="${clabsPrefix}--chat-code-editing-controls">
-              <cds-button
-                size="sm"
-                kind="danger"
-                tooltip-text="Cancel edit"
-                tooltip-position="left"
-                tooltip-alignment="end"
-                @click="${handleEditCancellation}">
-                Cancel edit
-              </cds-button>
-              <cds-button
-                size="sm"
-                tooltip-text="Validate edit"
-                tooltip-position="left"
-                tooltip-alignment="end"
-                @click="${handleEditValidation}">
-                Validate edit
-              </cds-button>
+            <div class="${clabsPrefix}--chat-code-container-full-elements">
+              <div class="${clabsPrefix}--chat-code-line-ticks-full"></div>
+              <div class="${clabsPrefix}--chat-code-line-divider-full"></div>
+              <textarea
+                @input="${handleFullCodeEdit}"
+                class="${clabsPrefix}--chat-code-edit-area">
+${_editedContent}
+          </textarea
+              >
             </div>
           `
-        : html``}
+        : currentlyFullyEdited || editable
+        ? html`
+            <textarea
+              @input="${handleFullCodeEdit}"
+              class="${clabsPrefix}--chat-code-edit-area">
+${_editedContent}
+          </textarea
+            >
+          `
+        : html` ${_renderedLines.map(
+            (lineObject, index) =>
+              html`
+                <div
+                  class="${clabsPrefix}--chat-code-line ${clabsPrefix}--chat-code-line-fade-in">
+                  ${disableLineTicks || _renderedLines.length < 2
+                    ? html``
+                    : html`
+                        <div class="${clabsPrefix}--chat-code-line-tick">
+                          ${index + 1}
+                        </div>
+                        <div
+                          class="${clabsPrefix}--chat-code-line-divider"></div>
+                      `}
+                  ${!editable
+                    ? html`<div
+                        class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-line${editable
+                          ? '-editable'
+                          : ''} ${lineObject.type}"
+                        style="padding-left: ${lineObject.paddingLeft}">
+                        ${lineObject.content}
+                      </div>`
+                    : html`
+                        <textarea
+                          @keydown="${handleCodeEdit}"
+                          rows="1"
+                          @click="${setCurrentIndex}"
+                          data-codeindex="${index}"
+                          class="${clabsPrefix}--chat-code-line-text-area ${lineObject.type}"
+                          style="padding-left: ${lineObject.paddingLeft}">
+${lineObject.content}</textarea
+                        >
+                      `}
+                </div>
+              `
+          )}`}
     </div>
+
+    ${currentlyEdited
+      ? html`
+          <div class="${clabsPrefix}--chat-code-editing-controls">
+            <cds-button
+              size="md"
+              align="top"
+              kind="danger--tertiary"
+              @click="${handleEditCancellation}">
+              ${Close16({ slot: 'icon' })} Revert all changes
+            </cds-button>
+
+            <cds-button
+              size="md"
+              align="top"
+              kind="tertiary"
+              @click="${handleEditValidation}">
+              ${Checkmark16({ slot: 'icon' })} Apply changes
+            </cds-button>
+          </div>
+        `
+      : html``}
   </div>`;
 }

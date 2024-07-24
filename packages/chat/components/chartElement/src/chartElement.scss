@@ -18,11 +18,11 @@
   border: 1px solid $border-subtle-00;
   border-radius: 8px;
   background: $background;
-  block-size: var(--chat-chart-element-height, '123px');
+  block-size: var(--chat-chart-element-height, 320px);
   font-family: 'IBM Plex Sans Condensed', sans-serif;
-  inline-size: var(--chat-chart-element-width, '123px');
-  min-block-size: 246px;
-  min-inline-size: 246px;
+  inline-size: var(--chat-chart-element-width, 100%);
+  min-block-size: 123px;
+  min-inline-size: 123px;
 
   .#{$clabs-prefix}--chat-chart-container {
     display: block;
@@ -30,15 +30,13 @@
     box-sizing: border-box;
     block-size: 100%;
     inline-size: 100%;
-    min-block-size: 100%;
-    min-inline-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-chart-options {
     position: absolute;
     display: flex;
     flex-direction: row;
-    inset-block-start: 16px;
+    inset-block-start: 8px;
     inset-inline-end: 0;
   }
 
@@ -54,6 +52,24 @@
     inline-size: 30px;
     pointer-events: none;
     visibility: hidden;
+  }
+
+  .#{$clabs-prefix}--chat-chart-thumbnail-container {
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 8px;
+    block-size: var(--chat-chart-element-height, 100%);
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-chart-thumbnail-container img {
+    position: absolute;
+    block-size: calc(100% - 16px);
+    inline-size: calc(100% - 16px);
+    inset-block-start: 8px;
+    inset-inline-start: 8px;
+    object-fit: cover;
   }
 
   .#{$clabs-prefix}--chat-chart-options-prefade {
@@ -109,7 +125,6 @@
     padding: 16px;
     block-size: 100%;
     inline-size: 100%;
-    min-block-size: calc(100vh - 68px - 52px);
     pointer-events: all;
   }
 
@@ -130,19 +145,24 @@
   .#{$clabs-prefix}--chat-editor-modal-section-code {
     display: flex;
     overflow: hidden;
+    box-sizing: border-box;
     flex-direction: column;
+    block-size: 100%;
+    inline-size: 80%;
   }
   .#{$clabs-prefix}--chat-editor-modal-code-container {
-    overflow: hidden scroll;
-    flex: 1;
+    overflow: hidden;
+    box-sizing: border-box;
+    max-block-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-editor-modal-section-chart {
     overflow: hidden;
-    flex: 1;
+    box-sizing: border-box;
     border: 1px solid $border-subtle-00;
     border-radius: 8px;
-    background: $background;
+    block-size: 100%;
+    inline-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-chart-options svg {
@@ -239,6 +259,25 @@
     inset-inline-start: 0;
     line-height: 18px;
     overflow-y: auto;
+  }
+
+  .#{$clabs-prefix}--chat-chart-fullscreen-container {
+    position: fixed;
+    z-index: 999;
+    display: flex;
+    box-sizing: border-box;
+    padding: 64px;
+    background: $background;
+    block-size: 100vh;
+    gap: 16px;
+    inline-size: 100vw;
+    inset: 0;
+  }
+  .#{$clabs-prefix}--chat-chart-fullscreen-container-close {
+    position: fixed;
+    z-index: 9999;
+    inset-block-start: 20px;
+    inset-inline-end: 20px;
   }
 
   @keyframes loading-animation {

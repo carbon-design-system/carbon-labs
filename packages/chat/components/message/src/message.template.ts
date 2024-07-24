@@ -63,6 +63,7 @@ export function messageTemplate(customElementClass) {
     watsonIconDark,
     watsonIconLight,
     _parentTheme: parentTheme,
+    _childLinkClicked: childLinkClicked,
     displayColor,
     currentlyStreaming,
     _handleSlotchange,
@@ -154,12 +155,16 @@ export function messageTemplate(customElementClass) {
                           `
                         : message.type === 'chart'
                         ? html`
-                            <clabs-chat-chart content="${message.content}">
+                            <clabs-chat-chart
+                              content="${message.content}"
+                              container-height="320px">
                             </clabs-chat-chart>
                           `
                         : message.type === 'link-list'
                         ? html`
-                            <clabs-chat-link-list content="${message.content}">
+                            <clabs-chat-link-list
+                              @on-link-list-item-selected="${childLinkClicked}"
+                              content="${message.content}">
                             </clabs-chat-link-list>
                           `
                         : message.type === 'carousel'

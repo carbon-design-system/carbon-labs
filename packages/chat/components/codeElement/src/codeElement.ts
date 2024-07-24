@@ -54,6 +54,12 @@ export default class codeElement extends LitElement {
   disableEditButton = true;
 
   /**
+   * streaming - flag to enable streaming mode
+   */
+  @property({ type: Boolean, attribute: 'streaming' })
+  streaming;
+
+  /**
    * Source content - save original code text content
    */
   @state()
@@ -76,6 +82,24 @@ export default class codeElement extends LitElement {
    */
   @state()
   _currentlyEdited = false;
+
+  /**
+   * currentlyFullyEdited - flag if any content was changed
+   */
+  @state()
+  _currentlyFullyEdited = false;
+
+  /**
+   * _fullEditMode - use one singular text area to edit
+   */
+  @state()
+  _fullEditMode = true;
+
+  /**
+   * _updateOnEdit - send event on every edit
+   */
+  @state()
+  _updateOnEdit = true;
 
   /**
    * Array of lines parsed from content attribute
@@ -113,9 +137,12 @@ export default class codeElement extends LitElement {
   updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('content')) {
-      this._originalContent = this.content;
-      this._formatCode();
-      this.requestUpdate();
+      if (!this._originalContent) {
+        this._originalContent = this.content;
+      }
+      if (this.streaming) {
+        this._formatCode();
+      }
     }
   }
 
@@ -125,10 +152,13 @@ export default class codeElement extends LitElement {
     if (this.hasAttribute('max-height')) {
       this.style.setProperty('--chat-code-height', this.maxHeight);
     }
+    if (this.editable) {
+      this.disableLineTicks = true;
+    }
     if (this.content !== undefined) {
+      this._editedContent = this.content;
       this._originalContent = this.content;
       this._formatCode();
-      this.requestUpdate();
     } else {
       this._renderedLines = [
         {
@@ -148,6 +178,42 @@ export default class codeElement extends LitElement {
     } catch (error) {
       console.error('CodeElement ERROR:', error);
     }
+  }
+
+  /**
+   * _handleFullCodeEdit - textarea input event to record and feedback edits to content
+   * @param {event} event - textarea input event
+   */
+  _handleFullCodeEdit(event) {
+    const newLines = event?.target?.value;
+
+    if (newLines && this._updateOnEdit) {
+      this._editedContent = newLines;
+      const codeEditedEvent = new CustomEvent('on-code-edit-change', {
+        detail: {
+          previousLineData: this.content,
+          newLineText: newLines,
+        },
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(codeEditedEvent);
+    }
+    if (this._editedContent === this._originalContent) {
+      this._currentlyEdited = false;
+    } else {
+      this._currentlyEdited = true;
+    }
+  }
+
+  /**
+   * _startFullEdit - textarea input event to record and feedback edits to content
+   */
+  _startFullEdit() {
+    if (!this._currentlyEdited) {
+      this._editedContent = this.content;
+    }
+    this._currentlyEdited = true;
   }
 
   /**
@@ -196,6 +262,13 @@ export default class codeElement extends LitElement {
    * @param {event} event - textarea click event
    */
   _setCurrentIndex(event) {
+    if (this._fullEditMode) {
+      if (!this._currentlyFullyEdited) {
+        this._editedContent = this.content;
+      }
+      this._currentlyFullyEdited = true;
+    }
+
     const targetElement = event?.target;
     const codeIndex = targetElement?.getAttribute('data-codeindex');
     if (codeIndex) {
@@ -207,18 +280,20 @@ export default class codeElement extends LitElement {
    * _handleEditValidation - button event when user confirms edit of code
    */
   _handleEditValidation() {
+    //this.content = this._editedContent;
     const codeEditedEvent = new CustomEvent('on-code-edit-validation', {
       detail: {
         previousLineData: this._renderedLines,
         newLineData: this._editedLines,
-        newLineText: this._packageSpecFromArray(),
+        newLineText: this._editedContent, //this._packageSpecFromArray(),
       },
       bubbles: true,
       composed: true,
     });
     this.dispatchEvent(codeEditedEvent);
-    this._renderedLines = [...this._editedLines];
-    this._originalLines = [...this._editedLines];
+    //this._renderedLines = [...this._editedLines];
+    //this._originalLines = [...this._editedLines];
+    this.content = this._editedContent;
     this._currentlyEdited = false;
     this.requestUpdate();
   }
@@ -227,12 +302,21 @@ export default class codeElement extends LitElement {
    * _handleCancellation - button event when user aborts edit of code
    */
   _handleEditCancellation() {
+    this._editedContent = this._originalContent;
     this._currentlyEdited = false;
-    //this._renderedLines.length = 0;
-    //this._renderedLines = this._originalLines;
-    this._renderedLines = [...this._originalLines];
 
-    this._formatCode();
+    const codeEditedEvent = new CustomEvent('on-code-edit-change', {
+      detail: {
+        previousLineData: this._originalContent,
+        newLineText: this._originalContent,
+        action: 'user canceled latest edit',
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(codeEditedEvent);
+
+    //this._formatCode();
     this.requestUpdate();
   }
 

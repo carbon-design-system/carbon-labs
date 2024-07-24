@@ -141,6 +141,18 @@ export default class molecularElement extends LitElement {
   _scaling = 1;
 
   /**
+   * viewX - save offset to target zooming
+   */
+  @state()
+  _viewX = 0;
+
+  /**
+   * viewY - save offset to target zooming
+   */
+  @state()
+  _viewY = 0;
+
+  /**
    * SmilesDrawer rendering object that targets the visible inner SVG
    */
   private molecularRenderer: any;
@@ -209,8 +221,8 @@ export default class molecularElement extends LitElement {
     let compactDrawing = false;
     let scale: any = null;
     let padding = 16;
-    let bondSpacing = 0.18 * 15;
-    let bondLength = 15;
+    let bondSpacing = 0.18 * 10;
+    const bondLength = 15;
     let atomVisualization = 'default';
 
     if (mode === 'fullscreen') {
@@ -220,13 +232,12 @@ export default class molecularElement extends LitElement {
     } else if (this.thumbNailMode) {
       fontSizeLarge = 12;
       fontSizeSmall = 8;
-      bondThickness = 1.6;
-      bondSpacing = 0.18 * 20;
+      bondThickness = 1.2;
+      bondSpacing = 0.18 * 15;
       compactDrawing = true;
       atomVisualization = 'balls';
-      bondLength = 15;
       padding = 8;
-      scale = 1.1;
+      scale = 1;
     }
 
     const options = {
@@ -237,7 +248,7 @@ export default class molecularElement extends LitElement {
       bondThickness: bondThickness,
       padding: padding,
       bondLength: bondLength,
-      shortBondLength: 0.85,
+      shortBondLength: 0.7,
       bondSpacing: bondSpacing,
       atomVisualization: atomVisualization,
       isomeric: true,
@@ -272,10 +283,10 @@ export default class molecularElement extends LitElement {
           CL: '#009d9a',
           BR: '#ba4e00',
           I: '#8a3ffc',
-          P: '#ff932b',
-          S: '#fdd13a',
-          B: '#f1c21b',
-          SI: '#f1c21b',
+          P: '#db5b00',
+          S: '#d6a602',
+          B: '#c29800',
+          SI: '#cca002',
           H: '#525252',
           BACKGROUND: '#f4f4f4',
           BONDS: '#e0e0e0',
@@ -330,36 +341,42 @@ export default class molecularElement extends LitElement {
    */
   _zoomIn(event) {
     event.preventDefault();
-    const zoomValue = 0.01;
-    const minZoom = 1.0;
+    const zoomValue = 0.001;
+    const minZoom = 0.5;
     const maxZoom = 3.0;
     const delta = Math.sign(event.deltaY) * zoomValue;
 
-    this._scaling = Math.min(
-      maxZoom,
-      Math.max(this._scaling - delta, minZoom, minZoom)
-    );
     const allSvg = this.shadowRoot?.getElementById(
       'clabs--chat-molecule-' + this._uniqueID
     );
     if (allSvg instanceof SVGElement) {
-      /*const mouseX = event.clientX - this.getBoundingClientRect().left;
-      const mouseY = event.clientY - this.getBoundingClientRect().top;
-      const viewBox = allSvg.viewBox.baseVal;
-      const newWidth = viewBox.width*this._scaling;
-      const newHeight = viewBox.height*this._scaling;
-      const viewX = mouseX - (mouseX - x) * (newWidth / viewBox.width);
-      const viewY = mouseY - (mouseY - y) * (newHeight / viewBox.height);
-      const viewX = -mouseX * (this._scaling-1)
-      const viewY = -mouseY * (this._scaling-1)
-      
-      const viewX = 0
-      const viewY = 0*/
+      const mouseX = event.offsetX;
+      const mouseY = event.offsetY;
+      const newScale = Math.min(
+        maxZoom,
+        Math.max(this._scaling - delta, minZoom)
+      );
+      this._viewX =
+        mouseX - (mouseX - this._viewX) * (newScale / this._scaling);
+      this._viewY =
+        mouseY - (mouseY - this._viewY) * (newScale / this._scaling);
 
+      this._scaling = newScale;
+
+      //allSvg.setAttribute('transform','translate('+this._viewX+' '+this._viewY+') scale('+this._scaling+')');
       const subElements = allSvg.querySelectorAll('g');
       for (const subElement of subElements) {
         //allSvg.setAttribute('viewBox', viewX+' '+viewY+' '+newWidth+' '+newHeight);//translate('+viewX+' '+viewY+')
-        subElement.setAttribute('transform', ' scale(' + this._scaling + ')');
+        subElement.setAttribute(
+          'transform',
+          'translate(' +
+            this._viewY +
+            ' ' +
+            this._viewX +
+            ') scale(' +
+            this._scaling +
+            ')'
+        );
       }
     }
   }
@@ -368,51 +385,93 @@ export default class molecularElement extends LitElement {
    * _appendCustomStyles - change smiles-drawer atom rendering
    */
   _appendCustomStyles() {
-    const enableTextStyling = false;
-    const enableCircleStyling = true;
-    const enableZooming = true;
+    //const enableTextStyling = false;
+    //const enableCircleStyling = false;
+    const enableZooming = false;
+    const shortenWedges = true;
 
     if (enableZooming) {
-      const finalizedSvg = this.shadowRoot?.getElementById(
-        'clabs--chat-molecule-' + this._uniqueID
+      /*const finalizedSvg = this.shadowRoot?.getElementById(clabsPrefix+'--chat-molecule-' + this._uniqueID);
+      if(finalizedSvg instanceof SVGElement){
+        finalizedSvg.addEventListener('wheel',(e)=>this._zoomIn(e))
+      }*/
+
+      const moleculeContainer = this.shadowRoot?.getElementById(
+        clabsPrefix + '--chat-molecule-container-id-' + this._uniqueID
       );
-      if (finalizedSvg instanceof SVGElement) {
-        finalizedSvg.addEventListener('wheel', (e) => this._zoomIn(e));
+      if (moleculeContainer instanceof HTMLElement) {
+        moleculeContainer.addEventListener('wheel', (e) => this._zoomIn(e));
       }
     }
 
-    if (enableTextStyling) {
+    if (shortenWedges) {
+      const wedgeElements = this.shadowRoot?.querySelectorAll('polygon');
+      if (wedgeElements) {
+        wedgeElements.forEach((wedge) => {
+          if (wedge instanceof SVGPolygonElement) {
+            const points = wedge.getAttribute('points').split(' ');
+            const coords = points.map((point) => point.split(',').map(Number));
+            const shortenFactor = 0.6;
+            const [x1, y1] = coords[0];
+            let [x2, y2] = coords[1];
+            let [x3, y3] = coords[2];
+
+            x2 = x1 + (x2 - x1) * shortenFactor;
+            y2 = y1 + (y2 - y1) * shortenFactor;
+            x3 = x1 + (x3 - x1) * shortenFactor;
+            y3 = y1 + (y3 - y1) * shortenFactor;
+
+            wedge.setAttribute(
+              'points',
+              x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x3 + ',' + y3
+            );
+          }
+        });
+      }
+    }
+
+    /*if(enableTextStyling){
       const textElements = this.shadowRoot?.querySelectorAll('text');
-      if (textElements) {
-        textElements.forEach((text) => {
-          //text.style.fill = 'red';
-          //text.style.textShadow = 'red'
-          text.style.textShadow = '0 0 5px rgba(255, 255, 255, 0.8)';
-          //text.style.stroke = 'black';
-          //text.style.strokeWidth = '3px';
-          //text.style.background = 'none';
+      if(textElements){
+        textElements.forEach(text =>{
+          if(text instanceof SVGTextElement){
+      //text.style.fill = 'red';
+      //text.style.textShadow = 'red'
+      text.style.textShadow='0 0 5px rgba(255, 255, 255, 0.8)'
+      //text.style.stroke = 'black';
+      //text.style.strokeWidth = '3px';
+      //text.style.background = 'none';
 
-          const tspans = text.querySelectorAll('tspan');
-          tspans.forEach((tspan) => {
-            tspan.style.stroke = 'rgba(255, 255, 255)';
-            tspan.style.fontWeight = '900';
-            //tspan.style.fill='white';
-            tspan.style.strokeWidth = '0.5px';
-            //tspan.style.textShadow='0 0 5px rgba(255, 255, 255, 0.8)'
-          });
-        });
+      const tspans = text?.querySelectorAll('tspan');
+      tspans.forEach(tspan =>{
+        if(tspan instanceof SVGTSpanElement){
+        tspan.style.stroke='rgba(255, 255, 255)';
+        tspan.style.fontWeight='900'
+        //tspan.style.fill='white';
+        tspan.style.strokeWidth='0.5px';
+        //tspan.style.textShadow='0 0 5px rgba(255, 255, 255, 0.8)'
+        }
+      });
+      }
+
+      })
+     }
+    }
+    if(enableCircleStyling){
+    const mask = this.shadowRoot?.querySelector('mask');
+    if(mask){
+      const circles = mask?.querySelectorAll('circle');
+      if(circles){
+
+      circles.forEach(circle =>{
+        if(circle instanceof SVGCircleElement){
+        //circle.style.opacity='0';
+        circle.setAttribute("r","3")
+        }
+      })
       }
     }
-    if (enableCircleStyling) {
-      const mask = this.shadowRoot?.querySelector('mask');
-      if (mask) {
-        const circles = mask.querySelectorAll('circle');
-        circles.forEach((circle) => {
-          //circle.style.opacity='0';
-          circle.setAttribute('r', '1');
-        });
-      }
-    }
+    }*/
   }
 
   /**
@@ -491,7 +550,7 @@ export default class molecularElement extends LitElement {
         }
       }
     } catch (pubChemError) {
-      console.error(pubChemError);
+      this.pubChemUrl = null;
     }
   }
 

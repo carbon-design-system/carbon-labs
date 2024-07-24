@@ -50,9 +50,15 @@ $css--plex: true !default;
     align-items: center;
     animation: fade-in 600ms forwards;
     border-block-start: 1px solid $border-subtle-01;
+
     gap: 8px;
     opacity: 0;
     padding-block: 4px;
+    padding-inline-end: 4px;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item svg {
+    pointer-events: none;
   }
 
   .#{$clabs-prefix}--chat-link-list-item-text {

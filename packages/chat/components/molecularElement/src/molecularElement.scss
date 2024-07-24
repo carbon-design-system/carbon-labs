@@ -33,13 +33,6 @@ $css--plex: true !default;
     inline-size: var(--chat-molecule-width, 'auto');
   }
 
-  .#{$clabs-prefix}--chat-molecule-target tspan {
-    font-weight: 700;
-    stroke: $background;
-    stroke-width: 0.3;
-    text-shadow: $background 0 0 6px;
-  }
-
   .#{$clabs-prefix}--chat-molecule-target .element {
     text-shadow: $background 0 0 6px;
   }
@@ -47,13 +40,6 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-molecule-target-fullscreen {
     block-size: 100%;
     inline-size: 100%;
-  }
-
-  .#{$clabs-prefix}--chat-molecule-target-fullscreen tspan {
-    font-weight: 700;
-    stroke: $background;
-    stroke-width: 0.3;
-    text-shadow: $background 0 0 6px;
   }
 
   .#{$clabs-prefix}--chat-molecule-container-loader {

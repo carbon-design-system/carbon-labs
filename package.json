@@ -55,11 +55,11 @@
   "devDependencies": {
     "@carbon/grid": "^11.21.1",
     "@carbon/icon-helpers": "10.49.1",
-    "@carbon/icons": "11.44.1",
+    "@carbon/icons": "11.45.0",
     "@carbon/layout": "11.23.1",
     "@carbon/motion": "11.19.1",
-    "@carbon/themes": "11.36.0",
-    "@carbon/type": "11.26.0",
+    "@carbon/themes": "11.37.0",
+    "@carbon/type": "11.28.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",
@@ -67,7 +67,7 @@
     "@open-wc/testing": "^4.0.0",
     "@playwright/test": "^1.39.0",
     "@rollup/plugin-alias": "^5.1.0",
-    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-commonjs": "^26.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-replace": "^5.0.5",
@@ -94,7 +94,7 @@
     "commander": "^12.0.0",
     "cssnano": "^7.0.0",
     "doctoc": "^2.2.1",
-    "esbuild": "^0.20.0",
+    "esbuild": "^0.23.0",
     "eslint": "^8.57.0",
     "eslint-config-carbon": "^3.11.0",
     "gitignore-to-glob": "^0.3.0",
@@ -122,7 +122,7 @@
     "rollup-plugin-esbuild": "^6.1.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-postcss-lit": "^2.1.0",
-    "sass": "~1.76.0",
+    "sass": "~1.77.0",
     "sinon": "^17.0.1",
     "storybook": "^8.0.0",
     "strip-comments": "^2.0.1",
@@ -132,5 +132,5 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
   },
-  "packageManager": "yarn@4.3.0"
+  "packageManager": "yarn@4.3.1"
 }

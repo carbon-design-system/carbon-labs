@@ -293,7 +293,6 @@ export function chartElementTemplate(customElementClass) {
                   `
                 : html``}
             </div>
-          </div>
-          ${errorMessage}`}
+          </div>`}
   `;
 }

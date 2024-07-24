@@ -34,7 +34,7 @@ export default class linkListElement extends LitElement {
    * max items before cutoff
    */
   @state()
-  maxItems = 2;
+  maxItems = 3;
 
   /** enableReditection -  whether open black new page
    */

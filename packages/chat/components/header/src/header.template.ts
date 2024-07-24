@@ -58,64 +58,55 @@ export function headerTemplate(customElementClass) {
       @mouseup="${handleHeaderMouseUp}"
       @mousemove="${handleHeaderMouseMove}">
       <div class="${clabsPrefix}--chat-header-elements">
-        ${
-          menuOpened
-            ? html`
-                <div class="${clabsPrefix}--chat-header-elements-menu-list">
-                  ${menuItems.map(
-                    (menuItem, index) => html`
-                      <div
-                        class="${clabsPrefix}--chat-header-elements-menu-list-item"
-                        data-menuindex="${index}"
-                        @mousedown="${handleMenuItemSelected}">
-                        ${menuItem.title}
-                      </div>
-                    `
-                  )}
-                </div>
-              `
-            : html``
-        }
+        ${menuOpened
+          ? html`
+              <div class="${clabsPrefix}--chat-header-elements-menu-list">
+                ${menuItems.map(
+                  (menuItem, index) => html`
+                    <div
+                      class="${clabsPrefix}--chat-header-elements-menu-list-item"
+                      data-menuindex="${index}"
+                      @mousedown="${handleMenuItemSelected}">
+                      ${menuItem.title}
+                    </div>
+                  `
+                )}
+              </div>
+            `
+          : html``}
 
         <div
-<<<<<<< HEAD
           role="banner"
-=======
->>>>>>> upstream/main
-          class="${clabsPrefix}--chat-header-elements-left ${
-    dockingEnabled ? clabsPrefix + '--chat-header-elements-left-docked' : ''
-  }"
+          class="${clabsPrefix}--chat-header-elements-left ${dockingEnabled
+            ? clabsPrefix + '--chat-header-elements-left-docked'
+            : ''}"
           @mousedown="${handleHeaderMouseDown}">
-          ${
-            !disableMenu && !disableHeaderButtons
-              ? html` <div class="${clabsPrefix}--chat-header-elements-icon">
-                  ${menuItems
-                    ? html`
-                        <cds-icon-button
-                          kind="ghost"
-                          size="sm"
-                          align="right"
-                          @blur="${hideMenu}"
-                          @click="${handleMenuToggle}">
-                          ${!menuOpened
-                            ? Menu24({ slot: 'icon' })
-                            : Close16({ slot: 'icon' })}
-                          <span slot="tooltip-content">
-                            ${menuOpened ? 'Close Menu' : 'Open Menu'}
-                          </span>
-                        </cds-icon-button>
-                      `
-                    : html``}
-                </div>`
-              : html``
-          }
-          ${
-            title
-              ? html` <span class="${clabsPrefix}--chat-header-title">
-                  ${title}
-                </span>`
-              : ''
-          }
+          ${!disableMenu && !disableHeaderButtons
+            ? html` <div class="${clabsPrefix}--chat-header-elements-icon">
+                ${menuItems
+                  ? html`
+                      <cds-icon-button
+                        kind="ghost"
+                        size="sm"
+                        align="right"
+                        @blur="${hideMenu}"
+                        @click="${handleMenuToggle}">
+                        ${!menuOpened
+                          ? Menu24({ slot: 'icon' })
+                          : Close16({ slot: 'icon' })}
+                        <span slot="tooltip-content">
+                          ${menuOpened ? 'Close Menu' : 'Open Menu'}
+                        </span>
+                      </cds-icon-button>
+                    `
+                  : html``}
+              </div>`
+            : html``}
+          ${title
+            ? html` <span class="${clabsPrefix}--chat-header-title">
+                ${title}
+              </span>`
+            : ''}
         </div>
 
         <div class="${clabsPrefix}--chat-header-elements-right">
@@ -131,96 +122,90 @@ export function headerTemplate(customElementClass) {
             </cds-slug>
           </div>
 
-          ${
-            !disableHeaderButtons
-              ? html`
-                  ${!disableFullscreen
-                    ? html`
-                        ${!enableFullscreen
-                          ? html`
-                              <div
-                                class="${clabsPrefix}--chat-header-elements-icon">
-                                <cds-icon-button
-                                  kind="ghost"
-                                  size="sm"
-                                  align="bottom-right"
-                                  @click="${handleMaximize}">
-                                  ${Maximize16({ slot: 'icon' })}
-                                  <span slot="tooltip-content"
-                                    >Fullscreen mode</span
-                                  >
-                                </cds-icon-button>
-                              </div>
-                            `
-                          : html`
-                              <div
-                                class="${clabsPrefix}--chat-header-elements-icon">
-                                <cds-icon-button
-                                  kind="ghost"
-                                  size="sm"
-                                  align="bottom-right"
-                                  @click="${handleMinimize}">
-                                  ${Minimize16({ slot: 'icon' })}
-                                  <span slot="tooltip-content"
-                                    >Exit fullscreen</span
-                                  >
-                                </cds-icon-button>
-                              </div>
-                            `}
-                      `
-                    : html``}
-                  ${!disableMinimize
-                    ? html`
-                        ${!enableDocking
-                          ? html`
-                              <div
-                                class="${clabsPrefix}--chat-header-elements-icon">
-                                <cds-icon-button
-                                  kind="ghost"
-                                  align="bottom-right"
-                                  size="sm"
-                                  @click="${handlePopup}">
-                                  ${Subtract16({ slot: 'icon' })}
-                                  <span slot="tooltip-content"
-                                    >Pop out chat</span
-                                  >
-                                </cds-icon-button>
-                              </div>
-                            `
-                          : html`
-                              <div
-                                class="${clabsPrefix}--chat-header-elements-icon">
-                                <cds-icon-button
-                                  kind="ghost"
-                                  size="sm"
-                                  align="bottom-right"
-                                  @click="${handleSubtract}">
-                                  ${Popup16({ slot: 'icon' })}
-                                  <span slot="tooltip-content"
-                                    >Expand chat</span
-                                  >
-                                </cds-icon-button>
-                              </div>
-                            `}
-                      `
-                    : html``}
-                  ${!disableClose
-                    ? html`
-                        <div class="${clabsPrefix}--chat-header-elements-icon">
-                          <cds-icon-button
-                            kind="ghost"
-                            size="sm"
-                            align="bottom-right"
-                            @click="${handleClosed}">
-                            ${Close16({ slot: 'icon' })}
-                            <span slot="tooltip-content">Close</span>
-                          </cds-icon-button>
-                        </div>
-                      `
-                    : html``}
-                `
-              : html``
-          }
+          ${!disableHeaderButtons
+            ? html`
+                ${!disableFullscreen
+                  ? html`
+                      ${!enableFullscreen
+                        ? html`
+                            <div
+                              class="${clabsPrefix}--chat-header-elements-icon">
+                              <cds-icon-button
+                                kind="ghost"
+                                size="sm"
+                                align="bottom-right"
+                                @click="${handleMaximize}">
+                                ${Maximize16({ slot: 'icon' })}
+                                <span slot="tooltip-content"
+                                  >Fullscreen mode</span
+                                >
+                              </cds-icon-button>
+                            </div>
+                          `
+                        : html`
+                            <div
+                              class="${clabsPrefix}--chat-header-elements-icon">
+                              <cds-icon-button
+                                kind="ghost"
+                                size="sm"
+                                align="bottom-right"
+                                @click="${handleMinimize}">
+                                ${Minimize16({ slot: 'icon' })}
+                                <span slot="tooltip-content"
+                                  >Exit fullscreen</span
+                                >
+                              </cds-icon-button>
+                            </div>
+                          `}
+                    `
+                  : html``}
+                ${!disableMinimize
+                  ? html`
+                      ${!enableDocking
+                        ? html`
+                            <div
+                              class="${clabsPrefix}--chat-header-elements-icon">
+                              <cds-icon-button
+                                kind="ghost"
+                                align="bottom-right"
+                                size="sm"
+                                @click="${handlePopup}">
+                                ${Subtract16({ slot: 'icon' })}
+                                <span slot="tooltip-content">Pop out chat</span>
+                              </cds-icon-button>
+                            </div>
+                          `
+                        : html`
+                            <div
+                              class="${clabsPrefix}--chat-header-elements-icon">
+                              <cds-icon-button
+                                kind="ghost"
+                                size="sm"
+                                align="bottom-right"
+                                @click="${handleSubtract}">
+                                ${Popup16({ slot: 'icon' })}
+                                <span slot="tooltip-content">Expand chat</span>
+                              </cds-icon-button>
+                            </div>
+                          `}
+                    `
+                  : html``}
+                ${!disableClose
+                  ? html`
+                      <div class="${clabsPrefix}--chat-header-elements-icon">
+                        <cds-icon-button
+                          kind="ghost"
+                          size="sm"
+                          align="bottom-right"
+                          @click="${handleClosed}">
+                          ${Close16({ slot: 'icon' })}
+                          <span slot="tooltip-content">Close</span>
+                        </cds-icon-button>
+                      </div>
+                    `
+                  : html``}
+              `
+            : html``}
         </div>
       </div>
     </div>

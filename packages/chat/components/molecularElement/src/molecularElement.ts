@@ -387,44 +387,44 @@ export default class molecularElement extends LitElement {
   _appendCustomStyles() {
     //const enableTextStyling = false;
     //const enableCircleStyling = false;
-    const enableZooming = false;
+    //const enableZooming = false;
     const shortenWedges = true;
 
-    if (enableZooming) {
-      /*const finalizedSvg = this.shadowRoot?.getElementById(clabsPrefix+'--chat-molecule-' + this._uniqueID);
-      if(finalizedSvg instanceof SVGElement){
-        finalizedSvg.addEventListener('wheel',(e)=>this._zoomIn(e))
-      }*/
+    /*if(enableZooming){
 
-      const moleculeContainer = this.shadowRoot?.getElementById(
-        clabsPrefix + '--chat-molecule-container-id-' + this._uniqueID
-      );
-      if (moleculeContainer instanceof HTMLElement) {
-        moleculeContainer.addEventListener('wheel', (e) => this._zoomIn(e));
+      const moleculeContainer = this.shadowRoot?.getElementById(clabsPrefix+'--chat-molecule-container-id-'+ this._uniqueID);
+      if(moleculeContainer instanceof HTMLElement){
+        moleculeContainer.addEventListener('wheel',(e)=>this._zoomIn(e))
       }
-    }
+
+    }*/
 
     if (shortenWedges) {
       const wedgeElements = this.shadowRoot?.querySelectorAll('polygon');
       if (wedgeElements) {
         wedgeElements.forEach((wedge) => {
           if (wedge instanceof SVGPolygonElement) {
-            const points = wedge.getAttribute('points').split(' ');
-            const coords = points.map((point) => point.split(',').map(Number));
-            const shortenFactor = 0.6;
-            const [x1, y1] = coords[0];
-            let [x2, y2] = coords[1];
-            let [x3, y3] = coords[2];
+            const pointsAttr = wedge.getAttribute('points');
+            if (pointsAttr) {
+              const points = pointsAttr.split(' ');
+              const coords = points.map((point) =>
+                point.split(',').map(Number)
+              );
+              const shortenFactor = 0.6;
+              const [x1, y1] = coords[0];
+              let [x2, y2] = coords[1];
+              let [x3, y3] = coords[2];
 
-            x2 = x1 + (x2 - x1) * shortenFactor;
-            y2 = y1 + (y2 - y1) * shortenFactor;
-            x3 = x1 + (x3 - x1) * shortenFactor;
-            y3 = y1 + (y3 - y1) * shortenFactor;
+              x2 = x1 + (x2 - x1) * shortenFactor;
+              y2 = y1 + (y2 - y1) * shortenFactor;
+              x3 = x1 + (x3 - x1) * shortenFactor;
+              y3 = y1 + (y3 - y1) * shortenFactor;
 
-            wedge.setAttribute(
-              'points',
-              x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x3 + ',' + y3
-            );
+              wedge.setAttribute(
+                'points',
+                x1 + ',' + y1 + ' ' + x2 + ',' + y2 + ' ' + x3 + ',' + y3
+              );
+            }
           }
         });
       }

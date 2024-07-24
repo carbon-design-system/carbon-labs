@@ -64,7 +64,7 @@ export default class chartElement extends LitElement {
    * Render using "svg" (easier to inspect in the DOM) or "canvas" (better performance)
    */
   @property({ type: String, attribute: 'render-method' })
-  renderMethod = 'svg';
+  renderMethod = 'canvas';
 
   /**
    * This value is either "dark" or "light" and displays the chart using Carbon Chart theme colors
@@ -311,12 +311,8 @@ export default class chartElement extends LitElement {
    */
   async _handleResize() {
     this.chartResizing = true;
-<<<<<<< HEAD
     this.chartLoading = true;
     await this._displayVisualization();
-=======
-    this._displayVisualization();
->>>>>>> upstream/main
   }
 
   /**
@@ -1164,15 +1160,9 @@ export default class chartElement extends LitElement {
       delete spec['width'];
     }
 
-<<<<<<< HEAD
     delete spec['height'];
     delete spec['width'];
     delete spec['autosize'];
-=======
-    //delete spec['height'];
-    //delete spec['width'];
-    //delete spec['autosize'];
->>>>>>> upstream/main
 
     let layeredSpec;
     let repeatedSpec;

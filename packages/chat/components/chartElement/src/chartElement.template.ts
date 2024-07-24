@@ -237,62 +237,60 @@ export function chartElementTemplate(customElementClass) {
     ${disableOptions || errorMessage || chartLoading || streaming
       ? html``
       : html` <div
-            class="${clabsPrefix}--chat-chart-options"
-            @mouseover="${handleMouseOver}"
-            style="visibility:${thumbNail && !isHovered
-              ? 'hidden'
-              : 'visible'};">
-            <div class="${clabsPrefix}--chat-chart-options-prefade">&nbsp;</div>
-            <div class="${clabsPrefix}--chat-chart-options-buttons">
-              ${!disableExport
-                ? html`
-                    <cds-icon-button
-                      kind="ghost"
-                      size="sm"
-                      align="bottom-right"
-                      @click="${exportToImage}">
-                      ${Download16({ slot: 'icon' })}
-                      <span slot="tooltip-content">Export to PNG</span>
-                    </cds-icon-button>
-                  `
-                : html``}
-              ${!disableEditor && debugMode
-                ? html`
-                    <cds-icon-button
-                      kind="ghost"
-                      size="sm"
-                      align="bottom-right"
-                      @click="${openEditorView}">
-                      ${Launch16({ slot: 'icon' })}
-                      <span slot="tooltip-content">Open in Vega editor</span>
-                    </cds-icon-button>
-                  `
-                : html``}
-              ${!disableCodeInspector
-                ? html`
-                    <cds-icon-button
-                      kind="ghost"
-                      size="sm"
-                      align="bottom-right"
-                      @click="${openCodeView}">
-                      ${Code16({ slot: 'icon' })}
-                      <span slot="tooltip-content">Show specification</span>
-                    </cds-icon-button>
-                  `
-                : html``}
-              ${!disableFullscreen
-                ? html`
-                    <cds-icon-button
-                      kind="ghost"
-                      size="sm"
-                      align="bottom-right"
-                      @click="${openFullscreenView}">
-                      ${Maximize16({ slot: 'icon' })}
-                      <span slot="tooltip-content">Fullscreen</span>
-                    </cds-icon-button>
-                  `
-                : html``}
-            </div>
-          </div>`}
+          class="${clabsPrefix}--chat-chart-options"
+          @mouseover="${handleMouseOver}"
+          style="visibility:${thumbNail && !isHovered ? 'hidden' : 'visible'};">
+          <div class="${clabsPrefix}--chat-chart-options-prefade">&nbsp;</div>
+          <div class="${clabsPrefix}--chat-chart-options-buttons">
+            ${!disableExport
+              ? html`
+                  <cds-icon-button
+                    kind="ghost"
+                    size="sm"
+                    align="bottom-right"
+                    @click="${exportToImage}">
+                    ${Download16({ slot: 'icon' })}
+                    <span slot="tooltip-content">Export to PNG</span>
+                  </cds-icon-button>
+                `
+              : html``}
+            ${!disableEditor && debugMode
+              ? html`
+                  <cds-icon-button
+                    kind="ghost"
+                    size="sm"
+                    align="bottom-right"
+                    @click="${openEditorView}">
+                    ${Launch16({ slot: 'icon' })}
+                    <span slot="tooltip-content">Open in Vega editor</span>
+                  </cds-icon-button>
+                `
+              : html``}
+            ${!disableCodeInspector
+              ? html`
+                  <cds-icon-button
+                    kind="ghost"
+                    size="sm"
+                    align="bottom-right"
+                    @click="${openCodeView}">
+                    ${Code16({ slot: 'icon' })}
+                    <span slot="tooltip-content">Show specification</span>
+                  </cds-icon-button>
+                `
+              : html``}
+            ${!disableFullscreen
+              ? html`
+                  <cds-icon-button
+                    kind="ghost"
+                    size="sm"
+                    align="bottom-right"
+                    @click="${openFullscreenView}">
+                    ${Maximize16({ slot: 'icon' })}
+                    <span slot="tooltip-content">Fullscreen</span>
+                  </cds-icon-button>
+                `
+              : html``}
+          </div>
+        </div>`}
   `;
 }

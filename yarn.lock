@@ -2631,7 +2631,7 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.13.0"
     "@carbon/charts": "npm:^1.15.5"
     "@carbon/web-components": "npm:2.11.0"
-    "@ibm/telemetry-js": "npm:^1.5.0"
+    "@ibm/telemetry-js": "npm:^1.6.0"
     mathjax: "npm:^3.2.2"
     smiles-drawer: "npm:^2.1.7"
     vega: "npm:^5.28.0"
@@ -4339,6 +4339,15 @@ __metadata:
   bin:
     ibmtelemetry: dist/collect.js
   checksum: 10c0/40c7ad6e34fb5f6756bfd086be08f6f038dcf7a56000689378f1201749811556300a2a4882eecda6178dcbf13f6fcc9045cd4db23d347aaafe7a15c36eaa358c
+  languageName: node
+  linkType: hard
+
+"@ibm/telemetry-js@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@ibm/telemetry-js@npm:1.6.0"
+  bin:
+    ibmtelemetry: dist/collect.js
+  checksum: 10c0/29b2d321b97218b4c3b19dc4a6dbccb88655dd5a9941c71a2974bd5f387532098dd4a791690e378b9e42b4f09e7b1ef349d370e9ef9ff834485d112405cea328
   languageName: node
   linkType: hard
 

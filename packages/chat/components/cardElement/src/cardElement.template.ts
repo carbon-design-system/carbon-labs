@@ -169,6 +169,8 @@ export function cardElementTemplate(customElementClass) {
                           class="${clabsPrefix}--chat-card-detail-audio-item">
                           ${isAudioPlaying
                             ? html` <cds-button
+                                aria-label="Pause Audio File"
+                                role="button"
                                 kind="ghost"
                                 size="sm"
                                 @click="${toggleAudio}">
@@ -176,13 +178,15 @@ export function cardElementTemplate(customElementClass) {
                               </cds-button>`
                             : html` <cds-button
                                 kind="ghost"
+                                aria-label="Play Audio File"
+                                role="button"
                                 size="sm"
                                 @click="${toggleAudio}">
                                 ${PlayFilledAlt16({ slot: 'icon' })}
                               </cds-button>`}
                         </div>
                         <!-- <div class="${clabsPrefix}--chat-card-detail-audio-item">
-                <cds-button kind="ghost" size="sm" disabled>
+                <cds-button aria-label="Mute Audio" role="button" kind="ghost" size="sm" disabled>
                   ${VolumeMute16({ slot: 'icon' })}
                 </cds-button>
                 </div>-->
@@ -263,10 +267,20 @@ export function cardElementTemplate(customElementClass) {
                         <div
                           class="${clabsPrefix}--chat-card-detail-audio-item">
                           ${isAudioPlaying
-                            ? html` <cds-button kind="ghost" disabled size="sm">
+                            ? html` <cds-button
+                                aria-label="Pause Audio"
+                                role="button"
+                                kind="ghost"
+                                disabled
+                                size="sm">
                                 ${PauseFilled16({ slot: 'icon' })}
                               </cds-button>`
-                            : html` <cds-button kind="ghost" disabled size="sm">
+                            : html` <cds-button
+                                aria-label="Start Audio"
+                                role="button"
+                                kind="ghost"
+                                disabled
+                                size="sm">
                                 ${PlayFilledAlt16({ slot: 'icon' })}
                               </cds-button>`}
                         </div>

@@ -62,13 +62,11 @@ $css--plex: true !default;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    padding: 12px;
     background: $background;
     color: $text-secondary;
     cursor: pointer;
     font-size: 16px;
     max-inline-size: 288px;
-    padding-inline: 16px;
     transition: border-color 300ms ease;
   }
 

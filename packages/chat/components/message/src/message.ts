@@ -200,7 +200,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 2;
+  baseStreamingSpeed = 10;
 
   /** detect when component is rendered to process rawtext
    */
@@ -1199,6 +1199,15 @@ export default class message extends LitElement {
    **/
   _handleEdit() {
     this._editing = true;
+    const messageDetails = this._prepareEventDetail();
+    messageDetails['action'] = 'MESSAGE: User started a message edit';
+    const startEditEvent = new CustomEvent('on-user-message-edit-request', {
+      detail: messageDetails,
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(startEditEvent);
+    this.requestUpdate();
 
     this.requestUpdate();
   }
@@ -1215,6 +1224,17 @@ export default class message extends LitElement {
   _cancelEdit() {
     this._editing = false;
     this._editedMessage = '';
+    const messageDetails = this._prepareEventDetail();
+    messageDetails['action'] = 'MESSAGE: User aborted a message edit';
+    const cancelledEditEvent = new CustomEvent(
+      'on-user-message-cancellation-request',
+      {
+        detail: messageDetails,
+        bubbles: true,
+        composed: true,
+      }
+    );
+    this.dispatchEvent(cancelledEditEvent);
     this.requestUpdate();
   }
 
@@ -1223,25 +1243,22 @@ export default class message extends LitElement {
   _validateEdit() {
     this._editing = false;
     const messageDetails = this._prepareEventDetail();
-    if (this._editedMessage !== null && this._editedMessage !== '') {
-      messageDetails['action'] = 'message: user edited a previous query';
-      messageDetails['newMessage'] = this._editedMessage;
-      messageDetails['previousMessage'] = this.rawText;
-      this.rawText = this._editedMessage;
-      this._messageElements = [{ content: this._editedMessage, type: 'text' }];
-      const regenerationEvent = new CustomEvent(
-        'on-user-message-update-request',
-        {
-          detail: messageDetails,
-          bubbles: true,
-          composed: true,
-        }
-      );
-      this.dispatchEvent(regenerationEvent);
-    } else {
-      this._editing = false;
-      this._editedMessage = '';
-    }
+
+    messageDetails['action'] = 'message: user edited a previous query';
+    messageDetails['newMessage'] = this._editedMessage;
+    messageDetails['previousMessage'] = this.rawText;
+    this.rawText = this._editedMessage;
+    this._messageElements = [{ content: this._editedMessage, type: 'text' }];
+    const regenerationEvent = new CustomEvent(
+      'on-user-message-update-request',
+      {
+        detail: messageDetails,
+        bubbles: true,
+        composed: true,
+      }
+    );
+    this.dispatchEvent(regenerationEvent);
+
     this.requestUpdate();
   }
 

@@ -25,7 +25,7 @@ import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
 import Download16 from '@carbon/web-components/es/icons/download/16.js';
 import Launch16 from '@carbon/web-components/es/icons/launch/16.js';
 import Code16 from '@carbon/web-components/es/icons/code/16.js';
-import Close24 from '@carbon/web-components/es/icons/close/24.js';
+import Close16 from '@carbon/web-components/es/icons/close/16.js';
 
 /**
  * Lit template for card
@@ -76,11 +76,12 @@ export function chartElementTemplate(customElementClass) {
       ? html`
           <div class="${clabsPrefix}--chat-chart-fullscreen-container-close">
             <cds-icon-button
-              kind="danger--tertiary"
-              size="md"
+              kind="tertiary"
+              aria-label="Close Fullscreen"
+              role="button"
               align="bottom-right"
               @click="${closeModal}">
-              ${Close24({ slot: 'icon' })}
+              ${Close16({ slot: 'icon' })}
               <span slot="tooltip-content">${'Close ' + modalMode}</span>
             </cds-icon-button>
           </div>
@@ -129,7 +130,7 @@ export function chartElementTemplate(customElementClass) {
 
         <div class="${clabsPrefix}--chat-editor-modal-section-code">
           <div class="${clabsPrefix}--chat-editor-modal-header">
-            <cds-content-switcher value="original">
+            <cds-content-switcher value="carbonified">
               <cds-content-switcher-item
                 value="carbonified"
                 selected=""
@@ -154,7 +155,7 @@ export function chartElementTemplate(customElementClass) {
                     ? html`
                         <clabs-chat-code
                           editable
-                          max-height="588px"
+                          max-height="calc(66vh)"
                           @on-code-edit-change="${handleLiveRawEditorChange}"
                           @on-code-edit-validation="${handleOriginalEditorValidation}"
                           content="${JSON.stringify(
@@ -167,7 +168,7 @@ export function chartElementTemplate(customElementClass) {
                     : html`
                         <clabs-chat-code
                           editable
-                          max-height="588px"
+                          max-height="calc(66vh)"
                           @on-code-edit-change="${handleLiveCarbonEditorChange}"
                           @on-code-edit-validation="${handleCarbonEditorValidation}"
                           content="${JSON.stringify(
@@ -213,6 +214,8 @@ export function chartElementTemplate(customElementClass) {
                           ${debugMode
                             ? html` <cds-button
                                 kind="danger--tertiary"
+                                aria-label="Open Code Viewer"
+                                role="button"
                                 size="sm"
                                 tooltip-position="left"
                                 tooltip-alignment="end"
@@ -247,6 +250,8 @@ export function chartElementTemplate(customElementClass) {
                   <cds-icon-button
                     kind="ghost"
                     size="sm"
+                    aria-label="Export Chart PNG"
+                    role="button"
                     align="bottom-right"
                     @click="${exportToImage}">
                     ${Download16({ slot: 'icon' })}
@@ -257,6 +262,8 @@ export function chartElementTemplate(customElementClass) {
             ${!disableEditor && debugMode
               ? html`
                   <cds-icon-button
+                    aria-label="Open in external Vega editor"
+                    role="button"
                     kind="ghost"
                     size="sm"
                     align="bottom-right"
@@ -271,6 +278,8 @@ export function chartElementTemplate(customElementClass) {
                   <cds-icon-button
                     kind="ghost"
                     size="sm"
+                    aria-label="Inspect and Edit Specification"
+                    role="button"
                     align="bottom-right"
                     @click="${openCodeView}">
                     ${Code16({ slot: 'icon' })}
@@ -281,6 +290,8 @@ export function chartElementTemplate(customElementClass) {
             ${!disableFullscreen
               ? html`
                   <cds-icon-button
+                    aria-label="View in Fullscreen"
+                    role="button"
                     kind="ghost"
                     size="sm"
                     align="bottom-right"

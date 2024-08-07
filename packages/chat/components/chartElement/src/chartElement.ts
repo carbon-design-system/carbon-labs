@@ -924,7 +924,8 @@ export default class chartElement extends LitElement {
 
         //this.content = JSON.stringify(newSpec);
         this._editedSpec = newSpec;
-        this._prepareVisualization(newSpec);
+        //this._prepareVisualization(newSpec)
+        this._prepareSpecification(newSpec, false, true, 0);
       } catch (error) {
         console.error(error);
         this.chartLoading = true;
@@ -949,6 +950,8 @@ export default class chartElement extends LitElement {
 
         //this.content = JSON.stringify(newSpec);
         //this._prepareVisualization(newSpec)
+        //this._prepareSpecification(newSpec, false, true, 0);
+        this._prepareVisualization(newSpec);
         this._editedSpec = newSpec;
 
         window.setTimeout(async () => {
@@ -1454,6 +1457,10 @@ export default class chartElement extends LitElement {
 
       if (spec?.encoding?.size?.legend) {
         spec.encoding.size.legend = null;
+      }
+
+      if (spec?.mark?.type === 'point') {
+        spec.mark.type = 'circle';
       }
 
       if (spec.encoding?.y?.axis?.label || spec.encoding?.y?.field) {

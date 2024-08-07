@@ -63,6 +63,8 @@ export function carouselElementTemplate(customElementClass) {
                     <cds-button
                       kind="ghost"
                       size="sm"
+                      aria-label="Previous Slide"
+                      role="button"
                       @click="${handlePreviousSlide}"
                       ?disabled="${slideCounter === 0}">
                       ${ChevronLeft16({ slot: 'icon' })}
@@ -74,6 +76,8 @@ export function carouselElementTemplate(customElementClass) {
                   <div class="${clabsPrefix}--chat-carousel-control-item">
                     <cds-button
                       kind="ghost"
+                      aria-label="Next slide"
+                      role="button"
                       size="sm"
                       @click="${handleNextSlide}"
                       ?disabled="${renderedSlideCounter === maxSlideCounter}">

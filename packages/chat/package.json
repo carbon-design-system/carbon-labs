@@ -37,7 +37,6 @@
   "dependencies": {
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.13.0",
-    "@carbon/charts": "^1.15.5",
     "@carbon/web-components": "2.10.0",
     "@ibm/telemetry-js": "^1.5.0",
     "mathjax": "^3.2.2",

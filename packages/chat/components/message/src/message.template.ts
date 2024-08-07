@@ -99,21 +99,36 @@ export function messageTemplate(customElementClass) {
             ${!disableButtons
               ? html` <div class="${clabsPrefix}--chat-message-dropdown-user">
                   ${editing === true
-                    ? html` <div
-                          class="${clabsPrefix}--chat-message-small-button"
+                    ? html` <cds-icon-button
+                          size="sm"
+                          kind="ghost"
+                          align="left"
+                          aria-label="Undo Edit"
+                          role="button"
                           @click="${cancelEdit}">
-                          ${Undo16()}
-                        </div>
-                        <div
-                          class="${clabsPrefix}--chat-message-small-button"
+                          ${Undo16({ slot: 'icon' })}
+                          <span slot="tooltip-content">Undo Edit</span>
+                        </cds-icon-button>
+                        <cds-icon-button
+                          size="sm"
+                          kind="ghost"
+                          align="left"
+                          aria-label="Send Edit"
+                          role="button"
                           @click="${validateEdit}">
-                          ${CheckMark16()}
-                        </div>`
-                    : html` <div
-                        class="${clabsPrefix}--chat-message-small-button"
+                          ${CheckMark16({ slot: 'icon' })}
+                          <span slot="tooltip-content">Validate Edit</span>
+                        </cds-icon-button>`
+                    : html` <cds-icon-button
+                        size="sm"
+                        kind="ghost"
+                        align="left"
+                        aria-label="Edit Code"
+                        role="button"
                         @click="${handleEdit}">
-                        ${Edit16()}
-                      </div>`}
+                        ${Edit16({ slot: 'icon' })}
+                        <span slot="tooltip-content">Enable editing</span>
+                      </cds-icon-button>`}
                 </div>`
               : html` <div
                   class="${clabsPrefix}--chat-message-dropdown-user"></div>`}
@@ -174,7 +189,9 @@ export function messageTemplate(customElementClass) {
                           `
                         : message.type === 'molecule'
                         ? html`
-                            <clabs-chat-molecule content="${message.content}">
+                            <clabs-chat-molecule
+                              height="${369}"
+                              content="${message.content}">
                             </clabs-chat-molecule>
                           `
                         : message.type === 'formula'
@@ -355,42 +372,76 @@ export function messageTemplate(customElementClass) {
                     `
                   : html``}
               </div>
+
               ${!loadingState && !disableButtons && !currentlyStreaming
                 ? html`
                     <div class="${clabsPrefix}--chat-message-dropdown-bot">
                       ${userSubmitted
                         ? editing === true
-                          ? html` <div
-                                class="${clabsPrefix}--chat-message-small-button"
+                          ? html` <cds-icon-button
+                                size="sm"
+                                kind="ghost"
+                                align="left"
+                                aria-label="Undo Edit"
+                                role="button"
                                 @click="${cancelEdit}">
-                                ${Undo16()}
-                              </div>
-                              <div
-                                class="${clabsPrefix}--chat-message-small-button"
+                                ${Undo16({ slot: 'icon' })}
+                                <span slot="tooltip-content">Undo Edit</span>
+                              </cds-icon-button>
+                              <cds-icon-button
+                                size="sm"
+                                kind="ghost"
+                                align="left"
+                                aria-label="Send Edit"
+                                role="button"
                                 @click="${validateEdit}">
-                                ${CheckMark16()}
-                              </div>`
-                          : html` <div
-                              class="${clabsPrefix}--chat-message-small-button"
+                                ${CheckMark16({ slot: 'icon' })}
+                                <span slot="tooltip-content"
+                                  >Validate Edit</span
+                                >
+                              </cds-icon-button>`
+                          : html` <cds-icon-button
+                              size="sm"
+                              kind="ghost"
+                              align="left"
+                              aria-label="Edit Message"
+                              role="button"
                               @click="${handleEdit}">
-                              ${Edit16()}
-                            </div>`
+                              ${Edit16({ slot: 'icon' })}
+                              <span slot="tooltip-content">Enable editing</span>
+                            </cds-icon-button>`
                         : html`
-                            <div
-                              class="${clabsPrefix}--chat-message-small-button"
+                            <cds-icon-button
+                              size="sm"
+                              kind="ghost"
+                              align="right"
+                              aria-label="Thumbs Up"
+                              role="button"
                               @click="${handlePositiveFeedback}">
-                              ${ThumbsUp16()}
-                            </div>
-                            <div
-                              class="${clabsPrefix}--chat-message-small-button"
+                              ${ThumbsUp16({ slot: 'icon' })}
+                              <span slot="tooltip-content">Thumbs Up</span>
+                            </cds-icon-button>
+
+                            <cds-icon-button
+                              size="sm"
+                              kind="ghost"
+                              align="right"
+                              aria-label="Thumbs Up"
+                              role="button"
                               @click="${handleNegativeFeedback}">
-                              ${ThumbsDown16()}
-                            </div>
-                            <div
-                              class="${clabsPrefix}--chat-message-small-button"
+                              ${ThumbsDown16({ slot: 'icon' })}
+                              <span slot="tooltip-content">Thumbs Down</span>
+                            </cds-icon-button>
+                            <cds-icon-button
+                              size="sm"
+                              kind="ghost"
+                              align="right"
+                              aria-label="Regenerate"
+                              role="button"
                               @click="${handleRegenerate}">
-                              ${Renew16()}
-                            </div>
+                              ${Renew16({ slot: 'icon' })}
+                              <span slot="tooltip-content">Regenerate</span>
+                            </cds-icon-button>
                           `}
                     </div>
                   `

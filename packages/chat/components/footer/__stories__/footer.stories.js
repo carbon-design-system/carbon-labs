@@ -64,7 +64,7 @@ export const Showcase = {
     <br />
     <div style="position:relative; top:40px;">
       <clabs-chat-footer
-        context-message="${'Click the AI icon above for more details'}"
+        context-message="${'Click the AI icon above for more details sjd;jkls;f;kjsdjkfskjfdkjdfjkdjks;ffjsklklsfdkldskjfksjkfkljdsfkldkjlfskjdfkljsf;dlkjkfjsklsfdkj'}"
         context-message-type="${'info'}">
       </clabs-chat-footer>
     </div>

@@ -20,6 +20,7 @@ import '@carbon/web-components/es/components/overflow-menu/index.js';
 
 import '@carbon/web-components/es/components/slug/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
+import '@carbon/web-components/es/components/button/index.js';
 
 /**
  * Lit template for card
@@ -67,7 +68,18 @@ export function headerTemplate(customElementClass) {
                       class="${clabsPrefix}--chat-header-elements-menu-list-item"
                       data-menuindex="${index}"
                       @mousedown="${handleMenuItemSelected}">
-                      ${menuItem.title}
+                      <cds-button
+                        kind="ghost"
+                        size="sm"
+                        aria-label="Select Menu Option"
+                        role="button"
+                        tooltip-position="right"
+                        tooltip-alignment="end"
+                        tooltip-text="${menuItem.tooltip
+                          ? menuItem.tooltip
+                          : menuItem.title}">
+                        ${menuItem.title}
+                      </cds-button>
                     </div>
                   `
                 )}
@@ -89,6 +101,8 @@ export function headerTemplate(customElementClass) {
                         kind="ghost"
                         size="sm"
                         align="right"
+                        aria-label="Open Menu"
+                        role="button"
                         @blur="${hideMenu}"
                         @click="${handleMenuToggle}">
                         ${!menuOpened
@@ -133,6 +147,8 @@ export function headerTemplate(customElementClass) {
                               <cds-icon-button
                                 kind="ghost"
                                 size="sm"
+                                aria-label="Fullscreen Chat"
+                                role="button"
                                 align="bottom-right"
                                 @click="${handleMaximize}">
                                 ${Maximize16({ slot: 'icon' })}
@@ -148,6 +164,8 @@ export function headerTemplate(customElementClass) {
                               <cds-icon-button
                                 kind="ghost"
                                 size="sm"
+                                aria-label="Minimize Chat"
+                                role="button"
                                 align="bottom-right"
                                 @click="${handleMinimize}">
                                 ${Minimize16({ slot: 'icon' })}
@@ -169,6 +187,8 @@ export function headerTemplate(customElementClass) {
                                 kind="ghost"
                                 align="bottom-right"
                                 size="sm"
+                                aria-label="Dock Chat"
+                                role="button"
                                 @click="${handlePopup}">
                                 ${Subtract16({ slot: 'icon' })}
                                 <span slot="tooltip-content">Pop out chat</span>
@@ -181,6 +201,8 @@ export function headerTemplate(customElementClass) {
                               <cds-icon-button
                                 kind="ghost"
                                 size="sm"
+                                aria-label="Undock Chat"
+                                role="button"
                                 align="bottom-right"
                                 @click="${handleSubtract}">
                                 ${Popup16({ slot: 'icon' })}
@@ -196,6 +218,8 @@ export function headerTemplate(customElementClass) {
                         <cds-icon-button
                           kind="ghost"
                           size="sm"
+                          aria-label="Close Chat"
+                          role="button"
                           align="bottom-right"
                           @click="${handleClosed}">
                           ${Close16({ slot: 'icon' })}

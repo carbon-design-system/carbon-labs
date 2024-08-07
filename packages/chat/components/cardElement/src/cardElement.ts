@@ -111,31 +111,37 @@ export default class cardElement extends LitElement {
   }
 
   /**
+   * _translateHexToRGB - convert bg color to rgb string to create a rgba fade
+   * @param {string} hexString - CSS hex color
+   */
+  _translateHexToRGB(hexString) {
+    const rawHex = hexString.replace(/^#/, '');
+    const red = parseInt(rawHex.substring(0, 2), 16);
+    const green = parseInt(rawHex.substring(2, 4), 16);
+    const blue = parseInt(rawHex.substring(4, 6), 16);
+    return [red, green, blue].join(',');
+  }
+
+  /**
    * _getTheme - find current theme by checking parent background color
    */
   _getTheme() {
     if (this.parentElement instanceof HTMLElement) {
       const parentStyle = getComputedStyle(this.parentElement);
       const backgroundColor = parentStyle.getPropertyValue('--cds-background');
-      const darkMode =
+      /*const darkMode =
         backgroundColor.startsWith('#') &&
-        parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2;
-      if (darkMode) {
-        this.style.setProperty(
-          '--chat-card-theme-bottom',
-          ' rgba(22, 22, 22, 0)'
-        );
-        this.style.setProperty('--chat-card-theme-top', ' rgba(22, 22, 22, 1)');
-      } else {
-        this.style.setProperty(
-          '--chat-card-theme-bottom',
-          ' rgba(255, 255, 255, 0)'
-        );
-        this.style.setProperty(
-          '--chat-card-theme-top',
-          ' rgba(255, 255, 255, 1)'
-        );
-      }
+        parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2;*/
+
+      const rgbColor = this._translateHexToRGB(backgroundColor);
+      this.style.setProperty(
+        '--chat-card-theme-bottom',
+        ' rgba(' + rgbColor + ', 0)'
+      );
+      this.style.setProperty(
+        '--chat-card-theme-top',
+        ' rgba(' + rgbColor + ', 1)'
+      );
     }
   }
 

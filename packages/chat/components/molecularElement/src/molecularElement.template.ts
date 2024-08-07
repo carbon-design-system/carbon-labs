@@ -95,6 +95,8 @@ export function molecularElementTemplate(customElementClass) {
                     <cds-icon-button
                       kind="ghost"
                       size="sm"
+                      aria-label="Export to PNG"
+                      role="button"
                       align="bottom-right"
                       @click="${exportToImage}">
                       ${Download16({ slot: 'icon' })}
@@ -107,6 +109,8 @@ export function molecularElementTemplate(customElementClass) {
                     <cds-icon-button
                       kind="ghost"
                       size="sm"
+                      aria-label="Open in PubChem"
+                      role="button"
                       align="bottom-right"
                       disabled="${!pubChemUrl}"
                       @click="${openEditorView}">
@@ -119,6 +123,8 @@ export function molecularElementTemplate(customElementClass) {
                 ? html`
                     <cds-icon-button
                       kind="ghost"
+                      aria-label="Fullscreen"
+                      role="button"
                       size="sm"
                       align="bottom-right"
                       @click="${openFullscreenView}">
@@ -141,6 +147,8 @@ export function molecularElementTemplate(customElementClass) {
           <cds-icon-button
             kind="tertiary"
             size="md"
+            aria-label="Close Fullscreen"
+            role="button"
             align="bottom-right"
             @click="${openFullscreenView}">
             ${Close16({ slot: 'icon' })}

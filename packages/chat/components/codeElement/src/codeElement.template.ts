@@ -48,7 +48,12 @@ export function codeElementTemplate(customElementClass) {
       <div class="${clabsPrefix}--chat-code-options-buttons">
         ${!disableEditButton
           ? html`
-              <cds-icon-button size="sm" kind="ghost" align="left">
+              <cds-icon-button
+                size="sm"
+                kind="ghost"
+                align="left"
+                aria-label="Edit Code"
+                role="button">
                 ${Edit16({ slot: 'icon' })}
                 <span slot="tooltip-content">Enable editing</span>
               </cds-icon-button>
@@ -60,6 +65,8 @@ export function codeElementTemplate(customElementClass) {
                 size="sm"
                 kind="ghost"
                 align="left"
+                aria-label="Copy Code"
+                role="button"
                 @click="${copyCode}">
                 ${Copy16({ slot: 'icon' })}
                 <span slot="tooltip-content">Copy code</span>
@@ -135,6 +142,8 @@ ${lineObject.content}</textarea
             <cds-button
               size="md"
               align="top"
+              aria-label="Undo Edit"
+              role="button"
               kind="danger--tertiary"
               @click="${handleEditCancellation}">
               ${Close16({ slot: 'icon' })} Revert all changes
@@ -142,6 +151,8 @@ ${lineObject.content}</textarea
 
             <cds-button
               size="md"
+              aria-label="Validate Edit"
+              role="button"
               align="top"
               kind="tertiary"
               @click="${handleEditValidation}">

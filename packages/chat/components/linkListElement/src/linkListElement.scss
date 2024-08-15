@@ -58,12 +58,13 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-link-list-item svg {
+    cursor: pointer;
     pointer-events: none;
   }
 
   .#{$clabs-prefix}--chat-link-list-item-text {
     overflow: hidden;
     flex: 1;
-    white-space: nowrap;
+    cursor: pointer;
   }
 }

@@ -89,6 +89,7 @@ export function headerTemplate(customElementClass) {
 
         <div
           role="banner"
+          aria-label="Menu section"
           class="${clabsPrefix}--chat-header-elements-left ${dockingEnabled
             ? clabsPrefix + '--chat-header-elements-left-docked'
             : ''}"

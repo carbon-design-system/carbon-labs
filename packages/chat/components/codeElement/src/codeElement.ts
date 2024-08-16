@@ -17,6 +17,12 @@ import styles from './codeElement.scss?inline';
  */
 export default class codeElement extends LitElement {
   static styles = styles;
+
+  /**
+   * resizeObserver - resize watcher of parent
+   **/
+  private resizeObserver;
+
   /**
    * Code string to be parsed into lines and displayed
    */
@@ -58,6 +64,12 @@ export default class codeElement extends LitElement {
    */
   @property({ type: Boolean, attribute: 'streaming' })
   streaming;
+
+  /**
+   * Editable boolean flag to let users know lines can be changed
+   */
+  @property({ type: Boolean, attribute: 'disable-auto-compacting' })
+  disableAutoCompacting;
 
   /**
    * Source content - save original code text content
@@ -168,6 +180,20 @@ export default class codeElement extends LitElement {
         },
       ];
     }
+    if (!this.disableAutoCompacting) {
+      this.resizeObserver = new ResizeObserver(async () => {
+        this._handleResize();
+      });
+
+      this.resizeObserver.observe(this);
+    }
+  }
+
+  /**
+   * _handleResize - resize handler to check code container size
+   */
+  _handleResize() {
+    this.disableLineTicks = this.clientWidth < 300;
   }
 
   /** copy current code to clipboard when copy event is triggered

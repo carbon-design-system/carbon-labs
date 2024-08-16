@@ -119,6 +119,13 @@ export function textElementTemplate(customElementClass) {
                   class="${clabsPrefix}--chat-text-content-${textPiece.type}"
                   >${unsafeHTML(textPiece.text)}</span
                 >`
+              : textPiece.type === 'code'
+              ? html`
+                  <span
+                    class="${clabsPrefix}--chat-text-content-${textPiece.type}"
+                    >${textPiece.text}</span
+                  >
+                `
               : textPiece.type === 'default'
               ? html` <span
                   class="${streaming

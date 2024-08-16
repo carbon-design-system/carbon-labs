@@ -26,6 +26,56 @@ export const Default = {
   </clabs-chat-text>`,
 };
 
+const codeElementsExample = [
+  {
+    text: 'To see the Chat, use ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: '<Chat loading={true}/>',
+    type: 'code',
+    active: false,
+    content: '',
+  },
+  {
+    text: ', then place:',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'user-name',
+    type: 'code',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'agent-name',
+    type: 'code',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'on-submit={newMessage}',
+    type: 'code',
+    active: false,
+    content: '',
+  },
+  {
+    text: '. Make sure to place inside:',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: '<Messages> <Message> <Code></Code> </Message> <Message> <TextElement></textElement> </Message> </Messages>',
+    type: 'code',
+    active: false,
+    content: '',
+  },
+];
 const subElementsExample = [
   {
     text: 'Abraham Lincoln was an American lawyer, politician, and statesman who served as the 16th ',
@@ -159,6 +209,12 @@ Here is an [annotation with under 5 links](https://en.wikipedia.org/wiki/Preside
 Here is an [annotation with over 5 links](https://en.wikipedia.org/wiki/President_of_the_United_States,https://en.wikipedia.org/wiki/Union_American_Civil_War,https://en.wikipedia.org/wiki/Illinois,https://en.wikipedia.org/wiki/21st_century,https://en.wikipedia.org/wiki/United_Nations,https://en.wikipedia.org/wiki/Sustainable_development,https://en.wikipedia.org/wiki/Climate_change)">
     </clabs-chat-text>
     <br />
+    <h4>Code Pieces</h4>
+    <br />
+    <clabs-chat-text .textSubElements="${codeElementsExample}">
+    </clabs-chat-text>
+    <br />
+
     <h4>Highlighting with slotting</h4>
     <br />
     <clabs-chat-text

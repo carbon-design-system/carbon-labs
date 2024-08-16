@@ -261,7 +261,7 @@ export function chartElementTemplate(customElementClass) {
                     align="bottom-right"
                     @click="${exportToImage}">
                     ${Download16({ slot: 'icon' })}
-                    <span slot="tooltip-content">Export to PNG</span>
+                    <span slot="tooltip-content">Export To PNG</span>
                   </cds-icon-button>
                 `
               : html``}
@@ -275,7 +275,7 @@ export function chartElementTemplate(customElementClass) {
                     align="bottom-right"
                     @click="${appendToContext}">
                     ${ViewNext16({ slot: 'icon' })}
-                    <span slot="tooltip-content">Make latest Chart</span>
+                    <span slot="tooltip-content">Make Latest Chart</span>
                   </cds-icon-button>
                 `
               : html``}
@@ -289,7 +289,7 @@ export function chartElementTemplate(customElementClass) {
                     align="bottom-right"
                     @click="${openEditorView}">
                     ${Launch16({ slot: 'icon' })}
-                    <span slot="tooltip-content">Open in Vega editor</span>
+                    <span slot="tooltip-content">Open In Vega Editor</span>
                   </cds-icon-button>
                 `
               : html``}
@@ -303,7 +303,7 @@ export function chartElementTemplate(customElementClass) {
                     align="bottom-right"
                     @click="${openCodeView}">
                     ${Code16({ slot: 'icon' })}
-                    <span slot="tooltip-content">Show specification</span>
+                    <span slot="tooltip-content">Show Specification</span>
                   </cds-icon-button>
                 `
               : html``}

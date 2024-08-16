@@ -65,12 +65,12 @@ export function headerTemplate(customElementClass) {
                 ${menuItems.map(
                   (menuItem, index) => html`
                     <div
-                      class="${clabsPrefix}--chat-header-elements-menu-list-item">
+                      class="${clabsPrefix}--chat-header-elements-menu-list-item" tab-index=${index}>
                       <cds-button
                         kind="ghost"
                         size="${dockingEnabled ? 'sm' : 'md'}
-                        aria-label="Select Menu Option"
-                        role="button"
+                        aria-label="Menu Option ${index}"
+                        role="menu-button"
                         data-menuindex="${index}"
                         @mousedown="${handleMenuItemSelected}"
                         tooltip-position="right"
@@ -100,13 +100,15 @@ export function headerTemplate(customElementClass) {
                         kind="ghost"
                         size="sm"
                         align="right"
-                        aria-label="Open Menu"
+                        aria-label="${!menuOpened ? 'Open Menu' : 'Close Menu'}
                         role="button"
                         @blur="${hideMenu}"
                         @click="${handleMenuToggle}">
-                        ${!menuOpened
-                          ? Menu24({ slot: 'icon' })
-                          : Close16({ slot: 'icon' })}
+                        ${
+                          !menuOpened
+                            ? Menu24({ slot: 'icon' })
+                            : Close16({ slot: 'icon' })
+                        }
                         <span slot="tooltip-content">
                           ${menuOpened ? 'Close Menu' : 'Open Menu'}
                         </span>
@@ -151,9 +153,7 @@ export function headerTemplate(customElementClass) {
                                 align="bottom-right"
                                 @click="${handleMaximize}">
                                 ${Maximize16({ slot: 'icon' })}
-                                <span slot="tooltip-content"
-                                  >Fullscreen mode</span
-                                >
+                                <span slot="tooltip-content">Fullscreen</span>
                               </cds-icon-button>
                             </div>
                           `
@@ -169,7 +169,7 @@ export function headerTemplate(customElementClass) {
                                 @click="${handleMinimize}">
                                 ${Minimize16({ slot: 'icon' })}
                                 <span slot="tooltip-content"
-                                  >Exit fullscreen</span
+                                  >Exit Fullscreen</span
                                 >
                               </cds-icon-button>
                             </div>
@@ -190,7 +190,7 @@ export function headerTemplate(customElementClass) {
                                 role="button"
                                 @click="${handlePopup}">
                                 ${Subtract16({ slot: 'icon' })}
-                                <span slot="tooltip-content">Pop out chat</span>
+                                <span slot="tooltip-content">Pop-out Chat</span>
                               </cds-icon-button>
                             </div>
                           `
@@ -205,7 +205,7 @@ export function headerTemplate(customElementClass) {
                                 align="bottom-right"
                                 @click="${handleSubtract}">
                                 ${Popup16({ slot: 'icon' })}
-                                <span slot="tooltip-content">Expand chat</span>
+                                <span slot="tooltip-content">Expand Chat</span>
                               </cds-icon-button>
                             </div>
                           `}

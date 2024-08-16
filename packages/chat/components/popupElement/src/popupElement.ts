@@ -38,6 +38,12 @@ export default class popupElement extends LitElement {
   /**
    * top level title for section
    */
+  @property({ type: Boolean, attribute: 'is-slotted' })
+  isSlotted;
+
+  /**
+   * top level title for section
+   */
   @property({ type: String, attribute: 'popup-title' })
   popupTitle;
 
@@ -70,6 +76,12 @@ export default class popupElement extends LitElement {
    */
   @property({ type: Boolean, attribute: 'is-open' })
   isOpen;
+
+  /**
+   * optional orientation value to show caret
+   */
+  @property({ type: String, attribute: 'orientation', reflect: true })
+  orientation = 'top';
 
   /**
    * target div to attach to
@@ -121,6 +133,16 @@ export default class popupElement extends LitElement {
     if (this.feedbackFormValues) {
       this._setValues(this.feedbackFormValues);
     }
+    if (this.type === 'thumbs-up') {
+      this.style.setProperty('--chat-popup-caret-offset', '-2px');
+    }
+    if (this.type === 'thumbs-down') {
+      this.style.setProperty('--chat-popup-caret-offset', '34px');
+    }
+
+    if (this.isSlotted) {
+      this.style.setProperty('--chat-popup-slotted-mode', 'fixed');
+    }
   }
 
   /** _handleTextInput - handle text change in submission
@@ -156,6 +178,16 @@ export default class popupElement extends LitElement {
     }
     if (changedProperties.has('feedbackFormValues')) {
       this._setValues(this.feedbackFormValues);
+    }
+
+    if (changedProperties.has('orientation')) {
+      console.log(this.orientation);
+    }
+    if (this.type === 'thumbs-up') {
+      this.style.setProperty('--chat-popup-caret-offset', '-2px');
+    }
+    if (this.type === 'thumbs-down') {
+      this.style.setProperty('--chat-popup-caret-offset', '34px');
     }
   }
 

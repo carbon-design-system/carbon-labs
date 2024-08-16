@@ -163,7 +163,7 @@ export function footerTemplate(customElementClass) {
                   size="sm"
                   align="top-right">
                   ${MicrophoneOff16({ slot: 'icon' })}
-                  <span slot="tooltip-content">Microphone unavailable</span>
+                  <span slot="tooltip-content">Microphone Unavailable</span>
                 </cds-icon-button>
               `
             : html` ${!isListening
@@ -175,7 +175,7 @@ export function footerTemplate(customElementClass) {
                     size="sm"
                     @click="${startRecording}">
                     ${Microphone16({ slot: 'icon' })}
-                    <span slot="tooltip-content">Start listening</span>
+                    <span slot="tooltip-content">Start Listening</span>
                   </cds-icon-button>`
                 : html` <cds-icon-button
                     kind="ghost"
@@ -186,7 +186,7 @@ export function footerTemplate(customElementClass) {
                     size="sm"
                     @click="${endRecording}">
                     ${MicrophoneFilled16({ slot: 'icon' })}
-                    <span slot="tooltip-content">Stop listening</span>
+                    <span slot="tooltip-content">Stop Listening</span>
                   </cds-icon-button>`}`
         }
       </div>
@@ -211,7 +211,7 @@ export function footerTemplate(customElementClass) {
                         slot: 'icon',
                         class: clabsPrefix + '--chat-footer-send-active',
                       })}
-                  <span slot="tooltip-content">Send response</span>
+                  <span slot="tooltip-content">Send Response</span>
                 </cds-icon-button>
               `
             : html`
@@ -226,7 +226,7 @@ export function footerTemplate(customElementClass) {
                     slot: 'icon',
                     class: clabsPrefix + '--chat-footer-button-danger',
                   })}
-                  <span slot="tooltip-content">Stop generating</span>
+                  <span slot="tooltip-content">Stop Generating</span>
                 </cds-icon-button>
               `
         }

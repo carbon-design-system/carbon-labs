@@ -38,6 +38,7 @@ import '../../molecularElement/molecularElement.js';
 import '../../formulaElement/formulaElement.js';
 import '../../fileUploadElement/fileUploadElement.js';
 import '../../popupElement/popupElement.js';
+import '../../diagramElement/diagramElement.js';
 
 /**
  * Lit template for message
@@ -78,6 +79,7 @@ export function messageTemplate(customElementClass) {
     feedbackFormTarget,
     enableComplexFeedback,
     compactIcon,
+    _feedbackFormOrientation: feedbackFormOrientation,
     _feedbackFormValues: feedbackFormValues,
   } = customElementClass;
 
@@ -89,6 +91,7 @@ export function messageTemplate(customElementClass) {
             <clabs-chat-popup
               @on-feedback-popup-closed="${hideFeedBackForm}"
               ?is-open="${showFeedBackForm}"
+              orientation="${feedbackFormOrientation}"
               inline-position="${feedbackFormTarget ? feedbackFormTarget.x : 0}"
               block-position="${feedbackFormTarget ? feedbackFormTarget.y : 0}"
               .feedbackFormValues="${feedbackFormValues}"
@@ -310,6 +313,10 @@ export function messageTemplate(customElementClass) {
                               content="${message.content}">
                             </clabs-chat-text>
                           `
+                        : message.type === 'diagram'
+                        ? html` <clabs-chat-diagram
+                            definition="${message.content}">
+                          </clabs-chat-diagram>`
                         : message.type === 'list'
                         ? html`
                             <clabs-chat-list content="${message.content}">
@@ -454,7 +461,7 @@ export function messageTemplate(customElementClass) {
                               role="button"
                               @click="${handleEdit}">
                               ${Edit16({ slot: 'icon' })}
-                              <span slot="tooltip-content">Enable editing</span>
+                              <span slot="tooltip-content">Enable Editing</span>
                             </cds-icon-button>`
                         : html`
                             <cds-icon-button

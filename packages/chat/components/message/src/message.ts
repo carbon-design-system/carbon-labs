@@ -239,6 +239,7 @@ export default class message extends LitElement {
 
   /** Desired feedback top/bottom orientation
    */
+  @state()
   _feedbackFormOrientation = 'top';
 
   /**
@@ -416,6 +417,7 @@ export default class message extends LitElement {
     //this.feedbackFormTarget = {"x":horizontalPosition, "y":verticalPosition};
     this.feedbackFormTarget = { x: horizontalPosition, y: verticalPosition };
     this._feedbackFormOrientation = orientation;
+
     if (this.feedbackFormDefinitions) {
       this._feedbackFormValues = this.feedbackFormDefinitions[type];
       this._feedbackFormValues.uniqueFeedbackId = uniqueId;
@@ -1416,11 +1418,15 @@ export default class message extends LitElement {
    **/
   _handlePositiveFeedback(event) {
     const uniqueFeedbackId = this.generateUniqueId();
-    this.positiveFeedbackSelected = true;
+    this.positiveFeedbackSelected = !this.positiveFeedbackSelected;
     this.negativeFeedbackSelected = false;
 
     const messageDetails = this._prepareEventDetail();
-    messageDetails['action'] = 'message: user gave feedback to response';
+    if (this.positiveFeedbackSelected) {
+      messageDetails['action'] = 'message: user gave feedback to response';
+    } else {
+      messageDetails['action'] = 'message: user removed feedback to response';
+    }
     messageDetails['type'] = 'positive';
     messageDetails['rawTextMessage'] = this.rawText;
     messageDetails['messageElements'] = this._messageElements;
@@ -1433,8 +1439,11 @@ export default class message extends LitElement {
       composed: true,
     });
     this.dispatchEvent(feedbackEvent);
-
-    this._handleDisplayFeedBackForm(event, 'thumbs-up', uniqueFeedbackId);
+    if (this.positiveFeedbackSelected) {
+      this._handleDisplayFeedBackForm(event, 'thumbs-up', uniqueFeedbackId);
+    } else {
+      this._hideFeedBackForm();
+    }
   }
   /** feedback function when a user clicks the feedback button
    * @param {event} event - negative event from thumbs up button
@@ -1442,9 +1451,13 @@ export default class message extends LitElement {
   _handleNegativeFeedback(event) {
     const uniqueFeedbackId = this.generateUniqueId();
     this.positiveFeedbackSelected = false;
-    this.negativeFeedbackSelected = true;
+    this.negativeFeedbackSelected = !this.negativeFeedbackSelected;
     const messageDetails = this._prepareEventDetail();
-    messageDetails['action'] = 'message: user gave feedback to response';
+    if (this.negativeFeedbackSelected) {
+      messageDetails['action'] = 'message: user gave feedback to response';
+    } else {
+      messageDetails['action'] = 'message: user removed feedback to response';
+    }
     messageDetails['type'] = 'negative';
     messageDetails['rawTextMessage'] = this.rawText;
     messageDetails['messageElements'] = this._messageElements;
@@ -1457,6 +1470,10 @@ export default class message extends LitElement {
       composed: true,
     });
     this.dispatchEvent(feedbackEvent);
-    this._handleDisplayFeedBackForm(event, 'thumbs-down', uniqueFeedbackId);
+    if (this.negativeFeedbackSelected) {
+      this._handleDisplayFeedBackForm(event, 'thumbs-down', uniqueFeedbackId);
+    } else {
+      this._hideFeedBackForm();
+    }
   }
 }

@@ -18,7 +18,6 @@ export default {
 
 const messages = [
   {
-    text: 'what is the nature of art?',
     origin: 'user',
     userSubmitted: true,
     hasError: false,
@@ -27,7 +26,6 @@ const messages = [
     elements: [{ content: 'what is the nature of art?', type: 'text' }],
   },
   {
-    text: 'the nature of art is a complex and multifaceted topic that has been debated by philosophers, critics, and scholars for centuries. at its core, art is the creation of aesthetic objects or experiences that are intended to elicit an emotional response from the viewer. this can take many forms, including painting, sculpture, photography, music, and literature.\n\nart can serve a variety of purposes, including the expression of the artists personal vision, the exploration of complex social or political issues, or the simple enjoyment of beauty. the nature of art is also influenced by cultural and historical context, and can evolve over time as new techniques and materials are developed.\n\n',
     origin: 'bot',
     hasError: false,
     time: '8:51',
@@ -41,7 +39,6 @@ const messages = [
     ],
   },
   {
-    text: 'how much do aesthetics play into it?',
     origin: 'user',
     hasError: false,
     userSubmitted: true,
@@ -55,7 +52,6 @@ const messages = [
     ],
   },
   {
-    text: 'aesthetics play a significant role in the creation and appreciation of art. the aesthetic qualities of a piece of art, such as its form, color, and composition, are often a key factor in determining its overall effectiveness and appeal. in addition, the aesthetic principles that underlie a work of art can influence its interpretation and meaning.\n\n\n',
     origin: 'bot',
     hasError: false,
     time: '8:52',
@@ -69,7 +65,6 @@ const messages = [
     ],
   },
   {
-    text: 'Should aesthetics not matter if its a purely subjective interpretation?',
     origin: 'user',
     hasError: false,
     userSubmitted: true,
@@ -84,7 +79,6 @@ const messages = [
     ],
   },
   {
-    text: 'while aesthetic evaluations are subjective, they can still provide valuable insights into the ways in which art can be appreciated and understood. the aesthetic qualities of a piece of art can influence how it is experienced and interpreted, and can also reflect the cultural and historical context in which it was created.\n\n\n\n',
     origin: 'bot',
     hasError: false,
     time: '8:53',

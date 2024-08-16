@@ -22,5 +22,12 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-list> </clabs-chat-list>`,
+  render: () =>
+    html` <clabs-chat-list
+      content="1. Google.com (United States)
+2. YouTube.com (US)
+3. Facebook.com (US)
+4. Baidu.com (China)
+5. Wikipedia.org (US)">
+    </clabs-chat-list>`,
 };

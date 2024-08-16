@@ -169,6 +169,12 @@ export default class chartElement extends LitElement {
   _errorMessage;
 
   /**
+   * _errorLevel - specifies at which level the error occured
+   */
+  @state()
+  _errorLevel;
+
+  /**
    * warningMessage - underlying warning to be appended to error
    */
   @state()
@@ -407,6 +413,7 @@ export default class chartElement extends LitElement {
     if (changedProperties.has('content')) {
       this._editedContent = this.content;
       this._errorMessage = null;
+      this._errorLevel = null;
       this.chartLoading = true;
       if (!this.streaming) {
         this._prepareVisualization();
@@ -432,6 +439,7 @@ export default class chartElement extends LitElement {
 
     if (changedProperties.has('_visualizationSpec')) {
       this._errorMessage = null;
+      this._errorLevel = null;
       const specificationFinalizedEvent = new CustomEvent(
         'on-chart-specification-ready',
         {
@@ -454,6 +462,7 @@ export default class chartElement extends LitElement {
         const renderErrorEvent = new CustomEvent('on-chart-error', {
           detail: {
             action: 'CHART: error detected',
+            level: this._errorLevel,
             uniqueID: this._uniqueID,
             message: this._errorMessage,
             content: this.content || 'unavailable',
@@ -588,25 +597,30 @@ export default class chartElement extends LitElement {
             if (this._previousSpec) {
               this.chartLoading = true;
               this._errorMessage = '';
+              this._errorLevel = null;
               this._visualizationSpec = JSON.parse(
                 JSON.stringify(this._previousSpec)
               );
               //await this._displayVisualization(mode);
             } else {
               this.chartLoading = false;
-              this._errorMessage = 'RENDER ERROR: ' + error.message;
+              this._errorMessage = error.message;
+              this._errorLevel = 'RENDERING';
             }
           });
         this.chartLoading = false;
       } catch (error) {
         this._errorMessage = 'RENDER ERROR: failed to render';
+        this._errorLevel = 'RENDERING';
       }
     } else {
       if (!this._latestError) {
+        this._errorLevel = 'WEB-COMPONENT';
         this._errorMessage =
           'CHART COMPONENT ERROR: Failed to retrieve chart container id: ' +
           targetID;
       } else {
+        this._errorLevel = 'WEB-COMPONENT';
         this._errorMessage =
           'CHART COMPONENT ERROR: [Vega]: ' + this._latestError;
       }
@@ -982,6 +996,7 @@ export default class chartElement extends LitElement {
       try {
         this.chartLoading = false;
         this._errorMessage = '';
+        this._errorLevel = null;
         const newSpec: any = JSON.parse(event.detail.newLineText);
         newSpec.data = previousData;
 
@@ -993,6 +1008,7 @@ export default class chartElement extends LitElement {
         console.error(error);
         this.chartLoading = true;
         this._errorMessage = 'CHART COMPONENT ERROR: edited spec is invalid';
+        this._errorLevel = 'USER-EDIT';
       }
     }
   }
@@ -1010,6 +1026,7 @@ export default class chartElement extends LitElement {
         newSpec['data'] = previousData;
         this.chartLoading = false;
         this._errorMessage = '';
+        this._errorLevel = null;
 
         //this.content = JSON.stringify(newSpec);
         //this._prepareVisualization(newSpec)
@@ -1024,6 +1041,7 @@ export default class chartElement extends LitElement {
         console.error(error);
         this.chartLoading = true;
         this._errorMessage = 'CHART COMPONENT ERROR: edited spec is invalid';
+        this._errorLevel = 'USER-EDIT';
       }
     }
   }
@@ -1035,6 +1053,7 @@ export default class chartElement extends LitElement {
   _handleCarbonEditorValidation(event) {
     if (event?.detail?.newLineText) {
       this._errorMessage = '';
+      this._errorLevel = null;
       const previousData = this._visualizationSpec.data;
       try {
         this.modalMode = null;
@@ -1067,6 +1086,7 @@ export default class chartElement extends LitElement {
         this._visualizationSpec = newSpec;
         this.chartLoading = false;
         this._errorMessage = '';
+        this._errorLevel = null;
 
         this.dispatchEvent(specificationEditedEvent);
 
@@ -1076,6 +1096,7 @@ export default class chartElement extends LitElement {
       } catch (error) {
         console.error(error);
         this._errorMessage = 'CHART COMPONENT ERROR: edited spec is invalid';
+        this._errorLevel = 'WEB-COMPONENT';
       }
     }
   }
@@ -1100,6 +1121,7 @@ export default class chartElement extends LitElement {
       } catch (error) {
         console.error(error);
         this._errorMessage = 'CHART COMPONENT ERROR: edited spec is invalid';
+        this._errorLevel = 'USER-EDIT';
       }
     }
   }
@@ -1206,6 +1228,7 @@ export default class chartElement extends LitElement {
       } catch (e) {
         this._errorMessage =
           'CARBON CHART ERROR: JSON parse() failed, specification is not valid JSON';
+        this._errorLevel = 'JSON-PARSING';
         return '';
       }
     } else {
@@ -1215,6 +1238,7 @@ export default class chartElement extends LitElement {
     if (!spec['$schema']) {
       this._errorMessage =
         'CHART COMPONENT ERROR: JSON is valid but not a valid schema, missing "$schema" field';
+      this._errorLevel = 'SPEC-VALIDATION';
       return '';
     }
 

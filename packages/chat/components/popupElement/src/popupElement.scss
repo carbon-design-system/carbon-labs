@@ -12,13 +12,7 @@
 :host(#{$clabs-prefix}-chat-popup) {
   position: absolute;
   z-index: 9999;
-  border: 1px solid;
 
-  border-image-source: linear-gradient(
-    0deg,
-    rgba(166, 200, 255, 0.24) 0%,
-    #4589ff 48.96%
-  );
   inset-block-end: var(--chat-popup-element-block-position, 0);
   inset-inline-start: var(--chat-popup-element-inline-position, 0);
   visibility: var(--chat-popup-element-visibility, 'hidden');
@@ -34,19 +28,20 @@
   }
 
   .#{$clabs-prefix}--chat-popup-container {
+    position: relative;
     display: flex;
-    overflow: hidden;
+    overflow: visible;
     box-sizing: border-box;
     flex-direction: row;
     padding: var(--chat-popup-element-opacity, 0);
-    border: 1px solid $border-subtle-00;
+    border: 1px solid $support-info;
     border-radius: 8px;
     animation: fade-in 600ms forwards;
 
     background: linear-gradient(
         0deg,
-        rgba(69, 137, 255, 0.2) 0%,
-        rgba(0, 0, 0, 0) 54.75%
+        $link-inverse-hover 0%,
+        $background 54.75%
       ),
       #ffffff;
     block-size: 464px;
@@ -57,6 +52,32 @@
     inline-size: 320px;
     opacity: 0;
     transition: border-color 0.15s linear;
+  }
+
+  .#{$clabs-prefix}--chat-popup-caret-bottom {
+    position: absolute;
+    inset-block-end: calc(100% - 2px);
+    inset-inline-start: 16px;
+    margin-inline-start: var(--chat-popup-caret-offset, -2px);
+
+    svg {
+      fill: $background;
+      stroke: $support-info;
+      stroke-width: 1px;
+    }
+  }
+
+  .#{$clabs-prefix}--chat-popup-caret-top {
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-start: 16px;
+    margin-inline-start: var(--chat-popup-caret-offset, -2px);
+
+    svg {
+      fill: $link-inverse-hover;
+      stroke: $support-info;
+      stroke-width: 1px;
+    }
   }
 
   .#{$clabs-prefix}--chat-popup-main-content {
@@ -92,7 +113,6 @@
     inline-size: 272px;
     inset-block-start: 205.54px;
     inset-inline-start: 24px;
-    opacity: 0;
   }
 
   .#{$clabs-prefix}--chat-popup-disclaimer {

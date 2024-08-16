@@ -114,11 +114,7 @@ export default class carouselElement extends LitElement {
       this._updateCarousel();
     });
 
-    const slidesContainer = this.shadowRoot?.querySelector(
-      '.clabs--chat-carousel-container'
-    );
-    this.resizeObserver.observe(slidesContainer);
-    this.resizeObserver.observe(this.parentElement);
+    this.resizeObserver.observe(this);
   }
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
@@ -170,9 +166,8 @@ export default class carouselElement extends LitElement {
         );
       }
 
-      this._maxSlideCounter = Math.ceil(
-        this._carouselContent.length / this._itemsPerSlide
-      );
+      this._maxSlideCounter =
+        Math.ceil(this._carouselContent.length / this._itemsPerSlide) - 1;
 
       let currentSlide =
         Math.floor(this._slideCounter / this._itemsPerSlide) *
@@ -275,9 +270,8 @@ export default class carouselElement extends LitElement {
       this._slideCounter += this._itemsPerSlide;
     }
 
-    this._maxSlideCounter = Math.ceil(
-      this._carouselContent.length / this._itemsPerSlide
-    );
+    this._maxSlideCounter =
+      Math.ceil(this._carouselContent.length / this._itemsPerSlide) - 1;
     this._renderedSlideCounter =
       Math.floor(this._slideCounter / this._itemsPerSlide) + 1;
     this._scrollSlideContainer();
@@ -291,9 +285,8 @@ export default class carouselElement extends LitElement {
     if (this._slideCounter - this._itemsPerSlide >= 0) {
       this._slideCounter -= this._itemsPerSlide;
     }
-    this._maxSlideCounter = Math.ceil(
-      this._carouselContent.length / this._itemsPerSlide
-    );
+    this._maxSlideCounter =
+      Math.ceil(this._carouselContent.length / this._itemsPerSlide) - 1;
     this._renderedSlideCounter =
       Math.floor(this._slideCounter / this._itemsPerSlide) + 1;
     this._scrollSlideContainer();

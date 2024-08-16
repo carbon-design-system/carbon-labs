@@ -149,7 +149,10 @@ export function messageTemplate(customElementClass) {
                       `}
                 </div> `
               : html``}
-            <div class="${clabsPrefix}--chat-message-content">
+            <div
+              class="${clabsPrefix}--chat-message-content ${compactIcon
+                ? clabsPrefix + '--chat-message-content-compact'
+                : ''}">
               ${!compactIcon
                 ? html` <div class="${clabsPrefix}--chat-message-timestamp-bot">
                     ${displayName == null ? 'watsonx' : displayName}

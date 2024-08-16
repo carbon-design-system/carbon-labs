@@ -63,9 +63,9 @@ $css--plex: true !default;
     align-items: flex-start;
     justify-content: center;
     background: $background;
+    border-block-start: 1px solid $border-subtle-00;
     color: $text-secondary;
     cursor: pointer;
-    font-size: 16px;
     max-inline-size: 288px;
     transition: border-color 300ms ease;
   }

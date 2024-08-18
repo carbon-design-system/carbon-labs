@@ -1,0 +1,36 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-detailed-error) {
+  .#{$clabs-prefix}--chat-detailed-error-container {
+    .title {
+      @include type-style('productive-heading-01');
+      color: $text-primary;
+      margin-bottom: $spacing-02;
+    }
+
+    .description {
+      @include type-style('body-01');
+      color: $text-primary;
+    }
+
+    .action {
+      display: block;
+      margin-top: $spacing-02;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

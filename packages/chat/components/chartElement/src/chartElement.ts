@@ -273,12 +273,14 @@ export default class chartElement extends LitElement {
       this.renderMethod = 'canvas';
     }
 
+    this.addEventListener('wheel', this._hideTooltip);
+
     this.intersectionObserver = new IntersectionObserver(async () => {
       if (!this.chartLoading) {
         await this._displayVisualization();
       }
     });
-    this.intersectionObserver.observe(this.parentElement);
+    this.intersectionObserver.observe(this);
 
     this.resizeObserver = new ResizeObserver(async () => {
       clearTimeout(this._resizeTimeout);
@@ -705,6 +707,16 @@ export default class chartElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(multiSelectionEvent);
+  }
+
+  /**
+   * _hideTooltip - remove tooltip when scrolling
+   */
+  _hideTooltip() {
+    const tooltip = document.querySelector('#vg-tooltip-element');
+    if (tooltip instanceof HTMLElement) {
+      tooltip.innerHTML = '';
+    }
   }
 
   /**

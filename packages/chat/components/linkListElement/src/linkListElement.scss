@@ -15,7 +15,6 @@ $css--plex: true !default;
   display: block;
   overflow: hidden;
   box-sizing: border-box;
-  background: $background;
   inline-size: 100%;
 
   .#{$clabs-prefix}--chat-link-list-header {
@@ -49,21 +48,22 @@ $css--plex: true !default;
     flex-direction: row;
     align-items: center;
     animation: fade-in 600ms forwards;
-    border-block-start: 1px solid $border-subtle-01;
+    border-block-start: 1px solid $border-subtle-00;
 
     gap: 8px;
     opacity: 0;
-    padding-block: 4px;
-    padding-inline-end: 4px;
+    padding-block: 6px;
+    padding-inline-end: 6px;
   }
 
   .#{$clabs-prefix}--chat-link-list-item svg {
+    cursor: pointer;
     pointer-events: none;
   }
 
   .#{$clabs-prefix}--chat-link-list-item-text {
     overflow: hidden;
     flex: 1;
-    white-space: nowrap;
+    cursor: pointer;
   }
 }

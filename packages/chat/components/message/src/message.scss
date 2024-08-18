@@ -39,6 +39,10 @@ $css--plex: true !default;
     padding-inline-start: 16px;
   }
 
+  .#{$clabs-prefix}--chat-message-content-compact {
+    padding-inline-start: 8px;
+  }
+
   .#{$clabs-prefix}--chat-message-section-temporary {
     margin-block: 16px 4px;
     margin-block-end: 64px;
@@ -97,23 +101,19 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-message-header-bot-compact {
     position: relative;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-block-end: 12px;
+    flex-direction: column;
+    padding-block: 8px 16px;
   }
   .#{$clabs-prefix}--chat-message-bot-icon-compact {
-    position: absolute;
-    block-size: 28px;
-    inline-size: 28px;
-    inset-inline-start: -12px;
+    block-size: 32px;
+    inline-size: 32px;
+    inset-inline-start: -2px;
   }
 
   .#{$clabs-prefix}--chat-message-timestamp-bot-compact {
-    block-size: 32px;
     color: $text-secondary;
     font-size: 12px;
-    line-height: 30px;
-    padding-inline-start: 22px;
+    padding-block-start: 12px;
   }
 
   .#{$clabs-prefix}--chat-message-agent-icon {

@@ -149,10 +149,28 @@ export function messageTemplate(customElementClass) {
                       `}
                 </div> `
               : html``}
-            <div class="${clabsPrefix}--chat-message-content">
-              <div class="${clabsPrefix}--chat-message-timestamp-bot">
-                ${displayName == null ? 'watsonx' : displayName} ${timeStamp}
-              </div>
+            <div
+              class="${clabsPrefix}--chat-message-content ${compactIcon
+                ? clabsPrefix + '--chat-message-content-compact'
+                : ''}">
+              ${!compactIcon
+                ? html` <div class="${clabsPrefix}--chat-message-timestamp-bot">
+                    ${displayName == null ? 'watsonx' : displayName}
+                    ${timeStamp}
+                  </div>`
+                : html` <div
+                    class="${clabsPrefix}--chat-message-header-bot-compact">
+                    <div class="${clabsPrefix}--chat-message-bot-icon-compact">
+                      ${parentTheme === 'white'
+                        ? unsafeHTML(watsonIconLight)
+                        : unsafeHTML(watsonIconDark)}
+                    </div>
+                    <div
+                      class="${clabsPrefix}--chat-message-timestamp-bot-compact">
+                      ${displayName == null ? 'watsonx' : displayName}
+                      ${timeStamp}
+                    </div>
+                  </div>`}
 
               <div
                 class="${clabsPrefix}--chat-message-response-bot ${currentlyStreaming

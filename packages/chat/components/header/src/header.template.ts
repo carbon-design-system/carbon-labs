@@ -70,14 +70,12 @@ export function headerTemplate(customElementClass) {
                       @mousedown="${handleMenuItemSelected}">
                       <cds-button
                         kind="ghost"
-                        size="sm"
+                        size="${dockingEnabled ? 'sm' : 'md'}
                         aria-label="Select Menu Option"
                         role="button"
                         tooltip-position="right"
                         tooltip-alignment="end"
-                        tooltip-text="${menuItem.tooltip
-                          ? menuItem.tooltip
-                          : menuItem.title}">
+                        tooltip-text="${menuItem.tooltip || menuItem.title}">
                         ${menuItem.title}
                       </cds-button>
                     </div>
@@ -89,6 +87,7 @@ export function headerTemplate(customElementClass) {
 
         <div
           role="banner"
+          aria-label="Menu section"
           class="${clabsPrefix}--chat-header-elements-left ${dockingEnabled
             ? clabsPrefix + '--chat-header-elements-left-docked'
             : ''}"

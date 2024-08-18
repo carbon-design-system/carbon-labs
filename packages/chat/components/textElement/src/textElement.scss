@@ -123,6 +123,19 @@ $css--plex: true !default;
     vertical-align: bottom;
   }
 
+  .#{$clabs-prefix}--chat-text-content-code {
+    border: 1px solid $border-subtle-01;
+    border-radius: 4px;
+    background: $layer-01;
+    color: $support-warning-inverse;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.64px;
+    line-height: 20px;
+    vertical-align: bottom;
+    word-break: keep-all;
+  }
+
   .#{$clabs-prefix}--chat-text--float-left {
     display: flex;
     justify-content: flex-start;

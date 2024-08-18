@@ -13,7 +13,6 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import errorElement from './src/detailedErrorElement.js';
 import { detailedErrorElementTemplate } from './src/detailedErrorElement.template.js';
 
-
 const { stablePrefix: clabsPrefix } = settings;
 
 /**

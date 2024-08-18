@@ -13,7 +13,6 @@ import { property } from 'lit/decorators.js';
 // @ts-ignore
 import styles from './detailedErrorElement.scss?inline';
 
-
 export interface DetailedErrorActionProps {
   text: string;
   click: () => void;
@@ -28,20 +27,20 @@ export default class detailedErrorElement extends LitElement {
   /**
    * Error title to display in detailedErrorElement
    */
-  @property({type: String, attribute: 'title', reflect: true})
+  @property({ type: String, attribute: 'title', reflect: true })
   title;
 
   /**
    * Error description to display in detailedErrorElement
    */
-  @property({type: String, attribute: 'description', reflect: true})
+  @property({ type: String, attribute: 'description', reflect: true })
   description;
 
   /**
    * Action to take when error button is clicked (optional)
    * Action should have a title and a call function to execute
    */
-  @property({type: Object, attribute: 'action', reflect: true})
+  @property({ type: Object, attribute: 'action', reflect: true })
   action?: DetailedErrorActionProps;
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
@@ -55,4 +54,3 @@ export default class detailedErrorElement extends LitElement {
    */
   firstUpdated() {}
 }
-

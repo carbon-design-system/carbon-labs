@@ -24,7 +24,8 @@ export const Default = {
    */
   render: () => {
     const title = 'I can’t answer that.';
-    const description = 'watsonx currently has limitations with Reports and cannot answer your query. Try asking it to translate another SQL instead.';
+    const description =
+      'watsonx currently has limitations with Reports and cannot answer your query. Try asking it to translate another SQL instead.';
     const action = {
       text: 'Next step',
       /**
@@ -33,14 +34,14 @@ export const Default = {
       click: () => {
         console.debug('User clicked on the action button!');
       },
-    }
+    };
 
     return html` <clabs-chat-detailed-error
-        .title=${title}
-        .description=${description}
-        .action=${action}>
-  </clabs-chat-detailed-error>`
-  }
+      .title=${title}
+      .description=${description}
+      .action=${action}>
+    </clabs-chat-detailed-error>`;
+  },
 };
 
 export const WithoutAction = {
@@ -54,10 +55,10 @@ export const WithoutAction = {
     const description = 'An unexpected error occurred. Please try again later.';
 
     return html` <clabs-chat-detailed-error
-        .title=${title}
-        .description=${description}>
-  </clabs-chat-detailed-error>`
-  }
+      .title=${title}
+      .description=${description}>
+    </clabs-chat-detailed-error>`;
+  },
 };
 
 export const WithoutDescription = {
@@ -77,12 +78,9 @@ export const WithoutDescription = {
       click: () => {
         console.debug('User clicked on the action button!');
       },
-    }
+    };
 
-    return html` <clabs-chat-detailed-error
-        .title=${title}
-        .action=${action}>
-  </clabs-chat-detailed-error>`
-  }
+    return html` <clabs-chat-detailed-error .title=${title} .action=${action}>
+    </clabs-chat-detailed-error>`;
+  },
 };
-

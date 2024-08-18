@@ -14,7 +14,6 @@ $css--plex: true !default;
 
 :host(#{$clabs-prefix}-chat-detailed-error) {
   .#{$clabs-prefix}--chat-detailed-error-container {
-
     .title {
       @include type-style('productive-heading-01');
       color: $text-primary;

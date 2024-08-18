@@ -11,6 +11,7 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import '@carbon/web-components/es/components/link/index.js';
 import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16.js';
+import { DetailedErrorActionProps } from "./detailedErrorElement";
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -21,7 +22,9 @@ const { stablePrefix: clabsPrefix } = settings;
  * @returns {TemplateResult<1>} Lit html template
  */
 export function detailedErrorElementTemplate(customElementClass) {
-  const { title, description, action } = customElementClass;
+  const { title, description, action } :
+    {title: string, description: string, action?: DetailedErrorActionProps}
+    = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-detailed-error">
     <div class="${clabsPrefix}--chat-detailed-error-container">
@@ -33,9 +36,9 @@ export function detailedErrorElementTemplate(customElementClass) {
           aria-label="Error action"
           role="button"
           icon="arrow-right"
-          @click="${action}"
+          @click="${action.click}"
           >
-          Next step ${ArrowRight16({ slot: 'icon' })}
+          ${action.text} ${ArrowRight16({ slot: 'icon' })}
         </cds-link>
       `}
     </div>

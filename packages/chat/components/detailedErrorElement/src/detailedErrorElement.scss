@@ -29,6 +29,9 @@ $css--plex: true !default;
     .action {
       display: block;
       margin-top: $spacing-02;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }

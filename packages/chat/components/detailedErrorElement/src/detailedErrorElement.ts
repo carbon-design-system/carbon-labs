@@ -12,6 +12,13 @@ import { property } from 'lit/decorators.js';
 
 // @ts-ignore
 import styles from './detailedErrorElement.scss?inline';
+
+
+export interface DetailedErrorActionProps {
+  text: string;
+  click: () => void;
+}
+
 /**
  * Input component using search typeahead api
  */
@@ -31,10 +38,11 @@ export default class detailedErrorElement extends LitElement {
   description;
 
   /**
-   * An action click function for acting on error (optional)
+   * Action to take when error button is clicked (optional)
+   * Action should have a title and a call function to execute
    */
-  @property({type: Function, attribute: 'action', reflect: true})
-  action;
+  @property({type: Object, attribute: 'action', reflect: true})
+  action?: DetailedErrorActionProps;
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object

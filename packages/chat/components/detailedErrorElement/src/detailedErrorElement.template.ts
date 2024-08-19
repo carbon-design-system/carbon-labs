@@ -31,12 +31,12 @@ export function detailedErrorElementTemplate(customElementClass) {
 
   return html`<div class="${clabsPrefix}--chat-detailed-error">
     <div class="${clabsPrefix}--chat-detailed-error-container">
-      <div class="title">${title}</div>
-      <div class="description">${description}</div>
+      <div class="detailed-error--title">${title}</div>
+      <div class="detailed-error--description">${description}</div>
       ${action &&
       html`
         <cds-link
-          class="action"
+          class="detailed-error--action"
           aria-label="Error action"
           role="button"
           icon="arrow-right"

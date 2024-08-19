@@ -14,18 +14,18 @@ $css--plex: true !default;
 
 :host(#{$clabs-prefix}-chat-detailed-error) {
   .#{$clabs-prefix}--chat-detailed-error-container {
-    .title {
+    .detailed-error--title {
       @include type-style('productive-heading-01');
       color: $text-primary;
       margin-bottom: $spacing-02;
     }
 
-    .description {
+    .detailed-error--description {
       @include type-style('body-01');
       color: $text-primary;
     }
 
-    .action {
+    .detailed-error--action {
       display: block;
       margin-top: $spacing-02;
       &:hover {

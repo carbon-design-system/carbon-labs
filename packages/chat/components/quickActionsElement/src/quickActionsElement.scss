@@ -1,0 +1,37 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-quick-actions) {
+  .#{$clabs-prefix}--chat-quick-actions-container {
+    .tile {
+      @include type-style('body-01');
+      margin-top: $spacing-03;
+      border: 1px solid $border-tile;
+      border-radius: $spacing-03;
+      transition: 150ms cubic-bezier(0.2, 0, 0.38, 0.9);
+
+      .tile--content {
+        text-decoration: none;
+        color: $text-primary;
+      }
+
+      .tile--icon {
+        position: absolute;
+        inset-block-end: var(--cds-layout-density-padding-inline-local);
+        inset-inline-end: var(--cds-layout-density-padding-inline-local);
+        fill: $icon-interactive;
+      }
+    }
+  }
+}

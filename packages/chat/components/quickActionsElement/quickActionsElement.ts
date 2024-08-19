@@ -10,24 +10,24 @@
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
-import detailedErrorElement from './src/detailedErrorElement.js';
-import { detailedErrorElementTemplate } from './src/detailedErrorElement.template.js';
+import quickActionsElement from './src/quickActionsElement.js';
+import { quickActionsElementTemplate } from './src/quickActionsElement.template.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Constructed class functionality for the test input custom element
  */
-@customElement(`${clabsPrefix}-chat-detailed-error`)
-class CLABSDetailedErrorElement extends detailedErrorElement {
+@customElement(`${clabsPrefix}-chat-quick-actions`)
+class CLABSQuickActionsElement extends quickActionsElement {
   /**
    * Renders the template while passing in class functionality
    *
    * @returns {TemplateResult<1>}
    */
   render() {
-    return detailedErrorElementTemplate(this);
+    return quickActionsElementTemplate(this);
   }
 }
 
-export default CLABSDetailedErrorElement;
+export default CLABSQuickActionsElement;

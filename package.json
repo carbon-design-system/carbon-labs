@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@carbon/grid": "^11.21.1",
-    "@carbon/icon-helpers": "10.49.1",
+    "@carbon/icon-helpers": "10.50.0",
     "@carbon/icons": "11.45.0",
     "@carbon/layout": "11.23.1",
     "@carbon/motion": "11.19.1",

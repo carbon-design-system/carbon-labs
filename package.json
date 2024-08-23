@@ -57,7 +57,7 @@
     "@carbon/icon-helpers": "10.50.0",
     "@carbon/icons": "11.47.0",
     "@carbon/layout": "11.24.0",
-    "@carbon/motion": "11.19.1",
+    "@carbon/motion": "11.20.0",
     "@carbon/themes": "11.37.0",
     "@carbon/type": "11.28.0",
     "@commitlint/cli": "^19.0.0",

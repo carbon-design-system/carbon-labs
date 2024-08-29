@@ -29,3 +29,5 @@ import './components/linkListElement/linkListElement.js';
 import './components/molecularElement/molecularElement.js';
 import './components/formulaElement/formulaElement.js';
 import './components/fileUploadElement/fileUploadElement.js';
+import './components/detailedErrorElement/detailedErrorElement.js';
+import './components/quickActionsElement/quickActionsElement.js';

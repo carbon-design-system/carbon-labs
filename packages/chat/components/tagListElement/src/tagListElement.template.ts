@@ -30,6 +30,9 @@ export function tagListElementTemplate(customElementClass) {
     _handleTagClick: handleTagClick,
     actionIcon,
     monoLabel,
+    isAction,
+    isInLine,
+    selectionIndex,
   } = customElementClass;
 
   return html`<div class="${clabsPrefix}--chat-tag-list">
@@ -39,13 +42,18 @@ export function tagListElementTemplate(customElementClass) {
         </div>`
       : html`<div class="${clabsPrefix}--chat-tag-list-container">
           ${tagList.map(
-            (value) =>
-              html` <div class="${clabsPrefix}--chat-tag-list-container-cell">
+            (value, index) =>
+              html` <div
+                class="${clabsPrefix}--chat-tag-list-container-cell${isInLine
+                  ? '-inline'
+                  : ''}">
                 <cds-chat-button
-                  kind="ghost"
+                  kind="${selectionIndex[index] ? 'primary' : 'ghost'}"
                   size="sm"
-                  is-quick-action
+                  type="button"
+                  ${isAction ? 'is-quick-action' : ''}
                   data-content="${value}"
+                  data-index="${index}"
                   @click="${handleTagClick}">
                   ${monoLabel ? monoLabel : value}
                   ${actionIcon === 'add'

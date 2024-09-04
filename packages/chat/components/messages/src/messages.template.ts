@@ -29,6 +29,8 @@ export function messagesTemplate(customElementClass) {
     _dockingEnabled: dockingEnabled,
     _streamDelay: streamDelay,
     userInterruptedStreaming,
+    feedbackFormDefinitions,
+    enableFeedbackForm,
     userName,
   } = customElementClass;
 
@@ -62,6 +64,8 @@ export function messagesTemplate(customElementClass) {
                     message.origin === userName}"
                     disable-buttons="${message.disableButtons || nothing}"
                     index="${index}"
+                    ?enable-complex-feedback="${enableFeedbackForm}"
+                    .feedbackFormDefinitions="${feedbackFormDefinitions}"
                     stream-delay="${streamDelay}"
                     parent-theme="${parentTheme}"
                     @on-structure-change="${handleInternalChange}"

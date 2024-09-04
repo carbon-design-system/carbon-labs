@@ -15,6 +15,8 @@ import Renew16 from '@carbon/web-components/es/icons/renew/16.js';
 import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
 import ThumbsUp16 from '@carbon/web-components/es/icons/thumbs-up/16.js';
 import ThumbsDown16 from '@carbon/web-components/es/icons/thumbs-down/16.js';
+import ThumbsUpFilled16 from '@carbon/web-components/es/icons/thumbs-up--filled/16.js';
+import ThumbsDownFilled16 from '@carbon/web-components/es/icons/thumbs-down--filled/16.js';
 import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16.js';
 import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
 import WatsonxData24 from '@carbon/web-components/es/icons/watsonx-data/24.js';
@@ -35,6 +37,7 @@ import '../../linkListElement/linkListElement.js';
 import '../../molecularElement/molecularElement.js';
 import '../../formulaElement/formulaElement.js';
 import '../../fileUploadElement/fileUploadElement.js';
+import '../../popupElement/popupElement.js';
 
 /**
  * Lit template for message
@@ -48,6 +51,7 @@ export function messageTemplate(customElementClass) {
     userSubmitted,
     timeStamp: timeStamp,
     loadingState: loadingState,
+    index,
     displayName: displayName,
     disableButtons: disableButtons,
     _editing: editing,
@@ -60,6 +64,7 @@ export function messageTemplate(customElementClass) {
     _handleRegenerate: handleRegenerate,
     _onTagSelected: onTagSelected,
     temporaryMessage,
+    showFeedBackForm,
     watsonIconDark,
     watsonIconLight,
     _parentTheme: parentTheme,
@@ -67,12 +72,35 @@ export function messageTemplate(customElementClass) {
     displayColor,
     currentlyStreaming,
     _handleSlotchange,
+    _hideFeedBackForm: hideFeedBackForm,
+    positiveFeedbackSelected,
+    negativeFeedbackSelected,
+    feedbackFormTarget,
+    enableComplexFeedback,
     compactIcon,
+    _feedbackFormValues: feedbackFormValues,
   } = customElementClass;
 
   return html`<div
     class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
     <div class="${clabsPrefix}--chat-message-container">
+      ${showFeedBackForm && enableComplexFeedback
+        ? html`
+            <clabs-chat-popup
+              @on-feedback-popup-closed="${hideFeedBackForm}"
+              ?is-open="${showFeedBackForm}"
+              inline-position="${feedbackFormTarget ? feedbackFormTarget.x : 0}"
+              block-position="${feedbackFormTarget ? feedbackFormTarget.y : 0}"
+              .feedbackFormValues="${feedbackFormValues}"
+              parent-message-id="${index}"
+              type="${positiveFeedbackSelected
+                ? 'thumbs-up'
+                : negativeFeedbackSelected
+                ? 'thumbs-down'
+                : 'custom'}">
+            </clabs-chat-popup>
+          `
+        : html``}
       ${userSubmitted
         ? html` <div class="${clabsPrefix}--chat-message-content">
             <div class="${clabsPrefix}--chat-message-timestamp-user">
@@ -436,7 +464,9 @@ export function messageTemplate(customElementClass) {
                               aria-label="Thumbs Up"
                               role="button"
                               @click="${handlePositiveFeedback}">
-                              ${ThumbsUp16({ slot: 'icon' })}
+                              ${positiveFeedbackSelected
+                                ? ThumbsUpFilled16({ slot: 'icon' })
+                                : ThumbsUp16({ slot: 'icon' })}
                               <span slot="tooltip-content">Thumbs Up</span>
                             </cds-icon-button>
 
@@ -447,7 +477,9 @@ export function messageTemplate(customElementClass) {
                               aria-label="Thumbs Up"
                               role="button"
                               @click="${handleNegativeFeedback}">
-                              ${ThumbsDown16({ slot: 'icon' })}
+                              ${negativeFeedbackSelected
+                                ? ThumbsDownFilled16({ slot: 'icon' })
+                                : ThumbsDown16({ slot: 'icon' })}
                               <span slot="tooltip-content">Thumbs Down</span>
                             </cds-icon-button>
                             <cds-icon-button

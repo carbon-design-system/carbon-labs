@@ -1432,6 +1432,26 @@ const headerMenuItems = [
   { title: 'Save history', action: 'save-chat-history' },
   { title: 'Report issue', action: 'report-issue' },
 ];
+const feedbackFormOptions = {
+  'thumbs-down': {
+    title: 'Unsatisfactory Response',
+    tags: [
+      'Inaccurate',
+      'Incomplete',
+      'Missing links',
+      'Privacy violations',
+      'Hate speech',
+    ],
+    prompt: 'What was unsatisfactory about this response?',
+    responsePlaceholder: 'Describe issues with this response',
+  },
+  'thumbs-up': {
+    title: 'Feedback',
+    tags: ['Accurate', 'Comprehensive', 'Consice', 'Easy to Understand'],
+    prompt: 'Why did you choose this rating?',
+    responsePlaceholder: 'Add a comment',
+  },
+};
 export const Playground = {
   component: 'clabs-chat',
   argTypes: objectPlaygroundControls,
@@ -1460,6 +1480,8 @@ export const Playground = {
         <clabs-chat
           user-name="user"
           agent-name="bot"
+          ?enable-feedback-form="${true}"
+          .feedbackDefinitions="${feedbackFormOptions}"
           .headerMenuItems="${headerMenuItems}"
           input-field-placeholder="${'What can I assist you with today?'}"
           .conversation="${testMode === 'Examples'
@@ -1481,6 +1503,9 @@ export const Playground = {
             console.log(e);
           }}"
           @on-header-menu-item-selected="${(e) => {
+            console.log(e);
+          }}"
+          @on-user-complex-feedback-request="${(e) => {
             console.log(e);
           }}"
           @on-message-element-selected="${(e) => {

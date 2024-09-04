@@ -12,13 +12,10 @@
 :host(#{$clabs-prefix}-chat-popup) {
   position: absolute;
   z-index: 9999;
-  border: 1px solid;
 
-  border-image-source: linear-gradient(
-    0deg,
-    rgba(166, 200, 255, 0.24) 0%,
-    #4589ff 48.96%
-  );
+  background: $background;
+  box-shadow: 0 23px 40px -24px rgba(0, 0, 0, 0.28);
+
   inset-block-end: var(--chat-popup-element-block-position, 0);
   inset-inline-start: var(--chat-popup-element-inline-position, 0);
   visibility: var(--chat-popup-element-visibility, 'hidden');
@@ -44,11 +41,11 @@
     animation: fade-in 600ms forwards;
 
     background: linear-gradient(
-        0deg,
-        rgba(69, 137, 255, 0.2) 0%,
-        rgba(0, 0, 0, 0) 54.75%
-      ),
-      #ffffff;
+      to bottom,
+      $background 80%,
+      rgba(69, 137, 255, 0.2)
+    );
+    background-blend-mode: multiply;
     block-size: 464px;
     box-shadow: -40px 30px 100px -25px rgba(0, 67, 206, 0.25),
       -60px 80px 60px -45px rgba(0, 0, 0, 0.1),
@@ -92,7 +89,6 @@
     inline-size: 272px;
     inset-block-start: 205.54px;
     inset-inline-start: 24px;
-    opacity: 0;
   }
 
   .#{$clabs-prefix}--chat-popup-disclaimer {

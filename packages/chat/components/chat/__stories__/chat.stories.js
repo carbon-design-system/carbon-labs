@@ -1480,7 +1480,7 @@ export const Playground = {
         <clabs-chat
           user-name="user"
           agent-name="bot"
-          enable-feedback-form
+          ?enable-feedback-form="${true}"
           .feedbackDefinitions="${feedbackFormOptions}"
           .headerMenuItems="${headerMenuItems}"
           input-field-placeholder="${'What can I assist you with today?'}"

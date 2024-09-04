@@ -58,8 +58,7 @@ export function popupElementTemplate(customElementClass) {
           rows="3"
           cols="50"
           @input="${handleTextInput}"
-          class="${clabsPrefix}--chat-popup-feedback-text-area">
-        </cds-textarea>
+          class="${clabsPrefix}--chat-popup-feedback-text-area"></cds-textarea>
       </div>
       <div class="${clabsPrefix}--chat-popup-disclaimer">
         ${disclaimer

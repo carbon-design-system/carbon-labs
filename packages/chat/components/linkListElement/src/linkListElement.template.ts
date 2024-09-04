@@ -45,22 +45,32 @@ export function linkListElementTemplate(customElementClass) {
               <div
                 class="${clabsPrefix}--chat-link-list-item-text"
                 @click="${handleLinkFeedback}">
-                <cds-link
-                  data-index="${index}"
-                  ${!disableRedirection
-                    ? 'href="' + linkObject.url + '" target="_blank"'
-                    : ''}
-                  >${linkObject.title}</cds-link
-                >
+                ${!disableRedirection
+                  ? html`
+                      <cds-link
+                        data-index="${index}"
+                        target="_blank"
+                        href="${linkObject.url}"
+                        >${linkObject.title}</cds-link
+                      >
+                    `
+                  : html`<cds-link data-index="${index}"
+                      >${linkObject.title}</cds-link
+                    >`}
               </div>
               <div @click="${handleLinkFeedback}">
-                <cds-link
-                  data-index="${index}"
-                  ${!disableRedirection
-                    ? 'href="' + linkObject.url + '" target="_blank"'
-                    : ''}
-                  >${ArrowRight16({ slot: 'icon' })}
-                </cds-link>
+                ${!disableRedirection
+                  ? html`
+                      <cds-link
+                        data-index="${index}"
+                        target="_blank"
+                        href="${linkObject.url}"
+                        >${ArrowRight16({ slot: 'icon' })}</cds-link
+                      >
+                    `
+                  : html`<cds-link data-index="${index}"
+                      >${ArrowRight16({ slot: 'icon' })}</cds-link
+                    >`}
               </div>
             </div>`
           : html``

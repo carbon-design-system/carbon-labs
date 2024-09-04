@@ -38,6 +38,7 @@ export function chatTemplate(customElementClass) {
     disableHeaderMinimize,
     disableHeaderFullscreen,
     headerMenuItems,
+    feedbackDefinitions,
     enableFullscreen,
     enableDocking,
     _handleFullscreenMode: handleFullscreenMode,
@@ -52,6 +53,8 @@ export function chatTemplate(customElementClass) {
     promptNotificationType,
     promptNotificationMessage,
     _isDragging: isDragging,
+    enableFeedbackForm,
+    enableTextFeedbackForm,
   } = customElementClass;
 
   return html`<div
@@ -61,19 +64,21 @@ export function chatTemplate(customElementClass) {
       ? clabsPrefix + '--chat-docked-dragging'
       : ''}  ${enableFullscreen ? clabsPrefix + '--chat-fullscreen' : ''}">
     <div class="${clabsPrefix}--chat-content-container">
-      <clabs-chat-header
-        @on-chat-fullscreen-change="${handleFullscreenMode}"
-        @on-chat-docking-change="${handleDockingMode}"
-        @on-chat-closed="${handleChatClosed}"
-        @on-header-drag-initiated="${handleHeaderDragStart}"
-        .menuItems="${headerMenuItems}"
-        ?docking-enabled="${enableDocking}"
-        ?disable-header-menu="${disableHeaderMenu}"
-        ?disable-header-close="${disableHeaderClose}"
-        ?disable-header-fullscreen="${disableHeaderFullscreen}"
-        ?disable-header-minimize="${disableHeaderMinimize}"
-        ?disable-header-buttons="${disableHeaderButtons}">
-      </clabs-chat-header>
+      <slot name="header">
+        <clabs-chat-header
+          @on-chat-fullscreen-change="${handleFullscreenMode}"
+          @on-chat-docking-change="${handleDockingMode}"
+          @on-chat-closed="${handleChatClosed}"
+          @on-header-drag-initiated="${handleHeaderDragStart}"
+          .menuItems="${headerMenuItems}"
+          ?docking-enabled="${enableDocking}"
+          ?disable-header-menu="${disableHeaderMenu}"
+          ?disable-header-close="${disableHeaderClose}"
+          ?disable-header-fullscreen="${disableHeaderFullscreen}"
+          ?disable-header-minimize="${disableHeaderMinimize}"
+          ?disable-header-buttons="${disableHeaderButtons}">
+        </clabs-chat-header>
+      </slot>
 
       <slot name="messages">
         <clabs-chat-messages
@@ -84,6 +89,9 @@ export function chatTemplate(customElementClass) {
           ?loading="${queryInProgress}"
           ?stream-responses="${streamResponses}"
           stream-delay="${streamDelay}"
+          ?feedback-form-enabled="${enableFeedbackForm}"
+          .feedbackFormDefinitions="${feedbackDefinitions}"
+          text-feedback-form-enabled="${enableTextFeedbackForm}"
           ?user-interrupted-streaming="${interruptStreaming}"
           @on-message-regeneration="${handleUserRegenerationRequest}"
           @on-user-message-update-request="${handleUserUpdateRequest}"
@@ -91,16 +99,18 @@ export function chatTemplate(customElementClass) {
         </clabs-chat-messages>
       </slot>
 
-      <clabs-chat-footer
-        ?disable-input="${loading}"
-        @on-user-text-input="${sendInput}"
-        @on-user-stream-interrupt="${endStreaming}"
-        context-message="${promptNotificationMessage}"
-        context-message-type="${promptNotificationType}"
-        ?currently-streaming="${streamResponses && !interruptStreaming}"
-        input-placeholder="${inputFieldPlaceholder}"
-        character-limit="${maxCharacterCount}">
-      </clabs-chat-footer>
+      <slot name="footer">
+        <clabs-chat-footer
+          ?disable-input="${loading}"
+          @on-user-text-input="${sendInput}"
+          @on-user-stream-interrupt="${endStreaming}"
+          context-message="${promptNotificationMessage}"
+          context-message-type="${promptNotificationType}"
+          ?currently-streaming="${streamResponses && !interruptStreaming}"
+          input-placeholder="${inputFieldPlaceholder}"
+          character-limit="${maxCharacterCount}">
+        </clabs-chat-footer>
+      </slot>
     </div>
   </div>`;
 }

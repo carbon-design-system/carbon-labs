@@ -166,7 +166,11 @@ export default class footer extends LitElement {
     const limit = this._characterLimit || Number.MAX_SAFE_INTEGER;
     if (this._messageText.length > limit) {
       this._contextMessage =
-        'Character limit of ' + limit.toString() + ' exceeded';
+        '(' +
+        this._messageText.length +
+        '/' +
+        limit.toString() +
+        ') Character limit exceeded';
       this._contextMessageType = 'error';
       this._forceDisableInput = true;
     } else {

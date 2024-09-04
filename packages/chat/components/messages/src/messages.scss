@@ -12,6 +12,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}-chat-messages) {
+  position: relative;
   display: flex;
   overflow: hidden;
   box-sizing: border-box;
@@ -24,6 +25,7 @@ $css--plex: true !default;
   min-inline-size: 300px;
 
   .#{$clabs-prefix}--chat-messages-container {
+    position: relative;
     overflow: hidden scroll;
     flex: 1;
     inline-size: 100%;

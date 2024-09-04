@@ -65,14 +65,14 @@ export function headerTemplate(customElementClass) {
                 ${menuItems.map(
                   (menuItem, index) => html`
                     <div
-                      class="${clabsPrefix}--chat-header-elements-menu-list-item"
-                      data-menuindex="${index}"
-                      @mousedown="${handleMenuItemSelected}">
+                      class="${clabsPrefix}--chat-header-elements-menu-list-item">
                       <cds-button
                         kind="ghost"
                         size="${dockingEnabled ? 'sm' : 'md'}
                         aria-label="Select Menu Option"
                         role="button"
+                        data-menuindex="${index}"
+                        @mousedown="${handleMenuItemSelected}"
                         tooltip-position="right"
                         tooltip-alignment="end"
                         tooltip-text="${menuItem.tooltip || menuItem.title}">

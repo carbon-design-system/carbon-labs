@@ -48,10 +48,40 @@ export default class tagListElement extends LitElement {
   actionIcon;
 
   /**
+   * isAction - use quick action buttons
+   */
+  @property({ type: String, attribute: 'is-action' })
+  isAction = true;
+
+  /**
    * MonoLabel - singulat label for all buttons
    */
   @property({ type: String, attribute: 'mono-label' })
   monoLabel;
+
+  /**
+   * isInLine - place buttons using flex
+   */
+  @property({ type: String, attribute: 'is-inline' })
+  isInLine = true;
+
+  /**
+   * multi - allow multi-selections
+   */
+  @property({ type: Boolean, attribute: 'multi-select' })
+  multiSelect;
+
+  /**
+   * selectionIndex - array of active tags when selected
+   */
+  @state()
+  selectionIndex = {};
+
+  /**
+   * selectedValues - array of selected values in list
+   */
+  @state()
+  selectedValues = {};
 
   /** detect when component is rendered to process visualization specification object
    */
@@ -83,12 +113,27 @@ export default class tagListElement extends LitElement {
   _handleTagClick(event) {
     event.preventDefault();
     const source = event.target.getAttribute('data-content');
+    const index = event.target.getAttribute('data-index');
+
+    if (!this.selectionIndex[index]) {
+      this.selectionIndex[index] = true;
+      this.selectedValues[index] = source;
+    } else {
+      delete this.selectionIndex[index];
+      delete this.selectedValues[index];
+    }
     const tagSelectedEvent = new CustomEvent('on-tag-selected', {
-      detail: { tagContent: source, tagLabel: source },
+      detail: {
+        tagContent: source,
+        tagLabel: source,
+        tagIndexInList: index,
+        selectionList: this.selectedValues,
+      },
       bubbles: true,
       composed: true,
     });
     this.dispatchEvent(tagSelectedEvent);
+    this.requestUpdate();
   }
 
   /**

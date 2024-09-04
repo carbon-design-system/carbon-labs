@@ -166,6 +166,18 @@ export default class CLABSChat extends LitElement {
   disableHeaderButtons;
 
   /**
+   * enableFeedBackCard - show feedback card on like buttons
+   */
+  @property({ type: Boolean, attribute: 'enable-feedback-form' })
+  enableFeedbackForm;
+
+  /**
+   * enableFeedBackCard - show feedback card on like buttons
+   */
+  @property({ type: Boolean, attribute: 'enable-text-feedback-form' })
+  enableTextFeedbackForm;
+
+  /**
    * Remove header fullscreen button option
    */
   @property({ type: Boolean, attribute: 'disable-header-fullscreen' })
@@ -188,6 +200,12 @@ export default class CLABSChat extends LitElement {
    */
   @property({ type: Object, attribute: 'headerMenuItems' })
   headerMenuItems;
+
+  /**
+   * JSON object with feedback options given a list of options: thumbs-up, thumbs-down, highlighted-text
+   */
+  @property({ type: Object, attribute: 'feedbackDefinitions' })
+  feedbackDefinitions;
 
   /**
    * string denoting selected querying method
@@ -264,6 +282,9 @@ export default class CLABSChat extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has('loading')) {
       this._queryInProgress = this.loading;
+      if (!this.loading) {
+        this._interruptStreaming = true;
+      }
     }
 
     if (changedProperties.has('conversation')) {

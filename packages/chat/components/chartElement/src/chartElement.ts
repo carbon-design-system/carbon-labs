@@ -79,6 +79,12 @@ export default class chartElement extends LitElement {
   disableOptions;
 
   /**
+   * Disable recontext button to make chart current
+   */
+  @property({ type: Boolean, attribute: 'enable-context' })
+  enableContext;
+
+  /**
    * Disable fullscreen button
    */
   @property({ type: Boolean, attribute: 'disable-fullscreen' })
@@ -257,6 +263,12 @@ export default class chartElement extends LitElement {
    */
   @state()
   isHovered = false;
+
+  /**
+   * _latestError -  Vega erro message to display
+   */
+  @state()
+  _latestError;
 
   /** detect when component is rendered to process visualization specification object
    */
@@ -506,10 +518,13 @@ export default class chartElement extends LitElement {
       //const currentWidth = this.shadowRoot.host.clientWidth;
 
       //const padding = chosenSpec.padding;
-      chosenSpec.height = 'container'; //currentHeight;// - (padding.top + padding.bottom)*2;
-      chosenSpec.width = 'container'; // - (padding.right + padding.left)*2;
+      //chosenSpec.height = 'container'; //currentHeight;// - (padding.top + padding.bottom)*2;
+      //chosenSpec.width = 'container'; // - (padding.right + padding.left)*2;
 
-      chosenSpec.autosize = { resize: false };
+      chosenSpec.height = 'container';
+      chosenSpec.width = 'container';
+
+      //chosenSpec.autosize = 'none';//{ resize: false };
       if (this.thumbNail) {
         chosenSpec.width = 400;
         chosenSpec.height = 300;
@@ -566,9 +581,10 @@ export default class chartElement extends LitElement {
             }
           })
           .catch(async (error) => {
-            console.log(error.message);
+            this._latestError = error.message;
             this._brokenSpec = this._visualizationSpec;
             this._visualizationSpec = null;
+            //this._errorMessage = 'RENDER ERROR: ' + error.message;
             if (this._previousSpec) {
               this.chartLoading = true;
               this._errorMessage = '';
@@ -586,9 +602,14 @@ export default class chartElement extends LitElement {
         this._errorMessage = 'RENDER ERROR: failed to render';
       }
     } else {
-      this._errorMessage =
-        'CHART COMPONENT ERROR: Failed to retrieve chart container id: ' +
-        targetID;
+      if (!this._latestError) {
+        this._errorMessage =
+          'CHART COMPONENT ERROR: Failed to retrieve chart container id: ' +
+          targetID;
+      } else {
+        this._errorMessage =
+          'CHART COMPONENT ERROR: [Vega]: ' + this._latestError;
+      }
     }
   }
 
@@ -607,6 +628,36 @@ export default class chartElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(singleSelectionEvent);
+  }
+
+  /**
+   * _chartClicked - chart selection event
+   */
+  _chartClicked() {
+    const clickEvent = new CustomEvent('on-chart-clicked', {
+      detail: {
+        action: 'CHART: click event registered',
+      },
+      bubbles: true,
+      composed: true,
+    });
+    console.log(clickEvent);
+    this.dispatchEvent(clickEvent);
+  }
+
+  /**
+   * _appendToContext - send context button click event to parent
+   */
+  _appendToContext() {
+    const contextEvent = new CustomEvent('on-chart-append-context', {
+      detail: {
+        action: 'CHART: context event registered',
+      },
+      bubbles: true,
+      composed: true,
+    });
+
+    this.dispatchEvent(contextEvent);
   }
 
   /**
@@ -1575,6 +1626,8 @@ export default class chartElement extends LitElement {
             titleFont: defaultFont,
             labelFont: defaultFont,
             labelOffset: 4,
+            columns: 7,
+            rowPadding: 8,
             titleFontSize: 11,
             labelFontSize: 12, //fillOpacity: 1,
             strokeWidth: 1, //fontWeight: 'bold',

@@ -3,6 +3,8 @@ run-name: Publish CDN artifacts - versioned by @${{ github.actor }}
 
 on:
   workflow_dispatch:
+  repository_dispatch:
+    types: [publish-cdn]
 
 concurrency:
   group: deploy-${{ github.ref }}

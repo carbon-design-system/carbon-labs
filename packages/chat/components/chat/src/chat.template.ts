@@ -89,7 +89,7 @@ export function chatTemplate(customElementClass) {
           ?loading="${queryInProgress}"
           ?stream-responses="${streamResponses}"
           stream-delay="${streamDelay}"
-          ?feedback-form-enabled="${enableFeedbackForm}"
+          ?enable-feedback-form="${enableFeedbackForm}"
           .feedbackFormDefinitions="${feedbackDefinitions}"
           text-feedback-form-enabled="${enableTextFeedbackForm}"
           ?user-interrupted-streaming="${interruptStreaming}"

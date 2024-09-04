@@ -84,7 +84,7 @@ export function messageTemplate(customElementClass) {
   return html`<div
     class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
     <div class="${clabsPrefix}--chat-message-container">
-      ${showFeedBackForm || enableComplexFeedback
+      ${showFeedBackForm && enableComplexFeedback
         ? html`
             <clabs-chat-popup
               @on-feedback-popup-closed="${hideFeedBackForm}"

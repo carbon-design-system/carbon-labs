@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/ai-ux-control",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "publishConfig": {
     "access": "public",
@@ -37,6 +37,6 @@
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.8.0",
     "@carbon/grid": "^11.21.0",
-    "@carbon/web-components": "2.11.0"
+    "@carbon/web-components": "2.11.1"
   }
 }

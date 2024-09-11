@@ -21,6 +21,7 @@ $css--plex: true !default;
   padding-inline: 16px 24px;
 
   .#{$clabs-prefix}--chat-message-container {
+    position: relative;
     display: inline-flex;
     inline-size: 100%;
   }

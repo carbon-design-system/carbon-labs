@@ -114,6 +114,7 @@ export default class header extends LitElement {
       bubbles: true,
       composed: true,
     });
+    console.log(dockingEvent);
     this.dispatchEvent(dockingEvent);
   }
 
@@ -175,11 +176,15 @@ export default class header extends LitElement {
    * @param {event} event - click event when item is chosen
    */
   _handleMenuItemSelected(event) {
+    console.log(event);
     event.stopPropagation();
     event.preventDefault();
 
     const targetElement = event?.target;
+    console.log(targetElement);
     const index = targetElement?.getAttribute('data-menuindex');
+    console.log(index);
+    console.log(targetElement);
     if (index) {
       if (this.menuItems[index]) {
         const menuSelectionEvent = new CustomEvent(

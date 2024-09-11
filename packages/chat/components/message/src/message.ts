@@ -72,6 +72,12 @@ export default class message extends LitElement {
   origin;
 
   /**
+   * showFeedbackForm - message decides if selecting feedback buttons displays the full form
+   */
+  @state()
+  showFeedBackForm = false;
+
+  /**
    * type property displaying timestamp of message
    */
   @property({ type: String, attribute: 'time-stamp' })
@@ -140,6 +146,12 @@ export default class message extends LitElement {
   _streamContent;
 
   /**
+   * Boolean to allow feedback forms to appear
+   */
+  @property({ type: Boolean, attribute: 'enable-complex-feedback' })
+  enableComplexFeedback;
+
+  /**
    * Force interruption boolean set when parent changes stream-content attribute to false;
    */
   @state()
@@ -201,6 +213,39 @@ export default class message extends LitElement {
    */
   @state()
   baseStreamingSpeed = 10;
+
+  /**
+   * feedbackFormTarget - div object to give to popup
+   */
+  @state()
+  feedbackFormTarget;
+
+  /**
+   * selection state for thumbs up
+   */
+  @state()
+  positiveFeedbackSelected = false;
+
+  /**
+   * selection state for thumbs down
+   */
+  @state()
+  negativeFeedbackSelected = false;
+
+  /** JSON dictionary of items describing feedback values
+   */
+  @property({ type: Object, attribute: 'feedbackFormDefinitions' })
+  feedbackFormDefinitions;
+
+  /** Desired feedback top/bottom orientation
+   */
+  _feedbackFormOrientation = 'top';
+
+  /**
+   * current user defined feedback form values (title, selections etcc...)
+   */
+  @state()
+  _feedbackFormValues;
 
   /** detect when component is rendered to process rawtext
    */
@@ -275,9 +320,14 @@ export default class message extends LitElement {
     if (this.parentElement instanceof HTMLElement) {
       const parentStyle = getComputedStyle(this.parentElement);
       const backgroundColor = parentStyle.getPropertyValue('--cds-background');
-      const darkMode =
+      let darkMode = false;
+      if (
         backgroundColor.startsWith('#') &&
-        parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2;
+        parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2
+      ) {
+        darkMode = true;
+      }
+
       this._parentTheme = darkMode ? 'g100' : 'white';
     }
   }
@@ -322,6 +372,55 @@ export default class message extends LitElement {
       }
     }
     return splitParts;
+  }
+
+  /** _hideFeedBackForm -  hide popup subelement
+   *
+   **/
+  _hideFeedBackForm() {
+    this.showFeedBackForm = false;
+  }
+
+  /**
+   * generateUniqueId - create random string to give unique feedback signature
+   */
+  generateUniqueId() {
+    const randomString: string = Math.random().toString(36).substr(2, 9);
+    return randomString;
+  }
+
+  /**  _handleDisplayFeedBackForm - target div and place popup appropriately
+   * @param {event} event - target button click event
+   * @param {string} type - thumbs up or down or custom
+   * @param {string} uniqueId - unique code for event
+   **/
+  _handleDisplayFeedBackForm(event, type, uniqueId) {
+    //const targetItem = event.target;
+    //const boundingRect = targetItem.getBoundingClientRect();
+    event.preventDefault();
+    const popupHeight = 464;
+    //const popupWidth = 320;
+
+    let horizontalPosition = 36;
+    let verticalPosition = 50;
+    let orientation = 'top';
+
+    if (this.offsetTop < popupHeight) {
+      verticalPosition = -popupHeight - 20;
+      orientation = 'bottom';
+    }
+
+    if (this.compactIcon) {
+      horizontalPosition = -16;
+    }
+    //this.feedbackFormTarget = {"x":horizontalPosition, "y":verticalPosition};
+    this.feedbackFormTarget = { x: horizontalPosition, y: verticalPosition };
+    this._feedbackFormOrientation = orientation;
+    if (this.feedbackFormDefinitions) {
+      this._feedbackFormValues = this.feedbackFormDefinitions[type];
+      this._feedbackFormValues.uniqueFeedbackId = uniqueId;
+    }
+    this.showFeedBackForm = true;
   }
 
   /**
@@ -1316,11 +1415,17 @@ export default class message extends LitElement {
    * @param {event} event - positive event from thumbs up button
    **/
   _handlePositiveFeedback(event) {
+    const uniqueFeedbackId = this.generateUniqueId();
+    this.positiveFeedbackSelected = true;
+    this.negativeFeedbackSelected = false;
+
     const messageDetails = this._prepareEventDetail();
     messageDetails['action'] = 'message: user gave feedback to response';
     messageDetails['type'] = 'positive';
     messageDetails['rawTextMessage'] = this.rawText;
     messageDetails['messageElements'] = this._messageElements;
+    messageDetails['originalEvent'] = event;
+    messageDetails['feedbackId'] = uniqueFeedbackId;
     event.preventDefault();
     const feedbackEvent = new CustomEvent('on-user-feedback-request', {
       detail: messageDetails,
@@ -1328,16 +1433,23 @@ export default class message extends LitElement {
       composed: true,
     });
     this.dispatchEvent(feedbackEvent);
+
+    this._handleDisplayFeedBackForm(event, 'thumbs-up', uniqueFeedbackId);
   }
   /** feedback function when a user clicks the feedback button
    * @param {event} event - negative event from thumbs up button
    **/
   _handleNegativeFeedback(event) {
+    const uniqueFeedbackId = this.generateUniqueId();
+    this.positiveFeedbackSelected = false;
+    this.negativeFeedbackSelected = true;
     const messageDetails = this._prepareEventDetail();
     messageDetails['action'] = 'message: user gave feedback to response';
     messageDetails['type'] = 'negative';
     messageDetails['rawTextMessage'] = this.rawText;
     messageDetails['messageElements'] = this._messageElements;
+    messageDetails['originalEvent'] = event;
+    messageDetails['feedbackId'] = uniqueFeedbackId;
     event.preventDefault();
     const feedbackEvent = new CustomEvent('on-user-feedback-request', {
       detail: messageDetails,
@@ -1345,5 +1457,6 @@ export default class message extends LitElement {
       composed: true,
     });
     this.dispatchEvent(feedbackEvent);
+    this._handleDisplayFeedBackForm(event, 'thumbs-down', uniqueFeedbackId);
   }
 }

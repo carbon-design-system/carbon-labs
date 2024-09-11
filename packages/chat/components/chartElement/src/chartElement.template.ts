@@ -26,6 +26,7 @@ import Download16 from '@carbon/web-components/es/icons/download/16.js';
 import Launch16 from '@carbon/web-components/es/icons/launch/16.js';
 import Code16 from '@carbon/web-components/es/icons/code/16.js';
 import Close16 from '@carbon/web-components/es/icons/close/16.js';
+import ViewNext16 from '@carbon/web-components/es/icons/view-next/16.js';
 
 /**
  * Lit template for card
@@ -68,6 +69,9 @@ export function chartElementTemplate(customElementClass) {
     _showOriginalSpec: showOriginalSpec,
     _showCarbonSpec: showCarbonSpec,
     isHovered,
+    _enableContext: enableContext,
+    _appendToContext: appendToContext,
+    _chartClicked: chartClicked,
     exportedImageURL,
   } = customElementClass;
 
@@ -155,7 +159,8 @@ export function chartElementTemplate(customElementClass) {
                     ? html`
                         <clabs-chat-code
                           editable
-                          max-height="calc(66vh)"
+                          max-height="calc(100vh - 186px)"
+                          debug
                           @on-code-edit-change="${handleLiveRawEditorChange}"
                           @on-code-edit-validation="${handleOriginalEditorValidation}"
                           content="${JSON.stringify(
@@ -168,7 +173,7 @@ export function chartElementTemplate(customElementClass) {
                     : html`
                         <clabs-chat-code
                           editable
-                          max-height="calc(66vh)"
+                          max-height="calc(100vh - 186px)"
                           @on-code-edit-change="${handleLiveCarbonEditorChange}"
                           @on-code-edit-validation="${handleCarbonEditorValidation}"
                           content="${JSON.stringify(
@@ -197,6 +202,7 @@ export function chartElementTemplate(customElementClass) {
       : html`
           ${_visualizationSpec && !errorMessage && !streaming
             ? html` <div
+                @click="${chartClicked}"
                 class="${clabsPrefix}--chat-chart-container"
                 id="${clabsPrefix}--chat-chart-embed-vis-${uniqueID}"></div>`
             : html` <div class="${clabsPrefix}--chat-chart-container">
@@ -256,6 +262,20 @@ export function chartElementTemplate(customElementClass) {
                     @click="${exportToImage}">
                     ${Download16({ slot: 'icon' })}
                     <span slot="tooltip-content">Export to PNG</span>
+                  </cds-icon-button>
+                `
+              : html``}
+            ${enableContext
+              ? html`
+                  <cds-icon-button
+                    kind="ghost"
+                    size="sm"
+                    aria-label="Make latest Chart"
+                    role="button"
+                    align="bottom-right"
+                    @click="${appendToContext}">
+                    ${ViewNext16({ slot: 'icon' })}
+                    <span slot="tooltip-content">Make latest Chart</span>
                   </cds-icon-button>
                 `
               : html``}

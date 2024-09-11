@@ -78,6 +78,21 @@ export default class messages extends LitElement {
   @property({ type: String, attribute: 'agent-name' })
   agentName;
 
+  /** boolean denoting if feedback popup show appear for feedback buttons
+   */
+  @property({ type: Boolean, attribute: 'enable-feedback-form' })
+  enableFeedbackForm;
+
+  /** boolean denoting if feedback popup show appear for text selections
+   */
+  @property({ type: Boolean, attribute: 'enable-text-feedback-form' })
+  enableTextFeedbackForm;
+
+  /** JSON dictionary of items describing feedback values
+   */
+  @property({ type: Object, attribute: 'feedbackFormDefinitions' })
+  feedbackFormDefinitions;
+
   /**
    * string denoting parent theme
    */
@@ -102,7 +117,6 @@ export default class messages extends LitElement {
       '.clabs--chat-messages-container'
     );
     this.addEventListener('scroll', (e) => {
-      console.log('scroll');
       e.preventDefault();
     });
   }

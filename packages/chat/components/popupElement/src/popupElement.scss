@@ -1,0 +1,112 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+
+:host(#{$clabs-prefix}-chat-popup) {
+  position: absolute;
+  z-index: 9999;
+
+  background: $background;
+  box-shadow: 0 23px 40px -24px rgba(0, 0, 0, 0.28);
+
+  inset-block-end: var(--chat-popup-element-block-position, 0);
+  inset-inline-start: var(--chat-popup-element-inline-position, 0);
+  visibility: var(--chat-popup-element-visibility, 'hidden');
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .#{$clabs-prefix}--chat-popup-container {
+    display: flex;
+    overflow: hidden;
+    box-sizing: border-box;
+    flex-direction: row;
+    padding: var(--chat-popup-element-opacity, 0);
+    border: 1px solid $border-subtle-00;
+    border-radius: 8px;
+    animation: fade-in 600ms forwards;
+
+    background: linear-gradient(
+      to bottom,
+      $background 80%,
+      rgba(69, 137, 255, 0.2)
+    );
+    background-blend-mode: multiply;
+    block-size: 464px;
+    box-shadow: -40px 30px 100px -25px rgba(0, 67, 206, 0.25),
+      -60px 80px 60px -45px rgba(0, 0, 0, 0.1),
+      inset 0 -80px 70px -65px rgba(69, 137, 255, 0.2);
+
+    inline-size: 320px;
+    opacity: 0;
+    transition: border-color 0.15s linear;
+  }
+
+  .#{$clabs-prefix}--chat-popup-main-content {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    padding: 32px;
+    gap: 8px;
+  }
+
+  .#{$clabs-prefix}--chat-popup-title {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.16px;
+    line-height: 18px;
+    text-align: start;
+  }
+
+  .#{$clabs-prefix}--chat-popup-prompt {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    text-align: start;
+  }
+
+  .#{$clabs-prefix}--chat-popup-tag-list {
+    padding-block-start: 8px;
+  }
+
+  .#{$clabs-prefix}--chat-popup-feedback-text {
+    block-size: 94px;
+    gap: 0;
+    inline-size: 272px;
+    inset-block-start: 205.54px;
+    inset-inline-start: 24px;
+  }
+
+  .#{$clabs-prefix}--chat-popup-disclaimer {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.32px;
+    line-height: 16px;
+    text-align: start;
+  }
+
+  .#{$clabs-prefix}--chat-popup-submit {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+  }
+  .#{$clabs-prefix}--chat-popup-close {
+    position: absolute;
+    inset-block-start: 16px;
+    inset-inline-end: 16px;
+  }
+}

@@ -218,46 +218,6 @@ const defaultArgs = {
   feedbackUrl: 'http://localhost:5001/feedback',
 };*/
 
-export const Default = {
-  /**
-   * Renders the template for Default Storybook
-   *
-   * @returns {TemplateResult<1>}
-   */
-  render: () => html`
-    <div style="height:calc(100vh - 84px); overflow:hidden;">
-      <clabs-chat
-        user-name="user"
-        agent-name="bot"
-        .conversation="${[
-          {
-            text: 'Greetings, how may I help you?',
-            origin: 'bot',
-            hasError: false,
-            time: '16:56',
-            index: 0,
-            disableButtons: true,
-            elements: [
-              {
-                content: 'Greetings, how may I help you?',
-                type: 'text',
-              },
-            ],
-          },
-        ]}"
-        @on-submit="${(event) => {
-          console.log(event);
-        }}"
-        @on-regeneration-request="${(event) => {
-          console.log(event);
-        }}"
-        @on-update-request="${(event) => {
-          console.log(event);
-        }}"></clabs-chat>
-    </div>
-  `,
-};
-
 const apiArgs = {
   chosenHost: 'Local',
   userPrompt:

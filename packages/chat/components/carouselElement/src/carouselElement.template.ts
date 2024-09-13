@@ -57,7 +57,7 @@ export function carouselElementTemplate(customElementClass) {
             )}
           </div>
           <div class="${clabsPrefix}--chat-carousel-controls">
-            ${maxSlideCounter !== 1
+            ${maxSlideCounter > 1
               ? html`
                   <div class="${clabsPrefix}--chat-carousel-control-item">
                     <cds-button

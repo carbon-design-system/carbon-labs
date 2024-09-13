@@ -9,6 +9,7 @@
 
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import '@carbon/web-components/es/components/data-table/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
@@ -18,29 +19,47 @@ const { stablePrefix: clabsPrefix } = settings;
  * @returns {TemplateResult<1>} Lit html template
  */
 export function tableElementTemplate(customElementClass) {
-  const { _tableObject: tableObject, _invalid: invalid } = customElementClass;
+  const {
+    _tableObject: tableObject,
+    _invalid: invalid,
+    _handleMouseOut: handleMouseOut,
+    _handleMouseOver: handleMouseOver,
+    _renderAsDataTable: renderAsDataTable,
+  } = customElementClass;
 
-  return html`<div class="${clabsPrefix}--chat-table">
+  return html`<div
+    class="${clabsPrefix}--chat-table"
+    @mouseout="${handleMouseOut}"
+    @mouseover="${handleMouseOver}">
     ${invalid === true
       ? html` <div class="${clabsPrefix}--chat-table-error">
           <p>Error displaying table</p>
         </div>`
       : html` <div class="${clabsPrefix}--chat-table-container">
-          <table>
-            <thead>
-              <tr>
-                ${tableObject.headers.map((value) => html`<th>${value}</th>`)}
-              </tr>
-            </thead>
-            <tbody>
-              ${tableObject.rows.map(
-                (row) =>
-                  html` <tr>
-                    ${row.map((cell) => html`<td>${cell}</td>`)}
-                  </tr>`
-              )}
-            </tbody>
-          </table>
+          ${!renderAsDataTable
+            ? html` <table>
+                <thead>
+                  <tr>
+                    ${tableObject.headers.map(
+                      (value) => html`<th>${value}</th>`
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  ${tableObject.rows.map(
+                    (row) =>
+                      html` <tr>
+                        ${row.map((cell) => html`<td>${cell}</td>`)}
+                      </tr>`
+                  )}
+                </tbody>
+              </table>`
+            : html`
+                <cds-table
+                  headers="${tableObject.headers}"
+                  rows="${tableObject.rows}">
+                </cds-table>
+              `}
         </div>`}
   </div>`;
 }

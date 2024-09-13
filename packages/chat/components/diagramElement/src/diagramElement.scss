@@ -1,0 +1,219 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-diagram) {
+  overflow: hidden;
+
+  .#{$clabs-prefix}--chat-diagram-container {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+
+    box-sizing: border-box;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid $border-subtle-01;
+    border-radius: 8px;
+    background: $background;
+    block-size: var(--chat-diagram-height, 'auto');
+    inline-size: var(--chat-diagram-width, 'auto');
+    min-block-size: var(--chat-diagram-height, '246px');
+    min-inline-size: var(--chat-diagram-width, '246px');
+    padding-block-end: 42px;
+
+    rect {
+      fill: $background;
+      stroke: $focus;
+    }
+
+    text {
+      fill: $text-primary;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    path {
+      stroke: $text-secondary;
+      stroke-width: 2;
+    }
+  }
+  .#{$clabs-prefix}--chat-diagram-target {
+    inline-size: var(--chat-diagram-width, 'auto');
+  }
+
+  .#{$clabs-prefix}--chat-diagram-target .element {
+    text-shadow: $background 0 0 6px;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-target-fullscreen {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-container-loader {
+    display: flex;
+    align-items: center;
+    block-size: 100%;
+
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-light .element {
+    fill: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-dark .element {
+    fill: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+  }
+  .#{$clabs-prefix}--chat-diagram-mermaid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: 100%;
+    inline-size: 100%;
+  }
+  .#{$clabs-prefix}--chat-diagram-mermaid svg {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-error {
+    padding: 10px;
+    border: 1px solid $support-error;
+    border-radius: 8px;
+    color: $support-error;
+    line-height: 22px;
+  }
+  .#{$clabs-prefix}--chat-diagram-tester {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .#{$clabs-prefix}--chat-diagram-stream-text-container {
+    position: absolute;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    inset-block-end: 8px;
+    inset-inline: 0 0;
+    line-height: 18px;
+    padding-inline: 8px;
+    pointer-events: none;
+  }
+  .#{$clabs-prefix}--chat-diagram-stream-text-content {
+    box-sizing: border-box;
+    color: $text-placeholder;
+    letter-spacing: 0.16px;
+    max-inline-size: 100%;
+    -ms-overflow-style: none;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    white-space: nowrap;
+  }
+  .#{$clabs-prefix}--chat-diagram-stream-text-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-options {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    inset-block-start: 10px;
+    inset-inline-end: 0;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-options-hidden {
+    visibility: hidden;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-title {
+    position: absolute;
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont,
+      '.SFNSText-Regular', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    inset-block-end: 16px;
+    inset-inline-start: 16px;
+    line-height: 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-title-thumbnail {
+    font-size: 14px;
+    font-weight: 400;
+    inset-block-end: 8px;
+    inset-inline-start: 8px;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-options-prefade-dark {
+    background: linear-gradient(
+      to right,
+      rgba(22, 22, 22, 0),
+      rgba(22, 22, 22, 1)
+    );
+    block-size: 32px;
+    content: '';
+    inline-size: 30px;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-options-prefade-light {
+    background: linear-gradient(
+      to right,
+      rgba(244, 244, 244, 0),
+      rgba(244, 244, 244, 1)
+    );
+    block-size: 32px;
+    content: '';
+    inline-size: 30px;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-options-buttons {
+    display: flex;
+    flex-direction: row;
+    background: $background;
+    gap: 4px;
+    padding-inline-end: 8px;
+  }
+
+  .#{$clabs-prefix}--chat-diagram-fullscreen-container {
+    position: fixed;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    background: $background;
+    block-size: 100%;
+    inline-size: 100%;
+    inset: 0;
+  }
+  .#{$clabs-prefix}--chat-diagram-fullscreen-container-close {
+    position: fixed;
+    z-index: 9999;
+    inset-block-start: 32px;
+    inset-inline-end: 32px;
+    pointer-events: none;
+  }
+}

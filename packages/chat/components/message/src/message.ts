@@ -12,6 +12,9 @@ import { property, state } from 'lit/decorators.js';
 // @ts-ignore
 import styles from './message.scss?inline';
 
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Core message component to display a single message
  */
@@ -239,6 +242,7 @@ export default class message extends LitElement {
 
   /** Desired feedback top/bottom orientation
    */
+  @state()
   _feedbackFormOrientation = 'top';
 
   /**
@@ -1411,16 +1415,52 @@ export default class message extends LitElement {
     this.dispatchEvent(messageEditCancelEvent);
   }
 
+  /** feedback function when a user navigates by keyboard and selects the feedback button
+   * @param {event} event - positive event from thumbs up button
+   **/
+  handlePositiveKeyboardInput(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this._handlePositiveFeedback(event);
+      event.preventDefault();
+    }
+  }
+
+  /** feedback function when a user navigates by keyboard and selects the feedback button
+   * @param {event} event - positive event from thumbs up button
+   **/
+  handleNegativeKeyboardInput(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this._handleNegativeFeedback(event);
+      event.preventDefault();
+    }
+  }
+
+  /**
+   * focus on popup element with aria system
+   */
+  _focusOnPopup() {
+    const popUpId = clabsPrefix + '--chat-popup-unique-feedback-' + this.index;
+    const popupElement = this.shadowRoot?.getElementById(popUpId);
+    if (popupElement instanceof HTMLElement) {
+      popupElement.focus();
+    }
+  }
+
   /** feedback function when a user clicks the feedback button
    * @param {event} event - positive event from thumbs up button
    **/
   _handlePositiveFeedback(event) {
     const uniqueFeedbackId = this.generateUniqueId();
-    this.positiveFeedbackSelected = true;
+    this.positiveFeedbackSelected = !this.positiveFeedbackSelected;
     this.negativeFeedbackSelected = false;
 
     const messageDetails = this._prepareEventDetail();
-    messageDetails['action'] = 'message: user gave feedback to response';
+    if (this.positiveFeedbackSelected) {
+      messageDetails['action'] = 'message: user gave feedback to response';
+      this._focusOnPopup();
+    } else {
+      messageDetails['action'] = 'message: user removed feedback to response';
+    }
     messageDetails['type'] = 'positive';
     messageDetails['rawTextMessage'] = this.rawText;
     messageDetails['messageElements'] = this._messageElements;
@@ -1433,8 +1473,11 @@ export default class message extends LitElement {
       composed: true,
     });
     this.dispatchEvent(feedbackEvent);
-
-    this._handleDisplayFeedBackForm(event, 'thumbs-up', uniqueFeedbackId);
+    if (this.positiveFeedbackSelected) {
+      this._handleDisplayFeedBackForm(event, 'thumbs-up', uniqueFeedbackId);
+    } else {
+      this._hideFeedBackForm();
+    }
   }
   /** feedback function when a user clicks the feedback button
    * @param {event} event - negative event from thumbs up button
@@ -1442,9 +1485,14 @@ export default class message extends LitElement {
   _handleNegativeFeedback(event) {
     const uniqueFeedbackId = this.generateUniqueId();
     this.positiveFeedbackSelected = false;
-    this.negativeFeedbackSelected = true;
+    this.negativeFeedbackSelected = !this.negativeFeedbackSelected;
     const messageDetails = this._prepareEventDetail();
-    messageDetails['action'] = 'message: user gave feedback to response';
+    if (this.negativeFeedbackSelected) {
+      messageDetails['action'] = 'message: user gave feedback to response';
+      this._focusOnPopup();
+    } else {
+      messageDetails['action'] = 'message: user removed feedback to response';
+    }
     messageDetails['type'] = 'negative';
     messageDetails['rawTextMessage'] = this.rawText;
     messageDetails['messageElements'] = this._messageElements;
@@ -1457,6 +1505,10 @@ export default class message extends LitElement {
       composed: true,
     });
     this.dispatchEvent(feedbackEvent);
-    this._handleDisplayFeedBackForm(event, 'thumbs-down', uniqueFeedbackId);
+    if (this.negativeFeedbackSelected) {
+      this._handleDisplayFeedBackForm(event, 'thumbs-down', uniqueFeedbackId);
+    } else {
+      this._hideFeedBackForm();
+    }
   }
 }

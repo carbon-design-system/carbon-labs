@@ -151,12 +151,14 @@ export function textElementTemplate(customElementClass) {
               <div
                 class="${clabsPrefix}--chat-text-content-summarization-element"
                 style="${!showSummarization ? 'display:none;' : ''}">
-                <clabs-chat-carousel
-                  selected-slide="${selectedAnnotationIndex}"
-                  max-slides="${1}"
-                  @on-carousel-index-change=${updateHighlightTarget}
-                  content=${JSON.stringify(annotationList)}>
-                </clabs-chat-carousel>
+                <slot name="custom-highlight-component">
+                  <clabs-chat-carousel
+                    selected-slide="${selectedAnnotationIndex}"
+                    max-slides="${1}"
+                    @on-carousel-index-change=${updateHighlightTarget}
+                    content=${JSON.stringify(annotationList)}>
+                  </clabs-chat-carousel>
+                </slot>
               </div>
             `
           : html``}

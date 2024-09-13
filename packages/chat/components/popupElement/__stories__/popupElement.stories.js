@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chat/popup',
+  title: 'Components/Chat/Popup',
   tags: ['autodocs'],
 };
 
@@ -23,15 +23,25 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: () => html`
-    <h4>Default</h4>
-    <clabs-chat-popup> </clabs-chat-popup>
-    <h4>Custom</h4>
-    <clabs-chat-popup
-      prompt-title="Custom title"
-      text-area-placeholder="Custom placeholder"
-      popup-title="Custom title"
-      .tag-list="${'["choice A","choice B", "choice C"]'}"
-      disclaimer="Place your own disclaimer here">
-    </clabs-chat-popup>
+    <div style="display:inline-flex;gap:16px;">
+      <div>
+        <h4>Default</h4>
+        <clabs-chat-popup> </clabs-chat-popup>
+      </div>
+      <div>
+        <h4>Custom</h4>
+        <clabs-chat-popup
+          prompt-title="Custom title"
+          text-area-placeholder="Custom placeholder"
+          popup-title="Custom title"
+          orientation="top"
+          .tag-list="${'["choice A","choice B", "choice C"]'}"
+          disclaimer="Place your own legal disclaimer here">
+        </clabs-chat-popup>
+      </div>
+      <div>
+        <clabs-chat-popup orientation="bottom"> </clabs-chat-popup>
+      </div>
+    </div>
   `,
 };

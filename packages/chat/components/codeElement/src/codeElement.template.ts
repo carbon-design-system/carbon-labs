@@ -15,7 +15,7 @@ import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 
 import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
-import Copy16 from '@carbon/web-components/es/icons/copy/16.js';
+import '@carbon/web-components/es/components/copy-button/index.js';
 import Checkmark16 from '@carbon/web-components/es/icons/checkmark/16.js';
 import Close16 from '@carbon/web-components/es/icons/close/16.js';
 
@@ -55,22 +55,18 @@ export function codeElementTemplate(customElementClass) {
                 aria-label="Edit Code"
                 role="button">
                 ${Edit16({ slot: 'icon' })}
-                <span slot="tooltip-content">Enable editing</span>
+                <span slot="tooltip-content">Enable Editing</span>
               </cds-icon-button>
             `
           : html``}
         ${!disableCopyButton
           ? html`
-              <cds-icon-button
-                size="sm"
-                kind="ghost"
-                align="left"
-                aria-label="Copy Code"
-                role="button"
-                @click="${copyCode}">
-                ${Copy16({ slot: 'icon' })}
-                <span slot="tooltip-content">Copy code</span>
-              </cds-icon-button>
+              <cds-copy-button
+                @click="${copyCode}"
+                feedback="Copied!"
+                feedback-timeout="2000">
+                Copy to Clipboard
+              </cds-copy-button>
             `
           : html``}
       </div>

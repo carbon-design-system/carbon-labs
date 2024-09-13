@@ -26,6 +26,93 @@ export const Default = {
   </clabs-chat-text>`,
 };
 
+const targetingElementsExample = [
+  {
+    text: 'This is a test to check targeted feedback responses in text, for exmaple a ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'token',
+    type: 'annotation',
+    color: '#8a3ffc',
+    content: 'https://en.wikipedia.org/wiki/President_of_the_United_States',
+    active: false,
+  },
+  {
+    text: ' or ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'group of tokens',
+    type: 'annotation',
+    color: '#33b1ff',
+    content: 'https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln',
+    active: true,
+  },
+  {
+    text: ' can be targeted.',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: ' We could also have entire sentences as well. ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'This sentence contains GDPR violations Mr. John Smith.',
+    type: 'annotation',
+    color: '#007d79',
+    content: 'https://en.wikipedia.org/wiki/American_Civil_War',
+    active: false,
+  },
+  {
+    text: 'Or this passage contains ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'hate speech',
+    type: 'annotation',
+    color: '#ff7eb6',
+    content: 'https://en.wikipedia.org/wiki/Union_(American_Civil_War',
+    active: false,
+  },
+  {
+    text: ' or ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: 'Business guideline violations',
+    type: 'annotation',
+    color: '#fa4d56',
+    content: 'https://en.wikipedia.org/wiki/Confederate_States_of_America',
+    active: false,
+  },
+  {
+    text: ' or ',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: ' factually incorrect information',
+    type: 'annotation',
+    color: '#08bdba',
+    content: 'https://en.wikipedia.org/wiki/Abolitionism_in_the_United_States',
+    active: false,
+  },
+];
+
 const codeElementsExample = [
   {
     text: 'To see the Chat, use ',
@@ -86,7 +173,7 @@ const subElementsExample = [
   {
     text: 'president of the United States',
     type: 'annotation',
-    color: '#FF00FF',
+    color: '#08bdba',
     content: 'https://en.wikipedia.org/wiki/President_of_the_United_States',
     active: false,
   },
@@ -99,7 +186,7 @@ const subElementsExample = [
   {
     text: 'assassination',
     type: 'annotation',
-    color: '#00FFFF',
+    color: '#6fdc8c',
     content: 'https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln',
     active: true,
   },
@@ -118,7 +205,7 @@ const subElementsExample = [
   {
     text: 'American Civil War',
     type: 'annotation',
-    color: '#00FFFF',
+    color: '#d2a106',
     content: 'https://en.wikipedia.org/wiki/American_Civil_War',
     active: false,
   },
@@ -131,7 +218,7 @@ const subElementsExample = [
   {
     text: 'union',
     type: 'annotation',
-    color: '#FF00FF',
+    color: '#d4bbff',
     content: 'https://en.wikipedia.org/wiki/Union_(American_Civil_War',
     active: false,
   },
@@ -144,7 +231,7 @@ const subElementsExample = [
   {
     text: 'Confederacy',
     type: 'annotation',
-    color: '#00DDDD',
+    color: '#33b1ff',
     content: 'https://en.wikipedia.org/wiki/Confederate_States_of_America',
     active: false,
   },
@@ -157,7 +244,7 @@ const subElementsExample = [
   {
     text: 'abolition of slavery',
     type: 'annotation',
-    color: '#DDFFDD',
+    color: '#ff7eb6',
     content: 'https://en.wikipedia.org/wiki/Abolitionism_in_the_United_States',
     active: false,
   },
@@ -170,6 +257,7 @@ export const Showcase = {
    * @returns {TemplateResult<1>}
    */
   render: () => html`
+    <div style="max-width:50%">
     <h4>Simple</h4>
     <br />
     <clabs-chat-text
@@ -195,6 +283,7 @@ export const Showcase = {
     <h4>Annotations</h4>
     <br />
     <clabs-chat-text
+      enable-annotations
       content="<strong>Abraham Lincoln</strong> was an American lawyer, politician, and statesman who served as the 16th [president of the United States](https://en.wikipedia.org/wiki/President_of_the_United_States) from 1861 until his [assassination](https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln) in 1865.
  Lincoln led the United States through the [American Civil War](https://en.wikipedia.org/wiki/American_Civil_War), defending the nation as a constitutional [union](https://en.wikipedia.org/wiki/Union_(American_Civil_War)), defeating the insurgent [Confederacy](https://en.wikipedia.org/wiki/Confederate_States_of_America), playing a major role in the [abolition of slavery](https://en.wikipedia.org/wiki/Abolitionism_in_the_United_States), expanding the power of the [federal government](https://en.wikipedia.org/wiki/Federal_government_of_the_United_States), and modernizing the [U.S. economy](https://en.wikipedia.org/wiki/Economy_of_the_United_States).
 Lincoln was born into poverty in a [log cabin](https://en.wikipedia.org/wiki/Log_cabin) in [Kentucky](https://en.wikipedia.org/wiki/Kentucky) and was raised on the [frontier](https://en.wikipedia.org/wiki/American_frontier), mainly in [Indiana](https://en.wikipedia.org/wiki/Indiana)."></clabs-chat-text>
@@ -215,7 +304,7 @@ Here is an [annotation with over 5 links](https://en.wikipedia.org/wiki/Presiden
     </clabs-chat-text>
     <br />
 
-    <h4>Highlighting with slotting</h4>
+     <h4>Highlighting with slotting</h4>
     <br />
     <clabs-chat-text
       enable-text-highlighting
@@ -224,14 +313,35 @@ Here is an [annotation with over 5 links](https://en.wikipedia.org/wiki/Presiden
  Lincoln led the United States through the [American Civil War](https://en.wikipedia.org/wiki/American_Civil_War), defending the nation as a constitutional [union](https://en.wikipedia.org/wiki/Union_(American_Civil_War)), defeating the insurgent [Confederacy](https://en.wikipedia.org/wiki/Confederate_States_of_America), playing a major role in the [abolition of slavery](https://en.wikipedia.org/wiki/Abolitionism_in_the_United_States), expanding the power of the [federal government](https://en.wikipedia.org/wiki/Federal_government_of_the_United_States), and modernizing the [U.S. economy](https://en.wikipedia.org/wiki/Economy_of_the_United_States).
 Lincoln was born into poverty in a [log cabin](https://en.wikipedia.org/wiki/Log_cabin) in [Kentucky](https://en.wikipedia.org/wiki/Kentucky) and was raised on the [frontier](https://en.wikipedia.org/wiki/American_frontier), mainly in [Indiana](https://en.wikipedia.org/wiki/Indiana).">
       <div slot="custom-highlight-component">
-        <div style="padding:16px;color:#FF007F;font-size:28px;">
+        <div style="padding:16px;color:#FF007F;font-size:28px;border:1px solid #FF007F;margin-top:8px;margin-bottom:8px;">
           Slotted div placed here
         </div>
       </div>
     </clabs-chat-text>
     <br />
     <br />
-    <h4>Text with text-sub-elements JSON Object</h4>
+
+    <h4>Feedback targeting</h4>
+    <br />
+    <clabs-chat-text
+      .textSubElements="${targetingElementsExample}"
+      enable-complex-feedback
+      @on-text-annotation-click="${(e) => console.log(e)}"">
+      <div slot="custom-highlight-component">
+        <clabs-chat-popup
+          prompt-title="Custom title"
+          text-area-placeholder="Custom placeholder"
+          popup-title="Custom title"
+          ?is-slotted
+          orientation="top"
+          .tag-list="${'["Factually incorrect","Offensive content","GDPR violation","BRCG violation"]'}"
+          disclaimer="Place your own legal disclaimer here">
+        </clabs-chat-popup>
+      </div>
+    </clabs-chat-text>
+    <br />
+    <br />
+    <h4>Text with text-sub-elements JSON Object using defined colors</h4>
     <br />
     <p style="font-style:italic; font-size:14px;">
       JSON array containing: text (plain text), type (default or annotated),
@@ -244,5 +354,6 @@ Lincoln was born into poverty in a [log cabin](https://en.wikipedia.org/wiki/Log
       .textSubElements="${subElementsExample}">
     </clabs-chat-text>
     <br />
+    </div>
   `,
 };

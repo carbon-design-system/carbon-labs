@@ -75,8 +75,3 @@ export const Showcase = {
       )}
     </div>`,
 };
-
-console.log(
-  'user: Give me a dozen of equations as latex strings.\nbot:' +
-    mathExamples.map((item) => item.title + '\n' + item.math).join('\n')
-);

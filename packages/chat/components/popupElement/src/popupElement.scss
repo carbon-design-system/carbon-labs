@@ -12,10 +12,6 @@
 :host(#{$clabs-prefix}-chat-popup) {
   position: absolute;
   z-index: 9999;
-
-  background: $background;
-  box-shadow: 0 23px 40px -24px rgba(0, 0, 0, 0.28);
-
   inset-block-end: var(--chat-popup-element-block-position, 0);
   inset-inline-start: var(--chat-popup-element-inline-position, 0);
   visibility: var(--chat-popup-element-visibility, 'hidden');
@@ -31,21 +27,22 @@
   }
 
   .#{$clabs-prefix}--chat-popup-container {
+    position: relative;
     display: flex;
-    overflow: hidden;
+    overflow: visible;
     box-sizing: border-box;
     flex-direction: row;
     padding: var(--chat-popup-element-opacity, 0);
-    border: 1px solid $border-subtle-00;
+    border: 1px solid $support-info;
     border-radius: 8px;
     animation: fade-in 600ms forwards;
 
     background: linear-gradient(
-      to bottom,
-      $background 80%,
-      rgba(69, 137, 255, 0.2)
-    );
-    background-blend-mode: multiply;
+        0deg,
+        $link-inverse-hover 0%,
+        $background 54.75%
+      ),
+      #ffffff;
     block-size: 464px;
     box-shadow: -40px 30px 100px -25px rgba(0, 67, 206, 0.25),
       -60px 80px 60px -45px rgba(0, 0, 0, 0.1),
@@ -54,6 +51,32 @@
     inline-size: 320px;
     opacity: 0;
     transition: border-color 0.15s linear;
+  }
+
+  .#{$clabs-prefix}--chat-popup-caret-bottom {
+    position: absolute;
+    inset-block-end: calc(100% - 2px);
+    inset-inline-start: 16px;
+    margin-inline-start: var(--chat-popup-caret-offset, -2px);
+
+    svg {
+      fill: $background;
+      stroke: $support-info;
+      stroke-width: 1px;
+    }
+  }
+
+  .#{$clabs-prefix}--chat-popup-caret-top {
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-start: 16px;
+    margin-inline-start: var(--chat-popup-caret-offset, -2px);
+
+    svg {
+      fill: $link-inverse-hover;
+      stroke: $support-info;
+      stroke-width: 1px;
+    }
   }
 
   .#{$clabs-prefix}--chat-popup-main-content {

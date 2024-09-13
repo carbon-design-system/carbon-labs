@@ -38,6 +38,7 @@ import '../../molecularElement/molecularElement.js';
 import '../../formulaElement/formulaElement.js';
 import '../../fileUploadElement/fileUploadElement.js';
 import '../../popupElement/popupElement.js';
+import '../../diagramElement/diagramElement.js';
 
 /**
  * Lit template for message
@@ -77,18 +78,23 @@ export function messageTemplate(customElementClass) {
     negativeFeedbackSelected,
     feedbackFormTarget,
     enableComplexFeedback,
+    handlePositiveKeyboardInput,
+    handleNegativeKeyboardInput,
     compactIcon,
+    _feedbackFormOrientation: feedbackFormOrientation,
     _feedbackFormValues: feedbackFormValues,
   } = customElementClass;
 
   return html`<div
     class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
     <div class="${clabsPrefix}--chat-message-container">
-      ${showFeedBackForm && enableComplexFeedback
+      ${showFeedBackForm || enableComplexFeedback
         ? html`
             <clabs-chat-popup
               @on-feedback-popup-closed="${hideFeedBackForm}"
               ?is-open="${showFeedBackForm}"
+              id="${clabsPrefix}--chat-popup-unique-feedback-${index}"
+              orientation="${feedbackFormOrientation}"
               inline-position="${feedbackFormTarget ? feedbackFormTarget.x : 0}"
               block-position="${feedbackFormTarget ? feedbackFormTarget.y : 0}"
               .feedbackFormValues="${feedbackFormValues}"
@@ -310,6 +316,10 @@ export function messageTemplate(customElementClass) {
                               content="${message.content}">
                             </clabs-chat-text>
                           `
+                        : message.type === 'diagram'
+                        ? html` <clabs-chat-diagram
+                            definition="${message.content}">
+                          </clabs-chat-diagram>`
                         : message.type === 'list'
                         ? html`
                             <clabs-chat-list content="${message.content}">
@@ -454,15 +464,18 @@ export function messageTemplate(customElementClass) {
                               role="button"
                               @click="${handleEdit}">
                               ${Edit16({ slot: 'icon' })}
-                              <span slot="tooltip-content">Enable editing</span>
+                              <span slot="tooltip-content">Enable Editing</span>
                             </cds-icon-button>`
                         : html`
                             <cds-icon-button
                               size="sm"
                               kind="ghost"
                               align="right"
+                              aria-expanded="${positiveFeedbackSelected}"
+                              aria-controls="${clabsPrefix}--chat-popup-unique-feedback-${index}"
                               aria-label="Thumbs Up"
                               role="button"
+                              @keydown="${handlePositiveKeyboardInput}"
                               @click="${handlePositiveFeedback}">
                               ${positiveFeedbackSelected
                                 ? ThumbsUpFilled16({ slot: 'icon' })
@@ -474,8 +487,11 @@ export function messageTemplate(customElementClass) {
                               size="sm"
                               kind="ghost"
                               align="right"
-                              aria-label="Thumbs Up"
+                              aria-expanded="${negativeFeedbackSelected}"
+                              aria-controls="${clabsPrefix}--chat-popup-unique-feedback-${index}"
+                              aria-label="Thumbs Down"
                               role="button"
+                              @keydown="${handleNegativeKeyboardInput}"
                               @click="${handleNegativeFeedback}">
                               ${negativeFeedbackSelected
                                 ? ThumbsDownFilled16({ slot: 'icon' })

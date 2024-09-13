@@ -18,9 +18,8 @@ $css--plex: true !default;
   justify-content: center;
   background: $background;
   border-block-end: 1px solid $border-subtle-00;
-  cursor: var(--chat-header-cursor-mode, auto) svg {
-    fill: $text-primary;
-  }
+  cursor: var(--chat-header-cursor-mode, auto);
+
   inset-block-start: 0;
   inset-inline: 0;
   min-block-size: 40px;
@@ -45,6 +44,10 @@ $css--plex: true !default;
     flex-grow: 1;
     align-items: center;
     block-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-header-elements svg {
+    fill: $text-primary;
   }
 
   .#{$clabs-prefix}--chat-header-elements-menu-list {

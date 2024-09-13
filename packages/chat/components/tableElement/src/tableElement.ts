@@ -41,6 +41,18 @@ export default class tableElement extends LitElement {
   @property({ type: String, attribute: 'max-height' })
   maxHeight;
 
+  /**
+   * is the component hovered upon
+   */
+  @state()
+  isHovered = false;
+
+  /**
+   * is the component hovered upon
+   */
+  @state()
+  _renderAsDataTable = false;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
@@ -64,6 +76,20 @@ export default class tableElement extends LitElement {
     if (changedProperties.has('content')) {
       this._tableObject = this._prepareTable();
     }
+  }
+
+  /**
+   * _handleMouseOut - see if component lost mouse content
+   */
+  _handleMouseOut() {
+    this.isHovered = false;
+  }
+
+  /**
+   * _handleMouseOut - see if component lost mouse content
+   */
+  _handleMouseOver() {
+    this.isHovered = true;
   }
 
   /**

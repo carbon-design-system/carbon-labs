@@ -46,8 +46,10 @@ export function headerTemplate(customElementClass) {
     disableClose,
     disableMinimize,
     dockingEnabled,
+    useOverflowMenu,
     _handleMenuItemSelected: handleMenuItemSelected,
     hideMenu,
+    _handleMenuKeyboardToggle: handleMenuKeyboardToggle,
     _handleHeaderMouseDown: handleHeaderMouseDown,
     _handleHeaderMouseUp: handleHeaderMouseUp,
     _handleHeaderMouseMove: handleHeaderMouseMove,
@@ -59,19 +61,24 @@ export function headerTemplate(customElementClass) {
       @mouseup="${handleHeaderMouseUp}"
       @mousemove="${handleHeaderMouseMove}">
       <div class="${clabsPrefix}--chat-header-elements">
-        ${menuOpened
-          ? html`
-              <div class="${clabsPrefix}--chat-header-elements-menu-list">
-                ${menuItems.map(
-                  (menuItem, index) => html`
+        ${!useOverflowMenu
+          ? html` ${menuOpened
+              ? html`
+                  <div
+                    class="${clabsPrefix}--chat-header-elements-menu-list"
+                    id="${clabsPrefix}--chat-header-menu-list-unique-id">
+                    ${menuItems.map(
+                      (menuItem, index) => html`
                     <div
-                      class="${clabsPrefix}--chat-header-elements-menu-list-item" tab-index=${index}>
+                      class="${clabsPrefix}--chat-header-elements-menu-list-item" >
                       <cds-button
                         kind="ghost"
                         size="${dockingEnabled ? 'sm' : 'md'}
                         aria-label="Menu Option ${index}"
                         role="menu-button"
                         data-menuindex="${index}"
+                        tab-index="0"
+                        class="${clabsPrefix}--chat-header-elements-menu-list-item-button"
                         @mousedown="${handleMenuItemSelected}"
                         tooltip-position="right"
                         tooltip-alignment="end"
@@ -80,9 +87,10 @@ export function headerTemplate(customElementClass) {
                       </cds-button>
                     </div>
                   `
-                )}
-              </div>
-            `
+                    )}
+                  </div>
+                `
+              : html``}`
           : html``}
 
         <div
@@ -96,13 +104,56 @@ export function headerTemplate(customElementClass) {
             ? html` <div class="${clabsPrefix}--chat-header-elements-icon">
                 ${menuItems
                   ? html`
+                      ${useOverflowMenu
+                        ? html`
+                            <cds-overflow-menu
+                              tooltip-alignment="right"
+                              tooltip-position="bottom"
+                              size="sm"
+                              @click="${handleMenuToggle}"
+                              tooltip-text="${menuOpened
+                                ? 'Close Menu'
+                                : 'Open Menu'}">
+                              ${Menu24({ slot: 'icon' })}
+                              <span slot="tooltip-content">
+                                ${menuOpened ? 'Close Menu' : 'Open Menu'}</span
+                              >
+                              <cds-overflow-menu-body>
+                                ${menuItems.map(
+                                  (menuItem, index) => html`
+                      <cds-overflow-menu-item
+                        size="${dockingEnabled ? 'sm' : 'md'}
+                        aria-label="Menu Option ${index}"
+                        role="menu-button"
+                        data-menuindex="${index}"
+                        tab-index="0"
+                        @keydown="${handleMenuKeyboardToggle}"
+                        class="${clabsPrefix}--chat-header-elements-menu-list-item-button"
+                        @mousedown="${handleMenuItemSelected}"
+                        tooltip-position="right"
+                        tooltip-alignment="end"
+                        tooltip-text="${menuItem.tooltip || menuItem.title}">
+                        
+                        ${menuItem.title}
+                        <span slot="tooltip-content">${
+                          menuItem.tooltip || menuItem.title
+                        }</span>
+                      </cds-overflow-menu-item>`
+                                )}
+                              </cds-overflow-menu-body>
+                            </cds-overflow-menu>
+                          `
+                        : html`
                       <cds-icon-button
                         kind="ghost"
                         size="sm"
                         align="right"
+                        aria-expanded="${menuOpened}"
+                        aria-controls="${clabsPrefix}--chat-header-menu-list-unique-id"
                         aria-label="${!menuOpened ? 'Open Menu' : 'Close Menu'}
                         role="button"
                         @blur="${hideMenu}"
+                        @keydown="${handleMenuKeyboardToggle}"
                         @click="${handleMenuToggle}">
                         ${
                           !menuOpened
@@ -112,7 +163,7 @@ export function headerTemplate(customElementClass) {
                         <span slot="tooltip-content">
                           ${menuOpened ? 'Close Menu' : 'Open Menu'}
                         </span>
-                      </cds-icon-button>
+                      </cds-icon-button>`}
                     `
                   : html``}
               </div>`

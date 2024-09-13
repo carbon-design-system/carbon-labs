@@ -78,6 +78,8 @@ export function messageTemplate(customElementClass) {
     negativeFeedbackSelected,
     feedbackFormTarget,
     enableComplexFeedback,
+    handlePositiveKeyboardInput,
+    handleNegativeKeyboardInput,
     compactIcon,
     _feedbackFormOrientation: feedbackFormOrientation,
     _feedbackFormValues: feedbackFormValues,
@@ -91,6 +93,7 @@ export function messageTemplate(customElementClass) {
             <clabs-chat-popup
               @on-feedback-popup-closed="${hideFeedBackForm}"
               ?is-open="${showFeedBackForm}"
+              id="${clabsPrefix}--chat-popup-unique-feedback-${index}"
               orientation="${feedbackFormOrientation}"
               inline-position="${feedbackFormTarget ? feedbackFormTarget.x : 0}"
               block-position="${feedbackFormTarget ? feedbackFormTarget.y : 0}"
@@ -468,8 +471,11 @@ export function messageTemplate(customElementClass) {
                               size="sm"
                               kind="ghost"
                               align="right"
+                              aria-expanded="${positiveFeedbackSelected}"
+                              aria-controls="${clabsPrefix}--chat-popup-unique-feedback-${index}"
                               aria-label="Thumbs Up"
                               role="button"
+                              @keydown="${handlePositiveKeyboardInput}"
                               @click="${handlePositiveFeedback}">
                               ${positiveFeedbackSelected
                                 ? ThumbsUpFilled16({ slot: 'icon' })
@@ -481,8 +487,11 @@ export function messageTemplate(customElementClass) {
                               size="sm"
                               kind="ghost"
                               align="right"
-                              aria-label="Thumbs Up"
+                              aria-expanded="${negativeFeedbackSelected}"
+                              aria-controls="${clabsPrefix}--chat-popup-unique-feedback-${index}"
+                              aria-label="Thumbs Down"
                               role="button"
+                              @keydown="${handleNegativeKeyboardInput}"
                               @click="${handleNegativeFeedback}">
                               ${negativeFeedbackSelected
                                 ? ThumbsDownFilled16({ slot: 'icon' })

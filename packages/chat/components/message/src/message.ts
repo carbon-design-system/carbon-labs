@@ -12,6 +12,9 @@ import { property, state } from 'lit/decorators.js';
 // @ts-ignore
 import styles from './message.scss?inline';
 
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Core message component to display a single message
  */
@@ -1412,6 +1415,37 @@ export default class message extends LitElement {
     this.dispatchEvent(messageEditCancelEvent);
   }
 
+  /** feedback function when a user navigates by keyboard and selects the feedback button
+   * @param {event} event - positive event from thumbs up button
+   **/
+  handlePositiveKeyboardInput(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this._handlePositiveFeedback(event);
+      event.preventDefault();
+    }
+  }
+
+  /** feedback function when a user navigates by keyboard and selects the feedback button
+   * @param {event} event - positive event from thumbs up button
+   **/
+  handleNegativeKeyboardInput(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this._handleNegativeFeedback(event);
+      event.preventDefault();
+    }
+  }
+
+  /**
+   * focus on popup element with aria system
+   */
+  _focusOnPopup() {
+    const popUpId = clabsPrefix + '--chat-popup-unique-feedback-' + this.index;
+    const popupElement = this.shadowRoot?.getElementById(popUpId);
+    if (popupElement instanceof HTMLElement) {
+      popupElement.focus();
+    }
+  }
+
   /** feedback function when a user clicks the feedback button
    * @param {event} event - positive event from thumbs up button
    **/
@@ -1423,6 +1457,7 @@ export default class message extends LitElement {
     const messageDetails = this._prepareEventDetail();
     if (this.positiveFeedbackSelected) {
       messageDetails['action'] = 'message: user gave feedback to response';
+      this._focusOnPopup();
     } else {
       messageDetails['action'] = 'message: user removed feedback to response';
     }
@@ -1454,6 +1489,7 @@ export default class message extends LitElement {
     const messageDetails = this._prepareEventDetail();
     if (this.negativeFeedbackSelected) {
       messageDetails['action'] = 'message: user gave feedback to response';
+      this._focusOnPopup();
     } else {
       messageDetails['action'] = 'message: user removed feedback to response';
     }

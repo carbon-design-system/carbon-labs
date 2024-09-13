@@ -102,6 +102,12 @@ export default class header extends LitElement {
   dragTimeout;
 
   /**
+   * useOverflowMenu - use carbon overflow
+   */
+  @state()
+  useOverflowMenu = true;
+
+  /**
    * docking event when popup button is clicked
    * @param {event} event - click event when docking chat
    */
@@ -120,7 +126,7 @@ export default class header extends LitElement {
 
   /**
    * initial click event to check if dragging is initiated
-   * @param {event} event - click event when chat is dicked
+   * @param {event} event - click event when chat is clicked
    */
   _handleHeaderMouseDown(event) {
     this.mouseHeldDown = true;
@@ -140,6 +146,16 @@ export default class header extends LitElement {
     this.mouseHeldDown = false;
     clearTimeout(this.dragTimeout);
     this.dragTimeout = null;
+  }
+
+  /**
+   * handle when enter/tab is on overflow menu
+   * @param {event} event - key event on menu items
+   */
+  _handleMenuKeyboardToggle(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this._handleMenuItemSelected(event);
+    }
   }
 
   /**
@@ -176,15 +192,8 @@ export default class header extends LitElement {
    * @param {event} event - click event when item is chosen
    */
   _handleMenuItemSelected(event) {
-    console.log(event);
-    event.stopPropagation();
-    event.preventDefault();
-
     const targetElement = event?.target;
-    console.log(targetElement);
     const index = targetElement?.getAttribute('data-menuindex');
-    console.log(index);
-    console.log(targetElement);
     if (index) {
       if (this.menuItems[index]) {
         const menuSelectionEvent = new CustomEvent(
@@ -202,13 +211,14 @@ export default class header extends LitElement {
         this.dispatchEvent(menuSelectionEvent);
       }
     }
-    this.menuOpened = false;
   }
 
   /**
    * hide menu on button blur
+   * @param {event} event - hide menu on open state
    */
-  hideMenu() {
+  hideMenu(event) {
+    event.preventDefault();
     this.menuOpened = false;
   }
 
@@ -279,7 +289,12 @@ export default class header extends LitElement {
    * @param {event} event - click event when toggling menu
    */
   _handleMenuToggle(event) {
-    event.stopPropagation();
     this.menuOpened = !this.menuOpened;
+    event.preventDefault();
+    /*const items = this.shadowRoot?.querySelectorAll('.'+clabsPrefix+'--chat-header-elements-menu-list-item-button');
+    console.log(items)
+    if(this.menuOpened && items.length>0){
+      items[0].focus();
+    }*/
   }
 }

@@ -13,8 +13,11 @@ const { stablePrefix: clabsPrefix } = settings;
 import Close16 from '@carbon/web-components/es/icons/close/16.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/textarea/index.js';
+<<<<<<< HEAD
 
 import '@carbon/web-components/es/components/icon-button/index.js';
+=======
+>>>>>>> upstream/main
 import '../../tagListElement/tagListElement.js';
 
 /**
@@ -33,7 +36,10 @@ export function popupElementTemplate(customElementClass) {
     textAreaPlaceholder,
     handleTagSelection,
     tagList,
+<<<<<<< HEAD
     orientation,
+=======
+>>>>>>> upstream/main
     disclaimer,
   } = customElementClass;
   return html`<div class="${clabsPrefix}--chat-popup-container">
@@ -96,7 +102,6 @@ export function popupElementTemplate(customElementClass) {
         </cds-icon-button>
       </div>
     </div>
-
     <div class="${clabsPrefix}--chat-popup-caret-${orientation}">
     
       ${

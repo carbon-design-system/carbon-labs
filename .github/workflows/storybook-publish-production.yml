@@ -1,5 +1,5 @@
 name: Deploy storybook to S3 (production)
-run-name: Publish ${{ inputs.tag }} to Production by @${{ github.actor }}
+run-name: Publish to Production by @${{ github.actor }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -7,11 +7,8 @@ concurrency:
 
 on:
   workflow_dispatch:
-    inputs:
-      tag:
-        required: true
-        description: 'Specify the tag for this release (ie. v0.0.1-rc.0)'
-        type: string
+  repository_dispatch:
+    types: [deploy-latest-storybook]
 
 jobs:
   build:

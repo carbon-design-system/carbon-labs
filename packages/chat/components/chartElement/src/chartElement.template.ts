@@ -279,6 +279,20 @@ export function chartElementTemplate(customElementClass) {
                   </cds-icon-button>
                 `
               : html``}
+            ${enableContext
+              ? html`
+                  <cds-icon-button
+                    kind="ghost"
+                    size="sm"
+                    aria-label="Make latest Chart"
+                    role="button"
+                    align="bottom-right"
+                    @click="${appendToContext}">
+                    ${ViewNext16({ slot: 'icon' })}
+                    <span slot="tooltip-content">Make latest Chart</span>
+                  </cds-icon-button>
+                `
+              : html``}
             ${!disableEditor && debugMode
               ? html`
                   <cds-icon-button

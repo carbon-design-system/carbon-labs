@@ -12,7 +12,6 @@
 :host(#{$clabs-prefix}-chat-popup) {
   position: absolute;
   z-index: 9999;
-
   inset-block-end: var(--chat-popup-element-block-position, 0);
   inset-inline-start: var(--chat-popup-element-inline-position, 0);
   visibility: var(--chat-popup-element-visibility, 'hidden');

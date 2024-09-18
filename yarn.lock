@@ -10372,7 +10372,6 @@ __metadata:
     lerna: "npm:^8.0.0"
     lint-staged: "npm:^15.0.2"
     lit: "npm:^3.0.0"
-    mermaid: "npm:^11.2.0"
     postcss: "npm:^8.4.31"
     prettier: "npm:^2.8.8"
     prettier-config-carbon: "npm:^0.11.0"

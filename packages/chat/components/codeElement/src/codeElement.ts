@@ -10,6 +10,8 @@
 import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
 
+import hljs from 'highlightjs';
+
 // @ts-ignore
 import styles from './codeElement.scss?inline';
 /**
@@ -34,6 +36,18 @@ export default class codeElement extends LitElement {
    */
   @property({ type: Boolean, attribute: 'editable', reflect: true })
   editable;
+
+  /**
+   * add coloring with highlightJS
+   */
+  @property({ type: Boolean, attribute: 'enable-coloring' })
+  enableColoring;
+
+  /**
+   * add coloring with highlightJS
+   */
+  @property({ type: Boolean, attribute: 'enable-language-display' })
+  enableLanguageDisplay;
 
   /**
    * Editable boolean flag to let users know lines can be changed
@@ -112,6 +126,12 @@ export default class codeElement extends LitElement {
    */
   @state()
   _updateOnEdit = true;
+
+  /**
+   * language - identified language
+   */
+  @state()
+  language;
 
   /**
    * Array of lines parsed from content attribute
@@ -346,9 +366,24 @@ export default class codeElement extends LitElement {
     this.requestUpdate();
   }
 
+  /** _highlightLine - run code coloring system
+   * @param {string} code - single code line
+   * @param {string} lang - language to render
+   */
+  _highlightLine(code, lang) {
+    return hljs.highlight(lang, code, true).value;
+  }
+
   /** format code to properly display in HTML
    */
   _formatCode() {
+    try {
+      const detection = hljs.highlightAuto(this.content);
+      this.language = detection.language;
+    } catch (e) {
+      this.language = 'javascript';
+    }
+
     this._currentlyEdited = false;
     const formattedText = this.content;
     const htmlSafeText = formattedText.replace(/```/g, '');
@@ -364,11 +399,11 @@ export default class codeElement extends LitElement {
     }[] = [];
 
     for (let i = 0; i < lines.length; i++) {
-      let lineType = '';
-      const trimmedLine = lines[i].replace(/\t/g, '');
+      const lineType = '';
+      /*const trimmedLine = lines[i].replace(/\t/g, '');
       if (trimmedLine.startsWith('#') || trimmedLine.startsWith('//')) {
         lineType = 'clabs--chat-code-line-comment';
-      }
+      }*/
 
       let tabOffset = paddingLeft;
       const tabMatch = lines[i].match(/^\t*/);

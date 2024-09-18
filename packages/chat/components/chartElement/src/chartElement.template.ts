@@ -232,6 +232,22 @@ export function chartElementTemplate(customElementClass) {
                                 editor
                               </cds-button>`
                             : html``}
+                          <br />
+                          ${debugMode
+                            ? html` <cds-button
+                                kind="danger--tertiary"
+                                aria-label="Open Vega Viewer"
+                                role="button"
+                                size="sm"
+                                tooltip-position="left"
+                                tooltip-alignment="end"
+                                tooltip-position="left"
+                                tooltip-text="Investigate in editor"
+                                @click="${openEditorView}">
+                                ${Launch16({ slot: 'icon' })} View in Vega
+                                editor
+                              </cds-button>`
+                            : html``}
                         </div>`
                     : html` <div
                           class="${clabsPrefix}--chat-chart-loading-grid">

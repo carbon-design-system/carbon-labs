@@ -382,6 +382,7 @@ export function messageTemplate(customElementClass) {
                         : temporaryMessage.type === 'code'
                         ? html`
                             <clabs-chat-code
+                              streaming
                               content="${temporaryMessage.content}">
                             </clabs-chat-code>
                           `

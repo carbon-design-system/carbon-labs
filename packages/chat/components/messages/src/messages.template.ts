@@ -28,6 +28,7 @@ export function messagesTemplate(customElementClass) {
     _parentTheme: parentTheme,
     _dockingEnabled: dockingEnabled,
     _streamDelay: streamDelay,
+    _handleScroll: handleScroll,
     userInterruptedStreaming,
     feedbackFormDefinitions,
     enableFeedbackForm,
@@ -35,6 +36,7 @@ export function messagesTemplate(customElementClass) {
   } = customElementClass;
 
   return html`<div
+    @wheel="${handleScroll}"
     class="${clabsPrefix}--chat-messages-container ${streamResponses
       ? clabsPrefix + '--chat-messages-container-streaming'
       : ''} 

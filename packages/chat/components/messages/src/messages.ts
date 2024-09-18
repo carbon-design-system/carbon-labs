@@ -100,6 +100,12 @@ export default class messages extends LitElement {
   _parentTheme;
 
   /**
+   * check if scrolled to bottom
+   */
+  @state()
+  _autoScroll = false;
+
+  /**
    * target scrollable to div to avoid fetching DOM
    */
   private scrollDiv;
@@ -110,15 +116,42 @@ export default class messages extends LitElement {
   private scrollTimeout;
 
   /**
+   * previous scrollheight
+   */
+  @state()
+  _previousScrollHeight;
+
+  /**
    * detect when component is rendered to process rawtext
    */
   firstUpdated() {
     this.scrollDiv = this.shadowRoot?.querySelector(
       '.clabs--chat-messages-container'
     );
-    this.addEventListener('scroll', (e) => {
-      e.preventDefault();
-    });
+  }
+
+  /**
+   * _handlescroll - wheele event to trigger/cancel auto-scroll
+   */
+  _handleScroll() {
+    const atBottom =
+      this.scrollDiv.scrollTop + this.scrollDiv.clientHeight >=
+      this.scrollDiv.scrollHeight - 50;
+    if (atBottom) {
+      this._autoScroll = true;
+    } else {
+      this._autoScroll = false;
+    }
+  }
+
+  /** shouldUpdate - internal LIT function to predetect updates
+   * @param {Object} changedProperties - returned inner DOM update object
+   **/
+  shouldUpdate(changedProperties) {
+    if (changedProperties.has('_computedMessages')) {
+      this._previousScrollHeight = this.scrollDiv?.scrollHeight;
+    }
+    return true;
   }
 
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
@@ -129,7 +162,10 @@ export default class messages extends LitElement {
 
     if (changedProperties.has('messages')) {
       this._computedMessages = [...this.messages];
-      this._updateScroll();
+    }
+
+    if (changedProperties.has('_computedMessages')) {
+      this._scrollMessage();
     }
 
     if (changedProperties.has('loading')) {
@@ -153,7 +189,9 @@ export default class messages extends LitElement {
       composed: true,
     });
     this.dispatchEvent(messageSlotUpdateEvent);
-    this._updateScroll();
+    if (this._autoScroll) {
+      this._updateScroll();
+    }
   }
 
   /**
@@ -161,7 +199,9 @@ export default class messages extends LitElement {
    */
   _handleInternalChange() {
     //console.log("struct change")
-    this._updateScroll();
+    if (this._autoScroll) {
+      this._updateScroll();
+    }
   }
 
   /**
@@ -171,16 +211,31 @@ export default class messages extends LitElement {
     this._computedMessages = [...this.messages];
   }
 
+  /**
+   * _scrollMessage - move message down post render
+   */
+  _scrollMessage() {
+    setTimeout(() => {
+      const position = this._previousScrollHeight + 246;
+      this.scrollDiv?.scrollTo({
+        top: position,
+        behavior: 'smooth',
+      });
+    }, 200);
+  }
+
   /** auto-scroll chat-messages div when a new message has appeared
    **/
   _updateScroll() {
     if (this.scrollDiv instanceof HTMLElement) {
       if (!this.scrollTimeout) {
         this.scrollTimeout = setTimeout(() => {
-          this.scrollDiv?.scrollTo({
-            top: this.scrollDiv?.scrollHeight,
-            behavior: 'smooth',
-          });
+          if (this._autoScroll) {
+            this.scrollDiv?.scrollTo({
+              top: this.scrollDiv?.scrollHeight,
+              behavior: 'smooth',
+            });
+          }
           clearTimeout(this.scrollTimeout);
           this.scrollTimeout = null;
         }, 200);

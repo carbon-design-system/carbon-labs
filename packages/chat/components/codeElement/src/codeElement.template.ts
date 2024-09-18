@@ -11,6 +11,8 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 
@@ -41,6 +43,10 @@ export function codeElementTemplate(customElementClass) {
     _currentlyFullyEdited: currentlyFullyEdited,
     _setCurrentIndex: setCurrentIndex,
     _currentlyEdited: currentlyEdited,
+    _highlightLine: highlightLine,
+    enableColoring,
+    language,
+    enableLanguageDisplay,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-code">
@@ -94,7 +100,8 @@ ${_editedContent}
           </textarea
             >
           `
-        : html` ${_renderedLines.map(
+        : html`${enableLanguageDisplay ? language : ''}
+          ${_renderedLines.map(
             (lineObject, index) =>
               html`
                 <div
@@ -110,11 +117,13 @@ ${_editedContent}
                       `}
                   ${!editable
                     ? html`<div
-                        class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-line${editable
-                          ? '-editable'
-                          : ''} ${lineObject.type}"
+                        class="${clabsPrefix}--chat-code-line-text"
                         style="padding-left: ${lineObject.paddingLeft}">
-                        ${lineObject.content}
+                        ${enableColoring
+                          ? lineObject.content
+                          : unsafeHTML(
+                              highlightLine(lineObject.content, language)
+                            )}
                       </div>`
                     : html`
                         <textarea

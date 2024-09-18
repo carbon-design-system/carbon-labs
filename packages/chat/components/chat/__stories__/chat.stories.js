@@ -44,9 +44,15 @@ const coreExamples = [
   ],
   [
     'code',
-    '```<clabs-chat \n\tuser-name="Owen" \n\tagent-name="Watson"\n\tconversation={conversationJSON}\n\tstream-responses={streamEnabled}\n\tloading={loading}\n\tdefault-viewing-mode="docked"\n\ton:on-user-message-update-request={handleUpdatedMessage}\n\ton:on-user-regeneration-request={handleRegeneration}\n\ton:on-user-text-input={handleNewMessage}\n\ton:on-message-element-selected={handleElementClicked}\n\ton:on-user-feedback-request={handleUserFeedback}\n\ton:on-message-element-tag-selected={handleTagClicked}>\n</clabs-chat>```',
+    '```from math import sqrt\n# n is the number to be check whether it is prime or not\nn = 1\n\n# this flag maintains status whether the n is prime or not\nprime_flag = 0\n\nif(n > 1):\n\tfor i in range(2, int(sqrt(n)) + 1):\n\t\tif (n % i == 0):\n\t\t\tprime_flag = 1\n\t\t\tbreak\n\tif (prime_flag == 0):\n\t\tprint("True")\n\telse:\n\t\tprint("False")\nelse:\n\tprint("False")\n```',
     '',
     'Prime function in python',
+  ],
+  [
+    'code',
+    '```<clabs-chat \n\tuser-name="Owen" \n\tagent-name="Watson"\n\tconversation={conversationJSON}\n\tstream-responses={streamEnabled}\n\tloading={loading}\n\tdefault-viewing-mode="docked"\n\ton:on-user-message-update-request={handleUpdatedMessage}\n\ton:on-user-regeneration-request={handleRegeneration}\n\ton:on-user-text-input={handleNewMessage}\n\ton:on-message-element-selected={handleElementClicked}\n\ton:on-user-feedback-request={handleUserFeedback}\n\ton:on-message-element-tag-selected={handleTagClicked}>\n</clabs-chat>```',
+    '',
+    'Carbon Chat example',
   ],
   [
     'link-list',

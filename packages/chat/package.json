@@ -39,10 +39,14 @@
     "@carbon-labs/utilities": "0.14.0",
     "@carbon/web-components": "2.11.1",
     "@ibm/telemetry-js": "^1.6.0",
+    "highlightjs": "^9.16.2",
     "mathjax": "^3.2.2",
     "smiles-drawer": "^2.1.7",
     "vega": "^5.28.0",
     "vega-embed": "^6.24.0",
     "vega-lite": "^5.17.0"
+  },
+  "devDependencies": {
+    "@types/highlightjs": "^9"
   }
 }

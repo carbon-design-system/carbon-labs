@@ -276,6 +276,12 @@ export default class chartElement extends LitElement {
   @state()
   _latestError;
 
+  /**
+   * spec type
+   */
+  @state()
+  _specType;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
@@ -1260,6 +1266,7 @@ export default class chartElement extends LitElement {
     let subChartWidth;
     let subChartHeight;
     if ('layer' in spec) {
+      this._specType = 'layered';
       layeredSpec = this._prepareSpecification(spec, false, true, 0);
       /*for (const [index, subSpec] of spec['layer'].entries()) {
         const tempSubSpec = this._prepareSpecification(JSON.parse(JSON.stringify(subSpec)), true, false, index+1);
@@ -1268,6 +1275,7 @@ export default class chartElement extends LitElement {
         layeredSpec['layer'][index] = tempSubSpec;
       }*/
     } else if (spec['repeat']) {
+      this._specType = 'repeated';
       const currentContainerWidth = this.clientWidth;
       const currentContainerHeight = this.clientHeight;
       repeatedSpec = this._prepareSpecification(
@@ -1338,6 +1346,7 @@ export default class chartElement extends LitElement {
         repeatedSpec['spec']['height'] = subChartHeight;
       }
     } else {
+      this._specType = 'plain';
       if (!spec['data']) {
         plainSpec = {};
       } else {

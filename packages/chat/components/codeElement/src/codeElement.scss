@@ -10,6 +10,7 @@ $css--plex: true !default;
 @use '../../../../../globals/scss/vars' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
 
 :host(#{$clabs-prefix}-chat-code) {
   position: relative;
@@ -176,5 +177,76 @@ $css--plex: true !default;
     gap: 8px;
     inset-block-end: 0;
     inset-inline-end: 0;
+  }
+
+  .hljs {
+    color: $text-primary;
+  }
+
+  .hljs-comment,
+  .hljs-quote {
+    color: $text-secondary;
+    font-style: italic;
+  }
+
+  .hljs-keyword,
+  .hljs-literal,
+  .hljs-built_in,
+  .hljs-selector-tag,
+  .hljs-doctag {
+    color: $purple-50;
+  }
+
+  .hljs-string,
+  .hljs-attribute,
+  .hljs-template-variable,
+  .hljs-template-tag {
+    color: $green-50;
+  }
+
+  .hljs-number,
+  .hljs-symbol,
+  .hljs-bullet {
+    color: $magenta-50;
+  }
+
+  .hljs-function .hljs-title,
+  .hljs-title,
+  .hljs-function {
+    color: $cyan-50;
+  }
+
+  .hljs-operator,
+  .hljs-punctuation,
+  .hljs-subst {
+    color: $red-50;
+  }
+
+  .hljs-variable,
+  .hljs-property,
+  .hljs-params {
+    color: $blue-50;
+  }
+
+  .hljs-class .hljs-title,
+  .hljs-type,
+  .hljs-class {
+    color: $yellow-50;
+  }
+
+  .hljs-tag,
+  .hljs-name,
+  .hljs-section,
+  .hljs-selector-id,
+  .hljs-selector-class {
+    color: $orange-50;
+  }
+
+  .hljs-emphasis {
+    font-style: italic;
+  }
+
+  .hljs-strong {
+    font-weight: bold;
   }
 }

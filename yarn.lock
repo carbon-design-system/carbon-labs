@@ -2655,6 +2655,8 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon/web-components": "npm:2.11.1"
     "@ibm/telemetry-js": "npm:^1.6.0"
+    "@types/highlightjs": "npm:^9"
+    highlightjs: "npm:^9.16.2"
     mathjax: "npm:^3.2.2"
     smiles-drawer: "npm:^2.1.7"
     vega: "npm:^5.28.0"
@@ -7836,6 +7838,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/235d2fc69741448e853333b7c3d1180a966dd2b8972c8cbcd6b2a0c6cd7f8d582ab2b8e58219dbc62cce8f1b40aa317ff78ea2201cdd8249da5025adebed6f0b
+  languageName: node
+  linkType: hard
+
+"@types/highlightjs@npm:^9":
+  version: 9.12.6
+  resolution: "@types/highlightjs@npm:9.12.6"
+  checksum: 10c0/8f0a4f9338d74a1698e05d27ec8f04e1d281936a6f722a682cd2ee7ec319c0e52d8e877f78fd5ad59bc8e35490b5a5a7badc7941bd798afb845b90b42f53abf6
   languageName: node
   linkType: hard
 
@@ -15963,6 +15972,13 @@ __metadata:
   dependencies:
     function-bind: "npm:^1.1.2"
   checksum: 10c0/3769d434703b8ac66b209a4cca0737519925bbdb61dd887f93a16372b14694c63ff4e797686d87c90f08168e81082248b9b028bad60d4da9e0d1148766f56eb9
+  languageName: node
+  linkType: hard
+
+"highlightjs@npm:^9.16.2":
+  version: 9.16.2
+  resolution: "highlightjs@npm:9.16.2"
+  checksum: 10c0/648ea96587c96b6b260a1a2a851edd8c3c58954396ff6a277a314afef3a52f72cae03570b619be22ebc36c9af935a3c3934e95b4a094b35bb63769b89a5dd5c7
   languageName: node
   linkType: hard
 

@@ -9,6 +9,7 @@
 
 import '../chartElement';
 import { html } from 'lit';
+import complexExamples from './examples2.json';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
@@ -363,6 +364,23 @@ export const Showcase = {
       container-height="350px">
     </clabs-chat-chart>
     <br />`,
+};
+
+export const ComplexExamples = {
+  /**
+   * Renders the template for Showcase Storybook
+   * @returns {TemplateResult<1>}
+   */
+  render: () =>
+    html`
+      ${complexExamples.map(
+        (item) =>
+          html` <h4>${item.title}</h4>
+            <i>${item.prompt}</i>
+            <clabs-chat-chart content="${JSON.stringify(item.result)}">
+            </clabs-chat-chart>`
+      )}
+    `,
 };
 
 export const RepeatingLayerCharts = {

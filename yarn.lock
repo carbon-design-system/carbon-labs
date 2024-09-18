@@ -2658,6 +2658,7 @@ __metadata:
     "@types/highlightjs": "npm:^9"
     highlightjs: "npm:^9.16.2"
     mathjax: "npm:^3.2.2"
+    mermaid: "npm:^11.2.0"
     smiles-drawer: "npm:^2.1.7"
     vega: "npm:^5.28.0"
     vega-embed: "npm:^6.24.0"

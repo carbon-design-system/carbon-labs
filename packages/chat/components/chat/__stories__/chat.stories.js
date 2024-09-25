@@ -630,6 +630,38 @@ const rawTextExamples = {
         '\n';
       return acc;
     }, ''),
+  RandAll:
+    'user:Show me random examples for all components in this chat\nbot:' +
+    coreExamples
+      .map((value) => ({ value, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value)
+      .reduce((acc, item, index) => {
+        if (
+          item[2] === 'highlight-text' ||
+          item[0] === 'error' ||
+          item[0] === 'loading' ||
+          item[0] === 'file-upload'
+        ) {
+          return acc;
+        }
+        acc +=
+          '<b>' +
+          (index + 1) +
+          '.</b> Here is a <b>&lt;clabs-chat-' +
+          item[0] +
+          '&gt;</b> element' +
+          (item[2] ? ' of type <i><b>' + item[2] + '</b></i>' : '') +
+          ':<br/> ' +
+          (item[3]
+            ? '<span style="font-size:12px;font-style:italic;">' +
+              item[3] +
+              '</span>\n'
+            : '\n') +
+          item[1] +
+          '\n';
+        return acc;
+      }, ''),
   Formulas:
     "user:Give me a dozen math formulas as latex strings:\nbot:Cauchy-Schwarz Inequality\n \\(\\left( \\sum_{k=1}^n a_k b_k \\right)^{\\!\\!2} \\leq    \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right)\\)\n Maxwell's Equations\n \\(\\begin{align}    \\nabla \\times \\vec{\\mathbf{B}} -\\, \\frac1c\\, \\frac{\\partial\\vec{\\mathbf{E}}}{\\partial t} & = \\frac{4\\pi}{c}\\vec{\\mathbf{j}} \\    \\nabla \\cdot \\vec{\\mathbf{E}} & = 4 \\pi \\rho \\    \\nabla \\times \\vec{\\mathbf{E}}\\, +\\, \\frac1c\\, \\frac{\\partial\\vec{\\mathbf{B}}}{\\partial t} & = \\vec{\\mathbf{0}} \\    \\nabla \\cdot \\vec{\\mathbf{B}} & = 0    \\end{align}\\)\n Rogers-Ramanujan Identity\n \\(1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots =    \\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})},     \\quad\\quad \\text{for $|q| < 1$}.\\)\n Cross Product Formula\n \\(\\mathbf{V}_1 \\times \\mathbf{V}_2 =    \\begin{vmatrix}     \\mathbf{i} & \\mathbf{j} & \\mathbf{k} \\     \\frac{\\partial X}{\\partial u} & \\frac{\\partial Y}{\\partial u} & 0 \\     \\frac{\\partial X}{\\partial v} & \\frac{\\partial Y}{\\partial v} & 0 \\    \\end{vmatrix}\\)\n String Theory Action\n \\( S = -\\frac{1}{2}\\int d^2\\sigma \\sqrt{-h} h^{ab}\\partial_a X^\\mu \\partial_b X^\\mu \\\\ \\frac{1}{4 \\pi \\alpha'} \\int d^2\\sigma \\sqrt{-h} \\left( h^{ab} \\partial_a X^\\mu \\partial_b X_\\mu + \\alpha' R \\Phi(X) \\right  \\\\ [\\alpha_m^\\mu, \\alpha_n^\\nu] = m \\delta_{m+n,0} \\eta^{\\mu \\nu}  \\)\n Custom: Tex stress test\n \\(\\begin{align}    \\int_{0}^{\\infty} e^{-x^2} \\, dx & = \\frac{\\sqrt{\\pi}}{2} \\\\    \\sum_{n=1}^{\\infty} \\frac{1}{n^2} & = \\frac{\\pi^2}{6} \\\\    \\mathbf{A} \\mathbf{x} & = \\left[ \\begin{array}{ccc}        a_{11} & a_{12} & a_{13} \\\\        a_{21} & a_{22} & a_{23} \\\\        a_{31} & a_{32} & a_{33}    \\end{array} \\right]     \\left[ \\begin{array}{c}        x_1 \\\\        x_2 \\\\        x_3    \\end{array} \\right] \\\\    e^{i \\pi} + 1 & = 0 \\\\    \\lim_{x \\to 0} \\frac{\\sin x}{x} & = 1 \\\\    \\left( \\sum_{k=1}^n a_k b_k \\right)^2 & \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right) \\\\    \\begin{bmatrix}        1 & 2 & 3 \\\\        4 & 5 & 6 \\\\        7 & 8 & 9    \\end{bmatrix}    \\begin{bmatrix}        x \\\\        y \\\\        z    \\end{bmatrix} & =     \\begin{bmatrix}        1 \\cdot x + 2 \\cdot y + 3 \\cdot z \\\\        4 \\cdot x + 5 \\cdot y + 6 \\cdot z \\\\        7 \\cdot x + 8 \\cdot y + 9 \\cdot z    \\end{bmatrix} \\\\    \\frac{d}{dx} \\left( \\frac{1}{x} \\right) & = -\\frac{1}{x^2}\\end{align}\\)\nHow else can I help you today?",
   'List of flowers':
@@ -1426,6 +1458,18 @@ const conversationExamples = {
   ],
 };
 
+const slugText = `
+<p class="secondary">AI Explained</p>
+    <h1>84%</h1>
+    <p class="secondary bold">Confidence score</p>
+    <p class="secondary">
+      Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed do
+      eiusmod tempor incididunt ut fsil labore et dolore magna aliqua.
+    </p>
+    <hr>
+    <p class="secondary">Model type</p>
+    <p class="bold">Foundation model</p>`;
+
 const headerMenuItems = [
   { title: 'Clear history', action: 'clear-chat-history' },
   { title: 'Save history', action: 'save-chat-history' },
@@ -1443,12 +1487,14 @@ const feedbackFormOptions = {
     ],
     prompt: 'What was unsatisfactory about this response?',
     responsePlaceholder: 'Describe issues with this response',
+    disclaimer: 'lorem',
   },
   'thumbs-up': {
     title: 'Feedback',
     tags: ['Accurate', 'Comprehensive', 'Consice', 'Easy to Understand'],
     prompt: 'Why did you choose this rating?',
     responsePlaceholder: 'Add a comment',
+    disclaimer: 'dolor',
   },
 };
 export const Playground = {
@@ -1482,6 +1528,7 @@ export const Playground = {
           enable-feedback-form
           .feedbackDefinitions="${feedbackFormOptions}"
           .headerMenuItems="${headerMenuItems}"
+          ai-slug-content="${slugText}"
           input-field-placeholder="${'What can I assist you with today?'}"
           .conversation="${testMode === 'Examples'
             ? conversationExamples[sampleConversation]

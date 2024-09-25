@@ -77,7 +77,11 @@ export function codeElementTemplate(customElementClass) {
           : html``}
       </div>
     </div>
-    <div class="${clabsPrefix}--chat-code-container">
+    <div
+      class="${clabsPrefix}--chat-code-container"
+      tabindex="0"
+      role="textbox"
+      aria-label="Code Section">
       ${currentlyFullyEdited && !disableLineTicks
         ? html`
             <div class="${clabsPrefix}--chat-code-container-full-elements">
@@ -85,6 +89,7 @@ export function codeElementTemplate(customElementClass) {
               <div class="${clabsPrefix}--chat-code-line-divider-full"></div>
               <textarea
                 @input="${handleFullCodeEdit}"
+                aria-label="Editable Text"
                 class="${clabsPrefix}--chat-code-edit-area">
 ${_editedContent}
           </textarea
@@ -95,6 +100,7 @@ ${_editedContent}
         ? html`
             <textarea
               @input="${handleFullCodeEdit}"
+              aria-label="Editable Text"
               class="${clabsPrefix}--chat-code-edit-area">
 ${_editedContent}
           </textarea
@@ -129,6 +135,7 @@ ${_editedContent}
                         <textarea
                           @keydown="${handleCodeEdit}"
                           rows="1"
+                          aria-label="Editable Text"
                           @click="${setCurrentIndex}"
                           data-codeindex="${index}"
                           class="${clabsPrefix}--chat-code-line-text-area ${lineObject.type}"

@@ -78,6 +78,12 @@ export default class header extends LitElement {
   disableHeaderButtons;
 
   /**
+   * html slug content to render
+   */
+  @property({ type: String, attribute: 'header-slug-content' })
+  headerSlugContent;
+
+  /**
    * menuOpened - boolean to see if menu is opened
    */
   @state()
@@ -120,7 +126,6 @@ export default class header extends LitElement {
       bubbles: true,
       composed: true,
     });
-    console.log(dockingEvent);
     this.dispatchEvent(dockingEvent);
   }
 

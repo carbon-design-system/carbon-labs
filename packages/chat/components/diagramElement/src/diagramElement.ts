@@ -95,6 +95,8 @@ export default class diagramElement extends LitElement {
   @state()
   fullscreenMode;
 
+  private mutationObserver;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
@@ -110,6 +112,11 @@ export default class diagramElement extends LitElement {
     if (this.height) {
       this.style.setProperty('--chat-diagram-height', this.height + 'px');
     }
+
+    this.mutationObserver = new MutationObserver(() => {
+      this._getTheme();
+    });
+    this.mutationObserver.observe(this.parentElement, { childList: false });
   }
 
   /** _buildOptions
@@ -183,6 +190,9 @@ export default class diagramElement extends LitElement {
     if (changedProperties.has('_uniqueID')) {
       await this._prepareDiagram();
     }
+    if (changedProperties.has('theme')) {
+      await this._prepareDiagram();
+    }
   }
 
   /**
@@ -243,23 +253,12 @@ export default class diagramElement extends LitElement {
     this.isHovered = true;
   }
 
-  /*async _renderDiagram(type, diagramDef, targetID) {
-    if (!this.title) {
-      this.title = type + ' diagram';
-    }
-    await mermaid.render(targetID, diagramDef, (svgObject) => {
-      this.loading=false;
-      //target.innerHTML = svgObject;
-      //this.renderedSVG = svgObject;
-    });
-  }*/
-
   /**
    * Prepare diagram object for rendering from content string
    * @param {String} mode - which mode to render with smilesDrawer
    */
   async _prepareDiagram() {
-    const diagramDef = this.definition;
+    const diagramDef = this.definition.replace(/```/g, '');
     //const preID = clabsPrefix + '--chat-diagram-previz-id-' + this._uniqueID;
     const targetID =
       clabsPrefix + '--chat-diagram-container-id-' + this._uniqueID;

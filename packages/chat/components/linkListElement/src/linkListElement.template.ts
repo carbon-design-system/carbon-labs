@@ -79,13 +79,25 @@ export function linkListElementTemplate(customElementClass) {
         ? html`<div class="${clabsPrefix}--chat-link-list-item">
             ${expanded
               ? html` <div class="${clabsPrefix}--chat-link-list-item-text">
-                  <cds-link @click="${collapseList}">
-                    Collapse list ${ChevronUp16({ slot: 'icon' })}</cds-link
+                  <cds-button
+                    kind="ghost"
+                    tooltip-text="Collapse"
+                    tooltip-position="right"
+                    tooltip-alignment="end"
+                    size="sm"
+                    @click="${collapseList}">
+                    Collapse list ${ChevronUp16({ slot: 'icon' })}</cds-button
                   >
                 </div>`
               : html` <div class="${clabsPrefix}--chat-link-list-item-text">
-                  <cds-link @click="${expandList}">
-                    View all ${ChevronDown16({ slot: 'icon' })}</cds-link
+                  <cds-button
+                    kind="ghost"
+                    tooltip-text="View all"
+                    tooltip-position="right"
+                    tooltip-alignment="end"
+                    size="sm"
+                    @click="${expandList}">
+                    View all ${ChevronDown16({ slot: 'icon' })}</cds-button
                   >
                 </div>`}
           </div>`

@@ -83,33 +83,19 @@ export function messageTemplate(customElementClass) {
     compactIcon,
     _feedbackFormOrientation: feedbackFormOrientation,
     _feedbackFormValues: feedbackFormValues,
+    popupTargetElement,
   } = customElementClass;
 
   return html`<div
+    role="article"
+    aria-labelledby="message${index}-origin"
     class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
     <div class="${clabsPrefix}--chat-message-container">
-      ${showFeedBackForm || enableComplexFeedback
-        ? html`
-            <clabs-chat-popup
-              @on-feedback-popup-closed="${hideFeedBackForm}"
-              ?is-open="${showFeedBackForm}"
-              id="${clabsPrefix}--chat-popup-unique-feedback-${index}"
-              orientation="${feedbackFormOrientation}"
-              inline-position="${feedbackFormTarget ? feedbackFormTarget.x : 0}"
-              block-position="${feedbackFormTarget ? feedbackFormTarget.y : 0}"
-              .feedbackFormValues="${feedbackFormValues}"
-              parent-message-id="${index}"
-              type="${positiveFeedbackSelected
-                ? 'thumbs-up'
-                : negativeFeedbackSelected
-                ? 'thumbs-down'
-                : 'custom'}">
-            </clabs-chat-popup>
-          `
-        : html``}
       ${userSubmitted
         ? html` <div class="${clabsPrefix}--chat-message-content">
-            <div class="${clabsPrefix}--chat-message-timestamp-user">
+            <div
+              id="message${index}-origin"
+              class="${clabsPrefix}--chat-message-timestamp-user">
               ${displayName ? displayName : 'You'} ${timeStamp}
             </div>
             <div class="${clabsPrefix}--chat-message-response-user">
@@ -138,7 +124,6 @@ export function messageTemplate(customElementClass) {
                           kind="ghost"
                           align="left"
                           aria-label="Undo Edit"
-                          role="button"
                           @click="${cancelEdit}">
                           ${Undo16({ slot: 'icon' })}
                           <span slot="tooltip-content">Undo Edit</span>
@@ -148,7 +133,6 @@ export function messageTemplate(customElementClass) {
                           kind="ghost"
                           align="left"
                           aria-label="Send Edit"
-                          role="button"
                           @click="${validateEdit}">
                           ${CheckMark16({ slot: 'icon' })}
                           <span slot="tooltip-content">Validate Edit</span>
@@ -158,7 +142,6 @@ export function messageTemplate(customElementClass) {
                         kind="ghost"
                         align="left"
                         aria-label="Edit Code"
-                        role="button"
                         @click="${handleEdit}">
                         ${Edit16({ slot: 'icon' })}
                         <span slot="tooltip-content">Enable editing</span>
@@ -188,7 +171,9 @@ export function messageTemplate(customElementClass) {
                 ? clabsPrefix + '--chat-message-content-compact'
                 : ''}">
               ${!compactIcon
-                ? html` <div class="${clabsPrefix}--chat-message-timestamp-bot">
+                ? html` <div
+                    class="${clabsPrefix}--chat-message-timestamp-bot"
+                    id="message${index}-origin">
                     ${displayName == null ? 'watsonx' : displayName}
                     ${timeStamp}
                   </div>`
@@ -200,7 +185,8 @@ export function messageTemplate(customElementClass) {
                         : unsafeHTML(watsonIconDark)}
                     </div>
                     <div
-                      class="${clabsPrefix}--chat-message-timestamp-bot-compact">
+                      class="${clabsPrefix}--chat-message-timestamp-bot-compact"
+                      id="message${index}-origin">
                       ${displayName == null ? 'watsonx' : displayName}
                       ${timeStamp}
                     </div>
@@ -350,11 +336,7 @@ export function messageTemplate(customElementClass) {
                           `
                         : html`
                             <p class="${clabsPrefix}--chat-message-warning">
-                              Warning: No valid type specified for message
-                              subelement in 'elements' array, available types
-                              are: 'text', 'img', 'url', 'video', 'audio',
-                              'file', 'code', 'list', 'table', 'chart', 'tags'
-                              and 'error'. Rendering as default: 'text'...
+                              [Warning] No valid block-type specified, rendering as type 'text': 
                             </p>
                             <clabs-chat-text
                               capitalize
@@ -440,7 +422,6 @@ export function messageTemplate(customElementClass) {
                                 kind="ghost"
                                 align="left"
                                 aria-label="Undo Edit"
-                                role="button"
                                 @click="${cancelEdit}">
                                 ${Undo16({ slot: 'icon' })}
                                 <span slot="tooltip-content">Undo Edit</span>
@@ -450,7 +431,6 @@ export function messageTemplate(customElementClass) {
                                 kind="ghost"
                                 align="left"
                                 aria-label="Send Edit"
-                                role="button"
                                 @click="${validateEdit}">
                                 ${CheckMark16({ slot: 'icon' })}
                                 <span slot="tooltip-content"
@@ -462,7 +442,6 @@ export function messageTemplate(customElementClass) {
                               kind="ghost"
                               align="left"
                               aria-label="Edit Message"
-                              role="button"
                               @click="${handleEdit}">
                               ${Edit16({ slot: 'icon' })}
                               <span slot="tooltip-content">Enable Editing</span>
@@ -472,10 +451,14 @@ export function messageTemplate(customElementClass) {
                               size="sm"
                               kind="ghost"
                               align="right"
-                              aria-expanded="${positiveFeedbackSelected}"
-                              aria-controls="${clabsPrefix}--chat-popup-unique-feedback-${index}"
-                              aria-label="Thumbs Up"
                               role="button"
+                              aria-expanded="${positiveFeedbackSelected}"
+                              aria-controls="${showFeedBackForm
+                                ? clabsPrefix +
+                                  '--chat-popup-unique-feedback-' +
+                                  index
+                                : ''}"
+                              aria-label="Thumbs Up"
                               @keydown="${handlePositiveKeyboardInput}"
                               @click="${handlePositiveFeedback}">
                               ${positiveFeedbackSelected
@@ -488,10 +471,14 @@ export function messageTemplate(customElementClass) {
                               size="sm"
                               kind="ghost"
                               align="right"
-                              aria-expanded="${negativeFeedbackSelected}"
-                              aria-controls="${clabsPrefix}--chat-popup-unique-feedback-${index}"
-                              aria-label="Thumbs Down"
                               role="button"
+                              aria-expanded="${negativeFeedbackSelected}"
+                              aria-controls="${showFeedBackForm
+                                ? clabsPrefix +
+                                  '--chat-popup-unique-feedback-' +
+                                  index
+                                : ''}"
+                              aria-label="Thumbs Down"
                               @keydown="${handleNegativeKeyboardInput}"
                               @click="${handleNegativeFeedback}">
                               ${negativeFeedbackSelected
@@ -504,7 +491,6 @@ export function messageTemplate(customElementClass) {
                               kind="ghost"
                               align="right"
                               aria-label="Regenerate"
-                              role="button"
                               @click="${handleRegenerate}">
                               ${Renew16({ slot: 'icon' })}
                               <span slot="tooltip-content">Regenerate</span>
@@ -516,5 +502,25 @@ export function messageTemplate(customElementClass) {
                     class="${clabsPrefix}--chat-message-dropdown-bot"></div>`}
             </div>`}
     </div>
+    ${showFeedBackForm || enableComplexFeedback
+      ? html`
+          <clabs-chat-popup
+            @on-feedback-popup-closed="${hideFeedBackForm}"
+            ?is-open="${showFeedBackForm}"
+            id="${clabsPrefix}--chat-popup-unique-feedback-${index}"
+            orientation="${feedbackFormOrientation}"
+            inline-position="${feedbackFormTarget ? feedbackFormTarget.x : 0}"
+            block-position="${feedbackFormTarget ? feedbackFormTarget.y : 0}"
+            .feedbackFormValues="${feedbackFormValues}"
+            .targetElement="${popupTargetElement}"
+            parent-message-id="${index}"
+            type="${positiveFeedbackSelected
+              ? 'thumbs-up'
+              : negativeFeedbackSelected
+              ? 'thumbs-down'
+              : 'custom'}">
+          </clabs-chat-popup>
+        `
+      : html``}
   </div>`;
 }

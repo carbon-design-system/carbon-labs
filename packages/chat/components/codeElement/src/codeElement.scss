@@ -189,7 +189,6 @@ $css--plex: true !default;
     font-style: italic;
   }
 
-  .hljs-keyword,
   .hljs-literal,
   .hljs-built_in,
   .hljs-selector-tag,
@@ -204,6 +203,7 @@ $css--plex: true !default;
     color: $green-50;
   }
 
+  .hljs-keyword,
   .hljs-number,
   .hljs-symbol,
   .hljs-bullet {
@@ -230,11 +230,11 @@ $css--plex: true !default;
 
   .hljs-class .hljs-title,
   .hljs-type,
+  .hljs-tag,
   .hljs-class {
     color: $yellow-50;
   }
 
-  .hljs-tag,
   .hljs-name,
   .hljs-section,
   .hljs-selector-id,

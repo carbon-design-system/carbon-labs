@@ -35,8 +35,9 @@ export function popupElementTemplate(customElementClass) {
     tagList,
     orientation,
     disclaimer,
+    parentMessageId,
   } = customElementClass;
-  return html`<div class="${clabsPrefix}--chat-popup-container">
+  return html`<div class="${clabsPrefix}--chat-popup-container" tabindex="0">
     <div class="${clabsPrefix}--chat-popup-main-content">
       <div class="${clabsPrefix}--chat-popup-title">
         ${popupTitle ? popupTitle : 'Feedback'}
@@ -48,29 +49,25 @@ export function popupElementTemplate(customElementClass) {
         <clabs-chat-tag-list
           is-inline
           @on-tag-selected="${handleTagSelection}"
-          content="${
-            tagList
-              ? tagList
-              : '["Accurate","Comprehensive","Consise","Easy to understand"]'
-          }">
+          content="${tagList
+            ? tagList
+            : '["Accurate","Comprehensive","Consise","Easy to understand"]'}">
         </clabs-chat-tag-list>
       </div>
       <div class="${clabsPrefix}--chat-popup-feedback-text">
         <cds-textarea
-          placeholder="${
-            textAreaPlaceholder ? textAreaPlaceholder : 'Add a comment'
-          }"
+          placeholder="${textAreaPlaceholder
+            ? textAreaPlaceholder
+            : 'Add a comment'}"
           rows="3"
           cols="50"
-          @input="${handleTextInput}"
+          @keydown="${handleTextInput}"
           class="${clabsPrefix}--chat-popup-feedback-text-area"></cds-textarea>
       </div>
       <div class="${clabsPrefix}--chat-popup-disclaimer">
-        ${
-          disclaimer
-            ? disclaimer
-            : "Your feedback on the use of AI-powered features by our dedicated team is to drive improvements. By continuing, you agree to IBM's Feedback Collecting Policy."
-        }
+        ${disclaimer
+          ? disclaimer
+          : "Your feedback on the use of AI-powered features by our dedicated team is to drive improvements. By continuing, you agree to IBM's Feedback Collecting Policy."}
       </div>
       <div class="${clabsPrefix}--chat-popup-submit">
         <cds-button
@@ -97,31 +94,31 @@ export function popupElementTemplate(customElementClass) {
       </div>
     </div>
     <div class="${clabsPrefix}--chat-popup-caret-${orientation}">
-    
-      ${
-        orientation === 'bottom'
-          ? html` <svg
+      ${orientation === 'bottom'
+        ? html` <svg
+            width="22"
+            height="14"
+            aria-label="caret container"
+            id="caret-up-${parentMessageId}"
+            xmlns="http://www.w3.org/2000/svg">
+            <polygon
+              aria-label="caret triangle"
+              id="caret-up-poly-${parentMessageId}"
+              points="1,13 21,13 11,1"></polygon>
+          </svg>`
+        : html`
+            <svg
               width="22"
               height="14"
+              id="caret-down-${parentMessageId}"
               aria-label="caret container"
               xmlns="http://www.w3.org/2000/svg">
               <polygon
                 aria-label="caret triangle"
-                points="1,13 21,13 11,1"></polygon>
-            </svg>`
-          : html`
-              <svg
-                width="22"
-                height="14"
-                aria-label="caret container"
-                xmlns="http://www.w3.org/2000/svg">
-                <polygon
-                  aria-label="caret triangle"
-                  points="1,1 21,1 11,13"></polygon>
-              </svg>
-            `
-      }
-      </svg>
+                id="caret-down-poly-${parentMessageId}"
+                points="1,1 21,1 11,13"></polygon>
+            </svg>
+          `}
     </div>
   </div>`;
 }

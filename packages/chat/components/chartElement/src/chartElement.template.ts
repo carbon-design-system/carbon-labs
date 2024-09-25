@@ -73,6 +73,7 @@ export function chartElementTemplate(customElementClass) {
     _appendToContext: appendToContext,
     _chartClicked: chartClicked,
     exportedImageURL,
+    _handleFullScreenScroll: handleFullScreenScroll,
   } = customElementClass;
 
   return html`
@@ -93,7 +94,8 @@ export function chartElementTemplate(customElementClass) {
       : html``}
     ${content
       ? html`
-    <div class="${clabsPrefix}--chat-chart-fullscreen-container" style="display:${
+    <div class="${clabsPrefix}--chat-chart-fullscreen-container" @wheel=
+          "${handleFullScreenScroll}" style="display:${
           modalMode === 'fullscreen' ? 'flex' : 'none'
         };">
 

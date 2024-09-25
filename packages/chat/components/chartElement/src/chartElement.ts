@@ -307,11 +307,23 @@ export default class chartElement extends LitElement {
     this.intersectionObserver.observe(this);
 
     this.resizeObserver = new ResizeObserver(async () => {
-      clearTimeout(this._resizeTimeout);
+      if (this._resizeTimeout) {
+        clearTimeout(this._resizeTimeout);
+      }
       this._resizeTimeout = await setTimeout(async () => {
         await this._handleResize();
       }, 200);
     });
+
+    /*this.resizeObserver = new ResizeObserver(async () => {
+      if(!this.chartResizing){
+      clearTimeout(this._resizeTimeout);
+      this.chartResizing = true;
+      this._resizeTimeout = await setTimeout(async () => {
+        await this._handleResize();
+      }, 200);
+      }
+    });*/
 
     this.resizeObserver.observe(this);
 
@@ -336,7 +348,7 @@ export default class chartElement extends LitElement {
    * _handleResize - target resize on component itself
    */
   async _handleResize() {
-    this.chartResizing = true;
+    this.chartResizing = false;
     this.chartLoading = true;
     await this._displayVisualization();
   }
@@ -529,8 +541,9 @@ export default class chartElement extends LitElement {
     const chosenSpec =
       this.modalMode !== 'edit' ? this._visualizationSpec : this._editedSpec;
     if (targetDiv instanceof HTMLElement) {
-      //const currentHeight = this.shadowRoot.host.clientHeight;
-      //const currentWidth = this.shadowRoot.host.clientWidth;
+      /*const padding = chosenSpec.padding;
+      chosenSpec.height = this.shadowRoot.host.clientHeight- (padding.top + padding.bottom)*2-32;
+      chosenSpec.width = this.shadowRoot.host.clientWidth- (padding.right + padding.left)*2-32;*/
 
       //const padding = chosenSpec.padding;
       //chosenSpec.height = 'container'; //currentHeight;// - (padding.top + padding.bottom)*2;
@@ -539,7 +552,7 @@ export default class chartElement extends LitElement {
       chosenSpec.height = 'container';
       chosenSpec.width = 'container';
 
-      //chosenSpec.autosize = 'none';//{ resize: false };
+      chosenSpec.autosize = { resize: false };
       if (this.thumbNail) {
         chosenSpec.width = 400;
         chosenSpec.height = 300;
@@ -1142,6 +1155,15 @@ export default class chartElement extends LitElement {
   }
 
   /**
+   * _handleFullScreenScroll - block scrolling beyond fullscreen
+   * @param {event} event - scroll/wheel event
+   */
+  _handleFullScreenScroll(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  /**
    * _showCarbonSpec - Code editor toggling to show post-hoc spec
    */
   _showCarbonSpec() {
@@ -1671,10 +1693,12 @@ export default class chartElement extends LitElement {
             gradientLabelOffset: 8,
           },
         };
+
+        spec['config'].axis.titleLimit = 100; //Math.min(spec.height,spec.width)
       }
 
-      this._authorizeSingleSelection = true;
-      this._authorizeMultiSelection = true;
+      this._authorizeSingleSelection = false;
+      this._authorizeMultiSelection = false;
       let isOrdinal: boolean;
       switch (chartType) {
         case 'bar':

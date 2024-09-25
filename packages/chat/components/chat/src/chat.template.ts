@@ -55,6 +55,7 @@ export function chatTemplate(customElementClass) {
     _isDragging: isDragging,
     enableFeedbackForm,
     enableTextFeedbackForm,
+    aiSlugContent,
   } = customElementClass;
 
   return html`<div
@@ -70,6 +71,7 @@ export function chatTemplate(customElementClass) {
           @on-chat-docking-change="${handleDockingMode}"
           @on-chat-closed="${handleChatClosed}"
           @on-header-drag-initiated="${handleHeaderDragStart}"
+          header-slug-content="${aiSlugContent}"
           .menuItems="${headerMenuItems}"
           ?docking-enabled="${enableDocking}"
           ?disable-header-menu="${disableHeaderMenu}"

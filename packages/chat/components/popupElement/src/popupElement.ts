@@ -86,8 +86,8 @@ export default class popupElement extends LitElement {
   /**
    * target div to attach to
    */
-  @state()
-  targetObject;
+  @property({ type: Object, attribute: 'targetElement' })
+  targetElement;
 
   /**
    * predefined JSON values of all above by dev/user
@@ -119,6 +119,16 @@ export default class popupElement extends LitElement {
   @property({ type: String, attribute: 'parent-message-id' })
   parentMessageId;
 
+  /**
+   * Event listener to check if parent visibility changed
+   */
+  //private intersectionObserver;
+
+  /**
+   * Event listener to check if parent visibility changed
+   */
+  //private resizeObserver;
+
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
@@ -142,6 +152,72 @@ export default class popupElement extends LitElement {
 
     if (this.isSlotted) {
       this.style.setProperty('--chat-popup-slotted-mode', 'fixed');
+    }
+
+    /*this.resizeObserver = new ResizeObserver(()=>{
+      this.setPosition();
+    })
+    this.resizeObserver.observe(this.targetElement);
+
+    this.intersectionObserver = new IntersectionObserver((entries)=>{
+      entries.forEach((entry) =>{
+        if(!entry.isIntersecting){
+          this.refitPosition();
+        }
+      })
+    })
+    this.intersectionObserver.observe(this);*/
+  }
+
+  /**
+   * setPosition -  place popup according to client positioning of target element
+   */
+  setPosition() {
+    if (this.targetElement instanceof HTMLElement) {
+      const targetBounds = this.targetElement.getBoundingClientRect();
+      const popupBounds = this.getBoundingClientRect();
+      const parentBounds = this.parentElement?.getBoundingClientRect();
+
+      if (targetBounds && popupBounds && parentBounds) {
+        let offsetLeft = targetBounds.left - parentBounds.left;
+        let offsetTop = targetBounds.bottom - parentBounds.top;
+
+        if (targetBounds.left + popupBounds.width > parentBounds.width) {
+          offsetLeft = parentBounds.width - popupBounds.width - 10;
+        }
+
+        if (offsetTop + popupBounds.height > parentBounds.height) {
+          offsetTop = targetBounds.top - parentBounds.top - popupBounds.height;
+        }
+
+        this.inlinePosition = offsetLeft;
+
+        this.blockPosition = offsetTop;
+      }
+    }
+  }
+
+  /**
+   * refitPosition - animate/move popup according to client events and target element
+   */
+  refitPosition() {
+    if (this.parentElement instanceof HTMLElement) {
+      const popupBounds = this.getBoundingClientRect();
+      const parentBounds = this.parentElement?.getBoundingClientRect();
+
+      const offsetLeft = parentBounds.width - popupBounds.width - 10;
+      const offsetTop = parentBounds.height - parentBounds.height - 10;
+      if (popupBounds.right > parentBounds.right) {
+        this.inlinePosition = offsetLeft;
+      } else if (popupBounds.left < parentBounds.left) {
+        this.inlinePosition = 10;
+      }
+
+      if (popupBounds.bottom > parentBounds.bottom) {
+        this.blockPosition = offsetTop;
+      } else if (popupBounds.top < parentBounds.top) {
+        this.blockPosition = 10;
+      }
     }
   }
 
@@ -189,6 +265,14 @@ export default class popupElement extends LitElement {
     if (this.type === 'thumbs-down') {
       this.style.setProperty('--chat-popup-caret-offset', '34px');
     }
+    if (this.isOpen) {
+      const container = this.shadowRoot?.querySelector(
+        '.clabs--chat-popup-container'
+      );
+      if (container instanceof HTMLElement) {
+        container.focus();
+      }
+    }
   }
 
   /**
@@ -200,6 +284,7 @@ export default class popupElement extends LitElement {
     this.textAreaPlaceholder = values.responsePlaceholder;
     this.promptTitle = values.prompt;
     this.tagList = values.tags;
+    this.disclaimer = values.disclaimer;
     this.requestUpdate();
   }
 

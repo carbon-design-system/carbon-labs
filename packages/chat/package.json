@@ -41,7 +41,7 @@
     "@ibm/telemetry-js": "^1.6.0",
     "highlightjs": "^9.16.2",
     "mathjax": "^3.2.2",
-    "mermaid": "^11.2.0",
+    "mermaid": "^11.2.1",
     "smiles-drawer": "^2.1.7",
     "vega": "^5.28.0",
     "vega-embed": "^6.24.0",

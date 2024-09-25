@@ -159,9 +159,10 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-footer-button {
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: center;
     block-size: auto;
+    margin-block-end: 12px;
   }
 
   .#{$clabs-prefix}--chat-search-query {
@@ -177,8 +178,9 @@ $css--plex: true !default;
     font-size: 14px;
     letter-spacing: 0.16px;
     line-height: 26px;
+    max-block-size: 182px;
     min-block-size: 40px;
-    overflow-y: hidden;
+    overflow-y: scroll;
     padding-block: 12px 10px;
     resize: none;
   }

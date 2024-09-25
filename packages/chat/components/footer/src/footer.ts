@@ -213,6 +213,16 @@ export default class footer extends LitElement {
   _startRecording() {
     this._speechRecognition?.start();
     this._isListening = true;
+    const recordingEvent = new CustomEvent('on-chat-footer-speech-start', {
+      detail: {
+        action: 'user started speech recognition',
+        currentMessage: this._messageText,
+        originalEvent: event,
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(recordingEvent);
   }
 
   /** handle voice recording end click event
@@ -220,6 +230,16 @@ export default class footer extends LitElement {
   _endRecording() {
     this._speechRecognition?.stop();
     this._isListening = false;
+    const recordingEvent = new CustomEvent('on-chat-footer-speech-end', {
+      detail: {
+        action: 'user ended speech recognition',
+        currentMessage: this._messageText,
+        originalEvent: event,
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(recordingEvent);
   }
 
   /** handle stop button click event to end streaming

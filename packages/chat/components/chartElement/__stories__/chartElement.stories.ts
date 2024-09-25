@@ -377,7 +377,10 @@ export const ComplexExamples = {
         (item) =>
           html` <h4>${item.title}</h4>
             <i>${item.prompt}</i>
-            <clabs-chat-chart content="${JSON.stringify(item.result)}">
+            <clabs-chat-chart
+              container-height="600px"
+              container-width="800px"
+              content="${JSON.stringify(item.result)}">
             </clabs-chat-chart>`
       )}
     `,

@@ -2658,7 +2658,7 @@ __metadata:
     "@types/highlightjs": "npm:^9"
     highlightjs: "npm:^9.16.2"
     mathjax: "npm:^3.2.2"
-    mermaid: "npm:^11.2.0"
+    mermaid: "npm:^11.2.1"
     smiles-drawer: "npm:^2.1.7"
     vega: "npm:^5.28.0"
     vega-embed: "npm:^6.24.0"
@@ -19087,9 +19087,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:^11.2.0":
-  version: 11.2.0
-  resolution: "mermaid@npm:11.2.0"
+"mermaid@npm:^11.2.1":
+  version: 11.2.1
+  resolution: "mermaid@npm:11.2.1"
   dependencies:
     "@braintree/sanitize-url": "npm:^7.0.1"
     "@iconify/utils": "npm:^2.1.32"
@@ -19110,7 +19110,7 @@ __metadata:
     stylis: "npm:^4.3.1"
     ts-dedent: "npm:^2.2.0"
     uuid: "npm:^9.0.1"
-  checksum: 10c0/74c0018c251655303497a1b96f623fc66468cb8de8ccdb6372e14a4b2f21c14615d7678fcbf256607f76240e947cbddd56d8a8618aaf27ee7d579863cddca144
+  checksum: 10c0/80207e2e7b3570cd478e5587f6665dd6044da062b85ca03fe621ffe76f4c347d22ae991aad9aaf7f643a0ccf9b00dce39403a64cafffbbd01409799785ea7f93
   languageName: node
   linkType: hard
 

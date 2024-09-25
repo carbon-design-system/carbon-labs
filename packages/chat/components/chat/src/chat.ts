@@ -261,6 +261,12 @@ export default class CLABSChat extends LitElement {
   verticalDockDirection = 'bottom';
 
   /**
+   * html content to show inside slug
+   */
+  @property({ type: String, attribute: 'ai-slug-content' })
+  aiSlugContent;
+
+  /**
    * vertical docking position with drag event
    */
   @state()
@@ -606,7 +612,7 @@ export default class CLABSChat extends LitElement {
             this._messages = [
               ...this._messages,
               {
-                text: res.reply,
+                text: res.reply + value,
                 origin: this.agentName,
                 hasError: errorState,
                 time: this._getCurrentTime(),

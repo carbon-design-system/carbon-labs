@@ -304,6 +304,15 @@ export default class molecularElement extends LitElement {
     this._uniqueID = randomString;
   }
 
+  /**
+   * _handleFullScreenScroll - block scrolling beyond fullscreen
+   * @param {event} event - scroll/wheel event
+   */
+  _handleFullScreenScroll(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/

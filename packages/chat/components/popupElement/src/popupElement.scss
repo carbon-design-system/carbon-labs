@@ -32,16 +32,13 @@
     overflow: visible;
     box-sizing: border-box;
     flex-direction: row;
-    padding: var(--chat-popup-element-opacity, 0);
+
+    padding: 32px;
     border: 1px solid $support-info;
     border-radius: 8px;
     animation: fade-in 600ms forwards;
 
-    background: linear-gradient(
-        0deg,
-        $link-inverse-hover 0%,
-        $background 54.75%
-      ),
+    background: linear-gradient(0deg, $link-inverse-hover 0%, $background 25%),
       #ffffff;
     block-size: 464px;
     box-shadow: -40px 30px 100px -25px rgba(0, 67, 206, 0.25),
@@ -83,7 +80,6 @@
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
-    padding: 32px;
     gap: 8px;
   }
 

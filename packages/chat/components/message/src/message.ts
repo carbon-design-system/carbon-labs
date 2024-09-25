@@ -251,6 +251,12 @@ export default class message extends LitElement {
   @state()
   _feedbackFormValues;
 
+  /**
+   * target DOM element for popup
+   */
+  @state()
+  popupTargetElement;
+
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
@@ -399,14 +405,15 @@ export default class message extends LitElement {
    * @param {string} uniqueId - unique code for event
    **/
   _handleDisplayFeedBackForm(event, type, uniqueId) {
-    //const targetItem = event.target;
+    const targetItem = event.target;
+    this.popupTargetElement = targetItem;
     //const boundingRect = targetItem.getBoundingClientRect();
     event.preventDefault();
     const popupHeight = 464;
     //const popupWidth = 320;
 
-    let horizontalPosition = 36;
-    let verticalPosition = 50;
+    let horizontalPosition = 54;
+    let verticalPosition = 60;
     let orientation = 'top';
 
     if (this.offsetTop < popupHeight) {
@@ -415,7 +422,7 @@ export default class message extends LitElement {
     }
 
     if (this.compactIcon) {
-      horizontalPosition = -16;
+      horizontalPosition = 0;
     }
     //this.feedbackFormTarget = {"x":horizontalPosition, "y":verticalPosition};
     this.feedbackFormTarget = { x: horizontalPosition, y: verticalPosition };

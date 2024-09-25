@@ -109,7 +109,6 @@ export function footerTemplate(customElementClass) {
                     : html`
                         <cds-icon-button
                           aria-label="Close Context Message"
-                          role="button"
                           kind="ghost"
                           size="sm"
                           @click="${handleContextMessageClose}">
@@ -159,7 +158,6 @@ export function footerTemplate(customElementClass) {
                   disabled
                   kind="ghost"
                   aria-label="No Microphone Available"
-                  role="button"
                   size="sm"
                   align="top-right">
                   ${MicrophoneOff16({ slot: 'icon' })}
@@ -171,7 +169,6 @@ export function footerTemplate(customElementClass) {
                     kind="ghost"
                     align="top-right"
                     aria-label="Start Listening"
-                    role="button"
                     size="sm"
                     @click="${startRecording}">
                     ${Microphone16({ slot: 'icon' })}
@@ -182,7 +179,6 @@ export function footerTemplate(customElementClass) {
                     class="${clabsPrefix}--chat-footer-button-danger"
                     align="top-right"
                     aria-label="Stop Listening"
-                    role="button"
                     size="sm"
                     @click="${endRecording}">
                     ${MicrophoneFilled16({ slot: 'icon' })}
@@ -198,7 +194,6 @@ export function footerTemplate(customElementClass) {
                   kind="ghost"
                   size="sm"
                   aria-label="Send"
-                  role="button"
                   align="top-right"
                   ?disabled="${messageText === '' || forceDisableInput}"
                   @click="${sendInputToParent}">
@@ -219,7 +214,6 @@ export function footerTemplate(customElementClass) {
                   kind="ghost"
                   size="sm"
                   aria-label="Stop Streaming"
-                  role="button"
                   align="top-right"
                   @click="${endStreaming}">
                   ${Stop16({

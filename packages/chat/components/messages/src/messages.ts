@@ -106,6 +106,12 @@ export default class messages extends LitElement {
   _autoScroll = false;
 
   /**
+   * limit autoscroll when new message arrives
+   */
+  @state()
+  _limitScroll = true;
+
+  /**
    * target scrollable to div to avoid fetching DOM
    */
   private scrollDiv;
@@ -137,6 +143,7 @@ export default class messages extends LitElement {
     const atBottom =
       this.scrollDiv.scrollTop + this.scrollDiv.clientHeight >=
       this.scrollDiv.scrollHeight - 50;
+    this._limitScroll = false;
     if (atBottom) {
       this._autoScroll = true;
     } else {
@@ -148,8 +155,14 @@ export default class messages extends LitElement {
    * @param {Object} changedProperties - returned inner DOM update object
    **/
   shouldUpdate(changedProperties) {
-    if (changedProperties.has('_computedMessages')) {
-      this._previousScrollHeight = this.scrollDiv?.scrollHeight;
+    if (changedProperties.has('messages')) {
+      const newHeight = this.scrollDiv?.scrollHeight;
+      const lastMessage = this.messages[this.messages.length - 1];
+      if (lastMessage) {
+        if (lastMessage.userSubmitted) {
+          this._previousScrollHeight = newHeight - 36;
+        }
+      }
     }
     return true;
   }
@@ -170,6 +183,7 @@ export default class messages extends LitElement {
 
     if (changedProperties.has('loading')) {
       this._queryInProgress = this.loading;
+      this._autoScroll = true;
       this._updateScroll();
     }
     if (changedProperties.has('_streamResponses')) {
@@ -198,7 +212,6 @@ export default class messages extends LitElement {
    * handleInternalChange - handle event when children update
    */
   _handleInternalChange() {
-    //console.log("struct change")
     if (this._autoScroll) {
       this._updateScroll();
     }
@@ -215,13 +228,11 @@ export default class messages extends LitElement {
    * _scrollMessage - move message down post render
    */
   _scrollMessage() {
-    setTimeout(() => {
-      const position = this._previousScrollHeight + 246;
-      this.scrollDiv?.scrollTo({
-        top: position,
-        behavior: 'smooth',
-      });
-    }, 200);
+    //const newHeight = this.scrollDiv?.scrollHeight;
+    //this._previousScrollHeight = newHeight;
+    this._autoScroll = true;
+    this._limitScroll = true;
+    this._updateScroll();
   }
 
   /** auto-scroll chat-messages div when a new message has appeared
@@ -231,8 +242,13 @@ export default class messages extends LitElement {
       if (!this.scrollTimeout) {
         this.scrollTimeout = setTimeout(() => {
           if (this._autoScroll) {
+            let scrollTarget = this.scrollDiv?.scrollHeight;
+            console.log(scrollTarget);
+            if (this._limitScroll) {
+              scrollTarget = this._previousScrollHeight;
+            }
             this.scrollDiv?.scrollTo({
-              top: this.scrollDiv?.scrollHeight,
+              top: scrollTarget,
               behavior: 'smooth',
             });
           }

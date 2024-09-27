@@ -109,6 +109,7 @@ export function headerTemplate(customElementClass) {
                       ${useOverflowMenu
                         ? html`
                             <cds-overflow-menu
+                              id="${clabsPrefix}--chat-header-overflow-menu-unique"
                               tooltip-alignment="right"
                               tooltip-position="bottom"
                               @click="${handleMenuToggle}">

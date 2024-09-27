@@ -37,7 +37,7 @@ export function popupElementTemplate(customElementClass) {
     disclaimer,
     parentMessageId,
   } = customElementClass;
-  return html`<div class="${clabsPrefix}--chat-popup-container">
+  return html`<div class="${clabsPrefix}--chat-popup-container" tabindex="0">
     <div class="${clabsPrefix}--chat-popup-main-content">
       <div
         class="${clabsPrefix}--chat-popup-title"

@@ -30,7 +30,6 @@ export function tagListElementTemplate(customElementClass) {
     _handleTagClick: handleTagClick,
     actionIcon,
     monoLabel,
-    isAction,
     isInLine,
     selectionIndex,
   } = customElementClass;
@@ -48,10 +47,11 @@ export function tagListElementTemplate(customElementClass) {
                   ? '-inline'
                   : ''}">
                 <cds-chat-button
-                  kind="${selectionIndex[index] ? 'primary' : 'ghost'}"
+                  kind="primary"
                   size="sm"
                   type="button"
-                  ${isAction ? 'is-quick-action' : ''}
+                  is-quick-action
+                  ?is-selected="${selectionIndex[index]}"
                   data-content="${value}"
                   data-index="${index}"
                   @click="${handleTagClick}">

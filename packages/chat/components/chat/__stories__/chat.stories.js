@@ -1487,14 +1487,16 @@ const feedbackFormOptions = {
     ],
     prompt: 'What was unsatisfactory about this response?',
     responsePlaceholder: 'Describe issues with this response',
-    disclaimer: 'lorem',
+    disclaimer:
+      'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
   },
   'thumbs-up': {
     title: 'Feedback',
     tags: ['Accurate', 'Comprehensive', 'Consice', 'Easy to Understand'],
     prompt: 'Why did you choose this rating?',
     responsePlaceholder: 'Add a comment',
-    disclaimer: 'dolor',
+    disclaimer:
+      'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
   },
 };
 export const Playground = {

@@ -9,6 +9,8 @@
 
 import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 // @ts-ignore
 import styles from './header.scss?inline';
 /**
@@ -114,6 +116,12 @@ export default class header extends LitElement {
   useOverflowMenu = true;
 
   /**
+   * menuContainerTarget
+   */
+  @state()
+  menuContainerTarget;
+
+  /**
    * docking event when popup button is clicked
    * @param {event} event - click event when docking chat
    */
@@ -145,12 +153,52 @@ export default class header extends LitElement {
   }
 
   /**
+   * LIT firstUpdated cycle to define initial parameters on first render
+   */
+  firstUpdated() {
+    this.menuContainerTarget = this.shadowRoot?.querySelector(
+      '#' + clabsPrefix + '--chat-header-container-target'
+    );
+  }
+
+  /**
    * docking event when mouseup event happens to undo drag mode
    */
   _handleHeaderMouseUp() {
     this.mouseHeldDown = false;
     clearTimeout(this.dragTimeout);
     this.dragTimeout = null;
+  }
+
+  /** _handleDragAreaKeydown - move chat when arrow keys detected
+   * @param {event} event - key event
+   */
+  _handleDragAreaKeydown(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this._handleHeaderMouseDown(event);
+      this.initiateDragging(event);
+    }
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      const dragEvent = new CustomEvent('on-header-drag-cancel', {
+        detail: {
+          action: 'user canceled drag event',
+        },
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(dragEvent);
+    }
+    if (
+      event.key === 'ArrowUp' ||
+      event.key === 'ArrowDown' ||
+      event.key === 'ArrowLeft' ||
+      event.key === 'ArrowRight'
+    ) {
+      event.preventDefault();
+      this._keyboardDragging(event.key);
+    }
   }
 
   /**
@@ -182,6 +230,45 @@ export default class header extends LitElement {
     const mouseY = event.clientY - this.getBoundingClientRect().top;
     this.mouseHeldDown = false;
     const dragEvent = new CustomEvent('on-header-drag-initiated', {
+      detail: {
+        action: 'user initiated drag event',
+        offset: { x: mouseX, y: mouseY },
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(dragEvent);
+  }
+
+  /**
+   * drag trigger event if arrow keys used
+   * @param {string} keyCode - key event value when docking chat
+   */
+  _keyboardDragging(keyCode) {
+    //const mouseX = event.clientX - this.getBoundingClientRect().left;
+    //const mouseY = event.clientY - this.getBoundingClientRect().top;
+    //this.mouseHeldDown = false;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    const dragStep = 8;
+
+    switch (keyCode) {
+      case 'ArrowUp':
+        mouseY = dragStep;
+        break;
+      case 'ArrowDown':
+        mouseY = -dragStep;
+        break;
+      case 'ArrowLeft':
+        mouseX = dragStep;
+        break;
+      case 'ArrowRight':
+        mouseX = -dragStep;
+        break;
+    }
+
+    const dragEvent = new CustomEvent('on-header-drag-keyboard-initiated', {
       detail: {
         action: 'user initiated drag event',
         offset: { x: mouseX, y: mouseY },

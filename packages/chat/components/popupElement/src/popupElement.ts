@@ -154,15 +154,25 @@ export default class popupElement extends LitElement {
       this.style.setProperty('--chat-popup-slotted-mode', 'fixed');
     }
 
+    const container = this.shadowRoot?.querySelector(
+      '.clabs--chat-popup-container'
+    );
+    if (container instanceof HTMLElement) {
+      container.focus();
+    }
+
+    //this.addEventListener('on-messages-scrolled', this._handleScrollChange)
+
     /*this.resizeObserver = new ResizeObserver(()=>{
       this.setPosition();
     })
-    this.resizeObserver.observe(this.targetElement);
+    this.resizeObserver.observe(this.targetElement);*/
 
-    this.intersectionObserver = new IntersectionObserver((entries)=>{
+    /*this.intersectionObserver = new IntersectionObserver((entries)=>{
       entries.forEach((entry) =>{
         if(!entry.isIntersecting){
-          this.refitPosition();
+          //this.refitPosition();
+          console.log("inter")
         }
       })
     })

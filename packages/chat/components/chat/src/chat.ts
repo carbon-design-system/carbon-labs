@@ -270,14 +270,17 @@ export default class CLABSChat extends LitElement {
    * vertical docking position with drag event
    */
   @state()
-  verticalDockPosition;
+  verticalDockPosition = 16;
 
   /**
    * horizontal docking position with drag event
    */
   @state()
-  horizontalDockPosition;
+  horizontalDockPosition = 16;
 
+  /**
+   * dragging state
+   */
   @state()
   _isDragging = false;
 
@@ -362,11 +365,78 @@ export default class CLABSChat extends LitElement {
     if (this.enableDocking) {
       this._isDragging = true;
       this.parentElement?.addEventListener('mousemove', (e) => {
+        e.preventDefault();
         this._dragChat(e, originalOffset);
       });
       this.parentElement?.addEventListener('mouseup', (e) => {
         this._dragEnd(e);
       });
+    }
+  }
+
+  /**
+   * handle when header sends dragstart event
+   * @param {event} event - drag start event
+   */
+  _handleHeaderDragCancel(event) {
+    if (this.enableDocking) {
+      this._dragEnd(event);
+    }
+  }
+
+  /**
+   * handle when header sends dragstart event
+   * @param {event} event - drag start event
+   */
+  _handleHeaderKeyboardDragStart(event) {
+    const originalOffset = event.detail.offset;
+    if (this.enableDocking) {
+      this._dragChatKeyboard(originalOffset);
+    }
+  }
+
+  /**
+   * drag chat event
+   * @param {event} event - core mousemove event
+   * @param {object} originalOffset - x/y click values from header
+   */
+  _dragChatKeyboard(originalOffset) {
+    if (this._isDragging) {
+      const chatReference = this.shadowRoot?.querySelector(
+        '.' + clabsPrefix + '--chat-container'
+      );
+      if (chatReference instanceof HTMLElement) {
+        const chatHeight = chatReference.clientHeight;
+        const chatWidth = chatReference.clientWidth;
+        const mininumPadding = { top: 16, bottom: 16, left: 16, right: 16 };
+
+        let newPositionX = this.horizontalDockPosition + originalOffset.x;
+
+        let newPositionY = this.verticalDockPosition + originalOffset.y;
+
+        newPositionX = Math.min(
+          Math.max(mininumPadding.right, newPositionX),
+          window.innerWidth - mininumPadding.left - chatWidth
+        );
+        newPositionY = Math.min(
+          Math.max(mininumPadding.bottom, newPositionY),
+          window.innerHeight - mininumPadding.top - chatHeight
+        );
+
+        if (newPositionX && newPositionY) {
+          this.verticalDockPosition = newPositionY;
+          this.horizontalDockPosition = newPositionX;
+
+          this.style.setProperty(
+            '--chat-docked-bottom-position',
+            newPositionY + 'px'
+          );
+          this.style.setProperty(
+            '--chat-docked-right-position',
+            newPositionX + 'px'
+          );
+        }
+      }
     }
   }
 
@@ -400,6 +470,8 @@ export default class CLABSChat extends LitElement {
         );
 
         if (newPositionX && newPositionY) {
+          this.verticalDockPosition = newPositionY;
+          this.horizontalDockPosition = newPositionX;
           this.style.setProperty(
             '--chat-docked-bottom-position',
             newPositionY + 'px'

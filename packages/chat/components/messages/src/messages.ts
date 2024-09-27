@@ -149,6 +149,16 @@ export default class messages extends LitElement {
     } else {
       this._autoScroll = false;
     }
+
+    /*const messagesScrolledEvent = new CustomEvent(
+      'on-messages-scrolled',
+      {
+        detail: {originalEvent:event},
+        bubbles: true,
+        composed: true,
+      }
+    );
+    this.dispatchEvent(messagesScrolledEvent);*/
   }
 
   /** shouldUpdate - internal LIT function to predetect updates
@@ -243,7 +253,6 @@ export default class messages extends LitElement {
         this.scrollTimeout = setTimeout(() => {
           if (this._autoScroll) {
             let scrollTarget = this.scrollDiv?.scrollHeight;
-            console.log(scrollTarget);
             if (this._limitScroll) {
               scrollTarget = this._previousScrollHeight;
             }

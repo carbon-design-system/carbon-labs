@@ -168,7 +168,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-search-query {
     box-sizing: border-box;
     flex: 3;
-    padding: 0;
+    padding: 6px 0 0;
     border: none;
     background: none;
 
@@ -177,9 +177,9 @@ $css--plex: true !default;
     font: inherit;
     font-size: 14px;
     letter-spacing: 0.16px;
-    line-height: 26px;
+    line-height: 30px;
     max-block-size: 182px;
-    min-block-size: 40px;
+    min-block-size: 44px;
     overflow-y: scroll;
     padding-block: 12px 10px;
     resize: none;

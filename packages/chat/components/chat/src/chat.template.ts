@@ -50,6 +50,8 @@ export function chatTemplate(customElementClass) {
     _endStreaming: endStreaming,
     _streamDelay: streamDelay,
     _handleHeaderDragStart: handleHeaderDragStart,
+    _handleHeaderDragCancel: handleHeaderDragCancel,
+    _handleHeaderKeyboardDragStart: handleHeaderKeyboardDragStart,
     promptNotificationType,
     promptNotificationMessage,
     _isDragging: isDragging,
@@ -71,6 +73,8 @@ export function chatTemplate(customElementClass) {
           @on-chat-docking-change="${handleDockingMode}"
           @on-chat-closed="${handleChatClosed}"
           @on-header-drag-initiated="${handleHeaderDragStart}"
+          @on-header-drag-cancel="${handleHeaderDragCancel}"
+          @on-header-drag-keyboard-initiated="${handleHeaderKeyboardDragStart}"
           header-slug-content="${aiSlugContent}"
           .menuItems="${headerMenuItems}"
           ?docking-enabled="${enableDocking}"

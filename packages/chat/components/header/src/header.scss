@@ -37,6 +37,23 @@ $css--plex: true !default;
     justify-content: space-between;
     background: $background;
     block-size: 40px;
+    gap: 8px;
+  }
+  .#{$clabs-prefix}--chat-header-drag-area {
+    display: flex;
+    align-items: center;
+    border: 2px solid $background;
+    background: $background;
+    block-size: 30px;
+    cursor: move;
+    inline-size: 100%;
+    transition: border-color 200ms ease;
+  }
+  .#{$clabs-prefix}--chat-header-drag-area:hover {
+    border-color: $border-subtle-00;
+  }
+  .#{$clabs-prefix}--chat-header-drag-area:focus {
+    border-color: $text-secondary;
   }
 
   .#{$clabs-prefix}--chat-header-elements {
@@ -84,11 +101,7 @@ $css--plex: true !default;
     flex-grow: 1;
     align-items: center;
     block-size: 100%;
-    gap: 10px;
-  }
-
-  .#{$clabs-prefix}--chat-header-elements-left-docked {
-    cursor: move;
+    gap: 0;
   }
 
   .#{$clabs-prefix}--chat-header-elements-right {

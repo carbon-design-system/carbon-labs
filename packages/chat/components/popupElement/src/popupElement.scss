@@ -80,10 +80,11 @@
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
-    gap: 8px;
+    gap: 16px;
   }
 
   .#{$clabs-prefix}--chat-popup-title {
+    color: $text-secondary;
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0.16px;
@@ -92,9 +93,9 @@
   }
 
   .#{$clabs-prefix}--chat-popup-prompt {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
-    line-height: 28px;
+    line-height: 26px;
     text-align: start;
   }
 
@@ -103,7 +104,6 @@
   }
 
   .#{$clabs-prefix}--chat-popup-feedback-text {
-    block-size: 94px;
     gap: 0;
     inline-size: 272px;
     inset-block-start: 205.54px;

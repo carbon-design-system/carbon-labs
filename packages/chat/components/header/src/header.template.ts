@@ -55,7 +55,9 @@ export function headerTemplate(customElementClass) {
     _handleHeaderMouseUp: handleHeaderMouseUp,
     _handleHeaderMouseMove: handleHeaderMouseMove,
     menuOpened,
+    menuContainerTarget,
     headerSlugContent,
+    _handleDragAreaKeydown: handleDragAreaKeydown,
   } = customElementClass;
   return html` <div class="${clabsPrefix}--chat-header-container" role="banner">
     <div
@@ -98,7 +100,8 @@ export function headerTemplate(customElementClass) {
           class="${clabsPrefix}--chat-header-elements-left ${dockingEnabled
             ? clabsPrefix + '--chat-header-elements-left-docked'
             : ''}"
-          @mousedown="${handleHeaderMouseDown}">
+          id="${clabsPrefix}--chat-header-container-target"
+          data-floating-menu-container>
           ${!disableMenu && !disableHeaderButtons
             ? html`
                 ${menuItems
@@ -106,40 +109,37 @@ export function headerTemplate(customElementClass) {
                       ${useOverflowMenu
                         ? html`
                             <cds-overflow-menu
-                              id="${clabsPrefix}--chat-header-overflow-menu-unique"
                               tooltip-alignment="right"
                               tooltip-position="bottom"
-                              size="sm"
-                              @click="${handleMenuToggle}"
-                              tooltip-text="${menuOpened
-                                ? 'Close Menu'
-                                : 'Open Menu'}">
+                              @click="${handleMenuToggle}">
                               ${Menu24({ slot: 'icon' })}
+
                               <span slot="tooltip-content">
-                                ${menuOpened ? 'Close Menu' : 'Open Menu'}</span
-                              >
+                                ${menuOpened ? 'Close Menu' : 'Open Menu'}
+                              </span>
+
                               <cds-overflow-menu-body
+                                size="sm"
+                                role="menu"
+                                container=${menuContainerTarget}
                                 id="${clabsPrefix}--chat-header-overflow-body-unique">
                                 ${menuItems.map(
-                                  (menuItem, index) => html`
-                      <cds-overflow-menu-item
-                        size="${dockingEnabled ? 'sm' : 'md'}
-                        aria-label="Menu Option ${index}"
-                        data-menuindex="${index}"
-                        tab-index="0"
-                        id="${clabsPrefix}--chat-header-overflow-menu-item-${index}"
-                        @keydown="${handleMenuKeyboardToggle}"
-                        class="${clabsPrefix}--chat-header-elements-menu-list-item-button"
-                        @mousedown="${handleMenuItemSelected}"
-                        tooltip-position="right"
-                        tooltip-alignment="end"
-                        tooltip-text="${menuItem.tooltip || menuItem.title}">
-                        
-                        ${menuItem.title}
-                        <span slot="tooltip-content">${
-                          menuItem.tooltip || menuItem.title
-                        }</span>
-                      </cds-overflow-menu-item>`
+                                  (
+                                    menuItem,
+                                    index
+                                  ) => html` <cds-overflow-menu-item
+                                    size=${dockingEnabled ? 'sm' : 'md'}
+                                    aria-label="Menu Option ${index}"
+                                    data-menuindex="${index}"
+                                    tab-index="0"
+                                    role="menuitem"
+                                    @mousedown="${handleMenuItemSelected}"
+                                    tooltip-position="right"
+                                    tooltip-alignment="end"
+                                    tooltip-text="${menuItem.tooltip ||
+                                    menuItem.title}">
+                                    ${menuItem.title}
+                                  </cds-overflow-menu-item>`
                                 )}
                               </cds-overflow-menu-body>
                             </cds-overflow-menu>
@@ -172,6 +172,19 @@ export function headerTemplate(customElementClass) {
             ? html` <span class="${clabsPrefix}--chat-header-title">
                 ${title}
               </span>`
+            : ''}
+          ${dockingEnabled
+            ? html`
+                <div
+                  role="button"
+                  @mousedown="${handleHeaderMouseDown}"
+                  @keydown="${handleDragAreaKeydown}"
+                  aria-label="Move chat"
+                  tabindex="0"
+                  class="${clabsPrefix}--chat-header-drag-area">
+                  &nbsp;
+                </div>
+              `
             : ''}
         </div>
 

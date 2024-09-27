@@ -37,9 +37,11 @@ export function popupElementTemplate(customElementClass) {
     disclaimer,
     parentMessageId,
   } = customElementClass;
-  return html`<div class="${clabsPrefix}--chat-popup-container" tabindex="0">
+  return html`<div class="${clabsPrefix}--chat-popup-container">
     <div class="${clabsPrefix}--chat-popup-main-content">
-      <div class="${clabsPrefix}--chat-popup-title">
+      <div
+        class="${clabsPrefix}--chat-popup-title"
+        id="popup-title-${parentMessageId}">
         ${popupTitle ? popupTitle : 'Feedback'}
       </div>
       <div class="${clabsPrefix}--chat-popup-prompt">
@@ -62,7 +64,9 @@ export function popupElementTemplate(customElementClass) {
           rows="3"
           cols="50"
           @keydown="${handleTextInput}"
-          class="${clabsPrefix}--chat-popup-feedback-text-area"></cds-textarea>
+          class="${clabsPrefix}--chat-popup-feedback-text-area">
+          <span slot="label-text">Feedback comment</span>
+        </cds-textarea>
       </div>
       <div class="${clabsPrefix}--chat-popup-disclaimer">
         ${disclaimer

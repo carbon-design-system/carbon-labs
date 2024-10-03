@@ -176,6 +176,19 @@ export function headerTemplate(customElementClass) {
                 ${title}
               </span>`
             : ''}
+          ${dockingEnabled
+            ? html`
+                <div
+                  role="button"
+                  @mousedown="${handleHeaderMouseDown}"
+                  @keydown="${handleDragAreaKeydown}"
+                  aria-label="Move chat"
+                  tabindex="0"
+                  class="${clabsPrefix}--chat-header-drag-area">
+                  &nbsp;
+                </div>
+              `
+            : ''}
         </div>
         ${dockingEnabled
           ? html`

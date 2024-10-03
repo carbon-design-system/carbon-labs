@@ -778,6 +778,7 @@ export default class CLABSChat extends LitElement {
       this.enableDocking = true;
     }
     this.enableFullscreen = mode;
+    document.body.style.overflow = mode ? 'hidden' : '';
     //this.parentElement.dispatchEvent(new Event('resize'));
   }
 
@@ -789,6 +790,7 @@ export default class CLABSChat extends LitElement {
     const mode = event.detail?.docking;
     this.enableFullscreen = false;
     this.enableDocking = mode;
+    document.body.style.overflow = '';
     //this.parentElement.dispatchEvent(new Event('resize'));
   }
 
@@ -797,6 +799,7 @@ export default class CLABSChat extends LitElement {
    */
   _handleChatClosed() {
     this.closed = true;
+    document.body.style.overflow = '';
     this.requestUpdate();
   }
 

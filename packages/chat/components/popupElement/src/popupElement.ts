@@ -275,14 +275,14 @@ export default class popupElement extends LitElement {
     if (this.type === 'thumbs-down') {
       this.style.setProperty('--chat-popup-caret-offset', '34px');
     }
-    if (this.isOpen) {
+    /*if (this.isOpen) {
       const container = this.shadowRoot?.querySelector(
         '.clabs--chat-popup-container'
       );
       if (container instanceof HTMLElement) {
         container.focus();
       }
-    }
+    }*/
   }
 
   /**

@@ -183,12 +183,12 @@ export default class footer extends LitElement {
   /** checkSize - see if width/height warrant changing the footer mode
    */
   _checkSize() {
-    const parentWidth = this.parentElement?.clientWidth;
-    const parentHeight = this.parentElement?.clientHeight;
+    const parentWidth = this.clientWidth;
+    const parentHeight = this.clientHeight;
+
     if (parentWidth && parentHeight) {
-      this._expandedWidth = this.parentElement?.clientWidth > 672;
-      this._expandedHeight =
-        this._expandedWidth && this.parentElement?.clientHeight > 672;
+      this._expandedWidth = parentWidth > 672;
+      this._expandedHeight = this._expandedWidth;
     }
   }
 

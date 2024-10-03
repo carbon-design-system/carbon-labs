@@ -122,6 +122,18 @@ export default class header extends LitElement {
   menuContainerTarget;
 
   /**
+   * count steps to accelerate movement
+   */
+  @state()
+  dragAcceleration = 0;
+
+  /**
+   * track current direction
+   */
+  @state()
+  dragDirection;
+
+  /**
    * docking event when popup button is clicked
    * @param {event} event - click event when docking chat
    */
@@ -170,17 +182,25 @@ export default class header extends LitElement {
     this.dragTimeout = null;
   }
 
+  /** _handleDragAreaKeyup - move chat when arrow keys detected
+   */
+  _handleDragAreaKeyup() {
+    this.dragAcceleration = 0;
+  }
+
   /** _handleDragAreaKeydown - move chat when arrow keys detected
    * @param {event} event - key event
    */
   _handleDragAreaKeydown(event) {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
+      this.dragAcceleration = 0;
       this._handleHeaderMouseDown(event);
       this.initiateDragging(event);
     }
     if (event.key === 'Escape') {
       event.preventDefault();
+      this.dragAcceleration = 0;
       const dragEvent = new CustomEvent('on-header-drag-cancel', {
         detail: {
           action: 'user canceled drag event',
@@ -228,6 +248,7 @@ export default class header extends LitElement {
   initiateDragging(event) {
     const mouseX = event.clientX - this.getBoundingClientRect().left;
     const mouseY = event.clientY - this.getBoundingClientRect().top;
+    this.dragAcceleration = 0;
     this.mouseHeldDown = false;
     const dragEvent = new CustomEvent('on-header-drag-initiated', {
       detail: {
@@ -245,13 +266,14 @@ export default class header extends LitElement {
    * @param {string} keyCode - key event value when docking chat
    */
   _keyboardDragging(keyCode) {
-    //const mouseX = event.clientX - this.getBoundingClientRect().left;
-    //const mouseY = event.clientY - this.getBoundingClientRect().top;
-    //this.mouseHeldDown = false;
-
+    if (this.dragDirection !== keyCode) {
+      this.dragAcceleration = 0;
+      this.dragDirection = keyCode;
+    }
+    this.dragAcceleration += 1;
     let mouseX = 0;
     let mouseY = 0;
-    const dragStep = 8;
+    const dragStep = 6 + 4 * this.dragAcceleration;
 
     switch (keyCode) {
       case 'ArrowUp':

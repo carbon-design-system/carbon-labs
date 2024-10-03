@@ -42,18 +42,18 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-header-drag-area {
     display: flex;
     align-items: center;
-    border: 2px solid $background;
-    background: $background;
+    justify-content: center;
+    background: transparent;
     block-size: 30px;
     cursor: move;
     inline-size: 100%;
-    transition: border-color 200ms ease;
+    transition: background 200ms ease;
   }
   .#{$clabs-prefix}--chat-header-drag-area:hover {
-    border-color: $border-subtle-00;
+    background: $background-hover;
   }
   .#{$clabs-prefix}--chat-header-drag-area:focus {
-    border-color: $text-secondary;
+    background: $background-active;
   }
 
   .#{$clabs-prefix}--chat-header-elements {

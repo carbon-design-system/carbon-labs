@@ -236,6 +236,9 @@ export default class CLABSChat extends LitElement {
   @property({ type: Boolean, attribute: 'use-watson-assistant-protocol' })
   useWatsonAssistantProtocol;
 
+  @property({ type: Boolean, attribute: 'disable-outside-control' })
+  disableOutsideControl;
+
   /**
    * fullscreen boolean dictated by header child
    */
@@ -339,6 +342,42 @@ export default class CLABSChat extends LitElement {
       composed: true,
     });
     this.dispatchEvent(chatSlotUpdateEvent);
+  }
+
+  /**
+   * handle when tab escapes chat
+   * @param {event} event - shift tab event from header
+   */
+  _handleHeaderEscape() {
+    const firstTabbableElement = this.shadowRoot?.querySelector(
+      clabsPrefix + '-chat-footer'
+    );
+    if (firstTabbableElement instanceof HTMLElement) {
+      const elem = firstTabbableElement.shadowRoot?.querySelector(
+        '.' + clabsPrefix + '--chat-search-query'
+      );
+      if (elem instanceof HTMLElement) {
+        elem.focus();
+      }
+    }
+  }
+
+  /**
+   * handle when tab escapes chat
+   * @param {event} event - tab event from footer
+   */
+  _handleFooterEscape() {
+    const firstTabbableElement = this.shadowRoot?.querySelector(
+      clabsPrefix + '-chat-header'
+    );
+    if (firstTabbableElement instanceof HTMLElement) {
+      const elem = firstTabbableElement.shadowRoot?.querySelector(
+        '.' + clabsPrefix + '--chat-header-overflow-menu-container'
+      );
+      if (elem instanceof HTMLElement) {
+        elem.focus();
+      }
+    }
   }
 
   /**
@@ -447,6 +486,9 @@ export default class CLABSChat extends LitElement {
    */
   _dragChat(event, originalOffset) {
     if (this._isDragging) {
+      if (!this.disableOutsideControl) {
+        document.body.style.userSelect = 'none';
+      }
       const chatReference = this.shadowRoot?.querySelector(
         '.' + clabsPrefix + '--chat-container'
       );
@@ -491,6 +533,9 @@ export default class CLABSChat extends LitElement {
    */
   _dragEnd(event) {
     this._isDragging = false;
+    if (!this.disableOutsideControl) {
+      document.body.style.userSelect = 'auto';
+    }
     try {
       //this.parentElement?.removeEventListener('mousemove', this._dragChat);
       //this.parentElement?.removeEventListener('mouseup', this._dragEnd);
@@ -778,7 +823,9 @@ export default class CLABSChat extends LitElement {
       this.enableDocking = true;
     }
     this.enableFullscreen = mode;
-    document.body.style.overflow = mode ? 'hidden' : '';
+    if (!this.disableOutsideControl) {
+      document.body.style.overflow = mode ? 'hidden' : '';
+    }
     //this.parentElement.dispatchEvent(new Event('resize'));
   }
 
@@ -799,7 +846,9 @@ export default class CLABSChat extends LitElement {
    */
   _handleChatClosed() {
     this.closed = true;
-    document.body.style.overflow = '';
+    if (!this.disableOutsideControl) {
+      document.body.style.overflow = '';
+    }
     this.requestUpdate();
   }
 

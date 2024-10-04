@@ -9,6 +9,9 @@
 
 import { LitElement } from 'lit';
 import { state, property } from 'lit/decorators.js';
+
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
 // @ts-ignore
 import styles from './footer.scss?inline';
 /**
@@ -180,6 +183,44 @@ export default class footer extends LitElement {
     }
   }
 
+  /** handle user tab inputs, check if escapes chat
+   * @param {event} event - lit event sent by the keyboard input
+   **/
+  _checkKeyboardEscapeB(event) {
+    const blockedSendTest = this._messageText === '' || this._forceDisableInput;
+    if (event.key === 'Tab' && blockedSendTest && !event.shiftKey) {
+      event.preventDefault();
+
+      const lastKeyEvent = new CustomEvent('on-footer-escape', {
+        detail: {
+          action: 'FOOTER: user tabbed beyond chat',
+          originalEvent: event,
+        },
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(lastKeyEvent);
+    }
+  }
+
+  /** handle user tab inputs, check if escapes chat
+   * @param {event} event - lit event sent by the keyboard input
+   **/
+  _checkKeyboardEscape(event) {
+    if (event.key === 'Tab' && !event.shiftKey) {
+      event.preventDefault();
+      const lastKeyEvent = new CustomEvent('on-footer-escape', {
+        detail: {
+          action: 'FOOTER: user tabbed beyond chat',
+          originalEvent: event,
+        },
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(lastKeyEvent);
+    }
+  }
+
   /** checkSize - see if width/height warrant changing the footer mode
    */
   _checkSize() {
@@ -289,7 +330,7 @@ export default class footer extends LitElement {
    */
   updateTextAreaHeight() {
     const textArea = this.shadowRoot?.querySelector(
-      '.clabs--chat-search-query'
+      '.' + clabsPrefix + '--chat-search-query'
     );
     if (textArea instanceof HTMLElement) {
       textArea.style.height = 'auto';
@@ -302,7 +343,7 @@ export default class footer extends LitElement {
    */
   resetTextAreaHeight() {
     const textArea = this.shadowRoot?.querySelector(
-      '.clabs--chat-search-query'
+      '.' + clabsPrefix + '--chat-search-query'
     );
     if (textArea instanceof HTMLElement) {
       textArea.style.height = 'auto';

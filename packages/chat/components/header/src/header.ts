@@ -11,6 +11,7 @@ import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
+
 // @ts-ignore
 import styles from './header.scss?inline';
 /**
@@ -134,6 +135,12 @@ export default class header extends LitElement {
   dragDirection;
 
   /**
+   * current Menu Item
+   */
+  @state()
+  currentMenuItem = 0;
+
+  /**
    * docking event when popup button is clicked
    * @param {event} event - click event when docking chat
    */
@@ -188,6 +195,61 @@ export default class header extends LitElement {
     this.dragAcceleration = 0;
   }
 
+  /** handle user tab inputs, check if escapes chat
+   * @param {event} event - lit event sent by the keyboard input
+   **/
+  _checkKeyboardEscape(event) {
+    if (event.key === 'Tab' && event.shiftKey) {
+      event.preventDefault();
+      const lastKeyEvent = new CustomEvent('on-header-escape', {
+        detail: {
+          action: 'HEADER: user tabbed beyond chat',
+          originalEvent: event,
+        },
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(lastKeyEvent);
+    }
+    if (event.key === 'Enter' || event.key === ' ') {
+      this.currentMenuItem = 0;
+    }
+  }
+
+  /** handle user tab inputs, check if escapes chat
+   * @param {event} event - lit event sent by the keyboard input
+   **/
+  _checkKeyboardMenu(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      this._handleMenuItemSelected(event);
+    }
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      if (event.key === 'ArrowUp') {
+        this.currentMenuItem--;
+      }
+      if (event.key === 'ArrowDown') {
+        this.currentMenuItem++;
+      }
+
+      if (this.currentMenuItem >= this.menuItems.length) {
+        this.currentMenuItem = 0;
+      }
+      if (this.currentMenuItem < 0) {
+        this.currentMenuItem = this.menuItems.length - 1;
+      }
+
+      const targetItem =
+        '.' +
+        clabsPrefix +
+        '--chat-header-overflow-menu-item-' +
+        this.currentMenuItem;
+      const menuItem = this.shadowRoot?.querySelector(targetItem);
+      if (menuItem instanceof HTMLElement) {
+        menuItem.focus();
+      }
+    }
+  }
+
   /** _handleDragAreaKeydown - move chat when arrow keys detected
    * @param {event} event - key event
    */
@@ -198,8 +260,10 @@ export default class header extends LitElement {
       this._handleHeaderMouseDown(event);
       this.initiateDragging(event);
     }
-    if (event.key === 'Escape') {
-      event.preventDefault();
+    if (event.key === 'Escape' || event.key === 'Tab') {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+      }
       this.dragAcceleration = 0;
       const dragEvent = new CustomEvent('on-header-drag-cancel', {
         detail: {

@@ -1459,22 +1459,59 @@ const conversationExamples = {
 };
 
 const slugText = `
-<p class="secondary">AI Explained</p>
-    <h1>84%</h1>
-    <p class="secondary bold">Confidence score</p>
-    <p class="secondary">
-      Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut fsil labore et dolore magna aliqua.
-    </p>
-    <hr>
-    <p class="secondary">Model type</p>
-    <p class="bold">Foundation model</p>`;
+<p style="margin-top: 0.75rem;">AI Explained</p>
+<p style="margin-top: 0.5rem; margin-bottom:0.75rem; font-size:1.5rem; font-weight:600;">IBM Cloud example text</p>
+<p style="margin-top: 0.75rem;">
+The AI assistant is designed as a retrieval-augmented generation (RAG) that is running against IBM© large language models
+</p>
+<hr>
+<p style="margin-bottom:0px;">How it works</p>
+<ul style="list-style: none;list-style-type: decimal; padding-left:1rem;margin-top:0px">
+  <li style="list-style-type: decimal;"><strong>Globalize</strong>. You can ask your questions and get an answer in any of the 10 languages supported by IBM Cloud</li>
+  <li style="list-style-type: decimal;"><strong>Query</strong>. The IBM Cloud docs are searched to find topics with facts about your question</li>
+  <li style="list-style-type: decimal;"><strong>Generate</strong>. Answers are generated ground in the IBM Cloud Docs</li>
+  <li style="list-style-type: decimal;"><strong>Verify</strong>. With each question you ask, source citations from the IBM Cloud docs are provided to verify responses</li>
+</ul>
+<hr>
+ <p style="margin-bottom:0px;">AI model</p>
+<a style="text-decoration:none;color:#4589ff;" target="_blank" href="https://www.google.com">granite.13.chat.v2</a>`;
+
+const slugContent = {
+  title: 'AI explainability',
+  prompt: 'IBM Cloud AI assistant',
+  responsePlaceholder: 'Describe issues with this response',
+  showTextArea: false,
+  description:
+    'The AI assistant is designed as a retrieval-augmented generation (RAG) that is running against IBM© large language models',
+  showList: true,
+  listTitle: 'How it works',
+  listItems: [
+    {
+      tilte: 'Globalize',
+      text: 'You can ask your questions and get an answer in any of the 10 languages supported by IBM Cloud',
+    },
+    {
+      title: 'Query',
+      text: 'The IBM Cloud docs are searched to find topics with facts about your question',
+    },
+    {
+      title: 'Generate',
+      text: 'Answers are generated ground in the IBM Cloud Docs',
+    },
+    {
+      title: 'Verify',
+      text: 'With each question you ask, sorce citations from the IBM Cloud docs are provided to verify responses',
+    },
+  ],
+  model: { name: 'granite.13.chat.v2', url: 'https://www.google.com' },
+};
 
 const headerMenuItems = [
   { title: 'Clear history', action: 'clear-chat-history' },
   { title: 'Save history', action: 'save-chat-history' },
   { title: 'Report issue', action: 'report-issue' },
 ];
+
 const feedbackFormOptions = {
   'thumbs-down': {
     title: 'Unsatisfactory Response',
@@ -1531,6 +1568,7 @@ export const Playground = {
           .feedbackDefinitions="${feedbackFormOptions}"
           .headerMenuItems="${headerMenuItems}"
           ai-slug-content="${slugText}"
+          .aiSlugObject="${slugContent}"
           input-field-placeholder="${'What can I assist you with today?'}"
           .conversation="${testMode === 'Examples'
             ? conversationExamples[sampleConversation]

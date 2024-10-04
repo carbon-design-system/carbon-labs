@@ -96,6 +96,39 @@ export default class popupElement extends LitElement {
   feedbackFormValues;
 
   /**
+   * top description
+   */
+  @property({ type: String, attribute: 'description' })
+  description;
+
+  /** title of list, requires show-list
+   */
+  @property({ type: String, attribute: 'list-title' })
+  listTitle;
+
+  /** whether to show list
+   */
+  @property({ type: Boolean, attribute: 'show-list' })
+  showList;
+
+  /** whether to show text area
+   */
+  @property({ type: Boolean, attribute: 'show-text-area' })
+  showTextArea = true;
+
+  /**
+   * array of list items with title and text content
+   */
+  @property({ type: Object, attribute: 'listItems' })
+  listItems;
+
+  /**
+   * model object with title and url
+   */
+  @property({ type: Object, attribute: 'model' })
+  model;
+
+  /**
    * internal saved text values for feedback
    */
   @state()

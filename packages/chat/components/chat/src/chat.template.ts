@@ -58,15 +58,25 @@ export function chatTemplate(customElementClass) {
     enableFeedbackForm,
     enableTextFeedbackForm,
     aiSlugContent,
+    _handleHeaderEscape,
+    _handleFooterEscape,
   } = customElementClass;
 
   return html`<div
+    aria-modal="true"
+    role="dialog"
+    aria-labelledby="${clabsPrefix}--chat-aria-title"
+    aria-describedby="${clabsPrefix}--chat-aria-desc"
     class="${clabsPrefix}--chat-container ${closed
       ? clabsPrefix + '--chat-closed'
       : ''} ${enableDocking ? clabsPrefix + '--chat-docked' : ''} ${isDragging
       ? clabsPrefix + '--chat-docked-dragging'
       : ''}  ${enableFullscreen ? clabsPrefix + '--chat-fullscreen' : ''}">
     <div class="${clabsPrefix}--chat-content-container">
+      <div class="${clabsPrefix}--chat-aria-container">
+        <p id="${clabsPrefix}--chat-aria-title">AI Chat</p>
+        <p id="${clabsPrefix}--chat-aria-desc">AI Chat interface window</p>
+      </div>
       <slot name="header">
         <clabs-chat-header
           @on-chat-fullscreen-change="${handleFullscreenMode}"
@@ -75,6 +85,7 @@ export function chatTemplate(customElementClass) {
           @on-header-drag-initiated="${handleHeaderDragStart}"
           @on-header-drag-cancel="${handleHeaderDragCancel}"
           @on-header-drag-keyboard-initiated="${handleHeaderKeyboardDragStart}"
+          @on-header-escape="${_handleHeaderEscape}"
           header-slug-content="${aiSlugContent}"
           .menuItems="${headerMenuItems}"
           ?docking-enabled="${enableDocking}"
@@ -110,6 +121,7 @@ export function chatTemplate(customElementClass) {
           ?disable-input="${loading}"
           @on-user-text-input="${sendInput}"
           @on-user-stream-interrupt="${endStreaming}"
+          @on-footer-escape="${_handleFooterEscape}"
           context-message="${promptNotificationMessage}"
           context-message-type="${promptNotificationType}"
           ?currently-streaming="${streamResponses && !interruptStreaming}"

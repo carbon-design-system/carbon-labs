@@ -26,6 +26,12 @@
     transition: border-color 600ms ease;
   }
 
+  .#{$clabs-prefix}--chat-aria-container {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+
   .#{$clabs-prefix}--chat-content-container {
     position: relative;
     display: flex;

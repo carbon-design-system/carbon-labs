@@ -52,7 +52,9 @@ export function footerTemplate(customElementClass) {
     _endStreaming: endStreaming,
     _isPromptFocused: isPromptFocused,
     hideContextMessage,
+    _checkKeyboardEscape: checkKeyboardEscape,
     _handleContextMessageClose: handleContextMessageClose,
+    _checkKeyboardEscapeB: checkKeyboardEscapeB,
   } = customElementClass;
 
   return html` 
@@ -124,7 +126,7 @@ export function footerTemplate(customElementClass) {
           `
         : ''
     }
-      <div class="${clabsPrefix}--chat-footer-prompt-items${
+      <div  class="${clabsPrefix}--chat-footer-prompt-items${
     expandedWidth ? '-expanded' : ''
   } ${isPromptFocused ? clabsPrefix + '--chat-footer-prompt-focused' : ''} ${
     isPromptFocused && contextMessageType
@@ -158,6 +160,7 @@ export function footerTemplate(customElementClass) {
                   disabled
                   kind="ghost"
                   aria-label="No Microphone Available"
+                  @keydown="${checkKeyboardEscapeB}"
                   size="sm"
                   align="top-right">
                   ${MicrophoneOff16({ slot: 'icon' })}
@@ -169,6 +172,7 @@ export function footerTemplate(customElementClass) {
                     kind="ghost"
                     align="top-right"
                     aria-label="Start Listening"
+                    @keydown="${checkKeyboardEscapeB}"
                     size="sm"
                     @click="${startRecording}">
                     ${Microphone16({ slot: 'icon' })}
@@ -179,6 +183,7 @@ export function footerTemplate(customElementClass) {
                     class="${clabsPrefix}--chat-footer-button-danger"
                     align="top-right"
                     aria-label="Stop Listening"
+                    @keydown="${checkKeyboardEscapeB}"
                     size="sm"
                     @click="${endRecording}">
                     ${MicrophoneFilled16({ slot: 'icon' })}
@@ -194,7 +199,9 @@ export function footerTemplate(customElementClass) {
                   kind="ghost"
                   size="sm"
                   aria-label="Send"
+                  class="${clabsPrefix}--chat-footer-send-button"
                   align="top-right"
+                  @keydown="${checkKeyboardEscape}"
                   ?disabled="${messageText === '' || forceDisableInput}"
                   @click="${sendInputToParent}">
                   ${messageText === '' || forceDisableInput || !isPromptFocused
@@ -215,6 +222,7 @@ export function footerTemplate(customElementClass) {
                   size="sm"
                   aria-label="Stop Streaming"
                   align="top-right"
+                  @keydown="${checkKeyboardEscape}"
                   @click="${endStreaming}">
                   ${Stop16({
                     slot: 'icon',

@@ -124,6 +124,7 @@ export function chatTemplate(customElementClass) {
           @on-footer-escape="${_handleFooterEscape}"
           context-message="${promptNotificationMessage}"
           context-message-type="${promptNotificationType}"
+          ?fullscreen-mode="${enableFullscreen}"
           ?currently-streaming="${streamResponses && !interruptStreaming}"
           input-placeholder="${inputFieldPlaceholder}"
           character-limit="${maxCharacterCount}">

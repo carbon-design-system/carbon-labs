@@ -61,7 +61,7 @@ export function codeElementTemplate(customElementClass) {
                 aria-label="Edit Code"
                 role="button">
                 ${Edit16({ slot: 'icon' })}
-                <span slot="tooltip-content">Enable Editing</span>
+                <span slot="tooltip-content">Enable editing</span>
               </cds-icon-button>
             `
           : html``}
@@ -71,7 +71,7 @@ export function codeElementTemplate(customElementClass) {
                 @click="${copyCode}"
                 feedback="Copied!"
                 feedback-timeout="2000">
-                Copy to Clipboard
+                Copy to clipboard
               </cds-copy-button>
             `
           : html``}

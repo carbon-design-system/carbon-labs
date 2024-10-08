@@ -30,4 +30,5 @@ import './components/molecularElement/molecularElement.js';
 import './components/formulaElement/formulaElement.js';
 import './components/fileUploadElement/fileUploadElement.js';
 import './components/popupElement/popupElement.js';
+import './components/feedbackElement/feedbackElement.js';
 import './components/diagramElement/diagramElement.js';

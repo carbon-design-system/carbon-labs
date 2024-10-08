@@ -76,26 +76,28 @@ export function messageTemplate(customElementClass) {
     _hideFeedBackForm: hideFeedBackForm,
     positiveFeedbackSelected,
     negativeFeedbackSelected,
-    feedbackFormTarget,
     enableComplexFeedback,
     handlePositiveKeyboardInput,
     handleNegativeKeyboardInput,
     compactIcon,
-    _feedbackFormOrientation: feedbackFormOrientation,
     _feedbackFormValues: feedbackFormValues,
     popupTargetElement,
   } = customElementClass;
 
   return html`<div
     role="article"
-    aria-labelledby="message${index}-origin"
+    aria-label="Message #${index} from ${userSubmitted
+      ? displayName
+        ? displayName
+        : 'You'
+      : displayName == null
+      ? 'watsonx'
+      : displayName} at ${timeStamp}"
     class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
     <div class="${clabsPrefix}--chat-message-container">
       ${userSubmitted
         ? html` <div class="${clabsPrefix}--chat-message-content">
-            <div
-              id="message${index}-origin"
-              class="${clabsPrefix}--chat-message-timestamp-user">
+            <div class="${clabsPrefix}--chat-message-timestamp-user">
               ${displayName ? displayName : 'You'} ${timeStamp}
             </div>
             <div class="${clabsPrefix}--chat-message-response-user">
@@ -123,25 +125,25 @@ export function messageTemplate(customElementClass) {
                           size="sm"
                           kind="ghost"
                           align="left"
-                          aria-label="Undo Edit"
+                          label="Undo edit"
                           @click="${cancelEdit}">
                           ${Undo16({ slot: 'icon' })}
-                          <span slot="tooltip-content">Undo Edit</span>
+                          <span slot="tooltip-content">Undo edit</span>
                         </cds-icon-button>
                         <cds-icon-button
                           size="sm"
                           kind="ghost"
                           align="left"
-                          aria-label="Send Edit"
+                          label="Send edit"
                           @click="${validateEdit}">
                           ${CheckMark16({ slot: 'icon' })}
-                          <span slot="tooltip-content">Validate Edit</span>
+                          <span slot="tooltip-content">Validate edit</span>
                         </cds-icon-button>`
                     : html` <cds-icon-button
                         size="sm"
                         kind="ghost"
                         align="left"
-                        aria-label="Edit Code"
+                        label="Edit Code"
                         @click="${handleEdit}">
                         ${Edit16({ slot: 'icon' })}
                         <span slot="tooltip-content">Enable editing</span>
@@ -171,9 +173,7 @@ export function messageTemplate(customElementClass) {
                 ? clabsPrefix + '--chat-message-content-compact'
                 : ''}">
               ${!compactIcon
-                ? html` <div
-                    class="${clabsPrefix}--chat-message-timestamp-bot"
-                    id="message${index}-origin">
+                ? html` <div class="${clabsPrefix}--chat-message-timestamp-bot">
                     ${displayName == null ? 'watsonx' : displayName}
                     ${timeStamp}
                   </div>`
@@ -421,16 +421,16 @@ export function messageTemplate(customElementClass) {
                                 size="sm"
                                 kind="ghost"
                                 align="left"
-                                aria-label="Undo Edit"
+                                label="Undo Edit"
                                 @click="${cancelEdit}">
                                 ${Undo16({ slot: 'icon' })}
-                                <span slot="tooltip-content">Undo Edit</span>
+                                <span slot="tooltip-content">Undo edit</span>
                               </cds-icon-button>
                               <cds-icon-button
                                 size="sm"
                                 kind="ghost"
                                 align="left"
-                                aria-label="Send Edit"
+                                label="Send edit"
                                 @click="${validateEdit}">
                                 ${CheckMark16({ slot: 'icon' })}
                                 <span slot="tooltip-content"
@@ -441,10 +441,10 @@ export function messageTemplate(customElementClass) {
                               size="sm"
                               kind="ghost"
                               align="left"
-                              aria-label="Edit Message"
+                              label="Edit message"
                               @click="${handleEdit}">
                               ${Edit16({ slot: 'icon' })}
-                              <span slot="tooltip-content">Enable Editing</span>
+                              <span slot="tooltip-content">Enable editing</span>
                             </cds-icon-button>`
                         : html`
                             <cds-icon-button
@@ -458,13 +458,13 @@ export function messageTemplate(customElementClass) {
                                   '--chat-popup-unique-feedback-' +
                                   index
                                 : ''}"
-                              aria-label="Thumbs Up"
+                              label="Thumbs up"
                               @keydown="${handlePositiveKeyboardInput}"
                               @click="${handlePositiveFeedback}">
                               ${positiveFeedbackSelected
                                 ? ThumbsUpFilled16({ slot: 'icon' })
                                 : ThumbsUp16({ slot: 'icon' })}
-                              <span slot="tooltip-content">Thumbs Up</span>
+                              <span slot="tooltip-content">Thumbs up</span>
                             </cds-icon-button>
 
                             <cds-icon-button
@@ -478,19 +478,19 @@ export function messageTemplate(customElementClass) {
                                   '--chat-popup-unique-feedback-' +
                                   index
                                 : ''}"
-                              aria-label="Thumbs Down"
+                              label="Thumbs down"
                               @keydown="${handleNegativeKeyboardInput}"
                               @click="${handleNegativeFeedback}">
                               ${negativeFeedbackSelected
                                 ? ThumbsDownFilled16({ slot: 'icon' })
                                 : ThumbsDown16({ slot: 'icon' })}
-                              <span slot="tooltip-content">Thumbs Down</span>
+                              <span slot="tooltip-content">Thumbs down</span>
                             </cds-icon-button>
                             <cds-icon-button
                               size="sm"
                               kind="ghost"
                               align="right"
-                              aria-label="Regenerate"
+                              label="Regenerate"
                               @click="${handleRegenerate}">
                               ${Renew16({ slot: 'icon' })}
                               <span slot="tooltip-content">Regenerate</span>
@@ -508,12 +508,10 @@ export function messageTemplate(customElementClass) {
             @on-feedback-popup-closed="${hideFeedBackForm}"
             ?is-open="${showFeedBackForm}"
             id="${clabsPrefix}--chat-popup-unique-feedback-${index}"
-            orientation="${feedbackFormOrientation}"
-            inline-position="${feedbackFormTarget ? feedbackFormTarget.x : 0}"
-            block-position="${feedbackFormTarget ? feedbackFormTarget.y : 0}"
             .feedbackFormValues="${feedbackFormValues}"
             .targetElement="${popupTargetElement}"
             parent-message-id="${index}"
+            ?compact-mode="${compactIcon}"
             type="${positiveFeedbackSelected
               ? 'thumbs-up'
               : negativeFeedbackSelected

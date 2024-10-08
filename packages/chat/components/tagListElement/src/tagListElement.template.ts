@@ -47,6 +47,7 @@ export function tagListElementTemplate(customElementClass) {
                   ? '-inline'
                   : ''}">
                 <cds-chat-button
+                  class="${clabsPrefix}--chat-tag-list-button"
                   kind="primary"
                   size="sm"
                   type="button"

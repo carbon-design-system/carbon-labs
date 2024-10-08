@@ -45,7 +45,7 @@ export default class popupElement extends LitElement {
    * top level title for section
    */
   @property({ type: String, attribute: 'popup-title' })
-  popupTitle;
+  popupTitle = 'placeholder title';
 
   /**
    * array definition of tags to select
@@ -57,13 +57,13 @@ export default class popupElement extends LitElement {
    * legal disclaimer text
    */
   @property({ type: String, attribute: 'disclaimer' })
-  disclaimer;
+  disclaimer = 'placeholder disclaimer';
 
   /**
    * question asked of user to give feedback
    */
   @property({ type: String, attribute: 'prompt-title' })
-  promptTitle;
+  promptTitle = 'placeholder prompt';
 
   /**
    * placeholder in text area
@@ -90,6 +90,18 @@ export default class popupElement extends LitElement {
   targetElement;
 
   /**
+   * radio button array
+   */
+  @property({ type: Object, attribute: 'radioButtons' })
+  radioButtons;
+
+  /**
+   * radio title
+   */
+  @property({ type: String, attribute: 'radio-title' })
+  radioTitle;
+
+  /**
    * predefined JSON values of all above by dev/user
    */
   @property({ type: Object, attribute: 'feedbackFormValues' })
@@ -113,8 +125,8 @@ export default class popupElement extends LitElement {
 
   /** whether to show text area
    */
-  @property({ type: Boolean, attribute: 'show-text-area' })
-  showTextArea = true;
+  @property({ type: Boolean, attribute: 'disable-text-area' })
+  disableTextArea;
 
   /**
    * array of list items with title and text content
@@ -132,13 +144,13 @@ export default class popupElement extends LitElement {
    * internal saved text values for feedback
    */
   @state()
-  _textInput;
+  _textInput = '';
 
   /**
    * internal tag seelction list
    */
   @state()
-  _tagSelections;
+  _tagSelections = {};
 
   /**
    * response type i.e positive nbegative custom etc
@@ -151,6 +163,18 @@ export default class popupElement extends LitElement {
    */
   @property({ type: String, attribute: 'parent-message-id' })
   parentMessageId;
+
+  /**
+   * compact mode
+   */
+  @property({ type: Boolean, attribute: 'compact-mode' })
+  compactMode;
+
+  /**
+   * check if submission is valid
+   */
+  @state()
+  invalidEntry = true;
 
   /**
    * Event listener to check if parent visibility changed
@@ -177,10 +201,13 @@ export default class popupElement extends LitElement {
       this._setValues(this.feedbackFormValues);
     }
     if (this.type === 'thumbs-up') {
-      this.style.setProperty('--chat-popup-caret-offset', '-2px');
+      const offset = this.compactMode ? -8 : -2;
+
+      this.style.setProperty('--chat-popup-caret-offset', offset + 'px');
     }
     if (this.type === 'thumbs-down') {
-      this.style.setProperty('--chat-popup-caret-offset', '34px');
+      const offset = this.compactMode ? 46 : 34;
+      this.style.setProperty('--chat-popup-caret-offset', offset + 'px');
     }
 
     if (this.isSlotted) {
@@ -193,6 +220,7 @@ export default class popupElement extends LitElement {
     if (container instanceof HTMLElement) {
       container.focus();
     }
+    this._setPosition();
 
     //this.addEventListener('on-messages-scrolled', this._handleScrollChange)
 
@@ -270,13 +298,19 @@ export default class popupElement extends LitElement {
   _handleTextInput(event) {
     const { value } = event.target;
     this._textInput = value;
+    const selectionLength = Object.keys(this._tagSelections).length;
+    if (this._textInput || selectionLength > 0) {
+      this.invalidEntry = false;
+    } else {
+      this.invalidEntry = true;
+    }
   }
 
   /**
    * updated - check changed properties
    * @param {object} changedProperties - LIT object denoting changed attributes
    */
-  updated(changedProperties) {
+  async updated(changedProperties) {
     if (changedProperties.has('inlinePosition')) {
       this.style.setProperty(
         '--chat-popup-element-inline-position',
@@ -297,25 +331,19 @@ export default class popupElement extends LitElement {
     }
     if (changedProperties.has('feedbackFormValues')) {
       this._setValues(this.feedbackFormValues);
+      await this.updateComplete;
+      this._setPosition();
     }
 
-    if (changedProperties.has('orientation')) {
-      console.log(this.orientation);
-    }
     if (this.type === 'thumbs-up') {
-      this.style.setProperty('--chat-popup-caret-offset', '-2px');
+      const offset = this.compactMode ? 12 : -2;
+
+      this.style.setProperty('--chat-popup-caret-offset', offset + 'px');
     }
     if (this.type === 'thumbs-down') {
-      this.style.setProperty('--chat-popup-caret-offset', '34px');
+      const offset = this.compactMode ? 48 : 34;
+      this.style.setProperty('--chat-popup-caret-offset', offset + 'px');
     }
-    /*if (this.isOpen) {
-      const container = this.shadowRoot?.querySelector(
-        '.clabs--chat-popup-container'
-      );
-      if (container instanceof HTMLElement) {
-        container.focus();
-      }
-    }*/
   }
 
   /**
@@ -328,7 +356,42 @@ export default class popupElement extends LitElement {
     this.promptTitle = values.prompt;
     this.tagList = values.tags;
     this.disclaimer = values.disclaimer;
+    this.description = values.description;
+    this.listTitle = values.listTitle;
+    this.listItems = values.listItems;
+    this.disableTextArea = values.disableTextArea;
+    this.radioButtons = values.radioButtons;
+    this.radioTitle = values.radioTitle;
+    this.model = values.model;
     this.requestUpdate();
+  }
+  /**
+   * _setPosition - place div next to target
+   */
+  _setPosition() {
+    this.style.setProperty('--chat-popup-element-visibility', 'hidden');
+    setTimeout(() => {
+      this.style.setProperty('--chat-popup-element-visibility', 'visible');
+      const offsetTop = this.feedbackFormValues?.parentValues?.offsetTop;
+      const feedbackHeight = this.scrollHeight;
+
+      let horizontalPosition = 54;
+      let verticalPosition = 60;
+      let orientation = 'top';
+
+      if (offsetTop < feedbackHeight) {
+        verticalPosition = -feedbackHeight;
+        orientation = 'bottom';
+      }
+
+      if (this.compactMode) {
+        horizontalPosition = 0;
+      }
+
+      this.inlinePosition = horizontalPosition;
+      this.blockPosition = verticalPosition;
+      this.orientation = orientation;
+    }, 100);
   }
 
   /**
@@ -362,6 +425,13 @@ export default class popupElement extends LitElement {
   handleTagSelection(event) {
     const selections = event.detail.selectionList;
     this._tagSelections = selections;
+
+    const selectionLength = Object.keys(this._tagSelections).length;
+    if (this._textInput || selectionLength > 0) {
+      this.invalidEntry = false;
+    } else {
+      this.invalidEntry = true;
+    }
   }
 
   /**

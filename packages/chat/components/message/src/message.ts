@@ -257,6 +257,9 @@ export default class message extends LitElement {
   @state()
   popupTargetElement;
 
+  @state()
+  uniqueFeedbackId;
+
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
@@ -320,6 +323,9 @@ export default class message extends LitElement {
       if (!this._streamContent) {
         this._parseText();
       }
+    }
+    if (changedProperties.has('compactIcon')) {
+      this.showFeedBackForm = false;
     }
   }
 
@@ -409,27 +415,15 @@ export default class message extends LitElement {
     this.popupTargetElement = targetItem;
     //const boundingRect = targetItem.getBoundingClientRect();
     event.preventDefault();
-    const popupHeight = 464;
-    //const popupWidth = 320;
 
-    let horizontalPosition = 54;
-    let verticalPosition = 60;
-    let orientation = 'top';
-
-    if (this.offsetTop < popupHeight) {
-      verticalPosition = -popupHeight - 20;
-      orientation = 'bottom';
-    }
-
-    if (this.compactIcon) {
-      horizontalPosition = 0;
-    }
-    //this.feedbackFormTarget = {"x":horizontalPosition, "y":verticalPosition};
-    this.feedbackFormTarget = { x: horizontalPosition, y: verticalPosition };
-    this._feedbackFormOrientation = orientation;
     if (this.feedbackFormDefinitions) {
       this._feedbackFormValues = this.feedbackFormDefinitions[type];
-      this._feedbackFormValues.uniqueFeedbackId = uniqueId;
+      this._feedbackFormValues.uniqueFeedbackId = this.uniqueFeedbackId;
+      this._feedbackFormValues.parentValues = {
+        offsetTop: this.offsetTop,
+        scrollHeight: this.scrollTop,
+        uniqueId: uniqueId,
+      };
     }
     this.showFeedBackForm = true;
   }

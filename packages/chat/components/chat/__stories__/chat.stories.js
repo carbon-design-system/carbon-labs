@@ -25,6 +25,7 @@ export default {
     'Abraham Lincoln article on Wikipedia',
   ],
 */
+
 const coreExamples = [
   [
     'text',
@@ -842,6 +843,7 @@ const objectPlaygroundControls = {
       'Nature of art',
       'Flowers',
       'Visualization',
+      'Cloud',
     ],
   },
   conversationJSON: {
@@ -941,6 +943,78 @@ const conversationExamples = {
           type: 'text',
           content:
             'If both are specified, elements will always supercede rawText\n',
+        },
+      ],
+    },
+  ],
+  Cloud: [
+    {
+      origin: 'user',
+      hasError: false,
+      time: '14:06',
+      index: 0,
+      elements: [
+        {
+          content:
+            'Showcase every type of Element available in this Chat component.',
+          type: 'text',
+        },
+      ],
+    },
+    {
+      text: '',
+      origin: 'bot',
+      hasError: false,
+      time: '14:07',
+      index: 1,
+      elements: [
+        {
+          content: 'Here is your answer',
+          type: 'text',
+        },
+        {
+          content:
+            '```<clabs-chat \n\tuser-name="Owen" \n\tagent-name="Watson"\n\tconversation={conversationJSON}\n\tstream-responses={streamEnabled}\n\tloading={loading}\n\tdefault-viewing-mode="docked"\n\ton:on-user-message-update-request={handleUpdatedMessage}\n\ton:on-user-regeneration-request={handleRegeneration}\n\ton:on-user-text-input={handleNewMessage}\n\ton:on-message-element-selected={handleElementClicked}\n\ton:on-user-feedback-request={handleUserFeedback}\n\ton:on-message-element-tag-selected={handleTagClicked}>\n</clabs-chat>```',
+          type: 'code',
+        },
+        {
+          content: 'Here are the sources:',
+          type: 'text',
+        },
+        {
+          content:
+            '[IBM Cloud Home](https://www.ibm.com/cloud),[Cloud Solutions](https://www.ibm.com/cloud/solutions),[Cloud products](https://www.ibm.com/cloud/products),[Cloud Docs](https://cloud.ibm.com/docs)',
+          type: 'link-list',
+        },
+      ],
+    },
+    {
+      origin: 'user',
+      hasError: false,
+      time: '14:06',
+      index: 0,
+      elements: [
+        {
+          content: 'ok cool now more examples',
+          type: 'text',
+        },
+      ],
+    },
+    {
+      text: '',
+      origin: 'bot',
+      hasError: false,
+      time: '14:07',
+      index: 1,
+      elements: [
+        {
+          content: 'Here is your answer',
+          type: 'text',
+        },
+        {
+          content:
+            'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n',
+          type: 'code',
         },
       ],
     },

@@ -120,6 +120,7 @@ export function headerTemplate(customElementClass) {
                               role="button"
                               aria-haspopup="${true}"
                               aria-expanded="${false}"
+                              aria-controls="${clabsPrefix}--chat-header-overflow-menu-unique"
                               class="${clabsPrefix}--chat-header-overflow-menu-container">
                               <cds-overflow-menu
                                 id="${clabsPrefix}--chat-header-overflow-menu-unique"
@@ -134,7 +135,7 @@ export function headerTemplate(customElementClass) {
                                 })}
 
                                 <span slot="tooltip-content">
-                                  ${menuOpened ? 'Close Menu' : 'Open Menu'}
+                                  ${menuOpened ? 'Close menu' : 'Open menu'}
                                 </span>
 
                                 <cds-overflow-menu-body
@@ -179,7 +180,7 @@ export function headerTemplate(customElementClass) {
                             : Close16({ slot: 'icon' })
                         }
                         <span slot="tooltip-content">
-                          ${menuOpened ? 'Close Menu' : 'Open Menu'}
+                          ${menuOpened ? 'Close menu' : 'Open menu'}
                         </span>
                       </cds-icon-button>`}
                     `
@@ -210,7 +211,7 @@ export function headerTemplate(customElementClass) {
         <div class="${clabsPrefix}--chat-header-elements-right">
           <div class="${clabsPrefix}--chat-header-elements-icon">
             <cds-slug
-              size="xs"
+              size="sm"
               slot="slug"
               kind="hollow"
               autoalign
@@ -253,7 +254,7 @@ export function headerTemplate(customElementClass) {
                                 @click="${handleMinimize}">
                                 ${Minimize16({ slot: 'icon' })}
                                 <span slot="tooltip-content"
-                                  >Exit Fullscreen</span
+                                  >Exit fullscreen</span
                                 >
                               </cds-icon-button>
                             </div>
@@ -273,7 +274,7 @@ export function headerTemplate(customElementClass) {
                                 aria-label="Dock Chat"
                                 @click="${handlePopup}">
                                 ${Subtract16({ slot: 'icon' })}
-                                <span slot="tooltip-content">Pop-out Chat</span>
+                                <span slot="tooltip-content">Pop-out chat</span>
                               </cds-icon-button>
                             </div>
                           `
@@ -287,7 +288,7 @@ export function headerTemplate(customElementClass) {
                                 align="bottom-right"
                                 @click="${handleSubtract}">
                                 ${Popup16({ slot: 'icon' })}
-                                <span slot="tooltip-content">Expand Chat</span>
+                                <span slot="tooltip-content">Expand chat</span>
                               </cds-icon-button>
                             </div>
                           `}

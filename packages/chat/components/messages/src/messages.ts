@@ -128,6 +128,12 @@ export default class messages extends LitElement {
   _previousScrollHeight;
 
   /**
+   * check if initial render
+   */
+  @state()
+  _firstRender = true;
+
+  /**
    * detect when component is rendered to process rawtext
    */
   firstUpdated() {
@@ -149,16 +155,6 @@ export default class messages extends LitElement {
     } else {
       this._autoScroll = false;
     }
-
-    /*const messagesScrolledEvent = new CustomEvent(
-      'on-messages-scrolled',
-      {
-        detail: {originalEvent:event},
-        bubbles: true,
-        composed: true,
-      }
-    );
-    this.dispatchEvent(messagesScrolledEvent);*/
   }
 
   /** shouldUpdate - internal LIT function to predetect updates
@@ -184,6 +180,9 @@ export default class messages extends LitElement {
     super.updated(changedProperties);
 
     if (changedProperties.has('messages')) {
+      if (this._computedMessages.length !== this.messages.length) {
+        console.log('diff');
+      }
       this._computedMessages = [...this.messages];
     }
 
@@ -256,6 +255,7 @@ export default class messages extends LitElement {
             if (this._limitScroll) {
               scrollTarget = this._previousScrollHeight;
             }
+            console.log(scrollTarget);
             this.scrollDiv?.scrollTo({
               top: scrollTarget,
               behavior: 'smooth',

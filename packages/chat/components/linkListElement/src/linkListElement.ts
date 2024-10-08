@@ -36,6 +36,12 @@ export default class linkListElement extends LitElement {
   @state()
   maxItems = 3;
 
+  /**
+   * hide arrows buttons (temp)
+   */
+  @state()
+  hideArrows = true;
+
   /** enableReditection -  whether open black new page
    */
   @property({ type: Boolean, attribute: 'disable-redirection' })

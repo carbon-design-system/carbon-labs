@@ -126,13 +126,14 @@ export function footerTemplate(customElementClass) {
           `
         : ''
     }
-      <div  class="${clabsPrefix}--chat-footer-prompt-items${
-    expandedWidth ? '-expanded' : ''
+      <div class="${clabsPrefix}--chat-footer-prompt-items-target ${clabsPrefix}--chat-footer-prompt-items${
+    expandedWidth ? (contextMessageType ? '-expanded-error' : '-expanded') : ''
   } ${isPromptFocused ? clabsPrefix + '--chat-footer-prompt-focused' : ''} ${
     isPromptFocused && contextMessageType
       ? clabsPrefix + '--chat-footer-prompt-focused' + '-' + contextMessageType
       : ''
   }">
+
       <textarea
         class="${clabsPrefix}--chat-search-query ${
     disableInput ? clabsPrefix + '--chat-search-query-disabled' : ''
@@ -146,12 +147,14 @@ export function footerTemplate(customElementClass) {
               : 'Type something...'
             : 'Thinking...'
         }"
+        aria-label="Chat text prompt area"
         @focus="${textAreaIsFocused}"
         @blur="${textAreaIsFocused}"
         .value="${messageText}"
         @input="${handleInput}"
         @keydown="${handleInput}"/>
         </textarea>
+
       <div class="${clabsPrefix}--chat-footer-button">
         ${
           !voiceAPIAvailable
@@ -164,7 +167,7 @@ export function footerTemplate(customElementClass) {
                   size="sm"
                   align="top-right">
                   ${MicrophoneOff16({ slot: 'icon' })}
-                  <span slot="tooltip-content">Microphone Unavailable</span>
+                  <span slot="tooltip-content">Microphone unavailable</span>
                 </cds-icon-button>
               `
             : html` ${!isListening
@@ -176,7 +179,7 @@ export function footerTemplate(customElementClass) {
                     size="sm"
                     @click="${startRecording}">
                     ${Microphone16({ slot: 'icon' })}
-                    <span slot="tooltip-content">Start Listening</span>
+                    <span slot="tooltip-content">Start listening</span>
                   </cds-icon-button>`
                 : html` <cds-icon-button
                     kind="ghost"
@@ -187,7 +190,7 @@ export function footerTemplate(customElementClass) {
                     size="sm"
                     @click="${endRecording}">
                     ${MicrophoneFilled16({ slot: 'icon' })}
-                    <span slot="tooltip-content">Stop Listening</span>
+                    <span slot="tooltip-content">Stop listening</span>
                   </cds-icon-button>`}`
         }
       </div>
@@ -213,7 +216,7 @@ export function footerTemplate(customElementClass) {
                         slot: 'icon',
                         class: clabsPrefix + '--chat-footer-send-active',
                       })}
-                  <span slot="tooltip-content">Send Response</span>
+                  <span slot="tooltip-content">Send response</span>
                 </cds-icon-button>
               `
             : html`
@@ -228,7 +231,7 @@ export function footerTemplate(customElementClass) {
                     slot: 'icon',
                     class: clabsPrefix + '--chat-footer-button-danger',
                   })}
-                  <span slot="tooltip-content">Stop Generating</span>
+                  <span slot="tooltip-content">Stop generating</span>
                 </cds-icon-button>
               `
         }

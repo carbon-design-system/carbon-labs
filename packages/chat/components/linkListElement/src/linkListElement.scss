@@ -55,6 +55,49 @@ $css--plex: true !default;
     padding-block: 6px;
     padding-inline-end: 6px;
   }
+  .#{$clabs-prefix}--chat-link-list-item-sublink {
+    position: relative;
+    display: flex;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-sublink svg {
+    position: absolute;
+    inset-block-start: 2px;
+    inset-inline-end: 4px;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-control {
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    animation: fade-in 600ms forwards;
+    border-block-start: 1px solid $border-subtle-00;
+
+    gap: 8px;
+    opacity: 0;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-text-sublink {
+    display: flex;
+    align-items: center;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-button::part(button) {
+    padding-inline-start: 2px;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-text-sublink::part(link) {
+    display: flex;
+    justify-content: space-between;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-button {
+    padding: 0;
+  }
 
   .#{$clabs-prefix}--chat-link-list-item svg {
     cursor: pointer;
@@ -63,6 +106,5 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-link-list-item-text {
     overflow: hidden;
     flex: 1;
-    cursor: pointer;
   }
 }

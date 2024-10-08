@@ -13,9 +13,10 @@ const { stablePrefix: clabsPrefix } = settings;
 import Close16 from '@carbon/web-components/es/icons/close/16.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/textarea/index.js';
-
+import '@carbon/web-components/es/components/link/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import '../../tagListElement/tagListElement.js';
+import '@carbon/web-components/es/components/radio-button/index.js';
 
 /**
  * Lit template for popup
@@ -36,50 +37,156 @@ export function popupElementTemplate(customElementClass) {
     orientation,
     disclaimer,
     parentMessageId,
+    disableTextArea,
+    description,
+    listTitle,
+    model,
+    radioTitle,
+    radioButtons,
+    listItems,
+    invalidEntry,
   } = customElementClass;
   return html`<div class="${clabsPrefix}--chat-popup-container">
+    <div class="${clabsPrefix}--chat-popup-caret-${orientation}">
+      ${orientation === 'bottom'
+        ? html` <svg
+            width="22"
+            height="11"
+            aria-label="caret container"
+            transform="translate(0,0)"
+            id="caret-up-${parentMessageId}"
+            xmlns="http://www.w3.org/2000/svg">
+            <polygon
+              aria-label="caret triangle"
+              id="caret-up-poly-${parentMessageId}"
+              points="0 11,11 22,22 11,11 0"></polygon>
+          </svg>`
+        : html`
+            <svg
+              width="22"
+              height="22"
+              transform="translate(0,-10)"
+              id="caret-down-${parentMessageId}"
+              aria-label="caret container"
+              xmlns="http://www.w3.org/2000/svg">
+              <polygon
+                aria-label="caret triangle"
+                id="caret-down-poly-${parentMessageId}"
+                points="0 11,11 22,22 11,11 0"></polygon>
+            </svg>
+          `}
+    </div>
     <div class="${clabsPrefix}--chat-popup-main-content">
-      <div
-        class="${clabsPrefix}--chat-popup-title"
-        id="popup-title-${parentMessageId}">
-        ${popupTitle ? popupTitle : 'Feedback'}
-      </div>
-      <div class="${clabsPrefix}--chat-popup-prompt">
-        ${promptTitle ? promptTitle : 'Why did you choose this rating?'}
-      </div>
-      <div class="${clabsPrefix}--chat-popup-tag-list">
-        <clabs-chat-tag-list
-          is-inline
-          @on-tag-selected="${handleTagSelection}"
-          content="${tagList
-            ? tagList
-            : '["Accurate","Comprehensive","Consise","Easy to understand"]'}">
-        </clabs-chat-tag-list>
-      </div>
-      <div class="${clabsPrefix}--chat-popup-feedback-text">
-        <cds-textarea
-          placeholder="${textAreaPlaceholder
-            ? textAreaPlaceholder
-            : 'Add a comment'}"
-          rows="3"
-          cols="50"
-          @keydown="${handleTextInput}"
-          class="${clabsPrefix}--chat-popup-feedback-text-area">
-          <span slot="label-text">Feedback comment</span>
-        </cds-textarea>
-      </div>
-      <div class="${clabsPrefix}--chat-popup-disclaimer">
-        ${disclaimer
-          ? disclaimer
-          : "Your feedback on the use of AI-powered features by our dedicated team is to drive improvements. By continuing, you agree to IBM's Feedback Collecting Policy."}
-      </div>
+      ${popupTitle
+        ? html`
+            <div
+              class="${clabsPrefix}--chat-popup-title"
+              id="popup-title-${parentMessageId}">
+              ${popupTitle}
+            </div>
+          `
+        : ''}
+      ${promptTitle
+        ? html` <h2 class="${clabsPrefix}--chat-popup-prompt">
+            ${promptTitle}
+          </h2>`
+        : ''}
+      ${description
+        ? html`<div class="${clabsPrefix}--chat-popup-description">
+            ${description}
+          </div>`
+        : ''}
+      <div class="${clabsPrefix}--chat-popup-divider"></div>
+
+      ${!disableTextArea
+        ? html`
+            <div class="${clabsPrefix}--chat-popup-feedback-text">
+              <cds-textarea
+                placeholder="${textAreaPlaceholder
+                  ? textAreaPlaceholder
+                  : 'Add a comment'}"
+                rows="3"
+                cols="50"
+                @input="${handleTextInput}"
+                class="${clabsPrefix}--chat-popup-feedback-text-area">
+                <span slot="label-text">Feedback comment</span>
+              </cds-textarea>
+            </div>
+          `
+        : ''}
+      ${tagList
+        ? html`
+            <div class="${clabsPrefix}--chat-popup-tag-list">
+              <clabs-chat-tag-list
+                is-inline
+                @on-tag-selected="${handleTagSelection}"
+                content="${tagList
+                  ? tagList
+                  : '["Accurate","Comprehensive","Consise","Easy to understand"]'}">
+              </clabs-chat-tag-list>
+            </div>
+          `
+        : ''}
+      ${listItems
+        ? html`
+            ${listTitle ? listTitle : ''}
+            <ul class="${clabsPrefix}--chat-popup-list">
+              ${listItems?.map(
+                (item) => html`
+                  <li class="${clabsPrefix}--chat-popup-list-item">
+                    <strong>${item.title}</strong> ${item.text}
+                  </li>
+                `
+              )}
+            </ul>
+          `
+        : ''}
+
+      <div class="${clabsPrefix}--chat-popup-divider"></div>
+      ${disclaimer
+        ? html`
+            <div class="${clabsPrefix}--chat-popup-disclaimer">
+              ${disclaimer
+                ? disclaimer
+                : "Your feedback on the use of AI-powered features by our dedicated team is to drive improvements. By continuing, you agree to IBM's Feedback Collecting Policy."}
+            </div>
+          `
+        : ''}
+      ${radioTitle ? html`<div>${radioTitle}</div>` : ''}
+      ${radioButtons
+        ? html`
+            <cds-radio-button-group
+              label-position="right"
+              orientation="vertical"
+              name="radio-group">
+              ${radioButtons?.map(
+                (item) => html`
+                  <cds-radio-button
+                    label-text="${item.text}"
+                    value="${item.value}"></cds-radio-button>
+                `
+              )}
+            </cds-radio-button-group>
+          `
+        : ''}
+      ${model
+        ? html`
+            <div class="${clabsPrefix}--chat-popup-divider"></div>
+            <div class="${clabsPrefix}--chat-popup-model-title">AI model</div>
+            <cds-link target="_blank" href="${model.url}">
+              ${model.name}
+            </cds-link>
+          `
+        : ''}
+
       <div class="${clabsPrefix}--chat-popup-submit">
         <cds-button
-          size="lg"
+          size="md"
           link-role="submit-button"
           tooltip-alignment="left"
           tooltip-position="top"
           tooltip-text="Submit"
+          ?disabled="${invalidEntry}"
           @click="${handleSubmit}">
           Submit
         </cds-button>
@@ -96,33 +203,6 @@ export function popupElementTemplate(customElementClass) {
           <span slot="tooltip-content">Close</span>
         </cds-icon-button>
       </div>
-    </div>
-    <div class="${clabsPrefix}--chat-popup-caret-${orientation}">
-      ${orientation === 'bottom'
-        ? html` <svg
-            width="22"
-            height="14"
-            aria-label="caret container"
-            id="caret-up-${parentMessageId}"
-            xmlns="http://www.w3.org/2000/svg">
-            <polygon
-              aria-label="caret triangle"
-              id="caret-up-poly-${parentMessageId}"
-              points="1,13 21,13 11,1"></polygon>
-          </svg>`
-        : html`
-            <svg
-              width="22"
-              height="14"
-              id="caret-down-${parentMessageId}"
-              aria-label="caret container"
-              xmlns="http://www.w3.org/2000/svg">
-              <polygon
-                aria-label="caret triangle"
-                id="caret-down-poly-${parentMessageId}"
-                points="1,1 21,1 11,13"></polygon>
-            </svg>
-          `}
     </div>
   </div>`;
 }

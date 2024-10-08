@@ -487,7 +487,7 @@ export default class CLABSChat extends LitElement {
   _dragChat(event, originalOffset) {
     if (this._isDragging) {
       if (!this.disableOutsideControl) {
-        document.body.style.userSelect = 'none';
+        //document.body.style.userSelect = 'none';
       }
       const chatReference = this.shadowRoot?.querySelector(
         '.' + clabsPrefix + '--chat-container'
@@ -534,7 +534,7 @@ export default class CLABSChat extends LitElement {
   _dragEnd(event) {
     this._isDragging = false;
     if (!this.disableOutsideControl) {
-      document.body.style.userSelect = 'auto';
+      //document.body.style.userSelect = 'auto';
     }
     try {
       //this.parentElement?.removeEventListener('mousemove', this._dragChat);
@@ -729,7 +729,7 @@ export default class CLABSChat extends LitElement {
             this._messages = [
               ...this._messages,
               {
-                text: res.reply + value,
+                text: res.reply,
                 origin: this.agentName,
                 hasError: errorState,
                 time: this._getCurrentTime(),

@@ -20,6 +20,7 @@ $css--plex: true !default;
   inset-inline: 0;
   max-inline-size: 672px;
   min-block-size: 56px;
+  transition: block-size 600ms ease;
 
   .#{$clabs-prefix}--chat-footer-container {
     background: none;
@@ -32,28 +33,31 @@ $css--plex: true !default;
     min-block-size: 56px;
   }
 
-  .#{$clabs-prefix}--chat-footer-prompt-items-expanded {
+  .#{$clabs-prefix}--chat-footer-prompt-items-target {
     display: flex;
-    align-items: center;
+    box-sizing: border-box;
+    align-items: flex-end;
     border: 2px solid $background;
-    border-radius: 8px;
     background: $background;
     gap: 4px;
+    max-block-size: 182px;
     min-block-size: 56px;
+    padding-block: 12px;
     padding-inline: 16px 8px;
-    transition: border-color 150ms linear;
+    transition: border-color 150ms linear, block-size 300ms ease;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-items-expanded {
+    border-radius: 8px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-items-expanded-error {
+    border-radius: 0 0 8px 8px;
   }
 
   .#{$clabs-prefix}--chat-footer-prompt-items {
-    display: flex;
-    border: 2px solid $background;
     border-radius: 0 0 8px 8px;
-    background: $background;
     border-block-start: 1px solid $border-subtle;
-    gap: 4px;
-    min-block-size: 56px;
-    padding-inline: 16px 8px;
-    transition: border-color 150ms linear;
   }
 
   @keyframes fade-in {
@@ -161,28 +165,23 @@ $css--plex: true !default;
     display: flex;
     align-items: end;
     justify-content: center;
-    block-size: auto;
-    margin-block-end: 12px;
   }
 
   .#{$clabs-prefix}--chat-search-query {
+    overflow: hidden var(--chat-footer-overflow-control, hidden);
     box-sizing: border-box;
-    flex: 3;
-    padding: 6px 0 0;
+    flex-grow: 1;
     border: none;
     background: none;
-
-    block-size: auto;
     color: $text-primary;
     font: inherit;
     font-size: 14px;
     letter-spacing: 0.16px;
     line-height: 26px;
-    max-block-size: 182px;
-    min-block-size: 40px;
-    overflow-y: scroll;
-    padding-block: 12px 10px;
+    max-block-size: 158px;
+    min-block-size: 32px;
     resize: none;
+    transition: block-size 300ms ease;
   }
 
   .#{$clabs-prefix}--chat-footer-prompt-focused {

@@ -38,6 +38,12 @@ export default class footer extends LitElement {
   _disableInput;
 
   /**
+   * disable user input such as when chat is loading
+   */
+  @property({ type: Boolean, attribute: 'fullscreen-mode' })
+  _fullscreenMode;
+
+  /**
    * force disable input because of internal error state
    */
   @state()
@@ -161,6 +167,9 @@ export default class footer extends LitElement {
         this._checkLimit();
       }
     }
+    if (changedProperties.has('_fullscreenMode')) {
+      this._checkSize();
+    }
   }
 
   /** _checkLimit - show warning message if character limit is exceeded
@@ -230,6 +239,10 @@ export default class footer extends LitElement {
     if (parentWidth && parentHeight) {
       this._expandedWidth = parentWidth > 672;
       this._expandedHeight = this._expandedWidth;
+    }
+    if (this._fullscreenMode) {
+      this._expandedWidth = true;
+      this._expandedHeight = true;
     }
   }
 
@@ -329,12 +342,27 @@ export default class footer extends LitElement {
    * Set a new height based on the size of the text area
    */
   updateTextAreaHeight() {
+    const maxheight = 182;
     const textArea = this.shadowRoot?.querySelector(
       '.' + clabsPrefix + '--chat-search-query'
     );
-    if (textArea instanceof HTMLElement) {
+
+    const textAreaContainer = this.shadowRoot?.querySelector(
+      '.' + clabsPrefix + '--chat-footer-prompt-items-target'
+    );
+    if (
+      textArea instanceof HTMLElement &&
+      textAreaContainer instanceof HTMLElement
+    ) {
       textArea.style.height = 'auto';
-      textArea.style.height = textArea.scrollHeight + 'px';
+      const newHeight = textArea.scrollHeight;
+      textArea.style.height = newHeight + 'px';
+      textAreaContainer.style.height = newHeight + 24 + 'px';
+      if (textArea.scrollHeight < maxheight) {
+        this.style.setProperty('--chat-footer-overflow-control', 'hidden');
+      } else {
+        this.style.setProperty('--chat-footer-overflow-control', 'scroll');
+      }
     }
   }
 
@@ -342,12 +370,20 @@ export default class footer extends LitElement {
    * reset height of the text area
    */
   resetTextAreaHeight() {
+    const textAreaContainer = this.shadowRoot?.querySelector(
+      '.' + clabsPrefix + '--chat-footer-prompt-items-target'
+    );
     const textArea = this.shadowRoot?.querySelector(
       '.' + clabsPrefix + '--chat-search-query'
     );
-    if (textArea instanceof HTMLElement) {
+    if (
+      textArea instanceof HTMLElement &&
+      textAreaContainer instanceof HTMLElement
+    ) {
       textArea.style.height = 'auto';
-      textArea.style.height = '40px';
+      textArea.style.height = 32 + 'px';
+      textAreaContainer.style.height = 32 + 'px';
+      this.style.setProperty('--chat-footer-overflow-control', 'hidden');
     }
   }
 
@@ -357,6 +393,11 @@ export default class footer extends LitElement {
    */
   _textAreaIsFocused(event) {
     this._isPromptFocused = event?.type === 'focus';
+    if (!this._isPromptFocused) {
+      this.resetTextAreaHeight();
+    } else {
+      this.updateTextAreaHeight();
+    }
     this.hideContextMessage = false;
   }
 

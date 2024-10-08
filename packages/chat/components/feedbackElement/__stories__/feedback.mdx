@@ -1,0 +1,90 @@
+import { Markdown, Meta} from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
+import * as feedbackElementStories from './feedbackElement.stories';
+import packageJson from '../../../package.json';
+
+<Meta of={feedbackElementStories} />
+
+# Carbon-Labs feedback Handbook
+
+## Table of Contents
+
+- [Overview](#overview)
+  - [Attributes and Properties](#attributes-and-properties)
+  - [Events](#events)
+  - [Troubleshooting](#troubleshooting)
+- [Installation](#installation)
+  - [JS via import](#js-via-import)
+- [Styles](#styles)
+
+## Overview 
+<a id="overview"></a>
+
+The Chat component is a collaboration between the **IBM Research Visual AI Lab (VAIL)** and the **Carbon Design Team** to provide an open-source, easily expandable chat interface to interact with large language models. Our core values are: open-source collaboration, universal support, ease of use and the in-depth customization Carbon is known for.
+
+The **Carbon Labs popup** component aims to render any JSON defintiion provided by the parent to display an informative popup component which provides detailed feedback about the target response/content.
+
+### Troubleshooting 
+<a id="troubleshooting"></a> 
+
+Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests regarding general information, installation, trouble-shooting and custom features.
+
+## Installation 
+<a id="installation"></a>
+
+Here's a quick example to get you started.
+
+### JS via import 
+<a id="js-via-import"></a>
+
+```javascript
+import '@carbon-labs/ai-chat-feedback/es/index.js';
+```
+
+## Attributes and Properties 
+<a id="attributes-and-properties"></a>
+### Setting values as attributes
+```html
+<clabs-chat-feedback
+  prompt-title="Custom title"
+  text-area-placeholder="Custom placeholder"
+  popup-title="Custom title"
+  tag-list="['choice A','choice B', 'choice C']"
+  disclaimer="Place your own legal disclaimer here">
+</clabs-chat-feedback>
+```
+### Setting values with a JSON definition
+
+Place JSON defintion in Chat as `feedbackDefinitions` or Popup as `feedbackFormValues`:
+```json
+{
+  'thumbs-down': {
+    title: 'Unsatisfactory Response',
+    tags: [
+      'Inaccurate',
+      'Incomplete',
+      'Missing links',
+      'Privacy violations',
+      'Hate speech',
+    ],
+    prompt: 'What was unsatisfactory about this response?',
+    responsePlaceholder: 'Describe issues with this response',
+  },
+  'thumbs-up': {
+    title: 'Feedback',
+    tags: ['Accurate', 'Comprehensive', 'Consice', 'Easy to Understand'],
+    prompt: 'Why did you choose this rating?',
+    responsePlaceholder: 'Add a comment',
+  },
+}
+```
+
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['chat'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>

@@ -15,11 +15,9 @@ $css--plex: true !default;
   max-inline-size: 100%;
 
   .#{$clabs-prefix}--chat-tag-list-container {
-    display: flex;
-    box-sizing: border-box;
-    flex-flow: row wrap;
-
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    inline-size: 100%;
   }
 
   @keyframes fade-in {
@@ -37,6 +35,7 @@ $css--plex: true !default;
     padding: 2px;
     animation: fade-in 600ms forwards;
     font-size: 11px;
+    inline-size: 100%;
     opacity: 0;
   }
 

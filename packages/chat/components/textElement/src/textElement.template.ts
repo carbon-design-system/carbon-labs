@@ -48,7 +48,8 @@ export function textElementTemplate(customElementClass) {
       class="${clabsPrefix}--chat-text--float-${alignRight ? 'right' : 'left'}">
       <div
         class="${clabsPrefix}--chat-text-content"
-        role="region"
+        role="log"
+        aria-live="polite"
         aria-label="${content}">
         ${textElements.map(
           (textPiece, index) =>

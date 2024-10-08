@@ -31,6 +31,7 @@ export function linkListElementTemplate(customElementClass) {
     collapseList,
     disableRedirection,
     maxItems,
+    hideArrows,
     _handleLinkFeedback: handleLinkFeedback,
   } = customElementClass;
 
@@ -49,57 +50,59 @@ export function linkListElementTemplate(customElementClass) {
                   ? html`
                       <cds-link
                         data-index="${index}"
+                        id="${clabsPrefix}--chat-link-list-item-text-${index}"
                         target="_blank"
+                        class="${clabsPrefix}--chat-link-list-item-text-sublink"
                         href="${linkObject.url}"
-                        >${linkObject.title}</cds-link
+                        >${linkObject.title}
+                        ${ArrowRight16({ slot: 'icon' })}</cds-link
                       >
                     `
                   : html`<cds-link data-index="${index}"
-                      >${linkObject.title}</cds-link
+                      >${linkObject.title}
+                      ${ArrowRight16({ slot: 'icon' })}</cds-link
                     >`}
               </div>
-              <div @click="${handleLinkFeedback}">
-                ${!disableRedirection
-                  ? html`
-                      <cds-link
-                        data-index="${index}"
-                        target="_blank"
-                        href="${linkObject.url}"
-                        >${ArrowRight16({ slot: 'icon' })}</cds-link
-                      >
-                    `
-                  : html`<cds-link data-index="${index}"
-                      >${ArrowRight16({ slot: 'icon' })}</cds-link
-                    >`}
-              </div>
+              ${hideArrows
+                ? ''
+                : html`
+                    <div @click="${handleLinkFeedback}">
+                      ${!disableRedirection
+                        ? html`
+                            <cds-link
+                              data-index="${index}"
+                              target="_blank"
+                              class="${clabsPrefix}--chat-link-list-item-text-sublink"
+                              tabindex="-1"
+                              href="${linkObject.url}"
+                              >${ArrowRight16({ slot: 'icon' })}</cds-link
+                            >
+                          `
+                        : html`<cds-link data-index="${index}" tabindex="-1"
+                            >${ArrowRight16({ slot: 'icon' })}</cds-link
+                          >`}
+                    </div>
+                  `}
             </div>`
           : html``
       )}
       ${linkList.length > maxItems
-        ? html`<div class="${clabsPrefix}--chat-link-list-item">
-            ${expanded
-              ? html` <div class="${clabsPrefix}--chat-link-list-item-text">
-                  <cds-button
-                    kind="ghost"
-                    tooltip-text="Collapse"
-                    tooltip-position="right"
-                    tooltip-alignment="end"
-                    size="sm"
-                    @click="${collapseList}">
-                    Collapse list ${ChevronUp16({ slot: 'icon' })}</cds-button
-                  >
-                </div>`
-              : html` <div class="${clabsPrefix}--chat-link-list-item-text">
-                  <cds-button
-                    kind="ghost"
-                    tooltip-text="View all"
-                    tooltip-position="right"
-                    tooltip-alignment="end"
-                    size="sm"
-                    @click="${expandList}">
-                    View all ${ChevronDown16({ slot: 'icon' })}</cds-button
-                  >
-                </div>`}
+        ? html`<div class="${clabsPrefix}--chat-link-list-item-control">
+            <div class="${clabsPrefix}--chat-link-list-item-text">
+              <cds-button
+                kind="ghost"
+                class="${clabsPrefix}--chat-link-list-item-button"
+                tooltip-text="${expanded ? 'Collapse' : 'View all'}"
+                tooltip-position="right"
+                tooltip-alignment="end"
+                size="sm"
+                @click="${expanded ? collapseList : expandList}">
+                ${expanded ? 'Collapse list' : 'View all'}
+                ${expanded
+                  ? ChevronUp16({ slot: 'icon' })
+                  : ChevronDown16({ slot: 'icon' })}</cds-button
+              >
+            </div>
           </div>`
         : html``}
     </div>

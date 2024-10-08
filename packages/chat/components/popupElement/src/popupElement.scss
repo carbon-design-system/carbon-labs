@@ -14,6 +14,7 @@
   z-index: 9999;
   inset-block-end: var(--chat-popup-element-block-position, 0);
   inset-inline-start: var(--chat-popup-element-inline-position, 0);
+  transition: height 300ms linear;
   visibility: var(--chat-popup-element-visibility, 'hidden');
 
   @keyframes fade-in {
@@ -34,16 +35,11 @@
     flex-direction: row;
 
     padding: 32px;
-    border: 1px solid $support-info;
+    border: 1px solid $ai-border-end;
     border-radius: 8px;
     animation: fade-in 600ms forwards;
 
-    background: linear-gradient(0deg, $link-inverse-hover 0%, $background 25%),
-      #ffffff;
-    block-size: 484px;
-    box-shadow: -40px 30px 100px -25px rgba(0, 67, 206, 0.25),
-      -60px 80px 60px -45px rgba(0, 0, 0, 0.1),
-      inset 0 -80px 70px -65px rgba(69, 137, 255, 0.2);
+    background: linear-gradient(0deg, $highlight 0%, $background 25%), #ffffff;
 
     inline-size: 320px;
     opacity: 0;
@@ -58,7 +54,7 @@
 
     svg {
       fill: $background;
-      stroke: $support-info;
+      stroke: $highlight;
       stroke-width: 1px;
     }
   }
@@ -70,17 +66,37 @@
     margin-inline-start: var(--chat-popup-caret-offset, -2px);
 
     svg {
-      fill: $link-inverse-hover;
-      stroke: $support-info;
-      stroke-width: 1px;
+      fill: $highlight;
+      stroke: $highlight;
+      stroke-width: 0;
     }
+  }
+  .#{$clabs-prefix}--chat-popup-divider {
+    box-sizing: border-box;
+    margin: 4px;
+    block-size: 2px;
+    border-block-start: 2px solid $border-subtle-02;
+    inline-size: 100%;
+    user-select: none;
   }
 
   .#{$clabs-prefix}--chat-popup-main-content {
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
-    gap: 16px;
+    padding-block-end: 32px;
+  }
+
+  .#{$clabs-prefix}--chat-popup-list {
+    list-style: none;
+    list-style-type: decimal;
+    margin-block-start: 0;
+    padding-inline-start: 1rem;
+  }
+
+  .#{$clabs-prefix}--chat-popup-list-item {
+    list-style-type: decimal;
+    margin-block-start: 2px;
   }
 
   .#{$clabs-prefix}--chat-popup-title {
@@ -88,26 +104,40 @@
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0.16px;
-    line-height: 18px;
+    line-height: 14px;
+    padding-block-end: 0.5rem;
     text-align: start;
   }
 
   .#{$clabs-prefix}--chat-popup-prompt {
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 26px;
+    padding: 0;
+    margin: 0;
+    letter-spacing: 0.32px;
+    line-height: 30px;
+    margin-block-end: 0.5rem;
+    text-align: start;
+  }
+  .#{$clabs-prefix}--chat-popup-description {
+    font-size: 14px;
+    margin-block-start: 0.75rem;
+    text-align: start;
+  }
+  .#{$clabs-prefix}--chat-popup-model-title {
+    font-size: 14px;
+    padding-block: 6px;
     text-align: start;
   }
 
   .#{$clabs-prefix}--chat-popup-tag-list {
-    padding-block-start: 8px;
+    padding-block: 0.75rem 8px;
   }
 
   .#{$clabs-prefix}--chat-popup-feedback-text {
     gap: 0;
-    inline-size: 272px;
+    inline-size: 256px;
     inset-block-start: 205.54px;
     inset-inline-start: 24px;
+    margin-block-start: 0.75rem;
   }
 
   .#{$clabs-prefix}--chat-popup-disclaimer {
@@ -115,6 +145,7 @@
     font-weight: 400;
     letter-spacing: 0.32px;
     line-height: 16px;
+    margin-block-start: 0.75rem;
     text-align: start;
   }
 
@@ -125,7 +156,7 @@
   }
   .#{$clabs-prefix}--chat-popup-close {
     position: absolute;
-    inset-block-start: 16px;
-    inset-inline-end: 16px;
+    inset-block-start: 24px;
+    inset-inline-end: 24px;
   }
 }

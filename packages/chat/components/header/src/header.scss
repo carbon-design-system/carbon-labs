@@ -45,15 +45,23 @@ $css--plex: true !default;
     justify-content: center;
     background: transparent;
     block-size: 30px;
-    cursor: move;
+    cursor: -webkit-grab;
     inline-size: 100%;
     transition: background 200ms ease;
   }
+
   .#{$clabs-prefix}--chat-header-drag-area:hover {
     background: $background-hover;
   }
-  .#{$clabs-prefix}--chat-header-drag-area:focus {
+  .#{$clabs-prefix}--chat-header-drag-area:active {
+    border: 2px solid $text-primary;
     background: $background-active;
+    cursor: -webkit-grabbing;
+  }
+
+  .#{$clabs-prefix}--chat-header-drag-area:focus {
+    border: 2px solid $text-primary;
+    outline: none;
   }
 
   .#{$clabs-prefix}--chat-header-elements {

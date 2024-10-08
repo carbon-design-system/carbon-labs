@@ -141,6 +141,12 @@ export default class header extends LitElement {
   currentMenuItem = 0;
 
   /**
+   * drag state
+   */
+  @state()
+  _isDragging = false;
+
+  /**
    * docking event when popup button is clicked
    * @param {event} event - click event when docking chat
    */
@@ -167,7 +173,7 @@ export default class header extends LitElement {
         if (this.mouseHeldDown) {
           this.initiateDragging(event);
         }
-      }, 1500);
+      }, 200);
     }
   }
 
@@ -187,6 +193,23 @@ export default class header extends LitElement {
     this.mouseHeldDown = false;
     clearTimeout(this.dragTimeout);
     this.dragTimeout = null;
+    this._isDragging = false;
+    this.dragAcceleration = 0;
+
+    const dragArea = this.shadowRoot?.querySelector(
+      '.' + clabsPrefix + '--chat-header-drag-area'
+    );
+    if (dragArea instanceof HTMLElement) {
+      dragArea.blur();
+    }
+    const dragEvent = new CustomEvent('on-header-drag-cancel', {
+      detail: {
+        action: 'user canceled drag event',
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(dragEvent);
   }
 
   /** _handleDragAreaKeyup - move chat when arrow keys detected
@@ -256,23 +279,20 @@ export default class header extends LitElement {
   _handleDragAreaKeydown(event) {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      this.dragAcceleration = 0;
-      this._handleHeaderMouseDown(event);
-      this.initiateDragging(event);
+      if (this._isDragging) {
+        this._handleHeaderMouseUp();
+      } else {
+        this.dragAcceleration = 0;
+        this._handleHeaderMouseDown(event);
+        this.initiateDragging(event);
+      }
     }
     if (event.key === 'Escape' || event.key === 'Tab') {
+      this._isDragging = false;
       if (event.key === 'Escape') {
         event.preventDefault();
       }
-      this.dragAcceleration = 0;
-      const dragEvent = new CustomEvent('on-header-drag-cancel', {
-        detail: {
-          action: 'user canceled drag event',
-        },
-        bubbles: true,
-        composed: true,
-      });
-      this.dispatchEvent(dragEvent);
+      this._handleHeaderMouseUp();
     }
     if (
       event.key === 'ArrowUp' ||
@@ -314,6 +334,7 @@ export default class header extends LitElement {
     const mouseY = event.clientY - this.getBoundingClientRect().top;
     this.dragAcceleration = 0;
     this.mouseHeldDown = false;
+    this._isDragging = true;
     const dragEvent = new CustomEvent('on-header-drag-initiated', {
       detail: {
         action: 'user initiated drag event',
@@ -330,6 +351,7 @@ export default class header extends LitElement {
    * @param {string} keyCode - key event value when docking chat
    */
   _keyboardDragging(keyCode) {
+    this._isDragging = true;
     if (this.dragDirection !== keyCode) {
       this.dragAcceleration = 0;
       this.dragDirection = keyCode;

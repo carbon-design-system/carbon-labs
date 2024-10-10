@@ -302,7 +302,7 @@ export default class message extends LitElement {
           this._streamText();
         } else {
           if (this.rawText) {
-            this._parseText();
+            //this._parseText();
           }
         }
       }

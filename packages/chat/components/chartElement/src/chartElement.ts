@@ -1018,11 +1018,18 @@ export default class chartElement extends LitElement {
         this._errorLevel = null;
         const newSpec: any = JSON.parse(event.detail.newLineText);
         newSpec.data = previousData;
+        this.chartLoading = false;
+        this._errorMessage = '';
+        this._errorLevel = null;
 
         //this.content = JSON.stringify(newSpec);
-        this._editedSpec = newSpec;
+        this.carbonify = false;
         //this._prepareVisualization(newSpec)
         this._prepareSpecification(newSpec, false, true, 0);
+        this._editedSpec = newSpec;
+        window.setTimeout(async () => {
+          await this._displayVisualization();
+        }, 200);
       } catch (error) {
         console.error(error);
         this.chartLoading = true;
@@ -1046,11 +1053,12 @@ export default class chartElement extends LitElement {
         this.chartLoading = false;
         this._errorMessage = '';
         this._errorLevel = null;
+        this.carbonify = false;
 
         //this.content = JSON.stringify(newSpec);
         //this._prepareVisualization(newSpec)
-        //this._prepareSpecification(newSpec, false, true, 0);
-        this._prepareVisualization(newSpec);
+        this._prepareSpecification(newSpec, false, true, 0);
+        //this._prepareVisualization(newSpec);
         this._editedSpec = newSpec;
 
         window.setTimeout(async () => {
@@ -1681,7 +1689,6 @@ export default class chartElement extends LitElement {
             titleFont: defaultFont,
             labelFont: defaultFont,
             labelOffset: 4,
-            columns: 7,
             rowPadding: 8,
             titleFontSize: 11,
             labelFontSize: 12, //fillOpacity: 1,

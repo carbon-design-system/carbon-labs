@@ -510,7 +510,7 @@ export default class header extends LitElement {
    */
   _renderLabel = (key) => {
     let customValue;
-    const labels = this.customLabels || null;
+    const labels = this.customLabels || {};
     if (labels) {
       switch (key) {
         case 'header-close-chat':

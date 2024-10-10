@@ -33,11 +33,12 @@ export function linkListElementTemplate(customElementClass) {
     maxItems,
     hideArrows,
     _handleLinkFeedback: handleLinkFeedback,
+    _renderLabel: renderLabel,
   } = customElementClass;
 
   return html`
     <div class="${clabsPrefix}--chat-link-list-header">
-      References (${linkList.length})
+      ${renderLabel('link-list-reference-title')} (${linkList.length})
     </div>
     <div class="${clabsPrefix}--chat-link-list-container">
       ${linkList.map((linkObject, index) =>
@@ -97,7 +98,9 @@ export function linkListElementTemplate(customElementClass) {
                 tooltip-alignment="end"
                 size="sm"
                 @click="${expanded ? collapseList : expandList}">
-                ${expanded ? 'Collapse list' : 'View all'}
+                ${expanded
+                  ? renderLabel('link-list-collapse-button')
+                  : renderLabel('link-list-view-all-button')}
                 ${expanded
                   ? ChevronUp16({ slot: 'icon' })
                   : ChevronDown16({ slot: 'icon' })}</cds-button

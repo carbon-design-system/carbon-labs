@@ -59,6 +59,12 @@ export default class linkListElement extends LitElement {
   @state()
   trimmedList: { url: string; title: string }[] = [];
 
+  /**
+   * custom label presets
+   */
+  @property({ type: Object, attribute: 'customLabels' })
+  customLabels;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
@@ -162,4 +168,27 @@ export default class linkListElement extends LitElement {
       this.trimmedList = this._linkList.slice(0, 4);
     }
   }
+
+  /**
+   * _renderLabel - render default or custom label
+   * @param {string} key - target
+   */
+  _renderLabel = (key) => {
+    let customValue;
+    const labels = this.customLabels || {};
+    if (labels) {
+      switch (key) {
+        case 'link-list-view-all-button':
+          customValue = labels[key] || 'View all';
+          break;
+        case 'link-list-collapse-button':
+          customValue = labels[key] || 'Collapse list';
+          break;
+        case 'link-list-reference-title':
+          customValue = labels[key] || 'References';
+          break;
+      }
+    }
+    return customValue || key;
+  };
 }

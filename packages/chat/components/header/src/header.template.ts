@@ -63,6 +63,7 @@ export function headerTemplate(customElementClass) {
     _handleDragAreaKeydown: handleDragAreaKeydown,
     _handleDragAreaKeyup: handleDragAreaKeyup,
     _checkKeyboardMenu: checkKeyboardMenu,
+    _renderLabel: renderLabel,
   } = customElementClass;
   return html` <div
     class="${clabsPrefix}--chat-header-container"
@@ -115,52 +116,47 @@ export function headerTemplate(customElementClass) {
                   ? html`
                       ${useOverflowMenu
                         ? html`
-                            <div
-                              tabindex="0"
-                              role="button"
-                              aria-haspopup="${true}"
-                              aria-expanded="${false}"
-                              aria-controls="${clabsPrefix}--chat-header-overflow-menu-unique"
-                              class="${clabsPrefix}--chat-header-overflow-menu-container">
-                              <cds-overflow-menu
-                                id="${clabsPrefix}--chat-header-overflow-menu-unique"
-                                tooltip-alignment="right"
-                                tooltip-position="bottom"
-                                @keydown="${checkKeyboardEscape}"
-                                type="button"
-                                kind="primary"
-                                close-on-activation>
-                                ${Menu24({
-                                  slot: 'icon',
-                                })}
+                            <cds-overflow-menu
+                              id="${clabsPrefix}--chat-header-overflow-menu-unique"
+                              tooltip-alignment="start"
+                              tooltip-position="bottom"
+                              @keydown="${checkKeyboardEscape}"
+                              close-on-activation="${true}">
+                              ${Menu24({
+                                slot: 'icon',
+                                id:
+                                  clabsPrefix +
+                                  '--chat-header-overflow-menu-icon',
+                              })}
 
-                                <span slot="tooltip-content">
-                                  ${menuOpened ? 'Close menu' : 'Open menu'}
-                                </span>
+                              <span slot="tooltip-content">
+                                ${menuOpened
+                                  ? renderLabel('header-close-menu')
+                                  : renderLabel('header-open-menu')}
+                              </span>
 
-                                <cds-overflow-menu-body
-                                  tabindex="-1"
-                                  size="sm"
-                                  role="menu"
-                                  @keydown="${checkKeyboardMenu}"
-                                  id="${clabsPrefix}--chat-header-overflow-body-unique">
-                                  ${menuItems.map(
-                                    (
-                                      menuItem,
-                                      index
-                                    ) => html` <cds-overflow-menu-item
-                                      size=${dockingEnabled ? 'sm' : 'md'}
-                                      aria-label="Menu Option ${index}"
-                                      data-menuindex="${index}"
-                                      role="menuitem"
-                                      class="${clabsPrefix}--chat-header-overflow-menu-item-${index}"
-                                      @mousedown="${handleMenuItemSelected}">
-                                      ${menuItem.title}
-                                    </cds-overflow-menu-item>`
-                                  )}
-                                </cds-overflow-menu-body>
-                              </cds-overflow-menu>
-                            </div>
+                              <cds-overflow-menu-body
+                                tabindex="0"
+                                size="sm"
+                                role="menu"
+                                @keydown="${checkKeyboardMenu}"
+                                id="${clabsPrefix}--chat-header-overflow-body-unique">
+                                ${menuItems.map(
+                                  (
+                                    menuItem,
+                                    index
+                                  ) => html` <cds-overflow-menu-item
+                                    size=${dockingEnabled ? 'sm' : 'md'}
+                                    aria-label="Menu Option ${index}"
+                                    data-menuindex="${index}"
+                                    role="menuitem"
+                                    class="${clabsPrefix}--chat-header-overflow-menu-item-${index}"
+                                    @mousedown="${handleMenuItemSelected}">
+                                    ${menuItem.title}
+                                  </cds-overflow-menu-item>`
+                                )}
+                              </cds-overflow-menu-body>
+                            </cds-overflow-menu>
                           `
                         : html`
                       <cds-icon-button
@@ -180,7 +176,11 @@ export function headerTemplate(customElementClass) {
                             : Close16({ slot: 'icon' })
                         }
                         <span slot="tooltip-content">
-                          ${menuOpened ? 'Close menu' : 'Open menu'}
+                          ${
+                            menuOpened
+                              ? renderLabel('header-close-menu')
+                              : renderLabel('header-open-menu')
+                          }
                         </span>
                       </cds-icon-button>`}
                     `
@@ -217,9 +217,11 @@ export function headerTemplate(customElementClass) {
               autoalign
               slug-label="Show information">
               <div slot="body-text">
-                ${headerSlugContent
-                  ? unsafeHTML(headerSlugContent)
-                  : 'Define your preferred tutorial/explanatory text within chat as an ai-slug-content attribute or as a composable slotted div element'}
+                <div class="${clabsPrefix}--chat-header-slug-compress">
+                  ${headerSlugContent
+                    ? unsafeHTML(headerSlugContent)
+                    : 'Define your preferred tutorial/explanatory text within chat as an ai-slug-content attribute or as a composable slotted div element'}
+                </div>
               </div>
             </cds-slug>
           </div>
@@ -239,7 +241,11 @@ export function headerTemplate(customElementClass) {
                                 align="bottom-right"
                                 @click="${handleMaximize}">
                                 ${Maximize16({ slot: 'icon' })}
-                                <span slot="tooltip-content">Fullscreen</span>
+                                <span slot="tooltip-content"
+                                  >${renderLabel(
+                                    'header-enable-fullscreen'
+                                  )}</span
+                                >
                               </cds-icon-button>
                             </div>
                           `
@@ -254,7 +260,9 @@ export function headerTemplate(customElementClass) {
                                 @click="${handleMinimize}">
                                 ${Minimize16({ slot: 'icon' })}
                                 <span slot="tooltip-content"
-                                  >Exit fullscreen</span
+                                  >${renderLabel(
+                                    'header-disable-fullscreen'
+                                  )}</span
                                 >
                               </cds-icon-button>
                             </div>
@@ -271,10 +279,12 @@ export function headerTemplate(customElementClass) {
                                 kind="ghost"
                                 align="bottom-right"
                                 size="sm"
-                                aria-label="Dock Chat"
+                                aria-label="Dock chat"
                                 @click="${handlePopup}">
                                 ${Subtract16({ slot: 'icon' })}
-                                <span slot="tooltip-content">Pop-out chat</span>
+                                <span slot="tooltip-content"
+                                  >${renderLabel('header-popout-chat')}</span
+                                >
                               </cds-icon-button>
                             </div>
                           `
@@ -288,7 +298,9 @@ export function headerTemplate(customElementClass) {
                                 align="bottom-right"
                                 @click="${handleSubtract}">
                                 ${Popup16({ slot: 'icon' })}
-                                <span slot="tooltip-content">Expand chat</span>
+                                <span slot="tooltip-content"
+                                  >${renderLabel('header-expand-chat')}</span
+                                >
                               </cds-icon-button>
                             </div>
                           `}
@@ -300,11 +312,16 @@ export function headerTemplate(customElementClass) {
                         <cds-icon-button
                           kind="ghost"
                           size="sm"
-                          aria-label="Close Chat"
+                          aria-controls
+                          label="Close Chat"
                           align="bottom-right"
                           @click="${handleClosed}">
                           ${Close16({ slot: 'icon' })}
-                          <span slot="tooltip-content">Close</span>
+                          <span
+                            id="${clabsPrefix}--chat-header-close-label"
+                            slot="tooltip-content"
+                            >${renderLabel('header-close-chat')}</span
+                          >
                         </cds-icon-button>
                       </div>
                     `

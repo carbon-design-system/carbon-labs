@@ -64,7 +64,7 @@ const hateExample = {
   model: { name: 'granite.13.chat.v2', url: 'https://www.google.com' },
 };
 
-const customStyle = 'width: 100%; height:500px;';
+const customStyle = 'width: 100%; height:500px;display:flex;';
 export const Default = {
   /**
    * Renders the template for Storybook
@@ -84,7 +84,7 @@ export const Default = {
           text-area-placeholder="Custom placeholder"
           popup-title="Custom title"
           orientation="top"
-          .tagList="${'["choice A","choice B", "choice C"]'}"
+          .tagList="${'["choice A","choice B","choice B","choice B","choice B", "choice Cddfsk;llkdsklfd"]'}"
           disclaimer="Place your own legal disclaimer here">
         </clabs-chat-popup>
       </div>

@@ -138,17 +138,17 @@ export function chartElementTemplate(customElementClass) {
           <div class="${clabsPrefix}--chat-editor-modal-header">
             <cds-content-switcher value="carbonified">
               <cds-content-switcher-item
-                value="carbonified"
-                selected=""
-                data-selection="carbonified"
-                @click="${showCarbonSpec}">
-                Edit Carbon Spec
-              </cds-content-switcher-item>
-              <cds-content-switcher-item
                 value="original"
+                selected
                 data-selection="original"
                 @click="${showOriginalSpec}">
                 Edit Original Spec
+              </cds-content-switcher-item>
+              <cds-content-switcher-item
+                value="carbonified"
+                data-selection="carbonified"
+                @click="${showCarbonSpec}">
+                Edit Carbon Spec
               </cds-content-switcher-item>
             </cds-content-switcher>
           </div>

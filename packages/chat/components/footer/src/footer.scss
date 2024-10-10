@@ -13,6 +13,7 @@ $css--plex: true !default;
 
 :host(#{$clabs-prefix}-chat-footer) {
   position: absolute;
+  z-index: 9999;
   display: block;
   margin: 0 auto;
   background: none;
@@ -130,12 +131,17 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-footer-send-active {
-    color: $link-primary;
-    fill: $link-primary;
+    color: $icon-primary;
+    fill: $icon-primary;
+  }
+
+  .#{$clabs-prefix}--chat-footer-send-inactive {
+    color: $icon-on-color-disabled;
+    fill: $icon-on-color-disabled;
     pointer-events: none;
   }
 
-  .#{$clabs-prefix}--chat-footer-button-danger {
+  .#{$clabs-prefix}--chat-footer-button-danger svg {
     color: $support-error;
     fill: $support-error;
   }
@@ -182,6 +188,17 @@ $css--plex: true !default;
     min-block-size: 32px;
     resize: none;
     transition: block-size 300ms ease;
+  }
+  .#{$clabs-prefix}--chat-search-query-label {
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    margin: -1px;
+    block-size: 1px;
+    clip: rect(0, 0, 0, 0);
+    inline-size: 1px;
+    white-space: nowrap;
   }
 
   .#{$clabs-prefix}--chat-footer-prompt-focused {

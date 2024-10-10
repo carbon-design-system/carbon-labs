@@ -58,8 +58,12 @@ export function chatTemplate(customElementClass) {
     enableFeedbackForm,
     enableTextFeedbackForm,
     aiSlugContent,
+    enableRequestCancelling,
     _handleHeaderEscape,
     _handleFooterEscape,
+    customLabels,
+    setUserMessage,
+    _cancelRequest: cancelRequest,
   } = customElementClass;
 
   return html`<div
@@ -88,6 +92,7 @@ export function chatTemplate(customElementClass) {
           @on-header-escape="${_handleHeaderEscape}"
           header-slug-content="${aiSlugContent}"
           .menuItems="${headerMenuItems}"
+          .customLabels="${customLabels}"
           ?docking-enabled="${enableDocking}"
           ?disable-header-menu="${disableHeaderMenu}"
           ?disable-header-close="${disableHeaderClose}"
@@ -112,6 +117,7 @@ export function chatTemplate(customElementClass) {
           ?user-interrupted-streaming="${interruptStreaming}"
           @on-message-regeneration="${handleUserRegenerationRequest}"
           @on-user-message-update-request="${handleUserUpdateRequest}"
+          .customLabels="${customLabels}"
           @on-message-streaming-done="${endStreaming}">
         </clabs-chat-messages>
       </slot>
@@ -121,12 +127,17 @@ export function chatTemplate(customElementClass) {
           ?disable-input="${loading}"
           @on-user-text-input="${sendInput}"
           @on-user-stream-interrupt="${endStreaming}"
+          @on-user-request-interrupt="${cancelRequest}"
           @on-footer-escape="${_handleFooterEscape}"
           context-message="${promptNotificationMessage}"
           context-message-type="${promptNotificationType}"
+          .customLabels="${customLabels}"
           ?fullscreen-mode="${enableFullscreen}"
+          ?enable-cancellation="${enableRequestCancelling}"
           ?currently-streaming="${streamResponses && !interruptStreaming}"
           input-placeholder="${inputFieldPlaceholder}"
+          preset-entry="${setUserMessage}"
+          ?query-processing="${queryInProgress}"
           character-limit="${maxCharacterCount}">
         </clabs-chat-footer>
       </slot>

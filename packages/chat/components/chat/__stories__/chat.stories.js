@@ -207,23 +207,161 @@ const coreExamples = [
     'Map example from vega-lite',
   ],
 ];
-/*
-const defaultArgs = {
-  conversation: null,
-  userName: 'user',
-  agentName: 'watson',
-  loading: false,
-  autoUpdate: false,
-  inputFieldPlaceholder: 'Type something...',
-  disableHeaderButtons: false,
-  chosenHost: 'Local',
-  userPrompt:
-    'You are Watson, a helpful and polite assistant. You will answer all my questions to the best of your knowledge.',
-  apiUrl: 'http://localhost:5002/generate',
-  model: 'llama-2',
-  temperature: '',
-  feedbackUrl: 'http://localhost:5001/feedback',
-};*/
+
+const slugText = `
+<p style="margin-top: 0.75rem;">AI Explained</p>
+<p style="margin-top: 0.5rem; margin-bottom:0.75rem; font-size:1.5rem; font-weight:600;">IBM Cloud example text</p>
+<p style="margin-top: 0.75rem;">
+The AI assistant is designed as a retrieval-augmented generation (RAG) that is running against IBM© large language models
+</p>
+<hr>
+<p style="margin-bottom:0px;">How it works</p>
+<ul style="list-style: none;list-style-type: decimal; padding-left:1rem;margin-top:0px">
+  <li style="list-style-type: decimal;"><strong>Globalize</strong>. You can ask your questions and get an answer in any of the 10 languages supported by IBM Cloud</li>
+  <li style="list-style-type: decimal;"><strong>Query</strong>. The IBM Cloud docs are searched to find topics with facts about your question</li>
+  <li style="list-style-type: decimal;"><strong>Generate</strong>. Answers are generated ground in the IBM Cloud Docs</li>
+  <li style="list-style-type: decimal;"><strong>Verify</strong>. With each question you ask, source citations from the IBM Cloud docs are provided to verify responses</li>
+</ul>
+<hr>
+ <p style="margin-bottom:0px;">AI model</p>
+<a style="text-decoration:none;color:#4589ff;" target="_blank" href="https://www.google.com">granite.13.chat.v2</a>`;
+
+const slugContent = {
+  title: 'AI explainability',
+  prompt: 'IBM Cloud AI assistant',
+  responsePlaceholder: 'Describe issues with this response',
+  showTextArea: false,
+  description:
+    'The AI assistant is designed as a retrieval-augmented generation (RAG) that is running against IBM© large language models',
+  showList: true,
+  listTitle: 'How it works',
+  listItems: [
+    {
+      tilte: 'Globalize',
+      text: 'You can ask your questions and get an answer in any of the 10 languages supported by IBM Cloud',
+    },
+    {
+      title: 'Query',
+      text: 'The IBM Cloud docs are searched to find topics with facts about your question',
+    },
+    {
+      title: 'Generate',
+      text: 'Answers are generated ground in the IBM Cloud Docs',
+    },
+    {
+      title: 'Verify',
+      text: 'With each question you ask, sorce citations from the IBM Cloud docs are provided to verify responses',
+    },
+  ],
+  model: { name: 'granite.13.chat.v2', url: 'https://www.google.com' },
+};
+
+const headerMenuItems = [
+  { title: 'Clear history', action: 'clear-chat-history' },
+  { title: 'Save history', action: 'save-chat-history' },
+  { title: 'Report issue', action: 'report-issue' },
+];
+
+const feedbackFormOptions = {
+  'thumbs-down': {
+    title: 'Unsatisfactory Response',
+    tags: [
+      'Inaccurate',
+      'Incomplete',
+      'Missing links',
+      'Privacy violations',
+      'Hate speech',
+    ],
+    prompt: 'What was unsatisfactory about this response?',
+    responsePlaceholder: 'Describe issues with this response',
+    disclaimer:
+      'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
+  },
+  'thumbs-up': {
+    title: 'Feedback',
+    tags: ['Accurate', 'Comprehensive', 'Consice', 'Easy to Understand'],
+    prompt: 'Why did you choose this rating?',
+    responsePlaceholder: 'Add a comment',
+    disclaimer:
+      'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
+  },
+};
+
+const customLabels = {
+  'header-close-chat': 'Close',
+  'header-enable-fullscreen': 'Fullscreen',
+  'header-disable-fullscreen': 'Exit fullscreen',
+  'header-popout-chat': 'Pop out chat',
+  'header-expand-chat': 'Expand chat',
+  'header-move-chat': 'Move chat',
+  'header-move-chat-done': 'Set chat',
+  'header-open-menu': 'Open',
+  'header-close-menu': 'Close',
+  'header-open-slug': 'Open',
+  'header-close-slug': 'Close',
+  'message-regenerate-button': 'Regenerate',
+  'message-like-button': 'Like',
+  'message-undo-like-button': 'Remove like',
+  'message-dislike-button': 'Dislike',
+  'message-undo-dislike-button': 'Remove dislike',
+  'message-enable-editing': 'Edit',
+  'message-undo-edit': 'Undo edit',
+  'message-validate-edit': 'Validate edit',
+  'feedback-submit-button': 'Submit',
+  'feedback-submit-button-unavailable': 'Submit unavailable',
+  'feedback-close': 'Close',
+  'link-list-view-all-button': 'View all',
+  'link-list-collapse-button': 'Collapse list',
+  'link-list-reference-title': 'References',
+  'code-copypaste-button': 'Copy code',
+  'code-copypaste-success': 'Copied!',
+  'prompt-start-listening': 'Start listening',
+  'prompt-stop-listening': 'Stop listening',
+  'prompt-microphone-unavailable': 'Microphone unavailable',
+  'prompt-loading-state-placeholder': 'Thinking...',
+  'prompt-entry-placeholder': 'Type something...',
+  'prompt-send-button': 'Send response',
+  'prompt-send-blocked-button': 'Send unavailable',
+  'prompt-cancel-button': 'Cancel request',
+};
+
+const customLabelsFR = {
+  'header-close-chat': 'Fermer',
+  'header-enable-fullscreen': 'Plein écran',
+  'header-disable-fullscreen': 'Quitter plein écran',
+  'header-popout-chat': 'Détacher la discussion',
+  'header-expand-chat': 'Développer la discussion',
+  'header-move-chat': 'Déplacer la discussion',
+  'header-move-chat-done': 'Définir la discussion',
+  'header-open-menu': 'Ouvrir',
+  'header-close-menu': 'Fermer',
+  'header-open-slug': 'Ouvrir',
+  'header-close-slug': 'Fermer',
+  'message-regenerate-button': 'Régénérer',
+  'message-like-button': 'Aimer',
+  'message-undo-like-button': 'Annuler le like',
+  'message-dislike-button': 'Ne pas aimer',
+  'message-undo-dislike-button': 'Annuler le dislike',
+  'message-enable-editing': 'Modifier',
+  'message-undo-edit': 'Annuler la modification',
+  'message-validate-edit': 'Valider la modification',
+  'feedback-submit-button': 'Envoyer',
+  'feedback-submit-button-unavailable': 'Envoyer indisponible',
+  'feedback-close': 'Fermer',
+  'link-list-view-all-button': 'Voir tout',
+  'link-list-collapse-button': 'Réduire la liste',
+  'link-list-reference-title': 'Références',
+  'code-copypaste-button': 'Copier le code',
+  'code-copypaste-success': 'Copié !',
+  'prompt-start-listening': "Démarrer l'écoute",
+  'prompt-stop-listening': "Arrêter l'écoute",
+  'prompt-microphone-unavailable': 'Microphone indisponible',
+  'prompt-loading-state-placeholder': 'Chargement...',
+  'prompt-entry-placeholder': 'Tapez quelque chose...',
+  'prompt-send-button': 'Envoyer la réponse',
+  'prompt-send-blocked-button': 'Envoyer indisponible',
+  'prompt-cancel-button': 'Annuler la demande',
+};
 
 const apiArgs = {
   chosenHost: 'Local',
@@ -286,7 +424,11 @@ export const APIPlayground = {
         }}"
         model="llama-2"
         auto-update
+        .customLabels="${customLabelsFR}"
+        ai-slug-content="${slugText}"
         user-prompt="${userPrompt}"
+        enable-feedback-form
+        .feedbackDefinitions="${feedbackFormOptions}"
         api-url="${apiUrl}"
         feedback-url="${feedbackUrl}"
         temperature="${temperature}"
@@ -1532,84 +1674,6 @@ const conversationExamples = {
   ],
 };
 
-const slugText = `
-<p style="margin-top: 0.75rem;">AI Explained</p>
-<p style="margin-top: 0.5rem; margin-bottom:0.75rem; font-size:1.5rem; font-weight:600;">IBM Cloud example text</p>
-<p style="margin-top: 0.75rem;">
-The AI assistant is designed as a retrieval-augmented generation (RAG) that is running against IBM© large language models
-</p>
-<hr>
-<p style="margin-bottom:0px;">How it works</p>
-<ul style="list-style: none;list-style-type: decimal; padding-left:1rem;margin-top:0px">
-  <li style="list-style-type: decimal;"><strong>Globalize</strong>. You can ask your questions and get an answer in any of the 10 languages supported by IBM Cloud</li>
-  <li style="list-style-type: decimal;"><strong>Query</strong>. The IBM Cloud docs are searched to find topics with facts about your question</li>
-  <li style="list-style-type: decimal;"><strong>Generate</strong>. Answers are generated ground in the IBM Cloud Docs</li>
-  <li style="list-style-type: decimal;"><strong>Verify</strong>. With each question you ask, source citations from the IBM Cloud docs are provided to verify responses</li>
-</ul>
-<hr>
- <p style="margin-bottom:0px;">AI model</p>
-<a style="text-decoration:none;color:#4589ff;" target="_blank" href="https://www.google.com">granite.13.chat.v2</a>`;
-
-const slugContent = {
-  title: 'AI explainability',
-  prompt: 'IBM Cloud AI assistant',
-  responsePlaceholder: 'Describe issues with this response',
-  showTextArea: false,
-  description:
-    'The AI assistant is designed as a retrieval-augmented generation (RAG) that is running against IBM© large language models',
-  showList: true,
-  listTitle: 'How it works',
-  listItems: [
-    {
-      tilte: 'Globalize',
-      text: 'You can ask your questions and get an answer in any of the 10 languages supported by IBM Cloud',
-    },
-    {
-      title: 'Query',
-      text: 'The IBM Cloud docs are searched to find topics with facts about your question',
-    },
-    {
-      title: 'Generate',
-      text: 'Answers are generated ground in the IBM Cloud Docs',
-    },
-    {
-      title: 'Verify',
-      text: 'With each question you ask, sorce citations from the IBM Cloud docs are provided to verify responses',
-    },
-  ],
-  model: { name: 'granite.13.chat.v2', url: 'https://www.google.com' },
-};
-
-const headerMenuItems = [
-  { title: 'Clear history', action: 'clear-chat-history' },
-  { title: 'Save history', action: 'save-chat-history' },
-  { title: 'Report issue', action: 'report-issue' },
-];
-
-const feedbackFormOptions = {
-  'thumbs-down': {
-    title: 'Unsatisfactory Response',
-    tags: [
-      'Inaccurate',
-      'Incomplete',
-      'Missing links',
-      'Privacy violations',
-      'Hate speech',
-    ],
-    prompt: 'What was unsatisfactory about this response?',
-    responsePlaceholder: 'Describe issues with this response',
-    disclaimer:
-      'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
-  },
-  'thumbs-up': {
-    title: 'Feedback',
-    tags: ['Accurate', 'Comprehensive', 'Consice', 'Easy to Understand'],
-    prompt: 'Why did you choose this rating?',
-    responsePlaceholder: 'Add a comment',
-    disclaimer:
-      'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
-  },
-};
 export const Playground = {
   component: 'clabs-chat',
   argTypes: objectPlaygroundControls,
@@ -1641,6 +1705,7 @@ export const Playground = {
           enable-feedback-form
           .feedbackDefinitions="${feedbackFormOptions}"
           .headerMenuItems="${headerMenuItems}"
+          .customLabels="${customLabels}"
           ai-slug-content="${slugText}"
           .aiSlugObject="${slugContent}"
           input-field-placeholder="${'What can I assist you with today?'}"

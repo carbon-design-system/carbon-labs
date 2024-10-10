@@ -116,15 +116,46 @@ export default class footer extends LitElement {
   _currentlyStreaming;
 
   /**
+   * enable requestion cancellation
+   */
+  @property({ type: Boolean, attribute: 'enable-cancellation' })
+  enableCancellation;
+
+  /**
    * speechRecognition object to interface with text input
    */
   private _speechRecognition: any = null;
+
+  /**
+   * global labels context
+   */
+  @state()
+  _customLabels;
+
+  /**
+   * present entry for auto-prompts
+   */
+  @property({ type: String, attribute: 'preset-entry' })
+  _presetEntry;
+
+  /**
+   * custom label presets
+   */
+  @property({ type: Object, attribute: 'customLabels' })
+  customLabels;
+
+  /**
+   * query in progress
+   */
+  @property({ type: Boolean, attribute: 'query-processing' })
+  queryProcessing;
 
   /**
    * LIT firstUpdated cycle to define initial parameters on first render
    */
   firstUpdated() {
     this._checkSize();
+
     this._resizeObserver = new ResizeObserver(async () => {
       this._checkSize();
     });
@@ -170,7 +201,51 @@ export default class footer extends LitElement {
     if (changedProperties.has('_fullscreenMode')) {
       this._checkSize();
     }
+    if (changedProperties.has('_presetEntry')) {
+      this._messageText = this._presetEntry;
+    }
   }
+
+  /**
+   * _renderLabel - render default or custom label
+   * @param {string} key - value to lookup
+   */
+  _renderLabel = (key) => {
+    let customValue;
+    const labels = this.customLabels || {};
+    if (labels) {
+      switch (key) {
+        case 'prompt-start-listening':
+          customValue = labels[key] || 'Start listening';
+          break;
+        case 'prompt-stop-listening':
+          customValue = labels[key] || 'Stop listening';
+          break;
+        case 'prompt-microphone-unavailable':
+          customValue = labels[key] || 'Microphone unavailable';
+          break;
+        case 'prompt-loading-state-placeholder':
+          customValue = labels[key] || 'Thinking...';
+          break;
+        case 'prompt-entry-placeholder':
+          customValue = labels[key] || 'Type something...';
+          break;
+        case 'prompt-send-button':
+          customValue = labels[key] || 'Send response';
+          break;
+        case 'prompt-send-blocked-button':
+          customValue = labels[key] || 'Send unavailable';
+          break;
+        case 'prompt-cancel-button':
+          customValue = labels[key] || 'Cancel request';
+          break;
+        case 'prompt-close-warning':
+          customValue = labels[key] || 'Close';
+          break;
+      }
+    }
+    return customValue || key;
+  };
 
   /** _checkLimit - show warning message if character limit is exceeded
    */
@@ -196,7 +271,9 @@ export default class footer extends LitElement {
    * @param {event} event - lit event sent by the keyboard input
    **/
   _checkKeyboardEscapeB(event) {
-    const blockedSendTest = this._messageText === '' || this._forceDisableInput;
+    const blockedSendTest =
+      (this._messageText === '' || this._forceDisableInput) &&
+      this._fullscreenMode;
     if (event.key === 'Tab' && blockedSendTest && !event.shiftKey) {
       event.preventDefault();
 
@@ -216,7 +293,7 @@ export default class footer extends LitElement {
    * @param {event} event - lit event sent by the keyboard input
    **/
   _checkKeyboardEscape(event) {
-    if (event.key === 'Tab' && !event.shiftKey) {
+    if (event.key === 'Tab' && !event.shiftKey && this._fullscreenMode) {
       event.preventDefault();
       const lastKeyEvent = new CustomEvent('on-footer-escape', {
         detail: {
@@ -299,13 +376,22 @@ export default class footer extends LitElement {
   /** handle stop button click event to end streaming
    */
   _endStreaming() {
-    const stopStreamEvent = new CustomEvent('on-user-stream-interrupt', {
-      detail: { action: 'FOOTER: user requested to end text streaming' },
-      bubbles: true,
-      composed: true,
-    });
-    this.dispatchEvent(stopStreamEvent);
-    this._currentlyStreaming = false;
+    if (this.enableCancellation) {
+      const stopResponseEvent = new CustomEvent('on-user-request-interrupt', {
+        detail: { action: 'FOOTER: user requested to cancel current query' },
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(stopResponseEvent);
+    } else {
+      const stopStreamEvent = new CustomEvent('on-user-stream-interrupt', {
+        detail: { action: 'FOOTER: user requested to end text streaming' },
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(stopStreamEvent);
+      this._currentlyStreaming = false;
+    }
   }
 
   /** handle voice input from speech recognition
@@ -380,6 +466,7 @@ export default class footer extends LitElement {
       textArea instanceof HTMLElement &&
       textAreaContainer instanceof HTMLElement
     ) {
+      textArea.scrollTop = 0;
       textArea.style.height = 'auto';
       textArea.style.height = 32 + 'px';
       textAreaContainer.style.height = 32 + 'px';

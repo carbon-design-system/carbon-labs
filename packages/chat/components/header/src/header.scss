@@ -64,6 +64,10 @@ $css--plex: true !default;
     outline: none;
   }
 
+  .#{$clabs-prefix}--chat-header-slug-compress {
+    overflow: hidden scroll;
+  }
+
   .#{$clabs-prefix}--chat-header-elements {
     display: flex;
     flex-grow: 1;

@@ -87,6 +87,12 @@ export default class header extends LitElement {
   headerSlugContent;
 
   /**
+   * custom labels injected from parent
+   */
+  @property({ type: Object, attribute: 'customLabels' })
+  customLabels;
+
+  /**
    * menuOpened - boolean to see if menu is opened
    */
   @state()
@@ -222,7 +228,7 @@ export default class header extends LitElement {
    * @param {event} event - lit event sent by the keyboard input
    **/
   _checkKeyboardEscape(event) {
-    if (event.key === 'Tab' && event.shiftKey) {
+    if (event.key === 'Tab' && event.shiftKey && this.enableFullscreen) {
       event.preventDefault();
       const lastKeyEvent = new CustomEvent('on-header-escape', {
         detail: {
@@ -497,4 +503,51 @@ export default class header extends LitElement {
       items[0].focus();
     }*/
   }
+
+  /**
+   * _renderLabel - render default or custom label
+   * @param {string} key - dictionary key for label
+   */
+  _renderLabel = (key) => {
+    let customValue;
+    const labels = this.customLabels || {};
+    if (labels) {
+      switch (key) {
+        case 'header-close-chat':
+          customValue = labels[key] || 'Close';
+          break;
+        case 'header-enable-fullscreen':
+          customValue = labels[key] || 'Fullscreen';
+          break;
+        case 'header-disable-fullscreen':
+          customValue = labels[key] || 'Exit fullscreen';
+          break;
+        case 'header-popout-chat':
+          customValue = labels[key] || 'Pop out chat';
+          break;
+        case 'header-expand-chat':
+          customValue = labels[key] || 'Expand chat';
+          break;
+        case 'header-move-chat':
+          customValue = labels[key] || 'Move chat';
+          break;
+        case 'header-move-chat-done':
+          customValue = labels[key] || 'Set chat';
+          break;
+        case 'header-open-menu':
+          customValue = labels[key] || 'Open';
+          break;
+        case 'header-close-menu':
+          customValue = labels[key] || 'Close';
+          break;
+        case 'header-open-slug':
+          customValue = labels[key] || 'Open';
+          break;
+        case 'header-close-slug':
+          customValue = labels[key] || 'Close';
+          break;
+      }
+    }
+    return customValue || key;
+  };
 }

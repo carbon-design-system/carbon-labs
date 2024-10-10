@@ -33,6 +33,7 @@ export function messagesTemplate(customElementClass) {
     feedbackFormDefinitions,
     enableFeedbackForm,
     userName,
+    customLabels,
   } = customElementClass;
 
   return html`<div
@@ -56,6 +57,7 @@ export function messagesTemplate(customElementClass) {
                     ?user-submitted="${message.userSubmitted ||
                     message.origin === userName}"
                     time-stamp="${message.time}"
+                    .customLabels="${customLabels}"
                     error-state
                     stream-delay="${streamDelay}"
                     ?compact-icon="${dockingEnabled}"
@@ -69,6 +71,7 @@ export function messagesTemplate(customElementClass) {
                     message.origin === userName}"
                     disable-buttons="${message.disableButtons || nothing}"
                     index="${index}"
+                    .customLabels="${customLabels}"
                     ?enable-complex-feedback="${enableFeedbackForm}"
                     .feedbackFormDefinitions="${feedbackFormDefinitions}"
                     stream-delay="${streamDelay}"
@@ -87,6 +90,7 @@ export function messagesTemplate(customElementClass) {
                   parent-theme="${parentTheme}"
                   ?compact-icon="${dockingEnabled}"
                   time-stamp=""
+                  .customLabels="${customLabels}"
                   loading-state
                   .elements="${[{ type: 'loading', content: '' }]}"
                   error-state="false">

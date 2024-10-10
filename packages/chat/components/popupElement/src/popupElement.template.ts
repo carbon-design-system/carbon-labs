@@ -10,6 +10,7 @@
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import Close16 from '@carbon/web-components/es/icons/close/16.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/textarea/index.js';
@@ -45,6 +46,7 @@ export function popupElementTemplate(customElementClass) {
     radioButtons,
     listItems,
     invalidEntry,
+    _renderLabel: renderLabel,
   } = customElementClass;
   return html`<div class="${clabsPrefix}--chat-popup-container">
     <div class="${clabsPrefix}--chat-popup-caret-${orientation}">
@@ -147,7 +149,7 @@ export function popupElementTemplate(customElementClass) {
         ? html`
             <div class="${clabsPrefix}--chat-popup-disclaimer">
               ${disclaimer
-                ? disclaimer
+                ? unsafeHTML(disclaimer)
                 : "Your feedback on the use of AI-powered features by our dedicated team is to drive improvements. By continuing, you agree to IBM's Feedback Collecting Policy."}
             </div>
           `
@@ -185,10 +187,14 @@ export function popupElementTemplate(customElementClass) {
           link-role="submit-button"
           tooltip-alignment="left"
           tooltip-position="top"
-          tooltip-text="Submit"
+          tooltip-text=" ${invalidEntry
+            ? renderLabel('feedback-submit-button-unavailable')
+            : renderLabel('feedback-submit-button')}"
           ?disabled="${invalidEntry}"
           @click="${handleSubmit}">
-          Submit
+          ${invalidEntry
+            ? renderLabel('feedback-submit-button-unavailable')
+            : renderLabel('feedback-submit-button')}
         </cds-button>
       </div>
       <div class="${clabsPrefix}--chat-popup-close">
@@ -200,7 +206,7 @@ export function popupElementTemplate(customElementClass) {
           align="bottom-right"
           @click="${handleClose}">
           ${Close16({ slot: 'icon' })}
-          <span slot="tooltip-content">Close</span>
+          <span slot="tooltip-content">${renderLabel('feedback-close')}</span>
         </cds-icon-button>
       </div>
     </div>

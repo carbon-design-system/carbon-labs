@@ -12,12 +12,16 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/type' as *;
 
 :host(#{$clabs-prefix}-chat-tag-list) {
+  overflow: hidden;
   max-inline-size: 100%;
 
   .#{$clabs-prefix}--chat-tag-list-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    inline-size: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    max-inline-size: 100%;
   }
 
   @keyframes fade-in {
@@ -32,10 +36,10 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-tag-list-container-cell {
     box-sizing: border-box;
+    flex: 1 1 28%;
     padding: 2px;
     animation: fade-in 600ms forwards;
-    font-size: 11px;
-    inline-size: 100%;
+    max-inline-size: 100%;
     opacity: 0;
   }
 

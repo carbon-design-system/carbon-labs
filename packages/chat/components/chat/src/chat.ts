@@ -526,13 +526,11 @@ export default class CLABSChat extends LitElement {
 
   /**
    * check if chat still viewable after resize
-   * @param {event} event - resize event
+   * @param {event} _event - resize event
    */
-  _checkPositioning(event) {
+  _checkPositioning(_event) {
     if (this.enableDocking) {
       if (window.innerHeight < this.verticalDockPosition + 640) {
-        console.log('!!! WARNING HEIGHT EXCEEDED');
-        console.log(event);
         const newVerticalPosition = Math.max(window.innerHeight - 640 - 16, 16);
         this.verticalDockPosition = newVerticalPosition;
         this.style.setProperty(
@@ -545,8 +543,6 @@ export default class CLABSChat extends LitElement {
           window.innerWidth - 320 - 16,
           16
         );
-        console.log('!!! WARNING WIDTH EXCEEDED');
-        console.log(event);
         this.horizontalDockPosition = newHorizontalPosition;
         this.style.setProperty(
           '--chat-docked-right-position',
@@ -606,13 +602,12 @@ export default class CLABSChat extends LitElement {
 
   /**
    * drag chat event
-   * @param {event} event - drag end event
+   * @param {event} _event - drag end event
    */
-  _dragEnd(event) {
+  _dragEnd(_event) {
     this._isDragging = false;
     if (!this.disableOutsideControl) {
       document.body.style.userSelect = 'auto';
-      console.log(event);
     }
   }
 
@@ -757,12 +752,11 @@ export default class CLABSChat extends LitElement {
 
   /**
    * _cancelRequest - ignore following response, delete previous user message and restore text in footer
-   * @param {event} event - custom feedback event from message subcomponent
+   * @param {event} _event - custom feedback event from message subcomponent
    **/
-  _cancelRequest(event) {
+  _cancelRequest(_event) {
     const lastMessage = this.lastUserMessage;
     if (this.enableRequestCancelling) {
-      console.log(event);
       this.requestCancelled = true;
       this._queryInProgress = false;
       this._messages = this._messages.slice(0, this._messages.length - 1);

@@ -564,7 +564,7 @@ export default class CLABSChat extends LitElement {
   _dragChat(event, originalOffset) {
     if (this._isDragging) {
       if (!this.disableOutsideControl) {
-        document.body.style.userSelect = 'none';
+        //document.body.style.userSelect = 'none';
       }
       const chatReference = this.shadowRoot?.querySelector(
         '.' + clabsPrefix + '--chat-container'

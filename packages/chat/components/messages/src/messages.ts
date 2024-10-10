@@ -263,6 +263,7 @@ export default class messages extends LitElement {
             if (this._limitScroll) {
               scrollTarget = this._previousScrollHeight;
             }
+            console.log(scrollTarget);
             this.scrollDiv?.scrollTo({
               top: scrollTarget,
               behavior: 'smooth',

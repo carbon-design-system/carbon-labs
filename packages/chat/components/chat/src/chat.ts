@@ -10,12 +10,12 @@
 import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { APIPlugin } from '../../../services/APIPlugin/index.js';
+
 // @ts-ignore
 import styles from './chat.scss?inline';
 
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
-
 /**
  * Input component using search typeahead api
  */
@@ -236,6 +236,9 @@ export default class CLABSChat extends LitElement {
   @property({ type: Boolean, attribute: 'use-watson-assistant-protocol' })
   useWatsonAssistantProtocol;
 
+  /**
+   * remove all events that effect the core dom outside the chat
+   */
   @property({ type: Boolean, attribute: 'disable-outside-control' })
   disableOutsideControl;
 
@@ -270,6 +273,12 @@ export default class CLABSChat extends LitElement {
   aiSlugContent;
 
   /**
+   * enable/disable user request canceling
+   */
+  @property({ type: Boolean, attribute: 'enable-request-cancelling' })
+  enableRequestCancelling;
+
+  /**
    * vertical docking position with drag event
    */
   @state()
@@ -286,6 +295,38 @@ export default class CLABSChat extends LitElement {
    */
   @state()
   _isDragging = false;
+
+  /**
+   * imported custom labels from parent
+   */
+  @property({ type: Object, attribute: 'customLabels' })
+  customLabels;
+
+  /**
+   * canceled message state
+   */
+  @state()
+  requestCancelled = false;
+
+  /**
+   * last user entry
+   */
+  @state()
+  lastUserMessage;
+
+  /**
+   * set custom message in footer
+   */
+  @state()
+  setUserMessage;
+
+  /** detect when component is rendered to process code object
+   */
+  firstUpdated() {
+    window.addEventListener('resize', (event) => {
+      this._checkPositioning(event);
+    });
+  }
 
   /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
    * @param {Object} changedProperties - returned inner DOM update object
@@ -370,12 +411,16 @@ export default class CLABSChat extends LitElement {
     const firstTabbableElement = this.shadowRoot?.querySelector(
       clabsPrefix + '-chat-header'
     );
+
     if (firstTabbableElement instanceof HTMLElement) {
       const elem = firstTabbableElement.shadowRoot?.querySelector(
-        '.' + clabsPrefix + '--chat-header-overflow-menu-container'
+        '#' + clabsPrefix + '--chat-header-overflow-menu-unique'
       );
       if (elem instanceof HTMLElement) {
-        elem.focus();
+        const subelem = elem.shadowRoot?.querySelector('#button');
+        if (subelem instanceof HTMLElement) {
+          subelem.focus();
+        }
       }
     }
   }
@@ -480,6 +525,38 @@ export default class CLABSChat extends LitElement {
   }
 
   /**
+   * check if chat still viewable after resize
+   * @param {event} event - resize event
+   */
+  _checkPositioning(event) {
+    if (this.enableDocking) {
+      if (window.innerHeight < this.verticalDockPosition + 640) {
+        console.log('!!! WARNING HEIGHT EXCEEDED');
+        console.log(event);
+        const newVerticalPosition = Math.max(window.innerHeight - 640 - 16, 16);
+        this.verticalDockPosition = newVerticalPosition;
+        this.style.setProperty(
+          '--chat-docked-bottom-position',
+          newVerticalPosition + 'px'
+        );
+      }
+      if (window.innerWidth < this.horizontalDockPosition + 320) {
+        const newHorizontalPosition = Math.max(
+          window.innerWidth - 320 - 16,
+          16
+        );
+        console.log('!!! WARNING WIDTH EXCEEDED');
+        console.log(event);
+        this.horizontalDockPosition = newHorizontalPosition;
+        this.style.setProperty(
+          '--chat-docked-right-position',
+          newHorizontalPosition + 'px'
+        );
+      }
+    }
+  }
+
+  /**
    * drag chat event
    * @param {event} event - core mousemove event
    * @param {object} originalOffset - x/y click values from header
@@ -487,7 +564,7 @@ export default class CLABSChat extends LitElement {
   _dragChat(event, originalOffset) {
     if (this._isDragging) {
       if (!this.disableOutsideControl) {
-        //document.body.style.userSelect = 'none';
+        document.body.style.userSelect = 'none';
       }
       const chatReference = this.shadowRoot?.querySelector(
         '.' + clabsPrefix + '--chat-container'
@@ -529,18 +606,12 @@ export default class CLABSChat extends LitElement {
 
   /**
    * drag chat event
-   * @param {event} event - core mousemove event
+   * @param {event} event - drag end event
    */
   _dragEnd(event) {
     this._isDragging = false;
     if (!this.disableOutsideControl) {
-      //document.body.style.userSelect = 'auto';
-    }
-    try {
-      //this.parentElement?.removeEventListener('mousemove', this._dragChat);
-      //this.parentElement?.removeEventListener('mouseup', this._dragEnd);
-    } catch (removalError) {
-      console.error(removalError);
+      document.body.style.userSelect = 'auto';
       console.log(event);
     }
   }
@@ -685,6 +756,21 @@ export default class CLABSChat extends LitElement {
   }
 
   /**
+   * _cancelRequest - ignore following response, delete previous user message and restore text in footer
+   * @param {event} event - custom feedback event from message subcomponent
+   **/
+  _cancelRequest(event) {
+    const lastMessage = this.lastUserMessage;
+    if (this.enableRequestCancelling) {
+      console.log(event);
+      this.requestCancelled = true;
+      this._queryInProgress = false;
+      this._messages = this._messages.slice(0, this._messages.length - 1);
+      this.setUserMessage = '' + lastMessage;
+    }
+  }
+
+  /**
    * sendInput - send in the latest user message from the footer element to the api, package it within the messages array and update the DOM
    * @param {event} event - custom feedback event from message subcomponent
    **/
@@ -693,6 +779,11 @@ export default class CLABSChat extends LitElement {
 
     //if streaming is enabled and previously interrupted
     this._interruptStreaming = !this._streamResponses;
+    this.lastUserMessage = value;
+
+    if (this.enableRequestCancelling) {
+      this.requestCancelled = false;
+    }
 
     const newMessage = {
       text: value,
@@ -722,37 +813,45 @@ export default class CLABSChat extends LitElement {
             Object.prototype.hasOwnProperty.call(res, 'failed') &&
             res['failed'] === true;
 
-          if (this.useWatsonAssistantProtocol) {
-            const newElements = this._translateWxA(res.reply);
-            this._messages = [...this._messages, ...newElements];
+          if (!this.requestCancelled) {
+            if (this.useWatsonAssistantProtocol) {
+              const newElements = this._translateWxA(res.reply);
+              this._messages = [...this._messages, ...newElements];
+            } else {
+              this._messages = [
+                ...this._messages,
+                {
+                  text: res.reply,
+                  origin: this.agentName,
+                  hasError: errorState,
+                  time: this._getCurrentTime(),
+                  index: this._messages.length,
+                },
+              ];
+            }
+            this._queryInProgress = false;
+            this.requestUpdate();
           } else {
+            this.requestCancelled = false;
+          }
+        })
+        .catch(() => {
+          if (!this.requestCancelled) {
             this._messages = [
               ...this._messages,
               {
-                text: res.reply,
+                text: 'Error reaching the model server, try again',
                 origin: this.agentName,
-                hasError: errorState,
+                hasError: true,
                 time: this._getCurrentTime(),
                 index: this._messages.length,
               },
             ];
+            this._queryInProgress = false;
+            this.requestUpdate();
+          } else {
+            this.requestCancelled = false;
           }
-          this._queryInProgress = false;
-          this.requestUpdate();
-        })
-        .catch(() => {
-          this._messages = [
-            ...this._messages,
-            {
-              text: 'Error reaching the model server, try again',
-              origin: this.agentName,
-              hasError: true,
-              time: this._getCurrentTime(),
-              index: this._messages.length,
-            },
-          ];
-          this._queryInProgress = false;
-          this.requestUpdate();
         });
     }
   }

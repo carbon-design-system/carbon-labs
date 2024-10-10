@@ -177,6 +177,12 @@ export default class popupElement extends LitElement {
   invalidEntry = true;
 
   /**
+   * custom label presets
+   */
+  @property({ type: Object, attribute: 'customLabels' })
+  customLabels;
+
+  /**
    * Event listener to check if parent visibility changed
    */
   //private intersectionObserver;
@@ -446,7 +452,36 @@ export default class popupElement extends LitElement {
       bubbles: true,
       composed: true,
     });
+    if (
+      this.targetElement instanceof HTMLElement ||
+      this.targetElement instanceof SVGElement
+    ) {
+      this.targetElement.focus();
+    }
     this.dispatchEvent(closePopupEvent);
     this.requestUpdate();
   }
+
+  /**
+   * _renderLabel - render default or custom label
+   * @param {string} key - dictionary key for label
+   */
+  _renderLabel = (key) => {
+    let customValue;
+    const labels = this.customLabels || {};
+    if (labels) {
+      switch (key) {
+        case 'feedback-submit-button':
+          customValue = labels[key] || 'Submit';
+          break;
+        case 'feedback-submit-button-unavailable':
+          customValue = labels[key] || 'Submit';
+          break;
+        case 'feedback-close':
+          customValue = labels[key] || 'Close';
+          break;
+      }
+    }
+    return customValue || key;
+  };
 }

@@ -82,6 +82,8 @@ export function messageTemplate(customElementClass) {
     compactIcon,
     _feedbackFormValues: feedbackFormValues,
     popupTargetElement,
+    _renderLabel: renderLabel,
+    customLabels,
   } = customElementClass;
 
   return html`<div
@@ -128,7 +130,9 @@ export function messageTemplate(customElementClass) {
                           label="Undo edit"
                           @click="${cancelEdit}">
                           ${Undo16({ slot: 'icon' })}
-                          <span slot="tooltip-content">Undo edit</span>
+                          <span slot="tooltip-content"
+                            >${renderLabel('message-undo-edit')}</span
+                          >
                         </cds-icon-button>
                         <cds-icon-button
                           size="sm"
@@ -137,7 +141,9 @@ export function messageTemplate(customElementClass) {
                           label="Send edit"
                           @click="${validateEdit}">
                           ${CheckMark16({ slot: 'icon' })}
-                          <span slot="tooltip-content">Validate edit</span>
+                          <span slot="tooltip-content"
+                            >${renderLabel('message-validate-edit')}</span
+                          >
                         </cds-icon-button>`
                     : html` <cds-icon-button
                         size="sm"
@@ -146,7 +152,9 @@ export function messageTemplate(customElementClass) {
                         label="Edit Code"
                         @click="${handleEdit}">
                         ${Edit16({ slot: 'icon' })}
-                        <span slot="tooltip-content">Enable editing</span>
+                        <span slot="tooltip-content"
+                          >${renderLabel('message-enable-editing')}</span
+                        >
                       </cds-icon-button>`}
                 </div>`
               : html` <div
@@ -217,6 +225,7 @@ export function messageTemplate(customElementClass) {
                         ? html`
                             <clabs-chat-link-list
                               @on-link-list-item-selected="${childLinkClicked}"
+                              .customLabels="${customLabels}"
                               content="${message.content}">
                             </clabs-chat-link-list>
                           `
@@ -317,6 +326,7 @@ export function messageTemplate(customElementClass) {
                         ? html`
                             <clabs-chat-code
                               content="${message.content}"
+                              .customLabels="${customLabels}"
                               max-height="246px">
                             </clabs-chat-code>
                           `
@@ -365,6 +375,7 @@ export function messageTemplate(customElementClass) {
                         ? html`
                             <clabs-chat-code
                               streaming
+                              .customLabels="${customLabels}"
                               content="${temporaryMessage.content}">
                             </clabs-chat-code>
                           `
@@ -424,7 +435,9 @@ export function messageTemplate(customElementClass) {
                                 label="Undo Edit"
                                 @click="${cancelEdit}">
                                 ${Undo16({ slot: 'icon' })}
-                                <span slot="tooltip-content">Undo edit</span>
+                                <span slot="tooltip-content"
+                                  >${renderLabel('message-undo-edit')}</span
+                                >
                               </cds-icon-button>
                               <cds-icon-button
                                 size="sm"
@@ -434,7 +447,7 @@ export function messageTemplate(customElementClass) {
                                 @click="${validateEdit}">
                                 ${CheckMark16({ slot: 'icon' })}
                                 <span slot="tooltip-content"
-                                  >Validate Edit</span
+                                  >${renderLabel('message-validate-edit')}</span
                                 >
                               </cds-icon-button>`
                           : html` <cds-icon-button
@@ -444,7 +457,9 @@ export function messageTemplate(customElementClass) {
                               label="Edit message"
                               @click="${handleEdit}">
                               ${Edit16({ slot: 'icon' })}
-                              <span slot="tooltip-content">Enable editing</span>
+                              <span slot="tooltip-content"
+                                >${renderLabel('message-enable-editing')}</span
+                              >
                             </cds-icon-button>`
                         : html`
                             <cds-icon-button
@@ -452,19 +467,30 @@ export function messageTemplate(customElementClass) {
                               kind="ghost"
                               align="right"
                               role="button"
+                              tabindex="0"
                               aria-expanded="${positiveFeedbackSelected}"
                               aria-controls="${showFeedBackForm
                                 ? clabsPrefix +
                                   '--chat-popup-unique-feedback-' +
                                   index
                                 : ''}"
-                              label="Thumbs up"
+                              label="${renderLabel(
+                                positiveFeedbackSelected
+                                  ? 'message-undo-like-button'
+                                  : 'message-like-button'
+                              )}"
                               @keydown="${handlePositiveKeyboardInput}"
                               @click="${handlePositiveFeedback}">
                               ${positiveFeedbackSelected
                                 ? ThumbsUpFilled16({ slot: 'icon' })
                                 : ThumbsUp16({ slot: 'icon' })}
-                              <span slot="tooltip-content">Thumbs up</span>
+                              <span slot="tooltip-content"
+                                >${renderLabel(
+                                  positiveFeedbackSelected
+                                    ? 'message-undo-like-button'
+                                    : 'message-like-button'
+                                )}</span
+                              >
                             </cds-icon-button>
 
                             <cds-icon-button
@@ -472,6 +498,7 @@ export function messageTemplate(customElementClass) {
                               kind="ghost"
                               align="right"
                               role="button"
+                              tabindex="0"
                               aria-expanded="${negativeFeedbackSelected}"
                               aria-controls="${showFeedBackForm
                                 ? clabsPrefix +
@@ -484,7 +511,13 @@ export function messageTemplate(customElementClass) {
                               ${negativeFeedbackSelected
                                 ? ThumbsDownFilled16({ slot: 'icon' })
                                 : ThumbsDown16({ slot: 'icon' })}
-                              <span slot="tooltip-content">Thumbs down</span>
+                              <span slot="tooltip-content"
+                                >${renderLabel(
+                                  negativeFeedbackSelected
+                                    ? 'message-undo-dislike-button'
+                                    : 'message-dislike-button'
+                                )}</span
+                              >
                             </cds-icon-button>
                             <cds-icon-button
                               size="sm"
@@ -493,7 +526,11 @@ export function messageTemplate(customElementClass) {
                               label="Regenerate"
                               @click="${handleRegenerate}">
                               ${Renew16({ slot: 'icon' })}
-                              <span slot="tooltip-content">Regenerate</span>
+                              <span slot="tooltip-content"
+                                >${renderLabel(
+                                  'message-regenerate-button'
+                                )}</span
+                              >
                             </cds-icon-button>
                           `}
                     </div>
@@ -510,6 +547,7 @@ export function messageTemplate(customElementClass) {
             id="${clabsPrefix}--chat-popup-unique-feedback-${index}"
             .feedbackFormValues="${feedbackFormValues}"
             .targetElement="${popupTargetElement}"
+            .customLabels="${customLabels}"
             parent-message-id="${index}"
             ?compact-mode="${compactIcon}"
             type="${positiveFeedbackSelected

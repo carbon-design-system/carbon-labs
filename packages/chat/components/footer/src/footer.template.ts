@@ -55,14 +55,17 @@ export function footerTemplate(customElementClass) {
     _checkKeyboardEscape: checkKeyboardEscape,
     _handleContextMessageClose: handleContextMessageClose,
     _checkKeyboardEscapeB: checkKeyboardEscapeB,
+    _renderLabel: renderLabel,
+    queryProcessing,
+    enableCancellation,
   } = customElementClass;
 
-  return html` 
-    <div class="${clabsPrefix}--chat-footer-container${
-    expandedHeight ? '-expanded' : ''
-  }">
-    ${
-      !hideContextMessage && isPromptFocused && contextMessage
+  return html`
+    <div
+      class="${clabsPrefix}--chat-footer-container${expandedHeight
+        ? '-expanded'
+        : ''}">
+      ${!hideContextMessage && isPromptFocused && contextMessage
         ? html`
             <div
               class="${clabsPrefix}--chat-footer-menu ${clabsPrefix}--chat-footer-menu${contextMessageType ===
@@ -110,13 +113,14 @@ export function footerTemplate(customElementClass) {
                     ? html``
                     : html`
                         <cds-icon-button
-                          aria-label="Close Context Message"
+                          aria-label="Close context message"
                           kind="ghost"
                           size="sm"
                           @click="${handleContextMessageClose}">
                           ${Close16({ slot: 'icon' })}
                           <span slot="tooltip-content">
-                            Close ${contextMessageType}
+                            ${renderLabel('prompt-close-warning')}
+                            ${contextMessageType}
                           </span>
                         </cds-icon-button>
                       `}
@@ -124,79 +128,87 @@ export function footerTemplate(customElementClass) {
               </div>
             </div>
           `
-        : ''
-    }
-      <div class="${clabsPrefix}--chat-footer-prompt-items-target ${clabsPrefix}--chat-footer-prompt-items${
-    expandedWidth ? (contextMessageType ? '-expanded-error' : '-expanded') : ''
-  } ${isPromptFocused ? clabsPrefix + '--chat-footer-prompt-focused' : ''} ${
-    isPromptFocused && contextMessageType
-      ? clabsPrefix + '--chat-footer-prompt-focused' + '-' + contextMessageType
-      : ''
-  }">
-
-      <textarea
-        class="${clabsPrefix}--chat-search-query ${
-    disableInput ? clabsPrefix + '--chat-search-query-disabled' : ''
-  }"
-        rows="1"
-        ?disabled="${disableInput}"
-        placeholder="${
-          !disableInput
+        : ''}
+      <div
+        class="${clabsPrefix}--chat-footer-prompt-items-target ${clabsPrefix}--chat-footer-prompt-items${expandedWidth
+          ? contextMessageType
+            ? '-expanded-error'
+            : '-expanded'
+          : ''} ${isPromptFocused
+          ? clabsPrefix + '--chat-footer-prompt-focused'
+          : ''} ${isPromptFocused && contextMessageType
+          ? clabsPrefix +
+            '--chat-footer-prompt-focused' +
+            '-' +
+            contextMessageType
+          : ''}">
+        <label
+          class="${clabsPrefix}--chat-search-query-label"
+          for="${clabsPrefix}--chat-footer-prompt-text-area"
+          >Chat text prompt area</label
+        >
+        <textarea
+          class="${clabsPrefix}--chat-search-query ${disableInput
+            ? clabsPrefix + '--chat-search-query-disabled'
+            : ''}"
+          rows="1"
+          ?disabled="${disableInput}"
+          id="${clabsPrefix}--chat-footer-prompt-text-area"
+          placeholder="${!disableInput
             ? inputPlaceholder
               ? inputPlaceholder
-              : 'Type something...'
-            : 'Thinking...'
-        }"
-        aria-label="Chat text prompt area"
-        @focus="${textAreaIsFocused}"
-        @blur="${textAreaIsFocused}"
-        .value="${messageText}"
-        @input="${handleInput}"
-        @keydown="${handleInput}"/>
+              : renderLabel('prompt-entry-placeholder')
+            : renderLabel('prompt-loading-state-placeholder')}"
+          aria-label="Chat text prompt area"
+          @focus="${textAreaIsFocused}"
+          @blur="${textAreaIsFocused}"
+          .value="${messageText}"
+          @input="${handleInput}"
+          @keydown="${handleInput}">
         </textarea>
 
-      <div class="${clabsPrefix}--chat-footer-button">
-        ${
-          !voiceAPIAvailable
+        <div class="${clabsPrefix}--chat-footer-button">
+          ${!voiceAPIAvailable
             ? html`
                 <cds-icon-button
                   disabled
                   kind="ghost"
-                  aria-label="No Microphone Available"
+                  aria-label="No microphone available"
                   @keydown="${checkKeyboardEscapeB}"
                   size="sm"
                   align="top-right">
                   ${MicrophoneOff16({ slot: 'icon' })}
-                  <span slot="tooltip-content">Microphone unavailable</span>
+                  <span slot="tooltip-content"
+                    >${renderLabel('prompt-microphone-unavailable')}</span
+                  >
                 </cds-icon-button>
               `
-            : html` ${!isListening
-                ? html` <cds-icon-button
-                    kind="ghost"
-                    align="top-right"
-                    aria-label="Start Listening"
-                    @keydown="${checkKeyboardEscapeB}"
-                    size="sm"
-                    @click="${startRecording}">
-                    ${Microphone16({ slot: 'icon' })}
-                    <span slot="tooltip-content">Start listening</span>
-                  </cds-icon-button>`
-                : html` <cds-icon-button
-                    kind="ghost"
-                    class="${clabsPrefix}--chat-footer-button-danger"
-                    align="top-right"
-                    aria-label="Stop Listening"
-                    @keydown="${checkKeyboardEscapeB}"
-                    size="sm"
-                    @click="${endRecording}">
-                    ${MicrophoneFilled16({ slot: 'icon' })}
-                    <span slot="tooltip-content">Stop listening</span>
-                  </cds-icon-button>`}`
-        }
-      </div>
-      <div class="${clabsPrefix}--chat-footer-button">
-        ${
-          !currentlyStreaming
+            : html`<cds-icon-button
+                kind="ghost"
+                align="top-right"
+                class="${isListening
+                  ? clabsPrefix + '--chat-footer-button-danger'
+                  : ''}"
+                aria-label="${isListening
+                  ? 'Stop listening'
+                  : 'Start listening'}"
+                @keydown="${checkKeyboardEscapeB}"
+                size="sm"
+                @click="${isListening ? endRecording : startRecording}">
+                ${isListening
+                  ? MicrophoneFilled16({ slot: 'icon' })
+                  : Microphone16({ slot: 'icon' })}
+                <span slot="tooltip-content"
+                  >${renderLabel(
+                    isListening
+                      ? 'prompt-stop-listening'
+                      : 'prompt-start-listening'
+                  )}</span
+                >
+              </cds-icon-button>`}
+        </div>
+        <div class="${clabsPrefix}--chat-footer-button">
+          ${!currentlyStreaming && !(queryProcessing && enableCancellation)
             ? html`
                 <cds-icon-button
                   kind="ghost"
@@ -207,7 +219,7 @@ export function footerTemplate(customElementClass) {
                   @keydown="${checkKeyboardEscape}"
                   ?disabled="${messageText === '' || forceDisableInput}"
                   @click="${sendInputToParent}">
-                  ${messageText === '' || forceDisableInput || !isPromptFocused
+                  ${messageText === '' || forceDisableInput
                     ? Send16({
                         slot: 'icon',
                         class: clabsPrefix + '--chat-footer-send-inactive',
@@ -216,27 +228,32 @@ export function footerTemplate(customElementClass) {
                         slot: 'icon',
                         class: clabsPrefix + '--chat-footer-send-active',
                       })}
-                  <span slot="tooltip-content">Send response</span>
+                  <span slot="tooltip-content">
+                    ${messageText === '' || forceDisableInput
+                      ? renderLabel('prompt-send-blocked-button')
+                      : renderLabel('prompt-send-button')}
+                  </span>
                 </cds-icon-button>
               `
             : html`
                 <cds-icon-button
                   kind="ghost"
                   size="sm"
-                  aria-label="Stop Streaming"
+                  aria-label="Stop streaming"
                   align="top-right"
+                  class="${clabsPrefix + '--chat-footer-button-danger'}"
                   @keydown="${checkKeyboardEscape}"
                   @click="${endStreaming}">
                   ${Stop16({
                     slot: 'icon',
-                    class: clabsPrefix + '--chat-footer-button-danger',
                   })}
-                  <span slot="tooltip-content">Stop generating</span>
+                  <span slot="tooltip-content"
+                    >${renderLabel('prompt-cancel-button')}</span
+                  >
                 </cds-icon-button>
-              `
-        }
+              `}
+        </div>
       </div>
-      </div>
-      </div>
-    `;
+    </div>
+  `;
 }

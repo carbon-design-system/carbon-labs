@@ -1610,6 +1610,45 @@ const feedbackFormOptions = {
       'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
   },
 };
+
+const customLabels = {
+  'header-close-chat': 'Close',
+  'header-enable-fullscreen': 'Fullscreen',
+  'header-disable-fullscreen': 'Exit fullscreen',
+  'header-popout-chat': 'Pop out chat',
+  'header-expand-chat': 'Expand chat',
+  'header-move-chat': 'Move chat',
+  'header-move-chat-done': 'Set chat',
+  'header-open-menu': 'Open',
+  'header-close-menu': 'Close',
+  'header-open-slug': 'Open',
+  'header-close-slug': 'Close',
+  'message-regenerate-button': 'Regenerate',
+  'message-like-button': 'Like',
+  'message-undo-like-button': 'Remove like',
+  'message-dislike-button': 'Dislike',
+  'message-undo-dislike-button': 'Remove dislike',
+  'message-enable-editing': 'Edit',
+  'message-undo-edit': 'Undo edit',
+  'message-validate-edit': 'Validate edit',
+  'feedback-submit-button': 'Submit',
+  'feedback-submit-button-unavailable': 'Submit unavailable',
+  'feedback-close': 'Close',
+  'link-list-view-all-button': 'View all',
+  'link-list-collapse-button': 'Collapse list',
+  'link-list-reference-title': 'References',
+  'code-copypaste-button': 'Copy code',
+  'code-copypaste-success': 'Copied!',
+  'prompt-start-listening': 'Start listening',
+  'prompt-stop-listening': 'Stop listening',
+  'prompt-microphone-unavailable': 'Microphone unavailable',
+  'prompt-loading-state-placeholder': 'Thinking...',
+  'prompt-entry-placeholder': 'Type something...',
+  'prompt-send-button': 'Send response',
+  'prompt-send-blocked-button': 'Send unavailable',
+  'prompt-cancel-button': 'Cancel request',
+};
+
 export const Playground = {
   component: 'clabs-chat',
   argTypes: objectPlaygroundControls,
@@ -1641,6 +1680,7 @@ export const Playground = {
           enable-feedback-form
           .feedbackDefinitions="${feedbackFormOptions}"
           .headerMenuItems="${headerMenuItems}"
+          .customLabels="${customLabels}"
           ai-slug-content="${slugText}"
           .aiSlugObject="${slugContent}"
           input-field-placeholder="${'What can I assist you with today?'}"

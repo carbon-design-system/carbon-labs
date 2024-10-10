@@ -134,6 +134,12 @@ export default class messages extends LitElement {
   _firstRender = true;
 
   /**
+   * custom labels injected from parent
+   */
+  @property({ type: Object, attribute: 'customLabels' })
+  customLabels;
+
+  /**
    * detect when component is rendered to process rawtext
    */
   firstUpdated() {
@@ -167,6 +173,8 @@ export default class messages extends LitElement {
       if (lastMessage) {
         if (lastMessage.userSubmitted) {
           this._previousScrollHeight = newHeight - 36;
+        } else {
+          this._previousScrollHeight = newHeight - 36;
         }
       }
     }
@@ -180,9 +188,9 @@ export default class messages extends LitElement {
     super.updated(changedProperties);
 
     if (changedProperties.has('messages')) {
-      if (this._computedMessages.length !== this.messages.length) {
+      /*if (this._computedMessages.length !== this.messages.length) {
         console.log('diff');
-      }
+      }*/
       this._computedMessages = [...this.messages];
     }
 
@@ -255,7 +263,6 @@ export default class messages extends LitElement {
             if (this._limitScroll) {
               scrollTarget = this._previousScrollHeight;
             }
-            console.log(scrollTarget);
             this.scrollDiv?.scrollTo({
               top: scrollTarget,
               behavior: 'smooth',

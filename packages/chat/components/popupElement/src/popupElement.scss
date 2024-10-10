@@ -42,6 +42,7 @@
     background: linear-gradient(0deg, $highlight 0%, $background 25%), #ffffff;
 
     inline-size: 320px;
+    max-inline-size: 320px;
     opacity: 0;
     transition: border-color 0.15s linear;
   }

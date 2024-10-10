@@ -257,8 +257,17 @@ export default class message extends LitElement {
   @state()
   popupTargetElement;
 
+  /**
+   * unique id to tie feedback together
+   */
   @state()
   uniqueFeedbackId;
+
+  /**
+   * custom label presets
+   */
+  @property({ type: Object, attribute: 'customLabels' })
+  customLabels;
 
   /** detect when component is rendered to process rawtext
    */
@@ -1512,4 +1521,42 @@ export default class message extends LitElement {
       this._hideFeedBackForm();
     }
   }
+
+  /**
+   * _renderLabel - render default or custom label
+   * @param {string} key - dictionary key for label
+   */
+  _renderLabel = (key) => {
+    let customValue;
+    const labels = this.customLabels || {};
+    if (labels) {
+      switch (key) {
+        case 'message-regenerate-button':
+          customValue = labels[key] || 'Regenerate';
+          break;
+        case 'message-like-button':
+          customValue = labels[key] || 'Thumbs up';
+          break;
+        case 'message-undo-like-button':
+          customValue = labels[key] || 'Remove thumbs up';
+          break;
+        case 'message-dislike-button':
+          customValue = labels[key] || 'Thumbs down';
+          break;
+        case 'message-undo-dislike-button':
+          customValue = labels[key] || 'Remove thumbs down';
+          break;
+        case 'message-enable-editing':
+          customValue = labels[key] || 'Edit';
+          break;
+        case 'message-undo-edit':
+          customValue = labels[key] || 'Undo edit';
+          break;
+        case 'message-validate-edit':
+          customValue = labels[key] || 'Validate edit';
+          break;
+      }
+    }
+    return customValue || key;
+  };
 }

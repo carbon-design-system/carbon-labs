@@ -39,7 +39,7 @@ export function tagListElementTemplate(customElementClass) {
       ? html`<div class="${clabsPrefix}--chat-tag-list-error">
           ${errorMessage}
         </div>`
-      : html`<div class="${clabsPrefix}--chat-tag-list-container">
+      : html`<div class="${clabsPrefix}--chat-tag-list-container" role="group">
           ${tagList.map(
             (value, index) =>
               html` <div
@@ -52,6 +52,11 @@ export function tagListElementTemplate(customElementClass) {
                   size="sm"
                   type="button"
                   is-quick-action
+                  role="option"
+                  aria-selected="${selectionIndex[index] ? true : false}"
+                  aria-label="${value +
+                  ' ' +
+                  (selectionIndex[index] ? 'selected' : 'unselected')}"
                   ?is-selected="${selectionIndex[index]}"
                   data-content="${value}"
                   data-index="${index}"

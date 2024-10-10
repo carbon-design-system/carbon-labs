@@ -163,6 +163,12 @@ export default class codeElement extends LitElement {
     paddingLeft: string;
   }[] = [];
 
+  /**
+   * custom label presets
+   */
+  @property({ type: Object, attribute: 'customLabels' })
+  customLabels;
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
@@ -427,4 +433,24 @@ export default class codeElement extends LitElement {
       tickWidth.toString() + 'px'
     );
   }
+
+  /**
+   * _renderLabel - render default or custom label
+   * @param {string} key - target
+   */
+  _renderLabel = (key) => {
+    let customValue;
+    const labels = this.customLabels || {};
+    if (labels) {
+      switch (key) {
+        case 'code-copypaste-button':
+          customValue = labels[key] || 'Copy code';
+          break;
+        case 'code-copypaste-success':
+          customValue = labels[key] || 'Copieddddd!';
+          break;
+      }
+    }
+    return customValue || key;
+  };
 }

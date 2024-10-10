@@ -47,6 +47,7 @@ export function codeElementTemplate(customElementClass) {
     enableColoring,
     language,
     enableLanguageDisplay,
+    _renderLabel: renderLabel,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-code">
@@ -69,9 +70,12 @@ export function codeElementTemplate(customElementClass) {
           ? html`
               <cds-copy-button
                 @click="${copyCode}"
-                feedback="Copied!"
+                tooltip-alignment="end"
+                tooltip-position="bottom"
+                align="left"
+                feedback="${renderLabel('code-copypaste-success')}"
                 feedback-timeout="2000">
-                Copy to clipboard
+                ${renderLabel('code-copypaste-button')}
               </cds-copy-button>
             `
           : html``}

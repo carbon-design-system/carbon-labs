@@ -516,7 +516,6 @@ export default class codeElement extends LitElement {
             }
           }
         } else {
-          console.log(node);
           const element = node as Element;
           currentLine += element.outerHTML;
         }

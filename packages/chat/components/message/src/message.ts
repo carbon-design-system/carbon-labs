@@ -305,7 +305,6 @@ export default class message extends LitElement {
           this._streamText();
         } else {
           if (this.rawText) {
-            //this._readerContent = this.rawText;
             //this._parseText();
           }
         }

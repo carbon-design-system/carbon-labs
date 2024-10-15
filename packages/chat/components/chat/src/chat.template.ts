@@ -58,6 +58,7 @@ export function chatTemplate(customElementClass) {
     enableFeedbackForm,
     enableTextFeedbackForm,
     aiSlugContent,
+    aiSlugObject,
     enableRequestCancelling,
     _handleHeaderEscape,
     _handleFooterEscape,
@@ -90,7 +91,9 @@ export function chatTemplate(customElementClass) {
           @on-header-drag-cancel="${handleHeaderDragCancel}"
           @on-header-drag-keyboard-initiated="${handleHeaderKeyboardDragStart}"
           @on-header-escape="${_handleHeaderEscape}"
+          @on-footer-escape="${_handleFooterEscape}"
           header-slug-content="${aiSlugContent}"
+          .headerSlugObject="${aiSlugObject}"
           .menuItems="${headerMenuItems}"
           .customLabels="${customLabels}"
           ?docking-enabled="${enableDocking}"

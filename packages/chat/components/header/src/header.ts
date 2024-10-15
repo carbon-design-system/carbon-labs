@@ -153,6 +153,34 @@ export default class header extends LitElement {
   _isDragging = false;
 
   /**
+   * slug object dict
+   */
+  @property({ type: Object, attribute: 'headerSlugObject' })
+  headerSlugObject;
+
+  @state()
+  slugOpened = false;
+
+  @state()
+  useSlug = true;
+
+  /**
+   * show slug on button click
+   * @param {event} _event - click event when docking chat
+   */
+  _handleSlugClick(_event) {
+    this.slugOpened = true;
+  }
+
+  /**
+   * hide slug
+   * @param {event} _event - click event when docking chat
+   */
+  _hideAISlug(_event) {
+    this.slugOpened = false;
+  }
+
+  /**
    * docking event when popup button is clicked
    * @param {event} event - click event when docking chat
    */
@@ -216,6 +244,31 @@ export default class header extends LitElement {
       composed: true,
     });
     this.dispatchEvent(dragEvent);
+  }
+
+  /**
+   * focusMenu - focus on menu item
+   * @param {event} event - transfer event
+   */
+  _focusMenu(event) {
+    /*const overflowMenu = this.shadowRoot?.querySelector('#'+clabsPrefix+'--chat-header-overflow-menu-unique');
+    console.log(overflowMenu)
+    if(overflowMenu instanceof HTMLElement){
+      const subelem = overflowMenu.shadowRoot?.querySelector('#button');
+      console.log(subelem)
+        if (subelem instanceof HTMLElement) {
+          subelem.focus();
+        }
+    }*/
+    const lastKeyEvent = new CustomEvent('on-footer-escape', {
+      detail: {
+        action: 'FOOTER: user tabbed beyond chat',
+        originalEvent: event,
+      },
+      bubbles: true,
+      composed: true,
+    });
+    this.dispatchEvent(lastKeyEvent);
   }
 
   /** _handleDragAreaKeyup - move chat when arrow keys detected
@@ -297,6 +350,10 @@ export default class header extends LitElement {
       this._isDragging = false;
       if (event.key === 'Escape') {
         event.preventDefault();
+      }
+      if (event.key === 'Tab' && event.shiftKey) {
+        event.preventDefault();
+        this._focusMenu(event);
       }
       this._handleHeaderMouseUp();
     }
@@ -497,11 +554,6 @@ export default class header extends LitElement {
   _handleMenuToggle(event) {
     this.menuOpened = !this.menuOpened;
     event.preventDefault();
-    /*const items = this.shadowRoot?.querySelectorAll('.'+clabsPrefix+'--chat-header-elements-menu-list-item-button');
-    console.log(items)
-    if(this.menuOpened && items.length>0){
-      items[0].focus();
-    }*/
   }
 
   /**

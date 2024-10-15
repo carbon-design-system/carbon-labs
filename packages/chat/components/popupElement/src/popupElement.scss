@@ -11,7 +11,7 @@
 
 :host(#{$clabs-prefix}-chat-popup) {
   position: absolute;
-  z-index: 9999;
+  z-index: 6;
   inset-block-end: var(--chat-popup-element-block-position, 0);
   inset-inline-start: var(--chat-popup-element-inline-position, 0);
   transition: height 300ms linear;
@@ -102,7 +102,7 @@
 
   .#{$clabs-prefix}--chat-popup-title {
     color: $text-secondary;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     letter-spacing: 0.16px;
     line-height: 14px;

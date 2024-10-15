@@ -36,23 +36,25 @@ export function codeElementTemplate(customElementClass) {
     disableEditButton,
     _handleFullCodeEdit: handleFullCodeEdit,
     _copyCode: copyCode,
-    _handleCodeEdit: handleCodeEdit,
     _handleEditValidation: handleEditValidation,
     _handleEditCancellation: handleEditCancellation,
     editable,
-    _currentlyFullyEdited: currentlyFullyEdited,
-    _setCurrentIndex: setCurrentIndex,
     _currentlyEdited: currentlyEdited,
     _highlightLine: highlightLine,
     enableColoring,
     language,
     enableLanguageDisplay,
     _renderLabel: renderLabel,
+    _handleScroll: handleScroll,
+    _controlTabbing: controlTabbing,
+    theme,
+    _preRender: preRender,
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-code">
     <div class="${clabsPrefix}--chat-code-options">
       <div class="${clabsPrefix}--chat-code-options-buttons">
+        <div>${enableLanguageDisplay ? language : ''}</div>
         ${!disableEditButton
           ? html`
               <cds-icon-button
@@ -81,75 +83,57 @@ export function codeElementTemplate(customElementClass) {
           : html``}
       </div>
     </div>
+
     <div
       class="${clabsPrefix}--chat-code-container"
       tabindex="0"
       role="textbox"
+      @wheel="${handleScroll}"
       aria-label="Code Section">
-      ${currentlyFullyEdited && !disableLineTicks
-        ? html`
-            <div class="${clabsPrefix}--chat-code-container-full-elements">
-              <div class="${clabsPrefix}--chat-code-line-ticks-full"></div>
-              <div class="${clabsPrefix}--chat-code-line-divider-full"></div>
-              <textarea
-                @input="${handleFullCodeEdit}"
-                aria-label="Editable Text"
-                class="${clabsPrefix}--chat-code-edit-area">
-${_editedContent}
-          </textarea
-              >
-            </div>
-          `
-        : currentlyFullyEdited || editable
-        ? html`
-            <textarea
-              @input="${handleFullCodeEdit}"
-              aria-label="Editable Text"
-              class="${clabsPrefix}--chat-code-edit-area">
-${_editedContent}
-          </textarea
-            >
-          `
-        : html`${enableLanguageDisplay ? language : ''}
-          ${_renderedLines.map(
-            (lineObject, index) =>
-              html`
+      <textarea
+        @input="${handleFullCodeEdit}"
+        @keyup="${controlTabbing}"
+        wrap="hard"
+        aria-label="Editable Text"
+        spellcheck="false"
+        class="${clabsPrefix}--chat-code-edit-area ${!editable
+          ? clabsPrefix + '--chat-code-edit-hidden'
+          : ''}">
+${_editedContent}</textarea
+      >
+
+      <div
+        class="${clabsPrefix + '--chat-code-color-area'} ${editable
+          ? ' ' + clabsPrefix + '--chat-code-color-hidden'
+          : ''}">
+        ${_renderedLines.map(
+          (lineObject, index) =>
+            html`
+              <div
+                class="${clabsPrefix}--chat-code-line ${clabsPrefix}--chat-code-line-fade-in">
+                ${disableLineTicks || _renderedLines.length < 2
+                  ? html``
+                  : html`
+                      <div class="${clabsPrefix}--chat-code-line-tick">
+                        ${index + 1}
+                      </div>
+                      <div class="${clabsPrefix}--chat-code-line-divider"></div>
+                    `}
                 <div
-                  class="${clabsPrefix}--chat-code-line ${clabsPrefix}--chat-code-line-fade-in">
-                  ${disableLineTicks || _renderedLines.length < 2
-                    ? html``
-                    : html`
-                        <div class="${clabsPrefix}--chat-code-line-tick">
-                          ${index + 1}
-                        </div>
-                        <div
-                          class="${clabsPrefix}--chat-code-line-divider"></div>
-                      `}
-                  ${!editable
-                    ? html`<div
-                        class="${clabsPrefix}--chat-code-line-text"
-                        style="padding-left: ${lineObject.paddingLeft}">
-                        ${enableColoring
+                  class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-${theme ||
+                  'default'}-theme">
+                  ${enableColoring
+                    ? lineObject.content
+                    : unsafeHTML(
+                        preRender
                           ? lineObject.content
-                          : unsafeHTML(
-                              highlightLine(lineObject.content, language)
-                            )}
-                      </div>`
-                    : html`
-                        <textarea
-                          @keydown="${handleCodeEdit}"
-                          rows="1"
-                          aria-label="Editable Text"
-                          @click="${setCurrentIndex}"
-                          data-codeindex="${index}"
-                          class="${clabsPrefix}--chat-code-line-text-area ${lineObject.type}"
-                          style="padding-left: ${lineObject.paddingLeft}">
-${lineObject.content}</textarea
-                        >
-                      `}
+                          : highlightLine(lineObject.content, language)
+                      )}
                 </div>
-              `
-          )}`}
+              </div>
+            `
+        )}
+      </div>
     </div>
 
     ${currentlyEdited

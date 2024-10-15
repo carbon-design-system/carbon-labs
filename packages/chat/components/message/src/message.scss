@@ -39,6 +39,17 @@ $css--plex: true !default;
     max-inline-size: 100%;
     padding-inline-start: 16px;
   }
+  .#{$clabs-prefix}--chat-message-hidden-label {
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    margin: -1px;
+    block-size: 1px;
+    clip: rect(0, 0, 0, 0);
+    inline-size: 1px;
+    white-space: nowrap;
+  }
 
   .#{$clabs-prefix}--chat-message-content-compact {
     padding-inline-start: 8px;

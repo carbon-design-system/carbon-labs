@@ -60,12 +60,17 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-header-drag-area:focus {
-    border: 2px solid $text-primary;
+    border: 2px solid $link-primary;
     outline: none;
   }
 
   .#{$clabs-prefix}--chat-header-slug-compress {
     overflow: hidden scroll;
+    max-block-size: 50vh;
+  }
+
+  .#{$clabs-prefix}--chat-header-ai-button::part(button) {
+    max-inline-size: 50px;
   }
 
   .#{$clabs-prefix}--chat-header-elements {

@@ -162,7 +162,7 @@ export default class header extends LitElement {
   slugOpened = false;
 
   @state()
-  useSlug = true;
+  _useSlug = true;
 
   /**
    * show slug on button click

@@ -64,6 +64,12 @@ export function headerTemplate(customElementClass) {
     _handleDragAreaKeyup: handleDragAreaKeyup,
     _checkKeyboardMenu: checkKeyboardMenu,
     _renderLabel: renderLabel,
+    slugOpened,
+    headerSlugObject,
+    _handleSlugClick: handleSlugClick,
+    _hideAISlug: hideAISlug,
+    customLabels: customLabels,
+    _useSlug: useSlug,
   } = customElementClass;
   return html` <div
     class="${clabsPrefix}--chat-header-container"
@@ -210,20 +216,47 @@ export function headerTemplate(customElementClass) {
 
         <div class="${clabsPrefix}--chat-header-elements-right">
           <div class="${clabsPrefix}--chat-header-elements-icon">
-            <cds-slug
-              size="sm"
-              slot="slug"
-              kind="hollow"
-              autoalign
-              slug-label="Show information">
-              <div slot="body-text">
-                <div class="${clabsPrefix}--chat-header-slug-compress">
-                  ${headerSlugContent
-                    ? unsafeHTML(headerSlugContent)
-                    : 'Define your preferred tutorial/explanatory text within chat as an ai-slug-content attribute or as a composable slotted div element'}
-                </div>
-              </div>
-            </cds-slug>
+            ${useSlug
+              ? html`<cds-slug
+                  size="sm"
+                  slot="slug"
+                  autoalign
+                  alignment="bottom"
+                  slug-label="Show information">
+                  <div slot="body-text">
+                    <div class="${clabsPrefix}--chat-header-slug-compress">
+                      ${headerSlugContent
+                        ? unsafeHTML(headerSlugContent)
+                        : 'Define your preferred tutorial/explanatory text within chat as an ai-slug-content attribute or as a composable slotted div element'}
+                    </div>
+                  </div>
+                </cds-slug> `
+              : html` <cds-icon-button
+                  size="sm"
+                  kind="tertiary"
+                  align="right"
+                  role="button"
+                  tabindex="0"
+                  class="${clabsPrefix}--chat-header-ai-button"
+                  aria-expanded="${slugOpened}"
+                  aria-controls="${slugOpened
+                    ? clabsPrefix + '--chat-popup-unique-slug'
+                    : ''}"
+                  label="${renderLabel(
+                    slugOpened
+                      ? 'message-undo-like-button'
+                      : 'message-like-button'
+                  )}"
+                  @click="${handleSlugClick}">
+                  <span slot="icon" class="cds--slug__text">AI</span>
+                  <span slot="tooltip-content"
+                    >${renderLabel(
+                      slugOpened
+                        ? 'message-undo-like-button'
+                        : 'message-like-button'
+                    )}</span
+                  >
+                </cds-icon-button>`}
           </div>
 
           ${!disableHeaderButtons
@@ -331,5 +364,19 @@ export function headerTemplate(customElementClass) {
         </div>
       </div>
     </div>
+    ${slugOpened
+      ? html` <clabs-chat-popup
+          @on-feedback-popup-closed="${hideAISlug}"
+          ?is-open="${slugOpened}"
+          orientation="top"
+          block-position="50"
+          inline-position="50"
+          id="${clabsPrefix}--chat-popup-unique-slug"
+          .feedbackFormValues="${headerSlugObject}"
+          .customLabels="${customLabels}"
+          ?compact-mode="${enableFullscreen}"
+          type="slug">
+        </clabs-chat-popup>`
+      : ''}
   </div>`;
 }

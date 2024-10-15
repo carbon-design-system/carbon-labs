@@ -325,44 +325,6 @@ const customLabels = {
   'prompt-cancel-button': 'Cancel request',
 };
 
-const customLabelsFR = {
-  'header-close-chat': 'Fermer',
-  'header-enable-fullscreen': 'Plein écran',
-  'header-disable-fullscreen': 'Quitter plein écran',
-  'header-popout-chat': 'Détacher la discussion',
-  'header-expand-chat': 'Développer la discussion',
-  'header-move-chat': 'Déplacer la discussion',
-  'header-move-chat-done': 'Définir la discussion',
-  'header-open-menu': 'Ouvrir',
-  'header-close-menu': 'Fermer',
-  'header-open-slug': 'Ouvrir',
-  'header-close-slug': 'Fermer',
-  'message-regenerate-button': 'Régénérer',
-  'message-like-button': 'Aimer',
-  'message-undo-like-button': 'Annuler le like',
-  'message-dislike-button': 'Ne pas aimer',
-  'message-undo-dislike-button': 'Annuler le dislike',
-  'message-enable-editing': 'Modifier',
-  'message-undo-edit': 'Annuler la modification',
-  'message-validate-edit': 'Valider la modification',
-  'feedback-submit-button': 'Envoyer',
-  'feedback-submit-button-unavailable': 'Envoyer indisponible',
-  'feedback-close': 'Fermer',
-  'link-list-view-all-button': 'Voir tout',
-  'link-list-collapse-button': 'Réduire la liste',
-  'link-list-reference-title': 'Références',
-  'code-copypaste-button': 'Copier le code',
-  'code-copypaste-success': 'Copié !',
-  'prompt-start-listening': "Démarrer l'écoute",
-  'prompt-stop-listening': "Arrêter l'écoute",
-  'prompt-microphone-unavailable': 'Microphone indisponible',
-  'prompt-loading-state-placeholder': 'Chargement...',
-  'prompt-entry-placeholder': 'Tapez quelque chose...',
-  'prompt-send-button': 'Envoyer la réponse',
-  'prompt-send-blocked-button': 'Envoyer indisponible',
-  'prompt-cancel-button': 'Annuler la demande',
-};
-
 const apiArgs = {
   chosenHost: 'Local',
   userPrompt:
@@ -424,14 +386,14 @@ export const APIPlayground = {
         }}"
         model="llama-2"
         auto-update
-        .customLabels="${customLabelsFR}"
+        .customLabels="${customLabels}"
         ai-slug-content="${slugText}"
         user-prompt="${userPrompt}"
         enable-feedback-form
         .feedbackDefinitions="${feedbackFormOptions}"
         api-url="${apiUrl}"
         feedback-url="${feedbackUrl}"
-        temperature="${temperature}"
+        temperature="${temperature || 0.2}"
         user-name="Sherlock"
         agent-name="Dr Watson">
       </clabs-chat>

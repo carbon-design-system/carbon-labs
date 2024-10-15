@@ -136,6 +136,12 @@ export default class CLABSChat extends LitElement {
   temperature;
 
   /**
+   * save original user temp
+   */
+  @state()
+  originalTemperature;
+
+  /**
    * string denoting the user name, used for internal logic in the server to differentiate bot responses and user reseponses. default: 'user' but should be the user's real name based on IBM ID or any other data available
    */
   @property({ type: String, attribute: 'user-name' })
@@ -272,6 +278,11 @@ export default class CLABSChat extends LitElement {
   @property({ type: String, attribute: 'ai-slug-content' })
   aiSlugContent;
 
+  /** dict for all renderable value
+   */
+  @property({ type: Object, attribute: 'aiSlugObject' })
+  aiSlugObject;
+
   /**
    * enable/disable user request canceling
    */
@@ -368,6 +379,10 @@ export default class CLABSChat extends LitElement {
 
     if (changedProperties.has('_streamResponses')) {
       this.requestUpdate();
+    }
+
+    if (changedProperties.has('temperature')) {
+      this.originalTemperature = this.temperature;
     }
   }
 
@@ -702,6 +717,9 @@ export default class CLABSChat extends LitElement {
     const deletionIndex = event.detail.messageIndexInChat - 1;
     const previousMessage = this._messages[deletionIndex].text;
     if (this.autoUpdate || this.apiURL) {
+      if (this.temperature) {
+        this.temperature += 0.2;
+      }
       this._messages = this._messages.slice(0, deletionIndex);
       const inputEvent = new CustomEvent('user-input', {
         detail: { textInputValue: previousMessage },
@@ -736,6 +754,9 @@ export default class CLABSChat extends LitElement {
         bubbles: true,
         composed: true,
       });
+      if (this.temperature) {
+        this.temperature += 0.2;
+      }
       this.requestUpdate();
       this.sendInput(inputEvent);
     } else {
@@ -778,6 +799,7 @@ export default class CLABSChat extends LitElement {
     if (this.enableRequestCancelling) {
       this.requestCancelled = false;
     }
+    this.temperature;
 
     const newMessage = {
       text: value,
@@ -828,6 +850,9 @@ export default class CLABSChat extends LitElement {
           } else {
             this.requestCancelled = false;
           }
+          if (this.temperature) {
+            this.temperature = this.originalTemperature;
+          }
         })
         .catch(() => {
           if (!this.requestCancelled) {
@@ -845,6 +870,9 @@ export default class CLABSChat extends LitElement {
             this.requestUpdate();
           } else {
             this.requestCancelled = false;
+          }
+          if (this.temperature) {
+            this.temperature = this.originalTemperature;
           }
         });
     }

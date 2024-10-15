@@ -271,10 +271,39 @@ export default class footer extends LitElement {
    * @param {event} event - lit event sent by the keyboard input
    **/
   _checkKeyboardEscapeB(event) {
-    const blockedSendTest =
-      (this._messageText === '' || this._forceDisableInput) &&
-      this._fullscreenMode;
-    if (event.key === 'Tab' && blockedSendTest && !event.shiftKey) {
+    const blockedSendTest = this._messageText === '' || this._forceDisableInput;
+    if (
+      event.key === 'Tab' &&
+      blockedSendTest &&
+      !event.shiftKey &&
+      this._fullscreenMode
+    ) {
+      event.preventDefault();
+
+      const lastKeyEvent = new CustomEvent('on-footer-escape', {
+        detail: {
+          action: 'FOOTER: user tabbed beyond chat',
+          originalEvent: event,
+        },
+        bubbles: true,
+        composed: true,
+      });
+      this.dispatchEvent(lastKeyEvent);
+    }
+  }
+
+  /** handle user tab inputs, check if escapes chat
+   * @param {event} event - lit event sent by the keyboard input
+   **/
+  _checkKeyboardEscapeC(event) {
+    const blockedSendTest = this._messageText === '' || this._forceDisableInput;
+    if (
+      event.key === 'Tab' &&
+      blockedSendTest &&
+      !event.shiftKey &&
+      !this._voiceAPIAvailable &&
+      this._fullscreenMode
+    ) {
       event.preventDefault();
 
       const lastKeyEvent = new CustomEvent('on-footer-escape', {
@@ -337,6 +366,7 @@ export default class footer extends LitElement {
         }
       }
     }
+    this._checkKeyboardEscapeC(event);
   }
 
   /** handle voice recording start click event

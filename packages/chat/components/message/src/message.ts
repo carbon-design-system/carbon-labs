@@ -269,6 +269,9 @@ export default class message extends LitElement {
   @property({ type: Object, attribute: 'customLabels' })
   customLabels;
 
+  @state()
+  _readerContent;
+
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
@@ -308,8 +311,16 @@ export default class message extends LitElement {
       }
     } else {
       this._messageElements = this.elements;
+      //this._readerContent = this._prepareReaderText(this.elements);
       this.requestUpdate();
     }
+  }
+
+  /** _prepareReaderText - convert obecjts into readable text
+   * @param {Object} elements -  array of objects
+   */
+  _prepareReaderText(elements) {
+    return elements.map((element) => element.content).join('\n');
   }
 
   /** internal LIT function to detect updates to the DOM tree, used to auto update the messageElements attribute
@@ -329,9 +340,13 @@ export default class message extends LitElement {
       this._forceStreamEnd = !this._streamContent;
     }
     if (changedProperties.has('rawText')) {
+      //this._readerContent = this.rawText;
       if (!this._streamContent) {
         this._parseText();
       }
+    }
+    if (changedProperties.has('_messageElements')) {
+      this._readerContent = this._prepareReaderText(this._messageElements);
     }
     if (changedProperties.has('compactIcon')) {
       this.showFeedBackForm = false;
@@ -424,13 +439,14 @@ export default class message extends LitElement {
     this.popupTargetElement = targetItem;
     //const boundingRect = targetItem.getBoundingClientRect();
     event.preventDefault();
+    const mainHeight = this.parentElement?.parentElement?.scrollHeight;
 
     if (this.feedbackFormDefinitions) {
       this._feedbackFormValues = this.feedbackFormDefinitions[type];
       this._feedbackFormValues.uniqueFeedbackId = this.uniqueFeedbackId;
       this._feedbackFormValues.parentValues = {
         offsetTop: this.offsetTop,
-        scrollHeight: this.scrollTop,
+        scrollHeight: mainHeight,
         uniqueId: uniqueId,
       };
     }

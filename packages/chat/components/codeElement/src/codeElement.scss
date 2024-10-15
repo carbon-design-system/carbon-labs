@@ -15,18 +15,29 @@ $css--plex: true !default;
 :host(#{$clabs-prefix}-chat-code) {
   position: relative;
   display: block;
+  box-sizing: border-box;
+  border: 1px solid $border-subtle-00;
+  border-radius: 8px;
+  background: $background;
+
   .#{$clabs-prefix}--chat-code-container {
+    overflow: hidden;
+    box-sizing: border-box;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.64px;
+    line-height: 20px;
+  }
+
+  .#{$clabs-prefix}--chat-code-color-area {
     position: relative;
-    display: block;
+    display: flex;
     overflow: hidden scroll;
     box-sizing: border-box;
     flex-direction: column;
-    padding: 16px;
-    border: 1px solid $border-subtle-00;
-    border-radius: 8px;
-    background-color: $background;
+
     block-size: 100%;
-    color: $text-primary;
+    font: inherit;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     inline-size: 100%;
@@ -34,12 +45,68 @@ $css--plex: true !default;
     line-height: 20px;
     max-block-size: var(--chat-code-height, '100%');
     min-block-size: 100%;
-    min-inline-size: 100%;
-    padding-inline: 12px 16px;
-    word-break: break-word;
+    padding-block: 16px;
+    tab-size: 3;
+  }
+
+  .#{$clabs-prefix}--chat-code-edit-area {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden scroll;
+    box-sizing: border-box;
+    border: none;
+    background: none;
+    block-size: 100%;
+    caret-color: $text-primary;
+    color: $support-warning;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    inline-size: calc(100% - 64px);
+    inset-block-start: 13px;
+    inset-inline-start: 14px;
+    letter-spacing: 0.16px;
+    line-height: 20px;
+    margin-inline: var(--chat-code-tick-width, '13px') 16px;
+    max-block-size: var(--chat-code-height, '100%');
+
+    outline: none;
+    overflow-wrap: break-word;
+    resize: none;
+    tab-size: 3;
+
+    white-space: pre;
+    word-wrap: break-word;
   }
 
   .#{$clabs-prefix}--chat-code-line {
+    display: flex;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-tick {
+    flex: 0 0 var(--chat-code-tick-width, '13px');
+    inline-size: var(--chat-code-tick-width, '13px');
+    padding-inline-end: 0.5em;
+    text-align: end;
+    user-select: none;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-divider {
+    box-sizing: border-box;
+    flex: 0 0 2px;
+    border-inline-start: 1px solid $border-subtle-01;
+    inline-size: 2px;
+    user-select: none;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-text {
+    flex: 1;
+    padding-inline-start: 8px;
+    pointer-events: none;
+    word-wrap: break-word;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-b {
     display: flex;
     flex-direction: row;
   }
@@ -84,7 +151,7 @@ $css--plex: true !default;
     cursor: pointer;
   }
 
-  .#{$clabs-prefix}--chat-code-line-tick {
+  .#{$clabs-prefix}--chat-code-line-tick-b {
     box-sizing: border-box;
     flex: 0 0 var(--chat-code-tick-width, '13px');
     inline-size: var(--chat-code-tick-width, '13px');
@@ -93,7 +160,7 @@ $css--plex: true !default;
     user-select: none;
   }
 
-  .#{$clabs-prefix}--chat-code-line-divider {
+  .#{$clabs-prefix}--chat-code-line-divider-b {
     box-sizing: border-box;
     flex: 0 0 2px;
     border-inline-start: 1px solid $border-subtle-01;
@@ -106,11 +173,11 @@ $css--plex: true !default;
     flex-direction: row;
   }
 
-  .#{$clabs-prefix}--chat-code-line-ticks-full {
+  .#{$clabs-prefix}--chat-code-line-ticks-full-b {
     inline-size: 26px;
   }
 
-  .#{$clabs-prefix}--chat-code-line-divider-full {
+  .#{$clabs-prefix}--chat-code-line-divider-full-b {
     box-sizing: border-box;
     flex: 0 0 2px;
     border-inline-start: 1px solid $border-subtle-01;
@@ -118,12 +185,12 @@ $css--plex: true !default;
     user-select: none;
   }
 
-  .#{$clabs-prefix}--chat-code-line-text {
+  .#{$clabs-prefix}--chat-code-line-text-b {
     flex-grow: 1;
     padding-block-end: 2px;
   }
 
-  .#{$clabs-prefix}--chat-code-line-text-area {
+  .#{$clabs-prefix}--chat-code-line-text-area-b {
     box-sizing: border-box;
     flex: 1;
     padding: 0;
@@ -140,27 +207,50 @@ $css--plex: true !default;
     word-break: break-word;
   }
 
-  .#{$clabs-prefix}--chat-code-edit-area {
+  .#{$clabs-prefix}--chat-code-edit-area-b {
     display: block;
-    overflow: hidden scroll;
     box-sizing: border-box;
     padding: 0;
     border: none;
     background: none;
     block-size: var(--chat-code-height, 100%);
-
-    color: $text-primary;
+    caret-color: $text-primary;
     font: inherit;
-    font-size: 13px;
+    font-size: 14px;
     inline-size: 100%;
     letter-spacing: 0.16px;
     line-height: 22px;
     outline: none;
-    padding-block-end: 46px;
-    padding-inline-start: 8px;
+
+    padding-inline-start: var(--chat-code-tick-width, '13px');
     resize: none;
+    tab-size: 3;
+    word-break: break-word;
+  }
+
+  .#{$clabs-prefix}--chat-code-color-area-b {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    background: none;
+    block-size: 100%;
+    inline-size: 100%;
+    inset-block-start: 16px;
+    inset-inline-start: var(--chat-tick-offset, '0px');
+    letter-spacing: 0.16px;
+    line-height: 1.5;
+    pointer-events: none;
     tab-size: 2;
     word-break: break-word;
+  }
+
+  .#{$clabs-prefix}--chat-code-edit-hidden {
+    display: none;
+    visibility: hidden;
   }
 
   .#{$clabs-prefix}--chat-code-line-comment {
@@ -185,68 +275,207 @@ $css--plex: true !default;
 
   .hljs-comment,
   .hljs-quote {
-    color: $text-secondary;
-    font-style: italic;
+    color: $support-success;
   }
 
-  .hljs-literal,
-  .hljs-built_in,
-  .hljs-selector-tag,
-  .hljs-doctag {
-    color: $purple-50;
+  .#{$clabs-prefix}--chat-code-g100-theme {
+    .hljs-literal,
+    .hljs-built_in,
+    .hljs-selector-tag,
+    .hljs-doctag {
+      color: $purple-60;
+    }
+
+    .hljs-string,
+    .hljs-attribute,
+    .hljs-template-variable,
+    .hljs-template-tag {
+      color: $green-60;
+    }
+
+    .hljs-keyword,
+    .hljs-number,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: $blue-60;
+    }
+
+    .hljs-function .hljs-title,
+    .hljs-title,
+    .hljs-function {
+      color: $cyan-60;
+    }
+
+    .hljs-operator,
+    .hljs-punctuation,
+    .hljs-subst {
+      color: $red-60;
+    }
+
+    .hljs-variable,
+    .hljs-property,
+    .hljs-params {
+      color: $magenta-60;
+    }
+
+    .hljs-attr {
+      color: $orange-60;
+    }
+
+    .hljs-class .hljs-title,
+    .hljs-type,
+    .hljs-class {
+      color: $teal-60;
+    }
+
+    .hljs-name,
+    .hljs-section,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-selector-class {
+      color: $yellow-60;
+    }
+
+    .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .hljs-strong {
+      font-weight: bold;
+    }
   }
 
-  .hljs-string,
-  .hljs-attribute,
-  .hljs-template-variable,
-  .hljs-template-tag {
-    color: $green-50;
+  .#{$clabs-prefix}--chat-code-default-theme {
+    .hljs-literal,
+    .hljs-built_in,
+    .hljs-selector-tag,
+    .hljs-doctag {
+      color: $purple-50;
+    }
+
+    .hljs-string,
+    .hljs-attribute,
+    .hljs-template-variable,
+    .hljs-template-tag {
+      color: $green-50;
+    }
+
+    .hljs-keyword,
+    .hljs-number,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: $blue-50;
+    }
+
+    .hljs-function .hljs-title,
+    .hljs-title,
+    .hljs-function {
+      color: $cyan-50;
+    }
+
+    .hljs-operator,
+    .hljs-punctuation,
+    .hljs-subst {
+      color: $red-50;
+    }
+
+    .hljs-variable,
+    .hljs-property,
+    .hljs-params {
+      color: $magenta-50;
+    }
+
+    .hljs-attr {
+      color: $orange-50;
+    }
+
+    .hljs-class .hljs-title,
+    .hljs-type,
+    .hljs-class {
+      color: $teal-50;
+    }
+
+    .hljs-name,
+    .hljs-section,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-selector-class {
+      color: $yellow-50;
+    }
+
+    .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .hljs-strong {
+      font-weight: bold;
+    }
   }
 
-  .hljs-keyword,
-  .hljs-number,
-  .hljs-symbol,
-  .hljs-bullet {
-    color: $magenta-50;
-  }
+  .#{$clabs-prefix}--chat-code-white-theme {
+    .hljs-literal,
+    .hljs-built_in,
+    .hljs-selector-tag,
+    .hljs-doctag {
+      color: $purple-40;
+    }
 
-  .hljs-function .hljs-title,
-  .hljs-title,
-  .hljs-function {
-    color: $cyan-50;
-  }
+    .hljs-string,
+    .hljs-attribute,
+    .hljs-template-variable,
+    .hljs-template-tag {
+      color: $green-40;
+    }
 
-  .hljs-operator,
-  .hljs-punctuation,
-  .hljs-subst {
-    color: $red-50;
-  }
+    .hljs-keyword,
+    .hljs-number,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: $blue-40;
+    }
 
-  .hljs-variable,
-  .hljs-property,
-  .hljs-params {
-    color: $blue-50;
-  }
+    .hljs-function .hljs-title,
+    .hljs-title,
+    .hljs-function {
+      color: $cyan-40;
+    }
 
-  .hljs-class .hljs-title,
-  .hljs-type,
-  .hljs-tag,
-  .hljs-class {
-    color: $yellow-50;
-  }
+    .hljs-operator,
+    .hljs-punctuation,
+    .hljs-subst {
+      color: $red-40;
+    }
 
-  .hljs-name,
-  .hljs-section,
-  .hljs-selector-id,
-  .hljs-selector-class {
-    color: $orange-50;
-  }
+    .hljs-variable,
+    .hljs-property,
+    .hljs-params {
+      color: $magenta-40;
+    }
 
-  .hljs-emphasis {
-    font-style: italic;
-  }
+    .hljs-attr {
+      color: $orange-40;
+    }
 
-  .hljs-strong {
-    font-weight: bold;
+    .hljs-class .hljs-title,
+    .hljs-type,
+    .hljs-class {
+      color: $teal-40;
+    }
+
+    .hljs-name,
+    .hljs-section,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-selector-class {
+      color: $yellow-40;
+    }
+
+    .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .hljs-strong {
+      font-weight: bold;
+    }
   }
 }

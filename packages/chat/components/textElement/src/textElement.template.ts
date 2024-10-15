@@ -27,7 +27,6 @@ export function textElementTemplate(customElementClass) {
   const {
     _textElements: textElements,
     alignRight,
-    content,
     enableHtmlRendering,
     enableSummarization,
     _updateHighlightTarget: updateHighlightTarget,
@@ -46,11 +45,7 @@ export function textElementTemplate(customElementClass) {
   return html`<div class="${clabsPrefix}--chat-text">
     <div
       class="${clabsPrefix}--chat-text--float-${alignRight ? 'right' : 'left'}">
-      <div
-        class="${clabsPrefix}--chat-text-content"
-        role="log"
-        aria-live="polite"
-        aria-label="${content}">
+      <div class="${clabsPrefix}--chat-text-content">
         ${textElements.map(
           (textPiece, index) =>
             html` ${textPiece.type === 'annotation' || textPiece.type === 'link'

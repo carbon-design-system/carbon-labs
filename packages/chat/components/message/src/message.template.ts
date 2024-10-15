@@ -84,18 +84,29 @@ export function messageTemplate(customElementClass) {
     popupTargetElement,
     _renderLabel: renderLabel,
     customLabels,
+    _readerContent: readerContent,
   } = customElementClass;
 
   return html`<div
-    role="article"
-    aria-label="Message #${index} from ${userSubmitted
-      ? displayName
-        ? displayName
-        : 'You'
-      : displayName == null
-      ? 'watsonx'
-      : displayName} at ${timeStamp}"
+    aria-labelledby="${clabsPrefix}--chat-message-${index}-target-reader-label"
+    role="alert"
+    aria-live="assertive"
     class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
+    <div
+      class="${clabsPrefix}--chat-message-hidden-label"
+      id="${clabsPrefix}--chat-message-${index}-target-reader-label">
+      <p>
+        Message from
+        ${userSubmitted
+          ? displayName
+            ? displayName
+            : 'User'
+          : displayName == null
+          ? 'AI model'
+          : displayName}
+        at ${timeStamp}: ${readerContent}"
+      </p>
+    </div>
     <div class="${clabsPrefix}--chat-message-container">
       ${userSubmitted
         ? html` <div class="${clabsPrefix}--chat-message-content">
@@ -474,11 +485,6 @@ export function messageTemplate(customElementClass) {
                                   '--chat-popup-unique-feedback-' +
                                   index
                                 : ''}"
-                              label="${renderLabel(
-                                positiveFeedbackSelected
-                                  ? 'message-undo-like-button'
-                                  : 'message-like-button'
-                              )}"
                               @keydown="${handlePositiveKeyboardInput}"
                               @click="${handlePositiveFeedback}">
                               ${positiveFeedbackSelected

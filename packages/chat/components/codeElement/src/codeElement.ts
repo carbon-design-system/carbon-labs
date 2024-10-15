@@ -134,6 +134,12 @@ export default class codeElement extends LitElement {
   language;
 
   /**
+   * prerender with highlight
+   */
+  @state()
+  _preRender = true;
+
+  /**
    * Array of lines parsed from content attribute
    */
   @state()
@@ -169,6 +175,12 @@ export default class codeElement extends LitElement {
   @property({ type: Object, attribute: 'customLabels' })
   customLabels;
 
+  /**
+   * core theme
+   */
+  @state()
+  theme;
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
@@ -179,9 +191,22 @@ export default class codeElement extends LitElement {
         this._originalContent = this.content;
       }
       if (this.streaming) {
-        this._formatCode();
+        this._formatCode(false);
       }
     }
+  }
+
+  /**
+   * _clearCode - get code type if it exists and remove backticks
+   * @param {string} content - content code string
+   */
+  _clearCode(content) {
+    const match = content.match(/^```(\w+)?\n([\s\S]*?)\n```$/);
+    if (match) {
+      const [, lang, codeContent] = match;
+      return { language: lang || null, codeContent };
+    }
+    return { language: null, codeContent: content };
   }
 
   /** detect when component is rendered to process code object
@@ -191,12 +216,20 @@ export default class codeElement extends LitElement {
       this.style.setProperty('--chat-code-height', this.maxHeight);
     }
     if (this.editable) {
-      this.disableLineTicks = true;
+      //this.disableLineTicks = true;
+      if (!this.disableLineTicks) {
+        this.style.setProperty('--chat-code-tick-offset', '16px');
+      }
     }
     if (this.content !== undefined) {
+      const codeAnalysis = this._clearCode(this.content);
+      if (codeAnalysis.language) {
+        this.content = codeAnalysis.codeContent;
+        this.language = codeAnalysis.language;
+      }
       this._editedContent = this.content;
       this._originalContent = this.content;
-      this._formatCode();
+      this._formatCode(false);
     } else {
       this._renderedLines = [
         {
@@ -212,6 +245,25 @@ export default class codeElement extends LitElement {
       });
 
       this.resizeObserver.observe(this);
+    }
+  }
+
+  /** _handleScroll
+   * @param {event} _event - event from scroll
+   */
+  _handleScroll(_event) {
+    const textArea = this.shadowRoot?.querySelector(
+      '.clabs--chat-code-edit-area'
+    );
+    const editArea = this.shadowRoot?.querySelector(
+      '.clabs--chat-code-color-area'
+    );
+    if (
+      editArea instanceof HTMLElement &&
+      textArea instanceof HTMLElement &&
+      this.editable
+    ) {
+      editArea.scrollTop = textArea.scrollTop;
     }
   }
 
@@ -233,6 +285,36 @@ export default class codeElement extends LitElement {
   }
 
   /**
+   * _getTheme - find current theme by checking parent background color
+   */
+  _getTheme() {
+    if (this.parentElement instanceof HTMLElement) {
+      const parentStyle = getComputedStyle(this.parentElement);
+      const backgroundColor = parentStyle.getPropertyValue('--cds-background');
+      const darkMode =
+        backgroundColor.startsWith('#') &&
+        parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2;
+      this.theme = darkMode ? 'g100' : 'white';
+    } else {
+      const parentStyle = getComputedStyle(this);
+      const backgroundColor = parentStyle.getPropertyValue('--cds-background');
+      const darkMode =
+        backgroundColor.startsWith('#') &&
+        parseInt(backgroundColor.replace('#', ''), 16) < 0xffffff / 2;
+      this.theme = darkMode ? 'g100' : 'white';
+    }
+  }
+
+  /** _controlTabbing - block tab event in typing
+   * @param {event} event - key event
+   */
+  _controlTabbing(event) {
+    if (event.type === 'keydown' && event.shiftKey && event.key === 'Tab') {
+      event.preventDefault();
+    }
+  }
+
+  /**
    * _handleFullCodeEdit - textarea input event to record and feedback edits to content
    * @param {event} event - textarea input event
    */
@@ -241,6 +323,7 @@ export default class codeElement extends LitElement {
 
     if (newLines && this._updateOnEdit) {
       this._editedContent = newLines;
+      this._formatCode(true);
       const codeEditedEvent = new CustomEvent('on-code-edit-change', {
         detail: {
           previousLineData: this.content,
@@ -256,6 +339,7 @@ export default class codeElement extends LitElement {
     } else {
       this._currentlyEdited = true;
     }
+    this._handleScroll(event);
   }
 
   /**
@@ -277,6 +361,7 @@ export default class codeElement extends LitElement {
 
     const targetElement = event?.target;
     const codeIndex = targetElement.getAttribute('data-codeindex');
+
     if (codeIndex) {
       const key = event.code;
       const lineIndex = parseInt(codeIndex);
@@ -367,8 +452,8 @@ export default class codeElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(codeEditedEvent);
-
-    //this._formatCode();
+    this._formatCode(false);
+    this._formatCode(true);
     this.requestUpdate();
   }
 
@@ -381,53 +466,97 @@ export default class codeElement extends LitElement {
   }
 
   /** format code to properly display in HTML
+   * @param {boolean} edited - whether to render edited or not
    */
-  _formatCode() {
+  _formatCode(edited) {
+    this.theme = this._getTheme();
+
+    this._currentlyEdited = false;
+    const formattedText = edited ? this._editedContent : this.content;
+    const htmlSafeText = formattedText.replace(/```/g, '');
+
     try {
-      const detection = hljs.highlightAuto(this.content);
-      this.language = detection.language;
+      if (!this.language) {
+        const detection = hljs.highlightAuto(htmlSafeText);
+        this.language = detection.language;
+      }
     } catch (e) {
       this.language = 'javascript';
     }
 
-    this._currentlyEdited = false;
-    const formattedText = this.content;
-    const htmlSafeText = formattedText.replace(/```/g, '');
-    //.replace(/</g, '&lt;')
-    //.replace(/>/g, '&gt;');
     const lines = htmlSafeText.trim().split('\n');
     const tabWidth = 24;
     const paddingLeft = 8;
-    const textValues: {
+    let textValues: {
       content: string;
       type: string;
       paddingLeft: string;
     }[] = [];
 
-    for (let i = 0; i < lines.length; i++) {
-      const lineType = '';
-      /*const trimmedLine = lines[i].replace(/\t/g, '');
+    const highlightMode = true;
+    if (highlightMode) {
+      const highlightedCode = hljs.highlightAuto(htmlSafeText).value;
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = highlightedCode;
+      const codeLines: string[] = [];
+      let currentLine = '';
+      for (let i = 0; i < tempDiv.childNodes.length; i++) {
+        const node = tempDiv.childNodes[i];
+        if (node.nodeType === Node.TEXT_NODE) {
+          const lines = node.textContent?.split('\n');
+          if (lines) {
+            for (let k = 0; k < lines.length; k++) {
+              if (k > 0) {
+                codeLines.push(
+                  currentLine.replace(/\t/g, '&nbsp;&nbsp;&nbsp;')
+                );
+                currentLine = '';
+              }
+              currentLine += lines[k];
+            }
+          }
+        } else {
+          console.log(node);
+          const element = node as Element;
+          currentLine += element.outerHTML;
+        }
+      }
+
+      if (currentLine) {
+        codeLines.push(currentLine.replace(/\t/g, '&nbsp;&nbsp;&nbsp;'));
+      }
+      textValues = codeLines.map((line) => ({
+        content: line,
+        type: '',
+        paddingLeft: '0px',
+      }));
+    } else {
+      for (let i = 0; i < lines.length; i++) {
+        const lineType = '';
+        /*const trimmedLine = lines[i].replace(/\t/g, '');
       if (trimmedLine.startsWith('#') || trimmedLine.startsWith('//')) {
         lineType = 'clabs--chat-code-line-comment';
       }*/
 
-      let tabOffset = paddingLeft;
-      const tabMatch = lines[i].match(/^\t*/);
-      if (tabMatch) {
-        tabOffset += tabMatch[0].length * tabWidth;
-      }
+        let tabOffset = paddingLeft;
+        const tabMatch = lines[i].match(/^\t*/);
+        if (tabMatch) {
+          tabOffset += tabMatch[0].length * tabWidth;
+        }
+        tabOffset = 0;
 
-      textValues.push({
-        content: lines[i].trim().replace(/\t/g, ''),
-        type: lineType,
-        paddingLeft: tabOffset.toString() + 'px',
-      });
+        textValues.push({
+          content: lines[i].trim().replace(/\t/g, ''),
+          type: lineType,
+          paddingLeft: tabOffset.toString() + 'px',
+        });
+      }
     }
 
     this._editedLines = JSON.parse(JSON.stringify(textValues));
     this._originalLines = JSON.parse(JSON.stringify(textValues));
     this._renderedLines = JSON.parse(JSON.stringify(textValues));
-    const tickWidth = 13 * lines.length.toString().length;
+    const tickWidth = 13 * textValues.length.toString().length;
     this.style.setProperty(
       '--chat-code-tick-width',
       tickWidth.toString() + 'px'

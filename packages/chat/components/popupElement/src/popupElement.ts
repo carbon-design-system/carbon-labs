@@ -81,7 +81,7 @@ export default class popupElement extends LitElement {
    * optional orientation value to show caret
    */
   @property({ type: String, attribute: 'orientation', reflect: true })
-  orientation = 'top';
+  orientation;
 
   /**
    * target div to attach to
@@ -380,12 +380,14 @@ export default class popupElement extends LitElement {
       this.style.setProperty('--chat-popup-element-visibility', 'visible');
       const offsetTop = this.feedbackFormValues?.parentValues?.offsetTop;
       const feedbackHeight = this.scrollHeight;
+      const parentHeight =
+        this.feedbackFormValues?.parentValues?.scrollHeight || 0;
 
       let horizontalPosition = 54;
       let verticalPosition = 60;
       let orientation = 'top';
 
-      if (offsetTop < feedbackHeight) {
+      if (parentHeight - feedbackHeight > offsetTop) {
         verticalPosition = -feedbackHeight;
         orientation = 'bottom';
       }

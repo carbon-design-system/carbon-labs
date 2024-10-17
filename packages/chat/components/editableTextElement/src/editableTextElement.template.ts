@@ -34,8 +34,7 @@ export function editableTextElementTemplate(customElementClass) {
         @keydown="${setEditedMessage}"
         @keyup="${setEditedMessage}"
         class="${clabsPrefix}--chat-editable-text-area">
-              ${content}
-          </textarea
+${content}</textarea
       >
     </div>
   </div>`;

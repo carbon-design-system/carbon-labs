@@ -18,6 +18,7 @@ import '@carbon/web-components/es/components/link/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import '../../tagListElement/tagListElement.js';
 import '@carbon/web-components/es/components/radio-button/index.js';
+import '@carbon/web-components/es/components/checkbox/index.js';
 
 /**
  * Lit template for popup
@@ -46,9 +47,15 @@ export function popupElementTemplate(customElementClass) {
     radioButtons,
     listItems,
     invalidEntry,
+    enableDataCollectionCheck,
+    dataCollectionTitle,
+    _handleEscape: handleEscape,
     _renderLabel: renderLabel,
+    _handleCheckBoxChange: handleCheckBoxChange,
   } = customElementClass;
-  return html`<div class="${clabsPrefix}--chat-popup-container">
+  return html`<div
+    class="${clabsPrefix}--chat-popup-container"
+    @keydown="${handleEscape}">
     <div class="${clabsPrefix}--chat-popup-caret-${orientation}">
       ${orientation === 'bottom'
         ? html` <svg
@@ -180,6 +187,16 @@ export function popupElementTemplate(customElementClass) {
             </cds-link>
           `
         : ''}
+      ${enableDataCollectionCheck
+        ? html`
+            <div class="${clabsPrefix}--chat-popup-divider"></div>
+            <cds-checkbox @cds-checkbox-changed="${handleCheckBoxChange}">
+              ${dataCollectionTitle
+                ? dataCollectionTitle
+                : 'Missing Data Collection title value'}
+            </cds-checkbox>
+          `
+        : ''}
 
       <div class="${clabsPrefix}--chat-popup-submit">
         <cds-button
@@ -187,6 +204,7 @@ export function popupElementTemplate(customElementClass) {
           link-role="submit-button"
           tooltip-alignment="left"
           tooltip-position="top"
+          class="${clabsPrefix}--chat-popup-submit-element"
           tooltip-text=" ${invalidEntry
             ? renderLabel('feedback-submit-button-unavailable')
             : renderLabel('feedback-submit-button')}"
@@ -197,6 +215,7 @@ export function popupElementTemplate(customElementClass) {
             : renderLabel('feedback-submit-button')}
         </cds-button>
       </div>
+
       <div class="${clabsPrefix}--chat-popup-close">
         <cds-icon-button
           kind="ghost"

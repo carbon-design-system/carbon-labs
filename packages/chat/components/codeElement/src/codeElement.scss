@@ -25,7 +25,6 @@ $css--plex: true !default;
     box-sizing: border-box;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
-    letter-spacing: 0.64px;
     line-height: 20px;
   }
 
@@ -39,9 +38,10 @@ $css--plex: true !default;
     block-size: 100%;
     font: inherit;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
+    font-size: 14px;
     inline-size: 100%;
-    letter-spacing: 0.64px;
+
+    letter-spacing: 0.16px;
     line-height: 20px;
     max-block-size: var(--chat-code-height, '100%');
     min-block-size: 100%;
@@ -64,6 +64,7 @@ $css--plex: true !default;
     inline-size: calc(100% - 64px);
     inset-block-start: 13px;
     inset-inline-start: 14px;
+
     letter-spacing: 0.16px;
     line-height: 20px;
     margin-inline: var(--chat-code-tick-width, '13px') 16px;
@@ -71,6 +72,7 @@ $css--plex: true !default;
 
     outline: none;
     overflow-wrap: break-word;
+    overflow-x: hidden;
     resize: none;
     tab-size: 3;
 

@@ -46,6 +46,21 @@ const slugContent = {
   model: { name: 'granite.13.chat.v2', url: 'https://www.google.com' },
 };
 
+const defExample = {
+  title: 'Example text',
+  tags: [
+    'A',
+    'random long text to text label length to the ends of the component',
+    'lorem ipsum dolor',
+    'lorem ipsum dolor',
+  ],
+  prompt: 'What was unsatisfactory about this response?',
+  responsePlaceholder: 'Describe issues with this response',
+  dataCollectionTitle: 'I allow IBm to collect my feedback',
+  enableDataCollectionCheck: true,
+  disclaimer:
+    'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
+};
 const hateExample = {
   title: 'Hate speech violation',
   prompt: 'Help us do better',
@@ -62,6 +77,8 @@ const hateExample = {
     { value: 5, text: 'very serious' },
   ],
   model: { name: 'granite.13.chat.v2', url: 'https://www.google.com' },
+  dataCollectionTitle: 'I allow IBm to collect my feedback',
+  enableDataCollectionCheck: false,
 };
 
 const customStyle = 'width: 100%; height:500px;display:flex;';
@@ -93,6 +110,13 @@ export const Default = {
         <clabs-chat-popup .feedbackFormValues="${slugContent}">
         </clabs-chat-popup>
       </div>
+
+      <div style="${customStyle}">
+        <h4>Experimental - advanced</h4>
+        <clabs-chat-popup .feedbackFormValues="${defExample}">
+        </clabs-chat-popup>
+      </div>
+
       <div style="${customStyle}">
         <h4>Hate speech example</h4>
         <clabs-chat-popup .feedbackFormValues="${hateExample}">

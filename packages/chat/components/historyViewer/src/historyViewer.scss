@@ -1,0 +1,66 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-history-viewer) {
+  .#{$clabs-prefix}--chat-history-viewer-container {
+    box-sizing: border-box;
+    padding: 16px;
+    background: $background;
+    block-size: 600px;
+    inline-size: 100px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-container-tree {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-message {
+    margin: 5px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-column {
+    flex-flow: column wrap;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block {
+    position: relative;
+    margin-block-start: 20px;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-block::after {
+    position: absolute;
+    background: $background;
+    block-size: 2px;
+    content: '';
+    inline-size: 20px;
+    inset-block-start: 50%;
+    inset-inline-start: -20px;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-block-content-user {
+    border: 1px solid $border-subtle-00;
+    border-radius: 8px;
+    background: $layer-accent-01;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-block-content-bot {
+    border: 1px solid $border-subtle-00;
+    border-radius: 8px;
+    background: $highlight;
+  }
+}

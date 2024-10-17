@@ -1665,6 +1665,7 @@ export const Playground = {
           user-name="user"
           agent-name="bot"
           enable-feedback-form
+          enable-launcher
           .feedbackDefinitions="${feedbackFormOptions}"
           .headerMenuItems="${headerMenuItems}"
           .customLabels="${customLabels}"

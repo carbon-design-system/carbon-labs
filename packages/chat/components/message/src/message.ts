@@ -353,6 +353,19 @@ export default class message extends LitElement {
     if (changedProperties.has('compactIcon')) {
       this.showFeedBackForm = false;
     }
+    if (changedProperties.has('_readerContent')) {
+      setTimeout(() => {
+        const hiddenLabel = this.shadowRoot?.querySelector(
+          '.' + clabsPrefix + '--chat-message-hidden-label'
+        );
+        if (hiddenLabel instanceof HTMLElement) {
+          hiddenLabel.setAttribute('role', 'alert');
+          setTimeout(() => {
+            hiddenLabel.setAttribute('role', 'heading');
+          }, 1000);
+        }
+      }, 200);
+    }
   }
 
   /**

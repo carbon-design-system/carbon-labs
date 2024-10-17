@@ -54,13 +54,13 @@ $css--plex: true !default;
     inset-inline-start: -20px;
   }
   .#{$clabs-prefix}--chat-history-viewer-block-content-user {
+    padding: 2px;
     border: 1px solid $border-subtle-00;
-    border-radius: 8px;
     background: $layer-accent-01;
   }
   .#{$clabs-prefix}--chat-history-viewer-block-content-bot {
+    padding: 2px;
     border: 1px solid $border-subtle-00;
-    border-radius: 8px;
     background: $highlight;
   }
 }

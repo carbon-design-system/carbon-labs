@@ -112,10 +112,7 @@ export default class historyViewer extends LitElement {
         allParents.add(parentId);
       });
     });
-    const sortedParents = Array.from(allParents).sort(
-      (a, b) => b.index - a.index
-    );
-    console.log(columns);
+    const sortedParents = Array.from(allParents).sort();
     this.sortedParents = sortedParents;
     this.columns = columns;
     this.branches = branches;

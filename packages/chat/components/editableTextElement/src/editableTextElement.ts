@@ -48,7 +48,6 @@ export default class editableTextElement extends LitElement {
   updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('_presetWidth')) {
-      console.log(this._presetWidth);
       this.style.setProperty(
         '--chat-editable-text-width',
         this._presetWidth - 30 + 'px'

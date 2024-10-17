@@ -85,277 +85,278 @@ export function messageTemplate(customElementClass) {
     _renderLabel: renderLabel,
     customLabels,
     _readerContent: readerContent,
+    previousMessageWidth,
   } = customElementClass;
 
-  return html`<div
-    aria-labelledby="${clabsPrefix}--chat-message-${index}-target-reader-label"
-    role="alert"
-    aria-live="assertive"
-    class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
-    <div
+  return html` <p
       class="${clabsPrefix}--chat-message-hidden-label"
       id="${clabsPrefix}--chat-message-${index}-target-reader-label">
-      <p>
-        Message from
-        ${userSubmitted
-          ? displayName
-            ? displayName
-            : 'User'
-          : displayName == null
-          ? 'AI model'
-          : displayName}
-        at ${timeStamp}: ${readerContent}"
-      </p>
-    </div>
-    <div class="${clabsPrefix}--chat-message-container">
+      Message from
       ${userSubmitted
-        ? html` <div class="${clabsPrefix}--chat-message-content">
-            <div class="${clabsPrefix}--chat-message-timestamp-user">
-              ${displayName ? displayName : 'You'} ${timeStamp}
-            </div>
-            <div class="${clabsPrefix}--chat-message-response-user">
-              <slot
-                name="message-item-content"
-                @slotchange="${_handleSlotchange}">
-                ${messageElements.map(
-                  (message) =>
-                    html` ${editing
-                      ? html` <clabs-chat-editable-text
-                          content="${message.content}"
-                          @message-edited="${setEditedMessage}">
-                        </clabs-chat-editable-text>`
-                      : html`<clabs-chat-text
-                          align-right
-                          content="${message.content}">
-                        </clabs-chat-text>`}`
-                )}
-              </slot>
-            </div>
-            ${!disableButtons
-              ? html` <div class="${clabsPrefix}--chat-message-dropdown-user">
-                  ${editing === true
-                    ? html` <cds-icon-button
-                          size="sm"
-                          kind="ghost"
-                          align="left"
-                          label="Undo edit"
-                          @click="${cancelEdit}">
-                          ${Undo16({ slot: 'icon' })}
-                          <span slot="tooltip-content"
-                            >${renderLabel('message-undo-edit')}</span
-                          >
-                        </cds-icon-button>
-                        <cds-icon-button
-                          size="sm"
-                          kind="ghost"
-                          align="left"
-                          label="Send edit"
-                          @click="${validateEdit}">
-                          ${CheckMark16({ slot: 'icon' })}
-                          <span slot="tooltip-content"
-                            >${renderLabel('message-validate-edit')}</span
-                          >
-                        </cds-icon-button>`
-                    : html` <cds-icon-button
-                        size="sm"
-                        kind="ghost"
-                        align="left"
-                        label="Edit Code"
-                        @click="${handleEdit}">
-                        ${Edit16({ slot: 'icon' })}
-                        <span slot="tooltip-content"
-                          >${renderLabel('message-enable-editing')}</span
-                        >
-                      </cds-icon-button>`}
-                </div>`
-              : html` <div
-                  class="${clabsPrefix}--chat-message-dropdown-user"></div>`}
-          </div>`
-        : html` ${!compactIcon
-              ? html`<div class="${clabsPrefix}--chat-message-icon">
-                  ${displayColor
-                    ? html` <div
-                        class="${clabsPrefix}--chat-message-agent-icon">
-                        ${WatsonxData24()}
-                      </div>`
-                    : html`
-                        <div class="${clabsPrefix}--chat-message-bot-icon">
-                          ${parentTheme === 'white'
-                            ? unsafeHTML(watsonIconLight)
-                            : unsafeHTML(watsonIconDark)}
-                        </div>
-                      `}
-                </div> `
-              : html``}
-            <div
-              class="${clabsPrefix}--chat-message-content ${compactIcon
-                ? clabsPrefix + '--chat-message-content-compact'
-                : ''}">
-              ${!compactIcon
-                ? html` <div class="${clabsPrefix}--chat-message-timestamp-bot">
-                    ${displayName == null ? 'watsonx' : displayName}
-                    ${timeStamp}
-                  </div>`
-                : html` <div
-                    class="${clabsPrefix}--chat-message-header-bot-compact">
-                    <div class="${clabsPrefix}--chat-message-bot-icon-compact">
-                      ${parentTheme === 'white'
-                        ? unsafeHTML(watsonIconLight)
-                        : unsafeHTML(watsonIconDark)}
-                    </div>
-                    <div
-                      class="${clabsPrefix}--chat-message-timestamp-bot-compact"
-                      id="message${index}-origin">
-                      ${displayName == null ? 'watsonx' : displayName}
-                      ${timeStamp}
-                    </div>
-                  </div>`}
-
-              <div
-                class="${clabsPrefix}--chat-message-response-bot ${currentlyStreaming
-                  ? clabsPrefix + '--chat-message-streaming'
-                  : ''}">
+        ? displayName
+          ? displayName
+          : 'User'
+        : displayName == null
+        ? 'AI model'
+        : displayName}
+      at ${timeStamp}: ${readerContent}
+    </p>
+    <div
+      aria-labelledby="${clabsPrefix}--chat-message-${index}-target-reader-label"
+      role="alert"
+      class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
+      <div class="${clabsPrefix}--chat-message-container">
+        ${userSubmitted
+          ? html` <div class="${clabsPrefix}--chat-message-content">
+              <div class="${clabsPrefix}--chat-message-timestamp-user">
+                ${displayName ? displayName : 'You'} ${timeStamp}
+              </div>
+              <div class="${clabsPrefix}--chat-message-response-user">
                 <slot
                   name="message-item-content"
                   @slotchange="${_handleSlotchange}">
                   ${messageElements.map(
-                    (message) => html`
-                      ${message.type === 'img'
-                        ? html`
-                            <clabs-chat-image content="${message.content}">
-                            </clabs-chat-image>
-                          `
-                        : message.type === 'chart'
-                        ? html`
-                            <clabs-chat-chart
-                              content="${message.content}"
-                              container-height="320px">
-                            </clabs-chat-chart>
-                          `
-                        : message.type === 'link-list'
-                        ? html`
-                            <clabs-chat-link-list
-                              @on-link-list-item-selected="${childLinkClicked}"
-                              .customLabels="${customLabels}"
-                              content="${message.content}">
-                            </clabs-chat-link-list>
-                          `
-                        : message.type === 'carousel'
-                        ? html`
-                            <clabs-chat-carousel content="${message.content}">
-                            </clabs-chat-carousel>
-                          `
-                        : message.type === 'molecule'
-                        ? html`
-                            <clabs-chat-molecule
-                              height="${369}"
-                              content="${message.content}">
-                            </clabs-chat-molecule>
-                          `
-                        : message.type === 'formula'
-                        ? html`
-                            <clabs-chat-formula content="${message.content}">
-                            </clabs-chat-formula>
-                          `
-                        : message.type === 'file-upload'
-                        ? html`
-                            <clabs-chat-file-upload
-                              content="${message.content}">
-                            </clabs-chat-file-upload>
-                          `
-                        : message.type === 'table'
-                        ? html`
-                            <clabs-chat-table
-                              max-height="246px"
-                              content="${message.content}">
-                            </clabs-chat-table>
-                          `
-                        : message.type === 'url' ||
-                          message.type === 'video' ||
-                          message.type === 'file' ||
-                          message.type === 'audio'
-                        ? html`
-                            <clabs-chat-card
-                              type="${message.type}"
-                              content="${message.content}">
-                            </clabs-chat-card>
-                          `
-                        : message.type === 'card'
-                        ? html`
-                            <clabs-chat-card content="${message.content}">
-                            </clabs-chat-card>
-                          `
-                        : message.type === 'text'
-                        ? html`
-                            <clabs-chat-text
-                              capitalize
-                              content="${message.content}">
-                            </clabs-chat-text>
-                          `
-                        : message.type === 'annotated-text'
-                        ? html`
-                            <clabs-chat-text
-                              capitalize
-                              enable-annotations
-                              content="${message.content}">
-                            </clabs-chat-text>
-                          `
-                        : message.type === 'highlight-text'
-                        ? html`
-                            <clabs-chat-text
-                              enable-text-highlighting
-                              content="${message.content}">
-                            </clabs-chat-text>
-                          `
-                        : message.type === 'summarized-text'
-                        ? html`
-                            <clabs-chat-text
-                              enable-summarization
-                              content="${message.content}">
-                            </clabs-chat-text>
-                          `
-                        : message.type === 'html-text'
-                        ? html`
-                            <clabs-chat-text
-                              capitalize
-                              enable-html-rendering
-                              content="${message.content}">
-                            </clabs-chat-text>
-                          `
-                        : message.type === 'diagram'
-                        ? html` <clabs-chat-diagram
-                            definition="${message.content}">
-                          </clabs-chat-diagram>`
-                        : message.type === 'list'
-                        ? html`
-                            <clabs-chat-list content="${message.content}">
-                            </clabs-chat-list>
-                          `
-                        : message.type === 'loading'
-                        ? html` <clabs-chat-loading> </clabs-chat-loading> `
-                        : message.type === 'code'
-                        ? html`
-                            <clabs-chat-code
-                              content="${message.content}"
-                              .customLabels="${customLabels}"
-                              max-height="246px">
-                            </clabs-chat-code>
-                          `
-                        : message.type === 'tags'
-                        ? html`
-                            <clabs-chat-tag-list
-                              content="${message.content}"
-                              @tag-selected="${onTagSelected}">
-                            </clabs-chat-tag-list>
-                          `
-                        : message.type === 'error'
-                        ? html`
-                            <clabs-chat-error
-                              content="${message.content}"
-                              capitalize>
-                            </clabs-chat-error>
-                          `
-                        : html`
+                    (message) =>
+                      html` ${editing
+                        ? html` <clabs-chat-editable-text
+                            content="${message.content}"
+                            preset-width="${previousMessageWidth}"
+                            @message-edited="${setEditedMessage}">
+                          </clabs-chat-editable-text>`
+                        : html`<clabs-chat-text
+                            align-right
+                            content="${message.content}">
+                          </clabs-chat-text>`}`
+                  )}
+                </slot>
+              </div>
+              ${!disableButtons
+                ? html` <div class="${clabsPrefix}--chat-message-dropdown-user">
+                    ${editing === true
+                      ? html` <cds-icon-button
+                            size="sm"
+                            kind="ghost"
+                            align="left"
+                            label="Undo edit"
+                            @click="${cancelEdit}">
+                            ${Undo16({ slot: 'icon' })}
+                            <span slot="tooltip-content"
+                              >${renderLabel('message-undo-edit')}</span
+                            >
+                          </cds-icon-button>
+                          <cds-icon-button
+                            size="sm"
+                            kind="ghost"
+                            align="left"
+                            label="Send edit"
+                            @click="${validateEdit}">
+                            ${CheckMark16({ slot: 'icon' })}
+                            <span slot="tooltip-content"
+                              >${renderLabel('message-validate-edit')}</span
+                            >
+                          </cds-icon-button>`
+                      : html` <cds-icon-button
+                          size="sm"
+                          kind="ghost"
+                          align="left"
+                          label="Edit Code"
+                          @click="${handleEdit}">
+                          ${Edit16({ slot: 'icon' })}
+                          <span slot="tooltip-content"
+                            >${renderLabel('message-enable-editing')}</span
+                          >
+                        </cds-icon-button>`}
+                  </div>`
+                : html` <div
+                    class="${clabsPrefix}--chat-message-dropdown-user"></div>`}
+            </div>`
+          : html` ${!compactIcon
+                ? html`<div class="${clabsPrefix}--chat-message-icon">
+                    ${displayColor
+                      ? html` <div
+                          class="${clabsPrefix}--chat-message-agent-icon">
+                          ${WatsonxData24()}
+                        </div>`
+                      : html`
+                          <div class="${clabsPrefix}--chat-message-bot-icon">
+                            ${parentTheme === 'white'
+                              ? unsafeHTML(watsonIconLight)
+                              : unsafeHTML(watsonIconDark)}
+                          </div>
+                        `}
+                  </div> `
+                : html``}
+              <div
+                class="${clabsPrefix}--chat-message-content ${compactIcon
+                  ? clabsPrefix + '--chat-message-content-compact'
+                  : ''}">
+                ${!compactIcon
+                  ? html` <div
+                      class="${clabsPrefix}--chat-message-timestamp-bot">
+                      ${displayName == null ? 'watsonx' : displayName}
+                      ${timeStamp}
+                    </div>`
+                  : html` <div
+                      class="${clabsPrefix}--chat-message-header-bot-compact">
+                      <div
+                        class="${clabsPrefix}--chat-message-bot-icon-compact">
+                        ${parentTheme === 'white'
+                          ? unsafeHTML(watsonIconLight)
+                          : unsafeHTML(watsonIconDark)}
+                      </div>
+                      <div
+                        class="${clabsPrefix}--chat-message-timestamp-bot-compact"
+                        id="message${index}-origin">
+                        ${displayName == null ? 'watsonx' : displayName}
+                        ${timeStamp}
+                      </div>
+                    </div>`}
+
+                <div
+                  class="${clabsPrefix}--chat-message-response-bot ${currentlyStreaming
+                    ? clabsPrefix + '--chat-message-streaming'
+                    : ''}">
+                  <slot
+                    name="message-item-content"
+                    @slotchange="${_handleSlotchange}">
+                    ${messageElements.map(
+                      (message) => html`
+                        ${message.type === 'img'
+                          ? html`
+                              <clabs-chat-image content="${message.content}">
+                              </clabs-chat-image>
+                            `
+                          : message.type === 'chart'
+                          ? html`
+                              <clabs-chat-chart
+                                content="${message.content}"
+                                container-height="320px">
+                              </clabs-chat-chart>
+                            `
+                          : message.type === 'link-list'
+                          ? html`
+                              <clabs-chat-link-list
+                                @on-link-list-item-selected="${childLinkClicked}"
+                                .customLabels="${customLabels}"
+                                content="${message.content}">
+                              </clabs-chat-link-list>
+                            `
+                          : message.type === 'carousel'
+                          ? html`
+                              <clabs-chat-carousel content="${message.content}">
+                              </clabs-chat-carousel>
+                            `
+                          : message.type === 'molecule'
+                          ? html`
+                              <clabs-chat-molecule
+                                height="${369}"
+                                content="${message.content}">
+                              </clabs-chat-molecule>
+                            `
+                          : message.type === 'formula'
+                          ? html`
+                              <clabs-chat-formula content="${message.content}">
+                              </clabs-chat-formula>
+                            `
+                          : message.type === 'file-upload'
+                          ? html`
+                              <clabs-chat-file-upload
+                                content="${message.content}">
+                              </clabs-chat-file-upload>
+                            `
+                          : message.type === 'table'
+                          ? html`
+                              <clabs-chat-table
+                                max-height="246px"
+                                content="${message.content}">
+                              </clabs-chat-table>
+                            `
+                          : message.type === 'url' ||
+                            message.type === 'video' ||
+                            message.type === 'file' ||
+                            message.type === 'audio'
+                          ? html`
+                              <clabs-chat-card
+                                type="${message.type}"
+                                content="${message.content}">
+                              </clabs-chat-card>
+                            `
+                          : message.type === 'card'
+                          ? html`
+                              <clabs-chat-card content="${message.content}">
+                              </clabs-chat-card>
+                            `
+                          : message.type === 'text'
+                          ? html`
+                              <clabs-chat-text
+                                capitalize
+                                content="${message.content}">
+                              </clabs-chat-text>
+                            `
+                          : message.type === 'annotated-text'
+                          ? html`
+                              <clabs-chat-text
+                                capitalize
+                                enable-annotations
+                                content="${message.content}">
+                              </clabs-chat-text>
+                            `
+                          : message.type === 'highlight-text'
+                          ? html`
+                              <clabs-chat-text
+                                enable-text-highlighting
+                                content="${message.content}">
+                              </clabs-chat-text>
+                            `
+                          : message.type === 'summarized-text'
+                          ? html`
+                              <clabs-chat-text
+                                enable-summarization
+                                content="${message.content}">
+                              </clabs-chat-text>
+                            `
+                          : message.type === 'html-text'
+                          ? html`
+                              <clabs-chat-text
+                                capitalize
+                                enable-html-rendering
+                                content="${message.content}">
+                              </clabs-chat-text>
+                            `
+                          : message.type === 'diagram'
+                          ? html` <clabs-chat-diagram
+                              definition="${message.content}">
+                            </clabs-chat-diagram>`
+                          : message.type === 'list'
+                          ? html`
+                              <clabs-chat-list content="${message.content}">
+                              </clabs-chat-list>
+                            `
+                          : message.type === 'loading'
+                          ? html` <clabs-chat-loading> </clabs-chat-loading> `
+                          : message.type === 'code'
+                          ? html`
+                              <clabs-chat-code
+                                content="${message.content}"
+                                .customLabels="${customLabels}"
+                                max-height="246px">
+                              </clabs-chat-code>
+                            `
+                          : message.type === 'tags'
+                          ? html`
+                              <clabs-chat-tag-list
+                                content="${message.content}"
+                                @tag-selected="${onTagSelected}">
+                              </clabs-chat-tag-list>
+                            `
+                          : message.type === 'error'
+                          ? html`
+                              <clabs-chat-error
+                                content="${message.content}"
+                                capitalize>
+                              </clabs-chat-error>
+                            `
+                          : html`
                             <p class="${clabsPrefix}--chat-message-warning">
                               [Warning] No valid block-type specified, rendering as type 'text': 
                             </p>
@@ -364,205 +365,209 @@ export function messageTemplate(customElementClass) {
                               content="${message.content}">
                             </clabs-chat-text>
                           </div>`}
-                    `
-                  )}
-                </slot>
-                ${currentlyStreaming
-                  ? html`
-                      ${temporaryMessage.type === 'table'
-                        ? html`
-                            <clabs-chat-table
-                              max-height="246px"
-                              content="${temporaryMessage.content}">
-                            </clabs-chat-table>
-                          `
-                        : temporaryMessage.type === 'list'
-                        ? html`
-                            <clabs-chat-list
-                              content="${temporaryMessage.content}">
-                            </clabs-chat-list>
-                          `
-                        : temporaryMessage.type === 'code'
-                        ? html`
-                            <clabs-chat-code
-                              streaming
-                              .customLabels="${customLabels}"
-                              content="${temporaryMessage.content}">
-                            </clabs-chat-code>
-                          `
-                        : temporaryMessage.type === 'chart'
-                        ? html`
-                            <clabs-chat-chart
-                              ?streaming="${true}"
-                              content="${temporaryMessage.content}">
-                            </clabs-chat-chart>
-                          `
-                        : temporaryMessage.type === 'carousel'
-                        ? html`
-                            <clabs-chat-carousel
-                              content="${temporaryMessage.content}">
-                            </clabs-chat-carousel>
-                          `
-                        : temporaryMessage.type === 'molecule'
-                        ? html`
-                            <clabs-chat-molecule
-                              streaming
-                              height="${369}"
-                              content="${temporaryMessage.content}">
-                            </clabs-chat-molecule>
-                          `
-                        : temporaryMessage.type === 'formula'
-                        ? html`
-                            <clabs-chat-formula
-                              content="${temporaryMessage.content}">
-                            </clabs-chat-formula>
-                          `
-                        : temporaryMessage.type === 'tags'
-                        ? html`
-                            <clabs-chat-tag-list
-                              content="${temporaryMessage.content}"
-                              @tag-selected="${onTagSelected}">
-                            </clabs-chat-tag-list>
-                          `
-                        : html`
-                            <clabs-chat-text
-                              streaming
-                              content="${temporaryMessage.content}">
-                            </clabs-chat-text>
-                          `}
-                    `
-                  : html``}
-              </div>
+                      `
+                    )}
+                  </slot>
+                  ${currentlyStreaming
+                    ? html`
+                        ${temporaryMessage.type === 'table'
+                          ? html`
+                              <clabs-chat-table
+                                max-height="246px"
+                                content="${temporaryMessage.content}">
+                              </clabs-chat-table>
+                            `
+                          : temporaryMessage.type === 'list'
+                          ? html`
+                              <clabs-chat-list
+                                content="${temporaryMessage.content}">
+                              </clabs-chat-list>
+                            `
+                          : temporaryMessage.type === 'code'
+                          ? html`
+                              <clabs-chat-code
+                                streaming
+                                .customLabels="${customLabels}"
+                                content="${temporaryMessage.content}">
+                              </clabs-chat-code>
+                            `
+                          : temporaryMessage.type === 'chart'
+                          ? html`
+                              <clabs-chat-chart
+                                ?streaming="${true}"
+                                content="${temporaryMessage.content}">
+                              </clabs-chat-chart>
+                            `
+                          : temporaryMessage.type === 'carousel'
+                          ? html`
+                              <clabs-chat-carousel
+                                content="${temporaryMessage.content}">
+                              </clabs-chat-carousel>
+                            `
+                          : temporaryMessage.type === 'molecule'
+                          ? html`
+                              <clabs-chat-molecule
+                                streaming
+                                height="${369}"
+                                content="${temporaryMessage.content}">
+                              </clabs-chat-molecule>
+                            `
+                          : temporaryMessage.type === 'formula'
+                          ? html`
+                              <clabs-chat-formula
+                                content="${temporaryMessage.content}">
+                              </clabs-chat-formula>
+                            `
+                          : temporaryMessage.type === 'tags'
+                          ? html`
+                              <clabs-chat-tag-list
+                                content="${temporaryMessage.content}"
+                                @tag-selected="${onTagSelected}">
+                              </clabs-chat-tag-list>
+                            `
+                          : html`
+                              <clabs-chat-text
+                                streaming
+                                content="${temporaryMessage.content}">
+                              </clabs-chat-text>
+                            `}
+                      `
+                    : html``}
+                </div>
 
-              ${!loadingState && !disableButtons && !currentlyStreaming
-                ? html`
-                    <div class="${clabsPrefix}--chat-message-dropdown-bot">
-                      ${userSubmitted
-                        ? editing === true
-                          ? html` <cds-icon-button
+                ${!loadingState && !disableButtons && !currentlyStreaming
+                  ? html`
+                      <div class="${clabsPrefix}--chat-message-dropdown-bot">
+                        ${userSubmitted
+                          ? editing === true
+                            ? html` <cds-icon-button
+                                  size="sm"
+                                  kind="ghost"
+                                  align="left"
+                                  label="Undo Edit"
+                                  @click="${cancelEdit}">
+                                  ${Undo16({ slot: 'icon' })}
+                                  <span slot="tooltip-content"
+                                    >${renderLabel('message-undo-edit')}</span
+                                  >
+                                </cds-icon-button>
+                                <cds-icon-button
+                                  size="sm"
+                                  kind="ghost"
+                                  align="left"
+                                  label="Send edit"
+                                  @click="${validateEdit}">
+                                  ${CheckMark16({ slot: 'icon' })}
+                                  <span slot="tooltip-content"
+                                    >${renderLabel(
+                                      'message-validate-edit'
+                                    )}</span
+                                  >
+                                </cds-icon-button>`
+                            : html` <cds-icon-button
                                 size="sm"
                                 kind="ghost"
                                 align="left"
-                                label="Undo Edit"
-                                @click="${cancelEdit}">
-                                ${Undo16({ slot: 'icon' })}
+                                label="Edit message"
+                                @click="${handleEdit}">
+                                ${Edit16({ slot: 'icon' })}
                                 <span slot="tooltip-content"
-                                  >${renderLabel('message-undo-edit')}</span
+                                  >${renderLabel(
+                                    'message-enable-editing'
+                                  )}</span
+                                >
+                              </cds-icon-button>`
+                          : html`
+                              <cds-icon-button
+                                size="sm"
+                                kind="ghost"
+                                align="right"
+                                role="button"
+                                tabindex="0"
+                                aria-expanded="${positiveFeedbackSelected}"
+                                aria-controls="${showFeedBackForm
+                                  ? clabsPrefix +
+                                    '--chat-popup-unique-feedback-' +
+                                    index
+                                  : ''}"
+                                @keydown="${handlePositiveKeyboardInput}"
+                                @click="${handlePositiveFeedback}">
+                                ${positiveFeedbackSelected
+                                  ? ThumbsUpFilled16({ slot: 'icon' })
+                                  : ThumbsUp16({ slot: 'icon' })}
+                                <span slot="tooltip-content"
+                                  >${renderLabel(
+                                    positiveFeedbackSelected
+                                      ? 'message-undo-like-button'
+                                      : 'message-like-button'
+                                  )}</span
+                                >
+                              </cds-icon-button>
+
+                              <cds-icon-button
+                                size="sm"
+                                kind="ghost"
+                                align="right"
+                                role="button"
+                                tabindex="0"
+                                aria-expanded="${negativeFeedbackSelected}"
+                                aria-controls="${showFeedBackForm
+                                  ? clabsPrefix +
+                                    '--chat-popup-unique-feedback-' +
+                                    index
+                                  : ''}"
+                                label="Thumbs down"
+                                @keydown="${handleNegativeKeyboardInput}"
+                                @click="${handleNegativeFeedback}">
+                                ${negativeFeedbackSelected
+                                  ? ThumbsDownFilled16({ slot: 'icon' })
+                                  : ThumbsDown16({ slot: 'icon' })}
+                                <span slot="tooltip-content"
+                                  >${renderLabel(
+                                    negativeFeedbackSelected
+                                      ? 'message-undo-dislike-button'
+                                      : 'message-dislike-button'
+                                  )}</span
                                 >
                               </cds-icon-button>
                               <cds-icon-button
                                 size="sm"
                                 kind="ghost"
-                                align="left"
-                                label="Send edit"
-                                @click="${validateEdit}">
-                                ${CheckMark16({ slot: 'icon' })}
+                                align="right"
+                                label="Regenerate"
+                                @click="${handleRegenerate}">
+                                ${Renew16({ slot: 'icon' })}
                                 <span slot="tooltip-content"
-                                  >${renderLabel('message-validate-edit')}</span
+                                  >${renderLabel(
+                                    'message-regenerate-button'
+                                  )}</span
                                 >
-                              </cds-icon-button>`
-                          : html` <cds-icon-button
-                              size="sm"
-                              kind="ghost"
-                              align="left"
-                              label="Edit message"
-                              @click="${handleEdit}">
-                              ${Edit16({ slot: 'icon' })}
-                              <span slot="tooltip-content"
-                                >${renderLabel('message-enable-editing')}</span
-                              >
-                            </cds-icon-button>`
-                        : html`
-                            <cds-icon-button
-                              size="sm"
-                              kind="ghost"
-                              align="right"
-                              role="button"
-                              tabindex="0"
-                              aria-expanded="${positiveFeedbackSelected}"
-                              aria-controls="${showFeedBackForm
-                                ? clabsPrefix +
-                                  '--chat-popup-unique-feedback-' +
-                                  index
-                                : ''}"
-                              @keydown="${handlePositiveKeyboardInput}"
-                              @click="${handlePositiveFeedback}">
-                              ${positiveFeedbackSelected
-                                ? ThumbsUpFilled16({ slot: 'icon' })
-                                : ThumbsUp16({ slot: 'icon' })}
-                              <span slot="tooltip-content"
-                                >${renderLabel(
-                                  positiveFeedbackSelected
-                                    ? 'message-undo-like-button'
-                                    : 'message-like-button'
-                                )}</span
-                              >
-                            </cds-icon-button>
-
-                            <cds-icon-button
-                              size="sm"
-                              kind="ghost"
-                              align="right"
-                              role="button"
-                              tabindex="0"
-                              aria-expanded="${negativeFeedbackSelected}"
-                              aria-controls="${showFeedBackForm
-                                ? clabsPrefix +
-                                  '--chat-popup-unique-feedback-' +
-                                  index
-                                : ''}"
-                              label="Thumbs down"
-                              @keydown="${handleNegativeKeyboardInput}"
-                              @click="${handleNegativeFeedback}">
-                              ${negativeFeedbackSelected
-                                ? ThumbsDownFilled16({ slot: 'icon' })
-                                : ThumbsDown16({ slot: 'icon' })}
-                              <span slot="tooltip-content"
-                                >${renderLabel(
-                                  negativeFeedbackSelected
-                                    ? 'message-undo-dislike-button'
-                                    : 'message-dislike-button'
-                                )}</span
-                              >
-                            </cds-icon-button>
-                            <cds-icon-button
-                              size="sm"
-                              kind="ghost"
-                              align="right"
-                              label="Regenerate"
-                              @click="${handleRegenerate}">
-                              ${Renew16({ slot: 'icon' })}
-                              <span slot="tooltip-content"
-                                >${renderLabel(
-                                  'message-regenerate-button'
-                                )}</span
-                              >
-                            </cds-icon-button>
-                          `}
-                    </div>
-                  `
-                : html`<div
-                    class="${clabsPrefix}--chat-message-dropdown-bot"></div>`}
-            </div>`}
-    </div>
-    ${showFeedBackForm || enableComplexFeedback
-      ? html`
-          <clabs-chat-popup
-            @on-feedback-popup-closed="${hideFeedBackForm}"
-            ?is-open="${showFeedBackForm}"
-            id="${clabsPrefix}--chat-popup-unique-feedback-${index}"
-            .feedbackFormValues="${feedbackFormValues}"
-            .targetElement="${popupTargetElement}"
-            .customLabels="${customLabels}"
-            parent-message-id="${index}"
-            ?compact-mode="${compactIcon}"
-            type="${positiveFeedbackSelected
-              ? 'thumbs-up'
-              : negativeFeedbackSelected
-              ? 'thumbs-down'
-              : 'custom'}">
-          </clabs-chat-popup>
-        `
-      : html``}
-  </div>`;
+                              </cds-icon-button>
+                            `}
+                      </div>
+                    `
+                  : html`<div
+                      class="${clabsPrefix}--chat-message-dropdown-bot"></div>`}
+              </div>`}
+      </div>
+      ${showFeedBackForm || enableComplexFeedback
+        ? html`
+            <clabs-chat-popup
+              @on-feedback-popup-closed="${hideFeedBackForm}"
+              ?is-open="${showFeedBackForm}"
+              id="${clabsPrefix}--chat-popup-unique-feedback-${index}"
+              .feedbackFormValues="${feedbackFormValues}"
+              .targetElement="${popupTargetElement}"
+              .customLabels="${customLabels}"
+              parent-message-id="${index}"
+              ?compact-mode="${compactIcon}"
+              type="${positiveFeedbackSelected
+                ? 'thumbs-up'
+                : negativeFeedbackSelected
+                ? 'thumbs-down'
+                : 'custom'}">
+            </clabs-chat-popup>
+          `
+        : html``}
+    </div>`;
 }

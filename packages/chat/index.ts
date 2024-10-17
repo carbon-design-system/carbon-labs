@@ -32,3 +32,4 @@ import './components/fileUploadElement/fileUploadElement.js';
 import './components/popupElement/popupElement.js';
 import './components/feedbackElement/feedbackElement.js';
 import './components/diagramElement/diagramElement.js';
+import './components/historyViewer/historyViewer.js';

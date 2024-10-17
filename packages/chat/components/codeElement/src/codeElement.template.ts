@@ -93,7 +93,6 @@ export function codeElementTemplate(customElementClass) {
       <textarea
         @input="${handleFullCodeEdit}"
         @keyup="${controlTabbing}"
-        wrap="hard"
         aria-label="Editable Text"
         spellcheck="false"
         class="${clabsPrefix}--chat-code-edit-area ${!editable

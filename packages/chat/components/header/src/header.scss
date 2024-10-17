@@ -45,7 +45,7 @@ $css--plex: true !default;
     justify-content: center;
     background: transparent;
     block-size: 30px;
-    cursor: -webkit-grab;
+    cursor: grab;
     inline-size: 100%;
     transition: background 200ms ease;
   }
@@ -56,7 +56,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-header-drag-area:active {
     border: 2px solid $text-primary;
     background: $background-active;
-    cursor: -webkit-grabbing;
+    cursor: grabbing;
   }
 
   .#{$clabs-prefix}--chat-header-drag-area:focus {

@@ -1,0 +1,58 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-history-viewer) {
+  .#{$clabs-prefix}--chat-history-viewer-container {
+    box-sizing: border-box;
+    background: $background;
+    block-size: 600px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-container-tree {
+    display: flex;
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-grid {
+    display: flex;
+    flex-wrap: wrap;
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-column {
+    flex-flow: column wrap;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-message {
+    overflow: scroll hidden;
+    margin: 5px;
+    margin-inline-start: 8px;
+    max-inline-size: 100px;
+    white-space: nowrap;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-empty {
+    min-block-size: 22px;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-block-content-user {
+    padding: 2px;
+    border: 1px solid $border-subtle-00;
+    background: $layer-accent-01;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-block-content-bot {
+    padding: 2px;
+    border: 1px solid $border-subtle-00;
+    background: $highlight;
+  }
+}

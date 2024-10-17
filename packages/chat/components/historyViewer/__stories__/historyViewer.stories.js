@@ -23,8 +23,7 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: () =>
-    html` <clabs-chat-history-viewer
-      content="\\(x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.\\)">
+    html` <clabs-chat-history-viewer .historyTree=${examples}>
     </clabs-chat-history-viewer>`,
 };
 

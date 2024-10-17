@@ -26,6 +26,9 @@ export function historyViewerTemplate(customElementClass) {
         ${branches?.map(
           (branchId) => html` <div
             class="${clabsPrefix}--chat-history-viewer-column">
+            <div class="${clabsPrefix}--chat-history-viewer-message">
+              branch ${branchId}
+            </div>
             ${sortedParents?.map((parentId) => {
               const message = columns[branchId][parentId];
               return message
@@ -35,11 +38,11 @@ export function historyViewerTemplate(customElementClass) {
                       class="${clabsPrefix +
                       '--chat-history-viewer-block-content-' +
                       (message.userSubmitted ? 'user' : 'bot')}">
-                      ${message.userSubmitted ? 'user' : 'bot'}:
-                      <strong>${message.id}</strong>
+                      <strong>${message.index}</strong> ${message.text}
                     </div>
                   </div>`
-                : `<div class="${clabsPrefix}--chat-history-viewer-message ${clabsPrefix}--chat-history-viewer-empty"></div>`;
+                : html`<div
+                    class="${clabsPrefix}--chat-history-viewer-message ${clabsPrefix}--chat-history-viewer-empty"></div>`;
             })}
           </div>`
         )}

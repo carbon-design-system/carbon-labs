@@ -224,7 +224,10 @@ export function headerTemplate(customElementClass) {
                   alignment="bottom"
                   slug-label="Show information">
                   <div slot="body-text">
-                    <div class="${clabsPrefix}--chat-header-slug-compress">
+                    <div
+                      class="${clabsPrefix}--chat-header-slug-compress"
+                      tabindex="0"
+                      role="textbox">
                       ${headerSlugContent
                         ? unsafeHTML(headerSlugContent)
                         : 'Define your preferred tutorial/explanatory text within chat as an ai-slug-content attribute or as a composable slotted div element'}

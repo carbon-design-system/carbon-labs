@@ -271,6 +271,15 @@ export default class popupElement extends LitElement {
     }
   }
 
+  /** handle when users escapes
+   * @param {event} event - key event on popup
+   */
+  _handleEscapeB(event) {
+    if (event.key === 'Tab') {
+      this._handleClose(event);
+    }
+  }
+
   /**
    * setPosition -  place popup according to client positioning of target element
    */

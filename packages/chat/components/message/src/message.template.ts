@@ -88,27 +88,41 @@ export function messageTemplate(customElementClass) {
     previousMessageWidth,
   } = customElementClass;
 
-  return html` <p
+  return html` <div
       class="${clabsPrefix}--chat-message-hidden-label"
+      aria-hidden="${!readerContent}"
+      aria-level="2"
+      role="${readerContent ? 'alert' : 'heading'}"
       id="${clabsPrefix}--chat-message-${index}-target-reader-label">
-      Message from
-      ${userSubmitted
-        ? displayName
+      ${readerContent
+        ? html` ${loadingState
+            ? html`Message sent, please wait...`
+            : `Message from
+      ${
+        userSubmitted
           ? displayName
-          : 'User'
-        : displayName == null
-        ? 'AI model'
-        : displayName}
-      at ${timeStamp}: ${readerContent}
-    </p>
+            ? displayName
+            : 'You'
+          : !displayName
+          ? 'Watson X'
+          : displayName === 'watsonx'
+          ? 'Watson X'
+          : displayName
+      }
+      at ${timeStamp}: ${readerContent}`}`
+        : ''}
+    </div>
     <div
       aria-labelledby="${clabsPrefix}--chat-message-${index}-target-reader-label"
-      role="alert"
+      role="article"
+      aria-label="message"
       class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
       <div class="${clabsPrefix}--chat-message-container">
         ${userSubmitted
           ? html` <div class="${clabsPrefix}--chat-message-content">
-              <div class="${clabsPrefix}--chat-message-timestamp-user">
+              <div
+                class="${clabsPrefix}--chat-message-timestamp-user"
+                aria-hidden="true">
                 ${displayName ? displayName : 'You'} ${timeStamp}
               </div>
               <div class="${clabsPrefix}--chat-message-response-user">
@@ -192,7 +206,8 @@ export function messageTemplate(customElementClass) {
                   : ''}">
                 ${!compactIcon
                   ? html` <div
-                      class="${clabsPrefix}--chat-message-timestamp-bot">
+                      class="${clabsPrefix}--chat-message-timestamp-bot"
+                      aria-hidden="true">
                       ${displayName == null ? 'watsonx' : displayName}
                       ${timeStamp}
                     </div>`
@@ -483,7 +498,6 @@ export function messageTemplate(customElementClass) {
                                 kind="ghost"
                                 align="right"
                                 role="button"
-                                tabindex="0"
                                 aria-expanded="${positiveFeedbackSelected}"
                                 aria-controls="${showFeedBackForm
                                   ? clabsPrefix +
@@ -509,7 +523,6 @@ export function messageTemplate(customElementClass) {
                                 kind="ghost"
                                 align="right"
                                 role="button"
-                                tabindex="0"
                                 aria-expanded="${negativeFeedbackSelected}"
                                 aria-controls="${showFeedBackForm
                                   ? clabsPrefix +

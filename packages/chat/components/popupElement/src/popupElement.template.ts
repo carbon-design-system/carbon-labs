@@ -50,6 +50,7 @@ export function popupElementTemplate(customElementClass) {
     enableDataCollectionCheck,
     dataCollectionTitle,
     _handleEscape: handleEscape,
+    _handleEscapeB: handleEscapeB,
     _renderLabel: renderLabel,
     _handleCheckBoxChange: handleCheckBoxChange,
   } = customElementClass;
@@ -223,6 +224,7 @@ export function popupElementTemplate(customElementClass) {
           aria-label="Close Feedback Form"
           role="button"
           align="bottom-right"
+          @keydown="${handleEscapeB}"
           @click="${handleClose}">
           ${Close16({ slot: 'icon' })}
           <span slot="tooltip-content">${renderLabel('feedback-close')}</span>

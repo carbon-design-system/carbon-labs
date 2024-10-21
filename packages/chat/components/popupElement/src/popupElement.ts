@@ -183,6 +183,22 @@ export default class popupElement extends LitElement {
   customLabels;
 
   /**
+   * enable data =collection checkbox area
+   */
+  @property({ type: Boolean, attribute: 'enable-data-collection-check' })
+  enableDataCollectionCheck = false;
+
+  /** require title for checkbox title
+   */
+  @property({ type: String, attribute: 'data-collection-title' })
+  dataCollectionTitle;
+
+  /** check for collection agreement to enable submit button
+   */
+  @state()
+  collectionAgreement;
+
+  /**
    * Event listener to check if parent visibility changed
    */
   //private intersectionObserver;
@@ -246,6 +262,24 @@ export default class popupElement extends LitElement {
     this.intersectionObserver.observe(this);*/
   }
 
+  /** handle when users escapes
+   * @param {event} event - key event on popup
+   */
+  _handleEscape(event) {
+    if (event.key === 'Escape') {
+      this._handleClose(event);
+    }
+  }
+
+  /** handle when users escapes
+   * @param {event} event - key event on popup
+   */
+  _handleEscapeB(event) {
+    if (event.key === 'Tab') {
+      this._handleClose(event);
+    }
+  }
+
   /**
    * setPosition -  place popup according to client positioning of target element
    */
@@ -304,12 +338,23 @@ export default class popupElement extends LitElement {
   _handleTextInput(event) {
     const { value } = event.target;
     this._textInput = value;
+    this._checkValidity();
+  }
+
+  /** _checkValidity
+   */
+  _checkValidity() {
     const selectionLength = Object.keys(this._tagSelections).length;
-    if (this._textInput || selectionLength > 0) {
-      this.invalidEntry = false;
-    } else {
-      this.invalidEntry = true;
+    let invalidSubmit = false;
+
+    if (!this._textInput && selectionLength <= 0) {
+      invalidSubmit = true;
     }
+
+    if (this.enableDataCollectionCheck && !this.collectionAgreement) {
+      invalidSubmit = true;
+    }
+    this.invalidEntry = invalidSubmit;
   }
 
   /**
@@ -353,6 +398,19 @@ export default class popupElement extends LitElement {
   }
 
   /**
+   * _handleCheckBoxChange - see if checkbox modifed
+   * @param {event} _event - checbox event
+   */
+  _handleCheckBoxChange(_event) {
+    if (_event?.detail?.checked) {
+      this.collectionAgreement = true;
+    } else {
+      this.collectionAgreement = false;
+    }
+    this._checkValidity();
+  }
+
+  /**
    * _setValues -  if preset Object is added, update all display values
    * @param {object} values - defined values
    */
@@ -369,6 +427,8 @@ export default class popupElement extends LitElement {
     this.radioButtons = values.radioButtons;
     this.radioTitle = values.radioTitle;
     this.model = values.model;
+    this.enableDataCollectionCheck = values.enableDataCollectionCheck;
+    this.dataCollectionTitle = values.dataCollectionTitle;
     this.requestUpdate();
   }
   /**
@@ -433,13 +493,7 @@ export default class popupElement extends LitElement {
   handleTagSelection(event) {
     const selections = event.detail.selectionList;
     this._tagSelections = selections;
-
-    const selectionLength = Object.keys(this._tagSelections).length;
-    if (this._textInput || selectionLength > 0) {
-      this.invalidEntry = false;
-    } else {
-      this.invalidEntry = true;
-    }
+    this._checkValidity();
   }
 
   /**

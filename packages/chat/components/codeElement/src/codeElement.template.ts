@@ -84,16 +84,10 @@ export function codeElementTemplate(customElementClass) {
       </div>
     </div>
 
-    <div
-      class="${clabsPrefix}--chat-code-container"
-      tabindex="0"
-      role="textbox"
-      @wheel="${handleScroll}"
-      aria-label="Code Section">
+    <div class="${clabsPrefix}--chat-code-container" @wheel="${handleScroll}">
       <textarea
         @input="${handleFullCodeEdit}"
         @keyup="${controlTabbing}"
-        wrap="hard"
         aria-label="Editable Text"
         spellcheck="false"
         class="${clabsPrefix}--chat-code-edit-area ${!editable
@@ -103,6 +97,9 @@ ${_editedContent}</textarea
       >
 
       <div
+        tabindex="0"
+        role="textbox"
+        aria-label="Code Section"
         class="${clabsPrefix + '--chat-code-color-area'} ${editable
           ? ' ' + clabsPrefix + '--chat-code-color-hidden'
           : ''}">

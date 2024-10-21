@@ -13,8 +13,10 @@ $css--plex: true !default;
 
 :host(#{$clabs-prefix}-chat-editable-text) {
   overflow: hidden;
+
   .#{$clabs-prefix}--chat-editable-text-area {
     overflow: hidden;
+    box-sizing: border-box;
     flex-grow: 1;
     padding: 0;
     border: none;
@@ -26,8 +28,11 @@ $css--plex: true !default;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
+    inline-size: var(--chat-editable-text-width, 'auto');
     letter-spacing: 0.16px;
     line-height: 20px;
+    max-inline-size: var(--chat-editable-text-width, 'auto');
+    min-inline-size: var(--chat-editable-text-width, 'auto');
     resize: none;
     word-break: break-word;
   }

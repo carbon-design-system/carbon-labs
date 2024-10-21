@@ -272,6 +272,11 @@ export default class codeElement extends LitElement {
    */
   _handleResize() {
     this.disableLineTicks = this.clientWidth < 300;
+    /*if(this.disableLineTicks){
+    this.style.setProperty(
+      '--chat-code-tick-width','0px'
+    );
+    }*/
   }
 
   /** copy current code to clipboard when copy event is triggered

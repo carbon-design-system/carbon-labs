@@ -130,6 +130,9 @@
   }
 
   .#{$clabs-prefix}--chat-popup-tag-list {
+    overflow: hidden;
+    box-sizing: border-box;
+    max-inline-size: 256px;
     padding-block: 0.75rem 8px;
   }
 
@@ -154,6 +157,10 @@
     position: absolute;
     inset-block-end: 0;
     inset-inline-end: 0;
+  }
+  .#{$clabs-prefix}--chat-popup-submit-element::part(button) {
+    inline-size: 320px;
+    text-align: end;
   }
   .#{$clabs-prefix}--chat-popup-close {
     position: absolute;

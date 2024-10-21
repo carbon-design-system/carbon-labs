@@ -58,6 +58,18 @@ export default class CLABSChat extends LitElement {
   autoUpdate;
 
   /**
+   * show launcher when closed
+   */
+  @property({ type: Boolean, attribute: 'enable-launcher' })
+  enableLauncher;
+
+  /**
+   * start in launcher mode
+   */
+  @property({ type: Boolean, attribute: 'start-with-launcher' })
+  startWithLauncher;
+
+  /**
    * disable header hamburger menu
    */
   @property({ type: Boolean, attribute: 'disable-header-menu' })
@@ -967,6 +979,17 @@ export default class CLABSChat extends LitElement {
    */
   _handleChatClosed() {
     this.closed = true;
+    if (!this.disableOutsideControl) {
+      document.body.style.overflow = '';
+    }
+    this.requestUpdate();
+  }
+
+  /**
+   * handle closing event when header close event is called
+   */
+  _handleChatOpened() {
+    this.closed = false;
     if (!this.disableOutsideControl) {
       document.body.style.overflow = '';
     }

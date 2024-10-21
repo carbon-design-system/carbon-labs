@@ -37,10 +37,10 @@ export function messagesTemplate(customElementClass) {
   } = customElementClass;
 
   return html`<div
+    @wheel="${handleScroll}"
     role="log"
     aria-live="polite"
-    aria-relevant="additions text"
-    @wheel="${handleScroll}"
+    aria-relevant="additions"
     class="${clabsPrefix}--chat-messages-container ${streamResponses
       ? clabsPrefix + '--chat-messages-container-streaming'
       : ''} 

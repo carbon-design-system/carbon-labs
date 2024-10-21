@@ -47,6 +47,12 @@ export default class editableTextElement extends LitElement {
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
+    if (changedProperties.has('_presetWidth')) {
+      this.style.setProperty(
+        '--chat-editable-text-width',
+        this._presetWidth - 30 + 'px'
+      );
+    }
   }
 
   /** detect when component is rendered to process text object
@@ -58,6 +64,12 @@ export default class editableTextElement extends LitElement {
       } else {
         this._initiateTextAreaHeight();
       }
+    }
+    if (this._presetWidth) {
+      this.style.setProperty(
+        '--chat-editable-text-width',
+        this._presetWidth - 30 + 'px'
+      );
     }
   }
 

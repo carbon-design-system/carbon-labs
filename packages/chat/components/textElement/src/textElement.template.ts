@@ -42,7 +42,12 @@ export function textElementTemplate(customElementClass) {
     _showSummarization: showSummarization,
   } = customElementClass;
 
-  return html`<div class="${clabsPrefix}--chat-text">
+  return html`<div
+    class="${clabsPrefix}--chat-text"
+    role="textbox"
+    aria-readonly="true"
+    tabindex="0"
+    aria-label="text block">
     <div
       class="${clabsPrefix}--chat-text--float-${alignRight ? 'right' : 'left'}">
       <div class="${clabsPrefix}--chat-text-content">
@@ -70,6 +75,8 @@ export function textElementTemplate(customElementClass) {
                     ? html`
                         <span
                           class="${clabsPrefix}--chat-text-content-chevron-container"
+                          role="button"
+                          aria-label="show link as card below"
                           style="${textPiece.color
                             ? 'background-color:' + textPiece.color + ';'
                             : html``}">
@@ -142,7 +149,9 @@ export function textElementTemplate(customElementClass) {
                   class="${clabsPrefix}--chat-text-content-chevron ${showSummarization
                     ? clabsPrefix + '--chat-text-content-chevron--focused'
                     : ''}"
-                  @click="${_toggleSummarization}">
+                  @click="${_toggleSummarization}"
+                  role="button"
+                  aria-label="show all links as a carousel below">
                   ${!showSummarization
                     ? html` ${ChevronDown16({ slot: 'icon' })} `
                     : html` ${ChevronUp16({ slot: 'icon' })} `}

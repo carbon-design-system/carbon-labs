@@ -61,6 +61,28 @@
     visibility: hidden;
   }
 
+  .#{$clabs-prefix}--chat-launcher-container {
+    position: fixed;
+    z-index: 1000;
+    overflow: hidden;
+    border: none;
+    block-size: 48px;
+    inline-size: 48px;
+    inset-block-end: 16px;
+    inset-inline-end: 16px;
+  }
+  .#{$clabs-prefix}--chat-launcher-button::part(button) {
+    border-radius: 24px;
+    block-size: 48px;
+    inline-size: 48px;
+    padding-block-start: 12px;
+  }
+  .#{$clabs-prefix}--chat-launcher-button svg {
+    block-size: 20px;
+    fill: $background;
+    inline-size: 20px;
+  }
+
   .#{$clabs-prefix}--chat-docked {
     position: fixed;
     z-index: 1000;

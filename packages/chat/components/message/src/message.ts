@@ -272,6 +272,9 @@ export default class message extends LitElement {
   @state()
   _readerContent;
 
+  @state()
+  previousMessageWidth;
+
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
@@ -285,13 +288,13 @@ export default class message extends LitElement {
 
     if (this.loadingState) {
       this._messageElements = [{ content: '', type: 'loading' }];
-      this.requestUpdate();
+
       return;
     }
 
     if (this.errorState) {
       this._messageElements = [{ content: this.rawText, type: 'error' }];
-      this.requestUpdate();
+
       return;
     }
 
@@ -312,7 +315,6 @@ export default class message extends LitElement {
     } else {
       this._messageElements = this.elements;
       //this._readerContent = this._prepareReaderText(this.elements);
-      this.requestUpdate();
     }
   }
 
@@ -350,6 +352,19 @@ export default class message extends LitElement {
     }
     if (changedProperties.has('compactIcon')) {
       this.showFeedBackForm = false;
+    }
+    if (changedProperties.has('_readerContent')) {
+      setTimeout(() => {
+        const hiddenLabel = this.shadowRoot?.querySelector(
+          '.' + clabsPrefix + '--chat-message-hidden-label'
+        );
+        if (hiddenLabel instanceof HTMLElement) {
+          hiddenLabel.setAttribute('role', 'alert');
+          setTimeout(() => {
+            hiddenLabel.setAttribute('role', 'heading');
+          }, 1000);
+        }
+      }, 200);
     }
   }
 
@@ -1155,7 +1170,6 @@ export default class message extends LitElement {
       }
     }
     this._messageElements = subMessages;
-    this.requestUpdate();
   }
 
   /** _checkForObjects analyze if objects elements are present and parse them out
@@ -1327,8 +1341,16 @@ export default class message extends LitElement {
   /** editing function when a user click the edit button
    **/
   _handleEdit() {
+    const textElement = this.shadowRoot?.querySelector(
+      '.' + clabsPrefix + '--chat-message-response-user'
+    );
+    let previousWidth = this.clientWidth;
+    if (textElement instanceof HTMLElement) {
+      previousWidth = textElement.clientWidth;
+    }
     this._editing = true;
     const messageDetails = this._prepareEventDetail();
+    this.previousMessageWidth = previousWidth;
     messageDetails['action'] = 'MESSAGE: User started a message edit';
     const startEditEvent = new CustomEvent('on-user-message-edit-request', {
       detail: messageDetails,
@@ -1336,9 +1358,6 @@ export default class message extends LitElement {
       composed: true,
     });
     this.dispatchEvent(startEditEvent);
-    this.requestUpdate();
-
-    this.requestUpdate();
   }
 
   /** record edited changes on message
@@ -1364,7 +1383,6 @@ export default class message extends LitElement {
       }
     );
     this.dispatchEvent(cancelledEditEvent);
-    this.requestUpdate();
   }
 
   /** editing function when a user click the edit button
@@ -1387,8 +1405,6 @@ export default class message extends LitElement {
       }
     );
     this.dispatchEvent(regenerationEvent);
-
-    this.requestUpdate();
   }
 
   /** trigger regenerate response event

@@ -42,7 +42,12 @@ export function textElementTemplate(customElementClass) {
     _showSummarization: showSummarization,
   } = customElementClass;
 
-  return html`<div class="${clabsPrefix}--chat-text">
+  return html`<div
+    class="${clabsPrefix}--chat-text"
+    role="textbox"
+    aria-readonly="true"
+    tabindex="0"
+    aria-label="text block">
     <div
       class="${clabsPrefix}--chat-text--float-${alignRight ? 'right' : 'left'}">
       <div class="${clabsPrefix}--chat-text-content">

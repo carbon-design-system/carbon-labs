@@ -42,12 +42,7 @@ export function textElementTemplate(customElementClass) {
     _showSummarization: showSummarization,
   } = customElementClass;
 
-  return html`<div
-    class="${clabsPrefix}--chat-text"
-    role="textbox"
-    aria-readonly="true"
-    tabindex="0"
-    aria-label="text block">
+  return html`<div class="${clabsPrefix}--chat-text">
     <div
       class="${clabsPrefix}--chat-text--float-${alignRight ? 'right' : 'left'}">
       <div class="${clabsPrefix}--chat-text-content">
@@ -76,7 +71,7 @@ export function textElementTemplate(customElementClass) {
                         <span
                           class="${clabsPrefix}--chat-text-content-chevron-container"
                           role="button"
-                          aria-label="show link as card below"
+                          aria-label="Show link as card below"
                           style="${textPiece.color
                             ? 'background-color:' + textPiece.color + ';'
                             : html``}">
@@ -121,11 +116,20 @@ export function textElementTemplate(customElementClass) {
                       `
                     : html``}
                 `
+              : alignRight
+              ? html` <span
+                  class="${streaming
+                    ? clabsPrefix + '--chat-text-fade-in'
+                    : ''}">
+                  ${textPiece.text}</span
+                >`
               : enableHtmlRendering || textPiece.type === 'html'
               ? html` <span
                   class="${clabsPrefix}--chat-text-content-${textPiece.type}"
                   >${unsafeHTML(textPiece.text)}</span
                 >`
+              : textPiece.type === 'new-line'
+              ? html`<br />`
               : textPiece.type === 'code'
               ? html`
                   <span
@@ -140,7 +144,9 @@ export function textElementTemplate(customElementClass) {
                     : ''}"
                   >${textPiece.text}</span
                 >`
-              : html` ${textPiece.text}`}`
+              : html`<p class="${clabsPrefix}--chat-text-content-paragraph">
+                  ${textPiece.text}
+                </p>`}`
         )}
         ${enableSummarization
           ? html`

@@ -17,11 +17,13 @@ import packageJson from '../../../package.json';
    - [JS via import](#js-via-import)
  - [Implementation](#implementation)
    - [Preface](#preface)
-   - [Vanilla, Svelte, Vue, Web-components](#all-implementation)
-   - [React](#react-implementation)
+   - [USAGE IN REACT](#react-implementation)
+   - [Usage in Vanilla, Svelte, Vue, Web-components](#all-implementation)
    - [Render with any API](#render-with-any-api)
    - [Render from Parent](#render-from-parent)
    - [Full Customization with Slotting](#full-customization-with-slotting)
+ - [Feedback popup](#feedback-form)
+ - [Localization](#localization)
  - [Styles](#styles)
 
 ## Overview 
@@ -53,28 +55,37 @@ All children components (Text, Code, Charts, Carousel etc) can be imported indiv
   <tr><td>**Type**</td><td>**Attribute name**</td><td>**Usage**</td></tr>
 </thead>
 <tbody>
-<tr><td>Boolean</td><td>loading</td><td>user-assigned boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message</td></tr>
-<tr><td>Boolean</td><td>closed</td><td>closed state to denote if chart is hidden</td></tr>
-<tr><td>Object</td><td>conversation</td><td>conversation object to display messages straight from the 'message' attribute, overrides any api_url system</td></tr>
-<tr><td>Boolean</td><td>stream-responses</td><td>user-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system</td></tr>
-<tr><td>Number</td><td>stream-delay</td><td>number value in milliseconds to throttle streaming response </td></tr>
-<tr><td>String</td><td>user-name</td><td>string denoting the user name, used for internal logic in the server to differentiate bot responses and user reseponses. default: 'user' but should be the user's real name based on IBM ID or any other data available</td></tr>
-<tr><td>String</td><td>agent-name</td><td>string denoting the bot name, default: 'external' but can be changed to 'Watson' or 'client assistant' or any other name</td></tr>
-<tr><td>String</td><td>default-viewing-mode</td><td>string denoting default viewing mode, can be "container" (default), "fullscreen" or "minimized"</td></tr>
-<tr><td>Boolean</td><td>disable-header-buttons</td><td>disable all buttons except slug</td></tr>
-<tr><td>Boolean</td><td>disable-header-fullscreen</td><td>remove header fullscreen button option</td></tr>
-<tr><td>Boolean</td><td>disable-header-close</td><td>remove header closing button option</td></tr>
-<tr><td>Boolean</td><td>disable-header-minimize</td><td>Remove fullscreen button option</td></tr>
-<tr><td>Boolean</td><td>disable-header-menu</td><td>disable header hamburger menu</td></tr>
-<tr><td>String</td><td>prompt-notification-message</td><td>string denoting message to append above prompt</td></tr>
-<tr><td>String</td><td>prompt-notification-type</td><td>string denoting type of appended prompt message (error, info, warning)</td></tr>
-<tr><td>String</td><td>input-field-placeholder</td><td>custom placeholder for input field in footer</td></tr>
-<tr><td>Number</td><td>max-character-count</td><td>max character counter specified by developer to prevent large queries</td></tr>
-<tr><td>String</td><td>api-url</td><td>string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service</td></tr>
-<tr><td>String</td><td>model</td><td>string denoting which model to use in your backend</td></tr>
-<tr><td>Boolean</td><td>auto-update</td><td>user-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system</td></tr>
-<tr><td>String</td><td>user-prompt</td><td>string denoting the unique behavior of the model designated by the user, appended to the private system prompt</td></tr>
-<tr><td>Number</td><td>temperature</td><td>float varying from 0.0 to 1.0, denotes how 'creative' the model's response will be. 0.0 (default) is the most safe and predictable while 1.0 is hightly creative but unpredictable (not advised for operations returning code or JSON objects)</td></tr>
+<tr><td>Boolean</td><td>`loading`</td><td>User-assigned boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message</td></tr>
+<tr><td>Boolean</td><td>`closed`</td><td>Closed state to denote if chart is hidden</td></tr>
+<tr><td>Object</td><td>`conversation`</td><td>conversation object to display messages straight from the 'message' attribute, overrides any api_url system</td></tr>
+<tr><td>Boolean</td><td>`enable-launcher`</td><td>Show launcher to open chat when closing chat</td></tr>
+<tr><td>Boolean</td><td>`start-with-launcher`</td><td>Close chat by default and show launcher</td></tr>
+<tr><td>Boolean</td><td>`enable-feedback-form`</td><td>Show complex feedback popup when clicking a reaction button</td></tr>
+<tr><td>Boolean</td><td>`enable-text-feedback-form`</td><td>Show complex feedback form on individual highlighted text items</td></tr>
+<tr><td>Object</td><td>`feedbackDefinitions`</td><td>Define what should be shown in feedback form, [see here](#feedback-form)</td></tr>
+<tr><td>String</td><td>`ai-slug-content`</td><td>HTML content to render in header AI slug</td></tr>
+<tr><td>Object</td><td>`aiSlugObject`</td><td>JSON object to specify AI slug content, formatted [here](#feedback-form)</td></tr>
+<tr><td>Boolean</td><td>`enable-request-cancelling`</td><td>When sending a query, show cancel button instead of send and interrupt incoming response</td></tr>
+<tr><td>Object</td><td>`customLabels`</td><td>Label list of all buttons/placeholders to localize UI, [see here](#localization)</td></tr>
+<tr><td>Boolean</td><td>`stream-responses`</td><td>User-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system</td></tr>
+<tr><td>Number</td><td>`stream-delay`</td><td>Number value in milliseconds to throttle streaming response </td></tr>
+<tr><td>String</td><td>`user-name`</td><td>String denoting the user name, used for internal logic in the server to differentiate bot responses and user reseponses. default: 'user' but should be the user's real name based on IBM ID or any other data available</td></tr>
+<tr><td>String</td><td>`agent-name`</td><td>String denoting the bot name, default: 'external' but can be changed to 'Watson' or 'client assistant' or any other name</td></tr>
+<tr><td>String</td><td>`default-viewing-mode`</td><td>String denoting default viewing mode, can be "container" (default), "fullscreen" or "minimized"</td></tr>
+<tr><td>Boolean</td><td>`disable-header-buttons`</td><td>Disable all buttons except slug</td></tr>
+<tr><td>Boolean</td><td>`disable-header-fullscreen`</td><td>Remove header fullscreen button option</td></tr>
+<tr><td>Boolean</td><td>`disable-header-close`</td><td>Remove header closing button option</td></tr>
+<tr><td>Boolean</td><td>`disable-header-minimize`</td><td>Remove fullscreen button option</td></tr>
+<tr><td>Boolean</td><td>`disable-header-menu`</td><td>Disable header hamburger menu</td></tr>
+<tr><td>String</td><td>`prompt-notification-message`</td><td>String denoting message to append above prompt</td></tr>
+<tr><td>String</td><td>`prompt-notification-type`</td><td>String denoting type of appended prompt message (error, info, warning)</td></tr>
+<tr><td>String</td><td>`input-field-placeholder`</td><td>Custom placeholder for input field in footer</td></tr>
+<tr><td>Number</td><td>`max-character-count`</td><td>Max character counter specified by developer to prevent large queries</td></tr>
+<tr><td>String</td><td>`api-url`</td><td>String url denoting where the message query will be sent, either BAM or watsonx.ai or any other service</td></tr>
+<tr><td>String</td><td>`model`</td><td>String denoting which model to use in your backend</td></tr>
+<tr><td>Boolean</td><td>`auto-update`</td><td>User-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system</td></tr>
+<tr><td>String</td><td>`user-prompt`</td><td>String denoting the unique behavior of the model designated by the user, appended to the private system prompt</td></tr>
+<tr><td>Number</td><td>`temperature`</td><td>Float varying from 0.0 to 1.0, denotes how 'creative' the model's response will be. 0.0 (default) is the most safe and predictable while 1.0 is hightly creative but unpredictable (not advised for operations returning code or JSON objects)</td></tr>
 </tbody>
 </table>
 
@@ -194,14 +205,14 @@ In Svelte, Vue, LIT and vanilla: simply use the tag to get going:
 <a id="react-implementation"></a>
 
 #### Try out our examples:
-> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/chat/examples/react/simple-chat)
+> [Github](https://stackblitz.com/github/ocornec/carbon-labs-react-examples/tree/main/simple-chat)
 > Simple Chat example.
 
-> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/chat/examples/react/fully-composed-chat)
+> [Github](https://stackblitz.com/github/ocornec/carbon-labs-react-examples/tree/main/fully-composed-chat)
 > Fully Composed Chat example.
 
-> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/packages/chat/examples/react/charts)
-> Singular component (charts() only example.
+> [Github](https://stackblitz.com/github/ocornec/carbon-labs-react-examples/tree/main/charts)
+> Singular component (charts only example).
 
 
 For React, one extra step is needed:
@@ -449,6 +460,98 @@ postMessage(previousMessage); //handle mimicking a real user request here to fet
   </clabs-chat-messages>
 
 </clabs-chat>
+```
+
+### Feedback form definition
+<a id="feedback-form"></a>
+Specify feedback form options like so:
+
+#### Importing into Chat
+```html
+<clabs-chat 
+  enable-complex-feedback
+  feedbackDefinitions={feedbackDefinitionsJSON}
+/>
+```
+
+### JSON object
+```js
+const feedbackFormOptions = {
+  'thumbs-down': {
+    title: 'Unsatisfactory Response',
+    tags: [
+      'Inaccurate',
+      'Incomplete',
+      'Missing links',
+      'Privacy violations',
+      'Hate speech',
+    ],
+    prompt: 'What was unsatisfactory about this response?',
+    responsePlaceholder: 'Describe issues with this response',
+    disclaimer:
+      'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
+  },
+  'thumbs-up': {
+    title: 'Feedback',
+    tags: ['Accurate', 'Comprehensive', 'Consice', 'Easy to Understand'],
+    prompt: 'Why did you choose this rating?',
+    responsePlaceholder: 'Add a comment',
+    disclaimer:
+      'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
+  }
+};
+```
+
+### Label localization
+<a id="localization"></a>
+Specify any and all label values like so:
+
+### Importing into Chat
+```html
+<clabs-chat 
+  customLabels={customLabelsJSON}
+/>
+```
+
+### JSON object
+```js
+const customLabelsJSON = {
+  'header-close-chat': 'Close',
+  'header-enable-fullscreen': 'Fullscreen',
+  'header-disable-fullscreen': 'Exit fullscreen',
+  'header-popout-chat': 'Pop out chat',
+  'header-expand-chat': 'Expand chat',
+  'header-move-chat': 'Move chat',
+  'header-move-chat-done': 'Set chat',
+  'header-open-menu': 'Open',
+  'header-close-menu': 'Close',
+  'header-open-slug': 'Open',
+  'header-close-slug': 'Close',
+  'message-regenerate-button': 'Regenerate',
+  'message-like-button': 'Like',
+  'message-undo-like-button': 'Remove like',
+  'message-dislike-button': 'Dislike',
+  'message-undo-dislike-button': 'Remove dislike',
+  'message-enable-editing': 'Edit',
+  'message-undo-edit': 'Undo edit',
+  'message-validate-edit': 'Validate edit',
+  'feedback-submit-button': 'Submit',
+  'feedback-submit-button-unavailable': 'Submit unavailable',
+  'feedback-close': 'Close',
+  'link-list-view-all-button': 'View all',
+  'link-list-collapse-button': 'Collapse list',
+  'link-list-reference-title': 'References',
+  'code-copypaste-button': 'Copy code',
+  'code-copypaste-success': 'Copied!',
+  'prompt-start-listening': 'Start listening',
+  'prompt-stop-listening': 'Stop listening',
+  'prompt-microphone-unavailable': 'Microphone unavailable',
+  'prompt-loading-state-placeholder': 'Thinking...',
+  'prompt-entry-placeholder': 'Type something...',
+  'prompt-send-button': 'Send response',
+  'prompt-send-blocked-button': 'Send unavailable',
+  'prompt-cancel-button': 'Cancel request',
+};
 ```
 
 ### Styles

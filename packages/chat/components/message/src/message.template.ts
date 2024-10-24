@@ -91,7 +91,6 @@ export function messageTemplate(customElementClass) {
   return html` <div
       class="${clabsPrefix}--chat-message-hidden-label"
       aria-hidden="${!readerContent}"
-      aria-level="2"
       role="${readerContent ? 'alert' : 'heading'}"
       id="${clabsPrefix}--chat-message-${index}-target-reader-label">
       ${readerContent
@@ -114,8 +113,9 @@ export function messageTemplate(customElementClass) {
     </div>
     <div
       aria-labelledby="${clabsPrefix}--chat-message-${index}-target-reader-label"
-      role="article"
+      role="treeitem"
       aria-label="message"
+      tabindex="0"
       class="${clabsPrefix}--chat-message ${clabsPrefix}--chat-message-user-message">
       <div class="${clabsPrefix}--chat-message-container">
         ${userSubmitted
@@ -355,6 +355,15 @@ export function messageTemplate(customElementClass) {
                                 content="${message.content}"
                                 .customLabels="${customLabels}"
                                 max-height="246px">
+                              </clabs-chat-code>
+                            `
+                          : message.type === 'editable-code'
+                          ? html`
+                              <clabs-chat-code
+                                content="${message.content}"
+                                .customLabels="${customLabels}"
+                                editable
+                                max-height="369px">
                               </clabs-chat-code>
                             `
                           : message.type === 'tags'

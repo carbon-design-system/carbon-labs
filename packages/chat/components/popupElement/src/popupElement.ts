@@ -466,7 +466,7 @@ export default class popupElement extends LitElement {
    * _handleSubmit - submit event when submit button click
    * @param {event} event - button click event
    */
-  _handleSubmit(event) {
+  _handleSubmit() {
     const feedbackDetails = {
       type: this.type ? this.type : 'unknown',
       formValues: this.feedbackFormValues,
@@ -483,7 +483,22 @@ export default class popupElement extends LitElement {
       }
     );
     this.dispatchEvent(complexFeedbackSubmission);
-    this._handleClose(event);
+    this.style.setProperty('--chat-popup-element-visibility', 'hidden');
+    const closePopupEvent = new CustomEvent('on-feedback-popup-closed', {
+      detail: {
+        action: 'Closed Feedback Popup after valid submit',
+        success: true,
+      },
+      bubbles: true,
+      composed: true,
+    });
+    if (
+      this.targetElement instanceof HTMLElement ||
+      this.targetElement instanceof SVGElement
+    ) {
+      this.targetElement.focus();
+    }
+    this.dispatchEvent(closePopupEvent);
   }
 
   /**
@@ -504,7 +519,7 @@ export default class popupElement extends LitElement {
     event.preventDefault();
     this.style.setProperty('--chat-popup-element-visibility', 'hidden');
     const closePopupEvent = new CustomEvent('on-feedback-popup-closed', {
-      detail: { action: 'Closed Feedback Popup' },
+      detail: { action: 'Closed Feedback Popup', success: false },
       bubbles: true,
       composed: true,
     });

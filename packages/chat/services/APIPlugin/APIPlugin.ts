@@ -324,6 +324,7 @@ class APIPlugin {
       return await fetch(API_URL, requestOptions)
         .then((response) => response.json())
         .then((response) => {
+          console.log(response.reply);
           if (model == 'llama-2') {
             response.reply = response.reply.split('undefined')[0];
           }

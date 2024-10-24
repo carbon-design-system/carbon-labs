@@ -42,6 +42,12 @@ export default class editableTextElement extends LitElement {
   @property({ type: Number, attribute: 'preset-height' })
   _presetHeight;
 
+  /**
+   * Preset min width from source text
+   */
+  @property({ type: Number, attribute: 'min-width' })
+  _minWidth = 123;
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
@@ -50,7 +56,7 @@ export default class editableTextElement extends LitElement {
     if (changedProperties.has('_presetWidth')) {
       this.style.setProperty(
         '--chat-editable-text-width',
-        this._presetWidth - 30 + 'px'
+        Math.max(this._minWidth, this._presetWidth - 30) + 'px'
       );
     }
   }
@@ -68,7 +74,7 @@ export default class editableTextElement extends LitElement {
     if (this._presetWidth) {
       this.style.setProperty(
         '--chat-editable-text-width',
-        this._presetWidth - 30 + 'px'
+        Math.max(this._minWidth, this._presetWidth - 30) + 'px'
       );
     }
   }

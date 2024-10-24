@@ -11,6 +11,9 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
+import Renew16 from '@carbon/web-components/es/icons/renew/16.js';
+import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
+
 /**
  * Lit template for formula
  *
@@ -18,7 +21,8 @@ const { stablePrefix: clabsPrefix } = settings;
  * @returns {TemplateResult<1>} Lit html template
  */
 export function historyViewerTemplate(customElementClass) {
-  const { sortedParents, columns, branches } = customElementClass;
+  const { sortedParents, columns, branches, branchingIndices, debug } =
+    customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-history-viewer-container">
     <div class="${clabsPrefix}--chat-history-viewer-container-tree">
@@ -26,23 +30,44 @@ export function historyViewerTemplate(customElementClass) {
         ${branches?.map(
           (branchId) => html` <div
             class="${clabsPrefix}--chat-history-viewer-column">
-            <div class="${clabsPrefix}--chat-history-viewer-message">
+            <div
+              class="${clabsPrefix}--chat-history-viewer-message ${clabsPrefix}--chat-history-viewer-header">
               branch ${branchId}
             </div>
             ${sortedParents?.map((parentId) => {
               const message = columns[branchId][parentId];
               return message
                 ? html` <div
-                    class="${clabsPrefix}--chat-history-viewer-message">
+                    class="${clabsPrefix}--chat-history-viewer-message ${branchingIndices[
+                      parentId
+                    ] > 1
+                      ? clabsPrefix + '--chat-history-viewer-common-branch'
+                      : ''}">
+                    ${message.action
+                      ? html` <div
+                          class="${clabsPrefix}--chat-history-viewer-action-label">
+                          ${message.action === 'regenerate' ? Renew16() : ''}
+                          ${message.action === 'edit' ? Edit16() : ''}
+                        </div>`
+                      : ''}
                     <div
                       class="${clabsPrefix +
                       '--chat-history-viewer-block-content-' +
                       (message.userSubmitted ? 'user' : 'bot')}">
-                      <strong>${message.index}</strong> ${message.text}
+                      ${debug
+                        ? html`<strong
+                            >${message.index + ':' + message.parentId}</strong
+                          >`
+                        : ''}
+                      ${message.text}
                     </div>
                   </div>`
                 : html`<div
-                    class="${clabsPrefix}--chat-history-viewer-message ${clabsPrefix}--chat-history-viewer-empty"></div>`;
+                    class="${clabsPrefix}--chat-history-viewer-message ${branchingIndices[
+                      parentId
+                    ] > 1
+                      ? clabsPrefix + '--chat-history-viewer-common-branch'
+                      : ''} ${clabsPrefix}--chat-history-viewer-empty"></div>`;
             })}
           </div>`
         )}

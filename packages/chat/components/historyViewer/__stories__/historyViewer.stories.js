@@ -34,7 +34,7 @@ export const Showcase = {
    * @returns {TemplateResult<1>}
    */
   render: () =>
-    html`<div style="display:flex;">
+    html`<div style="display:flex;max-width:900px;">
       <h4>Example 1</h4>
       <clabs-chat-history-viewer .historyTree=${examples}>
       </clabs-chat-history-viewer>

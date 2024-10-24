@@ -58,7 +58,7 @@ export default class textElement extends LitElement {
    * html boolean to render html content (TEMPORARY, for experimental use only)
    */
   @property({ type: Boolean, attribute: 'enable-html-rendering' })
-  enableHtmlRendering;
+  enableHtmlRendering = false;
 
   /**
    * enableTextHighlighting - show colored background for text
@@ -373,7 +373,7 @@ export default class textElement extends LitElement {
     }[] = [];
     let regexResult;
     const inputText = this.content;
-    const newLines = inputText.split('\n');
+    const newLines = inputText.trim().split('\n');
     for (const newLine of newLines) {
       while ((regexResult = annotationRegex.exec(newLine)) != null) {
         if (regexResult[1]) {
@@ -391,15 +391,33 @@ export default class textElement extends LitElement {
         } else if (regexResult[4]) {
           const checkHtmlContent = this._checkForHTML(regexResult[4]);
           const textType = checkHtmlContent ? 'html' : 'default';
+          const currentLine = regexResult[4];
           temporaryTextArray.push({
             text: this.capitalize
-              ? this._capitalizeText(regexResult[4])
-              : regexResult[4],
+              ? this._capitalizeText(currentLine)
+              : currentLine,
             type: textType,
             active: false,
             content: '',
           });
         }
+      }
+      if (!this.disableNewLines && !this.streaming) {
+        if (temporaryTextArray.length > 1) {
+          if (temporaryTextArray[temporaryTextArray.length - 1]) {
+            const prevObject =
+              temporaryTextArray[temporaryTextArray.length - 1];
+            if (prevObject?.type === 'new-line') {
+              continue;
+            }
+          }
+        }
+        temporaryTextArray.push({
+          text: '',
+          type: 'new-line',
+          active: false,
+          content: '',
+        });
       }
     }
     this._annotationList = temporaryAnnotationList;

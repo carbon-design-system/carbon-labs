@@ -108,6 +108,19 @@ export function popupElementTemplate(customElementClass) {
         : ''}
       <div class="${clabsPrefix}--chat-popup-divider"></div>
 
+      ${tagList
+        ? html`
+            <div class="${clabsPrefix}--chat-popup-tag-list">
+              <clabs-chat-tag-list
+                is-inline
+                @on-tag-selected="${handleTagSelection}"
+                content="${tagList
+                  ? tagList
+                  : '["Accurate","Comprehensive","Consise","Easy to understand"]'}">
+              </clabs-chat-tag-list>
+            </div>
+          `
+        : ''}
       ${!disableTextArea
         ? html`
             <div class="${clabsPrefix}--chat-popup-feedback-text">
@@ -121,19 +134,6 @@ export function popupElementTemplate(customElementClass) {
                 class="${clabsPrefix}--chat-popup-feedback-text-area">
                 <span slot="label-text">Feedback comment</span>
               </cds-textarea>
-            </div>
-          `
-        : ''}
-      ${tagList
-        ? html`
-            <div class="${clabsPrefix}--chat-popup-tag-list">
-              <clabs-chat-tag-list
-                is-inline
-                @on-tag-selected="${handleTagSelection}"
-                content="${tagList
-                  ? tagList
-                  : '["Accurate","Comprehensive","Consise","Easy to understand"]'}">
-              </clabs-chat-tag-list>
             </div>
           `
         : ''}
@@ -151,8 +151,6 @@ export function popupElementTemplate(customElementClass) {
             </ul>
           `
         : ''}
-
-      <div class="${clabsPrefix}--chat-popup-divider"></div>
       ${disclaimer
         ? html`
             <div class="${clabsPrefix}--chat-popup-disclaimer">
@@ -190,7 +188,6 @@ export function popupElementTemplate(customElementClass) {
         : ''}
       ${enableDataCollectionCheck
         ? html`
-            <div class="${clabsPrefix}--chat-popup-divider"></div>
             <cds-checkbox @cds-checkbox-changed="${handleCheckBoxChange}">
               ${dataCollectionTitle
                 ? dataCollectionTitle

@@ -32,6 +32,18 @@ $css--plex: true !default;
     padding-block: 32px 32px;
   }
 
+  .#{$clabs-prefix}--chat-messages-hidden-label {
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    margin: -1px;
+    block-size: 1px;
+    clip: rect(0, 0, 0, 0);
+    inline-size: 1px;
+    white-space: nowrap;
+  }
+
   .#{$clabs-prefix}--chat-messages-container-docked {
     overflow: hidden scroll;
     flex: 1;

@@ -62,6 +62,12 @@ export default class codeElement extends LitElement {
   maxHeight;
 
   /**
+   * Set tab size flag int
+   */
+  @property({ type: Number, attribute: 'tab-size' })
+  tabSize = 3;
+
+  /**
    * Editable boolean flag to let users know lines can be changed
    */
   @property({ type: Boolean, attribute: 'disable-copy-button', reflect: true })
@@ -192,7 +198,16 @@ export default class codeElement extends LitElement {
       }
       if (this.streaming) {
         this._formatCode(false);
+      } else {
+        this._formatCode(false);
       }
+    }
+    if (changedProperties.has('disableLineTicks')) {
+      this._formatCode(this.editable);
+    }
+
+    if (changedProperties.has('_editedContent')) {
+      this._formatCode(true);
     }
   }
 
@@ -216,10 +231,10 @@ export default class codeElement extends LitElement {
       this.style.setProperty('--chat-code-height', this.maxHeight);
     }
     if (this.editable) {
-      //this.disableLineTicks = true;
-      if (!this.disableLineTicks) {
+      this.disableLineTicks = false;
+      /*if (!this.disableLineTicks) {
         this.style.setProperty('--chat-code-tick-offset', '16px');
-      }
+      }*/
     }
     if (this.content !== undefined) {
       const codeAnalysis = this._clearCode(this.content);
@@ -241,7 +256,7 @@ export default class codeElement extends LitElement {
     }
     if (!this.disableAutoCompacting) {
       this.resizeObserver = new ResizeObserver(async () => {
-        this._handleResize();
+        this._handleScroll();
       });
 
       this.resizeObserver.observe(this);
@@ -249,9 +264,8 @@ export default class codeElement extends LitElement {
   }
 
   /** _handleScroll
-   * @param {event} _event - event from scroll
    */
-  _handleScroll(_event) {
+  _handleScroll() {
     const textArea = this.shadowRoot?.querySelector(
       '.clabs--chat-code-edit-area'
     );
@@ -264,19 +278,23 @@ export default class codeElement extends LitElement {
       this.editable
     ) {
       editArea.scrollTop = textArea.scrollTop;
+      setTimeout(() => {
+        if (Math.abs(textArea.scrollHeight - editArea.scrollHeight) > 10) {
+          this._formatCode(true);
+        }
+      }, 100);
     }
   }
 
   /**
    * _handleResize - resize handler to check code container size
+   * @param {event} _event - resize event
    */
-  _handleResize() {
-    this.disableLineTicks = this.clientWidth < 300;
-    /*if(this.disableLineTicks){
-    this.style.setProperty(
-      '--chat-code-tick-width','0px'
-    );
+  _handleResize(_event) {
+    /*if(!this.disableLineTicks){
+      this.disableLineTicks = (this.clientWidth < 300);
     }*/
+    this._handleScroll();
   }
 
   /** copy current code to clipboard when copy event is triggered
@@ -314,9 +332,25 @@ export default class codeElement extends LitElement {
    * @param {event} event - key event
    */
   _controlTabbing(event) {
-    if (event.type === 'keydown' && event.shiftKey && event.key === 'Tab') {
-      event.preventDefault();
+    //const newLines = event?.target?.value;
+    if (event?.key === 'Tab') {
+      event?.preventDefault();
+      /*let start = this.selectionStart;
+      let end = this.selectionEnd;
+      let tabbedline = newLines;
+
+      // set textarea value to: text before caret + tab + text after caret
+      tabbedline = tabbedline.substring(0, start) +"dksjfjkdkdjsl" + tabbedline.substring(end);
+
+      this.selectionStart = this.selectionEnd = start + 1;
+
+      if(event?.target?.value){
+        event.target.value = tabbedline;
+      }*/
     }
+    setTimeout(() => {
+      this._handleScroll();
+    }, 100);
   }
 
   /**
@@ -325,10 +359,8 @@ export default class codeElement extends LitElement {
    */
   _handleFullCodeEdit(event) {
     const newLines = event?.target?.value;
-
-    if (newLines && this._updateOnEdit) {
+    if (this._updateOnEdit) {
       this._editedContent = newLines;
-      this._formatCode(true);
       const codeEditedEvent = new CustomEvent('on-code-edit-change', {
         detail: {
           previousLineData: this.content,
@@ -344,7 +376,7 @@ export default class codeElement extends LitElement {
     } else {
       this._currentlyEdited = true;
     }
-    this._handleScroll(event);
+    this._handleScroll();
   }
 
   /**
@@ -389,7 +421,6 @@ export default class codeElement extends LitElement {
     }
 
     this._renderedLines = [...this._editedLines];
-    //this.requestUpdate();
   }
 
   /**
@@ -457,9 +488,7 @@ export default class codeElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(codeEditedEvent);
-    this._formatCode(false);
     this._formatCode(true);
-    this.requestUpdate();
   }
 
   /** _highlightLine - run code coloring system
@@ -474,8 +503,7 @@ export default class codeElement extends LitElement {
    * @param {boolean} edited - whether to render edited or not
    */
   _formatCode(edited) {
-    this.theme = this._getTheme();
-
+    this._getTheme();
     this._currentlyEdited = false;
     const formattedText = edited ? this._editedContent : this.content;
     const htmlSafeText = formattedText.replace(/```/g, '');
@@ -548,7 +576,9 @@ export default class codeElement extends LitElement {
           tabOffset += tabMatch[0].length * tabWidth;
         }
         tabOffset = 0;
-
+        if (!lines[i].trim()) {
+          continue;
+        }
         textValues.push({
           content: lines[i].trim().replace(/\t/g, ''),
           type: lineType,

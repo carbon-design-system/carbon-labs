@@ -36,68 +36,73 @@ export function messagesTemplate(customElementClass) {
     customLabels,
   } = customElementClass;
 
-  return html`<div
-    @wheel="${handleScroll}"
-    role="log"
-    aria-live="polite"
-    aria-relevant="additions"
-    class="${clabsPrefix}--chat-messages-container ${streamResponses
-      ? clabsPrefix + '--chat-messages-container-streaming'
-      : ''} 
+  return html` <div
+      class="${clabsPrefix}--chat-messages-hidden-label"
+      id="${clabsPrefix}--chat-messages-target-reader-label">
+      messages list
+    </div>
+
+    <div
+      @wheel="${handleScroll}"
+      role="tree"
+      aria-labelledby="${clabsPrefix}--chat-messages-target-reader-label"
+      class="${clabsPrefix}--chat-messages-container ${streamResponses
+        ? clabsPrefix + '--chat-messages-container-streaming'
+        : ''} 
 
     ${dockingEnabled ? clabsPrefix + '--chat-messages-container-docked' : ''}">
-    <slot name="message-items" @slotchange="${_handleSlotchange}">
-      ${computedMessages
-        ? html`
-            ${computedMessages.map((message, index) =>
-              message.hasError
+      <slot name="message-items" @slotchange="${_handleSlotchange}">
+        ${computedMessages
+          ? html`
+              ${computedMessages.map((message, index) =>
+                message.hasError
+                  ? html` <clabs-chat-message
+                      raw-text="${message.text}"
+                      origin="${message.origin}"
+                      ?user-submitted="${message.userSubmitted ||
+                      message.origin === userName}"
+                      time-stamp="${message.time}"
+                      .customLabels="${customLabels}"
+                      error-state
+                      stream-delay="${streamDelay}"
+                      ?compact-icon="${dockingEnabled}"
+                      index="${index}">
+                    </clabs-chat-message>`
+                  : html` <clabs-chat-message
+                      raw-text="${message.text}"
+                      origin="${message.origin}"
+                      time-stamp="${message.time}"
+                      ?user-submitted="${message.userSubmitted ||
+                      message.origin === userName}"
+                      disable-buttons="${message.disableButtons || nothing}"
+                      index="${index}"
+                      .customLabels="${customLabels}"
+                      ?enable-complex-feedback="${enableFeedbackForm}"
+                      .feedbackFormDefinitions="${feedbackFormDefinitions}"
+                      stream-delay="${streamDelay}"
+                      parent-theme="${parentTheme}"
+                      @on-structure-change="${handleInternalChange}"
+                      ?compact-icon="${dockingEnabled}"
+                      ?stream-content="${streamResponses &&
+                      !userInterruptedStreaming}"
+                      display-name="${message.displayName || nothing}"
+                      display-color="${message.displayColor || nothing}"
+                      .elements="${message.elements || nothing}">
+                    </clabs-chat-message>`
+              )}
+              ${queryInProgress
                 ? html` <clabs-chat-message
-                    raw-text="${message.text}"
-                    origin="${message.origin}"
-                    ?user-submitted="${message.userSubmitted ||
-                    message.origin === userName}"
-                    time-stamp="${message.time}"
-                    .customLabels="${customLabels}"
-                    error-state
-                    stream-delay="${streamDelay}"
-                    ?compact-icon="${dockingEnabled}"
-                    index="${index}">
-                  </clabs-chat-message>`
-                : html` <clabs-chat-message
-                    raw-text="${message.text}"
-                    origin="${message.origin}"
-                    time-stamp="${message.time}"
-                    ?user-submitted="${message.userSubmitted ||
-                    message.origin === userName}"
-                    disable-buttons="${message.disableButtons || nothing}"
-                    index="${index}"
-                    .customLabels="${customLabels}"
-                    ?enable-complex-feedback="${enableFeedbackForm}"
-                    .feedbackFormDefinitions="${feedbackFormDefinitions}"
-                    stream-delay="${streamDelay}"
                     parent-theme="${parentTheme}"
-                    @on-structure-change="${handleInternalChange}"
                     ?compact-icon="${dockingEnabled}"
-                    ?stream-content="${streamResponses &&
-                    !userInterruptedStreaming}"
-                    display-name="${message.displayName || nothing}"
-                    display-color="${message.displayColor || nothing}"
-                    .elements="${message.elements || nothing}">
+                    time-stamp=""
+                    .customLabels="${customLabels}"
+                    loading-state
+                    .elements="${[{ type: 'loading', content: '' }]}"
+                    error-state="false">
                   </clabs-chat-message>`
-            )}
-            ${queryInProgress
-              ? html` <clabs-chat-message
-                  parent-theme="${parentTheme}"
-                  ?compact-icon="${dockingEnabled}"
-                  time-stamp=""
-                  .customLabels="${customLabels}"
-                  loading-state
-                  .elements="${[{ type: 'loading', content: '' }]}"
-                  error-state="false">
-                </clabs-chat-message>`
-              : html``}
-          `
-        : html``}
-    </slot>
-  </div>`;
+                : html``}
+            `
+          : html``}
+      </slot>
+    </div>`;
 }

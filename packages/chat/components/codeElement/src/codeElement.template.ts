@@ -19,7 +19,7 @@ import '@carbon/web-components/es/components/icon-button/index.js';
 import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
 import '@carbon/web-components/es/components/copy-button/index.js';
 import Checkmark16 from '@carbon/web-components/es/icons/checkmark/16.js';
-import Close16 from '@carbon/web-components/es/icons/close/16.js';
+import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
 
 /**
  * Lit template for code
@@ -52,9 +52,11 @@ export function codeElementTemplate(customElementClass) {
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-code">
+    ${enableLanguageDisplay
+      ? html`<div class="${clabsPrefix}--chat-code-lang">${language}</div>`
+      : ``}
     <div class="${clabsPrefix}--chat-code-options">
       <div class="${clabsPrefix}--chat-code-options-buttons">
-        <div>${enableLanguageDisplay ? language : ''}</div>
         ${!disableEditButton
           ? html`
               <cds-icon-button
@@ -84,10 +86,13 @@ export function codeElementTemplate(customElementClass) {
       </div>
     </div>
 
-    <div class="${clabsPrefix}--chat-code-container" @wheel="${handleScroll}">
+    <div
+      class="${clabsPrefix}--chat-code-container"
+      @wheel="${handleScroll}"
+      @mousemove="${handleScroll}">
       <textarea
+        @keydown="${controlTabbing}"
         @input="${handleFullCodeEdit}"
-        @keyup="${controlTabbing}"
         aria-label="Editable Text"
         spellcheck="false"
         class="${clabsPrefix}--chat-code-edit-area ${!editable
@@ -108,7 +113,7 @@ ${_editedContent}</textarea
             html`
               <div
                 class="${clabsPrefix}--chat-code-line ${clabsPrefix}--chat-code-line-fade-in">
-                ${disableLineTicks || _renderedLines.length < 2
+                ${disableLineTicks && _renderedLines.length < 2
                   ? html``
                   : html`
                       <div class="${clabsPrefix}--chat-code-line-tick">
@@ -132,31 +137,30 @@ ${_editedContent}</textarea
         )}
       </div>
     </div>
-
     ${currentlyEdited
-      ? html`
-          <div class="${clabsPrefix}--chat-code-editing-controls">
-            <cds-button
-              size="md"
-              align="top"
-              aria-label="Undo Edit"
-              role="button"
-              kind="danger--tertiary"
-              @click="${handleEditCancellation}">
-              ${Close16({ slot: 'icon' })} Revert all changes
-            </cds-button>
+      ? html` <div class="${clabsPrefix}--chat-code-editing-controls">
+          <cds-icon-button
+            size="md"
+            aria-label="Validate Edit"
+            role="button"
+            align="left"
+            kind="ghost"
+            @click="${handleEditValidation}">
+            ${Checkmark16({ slot: 'icon' })}
+            <span slot="tooltip-content">Apply edit</span>
+          </cds-icon-button>
 
-            <cds-button
-              size="md"
-              aria-label="Validate Edit"
-              role="button"
-              align="top"
-              kind="tertiary"
-              @click="${handleEditValidation}">
-              ${Checkmark16({ slot: 'icon' })} Apply changes
-            </cds-button>
-          </div>
-        `
+          <cds-icon-button
+            size="md"
+            align="left"
+            aria-label="Undo edit"
+            role="button"
+            kind="danger"
+            @click="${handleEditCancellation}">
+            ${Undo16({ slot: 'icon' })}
+            <span slot="tooltip-content">Undo edit</span>
+          </cds-icon-button>
+        </div>`
       : html``}
   </div>`;
 }

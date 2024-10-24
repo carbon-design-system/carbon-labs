@@ -32,6 +32,13 @@ $css--plex: true !default;
     max-inline-size: 100%;
   }
 
+  .#{$clabs-prefix}--chat-text-content-chevron-container {
+    margin-inline: 4px 2px;
+  }
+
+  .#{$clabs-prefix}--chat-text-content-paragraph {
+    margin: 0;
+  }
   .#{$clabs-prefix}--chat-text-content-chevron {
     display: inline-block;
     box-sizing: border-box;

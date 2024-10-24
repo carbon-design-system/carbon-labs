@@ -28,6 +28,12 @@ $css--plex: true !default;
     line-height: 20px;
   }
 
+  .#{$clabs-prefix}--chat-code-lang {
+    font-style: italic;
+    padding-block-start: 16px;
+    padding-inline-start: 16px;
+  }
+
   .#{$clabs-prefix}--chat-code-color-area {
     position: relative;
     display: flex;
@@ -58,26 +64,29 @@ $css--plex: true !default;
     background: none;
     block-size: 100%;
     caret-color: $text-primary;
-    color: $support-warning;
+    color: transparent;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 14px;
-    inline-size: calc(100% - 64px);
-    inset-block-start: 13px;
-    inset-inline-start: 14px;
+    inline-size: calc(100% - var(--chat-code-tick-width, '13px') - 13px);
+    inset-block-start: 2px;
+    inset-inline-start: 15px;
 
     letter-spacing: 0.16px;
     line-height: 20px;
-    margin-inline: var(--chat-code-tick-width, '13px') 16px;
+    margin-inline: var(--chat-code-tick-width, '0px') 16px;
     max-block-size: var(--chat-code-height, '100%');
 
     outline: none;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
     overflow-x: hidden;
+    padding-block-start: 13px;
     resize: none;
     tab-size: 3;
 
-    white-space: pre;
-    word-wrap: break-word;
+    text-decoration: underline;
+    text-decoration-color: $layer-selected-01;
+    text-underline-offset: 3px;
+    word-break: break-word;
   }
 
   .#{$clabs-prefix}--chat-code-line {
@@ -103,6 +112,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-code-line-text {
     flex: 1;
+    overflow-wrap: anywhere;
     padding-inline-start: 8px;
     pointer-events: none;
     word-wrap: break-word;
@@ -139,6 +149,7 @@ $css--plex: true !default;
     inset-inline-end: 0;
   }
   .#{$clabs-prefix}--chat-code-options-buttons {
+    z-index: 3;
     display: flex;
     flex-direction: row;
     background: $background;
@@ -280,7 +291,7 @@ $css--plex: true !default;
     color: $support-success;
   }
 
-  .#{$clabs-prefix}--chat-code-g100-theme {
+  .#{$clabs-prefix}--chat-code-white-theme {
     .hljs-literal,
     .hljs-built_in,
     .hljs-selector-tag,
@@ -414,7 +425,7 @@ $css--plex: true !default;
     }
   }
 
-  .#{$clabs-prefix}--chat-code-white-theme {
+  .#{$clabs-prefix}--chat-code-g100-theme {
     .hljs-literal,
     .hljs-built_in,
     .hljs-selector-tag,

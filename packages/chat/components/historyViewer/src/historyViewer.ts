@@ -37,6 +37,12 @@ export default class historyViewer extends LitElement {
   @state()
   branches;
 
+  @state()
+  branchingIndices;
+
+  @state()
+  debug = false;
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
@@ -98,21 +104,42 @@ export default class historyViewer extends LitElement {
       '.' + clabsPrefix + '--chat-history-viewer-container'
     );*/
     const columns = {};
+    const branchTaken = {};
+    const branchingIndices = {};
     for (const msg of this.historyTree) {
       if (!columns[msg.branchId]) {
         columns[msg.branchId] = {};
       }
-      columns[msg.branchId][msg.parentId] = msg;
+      if (!branchingIndices[msg.parentId]) {
+        branchingIndices[msg.parentId] = 1;
+      }
+      if (!branchTaken[msg.branchId]) {
+        branchingIndices[msg.parentId]++;
+        branchTaken[msg.branchId] = msg.branchId;
+      }
+
+      columns[msg.branchId][msg.parentId === null ? -1 : msg.parentId] = msg;
     }
 
-    const branches = Object.keys(columns).sort();
+    const branches = Object.keys(columns).sort(
+      (a, b) => parseInt(a) - parseInt(b)
+    );
     const allParents = new Set();
     branches.forEach((branchId) => {
       Object.keys(columns[branchId]).forEach((parentId) => {
         allParents.add(parentId);
       });
     });
-    const sortedParents = Array.from(allParents).sort();
+    const sortedParents = Array.from(allParents);
+    /*.sort((a, b) => {
+      return parseInt(a) - parseInt(b);
+    });*/
+    this.style.setProperty(
+      '--chat-history-viewer-branch-percentage',
+      100 / branches.length + '%'
+    );
+    console.log(100 / branches.length + '%');
+    this.branchingIndices = branchingIndices;
     this.sortedParents = sortedParents;
     this.columns = columns;
     this.branches = branches;

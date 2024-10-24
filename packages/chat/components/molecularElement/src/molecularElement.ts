@@ -419,7 +419,7 @@ export default class molecularElement extends LitElement {
               const coords = points.map((point) =>
                 point.split(',').map(Number)
               );
-              const shortenFactor = 0.6;
+              const shortenFactor = 0.75;
               const [x1, y1] = coords[0];
               let [x2, y2] = coords[1];
               let [x3, y3] = coords[2];

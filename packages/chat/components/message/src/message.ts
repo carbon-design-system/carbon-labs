@@ -322,7 +322,31 @@ export default class message extends LitElement {
    * @param {Object} elements -  array of objects
    */
   _prepareReaderText(elements) {
-    return elements.map((element) => element.content).join('\n');
+    let textToRead = '';
+    /*const userElement = this.shadowRoot?.querySelector(
+      '.' + clabsPrefix + '--chat-message-response-user'
+    );
+    const botElement = this.shadowRoot?.querySelector(
+      '.' + clabsPrefix + '--chat-message-response-bot'
+    );
+    if(userElement instanceof HTMLElement){
+      console.log('user')
+      textToRead = userElement.textContent || userElement.innerText || '';
+    }else if(botElement instanceof HTMLElement){
+      console.log('bot')
+      console.log(botElement)
+      textToRead = botElement.textContent || botElement.innerText || '';
+    }else{
+      console.log('fail')
+      textToRead = elements.map((element) => element.content).join('\n');
+    }*/
+    textToRead = elements.map((element) => element.content).join('\n');
+    const tagRegex = '<[^>]*>';
+    const extrasRegex = '<(script|style)[^>]*>[\\s\\S]*?<\\/\\1>';
+
+    const cleanText = textToRead.replace(new RegExp(extrasRegex, 'gi'), '');
+    const pureText = cleanText.replace(new RegExp(tagRegex, 'g'), '');
+    return pureText.trim();
   }
 
   /** internal LIT function to detect updates to the DOM tree, used to auto update the messageElements attribute
@@ -355,7 +379,7 @@ export default class message extends LitElement {
     }
     if (changedProperties.has('_readerContent')) {
       setTimeout(() => {
-        const hiddenLabel = this.shadowRoot?.querySelector(
+        /*const hiddenLabel = this.shadowRoot?.querySelector(
           '.' + clabsPrefix + '--chat-message-hidden-label'
         );
         if (hiddenLabel instanceof HTMLElement) {
@@ -363,7 +387,7 @@ export default class message extends LitElement {
           setTimeout(() => {
             hiddenLabel.setAttribute('role', 'heading');
           }, 1000);
-        }
+        }*/
       }, 200);
     }
   }

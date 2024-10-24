@@ -45,15 +45,15 @@ const coreExamples = [
   ],
   [
     'code',
-    '```from math import sqrt\n# n is the number to be check whether it is prime or not\nn = 1\n\n# this flag maintains status whether the n is prime or not\nprime_flag = 0\n\nif(n > 1):\n\tfor i in range(2, int(sqrt(n)) + 1):\n\t\tif (n % i == 0):\n\t\t\tprime_flag = 1\n\t\t\tbreak\n\tif (prime_flag == 0):\n\t\tprint("True")\n\telse:\n\t\tprint("False")\nelse:\n\tprint("False")\n```',
+    'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n',
     '',
     'Prime function in python',
   ],
   [
-    'code',
-    '```<clabs-chat \n\tuser-name="Owen" \n\tagent-name="Watson"\n\tconversation={conversationJSON}\n\tstream-responses={streamEnabled}\n\tloading={loading}\n\tdefault-viewing-mode="docked"\n\ton:on-user-message-update-request={handleUpdatedMessage}\n\ton:on-user-regeneration-request={handleRegeneration}\n\ton:on-user-text-input={handleNewMessage}\n\ton:on-message-element-selected={handleElementClicked}\n\ton:on-user-feedback-request={handleUserFeedback}\n\ton:on-message-element-tag-selected={handleTagClicked}>\n</clabs-chat>```',
+    'editable-code',
+    '<!doctype html>\n<html>\n\t<head>\n\t\t<title>This is the title of the webpage</title>\n\t<script src="myscripts.js"></script>\n\t</head>\n\t<body>\n\t\t<p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this <strong>p</strong> tag and its contents.</p>\n\t</body>\n</html>',
     '',
-    'Carbon Chat example',
+    'Webpage example',
   ],
   [
     'link-list',
@@ -274,6 +274,8 @@ const feedbackFormOptions = {
     ],
     prompt: 'What was unsatisfactory about this response?',
     responsePlaceholder: 'Describe issues with this response',
+    dataCollectionTitle: 'I allow IBM to collect my feedback',
+    enableDataCollectionCheck: true,
     disclaimer:
       'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
   },
@@ -282,6 +284,8 @@ const feedbackFormOptions = {
     tags: ['Accurate', 'Comprehensive', 'Consice', 'Easy to Understand'],
     prompt: 'Why did you choose this rating?',
     responsePlaceholder: 'Add a comment',
+    dataCollectionTitle: 'I allow IBM to collect my feedback',
+    enableDataCollectionCheck: true,
     disclaimer:
       'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
   },
@@ -392,10 +396,11 @@ export const APIPlayground = {
         enable-feedback-form
         .feedbackDefinitions="${feedbackFormOptions}"
         api-url="${apiUrl}"
+        enable-request-cancelling
         feedback-url="${feedbackUrl}"
         temperature="${temperature || 0.2}"
-        user-name="Sherlock"
-        agent-name="Dr Watson">
+        user-name="Owen"
+        agent-name="AI Bot">
       </clabs-chat>
     </div>
   `,

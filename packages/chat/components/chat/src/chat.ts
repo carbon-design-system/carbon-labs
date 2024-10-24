@@ -366,7 +366,6 @@ export default class CLABSChat extends LitElement {
     if (changedProperties.has('conversation')) {
       if (this.conversation) {
         this._messages = [...this.conversation];
-        this.requestUpdate();
       } else {
         this._messages = [];
       }
@@ -381,16 +380,9 @@ export default class CLABSChat extends LitElement {
         this.enableFullscreen = false;
       }
     }
-    if (changedProperties.has('_messages')) {
-      this.requestUpdate();
-    }
 
     if (changedProperties.has('sampleQuery')) {
       this.initializeExamplesText();
-    }
-
-    if (changedProperties.has('_streamResponses')) {
-      this.requestUpdate();
     }
 
     if (changedProperties.has('temperature')) {
@@ -674,8 +666,6 @@ export default class CLABSChat extends LitElement {
     }
 
     this._queryInProgress = false;
-    this.requestUpdate();
-    this.requestUpdate();
   }
 
   /** trigger API call upon text input
@@ -738,7 +728,6 @@ export default class CLABSChat extends LitElement {
         bubbles: true,
         composed: true,
       });
-      this.requestUpdate();
       this.sendInput(inputEvent);
     } else {
       event.preventDefault();
@@ -769,7 +758,6 @@ export default class CLABSChat extends LitElement {
       if (this.temperature) {
         this.temperature += 0.2;
       }
-      this.requestUpdate();
       this.sendInput(inputEvent);
     } else {
       event.preventDefault();
@@ -833,7 +821,6 @@ export default class CLABSChat extends LitElement {
       this._messages = [...this._messages, newMessage];
 
       this._queryInProgress = true;
-      this.requestUpdate();
 
       this.getResults(value)
         .then((res) => {
@@ -858,7 +845,6 @@ export default class CLABSChat extends LitElement {
               ];
             }
             this._queryInProgress = false;
-            this.requestUpdate();
           } else {
             this.requestCancelled = false;
           }
@@ -879,7 +865,6 @@ export default class CLABSChat extends LitElement {
               },
             ];
             this._queryInProgress = false;
-            this.requestUpdate();
           } else {
             this.requestCancelled = false;
           }
@@ -982,7 +967,6 @@ export default class CLABSChat extends LitElement {
     if (!this.disableOutsideControl) {
       document.body.style.overflow = '';
     }
-    this.requestUpdate();
   }
 
   /**

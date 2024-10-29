@@ -15,7 +15,7 @@
     "vite": "^3.2.2"
   },
   "dependencies": {
-    "@carbon/styles": "^1.53.0",
-    "@carbon-labs/ai-ux-control": "latest"
+    "@carbon-labs/ai-ux-control": "latest",
+    "@carbon/styles": "^1.53.0"
   }
 }

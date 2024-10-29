@@ -5,9 +5,9 @@
     "module": "esNext",
     "moduleResolution": "node",
     "typeRoots": [
-      "declarations.d.ts",
+      "./declarations.d.ts",
       "./node_modules/@types/",
-      "../../node_modules/@ types"
+      "../../node_modules/@types"
     ],
     "declaration": true,
     "rootDir": ".",
@@ -26,6 +26,6 @@
     "resolveJsonModule": true,
     "types": ["mocha", "sinon"]
   },
-  "include": ["packages/**/*.ts", ".storybook/**/*.ts", "declarations.d.ts"],
-  "exclude": ["packages/**/__tests__"]
+  "include": ["*.ts", ".storybook/**/*.ts", "./declarations.d.ts"],
+  "exclude": ["**/__tests__"]
 }

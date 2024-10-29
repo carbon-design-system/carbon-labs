@@ -58,6 +58,7 @@ export function footerTemplate(customElementClass) {
     _renderLabel: renderLabel,
     queryProcessing,
     enableCancellation,
+    showNotification,
   } = customElementClass;
 
   return html`
@@ -127,6 +128,21 @@ export function footerTemplate(customElementClass) {
                 </div>
               </div>
             </div>
+          `
+        : ''}
+      ${showNotification
+        ? html`
+            <cds-inline-notification
+              title="${renderLabel('complex-feedback-notification-title')}"
+              timeout="1200"
+              aria-label="${renderLabel(
+                'complex-feedback-notification-close-label'
+              )}"
+              low-contrast
+              subtitle="${renderLabel(
+                'complex-feedback-notification-subtitle'
+              )}">
+            </cds-inline-notification>
           `
         : ''}
       <div

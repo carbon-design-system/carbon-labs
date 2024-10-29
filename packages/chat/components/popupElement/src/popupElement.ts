@@ -440,14 +440,17 @@ export default class popupElement extends LitElement {
       this.style.setProperty('--chat-popup-element-visibility', 'visible');
       const offsetTop = this.feedbackFormValues?.parentValues?.offsetTop;
       const feedbackHeight = this.scrollHeight;
+
       const parentHeight =
         this.feedbackFormValues?.parentValues?.scrollHeight || 0;
-
       let horizontalPosition = 54;
       let verticalPosition = 60;
       let orientation = 'top';
 
-      if (parentHeight - feedbackHeight > offsetTop) {
+      if (
+        parentHeight - feedbackHeight > offsetTop ||
+        feedbackHeight > offsetTop
+      ) {
         verticalPosition = -feedbackHeight;
         orientation = 'bottom';
       }

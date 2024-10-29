@@ -151,6 +151,18 @@ export default class footer extends LitElement {
   queryProcessing;
 
   /**
+   * notification counter to display
+   */
+  @property({ type: String, attribute: 'notification-count' })
+  notificationCount = '0';
+
+  /**
+   * trigger notification display
+   */
+  @state()
+  showNotification = false;
+
+  /**
    * LIT firstUpdated cycle to define initial parameters on first render
    */
   firstUpdated() {
@@ -204,6 +216,14 @@ export default class footer extends LitElement {
     if (changedProperties.has('_presetEntry')) {
       this._messageText = this._presetEntry;
     }
+    if (changedProperties.has('notificationCount')) {
+      if (this.notificationCount !== '0') {
+        this.showNotification = true;
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 1250);
+      }
+    }
   }
 
   /**
@@ -240,6 +260,15 @@ export default class footer extends LitElement {
           customValue = labels[key] || 'Cancel request';
           break;
         case 'prompt-close-warning':
+          customValue = labels[key] || 'Close';
+          break;
+        case 'complex-feedback-notification-title':
+          customValue = labels[key] || 'Feedback sent';
+          break;
+        case 'complex-feedback-notification-subtitle':
+          customValue = labels[key] || 'Thank you, we value your input';
+          break;
+        case 'complex-feedback-notification-close-label':
           customValue = labels[key] || 'Close';
           break;
       }

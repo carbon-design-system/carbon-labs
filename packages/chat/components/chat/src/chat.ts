@@ -343,6 +343,12 @@ export default class CLABSChat extends LitElement {
   @state()
   setUserMessage;
 
+  /**
+   * popup event counter
+   */
+  @state()
+  complexFeedbackCount = 0;
+
   /** detect when component is rendered to process code object
    */
   firstUpdated() {
@@ -978,6 +984,14 @@ export default class CLABSChat extends LitElement {
       document.body.style.overflow = '';
     }
     this.requestUpdate();
+  }
+
+  /**
+   * if complex feedback triggered, notify change to footer for notification
+   * @param {event} _event - custom complex feedback event
+   */
+  _handleComplexFeedback(_event) {
+    this.complexFeedbackCount++;
   }
 
   /** get time of message formatted as 1:23pm or 4:56am

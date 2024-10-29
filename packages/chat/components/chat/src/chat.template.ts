@@ -69,6 +69,8 @@ export function chatTemplate(customElementClass) {
     enableLauncher,
     _cancelRequest: cancelRequest,
     _handleChatOpened: handleChatOpened,
+    _handleComplexFeedback: handleComplexFeedback,
+    complexFeedbackCount,
   } = customElementClass;
 
   return html`<div
@@ -168,6 +170,7 @@ export function chatTemplate(customElementClass) {
                 .feedbackFormDefinitions="${feedbackDefinitions}"
                 text-feedback-form-enabled="${enableTextFeedbackForm}"
                 ?user-interrupted-streaming="${interruptStreaming}"
+                @on-user-complex-feedback-request="${handleComplexFeedback}"
                 @on-message-regeneration="${handleUserRegenerationRequest}"
                 @on-user-message-update-request="${handleUserUpdateRequest}"
                 .customLabels="${customLabels}"
@@ -190,6 +193,7 @@ export function chatTemplate(customElementClass) {
                 ?currently-streaming="${streamResponses && !interruptStreaming}"
                 input-placeholder="${inputFieldPlaceholder}"
                 preset-entry="${setUserMessage}"
+                notification-count="${complexFeedbackCount}"
                 ?query-processing="${queryInProgress}"
                 character-limit="${maxCharacterCount}">
               </clabs-chat-footer>

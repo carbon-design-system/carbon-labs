@@ -340,6 +340,11 @@ export default class message extends LitElement {
       console.log('fail')
       textToRead = elements.map((element) => element.content).join('\n');
     }*/
+    if (elements.length == 1) {
+      if (elements[0]?.type === 'loading') {
+        return this._renderLabel('message-loading-aria-label');
+      }
+    }
     textToRead = elements.map((element) => element.content).join('\n');
     const tagRegex = '<[^>]*>';
     const extrasRegex = '<(script|style)[^>]*>[\\s\\S]*?<\\/\\1>';
@@ -1610,6 +1615,9 @@ export default class message extends LitElement {
           break;
         case 'message-validate-edit':
           customValue = labels[key] || 'Validate edit';
+          break;
+        case 'message-loading-aria-label':
+          customValue = labels[key] || 'Message sent, please wait...';
           break;
       }
     }

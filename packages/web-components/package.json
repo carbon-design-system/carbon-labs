@@ -9,9 +9,6 @@
   "engines": {
     "node": ">=18.x"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "main": "es/index",
   "types": "es/index",
   "module": "es/index",
@@ -26,7 +23,6 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build": "lerna run build --stream && yarn custom-elements",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "build-storybook": "yarn build && storybook build",

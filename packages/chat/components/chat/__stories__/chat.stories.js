@@ -327,6 +327,10 @@ const customLabels = {
   'prompt-send-button': 'Send response',
   'prompt-send-blocked-button': 'Send unavailable',
   'prompt-cancel-button': 'Cancel request',
+  'complex-feedback-notification-title': 'Feedback sent',
+  'complex-feedback-notification-subtitle': 'Thank you, we value your input',
+  'complex-feedback-notification-close-label': 'Close',
+  'message-loading-aria-label': 'Message sent, please wait...',
 };
 
 const apiArgs = {

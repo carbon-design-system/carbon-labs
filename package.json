@@ -10,13 +10,14 @@
     "node": ">=18.x"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/*/**"
   ],
   "scripts": {
     "build": "lerna run build --stream ",
     "ci-check": "yarn run format:staged && yarn lint:license && yarn lint && yarn lint:styles",
     "ci-check:build": "yarn build && yarn build:dist && yarn ci-check",
-    "clean": "rm -rf **/node_modules **/es **/lib **/dist",
+    "clean": "rm -rf **/{node_modules,es,lib,dist}",
     "doctoc": "doctoc --title '## Table of Contents' docs",
     "format": "prettier --check '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:write": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",

@@ -66,7 +66,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-header-slug-compress {
     overflow: hidden scroll;
-    max-block-size: 60vh;
+    max-block-size: 50vh;
   }
 
   .#{$clabs-prefix}--chat-header-ai-button::part(button) {

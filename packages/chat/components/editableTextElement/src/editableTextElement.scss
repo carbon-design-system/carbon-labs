@@ -22,7 +22,7 @@ $css--plex: true !default;
     border: none;
     margin: 0;
     background: none;
-    block-size: 24px;
+    block-size: var(--chat-editable-text-height, '24px');
     color: $text-primary;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 14px;

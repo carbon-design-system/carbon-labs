@@ -218,7 +218,6 @@ export default class header extends LitElement {
     this.menuContainerTarget = this.shadowRoot?.querySelector(
       '#' + clabsPrefix + '--chat-header-container-target'
     );
-    console.log(this.parentElement);
   }
 
   /**

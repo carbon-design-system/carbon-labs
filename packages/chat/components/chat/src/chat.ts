@@ -632,7 +632,7 @@ export default class CLABSChat extends LitElement {
   _dragEnd(_event) {
     this._isDragging = false;
     if (!this.disableOutsideControl) {
-      document.body.style.userSelect = 'auto';
+      //document.body.style.userSelect = 'auto';
     }
   }
 
@@ -948,7 +948,7 @@ export default class CLABSChat extends LitElement {
     }
     this.enableFullscreen = mode;
     if (!this.disableOutsideControl) {
-      document.body.style.overflow = mode ? 'hidden' : '';
+      //document.body.style.overflow = mode ? 'hidden' : '';
     }
     //this.parentElement.dispatchEvent(new Event('resize'));
   }
@@ -971,7 +971,7 @@ export default class CLABSChat extends LitElement {
   _handleChatClosed() {
     this.closed = true;
     if (!this.disableOutsideControl) {
-      document.body.style.overflow = '';
+      //document.body.style.overflow = '';
     }
   }
 
@@ -981,7 +981,7 @@ export default class CLABSChat extends LitElement {
   _handleChatOpened() {
     this.closed = false;
     if (!this.disableOutsideControl) {
-      document.body.style.overflow = '';
+      //document.body.style.overflow = '';
     }
     this.requestUpdate();
   }

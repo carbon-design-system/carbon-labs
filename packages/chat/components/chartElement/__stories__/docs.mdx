@@ -7,6 +7,11 @@ import packageJson from '../../../package.json';
 
 # Chart Handbook
 <br/>
+* Status: Draft
+* Lab owner(s): Owen Cornec (o.cornec@ibm.com)
+* Target library: TBD
+* Target library Support channel: N/A
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -26,7 +31,7 @@ import packageJson from '../../../package.json';
   - [Vega as the back bone, Carbon as the output](#vega-and-carbon)
   - [Advantages](#advantages)
   - [Disadvantages](#disadvantages)
-  
+
 
 ## Overview
 <a id="overview"></a>
@@ -35,7 +40,7 @@ import packageJson from '../../../package.json';
 Like all components in Carbon Labs, Charts are invoked inside the core Chat component but can easily be imported separately and used independently. By default the `carbonify` attribute is enabled which extensively edits the specification styling in order to recreate Carbon Charts styling. This overrides and edits all axis/legend/title/encoding/gradient/colorscale values to display the specification as a clone of classic Carbon Charts.
 
 * Vega-lite reference: [vega.github.io](https://vega.github.io/vega-lite/)
-* Carbon Charts reference: 
+* Carbon Charts reference:
 [charts.carbondesignsystem.com](https://charts.carbondesignsystem.com/?path=/story/docs--welcome)
 
 **Feel free to contact Owen Cornec (on Slack or o.cornec@ibm.com) if you have any issues/questions**
@@ -56,15 +61,15 @@ import '@carbon-labs/ai-chat-chart/es/index.js';
 <a id="independent-usage"></a>
 ```html
 <clabs-chat-chart
-  content = "{ ... }" 
-  container-height = "500px" 
-  container-width = "100%" 
-  theme = "g100" 
+  content = "{ ... }"
+  container-height = "500px"
+  container-width = "100%"
+  theme = "g100"
 >
 </clabs-chat-chart>
 ```
 
-### &lt;clabs-chat-chart&gt; attributes 
+### &lt;clabs-chat-chart&gt; attributes
 <a id="chart-attributes"></a>
 <table><thead><tr><td>**Attribute**</td><td>**Type**</td><td>**Default**</td><td>**Description**</td></tr></thead><tbody><tr><td>`content`</td><td>string</td><td>empty</td><td>stringified JSON object defining a Vega-lite V5 chart specification. Specifications must contain $schema, data and encoding</td></tr><tr><td>`debug`</td><td>boolean</td><td>false</td><td>shows specification editor button and displays all errors in component when in error mode, otherwise show: Chart failed to render, see console for more details</td></tr><tr><td>`container-height`</td><td>string</td><td>&quot;300px&quot;</td><td>valid CSS string to define chart height, applied to chart container while specification fills the parent container height</td></tr><tr><td>`container-width`</td><td>string</td><td>&quot;100%&quot;</td><td>same as container-height, a CSS string to define the width, applied to chart container</td></tr><tr><td>`render-method`</td><td>string</td><td>&quot;canvas&quot;</td><td>render using &quot;svg&quot; (easier to inspect in the DOM) or &quot;canvas&quot; (better performance)</td></tr><tr><td>`theme`</td><td>string</td><td>&quot;g100&quot;</td><td>this value is either &quot;g100&quot; or &quot;white&quot; and displays the chart using Carbon Chart theme colors.</td></tr><tr><td>`carbonify`</td><td>boolean</td><td>true</td><td>extensively redefine the &quot;config&quot; field of the specification to apply Carbon Chart styling to chart defined in the specification</td></tr><tr><td>`enable-legend-filtering`</td><td>boolean</td><td>false</td><td>enable filtering of data points when clicking legend</td></tr><tr><td>`enable-tooltip`</td><td>boolean</td><td>false</td><td>enable tooltip in the chart component</td></tr><tr><td>`enable-zooming`</td><td>boolean</td><td>false</td><td>enable user-zooming in the chart component</td></tr><tr><td>`enable-brushing`</td><td>boolean</td><td>false</td><td>enable user-brush selection to fetch groups of elements</td></tr><tr><td>`disable-options`</td><td>boolean</td><td>false</td><td>disable all chart option buttons, supercedes all other individual button options below</td></tr><tr><td>`disable-fullscreen`</td><td>boolean</td><td>false</td><td>hide fullscreen button</td></tr><tr><td>`disable-editor`</td><td>boolean</td><td>false</td><td>hide vega editor button</td></tr><tr><td>`disable-export`</td><td>boolean</td><td>false</td><td>hide PNG export button</td></tr><tr><td>`disable-code-inspector`</td><td>boolean</td><td>false</td><td>hide spec viewer button</td></tr><tr><td>`loading`</td><td>boolean</td><td>true</td><td>show loading animation. When content is provided chart will auto-render and this will false. If streaming: raw data is incrementally displayed until complete and rendered</td></tr></tbody></table>
 
@@ -140,7 +145,7 @@ Enabled by default, the `carbonify` field in &lt;clabs-chat-chart&gt; will appen
 
 ### Usage inside Chat within the JSON conversation object:
 <a id="usage-with-json"></a>
-If specified within a valid JSON `conversation` attribute: 
+If specified within a valid JSON `conversation` attribute:
 
 ```html
 <clabs-chat
@@ -169,7 +174,7 @@ With the `conversationJSON` object as follows:
         {"type": "chart", "content": ChartJSONString }
       ]
   }
-] 
+]
 ```
 With `ChartJSONString` as follows:
 ```json
@@ -202,13 +207,13 @@ conversation = [
 
 ### Choice of Vega-lite
 <a id="choice-of-vega"></a>
-Countless visualization libraries are available and provide many features to generate and visualize charts. Many were tested by the Visual AI Lab with a variety of models. 
+Countless visualization libraries are available and provide many features to generate and visualize charts. Many were tested by the Visual AI Lab with a variety of models.
 
 Vega-lite was chosen due to it's **longevity**, **succinctness** and **common usage**, most LLMs have a large training corpus on a variety of Vega-lite specifications. We found this greatly improved reliability during LLM generation, as hallucinations and formatting/versioning errors are common in this space. Additionally, Vega only requires a single JSON object to display any type of chart, which forgoes the need for multiple context-dependent calls.
 
 ### Vega as the back bone, Carbon as the output
 <a id="vega-and-carbon"></a>
-Carbon Charts is an excellently designed, robust and production-ready library following core Carbon design guidelines. Regrettably without fine-tuning, generation accuracy is insufficient due to a lack of examples in common training data. Carbon Charts also requires a predefined HTML chart tag (such as &lt;AreaChart&gt; &lt;SimpleBarChart&gt; etc) as well as separate `options` and `data` fields. This requires multiple queries, with the additional complexity of shared context and custom doctoring/sanitization. 
+Carbon Charts is an excellently designed, robust and production-ready library following core Carbon design guidelines. Regrettably without fine-tuning, generation accuracy is insufficient due to a lack of examples in common training data. Carbon Charts also requires a predefined HTML chart tag (such as &lt;AreaChart&gt; &lt;SimpleBarChart&gt; etc) as well as separate `options` and `data` fields. This requires multiple queries, with the additional complexity of shared context and custom doctoring/sanitization.
 
 Yet despite it's generative edge, standard Vega styling is ill-fitting in any Carbon environment which prohibits any product-side adoption. This led us to adopt a hybrid approach, using Vega-lite as a boilerplate for querying LLMs then programmatically adding and editing styles/interactions/scaling. **This component is not a replacement for Carbon Charts**: it is primarily meant to reliably handle highly-variable LLM-generated content and allow creation and editing through conversation.
 

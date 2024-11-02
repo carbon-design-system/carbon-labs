@@ -10,7 +10,6 @@
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import Renew16 from '@carbon/web-components/es/icons/renew/16.js';
 import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
 import ThumbsUp16 from '@carbon/web-components/es/icons/thumbs-up/16.js';
@@ -21,6 +20,8 @@ import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16.js';
 import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
 import WatsonxData24 from '@carbon/web-components/es/icons/watsonx-data/24.js';
 import '@carbon/web-components/es/components/slug/index.js';
+import watsonIconLight from './watsonx-light.svg';
+import watsonIconDark from './watsonx-dark.svg';
 import '../../chartElement/chartElement.js';
 import '../../tableElement/tableElement.js';
 import '../../cardElement/cardElement.js';
@@ -66,8 +67,6 @@ export function messageTemplate(customElementClass) {
     _onTagSelected: onTagSelected,
     temporaryMessage,
     showFeedBackForm,
-    watsonIconDark,
-    watsonIconLight,
     _parentTheme: parentTheme,
     _childLinkClicked: childLinkClicked,
     displayColor,
@@ -194,8 +193,12 @@ export function messageTemplate(customElementClass) {
                       : html`
                           <div class="${clabsPrefix}--chat-message-bot-icon">
                             ${parentTheme === 'white'
-                              ? unsafeHTML(watsonIconLight)
-                              : unsafeHTML(watsonIconDark)}
+                              ? html`<img
+                                  src="${watsonIconLight}"
+                                  alt="watson x icon light" />`
+                              : html`<img
+                                  src="${watsonIconDark}"
+                                  alt="watson x icon dark" />`}
                           </div>
                         `}
                   </div> `
@@ -216,8 +219,12 @@ export function messageTemplate(customElementClass) {
                       <div
                         class="${clabsPrefix}--chat-message-bot-icon-compact">
                         ${parentTheme === 'white'
-                          ? unsafeHTML(watsonIconLight)
-                          : unsafeHTML(watsonIconDark)}
+                          ? html`<img
+                              src="${watsonIconLight}"
+                              alt="watson x icon light" />`
+                          : html`<img
+                              src="${watsonIconDark}"
+                              alt="watson x icon dark" />`}
                       </div>
                       <div
                         class="${clabsPrefix}--chat-message-timestamp-bot-compact"

@@ -43,15 +43,6 @@ export default class historyViewer extends LitElement {
   @state()
   debug = false;
 
-  /** detect when component is rendered to process visualization specification object
-   */
-  firstUpdated() {
-    if (this.historyTree !== null) {
-      console.log(this.historyTree);
-      //this._prepareHistoryViewer();
-    }
-  }
-
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
@@ -82,8 +73,9 @@ export default class historyViewer extends LitElement {
     const children = currentMessage.children || [];
     return html`
       <div
-        class="${clabsPrefix + '--chat-history-viewer-block'}"
-        style="margin-left: ${depth * 40}px;">
+        class="${clabsPrefix + '--chat-history-viewer-block'} ${clabsPrefix +
+        '--chat-history-viewer-block-depth-' +
+        depth}">
         <div
           class="${clabsPrefix +
           '--chat-history-viewer-block-content-' +
@@ -138,7 +130,6 @@ export default class historyViewer extends LitElement {
       '--chat-history-viewer-branch-percentage',
       100 / branches.length + '%'
     );
-    console.log(100 / branches.length + '%');
     this.branchingIndices = branchingIndices;
     this.sortedParents = sortedParents;
     this.columns = columns;

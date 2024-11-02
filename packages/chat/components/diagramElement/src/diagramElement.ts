@@ -113,10 +113,10 @@ export default class diagramElement extends LitElement {
       this.style.setProperty('--chat-diagram-height', this.height + 'px');
     }
 
-    this.mutationObserver = new MutationObserver(() => {
+    /*this.mutationObserver = new MutationObserver(() => {
       this._getTheme();
     });
-    this.mutationObserver.observe(this.parentElement, { childList: false });
+    this.mutationObserver.observe(this.parentElement, { childList: false });*/
   }
 
   /** _buildOptions
@@ -169,6 +169,7 @@ export default class diagramElement extends LitElement {
     return {
       startOnLoad: false,
       theme: mainTheme,
+      suppressErrorRendering: true,
       themeVariables: currentTheme,
       flowchart: { useMaxWidth: true, htmlLabels: true },
       sequenceDiagram: { useMaxWidth: true, htmlLabels: true },

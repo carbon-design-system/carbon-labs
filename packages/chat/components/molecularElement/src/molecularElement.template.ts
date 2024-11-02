@@ -161,7 +161,6 @@ export function molecularElementTemplate(customElementClass) {
     <div
       class="${clabsPrefix}--chat-molecule-fullscreen-container"
       @wheel="${handleFullScreenScroll}"
-      style="visibility:${fullscreenMode ? 'visible' : 'hidden'};"
       @click="${closeFullscreenView}">
       <svg
         class="${clabsPrefix}--chat-molecule-target-fullscreen"

@@ -505,7 +505,7 @@ export default class chartElement extends LitElement {
     if (changedProperties.has('isHovered')) {
       this.style.setProperty(
         '--chat-chart-thumbnail-visibility',
-        this.thumbnail && !this.isHovered ? 'hidden' : 'visible'
+        this.thumbNail && !this.isHovered ? 'hidden' : 'visible'
       );
     }
 

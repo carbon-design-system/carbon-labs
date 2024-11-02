@@ -95,7 +95,7 @@ export default class diagramElement extends LitElement {
   @state()
   fullscreenMode;
 
-  private mutationObserver;
+  //private mutationObserver;
 
   /** detect when component is rendered to process visualization specification object
    */

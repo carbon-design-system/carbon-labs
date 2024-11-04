@@ -173,9 +173,9 @@ export default class messages extends LitElement {
       const lastMessage = this.messages[this.messages.length - 1];
       if (lastMessage) {
         if (lastMessage.userSubmitted) {
-          this._previousScrollHeight = newHeight - 36;
+          this._previousScrollHeight = newHeight - 160;
         } else {
-          this._previousScrollHeight = newHeight - 36;
+          this._previousScrollHeight = newHeight - 160;
         }
       }
     }

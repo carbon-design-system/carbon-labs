@@ -226,6 +226,12 @@ export default class CLABSChat extends LitElement {
   feedbackDefinitions;
 
   /**
+   * JSON object defining moving dock boundaries
+   */
+  @property({ type: Object, attribute: 'dockBoundaries' })
+  dockBoundaries;
+
+  /**
    * string denoting selected querying method
    */
   private chosenHost = 'Local';
@@ -518,6 +524,12 @@ export default class CLABSChat extends LitElement {
         const chatHeight = chatReference.clientHeight;
         const chatWidth = chatReference.clientWidth;
         const mininumPadding = { top: 16, bottom: 16, left: 16, right: 16 };
+        if (this.dockBoundaries) {
+          mininumPadding.top = this.dockBoundaries.top || 16;
+          mininumPadding.bottom = this.dockBoundaries.bottom || 16;
+          mininumPadding.left = this.dockBoundaries.left || 16;
+          mininumPadding.right = this.dockBoundaries.right || 16;
+        }
 
         let newPositionX = this.horizontalDockPosition + originalOffset.x;
 
@@ -594,6 +606,12 @@ export default class CLABSChat extends LitElement {
         const chatHeight = chatReference.clientHeight;
         const chatWidth = chatReference.clientWidth;
         const mininumPadding = { top: 16, bottom: 16, left: 16, right: 16 };
+        if (this.dockBoundaries) {
+          mininumPadding.top = this.dockBoundaries.top || 16;
+          mininumPadding.bottom = this.dockBoundaries.bottom || 16;
+          mininumPadding.left = this.dockBoundaries.left || 16;
+          mininumPadding.right = this.dockBoundaries.right || 16;
+        }
 
         let newPositionX =
           window.innerWidth - (event.clientX - originalOffset.x) - chatWidth;

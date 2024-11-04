@@ -291,9 +291,9 @@ export default class codeElement extends LitElement {
    * @param {event} _event - resize event
    */
   _handleResize(_event) {
-    /*if(!this.disableLineTicks){
-      this.disableLineTicks = (this.clientWidth < 300);
-    }*/
+    if (!this.disableLineTicks) {
+      this.disableLineTicks = this.clientWidth < 300;
+    }
     this._handleScroll();
   }
 

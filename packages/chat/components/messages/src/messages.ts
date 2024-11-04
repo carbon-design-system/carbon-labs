@@ -146,6 +146,7 @@ export default class messages extends LitElement {
     this.scrollDiv = this.shadowRoot?.querySelector(
       '.clabs--chat-messages-container'
     );
+    this._scrollToBottom();
   }
 
   /**
@@ -250,6 +251,21 @@ export default class messages extends LitElement {
     this._autoScroll = true;
     this._limitScroll = true;
     this._updateScroll();
+  }
+
+  /**
+   * _scrollToBottom - scroll to the bottom of the page
+   */
+  _scrollToBottom() {
+    if (this.scrollDiv instanceof HTMLElement) {
+      setTimeout(() => {
+        const scrollTarget = this.scrollDiv?.scrollHeight * 10;
+        this.scrollDiv?.scrollTo({
+          top: scrollTarget,
+          behavior: 'smooth',
+        });
+      }, 1000);
+    }
   }
 
   /** auto-scroll chat-messages div when a new message has appeared

@@ -333,6 +333,13 @@ const customLabels = {
   'message-loading-aria-label': 'Message sent, please wait...',
 };
 
+const dockBoundaries = {
+  top: 100,
+  left: 16,
+  right: 16,
+  bottom: 16,
+};
+
 const apiArgs = {
   chosenHost: 'Local',
   userPrompt:
@@ -399,6 +406,7 @@ export const APIPlayground = {
         user-prompt="${userPrompt}"
         enable-feedback-form
         .feedbackDefinitions="${feedbackFormOptions}"
+        .dockBoundaries="${dockBoundaries}"
         api-url="${apiUrl}"
         enable-request-cancelling
         feedback-url="${feedbackUrl}"

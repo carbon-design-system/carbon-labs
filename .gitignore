@@ -17,6 +17,8 @@ lib
 storybook-static
 custom-elements.json
 
+package.tgz
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -108,6 +108,15 @@ export default class cardElement extends LitElement {
     if (changedProperties.has('content')) {
       this._buildCard();
     }
+    if (
+      changedProperties.has('_audioProgress') ||
+      changedProperties.has('_audioDuration')
+    ) {
+      this.style.setProperty(
+        '--chat-card-audio-progress-bar-width',
+        (this._audioProgress / this._audioDuration) * 100 + '%'
+      );
+    }
   }
 
   /**

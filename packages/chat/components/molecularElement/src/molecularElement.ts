@@ -191,6 +191,8 @@ export default class molecularElement extends LitElement {
       this.style.setProperty('--chat-molecule-height', this.height + 'px');
     }
 
+    this.style.setProperty('--chat-molecule-container-visibility', 'hidden');
+
     this.molecularRenderer = new SmileDrawer.SmiDrawer(
       this._buildOptions('default')
     );
@@ -500,6 +502,7 @@ export default class molecularElement extends LitElement {
    */
   _openFullscreenView() {
     this.fullscreenMode = true;
+    this.style.setProperty('--chat-molecule-container-visibility', 'visible');
     window.setTimeout(() => {
       this._prepareMolecule('fullscreen');
     }, 200);
@@ -510,6 +513,7 @@ export default class molecularElement extends LitElement {
    */
   _closeFullscreenView() {
     this.fullscreenMode = false;
+    this.style.setProperty('--chat-molecule-container-visibility', 'hidden');
     //this._prepareMolecule("default");
   }
 

@@ -193,9 +193,7 @@ export function cardElementTemplate(customElementClass) {
                         <div
                           class="${clabsPrefix}--chat-card-detail-audio-progress-bar">
                           <div
-                            class="${clabsPrefix}--chat-card-detail-audio-progress"
-                            style="width:${(audioProgress / audioDuration) *
-                            100}%">
+                            class="${clabsPrefix}--chat-card-detail-audio-progress">
                             &nbsp;
                           </div>
                         </div>
@@ -287,8 +285,7 @@ export function cardElementTemplate(customElementClass) {
                         <div
                           class="${clabsPrefix}--chat-card-detail-audio-progress-bar">
                           <div
-                            class="${clabsPrefix}--chat-card-detail-audio-progress"
-                            style="width:0%">
+                            class="${clabsPrefix}--chat-card-detail-audio-progress">
                             &nbsp;
                           </div>
                         </div>

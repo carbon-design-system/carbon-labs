@@ -61,6 +61,14 @@
     visibility: hidden;
   }
 
+  .#{$clabs-prefix}--chat-launcher-container-cls-1 {
+    fill: none;
+    stroke-width: 0;
+  }
+  .#{$clabs-prefix}--chat-launcher-container-cls-2 {
+    stroke-width: 0;
+  }
+
   .#{$clabs-prefix}--chat-launcher-container {
     position: fixed;
     z-index: 1000;

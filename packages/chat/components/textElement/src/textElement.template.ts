@@ -59,13 +59,10 @@ export function textElementTemplate(customElementClass) {
                     class="${clabsPrefix}--chat-text-content-${textPiece.type} ${streaming
                       ? clabsPrefix + '--chat-text-fade-in'
                       : ''} ${enableTextHighlighting
-                      ? clabsPrefix + '--chat-text-highlighted'
-                      : textPiece.active
-                      ? clabsPrefix + '--chat-text-highlight-active'
+                      ? clabsPrefix +
+                        '--chat-text-highlighted' +
+                        (textPiece.active ? '-active' : '')
                       : ''} "
-                    style="${textPiece.color
-                      ? 'background-color:' + textPiece.color + ';'
-                      : html``}"
                     data-index="${index}"
                     data-source="${textPiece.content}"
                     @click="${_handleAnnotationClick}">
@@ -76,19 +73,13 @@ export function textElementTemplate(customElementClass) {
                         <span
                           class="${clabsPrefix}--chat-text-content-chevron-container"
                           role="button"
-                          aria-label="Show link as card below"
-                          style="${textPiece.color
-                            ? 'background-color:' + textPiece.color + ';'
-                            : html``}">
+                          aria-label="Show link as card below">
                           <span
                             class="${clabsPrefix}--chat-text-content-chevron ${index ===
                             annotationIndex
                               ? clabsPrefix +
                                 '--chat-text-content-chevron--focused'
                               : ''}"
-                            style="${textPiece.color
-                              ? 'background-color:' + textPiece.color + ';'
-                              : html``}"
                             data-index="${index}"
                             data-source="${textPiece.content}"
                             @click="${_handleAnnotationClick}">
@@ -169,8 +160,10 @@ export function textElementTemplate(customElementClass) {
                 </span>
               </span>
               <div
-                class="${clabsPrefix}--chat-text-content-summarization-element"
-                style="${!showSummarization ? 'display:none;' : ''}">
+                class="${clabsPrefix}--chat-text-content-summarization-element ${!showSummarization
+                  ? clabsPrefix +
+                    '--chat-text-content-summarization-element-hidden'
+                  : ''}">
                 <slot name="custom-highlight-component">
                   <clabs-chat-carousel
                     selected-slide="${selectedAnnotationIndex}"

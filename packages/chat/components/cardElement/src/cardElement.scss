@@ -250,6 +250,6 @@
   .#{$clabs-prefix}--chat-card-detail-audio-progress {
     background: $link-primary;
     block-size: 4px;
-    inline-size: 0%;
+    inline-size: var('--chat-card-audio-progress-bar-width', '0%');
   }
 }

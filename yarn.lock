@@ -2864,12 +2864,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/layout@npm:11.27.0":
-  version: 11.27.0
-  resolution: "@carbon/layout@npm:11.27.0"
+"@carbon/layout@npm:11.28.0":
+  version: 11.28.0
+  resolution: "@carbon/layout@npm:11.28.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/f34c11edb4f3355c9ed67b35f23624e06d5f15a1ef1ee2dd393bdfb5bcc0ee7d1e0912ee39e68b40c044b9ea8f5b822b67fc3889a91bf635d5a44e9e9528ca95
+  checksum: 10c0/b75a2dd7c38e193142f5e47012c8e01b864097e21c51fd69e5f1574ea3d51ff82b5c44bc21340626f5d15bc5d53dbe9a249e60cb79e8858398474d0238f22e55
   languageName: node
   linkType: hard
 
@@ -10239,7 +10239,7 @@ __metadata:
     "@carbon/grid": "npm:^11.21.1"
     "@carbon/icon-helpers": "npm:10.54.0"
     "@carbon/icons": "npm:11.51.0"
-    "@carbon/layout": "npm:11.27.0"
+    "@carbon/layout": "npm:11.28.0"
     "@carbon/motion": "npm:11.24.0"
     "@carbon/styles": "npm:1.53.0"
     "@carbon/themes": "npm:11.39.0"

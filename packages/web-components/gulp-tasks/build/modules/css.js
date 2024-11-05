@@ -65,7 +65,7 @@ const buildModulesCSS = ({ banner }) =>
   )
   .pipe(prettier())
   .pipe(header(banner))
-  .pipe(gulp.dest(function(file){
+  .pipe(gulp.dest(function(file) {
    const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
    return `packages/${destPath}/es/`;
  }));
@@ -77,7 +77,7 @@ const buildModulesCSS = ({ banner }) =>
  */
 async function css() {
   const banner = await readFileAsync(
-    path.resolve(__dirname, '../../../tools/license.js'),
+    path.resolve(__dirname, '../../../../../tools/license.js'),
     'utf8'
   );
   await Promise.all([

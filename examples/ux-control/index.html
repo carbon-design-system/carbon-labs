@@ -1,0 +1,101 @@
+<!--
+@license
+
+Copyright IBM Corp. 2020
+
+This source code is licensed under the Apache-2.0 license found in the
+LICENSE file in the root directory of this source tree.
+-->
+
+<html>
+  <head>
+    <title>@carbon/ibmdotcom-web-components example</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/latest/plex.css" />
+    <link rel="stylesheet" href="src/styles.scss" />
+    <script type="module" src="src/index.js"></script>
+  </head>
+  <body>
+    <clabs-ux-control id="example-ux-control" open> </clabs-ux-control>
+
+    <script>
+      const promptSamples = [
+        {
+          id: 20123,
+          user_id: 'demo',
+          input: {
+            input: 'input',
+            view_id: 'hi_me',
+            context_variables: {
+              table_ids: '[ABC]',
+            },
+          },
+          output: {
+            output: 'example',
+            view_id: 'hi_me',
+            parameters: {
+              mode: 'quality',
+              question: 'a',
+              table_ids: 'a',
+            },
+          },
+        },
+        {
+          id: 20124,
+          user_id: 'a',
+          input: {
+            input: 'a',
+            view_id: 'hi_you',
+            context_variables: {
+              table_ids: 'a',
+            },
+          },
+          output: {
+            output: 'a',
+            view_id: 'hi_me',
+            parameters: {
+              mode: 'a',
+              question: '',
+              table_ids: 'a',
+            },
+          },
+        },
+      ];
+      const currentView = {
+        name: 'semantic_search_view',
+        contextVariables: [
+          'Try closing the context variables & parameters and check the console for the event',
+        ],
+        parameters: ['mode', 'question', 'table_ids'],
+      };
+      const viewList = [
+        'task_view',
+        'semantic_search_view',
+        'collections_view',
+        'semantic_querying_view',
+        'table_details_view',
+        'table_upload_view',
+        'visualization_view',
+        'table_expansion_view',
+        'glossary_view',
+        'table_comparison_view',
+        'causal_interference_view',
+      ];
+
+      document.getElementById('example-ux-control').promptSamples =
+        promptSamples;
+      document.getElementById('example-ux-control').currentView = currentView;
+      document.getElementById('example-ux-control').viewList = viewList;
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const myComponent = document.getElementById('example-ux-control');
+
+        myComponent.addEventListener('close-tag', (event) => {
+          console.log('Close tag event received:', event.detail);
+        });
+      });
+    </script>
+  </body>
+</html>

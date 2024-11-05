@@ -24,7 +24,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 function types() {
   const tsProject = ts.createProject(path.resolve(__dirname, '../../../tsconfig.json'));
   const { dts } = gulp
-  .src([`packages/${process.argv[4]}/**/*.ts`, `!packages/${process.argv[4]}/**/__tests__/*.ts`, `!packages/${process.argv[4]}/**/*-story*.ts*`, `!packages/${process.argv[4]}/**/__stories__/*.ts`])
+  .src([`packages/web-components/**/*.ts`, `!packages/web-components/**/__tests__/*.ts`, `!packages/web-components/**/*-story*.ts*`, `!packages/web-components/**/__stories__/*.ts`])
   .pipe(sourcemaps.init())
   .pipe(tsProject());
 
@@ -37,9 +37,10 @@ return dts
   )
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest(function(file){
-     // output type files within the package folders itself (ie. packages/es/{component}/src/..)
+    // output type files within the package folders itself, e.g. packages/web-components/{component}/es/..)
     const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
-    return `packages/${destPath}/es`;
+    console.log('types destpath', destPath);
+    return `packages/web-components/${destPath}/es`;
   }));
 }
 

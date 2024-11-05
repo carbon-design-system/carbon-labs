@@ -38,7 +38,7 @@ const promisifyStream = promisify(asyncDone);
  */
 const buildModulesCSS = ({ banner }) =>
  gulp
-  .src([`packages/${process.argv[4]}/**/src/*.scss`])
+  .src([`packages/web-components/src/${process.argv[4]}/**/src/*.scss`])
   .pipe(
     sass({
       includePaths: ['node_modules', '../../node_modules'],
@@ -66,8 +66,10 @@ const buildModulesCSS = ({ banner }) =>
   .pipe(prettier())
   .pipe(header(banner))
   .pipe(gulp.dest(function(file) {
+    // output type files within the package folders itself, e.g. packages/web-components/{component}/es/..)
    const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
-   return `packages/${destPath}/es/`;
+   console.log('css destpath', destPath);
+   return `packages/web-components/${destPath}/es`;
  }));
 
 /**

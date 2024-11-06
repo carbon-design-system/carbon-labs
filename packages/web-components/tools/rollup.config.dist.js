@@ -123,7 +123,7 @@ export default (commandLineArgs) => {
       json(),
       esbuild({ sourceMap: false, tsconfig: '../tsconfig.json' }),
       rollupPluginLitSCSS({
-        includePaths: [path.resolve(__dirname, '../node_modules')],
+        includePaths: [path.resolve(__dirname, '../../../node_modules')],
         async preprocessor(contents, id) {
           return (
             await postcss([autoprefixer(), cssnano()]).process(contents, {

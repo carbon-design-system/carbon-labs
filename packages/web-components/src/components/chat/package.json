@@ -30,8 +30,8 @@
   "customElements": "custom-elements.json",
   "scripts": {
     "build": "gulp build --option chat",
-    "build:dist": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js",
-    "build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary",
+    "build:dist": "rm -rf dist && rollup --config ../../../tools/rollup.config.dist.js",
+    "build:dist:canary": "rm -rf dist && rollup --config ../../../tools/rollup.config.dist.js --configCanary",
     "postinstall": "ibmtelemetry --config=telemetry.yml"
   },
   "dependencies": {

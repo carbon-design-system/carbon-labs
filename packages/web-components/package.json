@@ -23,8 +23,6 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build:dist": "lerna run build:dist --stream",
-    "build:dist:canary": "lerna run build:dist:canary --stream",
     "build-storybook": "yarn build && storybook build",
     "ci-check": "yarn run format:staged && yarn lint:license && yarn lint && yarn lint:styles",
     "ci-check:build": "yarn build && yarn build:dist && yarn ci-check",

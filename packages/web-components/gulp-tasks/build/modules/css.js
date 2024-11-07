@@ -68,7 +68,6 @@ const buildModulesCSS = ({ banner }) =>
   .pipe(gulp.dest(function(file) {
     // output type files within the package folders itself, e.g. packages/web-components/{component}/es/..)
    const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
-   console.log('css destpath', destPath);
    return `packages/web-components/${destPath}/es`;
  }));
 

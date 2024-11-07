@@ -59,7 +59,9 @@ function _getVersion() {
  */
 function _getName() {
   const packagePath = process.cwd();
-  const name = /packages\/(.*?)(?=$)/g.exec(packagePath);
+  const name = /packages\/web-components\/src\/components\/(.*?)(?=$)/g.exec(
+    packagePath
+  );
   return name[1];
 }
 

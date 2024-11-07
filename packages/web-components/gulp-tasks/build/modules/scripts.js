@@ -50,7 +50,6 @@ async function scripts() {
       .pipe(gulp.dest(function(file) {
         // output type files within the package folders itself, e.g. packages/web-components/{component}/es/..)
         const destPath = file.path.match(/(?<=..src\/components\/)(.*?)(?=\/)/gm)[0];
-        // console.log('FOOO', `packages/web-components/src/components/${destPath}/es`);
         return `packages/web-components/src/components/${destPath}/es`;
       }));
 }

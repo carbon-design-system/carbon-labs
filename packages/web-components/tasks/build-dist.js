@@ -19,7 +19,7 @@ import json from '@rollup/plugin-json';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import alias from '@rollup/plugin-alias';
-import rollupPluginLitSCSS from './rollup-plugin-lit-scss.js';
+import rollupPluginLitSCSS from '../tools/rollup-plugin-lit-scss.js';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

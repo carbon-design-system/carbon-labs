@@ -17,8 +17,6 @@ import filter from 'gulp-filter';
 import babelPluginResourceJSPaths from '../../../tools/babel-plugin-resource-js-paths.js';
 import { fileURLToPath } from 'url';
 
-import config from '../../config.js';
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 /**
  * Builds the module script files
@@ -28,7 +26,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 async function scripts() {
   const tsProject = ts.createProject(path.resolve(__dirname, '../../../tsconfig.json'));
   const { js } =  gulp.src([
-      `src/components/**/${process.argv[4]}/**/*.ts`,
+      `src/components/**/*.ts`,
       `!src/components/**/*-story*.ts*`,
       `!src/components/**/__stories__/*.ts`,
       `!src/components/**/__tests__/*.ts`,
@@ -49,10 +47,10 @@ async function scripts() {
     .pipe(filter((file) => stripComments(file.contents.toString(), { sourceType: 'module' }).replace(/\s/g, '')))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(function(file) {
-      console.log('SCRIPT FILE:', file.path);
+      // console.log('SCRIPT FILE:', file.path);
       // output type files within the package folders itself, e.g. packages/web-components/{component}/es/..)
       const destPath = file.path.match(/(?<=src\/components\/)(.*?)(?=\/)/gm)[0];
-      console.log('SCRIPT DEST:', `src/components/${destPath}/es`);
+      // console.log('SCRIPT DEST:', `src/components/${destPath}/es`);
       return `src/components/${destPath}/es`;
     }));
 }

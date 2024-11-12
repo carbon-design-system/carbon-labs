@@ -25,7 +25,7 @@ function types() {
   const tsProject = ts.createProject(path.resolve(__dirname, '../../../tsconfig.json'));
   const { dts } = gulp
   .src([
-    `${process.argv[4]}/**/*.ts`,
+    `src/components/**/*.ts`,
     `!src/components/**/__tests__/*.ts`,
     `!src/components/**/*-story*.ts*`,
     `!src/components/**/__stories__/*.ts`

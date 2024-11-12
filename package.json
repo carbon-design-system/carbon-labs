@@ -14,7 +14,7 @@
     "packages/*/**"
   ],
   "scripts": {
-    "build": "lerna run build --stream ",
+    "build": "lerna run build --stream",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "ci-check": "yarn run format:staged && yarn lint:license && yarn lint && yarn lint:styles",

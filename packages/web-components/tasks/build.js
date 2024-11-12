@@ -18,10 +18,11 @@ import litSCSS from "../tools/rollup-plugin-lit-scss.js";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import path from "path";
 import postcss from "postcss";
-import { readFileSync } from "fs";
 import typescript from "@rollup/plugin-typescript";
 
-const packageJson = JSON.parse(readFileSync("./package.json"));
+import * as packageJson from '../package.json' assert { type: 'json' };
+
+// const packageJson = JSON.parse(readFileSync("./package.json"));
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 async function build() {
@@ -32,7 +33,7 @@ async function build() {
     "!src/**/*.d.ts",
     "!src/globals/internal/storybook-cdn.ts",
   ]);
-
+console.log('esinputs', esInputs);
   const entryPoint = {
     rootDir: "src",
     outputDirectory: path.resolve(__dirname, ".."),
@@ -51,15 +52,15 @@ async function build() {
       format.directory
     );
 
-    const cwcInputConfig = getRollupConfig(
+    const wcInputConfig = getRollupConfig(
       esInputs,
       entryPoint.rootDir,
       outputDirectory
     );
 
-    const cwcBundle = await rollup(cwcInputConfig);
+    const wcBundle = await rollup(wcInputConfig);
 
-    await cwcBundle.write({
+    await wcBundle.write({
       dir: outputDirectory,
       format: format.type,
       preserveModules: true,

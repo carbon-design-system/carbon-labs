@@ -11,10 +11,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish-cdn:
+  web-components:
     if: |
       github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'packages/web-components'
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -33,7 +36,7 @@ jobs:
       - name: Create one folder with dist contents from each package
         run: |
           mkdir dist
-          cp -r packages/*/dist/. dist/
+          cp -r src/components/**/dist/. dist/
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks
@@ -44,4 +47,4 @@ jobs:
           AWS_REGION: ${{ secrets.COMMON_COS_REGION }}
           AWS_S3_ENDPOINT: https://${{ secrets.COMMON_COS_ENDPOINT }}
           SOURCE_DIR: 'dist'
-          DEST_DIR: 'common/carbon/labs'
+          DEST_DIR: 'common/carbon/labs/web-components'

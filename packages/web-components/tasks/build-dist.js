@@ -50,7 +50,7 @@ for (let i = folders.length - 1; i >= 0; i--) {
  */
 function _getVersion() {
   const data = fs.readFileSync('package.json', 'utf8');
-  const version = /"version"\: "(.*?)"/g.exec(data);
+  const version = /"version": "(.*?)"/g.exec(data);
   return `v${version[1]}`;
 }
 

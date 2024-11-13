@@ -1,0 +1,291 @@
+{
+  "samples": [
+    {
+      "id": 20123,
+      "user_id": "demo",
+      "input": {
+        "input": "I'd like to see the quality of this table.",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[BANKDEMO.SAVINGS_ACCOUNTS]"
+        }
+      },
+      "output": {
+        "output": "Alright, here are some important Data Quality metrics for this table.",
+        "view_id": "table_details_view",
+        "parameters": {
+          "mode": "quality",
+          "question": "",
+          "table_ids": "[BANKDEMO.SAVINGS_ACCOUNTS]"
+        }
+      }
+    },
+    {
+      "id": 20124,
+      "user_id": "demo",
+      "input": {
+        "input": "Can you show me the schema for this table?",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[CSTINSIGHT.ORGANIZATION_CST_LOYALTY_FACT]"
+        }
+      },
+      "output": {
+        "output": "No problem, here is the schema of your table.",
+        "view_id": "table_details_view",
+        "parameters": {
+          "mode": "schema",
+          "question": "",
+          "table_ids": "[CSTINSIGHT.ORGANIZATION_CST_LOYALTY_FACT]"
+        }
+      }
+    },
+    {
+      "id": 20125,
+      "user_id": "demo",
+      "input": {
+        "input": "Show me the data of this table.",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[PMT_RISK.BUILDING_TYPE]"
+        }
+      },
+      "output": {
+        "output": "Alright, here you can take a look at data in this table.",
+        "view_id": "table_details_view",
+        "parameters": {
+          "mode": "data",
+          "question": "",
+          "table_ids": "[PMT_RISK.BUILDING_TYPE]"
+        }
+      }
+    },
+    {
+      "id": 20135,
+      "user_id": "demo",
+      "input": {
+        "input": "i'd like to see the quality of this table.",
+        "view_id": "semantic_search_view",
+        "context_variables": {}
+      },
+      "output": {
+        "output": "You did not select a table yet.",
+        "view_id": "semantic_search_view",
+        "parameters": {}
+      }
+    },
+    {
+      "id": 20136,
+      "user_id": "demo",
+      "input": {
+        "input": "What can I join this table with?",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[CSTINSIGHT.CUSTOMER]"
+        }
+      },
+      "output": {
+        "output": "Let's see if we have some joinable tables in the Lakehouse.",
+        "view_id": "table_expansion_view",
+        "parameters": {
+          "keyword": "",
+          "table_ids": "[CSTINSIGHT.CUSTOMER]"
+        }
+      }
+    },
+    {
+      "id": 20142,
+      "user_id": "demo",
+      "input": {
+        "input": "I'd like to add more geographic context to this table.",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[PMT_RISK.BUILDING_TYPE]"
+        }
+      },
+      "output": {
+        "output": "Alright, let's see if we find joinable tables with geographic data.",
+        "view_id": "table_expansion_view",
+        "parameters": {
+          "keyword": "geography",
+          "table_ids": "[PMT_RISK.BUILDING_TYPE]"
+        }
+      }
+    },
+    {
+      "id": 20143,
+      "user_id": "demo",
+      "input": {
+        "input": "I'd like to add residence location data to this.",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[CUSTOM.b1c0f860-b1d7-43c2-a1a2-4807e78ed15b]"
+        }
+      },
+      "output": {
+        "output": "Alright, let's look for compatible tables that contain this kind of data.",
+        "view_id": "table_expansion_view",
+        "parameters": {
+          "keyword": "residence location",
+          "table_ids": "[CUSTOM.b1c0f860-b1d7-43c2-a1a2-4807e78ed15b]"
+        }
+      }
+    },
+    {
+      "id": 20156,
+      "user_id": "demo",
+      "input": {
+        "input": "I would like to see the annotations for this table.",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[CSTINSIGHT.PERSON]"
+        }
+      },
+      "output": {
+        "output": "Sure, here are the annotations and also you can provide your feedback on these.",
+        "view_id": "collection_annotation_view",
+        "parameters": {
+          "table_ids": "[CSTINSIGHT.PERSON]"
+        }
+      }
+    },
+    {
+      "id": 20161,
+      "user_id": "demo",
+      "input": {
+        "input": "Show me the details of table PMT_RISK.BUILDING_TYPE.",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[BANKDEMO.ACCOUNTS]"
+        }
+      },
+      "output": {
+        "output": "Alright, pulling up this table for you.",
+        "view_id": "table_details_view",
+        "parameters": {
+          "question": "",
+          "mode": "schema",
+          "table_ids": "[PMT_RISK.BUILDING_TYPE]"
+        }
+      }
+    },
+    {
+      "id": 20162,
+      "user_id": "demo",
+      "input": {
+        "input": "I would like to review the concept annotations of these tables.",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[CSTINSIGHT.CUSTOMER,BANKDEMO.ACCOUNTS]"
+        }
+      },
+      "output": {
+        "output": "No problem, here you can take a look at how the columns have been mapped to glossary concepts.",
+        "view_id": "collection_annotation_view",
+        "parameters": {
+          "table_ids": "[CSTINSIGHT.CUSTOMER,BANKDEMO.ACCOUNTS]"
+        }
+      }
+    },
+    {
+      "id": 20177,
+      "user_id": "demo",
+      "input": {
+        "input": "Can I improve my sales strategy using this?",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[CSTINSIGHT.PRODUCT]"
+        }
+      },
+      "output": {
+        "output": "Alright, let me try to create a policy based on the customer table.",
+        "view_id": "causal_inference_view",
+        "parameters": {
+          "keyword": "",
+          "question": "I want to improve the sales strategy.",
+          "table_ids": "[CSTINSIGHT.PRODUCT]"
+        }
+      }
+    },
+    {
+      "id": 20185,
+      "user_id": "demo",
+      "input": {
+        "input": "I have a question about this table.",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[CSTINSIGHT.INDIVIDUAL_CST_CHURN_FACT]",
+          "keyword": "customer churn"
+        }
+      },
+      "output": {
+        "output": "Sure, what would you like to know about it?",
+        "view_id": "semantic_search_view",
+        "parameters": {
+          "keyword": "customer churn"
+        }
+      }
+    },
+    {
+      "id": 20186,
+      "user_id": "demo",
+      "input": {
+        "input": "Who is the customer with highest net worth?",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[CSTINSIGHT.CUSTOMER]",
+          "keyword": "customer churn"
+        }
+      },
+      "output": {
+        "output": "Let me check whether if I can find the answer to this by querying the lakehouse for you.",
+        "view_id": "semantic_querying_view",
+        "parameters": {
+          "table_ids": "[CSTINSIGHT.CUSTOMER]",
+          "mode": "sql",
+          "question": "Who is the customer with highest net worth?"
+        }
+      }
+    },
+    {
+      "id": 20190,
+      "user_id": "demo",
+      "input": {
+        "input": "This looks interesting. What kinda products do we gave here?",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "[CSTINSIGHT.PRODUCT]"
+        }
+      },
+      "output": {
+        "output": "I'm gonna try to inquire about this in the lakehouse for you.",
+        "view_id": "semantic_querying_view",
+        "parameters": {
+          "keyword": "",
+          "table_ids": "[CSTINSIGHT.PRODUCT]",
+          "mode": "sql",
+          "question": "What kinda products do we gave here?"
+        }
+      }
+    },
+    {
+      "id": 20196,
+      "user_id": "demo",
+      "input": {
+        "input": "I have a question about CSTINSIGHT.INDIVIDUAL_CST_CHURN_FACT.",
+        "view_id": "semantic_search_view",
+        "context_variables": {
+          "table_ids": "",
+          "keyword": "customer churn"
+        }
+      },
+      "output": {
+        "output": "Sure, what would you like to know about it?",
+        "view_id": "semantic_search_view",
+        "parameters": {
+          "keyword": "customer churn"
+        }
+      }
+    }
+  ]
+}

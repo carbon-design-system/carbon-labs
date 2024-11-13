@@ -8,7 +8,7 @@
  */
 
 export default {
-  globs: ['packages/*/components/**/*.ts'],
+  globs: ['src/components/**/*.ts'],
   exclude: ['**/__stories__'],
   outdir: '.',
   litelement: true,

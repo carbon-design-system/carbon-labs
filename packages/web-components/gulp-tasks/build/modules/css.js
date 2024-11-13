@@ -38,7 +38,7 @@ const promisifyStream = promisify(asyncDone);
  */
 const buildModulesCSS = ({ banner }) =>
  gulp
-  .src([`packages/${process.argv[4]}/**/src/*.scss`])
+  .src([`src/components/**/*.scss`])
   .pipe(
     sass({
       includePaths: ['node_modules', '../../node_modules'],
@@ -65,9 +65,10 @@ const buildModulesCSS = ({ banner }) =>
   )
   .pipe(prettier())
   .pipe(header(banner))
-  .pipe(gulp.dest(function(file){
-   const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
-   return `packages/${destPath}/es/`;
+  .pipe(gulp.dest(function(file) {
+    // output type files within the package folders itself, e.g. packages/web-components/{component}/es/..)
+      const destPath = file.path.match(/(?<=src\/components\/)(.*?)(?=\/)/gm)[0];
+      return `src/components/${destPath}/es`;
  }));
 
 /**
@@ -77,7 +78,7 @@ const buildModulesCSS = ({ banner }) =>
  */
 async function css() {
   const banner = await readFileAsync(
-    path.resolve(__dirname, '../../../tools/license.js'),
+    path.resolve(__dirname, '../../../../../tools/license.js'),
     'utf8'
   );
   await Promise.all([

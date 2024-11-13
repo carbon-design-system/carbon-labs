@@ -1,287 +1,239 @@
-
 [
-{"title":"Airline passengers example",
-"prompt":"Show a repeating line chart with 6,8,24 and 36 month averages",
-"result":
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data": {
-    "url": "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/flights.csv"
-  },
-  "hconcat": [
-    {
-      "vconcat": [
+  {
+    "title": "Airline passengers example",
+    "prompt": "Show a repeating line chart with 6,8,24 and 36 month averages",
+    "result": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "data": {
+        "url": "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/flights.csv"
+      },
+      "hconcat": [
         {
-          "mark": "line",
-          "encoding": {
-            "x": {
-              "field": "date",
-              "type": "temporal",
-              "title": "Date"
-            },
-            "y": {
-              "field": "passengers",
-              "type": "quantitative",
-              "title": "Passengers"
-            }
-          },
-          "transform": [
+          "vconcat": [
             {
-              "window": [
-                {
-                  "op": "mean",
+              "mark": "line",
+              "encoding": {
+                "x": {
+                  "field": "date",
+                  "type": "temporal",
+                  "title": "Date"
+                },
+                "y": {
                   "field": "passengers",
-                  "as": "6-month-moving-average"
+                  "type": "quantitative",
+                  "title": "Passengers"
+                }
+              },
+              "transform": [
+                {
+                  "window": [
+                    {
+                      "op": "mean",
+                      "field": "passengers",
+                      "as": "6-month-moving-average"
+                    }
+                  ],
+                  "frame": [-6, 0]
                 }
               ],
-              "frame": [-6, 0]
-            }
-          ],
-          "layer": [
-            {"mark": "line"},
+              "layer": [
+                { "mark": "line" },
+                {
+                  "mark": {
+                    "type": "line",
+                    "color": "red",
+                    "strokeDash": [5, 5]
+                  },
+                  "encoding": {
+                    "y": { "field": "6-month-moving-average" }
+                  }
+                }
+              ],
+              "title": "6-month Moving Average"
+            },
             {
-              "mark": {"type": "line", "color": "red", "strokeDash": [5, 5]},
+              "mark": "line",
               "encoding": {
-                "y": {"field": "6-month-moving-average"}
-              }
+                "x": {
+                  "field": "date",
+                  "type": "temporal",
+                  "title": "Date"
+                },
+                "y": {
+                  "field": "passengers",
+                  "type": "quantitative",
+                  "title": "Passengers"
+                }
+              },
+              "transform": [
+                {
+                  "window": [
+                    {
+                      "op": "mean",
+                      "field": "passengers",
+                      "as": "8-month-moving-average"
+                    }
+                  ],
+                  "frame": [-8, 0]
+                }
+              ],
+              "layer": [
+                { "mark": "line" },
+                {
+                  "mark": {
+                    "type": "line",
+                    "color": "blue",
+                    "strokeDash": [5, 5]
+                  },
+                  "encoding": {
+                    "y": { "field": "8-month-moving-average" }
+                  }
+                }
+              ],
+              "title": "8-month Moving Average"
             }
-          ],
-          "title": "6-month Moving Average"
+          ]
         },
         {
-          "mark": "line",
-          "encoding": {
-            "x": {
-              "field": "date",
-              "type": "temporal",
-              "title": "Date"
-            },
-            "y": {
-              "field": "passengers",
-              "type": "quantitative",
-              "title": "Passengers"
-            }
-          },
-          "transform": [
+          "vconcat": [
             {
-              "window": [
-                {
-                  "op": "mean",
+              "mark": "line",
+              "encoding": {
+                "x": {
+                  "field": "date",
+                  "type": "temporal",
+                  "title": "Date"
+                },
+                "y": {
                   "field": "passengers",
-                  "as": "8-month-moving-average"
+                  "type": "quantitative",
+                  "title": "Passengers"
+                }
+              },
+              "transform": [
+                {
+                  "window": [
+                    {
+                      "op": "mean",
+                      "field": "passengers",
+                      "as": "24-month-moving-average"
+                    }
+                  ],
+                  "frame": [-24, 0]
                 }
               ],
-              "frame": [-8, 0]
-            }
-          ],
-          "layer": [
-            {"mark": "line"},
-            {
-              "mark": {"type": "line", "color": "blue", "strokeDash": [5, 5]},
-              "encoding": {
-                "y": {"field": "8-month-moving-average"}
-              }
-            }
-          ],
-          "title": "8-month Moving Average"
-        }
-      ]
-    },
-    {
-      "vconcat": [
-        {
-          "mark": "line",
-          "encoding": {
-            "x": {
-              "field": "date",
-              "type": "temporal",
-              "title": "Date"
-            },
-            "y": {
-              "field": "passengers",
-              "type": "quantitative",
-              "title": "Passengers"
-            }
-          },
-          "transform": [
-            {
-              "window": [
+              "layer": [
+                { "mark": "line" },
                 {
-                  "op": "mean",
-                  "field": "passengers",
-                  "as": "24-month-moving-average"
+                  "mark": {
+                    "type": "line",
+                    "color": "green",
+                    "strokeDash": [5, 5]
+                  },
+                  "encoding": {
+                    "y": { "field": "24-month-moving-average" }
+                  }
                 }
               ],
-              "frame": [-24, 0]
-            }
-          ],
-          "layer": [
-            {"mark": "line"},
-            {
-              "mark": {"type": "line", "color": "green", "strokeDash": [5, 5]},
-              "encoding": {
-                "y": {"field": "24-month-moving-average"}
-              }
-            }
-          ],
-          "title": "24-month Moving Average"
-        },
-        {
-          "mark": "line",
-          "encoding": {
-            "x": {
-              "field": "date",
-              "type": "temporal",
-              "title": "Date"
+              "title": "24-month Moving Average"
             },
-            "y": {
-              "field": "passengers",
-              "type": "quantitative",
-              "title": "Passengers"
-            }
-          },
-          "transform": [
             {
-              "window": [
-                {
-                  "op": "mean",
+              "mark": "line",
+              "encoding": {
+                "x": {
+                  "field": "date",
+                  "type": "temporal",
+                  "title": "Date"
+                },
+                "y": {
                   "field": "passengers",
-                  "as": "36-month-moving-average"
+                  "type": "quantitative",
+                  "title": "Passengers"
+                }
+              },
+              "transform": [
+                {
+                  "window": [
+                    {
+                      "op": "mean",
+                      "field": "passengers",
+                      "as": "36-month-moving-average"
+                    }
+                  ],
+                  "frame": [-36, 0]
                 }
               ],
-              "frame": [-36, 0]
+              "layer": [
+                { "mark": "line" },
+                {
+                  "mark": {
+                    "type": "line",
+                    "color": "orange",
+                    "strokeDash": [5, 5]
+                  },
+                  "encoding": {
+                    "y": { "field": "36-month-moving-average" }
+                  }
+                }
+              ],
+              "title": "36-month Moving Average"
             }
-          ],
-          "layer": [
-            {"mark": "line"},
-            {
-              "mark": {"type": "line", "color": "orange", "strokeDash": [5, 5]},
-              "encoding": {
-                "y": {"field": "36-month-moving-average"}
-              }
-            }
-          ],
-          "title": "36-month Moving Average"
+          ]
         }
       ]
     }
-  ]
-}
-
-},
-{"title":"",
-"prompt":"Make a pair-plot of all columns with scatter plots, use bar distributions when coloumns match",
-"result":
-
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},
-  "repeat": {
-    "row": ["Miles_per_Gallon","Cylinders","Displacement","Horsepower","Weight_in_lbs","Acceleration","Year"],
-    "column": ["Miles_per_Gallon","Cylinders","Displacement","Horsepower","Weight_in_lbs","Acceleration","Year"]
   },
-  "spec": {
-    "layer": [
-      {
-        "transform": [
-          {
-            "fold": [
-              "mpg",
-              "cylinders",
-              "displacement",
-              "horsepower",
-              "weight",
-              "acceleration"
-            ]
-          }
+  {
+    "title": "",
+    "prompt": "Make a pair-plot of all columns with scatter plots, use bar distributions when coloumns match",
+    "result": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "data": {
+        "url": "https://vega.github.io/vega-lite/examples/data/cars.json"
+      },
+      "repeat": {
+        "row": [
+          "Miles_per_Gallon",
+          "Cylinders",
+          "Displacement",
+          "Horsepower",
+          "Weight_in_lbs",
+          "Acceleration",
+          "Year"
         ],
-        "mark": {
-          "type": "bar",
-          "opacity": 1,
-          "color": "steelblue"
-        },
-        "encoding": {
-          "x": {
-            "field": {"repeat": "column"},
-            "type": "quantitative",
-            "bin": true,
-            "axis": null
-          },
-          "y": {
-            "aggregate": "count",
-            "type": "quantitative",
-            "axis": null
-          }
-        }
-      }
-    ]
-  },
-  "config": {
-    "view": {
-      "stroke": "transparent"
-    },
-    "facet": {
-      "spacing": 0
-    }
-  }
-}
-},
-{"title":"",
-"prompt":"Make a pair-plot of all columns with scatter plots, use bar distributions when coloumns match",
-"result":
-
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},
-  "repeat": {
-    "row": ["Miles_per_Gallon","Cylinders","Displacement","Horsepower","Weight_in_lbs","Acceleration","Year"],
-    "column": ["Miles_per_Gallon","Cylinders","Displacement","Horsepower","Weight_in_lbs","Acceleration","Year"]
-  },
-  "spec": {
-    "layer": [
-      {
-        "transform": [
-          {
-            "calculate": "datum['repeat_column'] == datum['repeat_row']",
-            "as": "isDiagonal"
-          }
-        ],
+        "column": [
+          "Miles_per_Gallon",
+          "Cylinders",
+          "Displacement",
+          "Horsepower",
+          "Weight_in_lbs",
+          "Acceleration",
+          "Year"
+        ]
+      },
+      "spec": {
         "layer": [
           {
-            "mark": {
-              "type": "point",
-              "opacity": 0.7,
-              "color": "blue"
-            },
-            "encoding": {
-              "x": {
-                "field": {"repeat": "column"},
-                "type": "quantitative",
-                "axis": {"grid": false}
-              },
-              "y": {
-                "field": {"repeat": "row"},
-                "type": "quantitative",
-                "axis": {"grid": false}
-              },
-              "opacity": {
-                "condition": {
-                  "test": "!datum.isDiagonal",
-                  "value": 1
-                },
-                "value": 0
+            "transform": [
+              {
+                "fold": [
+                  "mpg",
+                  "cylinders",
+                  "displacement",
+                  "horsepower",
+                  "weight",
+                  "acceleration"
+                ]
               }
-            }
-          },
-          {
+            ],
             "mark": {
               "type": "bar",
-              "color": "orange",
-              "opacity": 0.8
+              "opacity": 1,
+              "color": "steelblue"
             },
             "encoding": {
               "x": {
-                "field": {"repeat": "column"},
+                "field": { "repeat": "column" },
                 "type": "quantitative",
                 "bin": true,
                 "axis": null
@@ -290,94 +242,190 @@
                 "aggregate": "count",
                 "type": "quantitative",
                 "axis": null
-              },
-              "opacity": {
-                "condition": {
-                  "test": "datum.isDiagonal",
-                  "value": 1
-                },
-                "value": 0
               }
             }
           }
         ]
-      }
-    ]
-  },
-  "config": {
-    "view": {
-      "stroke": "transparent"
-    },
-    "facet": {
-      "spacing": 0
-    },
-    "scale": {
-      "pointPadding": 0
-    }
-  }
-}
-},
-{"title":"",
-"prompt":"Create two violin plots with sepal width",
-"result":
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Violin plot of Sepal Width by Species",
-  "data": {
-    "url": "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-  },
-  "transform": [
-    {
-      "density": "sepal_width",
-      "groupby": ["species"],
-      "extent": [1.5, 4.5]
-    }
-  ],
-  "width": 400,
-  "height": 200,
-  "layer": [
-    {
-      "mark": {
-        "type": "area",
-        "orient": "horizontal"
       },
-      "encoding": {
-        "x": {
-          "field": "density",
-          "type": "quantitative",
-          "stack": "zero",
-          "title": null
+      "config": {
+        "view": {
+          "stroke": "transparent"
         },
-        "y": {
-          "field": "sepal_width",
-          "type": "quantitative",
-          "scale": {"domain": [1.5, 4.5]},
-          "axis": {"title": "Sepal Width"}
-        },
-        "color": {
-          "field": "species",
-          "type": "nominal",
-          "scale": {"scheme": "category10"}
+        "facet": {
+          "spacing": 0
         }
       }
-    },
-    {
-      "mark": "rule",
-      "encoding": {
-        "y": {
-          "field": "sepal_width",
-          "type": "quantitative",
-          "aggregate": "mean",
-          "axis": {"title": null}
+    }
+  },
+  {
+    "title": "",
+    "prompt": "Make a pair-plot of all columns with scatter plots, use bar distributions when coloumns match",
+    "result": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "data": {
+        "url": "https://vega.github.io/vega-lite/examples/data/cars.json"
+      },
+      "repeat": {
+        "row": [
+          "Miles_per_Gallon",
+          "Cylinders",
+          "Displacement",
+          "Horsepower",
+          "Weight_in_lbs",
+          "Acceleration",
+          "Year"
+        ],
+        "column": [
+          "Miles_per_Gallon",
+          "Cylinders",
+          "Displacement",
+          "Horsepower",
+          "Weight_in_lbs",
+          "Acceleration",
+          "Year"
+        ]
+      },
+      "spec": {
+        "layer": [
+          {
+            "transform": [
+              {
+                "calculate": "datum['repeat_column'] == datum['repeat_row']",
+                "as": "isDiagonal"
+              }
+            ],
+            "layer": [
+              {
+                "mark": {
+                  "type": "point",
+                  "opacity": 0.7,
+                  "color": "blue"
+                },
+                "encoding": {
+                  "x": {
+                    "field": { "repeat": "column" },
+                    "type": "quantitative",
+                    "axis": { "grid": false }
+                  },
+                  "y": {
+                    "field": { "repeat": "row" },
+                    "type": "quantitative",
+                    "axis": { "grid": false }
+                  },
+                  "opacity": {
+                    "condition": {
+                      "test": "!datum.isDiagonal",
+                      "value": 1
+                    },
+                    "value": 0
+                  }
+                }
+              },
+              {
+                "mark": {
+                  "type": "bar",
+                  "color": "orange",
+                  "opacity": 0.8
+                },
+                "encoding": {
+                  "x": {
+                    "field": { "repeat": "column" },
+                    "type": "quantitative",
+                    "bin": true,
+                    "axis": null
+                  },
+                  "y": {
+                    "aggregate": "count",
+                    "type": "quantitative",
+                    "axis": null
+                  },
+                  "opacity": {
+                    "condition": {
+                      "test": "datum.isDiagonal",
+                      "value": 1
+                    },
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "config": {
+        "view": {
+          "stroke": "transparent"
         },
-        "color": {
-          "field": "species",
-          "type": "nominal"
+        "facet": {
+          "spacing": 0
         },
-        "size": {"value": 2}
+        "scale": {
+          "pointPadding": 0
+        }
       }
     }
-  ]
-}
-}
+  },
+  {
+    "title": "",
+    "prompt": "Create two violin plots with sepal width",
+    "result": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "description": "Violin plot of Sepal Width by Species",
+      "data": {
+        "url": "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+      },
+      "transform": [
+        {
+          "density": "sepal_width",
+          "groupby": ["species"],
+          "extent": [1.5, 4.5]
+        }
+      ],
+      "width": 400,
+      "height": 200,
+      "layer": [
+        {
+          "mark": {
+            "type": "area",
+            "orient": "horizontal"
+          },
+          "encoding": {
+            "x": {
+              "field": "density",
+              "type": "quantitative",
+              "stack": "zero",
+              "title": null
+            },
+            "y": {
+              "field": "sepal_width",
+              "type": "quantitative",
+              "scale": { "domain": [1.5, 4.5] },
+              "axis": { "title": "Sepal Width" }
+            },
+            "color": {
+              "field": "species",
+              "type": "nominal",
+              "scale": { "scheme": "category10" }
+            }
+          }
+        },
+        {
+          "mark": "rule",
+          "encoding": {
+            "y": {
+              "field": "sepal_width",
+              "type": "quantitative",
+              "aggregate": "mean",
+              "axis": { "title": null }
+            },
+            "color": {
+              "field": "species",
+              "type": "nominal"
+            },
+            "size": { "value": 2 }
+          }
+        }
+      ]
+    }
+  }
 ]

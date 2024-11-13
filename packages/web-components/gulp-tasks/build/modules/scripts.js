@@ -18,7 +18,6 @@ import babelPluginResourceJSPaths from '../../../tools/babel-plugin-resource-js-
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 /**
  * Builds the module script files
  *
@@ -26,29 +25,34 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  */
 async function scripts() {
   const tsProject = ts.createProject(path.resolve(__dirname, '../../../tsconfig.json'));
-  const {js} =  gulp.src([
-      `packages/${process.argv[4]}/**/*.ts`,
-      `!packages/${process.argv[4]}/**/*-story*.ts*`,
-      `!packages/${process.argv[4]}/**/__stories__/*.ts`,
-      `!packages/${process.argv[4]}/**/__tests__/*.ts`,
-      `!packages/${process.argv[4]}/**/*.d.ts`,
-    ]).pipe(sourcemaps.init()).pipe(tsProject());
+  const { js } =  gulp.src([
+      `src/components/**/*.ts`,
+      `!src/components/**/*-story*.ts*`,
+      `!src/components/**/__stories__/*.ts`,
+      `!src/components/**/__tests__/*.ts`,
+      `!src/components/**/**/*.d.ts`,
+    ])
+    .pipe(sourcemaps.init())
+    .pipe(tsProject());
 
-  return js.pipe(
-        babel({
-          plugins: [
-            babelPluginResourceJSPaths,
-          ],
-        })
-      )
-      // Avoids generating `.js` from interface-only `.ts` files
-      .pipe(filter((file) => stripComments(file.contents.toString(), { sourceType: 'module' }).replace(/\s/g, '')))
-      .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest(function(file){
-        // output type files within the package folders itself (ie. packages/es/{component}/src/..)
-        const destPath = file.path.match(/(?<=packages\/)(.*?)(?=\/)/gm)[0];
-        return `packages/${destPath}/es`;
-      }));
+  return js
+    .pipe(
+      babel({
+        plugins: [
+          babelPluginResourceJSPaths,
+        ],
+      })
+    )
+    // Avoids generating `.js` from interface-only `.ts` files
+    .pipe(filter((file) => stripComments(file.contents.toString(), { sourceType: 'module' }).replace(/\s/g, '')))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(function(file) {
+      // console.log('SCRIPT FILE:', file.path);
+      // output type files within the package folders itself, e.g. packages/web-components/{component}/es/..)
+      const destPath = file.path.match(/(?<=src\/components\/)(.*?)(?=\/)/gm)[0];
+      // console.log('SCRIPT DEST:', `src/components/${destPath}/es`);
+      return `src/components/${destPath}/es`;
+    }));
 }
 
 gulp.task('build:modules:scripts', scripts);

@@ -1,0 +1,82 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-ux-control) {
+  .#{$clabs-prefix}--heading-container {
+    padding: 0;
+  }
+  .#{$clabs-prefix}--heading,
+  .#{$clabs-prefix}--enter-new {
+    display: flex;
+  }
+  .#{$clabs-prefix}--heading-tune-prompts {
+    min-inline-size: max-content;
+  }
+  .#{$clabs-prefix}--view-dropdown {
+    max-inline-size: min-content;
+  }
+  .#{$clabs-prefix}--rename {
+    flex-grow: 1;
+  }
+  .#{$clabs-prefix}--header-view-info {
+    display: flex;
+  }
+  .#{$clabs-prefix}--header-context-variables {
+    flex: 1 1 50%;
+  }
+  .#{$clabs-prefix}--header-parameters {
+    flex: 1 1 25%;
+  }
+
+  .#{$clabs-prefix}--add-context-variable-tag,
+  .#{$clabs-prefix}--add-parameter-tag {
+    cursor: pointer;
+  }
+
+  .#{$clabs-prefix}--add-context-variable-tag:hover,
+  .#{$clabs-prefix}--add-parameter-tag:hover {
+    background-color: #636363;
+  }
+
+  .#{$clabs-prefix}--table-actions {
+    min-inline-size: 96px;
+  }
+  .#{$clabs-prefix}--prompt-edit-form {
+    display: flex;
+    justify-content: space-between;
+
+    h4 {
+      padding: 0;
+      margin: 1rem 0 0.5rem;
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      line-height: 1.4;
+    }
+
+    .#{$clabs-prefix}--edit-form-item {
+      display: inline-block;
+      margin-block-start: 10px;
+    }
+
+    .#{$clabs-prefix}--edit-input {
+      flex: 1 1 50%;
+      margin-inline-end: 24px;
+    }
+
+    .#{$clabs-prefix}--edit-output {
+      flex: 1 1 50%;
+      margin-inline-start: 24px;
+    }
+  }
+}

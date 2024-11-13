@@ -23,7 +23,7 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build-storybook": "yarn build && storybook build",
+    "build-storybook": "yarn storybook build",
     "ci-check": "yarn run format:staged && yarn lint:license && yarn lint && yarn lint:styles",
     "ci-check:build": "yarn build && yarn build:dist && yarn ci-check",
     "custom-elements": "cem analyze --config ./custom-elements-manifest.config.js",
@@ -34,7 +34,7 @@
     "test:updateSnapshot": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
   },
   "dependencies": {
-    "@carbon/styles": "1.53.0",
+    "@carbon/styles": "^1.69.0",
     "lit": "^3.0.0"
   },
   "devDependencies": {

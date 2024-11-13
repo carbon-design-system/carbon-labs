@@ -493,6 +493,22 @@ export default class chartElement extends LitElement {
       }
     }
 
+    if (changedProperties.has('modalMode')) {
+      this.style.setProperty(
+        '--chat-chart-fullscreen-visibility',
+        this.modalMode === 'fullscreen' || this.modalMode === 'edit'
+          ? 'flex'
+          : 'none'
+      );
+    }
+
+    if (changedProperties.has('isHovered')) {
+      this.style.setProperty(
+        '--chat-chart-thumbnail-visibility',
+        this.thumbNail && !this.isHovered ? 'hidden' : 'visible'
+      );
+    }
+
     if (!this.chartLoading) {
       if (
         //changedProperties.has('containerHeight') ||
@@ -811,48 +827,42 @@ export default class chartElement extends LitElement {
   _toolTipBuilder(value, _sanitize) {
     const tooltip = document.querySelector('#vg-tooltip-element');
     if (tooltip instanceof HTMLElement) {
-      let backgroundColor = '#161616';
-      let textColor = '#f4f4f4';
-      //let titleFont = 'IBM Plex Sans, sans-serif';
-      const defaultFont = 'IBM Plex Sans Condensed, Arial, sans-serif';
-      let gridColor = '#3d3d3d';
-      if (this.theme === 'white') {
-        backgroundColor = '#ffffff';
-        textColor = '#161616';
-        //labelColor = '#777677';
-        gridColor = '#e0e0e0';
-      }
-
-      tooltip.style.color = textColor;
-      //tooltip.style.border = '1px solid '+gridColor;
-      tooltip.style.border = 'none';
-      tooltip.style.padding = '0px';
-      tooltip.style.borderRadius = '0px';
-      tooltip.style.background = backgroundColor;
-      tooltip.style.fontFamily = defaultFont;
-      //tooltip.style.height = 'auto';
+      //tooltip.classList.add(clabsPrefix+'--chat-chart-tooltip')
 
       let toolTipHTML =
-        '<div style="background:' +
-        backgroundColor +
-        '; display: flex; flex-direction: column; align-items: start; height:auto; width:100%;">';
-      let sectionBorder = '1px solid ' + gridColor;
+        '<div class="' +
+        clabsPrefix +
+        '--chat-chart-tooltip-container-' +
+        this.theme +
+        '">';
+      let bordered = 'bordered';
+
       const entrySize = Object.keys(value).length;
       let entryCount = 0;
       for (const [key, dataValue] of Object.entries(value)) {
         if (entryCount >= entrySize - 1) {
-          sectionBorder = 'none';
+          bordered = 'none';
         }
         toolTipHTML +=
-          '<div style="display: flex; justify-content: space-between; align-items: center; width:100%; border-bottom: ' +
-          sectionBorder +
-          '; padding:6px; box-sizing: border-box;">';
+          '<div class="' +
+          clabsPrefix +
+          '--chat-chart-tooltip-inner-' +
+          bordered +
+          ' ' +
+          clabsPrefix +
+          '--chat-chart-tooltip-inner-' +
+          this.theme +
+          '">';
         toolTipHTML +=
-          '<span style="text-align: left; flex:1;font-size:10px; white-space: nowrap;">' +
+          '<span class="' +
+          clabsPrefix +
+          '--chat-chart-tooltip-inner-title">' +
           key +
           '</span>';
         toolTipHTML +=
-          '<span style="text-align: right; flex:1;font-size:12px; white-space: nowrap; padding-left:16px;">' +
+          '<span class="' +
+          clabsPrefix +
+          '--chat-chart-tooltip-inner-value">' +
           dataValue +
           '</span>';
         toolTipHTML += '</div>';

@@ -1,11 +1,17 @@
-import { Markdown, Meta } from '@storybook/blocks';
+import { Markdown, Meta} from '@storybook/blocks';
 import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
 import * as cardElementStories from './cardElement.stories';
 import packageJson from '../../../package.json';
 
 <Meta of={cardElementStories} />
 
-# Carbon-Labs Card Handbook
+# Carbon AI Chat: Card
+
+* **Initiative owner(s):** Owen Cornec
+* **Status:** Draft
+* **Target library:** `Carbon AI Chat`
+* **Target library maintainer(s) / PR Reviewer(s):** Ethan Winters, Damon Lundin
+* **Support channel:** `#carbon-ai-chat`
 
 ## Table of Contents
 
@@ -18,34 +24,23 @@ import packageJson from '../../../package.json';
 - [Styles](#styles)
 
 ## Overview
-
 <a id="overview"></a>
 
-The Chat component is a collaboration between the **IBM Research Visual AI Lab
-(VAIL)** and the **Carbon Design Team** to provide an open-source, easily
-expandable chat interface to interact with large language models. Our core
-values are: open-source collaboration, universal support, ease of use and the
-in-depth customization Carbon is known for.
+The Chat component is a collaboration between the **IBM Research Visual AI Lab (VAIL)** and the **Carbon Design Team** to provide an open-source, easily expandable chat interface to interact with large language models. Our core values are: open-source collaboration, universal support, ease of use and the in-depth customization Carbon is known for.
 
-The **Carbon Labs Card** component aims to render any HTTP url provided by users
-or LLM and display a flexible and informative Card component.
+The **Carbon Labs Card** component aims to render any HTTP url provided by users or LLM and display a flexible and informative Card component.
 
 ### Troubleshooting
+<a id="troubleshooting"></a>
 
-<a id="troubleshooting"></a>{' '}
-
-Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests
-regarding general information, installation, trouble-shooting and custom
-features.
+Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests regarding general information, installation, trouble-shooting and custom features.
 
 ## Installation
-
 <a id="installation"></a>
 
 Here's a quick example to get you started.
 
 ### JS via import
-
 <a id="js-via-import"></a>
 
 ```javascript
@@ -53,52 +48,40 @@ import '@carbon-labs/ai-chat-card/es/index.js';
 ```
 
 ## Attributes and Properties
-
 <a id="attributes-and-properties"></a>
 <table>
   <thead>
     <tr>
-      <td>**Attribute name**</td>
-      <td>**Type**</td>
-      <td>**Effect**</td>
+        <td>**Attribute name**</td>
+        <td>**Type**</td>
+        <td>**Effect**</td>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>`type`</td>
-      <td>String</td>
-      <td>
-        can be `url`, `file`, `video` or `audio`, dictates how to render the
-        card
-      </td>
+        <td>`type`</td>
+        <td>String</td>
+        <td>can be `url`, `file`, `video` or `audio`, dictates how to render the card</td>
     </tr>
     <tr>
-      <td>`content`</td>
-      <td>String</td>
-      <td>valid url to be rendered</td>
+        <td>`content`</td>
+        <td>String</td>
+        <td>valid url to be rendered</td>
     </tr>
     <tr>
-      <td>`card-elements`</td>
-      <td>JSON</td>
-      <td>
-        JSON object discribed below, sets all values in the Card component
-        (title, preview image url, description, redirect URL, URL Title){' '}
-      </td>
+        <td>`card-elements`</td>
+        <td>JSON</td>
+        <td>JSON object discribed below, sets all values in the Card component (title, preview image url, description, redirect URL, URL Title) </td>
     </tr>
     <tr>
-      <td>`api-url`</td>
-      <td>String</td>
-      <td>
-        When only content is specified, query a service to fetch preview data
-        from og tags to preview site
-      </td>
+        <td>`api-url`</td>
+        <td>String</td>
+        <td>When only content is specified, query a service to fetch preview data from og tags to preview site</td>
     </tr>
     <tr>
-      <td>`file-type`</td>
-      <td>String</td>
-      <td>
-        If type is `file`, choose what icon to display if not present in URL
-      </td>
+        <td>`file-type`</td>
+        <td>String</td>
+        <td>If type is `file`, choose what icon to display if not present in URL</td>
     </tr>
   </tbody>
 </table>
@@ -106,47 +89,40 @@ import '@carbon-labs/ai-chat-card/es/index.js';
 ## Basic usage
 
 ### `content` only
-
-When only a url is specified, `type` is automatically detected based on the
-ending of the url string.
-
+When only a url is specified, `type` is automatically detected based on the ending of the url string.
 ```html
-<clabs-chat-card content="htttp://www.google.com"> </clabs-chat-card>
+<clabs-chat-card
+    content="htttp://www.google.com">
+</clabs-chat-card>
 ```
 
 ### `content` + `api-url`
-
-When only a url is specified with an api, a proxy fetch will be attempted to
-attain the title, preview image url and description. if unsuccessful, these
-fields will be auto-populated solely on the url given:
-
+When only a url is specified with an api, a proxy fetch will be attempted to attain the title, preview image url and description. if unsuccessful, these fields will be auto-populated solely on the url given:
 ```html
 <clabs-chat-card
-  content="htttp://www.google.com"
-  api-url="localhost:5000/preview_link">
+    content="htttp://www.google.com"
+    api-url="localhost:5000/preview_link">
 </clabs-chat-card>
 ```
 
 ### `content` + `type`
-
-If `type` is specified the Card will render as specified, for example `video`
-with create a custom video player and attempt to load the `content` as is:
-
+If `type` is specified the Card will render as specified, for example `video` with create a custom video player and attempt to load the `content` as is:
 ```html
-<clabs-chat-card content="htttp://www.google.com" type="video">
+<clabs-chat-card
+    content="htttp://www.google.com"
+    type="video">
 </clabs-chat-card>
 ```
 
 ## Advanced usage with custom cardElements JSON
-
 Specify a 'cardElements' JSON object in the card component to render as-is:
-
 ```html
-<clabs-chat-card card-elements="{JSONobject}"> </clabs-chat-card>
+<clabs-chat-card
+    card-elements={JSONobject}>
+</clabs-chat-card>
 ```
 
 ### URL Card examples
-
 ```
 [
   {
@@ -180,7 +156,6 @@ Specify a 'cardElements' JSON object in the card component to render as-is:
 ```
 
 ### File Card examples
-
 ```
 [
   {
@@ -202,7 +177,6 @@ Specify a 'cardElements' JSON object in the card component to render as-is:
 ```
 
 ### Audio Card examples
-
 ```
 [
   {
@@ -222,6 +196,7 @@ Specify a 'cardElements' JSON object in the card component to render as-is:
   },
 ]
 ```
+
 
 ### Styles
 

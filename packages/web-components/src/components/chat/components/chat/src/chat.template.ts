@@ -98,19 +98,8 @@ export function chatTemplate(customElementClass) {
               width="32"
               height="32"
               viewBox="0 0 32 32">
-              <defs>
-                <style>
-                  .cls-1 {
-                    fill: none;
-                  }
-                  .cls-1,
-                  .cls-2 {
-                    stroke-width: 0px;
-                  }
-                </style>
-              </defs>
               <path
-                class="cls-2"
+                class="${clabsPrefix}--chat-launcher-container-cls-2"
                 d="m15,19l-1.4141,1.4141,3.5859,3.5859H4v-13h-2v13c0,1.1046.8954,2,2,2h13.1719l-3.5859,3.5859,1.4141,1.4141,6-6-6-6Z" />
               <path class="cls-2" d="m24,18v-2h2V4h-2v-2h6v2h-2v12h2v2h-6Z" />
               <path
@@ -119,7 +108,7 @@ export function chatTemplate(customElementClass) {
               <rect
                 id="_Transparent_Rectangle_"
                 data-name="&amp;lt;Transparent Rectangle&amp;gt;"
-                class="cls-1"
+                class="${clabsPrefix}--chat-launcher-container-cls-1"
                 width="32"
                 height="32"
                 transform="translate(32 32) rotate(180)" />

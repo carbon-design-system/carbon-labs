@@ -1,340 +1,152 @@
-import { Markdown, Meta, ArgTypes } from '@storybook/blocks';
+import { Markdown, Meta, ArgTypes} from '@storybook/blocks';
 import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
 import * as ChatStories from './chat.stories';
 import packageJson from '../../../package.json';
 
-<Meta of={ChatStories} /># Chat Handbook
+
+<Meta of={ChatStories} />
+# Carbon AI Chat
+
+* **Initiative owner(s):** Owen Cornec
+* **Status:** Draft
+* **Target library:** `Carbon AI Chat`
+* **Target library maintainer(s) / PR Reviewer(s):** Ethan Winters, Damon Lundin
+* **Support channel:** `#carbon-ai-chat`
 
 ## Table of Contents
 
-- [Overview](#overview)
-  - [Attributes and Properties](#attributes-and-properties)
-  - [Events](#events)
-  - [Troubleshooting](#troubleshooting)
-- [Installation](#installation)
-  - [JS via import](#js-via-import)
-- [Implementation](#implementation)
-  - [Preface](#preface)
-  - [USAGE IN REACT](#react-implementation)
-  - [Usage in Vanilla, Svelte, Vue, Web-components](#all-implementation)
-  - [Render with any API](#render-with-any-api)
-  - [Render from Parent](#render-from-parent)
-  - [Full Customization with Slotting](#full-customization-with-slotting)
-- [Feedback popup](#feedback-form)
-- [Localization](#localization)
-- [Styles](#styles)
+ - [Overview](#overview)
+   - [Attributes and Properties](#attributes-and-properties)
+   - [Events](#events)
+   - [Troubleshooting](#troubleshooting)
+ - [Installation](#installation)
+   - [JS via import](#js-via-import)
+ - [Implementation](#implementation)
+   - [Preface](#preface)
+   - [USAGE IN REACT](#react-implementation)
+   - [Usage in Vanilla, Svelte, Vue, Web-components](#all-implementation)
+   - [Render with any API](#render-with-any-api)
+   - [Render from Parent](#render-from-parent)
+   - [Full Customization with Slotting](#full-customization-with-slotting)
+ - [Feedback popup](#feedback-form)
+ - [Localization](#localization)
+ - [Styles](#styles)
 
 ## Overview
-
 <a id="overview"></a>
 
-The Chat component is a collaboration between the **IBM Research Visual AI Lab
-(VAIL)** and the **Carbon Design Team** to provide an open-source, easily
-expandable chat interface to interact with large language models. Our core
-values are: **open-source collaboration**, **universal support**,
-**compasability** and the **in-depth customization** Carbon is known for.
+The Chat component is a collaboration between the **IBM Research Visual AI Lab (VAIL)** and the **Carbon Design Team** to provide an open-source, easily expandable chat interface to interact with large language models. Our core values are: **open-source collaboration**, **universal support**, **compasability** and the **in-depth customization** Carbon is known for.
 
-It is part of **Carbon Labs**, a test bed to let anyone experiment with novel
-LLM-enabled components. We chose **LIT web-components** as these are the bedrock
-of the web and guarantee longevity, thus can be used instantly in **Vanilla**,
-**Svelte** and **Vue**. Meanwhile **React** requires on simple step,
-[see here](#react-implementation)
+It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LLM-enabled components. We chose **LIT web-components** as these are the bedrock of the web and guarantee longevity, thus can be used instantly in **Vanilla**, **Svelte** and **Vue**. Meanwhile **React** requires on simple step, [see here](#react-implementation)
 
-Our primary goal is to provide a space for novel and experimental
-features/components to be used in and out of Chat interfaces. By fully adhering
-to the latest design/safety/formatting guidelines, **Labs** can accelerate and
-streamline adoption across IBM to respond to the fast-moving field of AI and
-Large Language Models.
+Our primary goal is to provide a space for novel and experimental features/components to be used in and out of Chat interfaces. By fully adhering to the latest design/safety/formatting guidelines, **Labs** can accelerate and streamline adoption across IBM to respond to the fast-moving field of AI and Large Language Models.
 
-All children components (Text, Code, Charts, Carousel etc) can be imported
-individually outside of the Chat context, fully resiable and composable.
+All children components (Text, Code, Charts, Carousel etc) can be imported individually outside of the Chat context, fully resiable and composable.
 
 ### Demos
+ - [Streaming demo with all components](https://labs-canary.carbondesignsystem.com/?path=/story/components-chat-chat--stream-text-playground&args=sampleQuery:ShowAll&globals=theme:g100)
+ - [Static demo with all components](https://labs-canary.carbondesignsystem.com/?path=/story/components-chat-chat--playground)
+ - [Text showcase](https://labs-canary.carbondesignsystem.com/?path=/story/components-chat-text--showcase&globals=theme:g10)
+ - [Charts showcase](https://labs-canary.carbondesignsystem.com/?path=/story/components-chart--showcase)
+ - [Code showcase](https://labs-canary.carbondesignsystem.com/?path=/story/components-chat-code--showcase&globals=theme:g90)
+ - [Carousel showcase](https://labs-canary.carbondesignsystem.com/?path=/story/components-chat-carousel--showcase&globals=theme:g100)
 
-- [Streaming demo with all components](https://labs-canary.carbondesignsystem.com/?path=/story/components-chat-chat--stream-text-playground&args=sampleQuery:ShowAll&globals=theme:g100)
-- [Static demo with all components](https://labs-canary.carbondesignsystem.com/?path=/story/components-chat-chat--playground)
-- [Text showcase](https://labs-canary.carbondesignsystem.com/?path=/story/components-chat-text--showcase&globals=theme:g10)
-- [Charts showcase](https://labs-canary.carbondesignsystem.com/?path=/story/components-chart--showcase)
-- [Code showcase](https://labs-canary.carbondesignsystem.com/?path=/story/components-chat-code--showcase&globals=theme:g90)
-- [Carousel showcase](https://labs-canary.carbondesignsystem.com/?path=/story/components-chat-carousel--showcase&globals=theme:g100)
+
 
 ### Attributes and Properties
-
 <a id="attributes-and-properties"></a>
 
 <table>
-  <thead>
-    <tr>
-      <td>**Type**</td>
-      <td>**Attribute name**</td>
-      <td>**Usage**</td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Boolean</td>
-      <td>`loading`</td>
-      <td>
-        User-assigned boolean denoting when an api query has begun and returned
-        to 'false' when it is received or an error occured, used to display an
-        empty loading message
-      </td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`closed`</td>
-      <td>Closed state to denote if chart is hidden</td>
-    </tr>
-    <tr>
-      <td>Object</td>
-      <td>`conversation`</td>
-      <td>
-        conversation object to display messages straight from the 'message'
-        attribute, overrides any api_url system
-      </td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`enable-launcher`</td>
-      <td>Show launcher to open chat when closing chat</td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`start-with-launcher`</td>
-      <td>Close chat by default and show launcher</td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`enable-feedback-form`</td>
-      <td>Show complex feedback popup when clicking a reaction button</td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`enable-text-feedback-form`</td>
-      <td>Show complex feedback form on individual highlighted text items</td>
-    </tr>
-    <tr>
-      <td>Object</td>
-      <td>`feedbackDefinitions`</td>
-      <td>
-        Define what should be shown in feedback form, [see here](#feedback-form)
-      </td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td>`ai-slug-content`</td>
-      <td>HTML content to render in header AI slug</td>
-    </tr>
-    <tr>
-      <td>Object</td>
-      <td>`aiSlugObject`</td>
-      <td>
-        JSON object to specify AI slug content, formatted [here](#feedback-form)
-      </td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`enable-request-cancelling`</td>
-      <td>
-        When sending a query, show cancel button instead of send and interrupt
-        incoming response
-      </td>
-    </tr>
-    <tr>
-      <td>Object</td>
-      <td>`customLabels`</td>
-      <td>
-        Label list of all buttons/placeholders to localize UI, [see
-        here](#localization)
-      </td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`stream-responses`</td>
-      <td>
-        User-assigned boolean denoting if the conversation object is
-        user-updated or automatically updated using the api system
-      </td>
-    </tr>
-    <tr>
-      <td>Number</td>
-      <td>`stream-delay`</td>
-      <td>Number value in milliseconds to throttle streaming response </td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td>`user-name`</td>
-      <td>
-        String denoting the user name, used for internal logic in the server to
-        differentiate bot responses and user reseponses. default: 'user' but
-        should be the user's real name based on IBM ID or any other data
-        available
-      </td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td>`agent-name`</td>
-      <td>
-        String denoting the bot name, default: 'external' but can be changed to
-        'Watson' or 'client assistant' or any other name
-      </td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td>`default-viewing-mode`</td>
-      <td>
-        String denoting default viewing mode, can be "container" (default),
-        "fullscreen" or "minimized"
-      </td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`disable-header-buttons`</td>
-      <td>Disable all buttons except slug</td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`disable-header-fullscreen`</td>
-      <td>Remove header fullscreen button option</td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`disable-header-close`</td>
-      <td>Remove header closing button option</td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`disable-header-minimize`</td>
-      <td>Remove fullscreen button option</td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`disable-header-menu`</td>
-      <td>Disable header hamburger menu</td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td>`prompt-notification-message`</td>
-      <td>String denoting message to append above prompt</td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td>`prompt-notification-type`</td>
-      <td>
-        String denoting type of appended prompt message (error, info, warning)
-      </td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td>`input-field-placeholder`</td>
-      <td>Custom placeholder for input field in footer</td>
-    </tr>
-    <tr>
-      <td>Number</td>
-      <td>`max-character-count`</td>
-      <td>
-        Max character counter specified by developer to prevent large queries
-      </td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td>`api-url`</td>
-      <td>
-        String url denoting where the message query will be sent, either BAM or
-        watsonx.ai or any other service
-      </td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td>`model`</td>
-      <td>String denoting which model to use in your backend</td>
-    </tr>
-    <tr>
-      <td>Boolean</td>
-      <td>`auto-update`</td>
-      <td>
-        User-assigned boolean denoting if the conversation object is
-        user-updated or automatically updated using the api system
-      </td>
-    </tr>
-    <tr>
-      <td>String</td>
-      <td>`user-prompt`</td>
-      <td>
-        String denoting the unique behavior of the model designated by the user,
-        appended to the private system prompt
-      </td>
-    </tr>
-    <tr>
-      <td>Number</td>
-      <td>`temperature`</td>
-      <td>
-        Float varying from 0.0 to 1.0, denotes how 'creative' the model's
-        response will be. 0.0 (default) is the most safe and predictable while
-        1.0 is hightly creative but unpredictable (not advised for operations
-        returning code or JSON objects)
-      </td>
-    </tr>
-  </tbody>
+<thead>
+  <tr><td>**Type**</td><td>**Attribute name**</td><td>**Usage**</td></tr>
+</thead>
+<tbody>
+<tr><td>Boolean</td><td>`loading`</td><td>User-assigned boolean denoting when an api query has begun and returned to 'false' when it is received or an error occured, used to display an empty loading message</td></tr>
+<tr><td>Boolean</td><td>`closed`</td><td>Closed state to denote if chart is hidden</td></tr>
+<tr><td>Object</td><td>`conversation`</td><td>conversation object to display messages straight from the 'message' attribute, overrides any api_url system</td></tr>
+<tr><td>Boolean</td><td>`enable-launcher`</td><td>Show launcher to open chat when closing chat</td></tr>
+<tr><td>Boolean</td><td>`start-with-launcher`</td><td>Close chat by default and show launcher</td></tr>
+<tr><td>Boolean</td><td>`enable-feedback-form`</td><td>Show complex feedback popup when clicking a reaction button</td></tr>
+<tr><td>Boolean</td><td>`enable-text-feedback-form`</td><td>Show complex feedback form on individual highlighted text items</td></tr>
+<tr><td>Object</td><td>`feedbackDefinitions`</td><td>Define what should be shown in feedback form, [see here](#feedback-form)</td></tr>
+<tr><td>String</td><td>`ai-slug-content`</td><td>HTML content to render in header AI slug</td></tr>
+<tr><td>Object</td><td>`aiSlugObject`</td><td>JSON object to specify AI slug content, formatted [here](#feedback-form)</td></tr>
+<tr><td>Boolean</td><td>`enable-request-cancelling`</td><td>When sending a query, show cancel button instead of send and interrupt incoming response</td></tr>
+<tr><td>Object</td><td>`customLabels`</td><td>Label list of all buttons/placeholders to localize UI, [see here](#localization)</td></tr>
+<tr><td>Boolean</td><td>`stream-responses`</td><td>User-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system</td></tr>
+<tr><td>Number</td><td>`stream-delay`</td><td>Number value in milliseconds to throttle streaming response </td></tr>
+<tr><td>String</td><td>`user-name`</td><td>String denoting the user name, used for internal logic in the server to differentiate bot responses and user reseponses. default: 'user' but should be the user's real name based on IBM ID or any other data available</td></tr>
+<tr><td>String</td><td>`agent-name`</td><td>String denoting the bot name, default: 'external' but can be changed to 'Watson' or 'client assistant' or any other name</td></tr>
+<tr><td>String</td><td>`default-viewing-mode`</td><td>String denoting default viewing mode, can be "container" (default), "fullscreen" or "minimized"</td></tr>
+<tr><td>Boolean</td><td>`disable-header-buttons`</td><td>Disable all buttons except slug</td></tr>
+<tr><td>Boolean</td><td>`disable-header-fullscreen`</td><td>Remove header fullscreen button option</td></tr>
+<tr><td>Boolean</td><td>`disable-header-close`</td><td>Remove header closing button option</td></tr>
+<tr><td>Boolean</td><td>`disable-header-minimize`</td><td>Remove fullscreen button option</td></tr>
+<tr><td>Boolean</td><td>`disable-header-menu`</td><td>Disable header hamburger menu</td></tr>
+<tr><td>String</td><td>`prompt-notification-message`</td><td>String denoting message to append above prompt</td></tr>
+<tr><td>String</td><td>`prompt-notification-type`</td><td>String denoting type of appended prompt message (error, info, warning)</td></tr>
+<tr><td>String</td><td>`input-field-placeholder`</td><td>Custom placeholder for input field in footer</td></tr>
+<tr><td>Number</td><td>`max-character-count`</td><td>Max character counter specified by developer to prevent large queries</td></tr>
+<tr><td>String</td><td>`api-url`</td><td>String url denoting where the message query will be sent, either BAM or watsonx.ai or any other service</td></tr>
+<tr><td>String</td><td>`model`</td><td>String denoting which model to use in your backend</td></tr>
+<tr><td>Boolean</td><td>`auto-update`</td><td>User-assigned boolean denoting if the conversation object is user-updated or automatically updated using the api system</td></tr>
+<tr><td>String</td><td>`user-prompt`</td><td>String denoting the unique behavior of the model designated by the user, appended to the private system prompt</td></tr>
+<tr><td>Number</td><td>`temperature`</td><td>Float varying from 0.0 to 1.0, denotes how 'creative' the model's response will be. 0.0 (default) is the most safe and predictable while 1.0 is hightly creative but unpredictable (not advised for operations returning code or JSON objects)</td></tr>
+</tbody>
 </table>
 
 ### Events
-
 <a id="events"></a>
 
 <table>
   <thead>
     <tr>
-      <td>**Event name**</td>
-      <td>**Exclusive to chat mode**</td>
-      <td>**Triggering logic**</td>
+        <td>**Event name**</td>
+        <td>**Exclusive to chat mode**</td>
+        <td>**Triggering logic**</td>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>on-chat-slot-update</td>
-      <td>Carbon slotting in use</td>
-      <td>Return child update status</td>
+        <td>on-chat-slot-update</td>
+        <td>Carbon slotting in use</td>
+        <td>Return child update status</td>
     </tr>
     <tr>
-      <td>on-user-regeneration-request</td>
-      <td>API mode in use</td>
-      <td>Return when user requested regeneration on any bot message</td>
+        <td>on-user-regeneration-request</td>
+        <td>API mode in use</td>
+        <td>Return when user requested regeneration on any bot message</td>
     </tr>
     <tr>
-      <td>on-chat-close</td>
-      <td>All</td>
-      <td>Return when user clicked close in the header</td>
+        <td>on-chat-close</td>
+        <td>All</td>
+        <td>Return when user clicked close in the header</td>
     </tr>
     <tr>
-      <td>on-user-message-update-request</td>
-      <td>API mode in use</td>
-      <td>Return when user requested an edit on any user message</td>
+        <td>on-user-message-update-request</td>
+        <td>API mode in use</td>
+        <td>Return when user requested an edit on any user message</td>
     </tr>
     <tr>
-      <td>on-submit</td>
-      <td>All</td>
-      <td>Return when user submits a query in the footer</td>
+        <td>on-submit</td>
+        <td>All</td>
+        <td>Return when user submits a query in the footer</td>
     </tr>
   </tbody>
 </table>
 
 ### Troubleshooting
+<a id="troubleshooting"></a>
 
-<a id="troubleshooting"></a>{' '}
+Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests regarding general information, installation, trouble-shooting and custom features.
 
-Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests
-regarding general information, installation, trouble-shooting and custom
-features.
 
 ## Installation
-
 <a id="installation"></a>
 
 Here's a quick example to get you started.
 
 ### JS via import
-
 <a id="js-via-import"></a>
 
 ```javascript
@@ -342,16 +154,12 @@ import '@carbon-labs/ai-chat/es/index.js';
 ```
 
 ## Implementation
-
 <a id="inplementation"></a>
 
 ### Preface
-
 <a id="preface"></a>
 
-There are three ways to implement Chat: Add an API and directly auto-parse raw
-LLM responses, ingest your own conversation object from a parent application or
-specify every layer of the chat component and slot in custom components
+There are three ways to implement Chat: Add an API and directly auto-parse raw LLM responses, ingest your own conversation object from a parent application or specify every layer of the chat component and slot in custom components
 
 #### 1: Auto-rendering with an API: specify a URL in the api-url attribute to query a proxy server
 
@@ -371,7 +179,6 @@ specify every layer of the chat component and slot in custom components
     - like section 2, all events must be handled by the parent application
 
 ### Usage in non-React framworks:
-
 <a id="all-implementation"></a>
 
 In Svelte, Vue, LIT and vanilla: simply use the tag to get going:
@@ -401,11 +208,9 @@ In Svelte, Vue, LIT and vanilla: simply use the tag to get going:
 ```
 
 ### Usage in React:
-
 <a id="react-implementation"></a>
 
 #### Try out our examples:
-
 > [Github](https://stackblitz.com/github/ocornec/carbon-labs-react-examples/tree/main/simple-chat)
 > Simple Chat example.
 
@@ -415,11 +220,11 @@ In Svelte, Vue, LIT and vanilla: simply use the tag to get going:
 > [Github](https://stackblitz.com/github/ocornec/carbon-labs-react-examples/tree/main/charts)
 > Singular component (charts only example).
 
-For React, one extra step is needed:
 
+For React, one extra step is needed:
 ```js
 //ChatComponent.js
-import { createComponent } from '@lit/react';
+import {createComponent} from '@lit/react';
 import React from 'react';
 import CLABSChat from '@carbon-labs/ai-chat/es/components/chat/chat.js';
 
@@ -427,12 +232,12 @@ export const Chat = createComponent({
   tagName: 'clabs-chat',
   elementClass: CLABSChat,
   react: React,
-  events: {},
+  events: {
+  },
 });
 ```
 
 Then import like any other React Component:
-
 ```js
 //App.js
 import './App.css';
@@ -448,7 +253,6 @@ export default App;
 ```
 
 ### 1: Auto-rendering with an API
-
 <a id="render-with-any-api"></a>
 
 #### Basic usage
@@ -462,8 +266,7 @@ export default App;
 </clabs-chat>
 ```
 
-All events/interactions are executed internally, any user query sent to the
-`api-url` and packaged as such:
+All events/interactions are executed internally, any user query sent to the `api-url` and packaged as such:
 
 ```json
 {
@@ -484,62 +287,32 @@ All events/interactions are executed internally, any user query sent to the
   "max_tries": 3
 }
 ```
-
 #### Raw text response
-
-If API returns raw LLM text in a `reply` of type `string`, auto-parsing will be
-used to slice/classify text into subcompoments within a message.
+If API returns raw LLM text in a `reply` of type `string`, auto-parsing will be used to slice/classify text into subcompoments within a message.
 
 #### Object response
-
-If API returns a `reply` of type `object/json`, objects are rendered as-is in
-order of appearance, each containing a subelement containing a`type` string
-which render a `content` field:
+If API returns a `reply` of type `object/json`, objects are rendered as-is in order of appearance, each containing a subelement containing a`type` string which render a `content` field:
 
 ```json
 [
-  { "type": "text", "content": "Hello World!" },
-  { "type": "html-text", "content": "<h2>Title</h2>" },
-  {
-    "type": "annotated-text",
-    "content": "The link your requested is [here](http://www.google.com)"
-  },
-  { "type": "url", "content": "http://www.ibm.com" },
-  {
-    "type": "code",
-    "content": "python\ndef Prime(number,itr):\n\t#base condition\n\tif ..."
-  },
-  { "type": "error", "content": "ERROR: API failed to respond, try again" },
-  { "type": "image", "content": "http://www.gallery.come/image.png" },
-  { "type": "video", "content": "http://www.wikimedia.org/example_video.mp4" },
-  { "type": "image", "content": "http://www.gallery.come/image.png" },
-  {
-    "type": "audio",
-    "content": "https://wikimedia....Second_Hungarian_Rhapsody.ogg"
-  },
-  { "type": "file", "content": "ftp:spreadsheet.csv" },
-  {
-    "type": "carousel",
-    "content": "['http://www.google.com', 'http://www.facebook.com', 'http://www.wikipedia.org']"
-  },
-  {
-    "type": "link-list",
-    "content": "https://en.wikipedia.org/wiki/President_of_the_United_States,https://en..."
-  },
-  {
-    "type": "table",
-    "content": "header1,hedaer2,header3\n300,500,600\nNY,AK,MI"
-  },
-  { "type": "tags", "content": "['new chat','save chat','create chart']" },
-  { "type": "chart", "content": "PLACE STRINGIFIED VEGA SCHEME HERE" },
-  {
-    "type": "formula",
-    "content": "\\(1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+..."
-  },
-  {
-    "type": "molecule",
-    "content": "OC[C@@H](O1)[C@@H](O)[C@H](O)[C@@H]2[C@@H]..."
-  }
+  {"type": "text", "content": "Hello World!"},
+  {"type": "html-text", "content": "<h2>Title</h2>"},
+  {"type": "annotated-text", "content": "The link your requested is [here](http://www.google.com)"},
+  {"type": "url", "content": "http://www.ibm.com"},
+  {"type": "code", "content": "python\ndef Prime(number,itr):\n\t#base condition\n\tif ..."},
+  {"type": "error", "content": "ERROR: API failed to respond, try again"},
+  {"type": "image", "content": "http://www.gallery.come/image.png"},
+  {"type": "video", "content": "http://www.wikimedia.org/example_video.mp4"},
+  {"type": "image", "content": "http://www.gallery.come/image.png"},
+  {"type": "audio", "content": "https://wikimedia....Second_Hungarian_Rhapsody.ogg"},
+  {"type": "file", "content": "ftp:spreadsheet.csv"},
+  {"type": "carousel", "content": "['http://www.google.com', 'http://www.facebook.com', 'http://www.wikipedia.org']"},
+  {"type": "link-list", "content":"https://en.wikipedia.org/wiki/President_of_the_United_States,https://en..."},
+  {"type": "table", "content": "header1,hedaer2,header3\n300,500,600\nNY,AK,MI"},
+  {"type": "tags", "content": "['new chat','save chat','create chart']"},
+  {"type": "chart", "content": "PLACE STRINGIFIED VEGA SCHEME HERE"},
+  {"type": "formula", "content": "\\(1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+..."},
+  {"type": "molecule", "content": "OC[C@@H](O1)[C@@H](O)[C@H](O)[C@@H]2[C@@H]..."}
 ]
 ```
 
@@ -555,7 +328,6 @@ which render a `content` field:
 ```
 
 ### 2: API-less control with JSON object
-
 <a id="render-from-parent"></a>
 
 #### Specifiy a **conversation** object and specify the loading state and every interaction outside the chat, then update the **conversation** object to see an update:
@@ -621,9 +393,7 @@ which render a `content` field:
 ```
 
 #### Handling thumbs up/down feedback events
-
 Use the `on-user-feedback-request` event which returns in`event.detail`:
-
 ```json
 {
   "messageOrigin": "bot",
@@ -636,24 +406,19 @@ Use the `on-user-feedback-request` event which returns in`event.detail`:
   "messageElements": [] //complete message structure here
 }
 ```
-
 `event.detail.type` can be `positive` or `negative`
 
 #### Handling user regeneration requests
-
-Use the `on-user-regeneration-request` which returns
-`event.detail.cutConversationIndex`. This is the index of the previous user's
-message that generated the dissastisfactory model response. As such you need to:
-
+Use the `on-user-regeneration-request` which returns `event.detail.cutConversationIndex`. This is the index of the previous user's message that generated the dissastisfactory model response.
+As such you need to:
 ```js
 const deletionIndex = event.detail.cutConversationIndex;
 const previousMessage = conversation[deletionIndex].text;
-displayConversation = conversation.slice(0, deletionIndex + 1);
+displayConversation = conversation.slice(0, deletionIndex+1);
 postMessage(previousMessage); //handle mimicking a real user request here to fetch the response from your chosen API
-```
+````
 
 ### Full Customization with Slotting
-
 <a id="full-customization-with-slotting"></a>
 
 ```html
@@ -704,20 +469,18 @@ postMessage(previousMessage); //handle mimicking a real user request here to fet
 ```
 
 ### Feedback form definition
-
 <a id="feedback-form"></a>
 Specify feedback form options like so:
 
 #### Importing into Chat
-
 ```html
 <clabs-chat
   enable-complex-feedback
-  feedbackDefinitions="{feedbackDefinitionsJSON}" />
+  feedbackDefinitions={feedbackDefinitionsJSON}
+/>
 ```
 
 ### JSON object
-
 ```js
 const feedbackFormOptions = {
   'thumbs-down': {
@@ -741,23 +504,22 @@ const feedbackFormOptions = {
     responsePlaceholder: 'Add a comment',
     disclaimer:
       'Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed doeiusmod tempor incididunt ut fsil labore et dolore magna aliqua.',
-  },
+  }
 };
 ```
 
 ### Label localization
-
 <a id="localization"></a>
 Specify any and all label values like so:
 
 ### Importing into Chat
-
 ```html
-<clabs-chat customLabels="{customLabelsJSON}" />
+<clabs-chat
+  customLabels={customLabelsJSON}
+/>
 ```
 
 ### JSON object
-
 ```js
 const customLabelsJSON = {
   'header-close-chat': 'Close',

@@ -33,7 +33,7 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-text-content-chevron-container {
-    margin-inline: 4px 2px;
+    display: inline-block;
   }
 
   .#{$clabs-prefix}--chat-text-content-paragraph {
@@ -95,12 +95,12 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-text-highlighted {
-    background: var(--chat-text-element-highlight-color, $highlight);
+    background: var(--chat-text-element-highlight-color, $link-inverse);
     text-decoration: none;
   }
 
-  .#{$clabs-prefix}--chat-text-highlight-active {
-    background: var(--chat-text-element-highlight-color, $highlight);
+  .#{$clabs-prefix}--chat-text-highlighted-active {
+    background: var(--chat-text-element-highlight-color, $link-inverse-hover);
   }
 
   .#{$clabs-prefix}--chat-text-content-annotation-element {
@@ -119,6 +119,9 @@ $css--plex: true !default;
     padding-block: 8px;
     transition: max-height 0.3s linear;
   }
+  .#{$clabs-prefix}--chat-text-content-summarization-element-hidden {
+    display: none;
+  }
 
   .#{$clabs-prefix}--chat-text-content-link {
     cursor: pointer;
@@ -134,7 +137,7 @@ $css--plex: true !default;
     border: 1px solid $border-subtle-01;
     border-radius: 4px;
     background: $layer-01;
-    color: $support-warning-inverse;
+    color: $text-primary;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.64px;

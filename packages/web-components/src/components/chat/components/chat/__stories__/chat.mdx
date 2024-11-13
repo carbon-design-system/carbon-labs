@@ -3,7 +3,15 @@ import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
 import * as ChatStories from './chat.stories';
 import packageJson from '../../../package.json';
 
-<Meta of={ChatStories} /># Chat Handbook
+
+<Meta of={ChatStories} />
+# Carbon AI Chat
+
+* **Initiative owner(s):** Owen Cornec
+* **Status:** Draft
+* **Target library:** `Carbon AI Chat`
+* **Target library maintainer(s) / PR Reviewer(s):** Ethan Winters, Damon Lundin
+* **Support channel:** `#carbon-ai-chat`
 
 ## Table of Contents
 
@@ -26,6 +34,10 @@ import packageJson from '../../../package.json';
 
 ## Overview
 
+<<<<<<< HEAD
+=======
+## Overview
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 <a id="overview"></a>
 
 The Chat component is a collaboration between the **IBM Research Visual AI Lab
@@ -34,11 +46,15 @@ expandable chat interface to interact with large language models. Our core
 values are: **open-source collaboration**, **universal support**,
 **compasability** and the **in-depth customization** Carbon is known for.
 
+<<<<<<< HEAD
 It is part of **Carbon Labs**, a test bed to let anyone experiment with novel
 LLM-enabled components. We chose **LIT web-components** as these are the bedrock
 of the web and guarantee longevity, thus can be used instantly in **Vanilla**,
 **Svelte** and **Vue**. Meanwhile **React** requires on simple step,
 [see here](#react-implementation)
+=======
+It is part of **Carbon Labs**, a test bed to let anyone experiment with novel LLM-enabled components. We chose **LIT web-components** as these are the bedrock of the web and guarantee longevity, thus can be used instantly in **Vanilla**, **Svelte** and **Vue**. Meanwhile **React** requires on simple step, [see here](#react-implementation)
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 
 Our primary goal is to provide a space for novel and experimental
 features/components to be used in and out of Chat interfaces. By fully adhering
@@ -60,6 +76,10 @@ individually outside of the Chat context, fully resiable and composable.
 
 ### Attributes and Properties
 
+<<<<<<< HEAD
+=======
+### Attributes and Properties
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 <a id="attributes-and-properties"></a>
 
 <table>
@@ -279,7 +299,10 @@ individually outside of the Chat context, fully resiable and composable.
 </table>
 
 ### Events
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 <a id="events"></a>
 
 <table>
@@ -320,6 +343,10 @@ individually outside of the Chat context, fully resiable and composable.
 </table>
 
 ### Troubleshooting
+<<<<<<< HEAD
+=======
+<a id="troubleshooting"></a>
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 
 <a id="troubleshooting"></a>{' '}
 
@@ -329,12 +356,19 @@ features.
 
 ## Installation
 
+<<<<<<< HEAD
+=======
+## Installation
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 <a id="installation"></a>
 
 Here's a quick example to get you started.
 
 ### JS via import
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 <a id="js-via-import"></a>
 
 ```javascript
@@ -342,11 +376,17 @@ import '@carbon-labs/ai-chat/es/index.js';
 ```
 
 ## Implementation
+<<<<<<< HEAD
 
 <a id="inplementation"></a>
 
 ### Preface
 
+=======
+<a id="inplementation"></a>
+
+### Preface
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 <a id="preface"></a>
 
 There are three ways to implement Chat: Add an API and directly auto-parse raw
@@ -448,7 +488,10 @@ export default App;
 ```
 
 ### 1: Auto-rendering with an API
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 <a id="render-with-any-api"></a>
 
 #### Basic usage
@@ -555,7 +598,10 @@ which render a `content` field:
 ```
 
 ### 2: API-less control with JSON object
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 <a id="render-from-parent"></a>
 
 #### Specifiy a **conversation** object and specify the loading state and every interaction outside the chat, then update the **conversation** object to see an update:
@@ -648,12 +694,20 @@ message that generated the dissastisfactory model response. As such you need to:
 ```js
 const deletionIndex = event.detail.cutConversationIndex;
 const previousMessage = conversation[deletionIndex].text;
+<<<<<<< HEAD
 displayConversation = conversation.slice(0, deletionIndex + 1);
 postMessage(previousMessage); //handle mimicking a real user request here to fetch the response from your chosen API
 ```
 
 ### Full Customization with Slotting
 
+=======
+displayConversation = conversation.slice(0, deletionIndex+1);
+postMessage(previousMessage); //handle mimicking a real user request here to fetch the response from your chosen API
+````
+
+### Full Customization with Slotting
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 <a id="full-customization-with-slotting"></a>
 
 ```html
@@ -753,7 +807,13 @@ Specify any and all label values like so:
 ### Importing into Chat
 
 ```html
+<<<<<<< HEAD
 <clabs-chat customLabels="{customLabelsJSON}" />
+=======
+<clabs-chat
+  customLabels={customLabelsJSON}
+/>
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd
 ```
 
 ### JSON object

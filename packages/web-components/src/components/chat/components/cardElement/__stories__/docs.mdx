@@ -5,7 +5,13 @@ import packageJson from '../../../package.json';
 
 <Meta of={cardElementStories} />
 
-# Carbon-Labs Card Handbook
+# Carbon AI Chat: Card
+
+* **Initiative owner(s):** Owen Cornec
+* **Status:** Draft
+* **Target library:** `Carbon AI Chat`
+* **Target library maintainer(s) / PR Reviewer(s):** Ethan Winters, Damon Lundin
+* **Support channel:** `#carbon-ai-chat`
 
 ## Table of Contents
 
@@ -18,7 +24,10 @@ import packageJson from '../../../package.json';
 - [Styles](#styles)
 
 ## Overview
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/cardElement/__stories__/card.mdx
 
+=======
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/cardElement/__stories__/docs.mdx
 <a id="overview"></a>
 
 The Chat component is a collaboration between the **IBM Research Visual AI Lab
@@ -31,6 +40,10 @@ The **Carbon Labs Card** component aims to render any HTTP url provided by users
 or LLM and display a flexible and informative Card component.
 
 ### Troubleshooting
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/cardElement/__stories__/card.mdx
+=======
+<a id="troubleshooting"></a>
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/cardElement/__stories__/docs.mdx
 
 <a id="troubleshooting"></a>{' '}
 
@@ -40,12 +53,19 @@ features.
 
 ## Installation
 
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/cardElement/__stories__/card.mdx
+=======
+## Installation
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/cardElement/__stories__/docs.mdx
 <a id="installation"></a>
 
 Here's a quick example to get you started.
 
 ### JS via import
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/cardElement/__stories__/card.mdx
 
+=======
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/cardElement/__stories__/docs.mdx
 <a id="js-via-import"></a>
 
 ```javascript
@@ -53,7 +73,10 @@ import '@carbon-labs/ai-chat-card/es/index.js';
 ```
 
 ## Attributes and Properties
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/cardElement/__stories__/card.mdx
 
+=======
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/cardElement/__stories__/docs.mdx
 <a id="attributes-and-properties"></a>
 <table>
   <thead>
@@ -106,12 +129,20 @@ import '@carbon-labs/ai-chat-card/es/index.js';
 ## Basic usage
 
 ### `content` only
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/cardElement/__stories__/card.mdx
 
 When only a url is specified, `type` is automatically detected based on the
 ending of the url string.
 
 ```html
 <clabs-chat-card content="htttp://www.google.com"> </clabs-chat-card>
+=======
+When only a url is specified, `type` is automatically detected based on the ending of the url string.
+```html
+<clabs-chat-card
+    content="htttp://www.google.com">
+</clabs-chat-card>
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/cardElement/__stories__/docs.mdx
 ```
 
 ### `content` + `api-url`
@@ -122,8 +153,13 @@ fields will be auto-populated solely on the url given:
 
 ```html
 <clabs-chat-card
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/cardElement/__stories__/card.mdx
   content="htttp://www.google.com"
   api-url="localhost:5000/preview_link">
+=======
+    content="htttp://www.google.com"
+    api-url="localhost:5000/preview_link">
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/cardElement/__stories__/docs.mdx
 </clabs-chat-card>
 ```
 
@@ -133,7 +169,13 @@ If `type` is specified the Card will render as specified, for example `video`
 with create a custom video player and attempt to load the `content` as is:
 
 ```html
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/cardElement/__stories__/card.mdx
 <clabs-chat-card content="htttp://www.google.com" type="video">
+=======
+<clabs-chat-card
+    content="htttp://www.google.com"
+    type="video">
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/cardElement/__stories__/docs.mdx
 </clabs-chat-card>
 ```
 
@@ -142,7 +184,9 @@ with create a custom video player and attempt to load the `content` as is:
 Specify a 'cardElements' JSON object in the card component to render as-is:
 
 ```html
-<clabs-chat-card card-elements="{JSONobject}"> </clabs-chat-card>
+<clabs-chat-card
+    card-elements={JSONobject}>
+</clabs-chat-card>
 ```
 
 ### URL Card examples

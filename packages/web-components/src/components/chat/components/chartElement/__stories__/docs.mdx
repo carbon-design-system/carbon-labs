@@ -6,8 +6,13 @@ import packageJson from '../../../package.json';
 <Meta of={ChartElementStories} />
 
 # Chart Handbook
+<br/>
+* **Initiative owner(s):** Owen Cornec
+* **Status:** Draft
+* **Target library:** TBD
+* **Target library maintainer(s) / PR Reviewer(s):** N/A
+* **Support channel:** `#carbon-labs`
 
-<br />
 ## Table of Contents
 
 - [Overview](#overview)
@@ -27,6 +32,10 @@ import packageJson from '../../../package.json';
   - [Vega as the back bone, Carbon as the output](#vega-and-carbon)
   - [Advantages](#advantages)
   - [Disadvantages](#disadvantages)
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/chartElement/__stories__/chart.mdx
+=======
+
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/chartElement/__stories__/docs.mdx
 
 ## Overview
 
@@ -42,9 +51,15 @@ specification styling in order to recreate Carbon Charts styling. This overrides
 and edits all axis/legend/title/encoding/gradient/colorscale values to display
 the specification as a clone of classic Carbon Charts.
 
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/chartElement/__stories__/chart.mdx
 - Vega-lite reference: [vega.github.io](https://vega.github.io/vega-lite/)
 - Carbon Charts reference:
   [charts.carbondesignsystem.com](https://charts.carbondesignsystem.com/?path=/story/docs--welcome)
+=======
+* Vega-lite reference: [vega.github.io](https://vega.github.io/vega-lite/)
+* Carbon Charts reference:
+[charts.carbondesignsystem.com](https://charts.carbondesignsystem.com/?path=/story/docs--welcome)
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/chartElement/__stories__/docs.mdx
 
 **Feel free to contact Owen Cornec (on Slack or o.cornec@ibm.com) if you have
 any issues/questions**
@@ -66,6 +81,7 @@ Here's a quick example to get you started.
 <a id="independent-usage"></a>
 ```html
 <clabs-chat-chart
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/chartElement/__stories__/chart.mdx
   content="{ ... }"
   container-height="500px"
   container-width="100%"
@@ -74,6 +90,17 @@ Here's a quick example to get you started.
 
 ### &lt;clabs-chat-chart&gt; attributes
 
+=======
+  content = "{ ... }"
+  container-height = "500px"
+  container-width = "100%"
+  theme = "g100"
+>
+</clabs-chat-chart>
+```
+
+### &lt;clabs-chat-chart&gt; attributes
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/chartElement/__stories__/docs.mdx
 <a id="chart-attributes"></a>
 <table>
   <thead>
@@ -299,7 +326,11 @@ render the specification as is, useful for debugging.
 ### Usage inside Chat within the JSON conversation object:
 
 <a id="usage-with-json"></a>
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/chartElement/__stories__/chart.mdx
 If specified within a valid JSON `conversation` attribute:{' '}
+=======
+If specified within a valid JSON `conversation` attribute:
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/chartElement/__stories__/docs.mdx
 
 ```html
 <clabs-chat conversation="conversationJSON"> </clabs-chat>
@@ -364,6 +395,11 @@ conversation = [
 <a id="merging-carbon-and-vega"></a>
 
 ### Choice of Vega-lite
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/chartElement/__stories__/chart.mdx
+=======
+<a id="choice-of-vega"></a>
+Countless visualization libraries are available and provide many features to generate and visualize charts. Many were tested by the Visual AI Lab with a variety of models.
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/chartElement/__stories__/docs.mdx
 
 <a id="choice-of-vega"></a>
 Countless visualization libraries are available and provide many features to
@@ -378,6 +414,11 @@ this space. Additionally, Vega only requires a single JSON object to display any
 type of chart, which forgoes the need for multiple context-dependent calls.
 
 ### Vega as the back bone, Carbon as the output
+<<<<<<< HEAD:packages/web-components/src/components/chat/components/chartElement/__stories__/chart.mdx
+=======
+<a id="vega-and-carbon"></a>
+Carbon Charts is an excellently designed, robust and production-ready library following core Carbon design guidelines. Regrettably without fine-tuning, generation accuracy is insufficient due to a lack of examples in common training data. Carbon Charts also requires a predefined HTML chart tag (such as &lt;AreaChart&gt; &lt;SimpleBarChart&gt; etc) as well as separate `options` and `data` fields. This requires multiple queries, with the additional complexity of shared context and custom doctoring/sanitization.
+>>>>>>> 1c633dd4b76b3eb35d4e746b2a62c4da12b90bcd:packages/web-components/src/components/chat/components/chartElement/__stories__/docs.mdx
 
 <a id="vega-and-carbon"></a>
 Carbon Charts is an excellently designed, robust and production-ready library

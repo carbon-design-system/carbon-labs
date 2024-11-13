@@ -9,12 +9,17 @@
 
 import replaceExtension from 'replace-ext';
 
+/**
+ *
+ * @param {*} babel Babel options
+ * @returns
+ */
 export default function resourceJSPaths(babel) {
   const t = babel.types;
 
   return {
     visitor: {
-      ImportDeclaration(path, state) {
+      ImportDeclaration(path) {
         const { node } = path;
         const { value: source } = node.source;
         if (/^\..*\.scss\?inline$/i.test(source)) {

@@ -104,8 +104,11 @@ export default class editableTextElement extends LitElement {
     if (textArea instanceof HTMLElement) {
       textArea.focus();
       setTimeout(() => {
-        textArea.style.height = 'auto';
-        textArea.style.height = textArea.scrollHeight + 'px';
+        this.style.setProperty('--chat-editable-text-height', 'auto');
+        this.style.setProperty(
+          '--chat-editable-text-height',
+          textArea.scrollHeight + 'px'
+        );
         this.requestUpdate();
       }, 1);
     }
@@ -121,8 +124,14 @@ export default class editableTextElement extends LitElement {
 
     if (textArea instanceof HTMLElement) {
       textArea.focus();
-      textArea.style.height = this._presetHeight + 'px';
-      textArea.style.height = this._presetWidth + 'px';
+      this.style.setProperty(
+        '--chat-editable-text-height',
+        this._presetHeight + 'px'
+      );
+      this.style.setProperty(
+        '--chat-editable-text-height',
+        this._presetWidth + 'px'
+      );
       this.requestUpdate();
     }
   }
@@ -135,8 +144,11 @@ export default class editableTextElement extends LitElement {
     const textArea = event.target;
     if (textArea instanceof HTMLElement) {
       setTimeout(() => {
-        textArea.style.height = 'auto';
-        textArea.style.height = textArea.scrollHeight + 'px';
+        this.style.setProperty('--chat-editable-text-height', 'auto');
+        this.style.setProperty(
+          '--chat-editable-text-height',
+          textArea.scrollHeight + 'px'
+        );
         this.requestUpdate();
       }, 1);
     }

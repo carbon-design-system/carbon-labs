@@ -18,9 +18,9 @@
   border: 1px solid $border-subtle-00;
   border-radius: 8px;
   background: $background;
-  block-size: var(--chat-chart-element-height, 320px);
+  block-size: var(--chat-chart-element-height, '320px');
   font-family: 'IBM Plex Sans Condensed', sans-serif;
-  inline-size: var(--chat-chart-element-width, 100%);
+  inline-size: var(--chat-chart-element-width, '100%');
   min-block-size: 123px;
   min-inline-size: 123px;
 
@@ -38,6 +38,7 @@
     flex-direction: row;
     inset-block-start: 8px;
     inset-inline-end: 0;
+    visibility: var(--chat-chart-thumbnail-visibility, visible);
   }
 
   .#{$clabs-prefix}--chat-chart-options-prefade-dark {
@@ -59,7 +60,7 @@
     overflow: hidden;
     box-sizing: border-box;
     padding: 8px;
-    block-size: var(--chat-chart-element-height, 100%);
+    block-size: var(--chat-chart-element-height, '100%');
     inline-size: 100%;
   }
 
@@ -264,7 +265,7 @@
   .#{$clabs-prefix}--chat-chart-fullscreen-container {
     position: fixed;
     z-index: 999;
-    display: flex;
+    display: var(--chat-chart-fullscreen-visibility, none);
     box-sizing: border-box;
     padding: 64px;
     background: $background;
@@ -288,5 +289,83 @@
     to {
       background-position: -200% 0;
     }
+  }
+
+  .#{$clabs-prefix}--chat-chart-tooltip-g100 {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: #161616;
+    color: #f4f4f4;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+  }
+
+  .#{$clabs-prefix}--chat-chart-tooltip-white {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: #ffffff;
+    color: #161616;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+  }
+
+  .#{$clabs-prefix}--chat-chart-tooltip-container-g100 {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    background: #161616;
+    block-size: auto;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-chart-tooltip-container-white {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    background: #ffffff;
+    block-size: auto;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-chart-tooltip-inner-bordered {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 6px;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-chart-tooltip-inner-none {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px;
+
+    border-block-end: none;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-chart-tooltip-inner-g100 {
+    border-block-end: 1px solid #3d3d3d;
+  }
+  .#{$clabs-prefix}--chat-chart-tooltip-inner-white {
+    border-block-end: 1px solid #e0e0e0;
+  }
+
+  .#{$clabs-prefix}--chat-chart-tooltip-inner-title {
+    flex: 1;
+    font-size: 10px;
+    text-align: start;
+    white-space: nowrap;
+  }
+  .#{$clabs-prefix}--chat-chart-tooltip-inner-value {
+    flex: 1;
+    font-size: 12px;
+    padding-inline-start: 16px;
+    text-align: end;
+    white-space: nowrap;
   }
 }

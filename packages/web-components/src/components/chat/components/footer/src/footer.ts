@@ -499,10 +499,16 @@ export default class footer extends LitElement {
       textArea instanceof HTMLElement &&
       textAreaContainer instanceof HTMLElement
     ) {
-      textArea.style.height = 'auto';
+      this.style.setProperty('--chat-footer-text-area-height', 'auto');
       const newHeight = textArea.scrollHeight;
-      textArea.style.height = newHeight + 'px';
-      textAreaContainer.style.height = newHeight + 24 + 'px';
+      this.style.setProperty(
+        '--chat-footer-text-area-height',
+        newHeight + 'px'
+      );
+      this.style.setProperty(
+        '--chat-footer-text-area-container-height',
+        newHeight + 24 + 'px'
+      );
       if (textArea.scrollHeight < maxheight) {
         this.style.setProperty('--chat-footer-overflow-control', 'hidden');
       } else {
@@ -526,9 +532,12 @@ export default class footer extends LitElement {
       textAreaContainer instanceof HTMLElement
     ) {
       textArea.scrollTop = 0;
-      textArea.style.height = 'auto';
-      textArea.style.height = 32 + 'px';
-      textAreaContainer.style.height = 32 + 'px';
+      this.style.setProperty('--chat-footer-text-area-height', 'auto');
+      this.style.setProperty('--chat-footer-text-area-height', 32 + 'px');
+      this.style.setProperty(
+        '--chat-footer-text-area-container-height',
+        32 + 'px'
+      );
       this.style.setProperty('--chat-footer-overflow-control', 'hidden');
     }
   }

@@ -62,6 +62,30 @@ $css--plex: true !default;
     fill: $text-primary;
   }
 
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-0 {
+    margin-inline-start: 0;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-1 {
+    margin-inline-start: 40px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-2 {
+    margin-inline-start: 80px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-3 {
+    margin-inline-start: 120px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-4 {
+    margin-inline-start: 160px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-5 {
+    margin-inline-start: 200px;
+  }
+
   .#{$clabs-prefix}--chat-history-viewer-header {
     display: flex;
     box-sizing: border-box;

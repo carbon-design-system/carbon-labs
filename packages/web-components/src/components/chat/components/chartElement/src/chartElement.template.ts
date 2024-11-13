@@ -41,7 +41,6 @@ export function chartElementTemplate(customElementClass) {
     content,
     debugMode,
     streaming,
-    thumbNail,
     _buildLoader: buildLoader,
     _openFullscreenView: openFullscreenView,
     _exportToImage: exportToImage,
@@ -68,7 +67,6 @@ export function chartElementTemplate(customElementClass) {
     editOriginalSpecification,
     _showOriginalSpec: showOriginalSpec,
     _showCarbonSpec: showCarbonSpec,
-    isHovered,
     _enableContext: enableContext,
     _appendToContext: appendToContext,
     _chartClicked: chartClicked,
@@ -95,20 +93,14 @@ export function chartElementTemplate(customElementClass) {
     ${content
       ? html`
     <div class="${clabsPrefix}--chat-chart-fullscreen-container" @wheel=
-          "${handleFullScreenScroll}" style="display:${
-          modalMode === 'fullscreen' ? 'flex' : 'none'
-        };">
-
+          "${handleFullScreenScroll}">
       <div
           class="${clabsPrefix}--chat-chart-modal-container" id="${clabsPrefix}--chat-chart-fullscreen-embed-vis-${uniqueID}">
 
       </div>
     </div>
 
-    <div class="${clabsPrefix}--chat-chart-fullscreen-container" style="display:${
-          modalMode === 'edit' ? 'flex' : 'none'
-        };">
-
+    <div class="${clabsPrefix}--chat-chart-fullscreen-container">
       ${
         chartLoading || errorMessage
           ? html`
@@ -265,8 +257,7 @@ export function chartElementTemplate(customElementClass) {
       ? html``
       : html` <div
           class="${clabsPrefix}--chat-chart-options"
-          @mouseover="${handleMouseOver}"
-          style="visibility:${thumbNail && !isHovered ? 'hidden' : 'visible'};">
+          @mouseover="${handleMouseOver}">
           <div class="${clabsPrefix}--chat-chart-options-prefade">&nbsp;</div>
           <div class="${clabsPrefix}--chat-chart-options-buttons">
             ${!disableExport

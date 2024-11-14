@@ -41,7 +41,7 @@ jobs:
         run: yarn install
       - name: Check formatting of project files (staged)
         if: ${{ github.event_name == 'pull_request' }}
-        run: yarn format:staged
+        run: yarn format:diff
       - name: Check formatting of project files (non-staged)
         if: ${{ github.event_name != 'pull_request' }}
         run: yarn format

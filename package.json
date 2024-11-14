@@ -17,7 +17,7 @@
     "build": "lerna run build --stream",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
-    "ci-check": "yarn run format:staged && yarn lint:license && yarn lint && yarn lint:styles",
+    "ci-check": "yarn run format:diff && yarn lint:license && yarn lint && yarn lint:styles",
     "ci-check:build": "yarn build && yarn build:dist && yarn ci-check",
     "clean": "rm -rf **/{node_modules,es,lib,dist}",
     "doctoc": "doctoc --title '## Table of Contents' docs",

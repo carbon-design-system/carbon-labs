@@ -23,13 +23,9 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
+    "build": "cem analyze --config ./custom-elements-manifest.config.js",
     "build-storybook": "yarn storybook build",
-    "ci-check": "yarn run format:staged && yarn lint:license && yarn lint && yarn lint:styles",
-    "ci-check:build": "yarn build && yarn build:dist && yarn ci-check",
-    "custom-elements": "cem analyze --config ./custom-elements-manifest.config.js",
-    "doctoc": "doctoc --title '## Table of Contents' docs",
     "storybook": "storybook dev -p 6006",
-    "reset": "yarn cache clean && yarn clean && yarn install && yarn build",
     "test": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --playwright --browsers chromium firefox webkit",
     "test:updateSnapshot": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
   },

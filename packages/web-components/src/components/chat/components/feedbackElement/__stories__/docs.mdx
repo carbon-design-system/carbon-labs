@@ -1,5 +1,5 @@
 import { Markdown, Meta } from '@storybook/blocks';
-import { cdnJs, cdnCss } from '../../../../../../globals/internal/storybook-cdn';
+import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
 import * as feedbackElementStories from './feedbackElement.stories';
 import packageJson from '../../../package.json';
 
@@ -7,11 +7,11 @@ import packageJson from '../../../package.json';
 
 # Carbon Ai Chat: Feedback
 
-* **Initiative owner(s):** Owen Cornec
-* **Status:** Draft
-* **Target library:** `Carbon AI Chat`
-* **Target library maintainer(s) / PR Reviewer(s):** Ethan Winters, Damon Lundin
-* **Support channel:** `#carbon-ai-chat`
+- **Initiative owner(s):** Owen Cornec
+- **Status:** Draft
+- **Target library:** `Carbon AI Chat`
+- **Target library maintainer(s) / PR Reviewer(s):** Ethan Winters, Damon Lundin
+- **Support channel:** `#carbon-ai-chat`
 
 ## Table of Contents
 
@@ -24,6 +24,7 @@ import packageJson from '../../../package.json';
 - [Styles](#styles)
 
 ## Overview
+
 <a id="overview"></a>
 
 The Chat component is a collaboration between the **IBM Research Visual AI Lab
@@ -37,6 +38,7 @@ by the parent to display an informative popup component which provides detailed
 feedback about the target response/content.
 
 ### Troubleshooting
+
 <a id="troubleshooting"></a>
 
 Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests
@@ -46,11 +48,13 @@ features.
 ## Installation
 
 ## Installation
+
 <a id="installation"></a>
 
 Here's a quick example to get you started.
 
 ### JS via import
+
 <a id="js-via-import"></a>
 
 ```javascript
@@ -58,16 +62,19 @@ import '@carbon-labs/ai-chat-feedback/es/index.js';
 ```
 
 ## Attributes and Properties
+
 <a id="attributes-and-properties"></a>
 
 ### Setting values as attributes ```html
+
 <clabs-chat-feedback
   prompt-title="Custom title"
   text-area-placeholder="Custom placeholder"
   popup-title="Custom title"
   tag-list="['choice A','choice B', 'choice C']"
   disclaimer="Place your own legal disclaimer here"></clabs-chat-feedback>
-``` ### Setting values with a JSON definition
+
+````### Setting values with a JSON definition
 
 Place JSON defintion in Chat as `feedbackDefinitions` or Popup as
 `feedbackFormValues`:
@@ -93,7 +100,7 @@ Place JSON defintion in Chat as `feedbackDefinitions` or Popup as
     "responsePlaceholder": "Add a comment"
   }
 }
-```
+````
 
 ### Styles
 

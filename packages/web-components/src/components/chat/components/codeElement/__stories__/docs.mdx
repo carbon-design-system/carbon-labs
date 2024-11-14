@@ -1,5 +1,5 @@
-import { Markdown, Meta} from '@storybook/blocks';
-import { cdnJs, cdnCss } from '../../../../../../globals/internal/storybook-cdn';
+import { Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
 import * as CodeElementStories from './codeElement.stories';
 import packageJson from '../../../package.json';
 
@@ -7,11 +7,11 @@ import packageJson from '../../../package.json';
 
 # Carbon AI Chat: Code
 
-* **Initiative owner(s):** Owen Cornec
-* **Status:** Draft
-* **Target library:** `Carbon AI Chat`
-* **Target library maintainer(s) / PR Reviewer(s):** Ethan Winters, Damon Lundin
-* **Support channel:** `#carbon-ai-chat`
+- **Initiative owner(s):** Owen Cornec
+- **Status:** Draft
+- **Target library:** `Carbon AI Chat`
+- **Target library maintainer(s) / PR Reviewer(s):** Ethan Winters, Damon Lundin
+- **Support channel:** `#carbon-ai-chat`
 
 ## Table of Contents
 
@@ -24,78 +24,90 @@ import packageJson from '../../../package.json';
 - [Styles](#styles)
 
 ## Overview
+
 <a id="overview"></a>
 
-The Chat component is a collaboration between the **IBM Research Visual AI Lab (VAIL)** and the **Carbon Design Team** to provide an open-source, easily expandable chat interface to interact with large language models. Our core values are: open-source collaboration, universal support, ease of use and the in-depth customization Carbon is known for.
+The Chat component is a collaboration between the **IBM Research Visual AI Lab
+(VAIL)** and the **Carbon Design Team** to provide an open-source, easily
+expandable chat interface to interact with large language models. Our core
+values are: open-source collaboration, universal support, ease of use and the
+in-depth customization Carbon is known for.
 
-The **Carbon Labs Code** component aims to expand upon the **Carbon CodeSnippet** component with more flexibility, dynamic line marks, colored text and editing functions.
+The **Carbon Labs Code** component aims to expand upon the **Carbon
+CodeSnippet** component with more flexibility, dynamic line marks, colored text
+and editing functions.
 
 ### Attributes and Properties
+
 <a id="attributes-and-properties"></a>
 <table>
   <thead>
     <tr>
-        <td>**Attribute name**</td>
-        <td>**Effect**</td>
-        <td>**Use case**</td>
+      <td>**Attribute name**</td>
+      <td>**Effect**</td>
+      <td>**Use case**</td>
     </tr>
   </thead>
   <tbody>
     <tr>
-        <td>editable</td>
-        <td>Make every line editable by users</td>
-        <td>When a user-input is needed to fix an object</td>
+      <td>editable</td>
+      <td>Make every line editable by users</td>
+      <td>When a user-input is needed to fix an object</td>
     </tr>
     <tr>
-        <td>streaming</td>
-        <td>Rerenders component when content is streamed in</td>
-        <td>When streaming is enabled</td>
+      <td>streaming</td>
+      <td>Rerenders component when content is streamed in</td>
+      <td>When streaming is enabled</td>
     </tr>
     <tr>
-        <td>enable-coloring</td>
-        <td>When editable is invoked, remove edit button</td>
-        <td>Disable button to validate edit</td>
+      <td>enable-coloring</td>
+      <td>When editable is invoked, remove edit button</td>
+      <td>Disable button to validate edit</td>
     </tr>
     <tr>
-        <td>enable-language-display</td>
-        <td>Shows estimated language at top of component</td>
-        <td>When any type of code can be returned</td>
+      <td>enable-language-display</td>
+      <td>Shows estimated language at top of component</td>
+      <td>When any type of code can be returned</td>
     </tr>
     <tr>
-        <td>disable-auto-compacting</td>
-        <td>Stops line-ticks from being removed when space isn't sufficient</td>
-        <td>Hide ticks when compacted</td>
+      <td>disable-auto-compacting</td>
+      <td>Stops line-ticks from being removed when space isn't sufficient</td>
+      <td>Hide ticks when compacted</td>
     </tr>
     <tr>
-        <td>disable-edit-button</td>
-        <td>When editable is invoked, remove edit button</td>
-        <td>Disable button to validate edit</td>
+      <td>disable-edit-button</td>
+      <td>When editable is invoked, remove edit button</td>
+      <td>Disable button to validate edit</td>
     </tr>
     <tr>
-        <td>disable-line-ticks</td>
-        <td>Remove line counts on the left side-bar of code</td>
-        <td>When showing code such as console commands</td>
+      <td>disable-line-ticks</td>
+      <td>Remove line counts on the left side-bar of code</td>
+      <td>When showing code such as console commands</td>
     </tr>
     <tr>
-        <td>disable-copy-button</td>
-        <td>Remove copy button from top-right corner</td>
-        <td>When displaying code not meant to be replicated</td>
+      <td>disable-copy-button</td>
+      <td>Remove copy button from top-right corner</td>
+      <td>When displaying code not meant to be replicated</td>
     </tr>
   </tbody>
 </table>
 
 ### Troubleshooting
+
 <a id="troubleshooting"></a>
 
-Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests regarding general information, installation, trouble-shooting and custom features.
-
+Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests
+regarding general information, installation, trouble-shooting and custom
+features.
 
 ## Installation
+
 <a id="installation"></a>
 
 Here's a quick example to get you started.
 
 ### JS via import
+
 <a id="js-via-import"></a>
 
 ```javascript

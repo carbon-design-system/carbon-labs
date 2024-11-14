@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-"use strict";
+'use strict';
 
-import { fileURLToPath } from "url";
-import { globby } from "globby";
-import { rollup } from "rollup";
-import alias from "@rollup/plugin-alias";
-import autoprefixer from "autoprefixer";
-import commonjs from "@rollup/plugin-commonjs";
-import cssnano from "cssnano";
-import litSCSS from "../tools/rollup-plugin-lit-scss.js";
-import nodeResolve from "@rollup/plugin-node-resolve";
-import path from "path";
-import postcss from "postcss";
-import typescript from "@rollup/plugin-typescript";
+import { fileURLToPath } from 'url';
+import { globby } from 'globby';
+import { rollup } from 'rollup';
+import alias from '@rollup/plugin-alias';
+import autoprefixer from 'autoprefixer';
+import commonjs from '@rollup/plugin-commonjs';
+import cssnano from 'cssnano';
+import litSCSS from '../tools/rollup-plugin-lit-scss.js';
+import nodeResolve from '@rollup/plugin-node-resolve';
+import path from 'path';
+import postcss from 'postcss';
+import typescript from '@rollup/plugin-typescript';
 
 import * as packageJson from '../package.json' assert { type: 'json' };
 
@@ -27,22 +27,22 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 async function build() {
   const esInputs = await globby([
-    "src/**/*.ts",
-    "!src/**/__tests__",
-    "!src/**/*.stories.ts",
-    "!src/**/*.d.ts",
-    "!src/globals/internal/storybook-cdn.ts",
+    'src/**/*.ts',
+    '!src/**/__tests__',
+    '!src/**/*.stories.ts',
+    '!src/**/*.d.ts',
+    '!src/globals/internal/storybook-cdn.ts',
   ]);
-console.log('esinputs', esInputs);
+  console.log('esinputs', esInputs);
   const entryPoint = {
-    rootDir: "src",
-    outputDirectory: path.resolve(__dirname, ".."),
+    rootDir: 'src',
+    outputDirectory: path.resolve(__dirname, '..'),
   };
 
   const formats = [
     {
-      type: "esm",
-      directory: "es",
+      type: 'esm',
+      directory: 'es',
     },
   ];
 
@@ -64,9 +64,9 @@ console.log('esinputs', esInputs);
       dir: outputDirectory,
       format: format.type,
       preserveModules: true,
-      preserveModulesRoot: "src",
+      preserveModulesRoot: 'src',
       banner,
-      exports: "named",
+      exports: 'named',
       sourcemap: true,
     });
   }
@@ -99,20 +99,20 @@ function getRollupConfig(input, rootDir, outDir) {
     }),
     plugins: [
       alias({
-        entries: [{ find: /^(.*)\.scss\?lit$/, replacement: "$1.scss" }],
+        entries: [{ find: /^(.*)\.scss\?lit$/, replacement: '$1.scss' }],
       }),
       nodeResolve({
         browser: true,
-        mainFields: ["jsnext", "module", "main"],
-        extensions: [".js", ".ts"],
+        mainFields: ['jsnext', 'module', 'main'],
+        extensions: ['.js', '.ts'],
       }),
       commonjs({
         include: [/node_modules/],
       }),
       litSCSS({
         includePaths: [
-          path.resolve(__dirname, "../node_modules"),
-          path.resolve(__dirname, "../../../node_modules"),
+          path.resolve(__dirname, '../node_modules'),
+          path.resolve(__dirname, '../../../node_modules'),
         ],
         async preprocessor(contents, id) {
           return (

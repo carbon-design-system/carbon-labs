@@ -15,8 +15,8 @@ import sass from 'sass';
 
 const config = {
   stories: [
-    '../packages/**/__stories__/*.mdx',
-    '../packages/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../src/**/__stories__/*.mdx',
+    '../src/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   framework: {
@@ -42,9 +42,9 @@ const config = {
         postcss(),
         postcssLit({
           include: [
-            './node_modules',
-            'packages/**/*.scss',
-            'packages/**/*.scss?*',
+            '../../../node_modules',
+            'src/**/*.scss',
+            'src/**/*.scss?*',
           ],
         }),
       ],

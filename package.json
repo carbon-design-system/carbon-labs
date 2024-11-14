@@ -29,9 +29,7 @@
     "lint:license:staged": "tools/check-license.cjs -w",
     "lint:styles": "stylelint '**/*.{css,scss}' --report-needless-disables --report-invalid-scope-disables",
     "prepare": "husky install",
-    "reset": "yarn cache clean && yarn clean && yarn install && yarn build",
-    "test": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --playwright --browsers chromium firefox webkit",
-    "test:updateSnapshot": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
+    "reset": "yarn cache clean && yarn clean && yarn install && yarn build"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.0.0",

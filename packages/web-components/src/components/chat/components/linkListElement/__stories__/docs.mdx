@@ -1,5 +1,5 @@
-import { Markdown, Meta} from '@storybook/blocks';
-import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
+import { Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../../../../globals/internal/storybook-cdn';
 import * as linkListElementStories from './linkListElement.stories';
 import packageJson from '../../../package.json';
 
@@ -25,35 +25,49 @@ import packageJson from '../../../package.json';
 ## Overview
 <a id="overview"></a>
 
-The Chat component is a collaboration between the **IBM Research Visual AI Lab (VAIL)** and the **Carbon Design Team** to provide an open-source, easily expandable chat interface to interact with large language models. Our core values are: open-source collaboration, universal support, ease of use and the in-depth customization Carbon is known for.
-
+The Chat component is a collaboration between the **IBM Research Visual AI Lab
+(VAIL)** and the **Carbon Design Team** to provide an open-source, easily
+expandable chat interface to interact with large language models. Our core
+values are: open-source collaboration, universal support, ease of use and the
+in-depth customization Carbon is known for.
 
 ## Simple Usage
 <a id="simple-usage"></a>
-The linkList component receives LLM generated lists of urls and displays them, it accepts two types of formats:
+
+The linkList component receives LLM generated lists of urls and displays them,
+it accepts two types of formats:
 
 **List of Markdown Links:**
+
 ```json
 {
-    "content":
-        "[IBM Cloud Home](https://www.ibm.com/cloud),[Cloud Solutions](https://www.ibm.com/cloud/solutions),[Cloud products](https://www.ibm.com/cloud/products),[Cloud Docs](https://cloud.ibm.com/docs)",
-    "type": "link-list",
+  "content": "[IBM Cloud Home](https://www.ibm.com/cloud),[Cloud Solutions](https://www.ibm.com/cloud/solutions),[Cloud products](https://www.ibm.com/cloud/products),[Cloud Docs](https://cloud.ibm.com/docs)",
+  "type": "link-list"
 }
 ```
+
 Note: markdown text must be seperated by commas
 
 **Plain comma seperated list of links:**
-```json
-{"content": "https://www.ibm.com/cloud,https://www.ibm.com/cloud/solutions,https://www.ibm.com/cloud/products,https://cloud.ibm.com/docs", "type":"link-list"}
-```
-Note: In this case, the link title will be auto-extracted from the URL, results may vary
 
+```json
+{
+  "content": "https://www.ibm.com/cloud,https://www.ibm.com/cloud/solutions,https://www.ibm.com/cloud/products,https://cloud.ibm.com/docs",
+  "type": "link-list"
+}
+```
+
+Note: In this case, the link title will be auto-extracted from the URL, results
+may vary
 
 ### Troubleshooting
 <a id="troubleshooting"></a>
 
-Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests regarding general information, installation, trouble-shooting and custom features.
+Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests
+regarding general information, installation, trouble-shooting and custom
+features.
 
+## Installation
 
 ## Installation
 <a id="installation"></a>

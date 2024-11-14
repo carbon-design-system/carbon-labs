@@ -23,7 +23,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  *
  * @returns {*} Gulp stream
  */
-async function scripts() {
+function scripts() {
   const tsProject = ts.createProject(path.resolve(__dirname, '../../../tsconfig.json'));
   const { js } =  gulp.src([
       `src/components/**/*.ts`,

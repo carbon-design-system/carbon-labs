@@ -34,7 +34,7 @@
     "test:updateSnapshot": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
   },
   "dependencies": {
-    "@carbon/styles": "1.53.0",
+    "@carbon/styles": "^1.69.0",
     "lit": "^3.0.0"
   },
   "devDependencies": {

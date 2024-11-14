@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "@carbon-labs/ai-ux-control": "latest",
-    "@carbon/styles": "^1.53.0"
+    "@carbon/styles": "^1.69.0"
   }
 }

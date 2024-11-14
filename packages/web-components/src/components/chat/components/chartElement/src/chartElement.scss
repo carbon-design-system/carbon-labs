@@ -312,7 +312,7 @@
   .#{$clabs-prefix}--chat-chart-tooltip-container-g100 {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     background: #161616;
     block-size: auto;
     inline-size: 100%;
@@ -321,7 +321,7 @@
   .#{$clabs-prefix}--chat-chart-tooltip-container-white {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     background: #ffffff;
     block-size: auto;
     inline-size: 100%;

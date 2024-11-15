@@ -1,0 +1,43 @@
+{
+  "name": "@carbon-labs/network-graph",
+  "version": "0.11.0",
+  "private": true,
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "description": "Carbon Labs - network-graph component",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/network-graph"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "exports": {
+    ".": {
+      "default": "./src/index.js"
+    },
+    "./es/": "./es/"
+  },
+  "files": [
+    "es/**/*",
+    "custom-elements.json"
+  ],
+  "types": "./src/index.d.ts",
+  "customElements": "custom-elements.json",
+  "scripts": {
+    "build": "gulp build --option network-graph",
+    "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
+    "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary"
+  },
+  "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/runtime": "^7.23.2",
+    "@carbon-labs/utilities": "0.14.0",
+    "@carbon/grid": "^11.21.0",
+    "@carbon/web-components": "2.11.1",
+    "force-graph": "^1.43.5"
+  }
+}

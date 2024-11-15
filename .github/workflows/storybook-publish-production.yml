@@ -11,9 +11,12 @@ on:
     types: [deploy-latest-storybook]
 
 jobs:
-  build:
+  web-components:
     if: github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'packages/web-components'
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 18.x
@@ -26,7 +29,7 @@ jobs:
         run: yarn install
 
       - name: Build storybook
-        run: yarn build-storybook
+        run: npx storybook build
 
       - uses: jakejarvis/s3-sync-action@master
         with:

@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "lib": ["es2018", "dom", "dom.iterable"],
+    "module": "esNext",
+    "moduleResolution": "node",
+    "typeRoots": ["declarations.d.ts", "../../node_modules/@types"],
+    "declaration": true,
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "stripInternal": true,
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "types": ["mocha", "sinon"]
+  },
+  "include": ["**/*.ts", "declarations.d.ts"],
+  "exclude": ["packages/**/__tests__"]
+}

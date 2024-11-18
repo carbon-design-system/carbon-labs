@@ -6,7 +6,7 @@
 * @carbon-design-system/developers-system-reviewers
 
 # Carbon AI Chat
-/packages/chat      @carbon-design-system/carbon-ai-chat-admins @carbon-design-system/developers-system-reviewers
+/packages/web-components/src/components/chat      @carbon-design-system/carbon-ai-chat-admins @carbon-design-system/developers-system-reviewers
 
 # Admins should be notified of changes to CI/CD workflows
 # codeowners, and any other config present in .github.

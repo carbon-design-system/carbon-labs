@@ -11,7 +11,7 @@ import { html } from 'lit';
 import { action } from '@storybook/addon-actions';
 
 export default {
-  title: 'Components/Tag/Tag',
+  title: 'Components/Research/Tag',
   component: 'clabs-tag',
 };
 

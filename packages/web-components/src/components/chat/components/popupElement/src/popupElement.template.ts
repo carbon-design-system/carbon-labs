@@ -20,6 +20,9 @@ import '../../tagListElement/tagListElement.js';
 import '@carbon/web-components/es/components/radio-button/index.js';
 import '@carbon/web-components/es/components/checkbox/index.js';
 
+import '@carbon/web-components/es/components/dropdown/index.js';
+import '@carbon/web-components/es/components/slug/index.js';
+
 /**
  * Lit template for popup
  *
@@ -31,6 +34,7 @@ export function popupElementTemplate(customElementClass) {
     _handleClose: handleClose,
     _handleSubmit: handleSubmit,
     _handleTextInput: handleTextInput,
+    _handleModeSelection: handleModeSelection,
     popupTitle,
     promptTitle,
     textAreaPlaceholder,
@@ -47,12 +51,16 @@ export function popupElementTemplate(customElementClass) {
     radioButtons,
     listItems,
     invalidEntry,
+    overflowClose,
     enableDataCollectionCheck,
     dataCollectionTitle,
     _handleEscape: handleEscape,
     _handleEscapeB: handleEscapeB,
     _renderLabel: renderLabel,
     _handleCheckBoxChange: handleCheckBoxChange,
+    customPolicyMode,
+    violationTypes,
+    currentlySelectedMode,
   } = customElementClass;
   return html` <div class="${clabsPrefix}--chat-popup-modal">
     ${orientation === 'top'
@@ -72,18 +80,38 @@ export function popupElementTemplate(customElementClass) {
         </div>`
       : ''}
     <div
-      class="${clabsPrefix}--chat-popup-container"
+      class="${clabsPrefix}--chat-popup-container ${invalidEntry
+        ? ''
+        : clabsPrefix + '--chat-popup-container-ready'}"
       @keydown="${handleEscape}">
       <div class="${clabsPrefix}--chat-popup-main-content">
-        ${popupTitle
-          ? html`
-              <div
-                class="${clabsPrefix}--chat-popup-title"
-                id="popup-title-${parentMessageId}">
-                ${popupTitle}
-              </div>
-            `
-          : ''}
+        <div class="${clabsPrefix}--chat-popup-header-section">
+          ${popupTitle
+            ? html`
+                <div
+                  class="${clabsPrefix}--chat-popup-title"
+                  id="popup-title-${parentMessageId}">
+                  ${popupTitle}${currentlySelectedMode
+                    ? ': ' + currentlySelectedMode
+                    : ''}
+                </div>
+              `
+            : ''}
+          ${overflowClose
+            ? html` <cds-icon-button
+                kind="ghost"
+                size="md"
+                aria-label="Close Feedback Form"
+                role="button"
+                align="bottom-right"
+                @click="${handleClose}">
+                ${Close16({ slot: 'icon' })}
+                <span slot="tooltip-content"
+                  >${renderLabel('feedback-close')}</span
+                >
+              </cds-icon-button>`
+            : ''}
+        </div>
         ${promptTitle
           ? html` <h2 class="${clabsPrefix}--chat-popup-prompt">
               ${promptTitle}
@@ -94,13 +122,12 @@ export function popupElementTemplate(customElementClass) {
               ${description}
             </div>`
           : ''}
-        <div class="${clabsPrefix}--chat-popup-divider"></div>
-
         ${tagList
           ? html`
               <div class="${clabsPrefix}--chat-popup-tag-list">
                 <clabs-chat-tag-list
                   is-inline
+                  tag-mode
                   @on-tag-selected="${handleTagSelection}"
                   content="${tagList
                     ? tagList
@@ -148,7 +175,10 @@ export function popupElementTemplate(customElementClass) {
               </div>
             `
           : ''}
-        ${radioTitle ? html`<div>${radioTitle}</div>` : ''}
+        ${radioTitle
+          ? html`<div>${radioTitle}</div>
+              <br />`
+          : ''}
         ${radioButtons
           ? html`
               <cds-radio-button-group
@@ -185,35 +215,55 @@ export function popupElementTemplate(customElementClass) {
               </div>
             `
           : ''}
+        ${!overflowClose
+          ? html` <div class="${clabsPrefix}--chat-popup-close">
+              <cds-icon-button
+                kind="ghost"
+                size="md"
+                aria-label="Close Feedback Form"
+                role="button"
+                align="bottom-right"
+                @keydown="${handleEscapeB}"
+                @click="${handleClose}">
+                ${Close16({ slot: 'icon' })}
+                <span slot="tooltip-content"
+                  >${renderLabel('feedback-close')}</span
+                >
+              </cds-icon-button>
+            </div>`
+          : ''}
 
-        <div class="${clabsPrefix}--chat-popup-close">
-          <cds-icon-button
-            kind="ghost"
-            size="sm"
-            aria-label="Close Feedback Form"
-            role="button"
-            align="bottom-right"
-            @keydown="${handleEscapeB}"
-            @click="${handleClose}">
-            ${Close16({ slot: 'icon' })}
-            <span slot="tooltip-content">${renderLabel('feedback-close')}</span>
-          </cds-icon-button>
+        <div class="${clabsPrefix}--chat-popup-submit-inline">
+          <cds-button
+            size="lg"
+            class="${clabsPrefix}--chat-popup-submit-element-inline"
+            tooltip-text=" ${invalidEntry
+              ? renderLabel('feedback-submit-button-unavailable')
+              : renderLabel('feedback-submit-button')}"
+            ?disabled="${invalidEntry}"
+            @click="${handleSubmit}">
+            ${invalidEntry
+              ? renderLabel('feedback-submit-button-unavailable')
+              : renderLabel('feedback-submit-button')}
+          </cds-button>
         </div>
       </div>
-      <div class="${clabsPrefix}--chat-popup-submit">
-        <cds-button
-          size="md"
-          class="${clabsPrefix}--chat-popup-submit-element"
-          tooltip-text=" ${invalidEntry
-            ? renderLabel('feedback-submit-button-unavailable')
-            : renderLabel('feedback-submit-button')}"
-          ?disabled="${invalidEntry}"
-          @click="${handleSubmit}">
-          ${invalidEntry
-            ? renderLabel('feedback-submit-button-unavailable')
-            : renderLabel('feedback-submit-button')}
-        </cds-button>
-      </div>
+
+      ${customPolicyMode
+        ? html` <div class="${clabsPrefix}--chat-popup-mode-selector">
+            <cds-dropdown
+              label="Specify feedback type"
+              @cds-dropdown-selected="${handleModeSelection}">
+              ${violationTypes.map(
+                (elem) => html`
+                  <cds-dropdown-item value="${elem}">
+                    ${elem}
+                  </cds-dropdown-item>
+                `
+              )}
+            </cds-dropdown>
+          </div>`
+        : ``}
     </div>
     ${orientation === 'bottom'
       ? html` <div class="${clabsPrefix}--chat-popup-caret-${orientation}">

@@ -1268,6 +1268,7 @@ export default class chartElement extends LitElement {
    */
   _prepareVisualization(premadeSpec?: object) {
     let spec: any = {};
+
     if (!premadeSpec) {
       try {
         spec = JSON.parse(this.content);
@@ -1314,6 +1315,12 @@ export default class chartElement extends LitElement {
         delete tempSubSpec['padding'];
         layeredSpec['layer'][index] = tempSubSpec;
       }*/
+    } else if (spec['hconcat']) {
+      plainSpec = this._configUpdate(spec);
+    } else if (spec.encoding?.facet) {
+      plainSpec = this._configUpdate(spec);
+    } else if (spec['vconcat']) {
+      plainSpec = this._configUpdate(spec);
     } else if (spec['repeat']) {
       this._specType = 'repeated';
       const currentContainerWidth = this.clientWidth;
@@ -1408,6 +1415,74 @@ export default class chartElement extends LitElement {
 
     this._visualizationSpec = finalSpec;
     return '';
+  }
+
+  /**
+   * _configUpdate - apply changes for carbonization
+   * @param {object} spec - vega sepcification JSON
+   */
+  _configUpdate(spec) {
+    const specCopy = this._prepareSpecification(spec, true, true, 0);
+    const coreConfig = specCopy.config;
+    const newSpec = this._subConfigUpdate(spec, coreConfig);
+    return newSpec;
+  }
+
+  /**
+   * _subConfigUpdate - apply changes for carbonization
+   * @param {object} subSpec - vega sepcification JSON
+   * @param {object} coreConfig - added carbon styling
+   */
+  _subConfigUpdate(subSpec, coreConfig) {
+    if (!subSpec) {
+      return;
+    }
+
+    subSpec.config = {
+      ...subSpec.config,
+      ...coreConfig,
+    };
+
+    if (subSpec.layer) {
+      subSpec.layer.forEach((layer) =>
+        this._subConfigUpdate(layer, coreConfig)
+      );
+    }
+    if (subSpec.facet) {
+      if (subSpec.facet.spec) {
+        this._subConfigUpdate(subSpec.facet.spec, coreConfig);
+        ['row', 'column'].forEach((facetType) => {
+          if (subSpec.facet[facetType]?.spec) {
+            this._subConfigUpdate(subSpec.facet[facetType].spec, coreConfig);
+          }
+        });
+      }
+    }
+    if (subSpec.repeat) {
+      if (subSpec.repeat.spec) {
+        this._subConfigUpdate(subSpec.repeat.spec, coreConfig);
+      }
+      if (subSpec.repeat.layer) {
+        subSpec.repeat.layer.forEach((layer) =>
+          this._subConfigUpdate(layer, coreConfig)
+        );
+      }
+    }
+    if (subSpec.spec) {
+      this._subConfigUpdate(subSpec.spec, coreConfig);
+    }
+    if (subSpec.hconcat) {
+      subSpec.hconcat.forEach((layer) =>
+        this._subConfigUpdate(layer, coreConfig)
+      );
+    }
+    if (subSpec.vconcat) {
+      subSpec.vconcat.forEach((layer) =>
+        this._subConfigUpdate(layer, coreConfig)
+      );
+    }
+
+    return subSpec;
   }
 
   /**

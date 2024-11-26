@@ -62,7 +62,7 @@ export default class tagListElement extends LitElement {
   /**
    * isInLine - place buttons using flex
    */
-  @property({ type: String, attribute: 'is-inline' })
+  @property({ type: Boolean, attribute: 'is-inline' })
   isInLine = true;
 
   /**
@@ -70,6 +70,12 @@ export default class tagListElement extends LitElement {
    */
   @property({ type: Boolean, attribute: 'multi-select' })
   multiSelect;
+
+  /**
+   * full-width - fill whole width of parent
+   */
+  @property({ type: Boolean, attribute: 'tag-mode' })
+  tagMode = false;
 
   /**
    * selectionIndex - array of active tags when selected

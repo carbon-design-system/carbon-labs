@@ -21,6 +21,7 @@ $css--plex: true !default;
 :host(#{$clabs-prefix}-chat-formula) {
   overflow: hidden;
   font-family: IBMPlexMath-Regular, serif;
+  font-size: 22px;
   inline-size: 100%;
   pointer-events: none;
 

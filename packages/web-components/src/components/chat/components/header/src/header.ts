@@ -221,7 +221,6 @@ export default class header extends LitElement {
     this.menuContainerTarget = this.shadowRoot?.querySelector(
       '#' + clabsPrefix + '--chat-header-container-target'
     );
-    console.log(this.parentElement);
   }
 
   /**
@@ -566,8 +565,6 @@ export default class header extends LitElement {
    */
   _handleMenuClosed(_event) {
     this.menuOpened = false;
-    console.log('close');
-    console.log(_event);
   }
 
   /**
@@ -575,7 +572,6 @@ export default class header extends LitElement {
    * @param {event} _event - click event when toggling menu
    */
   _handleMenuOpened(_event) {
-    console.log('open');
     this.menuOpened = true;
   }
 

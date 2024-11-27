@@ -1015,6 +1015,7 @@ const objectPlaygroundControls = {
       'Flowers',
       'Visualization',
       'Cloud',
+      'Diagrams',
     ],
   },
   conversationJSON: {
@@ -1621,6 +1622,128 @@ const conversationExamples = {
       hasError: false,
       time: '16:57',
       index: 1,
+    },
+  ],
+  Diagrams: [
+    {
+      text: 'Give me 3 server diagram examples for a VPC',
+      origin: 'user',
+      time: '16:56',
+      index: 0,
+    },
+    {
+      text: '',
+      origin: 'bot',
+      hasError: false,
+      time: '10:34',
+      index: 1,
+      elements: [
+        {
+          content: 'Here are a few example architectures available to you:\n\n',
+          type: 'text',
+        },
+        {
+          content: '<b>1. VPC landing zone - Standard variation</b>',
+          type: 'text',
+        },
+        {
+          content:
+            'The Standard variation of the VPC landing zone deployable architecture uses two Virtual Private Clouds (VPC), a Management VPC, and a Workload VPC to manage the environment and the deployed workload. Each VPC is a multi-zoned, multi-subnet implementation that keeps your workloads secure. A transit gateway connects the VPCs to each other and Virtual Private Endpoints are used connect to IBM Cloud services.',
+          type: 'text',
+        },
+        {
+          content:
+            'https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone/raw/main/reference-architectures/vpc.drawio.svg',
+          type: 'img',
+        },
+        {
+          content:
+            'https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vpc-9fc0fa64-27af-4fed-9dce-47b3640ba739-global',
+          type: 'link-list',
+        },
+        {
+          content:
+            '<b>2. Red Hat OpenShift Container Platform on VPC landing zone - QuickStart variation</b>',
+          type: 'text',
+        },
+        {
+          content:
+            'The QuickStart variation of the Red Hat OpenShift Container Platform on VPC landing zone deployable architecture creates a fully customizable Virtual Private Cloud (VPC) environment in a single region. The solution provides a single Red Hat OpenShift cluster in a secure VPC for your workloads. The QuickStart variation is designed to deploy quickly for demonstration and development.\n',
+          type: 'text',
+        },
+        {
+          content:
+            'https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone/raw/main/reference-architectures/roks-quickstart.drawio.svg',
+          type: 'img',
+        },
+        {
+          content:
+            'https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global',
+          type: 'link-list',
+        },
+        {
+          content:
+            '<b>3. Red Hat OpenShift Container Platform on VPC landing zone</b>',
+          type: 'text',
+        },
+        {
+          content:
+            'https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone/raw/main/reference-architectures/roks.drawio.svg',
+          type: 'img',
+        },
+        {
+          content:
+            'https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-ocp-95fccffc-ae3b-42df-b6d9-80be5914d852-global',
+          type: 'link-list',
+        },
+        {
+          content:
+            'Select an option to start from and begin editing your server architecture.',
+          type: 'text',
+        },
+      ],
+    },
+    {
+      text: 'Give me a VSi variant',
+      origin: 'user',
+      time: '16:59',
+      index: 0,
+    },
+    {
+      text: '',
+      origin: 'bot',
+      hasError: false,
+      time: '10:34',
+      index: 1,
+      elements: [
+        {
+          content: 'Here is a template suited to you needs:\n',
+          type: 'text',
+        },
+        {
+          content: '<b>VSI on VPC landing zone - Standard variation</b>',
+          type: 'text',
+        },
+        {
+          content:
+            'The Standard variation of the VSI on VPC landing zone deployable architecture is based on the IBM Cloud for Financial Services reference architecture. The architecture creates a customizable and secure infrastructure, with virtual servers, to run your workloads with a Virtual Private Cloud (VPC) in multizone regions.',
+          type: 'text',
+        },
+        {
+          content:
+            'https://github.com/terraform-ibm-modules/terraform-ibm-landing-zone/raw/main/reference-architectures/vsi-vsi.drawio.svg',
+          type: 'img',
+        },
+        {
+          content:
+            'https://cloud.ibm.com/catalog/architecture/deploy-arch-ibm-slz-vsi-ef663980-4c71-4fac-af4f-4a510a9bcf68-global',
+          type: 'link-list',
+        },
+        {
+          content: 'Would you like to customize this configuration?',
+          type: 'text',
+        },
+      ],
     },
   ],
   Agents: [

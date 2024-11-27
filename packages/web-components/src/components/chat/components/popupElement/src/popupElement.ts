@@ -484,8 +484,6 @@ export default class popupElement extends LitElement {
       let verticalPosition = 60;
       let orientation = 'top';
 
-      console.log(this.feedbackFormValues);
-
       if (
         parentHeight - feedbackHeight > offsetTop ||
         feedbackHeight > offsetTop

@@ -36,9 +36,9 @@
   "devDependencies": {
     "@carbon/grid": "^11.21.1",
     "@carbon/icon-helpers": "10.54.0",
-    "@carbon/icons": "11.52.0",
+    "@carbon/icons": "11.53.0",
     "@carbon/layout": "11.28.0",
-    "@carbon/motion": "11.21.0",
+    "@carbon/motion": "11.24.0",
     "@carbon/themes": "11.43.0",
     "@carbon/type": "11.33.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",

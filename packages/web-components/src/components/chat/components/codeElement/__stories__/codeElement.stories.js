@@ -54,6 +54,8 @@ const codeExamples = {
     '#include <iostream>\nusing namespace std;\n\n\nint main() {\n\tint x = 5;\n\tint y = 6;\n\tint sum = x + y;\n\tcout << sum;\n\treturn 0;\n}\n',
   Malbolge:
     "(=<`$9]7<5YXz7wT.3,+O/o'K%$H'~D|#z@b=`{^Lx8%$Xmrkpohm-kNi;gsedcba`_^][ZYXWVUTSRQPONMLKJIHGFEDCBA@?>=<;:9876543s+O<oLm",
+  'C++ 2':
+    '#include <iostream>\n#include "llama.cpp/llama.h"\n\nint main() {\n\tllama_model *model = llama_load_model_from_file("path/to/model.bin"); \n\n\tif (model == nullptr) {\n\t\tstd::cerr << "Failed to load model.";\n\t\treturn 1;\n\t}\n\n\tstd::string prompt = "Hello, how are you today?";\n\tllama_context *ctx = llama_new_context_with_model(model, 512); \n\n\tstd::cout << "Prompt: " << prompt << std::endl;\n\tstd::cout << "Response: ";\n\n\tfor (int i = 0; i < 100; ++i) {\n\t\tllama_token token = llama_sample_token(ctx, nullptr);\n\t\tstd::cout << llama_token_to_str(model, token);\n\t}\n\n\tstd::cout << std::endl;\n\n\tllama_free_context(ctx);\n\tllama_free_model(model);\n\n\treturn 0;\n}',
 };
 
 export const Showcase = {
@@ -85,6 +87,13 @@ export const Showcase = {
       ?disable-line-ticks="${true}">
     </clabs-chat-code>
     <br />
+    <h4>Python example with no coloring or ticks</h4>
+    <clabs-chat-code
+      max-height="246px"
+      disable-line-ticks
+      disable-coloring
+      content="${codeExamples['python code']}">
+    </clabs-chat-code>
     <h4>SQL example with ticks</h4>
     <clabs-chat-code
       content="${codeExamples['SQL example']}"
@@ -97,6 +106,10 @@ export const Showcase = {
       enable-language-display
       content="${codeExamples['python code']}">
     </clabs-chat-code>
+    <br />
+    <h4>C++ example</h4>
+    <br />
+    <clabs-chat-code content="${codeExamples['C++']}"> </clabs-chat-code>
     <br />
     <h4>HTML with ticks</h4>
     <br />
@@ -123,20 +136,46 @@ export const Editing = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <h4>Python example</h4>
+  render: () => html`<h4>Python example (no coloring or ticks)</h4>
     <clabs-chat-code
       ?editable="${true}"
       max-height="246px"
+      disable-line-ticks
+      disable-coloring
       content="${codeExamples['python code']}">
     </clabs-chat-code>
+    <br />
+    <h4>Python example (no ticks)</h4>
+    <clabs-chat-code
+      ?editable="${true}"
+      disable-line-ticks
+      max-height="246px"
+      content="${codeExamples['python code']}">
+    </clabs-chat-code>
+    <br />
+    <h4>Python example (no coloring)</h4>
+    <clabs-chat-code
+      ?editable="${true}"
+      disable-coloring
+      max-height="246px"
+      content="${codeExamples['python code']}">
+    </clabs-chat-code>
+    <br />
     <h4>SQL example</h4>
     <clabs-chat-code
       ?editable="${true}"
       max-height="246px"
       content="${codeExamples['SQL example']}">
     </clabs-chat-code>
-    <h4>JS carbon example</h4>
     <br />
+    <h4>C++ example</h4>
+    <clabs-chat-code
+      max-height="492px"
+      ?editable="${true}"
+      content="${codeExamples['C++']}">
+    </clabs-chat-code>
+    <br />
+    <h4>JS carbon example</h4>
     <clabs-chat-code
       max-height="492px"
       ?editable="${true}"

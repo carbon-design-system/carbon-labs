@@ -52,6 +52,7 @@ $css--plex: true !default;
     max-block-size: var(--chat-code-height, '100%');
     min-block-size: 100%;
     padding-block: 16px;
+    padding-inline-start: 8px;
     tab-size: 3;
   }
 
@@ -60,6 +61,7 @@ $css--plex: true !default;
     z-index: 1;
     overflow: hidden scroll;
     box-sizing: border-box;
+    padding: 0;
     border: none;
     background: none;
     block-size: 100%;
@@ -67,19 +69,21 @@ $css--plex: true !default;
     color: transparent;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 14px;
-    inline-size: calc(100% - var(--chat-code-tick-width, '13px') - 13px);
+    inline-size: 100%;
     inset-block-start: 2px;
-    inset-inline-start: 15px;
 
     letter-spacing: 0.16px;
     line-height: 20px;
-    margin-inline: var(--chat-code-tick-width, '0px') 16px;
     max-block-size: var(--chat-code-height, '100%');
 
     outline: none;
     overflow-wrap: anywhere;
     overflow-x: hidden;
     padding-block-start: 13px;
+    padding-inline-start: calc(
+      var(--chat-code-tick-width, '13px') + var(--chat-code-inset-start, '13px') +
+        2px
+    );
     resize: none;
     tab-size: 3;
 
@@ -93,6 +97,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-code-line-tick {
     flex: 0 0 var(--chat-code-tick-width, '13px');
+    color: $text-placeholder;
     inline-size: var(--chat-code-tick-width, '13px');
     padding-inline-end: 0.5em;
     text-align: end;
@@ -102,7 +107,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-code-line-divider {
     box-sizing: border-box;
     flex: 0 0 2px;
-    border-inline-start: 1px solid $border-subtle-01;
+    border-inline-start: 1px solid $border-subtle-00;
     inline-size: 2px;
     user-select: none;
   }
@@ -137,7 +142,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-code-options {
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -274,7 +279,6 @@ $css--plex: true !default;
     justify-content: flex-end;
     background: $background;
     border-block-start: 1px solid $border-subtle-00;
-    gap: 8px;
     inset-block-end: 0;
     inset-inline-end: 0;
   }

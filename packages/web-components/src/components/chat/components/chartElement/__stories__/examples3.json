@@ -1,8 +1,9 @@
-[
+[   
     {
         "name": "trellis",
         "spec": {
             "name": "trellis_barley",
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
             "data": {
                 "url": "https://vega.github.io/vega-lite/data/barley.json"
             },
@@ -44,6 +45,7 @@
         "name": "trellis_barley",
         "spec": {
             "name": "trellis_barley",
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
             "data": {
                 "url": "https://vega.github.io/vega-lite/data/barley.json"
             },
@@ -205,6 +207,181 @@
                     "mark": "circle",
                     "encoding": {
                         "y": {
+                            "field": "b",
+                            "type": "nominal",
+                            "sort": null,
+                            "axis": {
+                                "ticks": false,
+                                "domain": false,
+                                "title": null
+                            }
+                        },
+                        "size": {
+                            "field": "b",
+                            "type": "quantitative",
+                            "scale": {
+                                "type": "threshold",
+                                "domain": [
+                                    30,
+                                    70
+                                ],
+                                "range": [
+                                    80,
+                                    200,
+                                    320
+                                ]
+                            }
+                        },
+                        "color": {
+                            "field": "b",
+                            "type": "quantitative",
+                            "scale": {
+                                "type": "threshold",
+                                "domain": [
+                                    30,
+                                    70
+                                ],
+                                "scheme": "viridis"
+                            },
+                            "legend": {
+                                "title": "Threshold"
+                            }
+                        }
+                    }
+                }
+            ],
+            "resolve": {
+                "scale": {
+                    "color": "independent",
+                    "size": "independent"
+                }
+            }
+        }
+    },
+     {
+        "name": "vconcat",
+        "spec": {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "description": "Horizontally concatenated charts that show different types of discretizing scales.",
+            "data": {
+                "values": [
+                    {
+                        "a": "A",
+                        "b": 28
+                    },
+                    {
+                        "a": "B",
+                        "b": 55
+                    },
+                    {
+                        "a": "C",
+                        "b": 43
+                    },
+                    {
+                        "a": "D",
+                        "b": 91
+                    },
+                    {
+                        "a": "E",
+                        "b": 81
+                    },
+                    {
+                        "a": "F",
+                        "b": 53
+                    },
+                    {
+                        "a": "G",
+                        "b": 19
+                    },
+                    {
+                        "a": "H",
+                        "b": 87
+                    },
+                    {
+                        "a": "I",
+                        "b": 52
+                    }
+                ]
+            },
+            "vconcat": [
+                {
+                    "mark": "circle",
+                    "encoding": {
+                        "x": {
+                            "field": "b",
+                            "type": "nominal",
+                            "sort": null,
+                            "axis": {
+                                "ticks": false,
+                                "domain": false,
+                                "title": null
+                            }
+                        },
+                        "size": {
+                            "field": "b",
+                            "type": "quantitative",
+                            "scale": {
+                                "type": "quantize"
+                            }
+                        },
+                        "color": {
+                            "field": "b",
+                            "type": "quantitative",
+                            "scale": {
+                                "type": "quantize",
+                                "zero": true
+                            },
+                            "legend": {
+                                "title": "Quantize"
+                            }
+                        }
+                    }
+                },
+                {
+                    "mark": "circle",
+                    "encoding": {
+                        "x": {
+                            "field": "b",
+                            "type": "nominal",
+                            "sort": null,
+                            "axis": {
+                                "ticks": false,
+                                "domain": false,
+                                "title": null
+                            }
+                        },
+                        "size": {
+                            "field": "b",
+                            "type": "quantitative",
+                            "scale": {
+                                "type": "quantile",
+                                "range": [
+                                    80,
+                                    160,
+                                    240,
+                                    320,
+                                    400
+                                ]
+                            }
+                        },
+                        "color": {
+                            "field": "b",
+                            "type": "quantitative",
+                            "scale": {
+                                "type": "quantile",
+                                "scheme": "magma"
+                            },
+                            "legend": {
+                                "format": "d",
+                                "title": "Quantile"
+                            }
+                        }
+                    }
+                },
+                {
+                    "mark": "circle",
+                    "encoding": {
+                        "x": {
                             "field": "b",
                             "type": "nominal",
                             "sort": null,
@@ -448,5 +625,66 @@
                 }
             }
         }
+    },{"name":"repeat and layer",
+    "spec":{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://vega.github.io/vega-lite/examples/data/movies.json"
+  },
+  "repeat": {
+    "layer": ["US Gross", "Worldwide Gross"]
+  },
+  "spec": {
+    "mark": "line",
+    "encoding": {
+      "x": {
+        "bin": true,
+        "field": "IMDB Rating",
+        "type": "quantitative"
+      },
+      "y": {
+        "aggregate": "mean",
+        "field": {"repeat": "layer"},
+        "type": "quantitative",
+        "title": "Mean of US and Worldwide Gross"
+      },
+      "color": {
+        "datum": {"repeat": "layer"},
+        "type": "nominal"
+      }
     }
+  }
+}
+},{"name": "concat",
+    "spec":{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Two horizonally concatenated charts that show a histogram of precipitation in Seattle and the relationship between min and max temperature.",
+  "data": {"url": "https://vega.github.io/vega-lite/data/seattle-weather.csv"},
+  "transform": [{"filter": "datum.location === 'Seattle'"}],
+  "columns": 2,
+  "concat": [
+    {
+      "mark": "bar",
+      "encoding": {
+        "x": {"timeUnit": "month", "field": "date", "type": "ordinal"},
+        "y": {"aggregate": "mean", "field": "precipitation"}
+      }
+    },
+    {
+      "mark": "bar",
+      "encoding": {
+        "x": {"timeUnit": "month", "field": "date", "type": "ordinal"},
+        "y": {"aggregate": "median", "field": "precipitation"}
+      }
+    },
+    {
+      "mark": "point",
+      "encoding": {
+        "x": {"field": "temp_min", "bin": true},
+        "y": {"field": "temp_max", "bin": true},
+        "size": {"aggregate": "count"}
+      }
+    }
+  ]
+}}
 ]

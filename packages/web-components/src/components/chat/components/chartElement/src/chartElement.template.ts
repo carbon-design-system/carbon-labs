@@ -161,8 +161,9 @@ export function chartElementTemplate(customElementClass) {
                     ? html`
                         <clabs-chat-code
                           editable
-                          max-height="calc(100vh - 186px)"
+                          max-height="calc(100vh - 190px)"
                           debug
+                          disable-line-ticks
                           @on-code-edit-change="${handleLiveRawEditorChange}"
                           @on-code-edit-validation="${handleOriginalEditorValidation}"
                           content="${JSON.stringify(
@@ -175,7 +176,8 @@ export function chartElementTemplate(customElementClass) {
                     : html`
                         <clabs-chat-code
                           editable
-                          max-height="calc(100vh - 186px)"
+                          max-height="calc(100vh - 190px)"
+                          disable-line-ticks
                           @on-code-edit-change="${handleLiveCarbonEditorChange}"
                           @on-code-edit-validation="${handleCarbonEditorValidation}"
                           content="${JSON.stringify(

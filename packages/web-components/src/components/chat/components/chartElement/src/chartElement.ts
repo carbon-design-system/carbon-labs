@@ -142,13 +142,13 @@ export default class chartElement extends LitElement {
    * Enable user-brush selection to fetch groups of elements to make targeted query
    */
   @property({ type: Boolean, attribute: 'enable-multi-selections' })
-  enableMultiSelections;
+  enableMultiSelections = true;
 
   /**
    * internal brush selection value
    */
   @state()
-  _authorizeMultiSelection = false;
+  _authorizeMultiSelection = true;
 
   /**
    * Enable user-brush selection to fetch groups of elements to make targeted query
@@ -557,26 +557,16 @@ export default class chartElement extends LitElement {
     const chosenSpec =
       this.modalMode !== 'edit' ? this._visualizationSpec : this._editedSpec;
     if (targetDiv instanceof HTMLElement) {
-      /*const padding = chosenSpec.padding;
-      chosenSpec.height = this.shadowRoot.host.clientHeight- (padding.top + padding.bottom)*2-32;
-      chosenSpec.width = this.shadowRoot.host.clientWidth- (padding.right + padding.left)*2-32;*/
-
-      //const padding = chosenSpec.padding;
-      //chosenSpec.height = 'container'; //currentHeight;// - (padding.top + padding.bottom)*2;
-      //chosenSpec.width = 'container'; // - (padding.right + padding.left)*2;
-
-      chosenSpec.height = 'container';
-      chosenSpec.width = 'container';
+      if (this._specType === 'plain' || this._specType === 'layered') {
+        chosenSpec.height = 'container';
+        chosenSpec.width = 'container';
+      }
 
       chosenSpec.autosize = { resize: false };
       if (this.thumbNail) {
         chosenSpec.width = 400;
         chosenSpec.height = 300;
       }
-
-      //chosenSpec.height = currentHeight - (padding.top + padding.bottom)*2;
-      //chosenSpec.width =  currentWidth - (padding.right + padding.left)*2;
-      //console.log("post: h - "+chosenSpec.height+", w - "+chosenSpec.width)
 
       try {
         let renderMode = 'svg';
@@ -690,7 +680,6 @@ export default class chartElement extends LitElement {
       bubbles: true,
       composed: true,
     });
-    console.log(clickEvent);
     this.dispatchEvent(clickEvent);
   }
 
@@ -1054,7 +1043,6 @@ export default class chartElement extends LitElement {
    * @param {event} event - custom codelement live change event
    */
   _handleLiveCarbonEditorChange(event) {
-    console.log(event);
     if (event?.detail?.newLineText) {
       const previousData = this._visualizationSpec.data;
 
@@ -1307,46 +1295,106 @@ export default class chartElement extends LitElement {
     let plainSpec;
     let subChartWidth;
     let subChartHeight;
+
     if ('layer' in spec) {
       this._specType = 'layered';
       layeredSpec = this._prepareSpecification(spec, false, true, 0);
-    } else if (spec.encoding?.facet || spec['hconcat'] || spec['vconcat']) {
-      plainSpec = this._configUpdate(spec);
-    } else if (spec['repeat']) {
-      this._specType = 'repeated';
+    } else if (
+      spec['repeat'] ||
+      spec['hconcat'] ||
+      spec['vconcat'] ||
+      spec['concat'] ||
+      spec.encoding?.facet
+    ) {
+      if (spec['repeat']) {
+        this._specType = 'repeat';
+        repeatedSpec = this._prepareSpecification(
+          JSON.parse(JSON.stringify(spec)),
+          false,
+          true,
+          0
+        );
+      } else if (spec['hconcat']) {
+        this._specType = 'hconcat';
+        repeatedSpec = this._prepareSpecification(
+          JSON.parse(JSON.stringify(spec)),
+          false,
+          true,
+          0
+        );
+      } else if (spec['vconcat']) {
+        this._specType = 'vconcat';
+        repeatedSpec = this._prepareSpecification(
+          JSON.parse(JSON.stringify(spec)),
+          false,
+          true,
+          0
+        );
+      } else if (spec['concat']) {
+        this._specType = 'concat';
+        repeatedSpec = this._prepareSpecification(
+          JSON.parse(JSON.stringify(spec)),
+          false,
+          true,
+          0
+        );
+      } else if (spec.encoding?.facet) {
+        this._specType = 'facet';
+        repeatedSpec = this._prepareSpecification(
+          JSON.parse(JSON.stringify(spec)),
+          false,
+          true,
+          0
+        );
+      }
 
       const currentContainerWidth = this.clientWidth;
       const currentContainerHeight = this.clientHeight;
-      repeatedSpec = this._prepareSpecification(
-        JSON.parse(JSON.stringify(spec)),
-        false,
-        true,
-        0
-      );
-      repeatedSpec['spec'] = this._prepareSpecification(
-        repeatedSpec['spec'],
-        true,
-        false,
-        0
-      );
+
       if (currentContainerWidth) {
         let rowCount;
         let columnCount;
-        if (Array.isArray(repeatedSpec['repeat'])) {
-          columnCount = repeatedSpec.columns ? repeatedSpec.columns : 1;
-          rowCount = Math.ceil(repeatedSpec['repeat'].length / columnCount);
-        } else {
-          if (repeatedSpec['repeat']['row']) {
-            rowCount = repeatedSpec['repeat']['row'].length;
+        const legendHeight = 16 * 3;
+        const paddingOffset = { vertical: 0, horizontal: 0 };
+        const gapSize = 17;
+
+        if (spec.repeat) {
+          if (Array.isArray(repeatedSpec['repeat'])) {
+            columnCount = repeatedSpec.columns ? repeatedSpec.columns : 1;
+            rowCount = Math.ceil(repeatedSpec['repeat'].length / columnCount);
+          } else {
+            if (repeatedSpec['repeat']['row']) {
+              rowCount = repeatedSpec['repeat']['row'].length;
+            }
+            if (repeatedSpec['repeat']['column']) {
+              columnCount = repeatedSpec['repeat']['column'].length;
+            }
           }
-          if (repeatedSpec['repeat']['column']) {
-            columnCount = repeatedSpec['repeat']['column'].length;
+          /*const itemCount = spec.repeat.row
+        ? spec.repeat.row.length
+        : spec.repeat.column.length;
+      const subWidth = (width - gapSize * (itemCount - 1)) / itemCount;
+      const subHeight = height;
+      this._adjustSubElements(spec.spec, subWidth, subHeight);*/
+        } else if (spec.vconcat) {
+          rowCount = spec.vconcat.length;
+          columnCount = 1;
+        } else if (spec.hconcat) {
+          columnCount = spec.hconcat.length;
+          rowCount = 1;
+        } else if (spec.concat) {
+          rowCount = Math.ceil(Math.sqrt(spec.concat.length));
+          columnCount = Math.ceil(spec.concat.length / rowCount);
+        } else if (spec.encoding.facet) {
+          if (spec.encoding.facet.columns) {
+            columnCount = spec.encoding.facet.columns;
+            rowCount = columnCount + 1;
+          }
+          if (spec.encoding.facet.rows) {
+            rowCount = spec.encoding.facet.rows;
+            columnCount = rowCount;
           }
         }
-
-        const legendHeight = 16 * 3;
-
-        const paddingOffset = { vertical: 0, horizontal: 0 };
 
         if (repeatedSpec['padding']) {
           paddingOffset['vertical'] =
@@ -1354,13 +1402,6 @@ export default class chartElement extends LitElement {
           paddingOffset['horizontal'] =
             repeatedSpec['padding']['left'] + repeatedSpec['padding']['right'];
         }
-
-        if (Array.isArray(repeatedSpec['repeat'])) {
-          //paddingOffset['horizontal']= paddingOffset['horizontal']columnCount;
-        }
-
-        //paddingOffset['horizontal'] = 120;
-        const gapSize = 17;
 
         subChartWidth =
           (currentContainerWidth - 48 - (columnCount + 1) * gapSize) /
@@ -1375,14 +1416,42 @@ export default class chartElement extends LitElement {
           42;
       }
 
-      delete repeatedSpec['spec']['background'];
-      delete repeatedSpec['spec']['padding'];
+      if (spec.repeat) {
+        repeatedSpec['spec'] = this._prepareSpecification(
+          repeatedSpec['spec'],
+          true,
+          false,
+          0
+        );
+        delete repeatedSpec['spec']['background'];
+        delete repeatedSpec['spec']['padding'];
 
-      if (subChartWidth) {
-        repeatedSpec['spec']['width'] = subChartWidth;
-      }
-      if (subChartHeight) {
-        repeatedSpec['spec']['height'] = subChartHeight;
+        if (subChartWidth) {
+          repeatedSpec['spec']['width'] = subChartWidth;
+        }
+        if (subChartHeight) {
+          repeatedSpec['spec']['height'] = subChartHeight;
+        }
+      } else if (spec.vconcat || spec.hconcat || spec.concat) {
+        for (let l = 0; l < repeatedSpec[this._specType].length; l++) {
+          repeatedSpec[this._specType][l] = this._prepareSpecification(
+            repeatedSpec[this._specType][l],
+            true,
+            true,
+            0
+          );
+          if (subChartWidth) {
+            repeatedSpec[this._specType][l]['width'] = subChartWidth;
+
+            //repeatedSpec[this._specType][l].config.legend.columns =calcColumn;
+          }
+          if (subChartHeight) {
+            repeatedSpec[this._specType][l]['height'] = subChartHeight;
+          }
+        }
+      } else if (spec.encoding?.facet) {
+        repeatedSpec['width'] = subChartWidth;
+        repeatedSpec['height'] = subChartHeight;
       }
     } else {
       this._specType = 'plain';
@@ -1396,18 +1465,126 @@ export default class chartElement extends LitElement {
 
     let finalSpec = spec; // =
 
-    if (spec['layer']) {
+    if (layeredSpec) {
       finalSpec = layeredSpec;
       //finalSpec['resolve'] = this._resolveLayerConfigs(JSON.parse(JSON.stringify(finalSpec.config)), "shared");
-    } else if (spec['repeat']) {
+    } else if (repeatedSpec) {
       finalSpec = repeatedSpec;
     } else {
       finalSpec = plainSpec;
     }
 
+    /*const finalSpec={};
+    if ('layer' in spec) {
+      this._specType = 'layered';
+      layeredSpec = this._prepareSpecification(spec, false, true, 0);
+      finalSpec = this._convertToFacet(layeredSpec)
+
+    } else if (spec.encoding?.facet || spec['hconcat'] || spec['vconcat']) {
+      plainSpec = this._prepareSpecification(spec, true, true, 0);//this._configUpdate(spec);
+      finalSpec = this._convertToFacet(plainSpec)
+    } else if (spec['repeat']) {
+      repeatedSpec = this._prepareSpecification(
+        JSON.parse(JSON.stringify(spec)),
+        false,
+        true,
+        0
+      );
+      repeatedSpec['spec'] = this._prepareSpecification(
+        repeatedSpec['spec'],
+        true,
+        false,
+        0
+      );
+      plainSpec = repeatedSpec;
+      finalSpec = this._convertToFacet(plainSpec);
+    }else{
+      plainSpec = this._prepareSpecification(spec, true, true, 0);
+    }*/
+
     this._visualizationSpec = finalSpec;
     return '';
   }
+
+  /*_findCategoryField(encoding) {
+    for (const [_key, value] of Object.entries(encoding)) {
+      if (value.type === 'ordinal' || value.type === 'nominal') {
+        return value.field;
+      }
+    }
+    return null;
+  }
+
+  _getFieldInSpec(specs) {
+    for (const subSpec of specs) {
+      if (subSpec['encoding']) {
+        const field = this._findCategoryField(subSpec['encoding']);
+        if (field) {
+          return field;
+        }
+      }
+    }
+    return null;
+  }
+
+  _convertToFacet(spec) {
+    const { coreField, direction } = this._getFacetOptions(spec);
+
+    const newSpecification = this._prepareSpecification(
+      JSON.parse(JSON.stringify(spec)),
+      true,
+      true,
+      0
+    );
+    const newConfig = newSpecification.config;
+    const facetSpec = {
+      $schema: 'https://vega.github.io/schema/vega-lite/v5.json',
+      facet: {
+        [direction]: { field: coreField, type: 'nominal' },
+      },
+      spec: {
+        ...spec,
+        spacing: 12,
+        autosize: { type: 'fit', contains: 'padding' },
+        encoding: {
+          ...spec.encoding,
+          [direction]: undefined,
+        },
+        config: newConfig,
+      },
+      data: spec.data,
+      config: newConfig,
+    };
+
+    //facetSpec = this._adjustChart(facetSpec)
+
+    return facetSpec;
+  }
+
+  _getFacetOptions(spec) {
+    let coreField = null;
+    let direction = 'column';
+
+    if (spec.repeat) {
+      coreField = (spec.repeat.row || spec.repeat.column)?.[0] || null;
+      direction = spec.repeat.row ? 'row' : 'column';
+    } else if (spec.vconcat || spec.hconcat) {
+      coreField = this._getFieldInSpec(spec.hconcat || spec.vconcat);
+      direction = spec.hconcat ? 'row' : 'column';
+    } else if (spec.layer) {
+      coreField = this._getFieldInSpec(spec.layer);
+    } else if (spec.encoding) {
+      coreField = this._getFieldInSpec(spec.encoding);
+      direction = 'row';
+      if (
+        spec.encoding.x?.type === 'quantitative' &&
+        spec.encoding.y?.type === 'quantitative'
+      ) {
+        direction = 'column';
+      }
+    }
+    return { coreField, direction };
+  }*/
 
   /** _adjustSubElements
    * @param {object} spec - vega sp3cification JSON
@@ -1447,8 +1624,12 @@ export default class chartElement extends LitElement {
         this._adjustSubElements(subSpec, subWidth, subHeight);
       });
     } else if (spec.facet) {
-      /*const rows = Math.ceil(Math.sqrt(spec.concat.length));
-      const columns = Math.ceil(spec.concat.length/rows);*/
+      const rows = Math.ceil(Math.sqrt(spec.concat.length));
+      const columns = Math.ceil(spec.concat.length / rows);
+      const subWidth = (width - gapSize * (columns - 1)) / columns;
+      const subHeight = (height - gapSize * (rows - 1)) / rows;
+      spec.width = subWidth;
+      spec.height = subHeight;
     } else {
       let newHeight = height;
       if (hasTitle) {
@@ -1764,6 +1945,7 @@ export default class chartElement extends LitElement {
           axisX: {
             labelAngle: 0,
           },
+          line: { interpolate: 'monotone' },
           mark: { tooltip: this.enableTooltip },
           axisBottom: {
             domainColor: axisColor,
@@ -1822,8 +2004,10 @@ export default class chartElement extends LitElement {
           legend: {
             title: null,
             symbolType: 'square',
+            symbolLimit: 30,
+            labelLimit: 60,
+            columns: { signal: 'floor(width / 70)' },
             orient: 'bottom',
-            anchor: 'start',
             symbolOpacity: 1,
             direction: 'horizontal',
             titleColor: textColor,
@@ -1847,7 +2031,7 @@ export default class chartElement extends LitElement {
       }
 
       this._authorizeSingleSelection = false;
-      this._authorizeMultiSelection = false;
+      //this._authorizeMultiSelection = false;
       let isOrdinal: boolean;
       switch (chartType) {
         case 'bar':
@@ -1884,11 +2068,11 @@ export default class chartElement extends LitElement {
           break;
         case 'line':
           isOrdinal = false;
-          spec.config.line = { interpolate: 'monotone' };
           break;
         case 'text':
           isOrdinal = false;
           this._authorizeMultiSelection = false;
+          spec['encoding']['color'] = textColor;
           //spec['config']['text'] = { strokeColor: textColor };
           break;
         case 'boxplot':

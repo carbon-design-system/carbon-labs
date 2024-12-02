@@ -36,9 +36,9 @@
   "devDependencies": {
     "@carbon/grid": "^11.21.1",
     "@carbon/icon-helpers": "10.54.0",
-    "@carbon/icons": "11.52.0",
+    "@carbon/icons": "11.53.0",
     "@carbon/layout": "11.28.0",
-    "@carbon/motion": "11.21.0",
+    "@carbon/motion": "11.24.0",
     "@carbon/themes": "11.43.0",
     "@carbon/type": "11.33.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",
@@ -69,7 +69,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "replace-ext": "^2.0.0",
-    "sass": "~1.77.0",
+    "sass": "~1.81.0",
     "sinon": "^17.0.1",
     "storybook": "^8.4.2",
     "strip-comments": "^2.0.1",
@@ -79,5 +79,5 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
   },
-  "packageManager": "yarn@4.3.1"
+  "packageManager": "yarn@4.5.3"
 }

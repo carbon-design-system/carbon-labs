@@ -142,7 +142,7 @@ export default class chartElement extends LitElement {
    * Enable user-brush selection to fetch groups of elements to make targeted query
    */
   @property({ type: Boolean, attribute: 'enable-multi-selections' })
-  enableMultiSelections = true;
+  enableMultiSelections;
 
   /**
    * internal brush selection value
@@ -1054,6 +1054,7 @@ export default class chartElement extends LitElement {
    * @param {event} event - custom codelement live change event
    */
   _handleLiveCarbonEditorChange(event) {
+    console.log(event);
     if (event?.detail?.newLineText) {
       const previousData = this._visualizationSpec.data;
 
@@ -1068,12 +1069,12 @@ export default class chartElement extends LitElement {
         //this.content = JSON.stringify(newSpec);
         //this._prepareVisualization(newSpec)
         this._prepareSpecification(newSpec, false, true, 0);
-        //this._prepareVisualization(newSpec);
+        this._prepareVisualization(newSpec);
         this._editedSpec = newSpec;
 
-        window.setTimeout(async () => {
+        /*window.setTimeout(async () => {
           await this._displayVisualization();
-        }, 200);
+        }, 200);*/
       } catch (error) {
         console.error(error);
         this.chartLoading = true;
@@ -1268,6 +1269,7 @@ export default class chartElement extends LitElement {
    */
   _prepareVisualization(premadeSpec?: object) {
     let spec: any = {};
+
     if (!premadeSpec) {
       try {
         spec = JSON.parse(this.content);
@@ -1308,14 +1310,11 @@ export default class chartElement extends LitElement {
     if ('layer' in spec) {
       this._specType = 'layered';
       layeredSpec = this._prepareSpecification(spec, false, true, 0);
-      /*for (const [index, subSpec] of spec['layer'].entries()) {
-        const tempSubSpec = this._prepareSpecification(JSON.parse(JSON.stringify(subSpec)), true, false, index+1);
-        delete tempSubSpec['background'];
-        delete tempSubSpec['padding'];
-        layeredSpec['layer'][index] = tempSubSpec;
-      }*/
+    } else if (spec.encoding?.facet || spec['hconcat'] || spec['vconcat']) {
+      plainSpec = this._configUpdate(spec);
     } else if (spec['repeat']) {
       this._specType = 'repeated';
+
       const currentContainerWidth = this.clientWidth;
       const currentContainerHeight = this.clientHeight;
       repeatedSpec = this._prepareSpecification(
@@ -1395,7 +1394,7 @@ export default class chartElement extends LitElement {
       }
     }
 
-    let finalSpec;
+    let finalSpec = spec; // =
 
     if (spec['layer']) {
       finalSpec = layeredSpec;
@@ -1408,6 +1407,139 @@ export default class chartElement extends LitElement {
 
     this._visualizationSpec = finalSpec;
     return '';
+  }
+
+  /** _adjustSubElements
+   * @param {object} spec - vega sp3cification JSON
+   * @param {integer} width - chart width
+   * @param {integer} height - chart height
+   */
+  _adjustSubElements(spec, width, height) {
+    const gapSize = 8;
+    const legendHeight = 30;
+    const titleHeight = 40;
+    //const facetHeight = 30;
+    const hasTitle = !!spec.title;
+    const hasLegend = true;
+    /*spec.encoding &&
+      Object.values(spec.encoding).some(
+        (subEncoding) => subEncoding.legend !== null
+      );*/
+    if (spec.repeat) {
+      const itemCount = spec.repeat.row
+        ? spec.repeat.row.length
+        : spec.repeat.column.length;
+      const subWidth = (width - gapSize * (itemCount - 1)) / itemCount;
+      const subHeight = height;
+      this._adjustSubElements(spec.spec, subWidth, subHeight);
+    } else if (spec.vconcat) {
+      const subHeight =
+        (height - gapSize * (spec.vconcat.length - 1)) / spec.vconcat.length;
+      spec.vconcat.forEach((subSpec) => {
+        this._adjustSubElements(subSpec, width, subHeight);
+      });
+    } else if (spec.concat) {
+      const rows = Math.ceil(Math.sqrt(spec.concat.length));
+      const columns = Math.ceil(spec.concat.length / rows);
+      const subWidth = (width - gapSize * (columns - 1)) / columns;
+      const subHeight = (height - gapSize * (rows - 1)) / rows;
+      spec.concat.forEach((subSpec) => {
+        this._adjustSubElements(subSpec, subWidth, subHeight);
+      });
+    } else if (spec.facet) {
+      /*const rows = Math.ceil(Math.sqrt(spec.concat.length));
+      const columns = Math.ceil(spec.concat.length/rows);*/
+    } else {
+      let newHeight = height;
+      if (hasTitle) {
+        newHeight -= titleHeight;
+      }
+      if (hasLegend) {
+        newHeight -= legendHeight;
+      }
+      spec.height = newHeight;
+      spec.width = width;
+    }
+  }
+
+  /**
+   * _adjustChart - apply changes for carbonization
+   * @param {object} spec - vega sp3cification JSON
+   */
+  _adjustChart(spec) {
+    const globalPadding = 16;
+    const chartWidth = this.clientWidth - 2 * globalPadding;
+    const chartHeight = this.clientHeight - 2 * globalPadding;
+    this._adjustSubElements(spec, chartWidth, chartHeight);
+    return spec;
+  }
+
+  /**
+   * _configUpdate - apply changes for carbonization
+   * @param {object} spec - vega sp3cification JSON
+   */
+  _configUpdate(spec) {
+    const specCopy = this._prepareSpecification(spec, true, true, 0);
+    const coreConfig = specCopy.config;
+    const newSpec = this._subConfigUpdate(spec, coreConfig);
+    return newSpec;
+  }
+
+  /**
+   * _subConfigUpdate - apply changes for carbonization
+   * @param {object} subSpec - vega sepcification JSON
+   * @param {object} coreConfig - added carbon styling
+   */
+  _subConfigUpdate(subSpec, coreConfig) {
+    if (!subSpec) {
+      return;
+    }
+
+    subSpec.config = {
+      ...subSpec.config,
+      ...coreConfig,
+    };
+
+    if (subSpec.layer) {
+      subSpec.layer.forEach((layer) =>
+        this._subConfigUpdate(layer, coreConfig)
+      );
+    }
+    if (subSpec.facet) {
+      if (subSpec.facet.spec) {
+        this._subConfigUpdate(subSpec.facet.spec, coreConfig);
+        ['row', 'column'].forEach((facetType) => {
+          if (subSpec.facet[facetType]?.spec) {
+            this._subConfigUpdate(subSpec.facet[facetType].spec, coreConfig);
+          }
+        });
+      }
+    }
+    if (subSpec.repeat) {
+      if (subSpec.repeat.spec) {
+        this._subConfigUpdate(subSpec.repeat.spec, coreConfig);
+      }
+      if (subSpec.repeat.layer) {
+        subSpec.repeat.layer.forEach((layer) =>
+          this._subConfigUpdate(layer, coreConfig)
+        );
+      }
+    }
+    if (subSpec.spec) {
+      this._subConfigUpdate(subSpec.spec, coreConfig);
+    }
+    if (subSpec.hconcat) {
+      subSpec.hconcat.forEach((layer) =>
+        this._subConfigUpdate(layer, coreConfig)
+      );
+    }
+    if (subSpec.vconcat) {
+      subSpec.vconcat.forEach((layer) =>
+        this._subConfigUpdate(layer, coreConfig)
+      );
+    }
+
+    return subSpec;
   }
 
   /**

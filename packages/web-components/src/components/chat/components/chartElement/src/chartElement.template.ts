@@ -92,7 +92,11 @@ export function chartElementTemplate(customElementClass) {
       : html``}
     ${content
       ? html`
-    <div class="${clabsPrefix}--chat-chart-fullscreen-container" @wheel=
+    <div class="${clabsPrefix}--chat-chart-fullscreen-container ${
+          modalMode === 'fullscreen'
+            ? clabsPrefix + '--chat-chart-modal-visible'
+            : ''
+        }" @wheel=
           "${handleFullScreenScroll}">
       <div
           class="${clabsPrefix}--chat-chart-modal-container" id="${clabsPrefix}--chat-chart-fullscreen-embed-vis-${uniqueID}">
@@ -100,7 +104,11 @@ export function chartElementTemplate(customElementClass) {
       </div>
     </div>
 
-    <div class="${clabsPrefix}--chat-chart-fullscreen-container">
+    <div class="${clabsPrefix}--chat-chart-fullscreen-container ${clabsPrefix}--chat-chart-fullscreen-container-editor ${
+          modalMode === 'edit'
+            ? clabsPrefix + '--chat-chart-edit-modal-visible'
+            : ''
+        }">
       ${
         chartLoading || errorMessage
           ? html`

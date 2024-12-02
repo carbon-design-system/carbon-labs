@@ -10,10 +10,11 @@
 import '../chartElement';
 import { html } from 'lit';
 import complexExamples from './examples2.json';
+import otherExamples from './examples3.json';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chart',
+  title: 'Components/Experimental/Chart',
   component: 'clabs-chat-chart',
 };
 
@@ -381,6 +382,26 @@ export const ComplexExamples = {
               container-height="600px"
               container-width="800px"
               content="${JSON.stringify(item.result)}">
+            </clabs-chat-chart>`
+      )}
+    `,
+};
+
+export const FacetingTest = {
+  /**
+   * Renders the template for Showcase Storybook
+   * @returns {TemplateResult<1>}
+   */
+  render: () =>
+    html`
+      ${otherExamples.map(
+        (item) =>
+          html` <h4>${item.name}</h4>
+            <clabs-chat-chart
+              container-height="600px"
+              container-width="800px"
+              debug-mode
+              content="${JSON.stringify(item.spec)}">
             </clabs-chat-chart>`
       )}
     `,

@@ -12,6 +12,11 @@
 :host(#{$clabs-prefix}-chat-popup) {
   position: absolute;
   z-index: 6;
+  display: flex;
+  overflow: hidden;
+  box-sizing: border-box;
+  flex-direction: column;
+  inline-size: calc(100% - 56px);
   inset-block-end: var(--chat-popup-element-block-position, 0);
   inset-inline-start: var(--chat-popup-element-inline-position, 0);
   transition: height 300ms linear;
@@ -29,7 +34,12 @@
 
   .#{$clabs-prefix}--chat-popup-modal {
     position: relative;
+    display: flex;
     overflow: visible;
+    box-sizing: border-box;
+    flex: 1;
+    flex-direction: column;
+    inline-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-popup-container {
@@ -38,19 +48,22 @@
 
     overflow: hidden;
     box-sizing: border-box;
+    flex: 1;
     flex-direction: row;
 
-    padding: 32px;
-    border: 1px solid $ai-border-end;
+    padding: 0;
+    border: 1px solid $border-subtle-00;
     border-radius: 8px;
     animation: fade-in 600ms forwards;
-
-    background: linear-gradient(0deg, $highlight 0%, $background 25%), #ffffff;
-
-    inline-size: 320px;
-    max-inline-size: 320px;
+    background: $background;
+    inline-size: 100%;
+    min-inline-size: 248px;
     opacity: 0;
+    padding-block-start: var(--chat-popup-element-mode-offset, 0);
     transition: border-color 0.15s linear;
+  }
+  .#{$clabs-prefix}--chat-popup-container-ready {
+    border: 1px solid $ai-border-end;
   }
 
   .#{$clabs-prefix}--chat-popup-caret-bottom {
@@ -82,6 +95,7 @@
   }
   .#{$clabs-prefix}--chat-popup-divider {
     box-sizing: border-box;
+    flex: 0 0 auto;
     margin: 4px;
     block-size: 2px;
     border-block-start: 2px solid $border-subtle-02;
@@ -93,15 +107,17 @@
     display: flex;
     overflow: hidden;
     box-sizing: border-box;
+    flex: 0 0 auto;
     flex-direction: column;
-    padding-block-end: 32px;
+    inline-size: 100%;
+    max-inline-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-popup-list {
     list-style: none;
     list-style-type: decimal;
     margin-block-start: 0;
-    padding-inline-start: 1rem;
+    padding-inline-start: 0.5rem;
   }
 
   .#{$clabs-prefix}--chat-popup-list-item {
@@ -110,63 +126,85 @@
   }
 
   .#{$clabs-prefix}--chat-popup-title {
-    color: $text-secondary;
-    font-size: 12px;
+    padding: 0.5rem;
+    color: $text-primary;
+    font-size: 18px;
     font-weight: 400;
     letter-spacing: 0.16px;
-    line-height: 14px;
-    padding-block-end: 0.5rem;
+    line-height: 20px;
     text-align: start;
   }
 
   .#{$clabs-prefix}--chat-popup-prompt {
-    padding: 0;
+    padding: 0.5rem;
     margin: 0;
-    font-size: 20px;
+    color: $text-secondary;
+    font-size: 12px;
+    font-weight: 400;
     letter-spacing: 0.32px;
-    line-height: 30px;
-    margin-block-end: 0.5rem;
+    line-height: 16px;
     text-align: start;
   }
   .#{$clabs-prefix}--chat-popup-description {
     font-size: 14px;
-    margin-block-start: 0.75rem;
+    margin-block-start: 0.5rem;
+    padding-inline: 0.5rem;
     text-align: start;
   }
   .#{$clabs-prefix}--chat-popup-model-title {
     font-size: 14px;
     padding-block: 6px;
+    padding-inline: 0.5rem;
     text-align: start;
   }
 
   .#{$clabs-prefix}--chat-popup-tag-list {
     overflow: hidden;
     box-sizing: border-box;
-    max-inline-size: 256px;
-    padding-block: 0.75rem 8px;
+    max-inline-size: 100%;
+    padding-block: 0.5rem 8px;
+    padding-inline: 0.5rem;
   }
 
   .#{$clabs-prefix}--chat-popup-feedback-text {
     box-sizing: border-box;
     border: 1px solid transparent;
     gap: 0;
-    inline-size: 256px;
+    inline-size: 100%;
     inset-block-start: 205.54px;
     inset-inline-start: 24px;
-    margin-block-start: 0.75rem;
+    margin-block-start: 0.5rem;
+    padding-inline: 0.5rem;
+  }
+  .#{$clabs-prefix}--chat-popup-feedback-text-area {
+    overflow: hidden;
+    inline-size: 100%;
+    max-inline-size: 246px;
   }
 
   .#{$clabs-prefix}--chat-popup-disclaimer {
+    color: $text-secondary;
     font-size: 12px;
     font-weight: 400;
     letter-spacing: 0.32px;
     line-height: 16px;
-    margin-block: 1.25rem 0.75rem;
+    margin-block: 1rem 1rem;
+    padding-inline: 0.5rem;
     text-align: start;
+  }
+
+  .#{$clabs-prefix}--chat-popup-header-section {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: space-between;
+    inline-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-popup-checkbox {
     margin-inline-start: -2px;
+    padding-block-end: 1.5rem;
+    padding-inline: 0.5rem;
   }
 
   .#{$clabs-prefix}--chat-popup-submit {
@@ -174,13 +212,35 @@
     inset-block-end: 0;
     inset-inline-end: 0;
   }
+  .#{$clabs-prefix}--chat-popup-submit-inline {
+    display: flex;
+    inline-size: 100%;
+  }
+  .#{$clabs-prefix}--chat-popup-submit-element-inline {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    inline-size: 100%;
+    margin-inline-start: auto;
+  }
   .#{$clabs-prefix}--chat-popup-submit-element::part(button) {
-    inline-size: 320px;
+    inline-size: 100%;
+    text-align: end;
+  }
+  .#{$clabs-prefix}--chat-popup-submit-element-inline::part(button) {
+    inline-size: 100%;
     text-align: end;
   }
   .#{$clabs-prefix}--chat-popup-close {
     position: absolute;
-    inset-block-start: 24px;
-    inset-inline-end: 24px;
+    inset-block-start: var(--chat-popup-element-mode-offset, 0);
+    inset-inline-end: 0;
+  }
+
+  .#{$clabs-prefix}--chat-popup-mode-selector {
+    position: absolute;
+    inline-size: 248px;
+    inset-block-start: 0;
+    inset-inline-start: 0;
   }
 }

@@ -201,7 +201,7 @@ export default class message extends LitElement {
    * base streaming speed
    */
   @state()
-  baseStreamingSpeed = 8;
+  baseStreamingSpeed = 6;
 
   /**
    * feedbackFormTarget - div object to give to popup

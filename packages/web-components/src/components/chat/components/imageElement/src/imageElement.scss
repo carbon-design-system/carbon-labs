@@ -15,7 +15,6 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-image-container {
     display: flex;
     overflow: hidden;
-    max-block-size: 246px;
   }
   @keyframes fade-in {
     from {
@@ -31,7 +30,6 @@ $css--plex: true !default;
     border-radius: 8px;
     animation: fade-in 600ms forwards;
     block-size: auto;
-    max-block-size: 246px;
     max-inline-size: 100%;
     object-fit: contain;
     opacity: 0;

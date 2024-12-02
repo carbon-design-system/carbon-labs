@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chat/Popup',
+  title: 'Components/Experimental/Feedback',
 };
 
 const slugContent = {
@@ -76,7 +76,7 @@ const hateExample = {
     { value: 5, text: 'very serious' },
   ],
   model: { name: 'granite.13.chat.v2', url: 'https://www.google.com' },
-  dataCollectionTitle: 'I allow IBm to collect my feedback',
+  dataCollectionTitle: 'I allow IBM to collect my feedback',
   enableDataCollectionCheck: false,
 };
 

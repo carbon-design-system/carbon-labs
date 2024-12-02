@@ -24,6 +24,11 @@ $css--plex: true !default;
     max-inline-size: 100%;
   }
 
+  .#{$clabs-prefix}--chat-tag-list-container-inline {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
   @keyframes fade-in {
     from {
       opacity: 0;

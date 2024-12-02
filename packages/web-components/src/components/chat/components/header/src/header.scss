@@ -49,6 +49,9 @@ $css--plex: true !default;
     inline-size: 100%;
     transition: background 200ms ease;
   }
+  .#{$clabs-prefix}--chat-header-drag-button::part(button) {
+    inline-size: 120px;
+  }
 
   .#{$clabs-prefix}--chat-header-drag-area:hover {
     background: $background-hover;

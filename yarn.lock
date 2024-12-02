@@ -1548,12 +1548,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons@npm:11.52.0":
-  version: 11.52.0
-  resolution: "@carbon/icons@npm:11.52.0"
+"@carbon/icons@npm:11.53.0":
+  version: 11.53.0
+  resolution: "@carbon/icons@npm:11.53.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/bde4ac79bba17c954d23ff763c0df175bb88ee022dca409fe3cd8d76818e9620521a9dfdb9c1e5b005b1c43babb7506f3bc4c3a4dbd0f5b8af234987b350475b
+  checksum: 10c0/ec19179cafb629d2354f906d70d44f85a911009c39f65602d2ad432ecd5264541110286a79fcd9566d569e78a8680190c84f4294839915a388ce07d8a72d6fa8
   languageName: node
   linkType: hard
 
@@ -1563,9 +1563,9 @@ __metadata:
   dependencies:
     "@carbon/grid": "npm:^11.21.1"
     "@carbon/icon-helpers": "npm:10.54.0"
-    "@carbon/icons": "npm:11.52.0"
+    "@carbon/icons": "npm:11.53.0"
     "@carbon/layout": "npm:11.28.0"
-    "@carbon/motion": "npm:11.21.0"
+    "@carbon/motion": "npm:11.24.0"
     "@carbon/styles": "npm:^1.69.0"
     "@carbon/themes": "npm:11.43.0"
     "@carbon/type": "npm:11.33.0"
@@ -1598,7 +1598,7 @@ __metadata:
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     replace-ext: "npm:^2.0.0"
-    sass: "npm:~1.77.0"
+    sass: "npm:~1.81.0"
     sinon: "npm:^17.0.1"
     storybook: "npm:^8.4.2"
     strip-comments: "npm:^2.0.1"
@@ -1635,12 +1635,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/motion@npm:11.21.0":
-  version: 11.21.0
-  resolution: "@carbon/motion@npm:11.21.0"
+"@carbon/motion@npm:11.24.0, @carbon/motion@npm:^11.24.0":
+  version: 11.24.0
+  resolution: "@carbon/motion@npm:11.24.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/be1aa85ca20a6b5a529446f50668a046980f0b43405121cf68c9d28d248c30af9a2d26b28d6d775a9d2854ba039f41bf2aeefff103880d957774c3ed243310db
+  checksum: 10c0/7b9c0ed655eefea45079d1c8e8e83d4236bb62b7027cea71a360c63a665e65cf8f1cb08baf2296d39154c27b3b584128ababa75231465bd6560fba95dd68704e
   languageName: node
   linkType: hard
 
@@ -1650,15 +1650,6 @@ __metadata:
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
   checksum: 10c0/f00ffae2f5076089ecc8de3e300b8b57bab7998cc82608d8a4ddaeafff35cab110bbf003a1c3e87b2e782af0af329b43b03a13c02192ce44443117eae1eda0be
-  languageName: node
-  linkType: hard
-
-"@carbon/motion@npm:^11.24.0":
-  version: 11.24.0
-  resolution: "@carbon/motion@npm:11.24.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/7b9c0ed655eefea45079d1c8e8e83d4236bb62b7027cea71a360c63a665e65cf8f1cb08baf2296d39154c27b3b584128ababa75231465bd6560fba95dd68704e
   languageName: node
   linkType: hard
 
@@ -3447,6 +3438,150 @@ __metadata:
     "@types/sinon-chai": "npm:^3.2.3"
     chai-a11y-axe: "npm:^1.5.0"
   checksum: 10c0/b0933f268fb411a3d7b2df2bc2bed8707b50a22e065827a5ad68dffabfc505cccbb617a26f9063f6759fe4de67ff5a28984e12dccea408d26725fcd72a6ca12a
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-android-arm64@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-android-arm64@npm:2.5.0"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-darwin-arm64@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-darwin-arm64@npm:2.5.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-darwin-x64@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-darwin-x64@npm:2.5.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-freebsd-x64@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-freebsd-x64@npm:2.5.0"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-linux-arm-glibc@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-linux-arm-glibc@npm:2.5.0"
+  conditions: os=linux & cpu=arm & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-linux-arm-musl@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-linux-arm-musl@npm:2.5.0"
+  conditions: os=linux & cpu=arm & libc=musl
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-linux-arm64-glibc@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-linux-arm64-glibc@npm:2.5.0"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-linux-arm64-musl@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-linux-arm64-musl@npm:2.5.0"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-linux-x64-glibc@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-linux-x64-glibc@npm:2.5.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-linux-x64-musl@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-linux-x64-musl@npm:2.5.0"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-win32-arm64@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-win32-arm64@npm:2.5.0"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-win32-ia32@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-win32-ia32@npm:2.5.0"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher-win32-x64@npm:2.5.0":
+  version: 2.5.0
+  resolution: "@parcel/watcher-win32-x64@npm:2.5.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@parcel/watcher@npm:^2.4.1":
+  version: 2.5.0
+  resolution: "@parcel/watcher@npm:2.5.0"
+  dependencies:
+    "@parcel/watcher-android-arm64": "npm:2.5.0"
+    "@parcel/watcher-darwin-arm64": "npm:2.5.0"
+    "@parcel/watcher-darwin-x64": "npm:2.5.0"
+    "@parcel/watcher-freebsd-x64": "npm:2.5.0"
+    "@parcel/watcher-linux-arm-glibc": "npm:2.5.0"
+    "@parcel/watcher-linux-arm-musl": "npm:2.5.0"
+    "@parcel/watcher-linux-arm64-glibc": "npm:2.5.0"
+    "@parcel/watcher-linux-arm64-musl": "npm:2.5.0"
+    "@parcel/watcher-linux-x64-glibc": "npm:2.5.0"
+    "@parcel/watcher-linux-x64-musl": "npm:2.5.0"
+    "@parcel/watcher-win32-arm64": "npm:2.5.0"
+    "@parcel/watcher-win32-ia32": "npm:2.5.0"
+    "@parcel/watcher-win32-x64": "npm:2.5.0"
+    detect-libc: "npm:^1.0.3"
+    is-glob: "npm:^4.0.3"
+    micromatch: "npm:^4.0.5"
+    node-addon-api: "npm:^7.0.0"
+    node-gyp: "npm:latest"
+  dependenciesMeta:
+    "@parcel/watcher-android-arm64":
+      optional: true
+    "@parcel/watcher-darwin-arm64":
+      optional: true
+    "@parcel/watcher-darwin-x64":
+      optional: true
+    "@parcel/watcher-freebsd-x64":
+      optional: true
+    "@parcel/watcher-linux-arm-glibc":
+      optional: true
+    "@parcel/watcher-linux-arm-musl":
+      optional: true
+    "@parcel/watcher-linux-arm64-glibc":
+      optional: true
+    "@parcel/watcher-linux-arm64-musl":
+      optional: true
+    "@parcel/watcher-linux-x64-glibc":
+      optional: true
+    "@parcel/watcher-linux-x64-musl":
+      optional: true
+    "@parcel/watcher-win32-arm64":
+      optional: true
+    "@parcel/watcher-win32-ia32":
+      optional: true
+    "@parcel/watcher-win32-x64":
+      optional: true
+  checksum: 10c0/9bad727d8b11e5d150ec47459254544c583adaa47d047b8ef65e1c74aede1a0767dc7fc6b8997649dae07318d6ef39caba6a1c405d306398d5bcd47074ec5d29
   languageName: node
   linkType: hard
 
@@ -8179,7 +8314,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.4.3, chokidar@npm:^3.5.3, chokidar@npm:^3.6.0":
+"chokidar@npm:^1.6.1":
+  version: 1.7.0
+  resolution: "chokidar@npm:1.7.0"
+  dependencies:
+    anymatch: "npm:^1.3.0"
+    async-each: "npm:^1.0.0"
+    fsevents: "npm:^1.0.0"
+    glob-parent: "npm:^2.0.0"
+    inherits: "npm:^2.0.1"
+    is-binary-path: "npm:^1.0.0"
+    is-glob: "npm:^2.0.0"
+    path-is-absolute: "npm:^1.0.0"
+    readdirp: "npm:^2.0.0"
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  checksum: 10c0/d3f82bc7fba1d5793a05ae494c30536cf6e4b23364a610e8bee8ae49dbaf963a67f70c627a943ab538cab252f6ac1862c6012885bccd06a10487438de5ae8a15
+  languageName: node
+  linkType: hard
+
+"chokidar@npm:^3.4.3, chokidar@npm:^3.5.3, chokidar@npm:^3.6.0":
   version: 3.6.0
   resolution: "chokidar@npm:3.6.0"
   dependencies:
@@ -8198,23 +8353,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^1.6.1":
-  version: 1.7.0
-  resolution: "chokidar@npm:1.7.0"
+"chokidar@npm:^4.0.0":
+  version: 4.0.1
+  resolution: "chokidar@npm:4.0.1"
   dependencies:
-    anymatch: "npm:^1.3.0"
-    async-each: "npm:^1.0.0"
-    fsevents: "npm:^1.0.0"
-    glob-parent: "npm:^2.0.0"
-    inherits: "npm:^2.0.1"
-    is-binary-path: "npm:^1.0.0"
-    is-glob: "npm:^2.0.0"
-    path-is-absolute: "npm:^1.0.0"
-    readdirp: "npm:^2.0.0"
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  checksum: 10c0/d3f82bc7fba1d5793a05ae494c30536cf6e4b23364a610e8bee8ae49dbaf963a67f70c627a943ab538cab252f6ac1862c6012885bccd06a10487438de5ae8a15
+    readdirp: "npm:^4.0.1"
+  checksum: 10c0/4bb7a3adc304059810bb6c420c43261a15bb44f610d77c35547addc84faa0374265c3adc67f25d06f363d9a4571962b02679268c40de07676d260de1986efea9
   languageName: node
   linkType: hard
 
@@ -10021,6 +10165,15 @@ __metadata:
   version: 5.0.0
   resolution: "detect-indent@npm:5.0.0"
   checksum: 10c0/58d985dd5b4d5e5aad6fe7d8ecc74538fa92c807c894794b8505569e45651bf01a38755b65d9d3d17e512239a26d3131837cbef43cf4226968d5abf175bbcc9d
+  languageName: node
+  linkType: hard
+
+"detect-libc@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "detect-libc@npm:1.0.3"
+  bin:
+    detect-libc: ./bin/detect-libc.js
+  checksum: 10c0/4da0deae9f69e13bc37a0902d78bf7169480004b1fed3c19722d56cff578d16f0e11633b7fbf5fb6249181236c72e90024cbd68f0b9558ae06e281f47326d50d
   languageName: node
   linkType: hard
 
@@ -13367,10 +13520,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immutable@npm:^4.0.0":
-  version: 4.3.5
-  resolution: "immutable@npm:4.3.5"
-  checksum: 10c0/63d2d7908241a955d18c7822fd2215b6e89ff5a1a33cc72cd475b013cbbdef7a705aa5170a51ce9f84a57f62fdddfaa34e7b5a14b33d8a43c65cc6a881d6e894
+"immutable@npm:^5.0.2":
+  version: 5.0.3
+  resolution: "immutable@npm:5.0.3"
+  checksum: 10c0/3269827789e1026cd25c2ea97f0b2c19be852ffd49eda1b674b20178f73d84fa8d945ad6f5ac5bc4545c2b4170af9f6e1f77129bc1cae7974a4bf9b04a9cdfb9
   languageName: node
   linkType: hard
 
@@ -16595,6 +16748,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-addon-api@npm:^7.0.0":
+  version: 7.1.1
+  resolution: "node-addon-api@npm:7.1.1"
+  dependencies:
+    node-gyp: "npm:latest"
+  checksum: 10c0/fb32a206276d608037fa1bcd7e9921e177fe992fc610d098aa3128baca3c0050fc1e014fa007e9b3874cf865ddb4f5bd9f43ccb7cbbbe4efaff6a83e920b17e9
+  languageName: node
+  linkType: hard
+
 "node-fetch@npm:2.6.7":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
@@ -19350,6 +19512,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"readdirp@npm:^4.0.1":
+  version: 4.0.2
+  resolution: "readdirp@npm:4.0.2"
+  checksum: 10c0/a16ecd8ef3286dcd90648c3b103e3826db2b766cdb4a988752c43a83f683d01c7059158d623cbcd8bdfb39e65d302d285be2d208e7d9f34d022d912b929217dd
+  languageName: node
+  linkType: hard
+
 "readdirp@npm:~3.6.0":
   version: 3.6.0
   resolution: "readdirp@npm:3.6.0"
@@ -20129,16 +20298,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:~1.77.0":
-  version: 1.77.8
-  resolution: "sass@npm:1.77.8"
+"sass@npm:~1.81.0":
+  version: 1.81.0
+  resolution: "sass@npm:1.81.0"
   dependencies:
-    chokidar: "npm:>=3.0.0 <4.0.0"
-    immutable: "npm:^4.0.0"
+    "@parcel/watcher": "npm:^2.4.1"
+    chokidar: "npm:^4.0.0"
+    immutable: "npm:^5.0.2"
     source-map-js: "npm:>=0.6.2 <2.0.0"
+  dependenciesMeta:
+    "@parcel/watcher":
+      optional: true
   bin:
     sass: sass.js
-  checksum: 10c0/2bfd62794070352c804f949e69bd8bb5b4ec846deeb924251b2c3f7b503170fb1ae186f513f0166907749eb34e0277dee747edcb78c886fb471aac01be1e864c
+  checksum: 10c0/9c59b3c9b4231c18fcb4583cc232dbc4de501ddc11101b7a025e44833e3f3ce6031546dc1cd109ee9f04ebcfb1fe30ff870810af33b8feb9aa9e36dfba9ec1ef
   languageName: node
   linkType: hard
 

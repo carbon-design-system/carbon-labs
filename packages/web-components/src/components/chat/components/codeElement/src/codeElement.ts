@@ -40,8 +40,8 @@ export default class codeElement extends LitElement {
   /**
    * add coloring with highlightJS
    */
-  @property({ type: Boolean, attribute: 'enable-coloring' })
-  enableColoring;
+  @property({ type: Boolean, attribute: 'disable-coloring' })
+  disableColoring;
 
   /**
    * add coloring with highlightJS
@@ -60,6 +60,12 @@ export default class codeElement extends LitElement {
    */
   @property({ type: String, attribute: 'max-height' })
   maxHeight;
+
+  /**
+   * Set max height for code piece
+   */
+  @property({ type: String, attribute: 'lang' })
+  assignedLanguage;
 
   /**
    * Set tab size flag int
@@ -230,11 +236,12 @@ export default class codeElement extends LitElement {
     if (this.hasAttribute('max-height')) {
       this.style.setProperty('--chat-code-height', this.maxHeight);
     }
-    if (this.editable) {
-      this.disableLineTicks = false;
-      /*if (!this.disableLineTicks) {
-        this.style.setProperty('--chat-code-tick-offset', '16px');
-      }*/
+    if (!this.disableLineTicks) {
+      this.style.setProperty('--chat-code-tick-offset', '16px');
+      this.style.setProperty('--chat-code-inset-start', '23px');
+    } else {
+      this.style.setProperty('--chat-code-tick-offset', '0px');
+      this.style.setProperty('--chat-code-inset-start', '14px');
     }
     if (this.content !== undefined) {
       const codeAnalysis = this._clearCode(this.content);
@@ -254,13 +261,13 @@ export default class codeElement extends LitElement {
         },
       ];
     }
-    if (!this.disableAutoCompacting) {
-      this.resizeObserver = new ResizeObserver(async () => {
-        this._handleScroll();
-      });
+    //if (!this.disableAutoCompacting) {
+    this.resizeObserver = new ResizeObserver(async () => {
+      this._handleScroll();
+    });
 
-      this.resizeObserver.observe(this);
-    }
+    this.resizeObserver.observe(this);
+    //}
   }
 
   /** _handleScroll
@@ -371,11 +378,7 @@ export default class codeElement extends LitElement {
       });
       this.dispatchEvent(codeEditedEvent);
     }
-    if (this._editedContent === this._originalContent) {
-      this._currentlyEdited = false;
-    } else {
-      this._currentlyEdited = true;
-    }
+    this._currentlyEdited = this._editedContent !== this._originalContent;
     this._handleScroll();
   }
 
@@ -453,7 +456,8 @@ export default class codeElement extends LitElement {
    * _handleEditValidation - button event when user confirms edit of code
    */
   _handleEditValidation() {
-    //this.content = this._editedContent;
+    this.content = this._editedContent;
+    this._originalContent = this._editedContent;
     const codeEditedEvent = new CustomEvent('on-code-edit-validation', {
       detail: {
         previousLineData: this._renderedLines,
@@ -464,9 +468,6 @@ export default class codeElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(codeEditedEvent);
-    //this._renderedLines = [...this._editedLines];
-    //this._originalLines = [...this._editedLines];
-    this.content = this._editedContent;
     this._currentlyEdited = false;
     this.requestUpdate();
   }
@@ -488,7 +489,7 @@ export default class codeElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(codeEditedEvent);
-    this._formatCode(true);
+    this._formatCode(false);
   }
 
   /** _highlightLine - run code coloring system
@@ -504,7 +505,6 @@ export default class codeElement extends LitElement {
    */
   _formatCode(edited) {
     this._getTheme();
-    this._currentlyEdited = false;
     const formattedText = edited ? this._editedContent : this.content;
     const htmlSafeText = formattedText.replace(/```/g, '');
 
@@ -518,15 +518,15 @@ export default class codeElement extends LitElement {
     }
 
     const lines = htmlSafeText.trim().split('\n');
-    const tabWidth = 24;
-    const paddingLeft = 8;
+    //const tabWidth = 24;
+    //const paddingLeft = 8;
     let textValues: {
       content: string;
       type: string;
       paddingLeft: string;
     }[] = [];
 
-    const highlightMode = true;
+    const highlightMode = !this.disableColoring;
     if (highlightMode) {
       const highlightedCode = hljs.highlightAuto(htmlSafeText).value;
       const tempDiv = document.createElement('div');
@@ -564,25 +564,10 @@ export default class codeElement extends LitElement {
       }));
     } else {
       for (let i = 0; i < lines.length; i++) {
-        const lineType = '';
-        /*const trimmedLine = lines[i].replace(/\t/g, '');
-      if (trimmedLine.startsWith('#') || trimmedLine.startsWith('//')) {
-        lineType = 'clabs--chat-code-line-comment';
-      }*/
-
-        let tabOffset = paddingLeft;
-        const tabMatch = lines[i].match(/^\t*/);
-        if (tabMatch) {
-          tabOffset += tabMatch[0].length * tabWidth;
-        }
-        tabOffset = 0;
-        if (!lines[i].trim()) {
-          continue;
-        }
         textValues.push({
-          content: lines[i].trim().replace(/\t/g, ''),
-          type: lineType,
-          paddingLeft: tabOffset.toString() + 'px',
+          content: lines[i].replace(/\t/g, '&nbsp;&nbsp;&nbsp;'),
+          type: '',
+          paddingLeft: '0px',
         });
       }
     }
@@ -591,10 +576,14 @@ export default class codeElement extends LitElement {
     this._originalLines = JSON.parse(JSON.stringify(textValues));
     this._renderedLines = JSON.parse(JSON.stringify(textValues));
     const tickWidth = 13 * textValues.length.toString().length;
-    this.style.setProperty(
-      '--chat-code-tick-width',
-      tickWidth.toString() + 'px'
-    );
+    if (!this.disableLineTicks) {
+      this.style.setProperty(
+        '--chat-code-tick-width',
+        tickWidth.toString() + 'px'
+      );
+    } else {
+      this.style.setProperty('--chat-code-tick-width', '0px');
+    }
   }
 
   /**

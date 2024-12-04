@@ -164,6 +164,9 @@ export default class header extends LitElement {
   @state()
   _useSlug = true;
 
+  @state()
+  _useAiLabel = false;
+
   /**
    * show slug on button click
    * @param {event} _event - click event when docking chat
@@ -218,7 +221,6 @@ export default class header extends LitElement {
     this.menuContainerTarget = this.shadowRoot?.querySelector(
       '#' + clabsPrefix + '--chat-header-container-target'
     );
-    console.log(this.parentElement);
   }
 
   /**
@@ -549,12 +551,28 @@ export default class header extends LitElement {
   }
 
   /**
-   * menu toggling event when meny button is selected
+   * menu toggling event when menu button is selected
    * @param {event} event - click event when toggling menu
    */
   _handleMenuToggle(event) {
     this.menuOpened = !this.menuOpened;
     event.preventDefault();
+  }
+
+  /**
+   * menu toggling event when menu button is selected
+   * @param {event} _event - click event when toggling menu
+   */
+  _handleMenuClosed(_event) {
+    this.menuOpened = false;
+  }
+
+  /**
+   * menu toggling event when menu button is selected
+   * @param {event} _event - click event when toggling menu
+   */
+  _handleMenuOpened(_event) {
+    this.menuOpened = true;
   }
 
   /**
@@ -598,6 +616,12 @@ export default class header extends LitElement {
           break;
         case 'header-close-slug':
           customValue = labels[key] || 'Close';
+          break;
+        case 'header-move-start-button':
+          customValue = labels[key] || 'Move chat';
+          break;
+        case 'header-move-end-button':
+          customValue = labels[key] || 'Release';
           break;
       }
     }

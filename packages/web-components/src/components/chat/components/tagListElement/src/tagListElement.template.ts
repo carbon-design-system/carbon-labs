@@ -31,6 +31,7 @@ export function tagListElementTemplate(customElementClass) {
     actionIcon,
     monoLabel,
     isInLine,
+    useTags,
     selectionIndex,
   } = customElementClass;
 
@@ -39,37 +40,49 @@ export function tagListElementTemplate(customElementClass) {
       ? html`<div class="${clabsPrefix}--chat-tag-list-error">
           ${errorMessage}
         </div>`
-      : html`<div class="${clabsPrefix}--chat-tag-list-container" role="group">
+      : html`<div
+          class="${clabsPrefix}--chat-tag-list-container${isInLine
+            ? '-inline'
+            : ''}"
+          role="group">
           ${tagList.map(
             (value, index) =>
               html` <div
                 class="${clabsPrefix}--chat-tag-list-container-cell${isInLine
                   ? '-inline'
                   : ''}">
-                <cds-chat-button
-                  class="${clabsPrefix}--chat-tag-list-button"
-                  kind="primary"
-                  size="sm"
-                  type="button"
-                  is-quick-action
-                  role="option"
-                  aria-selected="${selectionIndex[index] ? true : false}"
-                  aria-label="${value +
-                  ' ' +
-                  (selectionIndex[index] ? 'selected' : 'unselected')}"
-                  ?is-selected="${selectionIndex[index]}"
-                  data-content="${value}"
-                  data-index="${index}"
-                  @click="${handleTagClick}">
-                  ${monoLabel ? monoLabel : value}
-                  ${actionIcon === 'add'
-                    ? Add16({ slot: 'icon' })
-                    : actionIcon === 'upload'
-                    ? Upload16({ slot: 'icon' })
-                    : actionIcon === 'send'
-                    ? SendAlt16({ slot: 'icon' })
-                    : ''}
-                </cds-chat-button>
+                ${useTags
+                  ? html`
+                      <cds-tag color="cool-grey" interactive>
+                        ${monoLabel ? monoLabel : value}
+                      </cds-tag>
+                    `
+                  : html`
+                      <cds-chat-button
+                        class="${clabsPrefix}--chat-tag-list-button"
+                        kind="primary"
+                        size="sm"
+                        type="button"
+                        is-quick-action
+                        role="option"
+                        aria-selected="${selectionIndex[index] ? true : false}"
+                        aria-label="${value +
+                        ' ' +
+                        (selectionIndex[index] ? 'selected' : 'unselected')}"
+                        ?is-selected="${selectionIndex[index]}"
+                        data-content="${value}"
+                        data-index="${index}"
+                        @click="${handleTagClick}">
+                        ${monoLabel ? monoLabel : value}
+                        ${actionIcon === 'add'
+                          ? Add16({ slot: 'icon' })
+                          : actionIcon === 'upload'
+                          ? Upload16({ slot: 'icon' })
+                          : actionIcon === 'send'
+                          ? SendAlt16({ slot: 'icon' })
+                          : ''}
+                      </cds-chat-button>
+                    `}
               </div>`
           )}
         </div>`}

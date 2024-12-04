@@ -295,6 +295,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-code-white-theme {
     .hljs-literal,
     .hljs-built_in,
+    .hljs-builtin-name,
     .hljs-selector-tag,
     .hljs-doctag {
       color: $purple-60;
@@ -346,6 +347,7 @@ $css--plex: true !default;
     .hljs-section,
     .hljs-selector-id,
     .hljs-tag,
+    .hljs-meta,
     .hljs-selector-class {
       color: $yellow-60;
     }
@@ -362,6 +364,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-code-default-theme {
     .hljs-literal,
     .hljs-built_in,
+    .hljs-builtin-name,
     .hljs-selector-tag,
     .hljs-doctag {
       color: $purple-50;
@@ -413,6 +416,7 @@ $css--plex: true !default;
     .hljs-section,
     .hljs-selector-id,
     .hljs-tag,
+    .hljs-meta,
     .hljs-selector-class {
       color: $yellow-50;
     }
@@ -429,6 +433,7 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-code-g100-theme {
     .hljs-literal,
     .hljs-built_in,
+    .hljs-builtin-name,
     .hljs-selector-tag,
     .hljs-doctag {
       color: $purple-40;
@@ -480,6 +485,7 @@ $css--plex: true !default;
     .hljs-section,
     .hljs-selector-id,
     .hljs-tag,
+    .hljs-meta,
     .hljs-selector-class {
       color: $yellow-40;
     }

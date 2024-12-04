@@ -261,13 +261,13 @@ export default class codeElement extends LitElement {
         },
       ];
     }
-    if (!this.disableAutoCompacting) {
-      this.resizeObserver = new ResizeObserver(async () => {
-        this._handleScroll();
-      });
+    //if (!this.disableAutoCompacting) {
+    this.resizeObserver = new ResizeObserver(async () => {
+      this._handleScroll();
+    });
 
-      this.resizeObserver.observe(this);
-    }
+    this.resizeObserver.observe(this);
+    //}
   }
 
   /** _handleScroll

@@ -52,6 +52,9 @@ const codeExamples = {
   Java: `public class BinaryConverter {\n\t\n\tpublic static void main(String[] args){\n\t\tfor(int i = -5; i < 33; i++){\n\t\t\tSystem.out.println(i + ": " + toBinary(i));\n\t\t\tSystem.out.println(i);\n\t\t\t//always another way\n\t\t\tSystem.out.println(i + ": " + Integer.toBinaryString(i));\n\t\t}\n\t}\n\t\n\t/*\n\t * pre: none\n\t * post: returns a String with base10Num in base 2\n\t */\n\tpublic static String toBinary(int base10Num){\n\t\tboolean isNeg = base10Num < 0;\n\t\tbase10Num = Math.abs(base10Num);\n\t\tString result = "";\n\t\t\n\t\twhile(base10Num > 1){\n\t\t\tresult = (base10Num % 2) + result;\n\t\t\tbase10Num /= 2;\n\t\t}\n\t\tassert base10Num == 0 || base10Num == 1 : "value is not <= 1: " + base10Num;\n\t\t\n\t\tresult = base10Num + result;\n\t\tassert all0sAnd1s(result);\n\t\t\n\t\tif( isNeg )\n\t\t\tresult = "-" + result;\n\t\treturn result;\n\t}\n\t\n\t/*\n\t * pre: cal != null\n\t * post: return true if val consists only of characters 1 and 0, false otherwise\n\t */\n\tpublic static boolean all0sAnd1s(String val){\n\t\tassert val != null : "Failed precondition all0sAnd1s. parameter cannot be null";\n\t\tboolean all = true;\n\t\tint i = 0;\n\t\tchar c;\n\t\t\n\t\twhile(all && i < val.length()){\n\t\t\tc = val.charAt(i);\n\t\t\tall = c == '0' || c == '1';\n\t\t\ti++;\n\t\t}\n\t\treturn all;\n\t}\n}`,
   'C++':
     '#include <iostream>\nusing namespace std;\n\n\nint main() {\n\tint x = 5;\n\tint y = 6;\n\tint sum = x + y;\n\tcout << sum;\n\treturn 0;\n}\n',
+  JavaScript:
+    '// A simple JavaScript function to calculate the area of a rectangle\nfunction calculateRectangleArea(length, width) {\n\treturn length * width;\n}\n\n// Example usage:\nlet area = calculateRectangleArea(5, 10);\nconsole.log("Area:", area); // Output: Area: 50',
+  FORTRAN: `C AREA OF A TRIANGLE - HERON'S FORMULA\nC INPUT - CARD READER UNIT 5, INTEGER INPUT\nC OUTPUT -\nC INTEGER VARIABLES START WITH I,J,K,L,M OR N\n\t\t\tREAD(5,501) IA,IB,IC\n\t501 FORMAT(3I5)\n\t\t\tIF (IA) 701, 777, 701\n\t701 IF (IB) 702, 777, 702\n\t702 IF (IC) 703, 777, 703\n\t777 STOP 1\n\t703 S = (IA + IB + IC) / 2.0\n\t\t\tAREA = SQRT( S * (S - IA) * (S - IB) * (S - IC) )\n\t\t\tWRITE(6,801) IA,IB,IC,AREA\n\t801 FORMAT(4H A= ,I5,5H  B= ,I5,5H  C= ,I5,8H  AREA= ,F10.2, $13H SQUARE UNITS)\n\t\t\tSTOP\n\t\t\tEND\n`,
   Malbolge:
     "(=<`$9]7<5YXz7wT.3,+O/o'K%$H'~D|#z@b=`{^Lx8%$Xmrkpohm-kNi;gsedcba`_^][ZYXWVUTSRQPONMLKJIHGFEDCBA@?>=<;:9876543s+O<oLm",
   'C++ 2':
@@ -123,6 +126,12 @@ export const Showcase = {
     <h4>Java example</h4>
     <br />
     <clabs-chat-code content="${codeExamples['Java']}"> </clabs-chat-code>
+    <br />
+    <h4>JS example</h4>
+    <clabs-chat-code content="${codeExamples['JavaScript']}"> </clabs-chat-code>
+    <br />
+    <h4>FORTRAN example</h4>
+    <clabs-chat-code content="${codeExamples['FORTRAN']}"> </clabs-chat-code>
     <br />
     <h4>Malbolge example</h4>
     <br />

@@ -1,0 +1,38 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as ExampleButtonStories from './ExampleButton.stories';
+
+<Meta isTemplate />
+
+# ExampleButton
+
+[Source code](https://github.com/carbon-design-system/carbon/tree/main/packages/react/src/components/Accordion)
+&nbsp;|&nbsp;
+[Usage guidelines](https://www.carbondesignsystem.com/components/accordion/usage)
+&nbsp;|&nbsp;
+[Accessibility](https://www.carbondesignsystem.com/components/accordion/accessibility)
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Skeleton state](#skeleton-state)
+- [Component API](#component-api)
+- [References](#references)
+- [Feedback](#feedback)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+You can build an accordion using a combination of the `Accordion` and
+`AccordionItem` components. The `Accordion` components accepts a list of
+`AccordionItem` components as `children` and each `AccordionItem` is responsible
+for displaying the accordion's heading and panel content.
+
+You can configure the accordion item's heading using the `title` prop.
+Everything you pass in as a child of `AccordionItem` will be rendered in the
+accordion's panel.
+
+<Canvas of={ExampleButtonStories.Default} />

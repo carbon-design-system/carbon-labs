@@ -56,6 +56,7 @@
     "remark-gfm": "^4.0.0",
     "sass-loader": "^16.0.4",
     "storybook": "^8.4.6",
+    "storybook-addon-accessibility-checker": "^3.1.61-rc.3",
     "style-loader": "^4.0.0",
     "typescript-config-carbon": "^0.3.0",
     "webpack": "^5.97.0"

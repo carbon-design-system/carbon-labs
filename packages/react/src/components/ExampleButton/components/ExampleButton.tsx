@@ -1,8 +1,10 @@
-import React from 'react';
-import { Button } from '@carbon/react';
+import React, { PropsWithChildren } from 'react';
+import { Button, ButtonProps } from '@carbon/react';
 import './button.scss';
 
 /** Primary UI component for user interaction */
-export const ExampleButton = () => {
-  return <Button>Button</Button>;
+
+type ExampleButtonProps = PropsWithChildren<ButtonProps<any>>;
+export const ExampleButton = ({ children = 'Button', ...rest }: ExampleButtonProps ) => {
+  return <Button {...rest}>{children}</Button>;
 };

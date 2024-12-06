@@ -12,4 +12,7 @@ export default {
   },
 };
 
+/**
+ *
+ */
 export const Default = () => <ExampleButton />;

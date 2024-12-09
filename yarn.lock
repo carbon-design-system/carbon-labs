@@ -1380,7 +1380,7 @@ __metadata:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
-    "@carbon/web-components": "npm:2.18.0"
+    "@carbon/web-components": "npm:2.19.0"
     "@ibm/telemetry-js": "npm:^1.6.0"
     "@types/highlightjs": "npm:^9"
     highlightjs: "npm:^9.16.2"
@@ -1401,7 +1401,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.18.0"
+    "@carbon/web-components": "npm:2.19.0"
     uuid: "npm:^9.0.1"
   languageName: unknown
   linkType: soft
@@ -1414,7 +1414,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.8.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.18.0"
+    "@carbon/web-components": "npm:2.19.0"
   languageName: unknown
   linkType: soft
 
@@ -1426,7 +1426,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.8.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.18.0"
+    "@carbon/web-components": "npm:2.19.0"
   languageName: unknown
   linkType: soft
 
@@ -1438,7 +1438,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.18.0"
+    "@carbon/web-components": "npm:2.19.0"
     force-graph: "npm:^1.43.5"
   languageName: unknown
   linkType: soft
@@ -1614,9 +1614,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/styles@npm:^1.70.0":
-  version: 1.70.0
-  resolution: "@carbon/styles@npm:1.70.0"
+"@carbon/styles@npm:^1.71.0":
+  version: 1.71.0
+  resolution: "@carbon/styles@npm:1.71.0"
   dependencies:
     "@carbon/colors": "npm:^11.28.0"
     "@carbon/feature-flags": "npm:^0.24.0"
@@ -1640,7 +1640,7 @@ __metadata:
   peerDependenciesMeta:
     sass:
       optional: true
-  checksum: 10c0/020d94f3c34d95695b05e26556648ee5e155fe796c862048e6c8db3d5529dab4a079d050c03962ab20243161b542bc42389ffebd23f6ca0e11baf0308c867974
+  checksum: 10c0/a057da72de5cfb49b23973d928ef33f412cfe64c4ede341a281349e5ab42232b7cc5e78a13e85d3615bddd7c548afd29bd15a635e9361fbe4497390f23f870a6
   languageName: node
   linkType: hard
 
@@ -1668,18 +1668,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/web-components@npm:2.18.0":
-  version: 2.18.0
-  resolution: "@carbon/web-components@npm:2.18.0"
+"@carbon/web-components@npm:2.19.0":
+  version: 2.19.0
+  resolution: "@carbon/web-components@npm:2.19.0"
   dependencies:
-    "@carbon/styles": "npm:^1.70.0"
+    "@carbon/styles": "npm:^1.71.0"
     "@floating-ui/dom": "npm:^1.6.3"
     "@ibm/telemetry-js": "npm:^1.5.0"
     flatpickr: "npm:4.6.13"
     lit: "npm:^3.1.0"
     lodash-es: "npm:^4.17.21"
     tslib: "npm:^2.6.3"
-  checksum: 10c0/6d7012537b100827a9cba3fff9355239562575ad069b7f715add71c4899ed2c2b014b8f1190282b6e43c754e5394159f80abef5671c2c253cbfb3d9ffc216d7a
+  checksum: 10c0/71ce471c3c2882f74183250c3375b510e532adc6ccfe65fb975913c1133002fd72af3e8539acbc3f77c7c558c73eda1c3f911cbaef19a250b3e6891de19a18b5
   languageName: node
   linkType: hard
 

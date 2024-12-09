@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`YourComponent should match snapshot 1`] = `
+exports[`ExampleButton renders as expected - Component API should match snapshot 1`] = `
 <div>
   <button
     class="cds--btn cds--btn--primary"

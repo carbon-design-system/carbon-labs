@@ -7,6 +7,11 @@ import { ExampleButton } from '../components/ExampleButton';
 jest.mock('./button.scss', () => ({}));
 describe('ExampleButton', () => {
   describe('renders as expected - Component API', () => {
+    it('should match snapshot', () => {
+      const { container } = render(<ExampleButton />);
+      expect(container).toMatchSnapshot();
+    });
+
     it('renders a button element', () => {
       render(<ExampleButton />);
       expect(screen.getByRole('button')).toBeInTheDocument();

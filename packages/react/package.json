@@ -2,7 +2,6 @@
   "name": "@carbon/labs-react-components",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "description": "Carbon Labs React components",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-labs",
@@ -12,7 +11,8 @@
   "scripts": {
     "storybook": "storybook dev -p 3000",
     "build-storybook": "storybook build",
-    "test": "jest"
+    "test": "jest",
+    "test:updateSnapshot": "jest -u"
   },
   "browserslist": {
     "production": [

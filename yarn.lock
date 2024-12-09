@@ -2688,6 +2688,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/example-button@workspace:packages/react/src/components/ExampleButton":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/example-button@workspace:packages/react/src/components/ExampleButton"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/network-graph@workspace:packages/web-components/src/components/network-graph":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/network-graph@workspace:packages/web-components/src/components/network-graph"
@@ -2784,6 +2790,62 @@ __metadata:
   checksum: 10c0/ec19179cafb629d2354f906d70d44f85a911009c39f65602d2ad432ecd5264541110286a79fcd9566d569e78a8680190c84f4294839915a388ce07d8a72d6fa8
   languageName: node
   linkType: hard
+
+"@carbon/labs-react-components@workspace:packages/react":
+  version: 0.0.0-use.local
+  resolution: "@carbon/labs-react-components@workspace:packages/react"
+  dependencies:
+    "@babel/core": "npm:^7.26.0"
+    "@babel/preset-env": "npm:^7.26.0"
+    "@babel/preset-react": "npm:^7.26.3"
+    "@babel/preset-typescript": "npm:^7.26.0"
+    "@carbon/react": "npm:^1.71.1"
+    "@carbon/styles": "npm:^1.70.0"
+    "@chromatic-com/storybook": "npm:^3.2.2"
+    "@mdx-js/react": "npm:^3.1.0"
+    "@storybook/addon-docs": "npm:^8.4.6"
+    "@storybook/addon-essentials": "npm:^8.4.6"
+    "@storybook/addon-interactions": "npm:^8.4.6"
+    "@storybook/addon-onboarding": "npm:^8.4.6"
+    "@storybook/addon-storysource": "npm:^8.4.6"
+    "@storybook/addon-webpack5-compiler-babel": "npm:^3.0.3"
+    "@storybook/blocks": "npm:^8.4.6"
+    "@storybook/react": "npm:^8.4.6"
+    "@storybook/react-webpack5": "npm:^8.4.6"
+    "@storybook/test": "npm:^8.4.6"
+    "@testing-library/jest-dom": "npm:^5.17.0"
+    "@testing-library/react": "npm:^16.1.0"
+    "@testing-library/user-event": "npm:^14.5.2"
+    "@types/babel__core": "npm:^7"
+    "@types/babel__preset-env": "npm:^7"
+    "@types/jest": "npm:^27.5.2"
+    "@types/node": "npm:^16.18.121"
+    "@types/prop-types": "npm:^15"
+    "@types/react": "npm:^18.3.12"
+    "@types/react-dom": "npm:^18.3.1"
+    autoprefixer: "npm:^10.4.20"
+    babel-jest: "npm:^29.7.0"
+    css-loader: "npm:^7.1.2"
+    eslint-plugin-storybook: "npm:^0.11.1"
+    jest: "npm:^29.7.0"
+    jest-environment-jsdom: "npm:^29.7.0"
+    mini-css-extract-plugin: "npm:^2.9.2"
+    postcss: "npm:^8.4.49"
+    postcss-loader: "npm:^8.1.1"
+    prop-types: "npm:^15.8.1"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    remark-gfm: "npm:^4.0.0"
+    sass-loader: "npm:^16.0.4"
+    storybook: "npm:^8.4.6"
+    storybook-addon-accessibility-checker: "npm:^3.1.61-rc.3"
+    style-loader: "npm:^4.0.0"
+    ts-jest: "npm:^29.2.5"
+    typescript: "npm:^5.2.2"
+    typescript-config-carbon: "npm:^0.3.0"
+    webpack: "npm:^5.97.0"
+  languageName: unknown
+  linkType: soft
 
 "@carbon/labs-web-components@workspace:packages/web-components":
   version: 0.0.0-use.local
@@ -21665,62 +21727,6 @@ __metadata:
   checksum: 10c0/0b2fad0c671cef33ad3596d702b581e5bb3708ec7ba2913639cfb1642c7f5093af9d8793b38eafe1b723e7879d60419d2e96c5e7793271e0167833a7939ac66d
   languageName: node
   linkType: hard
-
-"my-app@workspace:packages/react":
-  version: 0.0.0-use.local
-  resolution: "my-app@workspace:packages/react"
-  dependencies:
-    "@babel/core": "npm:^7.26.0"
-    "@babel/preset-env": "npm:^7.26.0"
-    "@babel/preset-react": "npm:^7.26.3"
-    "@babel/preset-typescript": "npm:^7.26.0"
-    "@carbon/react": "npm:^1.71.1"
-    "@carbon/styles": "npm:^1.70.0"
-    "@chromatic-com/storybook": "npm:^3.2.2"
-    "@mdx-js/react": "npm:^3.1.0"
-    "@storybook/addon-docs": "npm:^8.4.6"
-    "@storybook/addon-essentials": "npm:^8.4.6"
-    "@storybook/addon-interactions": "npm:^8.4.6"
-    "@storybook/addon-onboarding": "npm:^8.4.6"
-    "@storybook/addon-storysource": "npm:^8.4.6"
-    "@storybook/addon-webpack5-compiler-babel": "npm:^3.0.3"
-    "@storybook/blocks": "npm:^8.4.6"
-    "@storybook/react": "npm:^8.4.6"
-    "@storybook/react-webpack5": "npm:^8.4.6"
-    "@storybook/test": "npm:^8.4.6"
-    "@testing-library/jest-dom": "npm:^5.17.0"
-    "@testing-library/react": "npm:^16.1.0"
-    "@testing-library/user-event": "npm:^14.5.2"
-    "@types/babel__core": "npm:^7"
-    "@types/babel__preset-env": "npm:^7"
-    "@types/jest": "npm:^27.5.2"
-    "@types/node": "npm:^16.18.121"
-    "@types/prop-types": "npm:^15"
-    "@types/react": "npm:^18.3.12"
-    "@types/react-dom": "npm:^18.3.1"
-    autoprefixer: "npm:^10.4.20"
-    babel-jest: "npm:^29.7.0"
-    css-loader: "npm:^7.1.2"
-    eslint-plugin-storybook: "npm:^0.11.1"
-    jest: "npm:^29.7.0"
-    jest-environment-jsdom: "npm:^29.7.0"
-    mini-css-extract-plugin: "npm:^2.9.2"
-    postcss: "npm:^8.4.49"
-    postcss-loader: "npm:^8.1.1"
-    prop-types: "npm:^15.8.1"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
-    remark-gfm: "npm:^4.0.0"
-    sass-loader: "npm:^16.0.4"
-    storybook: "npm:^8.4.6"
-    storybook-addon-accessibility-checker: "npm:^3.1.61-rc.3"
-    style-loader: "npm:^4.0.0"
-    ts-jest: "npm:^29.2.5"
-    typescript: "npm:^5.2.2"
-    typescript-config-carbon: "npm:^0.3.0"
-    webpack: "npm:^5.97.0"
-  languageName: unknown
-  linkType: soft
 
 "nan@npm:^2.12.1":
   version: 2.19.0

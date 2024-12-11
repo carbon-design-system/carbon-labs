@@ -10,7 +10,7 @@
   },
   "scripts": {
     "storybook": "storybook dev -p 3000",
-    "build-storybook": "storybook build",
+    "storybook:build": "storybook build",
     "test": "jest",
     "test:updateSnapshot": "jest -u"
   },

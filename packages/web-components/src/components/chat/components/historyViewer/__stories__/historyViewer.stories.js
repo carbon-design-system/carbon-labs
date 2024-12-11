@@ -12,7 +12,7 @@ import { html } from 'lit';
 import examples from './example.json';
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Chat/History Viewer',
+  title: 'Components/Research/History Viewer',
 };
 
 export const Default = {

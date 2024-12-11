@@ -30,7 +30,7 @@ import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
 export function codeElementTemplate(customElementClass) {
   const {
     _renderedLines,
-    _editedContent,
+    content,
     disableLineTicks,
     disableCopyButton,
     disableEditButton,
@@ -93,12 +93,13 @@ export function codeElementTemplate(customElementClass) {
       <textarea
         @keydown="${controlTabbing}"
         @input="${handleFullCodeEdit}"
+        @click="${handleScroll}"
         aria-label="Editable Text"
         spellcheck="false"
         class="${clabsPrefix}--chat-code-edit-area ${!editable
           ? clabsPrefix + '--chat-code-edit-hidden'
           : ''}">
-${_editedContent}</textarea
+${content}</textarea
       >
 
       <div
@@ -113,7 +114,7 @@ ${_editedContent}</textarea
             html`
               <div
                 class="${clabsPrefix}--chat-code-line ${clabsPrefix}--chat-code-line-fade-in">
-                ${disableLineTicks && _renderedLines.length < 2
+                ${disableLineTicks || _renderedLines.length < 2
                   ? html``
                   : html`
                       <div class="${clabsPrefix}--chat-code-line-tick">
@@ -136,31 +137,31 @@ ${_editedContent}</textarea
             `
         )}
       </div>
-    </div>
-    ${currentlyEdited
-      ? html` <div class="${clabsPrefix}--chat-code-editing-controls">
-          <cds-icon-button
-            size="md"
-            aria-label="Validate Edit"
-            role="button"
-            align="left"
-            kind="ghost"
-            @click="${handleEditValidation}">
-            ${Checkmark16({ slot: 'icon' })}
-            <span slot="tooltip-content">Apply edit</span>
-          </cds-icon-button>
+      ${currentlyEdited
+        ? html` <div class="${clabsPrefix}--chat-code-editing-controls">
+            <cds-icon-button
+              size="sm"
+              align="left"
+              aria-label="Undo edit"
+              role="button"
+              kind="danger-tertiary"
+              @click="${handleEditCancellation}">
+              ${Undo16({ slot: 'icon' })}
+              <span slot="tooltip-content">Undo edit</span>
+            </cds-icon-button>
 
-          <cds-icon-button
-            size="md"
-            align="left"
-            aria-label="Undo edit"
-            role="button"
-            kind="danger"
-            @click="${handleEditCancellation}">
-            ${Undo16({ slot: 'icon' })}
-            <span slot="tooltip-content">Undo edit</span>
-          </cds-icon-button>
-        </div>`
-      : html``}
+            <cds-icon-button
+              size="sm"
+              aria-label="Validate Edit"
+              role="button"
+              align="left"
+              kind="ghost"
+              @click="${handleEditValidation}">
+              ${Checkmark16({ slot: 'icon' })}
+              <span slot="tooltip-content">Apply edit</span>
+            </cds-icon-button>
+          </div>`
+        : html``}
+    </div>
   </div>`;
 }

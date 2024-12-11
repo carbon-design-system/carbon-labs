@@ -152,6 +152,9 @@ export default class popupElement extends LitElement {
   @state()
   _tagSelections = {};
 
+  @state()
+  overflowClose = true;
+
   /**
    * response type i.e positive nbegative custom etc
    */
@@ -168,7 +171,7 @@ export default class popupElement extends LitElement {
    * compact mode
    */
   @property({ type: Boolean, attribute: 'compact-mode' })
-  compactMode;
+  compactMode = false;
 
   /**
    * check if submission is valid
@@ -198,6 +201,37 @@ export default class popupElement extends LitElement {
   @state()
   collectionAgreement;
 
+  /** show dropdown with list of violation types, which auto-renders subelements
+   */
+  @property({ type: Boolean, attribute: 'custom-policy-mode' })
+  customPolicyMode = false;
+
+  /**
+   * feedback ai content
+   */
+  @state()
+  feedbackAiContent;
+
+  /**
+   * list of violations
+   */
+  @state()
+  violationTypes = [
+    'General',
+    'Hate speech',
+    'Unethical content',
+    'Factual errors',
+    'Personal information',
+    'Copyright infringement',
+    'Security concerns',
+  ];
+
+  /**
+   * currently selected mode
+   */
+  @state()
+  currentlySelectedMode;
+
   /**
    * Event listener to check if parent visibility changed
    */
@@ -211,6 +245,9 @@ export default class popupElement extends LitElement {
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
+    if (this.customPolicyMode) {
+      this.style.setProperty('--chat-popup-element-mode-offset', '63px');
+    }
     this.style.setProperty(
       '--chat-popup-element-inline-position',
       this.inlinePosition
@@ -456,7 +493,7 @@ export default class popupElement extends LitElement {
       }
 
       if (this.compactMode) {
-        horizontalPosition = 0;
+        horizontalPosition = 16;
       }
 
       this.inlinePosition = horizontalPosition;
@@ -512,6 +549,42 @@ export default class popupElement extends LitElement {
     const selections = event.detail.selectionList;
     this._tagSelections = selections;
     this._checkValidity();
+  }
+
+  /**
+   * handleModeSelection - handle dropdown mode changes
+   * @param {event} event -  tag click event
+   */
+  _handleModeSelection(event) {
+    if (event?.detail?.item?.value) {
+      this.currentlySelectedMode = event.detail.item.value;
+      this.presetFeedback();
+    }
+  }
+
+  /**
+   * presetFeedback - seelction mechanism to customize templates
+   */
+  presetFeedback() {
+    switch (this.currentlySelectedMode) {
+      case 'Hate speech':
+        this.tagList = null;
+        this.disclaimer = '';
+        this.promptTitle = 'Help us do better';
+        this.textAreaPlaceholder = 'Describe issues with this response';
+        this.disableTextArea = true;
+        this.description =
+          'Select the severity of this violation and provide details if needed';
+        this.radioTitle = 'Severity';
+        this.radioButtons = [
+          { value: 0, text: 'mild' },
+          { value: 1, text: 'concerning' },
+          { value: 2, text: 'elevated' },
+          { value: 3, text: 'serious' },
+          { value: 5, text: 'very serious' },
+        ];
+        break;
+    }
   }
 
   /**

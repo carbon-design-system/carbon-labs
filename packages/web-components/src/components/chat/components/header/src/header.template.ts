@@ -23,6 +23,7 @@ import '@carbon/web-components/es/components/overflow-menu/index.js';
 import '../../popupElement/popupElement.js';
 
 import '@carbon/web-components/es/components/slug/index.js';
+import '@carbon/web-components/es/components/ai-label/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 
@@ -65,11 +66,14 @@ export function headerTemplate(customElementClass) {
     _checkKeyboardMenu: checkKeyboardMenu,
     _renderLabel: renderLabel,
     slugOpened,
+    _handleMenuOpened,
     headerSlugObject,
     _handleSlugClick: handleSlugClick,
     _hideAISlug: hideAISlug,
     customLabels: customLabels,
     _useSlug: useSlug,
+    _useAiLabel: useAiLabel,
+    _isDragging: isDragging,
   } = customElementClass;
   return html` <div
     class="${clabsPrefix}--chat-header-container"
@@ -125,7 +129,9 @@ export function headerTemplate(customElementClass) {
                             <cds-overflow-menu
                               id="${clabsPrefix}--chat-header-overflow-menu-unique"
                               tooltip-alignment="start"
-                              tooltip-position="bottom"
+                              tooltip-position="right"
+                              @on-open="${_handleMenuOpened}"
+                              align="right"
                               @keydown="${checkKeyboardEscape}"
                               close-on-activation="${true}">
                               ${Menu24({
@@ -201,16 +207,22 @@ export function headerTemplate(customElementClass) {
         </div>
         ${dockingEnabled
           ? html`
-              <div
-                role="button"
+              <cds-icon-button
+                kind="ghost"
+                size="sm"
+                aria-label="Move Chat"
+                align="bottom"
+                class="${clabsPrefix}--chat-header-drag-button"
                 @mousedown="${handleHeaderMouseDown}"
                 @keydown="${handleDragAreaKeydown}"
-                @keyup="${handleDragAreaKeyup}"
-                aria-label="Move chat"
-                tabindex="0"
-                class="${clabsPrefix}--chat-header-drag-area">
-                <div>${Move16()}</div>
-              </div>
+                @keyup="${handleDragAreaKeyup}">
+                ${Move16({ slot: 'icon' })}
+                <span slot="tooltip-content"
+                  >${!isDragging
+                    ? renderLabel('header-move-start-button')
+                    : renderLabel('header-move-end-button')}</span
+                >
+              </cds-icon-button>
             `
           : ''}
 
@@ -221,8 +233,7 @@ export function headerTemplate(customElementClass) {
                   size="sm"
                   slot="slug"
                   autoalign
-                  alignment="bottom"
-                  slug-label="Show information">
+                  alignment="bottom">
                   <div slot="body-text">
                     <div
                       class="${clabsPrefix}--chat-header-slug-compress"
@@ -234,6 +245,14 @@ export function headerTemplate(customElementClass) {
                     </div>
                   </div>
                 </cds-slug> `
+              : useAiLabel
+              ? html`
+                  <cds-ai-label kind="inline" ai-text-label="Text goes here">
+                    <div slot="body-text">
+                      Explanation of AI-generated content
+                    </div>
+                  </cds-ai-label>
+                `
               : html` <cds-icon-button
                   size="sm"
                   kind="tertiary"

@@ -23,8 +23,5 @@
   },
   "files": [
     "es/**/*"
-  ],
-  "scripts": {
-    "build": "gulp build --option example-button"
-  }
+  ]
 }

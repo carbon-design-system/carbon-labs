@@ -2723,6 +2723,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carbon-labs/web-components-example-button@workspace:packages/web-components/src/components/example-button":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/web-components-example-button@workspace:packages/web-components/src/components/example-button"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.14.0"
+    "@carbon/web-components": "npm:2.18.0"
+  languageName: unknown
+  linkType: soft
+
 "@carbon/colors@npm:^11.28.0":
   version: 11.28.0
   resolution: "@carbon/colors@npm:11.28.0"

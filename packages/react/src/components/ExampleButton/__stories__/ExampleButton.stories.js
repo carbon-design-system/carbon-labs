@@ -22,6 +22,6 @@ export default {
 };
 
 /**
- *
+ * Default story for ExampleButton
  */
 export const Default = () => <ExampleButton />;

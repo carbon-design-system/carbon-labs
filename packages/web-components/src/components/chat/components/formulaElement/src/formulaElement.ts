@@ -41,6 +41,7 @@ export default class formulaElement extends LitElement {
     /**
      * getComponents
      */
+    // @ts-ignore
     MathJax.startup.getComponents = () => {
       // @ts-ignore
       MathJax.startup.document = MathJax.startup.document.constructor({

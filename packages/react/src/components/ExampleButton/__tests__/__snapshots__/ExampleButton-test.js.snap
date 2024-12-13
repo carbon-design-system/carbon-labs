@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExampleButton renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <button
+    class="cds--btn cds--btn--primary"
+    type="button"
+  >
+    Button
+  </button>
+</div>
+`;

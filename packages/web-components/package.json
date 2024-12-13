@@ -24,8 +24,8 @@
   },
   "scripts": {
     "build": "cem analyze --config ./custom-elements-manifest.config.js",
-    "build-storybook": "npx storybook build",
     "storybook": "storybook dev -p 6006",
+    "storybook:build": "npx storybook build",
     "test": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --playwright --browsers chromium firefox webkit",
     "test:updateSnapshot": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
   },
@@ -69,7 +69,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "replace-ext": "^2.0.0",
-    "sass": "~1.81.0",
+    "sass": "~1.82.0",
     "sinon": "^17.0.1",
     "storybook": "^8.4.2",
     "strip-comments": "^2.0.1",

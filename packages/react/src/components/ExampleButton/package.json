@@ -1,0 +1,27 @@
+{
+  "name": "@carbon-labs/example-button",
+  "version": "0.0.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - Example Button",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "src/components/ExampleButton"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "exports": {
+    ".": {
+      "default": "./src/index.js"
+    },
+    "./es/": "./es/"
+  },
+  "files": [
+    "es/**/*"
+  ]
+}

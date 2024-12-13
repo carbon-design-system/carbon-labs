@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  web-components:
+  deploy:
     if: github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-latest
     steps:

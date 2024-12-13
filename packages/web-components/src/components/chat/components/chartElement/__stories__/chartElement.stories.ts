@@ -14,7 +14,7 @@ import otherExamples from './examples3.json';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Experimental/Chart',
+  title: 'Components/Experimental Chat/Chart',
   component: 'clabs-chat-chart',
 };
 

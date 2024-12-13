@@ -30,6 +30,16 @@ const config = {
       },
     },
   ],
+  babel: async (config) => {
+    return {
+      ...config,
+      presets: [
+        '@babel/preset-env',
+        '@babel/preset-react',
+        '@babel/preset-typescript',
+      ],
+    };
+  },
   framework: {
     name: getAbsolutePath('@storybook/react-webpack5'),
     options: {},

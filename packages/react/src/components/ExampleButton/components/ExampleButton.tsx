@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import { Button, ButtonProps } from '@carbon/react';
-import './button.scss';
+import './example-button.scss';
 
 /** Primary UI component for user interaction */
 

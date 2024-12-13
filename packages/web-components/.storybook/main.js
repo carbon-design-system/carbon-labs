@@ -12,6 +12,15 @@ import { mergeConfig } from 'vite';
 import postcss from 'rollup-plugin-postcss';
 import postcssLit from 'rollup-plugin-postcss-lit';
 import sass from 'sass';
+import { join, dirname } from 'path';
+
+/**
+ * This function is used to resolve the absolute path of a package.
+ * It is needed in projects that use Yarn PnP or are set up within a monorepo.
+ */
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, 'package.json')));
+}
 
 const config = {
   stories: [
@@ -20,7 +29,7 @@ const config = {
   ],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   framework: {
-    name: '@storybook/web-components-vite',
+    name: getAbsolutePath('@storybook/web-components-vite'),
     options: {},
   },
   docs: {

@@ -33,6 +33,35 @@ export default class formulaElement extends LitElement {
   @state()
   formula;
 
+  /**
+   * startMathJax -  edit target document for rendering
+   */
+  async startMathJax() {
+    // @ts-ignore
+    /**
+     * getComponents
+     */
+    MathJax.startup.getComponents = () => {
+      // @ts-ignore
+      MathJax.startup.document = MathJax.startup.document.constructor({
+        // @ts-ignore
+        options: MathJax.config.options,
+        // @ts-ignore
+        renderActions: MathJax.startup.renderActions,
+        // @ts-ignore
+        inputJax: MathJax.startup.input,
+        // @ts-ignore
+        outputJax: MathJax.startup.output,
+        // @ts-ignore
+        adaptor: MathJax.startup.adaptor,
+      });
+      // @ts-ignore
+      MathJax.startup.document.document = this.shadowRoot;
+    };
+    // @ts-ignore
+    await MathJax.startup.promise;
+  }
+
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
@@ -62,6 +91,7 @@ export default class formulaElement extends LitElement {
    * Prepare table object for rendering from content string
    */
   async _renderFormula() {
+    await this.startMathJax();
     const targetDiv = this.shadowRoot?.querySelector(
       '.' + clabsPrefix + '--chat-formula-container'
     );

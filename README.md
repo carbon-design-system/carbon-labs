@@ -18,7 +18,7 @@ A Storybook demo of all component packages is available here:
 - Web Components Storybook: https://labs.carbondesignsystem.com/web-components
 - React Storybook: https://labs.carbondesignsystem.com/react
 
-## 🙌 Contributing
+## 🙌 Contributing hello
 
 We're always looking for contributors to help us fix bugs, build new features,
 or help us improve the project documentation. If you're interested, definitely

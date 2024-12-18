@@ -33,6 +33,18 @@ export default class chartElement extends LitElement {
   debugMode = true;
 
   /**
+   * selected- highlight if attr is chosen
+   */
+  @property({ type: Boolean, attribute: 'selected' })
+  selected;
+
+  /**
+   * selectable- enable highlight if clicked
+   */
+  @property({ type: Boolean, attribute: 'selectable' })
+  selectable = true;
+
+  /**
    * Event listener to check if parent visibility changed
    */
   private intersectionObserver;
@@ -271,6 +283,18 @@ export default class chartElement extends LitElement {
   isHovered = false;
 
   /**
+   * cellHeight - for multi charts, record max cell size
+   */
+  @state()
+  cellHeight;
+
+  /**
+   * cellWidth - for multi charts, record max cell size
+   */
+  @state()
+  cellWidth;
+
+  /**
    * _latestError -  Vega erro message to display
    */
   @state()
@@ -281,6 +305,12 @@ export default class chartElement extends LitElement {
    */
   @state()
   _specType;
+
+  /**
+   * selected - show highlight when chart clicked if selectable enabled
+   */
+  @state()
+  _isSelected = false;
 
   /** detect when component is rendered to process visualization specification object
    */
@@ -560,9 +590,10 @@ export default class chartElement extends LitElement {
       if (this._specType === 'plain' || this._specType === 'layered') {
         chosenSpec.height = 'container';
         chosenSpec.width = 'container';
+      } else {
+        chosenSpec.autosize = { resize: false };
       }
 
-      chosenSpec.autosize = { resize: false };
       if (this.thumbNail) {
         chosenSpec.width = 400;
         chosenSpec.height = 300;
@@ -1295,6 +1326,8 @@ export default class chartElement extends LitElement {
     let plainSpec;
     let subChartWidth;
     let subChartHeight;
+    this.cellWidth = null;
+    this.cellHeight = null;
 
     if ('layer' in spec) {
       this._specType = 'layered';
@@ -1354,9 +1387,9 @@ export default class chartElement extends LitElement {
       if (currentContainerWidth) {
         let rowCount;
         let columnCount;
-        const legendHeight = 16 * 3;
+        const legendHeight = 16 + 16 * Math.floor(currentContainerWidth / 130);
         const paddingOffset = { vertical: 0, horizontal: 0 };
-        const gapSize = 17;
+        const gapSize = 22;
 
         if (spec.repeat) {
           if (Array.isArray(repeatedSpec['repeat'])) {
@@ -1414,6 +1447,9 @@ export default class chartElement extends LitElement {
             (rowCount + 1) * gapSize) /
             rowCount -
           42;
+
+        this.cellWidth = subChartWidth;
+        this.cellHeight = subChartHeight;
       }
 
       if (spec.repeat) {
@@ -1432,6 +1468,8 @@ export default class chartElement extends LitElement {
         if (subChartHeight) {
           repeatedSpec['spec']['height'] = subChartHeight;
         }
+        this.cellWidth = subChartWidth;
+        this.cellHeight = subChartHeight;
       } else if (spec.vconcat || spec.hconcat || spec.concat) {
         for (let l = 0; l < repeatedSpec[this._specType].length; l++) {
           repeatedSpec[this._specType][l] = this._prepareSpecification(
@@ -1440,7 +1478,9 @@ export default class chartElement extends LitElement {
             true,
             0
           );
-          if (subChartWidth) {
+          if (repeatedSpec[this._specType][l].mark?.type === 'text') {
+            repeatedSpec[this._specType][l]['width'] = 40;
+          } else if (subChartWidth) {
             repeatedSpec[this._specType][l]['width'] = subChartWidth;
 
             //repeatedSpec[this._specType][l].config.legend.columns =calcColumn;
@@ -1453,6 +1493,8 @@ export default class chartElement extends LitElement {
         repeatedSpec['width'] = subChartWidth;
         repeatedSpec['height'] = subChartHeight;
       }
+      this.cellWidth = subChartWidth;
+      this.cellHeight = subChartHeight;
     } else {
       this._specType = 'plain';
       if (!spec['data']) {
@@ -2005,8 +2047,8 @@ export default class chartElement extends LitElement {
             title: null,
             symbolType: 'square',
             symbolLimit: 30,
-            labelLimit: 60,
-            columns: { signal: 'floor(width / 70)' },
+            labelLimit: 120,
+            columns: { signal: 'floor(width / 130)' },
             orient: 'bottom',
             symbolOpacity: 1,
             direction: 'horizontal',
@@ -2027,7 +2069,12 @@ export default class chartElement extends LitElement {
           },
         };
 
-        spec['config'].axis.titleLimit = 100; //Math.min(spec.height,spec.width)
+        if (this.cellHeight && this.cellWidth) {
+          spec['config'].axis.titleLimit = Math.min(
+            this.cellHeight,
+            this.cellWidth
+          );
+        }
       }
 
       this._authorizeSingleSelection = false;
@@ -2268,8 +2315,13 @@ export default class chartElement extends LitElement {
     }
 
     if (this._authorizeMultiSelection) {
-      const brushInteraction: { name: string; select: object } = {
+      const brushInteraction: {
+        name: string;
+        resolve: string;
+        select: object;
+      } = {
         name: 'brush',
+        resolve: 'union',
         select: { type: 'interval' },
       };
       params.push(brushInteraction);

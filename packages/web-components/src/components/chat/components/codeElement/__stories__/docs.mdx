@@ -54,48 +54,143 @@ and editing functions.
   </thead>
   <tbody>
     <tr>
-      <td>editable</td>
+      <td>`editable`</td>
       <td>Make every line editable by users</td>
       <td>When a user-input is needed to fix an object</td>
     </tr>
     <tr>
-      <td>streaming</td>
+      <td>`streaming`</td>
       <td>Rerenders component when content is streamed in</td>
       <td>When streaming is enabled</td>
     </tr>
     <tr>
-      <td>enable-coloring</td>
-      <td>When editable is invoked, remove edit button</td>
-      <td>Disable button to validate edit</td>
+      <td>`max-height`</td>
+      <td>Limits total height and scrolls if needed</td>
+      <td>When code is large or height is limited</td>
     </tr>
     <tr>
-      <td>enable-language-display</td>
-      <td>Shows estimated language at top of component</td>
-      <td>When any type of code can be returned</td>
+      <td>`display-line-count`</td>
+      <td>Shows line count at top of component</td>
+      <td>When code length is variable</td>
     </tr>
     <tr>
-      <td>disable-auto-compacting</td>
+      <td>`tab-size`</td>
+      <td>Set tab spacing for new lines</td>
+      <td>When default spacing of 2 is insufficient</td>
+    </tr>
+    <tr>
+      <td>`enable-language-display`</td>
+      <td>Show language at top of component</td>
+      <td>When generation offers multiple options</td>
+    </tr>
+    <tr>
+      <td>`displayed-language`</td>
+      <td>Force top-level language name</td>
+      <td>When automatic detection isn't accurate</td>
+    </tr>
+    <tr>
+      <td>`enable-estimated-language`</td>
+      <td>Show guessed language from coloring</td>
+      <td>When language is unknown</td>
+    </tr>
+    <tr>
+      <td>`disable-coloring`</td>
+      <td>Disable auto-coloring on render</td>
+      <td>When unneeded</td>
+    </tr>
+    <tr>
+      <td>`disable-coloring-char-threshold`</td>
+      <td>Max character count to auto disable coloring</td>
+      <td>To optimize performance with large code pieces</td>
+    </tr>
+    <tr>
+      <td>`disable-coloring-line-threshold`</td>
+      <td>Max line count to auto disable coloring</td>
+      <td>To optimize performance with large code pieces</td>
+    </tr>
+    <tr>
+      <td>`disable-auto-compacting`</td>
       <td>Stops line-ticks from being removed when space isn't sufficient</td>
       <td>Hide ticks when compacted</td>
     </tr>
     <tr>
-      <td>disable-edit-button</td>
+      <td>`disable-edit-button`</td>
       <td>When editable is invoked, remove edit button</td>
       <td>Disable button to validate edit</td>
     </tr>
     <tr>
-      <td>disable-line-ticks</td>
+      <td>`disable-line-ticks`</td>
       <td>Remove line counts on the left side-bar of code</td>
       <td>When showing code such as console commands</td>
     </tr>
     <tr>
-      <td>disable-copy-button</td>
+      <td>`disable-copy-button`</td>
       <td>Remove copy button from top-right corner</td>
       <td>When displaying code not meant to be replicated</td>
+    </tr>
+    <tr>
+      <td>`customLabels`</td>
+      <td>Define all button labels</td>
+      <td>See below</td>
     </tr>
   </tbody>
 </table>
 
+### Custom Labels for localization ###
+
+Place `customLabels` with the following object to edit all button tooltip values
+```js
+{
+  'code-copypaste-button': 'Copy code',
+  'code-copypaste-success': 'Copied!',
+  'code-estimated-warning': '(estimated)',
+  'code-line-descriptor': 'lines',
+  'code-editing-validation': 'Save edits',
+  'code-editing-cancelled': 'Revert edits'
+}
+```
+
+### &lt;clabs-chat-code&gt; events
+
+<a id="events"></a>
+<table>
+  <tr>
+    <td>**Event listener name**</td>
+    <td>**Trigger condition**</td>
+  </tr>
+  <tr>
+    <td>`on-code-edit-change`</td>
+    <td>Each edit when in editing mode</td>
+  </tr>
+  <tr>
+    <td>`on-code-edit-validation`</td>
+    <td>Editing finalized and locked</td>
+  </tr>
+  <tr>
+    <td>`on-code-edit-cancellation`</td>
+    <td>Last set of edits was undone</td>
+  </tr>
+  <tr>
+    <td>`on-coloring-auto-disabled`</td>
+    <td>Rendering threshold exceeded</td>
+  </tr>
+</table>
+
+### Usage example
+```html
+<clabs-code
+  editable
+  streaming
+  max-height="246px"
+  display-line-count
+  tabs-size="6"
+  enable-language-display
+  displayed-language="python"
+  disable-coloring-line-threshold="150"
+  disable-copy-button
+>
+</clabs-code>
+```
 ### Troubleshooting
 
 <a id="troubleshooting"></a>

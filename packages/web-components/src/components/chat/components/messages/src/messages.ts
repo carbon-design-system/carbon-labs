@@ -37,6 +37,12 @@ export default class messages extends LitElement {
   loading;
 
   /**
+   * force scroll down on new messages no matter what
+   */
+  @property({ type: Boolean, attribute: 'force-scroll-down' })
+  forceScrollDown;
+
+  /**
    * user-assigned boolean denoting when text content is streamed in token by token
    */
   @property({ type: Boolean, attribute: 'stream-responses', reflect: true })
@@ -196,7 +202,11 @@ export default class messages extends LitElement {
     }
 
     if (changedProperties.has('_computedMessages')) {
-      this._scrollMessage();
+      if (!this.forceScrollDown) {
+        this._scrollMessage();
+      } else {
+        this._scrollToBottom();
+      }
     }
 
     if (changedProperties.has('loading')) {

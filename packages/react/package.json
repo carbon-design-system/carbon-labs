@@ -1,30 +1,15 @@
 {
-  "name": "@carbon/labs-react-components",
+  "name": "@carbon/labs-react",
   "version": "0.0.0",
   "private": true,
-  "description": "Carbon Labs React components",
+  "description": "React components for Carbon Labs",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-labs",
-  "engines": {
-    "node": ">=18.x"
-  },
   "scripts": {
     "storybook": "storybook dev -p 3000",
     "storybook:build": "storybook build",
     "test": "jest",
     "test:updateSnapshot": "jest -u"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "dependencies": {
     "@carbon/react": "^1.71.1",
@@ -48,23 +33,22 @@
     "@babel/preset-typescript": "^7.26.0",
     "@chromatic-com/storybook": "^3.2.2",
     "@mdx-js/react": "^3.1.0",
-    "@storybook/addon-docs": "^8.4.6",
-    "@storybook/addon-essentials": "^8.4.6",
-    "@storybook/addon-interactions": "^8.4.6",
-    "@storybook/addon-onboarding": "^8.4.6",
-    "@storybook/addon-storysource": "^8.4.6",
+    "@storybook/addon-docs": "^8.4.7",
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/addon-interactions": "^8.4.7",
+    "@storybook/addon-onboarding": "^8.4.7",
+    "@storybook/addon-storysource": "^8.4.7",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
-    "@storybook/blocks": "^8.4.6",
-    "@storybook/react": "^8.4.6",
-    "@storybook/react-webpack5": "^8.4.6",
-    "@storybook/test": "^8.4.6",
+    "@storybook/blocks": "^8.4.7",
+    "@storybook/react": "^8.4.7",
+    "@storybook/react-webpack5": "^8.4.7",
+    "@storybook/test": "^8.4.7",
     "@types/babel__core": "^7",
     "@types/babel__preset-env": "^7",
     "@types/prop-types": "^15",
     "autoprefixer": "^10.4.20",
     "babel-jest": "^29.7.0",
     "css-loader": "^7.1.2",
-    "eslint-plugin-storybook": "^0.11.1",
     "jest-environment-jsdom": "^29.7.0",
     "mini-css-extract-plugin": "^2.9.2",
     "postcss": "^8.4.49",
@@ -72,7 +56,7 @@
     "prop-types": "^15.8.1",
     "remark-gfm": "^4.0.0",
     "sass-loader": "^16.0.4",
-    "storybook": "^8.4.6",
+    "storybook": "^8.4.7",
     "storybook-addon-accessibility-checker": "^3.1.61-rc.3",
     "style-loader": "^4.0.0",
     "ts-jest": "^29.2.5",

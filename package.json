@@ -42,7 +42,6 @@
     "@web/test-runner-commands": "^0.9.0",
     "@web/test-runner-playwright": "^0.11.0",
     "babel-preset-carbon": "^0.0.14",
-    "browserslist-config-carbon": "^11.2.0",
     "doctoc": "^2.2.1",
     "eslint": "^8.57.0",
     "eslint-config-carbon": "^3.11.0",
@@ -68,8 +67,7 @@
     "rollup-plugin-postcss-lit": "^2.1.0",
     "strip-comments": "^2.0.1",
     "stylelint": "15.11.0",
-    "stylelint-config-carbon": "1.17.0",
-    "through2": "^4.0.2"
+    "stylelint-config-carbon": "1.17.0"
   },
   "packageManager": "yarn@4.5.3"
 }

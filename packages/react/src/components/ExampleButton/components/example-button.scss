@@ -13,7 +13,7 @@
 $prefix: 'clabs' !default;
 
 .#{$prefix}--example-button__container {
-  width: fit-content;
-  border: 1px solid $border-subtle-01;
   padding: $spacing-01;
+  border: 1px solid $border-subtle-01;
+  inline-size: fit-content;
 }

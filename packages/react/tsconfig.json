@@ -1,21 +1,8 @@
 {
+  "extends": "typescript-config-carbon/tsconfig.base.json",
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "types": ["jest", "@testing-library/jest-dom"],
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    // TODO: Turn back on once stricter typings for internal utitlies are complete
+    "noImplicitAny": false
   },
-  "include": ["src", "__tests__/**/*"]
+  "include": ["src/**/*"]
 }

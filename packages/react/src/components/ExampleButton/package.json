@@ -15,13 +15,13 @@
   },
   "main": "./src/index.js",
   "module": "./src/index.js",
-  "exports": {
-    ".": {
-      "default": "./src/index.js"
-    },
-    "./es/": "./es/"
-  },
   "files": [
-    "es/**/*"
-  ]
+    "es",
+    "lib",
+    "scss"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rm -rf {es,lib,scss}"
+  }
 }

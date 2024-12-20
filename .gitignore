@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 es
+scss
 dist-ssr
 lib
 *.local

@@ -10,6 +10,7 @@
 import React from 'react';
 import mdx from './ExampleButton.mdx';
 import { ExampleButton } from '../components/ExampleButton';
+import '../components/example-button.scss';
 
 export default {
   title: 'Components/ExampleButton',

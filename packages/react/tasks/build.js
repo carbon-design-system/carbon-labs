@@ -1,16 +1,14 @@
 /**
- * Copyright IBM Corp. 2016, 2023
+ * Copyright IBM Corp. 2024
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-import autoprefixer from 'autoprefixer';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import path from 'path';
 import stripBanner from 'rollup-plugin-strip-banner';
-import postcss from 'rollup-plugin-postcss';
 import copy from 'rollup-plugin-copy';
 import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
@@ -107,8 +105,8 @@ const babelConfig = {
 };
 
 /**
- *
- * @returns
+ * Gets tsconfig options
+ * @returns tsconfig options object
  */
 function getTsCompilerOptions() {
   const baseOpts = loadBaseTsCompilerOpts();
@@ -159,7 +157,6 @@ function getRollupConfig(input, rootDir, outDir) {
         ],
         flatten: false,
       }),
-      // postcss(postcssOptions()),
       typescript({
         noEmitOnError: true,
         noForceEmit: true,

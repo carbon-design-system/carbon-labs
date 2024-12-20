@@ -17,10 +17,13 @@ import {
   loadBaseTsCompilerOpts,
   loadTsCompilerOpts,
 } from 'typescript-config-carbon';
-import * as packageJson from '../package.json' with { type: 'json' };
+import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const packageJSON = JSON.parse(
+  readFileSync(path.resolve(__dirname, '../package.json'))
+);
 
 /**
  * build function
@@ -129,9 +132,9 @@ function getRollupConfig(input, rootDir, outDir) {
     // Mark dependencies listed in `package.json` as external so that they are
     // not included in the output bundle.
     external: [
-      ...Object.keys(packageJson.default.peerDependencies),
-      ...Object.keys(packageJson.default.dependencies),
-      ...Object.keys(packageJson.default.devDependencies),
+      ...Object.keys(packageJSON.peerDependencies),
+      ...Object.keys(packageJSON.dependencies),
+      ...Object.keys(packageJSON.devDependencies),
     ].map((name) => {
       // Transform the name of each dependency into a regex so that imports from
       // nested paths are correctly marked as external.

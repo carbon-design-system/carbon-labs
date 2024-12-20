@@ -2569,12 +2569,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/example-button@workspace:packages/react/src/components/ExampleButton":
-  version: 0.0.0-use.local
-  resolution: "@carbon-labs/example-button@workspace:packages/react/src/components/ExampleButton"
-  languageName: unknown
-  linkType: soft
-
 "@carbon-labs/network-graph@workspace:packages/web-components/src/components/network-graph":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/network-graph@workspace:packages/web-components/src/components/network-graph"
@@ -2585,6 +2579,12 @@ __metadata:
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.19.0"
     force-graph: "npm:^1.43.5"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton"
   languageName: unknown
   linkType: soft
 
@@ -2720,6 +2720,7 @@ __metadata:
     css-loader: "npm:^7.1.2"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
+    lerna: "npm:^8.0.0"
     mini-css-extract-plugin: "npm:^2.9.2"
     postcss: "npm:^8.4.49"
     postcss-loader: "npm:^8.1.1"

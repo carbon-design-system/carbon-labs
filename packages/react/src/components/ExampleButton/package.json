@@ -1,5 +1,5 @@
 {
-  "name": "@carbon-labs/example-button",
+  "name": "@carbon-labs/react-example-button",
   "version": "0.0.0",
   "publishConfig": {
     "access": "public",

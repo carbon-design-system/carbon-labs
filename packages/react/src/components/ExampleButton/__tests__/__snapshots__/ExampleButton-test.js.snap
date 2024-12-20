@@ -2,11 +2,15 @@
 
 exports[`ExampleButton renders as expected - Component API should match snapshot 1`] = `
 <div>
-  <button
-    class="cds--btn cds--btn--primary"
-    type="button"
+  <div
+    class="clabs--example-button__container"
   >
-    Button
-  </button>
+    <button
+      class="cds--btn cds--btn--primary"
+      type="button"
+    >
+      Button
+    </button>
+  </div>
 </div>
 `;

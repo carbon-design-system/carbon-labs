@@ -2687,12 +2687,11 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.26.0"
     "@carbon/react": "npm:^1.71.1"
     "@carbon/styles": "npm:^1.70.0"
-    "@chromatic-com/storybook": "npm:^3.2.2"
     "@mdx-js/react": "npm:^3.1.0"
     "@rollup/plugin-babel": "npm:^6.0.0"
     "@rollup/plugin-commonjs": "npm:^28.0.0"
     "@rollup/plugin-node-resolve": "npm:^15.0.0"
-    "@rollup/plugin-typescript": "npm:^11.0.0"
+    "@rollup/plugin-typescript": "npm:^12.1.1"
     "@storybook/addon-docs": "npm:^8.4.7"
     "@storybook/addon-essentials": "npm:^8.4.7"
     "@storybook/addon-interactions": "npm:^8.4.7"
@@ -2952,21 +2951,6 @@ __metadata:
   version: 11.0.3
   resolution: "@chevrotain/utils@npm:11.0.3"
   checksum: 10c0/b31972d1b2d444eef1499cf9b7576fc1793e8544910de33a3c18e07c270cfad88067f175d0ee63e7bc604713ebed647f8190db45cc8311852cd2d4fe2ef14068
-  languageName: node
-  linkType: hard
-
-"@chromatic-com/storybook@npm:^3.2.2":
-  version: 3.2.2
-  resolution: "@chromatic-com/storybook@npm:3.2.2"
-  dependencies:
-    chromatic: "npm:^11.15.0"
-    filesize: "npm:^10.0.12"
-    jsonfile: "npm:^6.1.0"
-    react-confetti: "npm:^6.1.0"
-    strip-ansi: "npm:^7.1.0"
-  peerDependencies:
-    storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
-  checksum: 10c0/7b8da1ddb399c804337ff28a28594b548392b7bead52f66615b98e201cdeb4d31184b9e355791ba5d0d8cfdd2bea7d38355ecd0058f26f4790f9a887107bde0f
   languageName: node
   linkType: hard
 
@@ -5788,25 +5772,6 @@ __metadata:
     rollup:
       optional: true
   checksum: 10c0/b9cb6c8f02ac1c1344019e9fb854321b74f880efebc41b6bdd84f18331fce0f4a2aadcdb481042245cd3f409b429ac363af71f9efec4a2024731d67d32af36ee
-  languageName: node
-  linkType: hard
-
-"@rollup/plugin-typescript@npm:^11.0.0":
-  version: 11.1.6
-  resolution: "@rollup/plugin-typescript@npm:11.1.6"
-  dependencies:
-    "@rollup/pluginutils": "npm:^5.1.0"
-    resolve: "npm:^1.22.1"
-  peerDependencies:
-    rollup: ^2.14.0||^3.0.0||^4.0.0
-    tslib: "*"
-    typescript: ">=3.7.0"
-  peerDependenciesMeta:
-    rollup:
-      optional: true
-    tslib:
-      optional: true
-  checksum: 10c0/5347cd73ac28d4cf2401a3e689864a1a0df8f3ae029abd9c38525cbc84bcfa16c3a32a0ac5698dac65ec531ba7cf8332e14f5fc7f8fa501193da23320a134c5c
   languageName: node
   linkType: hard
 
@@ -11096,25 +11061,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromatic@npm:^11.15.0":
-  version: 11.20.1
-  resolution: "chromatic@npm:11.20.1"
-  peerDependencies:
-    "@chromatic-com/cypress": ^0.*.* || ^1.0.0
-    "@chromatic-com/playwright": ^0.*.* || ^1.0.0
-  peerDependenciesMeta:
-    "@chromatic-com/cypress":
-      optional: true
-    "@chromatic-com/playwright":
-      optional: true
-  bin:
-    chroma: dist/bin.js
-    chromatic: dist/bin.js
-    chromatic-cli: dist/bin.js
-  checksum: 10c0/6c161eef09d0fb8dd1489c6a5c3b196f6768ad7c82172ed51d894f45face96cbc570df522e4bae4150047baa58430fede686266cafdb0d351b4c9a64a68d2dff
-  languageName: node
-  linkType: hard
-
 "chrome-launcher@npm:^0.15.0":
   version: 0.15.2
   resolution: "chrome-launcher@npm:0.15.2"
@@ -15090,13 +15036,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"filesize@npm:^10.0.12":
-  version: 10.1.6
-  resolution: "filesize@npm:10.1.6"
-  checksum: 10c0/9a196d64da4e947b8c0d294be09a3dfa7a634434a1fc5fb3465f1c9acc1237ea0363f245ba6e24477ea612754d942bc964d86e0e500905a72e9e0e17ae1bbdbc
-  languageName: node
-  linkType: hard
-
 "fill-range@npm:^2.1.0":
   version: 2.2.4
   resolution: "fill-range@npm:2.2.4"
@@ -18780,7 +18719,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonfile@npm:^6.0.1, jsonfile@npm:^6.1.0":
+"jsonfile@npm:^6.0.1":
   version: 6.1.0
   resolution: "jsonfile@npm:6.1.0"
   dependencies:

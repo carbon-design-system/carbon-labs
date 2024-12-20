@@ -17,7 +17,7 @@ import {
   loadBaseTsCompilerOpts,
   loadTsCompilerOpts,
 } from 'typescript-config-carbon';
-import * as packageJson from '../package.json' assert { type: 'json' };
+import * as packageJson from '../package.json' with { type: 'json' };
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

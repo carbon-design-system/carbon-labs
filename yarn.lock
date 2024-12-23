@@ -10775,7 +10775,7 @@ __metadata:
     gulp-header: "npm:^2.0.9"
     gulp-postcss: "npm:^10.0.0"
     gulp-prettier: "npm:^6.0.0"
-    gulp-sass: "npm:^5.1.0"
+    gulp-sass: "npm:^6.0.0"
     gulp-sourcemaps: "npm:^3.0.0"
     gulp-typescript: "npm:6.0.0-alpha.1"
     husky: "npm:^9.0.0"
@@ -16245,9 +16245,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gulp-sass@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "gulp-sass@npm:5.1.0"
+"gulp-sass@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "gulp-sass@npm:6.0.0"
   dependencies:
     lodash.clonedeep: "npm:^4.5.0"
     picocolors: "npm:^1.0.0"
@@ -16255,7 +16255,7 @@ __metadata:
     replace-ext: "npm:^2.0.0"
     strip-ansi: "npm:^6.0.1"
     vinyl-sourcemaps-apply: "npm:^0.2.1"
-  checksum: 10c0/6eaacf92519ef9963cec83d4c716ae174aad0bb6427794058c86d6300559016633a97903457aaeb5485de98c710af86d4941e8b20c498f7b7cba14f93ba90065
+  checksum: 10c0/8864736d794d65f13d1bd314df17fa43770d3fd6fb2f0e746ef9513ac66b1d1405abdc4520a61f3ec4b911b4a3b4ab82b881ab3e3dd81b2f2fd6daca6538aa39
   languageName: node
   linkType: hard
 

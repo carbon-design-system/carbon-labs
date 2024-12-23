@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import { Button, ButtonProps } from '@carbon/react';
-import './example-button.scss';
+import { usePrefix } from '../../../internal/usePrefix';
 
 /** Primary UI component for user interaction */
 
@@ -20,5 +20,11 @@ export const ExampleButton = ({
   children = 'Button',
   ...rest
 }: ExampleButtonProps) => {
-  return <Button {...rest}>{children}</Button>;
+  const prefix = usePrefix();
+
+  return (
+    <div className={`${prefix}--example-button__container`}>
+      <Button {...rest}>{children}</Button>
+    </div>
+  );
 };

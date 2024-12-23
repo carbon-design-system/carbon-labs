@@ -7,7 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ExampleButton } from '@carbon-labs/example-button/es/index';
+import React from 'react';
+import { ExampleButton } from '@carbon-labs/react-example-button/es/index';
 
 function App() {
   return <ExampleButton />;

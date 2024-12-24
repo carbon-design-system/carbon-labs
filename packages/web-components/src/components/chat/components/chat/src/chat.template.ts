@@ -33,6 +33,7 @@ export function chatTemplate(customElementClass) {
     agentName,
     loading,
     closed,
+    forceAutoUpdate,
     maxCharacterCount,
     disableHeaderMenu,
     disableHeaderButtons,
@@ -151,6 +152,7 @@ export function chatTemplate(customElementClass) {
                 .messages="${messages}"
                 user-name="${userName}"
                 agent-name="${agentName}"
+                ?force-scroll-down="${forceAutoUpdate}"
                 ?docking-enabled="${enableDocking}"
                 ?loading="${queryInProgress}"
                 ?stream-responses="${streamResponses}"

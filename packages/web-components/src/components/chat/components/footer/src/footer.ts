@@ -98,6 +98,12 @@ export default class footer extends LitElement {
   hideContextMessage = false;
 
   /**
+   * focus-prompt set focus targeting
+   */
+  @property({ type: Boolean, attribute: 'focus-prompt' })
+  _focusPrompt;
+
+  /**
    * add context meesage above prompt
    */
   @property({ type: String, attribute: 'context-message' })
@@ -208,6 +214,18 @@ export default class footer extends LitElement {
       this.updateTextAreaHeight();
       if (this._characterLimit) {
         this._checkLimit();
+      }
+    }
+
+    if (changedProperties.has('_focusPrompt')) {
+      if (this._focusPrompt) {
+        const textArea = this.shadowRoot?.querySelector(
+          '.' + clabsPrefix + '--chat-search-query'
+        );
+        if (textArea instanceof HTMLElement) {
+          textArea.focus();
+          this._isPromptFocused = true;
+        }
       }
     }
     if (changedProperties.has('_fullscreenMode')) {

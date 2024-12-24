@@ -3,6 +3,12 @@ import * as ExampleButtonStories from './ExampleButton.stories';
 
 <Meta isTemplate />
 
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/example-button)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/example-button)
+
 # ExampleButton
 
 {/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
@@ -11,6 +17,7 @@ import * as ExampleButtonStories from './ExampleButton.stories';
 ## Table of Contents
 
 - [Overview](#overview)
+- [Getting started](#getting-started)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
 
@@ -19,3 +26,33 @@ import * as ExampleButtonStories from './ExampleButton.stories';
 This is an example button component.
 
 <Canvas of={ExampleButtonStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-example-button
+```
+
+### JS (via import)
+
+```javascript
+import { ExampleButton } from '@carbon-labs/react-example-button/es/index';
+
+function App() {
+  return <ExampleButton />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-example-button/scss/example-button';
+```

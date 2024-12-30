@@ -2594,6 +2594,8 @@ __metadata:
   dependencies:
     "@rollup/plugin-babel": "npm:^6.0.4"
     babel-cli: "npm:^6.26.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   languageName: unknown
   linkType: soft
 

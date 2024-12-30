@@ -23,5 +23,8 @@
   "scripts": {
     "build": "node ../../../tasks/build.js",
     "clean": "rm -rf {es,lib,scss}"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "canary"
   }
 }

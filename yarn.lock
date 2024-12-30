@@ -2585,6 +2585,8 @@ __metadata:
 "@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
   languageName: unknown
   linkType: soft
 
@@ -2603,6 +2605,16 @@ __metadata:
   version: 0.8.0
   resolution: "@carbon-labs/utilities@npm:0.8.0"
   checksum: 10c0/f163a6e0367d43f463be787b6561454805c307f7ebacb8f9ff0a7c37ff13b1b854a763bebbef7a47069d8c37cbd8ddccb1cecd72ba75fe422d91bb154e796dd8
+  languageName: node
+  linkType: hard
+
+"@carbon-labs/utilities@npm:canary":
+  version: 0.14.1-canary.387
+  resolution: "@carbon-labs/utilities@npm:0.14.1-canary.387"
+  dependencies:
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+  checksum: 10c0/17f791a40f4f55689924b355fdecbfb254abd99325e1aee86ef96b7adb95e57d5be0b0eb928083137a6bad8a667d1bdfe33af2946502fa48434a133fb43756a3
   languageName: node
   linkType: hard
 

@@ -31,7 +31,7 @@ const packageJSON = JSON.parse(
 async function build() {
   const reactEntrypoint = {
     filepath: path.resolve(process.cwd(), 'index.ts'),
-    rootDir: 'src',
+    rootDir: path.resolve(process.cwd()),
     outputDirectory: path.resolve(process.cwd()),
   };
 

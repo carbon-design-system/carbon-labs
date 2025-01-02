@@ -16,7 +16,7 @@ import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
  */
 export default {
   title: 'Example Component/Example button',
-  tags: ['autodocs'],
+  component: 'clabs-example-button',
 };
 
 /**

@@ -159,6 +159,18 @@ might want to run:
 3. Build your component. You can run the build for your new component from the
    root of the project using the `yarn build` command.
 
+4. For testing and documentation purposes, a stackblitz example can be created
+   and linked in the component's storybook documentation as shown in the
+   [`example-button` storybook docs](https://labs.carbondesignsystem.com/react/?path=/docs/components-example-button--overview).
+   - To do this, copy and paste the
+     [`ExampleButton` example folder](https://github.com/carbon-design-system/carbon-labs/tree/main/examples/web-components/example-button)
+     under the `carbon-labs/examples/web-components` folder and rename the copy
+     to your component name.
+   - [Add the stackblitz link](https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/__stories__/example-button.mdx?plain=1#16-#L20)
+     to your component storybook doc, making sure the link is pointing correctly
+     to your example folder. **Note:** The example needs to be merged into
+     `main` first before the stackblitz link is viewable.
+
 ## Submitting a Pull Request
 
 1. Pull the latest main branch from `upstream`:

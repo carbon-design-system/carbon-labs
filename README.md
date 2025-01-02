@@ -20,9 +20,7 @@ A Storybook demo of all component packages is available here:
 
 ## 🙌 Contributing
 
-We're always looking for contributors to help us fix bugs, build new features,
-or help us improve the project documentation. If you're interested, definitely
-check out our guides:
+Want to build a component in `@carbon-labs`? Start here with our guide:
 
 - [Developer Guide](https://github.com/carbon-design-system/carbon-labs/blob/main/docs/developing.md)
 

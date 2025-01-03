@@ -1514,9 +1514,13 @@ export default class message extends LitElement {
     const messageDetails = this._prepareEventDetail();
     if (this.positiveFeedbackSelected) {
       messageDetails['action'] = 'message: user gave feedback to response';
+
+      messageDetails['feedbackRetracted'] = false;
       this._focusOnPopup();
     } else {
       messageDetails['action'] = 'message: user removed feedback to response';
+
+      messageDetails['feedbackRetracted'] = true;
     }
     messageDetails['type'] = 'positive';
     messageDetails['rawTextMessage'] = this.rawText;
@@ -1546,9 +1550,11 @@ export default class message extends LitElement {
     const messageDetails = this._prepareEventDetail();
     if (this.negativeFeedbackSelected) {
       messageDetails['action'] = 'message: user gave feedback to response';
+      messageDetails['feedbackRetracted'] = false;
       this._focusOnPopup();
     } else {
       messageDetails['action'] = 'message: user removed feedback to response';
+      messageDetails['feedbackRetracted'] = true;
     }
     messageDetails['type'] = 'negative';
     messageDetails['rawTextMessage'] = this.rawText;

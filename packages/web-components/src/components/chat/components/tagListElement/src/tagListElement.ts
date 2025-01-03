@@ -48,6 +48,12 @@ export default class tagListElement extends LitElement {
   actionIcon;
 
   /**
+   * Type - dictate what action to attach
+   */
+  @property({ type: String, attribute: 'action-type' })
+  actionType;
+
+  /**
    * isAction - use quick action buttons
    */
   @property({ type: String, attribute: 'is-action' })
@@ -134,6 +140,7 @@ export default class tagListElement extends LitElement {
         tagLabel: source,
         tagIndexInList: index,
         selectionList: this.selectedValues,
+        actionType: this.actionType,
       },
       bubbles: true,
       composed: true,

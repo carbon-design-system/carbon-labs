@@ -72,6 +72,7 @@ export function chartElementTemplate(customElementClass) {
     _chartClicked: chartClicked,
     exportedImageURL,
     _handleFullScreenScroll: handleFullScreenScroll,
+    selected,
   } = customElementClass;
 
   return html`
@@ -207,7 +208,9 @@ export function chartElementTemplate(customElementClass) {
           ${_visualizationSpec && !errorMessage && !streaming
             ? html` <div
                 @click="${chartClicked}"
-                class="${clabsPrefix}--chat-chart-container"
+                class="${clabsPrefix}--chat-chart-container${selected
+                  ? ' ' + clabsPrefix + '--chat-chart-container-selected'
+                  : ''}"
                 id="${clabsPrefix}--chat-chart-embed-vis-${uniqueID}"></div>`
             : html` <div class="${clabsPrefix}--chat-chart-container">
                 <div class="${clabsPrefix}--chat-chart-loading-container">

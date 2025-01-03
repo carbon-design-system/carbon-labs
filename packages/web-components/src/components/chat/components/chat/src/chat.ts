@@ -58,6 +58,12 @@ export default class CLABSChat extends LitElement {
   autoUpdate;
 
   /**
+   * force-auto-update - force scroll down no matter what
+   */
+  @property({ type: Boolean, attribute: 'force-auto-update' })
+  forceAutoUpdate;
+
+  /**
    * show launcher when closed
    */
   @property({ type: Boolean, attribute: 'enable-launcher' })

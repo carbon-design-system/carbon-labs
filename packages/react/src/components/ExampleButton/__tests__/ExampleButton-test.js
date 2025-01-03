@@ -33,7 +33,7 @@ describe('ExampleButton', () => {
 
     it('supports a custom class name', () => {
       const { container } = render(<ExampleButton className="test" />);
-      expect(container.firstChild).toHaveClass('test');
+      expect(container.firstChild.firstChild).toHaveClass('test');
     });
 
     it('supports additional props', () => {

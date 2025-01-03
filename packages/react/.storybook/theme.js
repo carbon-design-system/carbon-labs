@@ -6,7 +6,6 @@
  */
 
 import { create } from '@storybook/theming';
-import PackageInfo from '../package.json';
 
 /**
  * @see https://storybook.js.org/docs/react/configure/theming

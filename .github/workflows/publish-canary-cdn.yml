@@ -9,12 +9,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  web-components:
+  deploy-canary-cdn:
     if: github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 'packages/web-components'
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -22,10 +19,10 @@ jobs:
       - uses: fkirc/skip-duplicate-actions@v5.3.1
         with:
           github_token: ${{ github.token }}
-      - name: Use Node.js 18.x
+      - name: Use Node.js 20.x
         uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '20.x'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
@@ -34,6 +31,7 @@ jobs:
       - name: Build dist folders in each package
         run: yarn build:dist:canary
       - name: Create one folder with dist contents from each package
+        working-directory: 'packages/web-components'
         run: |
           mkdir dist
           cp -r src/components/**/dist/. dist/

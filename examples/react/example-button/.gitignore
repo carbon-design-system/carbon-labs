@@ -4,21 +4,13 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 lerna-debug.log*
-.yarn/install-state.gz
 
 node_modules
 dist
-es
-scss
 dist-ssr
-lib
 *.local
-.env
-storybook-static
-custom-elements.json
-
-package.tgz
 
 # Editor directories and files
 .vscode/*
@@ -30,6 +22,3 @@ package.tgz
 *.njsproj
 *.sln
 *.sw?
-.nx/*
-agentic.stories.js
-/.history

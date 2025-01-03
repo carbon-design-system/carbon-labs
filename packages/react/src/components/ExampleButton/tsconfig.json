@@ -4,5 +4,5 @@
     // TODO: Turn back on once stricter typings for internal utitlies are complete
     "noImplicitAny": false
   },
-  "include": ["src/**/*"]
+  "exclude": ["**/__stories__/*.stories.js", "**/__tests__/*", "**/*d.ts"]
 }

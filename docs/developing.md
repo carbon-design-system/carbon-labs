@@ -9,6 +9,8 @@
 - [Installing dependencies](#installing-dependencies)
 - [Running Storybook](#running-storybook)
 - [Common tasks](#common-tasks)
+- [Building a React Component](#building-a-react-component)
+- [Building a Web Component](#building-a-web-component)
 - [Submitting a Pull Request](#submitting-a-pull-request)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -110,6 +112,64 @@ might want to run:
 | `yarn format`, `yarn format:write` | Check if files have been formatted, format files using prettier                                               |
 | `yarn ci-check`                    | Runs the ci-checks                                                                                            |
 | `yarn ci-check:build`              | Runs the ci-checks along with the build and build:dist commands                                               |
+
+## Building a React Component
+
+1. Start by copying and pasting the
+   [`ExampleButton` template component folder](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/ExampleButton),
+   renaming the copy to your desired component name.
+
+2. Adjust the naming in the files, most importantly these lines in the
+   `package.json` file:
+
+   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/ExampleButton/package.json#L2
+   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/ExampleButton/package.json#L9
+   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/ExampleButton/package.json#L14
+
+3. Build your component. You can run the build for your new component within the
+   component folder or in the root of the project using the `yarn build`
+   command.
+
+4. For testing and documentation purposes, a stackblitz example can be created
+   and linked in the component's storybook documentation as shown in the
+   [`ExampleButton` storybook docs](https://labs.carbondesignsystem.com/react/?path=/docs/components-examplebutton--overview).
+   - To do this, copy and paste the
+     [`ExampleButton` example folder](https://github.com/carbon-design-system/carbon-labs/tree/main/examples/react/example-button)
+     under the `carbon-labs/examples/react` folder and rename the copy to your
+     component name.
+   - [Add the stackblitz link](https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/ExampleButton/__stories__/ExampleButton.mdx?plain=1#L11-L15)
+     to your component storybook doc, making sure the link is pointing correctly
+     to your example folder. **Note:** The example needs to be merged into
+     `main` first before the stackblitz link is viewable.
+
+## Building a Web Component
+
+1. Start by copying and pasting the
+   [`example-button` template component folder](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/example-button),
+   renaming the copy to your desired component name.
+
+2. Adjust the naming in the files, most importantly these lines in the
+   `package.json` file:
+
+   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/package.json#L2
+   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/package.json#L8
+   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/package.json#L13
+   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/package.json#L32
+
+3. Build your component. You can run the build for your new component from the
+   root of the project using the `yarn build` command.
+
+4. For testing and documentation purposes, a stackblitz example can be created
+   and linked in the component's storybook documentation as shown in the
+   [`example-button` storybook docs](https://labs.carbondesignsystem.com/react/?path=/docs/components-example-button--overview).
+   - To do this, copy and paste the
+     [`ExampleButton` example folder](https://github.com/carbon-design-system/carbon-labs/tree/main/examples/web-components/example-button)
+     under the `carbon-labs/examples/web-components` folder and rename the copy
+     to your component name.
+   - [Add the stackblitz link](https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/__stories__/example-button.mdx?plain=1#16-#L20)
+     to your component storybook doc, making sure the link is pointing correctly
+     to your example folder. **Note:** The example needs to be merged into
+     `main` first before the stackblitz link is viewable.
 
 ## Submitting a Pull Request
 

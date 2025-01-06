@@ -21,6 +21,7 @@
   },
   "scripts": {
     "build": "cem analyze --config ./custom-elements-manifest.config.js",
+    "generate": "node tasks/generate",
     "storybook": "storybook dev -p 6006",
     "storybook:build": "npx storybook build",
     "test": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --playwright --browsers chromium firefox webkit",

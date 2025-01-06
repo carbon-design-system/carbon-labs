@@ -1,5 +1,5 @@
 {
-  "name": "carbon-labs-web-components-example-button",
+  "name": "carbon-labs-web-components-DISPLAY_NAME",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -15,7 +15,7 @@
     "vite": "^3.2.2"
   },
   "dependencies": {
-    "@carbon-labs/wc-example-button": "latest",
+    "@carbon-labs/wc-DISPLAY_NAME": "latest",
     "@carbon/styles": "^1.70.0"
   }
 }

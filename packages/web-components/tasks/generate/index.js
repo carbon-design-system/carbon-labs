@@ -9,7 +9,7 @@ import fs from 'fs';
 import chalk from 'chalk';
 import { outputFileSync } from 'fs-extra/esm';
 import { sync } from 'glob';
-import { pascalCase, paramCase, camelCase, capitalCase } from 'change-case';
+import { pascalCase, kebabCase, camelCase, capitalCase } from 'change-case';
 import path, { join, relative, resolve } from 'path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
@@ -33,7 +33,7 @@ if (!name) {
 }
 
 const substitutions = {
-  DISPLAY_NAME: paramCase(name),
+  DISPLAY_NAME: kebabCase(name),
   CAMEL_CASE: camelCase(name),
   PASCAL_CASE: pascalCase(name),
   FULL_YEAR: new Date().getFullYear(),

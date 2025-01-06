@@ -1,5 +1,5 @@
 {
-  "name": "@carbon-labs/web-components-example-button",
+  "name": "@carbon-labs/wc-example-button",
   "version": "0.4.0",
   "publishConfig": {
     "access": "public",

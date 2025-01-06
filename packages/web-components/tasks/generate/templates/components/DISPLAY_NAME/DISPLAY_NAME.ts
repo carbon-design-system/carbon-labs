@@ -16,7 +16,7 @@ const { stablePrefix: clabsPrefix } = settings;
 /**
  * Component extending the @carbon/web-components' button
  */
-@customElement(`${clabsPrefix}-example-button`)
+@customElement(`${clabsPrefix}-DISPLAY_NAME`)
 class CLABSPASCAL_CASE extends CAMEL_CASE {}
 
 export default CLABSPASCAL_CASE;

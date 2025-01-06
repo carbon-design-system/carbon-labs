@@ -120,6 +120,8 @@ might want to run:
    desired component name. This will generated the base component with all the
    necessary files.
 
+   The component name should be pascal case (ie. TestComponent).
+
    ```bash
    cd packages/react
    yarn generate TestComponent
@@ -149,6 +151,8 @@ might want to run:
 1. From the `web-components` package folder, run the `generate` script and
    provide the desired component name. This will generated the base component
    with all the necessary files.
+
+   The component name should be param case (ie. test-component).
 
    ```bash
    cd packages/web-components

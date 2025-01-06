@@ -9,7 +9,7 @@ import fs from 'fs';
 import chalk from 'chalk';
 import { outputFileSync } from 'fs-extra/esm';
 import { sync } from 'glob';
-import { paramCase, pascalCase, capitalCase } from 'change-case';
+import { pascalCase, paramCase, camelCase, capitalCase } from 'change-case';
 import path, { join, relative, resolve } from 'path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
@@ -27,16 +27,17 @@ if (!name) {
   console.error(
     `${chalk.red(
       'Error:'
-    )} No component name given. e.g. yarn generate TestComponent`
+    )} No component name given. e.g. yarn generate test-component`
   );
   process.exit(1);
 }
 
 const substitutions = {
-  DISPLAY_NAME: pascalCase(name),
+  DISPLAY_NAME: paramCase(name),
+  CAMEL_CASE: camelCase(name),
+  PASCAL_CASE: pascalCase(name),
   FULL_YEAR: new Date().getFullYear(),
   TITLE_NAME: capitalCase(name),
-  STYLE_NAME: paramCase(name),
 };
 
 /**
@@ -63,7 +64,7 @@ sync(resolve(templatesPath, '**/*')).forEach((template) => {
 
   if (relativePath.startsWith('example')) {
     path = join(
-      '../../examples/react',
+      '../../examples/web-components',
       substitutions.DISPLAY_NAME,
       compiledPath.substr('example/'.length)
     );

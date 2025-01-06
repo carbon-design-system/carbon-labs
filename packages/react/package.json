@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-labs",
   "scripts": {
-    "storybook": "storybook dev -p 3000",
+    "storybook": "storybook dev -p 6008",
     "storybook:build": "storybook build",
     "test": "jest",
     "test:updateSnapshot": "jest -u"

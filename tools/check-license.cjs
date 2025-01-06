@@ -59,10 +59,9 @@ const options = program.opts();
  */
 const check = async (paths, options) => {
   let checkPaths = [];
-  const { globby } = await import ('globby');
+  const { globby } = await import('globby');
 
   if (options.checkAllFiles) {
-
     const gitIgnorePath = await globby(
       path.resolve(__dirname, '../.gitignore'),
       {
@@ -74,16 +73,16 @@ const check = async (paths, options) => {
     checkPaths = await globby(
       gitIgnorePath.reduce(
         (acc, item) => acc.concat(gitignoreToGlob(item)),
-        ['**/*.{js,ts,tsx,scss,html}','!**/*.snap.js'],
+        ['**/*.{js,ts,tsx,scss,html}', '!**/*.snap.js', '!**/tasks/generate']
       )
     );
   } else if (options.writeCurrentYear) {
-    // Get the list of staged files 
+    // Get the list of staged files
     const { stdout } = await execPromise('git diff --cached --name-only');
     const allPaths = stdout.split('\n').filter(Boolean);
 
     checkPaths = await globby(
-      allPaths.map(file => path.relative(__dirname, file)),
+      allPaths.map((file) => path.relative(__dirname, file)),
       {
         cwd: path.resolve(__dirname, '..'),
         gitignore: true,

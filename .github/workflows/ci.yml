@@ -90,3 +90,6 @@ jobs:
       - name: run React tests
         working-directory: 'packages/react'
         run: yarn test
+      - name: run Web Component tests
+        working-directory: 'packages/web-components'
+        run: yarn test

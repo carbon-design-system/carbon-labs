@@ -8,6 +8,6 @@
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 
 export default {
-  files: ['src/**/*.test.ts'],
+  files: ['src/**/*.test.js'],
   plugins: [esbuildPlugin({ ts: true })],
 };

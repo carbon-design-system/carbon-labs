@@ -22,9 +22,10 @@
   "scripts": {
     "build": "cem analyze --config ./custom-elements-manifest.config.js",
     "storybook": "storybook dev -p 6007",
+    "generate": "node tasks/generate",
     "storybook:build": "npx storybook build",
-    "test": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --playwright --browsers chromium firefox webkit",
-    "test:updateSnapshot": "yarn build && web-test-runner \"packages/**/*.test.ts\" --node-resolve --update-snapshots"
+    "test": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve",
+    "test:updateSnapshot": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve --update-snapshots"
   },
   "dependencies": {
     "@carbon/styles": "^1.70.0",
@@ -37,10 +38,11 @@
     "@carbon/layout": "11.28.0",
     "@carbon/motion": "11.24.0",
     "@carbon/themes": "11.44.0",
-    "@carbon/type": "11.33.0",
+    "@carbon/type": "11.34.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",
     "@lit/react": "^1.0.1",
     "@open-wc/testing": "^4.0.0",
+    "@playwright/test": "^1.39.0",
     "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-commonjs": "^28.0.0",
     "@rollup/plugin-json": "^6.1.0",
@@ -56,6 +58,9 @@
     "@storybook/theming": "^8.4.7",
     "@storybook/web-components": "^8.4.7",
     "@storybook/web-components-vite": "^8.4.7",
+    "@web/test-runner": "^0.19.0",
+    "@web/test-runner-commands": "^0.9.0",
+    "@web/test-runner-playwright": "^0.11.0",
     "async-done": "^2.0.0",
     "autoprefixer": "^10.4.20",
     "browserslist-config-carbon": "^11.2.0",

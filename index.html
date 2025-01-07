@@ -1,34 +1,304 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <title>Carbon Labs</title>
-    <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/latest/plex.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://1.www.s81c.com/common/carbon/web-components/tag/v2/latest/grid.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://1.www.s81c.com/common/carbon/web-components/tag/v2/latest/themes.css"
-    />
+    <meta charset="utf-8" />
+
+    <title>@storybook/core - Storybook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    
     <style>
-      /* Suppress custom element until styles are loaded */
-      cds-button:not(:defined) {
-        display: none;
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-regular.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: italic;
+        font-weight: 400;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-italic.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-bold.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: italic;
+        font-weight: 700;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-bold-italic.woff2') format('woff2');
       }
     </style>
-    <script
-      type="module"
-      src="https://1.www.s81c.com/common/carbon/web-components/version/v2.19.0/button.min.js"
-    ></script>
+
+    <link href="./sb-manager/runtime.js" rel="modulepreload" />
+
+    
+    <link href="./sb-addons/storybook-core-core-server-presets-0/common-manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-controls-1/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-actions-2/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-backgrounds-3/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-viewport-4/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-toolbars-5/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-measure-6/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/essentials-outline-7/manager-bundle.js" rel="modulepreload" />
+      <meta
+  name="keywords"
+  content="IBM, design, system, Carbon, design system, Bluemix, styleguide, style, guide, components, library, pattern, kit, component, cloud, React, React.js" />
+<meta
+  name="description"
+  content="This is Carbon Labs, an innovation space for the creation of components leveraging Carbon Design System." />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Carbon Labs" />
+<meta property="og:site_name" content="Carbon Labs" />
+<meta
+  property="og:description"
+  content="This is Carbon Labs, an innovation space for the creation of components leveraging Carbon Design System." />
+<meta
+  property="og:image"
+  content="https://media.github.ibm.com/user/1679/files/aa651000-7749-11eb-900e-eeb9312ed756" />
+<meta property="og:url" content="http://labs.carbondesignsystem.com" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg" sizes="any" />
+
+<footer>
+  <dds-footer-container
+    key="footer"
+    disable-locale-button="true"
+    size="micro" />,
+</footer>
+
+<script
+  key="8"
+  type="module"
+  src="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/latest/footer.min.js" />
+
+<!-- Storybook override -->
+<script>
+  setTimeout(function () {
+    document.title = 'Carbon Labs';
+  }, 1000);
+</script>
+
+<!-- Tealium/GA Set up -->
+<script type="text/javascript">
+  window._ibmAnalytics = {
+    settings: {
+      name: 'CarbonLabsStorybook',
+      isSpa: true,
+      tealiumProfileName: 'ibm-web-app',
+    },
+    onLoad: [['ibmStats.pageview', []]],
+  };
+  digitalData = {
+    page: {
+      pageInfo: {
+        ibm: {
+          siteId: 'IBM_' + _ibmAnalytics.settings.name,
+        },
+      },
+      category: {
+        primaryCategory: 'PC100',
+      },
+    },
+  };
+</script>
+
+<script
+  src="//1.www.s81c.com/common/stats/ibm-common.js"
+  type="text/javascript"
+  async="async"></script>
+
+<!-- Style overrides -->
+<style>
+  body {
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  body a[href='/?path=/settings/about'] {
+    display: none;
+  }
+
+  /* This style is required because of the compliance footer */
+  #root > div {
+    height: calc(100vh - 48px);
+  }
+
+  /* This style is required because of the compliance footer in smaller screens */
+  @media (max-width: 671px) {
+    nav[class^='css-'] {
+      height: 281px;
+    }
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 99999;
+  }
+
+  .os-content form span {
+    font-weight: 600;
+  }
+
+  .os-content a button {
+    color: #161616;
+  }
+
+  button.sidebar-item svg {
+    color: #161616;
+  }
+
+  a.sidebar-item[data-selected='true'] {
+    color: #161616;
+  }
+
+  a.sidebar-item[data-selected='true'] svg {
+    color: #161616;
+  }
+
+  mark[class*='css-'] {
+    color: #0f62fe;
+  }
+</style>
+ 
+
+    <style>
+      #storybook-root[hidden] {
+        display: none !important;
+      }
+    </style>
+
+    
   </head>
-  <body class="cds-theme-zone-white">
-    <cds-button href="./web-components/index.html">
-      @carbon-labs/web-components
-    </cds-button>
-    <cds-button href="./react/index.html"> @carbon-labs/react </cds-button>
+  <body>
+    <div id="root"></div>
+
+    
+    <script>
+      
+        
+          window['FEATURES'] = {
+  "argTypeTargetsV7": true,
+  "legacyDecoratorFileOrder": false,
+  "disallowImplicitActionsInRenderV8": true
+};
+        
+      
+        
+          window['REFS'] = {
+  "web-components": {
+    "title": "Web Components",
+    "url": "web-components/index.html",
+    "id": "web-components",
+    "type": "unknown"
+  },
+  "react": {
+    "title": "React components",
+    "url": "react/index.html",
+    "id": "react",
+    "type": "unknown"
+  }
+};
+        
+      
+        
+          window['LOGLEVEL'] = "info";
+        
+      
+        
+          window['DOCS_OPTIONS'] = {
+  "defaultName": "Docs",
+  "autodocs": "tag"
+};
+        
+      
+        
+          window['CONFIG_TYPE'] = "PRODUCTION";
+        
+      
+        
+      
+        
+      
+        
+          window['TAGS_OPTIONS'] = {
+  "dev-only": {
+    "excludeFromDocsStories": true
+  },
+  "docs-only": {
+    "excludeFromSidebar": true
+  },
+  "test-only": {
+    "excludeFromSidebar": true,
+    "excludeFromDocsStories": true
+  }
+};
+        
+      
+        
+          window['STORYBOOK_RENDERER'] = "web-components";
+        
+      
+        
+          window['STORYBOOK_BUILDER'] = "@storybook/builder-vite";
+        
+      
+        
+          window['STORYBOOK_FRAMEWORK'] = "/home/runner/work/carbon-labs/carbon-labs/node_modules/@storybook/web-components-vite";
+        
+      
+    </script>
+    
+
+    <script type="module">
+      import './sb-manager/globals-runtime.js';
+      
+      
+        import './sb-addons/storybook-core-core-server-presets-0/common-manager-bundle.js';
+      
+        import './sb-addons/essentials-controls-1/manager-bundle.js';
+      
+        import './sb-addons/essentials-actions-2/manager-bundle.js';
+      
+        import './sb-addons/essentials-backgrounds-3/manager-bundle.js';
+      
+        import './sb-addons/essentials-viewport-4/manager-bundle.js';
+      
+        import './sb-addons/essentials-toolbars-5/manager-bundle.js';
+      
+        import './sb-addons/essentials-measure-6/manager-bundle.js';
+      
+        import './sb-addons/essentials-outline-7/manager-bundle.js';
+      
+      
+      import './sb-manager/runtime.js';
+    </script>
+
+    
+    <link href="./sb-preview/runtime.js" rel="prefetch" as="script" />
+    
   </body>
 </html>

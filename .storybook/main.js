@@ -11,8 +11,8 @@ function getAbsolutePath(value) {
 /** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
   stories: [
-    '../stories/**/*.mdx',
-    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    './stories/**/*.mdx',
+    './stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: [
     getAbsolutePath('@storybook/addon-essentials'),
@@ -25,13 +25,11 @@ const config = {
   refs: {
     'web-components': {
       title: 'Carbon Labs Web Components',
-      // url: 'https://labs.carbondesignsystem.com/web-components/index.html',
-      url: 'http://localhost:6007',
+      url: 'web-components/index.html',
     },
     react: {
       title: 'Carbon Labs React components',
-      // url: 'https://labs.carbondesignsystem.com/react/index.html',
-      url: 'http://localhost:6008',
+      url: 'react/index.html',
     },
   },
 };

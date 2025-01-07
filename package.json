@@ -30,7 +30,7 @@
     "prepare": "husky install",
     "reset": "yarn cache clean && yarn clean && yarn install && yarn build",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook:build": "storybook build"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",

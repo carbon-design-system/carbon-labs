@@ -1,5 +1,5 @@
 {
-  "name": "@carbon/labs-web-components",
+  "name": "@carbon-labs/web-components",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -21,15 +21,15 @@
   },
   "scripts": {
     "build": "cem analyze --config ./custom-elements-manifest.config.js",
+    "storybook": "storybook dev -p 6007",
     "generate": "node tasks/generate",
-    "storybook": "storybook dev -p 6006",
     "storybook:build": "npx storybook build",
     "test": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve",
     "test:updateSnapshot": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve --update-snapshots"
   },
   "dependencies": {
     "@carbon/styles": "^1.70.0",
-    "lit": "^3.0.0"
+    "lit": "^3.2.1"
   },
   "devDependencies": {
     "@carbon/grid": "^11.21.1",

@@ -78,10 +78,5 @@
     "stylelint": "15.11.0",
     "stylelint-config-carbon": "1.17.0"
   },
-  "packageManager": "yarn@4.5.3",
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
-  }
+  "packageManager": "yarn@4.5.3"
 }

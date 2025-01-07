@@ -22,13 +22,11 @@ const config = {
   refs: {
     'web-components': {
       title: 'Web Components',
-      // url: 'https://labs.carbondesignsystem.com/web-components/index.html',
-      url: 'http://localhost:6007',
+      url: 'web-components/index.html',
     },
     react: {
       title: 'React components',
-      // url: 'https://labs.carbondesignsystem.com/react/index.html',
-      url: 'http://localhost:6008',
+      url: 'react/index.html',
     },
   },
 };

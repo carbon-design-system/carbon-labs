@@ -13,4 +13,17 @@
 
 .welcome__heading {
   @include type.type-style('productive-heading-07');
+
+  color: colors.$gray-80;
+}
+
+.welcome__link,
+.welcome__link:hover,
+.welcome__link.cds--link:visited {
+  margin-top: 1rem;
+  color: colors.$blue-70;
+}
+
+.welcome__link:first-child {
+  margin-top: 2rem;
 }

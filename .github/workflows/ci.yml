@@ -93,5 +93,5 @@ jobs:
       - name: run Web Component tests
         working-directory: 'packages/web-components'
         run: |
-          yarn playwright install --with-deps
+          npx playwright install chromium --with-deps
           yarn test

@@ -1,7 +1,7 @@
 # @carbon-labs
 
-> A community-organized incubation space for IBMers, housing assets still in the
-> Discovery phase.
+> A community-organized incubation space for IBMers, housing assets in the
+> Discovery phase where research, exploration, and validation happen.
 
 ## Getting started
 

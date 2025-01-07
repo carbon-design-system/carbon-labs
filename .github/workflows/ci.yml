@@ -84,7 +84,9 @@ jobs:
           node-version: '20.x'
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn install
+          yarn playwright install --with-deps
       - name: Run build
         run: yarn build
       - name: run React tests

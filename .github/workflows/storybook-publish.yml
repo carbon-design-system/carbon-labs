@@ -39,7 +39,11 @@ jobs:
       - name: Build storybook for react
         working-directory: 'packages/react'
         run: yarn storybook:build
-
+      - name: Create CNAME
+        run: |
+          touch storybook-static/.nojekyll
+          touch storybook-static/CNAME
+          echo "labs.carbondesignsystem.com" > storybook-static/CNAME
       # Deploy Labs Storybook Github Pages using `gh-pages` package
       - name: Deploy Labs Storybook
         run: |

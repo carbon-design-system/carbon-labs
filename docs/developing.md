@@ -13,6 +13,7 @@
 - [Building a Web Component](#building-a-web-component)
 - [Document maintainers](#document-maintainers)
 - [Submitting a Pull Request](#submitting-a-pull-request)
+- [Publishing to NPM](#publishing-to-npm)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- prettier-ignore-end -->
@@ -137,10 +138,7 @@ might want to run:
    - The component folder (`packages/react/src/components/TestComponent`).
    - The package name for the component will begin with `@carbon-labs/react-*`.
 
-2. Rename the `package-edit.json` files to `package.json` in both the examples
-   folder and component folder.
-
-3. From the root of the project, run the following to add your component to the
+2. From the root of the project, run the following to add your component to the
    yarn workspace.
    ```bash
    yarn && yarn build
@@ -170,10 +168,7 @@ might want to run:
      (`packages/web-components/src/components/test-component`).
    - The package name for the component will begin with `@carbon-labs/wc-*`.
 
-2. Rename the `package-edit.json` files to `package.json` in both the examples
-   folder and component folder.
-
-3. From the root of the project, run the following to add your component to the
+2. From the root of the project, run the following to add your component to the
    yarn workspace.
    ```bash
    yarn && yarn build
@@ -248,3 +243,12 @@ file (within `<component-name>/__stories__/<component-name>.mdx`)
 
    Once all revisions to your pull request are complete, a maintainer will
    squash and merge your commits for you.
+
+## Publishing to NPM
+
+The
+[canary publish to NPM](https://github.com/carbon-design-system/carbon-labs/actions/workflows/release-canary.yml)
+occurs every time a PR is merged into `main`. This canary version of your
+package can be used in your applications.
+[Full minor releases](https://github.com/carbon-design-system/carbon-labs/actions/workflows/release.yml)
+occur when needed and are triggered manually.

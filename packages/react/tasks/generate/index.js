@@ -58,6 +58,13 @@ sync(resolve(templatesPath, '**/*')).forEach((template) => {
   }
 
   let relativePath = relative(templatesPath, template);
+
+  // needed to name the template package.json file to 'package-edit.json' otherwise
+  // yarn tries to register the template as a package, so swapping back to package.json here
+  if (relativePath.includes('package-edit.json')) {
+    relativePath = relativePath.replace('package-edit.json', 'package.json');
+  }
+
   const compiledPath = compile(relativePath);
   let path;
 

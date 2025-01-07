@@ -1,7 +1,7 @@
 # @carbon-labs
 
-> A collection of experimental components and patterns implemented utilizing the
-> [Carbon Design System](https://carbondesignsystem.com/).
+> A community-organized incubation space for IBMers, housing assets in the
+> Discovery phase where research, exploration, and validation happen.
 
 ## Getting started
 
@@ -20,7 +20,9 @@ A Storybook demo of all component packages is available here:
 
 ## 🙌 Contributing
 
-Want to build a component in `@carbon-labs`? Start here with our guide:
+Want to add an asset to `@carbon-labs`? Read through the Carbon Labs
+[contribution section](https://pages.github.ibm.com/carbon/ibm-products/contributing/carbon-labs/#carbon-labs-in-code)
+before diving into our developer guide:
 
 - [Developer Guide](https://github.com/carbon-design-system/carbon-labs/blob/main/docs/developing.md)
 

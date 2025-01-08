@@ -35,7 +35,14 @@ Here's a full list of packages that we support!
 | [`@carbon-labs/utilities`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/utilities) | Common utilities shared amongst packages |
 
 
+## Storybook demos
+
 Storybook demo of all component packages available here: https://labs.carbondesignsystem.com
+
+Storybook demos for the specific Web Component and React packages can be viewed as well:
+
+- Web Components: https://labs.carbondesignsystem.com/web-components/
+- React: https://labs.carbondesignsystem.com/react/
 
 ## 🙌 Contributing
 

@@ -15,6 +15,12 @@ export const Welcome = () => {
             GitHub repo
           </Link>
           <Link
+            href="https://github.com/carbon-design-system/carbon-labs?tab=readme-ov-file#-contributing"
+            className="welcome__link"
+            renderIcon={ArrowRight}>
+            How to contribute
+          </Link>
+          <Link
             href="https://carbondesignsystem.com/"
             className="welcome__link"
             renderIcon={ArrowRight}>

@@ -8,15 +8,27 @@
 This monorepo houses a collection of components, each as their own package.
 Here's a full list of packages that we support!
 
+### React
+
+| Package name             | Description |
+| ------------------------ | ----------- |
+| Ready for contributions! |             |
+
+### Web Components
+
+| Package name                                                                                                                        | Description       |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/chat) | AI Chat component |
+| [`@carbon-labs/ai-tag`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/tag)   | AI Tag component  |
+
+### Shared
+
 | Package name                                                                                                 | Description                              |
 | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
-| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/chat)        | AI Chat component                        |
 | [`@carbon-labs/utilities`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/utilities) | Common utilities shared amongst packages |
 
-A Storybook demo of all component packages is available here:
 
-- Web Components Storybook: https://labs.carbondesignsystem.com/web-components
-- React Storybook: https://labs.carbondesignsystem.com/react
+Storybook demo of all component packages available here: https://labs.carbondesignsystem.com
 
 ## 🙌 Contributing
 

@@ -35,16 +35,12 @@ bottlenecks in publishing and deployments. Here are some available components:
 | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
 | [`@carbon-labs/utilities`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/utilities) | Common utilities shared amongst packages |
 
-## Storybook demos
+### Storybook
 
-Storybook demo of all component packages available here:
-https://labs.carbondesignsystem.com
+The current state of all components can also be seen in Storybook
 
-Storybook demos for the specific Web Component and React packages can be viewed
-as well:
-
-- Web Components: https://labs.carbondesignsystem.com/web-components/
-- React: https://labs.carbondesignsystem.com/react/
+- [Web Components](https://labs.carbondesignsystem.com/web-components/)
+- [React](https://labs.carbondesignsystem.com/react/)
 
 ## 🙌 Contributing
 

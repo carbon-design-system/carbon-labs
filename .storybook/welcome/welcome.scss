@@ -18,6 +18,10 @@
   color: colors.$gray-80;
 }
 
+.welcome__link {
+  width: fit-content;
+}
+
 .welcome__link,
 .welcome__link:hover,
 .welcome__link.cds--link:visited {

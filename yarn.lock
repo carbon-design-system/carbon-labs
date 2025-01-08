@@ -2734,7 +2734,7 @@ __metadata:
     async-done: "npm:^2.0.0"
     autoprefixer: "npm:^10.4.20"
     browserslist-config-carbon: "npm:^11.2.0"
-    commander: "npm:^12.0.0"
+    commander: "npm:^13.0.0"
     cssnano: "npm:^7.0.0"
     gitignore-to-glob: "npm:^0.3.0"
     lit: "npm:^3.2.1"
@@ -11505,10 +11505,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^12.0.0":
-  version: 12.0.0
-  resolution: "commander@npm:12.0.0"
-  checksum: 10c0/e51cac1d1d0aa1f76581981d2256a9249497e08f5a370bf63b0dfc7e76a647fc8cbc3ddd507928f2bdca6c514c83834e87e2687ace2fe2fc7cc7e631bf80f83d
+"commander@npm:^13.0.0":
+  version: 13.0.0
+  resolution: "commander@npm:13.0.0"
+  checksum: 10c0/8ba1e2b83bfdbcefd967aa505f5f5dc58202aa5f8e10437f61f6980dd8a69f868dba439a261f9fb72fc543c5f6fe58140e37b001a4c70b92ae22527abe94dfe1
   languageName: node
   linkType: hard
 

@@ -11,7 +11,9 @@
 - [Common tasks](#common-tasks)
 - [Building a React Component](#building-a-react-component)
 - [Building a Web Component](#building-a-web-component)
+- [Document maintainers](#document-maintainers)
 - [Submitting a Pull Request](#submitting-a-pull-request)
+- [Publishing to NPM](#publishing-to-npm)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- prettier-ignore-end -->
@@ -115,61 +117,70 @@ might want to run:
 
 ## Building a React Component
 
-1. Start by copying and pasting the
-   [`ExampleButton` template component folder](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/ExampleButton),
-   renaming the copy to your desired component name.
+1. From the `react` package folder, run the `generate` script and provide the
+   desired component name. This will generated the base component with all the
+   necessary files.
 
-2. Adjust the naming in the files, most importantly these lines in the
-   `package.json` file:
+   The component name should be pascal case (ie. TestComponent).
 
-   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/ExampleButton/package.json#L2
-   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/ExampleButton/package.json#L9
-   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/ExampleButton/package.json#L14
+   ```bash
+   cd packages/react
+   yarn generate TestComponent
+   ```
 
-3. Build your component. You can run the build for your new component within the
-   component folder or in the root of the project using the `yarn build`
-   command.
+   This will generate:
 
-4. For testing and documentation purposes, a stackblitz example can be created
-   and linked in the component's storybook documentation as shown in the
-   [`ExampleButton` storybook docs](https://labs.carbondesignsystem.com/react/?path=/docs/components-examplebutton--overview).
-   - To do this, copy and paste the
-     [`ExampleButton` example folder](https://github.com/carbon-design-system/carbon-labs/tree/main/examples/react/example-button)
-     under the `carbon-labs/examples/react` folder and rename the copy to your
-     component name.
-   - [Add the stackblitz link](https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/ExampleButton/__stories__/ExampleButton.mdx?plain=1#L11-L15)
-     to your component storybook doc, making sure the link is pointing correctly
-     to your example folder. **Note:** The example needs to be merged into
-     `main` first before the stackblitz link is viewable.
+   - An example test app for your component, located in
+     `examples/react/TestComponent`. This example test app will be linked as a
+     stackblitz link in the component storybook `mdx` file. Note that this
+     example app will not run until the component has been merged into `main`
+     and published under NPM.
+   - The component folder (`packages/react/src/components/TestComponent`).
+   - The package name for the component will begin with `@carbon-labs/react-*`.
+
+2. From the root of the project, run the following to add your component to the
+   yarn workspace.
+   ```bash
+   yarn && yarn build
+   ```
 
 ## Building a Web Component
 
-1. Start by copying and pasting the
-   [`example-button` template component folder](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/example-button),
-   renaming the copy to your desired component name.
+1. From the `web-components` package folder, run the `generate` script and
+   provide the desired component name. This will generated the base component
+   with all the necessary files.
 
-2. Adjust the naming in the files, most importantly these lines in the
-   `package.json` file:
+   The component name should be param case (ie. test-component).
 
-   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/package.json#L2
-   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/package.json#L8
-   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/package.json#L13
-   - https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/package.json#L32
+   ```bash
+   cd packages/web-components
+   yarn generate test-component
+   ```
 
-3. Build your component. You can run the build for your new component from the
-   root of the project using the `yarn build` command.
+   This will generate:
 
-4. For testing and documentation purposes, a stackblitz example can be created
-   and linked in the component's storybook documentation as shown in the
-   [`example-button` storybook docs](https://labs.carbondesignsystem.com/react/?path=/docs/components-example-button--overview).
-   - To do this, copy and paste the
-     [`ExampleButton` example folder](https://github.com/carbon-design-system/carbon-labs/tree/main/examples/web-components/example-button)
-     under the `carbon-labs/examples/web-components` folder and rename the copy
-     to your component name.
-   - [Add the stackblitz link](https://github.com/carbon-design-system/carbon-labs/blob/main/packages/web-components/src/components/example-button/__stories__/example-button.mdx?plain=1#16-#L20)
-     to your component storybook doc, making sure the link is pointing correctly
-     to your example folder. **Note:** The example needs to be merged into
-     `main` first before the stackblitz link is viewable.
+   - An example test app for your component, located in
+     `examples/web-components/test-component`. This example test app will be
+     linked as a stackblitz link in the component storybook `mdx` file. Note
+     that this example app will not run until the component has been merged into
+     `main` and published under NPM.
+   - The component folder
+     (`packages/web-components/src/components/test-component`).
+   - The package name for the component will begin with `@carbon-labs/wc-*`.
+
+2. From the root of the project, run the following to add your component to the
+   yarn workspace.
+   ```bash
+   yarn && yarn build
+   ```
+
+## Document maintainers
+
+Each asset in Labs must have dedicated contributors and organize its own code
+reviewers. This can be and should be documented in the component storybook mdx
+file (within `<component-name>/__stories__/<component-name>.mdx`)
+
+![screenshot of storybook maintainers and status documentation](https://github.com/user-attachments/assets/10b3fbbf-d2fb-4d2d-9c70-ed5dbafc9a8c)
 
 ## Submitting a Pull Request
 
@@ -232,3 +243,12 @@ might want to run:
 
    Once all revisions to your pull request are complete, a maintainer will
    squash and merge your commits for you.
+
+## Publishing to NPM
+
+The
+[canary publish to NPM](https://github.com/carbon-design-system/carbon-labs/actions/workflows/release-canary.yml)
+occurs every time a PR is merged into `main`. This canary version of your
+package can be used in your applications.
+[Full minor releases](https://github.com/carbon-design-system/carbon-labs/actions/workflows/release.yml)
+occur when needed and are triggered manually.

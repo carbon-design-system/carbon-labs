@@ -8,12 +8,11 @@
  */
 
 import { html, fixture, expect } from '@open-wc/testing';
-import '@carbon-labs/ai-example-button/es/components/example-button/example-button.js';
-import CLABSExampleButton from '../components/example-button/example-button.js';
+import '@carbon-labs/wc-example-button/es/index.js';
 
 describe('clabs-example-button', function () {
   it('should render with cds-button minimum attributes', async () => {
-    const el = await fixture<CLABSExampleButton>(
+    const el = await fixture(
       html`<clabs-example-button> button </clabs-example-button>`
     );
 

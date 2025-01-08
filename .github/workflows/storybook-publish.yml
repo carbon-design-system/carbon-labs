@@ -28,6 +28,10 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Build storybook for Labs
+        working-directory: '.'
+        run: yarn storybook:build
+
       - name: Build storybook for web-components
         working-directory: 'packages/web-components'
         run: yarn storybook:build
@@ -35,6 +39,18 @@ jobs:
       - name: Build storybook for react
         working-directory: 'packages/react'
         run: yarn storybook:build
+      - name: Create CNAME
+        run: |
+          touch storybook-static/.nojekyll
+          touch storybook-static/CNAME
+          echo "labs.carbondesignsystem.com" > storybook-static/CNAME
+      # Deploy Labs Storybook Github Pages using `gh-pages` package
+      - name: Deploy Labs Storybook
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npx gh-pages -d storybook-static -u "github-actions-bot <support+actions@github.com>" --message "chore(deploy): deploy storybook"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Deploy web-components Storybook Github Pages using `gh-pages` package
       - name: Deploy web-components Storybook

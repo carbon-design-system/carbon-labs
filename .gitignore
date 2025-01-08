@@ -33,3 +33,5 @@ package.tgz
 .nx/*
 agentic.stories.js
 /.history
+
+*storybook.log

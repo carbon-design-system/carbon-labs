@@ -7,13 +7,14 @@
   Carbon Labs
 </h1>
 
-> A community-organized incubation space for IBMers, housing assets in the
-> Discovery phase where research, exploration, and validation happen.
+> A community-driven incubation space enabling rapid prototyping, development,
+> and deployment of Carbon-based components.
 
 ## Getting started
 
-This monorepo houses a collection of components, each as their own package.
-Here's a full list of packages that we support!
+Carbon Labs is a collection of components, offered in React and Web Component
+packages. Individual components are their own package, which helps to remove any
+bottlenecks in publishing and deployments. Here are some available components:
 
 ### React
 
@@ -34,16 +35,12 @@ Here's a full list of packages that we support!
 | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
 | [`@carbon-labs/utilities`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/utilities) | Common utilities shared amongst packages |
 
-## Storybook demos
+### Storybook
 
-Storybook demo of all component packages available here:
-https://labs.carbondesignsystem.com
+The current state of all components can also be seen in Storybook
 
-Storybook demos for the specific Web Component and React packages can be viewed
-as well:
-
-- Web Components: https://labs.carbondesignsystem.com/web-components/
-- React: https://labs.carbondesignsystem.com/react/
+- [Web Components](https://labs.carbondesignsystem.com/web-components/)
+- [React](https://labs.carbondesignsystem.com/react/)
 
 ## 🙌 Contributing
 

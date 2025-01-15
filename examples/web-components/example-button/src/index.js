@@ -7,4 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '@carbon-labs/web-components-example-button/es/index.js';
+import '@carbon-labs/wc-example-button/es/index.js';

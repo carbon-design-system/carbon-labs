@@ -1,26 +1,52 @@
-# @carbon-labs
+<p align="center">
+  <a href="https://www.carbondesignsystem.com">
+    <img alt="Carbon Design System" src="https://user-images.githubusercontent.com/3901764/57545698-ce5f2380-7320-11e9-8682-903df232d7b0.png" width="100%" />
+  </a>
+</p>
+<h1 align="center">
+  Carbon Labs
+</h1>
 
-> A collection of experimental components and patterns implemented utilizing the
-> [Carbon Design System](https://carbondesignsystem.com/).
+> A community-driven incubation space enabling rapid prototyping, development,
+> and deployment of Carbon-based components.
 
 ## Getting started
 
-This monorepo houses a collection of components, each as their own package.
-Here's a full list of packages that we support!
+Carbon Labs is a collection of components, offered in React and Web Component
+packages. Individual components are their own package, which helps to remove any
+bottlenecks in publishing and deployments. Here are some available components:
+
+### React
+
+| Package name             | Description |
+| ------------------------ | ----------- |
+| Ready for contributions! |             |
+
+### Web Components
+
+| Package name                                                                                                                        | Description       |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/chat) | AI Chat component |
+| [`@carbon-labs/ai-tag`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/tag)   | AI Tag component  |
+
+### Shared
 
 | Package name                                                                                                 | Description                              |
 | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
-| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/chat)        | AI Chat component                        |
 | [`@carbon-labs/utilities`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/utilities) | Common utilities shared amongst packages |
 
-A Storybook demo of all component packages is available here:
+### Storybook
 
-- Web Components Storybook: https://labs.carbondesignsystem.com/web-components
-- React Storybook: https://labs.carbondesignsystem.com/react
+The current state of all components can also be seen in Storybook
+
+- [Web Components](https://labs.carbondesignsystem.com/web-components/)
+- [React](https://labs.carbondesignsystem.com/react/)
 
 ## 🙌 Contributing
 
-Want to build a component in `@carbon-labs`? Start here with our guide:
+Want to add an asset to `@carbon-labs`? Read through the Carbon Labs
+[contribution section](https://pages.github.ibm.com/carbon/ibm-products/contributing/carbon-labs/#carbon-labs-in-code)
+before diving into our developer guide:
 
 - [Developer Guide](https://github.com/carbon-design-system/carbon-labs/blob/main/docs/developing.md)
 

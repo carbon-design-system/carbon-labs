@@ -1387,7 +1387,7 @@ export default class chartElement extends LitElement {
       if (currentContainerWidth) {
         let rowCount;
         let columnCount;
-        const legendHeight = 16 + 16 * Math.floor(currentContainerWidth / 130);
+        const legendHeight = 32; // + 8 * Math.floor(currentContainerWidth / 130);
         const paddingOffset = { vertical: 0, horizontal: 0 };
         const gapSize = 22;
 
@@ -1994,6 +1994,7 @@ export default class chartElement extends LitElement {
             labelColor: labelColor,
             titleColor: textColor,
             tickColor: backgroundColor,
+            labelOverlap: 'greedy',
             titlePadding: 12,
             titleFont: defaultFont,
             titleFontWeight: 400,
@@ -2004,6 +2005,7 @@ export default class chartElement extends LitElement {
             titleColor: textColor,
             tickColor: backgroundColor,
             titlePadding: 10,
+            labelOverlap: 'greedy',
             titleFont: defaultFont,
             titleFontWeight: 400,
           },
@@ -2011,6 +2013,7 @@ export default class chartElement extends LitElement {
             domainColor: axisColor,
             labelColor: labelColor,
             titleColor: textColor,
+            labelOverlap: 'greedy',
             tickColor: backgroundColor,
             titlePadding: 4,
             titleFont: defaultFont,
@@ -2020,6 +2023,7 @@ export default class chartElement extends LitElement {
             domainColor: gridColor,
             labelColor: labelColor,
             titleColor: textColor,
+            labelOverlap: 'greedy',
             tickColor: backgroundColor,
             titlePadding: 10,
             titleFont: defaultFont,
@@ -2043,29 +2047,32 @@ export default class chartElement extends LitElement {
             category: ordinalColors,
             ordinal: ordinalColors,
           },
+
           legend: {
-            title: null,
+            direction: 'horizontal',
             symbolType: 'square',
             symbolLimit: 30,
-            labelLimit: 120,
-            columns: { signal: 'floor(width / 130)' },
+            labelLimit: { signal: 'max(100, width * 0.25)' },
+            columns: { signal: 'floor(width / 150)' },
+            symbolSize: 256,
+            titlePadding: 5,
+            rowPadding: { signal: '12' },
             orient: 'bottom',
             symbolOpacity: 1,
-            direction: 'horizontal',
             titleColor: textColor,
             labelColor: labelColor,
             titleFont: defaultFont,
             labelFont: defaultFont,
             labelOffset: 4,
-            rowPadding: 8,
+            padding: 10,
             titleFontSize: 11,
             labelFontSize: 12, //fillOpacity: 1,
             strokeWidth: 1, //fontWeight: 'bold',
             offset: 20,
             symbolBaseFillColor: null,
-            gradientLength: 246,
-            gradientThickness: 8,
-            gradientLabelOffset: 8,
+            gradientLength: { signal: 'width - 32' },
+            gradientThickness: 16,
+            gradientLabelOffset: 16,
           },
         };
 

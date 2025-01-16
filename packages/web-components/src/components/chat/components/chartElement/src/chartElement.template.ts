@@ -27,6 +27,7 @@ import Launch16 from '@carbon/web-components/es/icons/launch/16.js';
 import Code16 from '@carbon/web-components/es/icons/code/16.js';
 import Close16 from '@carbon/web-components/es/icons/close/16.js';
 import ViewNext16 from '@carbon/web-components/es/icons/view-next/16.js';
+import Redo16 from '@carbon/web-components/es/icons/redo/16.js';
 
 /**
  * Lit template for card
@@ -198,7 +199,10 @@ export function chartElementTemplate(customElementClass) {
     ${exportedImageURL
       ? html`
           <div
-            class="${clabsPrefix}--chat-chart-thumbnail-container"
+            class="${clabsPrefix}--chat-chart-thumbnail-container${selected
+              ? ' ' + clabsPrefix + '--chat-chart-container-selected'
+              : ''}"
+            @click="${chartClicked}"
             @mouseout="${handleMouseOut}"
             @mouseover="${handleMouseOver}">
             <img src="${exportedImageURL}" />
@@ -273,6 +277,20 @@ export function chartElementTemplate(customElementClass) {
           @mouseover="${handleMouseOver}">
           <div class="${clabsPrefix}--chat-chart-options-prefade">&nbsp;</div>
           <div class="${clabsPrefix}--chat-chart-options-buttons">
+            ${!disableExport
+              ? html`
+                  <cds-icon-button
+                    kind="ghost"
+                    size="sm"
+                    aria-label="Make context"
+                    role="button"
+                    align="bottom-right"
+                    @click="${exportToImage}">
+                    ${Redo16({ slot: 'icon' })}
+                    <span slot="tooltip-content">Return to this chart</span>
+                  </cds-icon-button>
+                `
+              : html``}
             ${!disableExport
               ? html`
                   <cds-icon-button

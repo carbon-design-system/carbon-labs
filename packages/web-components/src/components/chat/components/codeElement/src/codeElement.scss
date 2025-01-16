@@ -30,13 +30,10 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-code-lang {
     color: $text-secondary;
-    font-size: 14px;
+    font-size: 16px;
     font-style: italic;
     padding-block: 16px 4px;
-    padding-inline-start: calc(
-      var(--chat-code-tick-width, '0px') + var(--chat-code-inset-start, '13px') +
-        2px
-    );
+    padding-inline-start: var(--chat-code-tick-width, '0px');
   }
 
   .#{$clabs-prefix}--chat-code-color-area {

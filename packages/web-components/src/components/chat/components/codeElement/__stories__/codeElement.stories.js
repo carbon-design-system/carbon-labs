@@ -134,47 +134,47 @@ class Program
 // Fibonacci sequence function in PHP
 function fibonacci($n)
 {
-if ($n <= 0) {
-return null;
-} elseif ($n == 1) {
-return 0;
-} elseif ($n == 2) {
-return 1;
-} else {
-$a = 0;
-$b = 1;
-for ($i = 3; $i <= $n; $i++) {
-$c = $a + $b;
-$a = $b;
-$b = $c;
-}
-return $b;
-}
+\tif ($n <= 0) {
+\t\treturn null;
+\t} elseif ($n == 1) {
+\t\treturn 0;
+\t} elseif ($n == 2) {
+\t\treturn 1;
+\t} else {
+\t\t$a = 0;
+\t\t$b = 1;
+\t\tfor ($i = 3; $i <= $n; $i++) {
+\t\t\t$c = $a + $b;
+\t\t\t$a = $b;
+\t\t\t$b = $c;
+\t\t}
+\t\treturn $b;
+\t}
 }
 echo "Fibonacci(10): " . fibonacci(10) . PHP_EOL;`,
   GO: `package main
 import (
-"fmt"
-"math/rand"
+\t"fmt"
+\t"math/rand"
 )
 func main() {
-rand.Seed(time.Now().UnixNano())
-fmt.Println("My favorite number is", rand.Intn(100))
+\trand.Seed(time.Now().UnixNano())
+\tfmt.Println("My favorite number is", rand.Intn(100))
 }`,
   Rust: `fn main() {
-let mut rng = rand::thread_rng();
-let favorite_number = rng.gen_range(1..100);
-println!("My favorite number is {}", favorite_number);
+\tlet mut rng = rand::thread_rng();
+\tlet favorite_number = rng.gen_range(1..100);
+\tprintln!("My favorite number is {}", favorite_number);
 }`,
   GraphQL: `type Query {
-favoriteNumber: Int!
+\tfavoriteNumber: Int!
 }
 type Mutation {
-randomizeFavoriteNumber: Int!
+\trandomizeFavoriteNumber: Int!
 }
 schema {
-query: Query
-mutation: Mutation
+\tquery: Query
+\tmutation: Mutation
 }`,
   JSON: `{
   "favoriteNumber": {
@@ -207,7 +207,7 @@ CMD ["./main"]`,
   FORTRAN: `C AREA OF A TRIANGLE - HERON'S FORMULA\nC INPUT - CARD READER UNIT 5, INTEGER INPUT\nC OUTPUT -\nC INTEGER VARIABLES START WITH I,J,K,L,M OR N\n\t\t\tREAD(5,501) IA,IB,IC\n\t501 FORMAT(3I5)\n\t\t\tIF (IA) 701, 777, 701\n\t701 IF (IB) 702, 777, 702\n\t702 IF (IC) 703, 777, 703\n\t777 STOP 1\n\t703 S = (IA + IB + IC) / 2.0\n\t\t\tAREA = SQRT( S * (S - IA) * (S - IB) * (S - IC) )\n\t\t\tWRITE(6,801) IA,IB,IC,AREA\n\t801 FORMAT(4H A= ,I5,5H  B= ,I5,5H  C= ,I5,8H  AREA= ,F10.2, $13H SQUARE UNITS)\n\t\t\tSTOP\n\t\t\tEND\n`,
   Malbolge:
     "(=<`$9]7<5YXz7wT.3,+O/o'K%$H'~D|#z@b=`{^Lx8%$Xmrkpohm-kNi;gsedcba`_^][ZYXWVUTSRQPONMLKJIHGFEDCBA@?>=<;:9876543s+O<oLm",
-  'carbon datatable': `import React from "react";\nimport { DataTable } from "..";\nconst {\n\tTable,\n\tTableBody,\n\tTableCell,\n\tTableContainer,\n\tTableHead,\n\tTableHeader,\n\tTableRow\n} = DataTable;\nimport mdx from "../DataTable.mdx";\nimport "./datatable-story.scss";\nexport default {\n\ttitle: "Components/DataTable/Basic",\n\tcomponent: DataTable,\n\tsubcomponents: {\n\t\tTableContainer,\n\t\tTable,\n\t\tTableHead,\n\t\tTableRow,\n\t\tTableHeader,\n\t\tTableBody,\n\t\tTableCell\n\t},\n\tparameters: {\n\t\tdocs: {\n\t\t\tpage: mdx\n\t\t}\n\t}\n};\nexport const Default = () => {\n\tconst rows = [{\n\t\tid: "load-balancer-1",\n\t\tname: "Load Balancer 1",\n\t\trule: "Round robin",\n\t\tStatus: "Starting",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-2",\n\t\tname: "Load Balancer 2",\n\t\trule: "DNS delegation",\n\t\tstatus: "Active",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-3",\n\t\tname: "Load Balancer 3",\n\t\trule: "Round robin",\n\t\tstatus: "Disabled",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-4",\n\t\tname: "Load Balancer 4",\n\t\trule: "Round robin",\n\t\tstatus: "Disabled",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-5",\n\t\tname: "Load Balancer 5",\n\t\trule: "Round robin",\n\t\tstatus: "Disabled",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-6",\n\t\tname: "Load Balancer 6",\n\t\trule: "Round robin",\n\t\tstatus: "Disabled",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-7",\n\t\tname: "Load Balancer 7",\n\t\trule: "Round robin",\n\t\tstatus: "Disabled",\n\t\tother: "Test",\n\t\texample: "22"\n\t}];\n\tconst headers = ["Name", "Rule", "Status", "Other", "Example"];\n\treturn <Table size="lg" useZebraStyles={false} aria-label="sample table">\n\t\t\t<TableHead>\n\t\t\t\t<TableRow>\n\t\t\t\t\t{headers.map(header => <TableHeader id={header.key} key={header}>\n\t\t\t\t\t\t\t{header}\n\t\t\t\t\t\t</TableHeader>)}\n\t\t\t\t</TableRow>\n\t\t\t</TableHead>\n\t\t\t<TableBody>\n\t\t\t\t{rows.map(row => <TableRow key={row.id}>\n\t\t\t\t\t\t{Object.keys(row).filter(key => key !== "id").map(key => {\n\t\t\t\t\treturn <TableCell key={key}>{row[key]}</TableCell>;\n\t\t\t\t})}\n\t\t\t\t\t</TableRow>)}\n\t\t\t</TableBody>\n\t\t</Table>;\n};`,
+  TypeScript: `import React from "react";\nimport { DataTable } from "..";\nconst {\n\tTable,\n\tTableBody,\n\tTableCell,\n\tTableContainer,\n\tTableHead,\n\tTableHeader,\n\tTableRow\n} = DataTable;\nimport mdx from "../DataTable.mdx";\nimport "./datatable-story.scss";\nexport default {\n\ttitle: "Components/DataTable/Basic",\n\tcomponent: DataTable,\n\tsubcomponents: {\n\t\tTableContainer,\n\t\tTable,\n\t\tTableHead,\n\t\tTableRow,\n\t\tTableHeader,\n\t\tTableBody,\n\t\tTableCell\n\t},\n\tparameters: {\n\t\tdocs: {\n\t\t\tpage: mdx\n\t\t}\n\t}\n};\nexport const Default = () => {\n\tconst rows = [{\n\t\tid: "load-balancer-1",\n\t\tname: "Load Balancer 1",\n\t\trule: "Round robin",\n\t\tStatus: "Starting",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-2",\n\t\tname: "Load Balancer 2",\n\t\trule: "DNS delegation",\n\t\tstatus: "Active",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-3",\n\t\tname: "Load Balancer 3",\n\t\trule: "Round robin",\n\t\tstatus: "Disabled",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-4",\n\t\tname: "Load Balancer 4",\n\t\trule: "Round robin",\n\t\tstatus: "Disabled",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-5",\n\t\tname: "Load Balancer 5",\n\t\trule: "Round robin",\n\t\tstatus: "Disabled",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-6",\n\t\tname: "Load Balancer 6",\n\t\trule: "Round robin",\n\t\tstatus: "Disabled",\n\t\tother: "Test",\n\t\texample: "22"\n\t}, {\n\t\tid: "load-balancer-7",\n\t\tname: "Load Balancer 7",\n\t\trule: "Round robin",\n\t\tstatus: "Disabled",\n\t\tother: "Test",\n\t\texample: "22"\n\t}];\n\tconst headers = ["Name", "Rule", "Status", "Other", "Example"];\n\treturn <Table size="lg" useZebraStyles={false} aria-label="sample table">\n\t\t\t<TableHead>\n\t\t\t\t<TableRow>\n\t\t\t\t\t{headers.map(header => <TableHeader id={header.key} key={header}>\n\t\t\t\t\t\t\t{header}\n\t\t\t\t\t\t</TableHeader>)}\n\t\t\t\t</TableRow>\n\t\t\t</TableHead>\n\t\t\t<TableBody>\n\t\t\t\t{rows.map(row => <TableRow key={row.id}>\n\t\t\t\t\t\t{Object.keys(row).filter(key => key !== "id").map(key => {\n\t\t\t\t\treturn <TableCell key={key}>{row[key]}</TableCell>;\n\t\t\t\t})}\n\t\t\t\t\t</TableRow>)}\n\t\t\t</TableBody>\n\t\t</Table>;\n};`,
 };
 
 export const OptionShowcase = {

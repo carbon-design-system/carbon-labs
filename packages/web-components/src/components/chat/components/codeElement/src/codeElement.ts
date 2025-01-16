@@ -128,6 +128,18 @@ export default class codeElement extends LitElement {
   enableAutoCompacting = true;
 
   /**
+   * compacting value
+   */
+  @property({ type: Number, attribute: 'auto-compacting-threshold' })
+  autoCompactingThreshold = 300;
+
+  /**
+   * displayed content string
+   */
+  @state()
+  _displayedContent;
+
+  /**
    * Source content - save original code text content
    */
   @state()
@@ -229,15 +241,21 @@ export default class codeElement extends LitElement {
   @state()
   theme;
 
+  /**
+   * compacted
+   */
+  @state()
+  compacted;
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('content')) {
-      if (!this._originalContent) {
-        this._originalContent = this.content;
-      }
+      this._editedContent = this.content;
+      this._originalContent = this.content;
+      this._displayedContent = this.content;
 
       if (this.streaming) {
         this._formatCode(false);
@@ -251,6 +269,10 @@ export default class codeElement extends LitElement {
 
     if (changedProperties.has('_editedContent')) {
       this._formatCode(true);
+    }
+
+    if (changedProperties.has('max-height')) {
+      this.style.setProperty('--chat-code-height', this.maxHeight);
     }
   }
 
@@ -293,6 +315,7 @@ export default class codeElement extends LitElement {
       }
       this._editedContent = this.content;
       this._originalContent = this.content;
+      this._displayedContent = this.content;
       this._formatCode(false);
     } else {
       this._renderedLines = [
@@ -339,10 +362,9 @@ export default class codeElement extends LitElement {
    * @param {event} _event - resize event
    */
   _handleResize(_event) {
-    if (this.enableAutoCompacting) {
-      if (this.clientWidth < 300) {
-        this.disableLineTicks = true;
-      }
+    if (this.enableAutoCompacting && !this.disableLineTicks) {
+      const limiter = this.autoCompactingThreshold;
+      this.compacted = this.clientWidth < limiter;
     }
     this._handleScroll();
   }
@@ -422,6 +444,7 @@ export default class codeElement extends LitElement {
       this.dispatchEvent(codeEditedEvent);
     }
     this._currentlyEdited = this._editedContent !== this._originalContent;
+    this._displayedContent = this._editedContent;
     this._handleScroll();
   }
 
@@ -430,7 +453,7 @@ export default class codeElement extends LitElement {
    */
   _startFullEdit() {
     if (!this._currentlyEdited) {
-      this._editedContent = this.content;
+      this._editedContent = this._displayedContent;
     }
     this._currentlyEdited = true;
   }
@@ -499,8 +522,8 @@ export default class codeElement extends LitElement {
    * _handleEditValidation - button event when user confirms edit of code
    */
   _handleEditValidation() {
-    this.content = this._editedContent;
     this._originalContent = this._editedContent;
+    this._displayedContent = this._editedContent;
     const codeEditedEvent = new CustomEvent('on-code-edit-validation', {
       detail: {
         previousLineData: this._renderedLines,
@@ -521,8 +544,8 @@ export default class codeElement extends LitElement {
   _handleEditCancellation() {
     //this._editedContent = this.content;
     //this.content=this._originalContent
-    this._editedContent = this.content;
     this._editedContent = this._originalContent;
+    this._displayedContent = this._originalContent;
     this._currentlyEdited = false;
 
     const codeEditedEvent = new CustomEvent('on-code-edit-change', {
@@ -552,7 +575,10 @@ export default class codeElement extends LitElement {
    */
   _formatCode(edited) {
     this._getTheme();
-    const formattedText = edited ? this._editedContent : this.content;
+    const formattedText = edited
+      ? this._displayedContent
+      : this._displayedContent;
+    //const formattedText = this._displayedContent;
     const htmlSafeText = formattedText.replace(/```/g, '');
 
     if (this.coloringCharacterThreshold) {
@@ -639,15 +665,16 @@ export default class codeElement extends LitElement {
       }
     }
 
-    this._editedLines = JSON.parse(JSON.stringify(textValues));
-    this._originalLines = JSON.parse(JSON.stringify(textValues));
-    this._renderedLines = JSON.parse(JSON.stringify(textValues));
+    //this._editedLines = JSON.parse(JSON.stringify(textValues));
+    //this._originalLines = JSON.parse(JSON.stringify(textValues));
+    this._renderedLines = textValues;
     const tickWidth = 13 * textValues.length.toString().length;
-    if (!this.disableLineTicks) {
+    if (!this.disableLineTicks && !this.compacted) {
       this.style.setProperty(
         '--chat-code-tick-width',
         tickWidth.toString() + 'px'
       );
+      console.log(tickWidth.toString());
     } else {
       this.style.setProperty('--chat-code-tick-width', '0px');
     }

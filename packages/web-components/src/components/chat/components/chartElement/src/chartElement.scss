@@ -14,9 +14,6 @@
   display: flex;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 0;
-  border: 1px solid var(--chat-chart-border-color, $border-subtle-00);
-  border-radius: 8px;
   background: $text-inverse;
   block-size: var(--chat-chart-element-height, '320px');
   font-family: 'IBM Plex Sans Condensed', sans-serif;
@@ -28,17 +25,24 @@
     display: block;
     overflow: hidden;
     box-sizing: border-box;
+    padding: 0;
+    border: 1px solid var(--chat-chart-border-color, $border-subtle-00);
+    border-radius: 8px;
     block-size: 100%;
     inline-size: 100%;
   }
+  .#{$clabs-prefix}--chat-chart-container:hover {
+    border-color: $border-interactive;
+  }
 
   .#{$clabs-prefix}--chat-chart-container-selected {
-    border: 2px solid $highlight;
+    border: 3px solid $border-interactive;
   }
 
   .#{$clabs-prefix}--chat-chart-options {
     position: absolute;
     display: flex;
+    overflow: hidden;
     flex-direction: row;
     inset-block-start: 8px;
     inset-inline-end: 0;
@@ -106,7 +110,7 @@
     flex-direction: row;
     background: $background;
     gap: 4px;
-    padding-inline-end: 8px;
+    margin-inline-end: 8px;
   }
 
   .#{$clabs-prefix}--chat-chart-modal-custom {
@@ -283,6 +287,7 @@
   .#{$clabs-prefix}--chat-chart-fullscreen-container-close {
     position: fixed;
     z-index: 9999;
+    background: $background;
     inset-block-start: 20px;
     inset-inline-end: 20px;
   }

@@ -41,4 +41,5 @@ jobs:
         run: |
           yarn lerna publish minor --dist-tag latest --yes --message 'chore: release'
         env:
-          GITHUB_TOKEN: ${{ secrets.MERGE_ACTION }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.MERGE_ACTION }}

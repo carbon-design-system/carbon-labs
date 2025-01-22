@@ -12,12 +12,11 @@ concurrency:
 
 jobs:
   release:
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: write
-    if: |
-      github.repository == 'carbon-design-system/carbon-labs'
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -40,4 +39,6 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
       - name: Publish minor release of packages
         run: |
-          yarn lerna publish minor --dist-tag latest --yes
+          yarn lerna publish minor --dist-tag latest --yes --message 'chore: release'
+        env:
+          GITHUB_TOKEN: ${{ secrets.MERGE_ACTION }}

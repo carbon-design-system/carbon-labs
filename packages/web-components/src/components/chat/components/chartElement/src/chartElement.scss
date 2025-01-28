@@ -15,9 +15,9 @@
   overflow: hidden;
   box-sizing: border-box;
   padding: 0;
-  border: 1px solid $border-subtle-00;
+  border: 1px solid var(--chat-chart-border-color, $border-subtle-00);
   border-radius: 8px;
-  background: $background;
+  background: $text-inverse;
   block-size: var(--chat-chart-element-height, '320px');
   font-family: 'IBM Plex Sans Condensed', sans-serif;
   inline-size: var(--chat-chart-element-width, '100%');
@@ -30,6 +30,10 @@
     box-sizing: border-box;
     block-size: 100%;
     inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-chart-container-selected {
+    border: 2px solid $highlight;
   }
 
   .#{$clabs-prefix}--chat-chart-options {
@@ -66,8 +70,8 @@
 
   .#{$clabs-prefix}--chat-chart-thumbnail-container img {
     position: absolute;
-    block-size: calc(100%);
-    inline-size: calc(100%);
+    block-size: 100%;
+    inline-size: 100%;
     inset-block-start: 0;
     inset-inline-start: 0;
   }

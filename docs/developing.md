@@ -92,15 +92,37 @@ Afterwards, you should be good to go!
 
 ## Running Storybook
 
-To get your development server running and to start coding, you just have to
-run:
+To get your development server running specifically for Web Components or React, run:
 
 ```bash
+cd packages/web-components
+yarn storybook
+```
+
+or
+
+```bash
+cd packages/react
 yarn storybook
 ```
 
 This will start a development server where you can see any changes you are
 making to components in Storybook.
+
+To get the consolidated view of both Web Components and React within one Storybook environment, you need to have Storybook running for both before running Storybook from the root of the project.
+
+```bash
+cd packages/web-components
+yarn storybook
+
+cd ../react
+yarn storybook
+
+cd ../..
+yarn storybook
+```
+
+The [Storybook references](https://github.com/carbon-design-system/carbon-labs/blob/main/.storybook/main.js) can be modified if needed.
 
 ## Common tasks
 

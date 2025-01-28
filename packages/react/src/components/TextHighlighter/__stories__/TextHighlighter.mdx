@@ -1,4 +1,4 @@
-import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import { ArgTypes, Canvas, Meta, Controls } from '@storybook/blocks';
 import * as TextHighlighterStories from './TextHighlighter.stories';
 
 <Meta isTemplate />
@@ -23,15 +23,31 @@ import * as TextHighlighterStories from './TextHighlighter.stories';
 ## Table of Contents
 
 - [Overview](#overview)
+  - [Variants](#here-we-have-a-component-offering-3-variants)
 - [Getting started](#getting-started)
+- [Example usages](#example-usages)
+  - [Version comparison](#1-version-comparison)
+  - [Reference anotation](#2-reference-anotation)
+  - [Document versioning](#3-document-versioning)
+  - [Document highlighting with source](#4-document-highlighting-with-source)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
 
 ## Overview
 
-Add description of component here
+The text highlighter feature enhances user experience by improving readability, focus, and engagement with the content. This feature is especially beneficial in various contexts such as version comparison, commenting, documentation etc
+
+***It’s crucial that we use HTML semantics appropriately to represent the text highlighters, as improper usage could lead to a negative user experience. We must ensure effective communication to users utilizing assistive technologies, necessitating careful control over the markup.***
+
+### Here we have a component offering 3 variants:
+
+- 1st variant - `<mark>` : This HTML element represents text which is marked or highlighted for reference or notation purposes.
+- 2nd variant - `<ins>` : This HTML element represents a range of text that has been added to a document. (Comparison purpose)
+- 3rd variant - `<del>` : This HTML element represents a range of text that has been deleted from a document. (Comparison purpose)
 
 <Canvas of={TextHighlighterStories.Default} />
+
+<Controls />
 
 ## Getting started
 
@@ -62,3 +78,23 @@ In your styles file import
 @use '@carbon/react';
 @use '@carbon-labs/react-text-highlighter/scss/text-highlighter';
 ```
+
+## Example usages
+
+Text highlighters add significant value by making content more interactive, engaging, and easier to manage and understand.
+
+### **1. Version comparison**
+
+<Canvas of={TextHighlighterStories.VersionComparison} />
+
+### **2. Reference anotation**
+
+<Canvas of={TextHighlighterStories.ReferenceAnotation} />
+
+### **3. Document versioning**
+
+<Canvas of={TextHighlighterStories.DocumentVersioning} />
+
+### **4. Document highlighting with source**
+
+<Canvas of={TextHighlighterStories.DocumentHighlightingWithSource} />

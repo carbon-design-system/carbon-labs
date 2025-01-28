@@ -247,338 +247,55 @@ export const ReferenceAnotation = {
 
             <div className="th-ref-body">
               <p>
-                In{' '}
-                <TextHighlighter type="magenta" reference="EA">
-                  2017
+                The airship `&quot;`
+                <TextHighlighter type="magenta" reference="OR">
+                  The Leviathan
                 </TextHighlighter>
-                , the company reported{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $79.1 billion
-                </TextHighlighter>{' '}
-                in revenue and{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $5.8 billion
-                </TextHighlighter>{' '}
-                in income from continuing operations, which includes a one-time
-                charge of{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $5.5 billion
-                </TextHighlighter>{' '}
-                associated with the enactment of U.S. tax reform.
-              </p>
-              <p>
-                Operating (non-GAAP) earnings were{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $12.9 billion
-                </TextHighlighter>{' '}
-                , which excludes the one-time charge.
-              </p>
-              <p>
-                Diluted earnings per share from continuing operations were{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $6.14
-                </TextHighlighter>{' '}
-                as reported and{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $13.80
-                </TextHighlighter>{' '}
-                on an operating (non-GAAP) basis.
-              </p>
-              <p>
-                The company generated{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $16.7 billion
-                </TextHighlighter>{' '}
-                in cash from operations,{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $13.0 billion
-                </TextHighlighter>{' '}
-                in free cash flow and delivered shareholder returns of{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $9.8 billion
-                </TextHighlighter>{' '}
-                in gross common stock repurchases and dividends.
-              </p>
-              <p>
-                Total{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  consolidated
-                </TextHighlighter>{' '}
-                revenue in{' '}
-                <TextHighlighter type="magenta" reference="EA">
-                  2017
-                </TextHighlighter>{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  decreased
-                </TextHighlighter>{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  1.0 percent
-                </TextHighlighter>{' '}
-                as reported and{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  1.3 percent
-                </TextHighlighter>{' '}
-                year to year adjusted for currency.
-              </p>
-              <p>
-                The company returned to revenue{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  growth
-                </TextHighlighter>{' '}
-                in the fourth quarter with an{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  increase
-                </TextHighlighter>{' '}
-                of{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  3.6 percent
-                </TextHighlighter>{' '}
-                as reported and{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  0.9 percent
-                </TextHighlighter>{' '}
-                adjusted for currency.
-              </p>
-              <p>
-                Year-to-year revenue performance improved{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  sequentially
-                </TextHighlighter>{' '}
-                in the second half of{' '}
-                <TextHighlighter type="magenta" reference="EA">
-                  2017
-                </TextHighlighter>{' '}
-                compared to first-half performance.
-              </p>
-              <p>
-                Contributors to the second-half{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  improvement
-                </TextHighlighter>{' '}
-                included: momentum in{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  cloud
-                </TextHighlighter>{' '}
-                and{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  as-a-Service
-                </TextHighlighter>{' '}
-                offerings, strong{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  Systems
-                </TextHighlighter>{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  growth
-                </TextHighlighter>{' '}
-                across{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  IBM Z
+                ,`&quot;` a magnificent vessel of gleaming chrome and polished
+                mahogany, glided silently above the bustling metropolis of{' '}
+                <TextHighlighter type="purple" reference="LO">
+                  Neo-Atheria
                 </TextHighlighter>
-                ,{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  Power
-                </TextHighlighter>{' '}
-                and{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  Storage
-                </TextHighlighter>
-                , improved software transactional performance and improved{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  growth
-                </TextHighlighter>{' '}
-                in Consulting.
+                .
               </p>
               <p>
-                In{' '}
-                <TextHighlighter type="magenta" reference="EA">
-                  2017
+                Within its opulent grand salon,{' '}
+                <TextHighlighter type="blue" reference="PE">
+                  Captain Amelia Croft
                 </TextHighlighter>
-                , the company continued to deliver solid revenue{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  growth
-                </TextHighlighter>{' '}
-                in its strategic{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  imperatives
-                </TextHighlighter>{' '}
-                which generated{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $36.5 billion
-                </TextHighlighter>{' '}
-                of revenue and grew{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  11 percent
-                </TextHighlighter>{' '}
-                as reported and adjusted for currency, with{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  double-digit
-                </TextHighlighter>{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  growth
-                </TextHighlighter>{' '}
-                in{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  cloud
+                , a woman of sharp wit and steely resolve, surveyed the
+                gathering of dignitaries. Among them were{' '}
+                <TextHighlighter type="blue" reference="PE">
+                  Lord Sterlingworth
                 </TextHighlighter>
-                ,{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  security
-                </TextHighlighter>{' '}
-                and{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  mobile
+                , the eccentric inventor of the `&quot;`
+                <TextHighlighter type="cyan" reference="TE">
+                  Gravitation Nullifier
                 </TextHighlighter>
-                , as the company continues to build new products and offerings
-                and continuously reinvent its platforms.
-              </p>
-              <p>
-                These are not separate businesses, they are offerings across the
-                segments that address opportunities in{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  analytics
+                `&quot;`, a device that defied the very laws of physics, and{' '}
+                <TextHighlighter type="blue" reference="PE">
+                  Baroness Von Schatten
                 </TextHighlighter>
-                ,{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  cloud
+                , a renowned archaeologist who had recently unearthed a cryptic
+                artifact from the long-lost city of{' '}
+                <TextHighlighter type="purple" reference="LO">
+                  Atlantis
                 </TextHighlighter>
-                ,{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  security
-                </TextHighlighter>{' '}
-                and{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  mobile
-                </TextHighlighter>{' '}
                 .
               </p>
               <p>
-                The company is embedding{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  cloud
-                </TextHighlighter>{' '}
-                and{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  cognitive
-                </TextHighlighter>{' '}
-                capabilities across the business and the strategic{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  imperatives
-                </TextHighlighter>{' '}
-                reflect the progress being made in helping enterprise clients
-                extract value from data and become{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  digital
+                The air crackled with anticipation as{' '}
+                <TextHighlighter type="blue" reference="PE">
+                  Professor Alistair Finch
                 </TextHighlighter>
-                ? businesses.
-              </p>
-              <p>
-                Strategic{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  imperatives
-                </TextHighlighter>{' '}
-                growth in{' '}
-                <TextHighlighter type="magenta" reference="EA">
-                  2017
-                </TextHighlighter>{' '}
-                largely represented organic growth as the acquisitive content
-                leveled on a year-to-year basis.
-              </p>
-              <p>
-                Total{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  Cloud
-                </TextHighlighter>{' '}
-                revenue of{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $17.0 billion
-                </TextHighlighter>{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  increased
-                </TextHighlighter>{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  24 percent
-                </TextHighlighter>{' '}
-                as reported and adjusted for currency, with{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  as-a-Service
+                , a renowned astrophysicist from the{' '}
+                <TextHighlighter type="magenta" reference="OR">
+                  University of Elysium
                 </TextHighlighter>
-                ? revenue up 31 percent as reported and adjusted for currency.
-              </p>
-              <p>
-                The annual exit run rate for{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  as-a-Service
-                </TextHighlighter>
-                ? revenue{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  increased
-                </TextHighlighter>{' '}
-                to $10.3 billion in{' '}
-                <TextHighlighter type="magenta" reference="EA">
-                  2017
-                </TextHighlighter>{' '}
-                compared to{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $8.6 billion
-                </TextHighlighter>{' '}
-                in{' '}
-                <TextHighlighter type="magenta" reference="EA">
-                  2016
-                </TextHighlighter>{' '}
-                .
-              </p>
-              <p>
-                <TextHighlighter type="teal" reference="PR">
-                  Analytics
-                </TextHighlighter>{' '}
-                revenue of{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  $20.6 billion
-                </TextHighlighter>{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  increased
-                </TextHighlighter>{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  6 percent
-                </TextHighlighter>{' '}
-                as reported and adjusted for currency.
-              </p>
-              <p>
-                <TextHighlighter type="teal" reference="PR">
-                  Mobile
-                </TextHighlighter>{' '}
-                revenue{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  increased
-                </TextHighlighter>{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  19 percent
-                </TextHighlighter>{' '}
-                as reported and adjusted for currency and{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  Security
-                </TextHighlighter>{' '}
-                revenue{' '}
-                <TextHighlighter type="blue" reference="FI">
-                  increased
-                </TextHighlighter>{' '}
-                <TextHighlighter type="purple" reference="VA">
-                  55 percent
-                </TextHighlighter>{' '}
-                (
-                <TextHighlighter type="purple" reference="VA">
-                  54 percent
-                </TextHighlighter>{' '}
-                adjusted for currency), driven by security software{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  solutions
-                </TextHighlighter>{' '}
-                and strong demand for the pervasive encryption capabilities in
-                the new z14{' '}
-                <TextHighlighter type="teal" reference="PR">
-                  mainframe
-                </TextHighlighter>
-                .
+                , prepared to unveil his groundbreaking theory on interstellar
+                travel. The fate of humanity, it seemed, hung precariously in
+                the balance, poised on the precipice of a new era of exploration
+                and discovery.
               </p>
             </div>
           </Tile>
@@ -596,16 +313,16 @@ export const ReferenceAnotation = {
               <div className="th-ref-right-panel-body">
                 <ContainedList title="" label="">
                   <ContainedListItem className="th-ref-entity th-ref-entity-blue">
-                    Financial outcome <sup>FI</sup>
+                    Person <sup>PE</sup>
                   </ContainedListItem>
                   <ContainedListItem className="th-ref-entity th-ref-entity-magenta">
-                    Earning period <sup>EA</sup>
+                    Organization <sup>OR</sup>
                   </ContainedListItem>
                   <ContainedListItem className="th-ref-entity th-ref-entity-purple">
-                    Value <sup>VA</sup>
+                    Location <sup>LO</sup>
                   </ContainedListItem>
                   <ContainedListItem className="th-ref-entity th-ref-entity-teal">
-                    Product or service <sup>PR</sup>
+                    Technology <sup>TE</sup>
                   </ContainedListItem>
                 </ContainedList>
               </div>

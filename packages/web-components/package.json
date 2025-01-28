@@ -37,7 +37,7 @@
     "@carbon/icons": "11.53.0",
     "@carbon/layout": "11.28.0",
     "@carbon/motion": "11.24.0",
-    "@carbon/themes": "11.44.0",
+    "@carbon/themes": "11.45.0",
     "@carbon/type": "11.34.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",
     "@lit/react": "^1.0.1",

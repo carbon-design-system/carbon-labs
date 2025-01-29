@@ -19,7 +19,5 @@ describe('TextHighlighter', () => {
       const { container } = render(<TextHighlighter />);
       expect(container).toMatchSnapshot();
     });
-
-
   });
 });

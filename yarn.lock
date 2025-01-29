@@ -2519,7 +2519,7 @@ __metadata:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon/web-components": "npm:2.21.0"
     "@ibm/telemetry-js": "npm:^1.6.0"
     "@types/highlightjs": "npm:^9"
     highlightjs: "npm:^9.16.2"
@@ -2540,7 +2540,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon/web-components": "npm:2.21.0"
     uuid: "npm:^9.0.1"
   languageName: unknown
   linkType: soft
@@ -2553,7 +2553,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.8.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon/web-components": "npm:2.21.0"
   languageName: unknown
   linkType: soft
 
@@ -2565,7 +2565,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.8.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon/web-components": "npm:2.21.0"
   languageName: unknown
   linkType: soft
 
@@ -2577,7 +2577,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon/web-components": "npm:2.21.0"
     force-graph: "npm:^1.43.5"
   languageName: unknown
   linkType: soft
@@ -2693,7 +2693,7 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon/web-components": "npm:2.21.0"
   languageName: unknown
   linkType: soft
 
@@ -2861,7 +2861,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/styles@npm:^1.70.0, @carbon/styles@npm:^1.71.0, @carbon/styles@npm:^1.72.0":
+"@carbon/styles@npm:^1.70.0, @carbon/styles@npm:^1.71.0":
   version: 1.72.0
   resolution: "@carbon/styles@npm:1.72.0"
   dependencies:
@@ -2891,7 +2891,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/themes@npm:11.45.0":
+"@carbon/styles@npm:^1.73.0":
+  version: 1.73.0
+  resolution: "@carbon/styles@npm:1.73.0"
+  dependencies:
+    "@carbon/colors": "npm:^11.28.0"
+    "@carbon/feature-flags": "npm:^0.24.0"
+    "@carbon/grid": "npm:^11.30.0"
+    "@carbon/layout": "npm:^11.28.0"
+    "@carbon/motion": "npm:^11.24.0"
+    "@carbon/themes": "npm:^11.45.0"
+    "@carbon/type": "npm:^11.34.0"
+    "@ibm/plex": "npm:6.0.0-next.6"
+    "@ibm/plex-mono": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-arabic": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-devanagari": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-hebrew": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-thai": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-thai-looped": "npm:0.0.3-alpha.0"
+    "@ibm/plex-serif": "npm:0.0.3-alpha.0"
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  peerDependencies:
+    sass: ^1.33.0
+  peerDependenciesMeta:
+    sass:
+      optional: true
+  checksum: 10c0/8068aa949bd4b4cf25a27ec33536782c2cde1bfb72ee6b24fb7355df4aa2331f12bdad5d66a6f6c6edf0a12979ec228d39ae692ec4f5ab80f219867b0b94c236
+  languageName: node
+  linkType: hard
+
+"@carbon/themes@npm:11.45.0, @carbon/themes@npm:^11.45.0":
   version: 11.45.0
   resolution: "@carbon/themes@npm:11.45.0"
   dependencies:
@@ -2928,18 +2958,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/web-components@npm:2.20.0":
-  version: 2.20.0
-  resolution: "@carbon/web-components@npm:2.20.0"
+"@carbon/web-components@npm:2.21.0":
+  version: 2.21.0
+  resolution: "@carbon/web-components@npm:2.21.0"
   dependencies:
-    "@carbon/styles": "npm:^1.72.0"
+    "@carbon/styles": "npm:^1.73.0"
     "@floating-ui/dom": "npm:^1.6.3"
     "@ibm/telemetry-js": "npm:^1.5.0"
     flatpickr: "npm:4.6.13"
     lit: "npm:^3.1.0"
     lodash-es: "npm:^4.17.21"
     tslib: "npm:^2.6.3"
-  checksum: 10c0/382245d5d0a2acd6fe2e7ea28f7946cd7288b0379f28d3498306b28faf71d656d5f0d087003a21361f4e8932812dedd48c7015542c221b6f5002976d551b6af7
+  checksum: 10c0/82ee4a6f3c3ba026a9fd37224496c4584820a3486f67c269f65d46ef737f9f999d1b2dfbad765e61a16af48230f06cb5fa67aafa899f39dab5de6a144ed8247f
   languageName: node
   linkType: hard
 

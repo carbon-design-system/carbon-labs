@@ -806,7 +806,7 @@
     "result": {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "data": {
-        "url": "https://vega.github.io/vega-lite/data/seattle-weather.csv"
+        "url": "https://vega.github.io/editor/data/weather.csv"
       },
       "title": "Daily Max Temperatures (C) in Cleveland, OH",
       "config": {

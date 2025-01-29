@@ -1,0 +1,59 @@
+<!--
+@license
+
+Copyright IBM Corp. 2025
+
+This source code is licensed under the Apache-2.0 license found in the
+LICENSE file in the root directory of this source tree.
+-->
+
+<html>
+  <head>
+    <title>@carbon-labs/wc-ui-shell example</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/tag/v1/latest/plex.css" />
+
+    <link rel="stylesheet" href="src/styles.scss" />
+    <style>
+      /* Suppress custom element until styles are loaded */
+      clabs-header:not(:defined) {
+        display: none;
+      }
+    </style>
+    <script type="module" src="src/index.js"></script>
+  </head>
+  <body>
+    <clabs-header aria-label="IBM Platform Name">
+      <clabs-header-menu-button
+        button-label-active="Close menu"
+        button-label-inactive="Open menu"></clabs-header-menu-button>
+      <clabs-header-name href="javascript:void 0" prefix="IBM"
+        >[Platform]</clabs-header-name
+      >
+      <clabs-header-nav menu-bar-label="IBM [Platform]">
+        <clabs-header-nav-item href="javascript:void 0"
+          >Link 1</clabs-header-nav-item
+        >
+        <clabs-header-nav-item href="javascript:void 0"
+          >Link 2</clabs-header-nav-item
+        >
+        <clabs-header-nav-item href="javascript:void 0"
+          >Link 3</clabs-header-nav-item
+        >
+        <clabs-header-menu menu-label="Link 4" trigger-content="Link 4">
+          <clabs-header-menu-item href="javascript:void 0"
+            >Sub-link 1</clabs-header-menu-item
+          >
+          <clabs-header-menu-item href="javascript:void 0"
+            >Sub-link 2</clabs-header-menu-item
+          >
+          <clabs-header-menu-item href="javascript:void 0"
+            >Sub-link 3</clabs-header-menu-item
+          >
+        </clabs-header-menu>
+      </clabs-header-nav>
+    </clabs-header>
+  </body>
+</html>

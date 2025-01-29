@@ -1,0 +1,27 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/web-components/scss/components/ui-shell/header';
+
+:host(#{$clabs-prefix}-header-global-action) {
+  @extend :host(#{$cds-prefix}-header-global-action);
+
+  ::slotted(svg) {
+    fill: var(--cds-icon-secondary);
+  }
+
+  &:hover ::slotted(svg) {
+    fill: var(--cds-icon-primary);
+  }
+
+  .#{$cds-prefix}--popover {
+    z-index: 8001;
+  }
+}

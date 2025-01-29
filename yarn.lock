@@ -2697,6 +2697,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/wc-ui-shell@workspace:packages/web-components/src/components/ui-shell":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/wc-ui-shell@workspace:packages/web-components/src/components/ui-shell"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.14.0"
+    "@carbon/web-components": "npm:2.20.0"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/web-components@workspace:packages/web-components":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/web-components@workspace:packages/web-components"

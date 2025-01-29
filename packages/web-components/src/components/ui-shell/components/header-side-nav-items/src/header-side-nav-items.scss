@@ -1,0 +1,23 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/breakpoint' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme';
+@use '@carbon/web-components/scss/components/ui-shell/side-nav';
+
+:host(#{$clabs-prefix}-header-side-nav-items) {
+  @extend :host(#{$cds-prefix}-header-side-nav-items);
+}
+
+:host(#{$clabs-prefix}-header-side-nav-items[has-divider]) {
+  @extend .#{$cds-prefix}--side-nav__header-divider;
+}

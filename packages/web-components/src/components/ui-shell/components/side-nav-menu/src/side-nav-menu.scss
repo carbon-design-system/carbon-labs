@@ -1,0 +1,41 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/config' as *;
+@use '@carbon/styles/scss/breakpoint' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme';
+@use '@carbon/web-components/scss/components/ui-shell/side-nav';
+
+:host(#{$clabs-prefix}-side-nav-menu) {
+  @extend :host(#{$cds-prefix}-side-nav-menu);
+}
+
+:host(#{$clabs-prefix}-side-nav-menu[active]) {
+  @extend .#{$cds-prefix}--side-nav__item--active;
+}
+
+:host(#{$clabs-prefix}-side-nav-menu[active][expanded]) {
+  position: inherit;
+  background-color: inherit;
+  color: inherit;
+
+  &::before {
+    content: none;
+  }
+}
+
+:host(#{$clabs-prefix}-side-nav-menu[has-icon]) {
+  @extend .#{$cds-prefix}--side-nav__item--icon;
+}
+
+:host(#{$clabs-prefix}-side-nav-menu[large]) {
+  @extend .#{$cds-prefix}--side-nav__item--large;
+}

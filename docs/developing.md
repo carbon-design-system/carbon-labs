@@ -171,6 +171,13 @@ might want to run:
    yarn && yarn build
    ```
 
+3. The generated template comes with a simple snapshot test case (ie. `packages/react/src/components/TestComponent/__tests__/TestComponent.test.js`), feel free to add additional test cases here. In order to generate the snapshot run:
+
+   ```bash
+   cd package/react
+   yarn test
+   ```
+
 ## Building a Web Component
 
 1. From the `web-components` package folder, run the `generate` script and
@@ -199,6 +206,13 @@ might want to run:
    yarn workspace.
    ```bash
    yarn && yarn build
+   ```
+
+3. The generated template comes with a simple snapshot test case (ie. `packages/web-components/src/components/test-component/__tests__/test-component.test.js`), feel free to add additional test cases here. In order to generate the snapshot run:
+
+   ```bash
+   cd package/web-components
+   yarn test
    ```
 
 ## Document maintainers

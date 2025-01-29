@@ -167,11 +167,15 @@ might want to run:
 
 2. From the root of the project, run the following to add your component to the
    yarn workspace.
+
    ```bash
    yarn && yarn build
    ```
 
-3. The generated template comes with a simple snapshot test case (ie. `packages/react/src/components/TestComponent/__tests__/TestComponent.test.js`), feel free to add additional test cases here. In order to generate the snapshot run:
+3. The generated template comes with a simple snapshot test case (ie.
+   `packages/react/src/components/TestComponent/__tests__/TestComponent.test.js`),
+   feel free to add additional test cases here. In order to generate the
+   snapshot run:
 
    ```bash
    cd package/react
@@ -204,11 +208,15 @@ might want to run:
 
 2. From the root of the project, run the following to add your component to the
    yarn workspace.
+
    ```bash
    yarn && yarn build
    ```
 
-3. The generated template comes with a simple snapshot test case (ie. `packages/web-components/src/components/test-component/__tests__/test-component.test.js`), feel free to add additional test cases here. In order to generate the snapshot run:
+3. The generated template comes with a simple snapshot test case (ie.
+   `packages/web-components/src/components/test-component/__tests__/test-component.test.js`),
+   feel free to add additional test cases here. In order to generate the
+   snapshot run:
 
    ```bash
    cd package/web-components

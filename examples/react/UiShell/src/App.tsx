@@ -8,10 +8,10 @@
  */
 
 import React from 'react';
-import { UiShell } from '@carbon-labs/react-ui-shell/es/index';
+import { UIShell } from '@carbon-labs/react-ui-shell/es/index';
 
 function App() {
-  return <UiShell />;
+  return <UIShell />;
 }
 
 export default App;

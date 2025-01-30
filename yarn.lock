@@ -2598,9 +2598,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UiShell":
+"@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UIShell":
   version: 0.0.0-use.local
-  resolution: "@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UiShell"
+  resolution: "@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UIShell"
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
   languageName: unknown

@@ -8,7 +8,7 @@
  */
 
 import React, { useState } from 'react';
-import mdx from './UiShell.mdx';
+import mdx from './UIShell.mdx';
 import { SideNav } from '../components/SideNav';
 import {
   // SideNav,
@@ -119,7 +119,7 @@ const StoryContent = ({ useResponsiveOffset = true }) => {
 };
 
 export default {
-  title: 'Components/UiShell',
+  title: 'Components/UIShell',
   component: SideNav,
   parameters: {
     docs: {

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.13.0-rc.0...@carbon-labs/utilities@0.15.0) (2025-01-30)
+
+**Note:** Version bump only for package @carbon-labs/utilities
+
+
+
+
+
 # [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.14.0-rc.0...@carbon-labs/utilities@0.14.0) (2024-09-05)
 
 **Note:** Version bump only for package @carbon-labs/utilities

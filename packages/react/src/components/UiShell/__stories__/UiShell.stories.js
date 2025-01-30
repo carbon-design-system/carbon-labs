@@ -23,7 +23,6 @@ import {
   Modal,
   Content,
 } from '@carbon/react';
-import { UiShell } from '../components/UiShell';
 
 /**
  * Story content
@@ -121,18 +120,13 @@ const StoryContent = ({ useResponsiveOffset = true }) => {
 
 export default {
   title: 'Components/UiShell',
-  component: UiShell,
+  component: SideNav,
   parameters: {
     docs: {
       page: mdx,
     },
   },
 };
-
-/**
- * Default story for UiShell
- */
-export const Default = () => <UiShell />;
 
 /**
  * Story for SideNav

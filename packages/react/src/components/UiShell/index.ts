@@ -7,4 +7,3 @@
  * LICENSE file in the root directory of this source tree.
  */
 export { SideNav } from './components/SideNav.js';
-export { UiShell } from './components/UiShell.js';

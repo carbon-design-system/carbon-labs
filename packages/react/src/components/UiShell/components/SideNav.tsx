@@ -16,15 +16,16 @@ import React, {
 } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
-import { AriaLabelPropType } from '../../../prop-types/AriaPropTypes';
+import { AriaLabelPropType } from '@carbon/react/lib/prop-types/AriaPropTypes';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import { usePrefix } from '../../../internal/usePrefix';
-import { keys, match } from '../../../internal/keyboard';
-import { useMergedRefs } from '../../../internal/useMergedRefs';
-import { useWindowEvent } from '../../../internal/useEvent';
-import { useDelayedState } from '../../../internal/useDelayedState';
+import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
+import { keys } from '@carbon/react/lib/internal/keyboard/keys';
+import { match } from '@carbon/react/lib/internal/keyboard/match';
+import { useMergedRefs } from '@carbon/react/lib/internal/useMergedRefs';
+import { useWindowEvent } from '@carbon/react/lib/internal/useEvent';
+import { useDelayedState } from '@carbon/react/lib/internal/useDelayedState';
 import { breakpoints } from '@carbon/layout';
-import { useMatchMedia } from '../../../internal/useMatchMedia';
+import { useMatchMedia } from '@carbon/react/lib/internal/useMatchMedia';
 // TO-DO: comment back in when footer is added for rails
 // import SideNavFooter from './SideNavFooter';
 

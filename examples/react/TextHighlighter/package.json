@@ -1,5 +1,5 @@
 {
-  "name": "carbon-labs-react-STYLE_NAME-example",
+  "name": "carbon-labs-react-text-highlighter-example",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -15,7 +15,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@carbon-labs/react-STYLE_NAME": "latest",
+    "@carbon-labs/react-text-highlighter": "latest",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",

@@ -1,0 +1,203 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon setting imports
+@use '@carbon/react/scss/components/tag/tokens' as tag;
+@use '@carbon/themes' as *;
+
+@use '@carbon/colors' as *;
+@use '@carbon/layout' as *;
+
+@use '@carbon/type' as *;
+
+.cds--tag__label {
+  display: inline-flex;
+  pointer-events: none;
+}
+
+p {
+  @include type-style('body-02');
+}
+
+// -- VersionComparison story --
+.th-compare {
+  // min-width: 90vw;
+  h6 {
+    margin-block-end: $spacing-01;
+  }
+}
+
+.th-compare
+  .cds--structured-list
+  .cds--structured-list-row
+  .cds--structured-list-td:first-of-type {
+  border-inline-end: 1px solid $border-subtle-02;
+}
+
+.th-compare
+  .cds--structured-list
+  .cds--structured-list-row
+  .cds--structured-list-td:not(.th-compare-title) {
+  padding: $spacing-05;
+  color: $text-primary;
+}
+
+// -- ReferenceAnotation story --
+.th-ref {
+  margin-block-start: $spacing-05;
+}
+
+.th-ref-header {
+  display: flex;
+  justify-content: space-between;
+  border-block-end: 1px solid $border-subtle-01;
+  margin-block-end: $spacing-05;
+  padding-block-end: $spacing-03;
+
+  p {
+    @include type-style('label-01');
+
+    color: $text-secondary;
+  }
+}
+
+.th-ref-body {
+  p {
+    @include type-style('body-02');
+
+    margin-block-end: $spacing-05;
+  }
+}
+
+.th-ref-right-panel {
+  block-size: 100%;
+}
+
+.th-ref-right-panel-container {
+  position: sticky;
+  inset-block-start: $spacing-04;
+}
+
+.th-ref-right-panel-header {
+  h3 {
+    @include type-style('heading-compact-02');
+
+    margin-block-end: $spacing-03;
+  }
+
+  p {
+    @include type-style('body-compact-01');
+  }
+}
+
+.th-ref-right-panel-body {
+  margin: 0 -$spacing-05;
+
+  .cds--contained-list--on-page .cds--contained-list__header {
+    background-color: transparent;
+  }
+}
+
+.th-ref-entity .cds--contained-list-item__content {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  sup {
+    font-size: 65%;
+    vertical-align: top;
+
+    &::before {
+      content: '[';
+    }
+
+    &::after {
+      content: ']';
+    }
+  }
+
+  &::before {
+    display: inline-block;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    block-size: $spacing-05;
+    content: '';
+    inline-size: $spacing-05;
+    margin-inline-end: $spacing-03;
+  }
+}
+
+.th-ref-entity.th-ref-entity-magenta {
+  .cds--contained-list-item__content {
+    &::before {
+      border-color: tag.$tag-color-magenta;
+      background-color: tag.$tag-background-magenta;
+    }
+  }
+}
+
+.th-ref-entity.th-ref-entity-purple {
+  .cds--contained-list-item__content {
+    &::before {
+      border-color: tag.$tag-color-purple;
+      background-color: tag.$tag-background-purple;
+    }
+  }
+}
+
+.th-ref-entity.th-ref-entity-blue {
+  .cds--contained-list-item__content {
+    &::before {
+      border-color: tag.$tag-color-blue;
+      background-color: tag.$tag-background-blue;
+    }
+  }
+}
+
+.th-ref-entity.th-ref-entity-teal {
+  .cds--contained-list-item__content {
+    &::before {
+      border-color: tag.$tag-color-teal;
+      background-color: tag.$tag-background-teal;
+    }
+  }
+}
+
+// -- DocumentVersioning story --
+.th-doc {
+  h1 {
+    margin-block-end: $spacing-05;
+  }
+
+  p {
+    margin-block-end: $spacing-05;
+  }
+
+  ol {
+    list-style: decimal;
+    margin-block-end: $spacing-05;
+    padding-inline-end: $spacing-07;
+
+    li {
+      margin-block-end: $spacing-04;
+    }
+  }
+}
+
+.th-doc .th-doc-wrapper {
+  padding: $spacing-10 $spacing-12;
+  border: 1px solid $border-strong-02;
+  margin: auto;
+  box-shadow: 0 0 $spacing-03 $layer-active-01;
+  max-inline-size: 60vw;
+}
+
+.th-doc-source {
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-03;
+}

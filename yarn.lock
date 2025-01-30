@@ -2590,6 +2590,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react@workspace:packages/react"

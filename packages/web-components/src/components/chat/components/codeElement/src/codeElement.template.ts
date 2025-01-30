@@ -30,7 +30,6 @@ import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
 export function codeElementTemplate(customElementClass) {
   const {
     _renderedLines,
-    content,
     disableLineTicks,
     disableCopyButton,
     disableEditButton,
@@ -39,10 +38,15 @@ export function codeElementTemplate(customElementClass) {
     _handleEditValidation: handleEditValidation,
     _handleEditCancellation: handleEditCancellation,
     editable,
+    assignedLanguage,
+    autoAssignLanguage,
+    _editedContent: editedContent,
     _currentlyEdited: currentlyEdited,
     _highlightLine: highlightLine,
     enableColoring,
     language,
+    lineCount,
+    displayLineCount,
     enableLanguageDisplay,
     _renderLabel: renderLabel,
     _handleScroll: handleScroll,
@@ -52,9 +56,26 @@ export function codeElementTemplate(customElementClass) {
   } = customElementClass;
 
   return html` <div class="${clabsPrefix}--chat-code">
-    ${enableLanguageDisplay
-      ? html`<div class="${clabsPrefix}--chat-code-lang">${language}</div>`
+    ${enableLanguageDisplay || displayLineCount
+      ? html`<div class="${clabsPrefix}--chat-code-lang">
+          ${enableLanguageDisplay
+            ? html`
+                ${assignedLanguage
+                  ? assignedLanguage
+                  : autoAssignLanguage
+                  ? language + ' ' + renderLabel('code-estimated-warning')
+                  : 'no language detected'}
+              `
+            : ``}
+          ${displayLineCount && lineCount > 1
+            ? (enableLanguageDisplay ? ', ' : '') +
+              lineCount +
+              ' ' +
+              renderLabel('code-line-descriptor')
+            : ''}
+        </div>`
       : ``}
+
     <div class="${clabsPrefix}--chat-code-options">
       <div class="${clabsPrefix}--chat-code-options-buttons">
         ${!disableEditButton
@@ -77,6 +98,7 @@ export function codeElementTemplate(customElementClass) {
                 tooltip-alignment="end"
                 tooltip-position="bottom"
                 align="left"
+                size="sm"
                 feedback="${renderLabel('code-copypaste-success')}"
                 feedback-timeout="2000">
                 ${renderLabel('code-copypaste-button')}
@@ -99,7 +121,7 @@ export function codeElementTemplate(customElementClass) {
         class="${clabsPrefix}--chat-code-edit-area ${!editable
           ? clabsPrefix + '--chat-code-edit-hidden'
           : ''}">
-${content}</textarea
+${editedContent}</textarea
       >
 
       <div
@@ -140,25 +162,29 @@ ${content}</textarea
       ${currentlyEdited
         ? html` <div class="${clabsPrefix}--chat-code-editing-controls">
             <cds-icon-button
-              size="sm"
+              size="md"
               align="left"
               aria-label="Undo edit"
               role="button"
               kind="danger-tertiary"
               @click="${handleEditCancellation}">
               ${Undo16({ slot: 'icon' })}
-              <span slot="tooltip-content">Undo edit</span>
+              <span slot="tooltip-content"
+                >${renderLabel('code-editing-cancelled')}</span
+              >
             </cds-icon-button>
 
             <cds-icon-button
-              size="sm"
+              size="md"
               aria-label="Validate Edit"
               role="button"
               align="left"
               kind="ghost"
               @click="${handleEditValidation}">
               ${Checkmark16({ slot: 'icon' })}
-              <span slot="tooltip-content">Apply edit</span>
+              <span slot="tooltip-content"
+                >${renderLabel('code-editing-validation')}</span
+              >
             </cds-icon-button>
           </div>`
         : html``}

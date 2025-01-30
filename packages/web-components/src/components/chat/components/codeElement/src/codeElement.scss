@@ -29,9 +29,14 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--chat-code-lang {
+    color: $text-secondary;
+    font-size: 14px;
     font-style: italic;
-    padding-block-start: 16px;
-    padding-inline-start: 16px;
+    padding-block: 16px 4px;
+    padding-inline-start: calc(
+      var(--chat-code-tick-width, '0px') + var(--chat-code-inset-start, '13px') +
+        2px
+    );
   }
 
   .#{$clabs-prefix}--chat-code-color-area {
@@ -53,7 +58,7 @@ $css--plex: true !default;
     min-block-size: 100%;
     padding-block: 16px;
     padding-inline-start: 8px;
-    tab-size: 3;
+    tab-size: 2;
   }
 
   .#{$clabs-prefix}--chat-code-edit-area {
@@ -85,7 +90,7 @@ $css--plex: true !default;
         2px
     );
     resize: none;
-    tab-size: 3;
+    tab-size: 2;
 
     word-break: break-word;
   }
@@ -97,7 +102,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-code-line-tick {
     flex: 0 0 var(--chat-code-tick-width, '13px');
-    color: $text-placeholder;
+    color: $text-secondary;
     inline-size: var(--chat-code-tick-width, '13px');
     padding-inline-end: 0.5em;
     text-align: end;
@@ -239,7 +244,7 @@ $css--plex: true !default;
 
     padding-inline-start: var(--chat-code-tick-width, '13px');
     resize: none;
-    tab-size: 3;
+    tab-size: 2;
     word-break: break-word;
   }
 
@@ -283,219 +288,401 @@ $css--plex: true !default;
     inset-inline-end: 0;
   }
 
-  .hljs {
+  .hljs,
+  .hljs-subst {
     color: $text-primary;
   }
 
-  .hljs-comment,
-  .hljs-quote {
-    color: $support-success;
-  }
-
   .#{$clabs-prefix}--chat-code-white-theme {
-    .hljs-literal,
-    .hljs-built_in,
-    .hljs-builtin-name,
     .hljs-selector-tag,
-    .hljs-doctag {
+    .hljs-title,
+    .hljs-section,
+    .hljs-function {
       color: $purple-60;
     }
 
-    .hljs-string,
-    .hljs-attribute,
-    .hljs-template-variable,
-    .hljs-template-tag {
-      color: $green-60;
-    }
-
-    .hljs-keyword,
-    .hljs-number,
-    .hljs-symbol,
-    .hljs-bullet {
+    .hljs-literal,
+    .hljs-doctype,
+    .hljs-keyword {
       color: $blue-60;
     }
 
-    .hljs-function .hljs-title,
-    .hljs-title,
-    .hljs-function {
-      color: $cyan-60;
-    }
-
-    .hljs-operator,
-    .hljs-punctuation,
-    .hljs-subst {
-      color: $red-60;
-    }
-
-    .hljs-variable,
-    .hljs-property,
-    .hljs-params {
-      color: $magenta-60;
-    }
-
-    .hljs-attr {
-      color: $orange-60;
-    }
-
-    .hljs-class .hljs-title,
-    .hljs-type,
-    .hljs-class {
-      color: $teal-60;
-    }
-
-    .hljs-name,
-    .hljs-section,
-    .hljs-selector-id,
-    .hljs-tag,
-    .hljs-meta,
-    .hljs-selector-class {
+    .hljs-tag .hljs-name {
       color: $yellow-60;
     }
 
+    .hljs-string,
+    .hljs-meta .hljs-string {
+      color: $green-60;
+    }
+
+    .hljs-number,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: $teal-60;
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: $green-60;
+    }
+
+    .hljs-meta,
+    .hljs-meta .hljs-keyword {
+      color: $purple-60;
+    }
+
+    .hljs-built_in,
+    .hljs-builtin-name {
+      color: $cyan-60;
+    }
+
+    .hljs-attr,
+    .hljs-attribute {
+      color: $teal-60;
+    }
+
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-class .hljs-title {
+      color: $yellow-60;
+    }
+
+    .hljs-tag {
+      color: $red-60;
+    }
+
+    .hljs-name,
+    .hljs-selector-id,
+    .hljs-selector-class {
+      color: $blue-60;
+    }
+
+    .hljs-attribute {
+      color: $teal-60;
+    }
+
+    .hljs-template-tag,
+    .hljs-template-variable {
+      color: $yellow-60;
+    }
+
+    .hljs-selector-tag {
+      color: $blue-60;
+    }
+
+    .hljs-selector-id {
+      color: $purple-60;
+    }
+
+    .hljs-selector-class {
+      color: $blue-60;
+    }
+
+    .hljs-selector-pseudo {
+      color: $cyan-60;
+    }
+
+    .hljs-selector-attr {
+      color: $green-60;
+    }
+
+    .hljs-decorator {
+      color: $magenta-60;
+    }
+
+    .hljs-bullet {
+      color: $orange-60;
+    }
+
+    .hljs-link {
+      color: $blue-60;
+    }
+
     .hljs-emphasis {
-      font-style: italic;
+      color: $gray-60;
     }
 
     .hljs-strong {
-      font-weight: bold;
+      color: $gray-60;
+    }
+
+    .hljs-error {
+      color: $red-60;
+    }
+
+    .hljs-addition {
+      color: $green-60;
+    }
+
+    .hljs-params {
+      color: $yellow-60;
+    }
+
+    .hljs-subst {
+      color: $gray-60;
     }
   }
 
   .#{$clabs-prefix}--chat-code-default-theme {
-    .hljs-literal,
-    .hljs-built_in,
-    .hljs-builtin-name,
     .hljs-selector-tag,
-    .hljs-doctag {
+    .hljs-title,
+    .hljs-section,
+    .hljs-function {
       color: $purple-50;
     }
 
-    .hljs-string,
-    .hljs-attribute,
-    .hljs-template-variable,
-    .hljs-template-tag {
-      color: $green-50;
-    }
-
-    .hljs-keyword,
-    .hljs-number,
-    .hljs-symbol,
-    .hljs-bullet {
+    .hljs-literal,
+    .hljs-doctype,
+    .hljs-keyword {
       color: $blue-50;
     }
 
-    .hljs-function .hljs-title,
-    .hljs-title,
-    .hljs-function {
-      color: $cyan-50;
-    }
-
-    .hljs-operator,
-    .hljs-punctuation,
-    .hljs-subst {
-      color: $red-50;
-    }
-
-    .hljs-variable,
-    .hljs-property,
-    .hljs-params {
-      color: $magenta-50;
-    }
-
-    .hljs-attr {
-      color: $orange-50;
-    }
-
-    .hljs-class .hljs-title,
-    .hljs-type,
-    .hljs-class {
-      color: $teal-50;
-    }
-
-    .hljs-name,
-    .hljs-section,
-    .hljs-selector-id,
-    .hljs-tag,
-    .hljs-meta,
-    .hljs-selector-class {
+    .hljs-tag .hljs-name {
       color: $yellow-50;
     }
 
+    .hljs-string,
+    .hljs-meta .hljs-string {
+      color: $green-50;
+    }
+
+    .hljs-number,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: $teal-50;
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: $green-50;
+    }
+
+    .hljs-meta,
+    .hljs-meta .hljs-keyword {
+      color: $purple-50;
+    }
+
+    .hljs-built_in,
+    .hljs-builtin-name {
+      color: $cyan-50;
+    }
+
+    .hljs-attr,
+    .hljs-attribute {
+      color: $teal-50;
+    }
+
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-class .hljs-title {
+      color: $yellow-50;
+    }
+
+    .hljs-tag {
+      color: $red-50;
+    }
+
+    .hljs-name,
+    .hljs-selector-id,
+    .hljs-selector-class {
+      color: $blue-50;
+    }
+
+    .hljs-attribute {
+      color: $teal-50;
+    }
+
+    .hljs-template-tag,
+    .hljs-template-variable {
+      color: $yellow-50;
+    }
+
+    .hljs-selector-tag {
+      color: $blue-50;
+    }
+
+    .hljs-selector-id {
+      color: $purple-50;
+    }
+
+    .hljs-selector-class {
+      color: $blue-50;
+    }
+
+    .hljs-selector-pseudo {
+      color: $cyan-50;
+    }
+
+    .hljs-selector-attr {
+      color: $green-50;
+    }
+
+    .hljs-decorator {
+      color: $magenta-50;
+    }
+
+    .hljs-bullet {
+      color: $orange-50;
+    }
+
+    .hljs-link {
+      color: $blue-50;
+    }
+
     .hljs-emphasis {
-      font-style: italic;
+      color: $gray-50;
     }
 
     .hljs-strong {
-      font-weight: bold;
+      color: $gray-50;
+    }
+
+    .hljs-error {
+      color: $red-50;
+    }
+
+    .hljs-addition {
+      color: $green-50;
+    }
+
+    .hljs-params {
+      color: $yellow-50;
+    }
+
+    .hljs-subst {
+      color: $gray-50;
     }
   }
 
   .#{$clabs-prefix}--chat-code-g100-theme {
-    .hljs-literal,
-    .hljs-built_in,
-    .hljs-builtin-name,
     .hljs-selector-tag,
-    .hljs-doctag {
+    .hljs-title,
+    .hljs-section,
+    .hljs-literal,
+    .hljs-function {
       color: $purple-40;
     }
 
-    .hljs-string,
-    .hljs-attribute,
-    .hljs-template-variable,
-    .hljs-template-tag {
-      color: $green-40;
-    }
-
-    .hljs-keyword,
-    .hljs-number,
-    .hljs-symbol,
-    .hljs-bullet {
+    .hljs-doctype,
+    .hljs-keyword {
       color: $blue-40;
     }
 
-    .hljs-function .hljs-title,
-    .hljs-title,
-    .hljs-function {
-      color: $cyan-40;
-    }
-
-    .hljs-operator,
-    .hljs-punctuation,
-    .hljs-subst {
-      color: $red-40;
-    }
-
-    .hljs-variable,
-    .hljs-property,
-    .hljs-params {
-      color: $magenta-40;
-    }
-
-    .hljs-attr {
-      color: $orange-40;
-    }
-
-    .hljs-class .hljs-title,
-    .hljs-type,
-    .hljs-class {
-      color: $teal-40;
-    }
-
-    .hljs-name,
-    .hljs-section,
-    .hljs-selector-id,
-    .hljs-tag,
-    .hljs-meta,
-    .hljs-selector-class {
+    .hljs-tag .hljs-name {
       color: $yellow-40;
     }
 
+    .hljs-string,
+    .hljs-meta .hljs-string {
+      color: $green-40;
+    }
+
+    .hljs-number,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: $teal-40;
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: $green-40;
+    }
+
+    .hljs-meta,
+    .hljs-meta .hljs-keyword {
+      color: $purple-40;
+    }
+
+    .hljs-built_in,
+    .hljs-builtin-name {
+      color: $cyan-40;
+    }
+
+    .hljs-attr,
+    .hljs-attribute {
+      color: $teal-40;
+    }
+
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-class .hljs-title {
+      color: $yellow-40;
+    }
+
+    .hljs-tag {
+      color: $red-40;
+    }
+
+    .hljs-name,
+    .hljs-selector-id,
+    .hljs-selector-class {
+      color: $blue-40;
+    }
+
+    .hljs-attribute {
+      color: $teal-40;
+    }
+
+    .hljs-template-tag,
+    .hljs-template-variable {
+      color: $yellow-40;
+    }
+
+    .hljs-selector-tag {
+      color: $blue-40;
+    }
+
+    .hljs-selector-id {
+      color: $purple-40;
+    }
+
+    .hljs-selector-class {
+      color: $blue-40;
+    }
+
+    .hljs-selector-pseudo {
+      color: $cyan-40;
+    }
+
+    .hljs-selector-attr {
+      color: $green-40;
+    }
+
+    .hljs-decorator {
+      color: $magenta-40;
+    }
+
+    .hljs-bullet {
+      color: $orange-40;
+    }
+
+    .hljs-link {
+      color: $blue-40;
+    }
+
     .hljs-emphasis {
-      font-style: italic;
+      color: $gray-40;
     }
 
     .hljs-strong {
-      font-weight: bold;
+      color: $gray-40;
+    }
+
+    .hljs-error {
+      color: $red-40;
+    }
+
+    .hljs-addition {
+      color: $green-40;
+    }
+
+    .hljs-params {
+      color: $yellow-40;
+    }
+
+    .hljs-subst {
+      color: $gray-40;
     }
   }
 }

@@ -19,15 +19,29 @@ const config = {
     name: getAbsolutePath('@storybook/web-components-vite'),
     options: {},
   },
-  refs: {
-    'web-components': {
-      title: 'Web Components',
-      url: 'https://labs.carbondesignsystem.com/web-components',
-    },
-    react: {
-      title: 'React components',
-      url: 'https://labs.carbondesignsystem.com/react',
-    },
+  refs: (config, { configType }) => {
+    if (configType === 'DEVELOPMENT') {
+      return {
+        'web-components': {
+          title: 'Web Components',
+          url: 'http://localhost:6007',
+        },
+        react: {
+          title: 'React components',
+          url: 'http://localhost:6008',
+        },
+      };
+    }
+    return {
+      'web-components': {
+        title: 'Web Components',
+        url: 'https://labs.carbondesignsystem.com/web-components',
+      },
+      react: {
+        title: 'React components',
+        url: 'https://labs.carbondesignsystem.com/react',
+      },
+    };
   },
 };
 export default config;

@@ -38,6 +38,18 @@ export default class codeElement extends LitElement {
   editable;
 
   /**
+   * character count render limit for coloring performance
+   */
+  @property({ type: Number, attribute: 'disable-coloring-char-threshold' })
+  coloringCharacterThreshold;
+
+  /**
+   * line count render limit for coloring performance
+   */
+  @property({ type: Number, attribute: 'disable-coloring-line-threshold' })
+  coloringLineThreshold;
+
+  /**
    * add coloring with highlightJS
    */
   @property({ type: Boolean, attribute: 'disable-coloring' })
@@ -62,16 +74,34 @@ export default class codeElement extends LitElement {
   maxHeight;
 
   /**
-   * Set max height for code piece
+   * Set lang name
    */
-  @property({ type: String, attribute: 'lang' })
+  @property({ type: String, attribute: 'displayed-language' })
   assignedLanguage;
+
+  /**
+   * Set render language
+   */
+  @property({ type: String, attribute: 'render-language' })
+  renderLanguage;
+
+  /**
+   * Show language guessed by hljs
+   */
+  @property({ type: Boolean, attribute: 'enable-estimated-language' })
+  autoAssignLanguage;
+
+  /**
+   * Show line count
+   */
+  @property({ type: Boolean, attribute: 'display-line-count' })
+  displayLineCount;
 
   /**
    * Set tab size flag int
    */
   @property({ type: Number, attribute: 'tab-size' })
-  tabSize = 3;
+  tabSize = 2;
 
   /**
    * Editable boolean flag to let users know lines can be changed
@@ -94,8 +124,8 @@ export default class codeElement extends LitElement {
   /**
    * Editable boolean flag to let users know lines can be changed
    */
-  @property({ type: Boolean, attribute: 'disable-auto-compacting' })
-  disableAutoCompacting;
+  @property({ type: Boolean, attribute: 'enable-auto-compacting' })
+  enableAutoCompacting = true;
 
   /**
    * Source content - save original code text content
@@ -152,6 +182,12 @@ export default class codeElement extends LitElement {
   _preRender = true;
 
   /**
+   * line count
+   */
+  @state()
+  lineCount;
+
+  /**
    * Array of lines parsed from content attribute
    */
   @state()
@@ -202,6 +238,7 @@ export default class codeElement extends LitElement {
       if (!this._originalContent) {
         this._originalContent = this.content;
       }
+
       if (this.streaming) {
         this._formatCode(false);
       } else {
@@ -243,6 +280,11 @@ export default class codeElement extends LitElement {
       this.style.setProperty('--chat-code-tick-offset', '0px');
       this.style.setProperty('--chat-code-inset-start', '14px');
     }
+
+    if (this.enableLanguageDisplay || this.displayLineCount) {
+      this.style.setProperty('--chat-code-info-offset', '46px');
+    }
+
     if (this.content !== undefined) {
       const codeAnalysis = this._clearCode(this.content);
       if (codeAnalysis.language) {
@@ -262,12 +304,11 @@ export default class codeElement extends LitElement {
       ];
     }
     //if (!this.disableAutoCompacting) {
-    this.resizeObserver = new ResizeObserver(async () => {
-      this._handleScroll();
+    this.resizeObserver = new ResizeObserver(async (_event) => {
+      this._handleResize(_event);
     });
 
     this.resizeObserver.observe(this);
-    //}
   }
 
   /** _handleScroll
@@ -285,11 +326,11 @@ export default class codeElement extends LitElement {
       this.editable
     ) {
       editArea.scrollTop = textArea.scrollTop;
-      setTimeout(() => {
+      /*setTimeout(() => {
         if (Math.abs(textArea.scrollHeight - editArea.scrollHeight) > 10) {
           this._formatCode(true);
         }
-      }, 100);
+      }, 100);*/
     }
   }
 
@@ -298,8 +339,10 @@ export default class codeElement extends LitElement {
    * @param {event} _event - resize event
    */
   _handleResize(_event) {
-    if (!this.disableLineTicks) {
-      this.disableLineTicks = this.clientWidth < 300;
+    if (this.enableAutoCompacting) {
+      if (this.clientWidth < 300) {
+        this.disableLineTicks = true;
+      }
     }
     this._handleScroll();
   }
@@ -469,13 +512,16 @@ export default class codeElement extends LitElement {
     });
     this.dispatchEvent(codeEditedEvent);
     this._currentlyEdited = false;
-    this.requestUpdate();
+    this._formatCode(false);
   }
 
   /**
    * _handleCancellation - button event when user aborts edit of code
    */
   _handleEditCancellation() {
+    //this._editedContent = this.content;
+    //this.content=this._originalContent
+    this._editedContent = this.content;
     this._editedContent = this._originalContent;
     this._currentlyEdited = false;
 
@@ -490,6 +536,7 @@ export default class codeElement extends LitElement {
     });
     this.dispatchEvent(codeEditedEvent);
     this._formatCode(false);
+    this._handleScroll();
   }
 
   /** _highlightLine - run code coloring system
@@ -508,13 +555,16 @@ export default class codeElement extends LitElement {
     const formattedText = edited ? this._editedContent : this.content;
     const htmlSafeText = formattedText.replace(/```/g, '');
 
-    try {
-      if (!this.language) {
-        const detection = hljs.highlightAuto(htmlSafeText);
-        this.language = detection.language;
+    if (this.coloringCharacterThreshold) {
+      if (formattedText.length > this.coloringCharacterThreshold) {
+        this.disableColoring = true;
       }
-    } catch (e) {
-      this.language = 'javascript';
+    }
+
+    const tabConversion = '&nbsp;';
+    let tabHTML = '';
+    if (this.tabSize) {
+      tabHTML = tabConversion.repeat(this.tabSize);
     }
 
     const lines = htmlSafeText.trim().split('\n');
@@ -525,6 +575,25 @@ export default class codeElement extends LitElement {
       type: string;
       paddingLeft: string;
     }[] = [];
+
+    this.lineCount = lines.length;
+
+    if (!this.disableColoring) {
+      try {
+        if (!this.language) {
+          const detection = hljs.highlightAuto(htmlSafeText);
+          this.language = detection.language;
+        }
+      } catch (e) {
+        this.language = 'javascript';
+      }
+    }
+
+    if (this.coloringLineThreshold) {
+      if (lines.length > this.coloringLineThreshold) {
+        this.disableColoring = true;
+      }
+    }
 
     const highlightMode = !this.disableColoring;
     if (highlightMode) {
@@ -540,9 +609,7 @@ export default class codeElement extends LitElement {
           if (lines) {
             for (let k = 0; k < lines.length; k++) {
               if (k > 0) {
-                codeLines.push(
-                  currentLine.replace(/\t/g, '&nbsp;&nbsp;&nbsp;')
-                );
+                codeLines.push(currentLine.replace(/\t/g, tabHTML));
                 currentLine = '';
               }
               currentLine += lines[k];
@@ -555,7 +622,7 @@ export default class codeElement extends LitElement {
       }
 
       if (currentLine) {
-        codeLines.push(currentLine.replace(/\t/g, '&nbsp;&nbsp;&nbsp;'));
+        codeLines.push(currentLine.replace(/\t/g, tabHTML));
       }
       textValues = codeLines.map((line) => ({
         content: line,
@@ -565,7 +632,7 @@ export default class codeElement extends LitElement {
     } else {
       for (let i = 0; i < lines.length; i++) {
         textValues.push({
-          content: lines[i].replace(/\t/g, '&nbsp;&nbsp;&nbsp;'),
+          content: lines[i].replace(/\t/g, tabHTML),
           type: '',
           paddingLeft: '0px',
         });
@@ -599,7 +666,19 @@ export default class codeElement extends LitElement {
           customValue = labels[key] || 'Copy code';
           break;
         case 'code-copypaste-success':
-          customValue = labels[key] || 'Copieddddd!';
+          customValue = labels[key] || 'Copied!';
+          break;
+        case 'code-estimated-warning':
+          customValue = labels[key] || '(estimated)';
+          break;
+        case 'code-editing-validation':
+          customValue = labels[key] || 'Save edits';
+          break;
+        case 'code-editing-cancelled':
+          customValue = labels[key] || 'Revert edits';
+          break;
+        case 'code-line-descriptor':
+          customValue = labels[key] || 'lines';
           break;
       }
     }

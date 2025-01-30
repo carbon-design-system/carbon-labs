@@ -8,7 +8,7 @@ on:
 jobs:
   DCOAssistant:
     if: github.repository == 'carbon-design-system/carbon-labs'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: 'DCO Assistant'
         if:

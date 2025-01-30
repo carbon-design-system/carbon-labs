@@ -1,17 +1,17 @@
 {
-  "name": "@carbon-labs/react-example-button",
+  "name": "@carbon-labs/react-text-highlighter",
   "version": "0.1.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
   "type": "module",
-  "description": "Carbon Labs - Example Button",
+  "description": "Carbon Labs - Text Highlighter",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/carbon-design-system/carbon-labs",
-    "directory": "src/components/ExampleButton"
+    "directory": "src/components/TextHighlighter"
   },
   "main": "./src/index.js",
   "module": "./src/index.js",

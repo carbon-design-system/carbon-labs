@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import mdx from './UIShell.mdx';
 import { SideNav } from '../components/SideNav';
 import {

@@ -1,0 +1,30 @@
+{
+  "name": "@carbon-labs/react-ui-shell",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - Ui Shell",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "src/components/UIShell"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "files": [
+    "es",
+    "lib",
+    "scss"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rm -rf {es,lib,scss}"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "canary"
+  }
+}

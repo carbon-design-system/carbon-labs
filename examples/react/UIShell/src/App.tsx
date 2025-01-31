@@ -49,6 +49,7 @@ function App() {
               expanded={isSideNavExpanded}
               onSideNavBlur={onClickSideNavExpand}
               isCollapsible
+              hideOverlay
               className="nav--global">
               <SideNavItems>
                 <SideNavMenu renderIcon={Fade} title="Link">

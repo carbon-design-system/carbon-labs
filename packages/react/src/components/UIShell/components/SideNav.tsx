@@ -48,6 +48,7 @@ export interface SideNavProps extends ComponentProps<'nav'> {
   enterDelayMs?: number;
   inert?: boolean;
   isCollapsible: boolean | undefined;
+  hideOverlay: boolean | undefined;
 }
 
 interface SideNavContextData {
@@ -78,6 +79,7 @@ function SideNavRenderFunction(
     onSideNavBlur,
     enterDelayMs = 100,
     isCollapsible = false,
+    hideOverlay = false,
     ...other
   }: SideNavProps,
   ref: ForwardedRef<HTMLElement>
@@ -121,8 +123,6 @@ function SideNavRenderFunction(
   const overlayClassName = cx({
     [`${prefix}--side-nav__overlay`]: true,
     [`${prefix}--side-nav__overlay-active`]: expanded || expandedViaHoverState,
-    [`${prefix}--side-nav__overlay-active--lg`]:
-      isCollapsible && (expanded || expandedViaHoverState),
   });
 
   let childrenToRender = children;
@@ -226,9 +226,11 @@ function SideNavRenderFunction(
   const lgMediaQuery = `(min-width: ${breakpoints.lg.width})`;
   const isLg = useMatchMedia(lgMediaQuery);
 
+  hideOverlay;
+
   return (
     <SideNavContext.Provider value={{ isRail }}>
-      {isFixedNav ? null : (
+      {isFixedNav || hideOverlay ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className={overlayClassName} onClick={onOverlayClick} />
       )}
@@ -286,6 +288,11 @@ SideNav.propTypes = {
    * Using this prop causes SideNav to become a controled component.
    */
   expanded: PropTypes.bool,
+
+  /**
+   * If `true`, the overlay will be hidden. Defaults to `false`.
+   */
+  hideOverlay: PropTypes.bool,
 
   /**
    * Provide the `href` to the id of the element on your package that is the

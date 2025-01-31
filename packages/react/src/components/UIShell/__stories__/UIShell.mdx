@@ -24,6 +24,9 @@ import * as UIShellStories from './UIShell.stories';
 
 - [Overview](#overview)
 - [Getting started](#getting-started)
+  - [SCSS](#scss)
+  - [JS (via import)](#js-via-import)
+- [Component API](#component-api)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
 
@@ -33,6 +36,8 @@ Enhancements to core Carbon UIShell components. Components included in this
 package:
 
 - `SideNav`
+  - `isCollapsible`
+  - `hideOverlay`
 
 <Canvas of={UIShellStories.Default} />
 
@@ -45,18 +50,6 @@ yarn add @carbon/react
 yarn add @carbon-labs/react-ui-shell
 ```
 
-### JS (via import)
-
-```javascript
-import { SideNav } from '@carbon-labs/react-ui-shell/es/index';
-
-function App() {
-  return <SideNav />;
-}
-
-export default App;
-```
-
 ### SCSS
 
 In your styles file import
@@ -65,3 +58,98 @@ In your styles file import
 @use '@carbon/react';
 @use '@carbon-labs/react-ui-shell/scss/ui-shell';
 ```
+
+### JS (via import)
+
+```javascript
+import { SideNav } from '@carbon-labs/react-ui-shell/es/index';
+import {
+  SideNavItems,
+  SideNavMenu,
+  SideNavMenuItem,
+  SideNavLink,
+  SkipToContent,
+  HeaderContainer,
+  Header,
+  HeaderName,
+  Theme,
+  HeaderMenuButton,
+  SideNavDivider,
+} from '@carbon/react';
+import { Fade } from '@carbon/icons-react';
+
+function App() {
+  return (
+    <Theme theme="g100">
+      <HeaderContainer
+        render={({ isSideNavExpanded, onClickSideNavExpand }) => (
+          <>
+            <Header aria-label="IBM Platform Name">
+              <SkipToContent />
+              <HeaderMenuButton
+                aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
+                onClick={onClickSideNavExpand}
+                isActive={isSideNavExpanded}
+                aria-expanded={isSideNavExpanded}
+                isCollapsible
+                isFixedNav
+              />
+              <HeaderName href="#" prefix="IBM">
+                [Platform]
+              </HeaderName>
+            </Header>
+            <SideNav
+              aria-label="Side navigation1"
+              expanded={isSideNavExpanded}
+              onSideNavBlur={onClickSideNavExpand}
+              isCollapsible
+              hideOverlay
+              className="nav--global">
+              <SideNavItems>
+                <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavDivider />
+                <SideNavLink renderIcon={Fade} href="#">
+                  Link
+                </SideNavLink>
+                <SideNavLink renderIcon={Fade} href="#">
+                  Link
+                </SideNavLink>
+                <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                </SideNavMenu>
+              </SideNavItems>
+            </SideNav>
+            <Theme theme="white">
+              <p>Content</p>
+            </Theme>
+          </>
+        )}
+      />
+    </Theme>
+  );
+}
+
+export default App;
+```
+
+## Component API
+
+<ArgTypes />

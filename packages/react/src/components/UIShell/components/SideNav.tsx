@@ -47,6 +47,7 @@ export interface SideNavProps extends ComponentProps<'nav'> {
   onSideNavBlur?: () => void | undefined;
   enterDelayMs?: number;
   inert?: boolean;
+  isCollapsible: boolean | undefined;
 }
 
 interface SideNavContextData {
@@ -76,6 +77,7 @@ function SideNavRenderFunction(
     onOverlayClick,
     onSideNavBlur,
     enterDelayMs = 100,
+    isCollapsible = false,
     ...other
   }: SideNavProps,
   ref: ForwardedRef<HTMLElement>
@@ -113,11 +115,14 @@ function SideNavRenderFunction(
     [`${prefix}--side-nav--rail`]: isRail,
     [`${prefix}--side-nav--ux`]: isChildOfHeader,
     [`${prefix}--side-nav--hidden`]: !isPersistent,
+    [`${prefix}--side-nav--collapsible`]: isCollapsible,
   });
 
   const overlayClassName = cx({
     [`${prefix}--side-nav__overlay`]: true,
     [`${prefix}--side-nav__overlay-active`]: expanded || expandedViaHoverState,
+    [`${prefix}--side-nav__overlay-active--lg`]:
+      isCollapsible && (expanded || expandedViaHoverState),
   });
 
   let childrenToRender = children;
@@ -292,6 +297,11 @@ SideNav.propTypes = {
    * Optionally provide a custom class to apply to the underlying `<li>` node
    */
   isChildOfHeader: PropTypes.bool,
+
+  /**
+   * Specify whether the SideNav is collapsible at desktop
+   */
+  isCollapsible: PropTypes.bool,
 
   /**
    * Specify if sideNav is standalone

@@ -6,15 +6,17 @@
  */
 
 // Carbon setting imports
-@use '@carbon/styles/scss/theme' as *;
-@use '@carbon/styles/scss/colors' as *;
-@use '@carbon/styles/scss/spacing' as *;
-@use '@carbon/styles/scss/components/button' as *;
+// @use '@carbon/styles/scss/theme' as *;
+// @use '@carbon/styles/scss/colors' as *;
+// @use '@carbon/styles/scss/spacing' as *;
+// @use '@carbon/styles/scss/components/button' as *;
 
-$prefix: 'clabs' !default;
+// $prefix: 'clabs' !default;
 
-.#{$prefix}--ui-shell__container {
-  padding: $spacing-01;
-  border: 1px solid $border-subtle-01;
-  inline-size: fit-content;
-}
+// .#{$prefix}--ui-shell__container {
+//   padding: $spacing-01;
+//   border: 1px solid $border-subtle-01;
+//   inline-size: fit-content;
+// }
+
+@use 'scss/side-nav';

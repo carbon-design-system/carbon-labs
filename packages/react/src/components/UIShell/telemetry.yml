@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: 5b9dce15-eeda-4b53-8683-3e3aeb599fd1
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  jsx:
+    elements:
+      allowedAttributeNames:
+        # SideNav
+        - addFocusListeners
+        - addMouseListeners
+        - className
+        - defaultExpanded
+        - enterDelayMs
+        - expanded
+        - href
+        - inert
+        - isChildOfHeader
+        - isCollapsible
+        - isFixedNav
+        - isPersistent
+        - isRail
+        - onOverlayClick
+        - onSideNavBlur
+        - onToggle
+        # React
+        - key
+        - ref
+      allowedAttributeStringValues:
+        - 'true'
+        - 'false'
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

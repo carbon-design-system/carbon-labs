@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.2.0...@carbon-labs/react-ui-shell@0.3.0) (2025-01-31)
+
+
+### Features
+
+* **UIShell:** add hideoverlay prop to sidenav ([#401](https://github.com/carbon-design-system/carbon-labs/issues/401)) ([a01b4b6](https://github.com/carbon-design-system/carbon-labs/commit/a01b4b6b347e140b998050f71a0aebc23f63c985))
+
+
+
+
+
 # [0.2.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.1.0...@carbon-labs/react-ui-shell@0.2.0) (2025-01-31)
 
 

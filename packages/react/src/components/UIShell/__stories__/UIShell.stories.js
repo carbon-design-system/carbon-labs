@@ -7,9 +7,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import mdx from './UIShell.mdx';
 import { SideNav } from '../components/SideNav';
+import { HeaderPanel } from '../components/HeaderPanel';
 import {
   SideNavItems,
   SideNavMenu,
@@ -23,9 +24,21 @@ import {
   HeaderMenuButton,
   SideNavDivider,
   Content,
+  HeaderGlobalBar,
+  HeaderGlobalAction,
 } from '@carbon/react';
 import { Fade } from '@carbon/icons-react';
 import '../components/ui-shell.scss';
+
+export default {
+  title: 'Components/UIShell',
+  component: SideNav,
+  parameters: {
+    docs: {
+      page: mdx,
+    },
+  },
+};
 
 /**
  * Story content
@@ -76,6 +89,7 @@ const StoryContent = () => {
         used per product section. If tabs are needed on a page when using a
         side-nav, then the tabs are secondary in hierarchy to the side-nav.
       </p>
+      <HeaderPanel />
     </div>
   );
   const style = {
@@ -88,88 +102,92 @@ const StoryContent = () => {
   );
 };
 
-export default {
-  title: 'Components/UIShell',
-  component: SideNav,
-  parameters: {
-    docs: {
-      page: mdx,
-    },
-  },
-};
-
 /**
- * Story for SideNav
+ * Story for UIShell
  * @returns {React.ReactElement} The JSX for the story
  */
-export const Default = () => (
-  <div>
-    <Theme theme="g100">
-      <HeaderContainer
-        render={({ isSideNavExpanded, onClickSideNavExpand }) => (
-          <>
-            <Header aria-label="IBM Platform Name">
-              <SkipToContent />
-              <HeaderMenuButton
-                aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
-                onClick={onClickSideNavExpand}
-                isActive={isSideNavExpanded}
-                aria-expanded={isSideNavExpanded}
-                isCollapsible //shows hamburger menu at desktop
-                isFixedNav
-              />
-              <HeaderName href="#" prefix="IBM">
-                [Platform]
-              </HeaderName>
-            </Header>
-            <SideNav
-              aria-label="Side navigation1"
-              expanded={isSideNavExpanded}
-              onSideNavBlur={onClickSideNavExpand}
-              isCollapsible
-              hideOverlay
-              className="nav--global">
-              <SideNavItems>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavDivider />
-                <SideNavLink renderIcon={Fade} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavLink renderIcon={Fade} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-              </SideNavItems>
-            </SideNav>
-            <Theme theme="white">
-              <StoryContent />
-            </Theme>
-          </>
-        )}
-      />
-    </Theme>
-  </div>
-);
+export const Default = () => {
+  const [expandedPanel, setExpandedPanel] = useState(false);
+  return (
+    <div>
+      <Theme theme="g100">
+        <HeaderContainer
+          render={({ isSideNavExpanded, onClickSideNavExpand }) => (
+            <>
+              <Header aria-label="IBM Platform Name">
+                <SkipToContent />
+                <HeaderMenuButton
+                  aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
+                  onClick={onClickSideNavExpand}
+                  isActive={isSideNavExpanded}
+                  aria-expanded={isSideNavExpanded}
+                  isCollapsible //shows hamburger menu at desktop
+                  isFixedNav
+                />
+                <HeaderName href="#" prefix="IBM">
+                  [Platform]
+                </HeaderName>
+                <HeaderGlobalBar>
+                  <HeaderGlobalAction
+                    aria-label={expandedPanel ? 'Close panel' : 'Open panel'}
+                    isActive={expandedPanel}
+                    aria-expanded={expandedPanel}
+                    tooltipAlignment="end"
+                    onClick={() => setExpandedPanel(!expandedPanel)}>
+                    <Fade size={20} />
+                  </HeaderGlobalAction>
+                </HeaderGlobalBar>
+                <HeaderPanel expanded={expandedPanel} />
+              </Header>
+              <SideNav
+                aria-label="Side navigation1"
+                expanded={isSideNavExpanded}
+                onSideNavBlur={onClickSideNavExpand}
+                isCollapsible
+                hideOverlay
+                className="nav--global">
+                <SideNavItems>
+                  <SideNavMenu renderIcon={Fade} title="Link">
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  </SideNavMenu>
+                  <SideNavMenu renderIcon={Fade} title="Link">
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  </SideNavMenu>
+                  <SideNavMenu renderIcon={Fade} title="Link">
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  </SideNavMenu>
+                  <SideNavMenu renderIcon={Fade} title="Link">
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  </SideNavMenu>
+                  <SideNavMenu renderIcon={Fade} title="Link">
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  </SideNavMenu>
+                  <SideNavDivider />
+                  <SideNavLink renderIcon={Fade} href="#">
+                    Link
+                  </SideNavLink>
+                  <SideNavLink renderIcon={Fade} href="#">
+                    Link
+                  </SideNavLink>
+                  <SideNavMenu renderIcon={Fade} title="Link">
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  </SideNavMenu>
+                </SideNavItems>
+              </SideNav>
+              <Theme theme="white">
+                <StoryContent />
+              </Theme>
+            </>
+          )}
+        />
+      </Theme>
+    </div>
+  );
+};
 
 Default.parameters = {
   controls: { disable: true },
@@ -180,7 +198,7 @@ Default.parameters = {
  * Story for SideNav
  * @returns {React.ReactElement} The JSX for the story
  */
-export const SideNavFixed = () => (
+export const SideNavStory = () => (
   <SideNav
     isFixedNav
     expanded={true}
@@ -219,3 +237,20 @@ export const SideNavFixed = () => (
     </SideNavItems>
   </SideNav>
 );
+SideNavStory.storyName = 'SideNav';
+
+/**
+ * Story for HeaderPanel
+ * @param {object} args Storybook args that control component props
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const HeaderPanelStory = (args) => <HeaderPanel {...args} />;
+HeaderPanelStory.storyName = 'HeaderPanel';
+
+HeaderPanelStory.args = {
+  expanded: true,
+};
+
+HeaderPanelStory.argTypes = {
+  expanded: { control: 'boolean' },
+};

@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { SideNav } from '@carbon-labs/react-ui-shell/es/index';
+import { SideNav, HeaderPanel } from '@carbon-labs/react-ui-shell/es/index';
 import {
   SideNavItems,
   SideNavMenu,
@@ -43,6 +43,7 @@ function App() {
               <HeaderName href="#" prefix="IBM">
                 [Platform]
               </HeaderName>
+              <HeaderPanel />
             </Header>
             <SideNav
               aria-label="Side navigation1"

@@ -26,33 +26,59 @@ import { useWindowEvent } from '@carbon/react/lib/internal/useEvent';
 import { useDelayedState } from '@carbon/react/lib/internal/useDelayedState';
 import { breakpoints } from '@carbon/layout';
 import { useMatchMedia } from '@carbon/react/lib/internal/useMatchMedia';
-// TO-DO: comment back in when footer is added for rails
-// import SideNavFooter from './SideNavFooter';
+import { TranslateWithId } from '@carbon/react/lib/types/common';
+import { SidePanelClose, SidePanelOpen } from '@carbon/icons-react';
+import SideNavToggle from './SideNavToggle';
 
-export interface SideNavProps extends ComponentProps<'nav'> {
-  expanded?: boolean | undefined;
-  defaultExpanded?: boolean | undefined;
-  isChildOfHeader?: boolean | undefined;
+export enum SIDE_NAV_TYPE {
+  DEFAULT = 'default',
+  RAIL = 'rail',
+  PANEL = 'panel',
+}
+
+export type TranslationKey = keyof typeof translationIds;
+
+export const translationIds = {
+  'collapse.sidenav': 'collapse.sidenav',
+  'expand.sidenav': 'expand.sidenav',
+} as const;
+
+const defaultTranslations: Record<TranslationKey, string> = {
+  [translationIds['collapse.sidenav']]: 'Collapse',
+  [translationIds['expand.sidenav']]: 'Expand',
+};
+
+const defaultTranslateWithId = (id: TranslationKey): string =>
+  defaultTranslations[id];
+
+export interface SideNavProps
+  extends ComponentProps<'nav'>,
+    TranslateWithId<TranslationKey> {
+  expanded?: boolean;
+  defaultExpanded?: boolean;
+  isChildOfHeader?: boolean;
   onToggle?: (
     event: FocusEvent<HTMLElement> | KeyboardEvent<HTMLElement> | boolean,
     value: boolean
-  ) => void | undefined;
-  href?: string | undefined;
-  isFixedNav?: boolean | undefined;
-  isRail?: boolean | undefined;
-  isPersistent?: boolean | undefined;
-  addFocusListeners?: boolean | undefined;
-  addMouseListeners?: boolean | undefined;
-  onOverlayClick?: MouseEventHandler<HTMLDivElement> | undefined;
-  onSideNavBlur?: () => void | undefined;
+  ) => void;
+  href?: string;
+  isFixedNav?: boolean;
+  isRail?: boolean;
+  isPersistent?: boolean;
+  addFocusListeners?: boolean;
+  addMouseListeners?: boolean;
+  onOverlayClick?: MouseEventHandler<HTMLDivElement>;
+  onSideNavBlur?: () => void;
   enterDelayMs?: number;
   inert?: boolean;
-  isCollapsible: boolean | undefined;
-  hideOverlay: boolean | undefined;
+  isCollapsible: boolean;
+  hideOverlay: boolean;
+  navType: SIDE_NAV_TYPE;
 }
 
 interface SideNavContextData {
-  isRail?: boolean | undefined;
+  isRail?: boolean;
+  navType?: SIDE_NAV_TYPE;
 }
 
 export const SideNavContext = createContext<SideNavContextData>(
@@ -73,6 +99,7 @@ function SideNavRenderFunction(
     isFixedNav = false,
     isRail,
     isPersistent = true,
+    navType = SIDE_NAV_TYPE.DEFAULT,
     addFocusListeners = true,
     addMouseListeners = true,
     onOverlayClick,
@@ -80,6 +107,7 @@ function SideNavRenderFunction(
     enterDelayMs = 100,
     isCollapsible = false,
     hideOverlay = false,
+    translateWithId: t = defaultTranslateWithId,
     ...other
   }: SideNavProps,
   ref: ForwardedRef<HTMLElement>
@@ -92,6 +120,10 @@ function SideNavRenderFunction(
   const expanded = controlled ? expandedProp : expandedState;
   const sideNavRef = useRef<HTMLDivElement>(null);
   const navRef = useMergedRefs([sideNavRef, ref]);
+
+  const sideNavToggleTitle = expandedState
+    ? t('collapse.sidenav')
+    : t('expand.sidenav');
 
   const handleToggle: typeof onToggle = (event, value = !expanded) => {
     if (!controlled) {
@@ -115,6 +147,7 @@ function SideNavRenderFunction(
     [`${prefix}--side-nav--expanded`]: expanded || expandedViaHoverState,
     [`${prefix}--side-nav--collapsed`]: !expanded && isFixedNav,
     [`${prefix}--side-nav--rail`]: isRail,
+    [`${prefix}--side-nav--panel`]: navType === SIDE_NAV_TYPE.PANEL,
     [`${prefix}--side-nav--ux`]: isChildOfHeader,
     [`${prefix}--side-nav--hidden`]: !isPersistent,
     [`${prefix}--side-nav--collapsible`]: isCollapsible,
@@ -168,6 +201,10 @@ function SideNavRenderFunction(
       }
     };
     eventHandlers.onBlur = (event) => {
+      if (navType === SIDE_NAV_TYPE.PANEL) {
+        return;
+      }
+
       if (!event.currentTarget.contains(event.relatedTarget)) {
         handleToggle(event, false);
       }
@@ -243,6 +280,13 @@ function SideNavRenderFunction(
         {...eventHandlers}
         {...other}>
         {childrenToRender}
+        {navType === SIDE_NAV_TYPE.PANEL && (
+          <SideNavToggle
+            renderIcon={expandedState ? SidePanelClose : SidePanelOpen}
+            title={sideNavToggleTitle}
+            onClick={() => setExpandedState(!expandedState)}
+          />
+        )}
       </nav>
     </SideNavContext.Provider>
   );

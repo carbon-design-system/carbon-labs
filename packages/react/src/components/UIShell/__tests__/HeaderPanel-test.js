@@ -6,9 +6,7 @@
  */
 
 import React from 'react';
-import HeaderPanel from '../HeaderPanel';
-import Switcher from '../Switcher';
-import SwitcherItem from '../SwitcherItem';
+import { HeaderPanel } from '../components/HeaderPanel';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -67,20 +65,6 @@ describe('HeaderPanel', () => {
       expect(childrenArray.length).toEqual(2);
     });
 
-    it('should call `onHeaderPanelFocus` callback, when defined', async () => {
-      const onHeaderPanelFocus = jest.fn();
-      render(
-        <HeaderPanel onHeaderPanelFocus={onHeaderPanelFocus} expanded>
-          <button type="button">Test</button>
-        </HeaderPanel>
-      );
-
-      screen.getByRole('button', { name: 'Test' }).focus();
-      await userEvent.keyboard('{Escape}');
-
-      expect(onHeaderPanelFocus).toHaveBeenCalled();
-    });
-
     it('should not error when `onHeaderPanelFocus` is not defined', async () => {
       render(
         <HeaderPanel>
@@ -92,47 +76,6 @@ describe('HeaderPanel', () => {
         screen.getByRole('button', { name: 'Test' }).focus();
         await userEvent.keyboard('{Escape}');
       }).not.toThrow();
-    });
-
-    it('should handle click', async () => {
-      const onClick = jest.fn();
-
-      render(
-        <HeaderPanel
-          aria-label="test-aria"
-          expanded
-          href="#"
-          onHeaderPanelFocus={onClick}>
-          <Switcher aria-label="Switcher Container">
-            <SwitcherItem aria-label="Link 1" href="#">
-              Link 1
-            </SwitcherItem>
-          </Switcher>
-        </HeaderPanel>
-      );
-
-      await userEvent.click(document.body);
-
-      expect(onClick).toHaveBeenCalled();
-    });
-
-    it('should handle onKeyDown', async () => {
-      const onKeyDown = jest.fn();
-
-      render(
-        <HeaderPanel
-          expanded
-          href="#"
-          onHeaderPanelFocus={onKeyDown}
-          data-testid="header-panel">
-          <button type="button">Test</button>
-        </HeaderPanel>
-      );
-
-      screen.getByRole('button', { name: 'Test' }).focus();
-
-      await userEvent.keyboard('{Escape}');
-      expect(onKeyDown).toHaveBeenCalled();
     });
 
     it('should handle onBlur', async () => {

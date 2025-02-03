@@ -151,10 +151,10 @@ HeaderPanel.propTypes = {
    */
   addFocusListeners: PropTypes.bool,
 
-  // /**
-  //  * The content that will render inside of the `HeaderPanel`
-  //  */
-  // children: PropTypes.node,
+  /**
+   * The content that will render inside of the `HeaderPanel`
+   */
+  children: PropTypes.any,
 
   /**
    * Optionally provide a custom class to apply to the underlying `<li>` node

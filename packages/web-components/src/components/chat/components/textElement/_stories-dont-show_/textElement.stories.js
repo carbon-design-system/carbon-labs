@@ -151,13 +151,25 @@ const codeElementsExample = [
     content: '',
   },
   {
-    text: '. Make sure to place inside:',
+    text: '.\nMake sure to place inside:',
     type: 'default',
     active: false,
     content: '',
   },
   {
-    text: '<Messages> <Message> <Code></Code> </Message> <Message> <TextElement></textElement> </Message> </Messages>',
+    text: '<Messages> <Message> Place objects here </Message> </Messages>',
+    type: 'code',
+    active: false,
+    content: '',
+  },
+  {
+    text: '\n Then any imported objects can be placed within such as:\n',
+    type: 'default',
+    active: false,
+    content: '',
+  },
+  {
+    text: '<Code></Code>  <TextElement></TextElement>',
     type: 'code',
     active: false,
     content: '',

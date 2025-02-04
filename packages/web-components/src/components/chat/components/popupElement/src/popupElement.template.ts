@@ -128,6 +128,7 @@ export function popupElementTemplate(customElementClass) {
                 <clabs-chat-tag-list
                   is-inline
                   tag-mode
+                  action-type="mutli-select"
                   @on-tag-selected="${handleTagSelection}"
                   content="${tagList
                     ? tagList

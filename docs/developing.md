@@ -92,15 +92,42 @@ Afterwards, you should be good to go!
 
 ## Running Storybook
 
-To get your development server running and to start coding, you just have to
+To get your development server running specifically for Web Components or React,
 run:
 
 ```bash
+cd packages/web-components
+yarn storybook
+```
+
+or
+
+```bash
+cd packages/react
 yarn storybook
 ```
 
 This will start a development server where you can see any changes you are
 making to components in Storybook.
+
+To get the consolidated view of both Web Components and React within one
+Storybook environment, you need to have Storybook running for both before
+running Storybook from the root of the project.
+
+```bash
+cd packages/web-components
+yarn storybook
+
+cd ../react
+yarn storybook
+
+cd ../..
+yarn storybook
+```
+
+The
+[Storybook references](https://github.com/carbon-design-system/carbon-labs/blob/main/.storybook/main.js)
+can be modified if needed.
 
 ## Common tasks
 
@@ -140,8 +167,19 @@ might want to run:
 
 2. From the root of the project, run the following to add your component to the
    yarn workspace.
+
    ```bash
    yarn && yarn build
+   ```
+
+3. The generated template comes with a simple snapshot test case (ie.
+   `packages/react/src/components/TestComponent/__tests__/TestComponent.test.js`),
+   feel free to add additional test cases here. In order to generate the
+   snapshot run:
+
+   ```bash
+   cd package/react
+   yarn test
    ```
 
 ## Building a Web Component
@@ -170,8 +208,19 @@ might want to run:
 
 2. From the root of the project, run the following to add your component to the
    yarn workspace.
+
    ```bash
    yarn && yarn build
+   ```
+
+3. The generated template comes with a simple snapshot test case (ie.
+   `packages/web-components/src/components/test-component/__tests__/test-component.test.js`),
+   feel free to add additional test cases here. In order to generate the
+   snapshot run:
+
+   ```bash
+   cd package/web-components
+   yarn test
    ```
 
 ## Document maintainers

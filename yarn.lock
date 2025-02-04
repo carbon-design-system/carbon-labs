@@ -2518,8 +2518,8 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.14.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon-labs/utilities": "npm:0.15.0"
+    "@carbon/web-components": "npm:2.21.0"
     "@ibm/telemetry-js": "npm:^1.6.0"
     "@types/highlightjs": "npm:^9"
     highlightjs: "npm:^9.16.2"
@@ -2538,9 +2538,9 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.14.0"
+    "@carbon-labs/utilities": "npm:0.15.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon/web-components": "npm:2.21.0"
     uuid: "npm:^9.0.1"
   languageName: unknown
   linkType: soft
@@ -2553,7 +2553,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.8.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon/web-components": "npm:2.21.0"
   languageName: unknown
   linkType: soft
 
@@ -2565,7 +2565,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.8.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon/web-components": "npm:2.21.0"
   languageName: unknown
   linkType: soft
 
@@ -2583,9 +2583,9 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.14.0"
+    "@carbon-labs/utilities": "npm:0.15.0"
     "@carbon/grid": "npm:^11.21.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon/web-components": "npm:2.21.0"
     force-graph: "npm:^1.43.5"
   languageName: unknown
   linkType: soft
@@ -2593,6 +2593,22 @@ __metadata:
 "@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UIShell":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UIShell"
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
   languageName: unknown
@@ -2668,7 +2684,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/utilities@npm:0.14.0, @carbon-labs/utilities@workspace:packages/utilities":
+"@carbon-labs/utilities@npm:0.15.0, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/utilities@workspace:packages/utilities"
   dependencies:
@@ -2701,8 +2717,8 @@ __metadata:
   resolution: "@carbon-labs/wc-example-button@workspace:packages/web-components/src/components/example-button"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.14.0"
-    "@carbon/web-components": "npm:2.20.0"
+    "@carbon-labs/utilities": "npm:0.15.0"
+    "@carbon/web-components": "npm:2.21.0"
   languageName: unknown
   linkType: soft
 
@@ -2712,11 +2728,11 @@ __metadata:
   dependencies:
     "@carbon/grid": "npm:^11.21.1"
     "@carbon/icon-helpers": "npm:10.54.0"
-    "@carbon/icons": "npm:11.53.0"
+    "@carbon/icons": "npm:11.54.0"
     "@carbon/layout": "npm:11.28.0"
     "@carbon/motion": "npm:11.24.0"
     "@carbon/styles": "npm:^1.70.0"
-    "@carbon/themes": "npm:11.44.0"
+    "@carbon/themes": "npm:11.45.0"
     "@carbon/type": "npm:11.34.0"
     "@custom-elements-manifest/analyzer": "npm:^0.10.0"
     "@lit/react": "npm:^1.0.1"
@@ -2752,7 +2768,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     replace-ext: "npm:^2.0.0"
     sass: "npm:~1.83.0"
-    sinon: "npm:^17.0.1"
+    sinon: "npm:^19.0.0"
     storybook: "npm:^8.4.7"
     through2: "npm:^4.0.2"
     typescript: "npm:^5.2.2"
@@ -2810,12 +2826,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons@npm:11.53.0":
-  version: 11.53.0
-  resolution: "@carbon/icons@npm:11.53.0"
+"@carbon/icons@npm:11.54.0":
+  version: 11.54.0
+  resolution: "@carbon/icons@npm:11.54.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/ec19179cafb629d2354f906d70d44f85a911009c39f65602d2ad432ecd5264541110286a79fcd9566d569e78a8680190c84f4294839915a388ce07d8a72d6fa8
+  checksum: 10c0/5ad7e9fe828db2695c67ede7dc963c54e444a8a13523f421da94cdfb57d7ca8ed798a712fd443810ab5999f14821d1daad7dd1379e5926fad029b2f6de56266b
   languageName: node
   linkType: hard
 
@@ -2870,7 +2886,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/styles@npm:^1.70.0, @carbon/styles@npm:^1.71.0, @carbon/styles@npm:^1.72.0":
+"@carbon/styles@npm:^1.70.0, @carbon/styles@npm:^1.71.0":
   version: 1.72.0
   resolution: "@carbon/styles@npm:1.72.0"
   dependencies:
@@ -2900,7 +2916,50 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/themes@npm:11.44.0, @carbon/themes@npm:^11.44.0":
+"@carbon/styles@npm:^1.73.0":
+  version: 1.73.0
+  resolution: "@carbon/styles@npm:1.73.0"
+  dependencies:
+    "@carbon/colors": "npm:^11.28.0"
+    "@carbon/feature-flags": "npm:^0.24.0"
+    "@carbon/grid": "npm:^11.30.0"
+    "@carbon/layout": "npm:^11.28.0"
+    "@carbon/motion": "npm:^11.24.0"
+    "@carbon/themes": "npm:^11.45.0"
+    "@carbon/type": "npm:^11.34.0"
+    "@ibm/plex": "npm:6.0.0-next.6"
+    "@ibm/plex-mono": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-arabic": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-devanagari": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-hebrew": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-thai": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-thai-looped": "npm:0.0.3-alpha.0"
+    "@ibm/plex-serif": "npm:0.0.3-alpha.0"
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  peerDependencies:
+    sass: ^1.33.0
+  peerDependenciesMeta:
+    sass:
+      optional: true
+  checksum: 10c0/8068aa949bd4b4cf25a27ec33536782c2cde1bfb72ee6b24fb7355df4aa2331f12bdad5d66a6f6c6edf0a12979ec228d39ae692ec4f5ab80f219867b0b94c236
+  languageName: node
+  linkType: hard
+
+"@carbon/themes@npm:11.45.0, @carbon/themes@npm:^11.45.0":
+  version: 11.45.0
+  resolution: "@carbon/themes@npm:11.45.0"
+  dependencies:
+    "@carbon/colors": "npm:^11.28.0"
+    "@carbon/layout": "npm:^11.28.0"
+    "@carbon/type": "npm:^11.34.0"
+    "@ibm/telemetry-js": "npm:^1.5.0"
+    color: "npm:^4.0.0"
+  checksum: 10c0/a8fb2f8dc2b655111a6f44e6e55ce12cc90d744601e5b7f220b5ec6ea84090b3b16111262bbce7469a08fe39a0c53e818a09ea18d927bd69b5b5f27cbc378d18
+  languageName: node
+  linkType: hard
+
+"@carbon/themes@npm:^11.44.0":
   version: 11.44.0
   resolution: "@carbon/themes@npm:11.44.0"
   dependencies:
@@ -2924,18 +2983,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/web-components@npm:2.20.0":
-  version: 2.20.0
-  resolution: "@carbon/web-components@npm:2.20.0"
+"@carbon/web-components@npm:2.21.0":
+  version: 2.21.0
+  resolution: "@carbon/web-components@npm:2.21.0"
   dependencies:
-    "@carbon/styles": "npm:^1.72.0"
+    "@carbon/styles": "npm:^1.73.0"
     "@floating-ui/dom": "npm:^1.6.3"
     "@ibm/telemetry-js": "npm:^1.5.0"
     flatpickr: "npm:4.6.13"
     lit: "npm:^3.1.0"
     lodash-es: "npm:^4.17.21"
     tslib: "npm:^2.6.3"
-  checksum: 10c0/382245d5d0a2acd6fe2e7ea28f7946cd7288b0379f28d3498306b28faf71d656d5f0d087003a21361f4e8932812dedd48c7015542c221b6f5002976d551b6af7
+  checksum: 10c0/82ee4a6f3c3ba026a9fd37224496c4584820a3486f67c269f65d46ef737f9f999d1b2dfbad765e61a16af48230f06cb5fa67aafa899f39dab5de6a144ed8247f
   languageName: node
   linkType: hard
 
@@ -6093,16 +6152,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sinonjs/commons@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@sinonjs/commons@npm:2.0.0"
-  dependencies:
-    type-detect: "npm:4.0.8"
-  checksum: 10c0/babe3fdfc7dfb810f6918f2ae055032a1c7c18910595f1c6bfda87bb1737c1a57268d4ca78c3d8ad2fa4aae99ff79796fad76be735a5a38ab763c0b3cfad1ae7
-  languageName: node
-  linkType: hard
-
-"@sinonjs/commons@npm:^3.0.0":
+"@sinonjs/commons@npm:^3.0.0, @sinonjs/commons@npm:^3.0.1":
   version: 3.0.1
   resolution: "@sinonjs/commons@npm:3.0.1"
   dependencies:
@@ -6120,30 +6170,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sinonjs/fake-timers@npm:^11.2.2":
-  version: 11.2.2
-  resolution: "@sinonjs/fake-timers@npm:11.2.2"
+"@sinonjs/fake-timers@npm:^13.0.1, @sinonjs/fake-timers@npm:^13.0.2":
+  version: 13.0.5
+  resolution: "@sinonjs/fake-timers@npm:13.0.5"
   dependencies:
-    "@sinonjs/commons": "npm:^3.0.0"
-  checksum: 10c0/a4218efa6fdafda622d02d4c0a6ab7df3641cb038bb0b14f0a3ee56f50c95aab4f1ab2d7798ce928b40c6fc1839465a558c9393a77e4dca879e1b2f8d60d8136
+    "@sinonjs/commons": "npm:^3.0.1"
+  checksum: 10c0/a707476efd523d2138ef6bba916c83c4a377a8372ef04fad87499458af9f01afc58f4f245c5fd062793d6d70587309330c6f96947b5bd5697961c18004dc3e26
   languageName: node
   linkType: hard
 
-"@sinonjs/samsam@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "@sinonjs/samsam@npm:8.0.0"
+"@sinonjs/samsam@npm:^8.0.1":
+  version: 8.0.2
+  resolution: "@sinonjs/samsam@npm:8.0.2"
   dependencies:
-    "@sinonjs/commons": "npm:^2.0.0"
+    "@sinonjs/commons": "npm:^3.0.1"
     lodash.get: "npm:^4.4.2"
-    type-detect: "npm:^4.0.8"
-  checksum: 10c0/c1654ad72ecd9efd4a57d756c492c1c17a197c3138da57b75ba1729562001ed1b3b9c656cce1bd1d91640bc86eb4185a72eced528d176fff09a3a01de28cdcc6
+    type-detect: "npm:^4.1.0"
+  checksum: 10c0/31d74c415040161f2963a202d7f866bedbb5a9b522a74b08a17086c15a75c3ef2893eecebb0c65a7b1603ef4ebdf83fa73cbe384b4cd679944918ed833200443
   languageName: node
   linkType: hard
 
-"@sinonjs/text-encoding@npm:^0.7.2":
-  version: 0.7.2
-  resolution: "@sinonjs/text-encoding@npm:0.7.2"
-  checksum: 10c0/583a45bf3643169e313ff9d4395aff28b0c4f330d3697e252c3effc13d4303ee30f83df542732c1a68617720e4ea6fc08d48a3d9151c9b354a7fc356a8e9b162
+"@sinonjs/text-encoding@npm:^0.7.3":
+  version: 0.7.3
+  resolution: "@sinonjs/text-encoding@npm:0.7.3"
+  checksum: 10c0/b112d1e97af7f99fbdc63c7dbcd35d6a60764dfec85cfcfff532e55cce8ecd8453f9fa2139e70aea47142c940fd90cd201d19f370b9a0141700d8a6de3116815
   languageName: node
   linkType: hard
 
@@ -13175,10 +13225,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"diff@npm:^5.0.0, diff@npm:^5.1.0":
+"diff@npm:^5.0.0":
   version: 5.2.0
   resolution: "diff@npm:5.2.0"
   checksum: 10c0/aed0941f206fe261ecb258dc8d0ceea8abbde3ace5827518ff8d302f0fc9cc81ce116c4d8f379151171336caf0516b79e01abdc1ed1201b6440d895a66689eb4
+  languageName: node
+  linkType: hard
+
+"diff@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "diff@npm:7.0.0"
+  checksum: 10c0/251fd15f85ffdf814cfc35a728d526b8d2ad3de338dcbd011ac6e57c461417090766b28995f8ff733135b5fbc3699c392db1d5e27711ac4e00244768cd1d577b
   languageName: node
   linkType: hard
 
@@ -18787,13 +18844,13 @@ __metadata:
   linkType: hard
 
 "katex@npm:^0.16.9":
-  version: 0.16.11
-  resolution: "katex@npm:0.16.11"
+  version: 0.16.21
+  resolution: "katex@npm:0.16.21"
   dependencies:
     commander: "npm:^8.3.0"
   bin:
     katex: cli.js
-  checksum: 10c0/be405d45d7228bbfeecd491e0f74d9da0066b5e7b457e3f1dc833de5b63f9e98e40d2ef6b46e1cbe577490a43338c043851da032c45aeec0cc03ad431ef6fd83
+  checksum: 10c0/e2e4139ba72a13f2393308fbb2b4c5511611a19a40a6e39d956cf775e553af3517dbfd0a54477faaf401c923e4654e32296347846b8ff15dfa579f88ff8579bb
   languageName: node
   linkType: hard
 
@@ -21285,16 +21342,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nise@npm:^5.1.5":
-  version: 5.1.9
-  resolution: "nise@npm:5.1.9"
+"nise@npm:^6.1.1":
+  version: 6.1.1
+  resolution: "nise@npm:6.1.1"
   dependencies:
-    "@sinonjs/commons": "npm:^3.0.0"
-    "@sinonjs/fake-timers": "npm:^11.2.2"
-    "@sinonjs/text-encoding": "npm:^0.7.2"
+    "@sinonjs/commons": "npm:^3.0.1"
+    "@sinonjs/fake-timers": "npm:^13.0.1"
+    "@sinonjs/text-encoding": "npm:^0.7.3"
     just-extend: "npm:^6.2.0"
-    path-to-regexp: "npm:^6.2.1"
-  checksum: 10c0/a44318e6de738b34a1f51b4b478f97f5b40a5a27175be4bf13f6e5b8e67aa70d0b3f51c77a966d6617fccdc3b436c675a89be57424833e6d8a290367faa66b28
+    path-to-regexp: "npm:^8.1.0"
+  checksum: 10c0/09471adb738dc3be2981cc7815c90879ed6a5a3e162202ca66e12f9a5a0956bea718d0ec2f0c07acc26e3f958481b8fb30c30da76c13620e922f3b9dcd249c50
   languageName: node
   linkType: hard
 
@@ -22521,10 +22578,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-to-regexp@npm:^6.2.1":
-  version: 6.3.0
-  resolution: "path-to-regexp@npm:6.3.0"
-  checksum: 10c0/73b67f4638b41cde56254e6354e46ae3a2ebc08279583f6af3d96fe4664fc75788f74ed0d18ca44fa4a98491b69434f9eee73b97bb5314bd1b5adb700f5c18d6
+"path-to-regexp@npm:^8.1.0":
+  version: 8.2.0
+  resolution: "path-to-regexp@npm:8.2.0"
+  checksum: 10c0/ef7d0a887b603c0a142fad16ccebdcdc42910f0b14830517c724466ad676107476bba2fe9fffd28fd4c141391ccd42ea426f32bb44c2c82ecaefe10c37b90f5a
   languageName: node
   linkType: hard
 
@@ -25543,17 +25600,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sinon@npm:^17.0.1":
-  version: 17.0.1
-  resolution: "sinon@npm:17.0.1"
+"sinon@npm:^19.0.0":
+  version: 19.0.2
+  resolution: "sinon@npm:19.0.2"
   dependencies:
-    "@sinonjs/commons": "npm:^3.0.0"
-    "@sinonjs/fake-timers": "npm:^11.2.2"
-    "@sinonjs/samsam": "npm:^8.0.0"
-    diff: "npm:^5.1.0"
-    nise: "npm:^5.1.5"
+    "@sinonjs/commons": "npm:^3.0.1"
+    "@sinonjs/fake-timers": "npm:^13.0.2"
+    "@sinonjs/samsam": "npm:^8.0.1"
+    diff: "npm:^7.0.0"
+    nise: "npm:^6.1.1"
     supports-color: "npm:^7.2.0"
-  checksum: 10c0/63e678bd58a959ebf69ddadb5410e9c31bd161b848b9dbec5f34f7e1485a8681810cd27d37bde072b68915b41b498f30bb5fb890c73e7a51dc281d1b1d573cfb
+  checksum: 10c0/a5d988d55643677e55bbc70c3aa6c9977f8a7cf55d157278ea8e4474d9acbec16d9c44056bd763e4f5988daf0fb75370099cf90105243dbb8742978478d53c40
   languageName: node
   linkType: hard
 
@@ -25984,9 +26041,9 @@ __metadata:
   linkType: hard
 
 "store2@npm:^2.14.2":
-  version: 2.14.3
-  resolution: "store2@npm:2.14.3"
-  checksum: 10c0/22e1096e6d69590672ca0b7f891d82b060837ef4c3e5df0d4563e6cbed14c52ddf2589fa94b79f4311b6ec41d95d6142e5d01d194539e0175c3fb4090cca8244
+  version: 2.14.4
+  resolution: "store2@npm:2.14.4"
+  checksum: 10c0/3453c9c8c153c760e6290395a7bc23669df5dc8a6e8a49f9b3187dbb9f86d14b58705aa4f17fad6b536d4b04fe3e66ea5bde12c1352abd52c6b303bbf5757ab6
   languageName: node
   linkType: hard
 
@@ -27452,10 +27509,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-detect@npm:4.0.8, type-detect@npm:^4.0.8":
+"type-detect@npm:4.0.8":
   version: 4.0.8
   resolution: "type-detect@npm:4.0.8"
   checksum: 10c0/8fb9a51d3f365a7de84ab7f73b653534b61b622aa6800aecdb0f1095a4a646d3f5eb295322127b6573db7982afcd40ab492d038cf825a42093a58b1e1353e0bd
+  languageName: node
+  linkType: hard
+
+"type-detect@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "type-detect@npm:4.1.0"
+  checksum: 10c0/df8157ca3f5d311edc22885abc134e18ff8ffbc93d6a9848af5b682730ca6a5a44499259750197250479c5331a8a75b5537529df5ec410622041650a7f293e2a
   languageName: node
   linkType: hard
 
@@ -28851,8 +28915,8 @@ __metadata:
   linkType: hard
 
 "vite@npm:^5.0.0":
-  version: 5.4.9
-  resolution: "vite@npm:5.4.9"
+  version: 5.4.14
+  resolution: "vite@npm:5.4.14"
   dependencies:
     esbuild: "npm:^0.21.3"
     fsevents: "npm:~2.3.3"
@@ -28889,7 +28953,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/e9c59f2c639047e37c79bbbb151c7a55a3dc27932957cf4cf0447ee0bdcc1ddfd9b1fb3ba0465371c01ba3616d62561327855794c2d652213c3a10a32e6d369d
+  checksum: 10c0/8842933bd70ca6a98489a0bb9c8464bec373de00f9a97c8c7a4e64b24d15c88bfaa8c1acb38a68c3e5eb49072ffbccb146842c2d4edcdd036a9802964cffe3d1
   languageName: node
   linkType: hard
 

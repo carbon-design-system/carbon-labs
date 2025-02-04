@@ -7,3 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 export { SideNav } from './components/SideNav.js';
+export { HeaderPanel } from './components/HeaderPanel';

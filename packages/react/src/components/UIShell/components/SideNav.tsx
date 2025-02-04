@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 import { AriaLabelPropType } from '@carbon/react/lib/prop-types/AriaPropTypes';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
 import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
-import { keys } from '@carbon/react/lib/internal/keyboard/keys';
+import * as keys from '@carbon/react/lib/internal/keyboard/keys';
 import { match } from '@carbon/react/lib/internal/keyboard/match';
 import { useMergedRefs } from '@carbon/react/lib/internal/useMergedRefs';
 import { useWindowEvent } from '@carbon/react/lib/internal/useEvent';

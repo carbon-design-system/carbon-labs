@@ -2569,14 +2569,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/animated-header@workspace:packages/react/src/components/AnimatedHeader":
-  version: 0.0.0-use.local
-  resolution: "@carbon-labs/animated-header@workspace:packages/react/src/components/AnimatedHeader"
-  dependencies:
-    "@carbon-labs/utilities": "npm:canary"
-  languageName: unknown
-  linkType: soft
-
 "@carbon-labs/network-graph@workspace:packages/web-components/src/components/network-graph":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/network-graph@workspace:packages/web-components/src/components/network-graph"
@@ -2587,6 +2579,14 @@ __metadata:
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:2.21.0"
     force-graph: "npm:^1.43.5"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-animated-header@workspace:packages/react/src/components/AnimatedHeader":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-animated-header@workspace:packages/react/src/components/AnimatedHeader"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
   languageName: unknown
   linkType: soft
 

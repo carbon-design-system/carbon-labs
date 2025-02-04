@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.6.0...@carbon-labs/react-ui-shell@0.7.0) (2025-02-04)
+
+
+### Bug Fixes
+
+* **UIShell:** update zindex and update main uishell story ([#412](https://github.com/carbon-design-system/carbon-labs/issues/412)) ([0fe618c](https://github.com/carbon-design-system/carbon-labs/commit/0fe618ce3496b4ecdff4816ca58a5a7d9cd91300))
+
+
+
+
+
 # [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.5.0...@carbon-labs/react-ui-shell@0.6.0) (2025-02-04)
 
 

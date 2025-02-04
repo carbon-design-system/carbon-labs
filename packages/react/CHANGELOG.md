@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.5.0...@carbon-labs/react@0.6.0) (2025-02-04)
+
+
+### Features
+
+* **UIShell:** add HeaderPanel to UIShell React package ([#407](https://github.com/carbon-design-system/carbon-labs/issues/407)) ([4d1f5b8](https://github.com/carbon-design-system/carbon-labs/commit/4d1f5b8a52f8a49c4b1c06d6f7942b0f856f18a5))
+
+
+
+
+
 # [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.4.0...@carbon-labs/react@0.5.0) (2025-02-04)
 
 **Note:** Version bump only for package @carbon-labs/react

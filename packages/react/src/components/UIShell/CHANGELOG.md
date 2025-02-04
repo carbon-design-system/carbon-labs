@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.5.0...@carbon-labs/react-ui-shell@0.6.0) (2025-02-04)
+
+
+### Features
+
+* **SideNav:** implement panel variant ([#408](https://github.com/carbon-design-system/carbon-labs/issues/408)) ([4e39d88](https://github.com/carbon-design-system/carbon-labs/commit/4e39d88b505a01c1529075cc317760c626b7686a))
+
+
+
+
+
 # [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.4.0...@carbon-labs/react-ui-shell@0.5.0) (2025-02-04)
 
 

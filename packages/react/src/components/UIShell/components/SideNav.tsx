@@ -121,7 +121,7 @@ function SideNavRenderFunction(
   const sideNavRef = useRef<HTMLDivElement>(null);
   const navRef = useMergedRefs([sideNavRef, ref]);
 
-  const sideNavToggleTitle = expandedState
+  const sideNavToggleText = expandedState
     ? t('collapse.sidenav')
     : t('expand.sidenav');
 
@@ -283,9 +283,9 @@ function SideNavRenderFunction(
         {navType === SIDE_NAV_TYPE.PANEL && (
           <SideNavToggle
             renderIcon={expandedState ? SidePanelClose : SidePanelOpen}
-            title={sideNavToggleTitle}
-            onClick={() => setExpandedState(!expandedState)}
-          />
+            onClick={() => setExpandedState(!expandedState)}>
+            {sideNavToggleText}
+          </SideNavToggle>
         )}
       </nav>
     </SideNavContext.Provider>

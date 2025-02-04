@@ -6,11 +6,19 @@
  */
 
 import PropTypes from 'prop-types';
-import React, { ForwardedRef, Ref } from 'react';
+import React, { ForwardedRef, ReactNode, Ref } from 'react';
 import { SideNavIcon } from '@carbon/react';
 import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
 
 interface SideNavToggleProps {
+  /**
+   * Specify the text content for the link
+   */
+  children: ReactNode;
+
+  /**
+   * Provide an optional function to be called when the item is clicked.
+   */
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 
   /**
@@ -23,16 +31,11 @@ interface SideNavToggleProps {
    * If not specified, the default validation will be applied.
    */
   tabIndex?: number;
-
-  /**
-   * The title of the SideNavToggle.
-   */
-  title: string;
 }
 
 export const SideNavToggle = React.forwardRef<HTMLElement, SideNavToggleProps>(
   function SideNavToggle(
-    { renderIcon: IconElement, tabIndex, title, ...rest },
+    { renderIcon: IconElement, tabIndex, children, ...rest },
     ref: ForwardedRef<HTMLElement>
   ) {
     const prefix = usePrefix();
@@ -49,7 +52,7 @@ export const SideNavToggle = React.forwardRef<HTMLElement, SideNavToggleProps>(
             <IconElement />
           </SideNavIcon>
         )}
-        <span className={`${prefix}--side-nav__toggle-title`}>{title}</span>
+        <span className={`${prefix}--side-nav__toggle-text`}>{children}</span>
       </button>
     );
   }
@@ -57,6 +60,11 @@ export const SideNavToggle = React.forwardRef<HTMLElement, SideNavToggleProps>(
 SideNavToggle.displayName = 'SideNavToggle';
 
 SideNavToggle.propTypes = {
+  /**
+   * Specify the text content for the toggle
+   */
+  children: PropTypes.element,
+
   /**
    * Provide an optional function to be called when clicked
    */
@@ -72,11 +80,6 @@ SideNavToggle.propTypes = {
    * Optional prop to specify the tabIndex of the button. If undefined, it will be applied default validation
    */
   tabIndex: PropTypes.number,
-
-  /**
-   * Provide the text for the overall toggle name
-   */
-  title: PropTypes.string.isRequired,
 };
 
 export default SideNavToggle;

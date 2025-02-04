@@ -64,7 +64,7 @@ $prefix: 'cds' !default;
     }
   }
 
-  .#{$prefix}--side-nav__toggle-title {
+  .#{$prefix}--side-nav__toggle-text {
     @include text-overflow();
 
     text-align: start;

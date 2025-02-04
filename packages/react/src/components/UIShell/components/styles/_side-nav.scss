@@ -13,6 +13,7 @@
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/styles/scss/components/ui-shell/mixins' as *;
 @use '@carbon/styles/scss/components/ui-shell/functions' as *;
+@use '@carbon/styles/scss/spacing' as *;
 
 $prefix: 'cds' !default;
 
@@ -32,7 +33,7 @@ $prefix: 'cds' !default;
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
   .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
-    margin-inline-end: mini-units(2);
+    margin-inline-end: $spacing-05;
   }
 
   .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
@@ -47,8 +48,8 @@ $prefix: 'cds' !default;
 
     display: flex;
     align-items: center;
-    padding: 0 mini-units(2);
-    block-size: mini-units(6);
+    padding: 0 $spacing-05;
+    block-size: $spacing-09;
     color: $text-secondary;
     transition: color $duration-fast-02, background-color $duration-fast-02,
       outline $duration-fast-02;

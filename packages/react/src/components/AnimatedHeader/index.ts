@@ -9,4 +9,4 @@
 import AnimatedHeader from '../AnimatedHeader/components/AnimatedHeader/AnimatedHeader';
 import { BaseTile } from './components/Tiles/index.js';
 
-export {AnimatedHeader, BaseTile};
+export { AnimatedHeader, BaseTile };

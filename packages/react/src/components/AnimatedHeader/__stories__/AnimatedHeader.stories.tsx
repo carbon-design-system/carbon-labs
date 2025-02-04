@@ -179,7 +179,7 @@ const sharedArgTypes = {
       4: ButtonKinds[4],
       5: ButtonKinds[5],
       6: ButtonKinds[6],
-      7: ButtonKinds[7]
+      7: ButtonKinds[7],
     },
   },
   buttonIcon: {

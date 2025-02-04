@@ -6,6 +6,7 @@
  */
 
 @use '@carbon/styles/scss/utilities/convert' as convert;
+@use '@carbon/styles/scss/spacing.scss' as *;
 
 // $prefix: 'clabs' !default;
 // Do we want to update to clabs?
@@ -21,3 +22,35 @@ $prefix: 'cds' !default;
 .#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--expanded {
   inline-size: convert.to-rem(256px);
 }
+
+//----------------------------------------------------------------------------
+// Treeview Side-nav
+//----------------------------------------------------------------------------
+.#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
+  margin-inline-end: $spacing-05;
+}
+
+
+// Possibly dynamically do the thingie
+// .cds--side-nav__item {
+//   --depth: 0;
+
+//   .cds--side-nav__submenu {
+//     padding-left: calc(4.5rem * var(--depth));
+//   }
+
+
+//   .cds--side-nav__menu .cds--side-nav__menu-item .cds--side-nav__link {
+//     padding-left: calc(4.5rem * var(--depth) + 1rem);
+//   }
+// }
+
+// .cds--side-nav__submenu {
+//   --depth: 0;
+//   padding-left: calc(4.5rem * var(--depth));
+
+//   .cds--side-nav__link {
+//     padding-left: 1rem;
+//     background-color: red;
+//   }
+// }

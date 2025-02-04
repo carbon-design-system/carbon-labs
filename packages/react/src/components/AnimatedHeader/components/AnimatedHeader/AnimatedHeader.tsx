@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import PropTypes, { elementType } from 'prop-types';
+import PropTypes from 'prop-types';
 import React, { useEffect, createRef, useState } from 'react';
 import {
   Grid,

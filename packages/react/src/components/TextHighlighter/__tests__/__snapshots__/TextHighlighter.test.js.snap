@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextHighlighter renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <div
+    class="clabs--text-highlighter__container clabs--text-highlighter-default"
+  >
+    <mark />
+  </div>
+</div>
+`;

@@ -27,7 +27,7 @@ import {
   HeaderGlobalBar,
   HeaderGlobalAction,
 } from '@carbon/react';
-import { Fade } from '@carbon/icons-react';
+import { Fade, SquareOutline } from '@carbon/icons-react';
 import '../components/ui-shell.scss';
 
 export default {
@@ -147,23 +147,54 @@ export const Default = () => {
                 hideOverlay
                 className="nav--global">
                 <SideNavItems>
-                  <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Link">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Link">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Link">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Link">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Link">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
+                  <SideNavDivider />
+                  <SideNavLink renderIcon={SquareOutline} href="#">
+                    Link
+                  </SideNavLink>
+                  <SideNavLink renderIcon={SquareOutline} href="#">
+                    Link
+                  </SideNavLink>
+                  <SideNavMenu renderIcon={SquareOutline} title="Link">
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  </SideNavMenu>
+                </SideNavItems>
+              </SideNav>
+              <SideNav
+                navType={SIDE_NAV_TYPE.PANEL}
+                isChildOfHeader={false}
+                aria-label="Side navigation">
+                <SideNavItems>
+                  <SideNavLink renderIcon={Fade} href="#">
+                    Link
+                  </SideNavLink>
+                  <SideNavLink renderIcon={Fade} href="#">
+                    Link
+                  </SideNavLink>
+                  <SideNavLink renderIcon={Fade} href="#">
+                    Link
+                  </SideNavLink>
+                  <SideNavLink renderIcon={Fade} href="#">
+                    Link
+                  </SideNavLink>
                   <SideNavDivider />
                   <SideNavLink renderIcon={Fade} href="#">
                     Link
@@ -171,11 +202,6 @@ export const Default = () => {
                   <SideNavLink renderIcon={Fade} href="#">
                     Link
                   </SideNavLink>
-                  <SideNavMenu renderIcon={Fade} title="Link">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  </SideNavMenu>
                 </SideNavItems>
               </SideNav>
               <Theme theme="white">
@@ -265,23 +291,18 @@ export const SideNavPanel = () => (
     isChildOfHeader={false}
     aria-label="Side navigation">
     <SideNavItems>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-      </SideNavMenu>
+      <SideNavLink renderIcon={Fade} href="#">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="#">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="#">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="#">
+        Link
+      </SideNavLink>
       <SideNavDivider />
       <SideNavLink renderIcon={Fade} href="#">
         Link
@@ -289,11 +310,6 @@ export const SideNavPanel = () => (
       <SideNavLink renderIcon={Fade} href="#">
         Link
       </SideNavLink>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-      </SideNavMenu>
     </SideNavItems>
   </SideNav>
 );

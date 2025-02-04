@@ -76,7 +76,6 @@ export const SideNavMenuItem = React.forwardRef<
   });
 
   const linkRef = useRef<HTMLElement | null>(null);
-
   const itemRef = useMergedRefs([linkRef, ref]);
 
   useEffect(() => {
@@ -90,7 +89,10 @@ export const SideNavMenuItem = React.forwardRef<
   }, []);
 
   return (
-    <li className={className}>
+    <li
+      role="treeitem"
+      aria-selected={isActive ? 'true' : 'false'}
+      className={className}>
       <Component {...rest} className={linkClassName} ref={itemRef}>
         <SideNavLinkText>{children}</SideNavLinkText>
       </Component>

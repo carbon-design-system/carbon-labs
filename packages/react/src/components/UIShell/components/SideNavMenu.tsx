@@ -99,11 +99,14 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const { isRail } = useContext(SideNavContext);
     const prefix = usePrefix();
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
+    const [active, setActive] = useState<boolean>(isActive); // Set local state to manage isActive
+
     const [prevExpanded, setPrevExpanded] = useState<boolean>(defaultExpanded);
+
     const className = cx({
       [`${prefix}--side-nav__item`]: true,
       [`${prefix}--side-nav__item--active`]:
-        isActive || (hasActiveDescendant(children) && !isExpanded),
+        active || (hasActiveDescendant(children) && !isExpanded),
       [`${prefix}--side-nav__item--icon`]: IconElement,
       [`${prefix}--side-nav__item--large`]: large,
       [customClassName as string]: !!customClassName,
@@ -133,7 +136,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
         const isCarbonSideNavItem =
           CARBON_SIDENAV_ITEMS.includes(childDisplayName);
-        const isSideNavMenu = childDisplayName === 'SideNavMenu';
 
         return React.cloneElement(child, {
           ...(isCarbonSideNavItem && {
@@ -168,20 +170,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         return depth;
       };
 
-      const calcContentOffset = () => {
-        // parent node with icon
-
-        // if (children && IconElement) {
-        //   return depth + 1.5;
-        // }
-
-        // parent node without icon
-        if (children) {
-          return depth * 4.5;
-        }
-        return depth;
-      };
-
       if (buttonRef.current) {
         buttonRef.current.style.paddingLeft = `${calcButtonOffset()}rem`;
         // buttonRef.current.style.setProperty('--depth', depth.toString());
@@ -195,6 +183,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     return (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <li
+        role="treeitem"
+        aria-expanded={isExpanded}
         className={className}
         ref={listRef}
         onKeyDown={(event) => {
@@ -207,6 +197,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           className={`${prefix}--side-nav__submenu`}
           onClick={() => {
             setIsExpanded(!isExpanded);
+            setActive(!active);
           }}
           ref={menuRef as Ref<HTMLButtonElement>}
           type="button"
@@ -227,7 +218,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
             <ChevronDown size={20} />
           </SideNavIcon>
         </button>
-        <ul className={`${prefix}--side-nav__menu`}>{childrenToRender}</ul>
+        <ul className={`${prefix}--side-nav__menu`} role="group">
+          {childrenToRender}
+        </ul>
       </li>
     );
   }

@@ -13,14 +13,14 @@ import React, {
   type MouseEventHandler,
   isValidElement,
   createContext,
+  useEffect,
 } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { AriaLabelPropType } from '@carbon/react/lib/prop-types/AriaPropTypes';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
 import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
-import { keys } from '@carbon/react/lib/internal/keyboard/keys';
-import { match } from '@carbon/react/lib/internal/keyboard/match';
+import { match, matches } from '@carbon/react/lib/internal/keyboard/match';
 import { useMergedRefs } from '@carbon/react/lib/internal/useMergedRefs';
 import { useWindowEvent } from '@carbon/react/lib/internal/useEvent';
 import { useDelayedState } from '@carbon/react/lib/internal/useDelayedState';
@@ -28,6 +28,8 @@ import { breakpoints } from '@carbon/layout';
 import { useMatchMedia } from '@carbon/react/lib/internal/useMatchMedia';
 // TO-DO: comment back in when footer is added for rails
 // import SideNavFooter from './SideNavFooter';
+
+import * as keys from '@carbon/react/lib/internal/keyboard/keys';
 
 export interface SideNavProps extends ComponentProps<'nav'> {
   expanded?: boolean | undefined;
@@ -161,6 +163,50 @@ function SideNavRenderFunction(
     >
   > = {};
 
+  const treeWalkerRef = useRef<TreeWalker | null>(null);
+  useEffect(() => {
+    treeWalkerRef.current =
+      treeWalkerRef.current ??
+      document.createTreeWalker(
+        sideNavRef?.current as unknown as Node,
+        NodeFilter.SHOW_ELEMENT,
+        {
+          acceptNode: function (node) {
+            if (!(node instanceof Element)) {
+              return NodeFilter.FILTER_SKIP;
+            }
+
+            if (node.classList.contains(`${prefix}--side-nav__divider`)) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            if (
+              node.matches(`li.${prefix}--side-nav__item`) ||
+              node.matches(`li.${prefix}--side-nav__menu-item`)
+            ) {
+              return NodeFilter.FILTER_ACCEPT;
+            }
+            return NodeFilter.FILTER_SKIP;
+          },
+        }
+      );
+
+    console.log('useEffect', treeWalkerRef.current);
+  }, [prefix]);
+
+  /**
+   * Returns the parent SideNavMenu, if node is actually inside one.
+   * @param node
+   * @returns
+   */
+  function parentSideNavMenu(node: Node) {
+    const parentNode = (node as HTMLElement).parentElement?.closest(
+      `.${prefix}--side-nav__item`
+    );
+    if (parentNode) return parentNode;
+    return node;
+  }
+  console.log('not inside effect', treeWalkerRef.current);
+
   if (addFocusListeners) {
     eventHandlers.onFocus = (event) => {
       if (!event.currentTarget.contains(event.relatedTarget) && isRail) {
@@ -182,6 +228,89 @@ function SideNavRenderFunction(
       }
     };
     eventHandlers.onKeyDown = (event) => {
+      if (!treeWalkerRef.current) return;
+      const treeWalker = treeWalkerRef.current;
+
+      event.stopPropagation();
+
+      // stops page from scrolling
+      if (
+        matches(event, [
+          keys.ArrowUp,
+          keys.ArrowDown,
+          keys.Home,
+          keys.End,
+          // @ts-ignore - `matches` doesn't like the object syntax without missing properties
+          { code: 'KeyA' },
+        ])
+      ) {
+        event.preventDefault();
+      }
+
+      console.log('keydown', treeWalker);
+
+      treeWalker.currentNode =
+        (event.target as HTMLElement).closest(`li`) ?? treeWalker?.currentNode;
+
+      let nextFocusNode: Node | null = null;
+
+      if (match(event, keys.ArrowUp)) {
+        const parentNode = parentSideNavMenu(
+          treeWalker.currentNode
+        ) as HTMLElement;
+
+        let previousSideNavMenu = parentNode?.previousSibling as HTMLElement;
+
+        // skip the divider
+        if (
+          previousSideNavMenu?.classList.contains(
+            `${prefix}--side-nav__divider`
+          )
+        ) {
+          previousSideNavMenu =
+            previousSideNavMenu?.previousSibling as HTMLElement;
+        }
+
+        // when previous sibling is open, go to its last item
+        if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
+          nextFocusNode = treeWalker.previousNode();
+        } else {
+          nextFocusNode = treeWalker.previousSibling();
+
+          // first item in the menu, go back up to SideNavMenu button
+          if (nextFocusNode == null) {
+            nextFocusNode = parentNode;
+          }
+        }
+      }
+
+      if (match(event, keys.ArrowDown)) {
+        if (
+          (treeWalker.currentNode as HTMLElement).getAttribute(
+            'aria-expanded'
+          ) == 'false'
+        ) {
+          nextFocusNode = treeWalker.nextSibling();
+        } else {
+          nextFocusNode = treeWalker.nextNode();
+        }
+      }
+
+      // focus on the focusable element within the node
+      if (nextFocusNode && nextFocusNode !== event.target) {
+        resetNodeTabIndices();
+        if (nextFocusNode instanceof HTMLElement) {
+          const node =
+            nextFocusNode.querySelector('button') ??
+            nextFocusNode.querySelector('a');
+          if (node) {
+            node.tabIndex = 0;
+            node?.focus();
+          }
+        }
+      }
+
+      // close menu
       if (match(event, keys.Escape)) {
         handleToggle(event, false);
         if (href) {
@@ -211,11 +340,12 @@ function SideNavRenderFunction(
   useWindowEvent('keydown', (event: Event) => {
     const focusedElement = document.activeElement;
 
+    // going from header menu to sideNav
     if (
       match(event, keys.Tab) &&
       expanded &&
       !isFixedNav &&
-      sideNavRef.current &&
+      sideNavRef?.current &&
       focusedElement?.classList.contains(`${prefix}--header__menu-toggle`) &&
       !focusedElement.closest('nav')
     ) {
@@ -228,6 +358,15 @@ function SideNavRenderFunction(
 
   hideOverlay;
 
+  function resetNodeTabIndices() {
+    Array.prototype.forEach.call(
+      sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [],
+      (item) => {
+        item.tabIndex = -1;
+      }
+    );
+  }
+
   return (
     <SideNavContext.Provider value={{ isRail }}>
       {isFixedNav || hideOverlay ? null : (
@@ -235,6 +374,7 @@ function SideNavRenderFunction(
         <div className={overlayClassName} onClick={onOverlayClick} />
       )}
       <nav
+        role="tree"
         tabIndex={-1}
         ref={navRef}
         className={`${prefix}--side-nav__navigation ${className}`}

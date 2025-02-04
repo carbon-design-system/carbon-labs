@@ -32,6 +32,8 @@ $prefix: 'cds' !default;
 // Side-nav Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
+  z-index: 7999; /* needs to be below header */
+
   .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
     margin-inline-end: $spacing-05;
   }

@@ -43,34 +43,35 @@ body {
   position: relative;
   display: flex;
   overflow: hidden;
-  width: 100vw;
-  max-height: 90vh;
-  padding-top: 0;
-  padding-bottom: $spacing-10;
   background: $background;
+  inline-size: 100vw;
+  max-block-size: 90vh;
   outline: 1px solid transparent;
+  padding-block: 0 $spacing-10;
   transition: padding 500ms motion.motion(standard, expressive),
     max-height 500ms motion.motion(standard, expressive), color 200ms linear,
     background-color 200ms linear,
     outline 500ms motion.motion(standard, expressive);
+  writing-mode: horizontal-tb;
 }
 
 .#{$prefix}__static--container {
   position: absolute;
   display: flex;
-
-  width: 100%;
-  width: -moz-available; /* WebKit-based browsers will ignore this. */
-  width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
-  width: fill-available;
-
-  height: 100%;
-  height: -moz-available; /* WebKit-based browsers will ignore this. */
-  height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
-  height: fill-available;
-
   justify-content: flex-end;
+
+  block-size: 100%;
+  block-size: -moz-available; /* WebKit-based browsers will ignore this. */
+  block-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  block-size: fill-available;
+
+  inline-size: 100%;
+  inline-size: -moz-available; /* WebKit-based browsers will ignore this. */
+  inline-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  inline-size: fill-available;
+
   max-inline-size: 96rem;
+  writing-mode: horizontal-tb;
 }
 
 .#{$prefix}__static {
@@ -85,24 +86,24 @@ body {
 }
 
 .#{$prefix}__ui-heading {
-  margin-top: $spacing-09;
+  margin-block-start: $spacing-09;
 }
 
 .#{$prefix}__ui-side-nav {
-  margin-left: $spacing-09;
+  margin-inline-start: $spacing-09;
 }
 
 .#{$prefix}__gradient--overlay {
   position: absolute;
   z-index: 1;
 
-  width: -moz-available; /* WebKit-based browsers will ignore this. */
-  width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
-  width: fill-available;
+  block-size: -moz-available; /* WebKit-based browsers will ignore this. */
+  block-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  block-size: fill-available;
 
-  height: -moz-available; /* WebKit-based browsers will ignore this. */
-  height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
-  height: fill-available;
+  inline-size: -moz-available; /* WebKit-based browsers will ignore this. */
+  inline-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  inline-size: fill-available;
 
   margin-inline: auto;
   max-inline-size: 99rem;
@@ -112,11 +113,11 @@ body {
 .#{$prefix}__container--gradient {
   position: absolute;
   z-index: 1;
-  top: 0;
-  left: 0;
 
-  width: 100%;
-  height: 100%;
+  block-size: 100%;
+  inline-size: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
 
   margin-inline: auto;
   padding-inline: var(--cds-grid-margin);
@@ -183,8 +184,8 @@ body {
   z-index: 3;
   display: flex;
   flex-direction: column;
-  margin-top: $spacing-08;
   gap: $spacing-07;
+  margin-block-start: $spacing-08;
   opacity: 1;
   transition: opacity 500ms linear;
 }
@@ -214,14 +215,14 @@ body {
 }
 
 .#{$prefix}__button {
-  max-width: fit-content;
   animation: 250ms ease-in fade-in;
   animation-delay: 300ms;
   animation-fill-mode: both;
+
+  max-inline-size: fit-content;
 }
 
 .#{$prefix}__header-dropdown {
-  max-width: fit-content;
   border-width: 1px;
   border-style: solid;
   border-color: $border-inverse;
@@ -229,7 +230,7 @@ body {
   animation-delay: 300ms;
   animation-fill-mode: both;
   background-color: transparent;
-  color: var(--cds-button-tertiary, #0f62fe);
+  max-inline-size: fit-content;
 }
 
 .#{$prefix}__content {
@@ -242,8 +243,7 @@ body {
 }
 
 .#{$prefix}__tile-dropdown--container {
-  min-height: $spacing-08;
-
+  min-block-size: $spacing-08;
   opacity: 1;
   transition: opacity 500ms linear;
 }
@@ -251,11 +251,10 @@ body {
 .#{$prefix}__tile-dropdown {
   position: relative;
   z-index: 9999;
-  margin-bottom: $spacing-03;
-
-  animation: 500ms motion.motion(standard, expressive) 0s 1 slide-in;
+  animation: 500ms motion.motion(standard, expressive) 0ms 1 slide-in;
   animation-delay: 383.333ms;
   animation-fill-mode: both;
+  margin-block-end: $spacing-03;
 }
 
 .#{$prefix}__tiles-container {
@@ -269,7 +268,7 @@ body {
 }
 
 .#{$prefix}__tile {
-  animation: 500ms motion.motion(standard, expressive) 0s 1 slide-in;
+  animation: 500ms motion.motion(standard, expressive) 0ms 1 slide-in;
   animation-fill-mode: both;
 }
 
@@ -288,15 +287,15 @@ body {
   display: flex;
   justify-content: flex-end;
 
-  width: 100%;
-  width: -moz-available; /* WebKit-based browsers will ignore this. */
-  width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
-  width: fill-available;
+  block-size: 100%;
+  block-size: -moz-available; /* WebKit-based browsers will ignore this. */
+  block-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  block-size: fill-available;
 
-  height: 100%;
-  height: -moz-available; /* WebKit-based browsers will ignore this. */
-  height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
-  height: fill-available;
+  inline-size: 100%;
+  inline-size: -moz-available; /* WebKit-based browsers will ignore this. */
+  inline-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  inline-size: fill-available;
 
   max-inline-size: 96rem;
 }
@@ -317,23 +316,22 @@ body {
 .#{$prefix}__button-collapse--container {
   position: absolute;
   z-index: 2;
-  right: 0;
-  bottom: 0;
-  left: 0;
   display: flex;
   justify-content: flex-end;
-  padding-top: $spacing-05;
-  margin-left: auto;
+  inset-block-end: 0;
+  inset-inline: 0;
+  inset-inline-start: 0;
+  margin-inline-start: auto;
+  padding-block-start: $spacing-05;
 }
 
 .#{$prefix}__button-collapse--gradient {
   position: absolute;
   z-index: 1;
-  right: 0;
-  bottom: 0;
-
-  width: 300px;
-  height: 200px;
+  block-size: 200px;
+  inline-size: 300px;
+  inset-block-end: 0;
+  inset-inline-end: 0;
 }
 
 [data-carbon-theme='white'] .#{$prefix}__button-collapse--gradient,
@@ -355,7 +353,7 @@ body {
 }
 
 ##{$prefix}__button-collapse {
-  min-width: 112px;
+  min-inline-size: 112px;
 }
 
 ##{$prefix}__button-collapse,
@@ -364,13 +362,13 @@ body {
 }
 
 .#{$prefix}--collapsed {
-  max-height: $spacing-09;
   padding: 0;
+  max-block-size: $spacing-09;
   outline: 1px solid $border-subtle-00;
 }
 
 // Small
-@media only screen and (min-width: 20rem) {
+@media only screen and (width >= 20rem) {
   .#{$prefix}__lottie-animation {
     display: none;
   }
@@ -388,7 +386,7 @@ body {
   }
 
   .#{$prefix}__tile-dropdown {
-    margin-top: $spacing-06;
+    margin-block-start: $spacing-06;
   }
 
   .#{$prefix}__content {
@@ -401,7 +399,7 @@ body {
 }
 
 // Medium
-@media only screen and (min-width: 42rem) {
+@media only screen and (width >= 42rem) {
   .#{$prefix}__lottie-animation {
     display: flex;
   }
@@ -414,13 +412,13 @@ body {
     display: flex;
 
     background-size: 203% auto;
-    width: 100%;
-    height: 100%;
+    block-size: 100%;
+    inline-size: 100%;
   }
 
   .#{$prefix}__lottie-animation > canvas {
-    //svg
-    width: 2582px !important;
+    inline-size: 2582px;
+    writing-mode: horizontal-tb;
   }
 
   .#{$prefix}__lottie-animation > canvas > svg > g > g > g > g > path {
@@ -437,44 +435,44 @@ body {
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
     > .#{$prefix}__tile {
-    width: calc(50% - 16px);
+    inline-size: calc(50% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
     > .#{$prefix}__tile {
-    width: calc(50% - 16px);
+    inline-size: calc(50% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
     > .#{$prefix}__tile {
-    width: calc(50% - 16px);
+    inline-size: calc(50% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
     > .#{$prefix}__tile {
-    width: calc(50% - 16px);
+    inline-size: calc(50% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
-    width: calc(33% - 16px);
+    inline-size: calc(33% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :first-child)
     > ##{$prefix}__ai-prompt-tile {
-    width: calc(100% - 16px);
+    inline-size: calc(100% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :first-child)
     > ##{$prefix}__ai-prompt-tile
     ~ .#{$prefix}__glass-tile {
-    width: calc(50% - 16px);
+    inline-size: calc(50% - 16px);
   }
 }
 
 // Large
-@media only screen and (min-width: 66rem) {
+@media only screen and (width >= 66rem) {
   .#{$prefix}__lottie-animation > canvas {
-    width: 1982px !important;
+    inline-size: 1982px;
   }
 
   .#{$prefix}__static {
@@ -486,49 +484,49 @@ body {
   }
 
   .#{$prefix}__tile-dropdown {
-    margin-top: 0;
+    margin-block-start: 0;
   }
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
     > .#{$prefix}__tile {
-    width: calc(33% - 16px);
+    inline-size: calc(33% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
     > .#{$prefix}__tile {
-    width: calc(50% - 16px);
+    inline-size: calc(50% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
     > .#{$prefix}__tile {
-    width: calc(50% - 16px);
+    inline-size: calc(50% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
     > .#{$prefix}__tile {
-    width: calc(33% - 16px);
+    inline-size: calc(33% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
-    width: calc(33% - 16px);
+    inline-size: calc(33% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :first-child)
     > ##{$prefix}__ai-prompt-tile {
-    width: calc(66% - 16px);
+    inline-size: calc(66% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :first-child)
     > ##{$prefix}__ai-prompt-tile
     ~ .#{$prefix}__glass-tile {
-    width: calc(33% - 16px);
+    inline-size: calc(33% - 16px);
   }
 }
 
 // X-Large
-@media only screen and (min-width: 82rem) {
+@media only screen and (width >= 82rem) {
   .#{$prefix}__lottie-animation > canvas {
-    width: 100% !important;
+    inline-size: 100%;
   }
 
   .#{$prefix}__static {
@@ -537,42 +535,38 @@ body {
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
     > .#{$prefix}__tile {
-    width: calc(25% - 16px);
+    inline-size: calc(25% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
     > .#{$prefix}__tile {
-    width: calc(50% - 16px);
+    inline-size: calc(50% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
     > .#{$prefix}__tile {
-    width: calc(33% - 16px);
+    inline-size: calc(33% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
     > .#{$prefix}__tile {
-    width: calc(25% - 16px);
+    inline-size: calc(25% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
-    width: calc(25% - 16px);
+    inline-size: calc(25% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :first-child)
     > ##{$prefix}__ai-prompt-tile {
-    width: calc(50% - 16px);
+    inline-size: calc(50% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :first-child)
     > ##{$prefix}__ai-prompt-tile
     ~ .#{$prefix}__glass-tile {
-    width: calc(25% - 16px);
+    inline-size: calc(25% - 16px);
   }
-}
-
-// Max
-@media only screen and (min-width: 99rem) {
 }
 
 @keyframes slide-in {

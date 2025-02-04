@@ -17,9 +17,9 @@ $prefix: 'clabs-animated-header__glass-tile' !default;
 .#{$prefix} {
   position: relative;
   display: flex;
-  min-height: 176px;
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
+  min-block-size: 176px;
   text-decoration: none;
 }
 
@@ -98,9 +98,9 @@ $prefix: 'clabs-animated-header__glass-tile' !default;
 .#{$prefix}--footer {
   position: absolute;
   z-index: 3;
-  bottom: $spacing-05;
   display: flex;
   gap: $spacing-05;
+  inset-block-end: $spacing-05;
 }
 
 .#{$prefix}--subtitle {

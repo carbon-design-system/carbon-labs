@@ -17,9 +17,9 @@ $prefix: 'clabs-animated-header__ai-prompt-tile' !default;
 .#{$prefix} {
   position: relative;
   display: flex;
-  min-height: 176px;
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
+  min-block-size: 176px;
   text-decoration: none;
 }
 
@@ -78,19 +78,20 @@ $prefix: 'clabs-animated-header__ai-prompt-tile' !default;
 
 .#{$prefix}--body:after {
   position: absolute;
+  border: 1px solid transparent;
   animation: 1000ms motion.motion(standard, expressive) animate-border;
   animation-delay: 466.666ms;
   animation-fill-mode: both;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  border: 1px solid transparent;
   background: linear-gradient(180deg, #a6c8ff 64%, #78a9ff) border-box;
   background-size: 100% 150%;
   content: '';
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  inset: 0;
+  inset-block-end: 0;
+  inset-inline: 0;
+  inset-inline-start: 0;
+  -webkit-mask: linear-gradient(#ffffff 0 0) padding-box,
+    linear-gradient(#ffffff 0 0);
+  mask: linear-gradient(#ffffff 0 0) padding-box, linear-gradient(#ffffff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
 }
@@ -151,7 +152,7 @@ $prefix: 'clabs-animated-header__ai-prompt-tile' !default;
 }
 
 .#{$prefix}--text-input input {
-  border-radius: 7px 0px 0px 7px;
+  border-radius: 7px 0 0 7px;
   background-color: transparent;
   border-block-end: none;
 }

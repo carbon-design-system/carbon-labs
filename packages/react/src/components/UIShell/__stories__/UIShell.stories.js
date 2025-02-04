@@ -9,8 +9,8 @@
 
 import React, { useState } from 'react';
 import mdx from './UIShell.mdx';
-import { SideNav } from '../components/SideNav';
 import { HeaderPanel } from '../components/HeaderPanel';
+import { SIDE_NAV_TYPE, SideNav } from '../components/SideNav';
 import {
   SideNavItems,
   SideNavMenu,
@@ -254,3 +254,46 @@ HeaderPanelStory.args = {
 HeaderPanelStory.argTypes = {
   expanded: { control: 'boolean' },
 };
+
+/**
+ * Story for SideNav
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const SideNavPanel = () => (
+  <SideNav
+    navType={SIDE_NAV_TYPE.PANEL}
+    isChildOfHeader={false}
+    aria-label="Side navigation">
+    <SideNavItems>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavDivider />
+      <SideNavLink renderIcon={Fade} href="#">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="#">
+        Link
+      </SideNavLink>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+    </SideNavItems>
+  </SideNav>
+);

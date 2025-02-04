@@ -8,11 +8,11 @@
  */
 
 import React from 'react';
-import { SideNav } from '@carbon-labs/react-ui-shell/es/index';
+import { SideNav } from '../components/SideNav';
+import { SideNavItems } from '../components/SideNavItems';
+import { SideNavMenu } from '../components/SideNavMenu';
+import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import {
-  SideNavItems,
-  SideNavMenu,
-  SideNavMenuItem,
   SideNavLink,
   SkipToContent,
   HeaderContainer,
@@ -79,7 +79,11 @@ function App() {
                 <SideNavMenu renderIcon={Fade} title="Link">
                   <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  <SideNavMenu title="Sub-menu level 2">
+                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                  </SideNavMenu>
                 </SideNavMenu>
               </SideNavItems>
             </SideNav>

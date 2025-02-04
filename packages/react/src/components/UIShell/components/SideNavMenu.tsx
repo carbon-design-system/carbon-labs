@@ -19,11 +19,12 @@ import React, {
 } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
 import SideNavIcon from '@carbon/react/lib/components/UIShell/SideNavIcon';
-import { keys } from '@carbon/react/lib/internal/keyboard/keys';
 import { match } from '@carbon/react/lib/internal/keyboard/match';
 import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
 import { SideNavContext } from './SideNav';
 import { useMergedRefs } from '@carbon/react/lib/internal/useMergedRefs';
+
+import * as keys from '@carbon/react/lib/internal/keyboard/keys';
 
 export interface SideNavMenuProps {
   /**

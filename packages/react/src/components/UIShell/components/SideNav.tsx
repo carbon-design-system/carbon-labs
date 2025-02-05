@@ -301,6 +301,42 @@ function SideNavRenderFunction(
         }
       }
 
+      if (matches(event, [keys.Home, keys.End])) {
+        if (!sideNavRef?.current) {
+          return;
+        }
+
+        const allItems = Array.from(
+          sideNavRef.current.querySelectorAll('a, button')
+        );
+
+        if (match(event, keys.Home)) {
+          const firstElement = allItems[0] as HTMLElement;
+
+          if (firstElement) {
+            firstElement.tabIndex = 0;
+            firstElement?.focus();
+          }
+        }
+
+        if (match(event, keys.End)) {
+          const lastVisibleItem =
+            allItems.reverse().find((e) => {
+              const parent = e.closest('[aria-expanded]');
+              return parent
+                ? e instanceof HTMLAnchorElement
+                  ? parent.getAttribute('aria-expanded') === 'true'
+                  : parent.getAttribute('aria-expanded') === 'false'
+                : true;
+            }) || null;
+
+          if (lastVisibleItem) {
+            (lastVisibleItem as HTMLElement).tabIndex = 0;
+            (lastVisibleItem as HTMLElement).focus();
+          }
+        }
+      }
+
       // focus on the focusable element within the node
       if (nextFocusNode && nextFocusNode !== event.target) {
         resetNodeTabIndices();

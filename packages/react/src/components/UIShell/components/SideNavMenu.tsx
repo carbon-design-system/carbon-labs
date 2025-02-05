@@ -154,6 +154,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           }),
           ...{
             depth: depth + 1,
+            navType: navType,
           },
         });
       }
@@ -272,7 +273,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           }}
           ref={menuRef as Ref<HTMLButtonElement>}
           type="button"
-          tabIndex={-1}>
+          tabIndex={navType == SIDE_NAV_TYPE.TREEVIEW ? -1 : 0}>
           {IconElement && (
             <SideNavIcon>
               <IconElement />

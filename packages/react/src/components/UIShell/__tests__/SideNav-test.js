@@ -38,17 +38,13 @@ describe('SideNav', () => {
 
     it('should label the <nav> through `aria-label`', () => {
       render(<SideNav aria-label="test" />);
-      expect(screen.getByRole('navigation')).toEqual(
-        screen.getByLabelText('test')
-      );
+      expect(screen.getByRole('tree')).toEqual(screen.getByLabelText('test'));
     });
   });
 
   it('should label the <nav> through `aria-label`', () => {
     render(<SideNav aria-label="test" />);
-    expect(screen.getByRole('navigation')).toEqual(
-      screen.getByLabelText('test')
-    );
+    expect(screen.getByRole('tree')).toEqual(screen.getByLabelText('test'));
   });
 
   it('should render an overlay if `isFixedNav` is false', () => {
@@ -73,21 +69,18 @@ describe('SideNav', () => {
 
   it('should support a custom `className` prop on the element with role="navigation"', () => {
     render(<SideNav aria-label="test" className="test" />);
-    expect(screen.getByRole('navigation')).toHaveClass('test');
+    expect(screen.getByRole('tree')).toHaveClass('test');
   });
 
   it('should spread extra props on the outermost element', () => {
     render(<SideNav aria-label="test" data-testid="test" />);
-    expect(screen.getByRole('navigation')).toHaveAttribute(
-      'data-testid',
-      'test'
-    );
+    expect(screen.getByRole('tree')).toHaveAttribute('data-testid', 'test');
   });
 
   it('should support a `ref` on the element with role="navigation"', () => {
     const ref = jest.fn();
     render(<SideNav aria-label="test" ref={ref} />);
-    expect(ref).toHaveBeenCalledWith(screen.getByRole('navigation'));
+    expect(ref).toHaveBeenCalledWith(screen.getByRole('tree'));
   });
 
   it('should call onOverlayClick when overlay is clicked', () => {
@@ -110,7 +103,7 @@ describe('SideNav', () => {
         onToggle={onToggle}
       />
     );
-    const sideNav = screen.getByRole('navigation');
+    const sideNav = screen.getByRole('tree');
     fireEvent.focus(sideNav);
     fireEvent.mouseEnter(sideNav);
     expect(onToggle).not.toHaveBeenCalled();
@@ -126,26 +119,26 @@ describe('SideNav', () => {
   //       href="#main-content"
   //     />
   //   );
-  //   const sideNav = screen.getByRole('navigation');
+  //   const sideNav = screen.getByRole('tree');
   //   fireEvent.keyDown(sideNav, { key: 'Escape', keyCode: 27 });
   //   expect(onToggle).toHaveBeenCalledWith(expect.anything(), false);
   // });
 
   it('should correctly handle `isRail` when true', () => {
     render(<SideNav aria-label="test" isRail />);
-    const sideNav = screen.getByRole('navigation');
+    const sideNav = screen.getByRole('tree');
     expect(sideNav).toHaveClass('cds--side-nav--rail');
   });
 
   it('should correctly handle `isRail` when false', () => {
     render(<SideNav aria-label="test" isRail={false} />);
-    const sideNav = screen.getByRole('navigation');
+    const sideNav = screen.getByRole('tree');
     expect(sideNav).not.toHaveClass('cds--side-nav--rail');
   });
 
   it('should toggle the expanded state when uncontrolled', () => {
     const { container } = render(<SideNav aria-label="test" />);
-    const sideNav = screen.getByRole('navigation');
+    const sideNav = screen.getByRole('tree');
     fireEvent.focus(sideNav);
     expect(container.firstChild).toHaveClass('cds--side-nav__overlay');
   });
@@ -211,7 +204,7 @@ describe('SideNav', () => {
         <TestChild />
       </SideNav>
     );
-    const sideNav = getByRole('navigation');
+    const sideNav = getByRole('tree');
     fireEvent.focus(sideNav);
     fireEvent.blur(sideNav);
     expect(onSideNavBlurMock).not.toHaveBeenCalled();
@@ -225,7 +218,7 @@ describe('SideNav', () => {
         <TestChild />
       </SideNav>
     );
-    const sideNav = getByRole('navigation');
+    const sideNav = getByRole('tree');
     fireEvent.focus(sideNav);
     fireEvent.blur(sideNav);
     expect(onSideNavBlurMock).not.toHaveBeenCalled();
@@ -242,7 +235,7 @@ describe('SideNav', () => {
         <TestChild />
       </SideNav>
     );
-    const sideNav = getByRole('navigation');
+    const sideNav = getByRole('tree');
     fireEvent.focus(sideNav);
     const unrelatedElement = document.createElement('div');
     document.body.appendChild(unrelatedElement);
@@ -263,7 +256,7 @@ describe('SideNav', () => {
         <TestChild />
       </SideNav>
     );
-    const sideNav = getByRole('navigation');
+    const sideNav = getByRole('tree');
     fireEvent.focus(sideNav);
     const unrelatedElement = document.createElement('div');
     document.body.appendChild(unrelatedElement);
@@ -280,7 +273,7 @@ describe('SideNav', () => {
         <TestChild />
       </SideNav>
     );
-    const sideNav = getByRole('navigation');
+    const sideNav = getByRole('tree');
     expect(sideNav).toHaveClass('cds--side-nav__navigation');
     fireEvent.mouseLeave(sideNav);
     expect(sideNav).toHaveClass('cds--side-nav__navigation');
@@ -294,7 +287,7 @@ describe('SideNav', () => {
         <TestChild />
       </SideNav>
     );
-    const sideNav = getByRole('navigation');
+    const sideNav = getByRole('tree');
     fireEvent.focus(sideNav);
     expect(onToggleMock).toHaveBeenCalled();
     fireEvent.mouseLeave(sideNav);
@@ -315,7 +308,7 @@ describe('SideNav', () => {
         <TestChild />
       </SideNav>
     );
-    const sideNav = getByRole('navigation');
+    const sideNav = getByRole('tree');
     fireEvent.mouseLeave(sideNav);
     expect(onToggleMock).not.toHaveBeenCalled();
   });
@@ -328,7 +321,7 @@ describe('SideNav', () => {
         <TestChild />
       </SideNav>
     );
-    const sideNav = getByRole('navigation');
+    const sideNav = getByRole('tree');
     expect(sideNav).not.toHaveClass('cds--side-nav--expanded');
     fireEvent.click(sideNav);
     expect(onToggleMock).toHaveBeenCalledWith(true, true);
@@ -348,7 +341,7 @@ describe('SideNav', () => {
   //     </>
   //   );
   //   const mockHeaderMenuButton = screen.getByRole('button');
-  //   const sideNav = screen.getByRole('navigation');
+  //   const sideNav = screen.getByRole('tree');
 
   //   mockHeaderMenuButton.focus();
   //   fireEvent.keyDown(window, { key: 'Tab' });
@@ -358,7 +351,7 @@ describe('SideNav', () => {
   // New Tests
   it('should correctly handle `isCollapsible` when true', () => {
     render(<SideNav aria-label="test" isCollapsible />);
-    const sideNav = screen.getByRole('navigation');
+    const sideNav = screen.getByRole('tree');
     expect(sideNav).toHaveClass('cds--side-nav--collapsible');
   });
 });

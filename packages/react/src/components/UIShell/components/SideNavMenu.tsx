@@ -99,7 +99,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const { isRail } = useContext(SideNavContext);
     const prefix = usePrefix();
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
-    const [active, setActive] = useState<boolean>(isActive); // Set local state to manage isActive
+    const [active, setActive] = useState<boolean>(isActive);
 
     const [prevExpanded, setPrevExpanded] = useState<boolean>(defaultExpanded);
 
@@ -110,6 +110,12 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       [`${prefix}--side-nav__item--icon`]: IconElement,
       [`${prefix}--side-nav__item--large`]: large,
       [customClassName as string]: !!customClassName,
+    });
+
+    const buttonClassName = cx({
+      [`${prefix}--side-nav__submenu`]: true,
+      [`${prefix}--side-nav__submenu--active`]:
+        active || (hasActiveDescendant(children) && isExpanded),
     });
 
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -153,10 +159,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     useEffect(() => {
       if (depth === 0) return;
 
-      // if (listRef.current) {
-      //   listRef.current.style.setProperty('--depth', depth.toString());
-      // }
-
       const calcButtonOffset = () => {
         // menu with icon
         if (children && IconElement) {
@@ -172,12 +174,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
       if (buttonRef.current) {
         buttonRef.current.style.paddingLeft = `${calcButtonOffset()}rem`;
-        // buttonRef.current.style.setProperty('--depth', depth.toString());
       }
-
-      // if (contentRef.current) {
-      //   contentRef.current.style.paddingLeft = `${calcContentOffset()}rem`;
-      // }
     }, []);
 
     /**
@@ -260,10 +257,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         onKeyDown={handleKeyDown}>
         <button
           aria-expanded={isExpanded}
-          className={`${prefix}--side-nav__submenu`}
+          className={buttonClassName}
           onClick={() => {
             setIsExpanded(!isExpanded);
-            // setActive(!active);
           }}
           ref={menuRef as Ref<HTMLButtonElement>}
           type="button"

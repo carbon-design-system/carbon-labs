@@ -6,6 +6,7 @@
  */
 
 @use '@carbon/styles/scss/utilities/convert' as convert;
+@use '@carbon/styles/scss/theme.scss' as *;
 @use '@carbon/styles/scss/spacing.scss' as *;
 
 // $prefix: 'clabs' !default;
@@ -28,6 +29,17 @@ $prefix: 'cds' !default;
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
   margin-inline-end: $spacing-05;
+}
+
+.#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active {
+  > span {
+    color: $text-primary;
+    font-weight: 600;
+  }
+
+  .#{$prefix}--side-nav__submenu-chevron > svg {
+    fill: $icon-primary;
+  }  
 }
 
 

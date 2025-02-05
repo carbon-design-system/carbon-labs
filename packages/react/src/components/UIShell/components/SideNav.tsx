@@ -301,6 +301,7 @@ function SideNavRenderFunction(
         }
       }
 
+      // Home/End functionality
       if (matches(event, [keys.Home, keys.End])) {
         if (!sideNavRef?.current) {
           return;
@@ -323,8 +324,6 @@ function SideNavRenderFunction(
           const allItems = Array.from(
             sideNavRef.current.querySelectorAll('li')
           );
-
-          console.log(allItems);
 
           const lastVisibleItem = allItems
             .reverse()

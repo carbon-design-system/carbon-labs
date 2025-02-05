@@ -13,6 +13,7 @@ import React, {
   type MouseEventHandler,
   isValidElement,
   createContext,
+  useEffect,
 } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
@@ -20,7 +21,7 @@ import { AriaLabelPropType } from '@carbon/react/lib/prop-types/AriaPropTypes';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
 import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
 import * as keys from '@carbon/react/lib/internal/keyboard/keys';
-import { match } from '@carbon/react/lib/internal/keyboard/match';
+import { match, matches } from '@carbon/react/lib/internal/keyboard/match';
 import { useMergedRefs } from '@carbon/react/lib/internal/useMergedRefs';
 import { useWindowEvent } from '@carbon/react/lib/internal/useEvent';
 import { useDelayedState } from '@carbon/react/lib/internal/useDelayedState';
@@ -194,6 +195,56 @@ function SideNavRenderFunction(
     >
   > = {};
 
+  const treeWalkerRef = useRef<TreeWalker | null>(null);
+  useEffect(() => {
+    treeWalkerRef.current =
+      treeWalkerRef.current ??
+      document.createTreeWalker(
+        sideNavRef?.current as unknown as Node,
+        NodeFilter.SHOW_ELEMENT,
+        {
+          acceptNode: function (node) {
+            if (!(node instanceof Element)) {
+              return NodeFilter.FILTER_SKIP;
+            }
+
+            if (node.classList.contains(`${prefix}--side-nav__divider`)) {
+              return NodeFilter.FILTER_REJECT;
+            }
+            if (
+              node.matches(`li.${prefix}--side-nav__item`) ||
+              node.matches(`li.${prefix}--side-nav__menu-item`)
+            ) {
+              return NodeFilter.FILTER_ACCEPT;
+            }
+            return NodeFilter.FILTER_SKIP;
+          },
+        }
+      );
+    resetNodeTabIndices();
+
+    const firstElement = sideNavRef?.current?.querySelector(
+      'a, button'
+    ) as HTMLElement;
+
+    if (firstElement) {
+      firstElement.tabIndex = 0;
+    }
+  }, [prefix]);
+
+  /**
+   * Returns the parent SideNavMenu, if node is actually inside one.
+   * @param node
+   * @returns parent side nav menu node
+   */
+  function parentSideNavMenu(node: Node) {
+    const parentNode = (node as HTMLElement).parentElement?.closest(
+      `.${prefix}--side-nav__item`
+    );
+    if (parentNode) return parentNode;
+    return node;
+  }
+
   if (addFocusListeners) {
     eventHandlers.onFocus = (event) => {
       if (!event.currentTarget.contains(event.relatedTarget) && isRail) {
@@ -219,7 +270,134 @@ function SideNavRenderFunction(
       }
     };
     eventHandlers.onKeyDown = (event) => {
+      if (!treeWalkerRef.current) return;
+      const treeWalker = treeWalkerRef.current;
+
+      event.stopPropagation();
+
+      // stops page from scrolling
+      if (
+        matches(event, [
+          keys.ArrowUp,
+          keys.ArrowDown,
+          keys.Home,
+          keys.End,
+          // @ts-ignore - `matches` doesn't like the object syntax without missing properties
+          { code: 'KeyA' },
+        ])
+      ) {
+        event.preventDefault();
+      }
+
+      treeWalker.currentNode =
+        (event.target as HTMLElement).closest(`li`) ?? treeWalker?.currentNode;
+
+      let nextFocusNode: Node | null = null;
+
+      if (match(event, keys.ArrowUp)) {
+        const parentNode = parentSideNavMenu(
+          treeWalker.currentNode
+        ) as HTMLElement;
+
+        let previousSideNavMenu =
+          parentNode?.previousElementSibling as HTMLElement;
+
+        // skip the divider
+        if (
+          previousSideNavMenu?.classList.contains(
+            `${prefix}--side-nav__divider`
+          )
+        ) {
+          previousSideNavMenu =
+            previousSideNavMenu?.previousElementSibling as HTMLElement;
+        }
+
+        // when previous sibling is open, go to its last item
+        if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
+          nextFocusNode = treeWalker.previousNode();
+        } else {
+          nextFocusNode = treeWalker.previousSibling();
+
+          // first item in the menu, go back up to SideNavMenu button
+          if (nextFocusNode == null) {
+            nextFocusNode = parentNode;
+          }
+        }
+      }
+
+      if (match(event, keys.ArrowDown)) {
+        if (
+          (treeWalker.currentNode as HTMLElement).getAttribute(
+            'aria-expanded'
+          ) == 'false'
+        ) {
+          nextFocusNode = treeWalker.nextSibling();
+        } else {
+          nextFocusNode = treeWalker.nextNode();
+        }
+      }
+
+      // Home/End functionality
+      if (matches(event, [keys.Home, keys.End])) {
+        if (!sideNavRef?.current) {
+          return;
+        }
+
+        const allItems = Array.from(
+          sideNavRef.current.querySelectorAll('a, button')
+        );
+
+        if (match(event, keys.Home)) {
+          const firstElement = allItems[0] as HTMLElement;
+
+          if (firstElement) {
+            firstElement.tabIndex = 0;
+            firstElement?.focus();
+          }
+        }
+
+        if (match(event, keys.End)) {
+          const allItems = Array.from(
+            sideNavRef.current.querySelectorAll('li')
+          );
+
+          const lastVisibleItem = allItems
+            .reverse()
+            .find((item) => getComputedStyle(item).visibility !== 'hidden');
+
+          if (lastVisibleItem) {
+            const node =
+              lastVisibleItem.querySelector('button') ??
+              lastVisibleItem.querySelector('a');
+            if (node) {
+              node.tabIndex = 0;
+              node?.focus();
+            }
+          }
+        }
+      }
+
+      // focus on the focusable element within the node
+      if (nextFocusNode && nextFocusNode !== event.target) {
+        resetNodeTabIndices();
+        if (nextFocusNode instanceof HTMLElement) {
+          const node =
+            nextFocusNode.querySelector('button') ??
+            nextFocusNode.querySelector('a');
+          if (node) {
+            node.tabIndex = 0;
+            node?.focus();
+          }
+        }
+      }
+
+      // close menu
       if (match(event, keys.Escape)) {
+        if (expanded && !isFixedNav) {
+          if (onSideNavBlur) {
+            onSideNavBlur();
+          }
+        }
         handleToggle(event, false);
         if (href) {
           window.location.href = href;
@@ -248,11 +426,12 @@ function SideNavRenderFunction(
   useWindowEvent('keydown', (event: Event) => {
     const focusedElement = document.activeElement;
 
+    // going from header menu to sideNav
     if (
       match(event, keys.Tab) &&
       expanded &&
       !isFixedNav &&
-      sideNavRef.current &&
+      sideNavRef?.current &&
       focusedElement?.classList.contains(`${prefix}--header__menu-toggle`) &&
       !focusedElement.closest('nav')
     ) {
@@ -265,6 +444,15 @@ function SideNavRenderFunction(
 
   hideOverlay;
 
+  function resetNodeTabIndices() {
+    Array.prototype.forEach.call(
+      sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [],
+      (item) => {
+        item.tabIndex = -1;
+      }
+    );
+  }
+
   return (
     <SideNavContext.Provider value={{ isRail }}>
       {isFixedNav || hideOverlay ? null : (
@@ -272,6 +460,7 @@ function SideNavRenderFunction(
         <div className={overlayClassName} onClick={onOverlayClick} />
       )}
       <nav
+        role="tree"
         tabIndex={-1}
         ref={navRef}
         className={`${prefix}--side-nav__navigation ${className}`}

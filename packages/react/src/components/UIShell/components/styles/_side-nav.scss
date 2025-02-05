@@ -29,6 +29,24 @@ $prefix: 'cds' !default;
 }
 
 //----------------------------------------------------------------------------
+// Treeview Side-nav
+//----------------------------------------------------------------------------
+.#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
+  margin-inline-end: $spacing-05;
+}
+
+.#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active {
+  > span {
+    color: $text-primary;
+    font-weight: 600;
+  }
+
+  .#{$prefix}--side-nav__submenu-chevron > svg {
+    fill: $icon-primary;
+  }
+}
+
+//----------------------------------------------------------------------------
 // Side-nav Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {

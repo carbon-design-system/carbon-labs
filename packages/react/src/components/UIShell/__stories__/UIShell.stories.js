@@ -9,12 +9,12 @@
 
 import React, { useState } from 'react';
 import mdx from './UIShell.mdx';
-import { HeaderPanel } from '../components/HeaderPanel';
 import { SIDE_NAV_TYPE, SideNav } from '../components/SideNav';
+import { SideNavItems } from '../components/SideNavItems';
+import { SideNavMenu } from '../components/SideNavMenu';
+import { SideNavMenuItem } from '../components/SideNavMenuItem';
+import { HeaderPanel } from '../components/HeaderPanel';
 import {
-  SideNavItems,
-  SideNavMenu,
-  SideNavMenuItem,
   SideNavLink,
   SkipToContent,
   HeaderContainer,
@@ -26,8 +26,10 @@ import {
   Content,
   HeaderGlobalBar,
   HeaderGlobalAction,
+  Grid,
+  Column,
 } from '@carbon/react';
-import { Fade, SquareOutline } from '@carbon/icons-react';
+import { Add, Fade, SquareOutline } from '@carbon/icons-react';
 import '../components/ui-shell.scss';
 
 export default {
@@ -46,51 +48,52 @@ export default {
  */
 const StoryContent = () => {
   const content = (
-    <div>
-      <h2 style={{ margin: '30px 0' }}>Purpose and function</h2>
-      <p>
-        The shell is perhaps the most crucial piece of any UI built with
-        <a href="www.carbondesignsystem.com"> Carbon</a>. It contains the shared
-        navigation framework for the entire design system and ties the products
-        in IBM’s portfolio together in a cohesive and elegant way. The shell is
-        the home of the topmost navigation, where users can quickly and
-        dependably gain their bearings and move between pages.
-        <br />
-        <br />
-        The shell was designed with maximum flexibility built in, to serve the
-        needs of a broad range of products and users. Adopting the shell ensures
-        compliance with IBM design standards, simplifies development efforts,
-        and provides great user experiences. All IBM products built with Carbon
-        are required to use the shell’s header.
-        <br />
-        <br />
-        To better understand the purpose and function of the UI shell, consider
-        the “shell” of MacOS, which contains the Apple menu, top-level
-        navigation, and universal, OS-level controls at the top of the screen,
-        as well as a universal dock along the bottom or side of the screen. The
-        Carbon UI shell is roughly analogous in function to these parts of the
-        Mac UI. For example, the app switcher portion of the shell can be
-        compared to the dock in MacOS.
-      </p>
-      <h2 style={{ margin: '30px 0' }}>Header responsive behavior</h2>
-      <p>
-        As a header scales down to fit smaller screen sizes, headers with
-        persistent side nav menus should have the side nav collapse into
-        “hamburger” menu. See the example to better understand responsive
-        behavior of the header.
-      </p>
-      <h2 style={{ margin: '30px 0' }}>Secondary navigation</h2>
-      <p>
-        The side-nav contains secondary navigation and fits below the header. It
-        can be configured to be either fixed-width or flexible, with only one
-        level of nested items allowed. Both links and category lists can be used
-        in the side-nav and may be mixed together. There are several
-        configurations of the side-nav, but only one configuration should be
-        used per product section. If tabs are needed on a page when using a
-        side-nav, then the tabs are secondary in hierarchy to the side-nav.
-      </p>
-      <HeaderPanel />
-    </div>
+    <Grid>
+      <Column sm={4} md={8} lg={16}>
+        <h2 style={{ margin: '30px 0' }}>Purpose and function</h2>
+        <p>
+          The shell is perhaps the most crucial piece of any UI built with
+          <a href="www.carbondesignsystem.com"> Carbon</a>. It contains the
+          shared navigation framework for the entire design system and ties the
+          products in IBM’s portfolio together in a cohesive and elegant way.
+          The shell is the home of the topmost navigation, where users can
+          quickly and dependably gain their bearings and move between pages.
+          <br />
+          <br />
+          The shell was designed with maximum flexibility built in, to serve the
+          needs of a broad range of products and users. Adopting the shell
+          ensures compliance with IBM design standards, simplifies development
+          efforts, and provides great user experiences. All IBM products built
+          with Carbon are required to use the shell’s header.
+          <br />
+          <br />
+          To better understand the purpose and function of the UI shell,
+          consider the “shell” of MacOS, which contains the Apple menu,
+          top-level navigation, and universal, OS-level controls at the top of
+          the screen, as well as a universal dock along the bottom or side of
+          the screen. The Carbon UI shell is roughly analogous in function to
+          these parts of the Mac UI. For example, the app switcher portion of
+          the shell can be compared to the dock in MacOS.
+        </p>
+        <h2 style={{ margin: '30px 0' }}>Header responsive behavior</h2>
+        <p>
+          As a header scales down to fit smaller screen sizes, headers with
+          persistent side nav menus should have the side nav collapse into
+          “hamburger” menu. See the example to better understand responsive
+          behavior of the header.
+        </p>
+        <h2 style={{ margin: '30px 0' }}>Secondary navigation</h2>
+        <p>
+          The side-nav contains secondary navigation and fits below the header.
+          It can be configured to be either fixed-width or flexible, with only
+          one level of nested items allowed. Both links and category lists can
+          be used in the side-nav and may be mixed together. There are several
+          configurations of the side-nav, but only one configuration should be
+          used per product section. If tabs are needed on a page when using a
+          side-nav, then the tabs are secondary in hierarchy to the side-nav.
+        </p>
+      </Column>
+    </Grid>
   );
   const style = {
     height: '100%',
@@ -147,21 +150,27 @@ export const Default = () => {
                 hideOverlay
                 className="nav--global">
                 <SideNavItems>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  <SideNavMenu
+                    renderIcon={SquareOutline}
+                    title="Sub-menu level 1">
+                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                    <SideNavMenu title="Sub-menu level 2">
+                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                    </SideNavMenu>
+                  </SideNavMenu>
+                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavDivider />
@@ -171,7 +180,7 @@ export const Default = () => {
                   <SideNavLink renderIcon={SquareOutline} href="#">
                     Link
                   </SideNavLink>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
@@ -264,6 +273,38 @@ export const SideNavStory = () => (
   </SideNav>
 );
 SideNavStory.storyName = 'SideNav';
+
+/**
+ * Story for SideNav w/ 3rd level
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const SideNavNested = () => (
+  <SideNav
+    isFixedNav
+    expanded={true}
+    isChildOfHeader={false}
+    aria-label="Side navigation">
+    <SideNavItems>
+      <SideNavLink renderIcon={Add} href="#">
+        Link level 1
+      </SideNavLink>
+      <SideNavMenu
+        defaultExpanded={true}
+        renderIcon={Fade}
+        title="Sub-menu level 1">
+        <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+        <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+        <SideNavMenu title="Sub-menu level 2" defaultExpanded={true}>
+          <SideNavMenuItem isActive href="#">
+            Link level 3
+          </SideNavMenuItem>
+          <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+        </SideNavMenu>
+      </SideNavMenu>
+    </SideNavItems>
+  </SideNav>
+);
+SideNavNested.storyName = 'SideNav w/ 3rd level';
 
 /**
  * Story for HeaderPanel

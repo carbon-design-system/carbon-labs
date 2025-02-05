@@ -93,7 +93,11 @@ export const SideNavMenuItem = React.forwardRef<
       role="treeitem"
       aria-selected={isActive ? 'true' : 'false'}
       className={className}>
-      <Component {...rest} className={linkClassName} ref={itemRef}>
+      <Component
+        {...rest}
+        className={linkClassName}
+        tabIndex={-1}
+        ref={itemRef}>
         <SideNavLinkText>{children}</SideNavLinkText>
       </Component>
     </li>

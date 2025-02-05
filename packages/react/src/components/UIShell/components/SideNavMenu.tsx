@@ -180,6 +180,76 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       // }
     }, []);
 
+    /**
+     * Returns the parent SideNavMenu, if node is actually inside one.
+     * @param node
+     * @returns parent side nav menu node
+     */
+    function parentSideNavMenu(node: Node) {
+      const parentNode = (node as HTMLElement).parentElement?.closest(
+        `.${prefix}--side-nav__item`
+      );
+      if (parentNode) return parentNode;
+      return node;
+    }
+
+    function handleKeyDown(event) {
+      if (match(event, keys.Escape)) {
+        setIsExpanded(false);
+      }
+
+      const node = event.target as HTMLElement;
+      const isMenu = node.hasAttribute('aria-expanded');
+      const isExpanded = node.getAttribute('aria-expanded');
+      const parent = parentSideNavMenu(node) as HTMLElement;
+
+      if (match(event, keys.ArrowLeft)) {
+        event.stopPropagation();
+
+        if (isMenu) {
+          // collapse menu
+          if (isExpanded == 'true') {
+            setIsExpanded(false);
+
+            // go to previous level's side nav menu button
+          } else {
+            // since we're in a menu, it finds its own <li>, we go up one more
+            const previousMenu = parentSideNavMenu(parent) as HTMLElement;
+            const button = previousMenu.querySelector('button');
+            button!.tabIndex = 0;
+            button?.focus();
+          }
+
+          // go to side nav menu button
+        } else if (parent) {
+          const button = parent.querySelector('button');
+          button!.tabIndex = 0;
+          button?.focus();
+        }
+      }
+
+      if (match(event, keys.ArrowRight)) {
+        event.stopPropagation();
+
+        // expand menu
+        if (isMenu) {
+          setIsExpanded(true);
+
+          // if already expanded, focus on first element
+          if (isExpanded == 'true') {
+            let nextNode = node.nextElementSibling?.querySelector(
+              'a, button'
+            ) as HTMLElement;
+
+            if (nextNode) {
+              nextNode.tabIndex = 0;
+              nextNode.focus();
+            }
+          }
+        }
+      }
+    }
+
     return (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <li
@@ -187,27 +257,17 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         aria-expanded={isExpanded}
         className={className}
         ref={listRef}
-        onKeyDown={(event) => {
-          if (match(event, keys.Escape)) {
-            setIsExpanded(false);
-          }
-        }}>
+        onKeyDown={handleKeyDown}>
         <button
           aria-expanded={isExpanded}
           className={`${prefix}--side-nav__submenu`}
           onClick={() => {
             setIsExpanded(!isExpanded);
-            setActive(!active);
+            // setActive(!active);
           }}
           ref={menuRef as Ref<HTMLButtonElement>}
           type="button"
-          tabIndex={
-            tabIndex === undefined
-              ? !isSideNavExpanded && !isRail
-                ? -1
-                : 0
-              : tabIndex
-          }>
+          tabIndex={-1}>
           {IconElement && (
             <SideNavIcon>
               <IconElement />

@@ -96,6 +96,7 @@ function SideNavRenderFunction(
   const navRef = useMergedRefs([sideNavRef, ref]);
 
   const handleToggle: typeof onToggle = (event, value = !expanded) => {
+    console.log('WHY');
     if (!controlled) {
       setExpandedState(value, enterDelayMs);
     }
@@ -189,14 +190,21 @@ function SideNavRenderFunction(
           },
         }
       );
+    resetNodeTabIndices();
 
-    console.log('useEffect', treeWalkerRef.current);
+    const firstElement = sideNavRef?.current?.querySelector(
+      'a, button'
+    ) as HTMLElement;
+
+    if (firstElement) {
+      firstElement.tabIndex = 0;
+    }
   }, [prefix]);
 
   /**
    * Returns the parent SideNavMenu, if node is actually inside one.
    * @param node
-   * @returns
+   * @returns parent side nav menu node
    */
   function parentSideNavMenu(node: Node) {
     const parentNode = (node as HTMLElement).parentElement?.closest(
@@ -205,7 +213,6 @@ function SideNavRenderFunction(
     if (parentNode) return parentNode;
     return node;
   }
-  console.log('not inside effect', treeWalkerRef.current);
 
   if (addFocusListeners) {
     eventHandlers.onFocus = (event) => {
@@ -247,8 +254,6 @@ function SideNavRenderFunction(
         event.preventDefault();
       }
 
-      console.log('keydown', treeWalker);
-
       treeWalker.currentNode =
         (event.target as HTMLElement).closest(`li`) ?? treeWalker?.currentNode;
 
@@ -259,7 +264,8 @@ function SideNavRenderFunction(
           treeWalker.currentNode
         ) as HTMLElement;
 
-        let previousSideNavMenu = parentNode?.previousSibling as HTMLElement;
+        let previousSideNavMenu =
+          parentNode?.previousElementSibling as HTMLElement;
 
         // skip the divider
         if (
@@ -268,7 +274,7 @@ function SideNavRenderFunction(
           )
         ) {
           previousSideNavMenu =
-            previousSideNavMenu?.previousSibling as HTMLElement;
+            previousSideNavMenu?.previousElementSibling as HTMLElement;
         }
 
         // when previous sibling is open, go to its last item
@@ -312,6 +318,7 @@ function SideNavRenderFunction(
 
       // close menu
       if (match(event, keys.Escape)) {
+        console.log('SAJDNJHSABDHJSBJD');
         handleToggle(event, false);
         if (href) {
           window.location.href = href;

@@ -18,7 +18,7 @@ import React, {
   useState,
 } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import SideNavIcon from '@carbon/react/lib/components/UIShell/SideNavIcon';
+import SideNavIcon from '@carbon/react/es/components/UIShell/SideNavIcon';
 import { match } from '@carbon/react/lib/internal/keyboard/match';
 import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
 import { SideNavContext } from './SideNav';

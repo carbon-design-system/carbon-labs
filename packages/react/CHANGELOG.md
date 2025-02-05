@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.8.0...@carbon-labs/react@0.9.0) (2025-02-05)
+
+
+### Features
+
+* **UIShell:** add base support for 3rd level nesting in SideNavMenu  ([#413](https://github.com/carbon-design-system/carbon-labs/issues/413)) ([3b57e50](https://github.com/carbon-design-system/carbon-labs/commit/3b57e5024238f7956cf33d0c3faccde01b044d2d))
+
+
+
+
+
 # [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.7.0...@carbon-labs/react@0.8.0) (2025-02-04)
 
 

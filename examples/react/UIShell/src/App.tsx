@@ -7,17 +7,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
-import { SideNav } from '../components/SideNav';
-import { SideNavItems } from '../components/SideNavItems';
-import { SideNavMenu } from '../components/SideNavMenu';
-import { SideNavMenuItem } from '../components/SideNavMenuItem';
+import React, { useState } from 'react';
+import {
+  SideNav,
+  SideNavItems,
+  SideNavMenu,
+  SideNavMenuItem,
+  HeaderPanel,
+} from '@carbon-labs/react-ui-shell/es/index';
 import {
   SideNavLink,
   SkipToContent,
   HeaderContainer,
   Header,
   HeaderName,
+  HeaderGlobalBar,
+  HeaderGlobalAction,
   Theme,
   HeaderMenuButton,
   SideNavDivider,
@@ -25,6 +30,7 @@ import {
 import { Fade } from '@carbon/icons-react';
 
 function App() {
+  const [expandedPanel, setExpandedPanel] = useState(false);
   return (
     <Theme theme="g100">
       <HeaderContainer
@@ -43,6 +49,17 @@ function App() {
               <HeaderName href="#" prefix="IBM">
                 [Platform]
               </HeaderName>
+              <HeaderGlobalBar>
+                <HeaderGlobalAction
+                  aria-label={expandedPanel ? 'Close panel' : 'Open panel'}
+                  isActive={expandedPanel}
+                  aria-expanded={expandedPanel}
+                  tooltipAlignment="end"
+                  onClick={() => setExpandedPanel(!expandedPanel)}>
+                  <Fade size={20} />
+                </HeaderGlobalAction>
+              </HeaderGlobalBar>
+              <HeaderPanel expanded={expandedPanel} />
             </Header>
             <SideNav
               aria-label="Side navigation1"

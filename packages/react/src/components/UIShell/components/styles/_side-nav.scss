@@ -6,11 +6,15 @@
  */
 
 @use '@carbon/styles/scss/utilities/convert' as convert;
-@use '@carbon/styles/scss/theme.scss' as *;
-@use '@carbon/styles/scss/spacing.scss' as *;
+@use '@carbon/styles/scss/utilities/button-reset' as button-reset;
+@use '@carbon/styles/scss/utilities/focus-outline' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/components/ui-shell/mixins' as *;
+@use '@carbon/styles/scss/components/ui-shell/functions' as *;
+@use '@carbon/styles/scss/spacing' as *;
 
-// $prefix: 'clabs' !default;
-// Do we want to update to clabs?
 $prefix: 'cds' !default;
 
 //----------------------------------------------------------------------------
@@ -66,3 +70,46 @@ $prefix: 'cds' !default;
 //     background-color: red;
 //   }
 // }
+// Side-nav Panel
+//----------------------------------------------------------------------------
+.#{$prefix}--side-nav--panel {
+  z-index: 7999; /* needs to be below header */
+
+  .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
+    margin-inline-end: $spacing-05;
+  }
+
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+    a.#{$prefix}--side-nav__link {
+    padding-inline-start: mini-units(8);
+  }
+
+  .#{$prefix}--side-nav__toggle {
+    @include button-reset.reset($width: true);
+    @include type-style('heading-compact-01');
+    @include focus-outline('reset');
+
+    display: flex;
+    align-items: center;
+    padding: 0 $spacing-05;
+    block-size: $spacing-09;
+    color: $text-secondary;
+    transition: color $duration-fast-02, background-color $duration-fast-02,
+      outline $duration-fast-02;
+
+    &:hover {
+      background-color: $background-hover;
+      color: $text-primary;
+    }
+
+    &:focus {
+      @include focus-outline('outline');
+    }
+  }
+
+  .#{$prefix}--side-nav__toggle-text {
+    @include text-overflow();
+
+    text-align: start;
+  }
+}

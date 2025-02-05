@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.7.0...@carbon-labs/react@0.8.0) (2025-02-04)
+
+
+### Bug Fixes
+
+* **UIShell:** update zindex and update main uishell story ([#412](https://github.com/carbon-design-system/carbon-labs/issues/412)) ([0fe618c](https://github.com/carbon-design-system/carbon-labs/commit/0fe618ce3496b4ecdff4816ca58a5a7d9cd91300))
+
+
+
+
+
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.6.0...@carbon-labs/react@0.7.0) (2025-02-04)
+
+
+### Features
+
+* **SideNav:** implement panel variant ([#408](https://github.com/carbon-design-system/carbon-labs/issues/408)) ([4e39d88](https://github.com/carbon-design-system/carbon-labs/commit/4e39d88b505a01c1529075cc317760c626b7686a))
+
+
+
+
+
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.5.0...@carbon-labs/react@0.6.0) (2025-02-04)
+
+
+### Features
+
+* **UIShell:** add HeaderPanel to UIShell React package ([#407](https://github.com/carbon-design-system/carbon-labs/issues/407)) ([4d1f5b8](https://github.com/carbon-design-system/carbon-labs/commit/4d1f5b8a52f8a49c4b1c06d6f7942b0f856f18a5))
+
+
+
+
+
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.4.0...@carbon-labs/react@0.5.0) (2025-02-04)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.3.0...@carbon-labs/react@0.4.0) (2025-01-31)
 
 

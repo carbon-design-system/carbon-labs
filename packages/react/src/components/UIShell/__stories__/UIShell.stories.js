@@ -106,7 +106,6 @@ const StoryContent = () => {
  * Story for UIShell
  * @returns {React.ReactElement} The JSX for the story
  */
-
 export const Default = () => {
   const [expandedPanel, setExpandedPanel] = useState(false);
   return (
@@ -148,21 +147,27 @@ export const Default = () => {
                 hideOverlay
                 className="nav--global">
                 <SideNavItems>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                  <SideNavMenu
+                    renderIcon={SquareOutline}
+                    title="Sub-menu level 1">
+                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                    <SideNavMenu title="Sub-menu level 2">
+                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                    </SideNavMenu>
+                  </SideNavMenu>
+                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavDivider />
@@ -172,7 +177,7 @@ export const Default = () => {
                   <SideNavLink renderIcon={SquareOutline} href="#">
                     Link
                   </SideNavLink>
-                  <SideNavMenu renderIcon={SquareOutline} title="Link">
+                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
@@ -222,83 +227,6 @@ Default.parameters = {
 };
 
 /**
- * Story for UIShell with TreeView
- * @returns {React.ReactElement} The JSX for the story
- */
-export const DefaultWithTreeView = () => (
-  <div>
-    <Theme theme="g100">
-      <HeaderContainer
-        render={({ isSideNavExpanded, onClickSideNavExpand }) => (
-          <>
-            <Header aria-label="IBM Platform Name">
-              <SkipToContent />
-              <HeaderMenuButton
-                aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
-                onClick={onClickSideNavExpand}
-                isActive={isSideNavExpanded}
-                aria-expanded={isSideNavExpanded}
-                isCollapsible //shows hamburger menu at desktop
-                isFixedNav
-              />
-              <HeaderName href="#" prefix="IBM">
-                [Platform]
-              </HeaderName>
-            </Header>
-            <SideNav
-              aria-label="Side navigation1"
-              expanded={isSideNavExpanded}
-              onSideNavBlur={onClickSideNavExpand}
-              isCollapsible
-              hideOverlay
-              className="nav--global">
-              <SideNavItems>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavDivider />
-                <SideNavLink renderIcon={Fade} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavLink renderIcon={Fade} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  <SideNavMenu title="Sub-menu level 2">
-                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                  </SideNavMenu>
-                </SideNavMenu>
-              </SideNavItems>
-            </SideNav>
-            <Theme theme="white">
-              <StoryContent />
-            </Theme>
-          </>
-        )}
-      />
-    </Theme>
-  </div>
-);
-
-/**
  * Story for SideNav
  * @returns {React.ReactElement} The JSX for the story
  */
@@ -341,12 +269,13 @@ export const SideNavStory = () => (
     </SideNavItems>
   </SideNav>
 );
+SideNavStory.storyName = 'SideNav';
 
 /**
- * Story for SideNav w/TreeView
+ * Story for SideNav w/ 3rd level
  * @returns {React.ReactElement} The JSX for the story
  */
-export const ThirdMenuTest = () => (
+export const SideNavNested = () => (
   <SideNav
     isFixedNav
     expanded={true}
@@ -372,107 +301,7 @@ export const ThirdMenuTest = () => (
     </SideNavItems>
   </SideNav>
 );
-
-/**
- * Story for SideNav w/TreeView
- * @returns {React.ReactElement} The JSX for the story
- */
-export const SideNavWithTreeView = () => (
-  <div>
-    <HeaderContainer
-      render={({ isSideNavExpanded, onClickSideNavExpand }) => (
-        <>
-          <Header aria-label="IBM Platform Name">
-            <SkipToContent />
-            <HeaderMenuButton
-              aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
-              onClick={onClickSideNavExpand}
-              isActive={isSideNavExpanded}
-              aria-expanded={isSideNavExpanded}
-            />
-            <HeaderName href="#" prefix="IBM">
-              [Platform]
-            </HeaderName>
-          </Header>
-          <SideNav
-            aria-label="Side navigation1"
-            expanded={isSideNavExpanded}
-            onSideNavBlur={onClickSideNavExpand}
-            hideOverlay
-            className="nav--global">
-            <SideNavItems>
-              <SideNavLink renderIcon={Fade} href="#">
-                Link level 1
-              </SideNavLink>
-              <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                <SideNavMenu title="Sub-menu level 1">
-                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                </SideNavMenu>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={Fade} title="Link">
-                <SideNavMenuItem href="#">Link</SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={Fade} title="Link">
-                <SideNavMenuItem href="#">Link</SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={Fade} title="Link">
-                <SideNavMenuItem href="#">Link</SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={Fade} title="Link">
-                <SideNavMenuItem href="#">Link</SideNavMenuItem>
-              </SideNavMenu>
-
-              <SideNavDivider />
-
-              <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-              </SideNavMenu>
-
-              <SideNavDivider />
-
-              <SideNavLink renderIcon={Fade} href="#">
-                Link level 1
-              </SideNavLink>
-              <SideNavLink renderIcon={Fade} href="#">
-                Link level 1
-              </SideNavLink>
-              <SideNavLink renderIcon={Fade} href="#">
-                Link level 1
-              </SideNavLink>
-              <SideNavLink renderIcon={Fade} href="#">
-                Link level 1
-              </SideNavLink>
-              <SideNavLink renderIcon={Fade} href="#">
-                Link level 1
-              </SideNavLink>
-              <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-              </SideNavMenu>
-            </SideNavItems>
-          </SideNav>
-          <Theme theme="white">
-            <StoryContent />
-          </Theme>
-        </>
-      )}
-    />
-  </div>
-);
-
-SideNavStory.storyName = 'SideNav';
+SideNavNested.storyName = 'SideNav w/ 3rd level';
 
 /**
  * Story for HeaderPanel

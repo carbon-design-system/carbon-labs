@@ -320,19 +320,24 @@ function SideNavRenderFunction(
         }
 
         if (match(event, keys.End)) {
-          const lastVisibleItem =
-            allItems.reverse().find((e) => {
-              const parent = e.closest('[aria-expanded]');
-              return parent
-                ? e instanceof HTMLAnchorElement
-                  ? parent.getAttribute('aria-expanded') === 'true'
-                  : parent.getAttribute('aria-expanded') === 'false'
-                : true;
-            }) || null;
+          const allItems = Array.from(
+            sideNavRef.current.querySelectorAll('li')
+          );
+
+          console.log(allItems);
+
+          const lastVisibleItem = allItems
+            .reverse()
+            .find((item) => getComputedStyle(item).visibility !== 'hidden');
 
           if (lastVisibleItem) {
-            (lastVisibleItem as HTMLElement).tabIndex = 0;
-            (lastVisibleItem as HTMLElement).focus();
+            const node =
+              lastVisibleItem.querySelector('button') ??
+              lastVisibleItem.querySelector('a');
+            if (node) {
+              node.tabIndex = 0;
+              node?.focus();
+            }
           }
         }
       }

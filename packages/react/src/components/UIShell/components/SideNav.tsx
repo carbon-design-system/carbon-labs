@@ -96,7 +96,6 @@ function SideNavRenderFunction(
   const navRef = useMergedRefs([sideNavRef, ref]);
 
   const handleToggle: typeof onToggle = (event, value = !expanded) => {
-    console.log('WHY');
     if (!controlled) {
       setExpandedState(value, enterDelayMs);
     }
@@ -318,7 +317,11 @@ function SideNavRenderFunction(
 
       // close menu
       if (match(event, keys.Escape)) {
-        console.log('SAJDNJHSABDHJSBJD');
+        if (expanded && !isFixedNav) {
+          if (onSideNavBlur) {
+            onSideNavBlur();
+          }
+        }
         handleToggle(event, false);
         if (href) {
           window.location.href = href;

@@ -345,7 +345,9 @@ export const ThirdMenuTest = () => (
         <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
         <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
         <SideNavMenu title="Sub-menu level 2" defaultExpanded={true}>
-          <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+          <SideNavMenuItem isActive href="#">
+            Link level 3
+          </SideNavMenuItem>
           <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
         </SideNavMenu>
       </SideNavMenu>

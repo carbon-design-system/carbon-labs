@@ -17,6 +17,7 @@ import {
   HeaderPanel,
 } from '@carbon-labs/react-ui-shell/es/index';
 import {
+  Content,
   Grid,
   Column,
   SideNavLink,

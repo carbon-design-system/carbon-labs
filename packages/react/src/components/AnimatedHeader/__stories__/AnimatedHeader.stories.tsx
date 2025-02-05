@@ -17,14 +17,14 @@ import { ButtonKinds } from '@carbon/react';
 
 import { tileDropdownData, headerTiles } from '../data/index';
 import {
+  dataFabricAnimatedLight,
+  dataFabricAnimatedDark,
   dataFabricStaticLight,
   dataFabricStaticDark,
   watsonXAnimatedLight,
   watsonXAnimatedDark,
-  watsonXDataAnimatedLight,
-  watsonXDataAnimatedDark,
-  watsonXDataStaticLight,
-  watsonXDataStaticDark,
+  watsonXStaticLight,
+  watsonXStaticDark,
   wxbiaAnimatedLight,
   wxbiaAnimatedDark,
 } from '../assets';
@@ -136,10 +136,10 @@ const sharedArgTypes = {
       type: 'select',
       labels: {
         0: 'None',
-        1: 'watsonx (light theme)',
-        2: 'watsonx (dark theme)',
-        3: 'watsonx.data (light theme)',
-        4: 'watsonx.data (dark theme)',
+        1: 'data fabric (light theme)',
+        2: 'data fabric (dark theme)',
+        3: 'watsonx (light theme)',
+        4: 'watsonx (dark theme)',
         5: 'wxbia (light theme)',
         6: 'wxbia (dark theme)',
       },
@@ -147,10 +147,10 @@ const sharedArgTypes = {
     options: [0, 1, 2, 3, 4, 5, 6],
     mapping: {
       0: null,
-      1: watsonXAnimatedLight,
-      2: watsonXAnimatedDark,
-      3: watsonXDataAnimatedLight,
-      4: watsonXDataAnimatedDark,
+      1: dataFabricAnimatedLight,
+      2: dataFabricAnimatedDark,
+      3: watsonXAnimatedLight,
+      4: watsonXAnimatedDark,
       5: wxbiaAnimatedLight,
       6: wxbiaAnimatedDark,
     },
@@ -209,8 +209,8 @@ const sharedArgTypes = {
       type: 'select',
       labels: {
         0: 'None',
-        1: 'watsonx.data (light theme)',
-        2: 'watsonx.data (dark theme)',
+        1: 'watsonx (light theme)',
+        2: 'watsonx (dark theme)',
         3: 'data fabric (light theme)',
         4: 'data fabric (dark theme)',
       },
@@ -218,8 +218,8 @@ const sharedArgTypes = {
     options: [0, 1, 2, 3, 4],
     mapping: {
       0: null,
-      1: watsonXDataStaticLight,
-      2: watsonXDataStaticDark,
+      1: watsonXStaticLight,
+      2: watsonXStaticDark,
       3: dataFabricStaticLight,
       4: dataFabricStaticDark,
     },
@@ -259,7 +259,7 @@ ThemeG10.argTypes = {
 };
 
 ThemeG10.args = {
-  headerAnimation: 1,
+  headerAnimation: 3,
   ...sharedArgs,
 };
 
@@ -282,7 +282,7 @@ ThemeG100.argTypes = {
 };
 
 ThemeG100.args = {
-  headerAnimation: 2,
+  headerAnimation: 4,
   ...sharedArgs,
 };
 

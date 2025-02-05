@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
 import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
+import { SIDE_NAV_TYPE } from './SideNav';
 
 export interface SideNavItemsProps {
   /**
@@ -28,12 +29,15 @@ export interface SideNavItemsProps {
    * keep local state and styling in step with the SideNav expansion state.
    */
   isSideNavExpanded?: boolean;
+
+  navType: SIDE_NAV_TYPE;
 }
 
 export const SideNavItems: React.FC<SideNavItemsProps> = ({
   className: customClassName,
   children,
   isSideNavExpanded,
+  navType: propType,
 }) => {
   const prefix = usePrefix();
   const className = cx([`${prefix}--side-nav__items`], customClassName);
@@ -52,6 +56,7 @@ export const SideNavItems: React.FC<SideNavItemsProps> = ({
         ...(isCarbonSideNavItem && { isSideNavExpanded: isSideNavExpanded }),
         ...(isSideNavMenu && {
           depth: 0,
+          navType: propType,
         }),
       });
     }

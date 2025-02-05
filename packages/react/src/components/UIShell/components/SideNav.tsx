@@ -35,6 +35,7 @@ export enum SIDE_NAV_TYPE {
   DEFAULT = 'default',
   RAIL = 'rail',
   PANEL = 'panel',
+  TREEVIEW = 'treeview',
 }
 
 export type TranslationKey = keyof typeof translationIds;
@@ -176,6 +177,7 @@ function SideNavRenderFunction(
         )
           ? {
               isSideNavExpanded: currentExpansionState,
+              navType: navType,
             }
           : {}),
       });
@@ -197,38 +199,40 @@ function SideNavRenderFunction(
 
   const treeWalkerRef = useRef<TreeWalker | null>(null);
   useEffect(() => {
-    treeWalkerRef.current =
-      treeWalkerRef.current ??
-      document.createTreeWalker(
-        sideNavRef?.current as unknown as Node,
-        NodeFilter.SHOW_ELEMENT,
-        {
-          acceptNode: function (node) {
-            if (!(node instanceof Element)) {
+    if (navType == SIDE_NAV_TYPE.TREEVIEW) {
+      treeWalkerRef.current =
+        treeWalkerRef.current ??
+        document.createTreeWalker(
+          sideNavRef?.current as unknown as Node,
+          NodeFilter.SHOW_ELEMENT,
+          {
+            acceptNode: function (node) {
+              if (!(node instanceof Element)) {
+                return NodeFilter.FILTER_SKIP;
+              }
+
+              if (node.classList.contains(`${prefix}--side-nav__divider`)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              if (
+                node.matches(`li.${prefix}--side-nav__item`) ||
+                node.matches(`li.${prefix}--side-nav__menu-item`)
+              ) {
+                return NodeFilter.FILTER_ACCEPT;
+              }
               return NodeFilter.FILTER_SKIP;
-            }
+            },
+          }
+        );
+      resetNodeTabIndices();
 
-            if (node.classList.contains(`${prefix}--side-nav__divider`)) {
-              return NodeFilter.FILTER_REJECT;
-            }
-            if (
-              node.matches(`li.${prefix}--side-nav__item`) ||
-              node.matches(`li.${prefix}--side-nav__menu-item`)
-            ) {
-              return NodeFilter.FILTER_ACCEPT;
-            }
-            return NodeFilter.FILTER_SKIP;
-          },
-        }
-      );
-    resetNodeTabIndices();
+      const firstElement = sideNavRef?.current?.querySelector(
+        'a, button'
+      ) as HTMLElement;
 
-    const firstElement = sideNavRef?.current?.querySelector(
-      'a, button'
-    ) as HTMLElement;
-
-    if (firstElement) {
-      firstElement.tabIndex = 0;
+      if (firstElement) {
+        firstElement.tabIndex = 0;
+      }
     }
   }, [prefix]);
 
@@ -270,127 +274,6 @@ function SideNavRenderFunction(
       }
     };
     eventHandlers.onKeyDown = (event) => {
-      if (!treeWalkerRef.current) return;
-      const treeWalker = treeWalkerRef.current;
-
-      event.stopPropagation();
-
-      // stops page from scrolling
-      if (
-        matches(event, [
-          keys.ArrowUp,
-          keys.ArrowDown,
-          keys.Home,
-          keys.End,
-          // @ts-ignore - `matches` doesn't like the object syntax without missing properties
-          { code: 'KeyA' },
-        ])
-      ) {
-        event.preventDefault();
-      }
-
-      treeWalker.currentNode =
-        (event.target as HTMLElement).closest(`li`) ?? treeWalker?.currentNode;
-
-      let nextFocusNode: Node | null = null;
-
-      if (match(event, keys.ArrowUp)) {
-        const parentNode = parentSideNavMenu(
-          treeWalker.currentNode
-        ) as HTMLElement;
-
-        let previousSideNavMenu =
-          parentNode?.previousElementSibling as HTMLElement;
-
-        // skip the divider
-        if (
-          previousSideNavMenu?.classList.contains(
-            `${prefix}--side-nav__divider`
-          )
-        ) {
-          previousSideNavMenu =
-            previousSideNavMenu?.previousElementSibling as HTMLElement;
-        }
-
-        // when previous sibling is open, go to its last item
-        if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
-          nextFocusNode = treeWalker.previousNode();
-        } else {
-          nextFocusNode = treeWalker.previousSibling();
-
-          // first item in the menu, go back up to SideNavMenu button
-          if (nextFocusNode == null) {
-            nextFocusNode = parentNode;
-          }
-        }
-      }
-
-      if (match(event, keys.ArrowDown)) {
-        if (
-          (treeWalker.currentNode as HTMLElement).getAttribute(
-            'aria-expanded'
-          ) == 'false'
-        ) {
-          nextFocusNode = treeWalker.nextSibling();
-        } else {
-          nextFocusNode = treeWalker.nextNode();
-        }
-      }
-
-      // Home/End functionality
-      if (matches(event, [keys.Home, keys.End])) {
-        if (!sideNavRef?.current) {
-          return;
-        }
-
-        const allItems = Array.from(
-          sideNavRef.current.querySelectorAll('a, button')
-        );
-
-        if (match(event, keys.Home)) {
-          const firstElement = allItems[0] as HTMLElement;
-
-          if (firstElement) {
-            firstElement.tabIndex = 0;
-            firstElement?.focus();
-          }
-        }
-
-        if (match(event, keys.End)) {
-          const allItems = Array.from(
-            sideNavRef.current.querySelectorAll('li')
-          );
-
-          const lastVisibleItem = allItems
-            .reverse()
-            .find((item) => getComputedStyle(item).visibility !== 'hidden');
-
-          if (lastVisibleItem) {
-            const node =
-              lastVisibleItem.querySelector('button') ??
-              lastVisibleItem.querySelector('a');
-            if (node) {
-              node.tabIndex = 0;
-              node?.focus();
-            }
-          }
-        }
-      }
-
-      // focus on the focusable element within the node
-      if (nextFocusNode && nextFocusNode !== event.target) {
-        resetNodeTabIndices();
-        if (nextFocusNode instanceof HTMLElement) {
-          const node =
-            nextFocusNode.querySelector('button') ??
-            nextFocusNode.querySelector('a');
-          if (node) {
-            node.tabIndex = 0;
-            node?.focus();
-          }
-        }
-      }
-
       // close menu
       if (match(event, keys.Escape)) {
         if (expanded && !isFixedNav) {
@@ -401,6 +284,130 @@ function SideNavRenderFunction(
         handleToggle(event, false);
         if (href) {
           window.location.href = href;
+        }
+      }
+
+      // Treeview keyboard navigation
+      if (treeWalkerRef?.current && navType == SIDE_NAV_TYPE.TREEVIEW) {
+        const treeWalker = treeWalkerRef.current;
+
+        event.stopPropagation();
+
+        // stops page from scrolling
+        if (
+          matches(event, [
+            keys.ArrowUp,
+            keys.ArrowDown,
+            keys.Home,
+            keys.End,
+            // @ts-ignore - `matches` doesn't like the object syntax without missing properties
+            { code: 'KeyA' },
+          ])
+        ) {
+          event.preventDefault();
+        }
+
+        treeWalker.currentNode =
+          (event.target as HTMLElement).closest(`li`) ??
+          treeWalker?.currentNode;
+
+        let nextFocusNode: Node | null = null;
+
+        if (match(event, keys.ArrowUp)) {
+          const parentNode = parentSideNavMenu(
+            treeWalker.currentNode
+          ) as HTMLElement;
+
+          let previousSideNavMenu =
+            parentNode?.previousElementSibling as HTMLElement;
+
+          // skip the divider
+          if (
+            previousSideNavMenu?.classList.contains(
+              `${prefix}--side-nav__divider`
+            )
+          ) {
+            previousSideNavMenu =
+              previousSideNavMenu?.previousElementSibling as HTMLElement;
+          }
+
+          // when previous sibling is open, go to its last item
+          if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
+            nextFocusNode = treeWalker.previousNode();
+          } else {
+            nextFocusNode = treeWalker.previousSibling();
+
+            // first item in the menu, go back up to SideNavMenu button
+            if (nextFocusNode == null) {
+              nextFocusNode = parentNode;
+            }
+          }
+        }
+
+        if (match(event, keys.ArrowDown)) {
+          if (
+            (treeWalker.currentNode as HTMLElement).getAttribute(
+              'aria-expanded'
+            ) == 'false'
+          ) {
+            nextFocusNode = treeWalker.nextSibling();
+          } else {
+            nextFocusNode = treeWalker.nextNode();
+          }
+        }
+
+        // Home/End functionality
+        if (matches(event, [keys.Home, keys.End])) {
+          if (!sideNavRef?.current) {
+            return;
+          }
+
+          const allItems = Array.from(
+            sideNavRef.current.querySelectorAll('a, button')
+          );
+
+          if (match(event, keys.Home)) {
+            const firstElement = allItems[0] as HTMLElement;
+
+            if (firstElement) {
+              firstElement.tabIndex = 0;
+              firstElement?.focus();
+            }
+          }
+
+          if (match(event, keys.End)) {
+            const allItems = Array.from(
+              sideNavRef.current.querySelectorAll('li')
+            );
+
+            const lastVisibleItem = allItems
+              .reverse()
+              .find((item) => getComputedStyle(item).visibility !== 'hidden');
+
+            if (lastVisibleItem) {
+              const node =
+                lastVisibleItem.querySelector('button') ??
+                lastVisibleItem.querySelector('a');
+              if (node) {
+                node.tabIndex = 0;
+                node?.focus();
+              }
+            }
+          }
+        }
+
+        // focus on the focusable element within the node
+        if (nextFocusNode && nextFocusNode !== event.target) {
+          resetNodeTabIndices();
+          if (nextFocusNode instanceof HTMLElement) {
+            const node =
+              nextFocusNode.querySelector('button') ??
+              nextFocusNode.querySelector('a');
+            if (node) {
+              node.tabIndex = 0;
+              node?.focus();
+            }
+          }
         }
       }
     };
@@ -460,7 +467,7 @@ function SideNavRenderFunction(
         <div className={overlayClassName} onClick={onOverlayClick} />
       )}
       <nav
-        role="tree"
+        role={navType == SIDE_NAV_TYPE.TREEVIEW ? 'tree' : 'navigation'}
         tabIndex={-1}
         ref={navRef}
         className={`${prefix}--side-nav__navigation ${className}`}

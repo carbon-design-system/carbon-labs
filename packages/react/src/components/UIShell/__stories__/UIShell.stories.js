@@ -246,6 +246,7 @@ export const DefaultWithTreeView = () => (
               </HeaderName>
             </Header>
             <SideNav
+              navType={SIDE_NAV_TYPE.TREEVIEW}
               aria-label="Side navigation1"
               expanded={isSideNavExpanded}
               onSideNavBlur={onClickSideNavExpand}
@@ -346,8 +347,9 @@ export const SideNavStory = () => (
  * Story for SideNav w/TreeView
  * @returns {React.ReactElement} The JSX for the story
  */
-export const ThirdMenuTest = () => (
+export const SideNavThirdLevel = () => (
   <SideNav
+    navType={SIDE_NAV_TYPE.TREEVIEW}
     isFixedNav
     expanded={true}
     isChildOfHeader={false}
@@ -377,7 +379,7 @@ export const ThirdMenuTest = () => (
  * Story for SideNav w/TreeView
  * @returns {React.ReactElement} The JSX for the story
  */
-export const SideNavWithTreeView = () => (
+export const SideNavTreeviewTest = () => (
   <div>
     <HeaderContainer
       render={({ isSideNavExpanded, onClickSideNavExpand }) => (
@@ -395,6 +397,7 @@ export const SideNavWithTreeView = () => (
             </HeaderName>
           </Header>
           <SideNav
+            navType={SIDE_NAV_TYPE.TREEVIEW}
             aria-label="Side navigation1"
             expanded={isSideNavExpanded}
             onSideNavBlur={onClickSideNavExpand}
@@ -513,6 +516,9 @@ export const SideNavPanel = () => (
         Link
       </SideNavLink>
       <SideNavDivider />
+      <SideNavLink renderIcon={Fade} href="#">
+        Link
+      </SideNavLink>
       <SideNavLink renderIcon={Fade} href="#">
         Link
       </SideNavLink>

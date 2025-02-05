@@ -21,7 +21,7 @@ import { CARBON_SIDENAV_ITEMS } from './_utils';
 import SideNavIcon from '@carbon/react/lib/components/UIShell/SideNavIcon';
 import { match } from '@carbon/react/lib/internal/keyboard/match';
 import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
-import { SideNavContext } from './SideNav';
+import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '@carbon/react/lib/internal/useMergedRefs';
 
 import * as keys from '@carbon/react/lib/internal/keyboard/keys';
@@ -59,6 +59,11 @@ export interface SideNavMenuProps {
   large?: boolean;
 
   /**
+   * The SideNav's nav type
+   */
+  navType: SIDE_NAV_TYPE;
+
+  /**
    * A custom icon to render next to the SideNavMenu title. This can be a function returning JSX or JSX itself.
    */
   renderIcon?: React.ComponentType;
@@ -90,7 +95,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       large = false,
       renderIcon: IconElement,
       isSideNavExpanded,
-      tabIndex,
+      navType,
       title,
     },
     ref: ForwardedRef<HTMLElement>
@@ -159,21 +164,23 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     useEffect(() => {
       if (depth === 0) return;
 
-      const calcButtonOffset = () => {
-        // menu with icon
-        if (children && IconElement) {
-          return depth + 3;
-        }
+      if (navType == SIDE_NAV_TYPE.TREEVIEW) {
+        const calcButtonOffset = () => {
+          // menu with icon
+          if (children && IconElement) {
+            return depth + 3;
+          }
 
-        // menu without icon
-        if (children) {
-          return depth * 4;
-        }
-        return depth;
-      };
+          // menu without icon
+          if (children) {
+            return depth * 4;
+          }
+          return depth;
+        };
 
-      if (buttonRef.current) {
-        buttonRef.current.style.paddingLeft = `${calcButtonOffset()}rem`;
+        if (buttonRef.current) {
+          buttonRef.current.style.paddingLeft = `${calcButtonOffset()}rem`;
+        }
       }
     }, []);
 
@@ -195,52 +202,54 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         setIsExpanded(false);
       }
 
-      const node = event.target as HTMLElement;
-      const isMenu = node.hasAttribute('aria-expanded');
-      const isExpanded = node.getAttribute('aria-expanded');
-      const parent = parentSideNavMenu(node) as HTMLElement;
+      if (navType == SIDE_NAV_TYPE.TREEVIEW) {
+        const node = event.target as HTMLElement;
+        const isMenu = node.hasAttribute('aria-expanded');
+        const isExpanded = node.getAttribute('aria-expanded');
+        const parent = parentSideNavMenu(node) as HTMLElement;
 
-      if (match(event, keys.ArrowLeft)) {
-        event.stopPropagation();
+        if (match(event, keys.ArrowLeft)) {
+          event.stopPropagation();
 
-        if (isMenu) {
-          // collapse menu
-          if (isExpanded == 'true') {
-            setIsExpanded(false);
+          if (isMenu) {
+            // collapse menu
+            if (isExpanded == 'true') {
+              setIsExpanded(false);
 
-            // go to previous level's side nav menu button
-          } else {
-            // since we're in a menu, it finds its own <li>, we go up one more
-            const previousMenu = parentSideNavMenu(parent) as HTMLElement;
-            const button = previousMenu.querySelector('button');
+              // go to previous level's side nav menu button
+            } else {
+              // since we're in a menu, it finds its own <li>, we go up one more
+              const previousMenu = parentSideNavMenu(parent) as HTMLElement;
+              const button = previousMenu.querySelector('button');
+              button!.tabIndex = 0;
+              button?.focus();
+            }
+
+            // go to side nav menu button
+          } else if (parent) {
+            const button = parent.querySelector('button');
             button!.tabIndex = 0;
             button?.focus();
           }
-
-          // go to side nav menu button
-        } else if (parent) {
-          const button = parent.querySelector('button');
-          button!.tabIndex = 0;
-          button?.focus();
         }
-      }
 
-      if (match(event, keys.ArrowRight)) {
-        event.stopPropagation();
+        if (match(event, keys.ArrowRight)) {
+          event.stopPropagation();
 
-        // expand menu
-        if (isMenu) {
-          setIsExpanded(true);
+          // expand menu
+          if (isMenu) {
+            setIsExpanded(true);
 
-          // if already expanded, focus on first element
-          if (isExpanded == 'true') {
-            let nextNode = node.nextElementSibling?.querySelector(
-              'a, button'
-            ) as HTMLElement;
+            // if already expanded, focus on first element
+            if (isExpanded == 'true') {
+              let nextNode = node.nextElementSibling?.querySelector(
+                'a, button'
+              ) as HTMLElement;
 
-            if (nextNode) {
-              nextNode.tabIndex = 0;
-              nextNode.focus();
+              if (nextNode) {
+                nextNode.tabIndex = 0;
+                nextNode.focus();
+              }
             }
           }
         }

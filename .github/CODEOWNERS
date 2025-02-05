@@ -8,6 +8,9 @@
 # Carbon AI Chat
 /packages/web-components/src/components/chat      @carbon-design-system/carbon-ai-chat-admins @carbon-design-system/developers-system-reviewers
 
+# Carbon UI Shell
+/packages/react/src/components/uishell      @carbon-design-system/carbon-ui-shell-labs-devs
+
 # Admins should be notified of changes to CI/CD workflows
 # codeowners, and any other config present in .github.
 # This should always be the last entry in this file.

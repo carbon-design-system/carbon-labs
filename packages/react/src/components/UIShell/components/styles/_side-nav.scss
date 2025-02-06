@@ -17,6 +17,13 @@
 
 $prefix: 'cds' !default;
 
+div:has(.#{$prefix}--header)
+  ~ div:has(.#{$prefix}--side-nav)
+  .#{$prefix}--side-nav {
+  block-size: calc(100% - $spacing-09);
+  inset-block-start: $spacing-09;
+}
+
 //----------------------------------------------------------------------------
 // Side-nav Collapsible
 //----------------------------------------------------------------------------
@@ -58,7 +65,7 @@ $prefix: 'cds' !default;
 
   .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
     a.#{$prefix}--side-nav__link {
-    padding-inline-start: mini-units(8);
+    padding-inline-start: $spacing-10;
   }
 
   .#{$prefix}--side-nav__toggle {

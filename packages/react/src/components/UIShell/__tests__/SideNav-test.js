@@ -31,10 +31,10 @@ jest.mock('./ui-shell.scss', () => ({}));
 describe('SideNav', () => {
   // Carbon React Tests
   describe('renders as expected - Component API', () => {
-    // it('should match snapshot', () => {
-    //   const { container } = render(<SideNav aria-label="test" />);
-    //   expect(container).toMatchSnapshot();
-    // });
+    it('should match snapshot', () => {
+      const { container } = render(<SideNav aria-label="test" />);
+      expect(container).toMatchSnapshot();
+    });
 
     it('should label the <nav> through `aria-label`', () => {
       render(<SideNav aria-label="test" />);

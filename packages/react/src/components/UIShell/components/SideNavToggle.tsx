@@ -8,7 +8,7 @@
 import PropTypes from 'prop-types';
 import React, { ForwardedRef, ReactNode, Ref } from 'react';
 import { SideNavIcon } from '@carbon/react';
-import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
+import { usePrefix } from '@carbon/react/es/internal/usePrefix';
 
 interface SideNavToggleProps {
   /**

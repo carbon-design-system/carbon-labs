@@ -17,17 +17,17 @@ import React, {
 } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
-import { AriaLabelPropType } from '@carbon/react/lib/prop-types/AriaPropTypes';
+import { AriaLabelPropType } from '@carbon/react/es/prop-types/AriaPropTypes';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
-import * as keys from '@carbon/react/lib/internal/keyboard/keys';
-import { match, matches } from '@carbon/react/lib/internal/keyboard/match';
-import { useMergedRefs } from '@carbon/react/lib/internal/useMergedRefs';
-import { useWindowEvent } from '@carbon/react/lib/internal/useEvent';
-import { useDelayedState } from '@carbon/react/lib/internal/useDelayedState';
+import { usePrefix } from '@carbon/react/es/internal/usePrefix';
+import * as keys from '@carbon/react/es/internal/keyboard/keys';
+import { match, matches } from '@carbon/react/es/internal/keyboard/match';
+import { useMergedRefs } from '@carbon/react/es/internal/useMergedRefs';
+import { useWindowEvent } from '@carbon/react/es/internal/useEvent';
+import { useDelayedState } from '@carbon/react/es/internal/useDelayedState';
 import { breakpoints } from '@carbon/layout';
-import { useMatchMedia } from '@carbon/react/lib/internal/useMatchMedia';
-import { TranslateWithId } from '@carbon/react/lib/types/common';
+import { useMatchMedia } from '@carbon/react/es/internal/useMatchMedia';
+import { TranslateWithId } from '@carbon/react/es/types/common';
 import { SidePanelClose, SidePanelOpen } from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
 

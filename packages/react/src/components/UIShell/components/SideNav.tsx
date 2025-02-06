@@ -17,17 +17,16 @@ import React, {
 } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
-import { AriaLabelPropType } from '@carbon/react/lib/prop-types/AriaPropTypes';
+import { AriaLabelPropType } from '../prop-types/AriaPropTypes';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
-import * as keys from '@carbon/react/lib/internal/keyboard/keys';
-import { match, matches } from '@carbon/react/lib/internal/keyboard/match';
-import { useMergedRefs } from '@carbon/react/lib/internal/useMergedRefs';
-import { useWindowEvent } from '@carbon/react/lib/internal/useEvent';
-import { useDelayedState } from '@carbon/react/lib/internal/useDelayedState';
+import { usePrefix } from '../internal/usePrefix';
+import { keys, match, matches } from '../internal/keyboard';
+import { useMergedRefs } from '../internal/useMergedRefs';
+import { useWindowEvent } from '../internal/useEvent';
+import { useDelayedState } from '../internal/useDelayedState';
 import { breakpoints } from '@carbon/layout';
-import { useMatchMedia } from '@carbon/react/lib/internal/useMatchMedia';
-import { TranslateWithId } from '@carbon/react/lib/types/common';
+import { useMatchMedia } from '../internal/useMatchMedia';
+import { TranslateWithId } from '../types/common';
 import { SidePanelClose, SidePanelOpen } from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
 
@@ -72,8 +71,8 @@ export interface SideNavProps
   onSideNavBlur?: () => void;
   enterDelayMs?: number;
   inert?: boolean;
-  isCollapsible: boolean;
-  hideOverlay: boolean;
+  isCollapsible?: boolean;
+  hideOverlay?: boolean;
   navType: SIDE_NAV_TYPE;
 }
 

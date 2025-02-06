@@ -12,6 +12,7 @@ $prefix: 'cds' !default;
 .#{$prefix}--side-nav--panel ~ .#{$prefix}--content,
 div:has(.#{$prefix}--side-nav--panel) ~ .#{$prefix}--content {
   margin-inline-start: convert.to-rem(48px);
+  /* Matches the side nav transition timing and easing from Carbon styles */
   transition: margin-inline-start 0.11s cubic-bezier(0.2, 0, 1, 0.9),
     transform 0.11s cubic-bezier(0.2, 0, 1, 0.9);
 }

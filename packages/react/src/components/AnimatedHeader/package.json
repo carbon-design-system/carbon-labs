@@ -24,6 +24,10 @@
     "build": "node ../../../tasks/build.js",
     "clean": "rm -rf {es,lib,scss}"
   },
+  "dependencies": {
+    "jest-canvas-mock": "^2.5.2",
+    "lottie-web": "^5.12.2"
+  },
   "devDependencies": {
     "@carbon-labs/utilities": "canary"
   }

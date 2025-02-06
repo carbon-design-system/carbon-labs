@@ -2587,6 +2587,8 @@ __metadata:
   resolution: "@carbon-labs/react-animated-header@workspace:packages/react/src/components/AnimatedHeader"
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
+    jest-canvas-mock: "npm:^2.5.2"
+    lottie-web: "npm:^5.12.2"
   languageName: unknown
   linkType: soft
 
@@ -2659,9 +2661,7 @@ __metadata:
     browserslist-config-carbon: "npm:^11.2.0"
     css-loader: "npm:^7.1.2"
     jest: "npm:^29.7.0"
-    jest-canvas-mock: "npm:^2.5.2"
     jest-environment-jsdom: "npm:^29.7.0"
-    lottie-web: "npm:^5.12.2"
     mini-css-extract-plugin: "npm:^2.9.2"
     postcss: "npm:^8.4.49"
     postcss-loader: "npm:^8.1.1"

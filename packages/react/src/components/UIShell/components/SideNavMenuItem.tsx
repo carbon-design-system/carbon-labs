@@ -15,7 +15,7 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
-import SideNavLinkText from '@carbon/react/es/components/UIShell/SideNavLinkText';
+import { SideNavLinkText } from '@carbon/react';
 import Link from './Link';
 import { usePrefix } from '../internal/usePrefix';
 import { useMergedRefs } from '../internal/useMergedRefs';

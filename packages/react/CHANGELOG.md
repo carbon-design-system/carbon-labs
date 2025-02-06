@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.14.0...@carbon-labs/react@0.15.0) (2025-02-06)
+
+
+### Features
+
+* **UIShell:** SideNav panel as grid influencer ([#427](https://github.com/carbon-design-system/carbon-labs/issues/427)) ([ee293fe](https://github.com/carbon-design-system/carbon-labs/commit/ee293fe78022a94cfcc94016db037974db576edf))
+
+
+
+
+
 # [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.13.0...@carbon-labs/react@0.14.0) (2025-02-06)
 
 

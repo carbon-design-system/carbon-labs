@@ -445,12 +445,10 @@ function SideNavRenderFunction(
   hideOverlay;
 
   function resetNodeTabIndices() {
-    Array.prototype.forEach.call(
-      sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [],
-      (item) => {
-        item.tabIndex = -1;
-      }
-    );
+    const items = sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [];
+    items.forEach((item) => {
+      item.tabIndex = -1;
+    });
   }
 
   return (

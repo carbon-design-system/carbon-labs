@@ -63,7 +63,7 @@ SideNavToggle.propTypes = {
   /**
    * Specify the text content for the toggle
    */
-  children: PropTypes.element,
+  children: PropTypes.node as unknown as React.Validator<React.ReactNode>,
 
   /**
    * Provide an optional function to be called when clicked

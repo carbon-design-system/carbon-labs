@@ -26,7 +26,7 @@ import { useWindowEvent } from '../internal/useEvent';
 import { useDelayedState } from '../internal/useDelayedState';
 import { breakpoints } from '@carbon/layout';
 import { useMatchMedia } from '../internal/useMatchMedia';
-import { TranslateWithId } from '@carbon/react/es/types/common';
+import { TranslateWithId } from '../types/common';
 import { SidePanelClose, SidePanelOpen } from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
 

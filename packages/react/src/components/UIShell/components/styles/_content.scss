@@ -6,15 +6,14 @@
  */
 
 @use '@carbon/styles/scss/utilities/convert' as convert;
+@use '@carbon/styles/scss/motion' as *;
 
 $prefix: 'cds' !default;
 
 .#{$prefix}--side-nav--panel ~ .#{$prefix}--content,
 div:has(.#{$prefix}--side-nav--panel) ~ .#{$prefix}--content {
   margin-inline-start: convert.to-rem(48px);
-  /* Matches the side nav transition timing and easing from Carbon styles */
-  transition: margin-inline-start 0.11s cubic-bezier(0.2, 0, 1, 0.9),
-    transform 0.11s cubic-bezier(0.2, 0, 1, 0.9);
+  transition: margin-inline-start $duration-fast-02, transform $duration-fast-02;
 }
 
 .#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded

@@ -65,7 +65,7 @@ div:has(.#{$prefix}--header)
 
   .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
     a.#{$prefix}--side-nav__link {
-    padding-inline-start: mini-units(8);
+    padding-inline-start: $spacing-10;
   }
 
   .#{$prefix}--side-nav__toggle {

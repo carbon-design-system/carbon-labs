@@ -447,6 +447,9 @@ function SideNavRenderFunction(
   function resetNodeTabIndices() {
     const items = sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [];
     items.forEach((item) => {
+      if (item.classList.contains(`${prefix}--side-nav__toggle`)) {
+        return;
+      }
       item.tabIndex = -1;
     });
   }

@@ -212,6 +212,7 @@ export const Default = () => {
               <SideNav
                 navType={SIDE_NAV_TYPE.PANEL}
                 isChildOfHeader={false}
+                hideOverlay
                 aria-label="Product navigation">
                 <SideNavItems>
                   <SideNavLink renderIcon={Fade} href="#">

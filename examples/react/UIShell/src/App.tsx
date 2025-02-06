@@ -196,6 +196,7 @@ function App() {
               <SideNav
                 navType={SIDE_NAV_TYPE.PANEL}
                 isChildOfHeader={false}
+                hideOverlay
                 aria-label="Side navigation">
                 <SideNavItems>
                   <SideNavLink renderIcon={Fade} href="#">

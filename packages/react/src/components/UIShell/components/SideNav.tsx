@@ -444,12 +444,13 @@ function SideNavRenderFunction(
   hideOverlay;
 
   function resetNodeTabIndices() {
-    Array.prototype.forEach.call(
-      sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [],
-      (item) => {
-        item.tabIndex = -1;
+    const items = sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [];
+    items.forEach((item) => {
+      if (item.classList.contains(`${prefix}--side-nav__toggle`)) {
+        return;
       }
-    );
+      item.tabIndex = -1;
+    });
   }
 
   return (
@@ -463,7 +464,11 @@ function SideNavRenderFunction(
         tabIndex={-1}
         ref={navRef}
         className={`${prefix}--side-nav__navigation ${className}`}
-        inert={!isRail ? (expanded || isLg ? undefined : -1) : undefined}
+        inert={
+          !isRail && navType !== SIDE_NAV_TYPE.PANEL && !(expanded || isLg)
+            ? -1
+            : undefined
+        }
         {...accessibilityLabel}
         {...eventHandlers}
         {...other}>

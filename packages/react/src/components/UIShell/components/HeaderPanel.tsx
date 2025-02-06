@@ -14,11 +14,10 @@ import React, {
   type ComponentProps,
   type ForwardedRef,
 } from 'react';
-import { usePrefix } from '@carbon/react/es/internal/usePrefix';
-import { keys } from '@carbon/react/es/internal/keyboard/keys';
-import { match } from '@carbon/react/es/internal/keyboard/match';
-import { useWindowEvent } from '@carbon/react/es/internal/useEvent';
-import { useMergedRefs } from '@carbon/react/es/internal/useMergedRefs';
+import { usePrefix } from '../internal/usePrefix';
+import { keys, match } from '../internal/keyboard';
+import { useWindowEvent } from '../internal/useEvent';
+import { useMergedRefs } from '../internal/useMergedRefs';
 
 export interface HeaderPanelProps {
   /**

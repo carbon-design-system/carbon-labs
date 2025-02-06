@@ -16,9 +16,9 @@ import React, {
   useRef,
 } from 'react';
 import SideNavLinkText from '@carbon/react/es/components/UIShell/SideNavLinkText';
-import Link from '@carbon/react/es/components/UIShell/Link';
-import { usePrefix } from '@carbon/react/es/internal/usePrefix';
-import { useMergedRefs } from '@carbon/react/es/internal/useMergedRefs';
+import Link from './Link';
+import { usePrefix } from '../internal/usePrefix';
+import { useMergedRefs } from '../internal/useMergedRefs';
 
 export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
   /**

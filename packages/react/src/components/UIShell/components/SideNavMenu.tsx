@@ -18,13 +18,11 @@ import React, {
   useState,
 } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import SideNavIcon from '@carbon/react/es/components/UIShell/SideNavIcon';
-import { match } from '@carbon/react/es/internal/keyboard/match';
-import { usePrefix } from '@carbon/react/es/internal/usePrefix';
+import { SideNavIcon } from '@carbon/react';
+import { keys, match } from '../internal/keyboard';
+import { usePrefix } from '../internal/usePrefix';
 import { SideNavContext } from './SideNav';
-import { useMergedRefs } from '@carbon/react/es/internal/useMergedRefs';
-
-import * as keys from '@carbon/react/es/internal/keyboard/keys';
+import { useMergedRefs } from '../internal/useMergedRefs';
 
 export interface SideNavMenuProps {
   /**

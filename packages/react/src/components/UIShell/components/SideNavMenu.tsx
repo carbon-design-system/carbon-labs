@@ -105,6 +105,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const prefix = usePrefix();
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
     const [active, setActive] = useState<boolean>(isActive);
+    const firstLink = useRef<string | null>(null);
 
     const [prevExpanded, setPrevExpanded] = useState<boolean>(defaultExpanded);
 
@@ -164,6 +165,14 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
     useEffect(() => {
       if (depth === 0) return;
+
+      if (!firstLink?.current && listRef?.current) {
+        const firstLinkElement = listRef.current!.querySelector(
+          `.${prefix}--side-nav__menu-item a`
+        );
+
+        firstLink.current = firstLinkElement?.getAttribute('href') ?? '';
+      }
 
       if (navType == SIDE_NAV_TYPE.TREEVIEW) {
         const calcButtonOffset = () => {
@@ -269,6 +278,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           aria-expanded={isExpanded}
           className={buttonClassName}
           onClick={() => {
+            if (!isExpanded && firstLink.current) {
+              window.location.href = firstLink.current;
+            }
             setIsExpanded(!isExpanded);
           }}
           ref={menuRef as Ref<HTMLButtonElement>}

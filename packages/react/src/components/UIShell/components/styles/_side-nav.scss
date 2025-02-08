@@ -68,6 +68,14 @@ $prefix: 'cds' !default;
     margin-inline-end: $spacing-05;
   }
 
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__link {
+    &:hover {
+      .#{$prefix}--side-nav__icon > svg {
+        fill: $icon-primary;
+      }  
+    }
+  }
+
   .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
     a.#{$prefix}--side-nav__link {
     padding-inline-start: mini-units(8);

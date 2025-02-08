@@ -1,3 +1,28 @@
 @use '@carbon/styles' as styles with (
   $font-path: '~@ibm/plex'
 );
+
+:root {
+  @include styles.theme(styles.$white);
+}
+
+[data-carbon-theme='g10'] {
+  @include styles.theme(styles.$g10);
+}
+
+[data-carbon-theme='g90'] {
+  @include styles.theme(styles.$g90);
+}
+
+[data-carbon-theme='g100'] {
+  @include styles.theme(styles.$g100);
+}
+
+body {
+  background: styles.$background;
+  color: styles.$text-primary;
+}
+
+.sb-show-main.sb-main-padded {
+  padding: 0;
+}

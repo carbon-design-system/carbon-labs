@@ -36,8 +36,9 @@ Enhancements to core Carbon UIShell components. Components included in this
 package:
 
 - `SideNav`
-  - `isCollapsible`
-  - `hideOverlay`
+- `SideNavItems`
+- `SideNavMenu`
+- `SideNavMenuItem`
 - `HeaderPanel`
 
 <Canvas of={UIShellStories.Default} />
@@ -56,18 +57,24 @@ yarn add @carbon-labs/react-ui-shell
 In your styles file import
 
 ```
-@use '@carbon/react';
+@use '@carbon/react' with (
+  $font-path: '@ibm/plex'
+);
 @use '@carbon-labs/react-ui-shell/scss/ui-shell';
 ```
 
 ### JS (via import)
 
 ```javascript
-import { SideNav, HeaderPanel } from '@carbon-labs/react-ui-shell/es/index';
 import {
+  SIDE_NAV_TYPE,
+  SideNav,
   SideNavItems,
   SideNavMenu,
   SideNavMenuItem,
+  HeaderPanel,
+} from '@carbon-labs/react-ui-shell/es/index';
+import {
   SideNavLink,
   SkipToContent,
   HeaderContainer,
@@ -76,8 +83,13 @@ import {
   Theme,
   HeaderMenuButton,
   SideNavDivider,
+  Content,
+  HeaderGlobalBar,
+  HeaderGlobalAction,
+  Grid,
+  Column,
 } from '@carbon/react';
-import { Fade } from '@carbon/icons-react';
+import { Fade, SquareOutline } from '@carbon/icons-react';
 
 function App() {
   return (
@@ -92,13 +104,23 @@ function App() {
                 onClick={onClickSideNavExpand}
                 isActive={isSideNavExpanded}
                 aria-expanded={isSideNavExpanded}
-                isCollapsible
+                isCollapsible //shows hamburger menu at desktop
                 isFixedNav
               />
               <HeaderName href="#" prefix="IBM">
                 [Platform]
               </HeaderName>
-              <HeaderPanel />
+              <HeaderGlobalBar>
+                <HeaderGlobalAction
+                  aria-label={expandedPanel ? 'Close panel' : 'Open panel'}
+                  isActive={expandedPanel}
+                  aria-expanded={expandedPanel}
+                  tooltipAlignment="end"
+                  onClick={() => setExpandedPanel(!expandedPanel)}>
+                  <Fade size={20} />
+                </HeaderGlobalAction>
+              </HeaderGlobalBar>
+              <HeaderPanel expanded={expandedPanel} />
             </Header>
             <SideNav
               aria-label="Side navigation1"
@@ -108,23 +130,61 @@ function App() {
               hideOverlay
               className="nav--global">
               <SideNavItems>
-                <SideNavMenu renderIcon={Fade} title="Link">
+                <SideNavMenu
+                  renderIcon={SquareOutline}
+                  title="Sub-menu level 1">
+                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                  <SideNavMenu title="Sub-menu level 2">
+                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                  </SideNavMenu>
+                </SideNavMenu>
+                <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavDivider />
+                <SideNavLink renderIcon={SquareOutline} href="#">
+                  Link
+                </SideNavLink>
+                <SideNavLink renderIcon={SquareOutline} href="#">
+                  Link
+                </SideNavLink>
+                <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                   <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   <SideNavMenuItem href="#">Link</SideNavMenuItem>
                 </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
+              </SideNavItems>
+            </SideNav>
+            <SideNav
+              navType={SIDE_NAV_TYPE.PANEL}
+              isChildOfHeader={false}
+              hideOverlay
+              aria-label="Side navigation">
+              <SideNavItems>
+                <SideNavLink renderIcon={Fade} href="#">
+                  Link
+                </SideNavLink>
+                <SideNavLink renderIcon={Fade} href="#">
+                  Link
+                </SideNavLink>
+                <SideNavLink renderIcon={Fade} href="#">
+                  Link
+                </SideNavLink>
+                <SideNavLink renderIcon={Fade} href="#">
+                  Link
+                </SideNavLink>
                 <SideNavDivider />
                 <SideNavLink renderIcon={Fade} href="#">
                   Link
@@ -132,15 +192,10 @@ function App() {
                 <SideNavLink renderIcon={Fade} href="#">
                   Link
                 </SideNavLink>
-                <SideNavMenu renderIcon={Fade} title="Link">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
               </SideNavItems>
             </SideNav>
             <Theme theme="white">
-              <p>Content</p>
+              <StoryContent />
             </Theme>
           </>
         )}

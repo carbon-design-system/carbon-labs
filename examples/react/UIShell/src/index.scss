@@ -5,5 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '@carbon/react';
+@use '@carbon/react' with (
+  $font-path: '@ibm/plex'
+);
 @use '@carbon-labs/react-ui-shell/scss/ui-shell';

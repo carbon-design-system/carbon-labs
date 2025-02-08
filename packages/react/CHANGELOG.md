@@ -3,6 +3,77 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.14.0...@carbon-labs/react@0.15.0) (2025-02-06)
+
+
+### Features
+
+* **UIShell:** SideNav panel as grid influencer ([#427](https://github.com/carbon-design-system/carbon-labs/issues/427)) ([ee293fe](https://github.com/carbon-design-system/carbon-labs/commit/ee293fe78022a94cfcc94016db037974db576edf))
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.13.0...@carbon-labs/react@0.14.0) (2025-02-06)
+
+
+### Bug Fixes
+
+* copy internal files over from carbon and update imports ([#428](https://github.com/carbon-design-system/carbon-labs/issues/428)) ([592d906](https://github.com/carbon-design-system/carbon-labs/commit/592d9060401ef4c06b04dc46c6eac0c3d850c693))
+
+
+
+
+
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.12.0...@carbon-labs/react@0.13.0) (2025-02-06)
+
+
+### Bug Fixes
+
+* **SideNav:** prevent SideNavToggle tabindex reset ([#426](https://github.com/carbon-design-system/carbon-labs/issues/426)) ([4fad974](https://github.com/carbon-design-system/carbon-labs/commit/4fad9742f75502b93d40a81209bc017273cdec1c))
+
+
+
+
+
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.11.0...@carbon-labs/react@0.12.0) (2025-02-06)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.10.0...@carbon-labs/react@0.11.0) (2025-02-05)
+
+
+### Bug Fixes
+
+* **SideNav:** fixed imports ([#420](https://github.com/carbon-design-system/carbon-labs/issues/420)) ([c73d033](https://github.com/carbon-design-system/carbon-labs/commit/c73d033546631aeb363bd06535e592f77efe80b5))
+
+
+
+
+
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.9.0...@carbon-labs/react@0.10.0) (2025-02-05)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.8.0...@carbon-labs/react@0.9.0) (2025-02-05)
+
+
+### Features
+
+* **UIShell:** add base support for 3rd level nesting in SideNavMenu  ([#413](https://github.com/carbon-design-system/carbon-labs/issues/413)) ([3b57e50](https://github.com/carbon-design-system/carbon-labs/commit/3b57e5024238f7956cf33d0c3faccde01b044d2d))
+
+
+
+
+
 # [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.7.0...@carbon-labs/react@0.8.0) (2025-02-04)
 
 

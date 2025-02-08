@@ -9,8 +9,8 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
 import { SIDE_NAV_TYPE } from './SideNav';
+import { usePrefix } from '../internal/usePrefix';
 
 export interface SideNavItemsProps {
   /**

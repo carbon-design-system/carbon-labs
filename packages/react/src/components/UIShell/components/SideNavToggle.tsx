@@ -8,7 +8,7 @@
 import PropTypes from 'prop-types';
 import React, { ForwardedRef, ReactNode, Ref } from 'react';
 import { SideNavIcon } from '@carbon/react';
-import { usePrefix } from '@carbon/react/lib/internal/usePrefix';
+import { usePrefix } from '../internal/usePrefix';
 
 interface SideNavToggleProps {
   /**
@@ -63,7 +63,7 @@ SideNavToggle.propTypes = {
   /**
    * Specify the text content for the toggle
    */
-  children: PropTypes.element,
+  children: PropTypes.node as unknown as React.Validator<React.ReactNode>,
 
   /**
    * Provide an optional function to be called when clicked

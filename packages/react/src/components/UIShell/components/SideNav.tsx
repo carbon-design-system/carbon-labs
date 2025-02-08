@@ -277,6 +277,7 @@ function SideNavRenderFunction(
       // close menu
       if (match(event, keys.Escape)) {
         if (expanded && !isFixedNav) {
+          resetNodeTabIndices();
           if (onSideNavBlur) {
             onSideNavBlur();
           }
@@ -333,7 +334,17 @@ function SideNavRenderFunction(
 
           // when previous sibling is open, go to its last item
           if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
-            nextFocusNode = treeWalker.previousNode();
+            const allItems = previousSideNavMenu.querySelectorAll(
+              `.${prefix}--side-nav__item`
+            );
+
+            const lastMenu = allItems[allItems.length - 1];
+
+            if (lastMenu && lastMenu.getAttribute('aria-expanded') == 'false') {
+              nextFocusNode = lastMenu;
+            } else {
+              nextFocusNode = treeWalker.previousNode();
+            }
           } else {
             nextFocusNode = treeWalker.previousSibling();
 
@@ -351,6 +362,13 @@ function SideNavRenderFunction(
             ) == 'false'
           ) {
             nextFocusNode = treeWalker.nextSibling();
+
+            if (!nextFocusNode) {
+              const parent = parentSideNavMenu(
+                treeWalker.currentNode
+              ) as HTMLElement;
+              nextFocusNode = parent?.nextElementSibling;
+            }
           } else {
             nextFocusNode = treeWalker.nextNode();
           }

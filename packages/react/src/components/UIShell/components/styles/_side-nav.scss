@@ -41,35 +41,24 @@ $prefix: 'cds' !default;
     font-weight: 600;
   }
 
+  .#{$prefix}--side-nav__icon > svg,
   .#{$prefix}--side-nav__submenu-chevron > svg {
     fill: $icon-primary;
   }  
 }
 
+.#{$prefix}--side-nav__link,
+.#{$prefix}--side-nav__submenu {
+  &:hover {
+    .#{$prefix}--side-nav__icon > svg,
+    .#{$prefix}--side-nav__submenu-chevron > svg {
+      fill: $icon-primary;
+    } 
+  }
+}
 
-// Possibly dynamically do the thingie
-// .cds--side-nav__item {
-//   --depth: 0;
-
-//   .cds--side-nav__submenu {
-//     padding-left: calc(4.5rem * var(--depth));
-//   }
 
 
-//   .cds--side-nav__menu .cds--side-nav__menu-item .cds--side-nav__link {
-//     padding-left: calc(4.5rem * var(--depth) + 1rem);
-//   }
-// }
-
-// .cds--side-nav__submenu {
-//   --depth: 0;
-//   padding-left: calc(4.5rem * var(--depth));
-
-//   .cds--side-nav__link {
-//     padding-left: 1rem;
-//     background-color: red;
-//   }
-// }
 // Side-nav Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {

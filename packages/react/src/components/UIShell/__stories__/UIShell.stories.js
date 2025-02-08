@@ -129,7 +129,6 @@ const StoryContent = () => {
  * Story for UIShell
  * @returns {React.ReactElement} The JSX for the story
  */
-
 export const Default = () => {
   const [expandedPanel, setExpandedPanel] = useState(false);
   return (

@@ -19,6 +19,7 @@ import { SideNavLinkText } from '@carbon/react';
 import Link from './Link';
 import { usePrefix } from '../internal/usePrefix';
 import { useMergedRefs } from '../internal/useMergedRefs';
+import { SIDE_NAV_TYPE } from './SideNav';
 
 export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
   /**
@@ -63,6 +64,7 @@ export const SideNavMenuItem = React.forwardRef<
   const {
     children,
     className: customClassName,
+    navType,
     depth: propDepth,
     as: Component = Link,
     isActive,
@@ -87,16 +89,17 @@ export const SideNavMenuItem = React.forwardRef<
       linkRef.current.style.paddingLeft = `${calcLinkOffset()}rem`;
     }
   }, []);
+  console.log(navType);
 
   return (
     <li
-      role="treeitem"
+      role={navType == SIDE_NAV_TYPE.TREEVIEW ? 'treeitem' : ''}
       aria-selected={isActive ? 'true' : 'false'}
       className={className}>
       <Component
         {...rest}
         className={linkClassName}
-        tabIndex={-1}
+        tabIndex={navType == SIDE_NAV_TYPE.TREEVIEW ? -1 : 0}
         ref={itemRef}>
         <SideNavLinkText>{children}</SideNavLinkText>
       </Component>

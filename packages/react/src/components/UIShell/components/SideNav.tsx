@@ -177,6 +177,9 @@ function SideNavRenderFunction(
           ? {
               isSideNavExpanded: currentExpansionState,
               navType: navType,
+              ...(childJsxElement.type?.displayName === 'SideNavItems' && {
+                accessibilityLabel: accessibilityLabel,
+              }),
             }
           : {}),
       });
@@ -485,7 +488,7 @@ function SideNavRenderFunction(
         <div className={overlayClassName} onClick={onOverlayClick} />
       )}
       <nav
-        role={navType == SIDE_NAV_TYPE.TREEVIEW ? 'tree' : 'navigation'}
+        role={'navigation'}
         tabIndex={-1}
         ref={navRef}
         className={`${prefix}--side-nav__navigation ${className}`}
@@ -494,7 +497,7 @@ function SideNavRenderFunction(
             ? -1
             : undefined
         }
-        {...accessibilityLabel}
+        {...(navType !== SIDE_NAV_TYPE.TREEVIEW && accessibilityLabel)}
         {...eventHandlers}
         {...other}>
         {childrenToRender}

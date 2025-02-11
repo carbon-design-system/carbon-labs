@@ -7,12 +7,13 @@
 
 import cx from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
 import { SIDE_NAV_TYPE } from './SideNav';
 import { usePrefix } from '../internal/usePrefix';
 
 export interface SideNavItemsProps {
+  accessibilityLabel: object;
   /**
    * Provide a single icon as the child to `SideNavIcon` to render in the
    * container
@@ -30,6 +31,9 @@ export interface SideNavItemsProps {
    */
   isSideNavExpanded?: boolean;
 
+  /**
+   * Property to modify the keyboard navigation depending on type.
+   */
   navType: SIDE_NAV_TYPE;
 }
 
@@ -38,7 +42,10 @@ export const SideNavItems: React.FC<SideNavItemsProps> = ({
   children,
   isSideNavExpanded,
   navType: propType,
+  accessibilityLabel: accessibilityLabel,
 }) => {
+  const listRef = useRef<HTMLUListElement>(null); // Adjust type if necessary
+  const navType = propType;
   const prefix = usePrefix();
   const className = cx([`${prefix}--side-nav__items`], customClassName);
   const childrenWithExpandedState = React.Children.map(children, (child) => {
@@ -61,7 +68,30 @@ export const SideNavItems: React.FC<SideNavItemsProps> = ({
       });
     }
   });
-  return <ul className={className}>{childrenWithExpandedState}</ul>;
+
+  useEffect(() => {
+    // set SideNavLink's role without needing to extend original component
+    if (navType == SIDE_NAV_TYPE.TREEVIEW && listRef.current) {
+      const sideNavItem = listRef.current.querySelectorAll(
+        `.${prefix}--side-nav__item`
+      );
+      sideNavItem.forEach((e) => {
+        if (!e.hasAttribute('role')) {
+          e.setAttribute('role', 'treeitem');
+        }
+      });
+    }
+  }, []);
+
+  return (
+    <ul
+      {...(navType == SIDE_NAV_TYPE.TREEVIEW && accessibilityLabel)}
+      ref={listRef}
+      className={className}
+      role={navType == SIDE_NAV_TYPE.TREEVIEW ? 'tree' : ''}>
+      {childrenWithExpandedState}
+    </ul>
+  );
 };
 
 SideNavItems.displayName = 'SideNavItems';

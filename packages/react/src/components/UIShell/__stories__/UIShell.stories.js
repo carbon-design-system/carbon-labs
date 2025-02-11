@@ -32,7 +32,6 @@ import {
 import {
   Add,
   Fade,
-  SquareOutline,
   Dashboard,
   DataAnalytics,
   Home,
@@ -41,14 +40,11 @@ import {
   DocumentMultiple_01,
   Security,
   Layers,
-  ApplicationWeb,
   BusinessProcesses,
   Application,
   Platforms,
-  CloudMonitoring,
   EventIncident,
   WorkflowAutomation,
-  ServiceLevels,
 } from '@carbon/icons-react';
 
 import {

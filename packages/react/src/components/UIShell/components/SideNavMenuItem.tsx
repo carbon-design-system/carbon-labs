@@ -89,7 +89,6 @@ export const SideNavMenuItem = React.forwardRef<
       linkRef.current.style.paddingLeft = `${calcLinkOffset()}rem`;
     }
   }, []);
-  console.log(navType);
 
   return (
     <li className={className}>

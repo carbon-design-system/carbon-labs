@@ -54,13 +54,11 @@ div:has(.#{$prefix}--header)
   }
 }
 
-.#{$prefix}--side-nav__link,
-.#{$prefix}--side-nav__submenu {
-  &:hover {
-    .#{$prefix}--side-nav__icon > svg,
-    .#{$prefix}--side-nav__submenu-chevron > svg {
-      fill: $icon-primary;
-    }
+.#{$prefix}--side-nav__link:hover,
+.#{$prefix}--side-nav__submenu:hover {
+  .#{$prefix}--side-nav__icon > svg,
+  .#{$prefix}--side-nav__submenu-chevron > svg {
+    fill: $icon-primary;
   }
 }
 
@@ -73,11 +71,9 @@ div:has(.#{$prefix}--header)
     margin-inline-end: $spacing-05;
   }
 
-  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__link {
-    &:hover {
-      .#{$prefix}--side-nav__icon > svg {
-        fill: $icon-primary;
-      }
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__link:hover {
+    .#{$prefix}--side-nav__icon > svg {
+      fill: $icon-primary;
     }
   }
 

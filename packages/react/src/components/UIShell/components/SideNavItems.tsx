@@ -73,7 +73,7 @@ export const SideNavItems: React.FC<SideNavItemsProps> = ({
     // set SideNavLink's role without needing to extend original component
     if (navType == SIDE_NAV_TYPE.TREEVIEW && listRef.current) {
       const sideNavItem = listRef.current.querySelectorAll(
-        `.${prefix}--side-nav__item`
+        `.${prefix}--side-nav__item a`
       );
       sideNavItem.forEach((e) => {
         if (!e.hasAttribute('role')) {

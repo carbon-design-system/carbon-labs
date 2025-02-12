@@ -92,12 +92,11 @@ export const SideNavMenuItem = React.forwardRef<
   console.log(navType);
 
   return (
-    <li
-      role={navType == SIDE_NAV_TYPE.TREEVIEW ? 'treeitem' : ''}
-      aria-selected={isActive ? 'true' : 'false'}
-      className={className}>
+    <li className={className}>
       <Component
         {...rest}
+        aria-selected={isActive ? 'true' : 'false'}
+        role={navType == SIDE_NAV_TYPE.TREEVIEW ? 'treeitem' : ''}
         className={linkClassName}
         tabIndex={navType == SIDE_NAV_TYPE.TREEVIEW ? -1 : 0}
         ref={itemRef}>

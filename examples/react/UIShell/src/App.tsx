@@ -146,7 +146,7 @@ function App() {
                 <HeaderPanel expanded={expandedPanel} />
               </Header>
               <SideNav
-                navType={SIDE_NAV_TYPE.DEFAULT}
+                navType={SIDE_NAV_TYPE.TREEVIEW}
                 aria-label="Side navigation1"
                 expanded={isSideNavExpanded}
                 onSideNavBlur={onClickSideNavExpand}

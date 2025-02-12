@@ -8,6 +8,7 @@
  */
 export { SideNav, SIDE_NAV_TYPE } from './components/SideNav.js';
 export { SideNavItems } from './components/SideNavItems.js';
+export { SideNavLink } from './components/SideNavLink.js';
 export { SideNavMenu } from './components/SideNavMenu.js';
 export { SideNavMenuItem } from './components/SideNavMenuItem.js';
 export { HeaderPanel } from './components/HeaderPanel';

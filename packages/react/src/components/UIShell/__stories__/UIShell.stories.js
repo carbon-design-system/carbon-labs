@@ -29,7 +29,31 @@ import {
   Grid,
   Column,
 } from '@carbon/react';
-import { Add, Fade, SquareOutline } from '@carbon/icons-react';
+import {
+  Add,
+  Fade,
+  Dashboard,
+  DataAnalytics,
+  Home,
+  Settings,
+  OverflowMenuVertical,
+  DocumentMultiple_01,
+  Security,
+  Layers,
+  BusinessProcesses,
+  Application,
+  Platforms,
+  EventIncident,
+  WorkflowAutomation,
+} from '@carbon/icons-react';
+
+import {
+  CarbonIBMDotCom,
+  CarbonDesignSystem,
+  CarbonforIBMProducts,
+  IBMTelemetry,
+} from './AppIcons';
+
 import '../components/ui-shell.scss';
 
 export default {
@@ -171,66 +195,35 @@ export const Default = () => {
                 hideOverlay
                 className="nav--global">
                 <SideNavItems>
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link level 1
-                  </SideNavLink>
-                  <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+                  <SideNavMenu
+                    renderIcon={CarbonDesignSystem}
+                    title="Product 1">
                     <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
                     <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenu title="Sub-menu level 1">
-                      <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                      <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                    <SideNavMenu title="Sub-menu level 2">
+                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
                     </SideNavMenu>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenu renderIcon={CarbonIBMDotCom} title="Product 2">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenu
+                    renderIcon={CarbonforIBMProducts}
+                    title="Product 3">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={Fade} title="Link">
+                  <SideNavMenu renderIcon={IBMTelemetry} title="Product 4">
                     <SideNavMenuItem href="#">Link</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={Fade} title="Link">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  </SideNavMenu>
-
                   <SideNavDivider />
-
-                  <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  </SideNavMenu>
-
-                  <SideNavDivider />
-
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link level 1
+                  <SideNavLink renderIcon={DocumentMultiple_01} href="#">
+                    Docs
                   </SideNavLink>
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link level 1
+                  <SideNavLink renderIcon={Settings} href="#">
+                    Settings
                   </SideNavLink>
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link level 1
-                  </SideNavLink>
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link level 1
-                  </SideNavLink>
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link level 1
-                  </SideNavLink>
-                  <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  </SideNavMenu>
                 </SideNavItems>
               </SideNav>
             </Theme>
@@ -241,24 +234,34 @@ export const Default = () => {
                 hideOverlay
                 aria-label="Product navigation">
                 <SideNavItems>
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link
+                  <SideNavLink renderIcon={Home}>Home</SideNavLink>
+                  <SideNavLink renderIcon={BusinessProcesses}>
+                    Business
                   </SideNavLink>
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link
+                  <SideNavLink renderIcon={Application}>
+                    Applications
                   </SideNavLink>
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link
+                  <SideNavLink renderIcon={Platforms}>Platforms</SideNavLink>
+                  <SideNavLink renderIcon={Layers}>Infrastructure</SideNavLink>
+                  <SideNavDivider />
+                  <SideNavLink renderIcon={Dashboard}>Dashboard</SideNavLink>
+                  <SideNavLink renderIcon={DataAnalytics}>
+                    Analytics
                   </SideNavLink>
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link
+                  <SideNavLink renderIcon={EventIncident}>
+                    Incidents
+                  </SideNavLink>
+                  <SideNavLink renderIcon={Security}>Security</SideNavLink>
+                  <SideNavLink renderIcon={WorkflowAutomation}>
+                    Automations
                   </SideNavLink>
                   <SideNavDivider />
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link
+                  <SideNavLink renderIcon={DocumentMultiple_01}>
+                    Docs
                   </SideNavLink>
-                  <SideNavLink renderIcon={Fade} href="#">
-                    Link
+                  <SideNavLink renderIcon={Settings}>Settings</SideNavLink>
+                  <SideNavLink renderIcon={OverflowMenuVertical}>
+                    More
                   </SideNavLink>
                 </SideNavItems>
               </SideNav>

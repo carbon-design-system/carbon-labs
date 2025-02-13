@@ -171,7 +171,9 @@ export const Default = () => {
                   isCollapsible //shows hamburger menu at desktop
                   isFixedNav
                 />
-                <HeaderName href="#" prefix="IBM">
+                <HeaderName
+                  href="http://www.carbondesignsystem.com"
+                  prefix="IBM">
                   [Platform]
                 </HeaderName>
                 <HeaderGlobalBar>
@@ -198,30 +200,50 @@ export const Default = () => {
                   <SideNavMenu
                     renderIcon={CarbonDesignSystem}
                     title="Product 1">
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Link level 2
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Link level 2
+                    </SideNavMenuItem>
                     <SideNavMenu title="Sub-menu level 2">
-                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Link level 3
+                      </SideNavMenuItem>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Link level 3
+                      </SideNavMenuItem>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Link level 3
+                      </SideNavMenuItem>
                     </SideNavMenu>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={CarbonIBMDotCom} title="Product 2">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Link
+                    </SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavMenu
                     renderIcon={CarbonforIBMProducts}
                     title="Product 3">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Link
+                    </SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={IBMTelemetry} title="Product 4">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Link
+                    </SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavDivider />
-                  <SideNavLink renderIcon={DocumentMultiple_01} href="#">
+                  <SideNavLink
+                    renderIcon={DocumentMultiple_01}
+                    href="http://www.carbondesignsystem.com">
                     Docs
                   </SideNavLink>
-                  <SideNavLink renderIcon={Settings} href="#">
+                  <SideNavLink
+                    renderIcon={Settings}
+                    href="http://www.carbondesignsystem.com">
                     Settings
                   </SideNavLink>
                 </SideNavItems>
@@ -234,33 +256,71 @@ export const Default = () => {
                 hideOverlay
                 aria-label="Product navigation">
                 <SideNavItems>
-                  <SideNavLink renderIcon={Home}>Home</SideNavLink>
-                  <SideNavLink renderIcon={BusinessProcesses}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Home}>
+                    Home
+                  </SideNavLink>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={BusinessProcesses}>
                     Business
                   </SideNavLink>
-                  <SideNavLink renderIcon={Application}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Application}>
                     Applications
                   </SideNavLink>
-                  <SideNavLink renderIcon={Platforms}>Platforms</SideNavLink>
-                  <SideNavLink renderIcon={Layers}>Infrastructure</SideNavLink>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Platforms}>
+                    Platforms
+                  </SideNavLink>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Layers}>
+                    Infrastructure
+                  </SideNavLink>
                   <SideNavDivider />
-                  <SideNavLink renderIcon={Dashboard}>Dashboard</SideNavLink>
-                  <SideNavLink renderIcon={DataAnalytics}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Dashboard}>
+                    Dashboard
+                  </SideNavLink>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={DataAnalytics}>
                     Analytics
                   </SideNavLink>
-                  <SideNavLink renderIcon={EventIncident}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={EventIncident}>
                     Incidents
                   </SideNavLink>
-                  <SideNavLink renderIcon={Security}>Security</SideNavLink>
-                  <SideNavLink renderIcon={WorkflowAutomation}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Security}>
+                    Security
+                  </SideNavLink>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={WorkflowAutomation}>
                     Automations
                   </SideNavLink>
                   <SideNavDivider />
-                  <SideNavLink renderIcon={DocumentMultiple_01}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={DocumentMultiple_01}>
                     Docs
                   </SideNavLink>
-                  <SideNavLink renderIcon={Settings}>Settings</SideNavLink>
-                  <SideNavLink renderIcon={OverflowMenuVertical}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Settings}>
+                    Settings
+                  </SideNavLink>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={OverflowMenuVertical}>
                     More
                   </SideNavLink>
                 </SideNavItems>
@@ -291,33 +351,53 @@ export const SideNavStory = () => (
     aria-label="Side navigation">
     <SideNavItems>
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
       </SideNavMenu>
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
       </SideNavMenu>
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
       </SideNavMenu>
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
       </SideNavMenu>
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
       </SideNavMenu>
       <SideNavDivider />
-      <SideNavLink renderIcon={Fade} href="#">
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
         Link
       </SideNavLink>
-      <SideNavLink renderIcon={Fade} href="#">
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
         Link
       </SideNavLink>
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
-        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
       </SideNavMenu>
     </SideNavItems>
   </SideNav>
@@ -330,26 +410,31 @@ SideNavStory.storyName = 'SideNav';
  */
 export const SideNavWithThirdLevel = () => (
   <SideNav
-    navType={SIDE_NAV_TYPE.TREEVIEW}
     isFixedNav
     expanded={true}
     isChildOfHeader={false}
     aria-label="Side navigation">
     <SideNavItems>
-      <SideNavLink renderIcon={Add} href="#">
+      <SideNavLink renderIcon={Add} href="http://www.carbondesignsystem.com">
         Link level 1
       </SideNavLink>
       <SideNavMenu
         defaultExpanded={true}
         renderIcon={Fade}
         title="Sub-menu level 1">
-        <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-        <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link level 2
+        </SideNavMenuItem>
         <SideNavMenu title="Sub-menu level 2" defaultExpanded={true}>
-          <SideNavMenuItem isActive href="#">
+          <SideNavMenuItem isActive href="http://www.carbondesignsystem.com">
             Link level 3
           </SideNavMenuItem>
-          <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Link level 3
+          </SideNavMenuItem>
         </SideNavMenu>
       </SideNavMenu>
     </SideNavItems>
@@ -369,23 +454,35 @@ export const SideNavPanel = () => {
         isChildOfHeader={false}
         aria-label="Product navigation">
         <SideNavItems>
-          <SideNavLink renderIcon={Fade} href="#">
+          <SideNavLink
+            renderIcon={Fade}
+            href="http://www.carbondesignsystem.com">
             Link
           </SideNavLink>
-          <SideNavLink renderIcon={Fade} href="#">
+          <SideNavLink
+            renderIcon={Fade}
+            href="http://www.carbondesignsystem.com">
             Link
           </SideNavLink>
-          <SideNavLink renderIcon={Fade} href="#">
+          <SideNavLink
+            renderIcon={Fade}
+            href="http://www.carbondesignsystem.com">
             Link
           </SideNavLink>
-          <SideNavLink renderIcon={Fade} href="#">
+          <SideNavLink
+            renderIcon={Fade}
+            href="http://www.carbondesignsystem.com">
             Link
           </SideNavLink>
           <SideNavDivider />
-          <SideNavLink renderIcon={Fade} href="#">
+          <SideNavLink
+            renderIcon={Fade}
+            href="http://www.carbondesignsystem.com">
             Link
           </SideNavLink>
-          <SideNavLink renderIcon={Fade} href="#">
+          <SideNavLink
+            renderIcon={Fade}
+            href="http://www.carbondesignsystem.com">
             Link
           </SideNavLink>
         </SideNavItems>

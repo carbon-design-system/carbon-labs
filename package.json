@@ -75,7 +75,7 @@
     "storybook": "^8.4.7",
     "strip-comments": "^2.0.1",
     "stylelint": "15.11.0",
-    "stylelint-config-carbon": "1.17.0",
+    "stylelint-config-carbon": "1.20.0",
     "yargs": "^17.7.2"
   },
   "packageManager": "yarn@4.6.0"

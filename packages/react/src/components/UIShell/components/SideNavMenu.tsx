@@ -21,7 +21,7 @@ import { CARBON_SIDENAV_ITEMS } from './_utils';
 import { SideNavIcon } from '@carbon/react';
 import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
-import { SideNavContext } from './SideNav';
+import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
 
 export interface SideNavMenuProps {
@@ -93,7 +93,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     ref: ForwardedRef<HTMLElement>
   ) {
     const depth = propDepth as number;
-    const { isTreeview, isRail, setIsTreeview } = useContext(SideNavContext);
+    const { isTreeview, expanded, navType, isRail, setIsTreeview } =
+      useContext(SideNavContext);
+    const sideNavExpanded = expanded;
     const prefix = usePrefix();
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
     const [active, setActive] = useState<boolean>(isActive);
@@ -155,19 +157,21 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     });
 
     useEffect(() => {
+      if (navType == SIDE_NAV_TYPE.PANEL) {
+        // grab first link to redirect if clicked when not expanded
+        if (!firstLink?.current && listRef?.current) {
+          const firstLinkElement = listRef.current!.querySelector(
+            `.${prefix}--side-nav__menu-item a`
+          );
+
+          firstLink.current = firstLinkElement?.getAttribute('href') ?? '';
+        }
+      }
+
       if (depth === 0) return;
 
       // if depth is more than 0, that means its nested, thus we set treeview mode
       setIsTreeview?.(true);
-
-      // grab first link to redirect if clicked when not expanded
-      if (!firstLink?.current && listRef?.current) {
-        const firstLinkElement = listRef.current!.querySelector(
-          `.${prefix}--side-nav__menu-item a`
-        );
-
-        firstLink.current = firstLinkElement?.getAttribute('href') ?? '';
-      }
 
       if (isTreeview) {
         const calcButtonOffset = () => {
@@ -261,6 +265,19 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       }
     }
 
+    // save expanded state before SideNav collapse
+    const [lastExpandedState, setLastExpandedState] = useState(isExpanded);
+
+    // reset when SideNav is panel
+    useEffect(() => {
+      if (navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded) {
+        setLastExpandedState(isExpanded);
+        setIsExpanded(false);
+      } else {
+        setIsExpanded(lastExpandedState);
+      }
+    }, [sideNavExpanded]);
+
     return (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <li
@@ -273,10 +290,18 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           aria-expanded={isExpanded}
           className={buttonClassName}
           onClick={() => {
-            if (!isExpanded && firstLink.current) {
+            // only when sidenav is panel view
+            if (
+              navType == SIDE_NAV_TYPE.PANEL &&
+              !isExpanded &&
+              firstLink.current &&
+              !sideNavExpanded
+            ) {
               window.location.href = firstLink.current;
+            } else {
+              setIsExpanded(!isExpanded);
+              setLastExpandedState(!isExpanded);
             }
-            setIsExpanded(!isExpanded);
           }}
           ref={menuRef as Ref<HTMLButtonElement>}
           type="button"

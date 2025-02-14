@@ -79,6 +79,7 @@ export interface SideNavProps
 }
 
 interface SideNavContextData {
+  expanded?: boolean;
   isRail?: boolean;
   navType?: SIDE_NAV_TYPE;
   isTreeview?: boolean;
@@ -505,6 +506,8 @@ function SideNavRenderFunction(
     <SideNavContext.Provider
       value={{
         isRail,
+        navType,
+        expanded: expanded,
         isTreeview: internalIsTreeview,
         setIsTreeview,
       }}>

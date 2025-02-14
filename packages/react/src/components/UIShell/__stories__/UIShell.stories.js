@@ -454,6 +454,14 @@ export const SideNavPanel = () => {
         isChildOfHeader={false}
         aria-label="Product navigation">
         <SideNavItems>
+          <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Link level 2
+            </SideNavMenuItem>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Link level 2
+            </SideNavMenuItem>
+          </SideNavMenu>
           <SideNavLink
             renderIcon={Fade}
             href="http://www.carbondesignsystem.com">

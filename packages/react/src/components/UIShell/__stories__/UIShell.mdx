@@ -135,11 +135,6 @@ function App() {
                   title="Sub-menu level 1">
                   <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
                   <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  <SideNavMenu title="Sub-menu level 2">
-                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                  </SideNavMenu>
                 </SideNavMenu>
                 <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
                   <SideNavMenuItem href="#">Link</SideNavMenuItem>
@@ -206,6 +201,101 @@ function App() {
 
 export default App;
 ```
+
+### Panel navigation type
+
+When using `navType="panel"` and a `SideNavMenu` component, when the `SideNav`
+is in its collapsed state, the menu's icon on the side panel will link to its
+first link automatically. Upon `SideNav` expansion, this functionality will be
+disabled, and click events will be reverted, meaning a click will expand the
+`SideNavMenu` as usual.
+
+```javascript
+import {
+  SIDE_NAV_TYPE,
+  SideNav,
+  SideNavItems,
+  SideNavMenu,
+  SideNavMenuItem,
+} from '@carbon-labs/react-ui-shell/es/index';
+import { Fade } from '@carbon/icons-react';
+
+function App() {
+  return (
+ <SideNav
+  navType={SIDE_NAV_TYPE.PANEL}
+  isChildOfHeader={false}
+  hideOverlay
+  aria-label="Product navigation">
+  <SideNavItems>
+    <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+      <SideNavMenuItem href="#">Link 1</SideNavMenuItem>
+      <SideNavMenuItem href="#">Link 2</SideNavMenuItem>
+      <SideNavMenuItem href="#">Link 3</SideNavMenuItem>
+    </SideNavMenu>
+  </SideNavItems>
+</SideNav> 
+  );
+}
+
+export default App;
+```
+
+### Treeview
+`SideNav` has a new treeview navigation type that can be enabled by adding the
+`isTreeview` prop. Note that this feature should only be used if there are two
+levels of content within the component.
+
+Also note that it will be automatically enabled if there are more than two levels of
+content within the component.
+
+```javascript
+import {
+  SIDE_NAV_TYPE,
+  SideNav,
+  SideNavItems,
+  SideNavMenu,
+  SideNavMenuItem,
+  HeaderPanel,
+} from '@carbon-labs/react-ui-shell/es/index';
+import {
+  SideNavLink,
+} from '@carbon/react';
+import { Fade, SquareOutline } from '@carbon/icons-react';
+
+function App() {
+  return (
+  <SideNav
+    isFixedNav
+    isTreeview
+    expanded={true}
+    isChildOfHeader={false}
+    aria-label="Side navigation">
+    <SideNavItems>
+      <SideNavLink renderIcon={Fade} href="#">
+        Link level 1
+      </SideNavLink>
+      <SideNavMenu
+        defaultExpanded={true}
+        renderIcon={Fade}
+        title="Sub-menu level 1">
+        <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+        <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+        <SideNavMenu title="Sub-menu level 2" defaultExpanded={true}>
+          <SideNavMenuItem isActive href="#">
+            Link level 3
+          </SideNavMenuItem>
+          <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+        </SideNavMenu>
+      </SideNavMenu>
+    </SideNavItems>
+  </SideNav>    
+  );
+}
+
+export default App;
+```
+
 
 ## Component API
 

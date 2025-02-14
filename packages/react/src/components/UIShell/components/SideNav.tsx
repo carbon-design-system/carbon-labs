@@ -14,6 +14,7 @@ import React, {
   isValidElement,
   createContext,
   useEffect,
+  useState,
 } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
@@ -74,11 +75,15 @@ export interface SideNavProps
   isCollapsible?: boolean;
   hideOverlay?: boolean;
   navType: SIDE_NAV_TYPE;
+  isTreeview: boolean;
 }
 
 interface SideNavContextData {
+  expanded?: boolean;
   isRail?: boolean;
   navType?: SIDE_NAV_TYPE;
+  isTreeview?: boolean;
+  setIsTreeview?: (value: boolean) => void;
 }
 
 export const SideNavContext = createContext<SideNavContextData>(
@@ -99,6 +104,7 @@ function SideNavRenderFunction(
     isFixedNav = false,
     isRail,
     isPersistent = true,
+    isTreeview: isTreeviewProp,
     navType = SIDE_NAV_TYPE.DEFAULT,
     addFocusListeners = true,
     addMouseListeners = true,
@@ -112,6 +118,9 @@ function SideNavRenderFunction(
   }: SideNavProps,
   ref: ForwardedRef<HTMLElement>
 ) {
+  const [internalIsTreeview, setInternalIsTreeview] = useState(
+    isTreeviewProp ?? false
+  );
   const prefix = usePrefix();
   const { current: controlled } = useRef(expandedProp !== undefined);
   const [expandedState, setExpandedState] = useDelayedState(defaultExpanded);
@@ -175,6 +184,9 @@ function SideNavRenderFunction(
         )
           ? {
               isSideNavExpanded: currentExpansionState,
+              ...(childJsxElement.type?.displayName === 'SideNavItems' && {
+                accessibilityLabel: accessibilityLabel,
+              }),
             }
           : {}),
       });
@@ -196,40 +208,42 @@ function SideNavRenderFunction(
 
   const treeWalkerRef = useRef<TreeWalker | null>(null);
   useEffect(() => {
-    treeWalkerRef.current =
-      treeWalkerRef.current ??
-      document.createTreeWalker(
-        sideNavRef?.current as unknown as Node,
-        NodeFilter.SHOW_ELEMENT,
-        {
-          acceptNode: function (node) {
-            if (!(node instanceof Element)) {
+    if (internalIsTreeview) {
+      treeWalkerRef.current =
+        treeWalkerRef.current ??
+        document.createTreeWalker(
+          sideNavRef?.current as unknown as Node,
+          NodeFilter.SHOW_ELEMENT,
+          {
+            acceptNode: function (node) {
+              if (!(node instanceof Element)) {
+                return NodeFilter.FILTER_SKIP;
+              }
+
+              if (node.classList.contains(`${prefix}--side-nav__divider`)) {
+                return NodeFilter.FILTER_REJECT;
+              }
+              if (
+                node.matches(`li.${prefix}--side-nav__item`) ||
+                node.matches(`li.${prefix}--side-nav__menu-item`)
+              ) {
+                return NodeFilter.FILTER_ACCEPT;
+              }
               return NodeFilter.FILTER_SKIP;
-            }
+            },
+          }
+        );
+      resetNodeTabIndices();
 
-            if (node.classList.contains(`${prefix}--side-nav__divider`)) {
-              return NodeFilter.FILTER_REJECT;
-            }
-            if (
-              node.matches(`li.${prefix}--side-nav__item`) ||
-              node.matches(`li.${prefix}--side-nav__menu-item`)
-            ) {
-              return NodeFilter.FILTER_ACCEPT;
-            }
-            return NodeFilter.FILTER_SKIP;
-          },
-        }
-      );
-    resetNodeTabIndices();
+      const firstElement = sideNavRef?.current?.querySelector(
+        'a, button'
+      ) as HTMLElement;
 
-    const firstElement = sideNavRef?.current?.querySelector(
-      'a, button'
-    ) as HTMLElement;
-
-    if (firstElement) {
-      firstElement.tabIndex = 0;
+      if (firstElement) {
+        firstElement.tabIndex = 0;
+      }
     }
-  }, [prefix]);
+  }, [prefix, internalIsTreeview]);
 
   /**
    * Returns the parent SideNavMenu, if node is actually inside one.
@@ -269,130 +283,10 @@ function SideNavRenderFunction(
       }
     };
     eventHandlers.onKeyDown = (event) => {
-      if (!treeWalkerRef.current) return;
-      const treeWalker = treeWalkerRef.current;
-
-      event.stopPropagation();
-
-      // stops page from scrolling
-      if (
-        matches(event, [
-          keys.ArrowUp,
-          keys.ArrowDown,
-          keys.Home,
-          keys.End,
-          // @ts-ignore - `matches` doesn't like the object syntax without missing properties
-          { code: 'KeyA' },
-        ])
-      ) {
-        event.preventDefault();
-      }
-
-      treeWalker.currentNode =
-        (event.target as HTMLElement).closest(`li`) ?? treeWalker?.currentNode;
-
-      let nextFocusNode: Node | null = null;
-
-      if (match(event, keys.ArrowUp)) {
-        const parentNode = parentSideNavMenu(
-          treeWalker.currentNode
-        ) as HTMLElement;
-
-        let previousSideNavMenu =
-          parentNode?.previousElementSibling as HTMLElement;
-
-        // skip the divider
-        if (
-          previousSideNavMenu?.classList.contains(
-            `${prefix}--side-nav__divider`
-          )
-        ) {
-          previousSideNavMenu =
-            previousSideNavMenu?.previousElementSibling as HTMLElement;
-        }
-
-        // when previous sibling is open, go to its last item
-        if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
-          nextFocusNode = treeWalker.previousNode();
-        } else {
-          nextFocusNode = treeWalker.previousSibling();
-
-          // first item in the menu, go back up to SideNavMenu button
-          if (nextFocusNode == null) {
-            nextFocusNode = parentNode;
-          }
-        }
-      }
-
-      if (match(event, keys.ArrowDown)) {
-        if (
-          (treeWalker.currentNode as HTMLElement).getAttribute(
-            'aria-expanded'
-          ) == 'false'
-        ) {
-          nextFocusNode = treeWalker.nextSibling();
-        } else {
-          nextFocusNode = treeWalker.nextNode();
-        }
-      }
-
-      // Home/End functionality
-      if (matches(event, [keys.Home, keys.End])) {
-        if (!sideNavRef?.current) {
-          return;
-        }
-
-        const allItems = Array.from(
-          sideNavRef.current.querySelectorAll('a, button')
-        );
-
-        if (match(event, keys.Home)) {
-          const firstElement = allItems[0] as HTMLElement;
-
-          if (firstElement) {
-            firstElement.tabIndex = 0;
-            firstElement?.focus();
-          }
-        }
-
-        if (match(event, keys.End)) {
-          const allItems = Array.from(
-            sideNavRef.current.querySelectorAll('li')
-          );
-
-          const lastVisibleItem = allItems
-            .reverse()
-            .find((item) => getComputedStyle(item).visibility !== 'hidden');
-
-          if (lastVisibleItem) {
-            const node =
-              lastVisibleItem.querySelector('button') ??
-              lastVisibleItem.querySelector('a');
-            if (node) {
-              node.tabIndex = 0;
-              node?.focus();
-            }
-          }
-        }
-      }
-
-      // focus on the focusable element within the node
-      if (nextFocusNode && nextFocusNode !== event.target) {
-        resetNodeTabIndices();
-        if (nextFocusNode instanceof HTMLElement) {
-          const node =
-            nextFocusNode.querySelector('button') ??
-            nextFocusNode.querySelector('a');
-          if (node) {
-            node.tabIndex = 0;
-            node?.focus();
-          }
-        }
-      }
-
       // close menu
       if (match(event, keys.Escape)) {
         if (expanded && !isFixedNav) {
+          resetNodeTabIndices();
           if (onSideNavBlur) {
             onSideNavBlur();
           }
@@ -400,6 +294,147 @@ function SideNavRenderFunction(
         handleToggle(event, false);
         if (href) {
           window.location.href = href;
+        }
+      }
+
+      // Treeview keyboard navigation
+      if (treeWalkerRef?.current && internalIsTreeview) {
+        const treeWalker = treeWalkerRef.current;
+
+        event.stopPropagation();
+
+        // stops page from scrolling
+        if (
+          matches(event, [
+            keys.ArrowUp,
+            keys.ArrowDown,
+            keys.Home,
+            keys.End,
+            // @ts-ignore - `matches` doesn't like the object syntax without missing properties
+            { code: 'KeyA' },
+          ])
+        ) {
+          event.preventDefault();
+        }
+
+        treeWalker.currentNode =
+          (event.target as HTMLElement).closest(`li`) ??
+          treeWalker?.currentNode;
+
+        let nextFocusNode: Node | null = null;
+
+        if (match(event, keys.ArrowUp)) {
+          const parentNode = parentSideNavMenu(
+            treeWalker.currentNode
+          ) as HTMLElement;
+
+          let previousSideNavMenu =
+            parentNode?.previousElementSibling as HTMLElement;
+
+          // skip the divider
+          if (
+            previousSideNavMenu?.classList.contains(
+              `${prefix}--side-nav__divider`
+            )
+          ) {
+            previousSideNavMenu =
+              previousSideNavMenu?.previousElementSibling as HTMLElement;
+          }
+
+          // when previous sibling is open, go to its last item
+          if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
+            const allItems = previousSideNavMenu.querySelectorAll(
+              `.${prefix}--side-nav__item`
+            );
+
+            const lastMenu = allItems[allItems.length - 1];
+
+            if (lastMenu && lastMenu.getAttribute('aria-expanded') == 'false') {
+              nextFocusNode = lastMenu;
+            } else {
+              nextFocusNode = treeWalker.previousNode();
+            }
+          } else {
+            nextFocusNode = treeWalker.previousSibling();
+
+            // first item in the menu, go back up to SideNavMenu button
+            if (nextFocusNode == null) {
+              nextFocusNode = parentNode;
+            }
+          }
+        }
+
+        if (match(event, keys.ArrowDown)) {
+          if (
+            (treeWalker.currentNode as HTMLElement).getAttribute(
+              'aria-expanded'
+            ) == 'false'
+          ) {
+            nextFocusNode = treeWalker.nextSibling();
+
+            if (!nextFocusNode) {
+              const parent = parentSideNavMenu(
+                treeWalker.currentNode
+              ) as HTMLElement;
+              nextFocusNode = parent?.nextElementSibling;
+            }
+          } else {
+            nextFocusNode = treeWalker.nextNode();
+          }
+        }
+
+        // Home/End functionality
+        if (matches(event, [keys.Home, keys.End])) {
+          if (!sideNavRef?.current) {
+            return;
+          }
+
+          const allItems = Array.from(
+            sideNavRef.current.querySelectorAll('a, button')
+          );
+
+          if (match(event, keys.Home)) {
+            const firstElement = allItems[0] as HTMLElement;
+
+            if (firstElement) {
+              firstElement.tabIndex = 0;
+              firstElement?.focus();
+            }
+          }
+
+          if (match(event, keys.End)) {
+            const allItems = Array.from(
+              sideNavRef.current.querySelectorAll('li')
+            );
+
+            const lastVisibleItem = allItems
+              .reverse()
+              .find((item) => getComputedStyle(item).visibility !== 'hidden');
+
+            if (lastVisibleItem) {
+              const node =
+                lastVisibleItem.querySelector('button') ??
+                lastVisibleItem.querySelector('a');
+              if (node) {
+                node.tabIndex = 0;
+                node?.focus();
+              }
+            }
+          }
+        }
+
+        // focus on the focusable element within the node
+        if (nextFocusNode && nextFocusNode !== event.target) {
+          resetNodeTabIndices();
+          if (nextFocusNode instanceof HTMLElement) {
+            const node =
+              nextFocusNode.querySelector('button') ??
+              nextFocusNode.querySelector('a');
+            if (node) {
+              node.tabIndex = 0;
+              node?.focus();
+            }
+          }
         }
       }
     };
@@ -453,14 +488,35 @@ function SideNavRenderFunction(
     });
   }
 
+  // ensure that changes are in sync with internal treeview prop
+  useEffect(() => {
+    if (isTreeviewProp !== undefined) {
+      setInternalIsTreeview(isTreeviewProp);
+    }
+  }, [isTreeviewProp]);
+
+  // prevent changes if prop is passed in
+  const setIsTreeview = (value: boolean) => {
+    if (isTreeviewProp === undefined) {
+      setInternalIsTreeview(value);
+    }
+  };
+
   return (
-    <SideNavContext.Provider value={{ isRail }}>
+    <SideNavContext.Provider
+      value={{
+        isRail,
+        navType,
+        expanded: expanded,
+        isTreeview: internalIsTreeview,
+        setIsTreeview,
+      }}>
       {isFixedNav || hideOverlay ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className={overlayClassName} onClick={onOverlayClick} />
       )}
       <nav
-        role="tree"
+        role={'navigation'}
         tabIndex={-1}
         ref={navRef}
         className={`${prefix}--side-nav__navigation ${className}`}

@@ -146,11 +146,11 @@ function App() {
                 <HeaderPanel expanded={expandedPanel} />
               </Header>
               <SideNav
-                navType={SIDE_NAV_TYPE.DEFAULT}
                 aria-label="Side navigation1"
                 expanded={isSideNavExpanded}
                 onSideNavBlur={onClickSideNavExpand}
                 isCollapsible
+                isTreeview
                 hideOverlay
                 className="nav--global">
                 <SideNavItems>
@@ -198,6 +198,10 @@ function App() {
                 isChildOfHeader={false}
                 hideOverlay
                 aria-label="Side navigation">
+                <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                </SideNavMenu>
                 <SideNavItems>
                   <SideNavLink renderIcon={Fade} href="#">
                     Link

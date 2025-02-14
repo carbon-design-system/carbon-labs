@@ -10,7 +10,6 @@ import React from 'react';
 import { Link } from '@carbon/react';
 import * as carbonIcons from '@carbon/icons-react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import './glass-tile.scss';
 
 /** Primary UI component for user interaction */
 

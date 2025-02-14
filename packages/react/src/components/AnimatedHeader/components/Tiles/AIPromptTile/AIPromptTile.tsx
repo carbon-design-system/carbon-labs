@@ -10,7 +10,6 @@ import React, { useState } from 'react';
 import { AILabel, Button, IconButton, TextInput } from '@carbon/react';
 import * as carbonIcons from '@carbon/icons-react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import './ai-prompt-tile.scss';
 
 /** Primary UI component for user interaction */
 

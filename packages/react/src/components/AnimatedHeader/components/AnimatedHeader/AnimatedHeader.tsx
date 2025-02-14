@@ -26,7 +26,6 @@ import {
 } from '@carbon/icons-react';
 import lottie from 'lottie-web';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import '../AnimatedHeader/animated-header.scss';
 
 import { BaseTile } from '../Tiles/index';
 

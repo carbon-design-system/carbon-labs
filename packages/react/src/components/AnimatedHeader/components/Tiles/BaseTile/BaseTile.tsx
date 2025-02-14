@@ -7,7 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 import React from 'react';
-import { AIPromptTile, GlassTile } from '../index';
+import { AIPromptTile } from '../AIPromptTile/AIPromptTile';
+import { GlassTile } from '../GlassTile/GlassTile';
 
 /** Base Tile */
 

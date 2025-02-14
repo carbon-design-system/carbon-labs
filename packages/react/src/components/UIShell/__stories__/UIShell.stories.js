@@ -189,7 +189,7 @@ export const Default = () => {
                 <HeaderPanel expanded={expandedPanel} />
               </Header>
               <SideNav
-                navType="treeview"
+                isTreeview={true}
                 aria-label="Main navigation"
                 expanded={isSideNavExpanded}
                 onSideNavBlur={onClickSideNavExpand}
@@ -410,11 +410,11 @@ SideNavStory.storyName = 'SideNav';
  */
 export const SideNavWithThirdLevel = () => (
   <SideNav
-    navType={SIDE_NAV_TYPE.TREEVIEW}
     isFixedNav
     expanded={true}
     isChildOfHeader={false}
-    aria-label="Side navigation">
+    aria-label="Side navigation"
+    isTreeview={true}>
     <SideNavItems>
       <SideNavLink renderIcon={Add} href="http://www.carbondesignsystem.com">
         Link level 1

@@ -57,11 +57,6 @@ export interface SideNavMenuProps {
   large?: boolean;
 
   /**
-   * The SideNav's nav type
-   */
-  navType: SIDE_NAV_TYPE;
-
-  /**
    * A custom icon to render next to the SideNavMenu title. This can be a function returning JSX or JSX itself.
    */
   renderIcon?: React.ComponentType;
@@ -70,6 +65,11 @@ export interface SideNavMenuProps {
    * Indicates if the side navigation container is expanded or collapsed.
    */
   isSideNavExpanded?: boolean;
+
+  /**
+   * Property to indicate if the SideNav should have treeview navigation.
+   */
+  isTreeview?: boolean;
 
   /**
    * The tabIndex for the button element.
@@ -90,10 +90,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       defaultExpanded = false,
       depth: propDepth,
       isActive = false,
+      isTreeview,
       large = false,
       renderIcon: IconElement,
       isSideNavExpanded,
-      navType,
       title,
     },
     ref: ForwardedRef<HTMLElement>
@@ -153,7 +153,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           }),
           ...{
             depth: depth + 1,
-            navType: navType,
+            isTreeview: isTreeview,
           },
         });
       }
@@ -164,6 +164,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     useEffect(() => {
       if (depth === 0) return;
 
+      // grab first link to redirect if clicked when not expanded
       if (!firstLink?.current && listRef?.current) {
         const firstLinkElement = listRef.current!.querySelector(
           `.${prefix}--side-nav__menu-item a`
@@ -172,7 +173,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         firstLink.current = firstLinkElement?.getAttribute('href') ?? '';
       }
 
-      if (navType == SIDE_NAV_TYPE.TREEVIEW) {
+      // TODO: if there is depth, make it a treeview
+
+      if (isTreeview) {
         const calcButtonOffset = () => {
           // menu with icon
           if (children && IconElement) {
@@ -210,7 +213,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         setIsExpanded(false);
       }
 
-      if (navType == SIDE_NAV_TYPE.TREEVIEW) {
+      if (isTreeview) {
         const node = event.target as HTMLElement;
         const isMenu = node.hasAttribute('aria-expanded');
         const isExpanded = node.getAttribute('aria-expanded');
@@ -267,7 +270,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     return (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <li
-        role="treeitem"
+        role={isTreeview ? 'treeitem' : undefined}
         aria-expanded={isExpanded}
         className={className}
         ref={listRef}
@@ -283,7 +286,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           }}
           ref={menuRef as Ref<HTMLButtonElement>}
           type="button"
-          tabIndex={navType == SIDE_NAV_TYPE.TREEVIEW ? -1 : 0}>
+          tabIndex={isTreeview ? -1 : 0}>
           {IconElement && (
             <SideNavIcon>
               <IconElement />

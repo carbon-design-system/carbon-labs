@@ -34,7 +34,6 @@ export enum SIDE_NAV_TYPE {
   DEFAULT = 'default',
   RAIL = 'rail',
   PANEL = 'panel',
-  TREEVIEW = 'treeview',
 }
 
 export type TranslationKey = keyof typeof translationIds;
@@ -75,6 +74,7 @@ export interface SideNavProps
   isCollapsible?: boolean;
   hideOverlay?: boolean;
   navType: SIDE_NAV_TYPE;
+  isTreeview: boolean;
 }
 
 interface SideNavContextData {
@@ -100,6 +100,7 @@ function SideNavRenderFunction(
     isFixedNav = false,
     isRail,
     isPersistent = true,
+    isTreeview = false,
     navType = SIDE_NAV_TYPE.DEFAULT,
     addFocusListeners = true,
     addMouseListeners = true,
@@ -176,7 +177,7 @@ function SideNavRenderFunction(
         )
           ? {
               isSideNavExpanded: currentExpansionState,
-              navType: navType,
+              isTreeview: isTreeview,
               ...(childJsxElement.type?.displayName === 'SideNavItems' && {
                 accessibilityLabel: accessibilityLabel,
               }),
@@ -201,7 +202,7 @@ function SideNavRenderFunction(
 
   const treeWalkerRef = useRef<TreeWalker | null>(null);
   useEffect(() => {
-    if (navType == SIDE_NAV_TYPE.TREEVIEW) {
+    if (isTreeview) {
       treeWalkerRef.current =
         treeWalkerRef.current ??
         document.createTreeWalker(
@@ -291,7 +292,7 @@ function SideNavRenderFunction(
       }
 
       // Treeview keyboard navigation
-      if (treeWalkerRef?.current && navType == SIDE_NAV_TYPE.TREEVIEW) {
+      if (treeWalkerRef?.current && isTreeview) {
         const treeWalker = treeWalkerRef.current;
 
         event.stopPropagation();
@@ -497,7 +498,7 @@ function SideNavRenderFunction(
             ? -1
             : undefined
         }
-        {...(navType !== SIDE_NAV_TYPE.TREEVIEW && accessibilityLabel)}
+        {...(isTreeview && accessibilityLabel)}
         {...eventHandlers}
         {...other}>
         {childrenToRender}

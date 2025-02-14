@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import React, {
   ElementType,
   ForwardedRef,
-  Ref,
   ComponentProps,
   useEffect,
   useRef,
@@ -19,7 +18,6 @@ import { SideNavLinkText } from '@carbon/react';
 import Link from './Link';
 import { usePrefix } from '../internal/usePrefix';
 import { useMergedRefs } from '../internal/useMergedRefs';
-import { SIDE_NAV_TYPE } from './SideNav';
 
 export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
   /**
@@ -46,6 +44,11 @@ export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
   isActive?: boolean;
 
   /**
+   * Property to indicate if the SideNav should have treeview navigation.
+   */
+  isTreeview?: boolean;
+
+  /**
    * Optionally provide an href for the underlying li`
    */
   href?: string;
@@ -64,10 +67,10 @@ export const SideNavMenuItem = React.forwardRef<
   const {
     children,
     className: customClassName,
-    navType,
     depth: propDepth,
     as: Component = Link,
     isActive,
+    isTreeview,
     ...rest
   } = props;
   const className = cx(`${prefix}--side-nav__menu-item`, customClassName);
@@ -95,9 +98,9 @@ export const SideNavMenuItem = React.forwardRef<
       <Component
         {...rest}
         aria-selected={isActive ? 'true' : 'false'}
-        role={navType == SIDE_NAV_TYPE.TREEVIEW ? 'treeitem' : ''}
+        role={isTreeview ? 'treeitem' : undefined}
         className={linkClassName}
-        tabIndex={navType == SIDE_NAV_TYPE.TREEVIEW ? -1 : 0}
+        tabIndex={isTreeview ? -1 : 0}
         ref={itemRef}>
         <SideNavLinkText>{children}</SideNavLinkText>
       </Component>

@@ -146,11 +146,11 @@ function App() {
                 <HeaderPanel expanded={expandedPanel} />
               </Header>
               <SideNav
-                navType={SIDE_NAV_TYPE.TREEVIEW}
                 aria-label="Side navigation1"
                 expanded={isSideNavExpanded}
                 onSideNavBlur={onClickSideNavExpand}
                 isCollapsible
+                isTreeview
                 hideOverlay
                 className="nav--global">
                 <SideNavItems>
@@ -194,8 +194,8 @@ function App() {
             </Theme>
             <Theme theme="g100">
               <SideNav
-                navType={SIDE_NAV_TYPE.PANEL}
                 isChildOfHeader={false}
+                isTreeview={true}
                 hideOverlay
                 aria-label="Side navigation">
                 <SideNavItems>

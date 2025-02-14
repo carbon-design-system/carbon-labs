@@ -203,8 +203,8 @@ export default App;
 ```
 
 ### Treeview
-`SideNav` has a new treeview navigation type that can be enabled by adding
-`navType='treeview'`. Note that it should only be enabled if there are more
+`SideNav` has a new treeview navigation type that can be enabled by adding the
+`isTreeview` prop. Note that it should only be enabled if there are more
 than two levels of content within the component.
 
 ```javascript
@@ -224,8 +224,8 @@ import { Fade, SquareOutline } from '@carbon/icons-react';
 function App() {
   return (
   <SideNav
-    navType="treeview"
     isFixedNav
+    isTreeview
     expanded={true}
     isChildOfHeader={false}
     aria-label="Side navigation">

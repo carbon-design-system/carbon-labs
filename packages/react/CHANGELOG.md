@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.18.0...@carbon-labs/react@0.19.0) (2025-02-14)
+
+
+### Features
+
+* **SideNav:** implement 3rd level navigation ([#410](https://github.com/carbon-design-system/carbon-labs/issues/410)) ([db4e09d](https://github.com/carbon-design-system/carbon-labs/commit/db4e09d1654f8160f8898c9390d2d16bdf66106e))
+
+
+
+
+
 # [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.17.0...@carbon-labs/react@0.18.0) (2025-02-14)
 
 **Note:** Version bump only for package @carbon-labs/react

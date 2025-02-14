@@ -9,7 +9,7 @@ exports[`SideNav renders as expected - Component API should match snapshot 1`] =
     aria-label="test"
     class="cds--side-nav__navigation cds--side-nav cds--side-nav--ux"
     inert="-1"
-    role="tree"
+    role="navigation"
     tabindex="-1"
   />
 </div>

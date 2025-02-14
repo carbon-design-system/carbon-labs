@@ -10,15 +10,16 @@ import PropTypes from 'prop-types';
 import React, {
   ElementType,
   ForwardedRef,
-  Ref,
   ComponentProps,
   useEffect,
   useRef,
+  useContext,
 } from 'react';
 import { SideNavLinkText } from '@carbon/react';
 import Link from './Link';
 import { usePrefix } from '../internal/usePrefix';
 import { useMergedRefs } from '../internal/useMergedRefs';
+import { SideNavContext } from './SideNav';
 
 export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
   /**
@@ -68,6 +69,7 @@ export const SideNavMenuItem = React.forwardRef<
     isActive,
     ...rest
   } = props;
+  const { isTreeview } = useContext(SideNavContext);
   const className = cx(`${prefix}--side-nav__menu-item`, customClassName);
   const depth = propDepth as number;
   const linkClassName = cx({
@@ -86,17 +88,16 @@ export const SideNavMenuItem = React.forwardRef<
     if (linkRef.current) {
       linkRef.current.style.paddingLeft = `${calcLinkOffset()}rem`;
     }
-  }, []);
+  }, [isTreeview]);
 
   return (
-    <li
-      role="treeitem"
-      aria-selected={isActive ? 'true' : 'false'}
-      className={className}>
+    <li className={className}>
       <Component
         {...rest}
+        aria-selected={isActive ? 'true' : 'false'}
+        role={isTreeview ? 'treeitem' : undefined}
         className={linkClassName}
-        tabIndex={-1}
+        tabIndex={isTreeview ? -1 : 0}
         ref={itemRef}>
         <SideNavLinkText>{children}</SideNavLinkText>
       </Component>

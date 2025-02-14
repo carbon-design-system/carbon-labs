@@ -7,11 +7,18 @@
 
 import cx from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
 import { usePrefix } from '../internal/usePrefix';
+import { SideNavContext } from './SideNav';
 
 export interface SideNavItemsProps {
+  /**
+   * Object to provide an aria-label to the component when used in treeview,
+   * to ensure it meets a11y requirements.
+   */
+  accessibilityLabel: object;
+
   /**
    * Provide a single icon as the child to `SideNavIcon` to render in the
    * container
@@ -34,7 +41,10 @@ export const SideNavItems: React.FC<SideNavItemsProps> = ({
   className: customClassName,
   children,
   isSideNavExpanded,
+  accessibilityLabel: accessibilityLabel,
 }) => {
+  const { isTreeview } = useContext(SideNavContext);
+  const listRef = useRef<HTMLUListElement>(null); // Adjust type if necessary
   const prefix = usePrefix();
   const className = cx([`${prefix}--side-nav__items`], customClassName);
   const childrenWithExpandedState = React.Children.map(children, (child) => {
@@ -56,7 +66,30 @@ export const SideNavItems: React.FC<SideNavItemsProps> = ({
       });
     }
   });
-  return <ul className={className}>{childrenWithExpandedState}</ul>;
+
+  useEffect(() => {
+    // set SideNavLink's role without needing to extend original component
+    if (isTreeview && listRef.current) {
+      const sideNavItem = listRef.current.querySelectorAll(
+        `.${prefix}--side-nav__item a`
+      );
+      sideNavItem.forEach((e) => {
+        if (!e.hasAttribute('role')) {
+          e.setAttribute('role', 'treeitem');
+        }
+      });
+    }
+  }, [isTreeview]);
+
+  return (
+    <ul
+      {...(isTreeview && accessibilityLabel)}
+      ref={listRef}
+      className={className}
+      role={isTreeview ? 'tree' : ''}>
+      {childrenWithExpandedState}
+    </ul>
+  );
 };
 
 SideNavItems.displayName = 'SideNavItems';

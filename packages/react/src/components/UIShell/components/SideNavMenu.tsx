@@ -21,7 +21,7 @@ import { CARBON_SIDENAV_ITEMS } from './_utils';
 import { SideNavIcon } from '@carbon/react';
 import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
-import { SideNavContext } from './SideNav';
+import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
 
 export interface SideNavMenuProps {
@@ -88,16 +88,18 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       large = false,
       renderIcon: IconElement,
       isSideNavExpanded,
-      tabIndex,
       title,
     },
     ref: ForwardedRef<HTMLElement>
   ) {
     const depth = propDepth as number;
-    const { isRail } = useContext(SideNavContext);
+    const { isTreeview, expanded, navType, isRail, setIsTreeview } =
+      useContext(SideNavContext);
+    const sideNavExpanded = expanded;
     const prefix = usePrefix();
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
     const [active, setActive] = useState<boolean>(isActive);
+    const firstLink = useRef<string | null>(null);
 
     const [prevExpanded, setPrevExpanded] = useState<boolean>(defaultExpanded);
 
@@ -155,25 +157,41 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     });
 
     useEffect(() => {
+      if (navType == SIDE_NAV_TYPE.PANEL) {
+        // grab first link to redirect if clicked when not expanded
+        if (!firstLink?.current && listRef?.current) {
+          const firstLinkElement = listRef.current!.querySelector(
+            `.${prefix}--side-nav__menu-item a`
+          );
+
+          firstLink.current = firstLinkElement?.getAttribute('href') ?? '';
+        }
+      }
+
       if (depth === 0) return;
 
-      const calcButtonOffset = () => {
-        // menu with icon
-        if (children && IconElement) {
-          return depth + 3;
-        }
+      // if depth is more than 0, that means its nested, thus we set treeview mode
+      setIsTreeview?.(true);
 
-        // menu without icon
-        if (children) {
-          return depth * 4;
-        }
-        return depth;
-      };
+      if (isTreeview) {
+        const calcButtonOffset = () => {
+          // menu with icon
+          if (children && IconElement) {
+            return depth + 3;
+          }
 
-      if (buttonRef.current) {
-        buttonRef.current.style.paddingLeft = `${calcButtonOffset()}rem`;
+          // menu without icon
+          if (children) {
+            return depth * 4;
+          }
+          return depth;
+        };
+
+        if (buttonRef.current) {
+          buttonRef.current.style.paddingLeft = `${calcButtonOffset()}rem`;
+        }
       }
-    }, []);
+    }, [isTreeview]);
 
     /**
      * Returns the parent SideNavMenu, if node is actually inside one.
@@ -193,62 +211,77 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         setIsExpanded(false);
       }
 
-      const node = event.target as HTMLElement;
-      const isMenu = node.hasAttribute('aria-expanded');
-      const isExpanded = node.getAttribute('aria-expanded');
-      const parent = parentSideNavMenu(node) as HTMLElement;
+      if (isTreeview) {
+        const node = event.target as HTMLElement;
+        const isMenu = node.hasAttribute('aria-expanded');
+        const isExpanded = node.getAttribute('aria-expanded');
+        const parent = parentSideNavMenu(node) as HTMLElement;
 
-      if (match(event, keys.ArrowLeft)) {
-        event.stopPropagation();
+        if (match(event, keys.ArrowLeft)) {
+          event.stopPropagation();
 
-        if (isMenu) {
-          // collapse menu
-          if (isExpanded == 'true') {
-            setIsExpanded(false);
+          if (isMenu) {
+            // collapse menu
+            if (isExpanded == 'true') {
+              setIsExpanded(false);
 
-            // go to previous level's side nav menu button
-          } else {
-            // since we're in a menu, it finds its own <li>, we go up one more
-            const previousMenu = parentSideNavMenu(parent) as HTMLElement;
-            const button = previousMenu.querySelector('button');
+              // go to previous level's side nav menu button
+            } else {
+              // since we're in a menu, it finds its own <li>, we go up one more
+              const previousMenu = parentSideNavMenu(parent) as HTMLElement;
+              const button = previousMenu.querySelector('button');
+              button!.tabIndex = 0;
+              button?.focus();
+            }
+
+            // go to side nav menu button
+          } else if (parent) {
+            const button = parent.querySelector('button');
             button!.tabIndex = 0;
             button?.focus();
           }
-
-          // go to side nav menu button
-        } else if (parent) {
-          const button = parent.querySelector('button');
-          button!.tabIndex = 0;
-          button?.focus();
         }
-      }
 
-      if (match(event, keys.ArrowRight)) {
-        event.stopPropagation();
+        if (match(event, keys.ArrowRight)) {
+          event.stopPropagation();
 
-        // expand menu
-        if (isMenu) {
-          setIsExpanded(true);
+          // expand menu
+          if (isMenu) {
+            setIsExpanded(true);
 
-          // if already expanded, focus on first element
-          if (isExpanded == 'true') {
-            let nextNode = node.nextElementSibling?.querySelector(
-              'a, button'
-            ) as HTMLElement;
+            // if already expanded, focus on first element
+            if (isExpanded == 'true') {
+              let nextNode = node.nextElementSibling?.querySelector(
+                'a, button'
+              ) as HTMLElement;
 
-            if (nextNode) {
-              nextNode.tabIndex = 0;
-              nextNode.focus();
+              if (nextNode) {
+                nextNode.tabIndex = 0;
+                nextNode.focus();
+              }
             }
           }
         }
       }
     }
 
+    // save expanded state before SideNav collapse
+    const [lastExpandedState, setLastExpandedState] = useState(isExpanded);
+
+    // reset when SideNav is panel
+    useEffect(() => {
+      if (navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded) {
+        setLastExpandedState(isExpanded);
+        setIsExpanded(false);
+      } else {
+        setIsExpanded(lastExpandedState);
+      }
+    }, [sideNavExpanded]);
+
     return (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <li
-        role="treeitem"
+        role={isTreeview ? 'treeitem' : undefined}
         aria-expanded={isExpanded}
         className={className}
         ref={listRef}
@@ -257,11 +290,22 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           aria-expanded={isExpanded}
           className={buttonClassName}
           onClick={() => {
-            setIsExpanded(!isExpanded);
+            // only when sidenav is panel view
+            if (
+              navType == SIDE_NAV_TYPE.PANEL &&
+              !isExpanded &&
+              firstLink.current &&
+              !sideNavExpanded
+            ) {
+              window.location.href = firstLink.current;
+            } else {
+              setIsExpanded(!isExpanded);
+              setLastExpandedState(!isExpanded);
+            }
           }}
           ref={menuRef as Ref<HTMLButtonElement>}
           type="button"
-          tabIndex={-1}>
+          tabIndex={isTreeview ? -1 : 0}>
           {IconElement && (
             <SideNavIcon>
               <IconElement />

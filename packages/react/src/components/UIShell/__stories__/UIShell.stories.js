@@ -413,8 +413,7 @@ export const SideNavWithThirdLevel = () => (
     isFixedNav
     expanded={true}
     isChildOfHeader={false}
-    aria-label="Side navigation"
-    isTreeview={true}>
+    aria-label="Side navigation">
     <SideNavItems>
       <SideNavLink renderIcon={Add} href="http://www.carbondesignsystem.com">
         Link level 1

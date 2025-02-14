@@ -194,8 +194,8 @@ function App() {
             </Theme>
             <Theme theme="g100">
               <SideNav
+                navType={SIDE_NAV_TYPE.PANEL}
                 isChildOfHeader={false}
-                isTreeview={true}
                 hideOverlay
                 aria-label="Side navigation">
                 <SideNavItems>

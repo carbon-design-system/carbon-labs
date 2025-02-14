@@ -61,13 +61,13 @@ body {
   justify-content: flex-end;
 
   block-size: 100%;
-  block-size: -moz-available; /* WebKit-based browsers will ignore this. */
-  block-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
 
   inline-size: 100%;
-  inline-size: -moz-available; /* WebKit-based browsers will ignore this. */
-  inline-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: fill-available;
 
   max-inline-size: 96rem;
@@ -97,12 +97,14 @@ body {
   position: absolute;
   z-index: 1;
 
-  block-size: -moz-available; /* WebKit-based browsers will ignore this. */
-  block-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  block-size: 100%;
+
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
 
-  inline-size: -moz-available; /* WebKit-based browsers will ignore this. */
-  inline-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  inline-size: 100%;
+
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: fill-available;
 
   margin-inline: auto;
@@ -288,13 +290,13 @@ body {
   justify-content: flex-end;
 
   block-size: 100%;
-  block-size: -moz-available; /* WebKit-based browsers will ignore this. */
-  block-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
 
   inline-size: 100%;
-  inline-size: -moz-available; /* WebKit-based browsers will ignore this. */
-  inline-size: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: fill-available;
 
   max-inline-size: 96rem;

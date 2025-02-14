@@ -93,7 +93,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     ref: ForwardedRef<HTMLElement>
   ) {
     const depth = propDepth as number;
-    const { isTreeview, isRail } = useContext(SideNavContext);
+    const { isTreeview, isRail, setIsTreeview } = useContext(SideNavContext);
     const prefix = usePrefix();
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
     const [active, setActive] = useState<boolean>(isActive);
@@ -157,6 +157,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     useEffect(() => {
       if (depth === 0) return;
 
+      // if depth is more than 0, that means its nested, thus we set treeview mode
+      setIsTreeview?.(true);
+
       // grab first link to redirect if clicked when not expanded
       if (!firstLink?.current && listRef?.current) {
         const firstLinkElement = listRef.current!.querySelector(
@@ -184,7 +187,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           buttonRef.current.style.paddingLeft = `${calcButtonOffset()}rem`;
         }
       }
-    }, []);
+    }, [isTreeview]);
 
     /**
      * Returns the parent SideNavMenu, if node is actually inside one.

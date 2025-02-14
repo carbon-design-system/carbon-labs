@@ -88,7 +88,7 @@ export const SideNavMenuItem = React.forwardRef<
     if (linkRef.current) {
       linkRef.current.style.paddingLeft = `${calcLinkOffset()}rem`;
     }
-  }, []);
+  }, [isTreeview]);
 
   return (
     <li className={className}>

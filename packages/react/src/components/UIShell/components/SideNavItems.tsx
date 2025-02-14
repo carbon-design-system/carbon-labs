@@ -74,7 +74,7 @@ export const SideNavItems: React.FC<SideNavItemsProps> = ({
         }
       });
     }
-  }, []);
+  }, [isTreeview]);
 
   return (
     <ul

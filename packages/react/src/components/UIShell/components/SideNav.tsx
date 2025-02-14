@@ -14,6 +14,7 @@ import React, {
   isValidElement,
   createContext,
   useEffect,
+  useState,
 } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
@@ -81,6 +82,7 @@ interface SideNavContextData {
   isRail?: boolean;
   navType?: SIDE_NAV_TYPE;
   isTreeview?: boolean;
+  setIsTreeview?: (value: boolean) => void;
 }
 
 export const SideNavContext = createContext<SideNavContextData>(
@@ -101,7 +103,7 @@ function SideNavRenderFunction(
     isFixedNav = false,
     isRail,
     isPersistent = true,
-    isTreeview = false,
+    isTreeview: isTreeviewProp,
     navType = SIDE_NAV_TYPE.DEFAULT,
     addFocusListeners = true,
     addMouseListeners = true,
@@ -115,6 +117,9 @@ function SideNavRenderFunction(
   }: SideNavProps,
   ref: ForwardedRef<HTMLElement>
 ) {
+  const [internalIsTreeview, setInternalIsTreeview] = useState(
+    isTreeviewProp ?? false
+  );
   const prefix = usePrefix();
   const { current: controlled } = useRef(expandedProp !== undefined);
   const [expandedState, setExpandedState] = useDelayedState(defaultExpanded);
@@ -202,7 +207,7 @@ function SideNavRenderFunction(
 
   const treeWalkerRef = useRef<TreeWalker | null>(null);
   useEffect(() => {
-    if (isTreeview) {
+    if (internalIsTreeview) {
       treeWalkerRef.current =
         treeWalkerRef.current ??
         document.createTreeWalker(
@@ -237,7 +242,7 @@ function SideNavRenderFunction(
         firstElement.tabIndex = 0;
       }
     }
-  }, [prefix]);
+  }, [prefix, internalIsTreeview]);
 
   /**
    * Returns the parent SideNavMenu, if node is actually inside one.
@@ -292,7 +297,7 @@ function SideNavRenderFunction(
       }
 
       // Treeview keyboard navigation
-      if (treeWalkerRef?.current && isTreeview) {
+      if (treeWalkerRef?.current && internalIsTreeview) {
         const treeWalker = treeWalkerRef.current;
 
         event.stopPropagation();
@@ -482,8 +487,27 @@ function SideNavRenderFunction(
     });
   }
 
+  // ensure that changes are in sync with internal treeview prop
+  useEffect(() => {
+    if (isTreeviewProp !== undefined) {
+      setInternalIsTreeview(isTreeviewProp);
+    }
+  }, [isTreeviewProp]);
+
+  // prevent changes if prop is passed in
+  const setIsTreeview = (value: boolean) => {
+    if (isTreeviewProp === undefined) {
+      setInternalIsTreeview(value);
+    }
+  };
+
   return (
-    <SideNavContext.Provider value={{ isRail, isTreeview }}>
+    <SideNavContext.Provider
+      value={{
+        isRail,
+        isTreeview: internalIsTreeview,
+        setIsTreeview,
+      }}>
       {isFixedNav || hideOverlay ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className={overlayClassName} onClick={onOverlayClick} />
@@ -498,7 +522,7 @@ function SideNavRenderFunction(
             ? -1
             : undefined
         }
-        {...(isTreeview && accessibilityLabel)}
+        {...accessibilityLabel}
         {...eventHandlers}
         {...other}>
         {childrenToRender}

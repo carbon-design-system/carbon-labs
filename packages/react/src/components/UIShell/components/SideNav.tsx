@@ -80,6 +80,7 @@ export interface SideNavProps
 interface SideNavContextData {
   isRail?: boolean;
   navType?: SIDE_NAV_TYPE;
+  isTreeview?: boolean;
 }
 
 export const SideNavContext = createContext<SideNavContextData>(
@@ -177,7 +178,6 @@ function SideNavRenderFunction(
         )
           ? {
               isSideNavExpanded: currentExpansionState,
-              isTreeview: isTreeview,
               ...(childJsxElement.type?.displayName === 'SideNavItems' && {
                 accessibilityLabel: accessibilityLabel,
               }),
@@ -483,7 +483,7 @@ function SideNavRenderFunction(
   }
 
   return (
-    <SideNavContext.Provider value={{ isRail }}>
+    <SideNavContext.Provider value={{ isRail, isTreeview }}>
       {isFixedNav || hideOverlay ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className={overlayClassName} onClick={onOverlayClick} />

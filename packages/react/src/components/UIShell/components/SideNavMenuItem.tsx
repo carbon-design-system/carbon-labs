@@ -13,11 +13,13 @@ import React, {
   ComponentProps,
   useEffect,
   useRef,
+  useContext,
 } from 'react';
 import { SideNavLinkText } from '@carbon/react';
 import Link from './Link';
 import { usePrefix } from '../internal/usePrefix';
 import { useMergedRefs } from '../internal/useMergedRefs';
+import { SideNavContext } from './SideNav';
 
 export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
   /**
@@ -44,11 +46,6 @@ export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
   isActive?: boolean;
 
   /**
-   * Property to indicate if the SideNav should have treeview navigation.
-   */
-  isTreeview?: boolean;
-
-  /**
    * Optionally provide an href for the underlying li`
    */
   href?: string;
@@ -70,9 +67,9 @@ export const SideNavMenuItem = React.forwardRef<
     depth: propDepth,
     as: Component = Link,
     isActive,
-    isTreeview,
     ...rest
   } = props;
+  const { isTreeview } = useContext(SideNavContext);
   const className = cx(`${prefix}--side-nav__menu-item`, customClassName);
   const depth = propDepth as number;
   const linkClassName = cx({

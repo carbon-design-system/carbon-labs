@@ -21,7 +21,7 @@ import { CARBON_SIDENAV_ITEMS } from './_utils';
 import { SideNavIcon } from '@carbon/react';
 import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
-import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
+import { SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
 
 export interface SideNavMenuProps {
@@ -67,11 +67,6 @@ export interface SideNavMenuProps {
   isSideNavExpanded?: boolean;
 
   /**
-   * Property to indicate if the SideNav should have treeview navigation.
-   */
-  isTreeview?: boolean;
-
-  /**
    * The tabIndex for the button element.
    * If not specified, the default validation will be applied.
    */
@@ -90,7 +85,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       defaultExpanded = false,
       depth: propDepth,
       isActive = false,
-      isTreeview,
       large = false,
       renderIcon: IconElement,
       isSideNavExpanded,
@@ -99,7 +93,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     ref: ForwardedRef<HTMLElement>
   ) {
     const depth = propDepth as number;
-    const { isRail } = useContext(SideNavContext);
+    const { isTreeview, isRail } = useContext(SideNavContext);
     const prefix = usePrefix();
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
     const [active, setActive] = useState<boolean>(isActive);
@@ -153,7 +147,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           }),
           ...{
             depth: depth + 1,
-            isTreeview: isTreeview,
           },
         });
       }
@@ -172,8 +165,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
         firstLink.current = firstLinkElement?.getAttribute('href') ?? '';
       }
-
-      // TODO: if there is depth, make it a treeview
 
       if (isTreeview) {
         const calcButtonOffset = () => {

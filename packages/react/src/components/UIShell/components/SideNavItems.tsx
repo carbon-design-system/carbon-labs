@@ -7,9 +7,10 @@
 
 import cx from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
 import { usePrefix } from '../internal/usePrefix';
+import { SideNavContext } from './SideNav';
 
 export interface SideNavItemsProps {
   accessibilityLabel: object;
@@ -29,20 +30,15 @@ export interface SideNavItemsProps {
    * keep local state and styling in step with the SideNav expansion state.
    */
   isSideNavExpanded?: boolean;
-
-  /**
-   * Property to indicate if the SideNav should have treeview navigation.
-   */
-  isTreeview?: boolean;
 }
 
 export const SideNavItems: React.FC<SideNavItemsProps> = ({
   className: customClassName,
   children,
   isSideNavExpanded,
-  isTreeview,
   accessibilityLabel: accessibilityLabel,
 }) => {
+  const { isTreeview } = useContext(SideNavContext);
   const listRef = useRef<HTMLUListElement>(null); // Adjust type if necessary
   const prefix = usePrefix();
   const className = cx([`${prefix}--side-nav__items`], customClassName);
@@ -61,7 +57,6 @@ export const SideNavItems: React.FC<SideNavItemsProps> = ({
         ...(isCarbonSideNavItem && { isSideNavExpanded: isSideNavExpanded }),
         ...(isSideNavMenu && {
           depth: 0,
-          isTreeview: isTreeview,
         }),
       });
     }

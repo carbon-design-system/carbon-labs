@@ -26,7 +26,14 @@ yarn add @carbon-labs/react-ui-shell @carbon/react
 ## ⚡ Usage
 
 To use this package you will need to import components from both `@carbon/react`
-and `@carbon-labs/react-ui-shell` to compose the pieces of the shell together:
+and `@carbon-labs/react-ui-shell`o compose the UI Shell. The following
+components are provided by `@carbon-labs/react-ui-shell`:
+
+- `SideNav`
+- `SideNavItems`
+- `SideNavMenu`
+- `SideNavMenuItem`
+- `HeaderPanel`
 
 ```jsx
 import { SideNav } from '@carbon-labs/react-ui-shell/es/index';

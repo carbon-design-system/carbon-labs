@@ -21,8 +21,7 @@
     "@carbon/react": "^1.71.1",
     "@carbon/styles": "^1.70.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "rollup-plugin-svg": "^2.0.0"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -73,6 +72,7 @@
     "remark-gfm": "^4.0.0",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-strip-banner": "^3.0.0",
+    "rollup-plugin-svg": "^2.0.0",
     "sass-loader": "^16.0.4",
     "storybook": "^8.4.7",
     "storybook-addon-accessibility-checker": "^3.1.61-rc.3",

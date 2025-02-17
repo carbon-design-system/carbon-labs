@@ -18,9 +18,11 @@ bottlenecks in publishing and deployments. Here are some available components:
 
 ### React
 
-| Package name             | Description |
-| ------------------------ | ----------- |
-| Ready for contributions! |             |
+| Package name                                                                                                                                         | Description                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| [`@carbon-labs/react-ui-shell`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/UIShell)                 | UI shell components        |
+| [`@carbon-labs/react-text-highlighter`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/TextHighlighter) | Text highlighter component |
+| [`@carbon-labs/react-animated-header`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/AnimatedHeader)   | Animated header component  |
 
 ### Web Components
 
@@ -37,10 +39,8 @@ bottlenecks in publishing and deployments. Here are some available components:
 
 ### Storybook
 
-The current state of all components can also be seen in Storybook
-
-- [Web Components](https://labs.carbondesignsystem.com/web-components/)
-- [React](https://labs.carbondesignsystem.com/react/)
+You can view the current state of all components in [Storybook](https://labs.carbondesignsystem.com). You can also view the individual storybooks for 
+[Web Components](https://labs.carbondesignsystem.com/web-components/) and [React](https://labs.carbondesignsystem.com/react/).
 
 ## 🙌 Contributing
 

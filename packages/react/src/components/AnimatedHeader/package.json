@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-animated-header",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -19,8 +19,7 @@
     "es",
     "lib",
     "scss",
-    "assets",
-    "data"
+    "assets"
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",

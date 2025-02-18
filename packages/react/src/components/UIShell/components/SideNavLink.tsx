@@ -20,6 +20,7 @@ import Link, { LinkProps, LinkPropTypes } from './Link';
 import { SideNavIcon, SideNavItem, SideNavLinkText } from '@carbon/react';
 import { usePrefix } from '../internal/usePrefix';
 import { SideNavContext } from './SideNav';
+import { SideNavLinkPopover } from './SideNavLinkPopover';
 
 export type SideNavLinkProps<E extends ElementType> = LinkProps<E> & {
   /**
@@ -89,13 +90,26 @@ export const SideNavLink: SideNavLinkComponent = forwardRef(
     }: SideNavLinkProps<E>,
     ref: ForwardedRef<ElementType>
   ) {
-    const isRail = useContext(SideNavContext);
+    const { expanded, isRail, navType } = useContext(SideNavContext);
     const prefix = usePrefix();
     const className = cx({
       [`${prefix}--side-nav__link`]: true,
       [`${prefix}--side-nav__link--current`]: isActive,
       [customClassName as string]: !!customClassName,
     });
+    const SideNavLinkIcon = IconElement && (
+      <SideNavIcon small>
+        <IconElement />
+      </SideNavIcon>
+    );
+
+    if (!expanded && navType === 'panel') {
+      return (
+        <SideNavLinkPopover align="right" label={children} {...rest}>
+          {SideNavLinkIcon}
+        </SideNavLinkPopover>
+      );
+    }
 
     return (
       <SideNavItem large={large}>
@@ -110,11 +124,7 @@ export const SideNavLink: SideNavLinkComponent = forwardRef(
                 : 0
               : tabIndex
           }>
-          {IconElement && (
-            <SideNavIcon small>
-              <IconElement />
-            </SideNavIcon>
-          )}
+          {SideNavLinkIcon}
           <SideNavLinkText>{children}</SideNavLinkText>
         </Link>
       </SideNavItem>

@@ -20,6 +20,7 @@ import '../components/theme-settings.scss';
 import './storybook.scss';
 import { Theme } from '@carbon/react';
 import { themes } from 'storybook/internal/theming';
+import { useThemeSetting } from '../utils/use-theme-setting';
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 const StoryWrapper = (Story) => (
@@ -260,3 +261,46 @@ export const InContext = () => {
     </Theme>
   );
 };
+
+// /**
+//  * InContext story for ThemeSettings
+//  */
+// export const InContextUseThemeSetting = () => {
+//   const [themeSetting, setThemeSetting] = useState(`system`);
+//   const [themeMenuCompliment, setThemeMenuCompliment] = useState(false);
+//   const [themeSet, setThemeSet] = useState('white/g100');
+//   const [theme, setTheme] = useThemeSetting(themeSetting, themeSet, false);
+//   const [themeHeader, setThemeHeader] = useThemeSetting(
+//     themeSetting,
+//     themeSet,
+//     themeMenuCompliment
+//   );
+
+//   return (
+//     <Theme className={'theme-setting-in-context'} theme={themeHeader}>
+//       <header className="theme-setting-in-context__header">
+//         A sample header
+//       </header>
+//       <Theme as="main" className="theme-setting-in-context__main" theme={theme}>
+//         <ThemeSettings>
+//           <ThemeSwitcher
+//             onChange={setThemeSetting}
+//             value={themeSetting}></ThemeSwitcher>
+//           <ThemeMenuCompliment
+//             id="theme-menu-compliment"
+//             labelText="Compliment menu theme"
+//             checked={themeMenuCompliment}
+//             onChange={setThemeMenuCompliment}
+//           />
+//           <ThemeSetDropdown
+//             id="theme-dropdown"
+//             label="Theme set"
+//             titleText="Theme set"
+//             value={themeSet}
+//             onChange={setThemeSet}
+//           />
+//         </ThemeSettings>
+//       </Theme>
+//     </Theme>
+//   );
+// };

@@ -16,7 +16,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ButtonKinds } from '@carbon/react';
 import '../components/animated_header.scss';
 
-import { tileDropdownData, headerTiles } from '../data/index';
+import { tileDropdownData, headerTiles } from './data';
 import {
   dataFabricAnimatedLight,
   dataFabricAnimatedDark,

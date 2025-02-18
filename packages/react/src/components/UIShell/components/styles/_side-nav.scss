@@ -62,10 +62,17 @@ div:has(.#{$prefix}--header)
   }
 }
 
+//----------------------------------------------------------------------------
 // Side-nav Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
   z-index: 7999; /* needs to be below header */
+  overflow: visible;
+
+  .#{$prefix}--side-nav__items,
+  .#{$prefix}--side-nav__items:hover {
+    overflow: visible;
+  }
 
   .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
     margin-inline-end: $spacing-05;
@@ -82,6 +89,7 @@ div:has(.#{$prefix}--header)
     padding-inline-start: $spacing-10;
   }
 
+  // Side Nav Toggle
   .#{$prefix}--side-nav__toggle {
     @include button-reset.reset($width: true);
     @include type-style('heading-compact-01');
@@ -109,5 +117,16 @@ div:has(.#{$prefix}--header)
     @include text-overflow();
 
     text-align: start;
+  }
+
+  // Side Nav Link Popover
+  .#{$prefix}--side-nav-link-popover.#{$prefix}--btn--icon-only {
+    block-size: $spacing-07;
+    min-block-size: initial;
+    padding: 0;
+
+    .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
+      margin-inline-end: 0;
+    }
   }
 }

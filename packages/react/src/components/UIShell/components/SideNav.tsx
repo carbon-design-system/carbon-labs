@@ -254,7 +254,9 @@ function SideNavRenderFunction(
     const parentNode = (node as HTMLElement).parentElement?.closest(
       `.${prefix}--side-nav__item`
     );
-    if (parentNode) return parentNode;
+    if (parentNode) {
+      return parentNode;
+    }
     return node;
   }
 
@@ -505,9 +507,9 @@ function SideNavRenderFunction(
   return (
     <SideNavContext.Provider
       value={{
+        expanded,
         isRail,
         navType,
-        expanded: expanded,
         isTreeview: internalIsTreeview,
         setIsTreeview,
       }}>

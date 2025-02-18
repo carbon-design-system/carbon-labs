@@ -29,7 +29,7 @@ import * as ThemeSettingsStories from './ThemeSettings.stories';
 
 ## Overview
 
-This is an Theme Switcher component.
+This is a Theme Settings component.
 
 <Canvas of={ThemeSettingsStories.InContextUseThemeSetting} />
 
@@ -50,6 +50,14 @@ yarn add @carbon-labs/react-theme-switcher
   `white/g90`, `white/g100`, `g10/g90` and `g10/g100`.
 - ThemeMenuCompliment: Used if user is permitted to toggle menu compliment
   (often global menu is compliment of main theme).
+
+### Utilities
+
+- useThemeSetting: Given a theme setting, theme set and a value for compliment
+  returns a Carbon theme based on these settings and users system preferences.
+
+NOTE: Theme set can be a fixed value e.g. `white/g90` if ThemeSetDropdown is not
+used.
 
 ### JS (via import)
 

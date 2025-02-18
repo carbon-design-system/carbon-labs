@@ -77,7 +77,7 @@ before diving into our developer guide:
 ## 📖 Changelog
 
 See the latest updates and version history in the
-[Changelog](https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/UIShell/CHANGELOG.md).
+[changelog](https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/UIShell/CHANGELOG.md).
 
 ## 📝 License
 

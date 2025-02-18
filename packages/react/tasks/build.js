@@ -7,7 +7,7 @@
 
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
-import svg from 'rollup-plugin-svg'
+import svg from 'rollup-plugin-svg';
 import typescript from '@rollup/plugin-typescript';
 import path from 'path';
 import stripBanner from 'rollup-plugin-strip-banner';
@@ -158,12 +158,12 @@ function getRollupConfig(input, rootDir, outDir) {
           {
             src: 'components/**/*.scss',
             dest: 'scss',
-          }
+          },
         ],
         flatten: false,
       }),
       json({
-        compact: true
+        compact: true,
       }),
       svg(),
       typescript({

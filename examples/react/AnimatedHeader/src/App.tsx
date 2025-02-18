@@ -9,7 +9,10 @@
 
 import React, { useState } from 'react';
 import { AnimatedHeader } from '@carbon-labs/react-animated-header/es/index';
-import { watsonXAnimatedLight, watsonXStaticLight } from '@carbon-labs/react-animated-header/assets';
+import {
+  watsonXAnimatedLight,
+  watsonXStaticLight,
+} from '@carbon-labs/react-animated-header/assets';
 import headerTiles from './data';
 
 function App() {

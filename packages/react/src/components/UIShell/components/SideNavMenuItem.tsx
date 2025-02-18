@@ -14,8 +14,9 @@ import React, {
   useEffect,
   useRef,
   useContext,
+  ComponentType,
 } from 'react';
-import { SideNavLinkText } from '@carbon/react';
+import { SideNavLinkText, SideNavIcon } from '@carbon/react';
 import Link from './Link';
 import { usePrefix } from '../internal/usePrefix';
 import { useMergedRefs } from '../internal/useMergedRefs';
@@ -54,6 +55,11 @@ export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
    * Optional component to render instead of default Link
    */
   as?: ElementType;
+
+  /**
+   * Provide an icon to render in the side navigation link. Should be a React class.
+   */
+  renderIcon?: ComponentType;
 }
 
 export const SideNavMenuItem = React.forwardRef<
@@ -67,6 +73,7 @@ export const SideNavMenuItem = React.forwardRef<
     depth: propDepth,
     as: Component = Link,
     isActive,
+    renderIcon: IconElement,
     ...rest
   } = props;
   const { isTreeview } = useContext(SideNavContext);
@@ -82,7 +89,11 @@ export const SideNavMenuItem = React.forwardRef<
 
   useEffect(() => {
     const calcLinkOffset = () => {
-      return 4 + Math.max(0, depth - 1) * 1;
+      if (IconElement) {
+        return depth + 2;
+      }
+
+      return 4 + Math.max(0, depth - 1);
     };
 
     if (linkRef.current) {
@@ -99,6 +110,11 @@ export const SideNavMenuItem = React.forwardRef<
         className={linkClassName}
         tabIndex={isTreeview ? -1 : 0}
         ref={itemRef}>
+        {IconElement && (
+          <SideNavIcon small>
+            <IconElement />
+          </SideNavIcon>
+        )}
         <SideNavLinkText>{children}</SideNavLinkText>
       </Component>
     </li>
@@ -107,6 +123,11 @@ export const SideNavMenuItem = React.forwardRef<
 
 SideNavMenuItem.displayName = 'SideNavMenuItem';
 SideNavMenuItem.propTypes = {
+  /**
+   * Optional component to render instead of default Link
+   */
+  as: PropTypes.elementType,
+
   /**
    * Specify the children to be rendered inside of the `SideNavMenuItem`
    */
@@ -136,7 +157,7 @@ SideNavMenuItem.propTypes = {
   isActive: PropTypes.bool,
 
   /**
-   * Optional component to render instead of default Link
+   * Provide an icon to render in the side navigation link. Should be a React class.
    */
-  as: PropTypes.elementType,
+  renderIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };

@@ -1,0 +1,108 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as ThemeSettingsStories from './ThemeSettings.stories';
+
+<Meta isTemplate />
+
+# ThemeSettings
+
+- **Initiative owner(s):** Lee Chase
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/ThemeSettings)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/ThemeSettings)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+This is an Theme Switcher component.
+
+<Canvas of={ThemeSettingsStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-theme-switcher
+```
+
+### Components
+
+- ThemeSettings: Container component for other ThemeSettings
+- ThemeSwitcher: 3 way switch between light, system and dark ThemeSettings
+- ThemeSetDropdown: Used if user is able to switch between theme sets
+  `white/g90`, `white/g100`, `g10/g90` and `g10/g100`.
+- ThemeMenuCompliment: Used if user is permitted to toggle menu compliment
+  (often global menu is compliment of main theme).
+
+### JS (via import)
+
+```javascript
+import {
+  ThemeSettings,
+  ThemeMenuCompliment,
+  ThemeSetDropdown,
+  ThemeSwitcher,
+} from '@carbon-labs/react-theme-switcher/es/index';
+
+function App() {
+  const handleSwitchChange = (themeSetting) => {
+    console.log(themeSetting); // 'light', 'system' or 'dark'
+  };
+
+  const handleThemeSet = (themeSet) => {
+    console.log(themeSet); // value of selected themeSet
+  };
+
+  const handleMenuCompliment = (compliment) => {
+    console.log(compliment); // boolean
+  };
+
+  return (
+    <ThemeSettings>
+      <ThemeSwitcher onChange={handleSwitchChange}></ThemeSwitcher>
+      <ThemeSetDropdown
+        id="theme-dropdown"
+        label="Theme set"
+        titleText="Theme set"
+        value="g10/g100"
+        onChange={handleThemeSet}
+      />
+      <ThemeMenuCompliment
+        id="theme-menu-compliment"
+        labelText="Compliment menu theme"
+        checked={false}
+        onChange={handleMenuCompliment}
+      />
+    </ThemeSettings>
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+````
+@use '@carbon/react';
+@use '@carbon-labs/react-theme-switcher/scss/theme-switcher';
+```./ThemeSettings.stories
+````

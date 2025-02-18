@@ -14,7 +14,7 @@ import { Launch, Add, DocumentImport } from '@carbon/react/icons';
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ButtonKinds } from '@carbon/react';
-import '../components/animated_header.scss';
+import '../components/animated-header.scss';
 
 import { tileDropdownData, headerTiles } from './data';
 import {

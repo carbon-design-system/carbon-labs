@@ -61,9 +61,20 @@ export const useThemeSetting = (
   const [theme, setTheme] = useState(initialTheme);
   const [systemDark, setSystemDark] = useState(mediaQueryList.matches);
 
-  mediaQueryList.addEventListener('change', (event) => {
+  /**
+   *
+   * @param event - media query event
+   */
+  const handleMediaQueryEvent = (event) => {
     setSystemDark(event.matches);
-  });
+  };
+
+  useEffect(() => {
+    mediaQueryList.addEventListener('change', handleMediaQueryEvent);
+
+    return () =>
+      mediaQueryList.removeEventListener('change', handleMediaQueryEvent);
+  }, []);
 
   useEffect(() => {
     setTheme(

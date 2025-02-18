@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import mdx from './ThemeSettings.mdx';
 import {
@@ -19,15 +19,7 @@ import {
 import '../components/theme-settings.scss';
 import './storybook.scss';
 import { Theme } from '@carbon/react';
-import { themes } from 'storybook/internal/theming';
 import { useThemeSetting } from '../utils/use-theme-setting';
-
-// eslint-disable-next-line jsdoc/require-jsdoc
-const StoryWrapper = (Story) => (
-  <div className="story-wrapper">
-    <Story />
-  </div>
-);
 
 export default {
   title: 'ThemeSettings/ThemeSettings',
@@ -76,7 +68,9 @@ export const Default = () => {
     </ThemeSettings>
   );
 };
-Default.decorators = [StoryWrapper];
+Default.parameters = {
+  layout: 'centered',
+};
 
 /**
  * WithMenuCompliment story for ThemeSettings
@@ -110,7 +104,9 @@ export const WithMenuCompliment = () => {
     </ThemeSettings>
   );
 };
-WithMenuCompliment.decorators = [StoryWrapper];
+WithMenuCompliment.parameters = {
+  layout: 'centered',
+};
 
 /**
  * WithThemeSet story for ThemeSettings
@@ -145,7 +141,9 @@ export const WithThemeSet = () => {
     </ThemeSettings>
   );
 };
-WithThemeSet.decorators = [StoryWrapper];
+WithThemeSet.parameters = {
+  layout: 'centered',
+};
 
 /**
  * Complete story for ThemeSettings
@@ -192,7 +190,9 @@ export const Complete = () => {
     </ThemeSettings>
   );
 };
-Complete.decorators = [StoryWrapper];
+Complete.parameters = {
+  layout: 'centered',
+};
 
 const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -207,9 +207,16 @@ export const InContext = () => {
   const [theme, setTheme] = useState('white');
   const [themeHeader, setThemeHeader] = useState('g100');
 
-  mediaQueryList.addEventListener('change', (event) => {
+  const handleMediaQueryEvent = (event) => {
     setSystemDark(event.matches);
-  });
+  };
+
+  useEffect(() => {
+    mediaQueryList.addEventListener('change', handleMediaQueryEvent);
+
+    return () =>
+      mediaQueryList.removeEventListener('change', handleMediaQueryEvent);
+  }, []);
 
   useEffect(() => {
     const themes = themeSet.split('/');
@@ -262,45 +269,45 @@ export const InContext = () => {
   );
 };
 
-// /**
-//  * InContext story for ThemeSettings
-//  */
-// export const InContextUseThemeSetting = () => {
-//   const [themeSetting, setThemeSetting] = useState(`system`);
-//   const [themeMenuCompliment, setThemeMenuCompliment] = useState(false);
-//   const [themeSet, setThemeSet] = useState('white/g100');
-//   const [theme, setTheme] = useThemeSetting(themeSetting, themeSet, false);
-//   const [themeHeader, setThemeHeader] = useThemeSetting(
-//     themeSetting,
-//     themeSet,
-//     themeMenuCompliment
-//   );
+/**
+ * InContext story for ThemeSettings
+ */
+export const InContextUseThemeSetting = () => {
+  const [themeSetting, setThemeSetting] = useState(`system`);
+  const [themeMenuCompliment, setThemeMenuCompliment] = useState(false);
+  const [themeSet, setThemeSet] = useState('white/g100');
+  const theme = useThemeSetting(themeSetting, themeSet, false);
+  const themeHeader = useThemeSetting(
+    themeSetting,
+    themeSet,
+    themeMenuCompliment
+  );
 
-//   return (
-//     <Theme className={'theme-setting-in-context'} theme={themeHeader}>
-//       <header className="theme-setting-in-context__header">
-//         A sample header
-//       </header>
-//       <Theme as="main" className="theme-setting-in-context__main" theme={theme}>
-//         <ThemeSettings>
-//           <ThemeSwitcher
-//             onChange={setThemeSetting}
-//             value={themeSetting}></ThemeSwitcher>
-//           <ThemeMenuCompliment
-//             id="theme-menu-compliment"
-//             labelText="Compliment menu theme"
-//             checked={themeMenuCompliment}
-//             onChange={setThemeMenuCompliment}
-//           />
-//           <ThemeSetDropdown
-//             id="theme-dropdown"
-//             label="Theme set"
-//             titleText="Theme set"
-//             value={themeSet}
-//             onChange={setThemeSet}
-//           />
-//         </ThemeSettings>
-//       </Theme>
-//     </Theme>
-//   );
-// };
+  return (
+    <Theme className={'theme-setting-in-context'} theme={themeHeader}>
+      <header className="theme-setting-in-context__header">
+        A sample header
+      </header>
+      <Theme as="main" className="theme-setting-in-context__main" theme={theme}>
+        <ThemeSettings>
+          <ThemeSwitcher
+            onChange={setThemeSetting}
+            value={themeSetting}></ThemeSwitcher>
+          <ThemeMenuCompliment
+            id="theme-menu-compliment"
+            labelText="Compliment menu theme"
+            checked={themeMenuCompliment}
+            onChange={setThemeMenuCompliment}
+          />
+          <ThemeSetDropdown
+            id="theme-dropdown"
+            label="Theme set"
+            titleText="Theme set"
+            value={themeSet}
+            onChange={setThemeSet}
+          />
+        </ThemeSettings>
+      </Theme>
+    </Theme>
+  );
+};

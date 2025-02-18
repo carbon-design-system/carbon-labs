@@ -157,9 +157,15 @@ function App() {
                   <SideNavMenu
                     renderIcon={SquareOutline}
                     title="Sub-menu level 1">
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenu title="Sub-menu level 2">
+                    <SideNavMenuItem renderIcon={SquareOutline} href="#">
+                      Link level 2
+                    </SideNavMenuItem>
+                    <SideNavMenuItem renderIcon={SquareOutline} href="#">
+                      Link level 2
+                    </SideNavMenuItem>
+                    <SideNavMenu
+                      renderIcon={SquareOutline}
+                      title="Sub-menu level 2">
                       <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
                       <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
                       <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
@@ -198,11 +204,11 @@ function App() {
                 isChildOfHeader={false}
                 hideOverlay
                 aria-label="Side navigation">
-                <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                </SideNavMenu>
                 <SideNavItems>
+                  <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                  </SideNavMenu>
                   <SideNavLink renderIcon={Fade} href="#">
                     Link
                   </SideNavLink>

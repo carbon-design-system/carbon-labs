@@ -177,7 +177,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         const calcButtonOffset = () => {
           // menu with icon
           if (children && IconElement) {
-            return depth + 3;
+            return depth + 2;
           }
 
           // menu without icon

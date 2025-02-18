@@ -246,6 +246,8 @@ export const InContext = () => {
         A sample header
       </header>
       <Theme as="main" className="theme-setting-in-context__main" theme={theme}>
+        <h2>Your app goes here.</h2>
+
         <ThemeSettings>
           <ThemeSwitcher
             onChange={setThemeSetting}
@@ -288,7 +290,10 @@ export const InContextUseThemeSetting = () => {
       <header className="theme-setting-in-context__header">
         A sample header
       </header>
+
       <Theme as="main" className="theme-setting-in-context__main" theme={theme}>
+        <h2>Your app goes here.</h2>
+
         <ThemeSettings>
           <ThemeSwitcher
             onChange={setThemeSetting}

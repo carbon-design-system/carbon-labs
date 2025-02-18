@@ -31,7 +31,7 @@ import * as ThemeSettingsStories from './ThemeSettings.stories';
 
 This is an Theme Switcher component.
 
-<Canvas of={ThemeSettingsStories.Default} />
+<Canvas of={ThemeSettingsStories.InContextUseThemeSetting} />
 
 ## Getting started
 
@@ -54,43 +54,54 @@ yarn add @carbon-labs/react-theme-switcher
 ### JS (via import)
 
 ```javascript
+import { Theme } from '@carbon/react';
 import {
   ThemeSettings,
   ThemeMenuCompliment,
   ThemeSetDropdown,
   ThemeSwitcher,
+  useThemeSetting,
 } from '@carbon-labs/react-theme-switcher/es/index';
 
 function App() {
-  const handleSwitchChange = (themeSetting) => {
-    console.log(themeSetting); // 'light', 'system' or 'dark'
-  };
-
-  const handleThemeSet = (themeSet) => {
-    console.log(themeSet); // value of selected themeSet
-  };
-
-  const handleMenuCompliment = (compliment) => {
-    console.log(compliment); // boolean
-  };
+  const [themeSetting, setThemeSetting] = useState(`system`);
+  const [themeMenuCompliment, setThemeMenuCompliment] = useState(false);
+  const [themeSet, setThemeSet] = useState('white/g100');
+  const theme = useThemeSetting(themeSetting, themeSet, false);
+  const themeHeader = useThemeSetting(
+    themeSetting,
+    themeSet,
+    themeMenuCompliment
+  );
 
   return (
-    <ThemeSettings>
-      <ThemeSwitcher onChange={handleSwitchChange}></ThemeSwitcher>
-      <ThemeSetDropdown
-        id="theme-dropdown"
-        label="Theme set"
-        titleText="Theme set"
-        value="g10/g100"
-        onChange={handleThemeSet}
-      />
-      <ThemeMenuCompliment
-        id="theme-menu-compliment"
-        labelText="Compliment menu theme"
-        checked={false}
-        onChange={handleMenuCompliment}
-      />
-    </ThemeSettings>
+    <Theme className={'theme-setting-in-context'} theme={themeHeader}>
+      <header className="theme-setting-in-context__header">
+        A sample header
+      </header>
+      <Theme as="main" className="theme-setting-in-context__main" theme={theme}>
+        <h2>Your app goes here.</h2>
+
+        <ThemeSettings>
+          <ThemeSwitcher
+            onChange={setThemeSetting}
+            value={themeSetting}></ThemeSwitcher>
+          <ThemeMenuCompliment
+            id="theme-menu-compliment"
+            labelText="Compliment menu theme"
+            checked={themeMenuCompliment}
+            onChange={setThemeMenuCompliment}
+          />
+          <ThemeSetDropdown
+            id="theme-dropdown"
+            label="Theme set"
+            titleText="Theme set"
+            value={themeSet}
+            onChange={setThemeSet}
+          />
+        </ThemeSettings>
+      </Theme>
+    </Theme>
   );
 }
 

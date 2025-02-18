@@ -39,8 +39,11 @@ bottlenecks in publishing and deployments. Here are some available components:
 
 ### Storybook
 
-You can view the current state of all components in [Storybook](https://labs.carbondesignsystem.com). You can also view the individual storybooks for 
-[Web Components](https://labs.carbondesignsystem.com/web-components/) and [React](https://labs.carbondesignsystem.com/react/).
+You can view the current state of all components in
+[Storybook](https://labs.carbondesignsystem.com). You can also view the
+individual storybooks for
+[Web Components](https://labs.carbondesignsystem.com/web-components/) and
+[React](https://labs.carbondesignsystem.com/react/).
 
 ## 🙌 Contributing
 

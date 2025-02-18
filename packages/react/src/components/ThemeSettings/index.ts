@@ -13,3 +13,5 @@ export {
   ThemeSetDropdown,
   ThemeMenuCompliment,
 } from './components/index';
+
+export { useThemeSetting } from './utils/use-theme-setting';

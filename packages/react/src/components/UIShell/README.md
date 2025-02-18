@@ -74,6 +74,11 @@ before diving into our developer guide:
 
 - [Developer Guide](https://github.com/carbon-design-system/carbon-labs/blob/main/docs/developing.md)
 
+## 📖 Changelog
+
+See the latest updates and version history in the
+[changelog](https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/UIShell/CHANGELOG.md).
+
 ## 📝 License
 
 Licensed under the

@@ -69,6 +69,11 @@ div:has(.#{$prefix}--header)
   z-index: 7999; /* needs to be below header */
   overflow: visible;
 
+  .#{$prefix}--side-nav__items {
+    display: flex;
+    flex-direction: column;
+  }
+
   .#{$prefix}--side-nav__items,
   .#{$prefix}--side-nav__items:hover {
     overflow: visible;

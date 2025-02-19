@@ -200,13 +200,27 @@ export const Default = () => {
                   <SideNavMenu
                     renderIcon={CarbonDesignSystem}
                     title="Product 1">
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Link level 2
+                    <SideNavMenuItem
+                      renderIcon={Home}
+                      href="http://www.carbondesignsystem.com">
+                      Home
                     </SideNavMenuItem>
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Link level 2
+                    <SideNavMenuItem
+                      href="http://www.carbondesignsystem.com"
+                      renderIcon={BusinessProcesses}>
+                      Business
                     </SideNavMenuItem>
-                    <SideNavMenu title="Sub-menu level 2">
+                    <SideNavMenuItem
+                      href="http://www.carbondesignsystem.com"
+                      renderIcon={Application}>
+                      Applications
+                    </SideNavMenuItem>
+                    <SideNavMenuItem
+                      href="http://www.carbondesignsystem.com"
+                      renderIcon={Platforms}>
+                      Platforms
+                    </SideNavMenuItem>
+                    <SideNavMenu renderIcon={Layers} title="Infrastructure">
                       <SideNavMenuItem href="http://www.carbondesignsystem.com">
                         Link level 3
                       </SideNavMenuItem>
@@ -437,10 +451,56 @@ export const SideNavWithThirdLevel = () => (
           </SideNavMenuItem>
         </SideNavMenu>
       </SideNavMenu>
+      <SideNavDivider />
     </SideNavItems>
   </SideNav>
 );
 SideNavWithThirdLevel.storyName = 'SideNav With Third Level';
+
+/**
+ * Story for SideNav w/TreeView icons
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const SideNavWithThirdLevelIcons = () => (
+  <SideNav
+    isFixedNav
+    expanded={true}
+    isChildOfHeader={false}
+    aria-label="Side navigation">
+    <SideNavItems>
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link level 1
+      </SideNavLink>
+      <SideNavMenu
+        defaultExpanded={true}
+        renderIcon={Fade}
+        title="Sub-menu level 1">
+        <SideNavMenuItem
+          renderIcon={Fade}
+          href="http://www.carbondesignsystem.com">
+          Link level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem
+          renderIcon={Fade}
+          href="http://www.carbondesignsystem.com">
+          Link level 2
+        </SideNavMenuItem>
+        <SideNavMenu
+          renderIcon={Fade}
+          title="Sub-menu level 2"
+          defaultExpanded={true}>
+          <SideNavMenuItem isActive href="http://www.carbondesignsystem.com">
+            Link level 3
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Link level 3
+          </SideNavMenuItem>
+        </SideNavMenu>
+      </SideNavMenu>
+    </SideNavItems>
+  </SideNav>
+);
+SideNavWithThirdLevelIcons.storyName = 'SideNav With Third Level Icons';
 
 /**
  * Story for SideNav panel
@@ -547,3 +607,52 @@ HeaderPanelStory.args = {
 HeaderPanelStory.argTypes = {
   expanded: { control: 'boolean' },
 };
+
+/**
+ * Story for Testing
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const Testing = () => (
+  <Theme theme="g100">
+    <SideNav
+      isFixedNav
+      expanded
+      isChildOfHeader={false}
+      aria-label="Side navigation">
+      <SideNavItems>
+        <SideNavLink
+          renderIcon={CarbonDesignSystem}
+          href="http://www.carbondesignsystem.com">
+          Product 1
+        </SideNavLink>
+        <SideNavMenu
+          defaultExpanded
+          renderIcon={CarbonDesignSystem}
+          title="Product 2">
+          <SideNavMenuItem
+            renderIcon={Home}
+            href="http://www.carbondesignsystem.com">
+            SideNavMenuItem 2
+          </SideNavMenuItem>
+          <SideNavMenuItem
+            renderIcon={BusinessProcesses}
+            href="http://www.carbondesignsystem.com">
+            SideNavMenuItem 2
+          </SideNavMenuItem>
+          <SideNavMenu
+            renderIcon={Application}
+            title="Sub-menu level 2"
+            defaultExpanded={true}>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              SideNavMenuItem 3
+            </SideNavMenuItem>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              SideNavMenuItem 3
+            </SideNavMenuItem>
+          </SideNavMenu>
+        </SideNavMenu>
+      </SideNavItems>
+    </SideNav>
+  </Theme>
+);
+Testing.storyName = 'Testing - SideNavMenuItem Icon';

@@ -6,6 +6,7 @@
  */
 
 @use '@carbon/styles/scss/utilities/convert' as convert;
+@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 @use '@carbon/styles/scss/utilities/button-reset' as button-reset;
 @use '@carbon/styles/scss/utilities/focus-outline' as *;
 @use '@carbon/styles/scss/theme' as *;
@@ -125,6 +126,13 @@ div:has(.#{$prefix}--header)
   }
 
   // Side Nav Link Popover
+  .#{$prefix}--icon-tooltip {
+    @include custom-property.declaration(
+      'tooltip-padding-block',
+      convert.to-rem(16px)
+    );
+  }
+
   .#{$prefix}--side-nav-link-popover.#{$prefix}--btn--icon-only {
     block-size: $spacing-07;
     min-block-size: initial;

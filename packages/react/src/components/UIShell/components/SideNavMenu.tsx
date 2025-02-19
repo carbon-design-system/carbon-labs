@@ -220,8 +220,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         if (match(event, keys.ArrowLeft)) {
           event.stopPropagation();
 
-          if (isMenu) {
-            // collapse menu
+          // collapse menu
+          if (isMenu && sideNavExpanded) {
             if (isExpanded == 'true') {
               setIsExpanded(false);
 
@@ -245,8 +245,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         if (match(event, keys.ArrowRight)) {
           event.stopPropagation();
 
-          // expand menu
-          if (isMenu) {
+          // expand menu when sidenav is expanded
+          if (isMenu && sideNavExpanded) {
             setIsExpanded(true);
 
             // if already expanded, focus on first element
@@ -268,7 +268,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     // save expanded state before SideNav collapse
     const [lastExpandedState, setLastExpandedState] = useState(isExpanded);
 
-    // reset when SideNav is panel
+    // reset to opened/collapsed menu state when Panel SideNav is toggled
     useEffect(() => {
       if (navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded) {
         setLastExpandedState(isExpanded);

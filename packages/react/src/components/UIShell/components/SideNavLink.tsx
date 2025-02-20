@@ -27,14 +27,16 @@ export type SideNavLinkProps<E extends ElementType> = LinkProps<E> & {
    * Required props for the accessibility label
    */
   'aria-label'?: string;
+
   /**
    * Required props for the accessibility label
    */
+
   'aria-labelledby'?: string;
   /**
    * Specify the text content for the link
    */
-  children: ReactNode;
+  children?: ReactNode;
 
   /**
    * Provide an optional class to be applied to the containing node
@@ -77,7 +79,7 @@ export interface SideNavLinkComponent {
 }
 
 export const SideNavLink: SideNavLinkComponent = forwardRef(
-  function SideNavLink<E extends ElementType = 'a'>(
+  function SideNavLink(
     {
       children,
       className: customClassName,
@@ -87,7 +89,7 @@ export const SideNavLink: SideNavLinkComponent = forwardRef(
       large = false,
       tabIndex,
       ...rest
-    }: SideNavLinkProps<E>,
+    }: SideNavLinkProps<ElementType>,
     ref: ForwardedRef<ElementType>
   ) {
     const { expanded, isRail, navType } = useContext(SideNavContext);
@@ -139,7 +141,7 @@ SideNavLink.propTypes = {
   /**
    * Specify the text content for the link
    */
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node as unknown as React.Validator<React.ReactNode>,
 
   /**
    * Provide an optional class to be applied to the containing node

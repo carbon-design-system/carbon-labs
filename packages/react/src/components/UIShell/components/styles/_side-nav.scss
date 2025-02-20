@@ -66,6 +66,7 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
   z-index: 7999; /* needs to be below header */
+  overflow: visible;
 
   .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
     margin-inline-end: $spacing-05;
@@ -110,4 +111,76 @@ div:has(.#{$prefix}--header)
 
     text-align: start;
   }
+
+  &:hover {
+    .#{$prefix}--side-nav__items {
+      overflow: visible;
+    }      
+  }
+
+  .#{$prefix}--popover-container {
+    display: block;
+    width: 100%;
+  }
+
+  .#{$prefix}--side-nav__items {
+    overflow: visible;
+  }  
+
+  .#{$prefix}--side-nav__submenu {
+    position: relative;
+
+    .#{$prefix}--side-nav--panel-submenu-caret-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+  
+    .#{$prefix}--side-nav--panel-submenu-caret {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+ 
+      > svg {
+        fill: $icon-secondary;
+      }
+  
+    }  
+  }
+
+  .#{$prefix}--popover-content {
+    padding: 4px 0;
+
+    .#{$prefix}--label {
+      padding-left: $spacing-05;
+      color: $text-secondary;
+    }
+
+    .#{$prefix}--side-nav__link {
+      padding-right: $spacing-08;
+      padding-left: $spacing-08;
+      font-weight: 400;      
+    }
+
+    .#{$prefix}--side-nav__link:hover{    
+      background-color: $background-hover;
+    }
+  }
+
+}
+
+// panel expanded styles
+.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded {
+  overflow: hidden;
+  
+  &:hover {
+    .#{$prefix}--side-nav__items {
+      overflow-y: auto;
+    }      
+  }
+
+  .#{$prefix}--side-nav__items {
+    overflow-y: auto;
+  }  
+
 }

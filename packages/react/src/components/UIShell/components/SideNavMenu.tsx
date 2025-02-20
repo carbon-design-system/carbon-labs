@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ChevronDown } from '@carbon/icons-react';
+import { CaretDown, ChevronDown } from '@carbon/icons-react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
@@ -18,12 +18,19 @@ import React, {
   useState,
 } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import { SideNavIcon } from '@carbon/react';
+import {
+  FormLabel,
+  Popover,
+  PopoverContent,
+  SideNavIcon,
+  Toggletip,
+  Tooltip,
+} from '@carbon/react';
 import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
 import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
-
+import { SharkfinIcon } from './Sharkfin';
 export interface SideNavMenuProps {
   /**
    * An optional CSS class to apply to the component.
@@ -278,7 +285,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       }
     }, [sideNavExpanded]);
 
-    return (
+    const [openPopover, setOpenPopover] = React.useState(false);
+
+    const content = (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <li
         role={isTreeview ? 'treeitem' : undefined}
@@ -297,7 +306,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               firstLink.current &&
               !sideNavExpanded
             ) {
-              window.location.href = firstLink.current;
+              setOpenPopover(!openPopover);
+              // window.location.href = firstLink.current;
             } else {
               setIsExpanded(!isExpanded);
               setLastExpandedState(!isExpanded);
@@ -311,6 +321,14 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               <IconElement />
             </SideNavIcon>
           )}
+          {!sideNavExpanded && (
+            <div
+              className={`${prefix}--side-nav--panel-submenu-caret-container`}>
+              <div className={`${prefix}--side-nav--panel-submenu-caret`}>
+                <SharkfinIcon />
+              </div>
+            </div>
+          )}
           <span className={`${prefix}--side-nav__submenu-title`}>{title}</span>
           <SideNavIcon className={`${prefix}--side-nav__submenu-chevron`} small>
             <ChevronDown size={20} />
@@ -320,6 +338,18 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           {childrenToRender}
         </ul>
       </li>
+    );
+
+    return navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded ? (
+      <Popover open={openPopover} align="right-top">
+        {content}
+        <PopoverContent>
+          <FormLabel>{title}</FormLabel>
+          {children}
+        </PopoverContent>
+      </Popover>
+    ) : (
+      content
     );
   }
 );

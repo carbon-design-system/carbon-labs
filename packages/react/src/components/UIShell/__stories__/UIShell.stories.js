@@ -439,7 +439,7 @@ export const DefaultWithFlyoutMenu = () => {
                 </SideNavItems>
               </SideNav>
             </Theme>
-            <Theme theme="g100">
+            <Theme theme="white">
               <SideNav
                 navType={SIDE_NAV_TYPE.PANEL}
                 isChildOfHeader={false}
@@ -455,17 +455,6 @@ export const DefaultWithFlyoutMenu = () => {
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Link level 2
                     </SideNavMenuItem>
-                    <SideNavMenu title="Sub-menu level 2">
-                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Link level 3
-                      </SideNavMenuItem>
-                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Link level 3
-                      </SideNavMenuItem>
-                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Link level 3
-                      </SideNavMenuItem>
-                    </SideNavMenu>
                   </SideNavMenu>
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"
@@ -473,6 +462,7 @@ export const DefaultWithFlyoutMenu = () => {
                     Home
                   </SideNavLink>
                   <SideNavLink
+                    size="small"
                     href="http://www.carbondesignsystem.com"
                     renderIcon={BusinessProcesses}>
                     Business

@@ -12,6 +12,7 @@ import {
   SIDE_NAV_TYPE,
   SideNav,
   SideNavItems,
+  SideNavLink,
   SideNavMenu,
   SideNavMenuItem,
 } from '@carbon-labs/react-ui-shell/es/index';
@@ -19,7 +20,6 @@ import {
   Content,
   Grid,
   Column,
-  SideNavLink,
   SkipToContent,
   HeaderContainer,
   Header,

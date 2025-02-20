@@ -24,8 +24,8 @@ import {
   HeaderMenuButton,
   SideNavDivider,
   Content,
-  HeaderGlobalBar,
-  HeaderGlobalAction,
+  // HeaderGlobalBar,
+  // HeaderGlobalAction,
   Grid,
   Column,
 } from '@carbon/react';
@@ -176,6 +176,7 @@ export const Default = () => {
                   prefix="IBM">
                   [Platform]
                 </HeaderName>
+                {/* Add back to demo when we update these components
                 <HeaderGlobalBar>
                   <HeaderGlobalAction
                     aria-label={expandedPanel ? 'Close panel' : 'Open panel'}
@@ -186,7 +187,7 @@ export const Default = () => {
                     <Fade size={20} />
                   </HeaderGlobalAction>
                 </HeaderGlobalBar>
-                <HeaderPanel expanded={expandedPanel} />
+                <HeaderPanel expanded={expandedPanel} /> */}
               </Header>
               <SideNav
                 isTreeview={true}

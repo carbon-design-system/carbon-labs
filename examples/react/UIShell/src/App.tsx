@@ -14,7 +14,6 @@ import {
   SideNavItems,
   SideNavMenu,
   SideNavMenuItem,
-  HeaderPanel,
 } from '@carbon-labs/react-ui-shell/es/index';
 import {
   Content,
@@ -25,8 +24,6 @@ import {
   HeaderContainer,
   Header,
   HeaderName,
-  HeaderGlobalBar,
-  HeaderGlobalAction,
   Theme,
   HeaderMenuButton,
   SideNavDivider,
@@ -133,17 +130,6 @@ function App() {
                 <HeaderName href="#" prefix="IBM">
                   [Platform]
                 </HeaderName>
-                <HeaderGlobalBar>
-                  <HeaderGlobalAction
-                    aria-label={expandedPanel ? 'Close panel' : 'Open panel'}
-                    isActive={expandedPanel}
-                    aria-expanded={expandedPanel}
-                    tooltipAlignment="end"
-                    onClick={() => setExpandedPanel(!expandedPanel)}>
-                    <Fade size={20} />
-                  </HeaderGlobalAction>
-                </HeaderGlobalBar>
-                <HeaderPanel expanded={expandedPanel} />
               </Header>
               <SideNav
                 aria-label="Side navigation1"

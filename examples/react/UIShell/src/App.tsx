@@ -158,30 +158,30 @@ function App() {
                     renderIcon={SquareOutline}
                     title="Sub-menu level 1">
                     <SideNavMenuItem renderIcon={SquareOutline} href="#">
-                      Link level 2
+                      Item level 2
                     </SideNavMenuItem>
                     <SideNavMenuItem renderIcon={SquareOutline} href="#">
-                      Link level 2
+                      Item level 2
                     </SideNavMenuItem>
                     <SideNavMenu
                       renderIcon={SquareOutline}
                       title="Sub-menu level 2">
-                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                     </SideNavMenu>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavDivider />
                   <SideNavLink renderIcon={SquareOutline} href="#">
@@ -191,9 +191,9 @@ function App() {
                     Link
                   </SideNavLink>
                   <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
                   </SideNavMenu>
                 </SideNavItems>
               </SideNav>
@@ -206,8 +206,8 @@ function App() {
                 aria-label="Side navigation">
                 <SideNavItems>
                   <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavLink renderIcon={Fade} href="#">
                     Link

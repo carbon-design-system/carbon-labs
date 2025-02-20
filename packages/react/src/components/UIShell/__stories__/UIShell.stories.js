@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import mdx from './UIShell.mdx';
 import { SIDE_NAV_TYPE, SideNav } from '../components/SideNav';
 import { SideNavItems } from '../components/SideNavItems';
@@ -24,8 +24,6 @@ import {
   HeaderMenuButton,
   SideNavDivider,
   Content,
-  // HeaderGlobalBar,
-  // HeaderGlobalAction,
   Grid,
   Column,
 } from '@carbon/react';
@@ -154,7 +152,6 @@ const StoryContent = () => {
  * @returns {React.ReactElement} The JSX for the story
  */
 export const Default = () => {
-  const [expandedPanel, setExpandedPanel] = useState(false);
   return (
     <div>
       <HeaderContainer
@@ -176,18 +173,6 @@ export const Default = () => {
                   prefix="IBM">
                   [Platform]
                 </HeaderName>
-                {/* Add back to demo when we update these components
-                <HeaderGlobalBar>
-                  <HeaderGlobalAction
-                    aria-label={expandedPanel ? 'Close panel' : 'Open panel'}
-                    isActive={expandedPanel}
-                    aria-expanded={expandedPanel}
-                    tooltipAlignment="end"
-                    onClick={() => setExpandedPanel(!expandedPanel)}>
-                    <Fade size={20} />
-                  </HeaderGlobalAction>
-                </HeaderGlobalBar>
-                <HeaderPanel expanded={expandedPanel} /> */}
               </Header>
               <SideNav
                 isTreeview={true}

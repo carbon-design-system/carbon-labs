@@ -182,9 +182,9 @@ div:has(.#{$prefix}--header)
   }
 
   .#{$prefix}--side-nav-link-popover.#{$prefix}--btn--icon-only {
+    padding: 0;
     block-size: $spacing-07;
     min-block-size: initial;
-    padding: 0;
 
     .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
       margin-inline-end: 0;

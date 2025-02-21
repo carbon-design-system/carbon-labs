@@ -26,6 +26,8 @@ import {
   Content,
   Grid,
   Column,
+  Button,
+  Dropdown,
 } from '@carbon/react';
 import {
   Add,
@@ -43,6 +45,8 @@ import {
   Platforms,
   EventIncident,
   WorkflowAutomation,
+  SquareFill,
+  SquareOutline,
 } from '@carbon/icons-react';
 
 import {
@@ -146,6 +150,37 @@ const StoryContent = () => {
     </Theme>
   );
 };
+
+const dropdownItems = [
+  {
+    text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+  },
+  {
+    text: 'Option 1',
+  },
+  {
+    text: 'Option 2',
+  },
+  {
+    text: 'Option 3 - a disabled item',
+    disabled: true,
+  },
+  {
+    text: 'Option 4',
+  },
+  {
+    text: 'Option 5',
+  },
+  {
+    text: 'Option 6',
+  },
+  {
+    text: 'Option 7',
+  },
+  {
+    text: 'Option 8',
+  },
+];
 
 /**
  * Story for UIShell
@@ -594,6 +629,62 @@ export const SideNavPanel = () => {
     </>
   );
 };
+/**
+ * Story for Header
+ * @param {object} args Storybook args that control component props
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const HeaderStory = () => (
+  <Header aria-label="IBM Platform Name">
+    <SkipToContent />
+    <HeaderMenuButton aria-label="Open menu" isCollapsible isFixedNav />
+    <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
+      [Platform]
+    </HeaderName>
+    <HeaderGlobalBar>
+      <Button kind="ghost">Ghost button</Button>
+      <Dropdown
+        id="dropdown1"
+        titleText="Dropdown label"
+        hideLabel
+        label="Dropdown"
+        items={dropdownItems}
+        itemToString={(item) => (item ? item.text : '')}
+      />
+      <Dropdown
+        id="dropdown2"
+        titleText="Dropdown label"
+        hideLabel
+        label="Dropdown"
+        items={dropdownItems}
+        itemToString={(item) => (item ? item.text : '')}
+      />
+
+      <HeaderGlobalAction aria-label="Open" isActive>
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+    </HeaderGlobalBar>
+  </Header>
+);
+HeaderStory.storyName = 'Header';
 
 /**
  * Story for HeaderPanel

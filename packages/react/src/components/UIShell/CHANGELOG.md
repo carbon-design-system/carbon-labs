@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.19.0...@carbon-labs/react-ui-shell@0.20.0) (2025-02-21)
+
+
+### Features
+
+* **SideNav:** add renderIcon to SideNavMenuItem ([#452](https://github.com/carbon-design-system/carbon-labs/issues/452)) ([c5b19ad](https://github.com/carbon-design-system/carbon-labs/commit/c5b19ad17fd6860d5a9cc1ef857c22a6fe61ae68))
+
+
+
+
+
 # [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.18.0...@carbon-labs/react-ui-shell@0.19.0) (2025-02-20)
 
 

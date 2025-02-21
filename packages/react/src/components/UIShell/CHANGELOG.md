@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.20.0...@carbon-labs/react-ui-shell@0.21.0) (2025-02-21)
+
+
+### Features
+
+* **SideNavLinkPopover:** create component  ([#454](https://github.com/carbon-design-system/carbon-labs/issues/454)) ([f8f4281](https://github.com/carbon-design-system/carbon-labs/commit/f8f4281d23bc47e84417e3da4a925c9c040bcb95))
+
+
+
+
+
 # [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.19.0...@carbon-labs/react-ui-shell@0.20.0) (2025-02-21)
 
 

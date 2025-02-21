@@ -28,6 +28,8 @@ import {
   HeaderGlobalAction,
   Grid,
   Column,
+  Button,
+  Dropdown,
 } from '@carbon/react';
 import {
   Add,
@@ -45,6 +47,8 @@ import {
   Platforms,
   EventIncident,
   WorkflowAutomation,
+  SquareFill,
+  SquareOutline,
 } from '@carbon/icons-react';
 
 import {
@@ -531,6 +535,33 @@ export const SideNavPanel = () => {
     </>
   );
 };
+/**
+ * Story for Header
+ * @param {object} args Storybook args that control component props
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const HeaderStory = (args) => (
+  <Header aria-label="IBM Platform Name">
+    <SkipToContent />
+    <HeaderMenuButton aria-label="Open menu" isCollapsible isFixedNav />
+    <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
+      [Platform]
+    </HeaderName>
+    <HeaderGlobalBar>
+      <Button kind="ghost">Ghost button</Button>
+      <HeaderGlobalAction aria-label="Open" tooltipAlignment="end">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open" isActive tooltipAlignment="end">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open" tooltipAlignment="end">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+    </HeaderGlobalBar>
+  </Header>
+);
+HeaderStory.storyName = 'Header';
 
 /**
  * Story for HeaderPanel

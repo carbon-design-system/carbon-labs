@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use 'styles/header';
-@use 'styles/side-nav';
-@use 'styles/content';
+$prefix: 'cds' !default;
+
+.#{$prefix}--header__action:focus {
+  border-width: 2px;
+}

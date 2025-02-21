@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.21.0...@carbon-labs/react@0.22.0) (2025-02-20)
+
+
+### Bug Fixes
+
+* **uishell:** update focus state for hamburger to 2px ([#458](https://github.com/carbon-design-system/carbon-labs/issues/458)) ([e9a107d](https://github.com/carbon-design-system/carbon-labs/commit/e9a107da0c73c9e308f1173b7e76bad5321820c6))
+
+
+
+
+
 # [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.20.0...@carbon-labs/react@0.21.0) (2025-02-19)
 
 **Note:** Version bump only for package @carbon-labs/react

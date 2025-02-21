@@ -153,6 +153,37 @@ const StoryContent = () => {
   );
 };
 
+const dropdownItems = [
+  {
+    text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+  },
+  {
+    text: 'Option 1',
+  },
+  {
+    text: 'Option 2',
+  },
+  {
+    text: 'Option 3 - a disabled item',
+    disabled: true,
+  },
+  {
+    text: 'Option 4',
+  },
+  {
+    text: 'Option 5',
+  },
+  {
+    text: 'Option 6',
+  },
+  {
+    text: 'Option 7',
+  },
+  {
+    text: 'Option 8',
+  },
+];
+
 /**
  * Story for UIShell
  * @returns {React.ReactElement} The JSX for the story
@@ -540,7 +571,7 @@ export const SideNavPanel = () => {
  * @param {object} args Storybook args that control component props
  * @returns {React.ReactElement} The JSX for the story
  */
-export const HeaderStory = (args) => (
+export const HeaderStory = () => (
   <Header aria-label="IBM Platform Name">
     <SkipToContent />
     <HeaderMenuButton aria-label="Open menu" isCollapsible isFixedNav />
@@ -549,13 +580,42 @@ export const HeaderStory = (args) => (
     </HeaderName>
     <HeaderGlobalBar>
       <Button kind="ghost">Ghost button</Button>
-      <HeaderGlobalAction aria-label="Open" tooltipAlignment="end">
+      <Dropdown
+        id="dropdown1"
+        titleText="Dropdown label"
+        hideLabel
+        label="Dropdown"
+        items={dropdownItems}
+        itemToString={(item) => (item ? item.text : '')}
+      />
+      <Dropdown
+        id="dropdown2"
+        titleText="Dropdown label"
+        hideLabel
+        label="Dropdown"
+        items={dropdownItems}
+        itemToString={(item) => (item ? item.text : '')}
+      />
+
+      <HeaderGlobalAction aria-label="Open" isActive>
         <SquareOutline size={20} />
       </HeaderGlobalAction>
-      <HeaderGlobalAction aria-label="Open" isActive tooltipAlignment="end">
+      <HeaderGlobalAction aria-label="Open">
         <SquareOutline size={20} />
       </HeaderGlobalAction>
-      <HeaderGlobalAction aria-label="Open" tooltipAlignment="end">
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
         <SquareOutline size={20} />
       </HeaderGlobalAction>
     </HeaderGlobalBar>

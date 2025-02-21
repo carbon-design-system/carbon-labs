@@ -38,6 +38,7 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 // Treeview Side-nav
 //----------------------------------------------------------------------------
+
 .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
   margin-inline-end: $spacing-05;
 }
@@ -62,6 +63,54 @@ div:has(.#{$prefix}--header)
   }
 }
 
+// SideNavMenu
+// Level 2
+// without icon
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-10;
+}
+
+// with icon
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-09;
+}
+
+// Nested SideNavMenuItem
+// Level 2
+// without icon
+.#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-10;
+}
+
+// with icon
+.#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+  padding-inline-start: $spacing-09;
+}
+
+// Level 3
+// without icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-11;
+}
+
+// with icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-12;
+}
+
+//----------------------------------------------------------------------------
 // Side-nav Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {

@@ -14,7 +14,6 @@ import {
   SideNavItems,
   SideNavMenu,
   SideNavMenuItem,
-  HeaderPanel,
 } from '@carbon-labs/react-ui-shell/es/index';
 import {
   Content,
@@ -25,8 +24,6 @@ import {
   HeaderContainer,
   Header,
   HeaderName,
-  HeaderGlobalBar,
-  HeaderGlobalAction,
   Theme,
   HeaderMenuButton,
   SideNavDivider,
@@ -133,17 +130,6 @@ function App() {
                 <HeaderName href="#" prefix="IBM">
                   [Platform]
                 </HeaderName>
-                <HeaderGlobalBar>
-                  <HeaderGlobalAction
-                    aria-label={expandedPanel ? 'Close panel' : 'Open panel'}
-                    isActive={expandedPanel}
-                    aria-expanded={expandedPanel}
-                    tooltipAlignment="end"
-                    onClick={() => setExpandedPanel(!expandedPanel)}>
-                    <Fade size={20} />
-                  </HeaderGlobalAction>
-                </HeaderGlobalBar>
-                <HeaderPanel expanded={expandedPanel} />
               </Header>
               <SideNav
                 aria-label="Side navigation1"
@@ -157,25 +143,31 @@ function App() {
                   <SideNavMenu
                     renderIcon={SquareOutline}
                     title="Sub-menu level 1">
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                    <SideNavMenu title="Sub-menu level 2">
-                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-                      <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+                    <SideNavMenuItem renderIcon={SquareOutline} href="#">
+                      Item level 2
+                    </SideNavMenuItem>
+                    <SideNavMenuItem renderIcon={SquareOutline} href="#">
+                      Item level 2
+                    </SideNavMenuItem>
+                    <SideNavMenu
+                      renderIcon={SquareOutline}
+                      title="Sub-menu level 2">
+                      <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                      <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                     </SideNavMenu>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavDivider />
                   <SideNavLink renderIcon={SquareOutline} href="#">
@@ -185,9 +177,9 @@ function App() {
                     Link
                   </SideNavLink>
                   <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Link</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
                   </SideNavMenu>
                 </SideNavItems>
               </SideNav>
@@ -198,11 +190,11 @@ function App() {
                 isChildOfHeader={false}
                 hideOverlay
                 aria-label="Side navigation">
-                <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                </SideNavMenu>
                 <SideNavItems>
+                  <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+                    <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
+                  </SideNavMenu>
                   <SideNavLink renderIcon={Fade} href="#">
                     Link
                   </SideNavLink>

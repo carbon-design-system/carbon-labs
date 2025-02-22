@@ -11,14 +11,12 @@ import React, {
   ElementType,
   ForwardedRef,
   ComponentProps,
-  useEffect,
-  useRef,
   useContext,
+  ComponentType,
 } from 'react';
-import { SideNavLinkText } from '@carbon/react';
+import { SideNavLinkText, SideNavIcon } from '@carbon/react';
 import Link from './Link';
 import { usePrefix } from '../internal/usePrefix';
-import { useMergedRefs } from '../internal/useMergedRefs';
 import { SideNavContext } from './SideNav';
 
 export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
@@ -31,12 +29,6 @@ export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
    * Provide an optional class to be applied to the containing node
    */
   className?: string;
-
-  /**
-   * **Note:** this is controlled by the parent SideNavMenu component, do not set manually.
-   * SideNavMenu depth to determine spacing
-   */
-  depth?: number;
 
   /**
    * Optionally specify whether the link is "active". An active link is one that
@@ -54,6 +46,11 @@ export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
    * Optional component to render instead of default Link
    */
   as?: ElementType;
+
+  /**
+   * Provide an icon to render in the side navigation link. Should be a React class.
+   */
+  renderIcon?: ComponentType;
 }
 
 export const SideNavMenuItem = React.forwardRef<
@@ -64,31 +61,17 @@ export const SideNavMenuItem = React.forwardRef<
   const {
     children,
     className: customClassName,
-    depth: propDepth,
     as: Component = Link,
     isActive,
+    renderIcon: IconElement,
     ...rest
   } = props;
   const { isTreeview } = useContext(SideNavContext);
   const className = cx(`${prefix}--side-nav__menu-item`, customClassName);
-  const depth = propDepth as number;
   const linkClassName = cx({
     [`${prefix}--side-nav__link`]: true,
     [`${prefix}--side-nav__link--current`]: isActive,
   });
-
-  const linkRef = useRef<HTMLElement | null>(null);
-  const itemRef = useMergedRefs([linkRef, ref]);
-
-  useEffect(() => {
-    const calcLinkOffset = () => {
-      return 4 + Math.max(0, depth - 1) * 1;
-    };
-
-    if (linkRef.current) {
-      linkRef.current.style.paddingLeft = `${calcLinkOffset()}rem`;
-    }
-  }, [isTreeview]);
 
   return (
     <li className={className}>
@@ -98,7 +81,12 @@ export const SideNavMenuItem = React.forwardRef<
         role={isTreeview ? 'treeitem' : undefined}
         className={linkClassName}
         tabIndex={isTreeview ? -1 : 0}
-        ref={itemRef}>
+        ref={ref}>
+        {IconElement && (
+          <SideNavIcon small>
+            <IconElement />
+          </SideNavIcon>
+        )}
         <SideNavLinkText>{children}</SideNavLinkText>
       </Component>
     </li>
@@ -108,6 +96,11 @@ export const SideNavMenuItem = React.forwardRef<
 SideNavMenuItem.displayName = 'SideNavMenuItem';
 SideNavMenuItem.propTypes = {
   /**
+   * Optional component to render instead of default Link
+   */
+  as: PropTypes.elementType,
+
+  /**
    * Specify the children to be rendered inside of the `SideNavMenuItem`
    */
   children: PropTypes.node,
@@ -116,12 +109,6 @@ SideNavMenuItem.propTypes = {
    * Provide an optional class to be applied to the containing node
    */
   className: PropTypes.string,
-
-  /**
-   * **Note:** this is controlled by the parent SideNavMenu component, do not set manually.
-   * SideNavMenu depth to determine spacing
-   */
-  depth: PropTypes.number,
 
   /**
    * Optionally provide an href for the underlying li`
@@ -136,7 +123,7 @@ SideNavMenuItem.propTypes = {
   isActive: PropTypes.bool,
 
   /**
-   * Optional component to render instead of default Link
+   * Provide an icon to render in the side navigation link. Should be a React class.
    */
-  as: PropTypes.elementType,
+  renderIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };

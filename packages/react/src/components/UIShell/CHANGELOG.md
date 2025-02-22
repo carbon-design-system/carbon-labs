@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.21.0...@carbon-labs/react-ui-shell@0.22.0) (2025-02-21)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.20.0...@carbon-labs/react-ui-shell@0.21.0) (2025-02-21)
+
+
+### Features
+
+* **SideNavLinkPopover:** create component  ([#454](https://github.com/carbon-design-system/carbon-labs/issues/454)) ([f8f4281](https://github.com/carbon-design-system/carbon-labs/commit/f8f4281d23bc47e84417e3da4a925c9c040bcb95))
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.19.0...@carbon-labs/react-ui-shell@0.20.0) (2025-02-21)
+
+
+### Features
+
+* **SideNav:** add renderIcon to SideNavMenuItem ([#452](https://github.com/carbon-design-system/carbon-labs/issues/452)) ([c5b19ad](https://github.com/carbon-design-system/carbon-labs/commit/c5b19ad17fd6860d5a9cc1ef857c22a6fe61ae68))
+
+
+
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.18.0...@carbon-labs/react-ui-shell@0.19.0) (2025-02-20)
+
+
+### Bug Fixes
+
+* **uishell:** update focus state for hamburger to 2px ([#458](https://github.com/carbon-design-system/carbon-labs/issues/458)) ([e9a107d](https://github.com/carbon-design-system/carbon-labs/commit/e9a107da0c73c9e308f1173b7e76bad5321820c6))
+
+
+
+
+
 # [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.17.0...@carbon-labs/react-ui-shell@0.18.0) (2025-02-18)
 
 **Note:** Version bump only for package @carbon-labs/react-ui-shell

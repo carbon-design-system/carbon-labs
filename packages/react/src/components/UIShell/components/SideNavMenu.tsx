@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ChevronDown } from '@carbon/icons-react';
+import { CaretDown, ChevronDown } from '@carbon/icons-react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
@@ -18,12 +18,20 @@ import React, {
   useState,
 } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import { SideNavIcon } from '@carbon/react';
+import {
+  FormLabel,
+  Popover,
+  PopoverContent,
+  SideNavIcon,
+  Toggletip,
+  Tooltip,
+} from '@carbon/react';
 import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
 import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
-
+import { SharkfinIcon } from './Sharkfin';
+import { SideNavFlyoutMenu } from './SideNavFlyoutMenu';
 export interface SideNavMenuProps {
   /**
    * An optional CSS class to apply to the component.
@@ -201,8 +209,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         if (match(event, keys.ArrowLeft)) {
           event.stopPropagation();
 
-          if (isMenu) {
-            // collapse menu
+          // collapse menu
+          if (isMenu && sideNavExpanded) {
             if (isExpanded == 'true') {
               setIsExpanded(false);
 
@@ -226,8 +234,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         if (match(event, keys.ArrowRight)) {
           event.stopPropagation();
 
-          // expand menu
-          if (isMenu) {
+          // expand menu when sidenav is expanded
+          if (isMenu && sideNavExpanded) {
             setIsExpanded(true);
 
             // if already expanded, focus on first element
@@ -249,7 +257,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     // save expanded state before SideNav collapse
     const [lastExpandedState, setLastExpandedState] = useState(isExpanded);
 
-    // reset when SideNav is panel
+    // reset to opened/collapsed menu state when Panel SideNav is toggled
     useEffect(() => {
       if (navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded) {
         setLastExpandedState(isExpanded);
@@ -259,7 +267,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       }
     }, [sideNavExpanded]);
 
-    return (
+    const [openPopover, setOpenPopover] = React.useState(false);
+
+    const content = (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <li
         role={isTreeview ? 'treeitem' : undefined}
@@ -278,7 +288,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               firstLink.current &&
               !sideNavExpanded
             ) {
-              window.location.href = firstLink.current;
+              setOpenPopover(!openPopover);
+              // window.location.href = firstLink.current;
             } else {
               setIsExpanded(!isExpanded);
               setLastExpandedState(!isExpanded);
@@ -292,6 +303,14 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               <IconElement />
             </SideNavIcon>
           )}
+          {!sideNavExpanded && (
+            <div
+              className={`${prefix}--side-nav--panel-submenu-caret-container`}>
+              <div className={`${prefix}--side-nav--panel-submenu-caret`}>
+                <SharkfinIcon />
+              </div>
+            </div>
+          )}
           <span className={`${prefix}--side-nav__submenu-title`}>{title}</span>
           <SideNavIcon className={`${prefix}--side-nav__submenu-chevron`} small>
             <ChevronDown size={20} />
@@ -301,6 +320,17 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           {childrenToRender}
         </ul>
       </li>
+    );
+
+    return navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded ? (
+      <SideNavFlyoutMenu
+        className={`${prefix}--side-nav-flyout-menu`}
+        title={title}
+        menuContent={children}>
+        {content}
+      </SideNavFlyoutMenu>
+    ) : (
+      content
     );
   }
 );

@@ -31,6 +31,7 @@ import { usePrefix } from '../internal/usePrefix';
 import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
 import { SharkfinIcon } from './Sharkfin';
+import { SideNavFlyoutMenu } from './SideNavFlyoutMenu';
 export interface SideNavMenuProps {
   /**
    * An optional CSS class to apply to the component.
@@ -322,13 +323,12 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     );
 
     return navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded ? (
-      <Popover open={openPopover} align="right-top">
+      <SideNavFlyoutMenu
+        className={`${prefix}--side-nav-flyout-menu`}
+        title={title}
+        menuContent={children}>
         {content}
-        <PopoverContent>
-          <FormLabel>{title}</FormLabel>
-          {children}
-        </PopoverContent>
-      </Popover>
+      </SideNavFlyoutMenu>
     ) : (
       content
     );

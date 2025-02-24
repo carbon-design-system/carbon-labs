@@ -6,6 +6,7 @@
  */
 
 @use '@carbon/styles/scss/utilities/convert' as convert;
+@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 @use '@carbon/styles/scss/utilities/button-reset' as button-reset;
 @use '@carbon/styles/scss/utilities/focus-outline' as *;
 @use '@carbon/styles/scss/theme' as *;
@@ -208,12 +209,26 @@ div:has(.#{$prefix}--header)
     }  
   }
 
-  .#{$prefix}--popover-content {
+  // .#{$prefix}--side-nav-flyout-menu {
+  //    .#{$prefix}--popover-content,
+  //    .#{$prefix}--popover-caret {
+  //     @include custom-property.declaration(
+  //       'popover-background-color',
+  //       $background-inverse
+  //     );
+  //     @include custom-property.declaration(
+  //       'popover-text-color',
+  //       $text-primary
+  //     );
+  //   }  
+  // }
+
+
+  .#{$prefix}--side-nav-menu--popover-content { 
     padding: 4px 0;
 
     .#{$prefix}--label {
       padding-left: $spacing-05;
-      color: $text-secondary;
     }
 
     .#{$prefix}--side-nav__link {
@@ -226,6 +241,17 @@ div:has(.#{$prefix}--header)
       background-color: $background-hover;
     }
   }
+
+  // Side Nav Link Popover
+  .#{$prefix}--side-nav-link-popover.#{$prefix}--btn--icon-only {
+    padding: 0;
+    block-size: $spacing-07;
+    min-block-size: initial;
+
+    .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
+      margin-inline-end: 0;
+    }
+  }  
 
 }
 
@@ -242,15 +268,4 @@ div:has(.#{$prefix}--header)
   .#{$prefix}--side-nav__items {
     overflow-y: auto;
   }  
-
-  // Side Nav Link Popover
-  .#{$prefix}--side-nav-link-popover.#{$prefix}--btn--icon-only {
-    padding: 0;
-    block-size: $spacing-07;
-    min-block-size: initial;
-
-    .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
-      margin-inline-end: 0;
-    }
-  }
 }

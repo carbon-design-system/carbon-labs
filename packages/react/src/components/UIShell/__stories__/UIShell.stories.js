@@ -53,6 +53,7 @@ import {
 } from './AppIcons';
 
 import '../components/ui-shell.scss';
+import { SideNavFlyoutMenu } from '../components/SideNavFlyoutMenu';
 
 export default {
   title: 'Components/UIShell',
@@ -356,7 +357,6 @@ Default.parameters = {
  * @returns {React.ReactElement} The JSX for the story
  */
 export const DefaultWithFlyoutMenu = () => {
-  const [expandedPanel, setExpandedPanel] = useState(false);
   return (
     <div>
       <HeaderContainer
@@ -378,17 +378,6 @@ export const DefaultWithFlyoutMenu = () => {
                   prefix="IBM">
                   [Platform]
                 </HeaderName>
-                <HeaderGlobalBar>
-                  <HeaderGlobalAction
-                    aria-label={expandedPanel ? 'Close panel' : 'Open panel'}
-                    isActive={expandedPanel}
-                    aria-expanded={expandedPanel}
-                    tooltipAlignment="end"
-                    onClick={() => setExpandedPanel(!expandedPanel)}>
-                    <Fade size={20} />
-                  </HeaderGlobalAction>
-                </HeaderGlobalBar>
-                <HeaderPanel expanded={expandedPanel} />
               </Header>
               <SideNav
                 isTreeview={true}
@@ -402,38 +391,53 @@ export const DefaultWithFlyoutMenu = () => {
                   <SideNavMenu
                     renderIcon={CarbonDesignSystem}
                     title="Product 1">
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Link level 2
+                    <SideNavMenuItem
+                      href="http://www.carbondesignsystem.com"
+                      renderIcon={BusinessProcesses}>
+                      Business
                     </SideNavMenuItem>
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Link level 2
+                    <SideNavMenuItem
+                      href="http://www.carbondesignsystem.com"
+                      renderIcon={Application}>
+                      Applications
                     </SideNavMenuItem>
-                    <SideNavMenu title="Sub-menu level 2">
+                    <SideNavMenuItem
+                      href="http://www.carbondesignsystem.com"
+                      renderIcon={Platforms}>
+                      Platforms
+                    </SideNavMenuItem>
+                    <SideNavMenu renderIcon={Layers} title="Infrastructure">
                       <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Link level 3
+                        Item level 3
                       </SideNavMenuItem>
                       <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Link level 3
+                        Item level 3
                       </SideNavMenuItem>
                       <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Link level 3
+                        Item level 3
                       </SideNavMenuItem>
                     </SideNavMenu>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={CarbonIBMDotCom} title="Product 2">
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    <SideNavMenuItem
+                      renderIcon={Home}
+                      href="http://www.carbondesignsystem.com">
                       Link
                     </SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavMenu
                     renderIcon={CarbonforIBMProducts}
                     title="Product 3">
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    <SideNavMenuItem
+                      renderIcon={Home}
+                      href="http://www.carbondesignsystem.com">
                       Link
                     </SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavMenu renderIcon={IBMTelemetry} title="Product 4">
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    <SideNavMenuItem
+                      renderIcon={Home}
+                      href="http://www.carbondesignsystem.com">
                       Link
                     </SideNavMenuItem>
                   </SideNavMenu>
@@ -451,30 +455,25 @@ export const DefaultWithFlyoutMenu = () => {
                 </SideNavItems>
               </SideNav>
             </Theme>
-            <Theme theme="white">
+            <Theme theme="g100">
               <SideNav
                 navType={SIDE_NAV_TYPE.PANEL}
                 isChildOfHeader={false}
                 hideOverlay
                 aria-label="Product navigation">
                 <SideNavItems>
-                  <SideNavMenu
-                    renderIcon={CarbonDesignSystem}
-                    title="Product 1">
+                  <SideNavMenu renderIcon={Home} title="Home">
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Link level 2
+                      Item level 3
                     </SideNavMenuItem>
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Link level 2
+                      Item level 3
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
                     </SideNavMenuItem>
                   </SideNavMenu>
                   <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={Home}>
-                    Home
-                  </SideNavLink>
-                  <SideNavLink
-                    size="small"
                     href="http://www.carbondesignsystem.com"
                     renderIcon={BusinessProcesses}>
                     Business

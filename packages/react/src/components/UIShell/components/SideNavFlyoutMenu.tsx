@@ -8,7 +8,12 @@
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { Popover, PopoverAlignment, PopoverContent } from '@carbon/react';
+import {
+  FormLabel,
+  Popover,
+  PopoverAlignment,
+  PopoverContent,
+} from '@carbon/react';
 import { keys, match } from '../internal/keyboard';
 import { useDelayedState } from '../internal/useDelayedState';
 import { useId } from '../internal/useId.js';
@@ -89,6 +94,16 @@ interface TooltipBaseProps {
    * Specify the duration in milliseconds to delay before hiding the tooltip
    */
   leaveDelayMs?: number;
+
+  /**
+   * The content to be rendered inside the popover menu.
+   */
+  menuContent?: React.ReactNode;
+
+  /**
+   *  The title for the overall menu name.
+   */
+  title?: string;
 }
 
 export type TooltipProps<T extends React.ElementType> = PolymorphicProps<
@@ -97,7 +112,7 @@ export type TooltipProps<T extends React.ElementType> = PolymorphicProps<
 >;
 
 function SideNavFlyoutMenu<T extends React.ElementType>({
-  align = 'top',
+  align = 'right-start',
   className: customClassName,
   children,
   label,
@@ -106,11 +121,13 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   leaveDelayMs = 300,
   defaultOpen = false,
   closeOnActivation = false,
-  dropShadow = false,
-  highContrast = true,
+  dropShadow = true,
+  highContrast = false,
+  menuContent,
+  title,
   ...rest
 }: TooltipProps<T>) {
-  const tooltipRef = useRef<HTMLSpanElement>(null);
+  const popoverRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useDelayedState(defaultOpen);
   const [isDragging, setIsDragging] = useState(false);
   const [focusByMouse, setFocusByMouse] = useState(false);
@@ -119,13 +136,23 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   const prefix = usePrefix();
   const child = React.Children.only(children);
 
+  const [clickMode, setClickMode] = useState(false);
+
   const triggerProps = {
     onFocus: () => !focusByMouse && setOpen(true),
     onBlur: () => {
       setOpen(false);
       setFocusByMouse(false);
+      setClickMode(false);
     },
-    onClick: () => closeOnActivation && setOpen(false),
+    onClick: () => {
+      if (closeOnActivation) {
+        setOpen(false);
+      }
+
+      setClickMode(true);
+      setOpen(true);
+    },
     // This should be placed on the trigger in case the element is disabled
     onMouseEnter,
     onMouseLeave,
@@ -193,9 +220,11 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
 
   function onMouseEnter() {
     // Interactive Tags should not support onMouseEnter
-    if (!rest?.onMouseEnter) {
-      setIsPointerIntersecting(true);
-      setOpen(true, enterDelayMs);
+    if (!clickMode) {
+      if (!rest?.onMouseEnter) {
+        setIsPointerIntersecting(true);
+        setOpen(true, enterDelayMs);
+      }
     }
   }
 
@@ -205,11 +234,13 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   }
 
   function onMouseLeave() {
-    setIsPointerIntersecting(false);
-    if (isDragging) {
-      return;
+    if (!clickMode) {
+      setIsPointerIntersecting(false);
+      if (isDragging) {
+        return;
+      }
+      setOpen(false, leaveDelayMs);
     }
-    setOpen(false, leaveDelayMs);
   }
 
   function onMouseMove(evt) {
@@ -247,32 +278,40 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     };
   }, [isDragging, onDragStop]);
 
+  useEffect(() => {
+    const popoverMenuLinks = popoverRef?.current?.querySelectorAll(
+      `.${prefix}--side-nav-menu--popover-content a`
+    );
+
+    popoverMenuLinks?.forEach((e) => e.setAttribute('tabindex', '-1'));
+  }, [menuContent]);
+
   return (
     // @ts-ignore-error Popover throws a TS error everytime is imported
     <Popover
+      ref={popoverRef}
       {...rest}
       align={align}
-      className={cx(`${prefix}--tooltip`, customClassName)}
+      className={cx(customClassName)}
       dropShadow={dropShadow}
       highContrast={highContrast}
       onKeyDown={onKeyDown}
       onMouseLeave={onMouseLeave}
       open={open}>
-      <div className={`${prefix}--tooltip-trigger__wrapper`}>
-        {child !== undefined
-          ? React.cloneElement(child, {
-              ...triggerProps,
-              ...getChildEventHandlers(child.props),
-            })
-          : null}
-      </div>
+      {child !== undefined
+        ? React.cloneElement(child, {
+            ...triggerProps,
+            ...getChildEventHandlers(child.props),
+          })
+        : null}
       <PopoverContent
         aria-hidden={open ? 'false' : 'true'}
-        className={`${prefix}--tooltip-content`}
+        className={`${prefix}--side-nav-menu--popover-content`}
         id={id}
         onMouseEnter={onMouseEnter}
         role="tooltip">
-        {label || description}
+        <FormLabel>{title}</FormLabel>
+        {menuContent}
       </PopoverContent>
     </Popover>
   );
@@ -372,6 +411,16 @@ SideNavFlyoutMenu.propTypes = {
    * Specify the duration in milliseconds to delay before hiding the tooltip
    */
   leaveDelayMs: PropTypes.number,
+
+  /**
+   * The content to be rendered inside the popover menu.
+   */
+  menuContent: PropTypes.node,
+
+  /**
+   * The title for the overall menu name.
+   */
+  title: PropTypes.string,
 };
 
 export { SideNavFlyoutMenu };

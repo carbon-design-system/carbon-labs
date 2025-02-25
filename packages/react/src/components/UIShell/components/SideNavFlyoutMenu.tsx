@@ -135,23 +135,48 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   const id = useId('tooltip');
   const prefix = usePrefix();
   const child = React.Children.only(children);
+  const menuButton = useRef<HTMLButtonElement | null>();
 
   const [clickMode, setClickMode] = useState(false);
+  const isFocusedInsideRef = useRef(false);
+  const popoverMenuLinks = useRef<NodeListOf<HTMLElement> | null>(null);
 
   const triggerProps = {
-    onFocus: () => !focusByMouse && setOpen(true),
-    onBlur: () => {
-      setOpen(false);
-      setFocusByMouse(false);
-      setClickMode(false);
+    onFocus: (event) => {
+      const lastFocus = event.relatedTarget;
+
+      // display menu on hover, except when menu was closed from Escape key
+      if (
+        !focusByMouse &&
+        !lastFocus.classList.contains(`${prefix}--side-nav__link`)
+      ) {
+        console.log('on foucs');
+        setOpen(true);
+      }
     },
-    onClick: () => {
+    onBlur: (e) => {
+      if (!isFocusedInsideRef.current && !focusByMouse) {
+        console.log('CLOSING EVERYHTING');
+        setOpen(false);
+        setFocusByMouse(false);
+        setClickMode(false);
+      }
+    },
+    onClick: (event) => {
       if (closeOnActivation) {
         setOpen(false);
       }
 
-      setClickMode(true);
-      setOpen(true);
+      // On hover, menu opens. If clicked, should remain open (aka clickMode is on).
+      // if clicked again, should close (clickMode OFF) and menu should close,
+      // even if mouse is hovering on the button. Menu opens upon reentering.
+      if (!isFocusedInsideRef.current) {
+        console.log('shouldnt');
+        setClickMode(!clickMode);
+        setIsPointerIntersecting(!clickMode);
+        setOpen(!clickMode);
+        isFocusedInsideRef.current = false;
+      }
     },
     // This should be placed on the trigger in case the element is disabled
     onMouseEnter,
@@ -183,43 +208,36 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     triggerProps['aria-describedby'] = id;
   }
 
-  const onKeyDown = useCallback(
-    (event: React.SyntheticEvent | Event) => {
-      if (open && match(event, keys.Escape)) {
-        event.stopPropagation();
-        setOpen(false);
-      }
-      if (
-        open &&
-        closeOnActivation &&
-        (match(event, keys.Enter) || match(event, keys.Space))
-      ) {
-        setOpen(false);
-      }
-    },
-    [closeOnActivation, open, setOpen]
-  );
-
-  useIsomorphicEffect(() => {
-    if (!open) {
-      return undefined;
+  function onKeyDown(event) {
+    if (open && match(event, keys.Escape)) {
+      event.stopPropagation();
+      closeMenu();
+    }
+    if (
+      open &&
+      closeOnActivation &&
+      (match(event, keys.Enter) || match(event, keys.Space))
+    ) {
+      setOpen(false);
     }
 
-    function handleKeyDown(event: KeyboardEvent) {
-      if (match(event, keys.Escape)) {
-        onKeyDown(event);
+    if (match(event, keys.Enter) || match(event, keys.Space)) {
+      setOpen(true);
+      setFocusByMouse(false);
+      if (popoverMenuLinks?.current) {
+        const firstLink = popoverMenuLinks?.current?.[0] as HTMLElement;
+        setContentTabIndex('0');
+
+        if (firstLink) {
+          isFocusedInsideRef.current = true;
+
+          firstLink.focus();
+        }
       }
     }
-
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [open, onKeyDown]);
+  }
 
   function onMouseEnter() {
-    // Interactive Tags should not support onMouseEnter
     if (!clickMode) {
       if (!rest?.onMouseEnter) {
         setIsPointerIntersecting(true);
@@ -278,13 +296,70 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     };
   }, [isDragging, onDragStop]);
 
-  useEffect(() => {
-    const popoverMenuLinks = popoverRef?.current?.querySelectorAll(
-      `.${prefix}--side-nav-menu--popover-content a`
-    );
+  const setContentTabIndex = (value: string) => {
+    if (popoverMenuLinks.current) {
+      popoverMenuLinks.current.forEach((e) =>
+        e.setAttribute('tabindex', value)
+      );
+    }
+  };
 
-    popoverMenuLinks?.forEach((e) => e.setAttribute('tabindex', '-1'));
-  }, [menuContent]);
+  function handleMenuFocusTrap(event) {
+    if (open && isFocusedInsideRef.current && !focusByMouse) {
+      if (!popoverRef.current?.contains(event.relatedTarget)) {
+        const firstLink = popoverMenuLinks.current?.[0];
+        firstLink?.focus();
+      } else if (menuButton.current?.contains(event.relatedTarget)) {
+        const lastLink =
+          popoverMenuLinks.current?.[popoverMenuLinks.current?.length - 1];
+        lastLink?.focus();
+      }
+    } else if (open && isFocusedInsideRef.current && focusByMouse) {
+      closeMenu();
+    }
+  }
+
+  function closeMenu() {
+    setOpen(false);
+    isFocusedInsideRef.current = false;
+    setContentTabIndex('-1');
+    menuButton.current?.focus();
+  }
+
+  // initiate menu content to be untabbable
+  useEffect(() => {
+    if (popoverRef.current) {
+      popoverMenuLinks.current = popoverRef.current.querySelectorAll(
+        `.${prefix}--side-nav-menu--popover-content a`
+      ) as NodeListOf<HTMLElement>;
+
+      setContentTabIndex('-1');
+
+      menuButton.current = popoverRef.current.querySelector(
+        `.${prefix}--side-nav__submenu`
+      ) as HTMLButtonElement;
+    }
+  }, []);
+
+  const handleMouseDown = (event) => {
+    if (open && isFocusedInsideRef.current) {
+      event.preventDefault();
+      setFocusByMouse(true);
+    }
+  };
+
+  useIsomorphicEffect(() => {
+    if (!open) {
+      return undefined;
+    }
+
+    console.log('add eevent');
+    document.addEventListener('onclick', handleMouseDown);
+
+    return () => {
+      document.removeEventListener('onclick', handleMouseDown);
+    };
+  }, [open]);
 
   return (
     // @ts-ignore-error Popover throws a TS error everytime is imported
@@ -294,7 +369,8 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       align={align}
       className={cx(customClassName)}
       dropShadow={dropShadow}
-      highContrast={highContrast}
+      highContrast={true}
+      onBlur={handleMenuFocusTrap}
       onKeyDown={onKeyDown}
       onMouseLeave={onMouseLeave}
       open={open}>

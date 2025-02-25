@@ -209,19 +209,21 @@ div:has(.#{$prefix}--header)
     }  
   }
 
-  // .#{$prefix}--side-nav-flyout-menu {
-  //    .#{$prefix}--popover-content,
-  //    .#{$prefix}--popover-caret {
-  //     @include custom-property.declaration(
-  //       'popover-background-color',
-  //       $background-inverse
-  //     );
-  //     @include custom-property.declaration(
-  //       'popover-text-color',
-  //       $text-primary
-  //     );
-  //   }  
-  // }
+  .#{$prefix}--side-nav-flyout-menu.#{$prefix}--popover--high-contrast  {
+    
+    .#{$prefix}--side-nav__link,
+    .#{$prefix}--side-nav__link-text {
+      color: $text-inverse;
+
+      &:focus {
+        outline-color: $focus-inverse;
+      }
+     }
+
+     .#{$prefix}--label {
+      color: $text-inverse;
+    }  
+  }
 
 
   .#{$prefix}--side-nav-menu--popover-content { 
@@ -232,9 +234,10 @@ div:has(.#{$prefix}--header)
     }
 
     .#{$prefix}--side-nav__link {
+      @include type-style('body-compact-01');
+
       padding-right: $spacing-08;
       padding-left: $spacing-08;
-      font-weight: 400;      
     }
 
     .#{$prefix}--side-nav__link:hover{    

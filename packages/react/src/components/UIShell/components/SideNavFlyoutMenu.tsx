@@ -141,6 +141,29 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   const isFocusedInsideRef = useRef(false);
   const popoverMenuLinks = useRef<NodeListOf<HTMLElement> | null>(null);
 
+  useEffect(() => {
+    console.log('====================');
+  }, [clickMode, isFocusedInsideRef.current, focusByMouse, open]);
+  // Log changes to clickMode
+  useEffect(() => {
+    console.log({ clickMode });
+  }, [clickMode]);
+
+  // Log changes to focusByMouse
+  useEffect(() => {
+    console.log({ focusByMouse });
+  }, [focusByMouse]);
+
+  // Log changes to open
+  useEffect(() => {
+    console.log({ open });
+  }, [open]);
+
+  // Log changes to isFocusedInsideRef
+  useEffect(() => {
+    console.log({ isFocusedInsideRef: isFocusedInsideRef.current });
+  }, [isFocusedInsideRef.current]);
+
   const triggerProps = {
     onFocus: (event) => {
       const lastFocus = event.relatedTarget;
@@ -148,7 +171,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       // display menu on hover, except when menu was closed from Escape key
       if (
         !focusByMouse &&
-        !lastFocus.classList.contains(`${prefix}--side-nav__link`)
+        !lastFocus?.classList.contains(`${prefix}--side-nav__link`)
       ) {
         console.log('on foucs');
         setOpen(true);
@@ -156,7 +179,9 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     },
     onBlur: (e) => {
       if (!isFocusedInsideRef.current && !focusByMouse) {
-        console.log('CLOSING EVERYHTING');
+        console.log('ON BLUR????');
+
+        isFocusedInsideRef.current = false;
         setOpen(false);
         setFocusByMouse(false);
         setClickMode(false);
@@ -222,15 +247,20 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     }
 
     if (match(event, keys.Enter) || match(event, keys.Space)) {
+      console.log('ENETER');
       setOpen(true);
       setFocusByMouse(false);
-      if (popoverMenuLinks?.current) {
+
+      if (
+        popoverMenuLinks?.current &&
+        !focusByMouse &&
+        !isFocusedInsideRef.current
+      ) {
         const firstLink = popoverMenuLinks?.current?.[0] as HTMLElement;
         setContentTabIndex('0');
 
         if (firstLink) {
           isFocusedInsideRef.current = true;
-
           firstLink.focus();
         }
       }
@@ -252,11 +282,12 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   }
 
   function onMouseLeave() {
-    if (!clickMode) {
+    if (!clickMode && !isFocusedInsideRef.current) {
       setIsPointerIntersecting(false);
       if (isDragging) {
         return;
       }
+      console.log('ON MOSUE LEAVE');
       setOpen(false, leaveDelayMs);
     }
   }
@@ -315,11 +346,22 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         lastLink?.focus();
       }
     } else if (open && isFocusedInsideRef.current && focusByMouse) {
+      console.log('MOUSE TRAP CLOSE MNENU');
       closeMenu();
+    }
+
+    if (clickMode) {
+      closeMenu();
+      isFocusedInsideRef.current = false;
+      setOpen(false);
+      setFocusByMouse(false);
+      setClickMode(false);
+      setIsPointerIntersecting(!clickMode);
     }
   }
 
   function closeMenu() {
+    console.log('CLOSE MENU FUNCITON');
     setOpen(false);
     isFocusedInsideRef.current = false;
     setContentTabIndex('-1');
@@ -342,8 +384,12 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   }, []);
 
   const handleMouseDown = (event) => {
-    if (open && isFocusedInsideRef.current) {
-      event.preventDefault();
+    const target = event.target;
+
+    if (open && popoverRef?.current?.contains(target)) {
+      event.stopPropagation();
+    } else if (open && isFocusedInsideRef.current) {
+      console.log('MOUSE DOWN');
       setFocusByMouse(true);
     }
   };
@@ -354,10 +400,10 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     }
 
     console.log('add eevent');
-    document.addEventListener('onclick', handleMouseDown);
+    document.addEventListener('mousedown', handleMouseDown);
 
     return () => {
-      document.removeEventListener('onclick', handleMouseDown);
+      document.removeEventListener('mousedown', handleMouseDown);
     };
   }, [open]);
 

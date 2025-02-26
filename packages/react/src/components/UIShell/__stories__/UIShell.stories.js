@@ -664,6 +664,15 @@ export const HeaderStory = () => (
           <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
         </HeaderMenu>
       </HeaderNavigation>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open" isActive>
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
       <MenuButton label="MenuButton" kind="ghost">
         <MenuItem label="MenuItem" />
         <MenuItem label="MenuItem" />
@@ -677,15 +686,6 @@ export const HeaderStory = () => (
           selectedItem="Radio 2"
         />
       </MenuButton>
-      <HeaderGlobalAction aria-label="Open">
-        <SquareOutline size={20} />
-      </HeaderGlobalAction>
-      <HeaderGlobalAction aria-label="Open">
-        <SquareOutline size={20} />
-      </HeaderGlobalAction>
-      <HeaderGlobalAction aria-label="Open" isActive>
-        <SquareOutline size={20} />
-      </HeaderGlobalAction>
       <HeaderGlobalAction aria-label="Open">
         <SquareOutline size={20} />
       </HeaderGlobalAction>

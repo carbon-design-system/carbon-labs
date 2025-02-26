@@ -38,6 +38,7 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 // Treeview Side-nav
 //----------------------------------------------------------------------------
+
 .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
   margin-inline-end: $spacing-05;
 }
@@ -62,10 +63,69 @@ div:has(.#{$prefix}--header)
   }
 }
 
+// SideNavMenu
+// Level 2
+// without icon
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-10;
+}
+
+// with icon
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-09;
+}
+
+// Nested SideNavMenuItem
+// Level 2
+// without icon
+.#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-10;
+}
+
+// with icon
+.#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+  padding-inline-start: $spacing-09;
+}
+
+// Level 3
+// without icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-11;
+}
+
+// with icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-12;
+}
+
+//----------------------------------------------------------------------------
 // Side-nav Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
   z-index: 7999; /* needs to be below header */
+  overflow: visible;
+
+  .#{$prefix}--side-nav__items {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .#{$prefix}--side-nav__items,
+  .#{$prefix}--side-nav__items:hover {
+    overflow: visible;
+  }
 
   .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
     margin-inline-end: $spacing-05;
@@ -82,6 +142,7 @@ div:has(.#{$prefix}--header)
     padding-inline-start: $spacing-10;
   }
 
+  // Side Nav Toggle
   .#{$prefix}--side-nav__toggle {
     @include button-reset.reset($width: true);
     @include type-style('heading-compact-01');
@@ -109,5 +170,16 @@ div:has(.#{$prefix}--header)
     @include text-overflow();
 
     text-align: start;
+  }
+
+  // Side Nav Link Popover
+  .#{$prefix}--side-nav-link-popover.#{$prefix}--btn--icon-only {
+    padding: 0;
+    block-size: $spacing-07;
+    min-block-size: initial;
+
+    .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
+      margin-inline-end: 0;
+    }
   }
 }

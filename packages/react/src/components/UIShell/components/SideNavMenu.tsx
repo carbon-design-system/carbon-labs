@@ -172,25 +172,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
       // if depth is more than 0, that means its nested, thus we set treeview mode
       setIsTreeview?.(true);
-
-      if (isTreeview) {
-        const calcButtonOffset = () => {
-          // menu with icon
-          if (children && IconElement) {
-            return depth + 3;
-          }
-
-          // menu without icon
-          if (children) {
-            return depth * 4;
-          }
-          return depth;
-        };
-
-        if (buttonRef.current) {
-          buttonRef.current.style.paddingLeft = `${calcButtonOffset()}rem`;
-        }
-      }
     }, [isTreeview]);
 
     /**

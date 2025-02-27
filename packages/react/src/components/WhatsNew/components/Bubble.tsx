@@ -1,5 +1,13 @@
-import cx from 'classnames';
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
+import cx from 'classnames';
 import { NewPopoverAlignment } from '@carbon/react';
 import React, { HTMLProps, useLayoutEffect, useRef } from 'react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
@@ -111,23 +119,25 @@ const Bubble = ({
     }
   }, [target, open, align]);
 
-  const bubbleClassName = cx(
-    {
-      [`${prefix}--whats-new__bubble`]: true,
-      [`${prefix}--whats-new__bubble-open`]: open,
-      [`${prefix}--whats-new__bubble-drop-shadow`]: dropShadow,
-      [`${prefix}--whats-new__bubble-high-contrast`]: highContrast,
-    },
-    customClassName
-  );
-  const arrowClassName = cx({
-    [`${prefix}--whats-new__bubble__arrow`]: true,
-    [`${prefix}--whats-new__bubble__arrow-high-contrast`]: highContrast,
-  });
-
   return (
-    <div {...rest} ref={tooltipRef} className={bubbleClassName}>
-      <div ref={arrowRef} className={arrowClassName}></div>
+    <div
+      {...rest}
+      ref={tooltipRef}
+      className={cx(
+        {
+          [`${prefix}--whats-new__bubble`]: true,
+          [`${prefix}--whats-new__bubble-open`]: open,
+          [`${prefix}--whats-new__bubble-drop-shadow`]: dropShadow,
+          [`${prefix}--whats-new__bubble-high-contrast`]: highContrast,
+        },
+        customClassName
+      )}>
+      <div
+        ref={arrowRef}
+        className={cx({
+          [`${prefix}--whats-new__bubble__arrow`]: true,
+          [`${prefix}--whats-new__bubble__arrow-high-contrast`]: highContrast,
+        })}></div>
       {children}
     </div>
   );

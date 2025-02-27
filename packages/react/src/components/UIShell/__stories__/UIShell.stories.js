@@ -645,15 +645,16 @@ export const HeaderStory = () => (
       [Platform]
     </HeaderName>
     <HeaderGlobalBar>
-      <Button kind="ghost">Ghost button</Button>
       <Dropdown
         id="dropdown1"
-        titleText="Dropdown"
+        titleText="dDropdown"
         hideLabel
         label="Dropdown"
         items={dropdownItems}
+        size="lg"
         itemToString={(item) => (item ? item.text : '')}
       />
+      <Button kind="ghost">Ghost button</Button>
       <HeaderNavigation aria-label="IBM [Platform]">
         <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
         <HeaderMenu aria-label="Link 4" menuLinkName="HeaderMenu">

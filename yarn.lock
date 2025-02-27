@@ -2617,6 +2617,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-whats-new@workspace:packages/react/src/components/WhatsNew":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-whats-new@workspace:packages/react/src/components/WhatsNew"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react@workspace:packages/react"

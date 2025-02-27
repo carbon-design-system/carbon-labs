@@ -22,7 +22,7 @@ import { Theme } from '@carbon/react';
 import { useThemeSetting } from '../utils/use-theme-setting';
 
 export default {
-  title: 'ThemeSettings/ThemeSettings',
+  title: 'Components/ThemeSettings',
   component: ThemeSettings,
   subcomponents: { ThemeSwitcher, ThemeSetDropdown, ThemeMenuCompliment },
   parameters: {

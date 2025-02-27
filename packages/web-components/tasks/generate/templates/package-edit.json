@@ -31,6 +31,6 @@
   "dependencies": {
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.14.0",
-    "@carbon/web-components": "2.19.0"
+    "@carbon/web-components": "2.24.0"
   }
 }

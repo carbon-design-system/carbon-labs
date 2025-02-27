@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "@carbon-labs/wc-DISPLAY_NAME": "latest",
-    "@carbon/styles": "^1.70.0"
+    "@carbon/styles": "^1.76.0"
   }
 }

@@ -18,10 +18,10 @@ const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
 
 /**
  *
- * @param themeSetting - 'light', 'system' or 'dark'
- * @param themeSet - pair of Carbon themes light/dark e.g. 'white/g90'
- * @param compliment - if the compliment of the theme is required
- * @param systemDark - system settings dark
+ * @param {ThemeSettingType} themeSetting - 'light', 'system' or 'dark'
+ * @param {ThemeSetType} themeSet - pair of Carbon themes light/dark e.g. 'white/g90'
+ * @param {boolean} compliment - if the compliment of the theme is required
+ * @param {boolean} systemDark - system settings dark
  * @returns - carbon theme 'white', 'g10', 'g90' or 'g100'
  */
 const getTheme = (themeSetting, themeSet, compliment, systemDark) => {
@@ -42,9 +42,9 @@ const getTheme = (themeSetting, themeSet, compliment, systemDark) => {
 
 /**
  *
- * @param themeSetting - 'light', 'system' or 'dark'
- * @param themeSet - pair of Carbon themes light/dark e.g. 'white/g90'
- * @param compliment - if the compliment of the theme is required
+ * @param {ThemeSettingType} themeSetting - 'light', 'system' or 'dark'
+ * @param {ThemeSetType} themeSet - pair of Carbon themes light/dark e.g. 'white/g90'
+ * @param {boolean} compliment - if the compliment of the theme is required
  * @returns - reactive carbon theme 'white', 'g10', 'g90' or 'g100'
  */
 export const useThemeSetting = (
@@ -63,7 +63,7 @@ export const useThemeSetting = (
 
   /**
    *
-   * @param event - media query event
+   * @param {any} event - media query event
    */
   const handleMediaQueryEvent = (event) => {
     setSystemDark(event.matches);

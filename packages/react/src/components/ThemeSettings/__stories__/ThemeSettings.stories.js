@@ -207,6 +207,9 @@ export const InContext = () => {
   const [theme, setTheme] = useState('white');
   const [themeHeader, setThemeHeader] = useState('g100');
 
+  /**
+   * @param {any} event media query event
+   */
   const handleMediaQueryEvent = (event) => {
     setSystemDark(event.matches);
   };

@@ -298,6 +298,11 @@ div:has(.#{$prefix}--header)
     }
   }  
 
+  // TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
+  .#{$prefix}--tooltip-content {
+    color: $text-primary;
+  }
+
 }
 
 // panel expanded styles

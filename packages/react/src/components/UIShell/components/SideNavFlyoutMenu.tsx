@@ -101,6 +101,11 @@ interface TooltipBaseProps {
   menuContent?: React.ReactNode;
 
   /**
+   *  The boolean to show the flyout menu has been selected.
+   */
+  selected?: boolean;
+
+  /**
    *  The title for the overall menu name.
    */
   title?: string;
@@ -164,17 +169,18 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     console.log({ isFocusedInsideRef: isFocusedInsideRef.current });
   }, [isFocusedInsideRef.current]);
 
+  const [isButtonFocused, setIsButtonFocused] = useState(false);
+
   const triggerProps = {
     onFocus: (event) => {
       const lastFocus = event.relatedTarget;
 
+      console.log('on focus');
+
       // display menu on hover, except when menu was closed from Escape key
-      if (
-        !focusByMouse &&
-        !lastFocus?.classList.contains(`${prefix}--side-nav__link`)
-      ) {
-        console.log('on foucs');
+      if (!focusByMouse) {
         setOpen(true);
+        setIsButtonFocused(true);
       }
     },
     onBlur: (e) => {
@@ -183,11 +189,14 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
 
         isFocusedInsideRef.current = false;
         setOpen(false);
+        setIsButtonFocused(false);
         setFocusByMouse(false);
         setClickMode(false);
       }
     },
     onClick: (event) => {
+      console.log('no way');
+      setIsButtonFocused(false);
       if (closeOnActivation) {
         setOpen(false);
       }
@@ -236,21 +245,25 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   function onKeyDown(event) {
     if (open && match(event, keys.Escape)) {
       event.stopPropagation();
-      closeMenu();
+      closeMenu({ revertFocus: true });
+      setOpen(true);
+      setIsButtonFocused(true);
     }
     if (
       open &&
       closeOnActivation &&
       (match(event, keys.Enter) || match(event, keys.Space))
     ) {
+      setIsButtonFocused(false);
       setOpen(false);
     }
 
     if (match(event, keys.Enter) || match(event, keys.Space)) {
-      console.log('ENETER');
+      setIsButtonFocused(false);
       setOpen(true);
       setFocusByMouse(false);
 
+      // focus on the first link
       if (
         popoverMenuLinks?.current &&
         !focusByMouse &&
@@ -260,8 +273,10 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         setContentTabIndex('0');
 
         if (firstLink) {
+          console.log(firstLink);
           isFocusedInsideRef.current = true;
-          firstLink.focus();
+          // avoid race condition
+          setTimeout(() => firstLink.focus(), 0);
         }
       }
     }
@@ -288,6 +303,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         return;
       }
       console.log('ON MOSUE LEAVE');
+      setIsButtonFocused(false);
       setOpen(false, leaveDelayMs);
     }
   }
@@ -309,6 +325,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     // Close the tooltip, unless the mouse pointer is within the bounds of the
     // trigger.
     if (!isPointerIntersecting) {
+      setIsButtonFocused(false);
       setOpen(false, leaveDelayMs);
     }
   }, [isPointerIntersecting, leaveDelayMs, setOpen]);
@@ -338,34 +355,32 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   function handleMenuFocusTrap(event) {
     if (open && isFocusedInsideRef.current && !focusByMouse) {
       if (!popoverRef.current?.contains(event.relatedTarget)) {
-        const firstLink = popoverMenuLinks.current?.[0];
-        firstLink?.focus();
-      } else if (menuButton.current?.contains(event.relatedTarget)) {
-        const lastLink =
-          popoverMenuLinks.current?.[popoverMenuLinks.current?.length - 1];
-        lastLink?.focus();
+        closeMenu();
       }
-    } else if (open && isFocusedInsideRef.current && focusByMouse) {
-      console.log('MOUSE TRAP CLOSE MNENU');
-      closeMenu();
     }
 
     if (clickMode) {
       closeMenu();
       isFocusedInsideRef.current = false;
       setOpen(false);
+      setIsButtonFocused(false);
       setFocusByMouse(false);
       setClickMode(false);
       setIsPointerIntersecting(!clickMode);
     }
   }
 
-  function closeMenu() {
-    console.log('CLOSE MENU FUNCITON');
-    setOpen(false);
+  function closeMenu({ revertFocus = false }: { revertFocus?: boolean } = {}) {
+    if (revertFocus) {
+      menuButton.current?.focus();
+      setOpen(true);
+      setIsButtonFocused(true);
+    } else {
+      setOpen(false);
+      setIsButtonFocused(false);
+    }
     isFocusedInsideRef.current = false;
     setContentTabIndex('-1');
-    menuButton.current?.focus();
   }
 
   // initiate menu content to be untabbable
@@ -383,37 +398,52 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     }
   }, []);
 
-  const handleMouseDown = (event) => {
-    const target = event.target;
+  useEffect(() => {
+    if (popoverRef.current && !popoverMenuLinks.current) {
+      popoverMenuLinks.current = popoverRef.current.querySelectorAll(
+        `.${prefix}--side-nav-menu--popover-content a`
+      ) as NodeListOf<HTMLElement>;
 
-    if (open && popoverRef?.current?.contains(target)) {
-      event.stopPropagation();
-    } else if (open && isFocusedInsideRef.current) {
-      console.log('MOUSE DOWN');
-      setFocusByMouse(true);
+      console.log(popoverMenuLinks.current);
+
+      setContentTabIndex('-1');
     }
-  };
-
-  useIsomorphicEffect(() => {
-    if (!open) {
-      return undefined;
-    }
-
-    console.log('add eevent');
-    document.addEventListener('mousedown', handleMouseDown);
-
-    return () => {
-      document.removeEventListener('mousedown', handleMouseDown);
-    };
   }, [open]);
+
+  //   const handleMouseDown = (event) => {
+  //     const target = event.target;
+
+  //     if (open && popoverRef?.current?.contains(target)) {
+  //       event.stopPropagation();
+  //     } else if (open && isFocusedInsideRef.current) {
+  //       closeMenu();
+  //       //   setFocusByMouse(true);
+  //     }
+  //   };
+
+  //   useIsomorphicEffect(() => {
+  //     if (!open) {
+  //       return undefined;
+  //     }
+
+  //     console.log('add eevent');
+  //     // document.addEventListener('mousedown', handleMouseDown);
+
+  //     return () => {
+  //       //   document.removeEventListener('mousedown', handleMouseDown);
+  //     };
+  //   }, [open]);
 
   return (
     // @ts-ignore-error Popover throws a TS error everytime is imported
     <Popover
       ref={popoverRef}
       {...rest}
-      align={align}
-      className={cx(customClassName)}
+      align={isButtonFocused ? 'right' : align}
+      className={cx(customClassName, {
+        [`${prefix}--flyout-menu-clicked`]: clickMode || open,
+        [`${prefix}--flyout-menu-selected`]: selected,
+      })}
       dropShadow={dropShadow}
       highContrast={true}
       onBlur={handleMenuFocusTrap}
@@ -428,12 +458,18 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         : null}
       <PopoverContent
         aria-hidden={open ? 'false' : 'true'}
-        className={`${prefix}--side-nav-menu--popover-content`}
+        className={cx({
+          [`${prefix}--side-nav-menu--popover-content`]: !isButtonFocused,
+          [`${prefix}--flyout-tooltip-content ${prefix}--tooltip-content`]:
+            isButtonFocused,
+        })}
         id={id}
         onMouseEnter={onMouseEnter}
         role="tooltip">
-        <FormLabel>{title}</FormLabel>
-        {menuContent}
+        {!isButtonFocused ? <FormLabel>{title}</FormLabel> : title}
+        <div style={{ display: isButtonFocused ? 'none' : 'block' }}>
+          {menuContent}
+        </div>
       </PopoverContent>
     </Popover>
   );

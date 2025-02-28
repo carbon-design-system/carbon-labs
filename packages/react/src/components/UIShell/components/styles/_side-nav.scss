@@ -209,6 +209,21 @@ div:has(.#{$prefix}--header)
     }  
   }
 
+  .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu {
+    background-color: $background-hover;
+  }
+
+  .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__icon svg{
+    fill: $icon-primary;
+  }  
+
+  // flyout on focus, only displays title
+  .#{$prefix}--flyout-tooltip-content {
+    padding-block-start: $spacing-02;
+    padding-block-end: $spacing-02;
+
+  }
+
   .#{$prefix}--side-nav-flyout-menu.#{$prefix}--popover--high-contrast  {
     
     .#{$prefix}--side-nav__link,
@@ -230,20 +245,29 @@ div:has(.#{$prefix}--header)
     padding: 4px 0;
 
     .#{$prefix}--label {
-      padding-left: $spacing-05;
+      padding-inline-start: $spacing-05;
     }
 
     .#{$prefix}--side-nav__link {
       @include type-style('body-compact-01');
 
-      padding-right: $spacing-08;
-      padding-left: $spacing-08;
+      padding-inline: $spacing-08;
     }
 
-    .#{$prefix}--side-nav__link:hover{    
+    .#{$prefix}--side-nav__link:hover{  
       background-color: $background-hover;
     }
   }
+
+
+  // Flyout menu link on hover styles
+  // waiting for the change upstream
+  .#{$prefix}--side-nav-menu--popover-content .#{$prefix}--side-nav__link:hover { 
+
+    .#{$prefix}--side-nav__link-text{  
+      // color: $text-primary; 
+    }
+  }  
 
   // Side Nav Link Popover
   .#{$prefix}--side-nav-link-popover.#{$prefix}--btn--icon-only {

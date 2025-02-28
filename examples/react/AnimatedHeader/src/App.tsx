@@ -13,7 +13,7 @@ import {
   watsonXAnimatedLight,
   watsonXStaticLight,
 } from '@carbon-labs/react-animated-header/assets';
-import {headerTiles, workspaceData} from './data';
+import { headerTiles, workspaceData } from './data';
 
 function App() {
   const [tiles] = useState(headerTiles);

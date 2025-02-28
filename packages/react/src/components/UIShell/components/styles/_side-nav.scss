@@ -209,13 +209,31 @@ div:has(.#{$prefix}--header)
     }  
   }
 
+  .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__icon svg,
+  .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__icon svg{
+    fill: $icon-primary;
+  }  
+
   .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu {
     background-color: $background-hover;
   }
 
-  .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__icon svg{
-    fill: $icon-primary;
+  .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu:focus {
+    outline: none;
   }  
+
+  .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__submenu {
+    background-color: $background-selected;
+  } 
+
+  .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__submenu::before {
+    position: absolute;
+    background-color: $border-interactive;
+    content: "";
+    inline-size: 3px;
+    inset-block: 0;
+    inset-inline-start: 0;
+  }   
 
   // flyout on focus, only displays title
   .#{$prefix}--flyout-tooltip-content {

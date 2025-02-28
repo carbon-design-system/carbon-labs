@@ -75,6 +75,11 @@ export interface SideNavMenuProps {
   isSideNavExpanded?: boolean;
 
   /**
+   *  The boolean to show the flyout menu has been selected.
+   */
+  selected?: boolean;
+
+  /**
    * The tabIndex for the button element.
    * If not specified, the default validation will be applied.
    */
@@ -96,6 +101,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       large = false,
       renderIcon: IconElement,
       isSideNavExpanded,
+      selected,
       title,
     },
     ref: ForwardedRef<HTMLElement>
@@ -324,6 +330,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
     return navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded ? (
       <SideNavFlyoutMenu
+        selected={selected}
         className={`${prefix}--side-nav-flyout-menu`}
         title={title}
         menuContent={children}>
@@ -382,6 +389,11 @@ SideNavMenu.propTypes = {
    */
   // @ts-expect-error - PropTypes are unable to cover this case.
   renderIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+
+  /**
+   *  The boolean to show the flyout menu has been selected.
+   */
+  selected: PropTypes.bool,
 
   /**
    * Optional prop to specify the tabIndex of the button. If undefined, it will be applied default validation

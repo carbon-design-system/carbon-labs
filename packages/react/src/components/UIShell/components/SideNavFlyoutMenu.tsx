@@ -129,6 +129,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   dropShadow = true,
   highContrast = false,
   menuContent,
+  selected = false,
   title,
   ...rest
 }: TooltipProps<T>) {
@@ -434,6 +435,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   //     };
   //   }, [open]);
 
+  console.log(selected);
   return (
     // @ts-ignore-error Popover throws a TS error everytime is imported
     <Popover
@@ -574,6 +576,11 @@ SideNavFlyoutMenu.propTypes = {
    * The content to be rendered inside the popover menu.
    */
   menuContent: PropTypes.node,
+
+  /**
+   *  The boolean to show the flyout menu has been selected.
+   */
+  selected: PropTypes.bool,
 
   /**
    * The title for the overall menu name.

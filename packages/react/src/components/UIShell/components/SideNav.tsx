@@ -234,16 +234,20 @@ function SideNavRenderFunction(
           }
         );
       resetNodeTabIndices();
+    }
+  }, [prefix, internalIsTreeview]);
 
+  useEffect(() => {
+    if (sideNavRef.current) {
       const firstElement = sideNavRef?.current?.querySelector(
         'a, button'
       ) as HTMLElement;
 
-      if (firstElement) {
+      if (firstElement && (navType == SIDE_NAV_TYPE.PANEL || expanded)) {
         firstElement.tabIndex = 0;
       }
     }
-  }, [prefix, internalIsTreeview]);
+  }, [expanded]);
 
   /**
    * Returns the parent SideNavMenu, if node is actually inside one.

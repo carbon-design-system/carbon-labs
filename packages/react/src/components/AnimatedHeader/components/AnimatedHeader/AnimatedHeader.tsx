@@ -38,9 +38,11 @@ export interface SelectedWorkspace {
 
 export interface Tile {
   id: string;
-  href: string;
-  title: string;
-  mainIcon: string;
+  href: string | null;
+  title: string | null;
+  subtitle: string | null;
+  mainIcon: string | null;
+  secondaryIcon: string | null;
 }
 
 export interface TileGroup {

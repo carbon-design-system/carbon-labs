@@ -75,11 +75,6 @@ interface TooltipBaseProps {
   enterDelayMs?: number;
 
   /**
-   * Render the component using the high-contrast theme
-   */
-  highContrast?: boolean;
-
-  /**
    * Provide the label to be rendered inside of the Tooltip. The label will use
    * `aria-labelledby` and will fully describe the child node that is provided.
    * This means that if you have text in the child node, that it will not be
@@ -147,23 +142,23 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   const isFocusedInsideRef = useRef(false);
   const popoverMenuLinks = useRef<NodeListOf<HTMLElement> | null>(null);
 
-  useEffect(() => {
-    console.log('====================');
-  }, [clickMode, isFocusedInsideRef.current, focusByMouse, open]);
-  // Log changes to clickMode
-  useEffect(() => {
-    console.log({ clickMode });
-  }, [clickMode]);
+  //   useEffect(() => {
+  //     console.log('====================');
+  //   }, [clickMode, isFocusedInsideRef.current, focusByMouse, open]);
+  //   // Log changes to clickMode
+  //   useEffect(() => {
+  //     console.log({ clickMode });
+  //   }, [clickMode]);
 
-  // Log changes to focusByMouse
-  useEffect(() => {
-    console.log({ focusByMouse });
-  }, [focusByMouse]);
+  //   // Log changes to focusByMouse
+  //   useEffect(() => {
+  //     console.log({ focusByMouse });
+  //   }, [focusByMouse]);
 
-  // Log changes to open
-  useEffect(() => {
-    console.log({ open });
-  }, [open]);
+  //   // Log changes to open
+  //   useEffect(() => {
+  //     console.log({ open });
+  //   }, [open]);
 
   // Log changes to isFocusedInsideRef
   useEffect(() => {
@@ -210,7 +205,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         setClickMode(!clickMode);
         setIsPointerIntersecting(!clickMode);
         setOpen(!clickMode);
-        isFocusedInsideRef.current = false;
+        isFocusedInsideRef.current = true;
       }
     },
     // This should be placed on the trigger in case the element is disabled
@@ -288,6 +283,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       if (!rest?.onMouseEnter) {
         setIsPointerIntersecting(true);
         setOpen(true, enterDelayMs);
+        // isFocusedInsideRef.current = false;
       }
     }
   }
@@ -297,7 +293,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     onDragStart();
   }
 
-  function onMouseLeave() {
+  function onMouseLeave(event) {
     if (!clickMode && !isFocusedInsideRef.current) {
       setIsPointerIntersecting(false);
       if (isDragging) {
@@ -354,20 +350,16 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   };
 
   function handleMenuFocusTrap(event) {
-    if (open && isFocusedInsideRef.current && !focusByMouse) {
-      if (!popoverRef.current?.contains(event.relatedTarget)) {
-        closeMenu();
-      }
+    const isFocusOutside = !popoverRef.current?.contains(event.relatedTarget);
+    // tab outside the menu
+    if (open && isFocusedInsideRef.current && !focusByMouse && isFocusOutside) {
+      closeMenu();
     }
 
-    if (clickMode) {
+    // if button has been clicked, and new click is outside the menu
+    if (clickMode && isFocusOutside) {
+      console.log('CLICK MODE');
       closeMenu();
-      isFocusedInsideRef.current = false;
-      setOpen(false);
-      setIsButtonFocused(false);
-      setFocusByMouse(false);
-      setClickMode(false);
-      setIsPointerIntersecting(!clickMode);
     }
   }
 
@@ -381,6 +373,9 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       setIsButtonFocused(false);
     }
     isFocusedInsideRef.current = false;
+    setFocusByMouse(false);
+    setIsPointerIntersecting(!clickMode);
+    setClickMode(false);
     setContentTabIndex('-1');
   }
 
@@ -447,7 +442,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         [`${prefix}--flyout-menu-selected`]: selected,
       })}
       dropShadow={dropShadow}
-      highContrast={true}
+      highContrast={false}
       onBlur={handleMenuFocusTrap}
       onKeyDown={onKeyDown}
       onMouseLeave={onMouseLeave}
@@ -550,11 +545,6 @@ SideNavFlyoutMenu.propTypes = {
    * Specify the duration in milliseconds to delay before displaying the tooltip
    */
   enterDelayMs: PropTypes.number,
-
-  /**
-   * Render the component using the high-contrast theme
-   */
-  highContrast: PropTypes.bool,
 
   /**
    * Provide the label to be rendered inside of the Tooltip. The label will use

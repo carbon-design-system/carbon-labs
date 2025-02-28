@@ -242,22 +242,6 @@ div:has(.#{$prefix}--header)
 
   }
 
-  .#{$prefix}--side-nav-flyout-menu.#{$prefix}--popover--high-contrast  {
-    
-    .#{$prefix}--side-nav__link,
-    .#{$prefix}--side-nav__link-text {
-      color: $text-inverse;
-
-      &:focus {
-        outline-color: $focus-inverse;
-      }
-     }
-
-     .#{$prefix}--label {
-      color: $text-inverse;
-    }  
-  }
-
 
   .#{$prefix}--side-nav-menu--popover-content { 
     padding: 4px 0;

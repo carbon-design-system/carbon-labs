@@ -182,4 +182,9 @@ div:has(.#{$prefix}--header)
       margin-inline-end: 0;
     }
   }
+
+  // TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
+  .#{$prefix}--tooltip-content {
+    color: $text-primary;
+  }
 }

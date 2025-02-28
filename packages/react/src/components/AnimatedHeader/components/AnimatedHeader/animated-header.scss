@@ -224,6 +224,11 @@ body {
   max-inline-size: fit-content;
 }
 
+.#{$prefix}__header-dropdown--container {
+  inline-size: auto;
+  max-inline-size: 30rem;
+}
+
 .#{$prefix}__header-dropdown {
   border-width: 1px;
   border-style: solid;
@@ -232,7 +237,10 @@ body {
   animation-delay: 300ms;
   animation-fill-mode: both;
   background-color: transparent;
-  max-inline-size: fit-content;
+}
+
+##{$prefix}__header-dropdown {
+  inline-size: 100%;
 }
 
 .#{$prefix}__content {
@@ -244,13 +252,13 @@ body {
   transition: opacity 500ms linear;
 }
 
-.#{$prefix}__tile-dropdown--container {
+.#{$prefix}__workspace--container {
   min-block-size: $spacing-08;
   opacity: 1;
   transition: opacity 500ms linear;
 }
 
-.#{$prefix}__tile-dropdown {
+.#{$prefix}__workspace {
   position: relative;
   z-index: 9999;
   animation: 500ms motion.motion(standard, expressive) 0ms 1 slide-in;
@@ -387,7 +395,7 @@ body {
     display: none;
   }
 
-  .#{$prefix}__tile-dropdown {
+  .#{$prefix}__workspace {
     margin-block-start: $spacing-06;
   }
 
@@ -407,7 +415,7 @@ body {
   }
 
   .#{$prefix}__header-dropdown {
-    display: inline-grid;
+    display: block;
   }
 
   .#{$prefix}__static {
@@ -485,7 +493,7 @@ body {
     background: linear-gradient(90deg, $background 25%, transparent 75%);
   }
 
-  .#{$prefix}__tile-dropdown {
+  .#{$prefix}__workspace {
     margin-block-start: 0;
   }
 
@@ -611,7 +619,7 @@ body {
   .#{$prefix}__heading-name,
   .#{$prefix}__description,
   .#{$prefix}__button,
-  .#{$prefix}__tile-dropdown,
+  .#{$prefix}__workspace,
   .#{$prefix}__tile,
   .#{$prefix}__icon-button {
     animation: none;

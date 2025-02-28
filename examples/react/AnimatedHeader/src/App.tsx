@@ -13,14 +13,20 @@ import {
   watsonXAnimatedLight,
   watsonXStaticLight,
 } from '@carbon-labs/react-animated-header/assets';
-import headerTiles from './data';
+import {headerTiles, workspaceData} from './data';
 
 function App() {
-  const [data] = useState(headerTiles);
-  const [selectedTile, setSelectedTile] = useState(data[0]);
+  const [tiles] = useState(headerTiles);
+  const [workspaces] = useState(workspaceData);
+  const [selectedTile, setSelectedTile] = useState(tiles[0]);
+  const [selectedWorkspace, setSelectedWorkspace] = useState(workspaces[0]);
 
-  const setSelectedTileGroup = (e: any) => {
-    setSelectedTile(e.selectedItem);
+  const handleWorkspaceSelect = (e: any) => {
+    setSelectedWorkspace(e.selectedItem);
+  };
+
+  const handleTileGroup = (e: any) => {
+    setSelectedTile(e.selectedItem.id);
   };
 
   return (
@@ -34,10 +40,12 @@ function App() {
       productName="[Product name]"
       headerAnimation={watsonXAnimatedLight}
       headerStatic={watsonXStaticLight}
-      tileDropdownItems={tileDropdownData}
+      selectedWorkspace={selectedWorkspace}
+      setSelectedWorkspace={handleWorkspaceSelect}
+      allWorkspaces={workspaces}
       selectedTileGroup={selectedTile}
-      setSelectedTileGroup={setSelectedTileGroup}
-      allTiles={data}
+      setSelectedTileGroup={handleTileGroup}
+      allTiles={tiles}
     />
   );
 }

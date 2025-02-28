@@ -443,7 +443,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       {...rest}
       align={isButtonFocused ? 'right' : align}
       className={cx(customClassName, {
-        [`${prefix}--flyout-menu-clicked`]: clickMode || open,
+        [`${prefix}--flyout-menu-clicked`]: clickMode,
         [`${prefix}--flyout-menu-selected`]: selected,
       })}
       dropShadow={dropShadow}

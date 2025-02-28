@@ -219,7 +219,7 @@ div:has(.#{$prefix}--header)
   }
 
   .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu:focus {
-    outline: none;
+    // outline: none;
   }  
 
   .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__submenu {

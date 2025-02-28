@@ -11,9 +11,9 @@ import classNames from 'classnames';
 
 import { Checkbox } from '@carbon/react';
 
-const blockClass = `theme-menu-compliment`;
+const blockClass = `theme-menu-complement`;
 
-interface ThemeMenuComplimentProps {
+interface ThemeMenuComplementProps {
   checked: boolean;
   className?: string;
   id: string;
@@ -21,15 +21,15 @@ interface ThemeMenuComplimentProps {
   onChange?: (checked: boolean) => void;
 }
 
-export const ThemeMenuCompliment = ({
+export const ThemeMenuComplement = ({
   checked,
   className,
   id,
   labelText,
   onChange,
   ...rest
-}: ThemeMenuComplimentProps) => {
-  const handleCompliment = (ev: React.ChangeEvent<HTMLInputElement>) => {
+}: ThemeMenuComplementProps) => {
+  const handleComplement = (ev: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(ev.target!.checked);
   };
 
@@ -39,10 +39,10 @@ export const ThemeMenuCompliment = ({
       id={id}
       labelText={labelText}
       checked={checked}
-      onChange={handleCompliment}
+      onChange={handleComplement}
       {...rest}
     />
   );
 };
 
-export default ThemeMenuCompliment;
+export default ThemeMenuComplement;

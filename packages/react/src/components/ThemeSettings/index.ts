@@ -11,7 +11,7 @@ export {
   ThemeSettings,
   ThemeSwitcher,
   ThemeSetDropdown,
-  ThemeMenuCompliment,
+  ThemeMenuComplement,
 } from './components/index';
 
 export { useThemeSetting } from './utils/use-theme-setting';

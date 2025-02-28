@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import mdx from './ThemeSettings.mdx';
 import {
-  ThemeMenuCompliment,
+  ThemeMenuComplement,
   ThemeSetDropdown,
   ThemeSettings,
   ThemeSwitcher,
@@ -24,7 +24,7 @@ import { useThemeSetting } from '../utils/use-theme-setting';
 export default {
   title: 'Components/ThemeSettings',
   component: ThemeSettings,
-  subcomponents: { ThemeSwitcher, ThemeSetDropdown, ThemeMenuCompliment },
+  subcomponents: { ThemeSwitcher, ThemeSetDropdown, ThemeMenuComplement },
   parameters: {
     docs: {
       page: mdx,
@@ -73,21 +73,21 @@ Default.parameters = {
 };
 
 /**
- * WithMenuCompliment story for ThemeSettings
+ * WithMenuComplement story for ThemeSettings
  */
-export const WithMenuCompliment = () => {
+export const WithMenuComplement = () => {
   const [themeSetting, setThemeSetting] = useState(`system`);
-  const [themeMenuCompliment, setThemeMenuCompliment] = useState(false);
+  const [themeMenuComplement, setThemeMenuComplement] = useState(false);
 
   const handleThemeSetting = createActionHandler(
     'ThemeSwitcher',
     'onChange',
     setThemeSetting
   );
-  const handleMenuCompliment = createActionHandler(
-    'ThemeMenuCompliment',
+  const handleMenuComplement = createActionHandler(
+    'ThemeMenuComplement',
     'onChange',
-    setThemeMenuCompliment
+    setThemeMenuComplement
   );
 
   return (
@@ -95,16 +95,16 @@ export const WithMenuCompliment = () => {
       <ThemeSwitcher
         onChange={handleThemeSetting}
         value={themeSetting}></ThemeSwitcher>
-      <ThemeMenuCompliment
-        id="theme-menu-compliment"
-        labelText="Compliment menu theme"
-        checked={themeMenuCompliment}
-        onChange={handleMenuCompliment}
+      <ThemeMenuComplement
+        id="theme-menu-complement"
+        labelText="Complement menu theme"
+        checked={themeMenuComplement}
+        onChange={handleMenuComplement}
       />
     </ThemeSettings>
   );
 };
-WithMenuCompliment.parameters = {
+WithMenuComplement.parameters = {
   layout: 'centered',
 };
 
@@ -150,7 +150,7 @@ WithThemeSet.parameters = {
  */
 export const Complete = () => {
   const [themeSetting, setThemeSetting] = useState(`system`);
-  const [themeMenuCompliment, setThemeMenuCompliment] = useState(false);
+  const [themeMenuComplement, setThemeMenuComplement] = useState(false);
   const [themeSet, setThemeSet] = useState('white/g100');
 
   const handleThemeSetting = createActionHandler(
@@ -158,10 +158,10 @@ export const Complete = () => {
     'onChange',
     setThemeSetting
   );
-  const handleMenuCompliment = createActionHandler(
-    'ThemeMenuCompliment',
+  const handleMenuComplement = createActionHandler(
+    'ThemeMenuComplement',
     'onChange',
-    setThemeMenuCompliment
+    setThemeMenuComplement
   );
   const handleThemeSet = createActionHandler(
     'ThemeSetDropdown',
@@ -174,11 +174,11 @@ export const Complete = () => {
       <ThemeSwitcher
         onChange={handleThemeSetting}
         value={themeSetting}></ThemeSwitcher>
-      <ThemeMenuCompliment
-        id="theme-menu-compliment"
-        labelText="Compliment menu theme"
-        checked={themeMenuCompliment}
-        onChange={handleMenuCompliment}
+      <ThemeMenuComplement
+        id="theme-menu-complement"
+        labelText="Complement menu theme"
+        checked={themeMenuComplement}
+        onChange={handleMenuComplement}
       />
       <ThemeSetDropdown
         id="theme-dropdown"
@@ -201,7 +201,7 @@ const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
  */
 export const InContext = () => {
   const [themeSetting, setThemeSetting] = useState(`system`);
-  const [themeMenuCompliment, setThemeMenuCompliment] = useState(false);
+  const [themeMenuComplement, setThemeMenuComplement] = useState(false);
   const [themeSet, setThemeSet] = useState('white/g100');
   const [systemDark, setSystemDark] = useState(mediaQueryList.matches);
   const [theme, setTheme] = useState('white');
@@ -227,21 +227,21 @@ export const InContext = () => {
     if (themeSetting === 'system') {
       setTheme(systemDark ? themes[1] : themes[0]);
       setThemeHeader(
-        (systemDark && !themeMenuCompliment) ||
-          (!systemDark && themeMenuCompliment)
+        (systemDark && !themeMenuComplement) ||
+          (!systemDark && themeMenuComplement)
           ? themes[1]
           : themes[0]
       );
     } else {
       if (themeSetting === 'light') {
         setTheme(themes[0]);
-        setThemeHeader(themeMenuCompliment ? themes[1] : themes[0]);
+        setThemeHeader(themeMenuComplement ? themes[1] : themes[0]);
       } else {
         setTheme(themes[1]);
-        setThemeHeader(themeMenuCompliment ? themes[0] : themes[1]);
+        setThemeHeader(themeMenuComplement ? themes[0] : themes[1]);
       }
     }
-  }, [systemDark, themeSetting, themeMenuCompliment, themeSet]);
+  }, [systemDark, themeSetting, themeMenuComplement, themeSet]);
 
   return (
     <Theme className={'theme-setting-in-context'} theme={themeHeader}>
@@ -255,11 +255,11 @@ export const InContext = () => {
           <ThemeSwitcher
             onChange={setThemeSetting}
             value={themeSetting}></ThemeSwitcher>
-          <ThemeMenuCompliment
-            id="theme-menu-compliment"
-            labelText="Compliment menu theme"
-            checked={themeMenuCompliment}
-            onChange={setThemeMenuCompliment}
+          <ThemeMenuComplement
+            id="theme-menu-complement"
+            labelText="Complement menu theme"
+            checked={themeMenuComplement}
+            onChange={setThemeMenuComplement}
           />
           <ThemeSetDropdown
             id="theme-dropdown"
@@ -279,13 +279,13 @@ export const InContext = () => {
  */
 export const InContextUseThemeSetting = () => {
   const [themeSetting, setThemeSetting] = useState(`system`);
-  const [themeMenuCompliment, setThemeMenuCompliment] = useState(false);
+  const [themeMenuComplement, setThemeMenuComplement] = useState(false);
   const [themeSet, setThemeSet] = useState('white/g100');
   const theme = useThemeSetting(themeSetting, themeSet, false);
   const themeHeader = useThemeSetting(
     themeSetting,
     themeSet,
-    themeMenuCompliment
+    themeMenuComplement
   );
 
   return (
@@ -301,11 +301,11 @@ export const InContextUseThemeSetting = () => {
           <ThemeSwitcher
             onChange={setThemeSetting}
             value={themeSetting}></ThemeSwitcher>
-          <ThemeMenuCompliment
-            id="theme-menu-compliment"
-            labelText="Compliment menu theme"
-            checked={themeMenuCompliment}
-            onChange={setThemeMenuCompliment}
+          <ThemeMenuComplement
+            id="theme-menu-complement"
+            labelText="Complement menu theme"
+            checked={themeMenuComplement}
+            onChange={setThemeMenuComplement}
           />
           <ThemeSetDropdown
             id="theme-dropdown"

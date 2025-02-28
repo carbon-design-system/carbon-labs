@@ -10,5 +10,5 @@
 export { ThemeSettings } from './ThemeSettings';
 export { ThemeSwitcher } from './ThemeSwitcher';
 export { ThemeSetDropdown } from './ThemeSetDropdown';
-export { ThemeMenuCompliment } from './ThemeMenuCompliment';
+export { ThemeMenuComplement } from './ThemeMenuComplement';
 export { themeSets } from './theme-settings-consts';

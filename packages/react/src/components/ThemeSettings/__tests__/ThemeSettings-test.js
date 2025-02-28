@@ -14,7 +14,7 @@ import '@testing-library/jest-dom';
 
 import { ThemeSettings } from '../components/ThemeSettings';
 import {
-  ThemeMenuCompliment,
+  ThemeMenuComplement,
   ThemeSetDropdown,
   ThemeSwitcher,
 } from '../components';
@@ -32,9 +32,9 @@ describe('ThemeSettings', () => {
             titleText="Theme set"
             value="g10/g100"
           />
-          <ThemeMenuCompliment
-            id="theme-menu-compliment"
-            labelText="Compliment menu theme"
+          <ThemeMenuComplement
+            id="theme-menu-complement"
+            labelText="Complement menu theme"
             checked={false}
           />
         </ThemeSettings>
@@ -67,12 +67,12 @@ describe('ThemeSettings', () => {
       expect(screen.getByRole('combobox'));
     });
 
-    it('should render a one theme compliment checkbox', () => {
+    it('should render a one theme complement checkbox', () => {
       render(
         <ThemeSettings>
-          <ThemeMenuCompliment
-            id="theme-menu-compliment"
-            labelText="Compliment menu theme"
+          <ThemeMenuComplement
+            id="theme-menu-complement"
+            labelText="Complement menu theme"
             checked={false}
           />
         </ThemeSettings>
@@ -155,14 +155,14 @@ describe('ThemeSettings', () => {
       expect(onChange).toHaveBeenLastCalledWith('g10/g100');
     });
 
-    it('should should change menu compliment', async () => {
+    it('should should change menu complement', async () => {
       const onChange = jest.fn();
 
       const { rerender } = render(
         <ThemeSettings>
-          <ThemeMenuCompliment
-            id="theme-menu-compliment"
-            labelText="Compliment menu theme"
+          <ThemeMenuComplement
+            id="theme-menu-complement"
+            labelText="Complement menu theme"
             checked={false}
             onChange={onChange}
           />
@@ -176,9 +176,9 @@ describe('ThemeSettings', () => {
 
       rerender(
         <ThemeSettings>
-          <ThemeMenuCompliment
-            id="theme-menu-compliment"
-            labelText="Compliment menu theme"
+          <ThemeMenuComplement
+            id="theme-menu-complement"
+            labelText="Complement menu theme"
             checked={true}
             onChange={onChange}
           />

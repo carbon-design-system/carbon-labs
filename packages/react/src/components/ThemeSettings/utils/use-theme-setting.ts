@@ -20,22 +20,22 @@ const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
  *
  * @param {ThemeSettingType} themeSetting - 'light', 'system' or 'dark'
  * @param {ThemeSetType} themeSet - pair of Carbon themes light/dark e.g. 'white/g90'
- * @param {boolean} compliment - if the compliment of the theme is required
+ * @param {boolean} complement - if the complement of the theme is required
  * @param {boolean} systemDark - system settings dark
  * @returns - carbon theme 'white', 'g10', 'g90' or 'g100'
  */
-const getTheme = (themeSetting, themeSet, compliment, systemDark) => {
+const getTheme = (themeSetting, themeSet, complement, systemDark) => {
   const themes = themeSet.split('/');
 
   if (themeSetting === 'system') {
-    return (systemDark && !compliment) || (!systemDark && compliment)
+    return (systemDark && !complement) || (!systemDark && complement)
       ? themes[1]
       : themes[0];
   } else {
     if (themeSetting === 'light') {
-      return compliment ? themes[1] : themes[0];
+      return complement ? themes[1] : themes[0];
     } else {
-      return compliment ? themes[0] : themes[1];
+      return complement ? themes[0] : themes[1];
     }
   }
 };
@@ -44,18 +44,18 @@ const getTheme = (themeSetting, themeSet, compliment, systemDark) => {
  *
  * @param {ThemeSettingType} themeSetting - 'light', 'system' or 'dark'
  * @param {ThemeSetType} themeSet - pair of Carbon themes light/dark e.g. 'white/g90'
- * @param {boolean} compliment - if the compliment of the theme is required
+ * @param {boolean} complement - if the complement of the theme is required
  * @returns - reactive carbon theme 'white', 'g10', 'g90' or 'g100'
  */
 export const useThemeSetting = (
   themeSetting: ThemeSettingType,
   themeSet: ThemeSetType,
-  compliment: boolean
+  complement: boolean
 ): CarbonTheme => {
   const initialTheme = getTheme(
     themeSetting,
     themeSet,
-    compliment,
+    complement,
     mediaQueryList.matches
   );
   const [theme, setTheme] = useState(initialTheme);
@@ -78,9 +78,9 @@ export const useThemeSetting = (
 
   useEffect(() => {
     setTheme(
-      getTheme(themeSetting, themeSet, compliment, mediaQueryList.matches)
+      getTheme(themeSetting, themeSet, complement, mediaQueryList.matches)
     );
-  }, [systemDark, themeSetting, themeSet, compliment]);
+  }, [systemDark, themeSetting, themeSet, complement]);
 
   return theme;
 };

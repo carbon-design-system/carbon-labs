@@ -3,10 +3,10 @@
 exports[`ThemeSettings renders as expected - Component API should match snapshot 1`] = `
 <div>
   <div
-    class="theme-settings"
+    class="clabs--theme-settings"
   >
     <fieldset
-      class="cds--fieldset theme-settings__form-group"
+      class="cds--fieldset clabs--theme-settings__form-group"
     >
       <legend
         class="cds--label"
@@ -267,23 +267,23 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
         </div>
       </div>
       <div
-        class="cds--form-item cds--checkbox-wrapper theme-menu-compliment"
+        class="cds--form-item cds--checkbox-wrapper theme-menu-complement"
       >
         <input
           class="cds--checkbox"
-          id="theme-menu-compliment"
+          id="theme-menu-complement"
           type="checkbox"
         />
         <label
           class="cds--checkbox-label"
-          for="theme-menu-compliment"
+          for="theme-menu-complement"
           title=""
         >
           <span
             class="cds--checkbox-label-text"
             dir="auto"
           >
-            Compliment menu theme
+            Complement menu theme
           </span>
         </label>
         <div

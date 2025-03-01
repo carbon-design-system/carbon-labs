@@ -209,18 +209,31 @@ div:has(.#{$prefix}--header)
     }  
   }
 
+  .#{$prefix}--flyout-menu-focused .#{$prefix}--side-nav--panel-submenu-caret svg {
+    fill: $icon-primary;
+  }
+
   .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__icon svg,
-  .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__icon svg{
+  .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__icon svg,
+  .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav--panel-submenu-caret svg{
     fill: $icon-primary;
   }  
 
   .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu {
     background-color: $background-hover;
-  }
+    .#{$prefix}--side-nav--panel-submenu-caret svg {
+      fill: $icon-primary;
+    }
+  } 
 
-  .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu:focus {
-    // outline: none;
-  }  
+
+  // Selected + click
+  .#{$prefix}--flyout-menu-selected.#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu {
+    background-color: $background-active;
+    .#{$prefix}--side-nav--panel-submenu-caret svg {
+      fill: $icon-primary;
+    }
+  }   
 
   .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__submenu {
     background-color: $background-selected;
@@ -237,9 +250,16 @@ div:has(.#{$prefix}--header)
 
   // flyout on focus, only displays title
   .#{$prefix}--flyout-tooltip-content {
-    padding-block-start: $spacing-02;
-    padding-block-end: $spacing-02;
+    padding-block-start: 1px;
+    padding-block-end: 1px;
+    
 
+  }
+
+  // make caret smaller in tooltip mode
+  .#{$prefix}--flyout-menu-focused .#{$prefix}--popover-caret {
+    @include custom-property.declaration('popover-caret-width', 0.5rem);
+    @include custom-property.declaration('popover-caret-height', 0.25rem);
   }
 
 
@@ -261,13 +281,16 @@ div:has(.#{$prefix}--header)
     }
   }
 
+  .#{$prefix}--side-nav-menu--popover-content .#{$prefix}--label {
+    color: $text-secondary;
+  }
+
 
   // Flyout menu link on hover styles
-  // waiting for the change upstream
-  .#{$prefix}--side-nav-menu--popover-content .#{$prefix}--side-nav__link:hover { 
-
+  .#{$prefix}--side-nav-menu--popover-content .#{$prefix}--side-nav__link:hover,
+  .#{$prefix}--side-nav-menu--popover-content .#{$prefix}--side-nav__link:focus { 
     .#{$prefix}--side-nav__link-text{  
-      // color: $text-primary; 
+      color: $text-primary; 
     }
   }  
 

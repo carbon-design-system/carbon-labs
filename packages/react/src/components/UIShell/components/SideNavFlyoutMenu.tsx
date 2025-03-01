@@ -19,7 +19,6 @@ import { useDelayedState } from '../internal/useDelayedState';
 import { useId } from '../internal/useId.js';
 import { usePrefix } from '../internal/usePrefix';
 import { type PolymorphicProps } from '../types/common';
-import useIsomorphicEffect from '../internal/useIsomorphicEffect.js';
 
 /**
  * Event types that trigger a "drag" to stop.
@@ -142,37 +141,10 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   const isFocusedInsideRef = useRef(false);
   const popoverMenuLinks = useRef<NodeListOf<HTMLElement> | null>(null);
 
-  //   useEffect(() => {
-  //     console.log('====================');
-  //   }, [clickMode, isFocusedInsideRef.current, focusByMouse, open]);
-  //   // Log changes to clickMode
-  //   useEffect(() => {
-  //     console.log({ clickMode });
-  //   }, [clickMode]);
-
-  //   // Log changes to focusByMouse
-  //   useEffect(() => {
-  //     console.log({ focusByMouse });
-  //   }, [focusByMouse]);
-
-  //   // Log changes to open
-  //   useEffect(() => {
-  //     console.log({ open });
-  //   }, [open]);
-
-  // Log changes to isFocusedInsideRef
-  useEffect(() => {
-    console.log({ isFocusedInsideRef: isFocusedInsideRef.current });
-  }, [isFocusedInsideRef.current]);
-
   const [isButtonFocused, setIsButtonFocused] = useState(false);
 
   const triggerProps = {
-    onFocus: (event) => {
-      const lastFocus = event.relatedTarget;
-
-      console.log('on focus');
-
+    onFocus: () => {
       // display menu on hover, except when menu was closed from Escape key
       if (!focusByMouse) {
         setOpen(true);
@@ -181,8 +153,6 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     },
     onBlur: (e) => {
       if (!isFocusedInsideRef.current && !focusByMouse) {
-        console.log('ON BLUR????');
-
         isFocusedInsideRef.current = false;
         setOpen(false);
         setIsButtonFocused(false);
@@ -190,8 +160,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         setClickMode(false);
       }
     },
-    onClick: (event) => {
-      console.log('no way');
+    onClick: () => {
       setIsButtonFocused(false);
       if (closeOnActivation) {
         setOpen(false);
@@ -201,7 +170,6 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       // if clicked again, should close (clickMode OFF) and menu should close,
       // even if mouse is hovering on the button. Menu opens upon reentering.
       if (!isFocusedInsideRef.current) {
-        console.log('shouldnt');
         setClickMode(!clickMode);
         setIsPointerIntersecting(!clickMode);
         setOpen(!clickMode);
@@ -269,7 +237,6 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         setContentTabIndex('0');
 
         if (firstLink) {
-          console.log(firstLink);
           isFocusedInsideRef.current = true;
           // avoid race condition
           setTimeout(() => firstLink.focus(), 0);
@@ -283,7 +250,6 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       if (!rest?.onMouseEnter) {
         setIsPointerIntersecting(true);
         setOpen(true, enterDelayMs);
-        // isFocusedInsideRef.current = false;
       }
     }
   }
@@ -299,7 +265,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       if (isDragging) {
         return;
       }
-      console.log('ON MOSUE LEAVE');
+
       setIsButtonFocused(false);
       setOpen(false, leaveDelayMs);
     }
@@ -358,7 +324,6 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
 
     // if button has been clicked, and new click is outside the menu
     if (clickMode && isFocusOutside) {
-      console.log('CLICK MODE');
       closeMenu();
     }
   }
@@ -400,37 +365,10 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         `.${prefix}--side-nav-menu--popover-content a`
       ) as NodeListOf<HTMLElement>;
 
-      console.log(popoverMenuLinks.current);
-
       setContentTabIndex('-1');
     }
   }, [open]);
 
-  //   const handleMouseDown = (event) => {
-  //     const target = event.target;
-
-  //     if (open && popoverRef?.current?.contains(target)) {
-  //       event.stopPropagation();
-  //     } else if (open && isFocusedInsideRef.current) {
-  //       closeMenu();
-  //       //   setFocusByMouse(true);
-  //     }
-  //   };
-
-  //   useIsomorphicEffect(() => {
-  //     if (!open) {
-  //       return undefined;
-  //     }
-
-  //     console.log('add eevent');
-  //     // document.addEventListener('mousedown', handleMouseDown);
-
-  //     return () => {
-  //       //   document.removeEventListener('mousedown', handleMouseDown);
-  //     };
-  //   }, [open]);
-
-  console.log(selected);
   return (
     // @ts-ignore-error Popover throws a TS error everytime is imported
     <Popover
@@ -438,8 +376,10 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       {...rest}
       align={isButtonFocused ? 'right' : align}
       className={cx(customClassName, {
+        [`${prefix}--flyout-menu`]: true,
         [`${prefix}--flyout-menu-clicked`]: clickMode,
         [`${prefix}--flyout-menu-selected`]: selected,
+        [`${prefix}--flyout-menu-focused`]: isButtonFocused,
       })}
       dropShadow={dropShadow}
       highContrast={false}

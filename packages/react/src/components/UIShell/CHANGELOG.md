@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.23.0...@carbon-labs/react-ui-shell@0.24.0) (2025-02-28)
+
+
+### Bug Fixes
+
+* **SideNav:** handle unexpanded tabindex ([#484](https://github.com/carbon-design-system/carbon-labs/issues/484)) ([2e8b6bb](https://github.com/carbon-design-system/carbon-labs/commit/2e8b6bb62b14538bc864e3b69bf1073a466215dd))
+
+
+
+
+
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.22.0...@carbon-labs/react-ui-shell@0.23.0) (2025-02-28)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
 # [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.21.0...@carbon-labs/react-ui-shell@0.22.0) (2025-02-21)
 
 **Note:** Version bump only for package @carbon-labs/react-ui-shell

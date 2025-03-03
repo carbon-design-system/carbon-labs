@@ -35,7 +35,7 @@ import OverflowMenuVertical from '@carbon/web-components/es/icons/overflow-menu-
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
  */
 export default {
-  title: 'Toolbar/Toolbar',
+  title: 'Components/Toolbar',
   component: 'clabs-toolbar',
   subcomponents: { ToolbarGroup: 'clabs-toolbar-group' },
 };

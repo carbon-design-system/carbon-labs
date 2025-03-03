@@ -63,7 +63,7 @@ const renderTemplate = (args) => {
       .subtitle=${args.subtitle}
       size=${args.size}
       .link=${args.link}>
-      <cds-button kind=${args.action.kind} slot="action">${args.action.text} ${args.action.icon}</cds-button>
+      <cds-button kind=${args.action.kind} size="sm" slot="action">${args.action.text} ${args.action.icon}</cds-button>
       <cds-link href=${args.link.href} slot="link"> ${args.link.text} </cds-link>
     </clabs-empty-state>
   `;

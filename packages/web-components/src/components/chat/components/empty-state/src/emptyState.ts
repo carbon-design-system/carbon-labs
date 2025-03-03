@@ -32,9 +32,5 @@ export default class emptyState extends LitElement {
    */
   @property()
   size: 'sm' | 'lg' = 'lg';
-  // /**
-  //  * Empty state subtext
-  //  */
-  // @property({ type: Object})
-  // link;
+
 }

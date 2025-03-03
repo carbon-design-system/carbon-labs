@@ -19,11 +19,11 @@ $css--plex: true !default;
   color: $text-primary;
   .#{$clabs-prefix}--empty-state__header {
     @include type-style('heading-03');
-    
+
     margin: 0;
     padding-block-end: $spacing-03;
   }
-  .#{$clabs-prefix}--empty-state___subtitle  {
+  .#{$clabs-prefix}--empty-state___subtitle {
     @include type-style('body-01');
 
     margin: 0;

@@ -40,6 +40,13 @@ $css--plex: true !default;
   .#{$clabs-prefix}--empty-state__subtitle--small {
     @include type-style('label-01');
   }
+  ::slotted(#{$cds-prefix}-button){
+    display: block;
+    margin-block-end: $spacing-05;
+  }
+  ::slotted(#{$cds-prefix}-link){
+    display: inline-block;
+  }
 }
 
 // .#{$clabs-prefix}--empty-state__illustration {
@@ -71,13 +78,4 @@ $css--plex: true !default;
 
 // .#{$clabs-prefix}--empty-state-position--left {
 //   flex-direction: row;
-// }
-
-// .#{$clabs-prefix}--empty-state .#{$clabs-prefix}--empty-state__action-button {
-//   display: block;
-//   margin-block-end: $spacing-05;
-// }
-
-// .#{$clabs-prefix}--empty-state .#{$clabs-prefix}--empty-state__link {
-//   display: inline-block;
 // }

@@ -45,6 +45,7 @@ export function emptyStateTemplate(customElementClass) {
         ${subtitle}
       </p>`
           )}
+    <slot name="action"></slot>
     <slot name="link"></slot>
   </div>`;
 }

@@ -1,0 +1,40 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+
+:host(clabs-toolbar) {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--cds-layer-01);
+}
+:host(clabs-toolbar-group) {
+  display: flex;
+  border-block-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  border-inline-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+}
+
+:host-context(clabs-toolbar-group:last-child) {
+  border-inline-end-width: 0;
+}
+
+:host([vertical]) {
+  display: inline-flex;
+  flex-direction: column;
+  border-inline-end-width: 0;
+  max-inline-size: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.cds-list-box {
+  border-block-end: unset !important;
+}
+.cds--overflow-menu__icon {
+  color: var(--cds-icon-primary, #161616);
+}

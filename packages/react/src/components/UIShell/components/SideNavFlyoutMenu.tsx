@@ -145,13 +145,14 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
 
   const triggerProps = {
     onFocus: () => {
-      // display menu on hover, except when menu was closed from Escape key
       if (!focusByMouse) {
         setOpen(true);
         setIsButtonFocused(true);
+        setClickMode(false);
+        isFocusedInsideRef.current = false;
       }
     },
-    onBlur: (e) => {
+    onBlur: () => {
       if (!isFocusedInsideRef.current && !focusByMouse) {
         isFocusedInsideRef.current = false;
         setOpen(false);
@@ -209,9 +210,12 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   function onKeyDown(event) {
     if (open && match(event, keys.Escape)) {
       event.stopPropagation();
-      closeMenu({ revertFocus: true });
-      setOpen(true);
-      setIsButtonFocused(true);
+      if (!isButtonFocused) {
+        closeMenu({ revertFocus: true });
+      }
+
+      setOpen(!isButtonFocused);
+      setIsButtonFocused(!isButtonFocused);
     }
     if (
       open &&
@@ -359,6 +363,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     }
   }, []);
 
+  // set menu content to be untabbable
   useEffect(() => {
     if (popoverRef.current && !popoverMenuLinks.current) {
       popoverMenuLinks.current = popoverRef.current.querySelectorAll(
@@ -379,7 +384,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         [`${prefix}--flyout-menu`]: true,
         [`${prefix}--flyout-menu-clicked`]: clickMode,
         [`${prefix}--flyout-menu-selected`]: selected,
-        [`${prefix}--flyout-menu-focused`]: isButtonFocused,
+        [`${prefix}--flyout-menu-focused`]: isButtonFocused || open,
       })}
       dropShadow={dropShadow}
       highContrast={false}

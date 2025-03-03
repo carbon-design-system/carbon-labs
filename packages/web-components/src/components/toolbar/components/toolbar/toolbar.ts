@@ -26,5 +26,4 @@ class CLABSToolbar extends Toolbar {}
 @customElement(`${clabsPrefix}-toolbar-group`)
 class CLABSToolbarGroup extends ToolbarGroup {}
 
-
 export { CLABSToolbar, CLABSToolbarGroup };

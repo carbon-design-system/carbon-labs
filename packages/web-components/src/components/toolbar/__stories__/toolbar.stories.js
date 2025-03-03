@@ -8,8 +8,8 @@
  */
 
 import { html } from 'lit';
-import { CLABSToolbar, CLABSToolbarGroup } from '../components/toolbar/toolbar';
-import CDSButton from '@carbon/web-components/es/components/button/button.js';
+// import { CLABSToolbar, CLABSToolbarGroup } from '../components/toolbar/toolbar';
+// import CDSButton from '@carbon/web-components/es/components/button/button.js';
 import '@carbon/web-components/es/components/dropdown/index.js';
 import '@carbon/web-components/es/components/overflow-menu/index.js';
 
@@ -150,7 +150,9 @@ export const Default = {
 window.customElements.whenDefined('cds-dropdown').then(() => {
   requestAnimationFrame(() => {
     const dropdown = document.querySelector('cds-dropdown');
-    if (!dropdown) {return} 
+    if (!dropdown) {
+      return;
+    }
     const shadowRoot = dropdown.shadowRoot;
     const listBox = shadowRoot?.querySelector('.cds--list-box');
     console.log('listBox', listBox);
@@ -163,12 +165,11 @@ window.customElements.whenDefined('cds-button').then(() => {
   requestAnimationFrame(() => {
     const buttons = document.querySelectorAll('cds-button');
     console.log('buttons', buttons);
-    
+
     buttons.forEach((button) => {
       const shadowRoot = button.shadowRoot;
       const buttonEl = shadowRoot?.querySelector('.cds--btn--icon-only');
       buttonEl.style.color = 'var(--cds-icon-primary, #161616)';
-      
     });
   });
 });

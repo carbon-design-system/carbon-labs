@@ -35,7 +35,7 @@ export const SharkfinIcon: React.FC<SharkfinIconProps> = ({
   const prefix = usePrefix();
   const className = cx({
     [`${prefix}--side-nav__icon`]: true,
-    [`${prefix}--shark-fin-icon`]: true,
+    [`${prefix}--shark-fin__icon`]: true,
     [customClassName as string]: !!customClassName,
   });
   return (

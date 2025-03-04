@@ -53,7 +53,7 @@ const defaultId = 'id';
 /**
  * Generate a unique ID for React <=17 with an optional prefix prepended to it.
  * This is an internal utility, not intended for public usage.
- * @param {string} [prefix]
+ * @param {string} [prefix] the optional prefix id
  * @returns {string}
  */
 export function useCompatibleId(prefix = defaultId) {
@@ -88,7 +88,7 @@ export function useCompatibleId(prefix = defaultId) {
 /**
  * Generate a unique ID for React >=18 with an optional prefix prepended to it.
  * This is an internal utility, not intended for public usage.
- * @param {string} [prefix]
+ * @param {string} [prefix] the optional prefix id
  * @returns {string}
  */
 function useReactId(prefix = defaultId) {
@@ -108,7 +108,7 @@ export const useId = _React.useId ? useReactId : useCompatibleId;
 /**
  * Generate a unique id if a given `id` is not provided
  * This is an internal utility, not intended for public usage.
- * @param {string|undefined} id
+ * @param {string|undefined} id the provided id
  * @returns {string}
  */
 export function useFallbackId(id) {

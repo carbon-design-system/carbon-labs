@@ -11,6 +11,9 @@ export const IdPrefixContext = React.createContext<string | null | undefined>(
   null
 );
 
+/**
+ *
+ */
 export function useIdPrefix() {
   return React.useContext(IdPrefixContext);
 }

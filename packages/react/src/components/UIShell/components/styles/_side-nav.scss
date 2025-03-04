@@ -299,21 +299,18 @@ div:has(.#{$prefix}--header)
     block-size: $spacing-07;
     min-block-size: initial;
 
+    svg {
+      fill: $icon-secondary;
+    }
+
+    &:hover svg {
+      fill: $icon-primary;
+    }
+
     .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
       margin-inline-end: 0;
     }
   }
-
-  .#{$prefix}--side-nav-link-popover.#{$prefix}--btn--icon-only {
-
-    svg {
-      fill: $icon-secondary;
-    }
-    
-    &:hover svg {
-      fill: $icon-primary;
-    }
-  }  
 
   // TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
   .#{$prefix}--tooltip-content {

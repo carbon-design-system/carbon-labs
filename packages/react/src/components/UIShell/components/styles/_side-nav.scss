@@ -304,6 +304,17 @@ div:has(.#{$prefix}--header)
     }
   }
 
+  .#{$prefix}--side-nav-link-popover.#{$prefix}--btn--icon-only {
+
+    svg {
+      fill: $icon-secondary;
+    }
+    
+    &:hover svg {
+      fill: $icon-primary;
+    }
+  }  
+
   // TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
   .#{$prefix}--tooltip-content {
     color: $text-primary;

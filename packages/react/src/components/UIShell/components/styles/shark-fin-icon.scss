@@ -1,8 +1,7 @@
 @use '@carbon/styles/scss/theme' as *;
 
-
 $prefix: 'cds' !default;
 
 .#{$prefix}--side-nav__icon.#{$prefix}--shark-fin__icon {
-    fill: $icon-secondary;
+  fill: $icon-secondary;
 }

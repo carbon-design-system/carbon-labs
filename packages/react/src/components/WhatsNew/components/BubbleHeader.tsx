@@ -15,11 +15,10 @@ const BubbleHeader = ({
   className,
   ...rest
 }: HTMLProps<HTMLElement>) => {
-  const prefix = usePrefix();
+  const labsPrefix = usePrefix();
+  const prefix = `${labsPrefix}--whats-new`;
   return (
-    <header
-      {...rest}
-      className={cx(`${prefix}--whats-new__bubble__header`, className)}>
+    <header {...rest} className={cx(`${prefix}__bubble__header`, className)}>
       {children}
     </header>
   );

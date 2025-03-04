@@ -4,24 +4,29 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/styles/scss/breakpoint' as *;
 @use '@carbon/styles/scss/utilities/convert' as convert;
 
-$prefix: 'clabs' !default;
+$prefix: 'clabs--whats-new' !default;
 $animateTime: 0.25s;
 
-.#{$prefix}--whats-new__view-stack {
+.#{$prefix}__view-stack {
   min-block-size: convert.to-rem(256px);
   min-inline-size: convert.to-rem(256px);
 }
 
-.#{$prefix}--whats-new__view-stack ul {
+.#{$prefix}__view-stack ul {
   position: relative;
   overflow: hidden;
   min-block-size: 100%;
   min-inline-size: 100%;
 }
 
-.#{$prefix}--whats-new__view {
+.#{$prefix}__view {
   position: absolute;
   z-index: 80;
   overflow: hidden auto;
@@ -32,12 +37,12 @@ $animateTime: 0.25s;
   transition: transform $animateTime cubic-bezier(0.2, 0, 0.38, 0.9);
 }
 
-.#{$prefix}--whats-new__view-active {
+.#{$prefix}__view-active {
   z-index: 100;
   transform: translateX(-100%);
 }
 
-.#{$prefix}--whats-new__view-in-stack {
+.#{$prefix}__view-in-stack {
   z-index: 90;
   transform: translateX(-200%);
 }
@@ -62,17 +67,17 @@ $animateTime: 0.25s;
   }
 }
 
-.#{$prefix}--whats-new__view-recycle-in {
+.#{$prefix}__view-recycle-in {
   z-index: 100;
   animation: out-to-active $animateTime cubic-bezier(0.2, 0, 0.38, 0.9) forwards;
 }
 
-.#{$prefix}--whats-new__view-recycle-out {
+.#{$prefix}__view-recycle-out {
   z-index: 90;
   animation: active-to-out $animateTime cubic-bezier(0.2, 0, 0.38, 0.9) forwards;
 }
 
-.#{$prefix}--whats-new__view-stack-announcer {
+.#{$prefix}__view-stack-announcer {
   position: absolute;
   overflow: hidden;
   padding: 0;

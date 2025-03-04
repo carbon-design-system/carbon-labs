@@ -67,7 +67,8 @@ const ViewStack = forwardRef(
     }: ViewStackProps,
     ref
   ) => {
-    const prefix = usePrefix();
+    const labsPrefix = usePrefix();
+    const prefix = `${labsPrefix}--whats-new`;
     const [refs, setRefs] = useState<
       Record<string, React.RefObject<HTMLLIElement>>
     >({});
@@ -80,15 +81,15 @@ const ViewStack = forwardRef(
       ViewStackHistory[]
     >([]);
 
-    const registerRef = (
-      index: number,
-      ref: React.RefObject<HTMLLIElement>
-    ) => {
-      setRefs((prevRefs) => ({
-        ...prevRefs,
-        [index]: ref,
-      }));
-    };
+    const registerRef = useCallback(
+      (index: number, ref: React.RefObject<HTMLLIElement>) => {
+        setRefs((prevRefs) => ({
+          ...prevRefs,
+          [index]: ref,
+        }));
+      },
+      []
+    );
     const getHistory = useCallback(
       (inIndexArray: number[]) => {
         return inIndexArray.map((id) => {
@@ -270,7 +271,7 @@ const ViewStack = forwardRef(
           role={role}
           tabIndex={0}
           {...rest}
-          className={cx(className, `${prefix}--whats-new__view-stack`)}>
+          className={cx(className, `${prefix}__view-stack`)}>
           <ul>
             {React.Children.map(children, (el, idx) => {
               if (isValidElement(el)) {
@@ -290,7 +291,7 @@ const ViewStack = forwardRef(
           <div
             aria-live="polite"
             aria-atomic="true"
-            className={`${prefix}--whats-new__view-stack-announcer`}>
+            className={`${prefix}__view-stack-announcer`}>
             {internalAssistiveTranslator(
               viewIndexStack[0] + 1,
               Object.keys(refs).length

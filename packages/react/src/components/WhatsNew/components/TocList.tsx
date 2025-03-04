@@ -7,7 +7,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import React, { ReactElement, useContext, useRef, useState } from 'react';
+import React, {
+  ReactElement,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from 'react';
 import { useToc } from './Toc';
 import { TocItemProps } from './TocItem';
 
@@ -24,21 +30,25 @@ const TocListContext = React.createContext<TocListContext | undefined>(
 );
 
 const TocList = ({ children }: TocListProps) => {
-  const prefix = usePrefix();
+  const labsPrefix = usePrefix();
+  const prefix = `${labsPrefix}--whats-new`;
   const { activeIds } = useToc();
   const [refs, setRefs] = useState<
     Record<string, React.RefObject<HTMLElement>>
   >({});
   const navRef = useRef(null);
 
-  const registerRef = (index: number, ref: React.RefObject<HTMLElement>) => {
-    setRefs((prevRefs) => {
-      return {
-        ...prevRefs,
-        [index]: ref,
-      };
-    });
-  };
+  const registerRef = useCallback(
+    (index: number, ref: React.RefObject<HTMLElement>) => {
+      setRefs((prevRefs) => {
+        return {
+          ...prevRefs,
+          [index]: ref,
+        };
+      });
+    },
+    []
+  );
 
   const getNextValueIndex = (
     elementIndex: number,
@@ -81,7 +91,7 @@ const TocList = ({ children }: TocListProps) => {
 
   return (
     <TocListContext.Provider value={{ registerRef, handleKeyDown }}>
-      <nav ref={navRef} className={`${prefix}--whats-new__toc-list`}>
+      <nav ref={navRef} className={`${prefix}__toc-list`}>
         {React.Children.map(children, (el, idx) => {
           return React.cloneElement(el as React.ReactElement<any>, {
             index: idx,

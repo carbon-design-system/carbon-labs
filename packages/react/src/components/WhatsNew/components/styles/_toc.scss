@@ -4,16 +4,22 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-$prefix: 'clabs' !default;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/styles/scss/breakpoint' as *;
 
-.#{$prefix}--whats-new__toc-list {
+$prefix: 'clabs--whats-new' !default;
+
+.#{$prefix}__toc-list {
   padding: 0;
   margin: 0;
   list-style: none;
   min-inline-size: 10rem;
 }
 
-.#{$prefix}--whats-new__toc-item a {
+.#{$prefix}__toc-item a {
   display: inline-block;
   border-inline-start: 0.25rem solid var(--cds-border-subtle-01, #c6c6c6);
   color: var(--cds-text-secondary, #525252);
@@ -28,12 +34,12 @@ $prefix: 'clabs' !default;
   transition: border 400ms ease-out;
 }
 
-.#{$prefix}--whats-new__toc-item-active a {
+.#{$prefix}__toc-item-active a {
   border-inline-start-color: var(--cds-border-interactive, #0f62fe);
   color: var(--cds-text-primary, #161616);
 }
 
-.#{$prefix}--whats-new__toc-sections {
+.#{$prefix}__toc-sections {
   display: flex;
   flex-direction: column;
   block-size: 100%;

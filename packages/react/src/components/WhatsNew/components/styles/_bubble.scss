@@ -7,19 +7,23 @@
 @use '@carbon/react/scss/type' as *;
 @use '@carbon/react/scss/spacing' as *;
 @use '@carbon/react/scss/colors' as *;
-@use '@carbon/react/scss/theme' as *;
+@use '@carbon/styles/scss/theme' as carbontheme;
+@use '@carbon/styles/scss/themes' as carbonthemes;
 @use '@carbon/styles/scss/breakpoint' as *;
+@use '@carbon/styles/scss/utilities';
+@use '@carbon/ibm-products/scss/config' as config;
+@use './scss-utils';
 
-$prefix: 'clabs' !default;
+$prefix: 'clabs--whats-new' !default;
 
-.#{$prefix}--whats-new__bubble {
+.#{$prefix}__bubble {
   position: fixed;
   z-index: 10000;
   display: none;
   padding: $spacing-05;
   border-radius: $spacing-01;
-  background: $layer;
-  color: $text-primary;
+  background-color: carbontheme.$layer;
+  color: carbontheme.$text-primary;
   font-weight: bold;
   inline-size: max-content;
   inset-block-start: 0;
@@ -27,37 +31,76 @@ $prefix: 'clabs' !default;
   pointer-events: none;
 }
 
-.#{$prefix}--whats-new__bubble-open {
+.#{$prefix}__bubble-open {
   display: grid;
   pointer-events: all;
 }
 
-.#{$prefix}--whats-new__bubble-drop-shadow {
+.#{$prefix}__bubble-drop-shadow {
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
 }
 
-.#{$prefix}--whats-new__bubble-high-contrast {
-  background: $background-inverse;
-  color: $text-inverse;
-}
-
-.#{$prefix}--whats-new__bubble__arrow {
+.#{$prefix}__bubble__arrow {
   position: absolute;
   z-index: 10010;
-  background: $layer;
+  background: carbontheme.$layer;
   block-size: $spacing-04;
   inline-size: $spacing-04;
   transform: rotate(45deg);
 }
 
-.#{$prefix}--whats-new__bubble__arrow-high-contrast {
-  background: $background-inverse;
-}
-
-.#{$prefix}--whats-new__bubble__header {
+.#{$prefix}__bubble__header {
   z-index: 10020;
   display: flex;
   justify-content: flex-end;
   margin-block-start: -$spacing-05;
   margin-inline: -$spacing-05;
 }
+
+// :root[data-carbon-theme='g100'] {
+//   .#{$prefix}__bubble-high-contrast {
+//     @include carbontheme.theme(carbonthemes.$white);
+//   }
+// }
+
+// :root[data-carbon-theme='g90'] {
+//   .#{$prefix}__bubble-high-contrast {
+//     @include carbontheme.theme(carbonthemes.$g10);
+//   }
+// }
+
+// :root[data-carbon-theme='g10'] {
+//   .#{$prefix}__bubble-high-contrast {
+//     @include carbontheme.theme(carbonthemes.$g90);
+//   }
+// }
+
+// :root[data-carbon-theme='white'] {
+//   .#{$prefix}__bubble-high-contrast {
+//     @include carbontheme.theme(carbonthemes.$g100);
+//   }
+// }
+
+// .#{config.$carbon-prefix}--g100 {
+//   .#{$prefix}__bubble-high-contrast {
+//     @include carbontheme.theme(carbonthemes.$white);
+//   }
+// }
+// // duplicating for class names for similar specificity to override potential global set themes
+// .#{config.$carbon-prefix}--g90 {
+//   .#{$prefix}__bubble-high-contrast {
+//     @include carbontheme.theme(carbonthemes.$g10);
+//   }
+// }
+
+// .#{config.$carbon-prefix}--g10 {
+//   .#{$prefix}__bubble-high-contrast {
+//     @include carbontheme.theme(carbonthemes.$g90);
+//   }
+// }
+
+// .#{config.$carbon-prefix}--white {
+//   .#{$prefix}__bubble-high-contrast {
+//     @include carbontheme.theme(carbonthemes.$g100);
+//   }
+// }

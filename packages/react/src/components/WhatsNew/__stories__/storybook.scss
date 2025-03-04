@@ -1,0 +1,20 @@
+@use '@carbon/ibm-products/scss/components/Tearsheet';
+@use '../components/whats-new.scss';
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/config';
+
+html,
+body,
+.storyBody,
+.cds--layout,
+#storybook-root {
+  block-size: 100vh;
+}
+
+.controlHeader {
+  display: flex;
+  border-block-end: 1px solid $background-inverse;
+  gap: 1;
+}

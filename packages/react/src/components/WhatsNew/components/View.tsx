@@ -25,7 +25,9 @@ const View = ({ className, title, index = Infinity, ...rest }: ViewProps) => {
     handleTransitionEnd,
   } = useViewStackContext();
   const ref = useRef<HTMLLIElement>(null);
-  const prefix = usePrefix();
+  const labsPrefix = usePrefix();
+  const prefix = `${labsPrefix}--whats-new`;
+
   useEffect(() => {
     registerRef(index, ref);
   }, [index, registerRef]);
@@ -55,8 +57,8 @@ const View = ({ className, title, index = Infinity, ...rest }: ViewProps) => {
 
   const transitionComplete = useCallback(() => {
     ref.current?.classList.remove(
-      `${prefix}--whats-new__view-recycle-in`,
-      `${prefix}--whats-new__view-recycle-out`
+      `${prefix}__view-recycle-in`,
+      `${prefix}__view-recycle-out`
     );
     handleTransitionEnd(ref.current);
   }, [handleTransitionEnd, prefix]);
@@ -70,12 +72,12 @@ const View = ({ className, title, index = Infinity, ...rest }: ViewProps) => {
       {...rest}
       className={cx(
         {
-          [`${prefix}--whats-new__view`]: true,
-          [`${prefix}--whats-new__view-in-stack`]: isInViewStack && !isActive,
-          [`${prefix}--whats-new__view-active`]: isInViewStack && isActive,
-          [`${prefix}--whats-new__view-recycle-in`]:
+          [`${prefix}__view`]: true,
+          [`${prefix}__view-in-stack`]: isInViewStack && !isActive,
+          [`${prefix}__view-active`]: isInViewStack && isActive,
+          [`${prefix}__view-recycle-in`]:
             isBeingRecycledIn && !isBeingRecycledOut,
-          [`${prefix}--whats-new__view-recycle-out`]:
+          [`${prefix}__view-recycle-out`]:
             isBeingRecycledOut && !isBeingRecycledIn,
         },
         className

@@ -21,7 +21,8 @@ interface TocItemProps {
 }
 
 const TocItem = (props: TocItemProps) => {
-  const prefix = usePrefix();
+  const labsPrefix = usePrefix();
+  const prefix = `${labsPrefix}--whats-new`;
   const { isActive, children, index = Infinity } = props;
   const { scrollToSection } = useToc();
   const { registerRef, handleKeyDown } = useTocListContext();
@@ -38,8 +39,8 @@ const TocItem = (props: TocItemProps) => {
   return (
     <li
       className={cx({
-        [`${prefix}--whats-new__toc-item`]: true,
-        [`${prefix}--whats-new__toc-item-active`]: isActive,
+        [`${prefix}__toc-item`]: true,
+        [`${prefix}__toc-item-active`]: isActive,
       })}
       data-index={index}>
       <a

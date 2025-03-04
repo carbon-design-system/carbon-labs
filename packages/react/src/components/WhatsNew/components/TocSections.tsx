@@ -7,7 +7,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { useToc } from './Toc';
 import cx from 'classnames';
@@ -31,7 +37,8 @@ const TocSections = ({
   className,
   ...rest
 }: TocSectionsProps) => {
-  const prefix = usePrefix();
+  const labsPrefix = usePrefix();
+  const prefix = `${labsPrefix}--whats-new`;
   const { dispatch, scrollToSectionIndex } = useToc();
   const scrollableDivRef = useRef<HTMLDivElement>(null);
   const intersectionObserverRef = useRef<IntersectionObserver | null>(null);
@@ -61,12 +68,15 @@ const TocSections = ({
     });
   }, [refs]);
 
-  const registerRef = (index: number, ref: React.RefObject<HTMLElement>) => {
-    setRefs((prevRefs) => ({
-      ...prevRefs,
-      [index]: ref,
-    }));
-  };
+  const registerRef = useCallback(
+    (index: number, ref: React.RefObject<HTMLElement>) => {
+      setRefs((prevRefs) => ({
+        ...prevRefs,
+        [index]: ref,
+      }));
+    },
+    []
+  );
   // INTERSECTION OBSERVER
   useEffect(() => {
     intersectionObserverRef.current?.disconnect();
@@ -102,7 +112,7 @@ const TocSections = ({
       <div
         {...rest}
         ref={scrollableDivRef}
-        className={cx(className, `${prefix}--whats-new__toc-sections`)}>
+        className={cx(className, `${prefix}__toc-sections`)}>
         {React.Children.map(children, (el, idx) => {
           return React.cloneElement(el as React.ReactElement<any>, {
             index: idx,

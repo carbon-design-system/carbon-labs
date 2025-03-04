@@ -8,9 +8,14 @@
  */
 
 import cx from 'classnames';
-import { NewPopoverAlignment } from '@carbon/react';
+import {
+  NewPopoverAlignment,
+  useTheme,
+  usePrefix as useCarbonPrefix,
+} from '@carbon/react';
 import React, { HTMLProps, useLayoutEffect, useRef } from 'react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+
 import {
   autoUpdate,
   computePosition,
@@ -39,7 +44,10 @@ const Bubble = ({
   // onClose,
   ...rest
 }: BubbleProps) => {
-  const prefix = usePrefix();
+  const { theme } = useTheme();
+  const labsPrefix = usePrefix();
+  const prefix = `${labsPrefix}--whats-new`;
+  const carbonPrefix = useCarbonPrefix();
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const arrowRef = useRef<HTMLDivElement | null>(null);
   const targetRef = useRef<Element | null>(null);
@@ -125,19 +133,26 @@ const Bubble = ({
       ref={tooltipRef}
       className={cx(
         {
-          [`${prefix}--whats-new__bubble`]: true,
-          [`${prefix}--whats-new__bubble-open`]: open,
-          [`${prefix}--whats-new__bubble-drop-shadow`]: dropShadow,
-          [`${prefix}--whats-new__bubble-high-contrast`]: highContrast,
+          [`${carbonPrefix}--g100`]:
+            (theme === 'white' && highContrast) ||
+            (theme === 'g100' && !highContrast),
+          [`${carbonPrefix}--g90`]:
+            (theme === 'g10' && highContrast) ||
+            (theme === 'g90' && !highContrast),
+          [`${carbonPrefix}--g10`]:
+            (theme === 'g90' && highContrast) ||
+            (theme === 'g10' && !highContrast),
+          [`${carbonPrefix}--white`]:
+            (theme === 'g100' && highContrast) ||
+            (theme === 'white' && !highContrast),
+          [`${prefix}__bubble`]: true,
+          [`${prefix}__bubble-open`]: open,
+          [`${prefix}__bubble-drop-shadow`]: dropShadow,
+          [`${prefix}__bubble-high-contrast`]: highContrast,
         },
         customClassName
       )}>
-      <div
-        ref={arrowRef}
-        className={cx({
-          [`${prefix}--whats-new__bubble__arrow`]: true,
-          [`${prefix}--whats-new__bubble__arrow-high-contrast`]: highContrast,
-        })}></div>
+      <div ref={arrowRef} className={`${prefix}__bubble__arrow`}></div>
       {children}
     </div>
   );

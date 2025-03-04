@@ -30,13 +30,12 @@ export interface SharkfinIconProps {
 }
 
 export const SharkfinIcon: React.FC<SharkfinIconProps> = ({
-  children,
   className: customClassName,
-  small = false,
 }) => {
   const prefix = usePrefix();
   const className = cx({
     [`${prefix}--side-nav__icon`]: true,
+    [`${prefix}--shark-fin-icon`]: true,
     [customClassName as string]: !!customClassName,
   });
   return (

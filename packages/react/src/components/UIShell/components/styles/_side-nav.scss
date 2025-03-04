@@ -15,6 +15,7 @@
 @use '@carbon/styles/scss/components/ui-shell/mixins' as *;
 @use '@carbon/styles/scss/components/ui-shell/functions' as *;
 @use '@carbon/styles/scss/spacing' as *;
+@use './shark-fin-icon.scss';
 
 $prefix: 'cds' !default;
 
@@ -200,12 +201,7 @@ div:has(.#{$prefix}--header)
     .#{$prefix}--side-nav--panel-submenu-caret {
       position: absolute;
       bottom: 4px;
-      right: 4px;
- 
-      > svg {
-        fill: $icon-secondary;
-      }
-  
+      right: 4px; 
     }  
   }
 
@@ -213,6 +209,7 @@ div:has(.#{$prefix}--header)
     fill: $icon-primary;
   }
 
+  // menu icon svg
   .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__icon svg,
   .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__icon svg,
   .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav--panel-submenu-caret svg{
@@ -221,7 +218,8 @@ div:has(.#{$prefix}--header)
 
   .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu {
     background-color: $background-hover;
-    .#{$prefix}--side-nav--panel-submenu-caret svg {
+    
+    .#{$prefix}-shark-fin-icon {
       fill: $icon-primary;
     }
   } 
@@ -230,7 +228,8 @@ div:has(.#{$prefix}--header)
   // Selected + click
   .#{$prefix}--flyout-menu-selected.#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu {
     background-color: $background-active;
-    .#{$prefix}--side-nav--panel-submenu-caret svg {
+
+    .#{$prefix}-shark-fin-icon {
       fill: $icon-primary;
     }
   }   

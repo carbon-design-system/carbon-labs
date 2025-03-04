@@ -30,7 +30,7 @@ import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
 import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
-import { SharkfinIcon } from './Sharkfin';
+import { SharkfinIcon } from './SharkFinIcon';
 import { SideNavFlyoutMenu } from './SideNavFlyoutMenu';
 export interface SideNavMenuProps {
   /**

@@ -1,6 +1,11 @@
 import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
 import * as ProcessingStories from './Processing.stories';
 import Processing from '../components/Processing';
+import AIChatLoop from './images/ai_chat_loop.gif';
+import NoLoopLight from './images/processing_element_load_unload_light_128x128.gif';
+import NoLoopDark from './images/processing_element_load_unload_dark_128x128.gif';
+import LoopLight from './images/processing_element_loop_light_128x128.gif';
+import LoopDark from './images/processing_element_loop_dark_128x128.gif';
 
 <Meta isTemplate />
 
@@ -43,7 +48,7 @@ processed/loaded and the user should wait.
   ]}
 />
 
-![AI chat window example](./images/ai_chat_loop.gif 'AI chat window example')
+<img src={AIChatLoop} alt="AI chat window example" />
 
 **Ex.** Content processing in a chat shell.
 
@@ -53,10 +58,10 @@ As a designer, you can use the Processing component in Figma to create a more
 interactive prototype. This can be done by downloading the desired `.gif` below
 and adding to Figma.
 
-|             |                             Light mode (white, g10)                              |                             Dark mode (g90, g100)                              |
-| :---------- | :------------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
-| **No Loop** | ![No loop light mode](./images/processing_element_load_unload_light_128x128.gif) | ![No loop dark mode](./images/processing_element_load_unload_dark_128x128.gif) |
-| **Loop**    |      ![Loop light mode](./images/processing_element_loop_light_128x128.gif)      |      ![Loop dark mode](./images/processing_element_loop_dark_128x128.gif)      |
+|             |              Light mode (white, g10)               |              Dark mode (g90, g100)               |
+| :---------- | :------------------------------------------------: | :----------------------------------------------: |
+| **No Loop** | <img src={NoLoopLight} alt="No loop light mode" /> | <img src={NoLoopDark} alt="No loop dark mode" /> |
+| **Loop**    |   <img src={LoopLight} alt="Loop light mode" />    |   <img src={LoopDark} alt="Loop dark mode" />    |
 
 ## Getting started
 

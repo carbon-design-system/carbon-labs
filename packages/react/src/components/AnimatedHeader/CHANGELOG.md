@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.2.0...@carbon-labs/react-animated-header@0.3.0) (2025-03-04)
+
+
+### Bug Fixes
+
+* **animated-header:** fix dropdown bugs and rename tile-dropdown to… ([#485](https://github.com/carbon-design-system/carbon-labs/issues/485)) ([a12c104](https://github.com/carbon-design-system/carbon-labs/commit/a12c104eb0fb0e40449a55af3013855dc539f271))
+
+
+
+
+
 # [0.2.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.1.0...@carbon-labs/react-animated-header@0.2.0) (2025-02-19)
 
 **Note:** Version bump only for package @carbon-labs/react-animated-header

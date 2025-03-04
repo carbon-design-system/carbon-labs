@@ -33,12 +33,12 @@ $prefix: 'clabs--processing' !default;
 
 [data-carbon-theme='white'] .#{$prefix}__dot,
 [data-carbon-theme='g10'] .#{$prefix}__dot {
-  stroke: #001d6c;
+  stroke: $blue-90;
 }
 
 [data-carbon-theme='g90'] .#{$prefix}__dot,
 [data-carbon-theme='g100'] .#{$prefix}__dot {
-  stroke: #f4f4f4;
+  stroke: $gray-10;
 }
 
 /* LINEAR */

@@ -11,7 +11,7 @@ import '../emptyState';
 import { html } from 'lit';
 import '@carbon/web-components/es/components/link/index.js';
 import '@carbon/web-components/es/components/button/index.js';
-import Add20 from '@carbon/web-components/es/icons/add--large/20';
+import Add20 from '@carbon/web-components/es/icons/add/20';
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction

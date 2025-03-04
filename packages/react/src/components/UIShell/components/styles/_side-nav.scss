@@ -189,6 +189,7 @@ div:has(.#{$prefix}--header)
     overflow: visible;
   }
 
+  // SharkFinIcon container styles
   .#{$prefix}--side-nav__submenu {
     position: relative;
 
@@ -205,6 +206,7 @@ div:has(.#{$prefix}--header)
     }
   }
 
+  // Focused FlyoutMenu button 
   .#{$prefix}--flyout-menu-focused
     .#{$prefix}--side-nav--panel-submenu-caret
     svg {
@@ -220,6 +222,7 @@ div:has(.#{$prefix}--header)
     fill: $icon-primary;
   }
 
+  // Change SharkFinIcon color when clicked
   .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu {
     background-color: $background-hover;
 
@@ -254,15 +257,6 @@ div:has(.#{$prefix}--header)
     background-color: $background-selected;
   }
 
-  .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__submenu::before {
-    position: absolute;
-    background-color: $border-interactive;
-    content: '';
-    inline-size: 3px;
-    inset-block: 0;
-    inset-inline-start: 0;
-  }
-
   // flyout on focus, only displays title
   .#{$prefix}--flyout-tooltip-content {
     padding-block-start: 1px;
@@ -275,11 +269,13 @@ div:has(.#{$prefix}--header)
     @include custom-property.declaration('popover-caret-height', 0.25rem);
   }
 
+  // Flyout menu content styles
   .#{$prefix}--side-nav-menu--popover-content {
     padding: 4px 0;
 
     .#{$prefix}--label {
       padding-inline-start: $spacing-05;
+      color: $text-secondary;
     }
 
     .#{$prefix}--side-nav__link {
@@ -291,10 +287,6 @@ div:has(.#{$prefix}--header)
     .#{$prefix}--side-nav__link:hover {
       background-color: $background-hover;
     }
-  }
-
-  .#{$prefix}--side-nav-menu--popover-content .#{$prefix}--label {
-    color: $text-secondary;
   }
 
   // Flyout menu link on hover styles

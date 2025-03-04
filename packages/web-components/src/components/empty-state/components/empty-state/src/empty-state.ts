@@ -11,7 +11,7 @@ import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
 // @ts-ignore
-import styles from './emptyState.scss?inline';
+import styles from './empty-state.scss?inline';
 /**
  * Input component using search typeahead api
  */

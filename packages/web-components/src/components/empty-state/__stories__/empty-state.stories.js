@@ -7,16 +7,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '../emptyState';
+import '../components/empty-state/empty-state';
 import { html } from 'lit';
 import '@carbon/web-components/es/components/link/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 import Add20 from '@carbon/web-components/es/icons/add/20';
 
-
-// More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
+/**
+ * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
+ */
 export default {
-  title: 'Components/Research/Empty State',
+  title: 'Components/Empty State',
+  component: 'clabs-empty-state',
 };
 
 const argTypes = {
@@ -50,6 +52,7 @@ const defaultLinkProps = {
   href: 'https://www.carbondesignsystem.com',
   text: 'View documentation',
 };
+
 /**
  * Renders the template for Storybook
  * 

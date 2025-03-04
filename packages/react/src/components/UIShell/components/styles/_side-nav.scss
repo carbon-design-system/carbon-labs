@@ -286,7 +286,8 @@ div:has(.#{$prefix}--header)
   }
 
   // Flyout menu link on hover styles
-  .#{$prefix}--side-nav-menu--popover-content .#{$prefix}--side-nav__link:hover {
+  .#{$prefix}--side-nav-menu--popover-content
+    .#{$prefix}--side-nav__link:hover {
     .#{$prefix}--side-nav__link-text {
       color: $text-primary;
     }
@@ -322,4 +323,8 @@ div:has(.#{$prefix}--header)
   .#{$prefix}--side-nav__items {
     overflow-y: auto;
   }
+
+  .#{$prefix}--side-nav__item {
+    overflow: visible;
+  }  
 }

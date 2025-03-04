@@ -26,7 +26,7 @@ $prefix: 'clabs--processing' !default;
 
 .#{$prefix}__dot {
   fill: none;
-  r: 0px;
+  r: 0;
   stroke-width: 0;
   transform: translateY(0);
 }
@@ -137,7 +137,7 @@ $prefix: 'clabs--processing' !default;
 @keyframes linear-load-size {
   0% {
     animation-timing-function: cubic-bezier(0, 0, 0.3, 1);
-    r: 0px;
+    r: 0;
   }
 
   25% {
@@ -215,11 +215,11 @@ $prefix: 'clabs--processing' !default;
   }
 
   58.33% {
-    r: 0px;
+    r: 0;
   }
 
   100% {
-    r: 0px;
+    r: 0;
   }
 }
 

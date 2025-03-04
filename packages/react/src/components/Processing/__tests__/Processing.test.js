@@ -11,7 +11,7 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
 
-import { Processing } from '../components/Processing';
+import Processing from '../components/Processing';
 jest.mock('./processing.scss', () => ({}));
 describe('Processing', () => {
   describe('renders as expected - Component API', () => {

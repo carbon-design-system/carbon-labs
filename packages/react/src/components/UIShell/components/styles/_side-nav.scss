@@ -234,6 +234,19 @@ div:has(.#{$prefix}--header)
     }
   }   
 
+  // Selected Panel FlyoutMenuItem styles (checkmark icon)
+  .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__menu-item--flyout-menu-item {
+
+    .#{$prefix}--side-nav__icon {
+      margin-inline-end: $spacing-04;
+    }
+
+
+    .#{$prefix}--side-nav__link--active {
+      padding-inline-start: $spacing-04; 
+    }
+  }
+
   .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__submenu {
     background-color: $background-selected;
   } 

@@ -170,6 +170,59 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       return child;
     });
 
+    /**
+      Defining the children parameter with the type ReactNode | ReactNode[]. This allows for various possibilities:
+      a single element, an array of elements, or null or undefined.
+    **/
+    function hasActiveDescendant(children: ReactNode | ReactNode[]): boolean {
+      if (Array.isArray(children)) {
+        return children.some((child) => {
+          if (!React.isValidElement(child)) {
+            setActive(false);
+            return false;
+          }
+
+          /** Explicitly defining the expected prop types (isActive and 'aria-current) for the children to ensure type
+  safety when accessing their props.
+  **/
+          const props = child.props as {
+            isActive?: boolean;
+            'aria-current'?: string;
+            children: ReactNode | ReactNode[];
+          };
+
+          if (
+            props.isActive === true ||
+            props['aria-current'] ||
+            (props.children instanceof Array &&
+              hasActiveDescendant(props.children))
+          ) {
+            setActive(true);
+            return true;
+          }
+
+          return false;
+        });
+      }
+
+      // We use React.isValidElement(child) to check if the child is a valid React element before accessing its props
+
+      if (React.isValidElement(children)) {
+        const props = children.props as {
+          isActive?: boolean;
+          'aria-current'?: string;
+        };
+
+        if (props.isActive === true || props['aria-current']) {
+          setActive(true);
+
+          return true;
+        }
+      }
+
+      return false;
+    }
+
     useEffect(() => {
       if (navType == SIDE_NAV_TYPE.PANEL) {
         // grab first link to redirect if clicked when not expanded
@@ -330,7 +383,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
     return navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded ? (
       <SideNavFlyoutMenu
-        selected={selected}
+        selected={active}
         className={`${prefix}--side-nav-flyout-menu`}
         title={title}
         menuContent={children}>
@@ -405,51 +458,3 @@ SideNavMenu.propTypes = {
    */
   title: PropTypes.string.isRequired,
 };
-
-/**
-Defining the children parameter with the type ReactNode | ReactNode[]. This allows for various possibilities:
-a single element, an array of elements, or null or undefined.
-**/
-function hasActiveDescendant(children: ReactNode | ReactNode[]): boolean {
-  if (Array.isArray(children)) {
-    return children.some((child) => {
-      if (!React.isValidElement(child)) {
-        return false;
-      }
-
-      /** Explicitly defining the expected prop types (isActive and 'aria-current) for the children to ensure type
-  safety when accessing their props.
-  **/
-      const props = child.props as {
-        isActive?: boolean;
-        'aria-current'?: string;
-        children: ReactNode | ReactNode[];
-      };
-
-      if (
-        props.isActive === true ||
-        props['aria-current'] ||
-        (props.children instanceof Array && hasActiveDescendant(props.children))
-      ) {
-        return true;
-      }
-
-      return false;
-    });
-  }
-
-  // We use React.isValidElement(child) to check if the child is a valid React element before accessing its props
-
-  if (React.isValidElement(children)) {
-    const props = children.props as {
-      isActive?: boolean;
-      'aria-current'?: string;
-    };
-
-    if (props.isActive === true || props['aria-current']) {
-      return true;
-    }
-  }
-
-  return false;
-}

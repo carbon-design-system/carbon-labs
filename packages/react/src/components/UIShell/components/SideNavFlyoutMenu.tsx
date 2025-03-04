@@ -143,6 +143,18 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
 
   const [isButtonFocused, setIsButtonFocused] = useState(false);
 
+  const flyoutMenuItems = React.Children.map(menuContent, (child) => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, {
+        ...{
+          isFlyoutMenuItem: true,
+        },
+      });
+    }
+
+    return child;
+  });
+
   const triggerProps = {
     onFocus: () => {
       if (!focusByMouse) {
@@ -171,10 +183,11 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       // if clicked again, should close (clickMode OFF) and menu should close,
       // even if mouse is hovering on the button. Menu opens upon reentering.
       if (!isFocusedInsideRef.current) {
+        console.log('huh');
         setClickMode(!clickMode);
         setIsPointerIntersecting(!clickMode);
         setOpen(!clickMode);
-        isFocusedInsideRef.current = true;
+        isFocusedInsideRef.current = true; // having this uncommented makes the click be weird
       }
     },
     // This should be placed on the trigger in case the element is disabled
@@ -410,7 +423,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         role="tooltip">
         {!isButtonFocused ? <FormLabel>{title}</FormLabel> : title}
         <div style={{ display: isButtonFocused ? 'none' : 'block' }}>
-          {menuContent}
+          {flyoutMenuItems}
         </div>
       </PopoverContent>
     </Popover>

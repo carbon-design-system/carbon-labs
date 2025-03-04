@@ -87,7 +87,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   headerStatic,
 }: AnimatedHeaderProps) => {
   const prefix = usePrefix();
-  const blockClass = `${prefix}-animated-header`;
+  const blockClass = `${prefix}--animated-header`;
 
   let animationContainer = createRef<HTMLDivElement>();
   const [open, setOpen] = useState(true);

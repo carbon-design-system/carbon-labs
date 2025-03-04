@@ -14,7 +14,7 @@
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/motion';
 
-$prefix: 'clabs-animated-header' !default;
+$prefix: 'clabs--animated-header' !default;
 
 [data-carbon-theme='white'] {
   @include theme(themes.$white, true);

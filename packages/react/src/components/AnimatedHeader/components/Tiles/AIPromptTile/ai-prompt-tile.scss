@@ -12,7 +12,7 @@
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/motion';
 
-$prefix: 'clabs-animated-header__ai-prompt-tile' !default;
+$prefix: 'clabs--animated-header__ai-prompt-tile' !default;
 
 .#{$prefix} {
   position: relative;

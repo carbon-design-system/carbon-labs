@@ -42,11 +42,6 @@ interface TooltipBaseProps {
   className?: string;
 
   /**
-   * Determines whether the tooltip should close when inner content is activated (click, Enter or Space)
-   */
-  closeOnActivation?: boolean;
-
-  /**
    * Specify whether the tooltip should be open when it first renders
    */
   defaultOpen?: boolean;
@@ -119,7 +114,6 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   enterDelayMs = 100,
   leaveDelayMs = 300,
   defaultOpen = false,
-  closeOnActivation = false,
   dropShadow = true,
   highContrast = false,
   menuContent,
@@ -166,29 +160,13 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     },
     onBlur: () => {
       if (!isFocusedInsideRef.current && !focusByMouse) {
-        isFocusedInsideRef.current = false;
-        setOpen(false);
-        setIsButtonFocused(false);
-        setFocusByMouse(false);
-        setClickMode(false);
+        closeMenu();
       }
     },
     onClick: () => {
       setIsButtonFocused(false);
-      if (closeOnActivation) {
-        setOpen(false);
-      }
-
-      // On hover, menu opens. If clicked, should remain open (aka clickMode is on).
-      // if clicked again, should close (clickMode OFF) and menu should close,
-      // even if mouse is hovering on the button. Menu opens upon reentering.
-      if (!isFocusedInsideRef.current) {
-        console.log('huh');
-        setClickMode(!clickMode);
-        setIsPointerIntersecting(!clickMode);
-        setOpen(!clickMode);
-        isFocusedInsideRef.current = true; // having this uncommented makes the click be weird
-      }
+      setClickMode(!clickMode);
+      setOpen(!clickMode);
     },
     // This should be placed on the trigger in case the element is disabled
     onMouseEnter,
@@ -230,14 +208,6 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       setOpen(!isButtonFocused);
       setIsButtonFocused(!isButtonFocused);
     }
-    if (
-      open &&
-      closeOnActivation &&
-      (match(event, keys.Enter) || match(event, keys.Space))
-    ) {
-      setIsButtonFocused(false);
-      setOpen(false);
-    }
 
     if (match(event, keys.Enter) || match(event, keys.Space)) {
       setIsButtonFocused(false);
@@ -245,11 +215,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       setFocusByMouse(false);
 
       // focus on the first link
-      if (
-        popoverMenuLinks?.current &&
-        !focusByMouse &&
-        !isFocusedInsideRef.current
-      ) {
+      if (popoverMenuLinks?.current && !isFocusedInsideRef.current) {
         const firstLink = popoverMenuLinks?.current?.[0] as HTMLElement;
         setContentTabIndex('0');
 
@@ -276,7 +242,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     onDragStart();
   }
 
-  function onMouseLeave(event) {
+  function onMouseLeave() {
     if (!clickMode && !isFocusedInsideRef.current) {
       setIsPointerIntersecting(false);
       if (isDragging) {
@@ -332,8 +298,9 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     }
   };
 
-  function handleMenuFocusTrap(event) {
+  function handleBlur(event) {
     const isFocusOutside = !popoverRef.current?.contains(event.relatedTarget);
+
     // tab outside the menu
     if (open && isFocusedInsideRef.current && !focusByMouse && isFocusOutside) {
       closeMenu();
@@ -401,7 +368,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
       })}
       dropShadow={dropShadow}
       highContrast={false}
-      onBlur={handleMenuFocusTrap}
+      onBlur={handleBlur}
       onKeyDown={onKeyDown}
       onMouseLeave={onMouseLeave}
       open={open}>
@@ -471,11 +438,6 @@ SideNavFlyoutMenu.propTypes = {
    * Specify an optional className to be applied to the container node
    */
   className: PropTypes.string,
-
-  /**
-   * Determines wether the tooltip should close when inner content is activated (click, Enter or Space)
-   */
-  closeOnActivation: PropTypes.bool,
 
   /**
    * Specify whether the tooltip should be open when it first renders

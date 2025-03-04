@@ -204,7 +204,7 @@ div:has(.#{$prefix}--header)
   }
 
   // Focused FlyoutMenu button
-  .#{$prefix}--flyout-menu-focused
+  .#{$prefix}--flyout-menu-clicked
     .#{$prefix}--side-nav--panel-submenu-caret
     svg {
     fill: $icon-primary;
@@ -286,9 +286,7 @@ div:has(.#{$prefix}--header)
   }
 
   // Flyout menu link on hover styles
-  .#{$prefix}--side-nav-menu--popover-content .#{$prefix}--side-nav__link:hover,
-  .#{$prefix}--side-nav-menu--popover-content
-    .#{$prefix}--side-nav__link:focus {
+  .#{$prefix}--side-nav-menu--popover-content .#{$prefix}--side-nav__link:hover {
     .#{$prefix}--side-nav__link-text {
       color: $text-primary;
     }

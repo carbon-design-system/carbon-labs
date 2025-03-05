@@ -17,42 +17,48 @@ const defaultProps = {
 };
 
 /**
-* Generates an HTML template for an empty state component.
-* 
-* @param {object} [props=defaultProps] - The properties to pass to the template.
-* @returns {TemplateResult} The Lit template result.
-*/
-const template = (props = defaultProps) => html `
-<clabs-empty-state
-    title=${props.title}
-    subtitle=${props.subtitle} 
-    size=${props.size}
-    >
-     <cds-button kind="tertiary" size="sm" slot="action">Create new</cds-button>
-     <cds-link href="https://www.carbondesignsystem.com" slot="link">View documentation</cds-link>
-    </clabs-empty-state>`
+ * Generates an HTML template for an empty state component.
+ *
+ * @param {object} [props=defaultProps] - The properties to pass to the template.
+ * @returns {TemplateResult} The Lit template result.
+ */
+const template = (props = defaultProps) => html` <clabs-empty-state
+  title=${props.title}
+  subtitle=${props.subtitle}
+  size=${props.size}>
+  <cds-button kind="tertiary" size="sm" slot="action">Create new</cds-button>
+  <cds-link href="https://www.carbondesignsystem.com" slot="link"
+    >View documentation</cds-link
+  >
+</clabs-empty-state>`;
 describe('clabs-empty-state', function () {
   it('should render clabs-empty-state', async () => {
-    const emptyState = (await fixture(template()));
+    const emptyState = await fixture(template());
     expect(emptyState).dom.to.equalSnapshot();
     expect(emptyState).shadowDom.to.be.accessible();
   });
   it('should contain title element', async () => {
     const emptyState = await fixture(template());
-    const headerElement = emptyState.shadowRoot.querySelector('.clabs--empty-state__header');
+    const headerElement = emptyState.shadowRoot.querySelector(
+      '.clabs--empty-state__header'
+    );
     expect(headerElement).to.exist;
   });
   it('should contain subtitle element', async () => {
     const emptyState = await fixture(template());
-    const subtitleElement = emptyState.shadowRoot.querySelector('.clabs--empty-state___subtitle');
+    const subtitleElement = emptyState.shadowRoot.querySelector(
+      '.clabs--empty-state___subtitle'
+    );
     expect(subtitleElement).to.exist;
   });
   it('should have a cds-button slotted into action', async () => {
     const emptyState = await fixture(template());
-    const actionSlot = emptyState.shadowRoot.querySelector('slot[name="action"]');
+    const actionSlot = emptyState.shadowRoot.querySelector(
+      'slot[name="action"]'
+    );
     expect(actionSlot).to.exist;
     const assignedNodes = actionSlot.assignedNodes({ flatten: true });
-    const button = assignedNodes.find(node => node.tagName === 'CDS-BUTTON');
+    const button = assignedNodes.find((node) => node.tagName === 'CDS-BUTTON');
     expect(button).to.exist;
     expect(button).to.have.attribute('kind', 'tertiary');
     expect(button).to.have.attribute('size', 'sm');
@@ -64,9 +70,12 @@ describe('clabs-empty-state', function () {
     const linkSlot = emptyState.shadowRoot.querySelector('slot[name="link"]');
     expect(linkSlot).to.exist;
     const assignedNodes = linkSlot.assignedNodes({ flatten: true });
-    const link = assignedNodes.find(node => node.tagName === 'CDS-LINK');
+    const link = assignedNodes.find((node) => node.tagName === 'CDS-LINK');
     expect(link).to.exist;
-    expect(link).to.have.attribute('href', 'https://www.carbondesignsystem.com');
+    expect(link).to.have.attribute(
+      'href',
+      'https://www.carbondesignsystem.com'
+    );
     expect(link).to.have.text('View documentation');
   });
 });

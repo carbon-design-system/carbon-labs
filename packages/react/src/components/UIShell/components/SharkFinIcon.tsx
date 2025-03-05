@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { usePrefix } from '../internal/usePrefix';
 
-export interface SharkfinIconProps {
+export interface SharkFinIconProps {
   /**
    * Provide a single icon as the child to `SharkfinIcon` to render in the
    * container
@@ -29,7 +29,7 @@ export interface SharkfinIconProps {
   small?: boolean;
 }
 
-export const SharkfinIcon: React.FC<SharkfinIconProps> = ({
+export const SharkFinIcon: React.FC<SharkFinIconProps> = ({
   className: customClassName,
 }) => {
   const prefix = usePrefix();
@@ -58,7 +58,7 @@ export const SharkfinIcon: React.FC<SharkfinIconProps> = ({
   );
 };
 
-SharkfinIcon.propTypes = {
+SharkFinIcon.propTypes = {
   /**
    * Provide a single icon as the child to `SharkfinIcon` to render in the
    * container

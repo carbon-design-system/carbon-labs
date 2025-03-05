@@ -13,3 +13,4 @@ export { SideNavLinkPopover } from './components/SideNavLinkPopover.js';
 export { SideNavMenu } from './components/SideNavMenu.js';
 export { SideNavMenuItem } from './components/SideNavMenuItem.js';
 export { HeaderPanel } from './components/HeaderPanel';
+export { SharkFinIcon } from './components/SharkFinIcon';

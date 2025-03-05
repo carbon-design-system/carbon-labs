@@ -18,19 +18,12 @@ import React, {
   useState,
 } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import {
-  FormLabel,
-  Popover,
-  PopoverContent,
-  SideNavIcon,
-  Toggletip,
-  Tooltip,
-} from '@carbon/react';
+import { SideNavIcon } from '@carbon/react';
 import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
 import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
-import { SharkfinIcon } from './SharkFinIcon';
+import { SharkFinIcon } from './SharkFinIcon';
 import { SideNavFlyoutMenu } from './SideNavFlyoutMenu';
 export interface SideNavMenuProps {
   /**
@@ -101,7 +94,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       large = false,
       renderIcon: IconElement,
       isSideNavExpanded,
-      selected,
       title,
     },
     ref: ForwardedRef<HTMLElement>
@@ -366,7 +358,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
             <div
               className={`${prefix}--side-nav--panel-submenu-caret-container`}>
               <div className={`${prefix}--side-nav--panel-submenu-caret`}>
-                <SharkfinIcon />
+                <SharkFinIcon />
               </div>
             </div>
           )}

@@ -519,7 +519,44 @@ export const SideNavPanel = () => (
           <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 2
           </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
         </SideNavMenu>
+        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+        </SideNavMenu>
+        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+        </SideNavMenu>
+        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+        </SideNavMenu>
+        <SideNavDivider />
         <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
           Link
         </SideNavLink>
@@ -575,98 +612,6 @@ export const SideNavPanel = () => (
     </Content>
   </>
 );
-
-/**
- * Story for SideNav Panel with Flyout Menu
- * @returns {React.ReactElement} The JSX for the story
- */
-export const SideNavPanelWithFlyoutMenu = () => {
-  return (
-    <Theme theme="g100">
-      <SideNav
-        navType={SIDE_NAV_TYPE.PANEL}
-        isChildOfHeader={false}
-        hideOverlay
-        aria-label="Product navigation">
-        <SideNavItems>
-          <SideNavMenu renderIcon={Home} title="Home">
-            <SideNavMenuItem href="http://www.carbondesignsystem.com">
-              Item level 3
-            </SideNavMenuItem>
-            <SideNavMenuItem isActive href="http://www.carbondesignsystem.com">
-              Item level 3
-            </SideNavMenuItem>
-            <SideNavMenuItem href="http://www.carbondesignsystem.com">
-              Item level 3
-            </SideNavMenuItem>
-          </SideNavMenu>
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={BusinessProcesses}>
-            Business
-          </SideNavLink>
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={Application}>
-            Applications
-          </SideNavLink>
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={Platforms}>
-            Platforms
-          </SideNavLink>
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={Layers}>
-            Infrastructure
-          </SideNavLink>
-          <SideNavDivider />
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={Dashboard}>
-            Dashboard
-          </SideNavLink>
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={DataAnalytics}>
-            Analytics
-          </SideNavLink>
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={EventIncident}>
-            Incidents
-          </SideNavLink>
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={Security}>
-            Security
-          </SideNavLink>
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={WorkflowAutomation}>
-            Automations
-          </SideNavLink>
-          <SideNavDivider />
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={DocumentMultiple_01}>
-            Docs
-          </SideNavLink>
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={Settings}>
-            Settings
-          </SideNavLink>
-          <SideNavLink
-            href="http://www.carbondesignsystem.com"
-            renderIcon={OverflowMenuVertical}>
-            More
-          </SideNavLink>
-        </SideNavItems>
-      </SideNav>
-    </Theme>
-  );
-};
 
 /**
  * Story for HeaderPanel

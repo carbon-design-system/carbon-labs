@@ -64,19 +64,70 @@ const renderTemplate = (args) => {
     <clabs-empty-state
       .title=${args.title}
       .subtitle=${args.subtitle}
-      size=${args.size}
-      .link=${args.link}>
-      <cds-button kind=${args.action.kind} size="sm" slot="action"
-        >${args.action.text} ${args.action.icon}</cds-button
-      >
-      <cds-link href=${args.link.href} slot="link">
-        ${args.link.text}
-      </cds-link>
+      size=${args.size}>
+      ${args.action &&
+      html`
+        <cds-button kind=${args.action.kind} size="sm" slot="action"
+          >${args.action.text} ${args.action.icon}</cds-button
+        >
+      `}
+      ${args.link &&
+      html`
+        <cds-link href=${args.link.href} slot="link">
+          ${args.link.text}
+        </cds-link>
+      `}
     </clabs-empty-state>
   `;
 };
 
 export const Default = {
+  args: {
+    title: 'Example EmptyState title',
+    subtitle: 'Example subtitle',
+    size: 'lg',
+  },
+  argTypes,
+  render: renderTemplate,
+};
+export const WithAction = {
+  args: {
+    title: 'Example EmptyState title',
+    subtitle: 'Example subtitle',
+    size: 'lg',
+    action: {
+      text: 'Create new',
+      kind: 'tertiary',
+    },
+  },
+  argTypes,
+  render: renderTemplate,
+};
+export const WithActionIconButton = {
+  args: {
+    title: 'Example EmptyState title',
+    subtitle: 'Example subtitle',
+    size: 'lg',
+    action: {
+      text: 'Create new',
+      kind: 'tertiary',
+      icon: Add20({ slot: 'icon' }),
+    },
+  },
+  argTypes,
+  render: renderTemplate,
+};
+export const WithLink = {
+  args: {
+    title: 'Example EmptyState title',
+    subtitle: 'Example subtitle',
+    size: 'lg',
+    link: defaultLinkProps,
+  },
+  argTypes,
+  render: renderTemplate,
+};
+export const WithActionAndLink = {
   args: {
     title: 'Example EmptyState title',
     subtitle: 'Example subtitle',

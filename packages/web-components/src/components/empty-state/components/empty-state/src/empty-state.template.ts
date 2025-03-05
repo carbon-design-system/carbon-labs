@@ -19,11 +19,7 @@ import '@carbon/web-components/es/components/link/index.js';
  * @returns {TemplateResult<1>} Lit html template
  */
 export function emptyStateTemplate(customElementClass) {
-  const {
-    title,
-    subtitle,
-    size,
-  } = customElementClass;
+  const { title, subtitle, size } = customElementClass;
   const titleClasses = classMap({
     [`${clabsPrefix}--empty-state__header`]: true,
     [`${clabsPrefix}--empty-state__header--small`]: size === 'sm',
@@ -34,16 +30,8 @@ export function emptyStateTemplate(customElementClass) {
   });
 
   return html`<div class="${clabsPrefix}--empty-state__content">
-    <h3
-      class="${titleClasses}"
-    >
-      ${title}
-    </h3>
-    ${subtitle && ( html`<p
-        class="${subTitleClasses}">
-        ${subtitle}
-      </p>`
-          )}
+    <h3 class="${titleClasses}">${title}</h3>
+    ${subtitle && html`<p class="${subTitleClasses}">${subtitle}</p>`}
     <slot name="action"></slot>
     <slot name="link"></slot>
   </div>`;

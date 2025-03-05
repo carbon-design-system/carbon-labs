@@ -20,7 +20,7 @@ export default class emptyState extends LitElement {
   /**
    * Empty state heading
    */
-  @property({ type: String})
+  @property({ type: String })
   title;
   /**
    * Empty state subtext
@@ -32,5 +32,4 @@ export default class emptyState extends LitElement {
    */
   @property()
   size: 'sm' | 'lg' = 'lg';
-
 }

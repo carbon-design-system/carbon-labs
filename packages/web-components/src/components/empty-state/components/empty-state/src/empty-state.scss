@@ -40,11 +40,11 @@ $css--plex: true !default;
   .#{$clabs-prefix}--empty-state__subtitle--small {
     @include type-style('label-01');
   }
-  ::slotted(#{$cds-prefix}-button){
+  ::slotted(#{$cds-prefix}-button) {
     display: block;
     margin-block-end: $spacing-05;
   }
-  ::slotted(#{$cds-prefix}-link){
+  ::slotted(#{$cds-prefix}-link) {
     display: inline-block;
   }
 }

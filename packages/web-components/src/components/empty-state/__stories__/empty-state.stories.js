@@ -28,25 +28,25 @@ const argTypes = {
   },
   subtitle: {
     control: 'text',
-    description:
-      'Empty state subtext.',
+    description: 'Empty state subtext.',
   },
-  
+
   size: {
     control: 'radio',
-    description:
-      'Empty state size',
+    description: 'Empty state size',
     options: ['sm', 'lg'],
   },
   link: {
     control: 'object',
-    description: 'Props for the link. Refer to the Carbon Components link documentation for full list of props.',
+    description:
+      'Props for the link. Refer to the Carbon Components link documentation for full list of props.',
   },
   action: {
     control: 'object',
-    description: 'Props for the action button. Refer to the Carbon Components button documentation for full list of props.',
+    description:
+      'Props for the action button. Refer to the Carbon Components button documentation for full list of props.',
   },
-}
+};
 
 const defaultLinkProps = {
   href: 'https://www.carbondesignsystem.com',
@@ -55,7 +55,7 @@ const defaultLinkProps = {
 
 /**
  * Renders the template for Storybook
- * 
+ *
  * @param {{ title: string, subtitle: string }} args - Object containing title and subtitle properties.
  * @returns {TemplateResult<1>}
  */
@@ -66,8 +66,12 @@ const renderTemplate = (args) => {
       .subtitle=${args.subtitle}
       size=${args.size}
       .link=${args.link}>
-      <cds-button kind=${args.action.kind} size="sm" slot="action">${args.action.text} ${args.action.icon}</cds-button>
-      <cds-link href=${args.link.href} slot="link"> ${args.link.text} </cds-link>
+      <cds-button kind=${args.action.kind} size="sm" slot="action"
+        >${args.action.text} ${args.action.icon}</cds-button
+      >
+      <cds-link href=${args.link.href} slot="link">
+        ${args.link.text}
+      </cds-link>
     </clabs-empty-state>
   `;
 };
@@ -81,7 +85,7 @@ export const Default = {
     action: {
       text: 'Create new',
       kind: 'tertiary',
-      icon:  Add20({ slot: 'icon' })
+      icon: Add20({ slot: 'icon' }),
     },
   },
   argTypes,

@@ -14,7 +14,7 @@ const defaultProps = {
   title: 'Empty state heading.',
   subtitle: 'Example subtitle',
   size: 'lg',
-}
+};
 
 /**
 * Generates an HTML template for an empty state component.

@@ -19,8 +19,8 @@ interface BaseTileProps {
   mainIcon?: string;
   secondaryIcon?: string;
   title?: string;
-  productName?: string;
   subtitle?: string;
+  productName?: string;
 }
 
 export const BaseTile: React.FC<BaseTileProps> = ({
@@ -30,8 +30,8 @@ export const BaseTile: React.FC<BaseTileProps> = ({
   mainIcon,
   secondaryIcon,
   title,
-  productName,
   subtitle,
+  productName,
 }: BaseTileProps) => {
   const props = {
     id,
@@ -40,8 +40,8 @@ export const BaseTile: React.FC<BaseTileProps> = ({
     mainIcon,
     secondaryIcon,
     title,
-    productName,
     subtitle,
+    productName,
   };
   const tile =
     id === 'ai-tile' ? (

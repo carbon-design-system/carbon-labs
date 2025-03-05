@@ -29,12 +29,44 @@ const template = (props = defaultProps) => html `
     size=${props.size}
     >
      <cds-button kind="tertiary" size="sm" slot="action">Create new</cds-button>
-     <cds-link href="https://www.carbondesignsystem.com" slot="link"> View documentation </cds-link>
+     <cds-link href="https://www.carbondesignsystem.com" slot="link">View documentation</cds-link>
     </clabs-empty-state>`
 describe('clabs-empty-state', function () {
-it('should render with clabs-empty-state minimum attributes', async () => {
-  const emptyState = (await fixture(template()));
-  expect(emptyState).dom.to.equalSnapshot();
-  expect(emptyState).shadowDom.to.be.accessible();
-});
+  it('should render clabs-empty-state', async () => {
+    const emptyState = (await fixture(template()));
+    expect(emptyState).dom.to.equalSnapshot();
+    expect(emptyState).shadowDom.to.be.accessible();
+  });
+  it('should contain title element', async () => {
+    const emptyState = await fixture(template());
+    const headerElement = emptyState.shadowRoot.querySelector('.clabs--empty-state__header');
+    expect(headerElement).to.exist;
+  });
+  it('should contain subtitle element', async () => {
+    const emptyState = await fixture(template());
+    const subtitleElement = emptyState.shadowRoot.querySelector('.clabs--empty-state___subtitle');
+    expect(subtitleElement).to.exist;
+  });
+  it('should have a cds-button slotted into action', async () => {
+    const emptyState = await fixture(template());
+    const actionSlot = emptyState.shadowRoot.querySelector('slot[name="action"]');
+    expect(actionSlot).to.exist;
+    const assignedNodes = actionSlot.assignedNodes({ flatten: true });
+    const button = assignedNodes.find(node => node.tagName === 'CDS-BUTTON');
+    expect(button).to.exist;
+    expect(button).to.have.attribute('kind', 'tertiary');
+    expect(button).to.have.attribute('size', 'sm');
+    expect(button).to.have.text('Create new');
+  });
+
+  it('should have a cds-link slotted into link slot', async () => {
+    const emptyState = await fixture(template());
+    const linkSlot = emptyState.shadowRoot.querySelector('slot[name="link"]');
+    expect(linkSlot).to.exist;
+    const assignedNodes = linkSlot.assignedNodes({ flatten: true });
+    const link = assignedNodes.find(node => node.tagName === 'CDS-LINK');
+    expect(link).to.exist;
+    expect(link).to.have.attribute('href', 'https://www.carbondesignsystem.com');
+    expect(link).to.have.text('View documentation');
+  });
 });

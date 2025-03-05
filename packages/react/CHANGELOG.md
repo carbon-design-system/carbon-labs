@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.28.0...@carbon-labs/react@0.29.0) (2025-03-04)
+
+
+### Bug Fixes
+
+* **animated-header:** fix dropdown bugs and rename tile-dropdown to… ([#485](https://github.com/carbon-design-system/carbon-labs/issues/485)) ([a12c104](https://github.com/carbon-design-system/carbon-labs/commit/a12c104eb0fb0e40449a55af3013855dc539f271))
+
+
+
+
+
 # [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.27.0...@carbon-labs/react@0.28.0) (2025-02-28)
 
 

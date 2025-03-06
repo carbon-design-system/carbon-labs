@@ -1,0 +1,110 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-link-list) {
+  display: block;
+  overflow: hidden;
+  box-sizing: border-box;
+  inline-size: 100%;
+
+  .#{$clabs-prefix}--chat-link-list-header {
+    color: $text-secondary;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    line-height: 16px;
+    padding-block-end: 8px;
+    text-align: start;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .#{$clabs-prefix}--chat-link-list-container {
+    overflow: hidden;
+    transition: height 800ms ease;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item {
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    animation: fade-in 600ms forwards;
+    border-block-start: 1px solid $border-subtle-00;
+
+    gap: 8px;
+    opacity: 0;
+    padding-block: 6px;
+    padding-inline-end: 6px;
+  }
+  .#{$clabs-prefix}--chat-link-list-item-sublink {
+    position: relative;
+    display: flex;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-sublink svg {
+    position: absolute;
+    inset-block-start: 2px;
+    inset-inline-end: 4px;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-control {
+    display: flex;
+    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+    animation: fade-in 600ms forwards;
+    border-block-start: 1px solid $border-subtle-00;
+
+    gap: 8px;
+    opacity: 0;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-text-sublink {
+    display: flex;
+    align-items: center;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-button::part(button) {
+    padding-inline-start: 2px;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-text-sublink::part(link) {
+    display: flex;
+    justify-content: space-between;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-button {
+    padding: 0;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item svg {
+    cursor: pointer;
+  }
+
+  .#{$clabs-prefix}--chat-link-list-item-text {
+    overflow: hidden;
+    flex: 1;
+  }
+}

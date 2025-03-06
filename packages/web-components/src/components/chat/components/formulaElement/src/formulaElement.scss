@@ -1,0 +1,33 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+@font-face {
+  font-family: IBMPlexMath-Regular;
+  font-style: normal;
+  font-weight: normal;
+  src: url('IBMPlexMath-Regular.otf') format('opentype');
+}
+
+:host(#{$clabs-prefix}-chat-formula) {
+  overflow: hidden;
+  font-family: IBMPlexMath-Regular, serif;
+  font-size: 22px;
+  inline-size: 100%;
+  pointer-events: none;
+
+  .#{$clabs-prefix}--chat-formula-container {
+    box-sizing: border-box;
+    padding: 16px;
+    inline-size: 100%;
+  }
+}

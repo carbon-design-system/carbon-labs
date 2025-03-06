@@ -1,0 +1,179 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon setting imports
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+
+@use '@carbon/react/scss/components/tag/tokens' as tag;
+
+$prefix: 'clabs' !default;
+
+@mixin th-theme($bg-color, $text-color) {
+  background-color: $bg-color;
+  color: $text-color;
+}
+
+// -- Flushing the default styles for mark, del and ins --
+mark {
+  background-color: inherit;
+  color: inherit;
+}
+
+del,
+ins {
+  color: inherit;
+  text-decoration: none;
+}
+// -------------------------------------------------------
+
+.#{$prefix}--text-highlighter__container {
+  display: inline;
+  padding: 0 $spacing-01;
+  background-color: $yellow-20;
+  color: $black;
+
+  @media screen and (-ms-high-contrast: active) {
+    background-color: $yellow-30;
+  }
+
+  sup {
+    display: inline-block;
+    font-size: 60%;
+    margin-block-start: -$spacing-01 + 0.2;
+    margin-inline-start: $spacing-02;
+    vertical-align: top;
+  }
+}
+
+.#{$prefix}--text-highlighter__container__ins {
+  background-color: tag.$tag-background-green;
+  border-block-end: 1px dashed;
+  color: tag.$tag-color-green;
+
+  @media screen and (-ms-high-contrast: active) {
+    @include th-theme($background-inverse, $text-inverse);
+  }
+}
+
+.#{$prefix}--text-highlighter__container__del {
+  background-color: tag.$tag-background-red;
+  color: tag.$tag-color-red;
+  text-decoration: line-through;
+
+  @media screen and (-ms-high-contrast: active) {
+    @include th-theme($background-inverse, $text-inverse);
+  }
+}
+
+// -- Color themes for text-heighlighter (mark) --
+
+.#{$prefix}--text-highlighter-magenta {
+  @include th-theme(tag.$tag-background-magenta, tag.$tag-color-magenta);
+
+  @media screen and (-ms-high-contrast: active) {
+    background-color: $yellow-30;
+  }
+}
+.#{$prefix}--text-highlighter-purple {
+  @include th-theme(tag.$tag-background-purple, tag.$tag-color-purple);
+
+  @media screen and (-ms-high-contrast: active) {
+    background-color: $yellow-30;
+  }
+}
+.#{$prefix}--text-highlighter-blue {
+  @include th-theme(tag.$tag-background-blue, tag.$tag-color-blue);
+
+  @media screen and (-ms-high-contrast: active) {
+    background-color: $yellow-30;
+  }
+}
+.#{$prefix}--text-highlighter-cyan {
+  @include th-theme(tag.$tag-background-cyan, tag.$tag-color-cyan);
+
+  @media screen and (-ms-high-contrast: active) {
+    background-color: $yellow-30;
+  }
+}
+.#{$prefix}--text-highlighter-teal {
+  @include th-theme(tag.$tag-background-teal, tag.$tag-color-teal);
+
+  @media screen and (-ms-high-contrast: active) {
+    background-color: $yellow-30;
+  }
+}
+.#{$prefix}--text-highlighter-gray {
+  @include th-theme(tag.$tag-background-gray, tag.$tag-color-gray);
+
+  @media screen and (-ms-high-contrast: active) {
+    background-color: $yellow-30;
+  }
+}
+.#{$prefix}--text-highlighter-cool-gray {
+  @include th-theme(tag.$tag-background-cool-gray, tag.$tag-color-cool-gray);
+
+  @media screen and (-ms-high-contrast: active) {
+    background-color: $yellow-30;
+  }
+}
+.#{$prefix}--text-highlighter-warm-gray {
+  @include th-theme(tag.$tag-background-warm-gray, tag.$tag-color-warm-gray);
+
+  @media screen and (-ms-high-contrast: active) {
+    background-color: $yellow-30;
+  }
+}
+.#{$prefix}--text-highlighter-high-contrast {
+  @include th-theme($background-inverse, $text-inverse);
+
+  @media screen and (-ms-high-contrast: active) {
+    background-color: $yellow-30;
+  }
+}
+// -------------------------------------------------------
+
+// -- For screen reader --
+mark::before,
+mark::after,
+del::before,
+del::after,
+ins::before,
+ins::after {
+  position: absolute;
+  overflow: hidden;
+  block-size: 1px;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(100%);
+  inline-size: 1px;
+  white-space: nowrap;
+}
+
+mark::before {
+  content: ' [highlight start] ';
+}
+
+mark::after {
+  content: ' [highlight end] ';
+}
+
+del::before {
+  content: ' [deletion start] ';
+}
+
+del::after {
+  content: ' [deletion end] ';
+}
+
+ins::before {
+  content: ' [insertion start] ';
+}
+
+ins::after {
+  content: ' [insertion end] ';
+}

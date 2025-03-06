@@ -25,11 +25,6 @@ on:
         description: 'Run dry run?'
         type: boolean
         default: true
-      force-publish:
-        required: true
-        description: 'Force publish?'
-        type: boolean
-        default: false
 
 jobs:
   release:
@@ -43,7 +38,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.MERGE_ACTION }}
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: '0'
       - run: |
@@ -66,38 +61,28 @@ jobs:
           if [ "${{ github.event.inputs.dry-run }}" == "false"  ]; then
             echo "DRY_RUN=--yes" >> $GITHUB_ENV
           fi
-      - name: Set force publish env variable
-        run: |
-          if [ "${{ github.event.inputs.force-publish }}" == "true" ]; then
-            echo "FORCE_PUBLISH=--force-publish" >> $GITHUB_ENV
-          fi
       - name: Publish full minor release (ie. v1.x.0)
         if: github.event.inputs.type == 'full minor release'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
-          echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
           yarn lerna publish minor --conventional-graduate $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
       - name: Publish first minor RC (ie. v1.x.0-rc.0)
         if: github.event.inputs.type == 'first minor rc'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
-          echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
           yarn lerna publish preminor --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
       - name: Publish full patch release (ie. v1.0.x)
         if: github.event.inputs.type == 'full patch release'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
-          echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
           yarn lerna publish patch --conventional-graduate $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
       - name: Publish first patch RC (ie. v1.0.x-rc.0)
         if: github.event.inputs.type == 'first patch rc'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
-          echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
           yarn lerna publish prepatch --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")
       - name: Publish subsequent RC (ie. v1.0.0-rc.x)
         if: github.event.inputs.type == 'subsequent rc'
         run: |
           echo "DRY RUN: ${{ env.DRY_RUN }}"
-          echo "FORCE_PUBLISH: ${{ env.FORCE_PUBLISH }}"
           yarn lerna publish --conventional-prerelease --preid rc --pre-dist-tag next $(echo "${{ env.DRY_RUN }}") $(echo "${{ env.FORCE_PUBLISH }}")

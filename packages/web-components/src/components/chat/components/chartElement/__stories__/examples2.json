@@ -1,0 +1,850 @@
+[
+  {
+    "title": "",
+    "prompt": "Make a pair-plot of all columns with scatter plots, use bar distributions when coloumns match",
+    "result": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "data": {
+        "url": "https://raw.githubusercontent.com/vega/vega-datasets/main/data/cars.json"
+      },
+      "repeat": {
+        "row": [
+          "Miles_per_Gallon",
+          "Cylinders",
+          "Displacement",
+          "Horsepower",
+          "Weight_in_lbs",
+          "Acceleration"
+        ],
+        "column": [
+          "Miles_per_Gallon",
+          "Cylinders",
+          "Displacement",
+          "Horsepower",
+          "Weight_in_lbs",
+          "Acceleration"
+        ]
+      },
+      "spec": {
+        "layer": [
+          {
+            "mark": {
+              "type": "point",
+              "tooltip": true
+            },
+            "encoding": {
+              "x": {
+                "field": {
+                  "repeat": "column"
+                },
+                "type": "quantitative",
+                "scale": {
+                  "zero": false
+                }
+              },
+              "y": {
+                "field": {
+                  "repeat": "row"
+                },
+                "type": "quantitative",
+                "scale": {
+                  "zero": false
+                }
+              }
+            }
+          },
+          {
+            "transform": [
+              {
+                "filter": "datum.repeat_row === datum.repeat_column"
+              }
+            ],
+            "mark": "bar",
+            "encoding": {
+              "x": {
+                "field": {
+                  "repeat": "column"
+                },
+                "bin": true,
+                "type": "quantitative"
+              },
+              "y": {
+                "aggregate": "count",
+                "type": "quantitative"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "title": "",
+    "prompt": "Create two violin plots with sepal width",
+    "result": {
+      "$schema": "https://vega.github.io/schema/vega/v5.json",
+      "description": "A violin plot example showing distributions for iris sepal width.",
+      "width": 300,
+      "height": 400,
+      "padding": 5,
+      "config": {
+        "axisBand": {
+          "bandPosition": 1,
+          "tickExtra": true,
+          "tickOffset": 0
+        }
+      },
+      "signals": [
+        {
+          "name": "plotWidth",
+          "update": "(width - 50)/3"
+        },
+        {
+          "name": "height",
+          "update": "height * 1"
+        }
+      ],
+      "data": [
+        {
+          "name": "iris",
+          "url": "https://raw.githubusercontent.com/mwaskom/seaborn-data/refs/heads/master/iris.csv",
+          "format": {
+            "type": "csv"
+          },
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.species != null && datum.sepal_width != null"
+            }
+          ]
+        },
+        {
+          "name": "density",
+          "source": "iris",
+          "transform": [
+            {
+              "type": "kde",
+              "field": "sepal_width",
+              "groupby": ["species"],
+              "extent": [1, 5]
+            }
+          ]
+        },
+        {
+          "name": "stats",
+          "source": "iris",
+          "transform": [
+            {
+              "type": "aggregate",
+              "groupby": ["species"],
+              "fields": ["sepal_width", "sepal_width", "sepal_width"],
+              "ops": ["q1", "median", "q3"],
+              "as": ["q1", "median", "q3"]
+            }
+          ]
+        }
+      ],
+      "scales": [
+        {
+          "name": "layout",
+          "type": "band",
+          "range": "width",
+          "domain": {
+            "data": "iris",
+            "field": "species"
+          }
+        },
+        {
+          "name": "yscale",
+          "type": "linear",
+          "range": "height",
+          "round": true,
+          "domain": {
+            "data": "iris",
+            "field": "sepal_width"
+          },
+          "domainMin": 1,
+          "domainMax": 5,
+          "zero": false,
+          "nice": true,
+          "reverse": false
+        },
+        {
+          "name": "hscale",
+          "type": "linear",
+          "range": [
+            0,
+            {
+              "signal": "plotWidth"
+            }
+          ],
+          "domain": {
+            "data": "density",
+            "field": "density"
+          }
+        },
+        {
+          "name": "color",
+          "type": "ordinal",
+          "domain": {
+            "data": "iris",
+            "field": "species"
+          },
+          "range": "category"
+        }
+      ],
+      "axes": [
+        {
+          "orient": "bottom",
+          "scale": "layout",
+          "zindex": 1,
+          "title": "Species"
+        },
+        {
+          "orient": "left",
+          "scale": "yscale",
+          "zindex": 1,
+          "title": "Sepal Width"
+        }
+      ],
+      "marks": [
+        {
+          "type": "group",
+          "from": {
+            "facet": {
+              "data": "density",
+              "name": "violin",
+              "groupby": "species"
+            }
+          },
+          "encode": {
+            "enter": {
+              "xc": {
+                "scale": "layout",
+                "field": "species",
+                "band": 0.5
+              },
+              "width": {
+                "signal": "plotWidth"
+              },
+              "height": {
+                "signal": "height"
+              }
+            }
+          },
+          "data": [
+            {
+              "name": "summary",
+              "source": "stats",
+              "transform": [
+                {
+                  "type": "filter",
+                  "expr": "datum.species === parent.species"
+                }
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "type": "area",
+              "from": {
+                "data": "violin"
+              },
+              "encode": {
+                "enter": {
+                  "orient": {
+                    "value": "horizontal"
+                  },
+                  "fill": {
+                    "scale": "color",
+                    "field": {
+                      "parent": "species"
+                    }
+                  }
+                },
+                "update": {
+                  "y": {
+                    "field": "value",
+                    "scale": "yscale"
+                  },
+                  "xc": {
+                    "signal": "plotWidth / 2"
+                  },
+                  "width": {
+                    "scale": "hscale",
+                    "field": "density"
+                  }
+                }
+              }
+            },
+            {
+              "type": "rect",
+              "from": {
+                "data": "summary"
+              },
+              "encode": {
+                "enter": {
+                  "fill": {
+                    "value": "black"
+                  },
+                  "width": {
+                    "value": 2
+                  }
+                },
+                "update": {
+                  "y": {
+                    "scale": "yscale",
+                    "field": "q1"
+                  },
+                  "y2": {
+                    "scale": "yscale",
+                    "field": "q3"
+                  },
+                  "xc": {
+                    "signal": "plotWidth / 2"
+                  }
+                }
+              }
+            },
+            {
+              "type": "rect",
+              "from": {
+                "data": "summary"
+              },
+              "encode": {
+                "enter": {
+                  "fill": {
+                    "value": "black"
+                  },
+                  "height": {
+                    "value": 2
+                  },
+                  "width": {
+                    "value": 8
+                  }
+                },
+                "update": {
+                  "y": {
+                    "scale": "yscale",
+                    "field": "median"
+                  },
+                  "xc": {
+                    "signal": "plotWidth / 2"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "title": "Airline passengers example",
+    "prompt": "Show a repeating line chart with 6,8,24 and 36 month averages",
+    "result": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "data": {
+        "url": "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/flights.csv"
+      },
+      "hconcat": [
+        {
+          "vconcat": [
+            {
+              "mark": "line",
+              "encoding": {
+                "x": {
+                  "field": "date",
+                  "type": "temporal",
+                  "title": "Date"
+                },
+                "y": {
+                  "field": "passengers",
+                  "type": "quantitative",
+                  "title": "Passengers"
+                }
+              },
+              "transform": [
+                {
+                  "window": [
+                    {
+                      "op": "mean",
+                      "field": "passengers",
+                      "as": "6-month-moving-average"
+                    }
+                  ],
+                  "frame": [-6, 0]
+                }
+              ],
+              "layer": [
+                {
+                  "mark": "line"
+                },
+                {
+                  "mark": {
+                    "type": "line",
+                    "color": "red",
+                    "strokeDash": [5, 5]
+                  },
+                  "encoding": {
+                    "y": {
+                      "field": "6-month-moving-average"
+                    }
+                  }
+                }
+              ],
+              "title": "6-month Moving Average"
+            },
+            {
+              "mark": "line",
+              "encoding": {
+                "x": {
+                  "field": "date",
+                  "type": "temporal",
+                  "title": "Date"
+                },
+                "y": {
+                  "field": "passengers",
+                  "type": "quantitative",
+                  "title": "Passengers"
+                }
+              },
+              "transform": [
+                {
+                  "window": [
+                    {
+                      "op": "mean",
+                      "field": "passengers",
+                      "as": "8-month-moving-average"
+                    }
+                  ],
+                  "frame": [-8, 0]
+                }
+              ],
+              "layer": [
+                {
+                  "mark": "line"
+                },
+                {
+                  "mark": {
+                    "type": "line",
+                    "color": "blue",
+                    "strokeDash": [5, 5]
+                  },
+                  "encoding": {
+                    "y": {
+                      "field": "8-month-moving-average"
+                    }
+                  }
+                }
+              ],
+              "title": "8-month Moving Average"
+            }
+          ]
+        },
+        {
+          "vconcat": [
+            {
+              "mark": "line",
+              "encoding": {
+                "x": {
+                  "field": "date",
+                  "type": "temporal",
+                  "title": "Date"
+                },
+                "y": {
+                  "field": "passengers",
+                  "type": "quantitative",
+                  "title": "Passengers"
+                }
+              },
+              "transform": [
+                {
+                  "window": [
+                    {
+                      "op": "mean",
+                      "field": "passengers",
+                      "as": "24-month-moving-average"
+                    }
+                  ],
+                  "frame": [-24, 0]
+                }
+              ],
+              "layer": [
+                {
+                  "mark": "line"
+                },
+                {
+                  "mark": {
+                    "type": "line",
+                    "color": "green",
+                    "strokeDash": [5, 5]
+                  },
+                  "encoding": {
+                    "y": {
+                      "field": "24-month-moving-average"
+                    }
+                  }
+                }
+              ],
+              "title": "24-month Moving Average"
+            },
+            {
+              "mark": "line",
+              "encoding": {
+                "x": {
+                  "field": "date",
+                  "type": "temporal",
+                  "title": "Date"
+                },
+                "y": {
+                  "field": "passengers",
+                  "type": "quantitative",
+                  "title": "Passengers"
+                }
+              },
+              "transform": [
+                {
+                  "window": [
+                    {
+                      "op": "mean",
+                      "field": "passengers",
+                      "as": "36-month-moving-average"
+                    }
+                  ],
+                  "frame": [-36, 0]
+                }
+              ],
+              "layer": [
+                {
+                  "mark": "line"
+                },
+                {
+                  "mark": {
+                    "type": "line",
+                    "color": "orange",
+                    "strokeDash": [5, 5]
+                  },
+                  "encoding": {
+                    "y": {
+                      "field": "36-month-moving-average"
+                    }
+                  }
+                }
+              ],
+              "title": "36-month Moving Average"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "title": "",
+    "prompt": "Create two violin plots with sepal width",
+    "result": {
+      "$schema": "https://vega.github.io/schema/vega/v5.json",
+      "description": "A violin plot example showing distributions for iris sepal width.",
+      "width": 300,
+      "height": 400,
+      "padding": 5,
+      "config": {
+        "axisBand": {
+          "bandPosition": 1,
+          "tickExtra": true,
+          "tickOffset": 0
+        }
+      },
+      "signals": [
+        {
+          "name": "plotWidth",
+          "update": "(width - 50)/3"
+        },
+        {
+          "name": "height",
+          "update": "height * 1"
+        }
+      ],
+      "data": [
+        {
+          "name": "iris",
+          "url": "https://raw.githubusercontent.com/mwaskom/seaborn-data/refs/heads/master/iris.csv",
+          "format": {
+            "type": "csv"
+          },
+          "transform": [
+            {
+              "type": "filter",
+              "expr": "datum.species != null && datum.sepal_length != null"
+            }
+          ]
+        },
+        {
+          "name": "density",
+          "source": "iris",
+          "transform": [
+            {
+              "type": "kde",
+              "field": "sepal_length",
+              "groupby": ["species"],
+              "extent": [3, 9]
+            }
+          ]
+        },
+        {
+          "name": "stats",
+          "source": "iris",
+          "transform": [
+            {
+              "type": "aggregate",
+              "groupby": ["species"],
+              "fields": ["sepal_length", "sepal_length", "sepal_length"],
+              "ops": ["q1", "median", "q3"],
+              "as": ["q1", "median", "q3"]
+            }
+          ]
+        }
+      ],
+      "scales": [
+        {
+          "name": "layout",
+          "type": "band",
+          "range": "width",
+          "domain": {
+            "data": "iris",
+            "field": "species"
+          }
+        },
+        {
+          "name": "yscale",
+          "type": "linear",
+          "range": "height",
+          "round": true,
+          "domain": {
+            "data": "iris",
+            "field": "sepal_length"
+          },
+          "domainMin": 3,
+          "domainMax": 9,
+          "zero": false,
+          "nice": true,
+          "reverse": false
+        },
+        {
+          "name": "hscale",
+          "type": "linear",
+          "range": [
+            0,
+            {
+              "signal": "plotWidth"
+            }
+          ],
+          "domain": {
+            "data": "density",
+            "field": "density"
+          }
+        },
+        {
+          "name": "color",
+          "type": "ordinal",
+          "domain": {
+            "data": "iris",
+            "field": "species"
+          },
+          "range": "category"
+        }
+      ],
+      "axes": [
+        {
+          "orient": "bottom",
+          "scale": "layout",
+          "zindex": 1,
+          "title": "Species"
+        },
+        {
+          "orient": "left",
+          "scale": "yscale",
+          "zindex": 1,
+          "title": "Sepal Width"
+        }
+      ],
+      "marks": [
+        {
+          "type": "group",
+          "from": {
+            "facet": {
+              "data": "density",
+              "name": "violin",
+              "groupby": "species"
+            }
+          },
+          "encode": {
+            "enter": {
+              "xc": {
+                "scale": "layout",
+                "field": "species",
+                "band": 0.5
+              },
+              "width": {
+                "signal": "plotWidth"
+              },
+              "height": {
+                "signal": "height"
+              }
+            }
+          },
+          "data": [
+            {
+              "name": "summary",
+              "source": "stats",
+              "transform": [
+                {
+                  "type": "filter",
+                  "expr": "datum.species === parent.species"
+                }
+              ]
+            }
+          ],
+          "marks": [
+            {
+              "type": "area",
+              "from": {
+                "data": "violin"
+              },
+              "encode": {
+                "enter": {
+                  "orient": {
+                    "value": "horizontal"
+                  },
+                  "fill": {
+                    "scale": "color",
+                    "field": {
+                      "parent": "species"
+                    }
+                  }
+                },
+                "update": {
+                  "y": {
+                    "field": "value",
+                    "scale": "yscale"
+                  },
+                  "xc": {
+                    "signal": "plotWidth / 2"
+                  },
+                  "width": {
+                    "scale": "hscale",
+                    "field": "density"
+                  }
+                }
+              }
+            },
+            {
+              "type": "rect",
+              "from": {
+                "data": "summary"
+              },
+              "encode": {
+                "enter": {
+                  "fill": {
+                    "value": "black"
+                  },
+                  "width": {
+                    "value": 2
+                  }
+                },
+                "update": {
+                  "y": {
+                    "scale": "yscale",
+                    "field": "q1"
+                  },
+                  "y2": {
+                    "scale": "yscale",
+                    "field": "q3"
+                  },
+                  "xc": {
+                    "signal": "plotWidth / 2"
+                  }
+                }
+              }
+            },
+            {
+              "type": "rect",
+              "from": {
+                "data": "summary"
+              },
+              "encode": {
+                "enter": {
+                  "fill": {
+                    "value": "black"
+                  },
+                  "height": {
+                    "value": 2
+                  },
+                  "width": {
+                    "value": 8
+                  }
+                },
+                "update": {
+                  "y": {
+                    "scale": "yscale",
+                    "field": "median"
+                  },
+                  "xc": {
+                    "signal": "plotWidth / 2"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "title": "",
+    "prompt": "",
+    "result": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "data": {
+        "url": "https://vega.github.io/editor/data/weather.csv"
+      },
+      "title": "Daily Max Temperatures (C) in Cleveland, OH",
+      "config": {
+        "view": {
+          "strokeWidth": 0,
+          "step": 13
+        },
+        "axis": {
+          "domain": false
+        }
+      },
+      "mark": "rect",
+      "encoding": {
+        "x": {
+          "field": "date",
+          "timeUnit": "date",
+          "type": "ordinal",
+          "title": "Day",
+          "axis": {
+            "labelAngle": 0,
+            "format": "%e"
+          }
+        },
+        "y": {
+          "field": "date",
+          "timeUnit": "month",
+          "type": "ordinal",
+          "title": "Month"
+        },
+        "color": {
+          "field": "temp_max",
+          "aggregate": "max",
+          "type": "quantitative",
+          "legend": {
+            "title": null
+          }
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,129 @@
+import { Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
+import * as TextElementStories from './textElement.stories';
+import packageJson from '../../../package.json';
+
+<Meta of={TextElementStories} />
+
+# Carbon AI Chat: Text
+
+> **NOTE: Chat components that reached "preview candidate" status are in the process of graduating to a stable library! If you are starting out new or currently using the existing Carbon Labs version, we recommend going to #carbon-ai-chat to request access to the new library.**
+>
+> **The chat components in Carbon Labs that reached "preview candidate" status will continue to be supported here until they are fully migrated to the new location.**
+
+- **Initiative owner(s):** Owen Cornec
+- **Status:** Preview Candidate
+- **Target library:** `Carbon AI Chat`
+- **Target library maintainer(s) / PR Reviewer(s):** Ethan Winters, Damon Lundin
+- **Support channel:** `#carbon-ai-chat`
+
+## Table of Contents
+
+- [Overview](#overview)
+  - [Attributes and Properties](#attributes-and-properties)
+  - [Events](#events)
+  - [Troubleshooting](#troubleshooting)
+- [Installation](#installation)
+  - [JS via import](#js-via-import)
+- [Styles](#styles)
+
+## Overview
+
+<a id="overview"></a>
+
+The Chat component is a collaboration between the **IBM Research Visual AI Lab
+(VAIL)** and the **Carbon Design Team** to provide an open-source, easily
+expandable chat interface to interact with large language models. Our core
+values are: open-source collaboration, universal support, ease of use and the
+in-depth customization Carbon is known for.
+
+The **Carbon Labs Text** component aims to provide a simple text element that
+can accept plain text, annotated text with markdown and html.
+
+### Attributes and Properties
+
+<a id="attributes-and-properties"></a>
+<table>
+  <thead>
+    <tr>
+      <td>**Attribute name**</td>
+      <td>**Type**</td>
+      <td>**Effect**</td>
+      <td>**Use case**</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>capitalize</td>
+      <td>boolean</td>
+      <td>Auto capitalize all text provided</td>
+      <td>
+        Make LLM responses more formal (should be avoided on user messages)
+      </td>
+    </tr>
+    <tr>
+      <td>align-right</td>
+      <td>boolean</td>
+      <td>Makes text element stick to right side</td>
+      <td>Used for user messages</td>
+    </tr>
+    <tr>
+      <td>enable-annotations</td>
+      <td>boolean</td>
+      <td>Auto-parses markdown link text</td>
+      <td>When streaming or receiving raw LLM text</td>
+    </tr>
+    <tr>
+      <td>enable-html-rendering</td>
+      <td>boolean</td>
+      <td>Parses and renders HTML strings</td>
+      <td>When the need arises to add simple styling</td>
+    </tr>
+    <tr>
+      <td>enable-text-highlighting</td>
+      <td>boolean</td>
+      <td>
+        Removes the chevron/underline and highlights annotations with a default
+        color
+      </td>
+      <td>when used Text outside of a chat context</td>
+    </tr>
+    <tr>
+      <td>text-highlight-color</td>
+      <td>string</td>
+      <td>Provide your own valid CSS Hex color for highlights</td>
+      <td>When the default color isn't appropriate</td>
+    </tr>
+  </tbody>
+</table>
+
+### Troubleshooting
+
+<a id="troubleshooting"></a>
+
+Contact **Owen Cornec** on Slack or at **o.cornec@ibm.com** for requests
+regarding general information, installation, trouble-shooting and custom
+features.
+
+## Installation
+
+<a id="installation"></a>
+
+Here's a quick example to get you started.
+
+### JS via import
+
+<a id="js-via-import"></a>
+
+```javascript
+import '@carbon-labs/ai-chat-text/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['chat'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>

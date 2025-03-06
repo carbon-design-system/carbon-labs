@@ -1,0 +1,146 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-history-viewer) {
+  .#{$clabs-prefix}--chat-history-viewer-container {
+    display: flex;
+    box-sizing: border-box;
+    background: $background;
+    max-block-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-container-tree {
+    display: flex;
+    inline-size: 100%;
+    max-block-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-grid {
+    display: flex;
+    overflow: hidden;
+    flex-wrap: wrap;
+    max-block-size: 100%;
+    max-inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-column {
+    flex-flow: column wrap;
+    max-inline-size: var(--chat-history-viewer-branch-percentage, 100%);
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-message {
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: row;
+    padding: 2px;
+    border-inline-start: 2px solid $background-inverse-hover;
+    font-size: 12px;
+    line-height: 18px;
+    padding-inline-end: 16%;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-action-label {
+    z-index: 2;
+    display: flex;
+    padding: 4px;
+    border: 2px solid $background-inverse-hover;
+    border-radius: 50%;
+    background: $support-warning;
+    margin-block-start: 2px;
+    margin-inline: -20% 4px;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-action-label svg {
+    fill: $text-primary;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-0 {
+    margin-inline-start: 0;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-1 {
+    margin-inline-start: 40px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-2 {
+    margin-inline-start: 80px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-3 {
+    margin-inline-start: 120px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-4 {
+    margin-inline-start: 160px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-block-depth-5 {
+    margin-inline-start: 200px;
+  }
+
+  .#{$clabs-prefix}--chat-history-viewer-header {
+    display: flex;
+    box-sizing: border-box;
+    border: none;
+    font-weight: 600;
+    inline-size: 100%;
+    text-align: center;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-empty {
+    box-sizing: border-box;
+    border: none;
+    min-block-size: 36px;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-common-branch {
+    position: relative;
+    z-index: 1;
+    margin-inline-start: 0;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-common-branch::after {
+    position: absolute;
+    z-index: 0;
+    background: $background-inverse-hover;
+    block-size: 2px;
+    content: '';
+    inline-size: 100%;
+    inset-block-start: 50%;
+    inset-inline-start: 0;
+    transform: translateY(-2px);
+  }
+  .#{$clabs-prefix}--chat-history-viewer-block-content-user {
+    z-index: 2;
+    overflow: scroll hidden;
+    box-sizing: border-box;
+    padding: 6px;
+    border: 1px solid $background-inverse-hover;
+    border-radius: 8px;
+    background: $layer-accent-01;
+    margin-inline-end: 8%;
+    max-inline-size: 100%;
+    min-inline-size: 32px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .#{$clabs-prefix}--chat-history-viewer-block-content-bot {
+    z-index: 2;
+    overflow: scroll hidden;
+    box-sizing: border-box;
+    padding: 6px;
+    border: 1px solid $background-inverse-hover;
+    border-radius: 8px;
+    background: $link-inverse;
+    margin-inline-end: 8%;
+    max-inline-size: 80%;
+    min-inline-size: 32px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

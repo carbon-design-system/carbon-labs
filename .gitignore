@@ -10,12 +10,15 @@ lerna-debug.log*
 node_modules
 dist
 es
+scss
 dist-ssr
 lib
 *.local
 .env
 storybook-static
 custom-elements.json
+
+package.tgz
 
 # Editor directories and files
 .vscode/*
@@ -30,3 +33,5 @@ custom-elements.json
 .nx/*
 agentic.stories.js
 /.history
+
+*storybook.log

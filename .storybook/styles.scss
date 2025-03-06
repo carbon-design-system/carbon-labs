@@ -1,0 +1,3 @@
+@use 'index.scss' as styles with (
+  $font-path: '~@ibm/plex'
+);

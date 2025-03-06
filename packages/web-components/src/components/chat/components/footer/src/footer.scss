@@ -1,0 +1,235 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-footer) {
+  position: absolute;
+  display: block;
+  margin: 0 auto;
+  background: none;
+  inset-block-end: 0;
+  inset-inline: 0;
+  max-inline-size: 672px;
+  min-block-size: 56px;
+  transition: block-size 600ms ease;
+
+  .#{$clabs-prefix}--chat-footer-container {
+    background: none;
+    min-block-size: 56px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-container-expanded {
+    background: none;
+    margin-block-end: 16px;
+    min-block-size: 56px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-items-target {
+    display: flex;
+    box-sizing: border-box;
+    align-items: flex-end;
+    border: 2px solid $background;
+    background: $background;
+    block-size: var(--chat-footer-text-area-container-height, '56px');
+    gap: 4px;
+    max-block-size: 182px;
+    min-block-size: 56px;
+    padding-block: 12px;
+    padding-inline: 16px 8px;
+    transition: border-color 150ms linear, block-size 300ms ease;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-items-expanded {
+    border-radius: 8px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-items-expanded-error {
+    border-radius: 0 0 8px 8px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-items {
+    border-radius: 0 0 8px 8px;
+    border-block-start: 1px solid $border-subtle;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu {
+    box-sizing: border-box;
+
+    padding: 6px 2px;
+    border: 2px solid $border-subtle;
+    animation: fade-in 600ms forwards;
+    background: $background;
+    border-block-end: none;
+    inline-size: 100%;
+    margin-block-end: 0;
+    opacity: 0;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-error {
+    border: 2px solid $support-error;
+    border-block-end: none;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-warning {
+    border: 2px solid $support-warning;
+    border-block-end: none;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-info {
+    border: 2px solid $support-info;
+    border-block-end: none;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 16px;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 32px;
+    max-inline-size: 32px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container-item-icon-error svg {
+    color: $support-error;
+    fill: $support-error;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container-item-icon-warning svg {
+    color: $support-warning;
+    fill: $support-warning;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container-item-icon-info svg {
+    color: $link-primary;
+    fill: $link-primary;
+  }
+
+  .#{$clabs-prefix}--chat-footer-send-active {
+    color: $icon-primary;
+    fill: $icon-primary;
+  }
+
+  .#{$clabs-prefix}--chat-footer-send-inactive {
+    color: $icon-on-color-disabled;
+    fill: $icon-on-color-disabled;
+    pointer-events: none;
+  }
+
+  .#{$clabs-prefix}--chat-footer-button-danger svg {
+    color: $support-error;
+    fill: $support-error;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container-message-error {
+    flex: 1;
+    color: $support-error;
+    font-size: 14px;
+    line-height: 14px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container-message-warning {
+    flex: 1;
+    color: $support-warning;
+    font-size: 14px;
+    line-height: 14px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-menu-container-message-info {
+    flex: 1;
+    color: $link-secondary;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .#{$clabs-prefix}--chat-footer-button {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .#{$clabs-prefix}--chat-search-query {
+    overflow: hidden var(--chat-footer-overflow-control, hidden);
+    box-sizing: border-box;
+    flex-grow: 1;
+    border: none;
+    background: none;
+    block-size: var(--chat-footer-text-area-height, '24px');
+    color: $text-primary;
+    font: inherit;
+    font-size: 14px;
+    letter-spacing: 0.16px;
+    line-height: 26px;
+    max-block-size: 158px;
+    min-block-size: 32px;
+    resize: none;
+    transition: block-size 300ms ease;
+  }
+  .#{$clabs-prefix}--chat-search-query-label {
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    margin: -1px;
+    block-size: 1px;
+    clip: rect(0, 0, 0, 0);
+    inline-size: 1px;
+    white-space: nowrap;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-focused {
+    border: 2px solid $focus;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-focused-error {
+    border: 2px solid $support-error;
+    border-block-start: 1px solid $border-subtle;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-focused-info {
+    border: 2px solid $support-info;
+    border-block-start: 1px solid $border-subtle;
+  }
+
+  .#{$clabs-prefix}--chat-footer-prompt-focused-warning {
+    border: 2px solid $support-warning;
+    border-block-start: 1px solid $border-subtle;
+  }
+
+  .#{$clabs-prefix}--chat-search-query-disabled {
+    cursor: wait;
+  }
+
+  .#{$clabs-prefix}--chat-search-query:focus {
+    outline: none;
+  }
+
+  .#{$clabs-prefix}--chat-search-query::placeholder {
+    color: $text-secondary;
+  }
+}

@@ -9,7 +9,11 @@
 - [Installing dependencies](#installing-dependencies)
 - [Running Storybook](#running-storybook)
 - [Common tasks](#common-tasks)
+- [Building a React Component](#building-a-react-component)
+- [Building a Web Component](#building-a-web-component)
+- [Document maintainers](#document-maintainers)
 - [Submitting a Pull Request](#submitting-a-pull-request)
+- [Publishing to NPM](#publishing-to-npm)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 <!-- prettier-ignore-end -->
@@ -88,15 +92,42 @@ Afterwards, you should be good to go!
 
 ## Running Storybook
 
-To get your development server running and to start coding, you just have to
+To get your development server running specifically for Web Components or React,
 run:
 
 ```bash
+cd packages/web-components
+yarn storybook
+```
+
+or
+
+```bash
+cd packages/react
 yarn storybook
 ```
 
 This will start a development server where you can see any changes you are
 making to components in Storybook.
+
+To get the consolidated view of both Web Components and React within one
+Storybook environment, you need to have Storybook running for both before
+running Storybook from the root of the project.
+
+```bash
+cd packages/web-components
+yarn storybook
+
+cd ../react
+yarn storybook
+
+cd ../..
+yarn storybook
+```
+
+The
+[Storybook references](https://github.com/carbon-design-system/carbon-labs/blob/main/.storybook/main.js)
+can be modified if needed.
 
 ## Common tasks
 
@@ -110,6 +141,95 @@ might want to run:
 | `yarn format`, `yarn format:write` | Check if files have been formatted, format files using prettier                                               |
 | `yarn ci-check`                    | Runs the ci-checks                                                                                            |
 | `yarn ci-check:build`              | Runs the ci-checks along with the build and build:dist commands                                               |
+
+## Building a React Component
+
+1. From the `react` package folder, run the `generate` script and provide the
+   desired component name. This will generated the base component with all the
+   necessary files.
+
+   The component name should be pascal case (ie. TestComponent).
+
+   ```bash
+   cd packages/react
+   yarn generate TestComponent
+   ```
+
+   This will generate:
+
+   - An example test app for your component, located in
+     `examples/react/TestComponent`. This example test app will be linked as a
+     stackblitz link in the component storybook `mdx` file. Note that this
+     example app will not run until the component has been merged into `main`
+     and published under NPM.
+   - The component folder (`packages/react/src/components/TestComponent`).
+   - The package name for the component will begin with `@carbon-labs/react-*`.
+
+2. From the root of the project, run the following to add your component to the
+   yarn workspace.
+
+   ```bash
+   yarn && yarn build
+   ```
+
+3. The generated template comes with a simple snapshot test case (ie.
+   `packages/react/src/components/TestComponent/__tests__/TestComponent.test.js`),
+   feel free to add additional test cases here. In order to generate the
+   snapshot run:
+
+   ```bash
+   cd package/react
+   yarn test
+   ```
+
+## Building a Web Component
+
+1. From the `web-components` package folder, run the `generate` script and
+   provide the desired component name. This will generated the base component
+   with all the necessary files.
+
+   The component name should be param case (ie. test-component).
+
+   ```bash
+   cd packages/web-components
+   yarn generate test-component
+   ```
+
+   This will generate:
+
+   - An example test app for your component, located in
+     `examples/web-components/test-component`. This example test app will be
+     linked as a stackblitz link in the component storybook `mdx` file. Note
+     that this example app will not run until the component has been merged into
+     `main` and published under NPM.
+   - The component folder
+     (`packages/web-components/src/components/test-component`).
+   - The package name for the component will begin with `@carbon-labs/wc-*`.
+
+2. From the root of the project, run the following to add your component to the
+   yarn workspace.
+
+   ```bash
+   yarn && yarn build
+   ```
+
+3. The generated template comes with a simple snapshot test case (ie.
+   `packages/web-components/src/components/test-component/__tests__/test-component.test.js`),
+   feel free to add additional test cases here. In order to generate the
+   snapshot run:
+
+   ```bash
+   cd package/web-components
+   yarn test
+   ```
+
+## Document maintainers
+
+Each asset in Labs must have dedicated contributors and organize its own code
+reviewers. This can be and should be documented in the component storybook mdx
+file (within `<component-name>/__stories__/<component-name>.mdx`)
+
+![screenshot of storybook maintainers and status documentation](https://github.com/user-attachments/assets/10b3fbbf-d2fb-4d2d-9c70-ed5dbafc9a8c)
 
 ## Submitting a Pull Request
 
@@ -172,3 +292,12 @@ might want to run:
 
    Once all revisions to your pull request are complete, a maintainer will
    squash and merge your commits for you.
+
+## Publishing to NPM
+
+The
+[canary publish to NPM](https://github.com/carbon-design-system/carbon-labs/actions/workflows/release-canary.yml)
+occurs every time a PR is merged into `main`. This canary version of your
+package can be used in your applications.
+[Full minor releases](https://github.com/carbon-design-system/carbon-labs/actions/workflows/release.yml)
+occur when needed and are triggered manually.

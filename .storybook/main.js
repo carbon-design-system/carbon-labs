@@ -1,54 +1,47 @@
-/** @type { import('@storybook/web-components-vite').StorybookConfig } */
+import { join, dirname } from 'path';
+
 /**
- * @license
- *
- * Copyright IBM Corp. 2023
- *
- * This source code is licensed under the Apache-2.0 license found in the
- * LICENSE file in the root directory of this source tree.
+ * This function is used to resolve the absolute path of a package.
+ * It is needed in projects that use Yarn PnP or are set up within a monorepo.
  */
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, 'package.json')));
+}
 
-import { mergeConfig } from 'vite';
-import postcss from 'rollup-plugin-postcss';
-import postcssLit from 'rollup-plugin-postcss-lit';
-import sass from 'sass';
-
+/** @type { import('@storybook/web-components-vite').StorybookConfig } */
 const config = {
   stories: [
-    '../packages/**/__stories__/*.mdx',
-    '../packages/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
+    './welcome/**/*.mdx',
+    './welcome/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+  addons: [getAbsolutePath('@storybook/addon-essentials')],
   framework: {
-    name: '@storybook/web-components-vite',
+    name: getAbsolutePath('@storybook/web-components-vite'),
     options: {},
   },
-  docs: {
-    autodocs: 'tag',
-  },
-  features: {
-    storyStoreV7: true,
-  },
-  async viteFinal(config) {
-    return mergeConfig(config, {
-      css: {
-        preprocessorOptions: {
-          scss: {
-            implementation: sass,
-          },
+  refs: (config, { configType }) => {
+    if (configType === 'DEVELOPMENT') {
+      return {
+        'web-components': {
+          title: 'Web Components',
+          url: 'http://localhost:6007',
         },
+        react: {
+          title: 'React components',
+          url: 'http://localhost:6008',
+        },
+      };
+    }
+    return {
+      'web-components': {
+        title: 'Web Components',
+        url: 'https://labs.carbondesignsystem.com/web-components',
       },
-      plugins: [
-        postcss(),
-        postcssLit({
-          include: [
-            './node_modules',
-            'packages/**/*.scss',
-            'packages/**/*.scss?*',
-          ],
-        }),
-      ],
-    });
+      react: {
+        title: 'React components',
+        url: 'https://labs.carbondesignsystem.com/react',
+      },
+    };
   },
 };
 export default config;

@@ -1,0 +1,75 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-chat-tag-list) {
+  overflow: hidden;
+  max-inline-size: 100%;
+
+  .#{$clabs-prefix}--chat-tag-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    max-inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-tag-list-container-inline {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .#{$clabs-prefix}--chat-tag-list-container-cell {
+    box-sizing: border-box;
+    flex: 1 1 28%;
+    padding: 2px;
+    animation: fade-in 600ms forwards;
+    max-inline-size: 100%;
+    opacity: 0;
+  }
+
+  .#{$clabs-prefix}--chat-tag-list-container-cell-inline {
+    box-sizing: border-box;
+    padding: 2px;
+    animation: fade-in 600ms forwards;
+    font-size: 11px;
+    opacity: 0;
+  }
+
+  .#{$clabs-prefix}--chat-tag-list-container-cell svg {
+    pointer-events: none;
+  }
+
+  .#{$clabs-prefix}--chat-tag-list-title {
+    font-style: bold;
+    inline-size: 100%;
+  }
+
+  .#{$clabs-prefix}--chat-tag-list-error {
+    padding: 10px;
+    border: 1px solid $support-error;
+    border-radius: 8px;
+    color: $support-error;
+    line-height: 22px;
+  }
+}

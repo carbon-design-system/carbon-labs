@@ -8,3 +8,4 @@
  */
 
 export * from './settings/index.js';
+export * from './usePrefix.js';

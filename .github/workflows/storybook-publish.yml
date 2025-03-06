@@ -1,0 +1,69 @@
+name: Deploy storybook to GitHub Pages
+run-name: Publish Storybook
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: github.repository == 'carbon-design-system/carbon-labs'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+
+      - name: Build storybook for Labs
+        working-directory: '.'
+        run: yarn storybook:build
+
+      - name: Build storybook for web-components
+        working-directory: 'packages/web-components'
+        run: yarn storybook:build
+
+      - name: Build storybook for react
+        working-directory: 'packages/react'
+        run: yarn storybook:build
+      - name: Create CNAME
+        run: |
+          touch storybook-static/.nojekyll
+          touch storybook-static/CNAME
+          echo "labs.carbondesignsystem.com" > storybook-static/CNAME
+      # Deploy Labs Storybook Github Pages using `gh-pages` package
+      - name: Deploy Labs Storybook
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npx gh-pages -d storybook-static -u "github-actions-bot <support+actions@github.com>" --message "chore(deploy): deploy storybook"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Deploy web-components Storybook Github Pages using `gh-pages` package
+      - name: Deploy web-components Storybook
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npx gh-pages -d packages/web-components/storybook-static -u "github-actions-bot <support+actions@github.com>" --dest web-components --message "chore(deploy): deploy web-components storybook"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Deploy react Storybook Github Pages using `gh-pages` package
+      - name: Deploy react Storybook
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npx gh-pages -d packages/react/storybook-static -u "github-actions-bot <support+actions@github.com>" --dest react --message "chore(deploy): deploy react storybook"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

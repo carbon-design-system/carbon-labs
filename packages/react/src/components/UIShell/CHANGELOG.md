@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.25.0...@carbon-labs/react-ui-shell@0.26.0) (2025-03-05)
+
+
+### Features
+
+* **SideNav:** panel flyout menu for SideNavMenu ([#457](https://github.com/carbon-design-system/carbon-labs/issues/457)) ([044e4c5](https://github.com/carbon-design-system/carbon-labs/commit/044e4c57847f27fe7f65a72e7b9495592077e531))
+
+
+
+
+
 # [0.25.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.24.0...@carbon-labs/react-ui-shell@0.25.0) (2025-03-05)
 
 

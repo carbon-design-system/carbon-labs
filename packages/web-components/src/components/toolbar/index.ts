@@ -8,3 +8,5 @@
  */
 
 import './components/toolbar/toolbar.js';
+import './components/toolbar-group/toolbar-group.js';
+import './components/toolbar-button/toolbar-button.js';

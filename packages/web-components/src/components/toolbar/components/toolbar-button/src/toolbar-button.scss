@@ -1,0 +1,19 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/web-components/scss/components/icon-button/icon-button';
+
+:host(#{$clabs-prefix}-toolbar-button) {
+  @extend :host(#{$cds-prefix}-icon-button);
+}
+
+:host(#{$clabs-prefix}-toolbar-button[kind="ghost"]) ::slotted([slot="icon"]) {
+    color: var(--cds-icon-primary, #161616);
+}

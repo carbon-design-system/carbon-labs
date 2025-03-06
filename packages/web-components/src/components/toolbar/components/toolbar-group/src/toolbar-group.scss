@@ -8,7 +8,8 @@
 $css--plex: true !default;
 
 @use '../../../../../globals/scss/vars' as *;
+@use '@carbon/web-components/scss/components/button/button';
 
 :host(#{$clabs-prefix}-toolbar) {
-  display: inline-flex;
+  @extend :host(#{$cds-prefix}-button);
 }

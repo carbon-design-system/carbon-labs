@@ -18,6 +18,7 @@ import { SideNavLinkText, SideNavIcon } from '@carbon/react';
 import Link from './Link';
 import { usePrefix } from '../internal/usePrefix';
 import { SideNavContext } from './SideNav';
+import { Checkmark } from '@carbon/icons-react';
 
 export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
   /**
@@ -36,6 +37,11 @@ export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
    * `aria-current="page"`, as well.
    */
   isActive?: boolean;
+
+  /**
+   * Specify whether the link is part of a "SideNavMenu" in "flyout menu" mode.
+   */
+  isFlyoutMenuItem?: boolean;
 
   /**
    * Optionally provide an href for the underlying li`
@@ -63,14 +69,22 @@ export const SideNavMenuItem = React.forwardRef<
     className: customClassName,
     as: Component = Link,
     isActive,
+    isFlyoutMenuItem,
     renderIcon: IconElement,
     ...rest
   } = props;
   const { isTreeview } = useContext(SideNavContext);
-  const className = cx(`${prefix}--side-nav__menu-item`, customClassName);
+  const className = cx(
+    {
+      [`${prefix}--side-nav__menu-item`]: true,
+      [`${prefix}--side-nav__menu-item--flyout-menu-item`]: isFlyoutMenuItem,
+    },
+    customClassName
+  );
   const linkClassName = cx({
     [`${prefix}--side-nav__link`]: true,
-    [`${prefix}--side-nav__link--current`]: isActive,
+    [`${prefix}--side-nav__link--active`]: isActive && isFlyoutMenuItem,
+    [`${prefix}--side-nav__link--current`]: isActive && !isFlyoutMenuItem,
   });
 
   return (
@@ -82,9 +96,14 @@ export const SideNavMenuItem = React.forwardRef<
         className={linkClassName}
         tabIndex={isTreeview ? -1 : 0}
         ref={ref}>
-        {IconElement && (
+        {IconElement && !isFlyoutMenuItem && (
           <SideNavIcon small>
             <IconElement />
+          </SideNavIcon>
+        )}
+        {isActive && isFlyoutMenuItem && (
+          <SideNavIcon small>
+            <Checkmark />
           </SideNavIcon>
         )}
         <SideNavLinkText>{children}</SideNavLinkText>
@@ -121,6 +140,11 @@ SideNavMenuItem.propTypes = {
    * `aria-current="page"`, as well.
    */
   isActive: PropTypes.bool,
+
+  /**
+   * Specify whether the link is part of a "SideNavMenu" in "flyout menu" mode.
+   */
+  isFlyoutMenuItem: PropTypes.bool,
 
   /**
    * Provide an icon to render in the side navigation link. Should be a React class.

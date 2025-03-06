@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.26.0...@carbon-labs/react-ui-shell@0.27.0) (2025-03-06)
+
+
+### Bug Fixes
+
+* **SideNavToggle:** show on screen height resize ([#500](https://github.com/carbon-design-system/carbon-labs/issues/500)) ([89fbc2a](https://github.com/carbon-design-system/carbon-labs/commit/89fbc2ad44c9f6f9258787beb4dfc47f63190ae0))
+
+
+
+
+
+# [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.25.0...@carbon-labs/react-ui-shell@0.26.0) (2025-03-05)
+
+
+### Features
+
+* **SideNav:** panel flyout menu for SideNavMenu ([#457](https://github.com/carbon-design-system/carbon-labs/issues/457)) ([044e4c5](https://github.com/carbon-design-system/carbon-labs/commit/044e4c57847f27fe7f65a72e7b9495592077e531))
+
+
+
+
+
+# [0.25.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.24.0...@carbon-labs/react-ui-shell@0.25.0) (2025-03-05)
+
+
+### Features
+
+* **UIShell:** add HeaderContainer ([#477](https://github.com/carbon-design-system/carbon-labs/issues/477)) ([ec3da77](https://github.com/carbon-design-system/carbon-labs/commit/ec3da7742be1a722ef7bed04335602946b518258))
+
+
+
+
+
+# [0.24.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.23.0...@carbon-labs/react-ui-shell@0.24.0) (2025-02-28)
+
+
+### Bug Fixes
+
+* **SideNav:** handle unexpanded tabindex ([#484](https://github.com/carbon-design-system/carbon-labs/issues/484)) ([2e8b6bb](https://github.com/carbon-design-system/carbon-labs/commit/2e8b6bb62b14538bc864e3b69bf1073a466215dd))
+
+
+
+
+
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.22.0...@carbon-labs/react-ui-shell@0.23.0) (2025-02-28)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
 # [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.21.0...@carbon-labs/react-ui-shell@0.22.0) (2025-02-21)
 
 **Note:** Version bump only for package @carbon-labs/react-ui-shell

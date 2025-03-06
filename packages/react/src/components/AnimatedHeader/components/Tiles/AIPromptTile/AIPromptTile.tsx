@@ -31,7 +31,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   productName,
 }: AIPromptTileProps) => {
   const prefix = usePrefix();
-  const blockClass = `${prefix}-animated-header__ai-prompt-tile`;
+  const blockClass = `${prefix}--animated-header__ai-prompt-tile`;
   const collapsed = `${blockClass}--collapsed`;
 
   const [textInput, setTextInput] = useState('');
@@ -58,7 +58,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   return (
     <div
       id={`${blockClass}`}
-      className={`${prefix}-animated-header__tile ${blockClass}`}
+      className={`${prefix}--animated-header__tile ${blockClass}`}
       key={id}>
       <div className={`${blockClass}--body ${!open && collapsed}`}>
         <div className={`${blockClass}--icons`}>

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SplitPanel renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <div
+    class="clabs--split-panel__container"
+  >
+    <button
+      class="cds--btn cds--btn--primary"
+      type="button"
+    >
+      Button
+    </button>
+  </div>
+</div>
+`;

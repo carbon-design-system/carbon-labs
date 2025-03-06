@@ -338,11 +338,11 @@ div:has(.#{$prefix}--header)
 
 .#{$prefix}--side-nav__toggle-container {
   position: absolute;
-  bottom: 0;
-  width: 100%;
   background: $background;
+  inline-size: 100%;
+  inset-block-end: 0;
 
   .#{$prefix}--side-nav__toggle.#{$prefix}--side-nav__toggle--collapsed:hover {
     background: $background-hover;
-  }  
+  }
 }

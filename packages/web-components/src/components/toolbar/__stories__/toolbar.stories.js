@@ -9,8 +9,8 @@
 
 import { html } from 'lit';
 import '../components/toolbar/toolbar';
-import '../components/toolbar-button/toolbar-button'
-import '../components/toolbar-group/toolbar-group'
+import '../components/toolbar-button/toolbar-button';
+import '../components/toolbar-group/toolbar-group';
 import '@carbon/web-components/es/components/dropdown/index.js';
 import '@carbon/web-components/es/components/overflow-menu/index.js';
 

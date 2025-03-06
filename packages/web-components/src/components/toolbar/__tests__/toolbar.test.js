@@ -12,9 +12,7 @@ import '@carbon-labs/wc-toolbar/es/index.js';
 
 describe('clabs-toolbar', function () {
   it('should render with cds-button minimum attributes', async () => {
-    const el = await fixture(
-      html`<clabs-toolbar> button </clabs-toolbar>`
-    );
+    const el = await fixture(html`<clabs-toolbar> button </clabs-toolbar>`);
 
     await expect(el).dom.to.equalSnapshot();
     await expect(el).shadowDom.to.be.accessible();

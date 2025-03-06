@@ -1,9 +1,0 @@
-@use '@carbon/ibm-products/scss/config' as config;
-
-@function get-carbon-name($name) {
-  @return --#{config.$carbon-prefix}-#{$name};
-}
-
-@mixin carbon-declaration($name, $value) {
-  #{get-carbon-name($name)}: #{$value};
-}

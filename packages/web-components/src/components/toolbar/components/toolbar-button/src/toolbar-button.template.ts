@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import CDSIconButton from '@carbon/web-components/es/components/icon-button/icon-button';
+import CDSIconButton from '@carbon/web-components/es/components/icon-button/icon-button.js';
 // @ts-ignore
 import styles from './toolbar-button.scss?inline';
 

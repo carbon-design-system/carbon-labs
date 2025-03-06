@@ -67,6 +67,7 @@ $prefix: 'clabs' !default;
   --handle-color: #{$border-subtle-01};
   --handle-inline-size: 1px;
   --handle-block-size: 1px;
+  --handle-border: 1px solid transparent;
   --handle-cursor: initial;
 
   position: relative;
@@ -77,6 +78,9 @@ $prefix: 'clabs' !default;
 [class*='#{$prefix}--split-panel__handle--']::after {
   position: absolute;
   display: block;
+  box-sizing: content-box;
+  border: 1px solid var(--handle-border-color);
+  background-clip: content-box;
   background-color: var(--handle-color);
   block-size: var(--handle-block-size);
   content: '';
@@ -93,6 +97,7 @@ $prefix: 'clabs' !default;
 
 [class*='#{$prefix}--split-panel__handle--']:focus {
   --handle-color: #{$border-interactive};
+  --handle-border-color: #{$border-interactive};
 }
 
 [class*='#{$prefix}--split-panel__handle--']:where(:focus, :hover) {

@@ -17,6 +17,9 @@ type PolymorphicProps<E extends React.ElementType> = React.PropsWithChildren<
 >;
 
 type TocSectionProps<T extends React.ElementType> = PolymorphicProps<T> & {
+  /**
+   * Internally used and passed in programmatically. Any value provided will be overwritten.
+   * */
   index?: number;
 };
 

@@ -19,7 +19,18 @@ import { useToc } from './Toc';
 import cx from 'classnames';
 
 interface TocSectionsProps extends React.HTMLProps<HTMLDivElement> {
+  /**
+   * Used in an IntersectionObserverInit object to customize behavior with the Table of contents.
+   *
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#rootmargin} for further information.
+   * */
   rootMargin?: string;
+
+  /**
+   * Used in an IntersectionObserverInit object to customize behavior with the Table of contents.
+   *
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#threshold} for further information.
+   * */
   threshold?: number | number[];
 }
 

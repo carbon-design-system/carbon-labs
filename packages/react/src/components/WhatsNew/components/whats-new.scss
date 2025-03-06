@@ -9,11 +9,10 @@
 @use '@carbon/react';
 @use '@carbon/react/scss/zone';
 @use '@carbon/styles/scss/themes';
-
+@use '@carbon/react/scss/theme' as *;
 @use '@carbon/react/scss/type' as *;
 @use '@carbon/react/scss/spacing' as *;
 @use '@carbon/react/scss/colors' as *;
-@use '@carbon/react/scss/theme' as *;
 @use '@carbon/styles/scss/breakpoint' as *;
 @use 'styles/bubble';
 @use 'styles/toc';

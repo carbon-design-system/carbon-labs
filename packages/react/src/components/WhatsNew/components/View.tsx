@@ -12,8 +12,17 @@ import cx from 'classnames';
 import { useViewStackContext } from './ViewStack';
 
 interface ViewProps extends Omit<React.HTMLProps<HTMLLIElement>, 'title'> {
-  index?: number;
+  /**
+   * Required property used in history. Useful for providing navigational button labels to a different view. **Example** "Back to Settings"
+   **/
   title: string;
+  /**
+   * Internally used and passed in programmatically. Any value provided will be overwritten.
+   **/
+  index?: number;
+  /**
+   * Internally used and passed in programmatically. Any value provided will be overwritten.
+   **/
   isRecycled?: boolean;
 }
 

@@ -43,13 +43,26 @@ type ViewStackCallbackResponse = {
 };
 
 interface ViewStackProps
-  extends Omit<React.HTMLProps<HTMLDivElement>, 'ariaLabel' | 'role'> {
+  extends Omit<React.HTMLProps<HTMLDivElement>, 'aria-label' | 'role'> {
   ariaLabel?: string;
   role?: string;
   children: React.ReactNode;
   className?: string;
+
+  /**
+   * Function used to translate assistive text used in the ViewStack. **Example return value:** Displaying view ${currentIndex} of ${lastIndex}
+   **/
   viewAssistiveTranslator?: (currentIndex: number, lastIndex: number) => string;
+
+  /**
+   * Function used to update any local state based on the ViewStack's internal state **before** any chages are made.
+   * @param {object} res: {currentIndex: number, lastIndex: number, totalViews: number, historyStack: [{id: number, title: string}...]}
+   **/
   onViewChangeStart?: (res: ViewStackCallbackResponse) => void;
+  /**
+   * Function used to update any local state based on the ViewStack's internal state **after** any chages are made.
+   * @param {object} res: {currentIndex: number, lastIndex: number, totalViews: number, historyStack: [{id: number, title: string}...]}
+   **/
   onViewChangeEnd?: (res: ViewStackCallbackResponse) => void;
 }
 

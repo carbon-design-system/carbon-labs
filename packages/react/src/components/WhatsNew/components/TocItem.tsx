@@ -15,8 +15,14 @@ import React, { useEffect, useRef } from 'react';
 import { useTocListContext } from './TocList';
 
 interface TocItemProps {
-  isActive?: boolean;
   children: React.ReactNode;
+  /**
+   * Internally used and passed in programmatically. Any value provided will be overwritten.
+   * */
+  isActive?: boolean;
+  /**
+   * Internally used and passed in programmatically. Any value provided will be overwritten.
+   * */
   index?: number;
 }
 

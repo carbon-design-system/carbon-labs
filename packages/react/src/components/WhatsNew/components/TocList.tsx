@@ -15,10 +15,15 @@ import React, {
   useState,
 } from 'react';
 import { useToc } from './Toc';
-import { TocItemProps } from './TocItem';
+import { TocItem, TocItemProps } from './TocItem';
 
 interface TocListProps {
-  children: ReactElement<TocItemProps> | Array<ReactElement<TocItemProps>>;
+  /**
+   * Children are expected to be TocItem elements.
+   * */
+  children:
+    | ReactElement<TocItemProps, typeof TocItem>
+    | Array<ReactElement<TocItemProps, typeof TocItem>>;
 }
 interface TocListContext {
   registerRef: (index: number, ref: React.RefObject<HTMLElement>) => void;

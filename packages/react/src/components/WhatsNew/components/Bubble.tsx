@@ -27,6 +27,9 @@ import {
 
 interface BubbleProps extends Omit<HTMLProps<HTMLDivElement>, 'target'> {
   align: NewPopoverAlignment;
+  /**
+   * Values can range from an element, a ref, a string which will use queryselector to target an element. **type:** (Element | React.RefObject<Element> | string | null | undefined)
+   **/
   target: Element | React.RefObject<Element> | string | null | undefined;
   dropShadow?: boolean;
   highContrast?: boolean;

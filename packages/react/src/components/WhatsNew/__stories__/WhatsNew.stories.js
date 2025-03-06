@@ -8,7 +8,7 @@
  */
 
 import React, { useCallback, useRef, useState } from 'react';
-import { Close, Gift, Launch, Notification } from '@carbon/react/icons'; //Close, Gift,
+import { Close, Gift, Launch, Notification } from '@carbon/react/icons';
 import mdx from './WhatsNew.mdx';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import { Toc } from '../components/Toc';
@@ -37,10 +37,21 @@ pkg.component.ScrollGradient = true;
 
 export default {
   title: 'Components/WhatsNew',
-  component: Toc,
+  component: 'WhatsNewPattern',
+  subcomponents: {
+    TocList,
+    TocItem,
+    TocSections,
+    TocSection,
+    Bubble,
+    BubbleHeader,
+    ViewStack,
+    View,
+  },
   parameters: {
     docs: {
       page: mdx,
+      defaultName: 'Overview+',
     },
   },
 };
@@ -48,10 +59,7 @@ export default {
 /**
  * Default story for WhatsNew
  */
-export const Default = () => {
-  const labsPrefix = usePrefix();
-  const prefix = `${labsPrefix}--whats-new`;
-
+export const WhatsNewPattern = () => {
   /* ************************************* */
   // INTERNAL STATE
   const [contentIndex, setContentIndex] = useState(0);
@@ -66,11 +74,12 @@ export const Default = () => {
   const tocRef = useRef(null);
   const viewStackRef = useRef(null);
   const bodyRef = useRef(null);
-  console.log('pkg.carbon.theme: ', pkg);
   /* ************************************* */
 
   /* ************************************* */
   // CONSTANTS
+  const labsPrefix = usePrefix();
+  const prefix = `${labsPrefix}--whats-new`;
   /* ************************************* */
 
   /* ************************************* */
@@ -87,6 +96,7 @@ export const Default = () => {
 
   return (
     <div ref={bodyRef} className="storyBody">
+      {/* Storybook only control - todo:  */}
       <div className="controlHeader">
         <Button onClick={() => setShouldShowAnnouncement(true)}>
           Open What&apos;s New center
@@ -94,17 +104,20 @@ export const Default = () => {
 
         <Button
           onClick={() => setShouldShowReleaseNotification((prev) => !prev)}>
-          Open release notification
+          Toggle release notification
         </Button>
-
-        <Button
-          id="ExampleTarget"
-          renderIcon={Notification}
-          iconDescription="Example icon button"
-          hasIconOnly
-        />
+        <div className="iconBtnRight">
+          <Button
+            id="ExampleTarget"
+            renderIcon={Notification}
+            iconDescription="Example icon button"
+            hasIconOnly
+            tooltipAlignment="end"
+            tooltipPosition="bottom"
+          />
+        </div>
       </div>
-
+      {/* Tier 2 - release notification pattern */}
       <Bubble
         highContrast
         align="bottom-end"
@@ -129,7 +142,6 @@ export const Default = () => {
           viewAssistiveTranslator={(currentIndex, lastIndex) =>
             `Affichage de la vue ${currentIndex} sur ${lastIndex}`
           }
-          // have an on start, change name of onViewChangeEnd to reflect it being the end of the animation.
           onViewChangeEnd={({ currentIndex, lastIndex }) => {
             setCurrentReleaseNotifications(currentIndex + 1);
             setTotalReleaseNotifications(lastIndex + 1);
@@ -252,10 +264,9 @@ export const Default = () => {
           )}
         </footer>
       </Bubble>
-
+      {/* Tier 1 - what's new center pattern */}
       <Toc ref={tocRef}>
         <Tearsheet
-          portalTarget={bodyRef.current}
           selectorPrimaryFocus="#FeatureSwitcher"
           title="What's new"
           open={shouldShowAnnouncement}
@@ -315,7 +326,7 @@ export const Default = () => {
                     <img
                       className={`${prefix}__wn_pattern__feature__section_image`}
                       src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
-                      aria-label="Sweet Image"
+                      aria-label="Example image"
                     />
                     <div className={`${prefix}__wn_pattern__tag_container`}>
                       <Tag
@@ -351,7 +362,7 @@ export const Default = () => {
                     <img
                       className={`${prefix}__wn_pattern__feature__section_image`}
                       src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
-                      aria-label="Sweet Image"
+                      aria-label="Example image"
                     />
                     <div className={`${prefix}__wn_pattern__tag_container`}>
                       <Tag
@@ -398,7 +409,7 @@ export const Default = () => {
                       <img
                         className={`${prefix}__wn_pattern__feature__section_image`}
                         src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
-                        aria-label="Sweet Image"
+                        aria-label="Example image"
                       />
                       <div className={`${prefix}__wn_pattern__tag_container`}>
                         <Tag
@@ -431,7 +442,7 @@ export const Default = () => {
                       <img
                         className={`${prefix}__wn_pattern__feature__section_image`}
                         src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
-                        aria-label="Sweet Image"
+                        aria-label="Example image"
                       />
                       <div className={`${prefix}__wn_pattern__tag_container`}>
                         <Tag
@@ -474,7 +485,7 @@ export const Default = () => {
                       <img
                         className={`${prefix}__wn_pattern__feature__section_image`}
                         src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
-                        aria-label="Sweet Image"
+                        aria-label="Example image"
                       />
                       <div className={`${prefix}__wn_pattern__tag_container`}>
                         <Tag
@@ -507,7 +518,7 @@ export const Default = () => {
                       <img
                         className={`${prefix}__wn_pattern__feature__section_image`}
                         src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
-                        aria-label="Sweet Image"
+                        aria-label="Example image"
                       />
                       <div className={`${prefix}__wn_pattern__tag_container`}>
                         <Tag
@@ -545,3 +556,4 @@ export const Default = () => {
     </div>
   );
 };
+WhatsNewPattern.storyName = "What's new pattern";

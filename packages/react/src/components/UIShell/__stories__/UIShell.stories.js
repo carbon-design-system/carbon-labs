@@ -15,22 +15,25 @@ import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { HeaderPanel } from '../components/HeaderPanel';
 import { SideNavLink } from '../components/SideNavLink';
+import { HeaderContainer } from '../components/HeaderContainer';
 import {
   SkipToContent,
-  HeaderContainer,
   Header,
   HeaderName,
-  HeaderGlobalBar,
-  HeaderGlobalAction,
-  HeaderMenu,
-  HeaderMenuItem,
   Theme,
   HeaderMenuButton,
-  HeaderNavigation,
   SideNavDivider,
   Content,
   Grid,
   Column,
+  HeaderGlobalBar,
+  HeaderGlobalAction,
+  HeaderNavigation,
+  HeaderMenuItem,
+  HeaderMenu,
+  Switcher,
+  SwitcherItem,
+  SwitcherDivider,
   Button,
   Dropdown,
   MenuButton,
@@ -55,6 +58,9 @@ import {
   Platforms,
   EventIncident,
   WorkflowAutomation,
+  Search,
+  Notification,
+  Switcher as SwitcherIcon,
   SquareOutline,
 } from '@carbon/icons-react';
 
@@ -77,6 +83,31 @@ export default {
   },
 };
 
+const dropdownItems = [
+  {
+    text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+  },
+  {
+    text: 'Option 1',
+  },
+  {
+    text: 'Option 2',
+  },
+  {
+    text: 'Option 3 - a disabled item',
+    disabled: true,
+  },
+  {
+    text: 'Option 4',
+  },
+  {
+    text: 'Option 5',
+  },
+  {
+    text: 'Option 6',
+  },
+];
+
 /**
  * Story content
  * @returns {React.ReactElement} The JSX for the story
@@ -87,8 +118,8 @@ const StoryContent = () => (
       <Column sm={4} md={8} lg={12}>
         <h2 style={{ margin: '0 0 30px 0' }}>Purpose and function</h2>
         <p>
-          The shell is perhaps the most crucial piece of any UI built with
-          <a href="www.carbondesignsystem.com"> Carbon</a>. It contains the
+          The shell is perhaps the most crucial piece of any UI built with {''}
+          <a href="www.carbondesignsystem.com">Carbon</a>. It contains the
           shared navigation framework for the entire design system and ties the
           products in IBM’s portfolio together in a cohesive and elegant way.
           The shell is the home of the topmost navigation, where users can
@@ -154,241 +185,255 @@ const StoryContent = () => (
   </Theme>
 );
 
-const dropdownItems = [
-  {
-    text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
-  },
-  {
-    text: 'Option 1',
-  },
-  {
-    text: 'Option 2',
-  },
-  {
-    text: 'Option 3 - a disabled item',
-    disabled: true,
-  },
-  {
-    text: 'Option 4',
-  },
-  {
-    text: 'Option 5',
-  },
-  {
-    text: 'Option 6',
-  },
-  {
-    text: 'Option 7',
-  },
-  {
-    text: 'Option 8',
-  },
-];
-
 /**
  * Story for UIShell
  * @returns {React.ReactElement} The JSX for the story
  */
-export const Default = () => {
-  return (
-    <div>
-      <HeaderContainer
-        render={({ isSideNavExpanded, onClickSideNavExpand }) => (
-          <>
-            <Theme theme="g100">
-              <Header aria-label="IBM Platform Name">
-                <SkipToContent />
-                <HeaderMenuButton
-                  aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
-                  onClick={onClickSideNavExpand}
-                  isActive={isSideNavExpanded}
-                  aria-expanded={isSideNavExpanded}
-                  isCollapsible //shows hamburger menu at desktop
-                  isFixedNav
-                />
-                <HeaderName
+export const Default = () => (
+  <HeaderContainer
+    render={({
+      isSideNavExpanded,
+      isSwitcherExpanded,
+      onClickSideNavExpand,
+      onClickSwitcherExpand,
+    }) => (
+      <>
+        <Theme theme="g100">
+          <Header aria-label="IBM Platform Name">
+            <SkipToContent />
+            <HeaderMenuButton
+              aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
+              onClick={onClickSideNavExpand}
+              isActive={isSideNavExpanded}
+              aria-expanded={isSideNavExpanded}
+              isCollapsible //shows hamburger menu at desktop
+              isFixedNav
+            />
+            <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
+              [Platform]
+            </HeaderName>
+            <HeaderGlobalBar>
+              <HeaderGlobalAction aria-label="Search">
+                <Search size={20} />
+              </HeaderGlobalAction>
+              <HeaderGlobalAction aria-label="Notifications">
+                <Notification size={20} />
+              </HeaderGlobalAction>
+              <HeaderGlobalAction
+                aria-label={
+                  isSwitcherExpanded ? 'Close switcher' : 'Open switcher'
+                }
+                aria-expanded={isSwitcherExpanded}
+                isActive={isSwitcherExpanded}
+                onClick={onClickSwitcherExpand}
+                tooltipAlignment="end"
+                id="switcher-button">
+                <SwitcherIcon size={20} />
+              </HeaderGlobalAction>
+            </HeaderGlobalBar>
+            <HeaderPanel
+              expanded={isSwitcherExpanded}
+              onHeaderPanelFocus={onClickSwitcherExpand}
+              href="#switcher-button">
+              <Switcher
+                aria-label="Switcher Container"
+                expanded={isSwitcherExpanded}>
+                <SwitcherItem aria-label="Link 1" href="#">
+                  Link 1
+                </SwitcherItem>
+                <SwitcherDivider />
+                <SwitcherItem href="#" aria-label="Link 2">
+                  Link 2
+                </SwitcherItem>
+                <SwitcherItem href="#" aria-label="Link 3">
+                  Link 3
+                </SwitcherItem>
+                <SwitcherItem href="#" aria-label="Link 4">
+                  Link 4
+                </SwitcherItem>
+                <SwitcherItem href="#" aria-label="Link 5">
+                  Link 5
+                </SwitcherItem>
+                <SwitcherDivider />
+                <SwitcherItem href="#" aria-label="Link 6">
+                  Link 6
+                </SwitcherItem>
+              </Switcher>
+            </HeaderPanel>
+          </Header>
+          <SideNav
+            isTreeview={true}
+            aria-label="Main navigation"
+            expanded={isSideNavExpanded}
+            onSideNavBlur={onClickSideNavExpand}
+            isCollapsible
+            hideOverlay
+            className="nav--global">
+            <SideNavItems>
+              <SideNavMenu renderIcon={CarbonDesignSystem} title="Product 1">
+                <SideNavMenu renderIcon={Home} title="Home">
+                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    Item level 3
+                  </SideNavMenuItem>
+                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    Item level 3
+                  </SideNavMenuItem>
+                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    Item level 3
+                  </SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenuItem
                   href="http://www.carbondesignsystem.com"
-                  prefix="IBM">
-                  [Platform]
-                </HeaderName>
-              </Header>
-              <SideNav
-                isTreeview={true}
-                aria-label="Main navigation"
-                expanded={isSideNavExpanded}
-                onSideNavBlur={onClickSideNavExpand}
-                isCollapsible
-                hideOverlay
-                className="nav--global">
-                <SideNavItems>
-                  <SideNavMenu
-                    renderIcon={CarbonDesignSystem}
-                    title="Product 1">
-                    <SideNavMenu renderIcon={Home} title="Home">
-                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Item level 3
-                      </SideNavMenuItem>
-                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Item level 3
-                      </SideNavMenuItem>
-                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Item level 3
-                      </SideNavMenuItem>
-                    </SideNavMenu>
-                    <SideNavMenuItem
-                      href="http://www.carbondesignsystem.com"
-                      renderIcon={BusinessProcesses}>
-                      Business
-                    </SideNavMenuItem>
-                    <SideNavMenuItem
-                      href="http://www.carbondesignsystem.com"
-                      renderIcon={Application}>
-                      Applications
-                    </SideNavMenuItem>
-                    <SideNavMenuItem
-                      href="http://www.carbondesignsystem.com"
-                      renderIcon={Platforms}>
-                      Platforms
-                    </SideNavMenuItem>
-                    <SideNavMenu renderIcon={Layers} title="Infrastructure">
-                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Item level 3
-                      </SideNavMenuItem>
-                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Item level 3
-                      </SideNavMenuItem>
-                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                        Item level 3
-                      </SideNavMenuItem>
-                    </SideNavMenu>
-                  </SideNavMenu>
-                  <SideNavMenu renderIcon={CarbonIBMDotCom} title="Product 2">
-                    <SideNavMenuItem
-                      renderIcon={Home}
-                      href="http://www.carbondesignsystem.com">
-                      Link
-                    </SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavMenu
-                    renderIcon={CarbonforIBMProducts}
-                    title="Product 3">
-                    <SideNavMenuItem
-                      renderIcon={Home}
-                      href="http://www.carbondesignsystem.com">
-                      Link
-                    </SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavMenu renderIcon={IBMTelemetry} title="Product 4">
-                    <SideNavMenuItem
-                      renderIcon={Home}
-                      href="http://www.carbondesignsystem.com">
-                      Link
-                    </SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavDivider />
-                  <SideNavLink
-                    renderIcon={DocumentMultiple_01}
-                    href="http://www.carbondesignsystem.com">
-                    Docs
-                  </SideNavLink>
-                  <SideNavLink
-                    renderIcon={Settings}
-                    href="http://www.carbondesignsystem.com">
-                    Settings
-                  </SideNavLink>
-                </SideNavItems>
-              </SideNav>
-            </Theme>
-            <Theme theme="g100">
-              <SideNav
-                navType={SIDE_NAV_TYPE.PANEL}
-                isChildOfHeader={false}
-                hideOverlay
-                aria-label="Product navigation">
-                <SideNavItems>
-                  <SideNavMenu renderIcon={Home} title="Home">
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Item level 3
-                    </SideNavMenuItem>
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Item level 3
-                    </SideNavMenuItem>
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Item level 3
-                    </SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={BusinessProcesses}>
-                    Business
-                  </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={Application}>
-                    Applications
-                  </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={Platforms}>
-                    Platforms
-                  </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={Layers}>
-                    Infrastructure
-                  </SideNavLink>
-                  <SideNavDivider />
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={Dashboard}>
-                    Dashboard
-                  </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={DataAnalytics}>
-                    Analytics
-                  </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={EventIncident}>
-                    Incidents
-                  </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={Security}>
-                    Security
-                  </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={WorkflowAutomation}>
-                    Automations
-                  </SideNavLink>
-                  <SideNavDivider />
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={DocumentMultiple_01}>
-                    Docs
-                  </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={Settings}>
-                    Settings
-                  </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={OverflowMenuVertical}>
-                    More
-                  </SideNavLink>
-                </SideNavItems>
-              </SideNav>
-            </Theme>
-            <StoryContent />
-          </>
-        )}
-      />
-    </div>
-  );
-};
+                  renderIcon={BusinessProcesses}>
+                  Business
+                </SideNavMenuItem>
+                <SideNavMenuItem
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Application}>
+                  Applications
+                </SideNavMenuItem>
+                <SideNavMenuItem
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Platforms}>
+                  Platforms
+                </SideNavMenuItem>
+                <SideNavMenu renderIcon={Layers} title="Infrastructure">
+                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    Item level 3
+                  </SideNavMenuItem>
+                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    Item level 3
+                  </SideNavMenuItem>
+                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    Item level 3
+                  </SideNavMenuItem>
+                </SideNavMenu>
+              </SideNavMenu>
+              <SideNavMenu renderIcon={CarbonIBMDotCom} title="Product 2">
+                <SideNavMenuItem
+                  renderIcon={Home}
+                  href="http://www.carbondesignsystem.com">
+                  Link
+                </SideNavMenuItem>
+              </SideNavMenu>
+              <SideNavMenu renderIcon={CarbonforIBMProducts} title="Product 3">
+                <SideNavMenuItem
+                  renderIcon={Home}
+                  href="http://www.carbondesignsystem.com">
+                  Link
+                </SideNavMenuItem>
+              </SideNavMenu>
+              <SideNavMenu renderIcon={IBMTelemetry} title="Product 4">
+                <SideNavMenuItem
+                  renderIcon={Home}
+                  href="http://www.carbondesignsystem.com">
+                  Link
+                </SideNavMenuItem>
+              </SideNavMenu>
+              <SideNavDivider />
+              <SideNavLink
+                renderIcon={DocumentMultiple_01}
+                href="http://www.carbondesignsystem.com">
+                Docs
+              </SideNavLink>
+              <SideNavLink
+                renderIcon={Settings}
+                href="http://www.carbondesignsystem.com">
+                Settings
+              </SideNavLink>
+            </SideNavItems>
+          </SideNav>
+        </Theme>
+        <Theme theme="g100">
+          <SideNav
+            navType={SIDE_NAV_TYPE.PANEL}
+            isChildOfHeader={false}
+            hideOverlay
+            aria-label="Product navigation">
+            <SideNavItems>
+              <SideNavMenu renderIcon={Home} title="Home">
+                <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                  Item level 3
+                </SideNavMenuItem>
+                <SideNavMenuItem
+                  isActive
+                  href="http://www.carbondesignsystem.com">
+                  Item level 3
+                </SideNavMenuItem>
+                <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                  Item level 3
+                </SideNavMenuItem>
+              </SideNavMenu>
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={BusinessProcesses}>
+                Business
+              </SideNavLink>
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={Application}>
+                Applications
+              </SideNavLink>
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={Platforms}>
+                Platforms
+              </SideNavLink>
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={Layers}>
+                Infrastructure
+              </SideNavLink>
+              <SideNavDivider />
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={Dashboard}>
+                Dashboard
+              </SideNavLink>
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={DataAnalytics}>
+                Analytics
+              </SideNavLink>
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={EventIncident}>
+                Incidents
+              </SideNavLink>
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={Security}>
+                Security
+              </SideNavLink>
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={WorkflowAutomation}>
+                Automations
+              </SideNavLink>
+              <SideNavDivider />
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={DocumentMultiple_01}>
+                Docs
+              </SideNavLink>
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={Settings}>
+                Settings
+              </SideNavLink>
+              <SideNavLink
+                href="http://www.carbondesignsystem.com"
+                renderIcon={OverflowMenuVertical}>
+                More
+              </SideNavLink>
+            </SideNavItems>
+          </SideNav>
+        </Theme>
+        <StoryContent />
+      </>
+    )}
+  />
+);
 
 Default.parameters = {
   controls: { disable: true },
@@ -547,91 +592,115 @@ SideNavWithThirdLevelIcons.storyName = 'SideNav With Third Level Icons';
  * Story for SideNav panel
  * @returns {React.ReactElement} The JSX for the story
  */
-export const SideNavPanel = () => {
-  return (
-    <>
-      <SideNav
-        navType={SIDE_NAV_TYPE.PANEL}
-        isChildOfHeader={false}
-        aria-label="Product navigation">
-        <SideNavItems>
-          <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-            <SideNavMenuItem href="http://www.carbondesignsystem.com">
-              Link level 2
-            </SideNavMenuItem>
-            <SideNavMenuItem href="http://www.carbondesignsystem.com">
-              Link level 2
-            </SideNavMenuItem>
-          </SideNavMenu>
-          <SideNavLink
-            renderIcon={Fade}
-            href="http://www.carbondesignsystem.com">
-            Link
-          </SideNavLink>
-          <SideNavLink
-            renderIcon={Fade}
-            href="http://www.carbondesignsystem.com">
-            Link
-          </SideNavLink>
-          <SideNavLink
-            renderIcon={Fade}
-            href="http://www.carbondesignsystem.com">
-            Link
-          </SideNavLink>
-          <SideNavLink
-            renderIcon={Fade}
-            href="http://www.carbondesignsystem.com">
-            Link
-          </SideNavLink>
-          <SideNavDivider />
-          <SideNavLink
-            renderIcon={Fade}
-            href="http://www.carbondesignsystem.com">
-            Link
-          </SideNavLink>
-          <SideNavLink
-            renderIcon={Fade}
-            href="http://www.carbondesignsystem.com">
-            Link
-          </SideNavLink>
-        </SideNavItems>
-      </SideNav>
-      <Content>
-        <Grid align="start">
-          <Column sm={4} md={8} lg={12}>
-            <h2 style={{ margin: '0 0 30px 0' }}>Purpose and function</h2>
-            <p>
-              The shell is perhaps the most crucial piece of any UI built with
-              <a href="www.carbondesignsystem.com"> Carbon</a>. It contains the
-              shared navigation framework for the entire design system and ties
-              the products in IBM’s portfolio together in a cohesive and elegant
-              way. The shell is the home of the topmost navigation, where users
-              can quickly and dependably gain their bearings and move between
-              pages.
-              <br />
-              <br />
-              The shell was designed with maximum flexibility built in, to serve
-              the needs of a broad range of products and users. Adopting the
-              shell ensures compliance with IBM design standards, simplifies
-              development efforts, and provides great user experiences. All IBM
-              products built with Carbon are required to use the shell’s header.
-              <br />
-              <br />
-              To better understand the purpose and function of the UI shell,
-              consider the “shell” of MacOS, which contains the Apple menu,
-              top-level navigation, and universal, OS-level controls at the top
-              of the screen, as well as a universal dock along the bottom or
-              side of the screen. The Carbon UI shell is roughly analogous in
-              function to these parts of the Mac UI. For example, the app
-              switcher portion of the shell can be compared to the dock in
-              MacOS.
-            </p>
-          </Column>
-        </Grid>
-      </Content>
-    </>
-  );
-};
+export const SideNavPanel = () => (
+  <>
+    <SideNav
+      navType={SIDE_NAV_TYPE.PANEL}
+      isChildOfHeader={false}
+      aria-label="Product navigation">
+      <SideNavItems>
+        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+        </SideNavMenu>
+        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+        </SideNavMenu>
+        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+        </SideNavMenu>
+        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 2
+          </SideNavMenuItem>
+        </SideNavMenu>
+        <SideNavDivider />
+        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavLink>
+        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavLink>
+        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavLink>
+        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavLink>
+        <SideNavDivider />
+        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavLink>
+        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavLink>
+      </SideNavItems>
+    </SideNav>
+    <Content>
+      <Grid align="start">
+        <Column sm={4} md={8} lg={12}>
+          <h2 style={{ margin: '0 0 30px 0' }}>Purpose and function</h2>
+          <p>
+            The shell is perhaps the most crucial piece of any UI built with{' '}
+            {''}
+            <a href="www.carbondesignsystem.com">Carbon</a>. It contains the
+            shared navigation framework for the entire design system and ties
+            the products in IBM’s portfolio together in a cohesive and elegant
+            way. The shell is the home of the topmost navigation, where users
+            can quickly and dependably gain their bearings and move between
+            pages.
+            <br />
+            <br />
+            The shell was designed with maximum flexibility built in, to serve
+            the needs of a broad range of products and users. Adopting the shell
+            ensures compliance with IBM design standards, simplifies development
+            efforts, and provides great user experiences. All IBM products built
+            with Carbon are required to use the shell’s header.
+            <br />
+            <br />
+            To better understand the purpose and function of the UI shell,
+            consider the “shell” of MacOS, which contains the Apple menu,
+            top-level navigation, and universal, OS-level controls at the top of
+            the screen, as well as a universal dock along the bottom or side of
+            the screen. The Carbon UI shell is roughly analogous in function to
+            these parts of the Mac UI. For example, the app switcher portion of
+            the shell can be compared to the dock in MacOS.
+          </p>
+        </Column>
+      </Grid>
+    </Content>
+  </>
+);
+
 /**
  * Story for Header
  * @param {object} args Storybook args that control component props
@@ -700,6 +769,7 @@ export const HeaderStory = () => (
   </Header>
 );
 HeaderStory.storyName = 'Header';
+
 /**
  * Story for HeaderPanel
  * @param {object} args Storybook args that control component props

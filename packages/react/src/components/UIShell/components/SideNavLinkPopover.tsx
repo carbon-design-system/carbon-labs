@@ -97,6 +97,8 @@ export function SideNavLinkPopover({
   return (
     <IconButton
       className={cx(className, `${prefix}--side-nav-link-popover`)}
+      dropShadow
+      highContrast={false}
       kind="ghost"
       {...rest}>
       {children}

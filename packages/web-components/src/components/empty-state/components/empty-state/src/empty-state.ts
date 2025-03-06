@@ -32,4 +32,27 @@ export default class emptyState extends LitElement {
    */
   @property()
   size: 'sm' | 'lg' = 'lg';
+  /**
+   * Determines which predefined illustration will be displayed
+   */
+  @property()
+  kind?:
+    | 'error'
+    | 'noData'
+    | 'noTags'
+    | 'notFound'
+    | 'notifications'
+    | 'unauthorized';
+  /**
+   * Empty state illustration theme variations. To ensure you use the correct themed illustrations, you can conditionally specify light or dark based on your app's current theme value.
+   */
+  @property()
+  illustrationTheme?: 'light' | 'dark';
+  
+  /**
+   * Source for the illustration image if you choose to use your own custom image. Passing an illustration prop will supersede the kind option.
+   */
+  @property({ type: String })
+  illustration?;
+
 }

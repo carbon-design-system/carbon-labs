@@ -335,3 +335,14 @@ div:has(.#{$prefix}--header)
     overflow: visible;
   }
 }
+
+.#{$prefix}--side-nav__toggle-container {
+  position: absolute;
+  background: $background;
+  inline-size: 100%;
+  inset-block-end: 0;
+
+  .#{$prefix}--side-nav__toggle.#{$prefix}--side-nav__toggle--collapsed:hover {
+    background: $background-hover;
+  }
+}

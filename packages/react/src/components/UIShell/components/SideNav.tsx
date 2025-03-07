@@ -508,6 +508,15 @@ function SideNavRenderFunction(
     }
   };
 
+  const SideNavToggleButton = (
+    <SideNavToggle
+      className={!expandedState ? `${prefix}--side-nav__toggle--collapsed` : ''}
+      renderIcon={expandedState ? SidePanelClose : SidePanelOpen}
+      onClick={() => setExpandedState(!expandedState)}>
+      {sideNavToggleText}
+    </SideNavToggle>
+  );
+
   return (
     <SideNavContext.Provider
       value={{
@@ -535,13 +544,14 @@ function SideNavRenderFunction(
         {...eventHandlers}
         {...other}>
         {childrenToRender}
-        {navType === SIDE_NAV_TYPE.PANEL && (
-          <SideNavToggle
-            renderIcon={expandedState ? SidePanelClose : SidePanelOpen}
-            onClick={() => setExpandedState(!expandedState)}>
-            {sideNavToggleText}
-          </SideNavToggle>
-        )}
+        {navType === SIDE_NAV_TYPE.PANEL &&
+          (expandedState ? (
+            SideNavToggleButton
+          ) : (
+            <div className={`${prefix}--side-nav__toggle-container`}>
+              {SideNavToggleButton}
+            </div>
+          ))}
       </nav>
     </SideNavContext.Provider>
   );

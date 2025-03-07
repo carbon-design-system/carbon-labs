@@ -11,10 +11,10 @@
 import { useToc } from './Toc';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import cx from 'classnames';
-import React, { useEffect, useRef } from 'react';
+import React, { HTMLProps, useEffect, useRef } from 'react';
 import { useTocListContext } from './TocList';
 
-interface TocItemProps {
+interface TocItemProps extends HTMLProps<HTMLLIElement> {
   children: React.ReactNode;
   /**
    * Internally used and passed in programmatically. Any value provided will be overwritten.
@@ -26,10 +26,16 @@ interface TocItemProps {
   index?: number;
 }
 
-const TocItem = (props: TocItemProps) => {
+const TocItem = ({
+  children,
+  isActive,
+  className,
+  index = Infinity,
+  ...rest
+}: TocItemProps) => {
   const labsPrefix = usePrefix();
   const prefix = `${labsPrefix}--whats-new`;
-  const { isActive, children, index = Infinity } = props;
+
   const { scrollToSection } = useToc();
   const { registerRef, handleKeyDown } = useTocListContext();
   const ref = useRef<HTMLAnchorElement>(null);
@@ -44,10 +50,14 @@ const TocItem = (props: TocItemProps) => {
 
   return (
     <li
-      className={cx({
-        [`${prefix}__toc-item`]: true,
-        [`${prefix}__toc-item-active`]: isActive,
-      })}
+      {...rest}
+      className={cx(
+        {
+          [`${prefix}__toc-item`]: true,
+          [`${prefix}__toc-item-active`]: isActive,
+        },
+        className
+      )}
       data-index={index}>
       <a
         role="button"

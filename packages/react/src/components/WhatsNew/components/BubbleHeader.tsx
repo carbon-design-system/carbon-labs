@@ -11,12 +11,11 @@ import React, { HTMLProps } from 'react';
 import cx from 'classnames';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 
-interface BubbleHeaderProps extends HTMLProps<HTMLElement> {
-  children: React.ReactNode;
-  className?: string;
-}
-
-const BubbleHeader = ({ children, className, ...rest }: BubbleHeaderProps) => {
+const BubbleHeader = ({
+  children,
+  className,
+  ...rest
+}: HTMLProps<HTMLElement>) => {
   const labsPrefix = usePrefix();
   const prefix = `${labsPrefix}--whats-new`;
   return (

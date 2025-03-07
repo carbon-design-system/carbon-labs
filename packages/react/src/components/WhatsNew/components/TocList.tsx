@@ -6,8 +6,10 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import cx from 'classnames';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import React, {
+  HTMLProps,
   ReactElement,
   useCallback,
   useContext,
@@ -17,7 +19,7 @@ import React, {
 import { useToc } from './Toc';
 import { TocItem, TocItemProps } from './TocItem';
 
-interface TocListProps {
+interface TocListProps extends Omit<HTMLProps<HTMLElement>, 'children'> {
   /**
    * Children are expected to be TocItem elements.
    * */
@@ -34,7 +36,7 @@ const TocListContext = React.createContext<TocListContext | undefined>(
   undefined
 );
 
-const TocList = ({ children }: TocListProps) => {
+const TocList = ({ children, className, ...rest }: TocListProps) => {
   const labsPrefix = usePrefix();
   const prefix = `${labsPrefix}--whats-new`;
   const { activeIds } = useToc();
@@ -96,7 +98,10 @@ const TocList = ({ children }: TocListProps) => {
 
   return (
     <TocListContext.Provider value={{ registerRef, handleKeyDown }}>
-      <nav ref={navRef} className={`${prefix}__toc-list`}>
+      <nav
+        ref={navRef}
+        {...rest}
+        className={cx(`${prefix}_toc-list`, className)}>
         {React.Children.map(children, (el, idx) => {
           return React.cloneElement(el as React.ReactElement<any>, {
             index: idx,

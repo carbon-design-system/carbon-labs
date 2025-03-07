@@ -30,13 +30,17 @@ $prefix: 'clabs--whats-new' !default;
   pointer-events: none;
 }
 
+.#{$prefix}__bubble-hidden {
+  display: none;
+}
+
 .#{$prefix}__bubble-open {
   display: grid;
   pointer-events: all;
 }
 
 .#{$prefix}__bubble-drop-shadow {
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 $spacing-01 $spacing-01 rgba(0, 0, 0, 0.2));
 }
 
 .#{$prefix}__bubble__arrow {
@@ -55,51 +59,3 @@ $prefix: 'clabs--whats-new' !default;
   margin-block-start: -$spacing-05;
   margin-inline: -$spacing-05;
 }
-
-// :root[data-carbon-theme='g100'] {
-//   .#{$prefix}__bubble-high-contrast {
-//     @include carbontheme.theme(carbonthemes.$white);
-//   }
-// }
-
-// :root[data-carbon-theme='g90'] {
-//   .#{$prefix}__bubble-high-contrast {
-//     @include carbontheme.theme(carbonthemes.$g10);
-//   }
-// }
-
-// :root[data-carbon-theme='g10'] {
-//   .#{$prefix}__bubble-high-contrast {
-//     @include carbontheme.theme(carbonthemes.$g90);
-//   }
-// }
-
-// :root[data-carbon-theme='white'] {
-//   .#{$prefix}__bubble-high-contrast {
-//     @include carbontheme.theme(carbonthemes.$g100);
-//   }
-// }
-
-// .#{config.$carbon-prefix}--g100 {
-//   .#{$prefix}__bubble-high-contrast {
-//     @include carbontheme.theme(carbonthemes.$white);
-//   }
-// }
-// // duplicating for class names for similar specificity to override potential global set themes
-// .#{config.$carbon-prefix}--g90 {
-//   .#{$prefix}__bubble-high-contrast {
-//     @include carbontheme.theme(carbonthemes.$g10);
-//   }
-// }
-
-// .#{config.$carbon-prefix}--g10 {
-//   .#{$prefix}__bubble-high-contrast {
-//     @include carbontheme.theme(carbonthemes.$g90);
-//   }
-// }
-
-// .#{config.$carbon-prefix}--white {
-//   .#{$prefix}__bubble-high-contrast {
-//     @include carbontheme.theme(carbonthemes.$g100);
-//   }
-// }

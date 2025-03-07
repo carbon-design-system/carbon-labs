@@ -26,9 +26,12 @@ import {
 } from '@floating-ui/react';
 
 interface BubbleProps extends Omit<HTMLProps<HTMLDivElement>, 'target'> {
+  /**
+   * 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-end' | 'left-start' | 'right-end' | 'right-start';
+   **/
   align: NewPopoverAlignment;
   /**
-   * Values can range from an element, a ref, a string which will use queryselector to target an element.
+   * Values can range from an Element, a ref of an Element, a string which will use queryselector to select an Element.
    **/
   target: Element | React.RefObject<Element> | string | null | undefined;
   dropShadow?: boolean;
@@ -66,7 +69,6 @@ const Bubble = ({
       }
 
       if (targetRef.current && tooltipRef.current && arrowRef.current && open) {
-        console.log('GO');
         targetRef.current.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
@@ -131,6 +133,10 @@ const Bubble = ({
     }
   }, [target, open, align]);
 
+  if (!target) {
+    return null;
+  }
+
   return (
     <div
       {...rest}
@@ -153,6 +159,7 @@ const Bubble = ({
           [`${prefix}__bubble-open`]: open,
           [`${prefix}__bubble-drop-shadow`]: dropShadow,
           [`${prefix}__bubble-high-contrast`]: highContrast,
+          [`${prefix}__bubble-hidden`]: !targetRef.current,
         },
         customClassName
       )}>

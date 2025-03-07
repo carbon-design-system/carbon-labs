@@ -28,7 +28,7 @@ import {
 interface BubbleProps extends Omit<HTMLProps<HTMLDivElement>, 'target'> {
   align: NewPopoverAlignment;
   /**
-   * Values can range from an element, a ref, a string which will use queryselector to target an element. **type:** (Element | React.RefObject<Element> | string | null | undefined)
+   * Values can range from an element, a ref, a string which will use queryselector to target an element.
    **/
   target: Element | React.RefObject<Element> | string | null | undefined;
   dropShadow?: boolean;
@@ -65,7 +65,8 @@ const Bubble = ({
         targetRef.current = target;
       }
 
-      if (targetRef.current && tooltipRef.current && arrowRef.current) {
+      if (targetRef.current && tooltipRef.current && arrowRef.current && open) {
+        console.log('GO');
         targetRef.current.scrollIntoView({
           behavior: 'smooth',
           block: 'center',

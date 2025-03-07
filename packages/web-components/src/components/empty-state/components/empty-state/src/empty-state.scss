@@ -15,9 +15,9 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/components/link';
 
 :host(#{$clabs-prefix}-empty-state) {
+  flex-direction: column;
   display: flex;
   color: $text-primary;
-  flex-direction: column;
   .#{$clabs-prefix}--empty-state__header {
     @include type-style('heading-03');
 

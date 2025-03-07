@@ -65,9 +65,10 @@ $prefix: 'clabs' !default;
 
 [class*='#{$prefix}--split-panel__handle--'] {
   --handle-color: #{$border-subtle-01};
-  --handle-inline-size: 1px;
-  --handle-block-size: 1px;
-  --handle-border: 1px solid transparent;
+  --handle-border-color: transparent;
+  --handle-size: 1px;
+  --handle-inline-size: var(--handle-size);
+  --handle-block-size: var(--handle-size);
   --handle-cursor: initial;
 
   position: relative;
@@ -79,10 +80,10 @@ $prefix: 'clabs' !default;
   position: absolute;
   display: block;
   box-sizing: content-box;
-  border: 1px solid var(--handle-border-color);
   background-clip: content-box;
   background-color: var(--handle-color);
   block-size: var(--handle-block-size);
+  border-inline: 1px solid var(--handle-border-color);
   content: '';
   inline-size: var(--handle-inline-size);
   inset-block-start: 50%;
@@ -96,8 +97,11 @@ $prefix: 'clabs' !default;
 }
 
 [class*='#{$prefix}--split-panel__handle--']:focus {
-  --handle-color: #{$border-interactive};
+  --handle-color: #{$background};
   --handle-border-color: #{$border-interactive};
+  --handle-size: 3px;
+
+  color: var(--handle-border-color);
 }
 
 [class*='#{$prefix}--split-panel__handle--']:where(:focus, :hover) {

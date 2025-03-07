@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, fixture, expect, nextFrame } from '@open-wc/testing';
+import { html, fixture, expect } from '@open-wc/testing';
 import '@carbon-labs/wc-empty-state/es/index.js';
 
 const illustrationImage =
@@ -43,7 +43,6 @@ describe('clabs-empty-state', function () {
   it('should render clabs-empty-state', async () => {
     const emptyState = await fixture(template());
     expect(emptyState).dom.to.equalSnapshot();
-    // await nextFrame();
     expect(emptyState).shadowDom.to.be.accessible();
   });
   it('should contain title element', async () => {

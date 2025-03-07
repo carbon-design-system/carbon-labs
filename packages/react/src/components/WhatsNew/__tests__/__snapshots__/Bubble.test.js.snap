@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bubble renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <div>
+    <button
+      data-testid="TargetButton1"
+      id="TestTargetElement1"
+      type="button"
+    >
+      Target button
+    </button>
+    <div
+      class="cds--white clabs--whats-new__bubble clabs--whats-new__bubble-open clabs--whats-new__bubble-drop-shadow clabs--whats-new__bubble-hidden"
+      data-testid="TestBubble"
+    >
+      <div
+        class="clabs--whats-new__bubble__arrow"
+      />
+      <header
+        class="clabs--whats-new__bubble__header"
+        data-testid="TestBubbleHeader"
+      />
+    </div>
+  </div>
+</div>
+`;

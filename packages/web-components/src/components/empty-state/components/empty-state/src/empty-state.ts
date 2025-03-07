@@ -48,11 +48,10 @@ export default class emptyState extends LitElement {
    */
   @property()
   illustrationTheme?: 'light' | 'dark';
-  
+
   /**
    * Source for the illustration image if you choose to use your own custom image. Passing an illustration prop will supersede the kind option.
    */
   @property({ type: String })
   illustration?;
-
 }

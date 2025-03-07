@@ -11,12 +11,12 @@ import { classMap } from 'lit/directives/class-map.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import '@carbon/web-components/es/components/link/index.js';
-import errorIllustration from './assets/error-illustration.js';
-import noDataIllustration from './assets/no-data-illustration.js';
-import noTagsIllustration from './assets/no-tags-illustration.js';
-import noFoundIllustration from './assets/not-found-illustration.js';
-import notificationsIllustration from './assets/notifications-illustration.js';
-import unauthorizedIllustration from './assets/unauthorized-illustration.js';
+import errorIllustration from './assets/error-illustration';
+import noDataIllustration from './assets/no-data-illustration';
+import noTagsIllustration from './assets/no-tags-illustration';
+import noFoundIllustration from './assets/not-found-illustration';
+import notificationsIllustration from './assets/notifications-illustration';
+import unauthorizedIllustration from './assets/unauthorized-illustration';
 
 /**
  * Lit template for card
@@ -25,7 +25,8 @@ import unauthorizedIllustration from './assets/unauthorized-illustration.js';
  * @returns {TemplateResult<1>} Lit html template
  */
 export function emptyStateTemplate(customElementClass) {
-  const { title, subtitle, size, kind, illustrationTheme, illustration } = customElementClass;
+  const { title, subtitle, size, kind, illustrationTheme, illustration } =
+    customElementClass;
   const titleClasses = classMap({
     [`${clabsPrefix}--empty-state__header`]: true,
     [`${clabsPrefix}--empty-state__header--small`]: size === 'sm',
@@ -35,8 +36,8 @@ export function emptyStateTemplate(customElementClass) {
     [`${clabsPrefix}--empty-state__subtitle--small`]: size === 'sm',
   });
   let emptyStateSVg;
-  if(!illustration){
-    switch(kind){
+  if (!illustration) {
+    switch (kind) {
       case 'error':
         emptyStateSVg = errorIllustration(illustrationTheme, size);
         break;
@@ -56,17 +57,12 @@ export function emptyStateTemplate(customElementClass) {
         emptyStateSVg = unauthorizedIllustration(illustrationTheme, size);
         break;
     }
-  }else{
+  } else {
     const svgClasses = classMap({
       [`${clabsPrefix}__illustration`]: true,
       [`${clabsPrefix}__illustration--${size}`]: true,
     });
-    emptyStateSVg = html `
-        <img
-            src="${illustration}"
-            class="${svgClasses}"
-          />
-    `;
+    emptyStateSVg = html` <img src="${illustration}" class="${svgClasses}" /> `;
   }
   return html`<div class="${clabsPrefix}--empty-state__content">
     ${emptyStateSVg}

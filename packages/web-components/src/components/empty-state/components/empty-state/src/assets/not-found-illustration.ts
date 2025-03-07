@@ -10,6 +10,13 @@ import { classMap } from 'lit/directives/class-map.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
+/**
+ * Generates an error illustration SVG based on the specified theme and size.
+ *
+ * @param {string} [theme='light'] - The theme of the illustration, either 'light' or 'dark'.
+ * @param {string} [size='large'] - The size of the illustration, such as 'large' or other predefined sizes.
+ * @returns {import('lit').TemplateResult} The SVG illustration as a Lit template result.
+ */
 const noFoundIllustration = (theme = 'light', size = 'large') => {
   const svgId = uuidv4();
   const svgClasses = classMap({

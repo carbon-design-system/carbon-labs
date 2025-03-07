@@ -20,9 +20,9 @@ const { stablePrefix: clabsPrefix } = settings;
 const unauthorizedIllustration = (theme = 'light', size = 'lg') => {
   const svgId = uuidv4();
   const svgClasses = classMap({
-    [`${clabsPrefix}__illustration`]: true,
-    [`${clabsPrefix}__illustration-unauthorized`]: true,
-    [`${clabsPrefix}__illustration--${size}`]: true,
+    [`${clabsPrefix}--empty-state__illustration`]: true,
+    [`${clabsPrefix}--empty-state__illustration-unauthorized`]: true,
+    [`${clabsPrefix}--empty-state__illustration--${size}`]: true,
   });
   const svgImage =
     theme === 'dark'

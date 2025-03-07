@@ -35,6 +35,10 @@ export function emptyStateTemplate(customElementClass) {
     [`${clabsPrefix}--empty-state___subtitle`]: true,
     [`${clabsPrefix}--empty-state__subtitle--small`]: size === 'sm',
   });
+  const svgClasses = classMap({
+    [`${clabsPrefix}--empty-state__illustration`]: true,
+    [`${clabsPrefix}--empty-state__illustration--${size}`]: true,
+  });
   let emptyStateSVg;
   if (!illustration) {
     switch (kind) {
@@ -58,17 +62,15 @@ export function emptyStateTemplate(customElementClass) {
         break;
     }
   } else {
-    const svgClasses = classMap({
-      [`${clabsPrefix}__illustration`]: true,
-      [`${clabsPrefix}__illustration--${size}`]: true,
-    });
     emptyStateSVg = html` <img src="${illustration}" class="${svgClasses}" /> `;
   }
-  return html`<div class="${clabsPrefix}--empty-state__content">
+  return html`
     ${emptyStateSVg}
-    <h3 class="${titleClasses}">${title}</h3>
-    ${subtitle && html`<p class="${subTitleClasses}">${subtitle}</p>`}
-    <slot name="action"></slot>
-    <slot name="link"></slot>
-  </div>`;
+    <div class="${clabsPrefix}--empty-state__content">
+      <h3 class="${titleClasses}">${title}</h3>
+      ${subtitle && html`<p class="${subTitleClasses}">${subtitle}</p>`}
+      <slot name="action"></slot>
+      <slot name="link"></slot>
+    </div>
+  `;
 }

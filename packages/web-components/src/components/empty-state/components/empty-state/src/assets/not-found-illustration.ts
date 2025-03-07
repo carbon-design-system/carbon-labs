@@ -20,9 +20,9 @@ const { stablePrefix: clabsPrefix } = settings;
 const noFoundIllustration = (theme = 'light', size = 'large') => {
   const svgId = uuidv4();
   const svgClasses = classMap({
-    [`${clabsPrefix}__illustration`]: true,
-    [`${clabsPrefix}__illustration-notFound`]: true,
-    [`${clabsPrefix}__illustration--${size}`]: true,
+    [`${clabsPrefix}--empty-state__illustration`]: true,
+    [`${clabsPrefix}--empty-state__illustration-notFound`]: true,
+    [`${clabsPrefix}--empty-state__illustration--${size}`]: true,
   });
   const svgImage =
     theme === 'dark'

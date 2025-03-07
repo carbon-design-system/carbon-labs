@@ -17,6 +17,7 @@ $css--plex: true !default;
 :host(#{$clabs-prefix}-empty-state) {
   display: flex;
   color: $text-primary;
+  flex-direction: column; 
   .#{$clabs-prefix}--empty-state__header {
     @include type-style('heading-03');
 
@@ -49,33 +50,17 @@ $css--plex: true !default;
   }
 }
 
-// .#{$clabs-prefix}--empty-state__illustration {
-//   block-size: auto;
-//   margin-block-end: $spacing-05;
+.#{$clabs-prefix}--empty-state__illustration {
+  block-size: auto;
+  margin-block-end: $spacing-05;
 
-//   &.#{$clabs-prefix}--empty-state__illustration--lg {
-//     max-inline-size: $spacing-11;
-//     min-inline-size: $spacing-11;
-//   }
+  &.#{$clabs-prefix}--empty-state__illustration--lg {
+    max-inline-size: $spacing-11;
+    min-inline-size: $spacing-11;
+  }
 
-//   &.#{$clabs-prefix}--empty-state__illustration--sm {
-//     max-inline-size: $spacing-10;
-//     min-inline-size: $spacing-10;
-//   }
-// }
-
-// .#{$clabs-prefix}--empty-state-position--top {
-//   flex-direction: column;
-// }
-
-// .#{$clabs-prefix}--empty-state-position--right {
-//   flex-direction: row-reverse;
-// }
-
-// .#{$clabs-prefix}--empty-state-position--bottom {
-//   flex-direction: column-reverse;
-// }
-
-// .#{$clabs-prefix}--empty-state-position--left {
-//   flex-direction: row;
-// }
+  &.#{$clabs-prefix}--empty-state__illustration--sm {
+    max-inline-size: $spacing-10;
+    min-inline-size: $spacing-10;
+  }
+}

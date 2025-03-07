@@ -17,7 +17,7 @@ $css--plex: true !default;
 :host(#{$clabs-prefix}-empty-state) {
   display: flex;
   color: $text-primary;
-  flex-direction: column; 
+  flex-direction: column;
   .#{$clabs-prefix}--empty-state__header {
     @include type-style('heading-03');
 

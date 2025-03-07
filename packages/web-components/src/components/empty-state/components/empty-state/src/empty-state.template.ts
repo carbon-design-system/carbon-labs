@@ -62,7 +62,9 @@ export function emptyStateTemplate(customElementClass) {
         break;
     }
   } else {
-    emptyStateSVg = html` <img src="${illustration}" class="${svgClasses}" /> `;
+    emptyStateSVg = html`
+      <img src="${illustration}" class="${svgClasses}" alt="${title}" />
+    `;
   }
   return html`
     ${emptyStateSVg}

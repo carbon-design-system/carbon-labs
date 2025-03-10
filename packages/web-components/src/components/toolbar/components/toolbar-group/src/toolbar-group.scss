@@ -9,23 +9,23 @@ $css--plex: true !default;
 
 @use '../../../../../globals/scss/vars' as *;
 
-:host {
+:host(#{$clabs-prefix}-toolbar-group) {
   display: flex;
   flex-direction: row;
   border-block-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
   border-inline-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
 }
 
-:host([orientation='vertical']) {
+:host(#{$clabs-prefix}-toolbar-group[orientation='vertical']) {
   flex-flow: column wrap;
   border-inline-end: none;
   max-inline-size: 2.5rem;
 }
 
-:host(:last-child) {
+:host(#{$clabs-prefix}-toolbar-group:last-child) {
   border-inline-end: none;
 }
 
-:host([orientation='vertical']:last-child) {
+:host(#{$clabs-prefix}-toolbar-group[orientation='vertical']:last-child) {
   border-block-end: none;
 }

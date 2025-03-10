@@ -104,7 +104,6 @@ class CLABSToolbar extends LitElement {
     }
 
     this._updateTabIndexes(focusableElements, nextIndex);
-    console.log(focusableElements[nextIndex]);
 
     focusableElements[nextIndex]?.focus();
   }

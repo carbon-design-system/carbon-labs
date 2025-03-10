@@ -20,7 +20,7 @@ $css--plex: true !default;
   color: var(--cds-icon-primary, #161616);
 }
 
-:host([caret])::before {
+:host(#{$clabs-prefix}-toolbar-button[caret])::before {
   position: absolute;
   background: linear-gradient(
     to right bottom,

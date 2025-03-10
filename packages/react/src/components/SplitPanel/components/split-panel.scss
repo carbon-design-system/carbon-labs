@@ -82,7 +82,7 @@ $prefix: 'clabs' !default;
   position: relative;
   background-color: var(
     --#{$prefix}--split-panel-handle-background,
-    #{$layer$background}
+    #{$background}
   );
   cursor: var(--#{$prefix}--split-panel-handle-cursor);
 }

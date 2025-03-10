@@ -112,11 +112,12 @@ In your styles file import
 ```./SplitPanel.stories
 ````
 
-## Panel backgrounds
+## Panel backgrounds and layers
 
 Like the tile component the panels of the SplitPanel component are set to the
 current layer color. You should not modify this directly, doing so may affect
-the visibility of the split handle.
+the visibility of the split handle. Where you are using the SplitPanel component
+inside a layer, simply wrap with a layer component.
 
 ## Component API
 

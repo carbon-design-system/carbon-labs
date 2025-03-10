@@ -11,8 +11,8 @@ $css--plex: true !default;
 
 :host {
   display: flex;
-  border-block-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
   flex-direction: row;
+  border-block-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
   border-inline-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
 }
 

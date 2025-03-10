@@ -17,13 +17,13 @@ import { toolbarTemplate } from './src/toolbar.template';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * CLABS Component extending toolbar
+ * CLABS Toolbar component
  */
 @customElement(`${clabsPrefix}-toolbar`)
 class CLABSToolbar extends LitElement {
   static styles = [styles];
 
-  @property({ type: Boolean, reflect: true }) vertical = false;
+  @property({ type: String, reflect: true }) orientation = 'horizontal';
   @query('slot') slotElement!: HTMLSlotElement;
 
   /**
@@ -61,7 +61,11 @@ class CLABSToolbar extends LitElement {
    */
   private _handleKeydown(event: KeyboardEvent) {
     const focusableElements = this._getFocusableElements();
-    console.log(focusableElements);
+    if (
+      ['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'].includes(event.key)
+    ) {
+      event.preventDefault();
+    }
     const currentIndex = focusableElements.indexOf(
       document.activeElement as HTMLElement
     );
@@ -70,7 +74,7 @@ class CLABSToolbar extends LitElement {
     }
 
     let nextIndex = currentIndex;
-    const isHorizontal = !this.vertical;
+    const isHorizontal = this.orientation === 'horizontal' || undefined;
 
     switch (event.key) {
       case 'ArrowRight':
@@ -86,12 +90,12 @@ class CLABSToolbar extends LitElement {
         }
         break;
       case 'ArrowDown':
-        if (this.vertical) {
+        if (this.orientation === 'vertical') {
           nextIndex = (currentIndex + 1) % focusableElements.length;
         }
         break;
       case 'ArrowUp':
-        if (this.vertical) {
+        if (this.orientation === 'vertical') {
           nextIndex =
             (currentIndex - 1 + focusableElements.length) %
             focusableElements.length;
@@ -103,7 +107,6 @@ class CLABSToolbar extends LitElement {
     console.log(focusableElements[nextIndex]);
 
     focusableElements[nextIndex]?.focus();
-    // event.preventDefault();
   }
 
   /**
@@ -120,26 +123,19 @@ class CLABSToolbar extends LitElement {
    * @returns {HTMLElement[]} An array of focusable elements in the toolbar.
    */
   private _getFocusableElements(): HTMLElement[] {
-    return (
-      (this.slotElement?.assignedElements({ flatten: true }) || [])
-        // @ts-ignore
-        .flatMap((group) =>
-          Array.from(
-            // be sure to include all the focusable web components
-            group.querySelectorAll(
-              'cds-icon-button, clabs-toolbar-button, cds-dropdown, cds-overflow-menu'
-            )
-          )
-        )
-        .filter((el) => el instanceof HTMLElement) as HTMLElement[]
-    );
+    return this.slotElement
+      ? this.slotElement
+          .assignedElements({ flatten: true })
+          // @ts-ignore
+          .flatMap((el) => Array.from(el.children) as HTMLElement[])
+      : [];
   }
 
   /**
    * render function
    */
   render() {
-    return toolbarTemplate(this.vertical);
+    return toolbarTemplate();
   }
 }
 

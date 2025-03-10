@@ -12,3 +12,11 @@ $css--plex: true !default;
 :host(#{$clabs-prefix}-toolbar) {
   display: inline-flex;
 }
+:host {
+  display: flex;
+  background: var(--cds-layer-01, #f4f4f4);
+  flex-direction: row;
+}
+:host([orientation='vertical']) {
+  flex-direction: column;
+}

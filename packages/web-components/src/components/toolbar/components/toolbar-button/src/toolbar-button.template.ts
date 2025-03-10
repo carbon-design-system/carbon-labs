@@ -14,34 +14,8 @@ import styles from './toolbar-button.scss?inline';
 /**
  * Extended toolbar button with predefined properties
  */
-class ToolbarButton extends CDSIconButton {
+class toolbarButton extends CDSIconButton {
   static styles = styles;
-  /**
-   * Constructor
-   */
-  constructor() {
-    super();
-  }
-
-  /**
-   * Connected callback
-   */
-  connectedCallback() {
-    super.connectedCallback();
-
-    // modifying default properties of the extended component
-    this.setAttribute('kind', this.getAttribute('kind') || 'ghost');
-    this.setAttribute(
-      'enter-delay-ms',
-      this.getAttribute('enter-delay-ms') || '100'
-    );
-    this.setAttribute(
-      'leave-delay-ms',
-      this.getAttribute('leave-delay-ms') || '100'
-    );
-    this.setAttribute('kind', this.getAttribute('kind') || 'ghost');
-  }
 }
 
-customElements.define('toolbar-button', ToolbarButton);
-export default ToolbarButton;
+export default toolbarButton;

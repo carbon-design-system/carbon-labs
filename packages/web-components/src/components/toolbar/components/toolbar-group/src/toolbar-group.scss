@@ -8,8 +8,22 @@
 $css--plex: true !default;
 
 @use '../../../../../globals/scss/vars' as *;
-@use '@carbon/web-components/scss/components/button/button';
 
-:host(#{$clabs-prefix}-toolbar) {
-  @extend :host(#{$cds-prefix}-button);
+:host {
+  display: flex;
+  border-block-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  border-inline-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  flex-direction: row;
+}
+:host([orientation='vertical']) {
+  flex-direction: column;
+  border-inline-end: none;
+  max-inline-size: 2.5rem;
+  flex-wrap: wrap;
+}
+:host(:last-child) {
+  border-inline-end: none;
+}
+:host([orientation='vertical']:last-child) {
+  border-block-end: none;
 }

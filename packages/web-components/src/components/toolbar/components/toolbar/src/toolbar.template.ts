@@ -10,18 +10,8 @@
 import { html } from 'lit';
 
 /**
- * Generates a template for a toolbar component.
+ * Template for the toolbar.
  *
- * @param {boolean} vertical - Determines the orientation of the toolbar. If true, the toolbar will be displayed vertically; otherwise, it will be displayed horizontally.
- * @returns {TemplateResult} The HTML template for the toolbar component.
+ * @returns {TemplateResult} The template result.
  */
-export const toolbarTemplate = (vertical: boolean) => html`
-  <style>
-    :host {
-      display: flex;
-      background: var(--cds-layer-01, #f4f4f4);
-      flex-direction: ${vertical ? 'column' : 'row'};
-    }
-  </style>
-  <slot></slot>
-`;
+export const toolbarTemplate = () => html` <slot></slot> `;

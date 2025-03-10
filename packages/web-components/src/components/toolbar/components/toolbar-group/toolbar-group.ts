@@ -11,24 +11,25 @@ import { LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 // @ts-ignore
-import styles from '../toolbar/src/toolbar.scss?inline';
+import styles from './src/toolbar-group.scss?inline';
 import { toolbarGroupTemplate } from './src/toolbar-group.template';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * CLABS Component extending toolbar group
+ * CLABS toolbar group component
  */
 @customElement(`${clabsPrefix}-toolbar-group`)
 class CLABSToolbarGroup extends LitElement {
   static styles = [styles];
-  @property({ type: Boolean, reflect: true }) vertical = false;
+
+  @property({ type: String, reflect: true }) orientation = 'horizontal';
 
   /**
-   *
+   * Render
    */
   render() {
-    return toolbarGroupTemplate(this.vertical);
+    return toolbarGroupTemplate();
   }
 }
 

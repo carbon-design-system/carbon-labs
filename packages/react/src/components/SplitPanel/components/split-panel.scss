@@ -1,0 +1,155 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/components/button' as *;
+
+$prefix: 'clabs' !default;
+
+.#{$prefix}--split-panel {
+  overflow: hidden;
+  block-size: 100%;
+}
+
+[class*='#{$prefix}--split-panel__content--'] {
+  --#{$prefix}--split-panel-before-size: 0.5fr;
+  --#{$prefix}--split-panel-after-size: 0.5fr;
+  --#{$prefix}--split-panel-gap: #{$spacing-07};
+  --#{$prefix}--split-panel-handle-transition: initial;
+
+  display: grid;
+  overflow: hidden;
+  block-size: 100%;
+
+  transition: var(--#{$prefix}--split-panel-handle-transition);
+}
+
+.#{$prefix}--split-panel__content--gap-narrow {
+  --#{$prefix}--split-panel-gap: #{$spacing-05};
+}
+
+.#{$prefix}--split-panel__content--gap-none {
+  --#{$prefix}--split-panel-gap: 0;
+}
+
+.#{$prefix}--split-panel__content--horizontal {
+  grid-template-columns:
+    var(--#{$prefix}--split-panel-before-size) var(
+      --#{$prefix}--split-panel-gap
+    )
+    var(--#{$prefix}--split-panel-after-size);
+}
+
+.#{$prefix}--split-panel__content--vertical {
+  grid-template-rows:
+    var(--#{$prefix}--split-panel-before-size) var(
+      --#{$prefix}--split-panel-gap
+    )
+    var(--#{$prefix}--split-panel-after-size);
+}
+
+.#{$prefix}--split-panel__content--kb-interaction {
+  /* linear looks smoother to my eye than motion(standard, productive) */
+  --#{$prefix}--split-panel-handle-transition: all #{$duration-moderate-01} linear;
+}
+
+.#{$prefix}--split-panel__panel {
+  overflow: auto;
+  /* padding causes panel sizing issue when larger than space available */
+  padding: 0;
+  background-color: $layer;
+  block-size: 100%;
+}
+
+/* panels that directly contain another split panel do not have a background color so that the
+split handle remains transparent through to the background color */
+.#{$prefix}--split-panel__panel:has(
+    > .#{$prefix}--split-panel .#{$prefix}--split-panel__panel
+  ) {
+  background-color: transparent;
+}
+
+[class*='#{$prefix}--split-panel__handle--'] {
+  --#{$prefix}--split-panel-handle-color: #{$border-subtle-01};
+  --#{$prefix}--split-panel-handle-border-color: transparent;
+  --#{$prefix}--split-panel-handle-size: 1px;
+  --#{$prefix}--split-panel-handle-inline-size: var(
+    --#{$prefix}--split-panel-handle-size
+  );
+  --#{$prefix}--split-panel-handle-block-size: var(
+    --#{$prefix}--split-panel-handle-size
+  );
+  --#{$prefix}--split-panel-handle-cursor: initial;
+
+  position: relative;
+  cursor: var(--#{$prefix}--split-panel-handle-cursor);
+}
+
+[class*='#{$prefix}--split-panel__handle--']::after {
+  position: absolute;
+  display: block;
+  box-sizing: content-box;
+  border: 1px solid var(--#{$prefix}--split-panel-handle-border-color);
+  background-clip: content-box;
+  background-color: var(--#{$prefix}--split-panel-handle-color);
+  block-size: var(--#{$prefix}--split-panel-handle-block-size);
+  content: '';
+  inline-size: var(--#{$prefix}--split-panel-handle-inline-size);
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
+  transition: all $fast-02 $ease-in;
+}
+
+[class*='#{$prefix}--split-panel__handle--']:hover {
+  --#{$prefix}--split-panel-handle-color: #{$border-strong-01};
+}
+
+[class*='#{$prefix}--split-panel__handle--']:focus {
+  --#{$prefix}--split-panel-handle-color: #{$background};
+  --#{$prefix}--split-panel-handle-border-color: #{$border-interactive};
+  --#{$prefix}--split-panel-handle-size: 3px;
+
+  border-color: #{$border-interactive};
+}
+
+[class*='#{$prefix}--split-panel__handle--']:where(:focus, :hover) {
+  outline: none;
+}
+
+.#{$prefix}--split-panel__handle--horizontal {
+  --#{$prefix}--split-panel-handle-block-size: calc(100% - #{$spacing-03});
+}
+
+.#{$prefix}--split-panel__handle--horizontal::after {
+  border-block: initial;
+}
+
+.#{$prefix}--split-panel__handle--vertical {
+  --#{$prefix}--split-panel-handle-inline-size: calc(100% - #{$spacing-03});
+}
+
+.#{$prefix}--split-panel__handle--vertical::after {
+  border-inline: initial;
+}
+
+.#{$prefix}--split-panel__handle--horizontal:where(:focus, :hover) {
+  --#{$prefix}--split-panel-handle-cursor: col-resize;
+}
+
+.#{$prefix}--split-panel__handle--vertical:where(:focus, :hover) {
+  --#{$prefix}--split-panel-handle-cursor: row-resize;
+}
+
+.#{$prefix}--split-panel__handle-icon {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
+}

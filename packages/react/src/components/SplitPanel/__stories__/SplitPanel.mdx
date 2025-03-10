@@ -112,6 +112,19 @@ In your styles file import
 ```./SplitPanel.stories
 ````
 
+## Component backgrounds
+
+By default the component background is `$layer` with the handle background
+`$background`. This makes assumptions about layering both externally and
+internally of the panels.
+
+In lieu of a better solution, the custom CSS properties
+`--#{$prefix}--split-panel-background` and
+`--#{$prefix}--split-panel-handle-background` can be configured to change these
+values.
+
+Where $prefix is by default `clabs`.
+
 ## Component API
 
 <ArgTypes />

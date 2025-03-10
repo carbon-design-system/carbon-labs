@@ -157,8 +157,8 @@ export const SplitPanel = ({
   };
 
   const style = {
-    '--split-panel-before-size': `${splitValue / 100}fr`,
-    '--split-panel-after-size': `${1 - splitValue / 100}fr`,
+    [`--${prefix}--split-panel-before-size`]: `${splitValue / 100}fr`,
+    [`--${prefix}--split-panel-after-size`]: `${1 - splitValue / 100}fr`,
   } as React.CSSProperties;
 
   const splitKeyMove = (ev) => {

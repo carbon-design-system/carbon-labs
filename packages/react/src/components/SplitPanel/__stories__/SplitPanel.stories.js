@@ -202,6 +202,7 @@ export const Nested = (args) => (
             </ul>
           </div>
         }
+        {...args}
       />
     }
     childrenAfterSplit={

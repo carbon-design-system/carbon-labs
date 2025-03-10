@@ -14,9 +14,9 @@ import { Launch, Add, DocumentImport } from '@carbon/react/icons';
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ButtonKinds } from '@carbon/react';
-import '../components/animated_header.scss';
+import '../components/animated-header.scss';
 
-import { tileDropdownData, headerTiles } from '../data/index';
+import { workspaceData, headerTiles } from './data';
 import {
   dataFabricAnimatedLight,
   dataFabricAnimatedDark,
@@ -81,8 +81,8 @@ const sharedArgTypes = {
       default: false,
     },
   },
-  tileDropdownItems: {
-    description: 'Options for Tile dropdown menu',
+  selectedWorkspace: {
+    description: 'Options for workspace selection',
     type: 'array',
     control: {
       type: 'select',
@@ -96,9 +96,9 @@ const sharedArgTypes = {
     options: [0, 1, 2, 3],
     mapping: {
       0: null,
-      1: tileDropdownData.slice(0, 1),
-      2: tileDropdownData.slice(0, 2),
-      3: tileDropdownData,
+      1: workspaceData.slice(0, 1),
+      2: workspaceData.slice(0, 2),
+      3: workspaceData,
     },
   },
   selectedTileGroup: {
@@ -236,7 +236,8 @@ const sharedArgs = {
   buttonIcon: 0,
   headerStatic: 0,
   headerDropdown: false,
-  tileDropdownItems: 2,
+  selectedWorkspace: 3,
+  allWorkspaces: workspaceData,
   selectedTileGroup: 1,
   allTiles: headerTiles,
 };
@@ -244,14 +245,19 @@ const sharedArgs = {
 export const ThemeG10 = (args) => {
   const [_, updateArgs] = useArgs();
 
-  const setTileGroup = (e) => {
+  const handleWorkspaceSelect = (e) => {
+    updateArgs({ ...args, selectedWorkspace: e.selectedItem });
+  };
+
+  const handleTileGroup = (e) => {
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 
   return (
     <AnimatedHeader
       {...args}
-      setSelectedTileGroup={(e) => setTileGroup(e)}></AnimatedHeader>
+      setSelectedWorkspace={(e) => handleWorkspaceSelect(e)}
+      setSelectedTileGroup={(e) => handleTileGroup(e)}></AnimatedHeader>
   );
 };
 
@@ -267,14 +273,19 @@ ThemeG10.args = {
 export const ThemeG100 = (args) => {
   const [_, updateArgs] = useArgs();
 
-  const setTileGroup = (e) => {
+  const handleWorkspaceSelect = (e) => {
+    updateArgs({ ...args, selectedWorkspace: e.selectedItem });
+  };
+
+  const handleTileGroup = (e) => {
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 
   return (
     <AnimatedHeader
       {...args}
-      setSelectedTileGroup={(e) => setTileGroup(e)}></AnimatedHeader>
+      setSelectedWorkspace={(e) => handleWorkspaceSelect(e)}
+      setSelectedTileGroup={(e) => handleTileGroup(e)}></AnimatedHeader>
   );
 };
 

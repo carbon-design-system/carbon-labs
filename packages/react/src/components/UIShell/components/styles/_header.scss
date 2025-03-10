@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use 'styles/header';
-@use 'styles/side-nav';
-@use 'styles/content';
-@use 'styles/shark-fin-icon.scss';
+$prefix: 'cds' !default;
+
+.#{$prefix}--header__action:focus {
+  border-width: 2px;
+}

@@ -31,11 +31,18 @@ import { BaseTile } from '../Tiles/index';
 
 /** Animated Header */
 
+export interface SelectedWorkspace {
+  id: string;
+  text: string;
+}
+
 export interface Tile {
   id: string;
-  href: string;
-  title: string;
-  mainIcon: string;
+  href: string | null;
+  title: string | null;
+  subtitle: string | null;
+  mainIcon: string | null;
+  secondaryIcon: string | null;
 }
 
 export interface TileGroup {
@@ -52,7 +59,9 @@ export interface AnimatedHeaderProps {
   buttonIcon?: any;
   headerDropdown?: boolean;
   productName?: string;
-  tileDropdownItems?: Array<object>;
+  selectedWorkspace?: SelectedWorkspace[] | any;
+  setSelectedWorkspace: (e) => void;
+  allWorkspaces?: SelectedWorkspace[];
   selectedTileGroup: TileGroup[] | any;
   setSelectedTileGroup: (e) => void;
   allTiles: TileGroup[];
@@ -68,7 +77,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   buttonIcon = null,
   headerDropdown = false,
   productName = '[Product name]',
-  tileDropdownItems,
+  selectedWorkspace,
+  setSelectedWorkspace,
+  allWorkspaces,
   selectedTileGroup,
   setSelectedTileGroup,
   allTiles,
@@ -76,7 +87,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   headerStatic,
 }: AnimatedHeaderProps) => {
   const prefix = usePrefix();
-  const blockClass = `${prefix}-animated-header`;
+  const blockClass = `${prefix}--animated-header`;
 
   let animationContainer = createRef<HTMLDivElement>();
   const [open, setOpen] = useState(true);
@@ -215,41 +226,44 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             )}
 
             {!buttonText && headerDropdown && allTiles && (
-              <Dropdown
-                id={`${blockClass}__header-dropdown`}
-                className={`${blockClass}__header-dropdown`}
-                size="md"
-                autoAlign
-                titleText="Label"
-                initialSelectedItem={allTiles[0]}
-                label={allTiles[0].name}
-                hideLabel
-                type="inline"
-                items={allTiles}
-                itemToString={(item) => (item ? item.name : '')}
-                onChange={(e) => setSelectedTileGroup(e)}
-              />
+              <div className={`${blockClass}__header-dropdown--container`}>
+                <Dropdown
+                  id={`${blockClass}__header-dropdown`}
+                  className={`${blockClass}__header-dropdown`}
+                  size="md"
+                  autoAlign
+                  titleText="Label"
+                  initialSelectedItem={allTiles[0]}
+                  label={allTiles[0].name || 'Select an option below'}
+                  hideLabel
+                  type="inline"
+                  items={allTiles}
+                  itemToString={(item) => (item ? item.name : '')}
+                  onChange={(e) => setSelectedTileGroup(e)}
+                />
+              </div>
             )}
           </Column>
         )}
 
         {selectedTileGroup && (
           <Column sm={4} md={8} lg={12} className={`${blockClass}__content`}>
-            {tileDropdownItems && (
+            {allWorkspaces && (
               <div
-                className={`${blockClass}__tile-dropdown--container ${
+                className={`${blockClass}__workspace--container ${
                   !open && contentCollapsed
                 }`}>
                 <Dropdown
-                  id={`${blockClass}__tile-dropdown`}
-                  className={`${blockClass}__tile-dropdown`}
+                  id={`${blockClass}__workspace`}
+                  className={`${blockClass}__workspace`}
                   size="sm"
                   titleText="Label"
-                  label={`Open in: ${name}'s sandbox`}
+                  label={`Open in: ${name}'s workspace` || 'Select a workspace'}
                   hideLabel
                   type="inline"
-                  items={tileDropdownItems}
+                  items={allWorkspaces}
                   itemToString={(item) => (item ? item['text'] : '')}
+                  onChange={(e) => setSelectedWorkspace(e)}
                 />
               </div>
             )}
@@ -348,10 +362,20 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   productName: PropTypes.string,
 
   /**
-   * Object containing dropdown items
+   * Object containing workspace selection
    * `Open in: "_"`
    */
-  tileDropdownItems: PropTypes.arrayOf(PropTypes.object),
+  selectedWorkspace: PropTypes.object,
+
+  /**
+   * Provide function to be called when switching workspace selection
+   */
+  setSelectedWorkspace: PropTypes.func,
+
+  /**
+   * Array of all workspace options
+   */
+  allWorkspaces: PropTypes.arrayOf(PropTypes.object),
 
   /**
    * The tile group that is active in the header

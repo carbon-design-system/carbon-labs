@@ -11,15 +11,14 @@ import React, {
   ElementType,
   ForwardedRef,
   ComponentProps,
-  useEffect,
-  useRef,
   useContext,
+  ComponentType,
 } from 'react';
-import { SideNavLinkText } from '@carbon/react';
+import { SideNavLinkText, SideNavIcon } from '@carbon/react';
 import Link from './Link';
 import { usePrefix } from '../internal/usePrefix';
-import { useMergedRefs } from '../internal/useMergedRefs';
 import { SideNavContext } from './SideNav';
+import { Checkmark } from '@carbon/icons-react';
 
 export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
   /**
@@ -33,17 +32,16 @@ export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
   className?: string;
 
   /**
-   * **Note:** this is controlled by the parent SideNavMenu component, do not set manually.
-   * SideNavMenu depth to determine spacing
-   */
-  depth?: number;
-
-  /**
    * Optionally specify whether the link is "active". An active link is one that
    * has an href that is the same as the current page. Can also pass in
    * `aria-current="page"`, as well.
    */
   isActive?: boolean;
+
+  /**
+   * Specify whether the link is part of a "SideNavMenu" in "flyout menu" mode.
+   */
+  isFlyoutMenuItem?: boolean;
 
   /**
    * Optionally provide an href for the underlying li`
@@ -54,6 +52,11 @@ export interface SideNavMenuItemProps extends ComponentProps<typeof Link> {
    * Optional component to render instead of default Link
    */
   as?: ElementType;
+
+  /**
+   * Provide an icon to render in the side navigation link. Should be a React class.
+   */
+  renderIcon?: ComponentType;
 }
 
 export const SideNavMenuItem = React.forwardRef<
@@ -64,31 +67,25 @@ export const SideNavMenuItem = React.forwardRef<
   const {
     children,
     className: customClassName,
-    depth: propDepth,
     as: Component = Link,
     isActive,
+    isFlyoutMenuItem,
+    renderIcon: IconElement,
     ...rest
   } = props;
   const { isTreeview } = useContext(SideNavContext);
-  const className = cx(`${prefix}--side-nav__menu-item`, customClassName);
-  const depth = propDepth as number;
+  const className = cx(
+    {
+      [`${prefix}--side-nav__menu-item`]: true,
+      [`${prefix}--side-nav__menu-item--flyout-menu-item`]: isFlyoutMenuItem,
+    },
+    customClassName
+  );
   const linkClassName = cx({
     [`${prefix}--side-nav__link`]: true,
-    [`${prefix}--side-nav__link--current`]: isActive,
+    [`${prefix}--side-nav__link--active`]: isActive && isFlyoutMenuItem,
+    [`${prefix}--side-nav__link--current`]: isActive && !isFlyoutMenuItem,
   });
-
-  const linkRef = useRef<HTMLElement | null>(null);
-  const itemRef = useMergedRefs([linkRef, ref]);
-
-  useEffect(() => {
-    const calcLinkOffset = () => {
-      return 4 + Math.max(0, depth - 1) * 1;
-    };
-
-    if (linkRef.current) {
-      linkRef.current.style.paddingLeft = `${calcLinkOffset()}rem`;
-    }
-  }, [isTreeview]);
 
   return (
     <li className={className}>
@@ -98,7 +95,17 @@ export const SideNavMenuItem = React.forwardRef<
         role={isTreeview ? 'treeitem' : undefined}
         className={linkClassName}
         tabIndex={isTreeview ? -1 : 0}
-        ref={itemRef}>
+        ref={ref}>
+        {IconElement && !isFlyoutMenuItem && (
+          <SideNavIcon small>
+            <IconElement />
+          </SideNavIcon>
+        )}
+        {isActive && isFlyoutMenuItem && (
+          <SideNavIcon small>
+            <Checkmark />
+          </SideNavIcon>
+        )}
         <SideNavLinkText>{children}</SideNavLinkText>
       </Component>
     </li>
@@ -108,6 +115,11 @@ export const SideNavMenuItem = React.forwardRef<
 SideNavMenuItem.displayName = 'SideNavMenuItem';
 SideNavMenuItem.propTypes = {
   /**
+   * Optional component to render instead of default Link
+   */
+  as: PropTypes.elementType,
+
+  /**
    * Specify the children to be rendered inside of the `SideNavMenuItem`
    */
   children: PropTypes.node,
@@ -116,12 +128,6 @@ SideNavMenuItem.propTypes = {
    * Provide an optional class to be applied to the containing node
    */
   className: PropTypes.string,
-
-  /**
-   * **Note:** this is controlled by the parent SideNavMenu component, do not set manually.
-   * SideNavMenu depth to determine spacing
-   */
-  depth: PropTypes.number,
 
   /**
    * Optionally provide an href for the underlying li`
@@ -136,7 +142,12 @@ SideNavMenuItem.propTypes = {
   isActive: PropTypes.bool,
 
   /**
-   * Optional component to render instead of default Link
+   * Specify whether the link is part of a "SideNavMenu" in "flyout menu" mode.
    */
-  as: PropTypes.elementType,
+  isFlyoutMenuItem: PropTypes.bool,
+
+  /**
+   * Provide an icon to render in the side navigation link. Should be a React class.
+   */
+  renderIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };

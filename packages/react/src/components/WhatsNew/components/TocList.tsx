@@ -101,7 +101,7 @@ const TocList = ({ children, className, ...rest }: TocListProps) => {
       <nav
         ref={navRef}
         {...rest}
-        className={cx(`${prefix}_toc-list`, className)}>
+        className={cx(`${prefix}__toc-list`, className)}>
         {React.Children.map(children, (el, idx) => {
           return React.cloneElement(el as React.ReactElement<any>, {
             index: idx,

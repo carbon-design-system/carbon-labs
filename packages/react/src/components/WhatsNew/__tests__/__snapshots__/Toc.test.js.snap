@@ -3,7 +3,7 @@
 exports[`Toc renders as expected - Component API should match snapshot 1`] = `
 <div>
   <nav
-    class="clabs--whats-new_toc-list"
+    class="clabs--whats-new__toc-list"
     data-testid="TestTocList"
   >
     <li

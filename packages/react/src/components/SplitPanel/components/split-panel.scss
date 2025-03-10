@@ -63,8 +63,16 @@ $prefix: 'clabs' !default;
   overflow: auto;
   /* padding causes panel sizing issue when larger than space available */
   padding: 0;
-  background-color: var(--#{$prefix}--split-panel-background, #{$layer});
+  background-color: $layer;
   block-size: 100%;
+}
+
+/* panels that directly contain another split panel do not have a background color so that the
+split handle remains transparent through to the background color */
+.#{$prefix}--split-panel__panel:has(
+    > .#{$prefix}--split-panel .#{$prefix}--split-panel__panel
+  ) {
+  background-color: transparent;
 }
 
 [class*='#{$prefix}--split-panel__handle--'] {
@@ -80,10 +88,6 @@ $prefix: 'clabs' !default;
   --#{$prefix}--split-panel-handle-cursor: initial;
 
   position: relative;
-  background-color: var(
-    --#{$prefix}--split-panel-handle-background,
-    #{$background}
-  );
   cursor: var(--#{$prefix}--split-panel-handle-cursor);
 }
 

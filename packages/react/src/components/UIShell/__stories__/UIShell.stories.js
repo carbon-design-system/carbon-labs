@@ -15,6 +15,12 @@ import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { HeaderPanel } from '../components/HeaderPanel';
 import { SideNavLink } from '../components/SideNavLink';
+import {
+  HeaderAction,
+  HeaderActionActions,
+  HeaderActionButton,
+  HeaderActionContent,
+} from '../components/HeaderAction';
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderDivider } from '../components/HeaderDivider';
 import {
@@ -38,6 +44,8 @@ import {
   MenuButton,
   MenuItemRadioGroup,
   ExpandableSearch,
+  Link,
+  Button,
 } from '@carbon/react';
 import {
   Add,
@@ -61,6 +69,7 @@ import {
   UserAvatar,
   Help,
   IbmWatsonxAssistant,
+  Information,
 } from '@carbon/icons-react';
 
 import {
@@ -258,6 +267,22 @@ export const Default = () => {
                   tooltipHighContrast={false}>
                   <IbmWatsonxAssistant size={20} />
                 </HeaderGlobalAction>
+                <HeaderAction align="bottom-right">
+                  <HeaderActionButton align="bottom" label="Show information">
+                    <Information />
+                  </HeaderActionButton>
+                  <HeaderActionContent>
+                    <p>
+                      Lorem ipsum dolor sit amet, di os consectetur adipiscing
+                      elit, sed do eiusmod tempor incididunt ut fsil labore et
+                      dolore magna aliqua.
+                    </p>
+                    <HeaderActionActions>
+                      <Link href="#">Link action</Link>
+                      <Button size="sm">Button</Button>
+                    </HeaderActionActions>
+                  </HeaderActionContent>
+                </HeaderAction>
                 <HeaderGlobalAction
                   aria-label="Help"
                   tooltipHighContrast={false}>

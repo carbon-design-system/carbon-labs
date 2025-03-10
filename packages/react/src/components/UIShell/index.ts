@@ -13,6 +13,12 @@ export { SideNavLinkPopover } from './components/SideNavLinkPopover.js';
 export { SideNavMenu } from './components/SideNavMenu.js';
 export { SideNavMenuItem } from './components/SideNavMenuItem.js';
 export { HeaderContainer } from './components/HeaderContainer';
+export {
+  HeaderAction,
+  HeaderActionActions as ToggletipActions,
+  HeaderActionButton,
+  HeaderActionContent,
+} from './components/HeaderAction';
 export { HeaderPanel } from './components/HeaderPanel';
 export { SharkFinIcon } from './components/SharkFinIcon';
 export { HeaderDivider } from './components/HeaderDivider';

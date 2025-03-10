@@ -6,6 +6,7 @@
  */
 @use '@carbon/styles/scss/theme' as *;
 
+@use '@carbon/styles/scss/theme' as *;
 $prefix: 'cds' !default;
 
 .#{$prefix}--header__global {

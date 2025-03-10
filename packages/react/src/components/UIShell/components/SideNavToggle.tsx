@@ -5,12 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ForwardedRef, ReactNode, Ref } from 'react';
 import { SideNavIcon } from '@carbon/react';
 import { usePrefix } from '../internal/usePrefix';
 
 interface SideNavToggleProps {
+  /**
+   * Specify an optional className to be applied to the button node
+   */
+  className?: string;
+
   /**
    * Specify the text content for the link
    */
@@ -35,14 +41,22 @@ interface SideNavToggleProps {
 
 export const SideNavToggle = React.forwardRef<HTMLElement, SideNavToggleProps>(
   function SideNavToggle(
-    { renderIcon: IconElement, tabIndex, children, ...rest },
+    {
+      className: customClassName,
+      renderIcon: IconElement,
+      tabIndex,
+      children,
+      ...rest
+    },
     ref: ForwardedRef<HTMLElement>
   ) {
     const prefix = usePrefix();
 
     return (
       <button
-        className={`${prefix}--side-nav__toggle`}
+        className={cx(customClassName, {
+          [`${prefix}--side-nav__toggle`]: true,
+        })}
         ref={ref as Ref<HTMLButtonElement>}
         type="button"
         tabIndex={tabIndex ?? 0}
@@ -64,6 +78,11 @@ SideNavToggle.propTypes = {
    * Specify the text content for the toggle
    */
   children: PropTypes.node as unknown as React.Validator<React.ReactNode>,
+
+  /**
+   * Specify an optional className to be applied to the button node
+   */
+  className: PropTypes.string,
 
   /**
    * Provide an optional function to be called when clicked

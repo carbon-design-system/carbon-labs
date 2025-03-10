@@ -2748,8 +2748,8 @@ __metadata:
   resolution: "@carbon-labs/web-components@workspace:packages/web-components"
   dependencies:
     "@carbon/grid": "npm:^11.21.1"
-    "@carbon/icon-helpers": "npm:10.54.0"
-    "@carbon/icons": "npm:11.55.0"
+    "@carbon/icon-helpers": "npm:10.55.0"
+    "@carbon/icons": "npm:11.56.0"
     "@carbon/layout": "npm:11.29.0"
     "@carbon/motion": "npm:11.24.0"
     "@carbon/styles": "npm:^1.70.0"
@@ -2788,7 +2788,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     replace-ext: "npm:^2.0.0"
-    sass: "npm:~1.83.0"
+    sass: "npm:~1.85.0"
     sinon: "npm:^19.0.0"
     storybook: "npm:^8.4.7"
     through2: "npm:^4.0.2"
@@ -2863,16 +2863,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icon-helpers@npm:10.54.0":
-  version: 10.54.0
-  resolution: "@carbon/icon-helpers@npm:10.54.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/320318028f24e3a63f81be20e9bd0e74853b4a7fb3a5314ad11f8214f3f3ca3aba51a45b2ae6c46e51d46121ccf94d7cad9a96b5e2d45a364d1344101db6f809
-  languageName: node
-  linkType: hard
-
-"@carbon/icon-helpers@npm:^10.55.0":
+"@carbon/icon-helpers@npm:10.55.0, @carbon/icon-helpers@npm:^10.55.0":
   version: 10.55.0
   resolution: "@carbon/icon-helpers@npm:10.55.0"
   dependencies:
@@ -2894,12 +2885,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons@npm:11.55.0":
-  version: 11.55.0
-  resolution: "@carbon/icons@npm:11.55.0"
+"@carbon/icons@npm:11.56.0":
+  version: 11.56.0
+  resolution: "@carbon/icons@npm:11.56.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/e9f6831e0e67e02993771d91735a0d0daf4ad58875fbb17f13c17e23055dc1125a46313b4aab80d24d3b6b0e85cf3b515b7bd6c6a31a72e541e8a1929237bced
+  checksum: 10c0/84e6087c6d17389c89a4db83d3584a5e9b03d0e6ce21721507caa6bcc13c331c6ab7957ce0691892ade68f9aa4194509ce1368dce7ba340c5dac7e7617f6fe17
   languageName: node
   linkType: hard
 
@@ -25644,9 +25635,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:~1.83.0":
-  version: 1.83.0
-  resolution: "sass@npm:1.83.0"
+"sass@npm:~1.85.0":
+  version: 1.85.1
+  resolution: "sass@npm:1.85.1"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^4.0.0"
@@ -25657,7 +25648,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10c0/4415361229879a9041d77c953da85482e89032aa4321ba13250a9987d39c80fac6c88af3777f2a2d76a4e8b0c8afbd21c1970fdbe84e0b3ec25fb26741f92beb
+  checksum: 10c0/f843aa1df1dca2f0e9cb2fb247e4939fd514ae4c182cdd1900a0622c0d71b40dfb1c4225f78b78e165a318287ca137ec597695db3e496408bd16a921a2bc2b3f
   languageName: node
   linkType: hard
 

@@ -55,7 +55,7 @@ const defaultControls = {
     control: { type: 'radio' },
     options: ['horizontal', 'vertical'],
     description: 'Toolbar orientation',
-  }
+  },
 };
 export const horizontal = {
   args: defaultArgs,
@@ -69,59 +69,72 @@ export const horizontal = {
   render: (args) =>
     html` <clabs-toolbar orientation=${args.orientation}>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Save({ slot: 'icon' })}
           <span slot="tooltip-content">Save</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Share({ slot: 'icon' })}
           <span slot="tooltip-content">Share</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Upload({ slot: 'icon' })}
           <span slot="tooltip-content">Upload</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Printer({ slot: 'icon' })}
           <span slot="tooltip-content">Print</span>
         </clabs-toolbar-button>
       </clabs-toolbar-group>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Undo({ slot: 'icon' })}
           <span slot="tooltip-content">Undo</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Redo({ slot: 'icon' })}
           <span slot="tooltip-content">Redo</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${ZoomIn({ slot: 'icon' })}
           <span slot="tooltip-content">Zoom in</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${ZoomOut({ slot: 'icon' })}
           <span slot="tooltip-content">Zoom out</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Minimize({ slot: 'icon' })}
           <span slot="tooltip-content">Minimize</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${AlignHorizontalCenter({ slot: 'icon' })}
           <span slot="tooltip-content">Align center</span>
         </clabs-toolbar-button>
       </clabs-toolbar-group>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${RulerAlt({ slot: 'icon' })}
           <span slot="tooltip-content">Ruler</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Pin({ slot: 'icon' })}
           <span slot="tooltip-content">Pin</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${CopyFile({ slot: 'icon' })}
           <span slot="tooltip-content">Copy file</span>
         </clabs-toolbar-button>
@@ -135,7 +148,9 @@ export const horizontal = {
         </cds-dropdown>
       </clabs-toolbar-group>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <clabs-toolbar-button caret align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          caret
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${TextAlignCenter({
             slot: 'icon',
             class: '.cds--btn--icon-only',
@@ -161,18 +176,19 @@ export const horizontal = {
         </cds-overflow-menu>
       </clabs-toolbar-group>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Table({ slot: 'icon' })}
           <span slot="tooltip-content">Table</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${SettingsAdjust({ slot: 'icon' })}
           <span slot="tooltip-content">Settings</span>
         </clabs-toolbar-button>
       </clabs-toolbar-group>
     </clabs-toolbar>`,
 };
-
 
 export const vertical = {
   args: { orientation: 'vertical' },
@@ -186,55 +202,67 @@ export const vertical = {
   render: (args) =>
     html` <clabs-toolbar orientation=${args.orientation}>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Draggable({ slot: 'icon' })}
           <span slot="tooltip-content">Drag</span>
         </clabs-toolbar-button>
       </clabs-toolbar-group>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${RulerAlt({ slot: 'icon' })}
           <span slot="tooltip-content">Ruler</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Pin({ slot: 'icon' })}
           <span slot="tooltip-content">Pin</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button caret align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          caret
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${ColorPalette({ slot: 'icon' })}
           <span slot="tooltip-content">Color palette</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${TextCreation({ slot: 'icon' })}
           <span slot="tooltip-content">Text creation</span>
         </clabs-toolbar-button>
       </clabs-toolbar-group>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${OpenPanelLeft({ slot: 'icon' })}
           <span slot="tooltip-content">Open panel left</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${OpenPanelRight({ slot: 'icon' })}
           <span slot="tooltip-content">Open panel right</span>
         </clabs-toolbar-button>
       </clabs-toolbar-group>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Move({ slot: 'icon' })}
           <span slot="tooltip-content">Move</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${Rotate({ slot: 'icon' })}
           <span slot="tooltip-content">Rotate</span>
         </clabs-toolbar-button>
       </clabs-toolbar-group>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${ZoomIn({ slot: 'icon' })}
           <span slot="tooltip-content">Zoom in</span>
         </clabs-toolbar-button>
-        <clabs-toolbar-button align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+        <clabs-toolbar-button
+          align=${args.orientation === 'vertical' ? 'right' : 'top'}>
           ${ZoomOut({ slot: 'icon' })}
           <span slot="tooltip-content">Zoom out</span>
         </clabs-toolbar-button>
@@ -249,10 +277,10 @@ window.customElements.whenDefined('cds-dropdown').then(() => {
     if (!dropdown) {
       return;
     }
-      const shadowRoot = dropdown.shadowRoot;
-      const listBox = shadowRoot?.querySelector('.cds--list-box');
-      if (listBox) {
-        listBox.style.borderBlockEnd = 'unset';
-      }
+    const shadowRoot = dropdown.shadowRoot;
+    const listBox = shadowRoot?.querySelector('.cds--list-box');
+    if (listBox) {
+      listBox.style.borderBlockEnd = 'unset';
+    }
   });
 });

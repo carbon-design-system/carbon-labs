@@ -15,8 +15,10 @@ import { emptyStateTemplate } from './src/empty-state.template.js';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Constructed class functionality for the test input custom element
- */
+ * EmptyState.
+ *
+ * @element clabs-empty-state
+ * */
 @customElement(`${clabsPrefix}-empty-state`)
 class CLABSEmptyState extends emptyState {
   /**

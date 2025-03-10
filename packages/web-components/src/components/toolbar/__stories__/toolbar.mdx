@@ -45,7 +45,15 @@ that is implemented.
 ### HTML
 
 ```html
-<clabs-toolbar> Toolbar </clabs-toolbar>
+<clabs-toolbar orientation=${args.orientation}>
+  <clabs-toolbar-group orientation=${args.orientation}>
+    <clabs-toolbar-button
+      align=${args.orientation === 'vertical' ? 'right' : 'top'}>
+      ${Save({ slot: 'icon' })}
+      <span slot="tooltip-content">Save</span>
+    </clabs-toolbar-button>
+  </clabs-toolbar-group>
+</clabs-toolbar>
 ```
 
 ### &lt;clabs-toolbar&gt; attributes and properties

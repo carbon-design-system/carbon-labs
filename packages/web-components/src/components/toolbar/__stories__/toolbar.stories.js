@@ -140,7 +140,7 @@ export const horizontal = {
         </clabs-toolbar-button>
       </clabs-toolbar-group>
       <clabs-toolbar-group orientation=${args.orientation}>
-        <cds-dropdown value="14">
+        <cds-dropdown value="14" aria-label="font size">
           <cds-dropdown-item value="14">14</cds-dropdown-item>
           <cds-dropdown-item value="15">15</cds-dropdown-item>
           <cds-dropdown-item value="16">16</cds-dropdown-item>
@@ -269,18 +269,3 @@ export const vertical = {
       </clabs-toolbar-group>
     </clabs-toolbar>`,
 };
-
-// need to find a better way to override the styles
-window.customElements.whenDefined('cds-dropdown').then(() => {
-  requestAnimationFrame(() => {
-    const dropdown = document.querySelector('cds-dropdown');
-    if (!dropdown) {
-      return;
-    }
-    const shadowRoot = dropdown.shadowRoot;
-    const listBox = shadowRoot?.querySelector('.cds--list-box');
-    if (listBox) {
-      listBox.style.borderBlockEnd = 'unset';
-    }
-  });
-});

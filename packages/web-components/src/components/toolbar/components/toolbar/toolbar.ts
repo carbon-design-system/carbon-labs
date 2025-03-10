@@ -29,10 +29,23 @@ class CLABSToolbar extends LitElement {
   /**
    * Handles the keydown event. also updates the tabindex of the focusable elements.
    */
-  firstUpdated() {
+  async firstUpdated() {
     super.connectedCallback();
     this.addEventListener('keydown', this._handleKeydown);
+    this.setAttribute('role', 'toolbar');
     this._initializeFocusableElements();
+
+    // overriding default border bottom for dropdowns, as it is not needed in the toolbar which already has a default border
+    await this.updateComplete;
+    this._getFocusableElements()
+      .filter((el) => el.tagName.toLowerCase() === 'cds-dropdown')
+      .forEach((el) => {
+        const shadowRoot = el.shadowRoot;
+        const listBox = shadowRoot?.querySelector('.cds--list-box');
+        if (listBox) {
+          (listBox as HTMLElement).style.borderBlockEnd = 'unset';
+        }
+      });
   }
 
   /**

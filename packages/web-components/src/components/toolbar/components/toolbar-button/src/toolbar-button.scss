@@ -12,12 +12,14 @@ $css--plex: true !default;
 
 :host(#{$clabs-prefix}-toolbar-button) {
   @extend :host(#{$cds-prefix}-icon-button);
+
   position: relative;
 }
 
 :host(#{$clabs-prefix}-toolbar-button[kind='ghost']) ::slotted([slot='icon']) {
   color: var(--cds-icon-primary, #161616);
 }
+
 :host([caret])::before {
   position: absolute;
   background: linear-gradient(

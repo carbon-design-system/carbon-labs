@@ -7,7 +7,7 @@ exports[`SplitPanel renders as expected - Component API should match snapshot 1`
   >
     <div
       class="clabs--split-panel__content--horizontal clabs--split-panel__content--gap-default"
-      style="--split-panel-before-size: 0.5fr; --split-panel-after-size: 0.5fr;"
+      style="--clabs--split-panel-before-size: 0.5fr; --clabs--split-panel-after-size: 0.5fr;"
     >
       <div
         class="clabs--split-panel__panel"

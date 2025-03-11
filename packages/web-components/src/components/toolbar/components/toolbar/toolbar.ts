@@ -33,6 +33,7 @@ class CLABSToolbar extends LitElement {
   async firstUpdated() {
     super.connectedCallback();
     this.addEventListener('keydown', this._handleKeydown);
+    this.addEventListener('focusin', this._handleFocusIn);
     this.setAttribute('role', 'toolbar');
     this._initializeFocusableElements();
 
@@ -55,6 +56,7 @@ class CLABSToolbar extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener('keydown', this._handleKeydown);
+    this.removeEventListener('focusin', this._handleFocusIn);
   }
 
   /**
@@ -88,38 +90,44 @@ class CLABSToolbar extends LitElement {
     }
 
     let nextIndex = currentIndex;
-    const isHorizontal = this.orientation === 'horizontal' || undefined;
+    const isHorizontal = this.orientation === 'horizontal';
+    const isVertical = this.orientation === 'vertical';
+
+    const moveFocus = (direction: number) => {
+      nextIndex += direction;
+      nextIndex = Math.max(
+        0,
+        Math.min(nextIndex, focusableElements.length - 1)
+      );
+    };
 
     switch (event.key) {
       case 'ArrowRight':
-        if (isHorizontal) {
-          nextIndex = (currentIndex + 1) % focusableElements.length;
-        }
+        if (isHorizontal) moveFocus(1);
         break;
       case 'ArrowLeft':
-        if (isHorizontal) {
-          nextIndex =
-            (currentIndex - 1 + focusableElements.length) %
-            focusableElements.length;
-        }
+        if (isHorizontal) moveFocus(-1);
         break;
       case 'ArrowDown':
-        if (this.orientation === 'vertical') {
-          nextIndex = (currentIndex + 1) % focusableElements.length;
-        }
+        if (isVertical) moveFocus(1);
         break;
       case 'ArrowUp':
-        if (this.orientation === 'vertical') {
-          nextIndex =
-            (currentIndex - 1 + focusableElements.length) %
-            focusableElements.length;
-        }
+        if (isVertical) moveFocus(-1);
         break;
     }
 
     this._updateTabIndexes(focusableElements, nextIndex);
-
     focusableElements[nextIndex]?.focus();
+  }
+
+  private _handleFocusIn(event: FocusEvent) {
+    const focusableElements = this._getFocusableElements();
+    const focusedElement = event.target as HTMLElement;
+    const focusedIndex = focusableElements.indexOf(focusedElement);
+
+    if (focusedIndex !== -1) {
+      this._updateTabIndexes(focusableElements, focusedIndex);
+    }
   }
 
   /**

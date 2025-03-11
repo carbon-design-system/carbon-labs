@@ -3125,6 +3125,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carbon/telemetry@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@carbon/telemetry@npm:0.1.0"
+  bin:
+    carbon-telemetry: bin/carbon-telemetry.js
+  checksum: 10c0/63ccb4de06beab043d8366da6391ba30e11e86479d84e58f3c486695cde5d93a5615034b3e5c802c50a54b18fe916cdcad075859d29510ea985b175974603c9e
+  languageName: node
+  linkType: hard
+
 "@carbon/themes@npm:11.46.0":
   version: 11.46.0
   resolution: "@carbon/themes@npm:11.46.0"

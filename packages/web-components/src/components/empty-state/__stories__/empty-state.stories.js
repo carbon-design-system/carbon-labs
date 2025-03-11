@@ -74,7 +74,7 @@ const argTypes = {
     options: ['light', 'dark'],
   },
   illustration: {
-    control: 'object',
+    control: 'text',
     description:
       'Source for the illustration image if you choose to use your own custom image. Passing an illustration prop will supersede the kind option.',
   },

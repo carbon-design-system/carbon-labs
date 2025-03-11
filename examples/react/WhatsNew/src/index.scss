@@ -7,3 +7,9 @@
 
 @use '@carbon/react';
 @use '@carbon-labs/react-whats-new/scss/whats-new';
+@use '@carbon/ibm-products/scss/components/Tearsheet';
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/config';
+@use '@carbon/react/scss/components/button/tokens' as *;

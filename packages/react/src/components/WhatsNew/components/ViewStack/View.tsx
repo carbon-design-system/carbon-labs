@@ -9,7 +9,7 @@
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import React, { useCallback, useEffect, useRef } from 'react';
 import cx from 'classnames';
-import { useViewStackContext } from './ViewStack';
+import { useViewStackContext } from './ViewStackContext';
 
 interface ViewProps extends Omit<React.HTMLProps<HTMLLIElement>, 'title'> {
   /**

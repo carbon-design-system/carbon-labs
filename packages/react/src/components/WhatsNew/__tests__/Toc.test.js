@@ -11,10 +11,10 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
 import { Toc } from '../components/Toc';
-import { TocItem } from '../components/TocItem';
-import { TocList } from '../components/TocList';
-import { TocSection } from '../components/TocSection';
-import { TocSections } from '../components/TocSections';
+import { TocItem } from '../components/Toc/TocItem';
+import { TocList } from '../components/Toc/TocList';
+import { TocSection } from '../components/Toc/TocSection';
+import { TocSections } from '../components/Toc/TocSections';
 
 jest.mock('./whats-new.scss', () => ({}));
 describe('Toc', () => {

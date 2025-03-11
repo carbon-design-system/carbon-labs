@@ -8,10 +8,9 @@
  */
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import React, {
-  createContext,
+  // createContext,
   forwardRef,
   useCallback,
-  useContext,
   useEffect,
   useImperativeHandle,
   useState,
@@ -19,28 +18,8 @@ import React, {
 } from 'react';
 import cx from 'classnames';
 import { View, ViewProps } from './View';
-
-const ViewStackContext = createContext<ViewStackContext | undefined>(undefined);
-
-interface ViewStackHistory {
-  id: number;
-  title: string;
-}
-
-interface ViewStackContext {
-  registerRef: (index: number, ref: React.RefObject<HTMLLIElement>) => void;
-  previousViewIndexStack: number[];
-  viewIndexStack: number[];
-  viewStackHistory: ViewStackHistory[];
-  handleTransitionEnd: (el?: HTMLLIElement | null) => void;
-}
-
-type ViewStackCallbackResponse = {
-  currentIndex: number;
-  lastIndex: number;
-  totalViews: number;
-  historyStack: ViewStackHistory[];
-};
+import { ViewStackContext } from './ViewStackContext';
+import { iViewStackCallbackResponse, iViewStackHistory } from './types';
 
 interface ViewStackProps
   extends Omit<React.HTMLProps<HTMLDivElement>, 'aria-label' | 'role'> {
@@ -58,12 +37,12 @@ interface ViewStackProps
    * Function used to update any local state based on the ViewStack's internal state **before** any chages are made.
    * @param {object} res: {currentIndex: number, lastIndex: number, totalViews: number, historyStack: [{id: number, title: string}...]}
    **/
-  onViewChangeStart?: (res: ViewStackCallbackResponse) => void;
+  onViewChangeStart?: (res: iViewStackCallbackResponse) => void;
   /**
    * Function used to update any local state based on the ViewStack's internal state **after** any chages are made.
    * @param {object} res: {currentIndex: number, lastIndex: number, totalViews: number, historyStack: [{id: number, title: string}...]}
    **/
-  onViewChangeEnd?: (res: ViewStackCallbackResponse) => void;
+  onViewChangeEnd?: (res: iViewStackCallbackResponse) => void;
 }
 
 const ViewStack = forwardRef(
@@ -91,7 +70,7 @@ const ViewStack = forwardRef(
       number[]
     >([0]);
     const [viewStackHistory, setViewStackHistory] = useState<
-      ViewStackHistory[]
+      iViewStackHistory[]
     >([]);
 
     const registerRef = useCallback(
@@ -113,7 +92,7 @@ const ViewStack = forwardRef(
       [refs]
     );
 
-    const getCallbackResponse = useCallback((): ViewStackCallbackResponse => {
+    const getCallbackResponse = useCallback((): iViewStackCallbackResponse => {
       const totalRefs = Object.keys(refs).length;
       const lastElementRef = refs[totalRefs - 1];
       const historicalData = getHistory(viewIndexStack);
@@ -316,15 +295,6 @@ const ViewStack = forwardRef(
   }
 );
 
-const useViewStackContext = () => {
-  const ctx = useContext(ViewStackContext);
-  if (!ctx) {
-    throw new Error(`Component must be a child of ViewStack`);
-  }
-  return ctx;
-};
-
 ViewStack.displayName = 'ViewStack';
 
-export { ViewStack, useViewStackContext };
-export type { ViewStackHistory };
+export { ViewStack };

@@ -2754,7 +2754,7 @@ __metadata:
     "@carbon/icon-helpers": "npm:10.55.0"
     "@carbon/icons": "npm:11.56.0"
     "@carbon/layout": "npm:11.30.0"
-    "@carbon/motion": "npm:11.24.0"
+    "@carbon/motion": "npm:11.25.0"
     "@carbon/styles": "npm:^1.70.0"
     "@carbon/themes": "npm:11.46.0"
     "@carbon/type": "npm:11.35.0"
@@ -2969,21 +2969,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/motion@npm:11.24.0, @carbon/motion@npm:^11.24.0":
-  version: 11.24.0
-  resolution: "@carbon/motion@npm:11.24.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/7b9c0ed655eefea45079d1c8e8e83d4236bb62b7027cea71a360c63a665e65cf8f1cb08baf2296d39154c27b3b584128ababa75231465bd6560fba95dd68704e
-  languageName: node
-  linkType: hard
-
-"@carbon/motion@npm:^11.25.0":
+"@carbon/motion@npm:11.25.0, @carbon/motion@npm:^11.25.0":
   version: 11.25.0
   resolution: "@carbon/motion@npm:11.25.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
   checksum: 10c0/a6bd67f212fd2b4841c5af23be29b1d94b09e8d81be79bfb88584ecf87306bfc7220b81fc5ac50dd10dee55afcfdd8583d7d186103ba7bdc7b158f45ac79a661
+  languageName: node
+  linkType: hard
+
+"@carbon/motion@npm:^11.24.0":
+  version: 11.24.0
+  resolution: "@carbon/motion@npm:11.24.0"
+  dependencies:
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  checksum: 10c0/7b9c0ed655eefea45079d1c8e8e83d4236bb62b7027cea71a360c63a665e65cf8f1cb08baf2296d39154c27b3b584128ababa75231465bd6560fba95dd68704e
   languageName: node
   linkType: hard
 

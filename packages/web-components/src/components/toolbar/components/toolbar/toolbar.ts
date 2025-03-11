@@ -93,6 +93,11 @@ class CLABSToolbar extends LitElement {
     const isHorizontal = this.orientation === 'horizontal';
     const isVertical = this.orientation === 'vertical';
 
+    /**
+     * Moves the focus to the next or previous focusable element.
+     *
+     * @param {number} direction - The direction to move the focus. Positive for next, negative for previous.
+     */
     const moveFocus = (direction: number) => {
       nextIndex += direction;
       nextIndex = Math.max(
@@ -103,16 +108,24 @@ class CLABSToolbar extends LitElement {
 
     switch (event.key) {
       case 'ArrowRight':
-        if (isHorizontal) moveFocus(1);
+        if (isHorizontal) {
+          moveFocus(1);
+        }
         break;
       case 'ArrowLeft':
-        if (isHorizontal) moveFocus(-1);
+        if (isHorizontal) {
+          moveFocus(-1);
+        }
         break;
       case 'ArrowDown':
-        if (isVertical) moveFocus(1);
+        if (isVertical) {
+          moveFocus(1);
+        }
         break;
       case 'ArrowUp':
-        if (isVertical) moveFocus(-1);
+        if (isVertical) {
+          moveFocus(-1);
+        }
         break;
     }
 
@@ -120,6 +133,11 @@ class CLABSToolbar extends LitElement {
     focusableElements[nextIndex]?.focus();
   }
 
+  /**
+   * Handles the focusin event and updates the tabindex of the focusable elements.
+   *
+   * @param {FocusEvent} event - The focus event.
+   */
   private _handleFocusIn(event: FocusEvent) {
     const focusableElements = this._getFocusableElements();
     const focusedElement = event.target as HTMLElement;

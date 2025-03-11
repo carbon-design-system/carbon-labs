@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.33.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.32.0...@carbon-labs/react@0.33.0) (2025-03-10)
+
+
+### Features
+
+* **whatsnew:** Whats new pattern components ([#502](https://github.com/carbon-design-system/carbon-labs/issues/502)) ([c4c8e30](https://github.com/carbon-design-system/carbon-labs/commit/c4c8e30876974e9d9e1a9e44759cb951bcd949ef))
+
+
+
+
+
 # [0.32.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.31.0...@carbon-labs/react@0.32.0) (2025-03-06)
 
 

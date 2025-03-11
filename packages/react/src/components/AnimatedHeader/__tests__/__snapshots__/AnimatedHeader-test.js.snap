@@ -3,22 +3,22 @@
 exports[`AnimatedHeader renders as expected - Component API should match snapshot 1`] = `
 <div>
   <section
-    class="clabs-animated-header false"
+    class="clabs--animated-header false"
   >
     <div
       class="cds--css-grid"
     >
       <div
-        class="clabs-animated-header__gradient--overlay"
+        class="clabs--animated-header__gradient--overlay"
       />
       <div
-        class="clabs-animated-header__container--gradient"
+        class="clabs--animated-header__container--gradient"
       />
       <div
-        class="clabs-animated-header__lottie-animation--container"
+        class="clabs--animated-header__lottie-animation--container"
       >
         <div
-          class="clabs-animated-header__lottie-animation false"
+          class="clabs--animated-header__lottie-animation false"
         />
       </div>
       <div
@@ -32,16 +32,16 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <h1
               aria-labelledby="tooltip-:r0:"
-              class="clabs-animated-header__heading "
+              class="clabs--animated-header__heading "
             >
               <span
-                class="clabs-animated-header__heading-welcome"
+                class="clabs--animated-header__heading-welcome"
               >
                 Welcome,
                  
               </span>
               <span
-                class="clabs-animated-header__heading-name"
+                class="clabs--animated-header__heading-name"
               />
             </h1>
           </div>
@@ -63,14 +63,14 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         </span>
       </div>
       <div
-        class="clabs-animated-header__button-collapse--gradient"
+        class="clabs--animated-header__button-collapse--gradient"
       />
       <div
-        class="clabs-animated-header__button-collapse--container"
+        class="clabs--animated-header__button-collapse--container"
       >
         <button
           class="cds--btn cds--btn--ghost"
-          id="clabs-animated-header__button-collapse"
+          id="clabs--animated-header__button-collapse"
           type="button"
         >
           Collapse

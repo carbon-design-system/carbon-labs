@@ -31,6 +31,7 @@ components are provided by `@carbon-labs/react-ui-shell`:
 
 - `SideNav`
 - `SideNavItems`
+- `SideNavLink`
 - `SideNavMenu`
 - `SideNavMenuItem`
 - `HeaderPanel`

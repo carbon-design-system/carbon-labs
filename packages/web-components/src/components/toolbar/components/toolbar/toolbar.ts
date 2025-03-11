@@ -145,7 +145,7 @@ class CLABSToolbar extends LitElement {
   }
 
   /**
-   * render function 
+   * render function
    */
   render() {
     return toolbarTemplate();

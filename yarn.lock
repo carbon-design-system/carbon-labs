@@ -3121,7 +3121,7 @@ __metadata:
   peerDependenciesMeta:
     sass:
       optional: true
-  checksum: 10c0/cd681af5c7e042d287a7eb758d9ce219c27d7c8932af71779a933882dd1beaf98365299b10d8b774cb5f2fc674342ccd00584c6071a90e027d47ce2ddb9316f3
+  checksum: 10c0/8068aa949bd4b4cf25a27ec33536782c2cde1bfb72ee6b24fb7355df4aa2331f12bdad5d66a6f6c6edf0a12979ec228d39ae692ec4f5ab80f219867b0b94c236
   languageName: node
   linkType: hard
 

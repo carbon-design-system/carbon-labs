@@ -43,7 +43,6 @@ import Rotate from '@carbon/web-components/es/icons/rotate/16.js';
 export default {
   title: 'Components/Toolbar',
   component: 'clabs-toolbar',
-  subcomponents: { ToolbarGroup: 'clabs-toolbar-group' },
 };
 const defaultArgs = {
   orientation: 'horizontal',

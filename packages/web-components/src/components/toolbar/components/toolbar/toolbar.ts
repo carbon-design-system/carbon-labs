@@ -18,6 +18,7 @@ const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * CLABS Toolbar component
+ * @element clabs-toolbar
  */
 @customElement(`${clabsPrefix}-toolbar`)
 class CLABSToolbar extends LitElement {

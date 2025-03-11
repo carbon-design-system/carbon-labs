@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewStack renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <div
+    aria-label="View stack"
+    class="clabs--whats-new__view-stack"
+    data-testid="TestViewStack"
+    role="region"
+    tabindex="0"
+  >
+    <ul>
+      <li
+        class="clabs--whats-new__view clabs--whats-new__view-active"
+        data-index="0"
+      />
+    </ul>
+    <div
+      aria-atomic="true"
+      aria-live="polite"
+      class="clabs--whats-new__view-stack-announcer"
+    >
+      Displaying view 1 of 1
+    </div>
+  </div>
+</div>
+`;

@@ -9,7 +9,6 @@
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
-  type ElementType,
   useContext,
   useRef,
   useState,
@@ -24,6 +23,7 @@ import {
   ToggletipActions,
   ToggleTipButtonProps,
   ToggletipContent,
+  ToggletipContentProps,
   ToggletipProps,
 } from '@carbon/react';
 import { match, keys } from '../internal/keyboard';
@@ -264,9 +264,22 @@ HeaderActionButton.propTypes = {
  * `children` passed in as a prop inside of `PopoverContent` so that they will
  * be rendered inside of the popover for this component.
  */
-const HeaderActionContent = ToggletipContent;
-HeaderActionContent.displayName = 'HeaderActionContent';
-export { HeaderActionContent };
+export function HeaderActionContent({
+  children,
+  className,
+  ...rest
+}: ToggletipContentProps) {
+  const prefix = usePrefix();
+  return (
+    <ToggletipContent
+      className={cx(className, {
+        [`${prefix}--header-action__content`]: true,
+      })}
+      {...rest}>
+      {children}
+    </ToggletipContent>
+  );
+}
 
 /**
  * `ToggletipActions` is a container for one or two actions present at the base

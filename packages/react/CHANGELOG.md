@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.33.0...@carbon-labs/react@0.34.0) (2025-03-12)
+
+
+### Bug Fixes
+
+* **UIShell:** resolve storybook z-index issue ([#512](https://github.com/carbon-design-system/carbon-labs/issues/512)) ([7b7fbc0](https://github.com/carbon-design-system/carbon-labs/commit/7b7fbc00d46ab895a20250249233113d17b6d1ae))
+
+
+
+
+
 # [0.33.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.32.0...@carbon-labs/react@0.33.0) (2025-03-10)
 
 

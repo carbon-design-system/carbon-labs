@@ -7,6 +7,7 @@
 @use '@carbon/styles/scss/theme' as *;
 
 @use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/motion' as *;
 $prefix: 'cds' !default;
 
 .#{$prefix}--header__global {
@@ -28,4 +29,31 @@ $prefix: 'cds' !default;
 .#{$prefix}--header
   .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not([disabled]) {
   color: $text-secondary;
+}
+
+.#{$prefix}--header-action.#{$prefix}--animate--slide-down
+  .#{$prefix}--popover
+  .#{$prefix}--header-action__content {
+  transition: transform motion(standard, productive) $duration-fast-02;
+}
+
+.#{$prefix}--header-action.#{$prefix}--animate--slide-down.#{$prefix}--popover--open
+  .#{$prefix}--popover
+  .#{$prefix}--header-action__content {
+  transform: translateY(100%);
+  visibility: visible;
+  opacity: 1;
+}
+
+/** starting style also not supported widely
+ * https://caniuse.com/mdn-css_at-rules_starting-style
+ */
+@starting-style {
+  .#{$prefix}--header-action.#{$prefix}--animate--slide-down.#{$prefix}--popover--open
+    .#{$prefix}--popover
+    .#{$prefix}--header-action__content {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%);
+  }
 }

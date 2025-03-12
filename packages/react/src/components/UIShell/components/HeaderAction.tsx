@@ -48,26 +48,39 @@ function useToggletip() {
   return useContext(HeaderActionContext);
 }
 
+enum animationType {
+  DEFAULT = 'default',
+  SLIDE_DOWN = 'slide-down',
+}
+
+type HeaderActionProps = {
+  animate: animationType;
+} & ToggletipProps<any>;
+
 /**
  * Used as a container for the button and content of a toggletip. This component
  * is responsible for coordinating between interactions with the button and the
  * visibility of the content
  */
-export function HeaderAction<E extends ElementType = 'span'>({
+export function HeaderAction({
   align,
+  animate = animationType.DEFAULT,
   as,
   autoAlign,
   className: customClassName,
   children,
   defaultOpen = false,
   ...rest
-}: ToggletipProps<E>) {
+}: HeaderActionProps) {
   const ref = useRef<Element>(null);
   const [open, setOpen] = useState(defaultOpen);
   const prefix = usePrefix();
   const id = useId();
   const className = cx(customClassName, {
+    [`${prefix}--header-action`]: true,
     [`${prefix}--autoalign`]: autoAlign,
+    [`${prefix}--animate`]: animate !== animationType.DEFAULT,
+    [`${prefix}--animate--slide-down`]: animate === animationType.SLIDE_DOWN,
   });
   const actions = {
     toggle: () => {

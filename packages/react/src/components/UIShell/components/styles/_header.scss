@@ -6,13 +6,37 @@
  */
 
 @use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/motion' as *;
 $prefix: 'cds' !default;
-
-.#{$prefix}--header__action:focus {
-  border-width: 2px;
-}
 
 // TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
 .#{$prefix}--tooltip-content {
   color: $text-primary;
+}
+
+.#{$prefix}--header-action.#{$prefix}--animate--slide-down
+  .#{$prefix}--popover
+  .#{$prefix}--header-action__content {
+  transition: transform motion(standard, productive) $duration-fast-02;
+}
+
+.#{$prefix}--header-action.#{$prefix}--animate--slide-down.#{$prefix}--popover--open
+  .#{$prefix}--popover
+  .#{$prefix}--header-action__content {
+  transform: translateY(100%);
+  visibility: visible;
+  opacity: 1;
+}
+
+/** starting style also not supported widely
+ * https://caniuse.com/mdn-css_at-rules_starting-style
+ */
+@starting-style {
+  .#{$prefix}--header-action.#{$prefix}--animate--slide-down.#{$prefix}--popover--open
+    .#{$prefix}--popover
+    .#{$prefix}--header-action__content {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%);
+  }
 }

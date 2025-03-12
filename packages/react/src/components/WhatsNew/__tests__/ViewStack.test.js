@@ -10,14 +10,11 @@
 import { render, act } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
-import { ViewStack, View } from '../components/ViewStack';
+import { ViewStack, View } from '../index';
 
 jest.mock('./whats-new.scss', () => ({}));
 describe('ViewStack', () => {
   const prefix = 'clabs--whats-new';
-  // beforeEach(() => {
-  //   Element.prototype.scrollIntoView = jest.fn();
-  // });
   describe('renders as expected - Component API', () => {
     it('should match snapshot', async () => {
       const { container, getByTestId } = render(

@@ -8,7 +8,6 @@
  */
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import React, {
-  // createContext,
   forwardRef,
   useCallback,
   useEffect,

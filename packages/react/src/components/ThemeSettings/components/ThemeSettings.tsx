@@ -9,7 +9,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import './theme-settings.scss';
+// import './theme-settings.scss';
 import { FormGroup } from '@carbon/react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 

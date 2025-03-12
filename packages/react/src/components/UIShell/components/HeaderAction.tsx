@@ -226,7 +226,10 @@ export function HeaderActionButton<T extends React.ElementType>({
   ...rest
 }: ToggleTipButtonProps<T>) {
   const toggletip = useToggletip();
-  const className = cx(customClassName);
+  const prefix = usePrefix();
+  const className = cx(customClassName, {
+    [`${prefix}--header-action__button`]: true,
+  });
   const ComponentToggle: any = BaseComponent ?? IconButton;
   return (
     <ComponentToggle

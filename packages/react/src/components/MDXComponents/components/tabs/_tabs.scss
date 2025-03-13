@@ -61,8 +61,10 @@
   cursor: pointer;
   outline-color: transparent;
   text-align: left;
-  transition: color motion.$duration-fast-02, background-color motion.$duration-fast-02,
-    border-color motion.$duration-fast-02, outline-color motion.$duration-fast-02;
+  transition: color motion.$duration-fast-02,
+    background-color motion.$duration-fast-02,
+    border-color motion.$duration-fast-02,
+    outline-color motion.$duration-fast-02;
   white-space: nowrap;
 
   &::-moz-focus-inner {

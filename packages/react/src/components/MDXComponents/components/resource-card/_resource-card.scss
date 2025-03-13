@@ -156,7 +156,8 @@
     }
   }
 
-  [class*='cds--lg:col-span-4']:nth-child(even) .#{with-prefix('resource-card')} {
+  [class*='cds--lg:col-span-4']:nth-child(even)
+    .#{with-prefix('resource-card')} {
     @include breakpoint.breakpoint('md') {
       box-shadow: -1px 0 0 0 theme.$border-subtle;
     }

@@ -91,6 +91,8 @@
   color: theme.$text-on-color-disabled;
 }
 
-.#{with-prefix('disabled')} .#{with-prefix('action-icon')} .#{with-prefix('svg')} {
+.#{with-prefix('disabled')}
+  .#{with-prefix('action-icon')}
+  .#{with-prefix('svg')} {
   fill: theme.$icon-on-color-disabled;
 }

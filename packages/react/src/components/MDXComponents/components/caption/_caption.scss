@@ -1,0 +1,29 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/theme' as theme;
+
+@use '../utils' as *;
+
+.#{with-prefix('caption-container')} {
+  margin-top: spacing.$spacing-05;
+
+  .#{with-prefix('header')} + & {
+    margin-top: spacing.$spacing-06;
+  }
+}
+
+.#{with-prefix('caption')},
+.#{with-prefix('caption')} p,
+.#{with-prefix('caption')} div {
+  @include type.type-style('body-short-01');
+
+  margin-top: 0;
+  color: theme.$text-primary;
+}

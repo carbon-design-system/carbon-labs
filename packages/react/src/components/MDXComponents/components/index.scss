@@ -16,9 +16,9 @@
 @use './code/code';
 @use './divider/divider';
 @use './do-dont/do-dont';
-// @use './gif-player/gif-player';
+@use './gif-player/gif-player';
 @use './grid-transform/grid';
-// @use './image-wrapper/image-wrapper';
+@use './image-wrapper/image-wrapper';
 @use './inline-notification/inline-notification';
 @use './link/link';
 // @use './mini-card/mini-card';
@@ -28,4 +28,4 @@
 // @use './resource-card/resource-card';
 @use './storybook-demo/storybook-demo';
 @use './tabs/tabs';
-// @use './video/video';
+@use './video/video';

@@ -9,13 +9,10 @@ export { AnchorLink } from './components/anchor-links/anchor-link.js';
 export { AnchorLinks } from './components/anchor-links/anchor-links.js';
 
 // export {
-//   default as ArtDirection,
-//   ArtDirectionProps,
-// } from './art-direction/art-direction.js';
-// export {
 //   default as ArticleCard,
 //   ArticleCardProps,
 // } from './article-card/article-card.js';
+export { ArtDirection } from './components/art-direction/art-direction.js';
 export { Aside } from './components/aside/aside.js';
 export { Caption } from './components/caption/caption.js';
 // export {
@@ -26,7 +23,7 @@ export { Code } from './components/code/code.js';
 export { Divider } from './components/divider/divider.js';
 export { DoDont } from './components/do-dont/do-dont.js';
 export { DoDontRow } from './components/do-dont/do-dont-row.js';
-// export { default as DoDontRow, DoDontRowProps } from './do-dont/do-dont-row.js';
+export { GifPlayer } from './components/gif-player/gif-player.js';
 // export {
 //   default as GifPlayer,
 //   GifPlayerProps,
@@ -34,14 +31,7 @@ export { DoDontRow } from './components/do-dont/do-dont-row.js';
 export { Column } from './components/grid-transform/column.js';
 export { Grid } from './components/grid-transform/grid.js';
 export { Row } from './components/grid-transform/row.js';
-// export {
-//   default as ImageWrapper,
-//   ImageWrapperProps,
-// } from './image-wrapper/image-wrapper.js';
-// export {
-//   default as InlineNotification,
-//   InlineNotificationProps,
-// } from './inline-notification/inline-notification.js';
+export { ImageWrapper } from './components/image-wrapper/image-wrapper.js';
 export { InlineNotification } from './components/inline-notification/inline-notification.js';
 export { Link } from './components/link/link.js';
 export { Blockquote } from './components/markdown/blockquote.js';
@@ -71,12 +61,7 @@ export { StorybookDemo } from './components/storybook-demo/storybook-demo.js';
 export { Tab } from './components/tabs/tab.js';
 export { Tabs } from './components/tabs/tabs.js';
 export { Title } from './components/title/title.js';
-// export { default as Title, TitleProps } from './title/title.js';
-// export {
-//   default as Video,
-//   VideoWithSrcProps,
-//   VideoWithVimeoIdProps,
-// } from './video/video.js';
+export { Video } from './components/video/video.js';
 
 // Carbon components
 export { AccordionItem, Button, Layer } from '@carbon/react';

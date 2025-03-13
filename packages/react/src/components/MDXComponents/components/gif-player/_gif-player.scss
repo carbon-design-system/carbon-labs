@@ -1,0 +1,57 @@
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/spacing' as spacing;
+
+@use '../utils' as *;
+
+.#{with-prefix('gif-player-container')} {
+  position: relative;
+
+  .#{with-prefix('controls')} {
+    position: absolute;
+    bottom: spacing.$spacing-05;
+    left: spacing.$spacing-05;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+
+  .#{with-prefix('controls')} svg {
+    fill: theme.$icon-inverse;
+  }
+
+  .#{with-prefix('dark')} svg {
+    fill: theme.$icon-primary;
+  }
+
+  .#{with-prefix('controls')}:focus svg {
+    outline: 2px solid theme.$focus;
+    outline-offset: -2px;
+  }
+
+  //toggle static image
+  .#{with-prefix('img-hidden')} {
+    display: none;
+  }
+
+  .#{with-prefix('img-displayed')} {
+    display: block;
+  }
+
+  //toggle gif
+  .#{with-prefix('gif-displayed')} {
+    display: block;
+  }
+
+  .#{with-prefix('gif-hidden')} {
+    display: none;
+  }
+
+  //styles for gif player in image gallery
+  &.#{with-prefix('gif-in-dialog')} {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

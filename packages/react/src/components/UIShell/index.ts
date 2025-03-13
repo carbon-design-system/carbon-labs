@@ -15,7 +15,7 @@ export { SideNavMenuItem } from './components/SideNavMenuItem.js';
 export { HeaderContainer } from './components/HeaderContainer';
 export {
   HeaderAction,
-  HeaderActionActions as ToggletipActions,
+  HeaderActionActions,
   HeaderActionButton,
   HeaderActionContent,
 } from './components/HeaderAction';

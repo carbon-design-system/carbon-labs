@@ -12,28 +12,28 @@
 @use '../utils' as *;
 
 .#{with-prefix('card-group')} {
-  margin-top: spacing.$spacing-07;
+  margin-block-start: spacing.$spacing-07;
 
   .#{with-prefix('header')} + & {
-    margin-top: spacing.$spacing-06;
+    margin-block-start: spacing.$spacing-06;
   }
 }
 
-// Sets gray border on the top of cards at the smallest breakpoint and
+// Sets gray border on the inset-block-start of cards at the smallest breakpoint and
 // removes the margin set by the <Column> in the Grid component.
 .#{with-prefix('card-group')} [class*='column'] {
-  border-top: 1px solid theme.$border-subtle;
-  margin-bottom: 0;
+  border-block-start: 1px solid theme.$border-subtle;
+  margin-block-end: 0;
 }
 
 .#{with-prefix('card-group')} [class*='column']:first-child {
-  border-top: 0 solid transparent;
+  border-block-start: 0 solid transparent;
 }
 
 // Borders for cards at the medium breakpoint
 .#{with-prefix('card-group')} [class*='column']:nth-child(-n + 2) {
   @include breakpoint.breakpoint('md') {
-    border-top: 0 solid transparent;
+    border-block-start: 0 solid transparent;
   }
 }
 

@@ -12,13 +12,13 @@
 @use '../utils' as *;
 
 .#{with-prefix('accordion')} {
-  margin-top: spacing.$spacing-06;
   color: theme.$text-primary;
+  margin-block-start: spacing.$spacing-06;
 }
 
-// override carbon, accordion right spacing
+// override carbon, accordion inset-inline-end spacing
 .#{with-prefix('accordion')} .cds--accordion__content {
-  padding-right: spacing.$spacing-10;
+  padding-inline-end: spacing.$spacing-10;
 }
 
 // override carbon, title font and spacing

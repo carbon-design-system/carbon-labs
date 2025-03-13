@@ -12,8 +12,8 @@
 @use '../utils' as *;
 
 .#{with-prefix('page-description')} {
-  margin-top: spacing.$spacing-07;
   color: theme.$text-primary;
+  margin-block-start: spacing.$spacing-07;
 }
 
 .#{with-prefix('page-description')},
@@ -25,11 +25,11 @@
 }
 
 .#{with-prefix('page-description')} > * {
-  margin-top: 0;
+  margin-block-start: 0;
 }
 
 .#{with-prefix('page-description')} > * + * {
-  margin-top: spacing.$spacing-06;
+  margin-block-start: spacing.$spacing-06;
 }
 
 .#{with-prefix('page-description')} code {

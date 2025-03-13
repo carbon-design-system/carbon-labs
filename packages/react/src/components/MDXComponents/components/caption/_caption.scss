@@ -12,10 +12,10 @@
 @use '../utils' as *;
 
 .#{with-prefix('caption-container')} {
-  margin-top: spacing.$spacing-05;
+  margin-block-start: spacing.$spacing-05;
 
   .#{with-prefix('header')} + & {
-    margin-top: spacing.$spacing-06;
+    margin-block-start: spacing.$spacing-06;
   }
 }
 
@@ -24,6 +24,7 @@
 .#{with-prefix('caption')} div {
   @include type.type-style('body-short-01');
 
-  margin-top: 0;
   color: theme.$text-primary;
+
+  margin-block-start: 0;
 }

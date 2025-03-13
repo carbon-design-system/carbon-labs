@@ -8,5 +8,6 @@
 @use '../utils' as *;
 
 .#{with-prefix('link')} {
+  /* stylelint-disable-next-line declaration-no-important */
   font-size: inherit !important;
 }

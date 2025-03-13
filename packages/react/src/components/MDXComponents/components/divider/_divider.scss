@@ -13,55 +13,55 @@
 
 .#{with-prefix('divider')} {
   position: relative;
-  padding-top: spacing.$spacing-06;
-  margin-top: spacing.$spacing-09;
+  margin-block-start: spacing.$spacing-09;
+  padding-block-start: spacing.$spacing-06;
 
   @include breakpoint.breakpoint(md) {
-    padding-top: spacing.$spacing-07;
-    margin-top: spacing.$spacing-10;
+    margin-block-start: spacing.$spacing-10;
+    padding-block-start: spacing.$spacing-07;
   }
 
   @include breakpoint.breakpoint(lg) {
-    margin-right: -(spacing.$spacing-05);
+    margin-inline-end: -(spacing.$spacing-05);
   }
 
   &::after {
     position: absolute;
     z-index: 1;
-    top: 0;
-    left: 1rem;
-    width: calc(100% - 2rem);
-    height: 1px;
     background: theme.$border-strong;
+    block-size: 1px;
     content: '';
+    inline-size: calc(100% - 2rem);
+    inset-block-start: 0;
+    inset-inline-start: 1rem;
   }
 }
 
 .#{with-prefix('divider--empty')} {
-  height: 1px;
   padding: 0;
+  block-size: 1px;
 }
 
 .#{with-prefix('divider--empty')} + div {
-  margin-top: spacing.$spacing-06;
+  margin-block-start: spacing.$spacing-06;
 
   @include breakpoint.breakpoint(md) {
-    margin-top: spacing.$spacing-07;
+    margin-block-start: spacing.$spacing-07;
   }
 }
 
 .#{with-prefix('divider')} > [class*='grid'] {
-  margin-top: 0;
+  margin-block-start: 0;
 }
 
 .#{with-prefix('divider')} > [class*='grid'] > *:not(:first-child) {
-  margin-top: spacing.$spacing-06;
+  margin-block-start: spacing.$spacing-06;
 
   @include breakpoint.breakpoint(lg) {
-    margin-top: 0;
+    margin-block-start: 0;
   }
 }
 
 .#{with-prefix('divider')} [class*='column'] > *:first-child {
-  margin-top: 0;
+  margin-block-start: 0;
 }

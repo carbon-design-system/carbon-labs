@@ -14,10 +14,10 @@
 
 .#{with-prefix('mini-card')} {
   display: flex;
-  height: convert.rem(64px);
   flex-direction: column;
   justify-content: center;
   background: theme.$layer-01;
+  block-size: convert.rem(64px);
   transition: background motion.$duration-fast-02;
 
   &:hover {
@@ -28,8 +28,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-right: spacing.$spacing-05;
-    padding-left: spacing.$spacing-05;
+    padding-inline: spacing.$spacing-05 spacing.$spacing-05;
   }
 
   .#{with-prefix('title')} {
@@ -39,11 +38,11 @@
   .#{with-prefix('image')},
   .#{with-prefix('image')} [class*='mdx-icon'],
   .#{with-prefix('image')} [class*='mdx-icon'] svg {
-    width: convert.rem(20px);
-    height: convert.rem(20px);
+    block-size: convert.rem(20px);
+    inline-size: convert.rem(20px);
   }
 
   .#{with-prefix('icon')} {
-    padding-top: spacing.$spacing-02;
+    padding-block-start: spacing.$spacing-02;
   }
 }

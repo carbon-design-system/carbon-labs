@@ -1,0 +1,96 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/motion' as motion;
+
+@use '../utils' as *;
+
+.#{with-prefix('article-card')} {
+  background: theme.$layer-01;
+  transition: background motion.$duration-fast-01;
+
+  &:hover {
+    background: theme.$layer-hover-01;
+  }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  .cds--tile {
+    position: relative;
+    height: 100%;
+    padding: 0;
+    margin-bottom: spacing.$spacing-06;
+    background: transparent;
+    text-decoration: none;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .#{with-prefix('tile')} {
+    padding: spacing.$spacing-05 25% spacing.$spacing-05 spacing.$spacing-05;
+  }
+
+  .#{with-prefix('title')} {
+    @include type.type-style('body-compact-02');
+
+    color: theme.$text-primary;
+    text-decoration: none;
+  }
+
+  .#{with-prefix('subtitle')} {
+    @include type.type-style('heading-01');
+
+    color: theme.$text-primary;
+    font-weight: 400;
+  }
+
+  .#{with-prefix('info')} {
+    position: absolute;
+    bottom: spacing.$spacing-05;
+    left: spacing.$spacing-05;
+    color: theme.$text-secondary;
+    @include type.type-style('label-01');
+  }
+
+  .#{with-prefix('icon-action')} {
+    position: absolute;
+    right: spacing.$spacing-05;
+    bottom: spacing.$spacing-05;
+  }
+
+  .#{with-prefix('icon-action')} svg {
+    fill: theme.$icon-primary;
+  }
+}
+
+// carbon override, disabled state
+.#{with-prefix('disabled')}.#{with-prefix('article-card')},
+.#{with-prefix('disabled')} .cds--tile {
+  cursor: not-allowed;
+}
+
+.#{with-prefix('disabled')}:hover {
+  background: theme.$layer-01;
+  cursor: not-allowed;
+}
+
+.#{with-prefix('disabled')} .#{with-prefix('title')},
+.#{with-prefix('disabled')} .#{with-prefix('subtitle')},
+.#{with-prefix('disabled')} .#{with-prefix('info')} {
+  color: theme.$text-on-color-disabled;
+}
+
+.#{with-prefix('disabled')} .#{with-prefix('action-icon')} .#{with-prefix('svg')} {
+  fill: theme.$icon-on-color-disabled;
+}

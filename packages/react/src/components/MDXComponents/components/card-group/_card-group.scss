@@ -1,0 +1,44 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/spacing' as spacing;
+
+@use '../utils' as *;
+
+.#{with-prefix('card-group')} {
+  margin-top: spacing.$spacing-07;
+
+  .#{with-prefix('header')} + & {
+    margin-top: spacing.$spacing-06;
+  }
+}
+
+// Sets gray border on the top of cards at the smallest breakpoint and
+// removes the margin set by the <Column> in the Grid component.
+.#{with-prefix('card-group')} [class*='column'] {
+  border-top: 1px solid theme.$border-subtle;
+  margin-bottom: 0;
+}
+
+.#{with-prefix('card-group')} [class*='column']:first-child {
+  border-top: 0 solid transparent;
+}
+
+// Borders for cards at the medium breakpoint
+.#{with-prefix('card-group')} [class*='column']:nth-child(-n + 2) {
+  @include breakpoint.breakpoint('md') {
+    border-top: 0 solid transparent;
+  }
+}
+
+.#{with-prefix('card-group')} [class*='column']:nth-child(even) {
+  @include breakpoint.breakpoint('md') {
+    box-shadow: -1px 0 0 0 theme.$border-subtle;
+  }
+}

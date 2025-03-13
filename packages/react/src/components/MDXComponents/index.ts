@@ -62,6 +62,7 @@ export { UL } from './components/markdown/ul.js';
 // } from './page-description/page-description.js';
 export { PageDescription } from './components/page-description/page-description.js';
 export { PageTable } from './components/page-table/page-table.js';
+export { Preview } from './components/preview/preview.js';
 // export { default as Preview, PreviewProps } from './preview/preview.js';
 // export {
 //   default as ResourceCard,

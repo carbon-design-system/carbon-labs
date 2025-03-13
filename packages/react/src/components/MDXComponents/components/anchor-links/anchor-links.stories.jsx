@@ -14,10 +14,10 @@ export default {
   subcomponents: { AnchorLink },
   argTypes: {
     small: {
-      control: 'boolean'
-    }
-  }
-}
+      control: 'boolean',
+    },
+  },
+};
 
 const Template = (args) => (
   <AnchorLinks {...args}>
@@ -29,14 +29,14 @@ const Template = (args) => (
     <AnchorLink>Link 6</AnchorLink>
     <AnchorLink>Link 7</AnchorLink>
   </AnchorLinks>
-)
+);
 
-export const Default = Template.bind({})
+export const Default = Template.bind({});
 Default.args = {
-  small: false
-}
+  small: false,
+};
 
-export const Small = Template.bind({})
+export const Small = Template.bind({});
 Small.args = {
-  small: true
-}
+  small: true,
+};

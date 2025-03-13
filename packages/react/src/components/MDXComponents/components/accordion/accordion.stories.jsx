@@ -13,9 +13,6 @@ export default {
   title: 'MDX Components/Accordion',
   component: Accordion,
   subcomponents: { AccordionItem },
-  parameters: {
-    layout: 'fullscreen',
-  },
 };
 
 export const Default = (args) => (

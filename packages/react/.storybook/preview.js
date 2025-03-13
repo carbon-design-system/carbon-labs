@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { white, g10, g90, g100 } from '@carbon/themes';
 import { breakpoints } from '@carbon/layout';
 import { GlobalTheme, Theme } from '@carbon/react/es/components/Theme';
@@ -20,12 +20,28 @@ const Container = ({ children, ...props }) => {
     children?.type?.name === `MDXContent` &&
     !props?.context?.attachedCSFFiles.size;
 
+  useEffect(() => {
+    if (isCarbonMdx) {
+      document.documentElement.classList.add('cds--mdx');
+    } else {
+      document.documentElement.classList.remove('cds--mdx');
+    }
+  }, [isCarbonMdx]);
+
   // Disable Storybook markdown styles and ignore global theme switchers
   if (isCarbonMdx) {
     return (
       <DocsContainer {...props}>
         <Unstyled>
-          <Theme theme="g10">{children}</Theme>
+          <Theme
+            style={{
+              paddingBottom: '2rem',
+              paddingTop: '1px',
+              marginTop: '-1px',
+            }}
+            theme="g10">
+            {children}
+          </Theme>
         </Unstyled>
       </DocsContainer>
     );
@@ -207,7 +223,7 @@ const decorators = [
     const { layoutDensity, layoutSize, locale, dir } = context.globals;
     const [randomKey, setRandomKey] = React.useState(1);
 
-    const isMarkdown = context?.kind?.startsWith('Components/MDX Components');
+    const isMarkdown = context?.kind?.startsWith('MDX Components');
 
     // Carbon MDX only supports the g10 theme
     if (isMarkdown) {

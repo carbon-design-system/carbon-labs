@@ -58,10 +58,7 @@ export { UL } from './components/markdown/ul.js';
 //   default as PageDescription,
 //   PageDescriptionProps,
 // } from './page-description/page-description.js';
-// export {
-//   default as PageTable,
-//   PageTableProps,
-// } from './page-table/page-table.js';
+export { PageTable } from './components/page-table/page-table.js';
 // export { default as Preview, PreviewProps } from './preview/preview.js';
 // export {
 //   default as ResourceCard,

@@ -20,6 +20,7 @@ import {
   HeaderActionActions,
   HeaderActionButton,
   HeaderActionContent,
+  animationType,
 } from '../components/HeaderAction';
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderDivider } from '../components/HeaderDivider';
@@ -786,10 +787,10 @@ export const SideNavPanel = () => (
 
 /**
  * Story for Header
- * @param {object} args Storybook args that control component props
+ * @param {string} args.animate The animation type
  * @returns {React.ReactElement} The JSX for the story
  */
-export const HeaderStory = () => {
+export const HeaderStory = ({ animate }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
 
@@ -848,6 +849,22 @@ export const HeaderStory = () => {
           />
         </MenuButton>
         <HeaderDivider />
+        <HeaderAction align="bottom-right" animate={animate}>
+          <HeaderActionButton align="bottom" label="Show information">
+            <Information />
+          </HeaderActionButton>
+          <HeaderActionContent>
+            <p>
+              Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed
+              do eiusmod tempor incididunt ut fsil labore et dolore magna
+              aliqua.
+            </p>
+            <HeaderActionActions>
+              <Link href="#">Link action</Link>
+              <Button size="sm">Button</Button>
+            </HeaderActionActions>
+          </HeaderActionContent>
+        </HeaderAction>
         <HeaderGlobalAction aria-label="Open">
           <SquareOutline size={20} />
         </HeaderGlobalAction>
@@ -857,6 +874,18 @@ export const HeaderStory = () => {
 };
 
 HeaderStory.storyName = 'Header';
+HeaderStory.args = {
+  animate: animationType.DEFAULT,
+};
+
+HeaderStory.argTypes = {
+  animate: {
+    options: animationType,
+    control: {
+      type: 'select',
+    },
+  },
+};
 
 /**
  * Story for HeaderPanel

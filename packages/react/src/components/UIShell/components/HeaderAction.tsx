@@ -48,7 +48,7 @@ function useToggletip() {
   return useContext(HeaderActionContext);
 }
 
-enum animationType {
+export enum animationType {
   DEFAULT = 'default',
   SLIDE_DOWN = 'slide-down',
 }

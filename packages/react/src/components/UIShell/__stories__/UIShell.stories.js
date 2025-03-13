@@ -20,6 +20,7 @@ import {
   HeaderActionActions,
   HeaderActionButton,
   HeaderActionContent,
+  animationType,
 } from '../components/HeaderAction';
 import { HeaderContainer } from '../components/HeaderContainer';
 import {
@@ -690,6 +691,201 @@ export const SideNavPanel = () => (
     </Content>
   </>
 );
+
+/**
+ * Story for Header
+ * @param {object} args Storybook args that control component props
+ * @param {string} args.animate The animation type
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const HeaderStory = ({ animate }) => (
+  <HeaderContainer
+    render={({
+      isSideNavExpanded,
+      isSwitcherExpanded,
+      onClickSideNavExpand,
+      onClickSwitcherExpand,
+    }) => (
+      <Theme theme="g100">
+        <Header aria-label="IBM Platform Name">
+          <SkipToContent />
+          <HeaderMenuButton
+            aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
+            onClick={onClickSideNavExpand}
+            isActive={isSideNavExpanded}
+            aria-expanded={isSideNavExpanded}
+            isCollapsible //shows hamburger menu at desktop
+            isFixedNav
+          />
+          <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
+            [Platform]
+          </HeaderName>
+          <HeaderGlobalBar>
+            <HeaderAction align="bottom-right" animate={animate}>
+              <HeaderActionButton align="bottom" label="Show information">
+                <Information />
+              </HeaderActionButton>
+              <HeaderActionContent>
+                <p>
+                  Lorem ipsum dolor sit amet, di os consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt ut fsil labore et dolore
+                  magna aliqua.
+                </p>
+                <HeaderActionActions>
+                  <Link href="#">Link action</Link>
+                  <Button size="sm">Button</Button>
+                </HeaderActionActions>
+              </HeaderActionContent>
+            </HeaderAction>
+            {/* // TODO: await release of https://github.com/carbon-design-system/carbon/pull/18732 */}
+            <HeaderGlobalAction aria-label="Search">
+              <Search size={20} />
+            </HeaderGlobalAction>
+            <HeaderGlobalAction aria-label="Notifications">
+              <Notification size={20} />
+            </HeaderGlobalAction>
+            <HeaderGlobalAction
+              aria-label={
+                isSwitcherExpanded ? 'Close switcher' : 'Open switcher'
+              }
+              aria-expanded={isSwitcherExpanded}
+              isActive={isSwitcherExpanded}
+              onClick={onClickSwitcherExpand}
+              tooltipAlignment="end"
+              id="switcher-button">
+              <SwitcherIcon size={20} />
+            </HeaderGlobalAction>
+          </HeaderGlobalBar>
+          <HeaderPanel
+            expanded={isSwitcherExpanded}
+            onHeaderPanelFocus={onClickSwitcherExpand}
+            href="#switcher-button">
+            <Switcher
+              aria-label="Switcher Container"
+              expanded={isSwitcherExpanded}>
+              <SwitcherItem aria-label="Link 1" href="#">
+                Link 1
+              </SwitcherItem>
+              <SwitcherDivider />
+              <SwitcherItem href="#" aria-label="Link 2">
+                Link 2
+              </SwitcherItem>
+              <SwitcherItem href="#" aria-label="Link 3">
+                Link 3
+              </SwitcherItem>
+              <SwitcherItem href="#" aria-label="Link 4">
+                Link 4
+              </SwitcherItem>
+              <SwitcherItem href="#" aria-label="Link 5">
+                Link 5
+              </SwitcherItem>
+              <SwitcherDivider />
+              <SwitcherItem href="#" aria-label="Link 6">
+                Link 6
+              </SwitcherItem>
+            </Switcher>
+          </HeaderPanel>
+        </Header>
+        <SideNav
+          isTreeview={true}
+          aria-label="Main navigation"
+          expanded={isSideNavExpanded}
+          onSideNavBlur={onClickSideNavExpand}
+          isCollapsible
+          hideOverlay
+          className="nav--global">
+          <SideNavItems>
+            <SideNavMenu renderIcon={CarbonDesignSystem} title="Product 1">
+              <SideNavMenu renderIcon={Home} title="Home">
+                <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                  Item level 3
+                </SideNavMenuItem>
+                <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                  Item level 3
+                </SideNavMenuItem>
+                <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                  Item level 3
+                </SideNavMenuItem>
+              </SideNavMenu>
+              <SideNavMenuItem
+                href="http://www.carbondesignsystem.com"
+                renderIcon={BusinessProcesses}>
+                Business
+              </SideNavMenuItem>
+              <SideNavMenuItem
+                href="http://www.carbondesignsystem.com"
+                renderIcon={Application}>
+                Applications
+              </SideNavMenuItem>
+              <SideNavMenuItem
+                href="http://www.carbondesignsystem.com"
+                renderIcon={Platforms}>
+                Platforms
+              </SideNavMenuItem>
+              <SideNavMenu renderIcon={Layers} title="Infrastructure">
+                <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                  Item level 3
+                </SideNavMenuItem>
+                <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                  Item level 3
+                </SideNavMenuItem>
+                <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                  Item level 3
+                </SideNavMenuItem>
+              </SideNavMenu>
+            </SideNavMenu>
+            <SideNavMenu renderIcon={CarbonIBMDotCom} title="Product 2">
+              <SideNavMenuItem
+                renderIcon={Home}
+                href="http://www.carbondesignsystem.com">
+                Link
+              </SideNavMenuItem>
+            </SideNavMenu>
+            <SideNavMenu renderIcon={CarbonforIBMProducts} title="Product 3">
+              <SideNavMenuItem
+                renderIcon={Home}
+                href="http://www.carbondesignsystem.com">
+                Link
+              </SideNavMenuItem>
+            </SideNavMenu>
+            <SideNavMenu renderIcon={IBMTelemetry} title="Product 4">
+              <SideNavMenuItem
+                renderIcon={Home}
+                href="http://www.carbondesignsystem.com">
+                Link
+              </SideNavMenuItem>
+            </SideNavMenu>
+            <SideNavDivider />
+            <SideNavLink
+              renderIcon={DocumentMultiple_01}
+              href="http://www.carbondesignsystem.com">
+              Docs
+            </SideNavLink>
+            <SideNavLink
+              renderIcon={Settings}
+              href="http://www.carbondesignsystem.com">
+              Settings
+            </SideNavLink>
+          </SideNavItems>
+        </SideNav>
+      </Theme>
+    )}
+  />
+);
+
+HeaderStory.storyName = 'Header';
+HeaderStory.args = {
+  animate: animationType.DEFAULT,
+};
+
+HeaderStory.argTypes = {
+  animate: {
+    options: animationType,
+    control: {
+      type: 'select',
+    },
+  },
+};
 
 /**
  * Story for HeaderPanel

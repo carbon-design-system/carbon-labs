@@ -8,6 +8,7 @@
 
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/motion' as *;
+
 $prefix: 'cds' !default;
 
 .#{$prefix}--header__global {
@@ -34,26 +35,31 @@ $prefix: 'cds' !default;
 .#{$prefix}--header-action.#{$prefix}--animate--slide-down
   .#{$prefix}--popover
   .#{$prefix}--header-action__content {
-  transition: transform motion(standard, productive) $duration-fast-02;
+  transform: translateY(-100%);
+  transition: transform motion(standard, productive) $duration-fast-02,
+    display motion(standard, productive) $duration-fast-02;
+  transition-behavior: allow-discrete;
+
+  /**
+   * starting style also not supported widely
+   * https://caniuse.com/mdn-css_at-rules_starting-style
+   */
+  @starting-style {
+    transform: translateY(100%);
+  }
 }
 
 .#{$prefix}--header-action.#{$prefix}--animate--slide-down.#{$prefix}--popover--open
   .#{$prefix}--popover
   .#{$prefix}--header-action__content {
   transform: translateY(100%);
-  visibility: visible;
-  opacity: 1;
-}
+  transition: transform motion(standard, productive) $duration-fast-02;
 
-/** starting style also not supported widely
- * https://caniuse.com/mdn-css_at-rules_starting-style
- */
-@starting-style {
-  .#{$prefix}--header-action.#{$prefix}--animate--slide-down.#{$prefix}--popover--open
-    .#{$prefix}--popover
-    .#{$prefix}--header-action__content {
-    opacity: 0;
-    visibility: hidden;
+  /**
+   * starting style also not supported widely
+   * https://caniuse.com/mdn-css_at-rules_starting-style
+   */
+  @starting-style {
     transform: translateY(-100%);
   }
 }

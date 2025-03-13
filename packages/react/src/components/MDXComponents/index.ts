@@ -60,6 +60,7 @@ export { UL } from './components/markdown/ul.js';
 //   default as PageDescription,
 //   PageDescriptionProps,
 // } from './page-description/page-description.js';
+export { PageDescription } from './components/page-description/page-description.js';
 export { PageTable } from './components/page-table/page-table.js';
 // export { default as Preview, PreviewProps } from './preview/preview.js';
 // export {

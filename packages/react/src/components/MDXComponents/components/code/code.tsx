@@ -11,7 +11,7 @@ import React, { ReactElement, ReactPortal } from 'react';
 
 import { MdxComponent, NonScalarNode } from '../interfaces';
 import { withPrefix } from '../utils';
-import Path from './path';
+import { Path } from './path';
 
 interface CodeProps {
   children: Exclude<NonScalarNode, Array<ReactElement | ReactPortal>>;
@@ -32,6 +32,8 @@ export const Code: MdxComponent<CodeProps> = ({ children }) => {
   const path = children.props.path;
   const src = children.props.src;
   const language = children.props.className || 'language-plain';
+
+  console.log(children);
 
   return (
     <Grid condensed>

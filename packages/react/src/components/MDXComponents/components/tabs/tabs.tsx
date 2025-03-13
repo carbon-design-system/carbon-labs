@@ -66,4 +66,3 @@ Tabs.propTypes = {
 Tabs.displayName = 'Tabs';
 
 export { TabContext };
-export default Tabs;

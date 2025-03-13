@@ -30,7 +30,7 @@ export const Path: MdxComponent<PathProps> = ({ src, path }) => {
           title="View source"
           className={withPrefix('icon')}
           href={src}>
-          <Launch alt="View source" />
+          <Launch title="View source" />
         </a>
       )}
     </div>

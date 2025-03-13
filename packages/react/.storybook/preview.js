@@ -1,13 +1,38 @@
 import React from 'react';
 import { white, g10, g90, g100 } from '@carbon/themes';
 import { breakpoints } from '@carbon/layout';
-import { GlobalTheme } from '@carbon/react/es/components/Theme';
+import { GlobalTheme, Theme } from '@carbon/react/es/components/Theme';
 import { Layout } from '@carbon/react/es/components/Layout';
 import { TextDirection } from '@carbon/react/es/components/Text';
+import { DocsContainer, Unstyled } from '@storybook/blocks';
 import '../src/components/MDXComponents/components/index.scss';
 import './styles.scss';
 
 import theme from './theme';
+
+/**
+ * Custom container to render Carbon MDX differently
+ */
+const Container = ({ children, ...props }) => {
+  // MDX pages that aren't associated with a story
+  // @TODO set prop types
+  const isCarbonMdx =
+    children?.type?.name === `MDXContent` &&
+    !props?.context?.attachedCSFFiles.size;
+
+  // Disable Storybook markdown styles and ignore global theme switchers
+  if (isCarbonMdx) {
+    return (
+      <DocsContainer {...props}>
+        <Unstyled>
+          <Theme theme="g10">{children}</Theme>
+        </Unstyled>
+      </DocsContainer>
+    );
+  }
+
+  return <DocsContainer {...props}>{children}</DocsContainer>;
+};
 
 const devTools = {
   layoutSize: {
@@ -127,6 +152,7 @@ export const parameters = {
     current: 'light',
   },
   docs: {
+    container: Container,
     theme,
   },
   // Small (<672)
@@ -177,8 +203,16 @@ export const parameters = {
 
 const decorators = [
   (Story, context) => {
-    const { layoutDensity, layoutSize, locale, dir, theme } = context.globals;
+    let { theme } = context.globals;
+    const { layoutDensity, layoutSize, locale, dir } = context.globals;
     const [randomKey, setRandomKey] = React.useState(1);
+
+    const isMarkdown = context?.kind?.startsWith('Components/MDX Components');
+
+    // Carbon MDX only supports the g10 theme
+    if (isMarkdown) {
+      theme = 'g10';
+    }
 
     React.useEffect(() => {
       document.documentElement.setAttribute('data-carbon-theme', theme);
@@ -191,14 +225,6 @@ const decorators = [
       setRandomKey(Math.floor(Math.random() * 10));
     }, [locale, dir]);
 
-    const markdownComponentsStyles = {
-      background: 'var(--cds-background)',
-      padding: '1rem',
-    };
-
-    const isMarkdownComponent =
-      context.kind && context.kind.startsWith('Components/MDX Components');
-
     return (
       <GlobalTheme theme={theme}>
         <Layout size={layoutSize || null} density={layoutDensity || null}>
@@ -206,13 +232,9 @@ const decorators = [
             getTextDirection={(text) => {
               return dir;
             }}>
-            {isMarkdownComponent ? (
-              <div style={markdownComponentsStyles}>
-                <Story key={randomKey} {...context} />
-              </div>
-            ) : (
+            <Theme theme={theme}>
               <Story key={randomKey} {...context} />
-            )}
+            </Theme>
           </TextDirection>
         </Layout>
       </GlobalTheme>

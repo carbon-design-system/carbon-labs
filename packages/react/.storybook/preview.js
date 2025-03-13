@@ -4,6 +4,7 @@ import { breakpoints } from '@carbon/layout';
 import { GlobalTheme } from '@carbon/react/es/components/Theme';
 import { Layout } from '@carbon/react/es/components/Layout';
 import { TextDirection } from '@carbon/react/es/components/Text';
+import '../src/components/MDXComponents/components/index.scss';
 import './styles.scss';
 
 import theme from './theme';

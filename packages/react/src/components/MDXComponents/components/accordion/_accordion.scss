@@ -1,0 +1,27 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/theme' as theme;
+
+@use '../utils' as *;
+
+.#{with-prefix('accordion')} {
+  margin-top: spacing.$spacing-06;
+  color: theme.$text-primary;
+}
+
+// override carbon, accordion right spacing
+.#{with-prefix('accordion')} .cds--accordion__content {
+  padding-right: spacing.$spacing-10;
+}
+
+// override carbon, title font and spacing
+.#{with-prefix('accordion')} .cds--accordion__title {
+  @include type.type-style('heading-02');
+}

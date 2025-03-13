@@ -1,0 +1,18 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+$carbon-platform-prefix: 'carbon-platform-mdx-components';
+
+@function with-prefix($input) {
+  @return $carbon-platform-prefix + '--' + $input;
+}
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+}

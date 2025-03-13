@@ -197,7 +197,7 @@ const decorators = [
     };
 
     const isMarkdownComponent =
-      context.kind && context.kind.startsWith('Components/MDX Components');
+      context.kind && context.kind.startsWith('MDX Components');
 
     return (
       <GlobalTheme theme={theme}>

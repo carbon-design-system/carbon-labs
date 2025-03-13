@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react'
+import React from 'react';
 import { Code } from './code'
 
 export default {
-  title: 'Components/MDX Components/Markdown/Code',
+  title: 'MDX Components/Markdown/Code',
   component: Code
 }
 

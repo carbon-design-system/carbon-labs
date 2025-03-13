@@ -8,7 +8,7 @@ import React from 'react';
 import { Link } from './link'
 
 export default {
-  title: 'Components/MDX Components/Markdown/Link',
+  title: 'MDX Components/Markdown/Link',
   component: Link,
   argTypes: {
     className: {

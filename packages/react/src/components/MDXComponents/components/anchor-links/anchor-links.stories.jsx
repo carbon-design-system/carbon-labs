@@ -9,7 +9,7 @@ import { AnchorLink } from './anchor-link';
 import { AnchorLinks } from './anchor-links';
 
 export default {
-  title: 'Components/MDX Components/AnchorLinks',
+  title: 'MDX Components/AnchorLinks',
   component: AnchorLinks,
   subcomponents: { AnchorLink },
   argTypes: {

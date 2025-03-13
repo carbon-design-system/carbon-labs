@@ -1,0 +1,56 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/type' as type;
+
+@use '../utils' as *;
+
+.#{with-prefix('aside')} {
+  @include type.type-style('body-01');
+
+  position: relative;
+  top: -(spacing.$spacing-04);
+  color: theme.$text-primary;
+
+  @include breakpoint.breakpoint('lg') {
+    padding-top: spacing.$spacing-04;
+  }
+
+  @include breakpoint.breakpoint('lg') {
+    //spacing values came from IDL site design
+    padding-right: 26%;
+  }
+
+  > div,
+  > div ol:first-child {
+    margin-top: 0;
+  }
+
+  p,
+  li {
+    @include type.type-style('body-01');
+  }
+
+  @include breakpoint.breakpoint('md') {
+    &::before {
+      position: absolute;
+      top: 0;
+      left: -(spacing.$spacing-05);
+      width: 40%;
+      height: 1px;
+      background: theme.$border-inverse;
+      content: '';
+    }
+  }
+}
+
+.#{with-prefix('aside--no-rule')}::before {
+  content: none;
+}

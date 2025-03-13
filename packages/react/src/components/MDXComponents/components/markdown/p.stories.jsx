@@ -9,7 +9,7 @@ import React from 'react';
 import { P } from './p'
 
 const stories = {
-  title: 'Components/MDX Components/Markdown/P',
+  title: 'MDX Components/Markdown/P',
   component: P
 }
 

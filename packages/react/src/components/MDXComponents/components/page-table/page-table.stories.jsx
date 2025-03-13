@@ -8,7 +8,7 @@ import React from 'react';
 import { PageTable } from './page-table';
 
 const stories = {
-  title: 'Components/MDX Components/Markdown/PageTable',
+  title: 'MDX Components/Markdown/PageTable',
   component: PageTable,
   argTypes: {
     children: {

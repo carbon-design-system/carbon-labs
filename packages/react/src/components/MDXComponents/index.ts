@@ -25,6 +25,7 @@ export { Caption } from './components/caption/caption.js';
 export { Code } from './components/code/code.js';
 export { Divider } from './components/divider/divider.js';
 export { DoDont } from './components/do-dont/do-dont.js';
+export { DoDontRow } from './components/do-dont/do-dont-row.js';
 // export { default as DoDontRow, DoDontRowProps } from './do-dont/do-dont-row.js';
 // export {
 //   default as GifPlayer,

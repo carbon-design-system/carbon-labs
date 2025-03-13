@@ -8,7 +8,7 @@
 import React from 'react'
 import { DoDont } from './do-dont'
 import { DoDontRow } from './do-dont-row'
-import lightTheme from '../../res/light-theme.jpg'
+import lightTheme from '../../../../../.storybook/storybook-images/light-theme.jpg'
 
 export default {
   title: 'MDX Components/DoDont',

@@ -42,6 +42,7 @@ export { Row } from './components/grid-transform/row.js';
 //   default as InlineNotification,
 //   InlineNotificationProps,
 // } from './inline-notification/inline-notification.js';
+export { InlineNotification } from './components/inline-notification/inline-notification.js';
 export { Link } from './components/link/link.js';
 export { Blockquote } from './components/markdown/blockquote.js';
 export { H1 } from './components/markdown/h1.js';

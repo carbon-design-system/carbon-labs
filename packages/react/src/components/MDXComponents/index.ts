@@ -68,12 +68,8 @@ export { Preview } from './components/preview/preview.js';
 //   ResourceCardProps,
 // } from './resource-card/resource-card.js';
 export { StorybookDemo } from './components/storybook-demo/storybook-demo.js';
-// export {
-//   default as StorybookDemo,
-//   StorybookDemoProps,
-// } from './storybook-demo/storybook-demo.js';
-// export { default as Tab, TabProps } from './tabs/tab.js';
-// export { default as Tabs, TabsProps } from './tabs/tabs.js';
+export { Tab } from './components/tabs/tab.js';
+export { Tabs } from './components/tabs/tabs.js';
 // export { default as Title, TitleProps } from './title/title.js';
 // export {
 //   default as Video,

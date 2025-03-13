@@ -177,7 +177,9 @@ export const parameters = {
 
 const decorators = [
   (Story, context) => {
-    const { layoutDensity, layoutSize, locale, dir, theme } = context.globals;
+    const { layoutDensity, layoutSize, locale, dir } = context.globals;
+    let { theme } = context.globals;
+
     const [randomKey, setRandomKey] = React.useState(1);
 
     React.useEffect(() => {
@@ -191,13 +193,12 @@ const decorators = [
       setRandomKey(Math.floor(Math.random() * 10));
     }, [locale, dir]);
 
-    const markdownComponentsStyles = {
-      background: 'var(--cds-background)',
-      padding: '1rem',
-    };
-
     const isMarkdownComponent =
       context.kind && context.kind.startsWith('MDX Components');
+
+    if (isMarkdownComponent) {
+      theme = 'g10';
+    }
 
     return (
       <GlobalTheme theme={theme}>
@@ -206,13 +207,7 @@ const decorators = [
             getTextDirection={(text) => {
               return dir;
             }}>
-            {isMarkdownComponent ? (
-              <div style={markdownComponentsStyles}>
-                <Story key={randomKey} {...context} />
-              </div>
-            ) : (
-              <Story key={randomKey} {...context} />
-            )}
+            <Story key={randomKey} {...context} />
           </TextDirection>
         </Layout>
       </GlobalTheme>

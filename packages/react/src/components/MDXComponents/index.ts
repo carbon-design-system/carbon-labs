@@ -63,11 +63,11 @@ export { UL } from './components/markdown/ul.js';
 export { PageDescription } from './components/page-description/page-description.js';
 export { PageTable } from './components/page-table/page-table.js';
 export { Preview } from './components/preview/preview.js';
-// export { default as Preview, PreviewProps } from './preview/preview.js';
 // export {
 //   default as ResourceCard,
 //   ResourceCardProps,
 // } from './resource-card/resource-card.js';
+export { StorybookDemo } from './components/storybook-demo/storybook-demo.js';
 // export {
 //   default as StorybookDemo,
 //   StorybookDemoProps,

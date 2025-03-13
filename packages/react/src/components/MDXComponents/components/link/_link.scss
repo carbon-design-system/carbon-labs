@@ -8,5 +8,5 @@
 @use '../utils' as *;
 
 .#{with-prefix('link')} {
-  font-size: inherit;
+  font-size: inherit !important;
 }

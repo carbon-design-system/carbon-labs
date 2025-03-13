@@ -171,6 +171,11 @@ export const parameters = {
     container: Container,
     theme,
   },
+  options: {
+    storySort: {
+      order: ['Components'],
+    },
+  },
   // Small (<672)
   // Medium (672 - 1056px)
   // Large (1056 - 1312px)
@@ -248,9 +253,7 @@ const decorators = [
             getTextDirection={(text) => {
               return dir;
             }}>
-            <Theme theme={theme}>
-              <Story key={randomKey} {...context} />
-            </Theme>
+            <Story key={randomKey} {...context} />
           </TextDirection>
         </Layout>
       </GlobalTheme>

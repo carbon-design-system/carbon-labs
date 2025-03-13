@@ -31,9 +31,9 @@ export { DoDontRow } from './components/do-dont/do-dont-row.js';
 //   default as GifPlayer,
 //   GifPlayerProps,
 // } from './gif-player/gif-player.js';
-// export { default as Column, ColumnProps } from './grid-transform/column.js';
-// export { default as Grid, GridProps } from './grid-transform/grid.js';
-// export { default as Row, RowProps } from './grid-transform/row.js';
+export { Column } from './components/grid-transform/column.js';
+export { Grid } from './components/grid-transform/grid.js';
+export { Row } from './components/grid-transform/row.js';
 // export {
 //   default as ImageWrapper,
 //   ImageWrapperProps,

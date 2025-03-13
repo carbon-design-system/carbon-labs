@@ -1,0 +1,193 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/utilities/convert' as convert;
+
+@use '../utils' as *;
+
+// Row
+.#{with-prefix('do-dont-row')} {
+  margin-top: spacing.$spacing-07;
+}
+
+.#{with-prefix('do-dont-row')} [class*='grid'] {
+  @include breakpoint.breakpoint('md') {
+    margin-bottom: 0;
+  }
+}
+
+.#{with-prefix('do-dont-row')} [class*='markdown_paragraph-container'] {
+  margin-top: 0;
+}
+
+.#{with-prefix('do-dont')} {
+  // Caption and title
+  .#{with-prefix('caption')} {
+    width: 100%;
+    padding: spacing.$spacing-05 0 0 0;
+    color: theme.$text-primary;
+
+    @include breakpoint.breakpoint('md') {
+      width: 75%;
+      margin-bottom: 0;
+    }
+  }
+
+  .#{with-prefix('title')} {
+    @include type.type-style('body-compact-01');
+
+    margin: 0;
+    color: theme.$text-primary;
+    font-weight: 600;
+
+    @media (orientation: landscape) {
+      padding: 0 25% 0 0;
+    }
+
+    @include breakpoint.breakpoint('md') {
+      padding: 0 25% 0 0;
+    }
+  }
+
+  .#{with-prefix('description')} {
+    @include type.type-style('body-compact-01');
+
+    padding: 0;
+    margin: 0;
+  }
+
+  // Icons
+  .#{with-prefix('icon')} {
+    position: absolute;
+    z-index: 10;
+    top: calc(1rem - 1px);
+    left: calc(1rem - 1px);
+    display: block;
+    width: convert.rem(24px);
+    height: convert.rem(24px);
+  }
+
+  .#{with-prefix('icon-correct')} {
+    fill: theme.$support-success;
+  }
+
+  .#{with-prefix('icon-incorrect')} {
+    fill: theme.$support-error;
+  }
+
+  .#{with-prefix('icon')} path[dataIconPath='inner-path'],
+  .#{with-prefix('icon')}path[data-icon-path='inner-path'] {
+    fill: theme.$icon-on-color;
+    opacity: 1;
+  }
+
+  // Example
+  .#{with-prefix('example')} {
+    width: 100%;
+  }
+
+  // Example card
+  .#{with-prefix('card')} {
+    position: relative;
+    width: 100%;
+    background: theme.$layer-01;
+    color: theme.$text-primary;
+  }
+
+  .#{with-prefix('ratio1x1')} .#{with-prefix('card')} {
+    padding-top: 100%;
+  }
+
+  .#{with-prefix('ratio4x3')} .#{with-prefix('card')} {
+    padding-top: 75%;
+  }
+
+  .#{with-prefix('ratio3x4')} .#{with-prefix('card')} {
+    padding-top: 133.3333%;
+  }
+
+  .#{with-prefix('ratio2x1')} .#{with-prefix('card')} {
+    padding-top: 50%;
+  }
+
+  .#{with-prefix('ratio1x2')} .#{with-prefix('card')} {
+    padding-top: 150%;
+  }
+
+  .#{with-prefix('ratio9x16')} .#{with-prefix('card')} {
+    padding-top: 177.7778%;
+  }
+
+  .#{with-prefix('ratio16x9')} .#{with-prefix('card')} {
+    padding-top: 56.25%;
+  }
+
+  .#{with-prefix('card')}::before {
+    position: absolute;
+    z-index: 1;
+    top: convert.rem(-1px);
+    left: 0;
+    width: 100%;
+    height: convert.rem(3px);
+    content: '';
+  }
+
+  .#{with-prefix('correct')} .#{with-prefix('card')}::before {
+    background: theme.$support-success;
+  }
+
+  .#{with-prefix('incorrect')} .#{with-prefix('card')}::before {
+    background: theme.$support-error;
+  }
+
+  // Example content
+  .#{with-prefix('content')} {
+    width: 100%;
+    font-size: 1.25rem;
+    font-weight: 300;
+  }
+
+  .#{with-prefix('text')} {
+    padding: 10%;
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.25;
+  }
+
+  .#{with-prefix('example')} .#{with-prefix('card-content')} {
+    position: relative;
+  }
+
+  .#{with-prefix('ratio')} .#{with-prefix('card-content')} {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Images
+  .#{with-prefix('content')} img {
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .#{with-prefix('image')} {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+}

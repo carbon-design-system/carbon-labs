@@ -9,7 +9,7 @@ import { LI } from './li';
 import { UL } from './ul';
 
 const stories = {
-  title: 'Components/MDX Components/Markdown/UL',
+  title: 'MDX Components/Markdown/UL',
   component: UL,
   argTypes: {
     children: {

@@ -1,0 +1,96 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/motion' as motion;
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/theme' as theme;
+
+@use '../utils' as *;
+
+.#{with-prefix('tab-dropdown')},
+.#{with-prefix('tab-list')} {
+  margin-top: spacing.$spacing-06;
+}
+
+.#{with-prefix('tab-list')} {
+  display: flex;
+  max-width: min-content;
+  border-bottom: 1px solid theme.$border-subtle-01;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  @include breakpoint.breakpoint('md') {
+    overflow: visible;
+  }
+}
+
+.#{with-prefix('tab-panel')} {
+  padding: spacing.$spacing-05;
+  padding-bottom: spacing.$spacing-08;
+  margin-top: 0;
+  background: theme.$layer-01;
+
+  color: theme.$text-primary;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.#{with-prefix('tab')} {
+  @include type.type-style('body-short-01');
+
+  position: relative;
+  display: inline-block;
+  min-width: 0;
+  height: 3rem;
+  align-items: center;
+  padding: spacing.$spacing-03 spacing.$spacing-05;
+  border: none;
+  border-right: 1px solid theme.$layer-03;
+  margin: 0;
+  background-color: theme.$layer-01;
+  color: theme.$text-primary;
+
+  cursor: pointer;
+  outline-color: transparent;
+  text-align: left;
+  transition: color motion.$duration-fast-02, background-color motion.$duration-fast-02,
+    border-color motion.$duration-fast-02, outline-color motion.$duration-fast-02;
+  white-space: nowrap;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &:focus {
+    // allows overflow to be above subsequent tab
+    z-index: 1;
+    border-right: 1px solid theme.$border-inverse;
+    outline: 1px solid theme.$focus-inverse;
+    outline-offset: -4px;
+  }
+
+  &:hover {
+    background-color: theme.$background-hover;
+  }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.#{with-prefix('tab')}[aria-selected='true'] {
+  background-color: theme.$layer-selected-inverse;
+  color: theme.$focus-inset;
+}
+
+.#{with-prefix('tab-list')} li:last-of-type #{with-prefix('.tab')} {
+  border-right: none;
+}

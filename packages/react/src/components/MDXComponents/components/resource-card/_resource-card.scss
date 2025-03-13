@@ -1,0 +1,164 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/motion' as motion;
+@use '@carbon/react/scss/utilities/convert' as convert;
+
+@use '../utils' as *;
+
+.#{with-prefix('resource-card')} {
+  //override carbon aspect ratio styles
+  .cds--aspect-ratio--object {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  //override carbon tile
+  .cds--tile {
+    position: relative;
+    height: 100%;
+    padding: spacing.$spacing-05 25% spacing.$spacing-05 spacing.$spacing-05;
+    text-decoration: none;
+    transition: background motion.$duration-fast-01;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  .#{with-prefix('title')} {
+    @include type.type-style('heading-03');
+
+    color: theme.$text-primary;
+    text-decoration: none;
+  }
+
+  .#{with-prefix('subtitle')} {
+    @include type.type-style('heading-01');
+    @include line-clamp(3);
+
+    color: theme.$text-primary;
+    font-weight: 400;
+    text-decoration: none;
+  }
+
+  .#{with-prefix('icon-img')} {
+    position: absolute;
+    bottom: spacing.$spacing-05;
+    left: spacing.$spacing-05;
+    display: flex;
+    width: convert.rem(32px);
+    max-height: convert.rem(32px);
+    align-items: flex-end;
+
+    img {
+      width: convert.rem(32px);
+      max-height: convert.rem(32px);
+    }
+
+    img[class*='image'] {
+      background: transparent;
+    }
+  }
+
+  .#{with-prefix('icon-action')} {
+    position: absolute;
+    right: spacing.$spacing-05;
+    bottom: spacing.$spacing-05;
+    width: convert.rem(20px);
+    height: convert.rem(20px);
+  }
+
+  .#{with-prefix('icon-action')} svg {
+    fill: theme.$icon-primary;
+  }
+
+  // Disabled
+  // override carbon tile
+  &.#{with-prefix('disabled')} .cds--tile:hover {
+    background: theme.$layer-01;
+    cursor: not-allowed;
+  }
+
+  &.#{with-prefix('disabled')} .#{with-prefix('title')},
+  &.#{with-prefix('disabled')} .#{with-prefix('subtitle')} {
+    color: theme.$text-on-color-disabled;
+  }
+
+  &.#{with-prefix('disabled')} .#{with-prefix('icon-action')} svg {
+    fill: theme.$icon-disabled;
+  }
+
+  &.#{with-prefix('disabled')} .#{with-prefix('icon-img')} {
+    filter: grayscale(100%);
+    opacity: 0.5;
+  }
+
+  .#{with-prefix('card-with-title')} {
+    .#{with-prefix('subtitle')} {
+      @include type.type-style('body-compact-01');
+
+      color: theme.$text-secondary;
+    }
+
+    .#{with-prefix('title')} {
+      @include type.type-style('body-compact-02');
+      @include line-clamp(2);
+    }
+  }
+
+  .#{with-prefix('child-component')} {
+    position: absolute;
+    top: spacing.$spacing-05;
+    right: spacing.$spacing-05;
+  }
+
+  .#{with-prefix('card-with-component')} {
+    padding-right: 50%;
+  }
+}
+
+// Resource card group
+// Add border only in between group of cards
+// Forces 3rd card to start new "row"
+// override carbon grid styles
+// this is a class used by users, doesn't need with-prefix
+.resource-card-group {
+  .cds--css-grid-column {
+    margin-bottom: 0;
+  }
+  // items: 3,5,7,9...
+  [class*='cds--lg:col-span-4']:nth-child(2n + 3) {
+    @include breakpoint.breakpoint('lg') {
+      grid-column-start: 1;
+    }
+  }
+
+  .#{with-prefix('resource-card')} {
+    border-top: 1px solid theme.$border-subtle;
+  }
+
+  [class*='cds--lg:col-span-4']:first-child .#{with-prefix('resource-card')} {
+    border-top: 0 solid transparent;
+  }
+
+  [class*='cds--lg:col-span-4']:nth-child(2) .#{with-prefix('resource-card')} {
+    @include breakpoint.breakpoint('md') {
+      border-top: 0 solid transparent;
+    }
+  }
+
+  [class*='cds--lg:col-span-4']:nth-child(even) .#{with-prefix('resource-card')} {
+    @include breakpoint.breakpoint('md') {
+      box-shadow: -1px 0 0 0 theme.$border-subtle;
+    }
+  }
+}

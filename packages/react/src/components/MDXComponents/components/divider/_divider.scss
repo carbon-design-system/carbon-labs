@@ -1,0 +1,67 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+
+@use '../utils' as *;
+
+.#{with-prefix('divider')} {
+  position: relative;
+  padding-top: spacing.$spacing-06;
+  margin-top: spacing.$spacing-09;
+
+  @include breakpoint.breakpoint(md) {
+    padding-top: spacing.$spacing-07;
+    margin-top: spacing.$spacing-10;
+  }
+
+  @include breakpoint.breakpoint(lg) {
+    margin-right: -(spacing.$spacing-05);
+  }
+
+  &::after {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 1rem;
+    width: calc(100% - 2rem);
+    height: 1px;
+    background: theme.$border-strong;
+    content: '';
+  }
+}
+
+.#{with-prefix('divider--empty')} {
+  height: 1px;
+  padding: 0;
+}
+
+.#{with-prefix('divider--empty')} + div {
+  margin-top: spacing.$spacing-06;
+
+  @include breakpoint.breakpoint(md) {
+    margin-top: spacing.$spacing-07;
+  }
+}
+
+.#{with-prefix('divider')} > [class*='grid'] {
+  margin-top: 0;
+}
+
+.#{with-prefix('divider')} > [class*='grid'] > *:not(:first-child) {
+  margin-top: spacing.$spacing-06;
+
+  @include breakpoint.breakpoint(lg) {
+    margin-top: 0;
+  }
+}
+
+.#{with-prefix('divider')} [class*='column'] > *:first-child {
+  margin-top: 0;
+}

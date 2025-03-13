@@ -13,7 +13,7 @@ import { H5 } from './h5';
 import { H6 } from './h6';
 
 export default {
-  title: 'Components/MDX Components/Markdown/Headings',
+  title: 'MDX Components/Markdown/Headings',
   component: H1,
   argTypes: {
     children: {

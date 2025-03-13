@@ -9,7 +9,7 @@ import { Blockquote } from './blockquote'
 import { P } from './p'
 
 export default {
-  title: 'Components/MDX Components/Markdown/Blockquote',
+  title: 'MDX Components/Markdown/Blockquote',
   component: Blockquote
 }
 

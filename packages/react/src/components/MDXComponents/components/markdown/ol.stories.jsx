@@ -10,7 +10,7 @@ import { LI } from './li';
 import { OL } from './ol';
 
 const stories = {
-  title: 'Components/MDX Components/Markdown/OL',
+  title: 'MDX Components/Markdown/OL',
   component: OL,
   argTypes: {
     children: {

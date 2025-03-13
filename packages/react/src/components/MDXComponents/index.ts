@@ -70,6 +70,7 @@ export { Preview } from './components/preview/preview.js';
 export { StorybookDemo } from './components/storybook-demo/storybook-demo.js';
 export { Tab } from './components/tabs/tab.js';
 export { Tabs } from './components/tabs/tabs.js';
+export { Title } from './components/title/title.js';
 // export { default as Title, TitleProps } from './title/title.js';
 // export {
 //   default as Video,

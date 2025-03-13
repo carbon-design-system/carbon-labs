@@ -17,7 +17,7 @@ interface PathProps {
   children: ReactNode;
 }
 
-const Path: MdxComponent<PathProps> = ({ src, path }) => {
+export const Path: MdxComponent<PathProps> = ({ src, path }) => {
   if (!path) return null;
   return (
     <div className={withPrefix('path-container')}>
@@ -38,12 +38,9 @@ const Path: MdxComponent<PathProps> = ({ src, path }) => {
 };
 
 Path.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node as unknown as React.Validator<React.ReactNode>,
   /** Provide path */
   path: PropTypes.string,
   /** Provide src link */
   src: PropTypes.string,
 };
-
-export { PathProps };
-export default Path;

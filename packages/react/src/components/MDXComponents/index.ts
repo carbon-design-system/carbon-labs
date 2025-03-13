@@ -7,10 +7,7 @@
 export { Accordion } from './components/accordion/accordion.js';
 export { AnchorLink } from './components/anchor-links/anchor-link.js';
 export { AnchorLinks } from './components/anchor-links/anchor-links.js';
-// export {
-//   default as AnchorLinks,
-//   AnchorLinksProps,
-// } from './anchor-links/anchor-links.js';
+
 // export {
 //   default as ArtDirection,
 //   ArtDirectionProps,
@@ -44,7 +41,7 @@ export { Code } from './components/code/code.js';
 //   default as InlineNotification,
 //   InlineNotificationProps,
 // } from './inline-notification/inline-notification.js';
-// export { default as Link, LinkProps } from './link/link.js';
+export { Link } from './components/link/link.js';
 export { Blockquote } from './components/markdown/blockquote.js';
 export { H1 } from './components/markdown/h1.js';
 export { H2 } from './components/markdown/h2.js';

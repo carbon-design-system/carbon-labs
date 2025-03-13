@@ -7,7 +7,7 @@
 import { breakpoints } from '@carbon/layout';
 import { useEffect, useState } from 'react';
 
-const prefix = 'carbon-platform-mdx-components';
+const prefix = 'carbon-mdx-components';
 const mediaQueries = {
   sm: `(min-width: ${breakpoints.sm.width})`,
   md: `(min-width: ${breakpoints.md.width})`,

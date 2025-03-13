@@ -45,20 +45,17 @@ export { AnchorLinks } from './components/anchor-links/anchor-links.js';
 //   InlineNotificationProps,
 // } from './inline-notification/inline-notification.js';
 // export { default as Link, LinkProps } from './link/link.js';
-// export {
-//   default as Blockquote,
-//   BlockquoteProps,
-// } from './markdown/blockquote.js';
-// export { default as H1, H1Props } from './markdown/h1.js';
-// export { default as H2, H2Props } from './markdown/h2.js';
-// export { default as H3, H3Props } from './markdown/h3.js';
-// export { default as H4, H4Props } from './markdown/h4.js';
-// export { default as H5, H5Props } from './markdown/h5.js';
-// export { default as H6, H6Props } from './markdown/h6.js';
-// export { default as LI, LiProps } from './markdown/li.js';
-// export { default as OL, OlProps } from './markdown/ol.js';
-// export { default as P, ParagraphProps } from './markdown/p.js';
-// export { default as UL, UlProps } from './markdown/ul.js';
+export { Blockquote } from './components/markdown/blockquote.js';
+export { H1 } from './components/markdown/h1.js';
+export { H2 } from './components/markdown/h2.js';
+export { H3 } from './components/markdown/h3.js';
+export { H4 } from './components/markdown/h4.js';
+export { H5 } from './components/markdown/h5.js';
+export { H6 } from './components/markdown/h6.js';
+export { LI } from './components/markdown/li.js';
+export { OL } from './components/markdown/ol.js';
+export { P } from './components/markdown/p.js';
+export { UL } from './components/markdown/ul.js';
 // export { default as MiniCard, MiniCardProps } from './mini-card/mini-card.js';
 // export {
 //   default as PageDescription,

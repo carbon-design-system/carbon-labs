@@ -1,0 +1,135 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/type' as type;
+
+@use '../utils' as *;
+@use './autolink-header/autolink-header';
+
+/*  Spacing */
+.#{with-prefix('h1-container')} + *,
+.#{with-prefix('h2-container')} + *,
+.#{with-prefix('h3-container')} + *,
+.#{with-prefix('paragraph-container')} + * {
+  margin-top: spacing.$spacing-06;
+}
+
+.#{with-prefix('h4-container')} + *,
+.#{with-prefix('h4-container')} + div {
+  margin-top: 0;
+}
+
+.#{with-prefix('h1-container')} {
+  margin-top: spacing.$spacing-12;
+}
+
+.#{with-prefix('h2-container')},
+.#{with-prefix('paragraph-container')} + .#{with-prefix('h2-container')} {
+  margin-top: spacing.$spacing-09;
+
+  @include breakpoint.breakpoint(md) {
+    margin-top: spacing.$spacing-11;
+  }
+}
+
+.#{with-prefix('h3-container')},
+.#{with-prefix('paragraph-container')} + .#{with-prefix('h3-container')} {
+  margin-top: spacing.$spacing-10;
+}
+
+.#{with-prefix('h4-container')},
+.#{with-prefix('paragraph-container')} + .#{with-prefix('h4-container')} {
+  margin-top: spacing.$spacing-07;
+}
+
+.#{with-prefix('h5-container')},
+.#{with-prefix('h6-container')} {
+  margin-top: 0;
+}
+
+.#{with-prefix('paragraph-container')} {
+  margin-top: spacing.$spacing-06;
+}
+
+/* Spacing List */
+.#{with-prefix('list-container')} {
+  margin-top: spacing.$spacing-06;
+}
+
+.#{with-prefix('list')} .#{with-prefix('list')} {
+  margin-top: 0;
+}
+
+.#{with-prefix('ul')} {
+  /* override carbon remove hanging bullet */
+  margin-left: spacing.$spacing-05;
+}
+
+.#{with-prefix('ol')} {
+  /*  override carbon remove hanging bullet */
+  margin-left: spacing.$spacing-06;
+}
+
+/* Headings */
+.#{with-prefix('h1')} {
+  @include type.type-style('fluid-heading-05', true);
+}
+
+.#{with-prefix('h2')} {
+  @include type.type-style('fluid-heading-04', true);
+}
+
+.#{with-prefix('h3')} {
+  @include type.type-style('fluid-heading-03', true);
+}
+
+.#{with-prefix('h4')} {
+  @include type.type-style('heading-02');
+}
+
+.#{with-prefix('h5')},
+.#{with-prefix('h6')} {
+  @include type.type-style('heading-01');
+}
+
+/* Paragraph */
+.#{with-prefix('paragraph')} {
+  @include type.type-style('body-long-02');
+}
+
+.#{with-prefix('paragraph--large')} {
+  @include type.type-style('fluid-heading-03', true);
+}
+
+/*  Blockquote */
+.#{with-prefix('blockquote')} {
+  padding-left: 1ch;
+  margin: spacing.$spacing-08 0;
+  margin-left: spacing.$spacing-05;
+
+  @include breakpoint.breakpoint('md') {
+    margin-left: spacing.$spacing-08;
+  }
+}
+
+.#{with-prefix('blockquote')} .#{with-prefix('paragraph')} {
+  @include type.type-style('fluid-heading-03', true);
+
+  font-style: italic;
+}
+
+.#{with-prefix('blockquote')} cite {
+  @include type.type-style('body-long-01');
+
+  display: block;
+  padding-left: spacing.$spacing-05;
+  margin-top: spacing.$spacing-02;
+  font-style: italic;
+  text-indent: 0;
+}

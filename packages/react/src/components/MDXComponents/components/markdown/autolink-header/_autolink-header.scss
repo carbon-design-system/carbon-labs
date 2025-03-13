@@ -1,0 +1,57 @@
+/*
+ * Copyright IBM Corp. 2022, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+@use '@carbon/react/scss/motion' as motion;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+
+@use '../../utils' as *;
+
+.#{with-prefix('header')} {
+  position: relative;
+
+  .#{with-prefix('anchor')} {
+    opacity: 0;
+
+    transition: opacity motion.$duration-fast-01 motion.$standard-easing;
+
+    &:hover,
+    &:active,
+    &:focus {
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: 2px solid theme.$focus;
+    }
+
+    svg {
+      fill: theme.$link-primary;
+    }
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  .#{with-prefix('left-anchor')} {
+    position: absolute;
+    top: 0;
+    left: calc(#{spacing.$spacing-06} * -1);
+  }
+
+  .#{with-prefix('right-anchor')} {
+    margin-left: spacing.$spacing-03;
+    white-space: nowrap;
+  }
+
+  &:hover .#{with-prefix('anchor')} {
+    @include breakpoint.breakpoint('md') {
+      opacity: 1;
+    }
+  }
+}

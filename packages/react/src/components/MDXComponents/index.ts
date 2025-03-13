@@ -16,14 +16,14 @@ export { AnchorLinks } from './components/anchor-links/anchor-links.js';
 //   default as ArticleCard,
 //   ArticleCardProps,
 // } from './article-card/article-card.js';
-// export { default as Aside, AsideProps } from './aside/aside.js';
+export { Aside } from './components/aside/aside.js';
 // export { default as Caption, CaptionProps } from './caption/caption.js';
 // export {
 //   default as CardGroup,
 //   CardGroupProps,
 // } from './card-group/card-group.js';
 export { Code } from './components/code/code.js';
-// export { default as Divider, DividerProps } from './divider/divider.js';
+export { Divider } from './components/divider/divider.js';
 // export { default as DoDont, DoDontProps } from './do-dont/do-dont.js';
 // export { default as DoDontRow, DoDontRowProps } from './do-dont/do-dont-row.js';
 // export {

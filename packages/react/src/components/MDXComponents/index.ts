@@ -5,10 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 export { Accordion } from './components/accordion/accordion.js';
-// export {
-//   default as AnchorLink,
-//   AnchorLinkProps,
-// } from './anchor-links/anchor-link.js';
+export { AnchorLink } from './components/anchor-links/anchor-link.js';
+export { AnchorLinks } from './components/anchor-links/anchor-links.js';
 // export {
 //   default as AnchorLinks,
 //   AnchorLinksProps,

@@ -29,7 +29,8 @@
   },
   "dependencies": {
     "@ibm/telemetry-js": "^1.9.1",
-    "clsx": "^1.2.1"
+    "clsx": "^1.2.1",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@carbon-labs/utilities": "canary"

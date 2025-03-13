@@ -191,6 +191,14 @@ const decorators = [
       setRandomKey(Math.floor(Math.random() * 10));
     }, [locale, dir]);
 
+    const markdownComponentsStyles = {
+      background: 'var(--cds-background)',
+      padding: '1rem',
+    };
+
+    const isMarkdownComponent =
+      context.kind && context.kind.startsWith('Components/MDX Components');
+
     return (
       <GlobalTheme theme={theme}>
         <Layout size={layoutSize || null} density={layoutDensity || null}>
@@ -198,7 +206,13 @@ const decorators = [
             getTextDirection={(text) => {
               return dir;
             }}>
-            <Story key={randomKey} {...context} />
+            {isMarkdownComponent ? (
+              <div style={markdownComponentsStyles}>
+                <Story key={randomKey} {...context} />
+              </div>
+            ) : (
+              <Story key={randomKey} {...context} />
+            )}
           </TextDirection>
         </Layout>
       </GlobalTheme>

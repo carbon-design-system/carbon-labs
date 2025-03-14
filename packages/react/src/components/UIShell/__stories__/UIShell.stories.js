@@ -28,9 +28,19 @@ import {
   Column,
   HeaderGlobalBar,
   HeaderGlobalAction,
+  HeaderNavigation,
+  HeaderMenuItem,
+  HeaderMenu,
   Switcher,
   SwitcherItem,
   SwitcherDivider,
+  Button,
+  Dropdown,
+  MenuButton,
+  MenuItem,
+  MenuItemRadioGroup,
+  MenuItemGroup,
+  MenuItemSelectable,
 } from '@carbon/react';
 import {
   Add,
@@ -51,6 +61,7 @@ import {
   Search,
   Notification,
   Switcher as SwitcherIcon,
+  SquareOutline,
 } from '@carbon/icons-react';
 
 import {
@@ -71,6 +82,31 @@ export default {
     },
   },
 };
+
+const dropdownItems = [
+  {
+    text: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
+  },
+  {
+    text: 'Option 1',
+  },
+  {
+    text: 'Option 2',
+  },
+  {
+    text: 'Option 3 - a disabled item',
+    disabled: true,
+  },
+  {
+    text: 'Option 4',
+  },
+  {
+    text: 'Option 5',
+  },
+  {
+    text: 'Option 6',
+  },
+];
 
 /**
  * Story content
@@ -664,6 +700,75 @@ export const SideNavPanel = () => (
     </Content>
   </>
 );
+
+/**
+ * Story for Header
+ * @param {object} args Storybook args that control component props
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const HeaderStory = () => (
+  <Header aria-label="IBM Platform Name">
+    <SkipToContent />
+    <HeaderMenuButton aria-label="Open menu" isCollapsible isFixedNav />
+    <HeaderName href="#" prefix="IBM">
+      [Platform]
+    </HeaderName>
+    <HeaderGlobalBar>
+      <Dropdown
+        id="dropdown1"
+        titleText="dDropdown"
+        hideLabel
+        label="Dropdown"
+        items={dropdownItems}
+        size="lg"
+        itemToString={(item) => (item ? item.text : '')}
+      />
+      <Button kind="ghost">Ghost button</Button>
+      <HeaderNavigation aria-label="IBM [Platform]">
+        <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+        <HeaderMenu aria-label="Link 4" menuLinkName="HeaderMenu">
+          <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+          <HeaderMenuItem isActive href="#">
+            HeaderMenuItem
+          </HeaderMenuItem>
+          <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+        </HeaderMenu>
+      </HeaderNavigation>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open" isActive>
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <MenuButton label="MenuButton" kind="ghost">
+        <MenuItem label="MenuItem" />
+        <MenuItem label="MenuItem" />
+        <MenuItemGroup label="MenuItemGroup">
+          <MenuItemSelectable label="Selectable 1" selected />
+          <MenuItemSelectable label="Selectable 2" />
+        </MenuItemGroup>
+        <MenuItemRadioGroup
+          label="MenuItemRadioGroup"
+          items={['Radio 1', 'Radio 2']}
+          selectedItem="Radio 2"
+        />
+      </MenuButton>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+      <HeaderGlobalAction aria-label="Open">
+        <SquareOutline size={20} />
+      </HeaderGlobalAction>
+    </HeaderGlobalBar>
+  </Header>
+);
+HeaderStory.storyName = 'Header';
 
 /**
  * Story for HeaderPanel

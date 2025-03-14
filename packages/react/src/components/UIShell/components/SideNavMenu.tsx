@@ -58,6 +58,12 @@ export interface SideNavMenuProps {
   large?: boolean;
 
   /**
+   *
+   * A custom onClick handler hook that runs when the SideNavMenu is toggled.
+   */
+  onMenuToggle?: () => void;
+
+  /**
    * A custom icon to render next to the SideNavMenu title. This can be a function returning JSX or JSX itself.
    */
   renderIcon?: React.ComponentType;
@@ -95,6 +101,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       renderIcon: IconElement,
       isSideNavExpanded,
       title,
+      onMenuToggle,
     },
     ref: ForwardedRef<HTMLElement>
   ) {
@@ -249,6 +256,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     function handleKeyDown(event) {
       if (match(event, keys.Escape)) {
         setIsExpanded(false);
+
+        if (onMenuToggle) {
+          onMenuToggle();
+        }
       }
 
       if (isTreeview) {
@@ -263,6 +274,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           // collapse menu
           if (isMenu && sideNavExpanded) {
             if (isExpanded == 'true') {
+              if (onMenuToggle) {
+                onMenuToggle();
+              }
               setIsExpanded(false);
 
               // go to previous level's side nav menu button
@@ -288,6 +302,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           // expand menu when sidenav is expanded
           if (isMenu && sideNavExpanded) {
             setIsExpanded(true);
+
+            if (onMenuToggle) {
+              onMenuToggle();
+            }
 
             // if already expanded, focus on first element
             if (isExpanded == 'true') {
@@ -332,6 +350,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           aria-expanded={isExpanded}
           className={buttonClassName}
           onClick={() => {
+            if (onMenuToggle) {
+              onMenuToggle();
+            }
+
             // only when sidenav is panel view
             if (
               navType == SIDE_NAV_TYPE.PANEL &&
@@ -428,6 +450,12 @@ SideNavMenu.propTypes = {
    * Specify if this is a large variation of the SideNavMenu
    */
   large: PropTypes.bool,
+
+  /**
+   *
+   * A custom onClick handler hook that runs when the SideNavMenu is toggled.
+   */
+  onMenuToggle: PropTypes.func,
 
   /**
    * Pass in a custom icon to render next to the `SideNavMenu` title

@@ -44,6 +44,7 @@ $prefix: 'cds' !default;
    * starting style also not supported widely
    * https://caniuse.com/mdn-css_at-rules_starting-style
    */
+  // stylelint-disable-next-line scss/at-rule-no-unknown
   @starting-style {
     transform: translateY(100%);
   }
@@ -59,6 +60,7 @@ $prefix: 'cds' !default;
    * starting style also not supported widely
    * https://caniuse.com/mdn-css_at-rules_starting-style
    */
+  // stylelint-disable-next-line scss/at-rule-no-unknown
   @starting-style {
     transform: translateY(-100%);
   }

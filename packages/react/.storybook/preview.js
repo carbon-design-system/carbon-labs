@@ -31,7 +31,6 @@ import theme, { MarkdownTheme } from './theme';
  */
 const Container = ({ children, ...props }) => {
   // MDX pages that aren't associated with a story
-  // @TODO set prop types
   const isCarbonMdx =
     children?.type?.name === `MDXContent` &&
     !props?.context?.attachedCSFFiles.size;

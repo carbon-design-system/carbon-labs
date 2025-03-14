@@ -15,6 +15,7 @@ import React, {
   type ComponentProps,
   type KeyboardEventHandler,
   type FocusEventHandler,
+  useEffect,
 } from 'react';
 import {
   IconButton,
@@ -139,6 +140,41 @@ export function HeaderAction({
       actions.close();
     }
   });
+
+  useEffect(() => {
+    const buttonContainer = document.querySelector(
+      `.${prefix}--popover-container.${prefix}--animate .${prefix}--icon-tooltip`
+    );
+
+    if (buttonContainer) {
+      if (open) {
+        buttonContainer.classList.add(
+          `${prefix}--popover-container--icon-wall`
+        );
+      } else {
+        setTimeout(() => {
+          buttonContainer.classList.remove(
+            `${prefix}--popover-container--icon-wall`
+          );
+        }, 300);
+      }
+    }
+  }, [open]);
+
+  useEffect(() => {
+    const headerName = document.querySelector(`.${prefix}--header__name`);
+    const headerGlobal = document.querySelector(`.${prefix}--header__global`);
+
+    if (headerName) {
+      const fakeMiddle = document.createElement('div');
+      fakeMiddle.classList.add(`${prefix}--header-fake-middle`);
+      headerName.after(fakeMiddle);
+    }
+
+    if (headerGlobal) {
+      headerGlobal.classList.add(`${prefix}--header__global--active-popover`);
+    }
+  }, []);
 
   return (
     <HeaderActionContext.Provider value={value}>

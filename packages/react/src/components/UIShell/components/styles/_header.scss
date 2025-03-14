@@ -46,3 +46,19 @@ $prefix: 'cds' !default;
     transform: translateY(-100%);
   }
 }
+
+.#{$prefix}--header-fake-middle {
+  flex-grow: 2;
+  width: auto;
+  background-color: $background;
+  height: 100%;
+}
+
+.#{$prefix}--header__global--active-popover {
+  z-index: -1;
+}
+
+.#{$prefix}--popover-container--icon-wall {
+  background-color: $background;
+  z-index: 8002;
+}

@@ -25,11 +25,13 @@ const stories = {
 export default stories
 
 const Template = (args) => (
-  <OL {...args}>
-    <LI>list item 1</LI>
-    <LI>list item 2</LI>
-    <LI>list item 3</LI>
-  </OL>
+  <div style={{paddingLeft: "1rem"}}>
+    <OL {...args}>
+      <LI>list item 1</LI>
+      <LI>list item 2</LI>
+      <LI>list item 3</LI>
+    </OL>
+  </div>  
 )
 
 export const Default = Template.bind({})

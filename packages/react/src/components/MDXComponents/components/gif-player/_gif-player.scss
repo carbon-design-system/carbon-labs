@@ -1,3 +1,10 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 @use '@carbon/react/scss/theme' as theme;
 @use '@carbon/react/scss/spacing' as spacing;
 
@@ -8,13 +15,13 @@
 
   .#{with-prefix('controls')} {
     position: absolute;
-    bottom: spacing.$spacing-05;
-    left: spacing.$spacing-05;
-    width: 1.5rem;
-    height: 1.5rem;
     padding: 0;
     border: none;
     background: transparent;
+    block-size: 1.5rem;
+    inline-size: 1.5rem;
+    inset-block-end: spacing.$spacing-05;
+    inset-inline-start: spacing.$spacing-05;
     outline: none;
   }
 
@@ -51,7 +58,7 @@
 
   //styles for gif player in image gallery
   &.#{with-prefix('gif-in-dialog')} {
-    top: 50%;
+    inset-block-start: 50%;
     transform: translateY(-50%);
   }
 }

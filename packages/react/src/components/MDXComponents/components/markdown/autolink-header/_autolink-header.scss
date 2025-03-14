@@ -1,5 +1,5 @@
 /*
- * Copyright IBM Corp. 2022, 2023
+ * Copyright IBM Corp. 2022, 2025
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -40,12 +40,12 @@
 
   .#{with-prefix('left-anchor')} {
     position: absolute;
-    top: 0;
-    left: calc(#{spacing.$spacing-06} * -1);
+    inset-block-start: 0;
+    inset-inline-start: calc(#{spacing.$spacing-06} * -1);
   }
 
   .#{with-prefix('right-anchor')} {
-    margin-left: spacing.$spacing-03;
+    margin-inline-start: spacing.$spacing-03;
     white-space: nowrap;
   }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright IBM Corp. 2022, 2023
+ * Copyright IBM Corp. 2022, 2025
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,7 +8,7 @@
 import React from 'react'
 import { DoDont } from './do-dont'
 import { DoDontRow } from './do-dont-row'
-import lightTheme from '../../../../../.storybook/storybook-images/light-theme.jpg'
+import lightTheme from './light-theme.jpg'
 
 export default {
   title: 'MDX Components/DoDont',

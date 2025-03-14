@@ -8,7 +8,7 @@ import React from 'react'
 import { Column, Grid } from '@carbon/react'
 
 import { ArticleCard } from './article-card'
-import article06 from '../../../../../.storybook/storybook-images/article06.png'
+import article06 from './article06.png'
 
 const stories = {
   title: 'MDX Components/Cards/ArticleCard',

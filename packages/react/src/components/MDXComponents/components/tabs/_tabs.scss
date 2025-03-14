@@ -1,5 +1,5 @@
 /*
- * Copyright IBM Corp. 2022, 2023
+ * Copyright IBM Corp. 2022, 2025
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,13 +15,13 @@
 
 .#{with-prefix('tab-dropdown')},
 .#{with-prefix('tab-list')} {
-  margin-top: spacing.$spacing-06;
+  margin-block-start: spacing.$spacing-06;
 }
 
 .#{with-prefix('tab-list')} {
   display: flex;
-  max-width: min-content;
-  border-bottom: 1px solid theme.$border-subtle-01;
+  border-block-end: 1px solid theme.$border-subtle-01;
+  max-inline-size: min-content;
   overflow-x: auto;
   scrollbar-width: none;
 
@@ -32,11 +32,11 @@
 
 .#{with-prefix('tab-panel')} {
   padding: spacing.$spacing-05;
-  padding-bottom: spacing.$spacing-08;
-  margin-top: 0;
   background: theme.$layer-01;
 
   color: theme.$text-primary;
+  margin-block-start: 0;
+  padding-block-end: spacing.$spacing-08;
 
   &[hidden] {
     display: none;
@@ -48,21 +48,23 @@
 
   position: relative;
   display: inline-block;
-  min-width: 0;
-  height: 3rem;
   align-items: center;
   padding: spacing.$spacing-03 spacing.$spacing-05;
   border: none;
-  border-right: 1px solid theme.$layer-03;
   margin: 0;
   background-color: theme.$layer-01;
+  block-size: 3rem;
+  border-inline-end: 1px solid theme.$layer-03;
   color: theme.$text-primary;
 
   cursor: pointer;
+  min-inline-size: 0;
   outline-color: transparent;
-  text-align: left;
-  transition: color motion.$duration-fast-02, background-color motion.$duration-fast-02,
-    border-color motion.$duration-fast-02, outline-color motion.$duration-fast-02;
+  text-align: inset-inline-start;
+  transition: color motion.$duration-fast-02,
+    background-color motion.$duration-fast-02,
+    border-color motion.$duration-fast-02,
+    outline-color motion.$duration-fast-02;
   white-space: nowrap;
 
   &::-moz-focus-inner {
@@ -72,7 +74,7 @@
   &:focus {
     // allows overflow to be above subsequent tab
     z-index: 1;
-    border-right: 1px solid theme.$border-inverse;
+    border-inline-end: 1px solid theme.$border-inverse;
     outline: 1px solid theme.$focus-inverse;
     outline-offset: -4px;
   }
@@ -92,5 +94,5 @@
 }
 
 .#{with-prefix('tab-list')} li:last-of-type #{with-prefix('.tab')} {
-  border-right: none;
+  border-inline-end: none;
 }

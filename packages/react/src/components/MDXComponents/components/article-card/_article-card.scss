@@ -1,5 +1,5 @@
 /*
- * Copyright IBM Corp. 2022, 2023
+ * Copyright IBM Corp. 2022, 2025
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -26,14 +26,14 @@
 
   .cds--tile {
     position: relative;
-    height: 100%;
     padding: 0;
-    margin-bottom: spacing.$spacing-06;
     background: transparent;
+    block-size: 100%;
+    margin-block-end: spacing.$spacing-06;
     text-decoration: none;
 
     img {
-      max-width: 100%;
+      max-inline-size: 100%;
     }
   }
 
@@ -57,16 +57,16 @@
 
   .#{with-prefix('info')} {
     position: absolute;
-    bottom: spacing.$spacing-05;
-    left: spacing.$spacing-05;
     color: theme.$text-secondary;
+    inset-block-end: spacing.$spacing-05;
+    inset-inline-start: spacing.$spacing-05;
     @include type.type-style('label-01');
   }
 
   .#{with-prefix('icon-action')} {
     position: absolute;
-    right: spacing.$spacing-05;
-    bottom: spacing.$spacing-05;
+    inset-block-end: spacing.$spacing-05;
+    inset-inline-end: spacing.$spacing-05;
   }
 
   .#{with-prefix('icon-action')} svg {
@@ -91,6 +91,8 @@
   color: theme.$text-on-color-disabled;
 }
 
-.#{with-prefix('disabled')} .#{with-prefix('action-icon')} .#{with-prefix('svg')} {
+.#{with-prefix('disabled')}
+  .#{with-prefix('action-icon')}
+  .#{with-prefix('svg')} {
   fill: theme.$icon-on-color-disabled;
 }

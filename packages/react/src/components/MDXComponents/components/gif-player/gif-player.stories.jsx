@@ -1,5 +1,5 @@
 /*
- * Copyright IBM Corp. 2022, 2023
+ * Copyright IBM Corp. 2022, 2025
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -7,8 +7,8 @@
 
 import React from 'react'
 import { GifPlayer } from './gif-player'
-import cloudGif from '../../../../../.storybook/storybook-images/cloud.gif'
-import cloudJpg from '../../../../../.storybook/storybook-images/cloud.jpg'
+import cloudGif from './cloud.gif'
+import cloudJpg from './cloud.jpg'
 
 const stories = {
   title: 'MDX Components/Images & Video/GifPlayer',

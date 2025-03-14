@@ -1,5 +1,5 @@
 /*
- * Copyright IBM Corp. 2022, 2023
+ * Copyright IBM Corp. 2022, 2025
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -36,22 +36,21 @@
 
 // scoped to div code to override global reset styles
 .#{with-prefix('code')}.cds--snippet--multi {
-  max-width: none;
-  margin-top: spacing.$spacing-07;
+  margin-block-start: spacing.$spacing-07;
+  max-inline-size: none;
 
   .cds--snippet-container {
-    // override carbon snippet container width
-    width: 100%;
-
-    // override carbon snippet minimum height
-    /* stylelint-disable-next-line declaration-property-value-disallowed-list, declaration-no-important */
-    min-height: unset !important;
+    // override carbon snippet container inline-size
+    inline-size: 100%;
+    // override carbon snippet minimum block-size
+    /* stylelint-disable-next-line declaration-no-important */
+    min-block-size: auto !important;
 
     pre {
-      // override carbon snippet pre padding
-      padding-bottom: 0;
       // remove prism-added tabindex border around code blocks
       outline: none;
+      // override carbon snippet pre padding
+      padding-block-end: 0;
     }
   }
 
@@ -62,19 +61,18 @@
 
 .#{with-prefix('path-container')} {
   display: flex;
-  width: 100%;
-  height: 3rem;
   align-items: center;
   justify-content: space-between;
-  padding-right: spacing.$spacing-03;
-  padding-left: spacing.$spacing-05;
-  border-bottom: 1px solid theme.$border-subtle;
-  margin-top: spacing.$spacing-07;
   background: theme.$layer-01;
+  block-size: 3rem;
+  border-block-end: 1px solid theme.$border-subtle;
+  inline-size: 100%;
+  margin-block-start: spacing.$spacing-07;
+  padding-inline: spacing.$spacing-05 spacing.$spacing-03;
 }
 
 .#{with-prefix('path-container')} + .#{with-prefix('code')} {
-  margin-top: 0;
+  margin-block-start: 0;
 }
 
 .#{with-prefix('path')} {
@@ -88,14 +86,14 @@
 
 .#{with-prefix('icon')} {
   display: flex;
-  width: 32px;
-  height: 32px;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
   background: transparent;
+  block-size: 32px;
   cursor: pointer;
   font-size: 0;
+  inline-size: 32px;
   outline-offset: -2px;
   transition: background motion.$duration-fast-02;
   @media screen and (prefers-reduced-motion: reduce) {

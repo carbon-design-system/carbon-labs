@@ -1,5 +1,5 @@
 /*
- * Copyright IBM Corp. 2022, 2023
+ * Copyright IBM Corp. 2022, 2025
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,7 +11,7 @@ import React, { ReactElement, ReactPortal } from 'react';
 
 import { MdxComponent, NonScalarNode } from '../interfaces';
 import { withPrefix } from '../utils';
-import Path from './path';
+import { Path } from './path';
 
 interface CodeProps {
   children: Exclude<NonScalarNode, Array<ReactElement | ReactPortal>>;
@@ -32,6 +32,8 @@ export const Code: MdxComponent<CodeProps> = ({ children }) => {
   const path = children.props.path;
   const src = children.props.src;
   const language = children.props.className || 'language-plain';
+
+  console.log(children);
 
   return (
     <Grid condensed>

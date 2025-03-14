@@ -1,13 +1,13 @@
 /*
- * Copyright IBM Corp. 2022, 2023
+ * Copyright IBM Corp. 2022, 2025
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
 import React from 'react'
 import { Video } from './video'
-import localPoster from '../../../../../.storybook/storybook-images/local-poster.jpeg'
-import localVideo from '../../../../../.storybook/storybook-images/local-video.mp4'
+import localPoster from './local-poster.jpeg'
+import localVideo from './local-video.mp4'
 
 export default {
   title: 'MDX Components/Images & Video/Video',

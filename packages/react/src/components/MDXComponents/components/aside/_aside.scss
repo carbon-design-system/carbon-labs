@@ -1,5 +1,5 @@
 /*
- * Copyright IBM Corp. 2022, 2023
+ * Copyright IBM Corp. 2022, 2025
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -16,21 +16,21 @@
   @include type.type-style('body-01');
 
   position: relative;
-  top: -(spacing.$spacing-04);
   color: theme.$text-primary;
+  inset-block-start: -(spacing.$spacing-04);
 
   @include breakpoint.breakpoint('lg') {
-    padding-top: spacing.$spacing-04;
+    padding-block-start: spacing.$spacing-04;
   }
 
   @include breakpoint.breakpoint('lg') {
     //spacing values came from IDL site design
-    padding-right: 26%;
+    padding-inline-end: 26%;
   }
 
   > div,
   > div ol:first-child {
-    margin-top: 0;
+    margin-block-start: 0;
   }
 
   p,
@@ -41,12 +41,12 @@
   @include breakpoint.breakpoint('md') {
     &::before {
       position: absolute;
-      top: 0;
-      left: -(spacing.$spacing-05);
-      width: 40%;
-      height: 1px;
       background: theme.$border-inverse;
+      block-size: 1px;
       content: '';
+      inline-size: 40%;
+      inset-block-start: 0;
+      inset-inline-start: -(spacing.$spacing-05);
     }
   }
 }

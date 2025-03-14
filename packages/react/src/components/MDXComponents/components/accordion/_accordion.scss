@@ -1,5 +1,5 @@
 /*
- * Copyright IBM Corp. 2022, 2023
+ * Copyright IBM Corp. 2022, 2025
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -12,13 +12,13 @@
 @use '../utils' as *;
 
 .#{with-prefix('accordion')} {
-  margin-top: spacing.$spacing-06;
   color: theme.$text-primary;
+  margin-block-start: spacing.$spacing-06;
 }
 
-// override carbon, accordion right spacing
+// override carbon, accordion inset-inline-end spacing
 .#{with-prefix('accordion')} .cds--accordion__content {
-  padding-right: spacing.$spacing-10;
+  padding-inline-end: spacing.$spacing-10;
 }
 
 // override carbon, title font and spacing

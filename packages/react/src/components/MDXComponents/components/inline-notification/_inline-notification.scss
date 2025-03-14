@@ -1,0 +1,29 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/spacing' as spacing;
+
+@use '../utils' as *;
+
+.#{with-prefix('notification')} {
+  margin-block-start: spacing.$spacing-05;
+
+  // override carbon, notification inline-size
+  &.#{with-prefix('notification')} .cds--inline-notification {
+    max-inline-size: 100%;
+  }
+
+  .#{with-prefix('content')} div {
+    margin-block-start: 0;
+  }
+
+  .#{with-prefix('content')},
+  .#{with-prefix('content')} p {
+    @include type.type-style('body-compact-01');
+  }
+}

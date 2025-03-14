@@ -1,0 +1,16 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/spacing' as spacing;
+@use '../utils' as *;
+
+.#{with-prefix('preview')} {
+  border: 1px solid theme.$border-subtle;
+  inline-size: 100%;
+  margin-block-start: spacing.$spacing-07;
+}

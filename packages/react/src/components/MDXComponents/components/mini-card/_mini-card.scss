@@ -1,0 +1,55 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/utilities/convert' as convert;
+@use '@carbon/react/scss/motion' as motion;
+
+@use '../utils' as *;
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .#{with-prefix('mini-card')} {
+    transition: none;
+  }
+}
+
+.#{with-prefix('mini-card')} {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: theme.$layer-01;
+  block-size: convert.rem(64px);
+  transition: background motion.$duration-fast-02;
+
+  &:hover {
+    background: theme.$background-hover;
+  }
+
+  .#{with-prefix('wrapper')} {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: spacing.$spacing-05 spacing.$spacing-05;
+  }
+
+  .#{with-prefix('title')} {
+    @include type.type-style('body-short-01');
+  }
+
+  .#{with-prefix('image')},
+  .#{with-prefix('image')} [class*='mdx-icon'],
+  .#{with-prefix('image')} [class*='mdx-icon'] svg {
+    block-size: convert.rem(20px);
+    inline-size: convert.rem(20px);
+  }
+
+  .#{with-prefix('icon')} {
+    padding-block-start: spacing.$spacing-02;
+  }
+}

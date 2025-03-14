@@ -1,0 +1,191 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/utilities/convert' as convert;
+
+@use '../utils' as *;
+
+// Row
+.#{with-prefix('do-dont-row')} {
+  margin-block-start: spacing.$spacing-07;
+}
+
+.#{with-prefix('do-dont-row')} [class*='grid'] {
+  @include breakpoint.breakpoint('md') {
+    margin-block-end: 0;
+  }
+}
+
+.#{with-prefix('do-dont-row')} [class*='markdown_paragraph-container'] {
+  margin-block-start: 0;
+}
+
+.#{with-prefix('do-dont')} {
+  // Caption and title
+  .#{with-prefix('caption')} {
+    padding: spacing.$spacing-05 0 0 0;
+    color: theme.$text-primary;
+    inline-size: 100%;
+
+    @include breakpoint.breakpoint('md') {
+      inline-size: 75%;
+      margin-block-end: 0;
+    }
+  }
+
+  .#{with-prefix('title')} {
+    @include type.type-style('body-compact-01');
+
+    margin: 0;
+    color: theme.$text-primary;
+    font-weight: 600;
+
+    @media (orientation: landscape) {
+      padding: 0 25% 0 0;
+    }
+
+    @include breakpoint.breakpoint('md') {
+      padding: 0 25% 0 0;
+    }
+  }
+
+  .#{with-prefix('description')} {
+    @include type.type-style('body-compact-01');
+
+    padding: 0;
+    margin: 0;
+  }
+
+  // Icons
+  .#{with-prefix('icon')} {
+    position: absolute;
+    z-index: 10;
+    display: block;
+    block-size: convert.rem(24px);
+    inline-size: convert.rem(24px);
+    inset-block-start: calc(1rem - 1px);
+    inset-inline-start: calc(1rem - 1px);
+  }
+
+  .#{with-prefix('icon-correct')} {
+    fill: theme.$support-success;
+  }
+
+  .#{with-prefix('icon-incorrect')} {
+    fill: theme.$support-error;
+  }
+
+  .#{with-prefix('icon')} path[dataIconPath='inner-path'],
+  .#{with-prefix('icon')}path[data-icon-path='inner-path'] {
+    fill: theme.$icon-on-color;
+    opacity: 1;
+  }
+
+  // Example
+  .#{with-prefix('example')} {
+    inline-size: 100%;
+  }
+
+  // Example card
+  .#{with-prefix('card')} {
+    position: relative;
+    background: theme.$layer-01;
+    color: theme.$text-primary;
+    inline-size: 100%;
+  }
+
+  .#{with-prefix('ratio1x1')} .#{with-prefix('card')} {
+    padding-block-start: 100%;
+  }
+
+  .#{with-prefix('ratio4x3')} .#{with-prefix('card')} {
+    padding-block-start: 75%;
+  }
+
+  .#{with-prefix('ratio3x4')} .#{with-prefix('card')} {
+    padding-block-start: 133.3333%;
+  }
+
+  .#{with-prefix('ratio2x1')} .#{with-prefix('card')} {
+    padding-block-start: 50%;
+  }
+
+  .#{with-prefix('ratio1x2')} .#{with-prefix('card')} {
+    padding-block-start: 150%;
+  }
+
+  .#{with-prefix('ratio9x16')} .#{with-prefix('card')} {
+    padding-block-start: 177.7778%;
+  }
+
+  .#{with-prefix('ratio16x9')} .#{with-prefix('card')} {
+    padding-block-start: 56.25%;
+  }
+
+  .#{with-prefix('card')}::before {
+    position: absolute;
+    z-index: 1;
+    block-size: convert.rem(3px);
+    content: '';
+    inline-size: 100%;
+    inset-block-start: convert.rem(-1px);
+    inset-inline-start: 0;
+  }
+
+  .#{with-prefix('correct')} .#{with-prefix('card')}::before {
+    background: theme.$support-success;
+  }
+
+  .#{with-prefix('incorrect')} .#{with-prefix('card')}::before {
+    background: theme.$support-error;
+  }
+
+  // Example content
+  .#{with-prefix('content')} {
+    font-size: 1.25rem;
+    font-weight: 300;
+    inline-size: 100%;
+  }
+
+  .#{with-prefix('text')} {
+    padding: 10%;
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.25;
+  }
+
+  .#{with-prefix('example')} .#{with-prefix('card-content')} {
+    position: relative;
+  }
+
+  .#{with-prefix('ratio')} .#{with-prefix('card-content')} {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset-block: 0 0;
+    inset-inline: 0 0;
+  }
+
+  // Images
+  .#{with-prefix('content')} img {
+    display: block;
+    inline-size: 100%;
+    margin-block-end: 0;
+  }
+
+  .#{with-prefix('image')} {
+    display: block;
+    padding: 0;
+    margin: 0;
+    inline-size: 100%;
+  }
+}

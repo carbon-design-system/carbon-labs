@@ -1,0 +1,64 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/spacing' as spacing;
+
+@use '../utils' as *;
+
+.#{with-prefix('gif-player-container')} {
+  position: relative;
+
+  .#{with-prefix('controls')} {
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: transparent;
+    block-size: 1.5rem;
+    inline-size: 1.5rem;
+    inset-block-end: spacing.$spacing-05;
+    inset-inline-start: spacing.$spacing-05;
+    outline: none;
+  }
+
+  .#{with-prefix('controls')} svg {
+    fill: theme.$icon-inverse;
+  }
+
+  .#{with-prefix('dark')} svg {
+    fill: theme.$icon-primary;
+  }
+
+  .#{with-prefix('controls')}:focus svg {
+    outline: 2px solid theme.$focus;
+    outline-offset: -2px;
+  }
+
+  //toggle static image
+  .#{with-prefix('img-hidden')} {
+    display: none;
+  }
+
+  .#{with-prefix('img-displayed')} {
+    display: block;
+  }
+
+  //toggle gif
+  .#{with-prefix('gif-displayed')} {
+    display: block;
+  }
+
+  .#{with-prefix('gif-hidden')} {
+    display: none;
+  }
+
+  //styles for gif player in image gallery
+  &.#{with-prefix('gif-in-dialog')} {
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+  }
+}

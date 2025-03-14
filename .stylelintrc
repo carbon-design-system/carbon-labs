@@ -1,6 +1,12 @@
 {
   "extends": ["stylelint-config-carbon"],
   "rules": {
-    "max-nesting-depth": 2
+    "max-nesting-depth": 2,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ]
   }
 }

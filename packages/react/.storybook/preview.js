@@ -24,7 +24,7 @@ import {
 import '../src/components/MDXComponents/components/index.scss';
 import './styles.scss';
 
-import theme from './theme';
+import theme, { MarkdownTheme } from './theme';
 
 /**
  * Custom container to render Carbon MDX differently
@@ -47,7 +47,7 @@ const Container = ({ children, ...props }) => {
   // Disable Storybook markdown styles and ignore global theme switchers
   if (isCarbonMdx) {
     return (
-      <DocsContainer {...props}>
+      <DocsContainer {...props} theme={MarkdownTheme}>
         <Unstyled>
           <Theme
             style={{
@@ -184,22 +184,6 @@ export const parameters = {
     current: 'light',
   },
   docs: {
-    components: {
-      h1: H1,
-      h2: H2,
-      h3: H3,
-      h4: H4,
-      h5: H5,
-      h6: H6,
-      p: P,
-      blockquote: Blockquote,
-      table: PageTable,
-      pre: Code,
-      ul: UL,
-      ol: OL,
-      li: LI,
-      a: Link,
-    },
     container: Container,
     theme,
   },
@@ -254,6 +238,7 @@ export const parameters = {
   },
 };
 
+// only for stories
 const decorators = [
   (Story, context) => {
     let { theme } = context.globals;

@@ -1,13 +1,69 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { white, g10, g90, g100 } from '@carbon/themes';
 import { breakpoints } from '@carbon/layout';
-import { GlobalTheme } from '@carbon/react/es/components/Theme';
+import { GlobalTheme, Theme } from '@carbon/react/es/components/Theme';
 import { Layout } from '@carbon/react/es/components/Layout';
 import { TextDirection } from '@carbon/react/es/components/Text';
+import { DocsContainer, Unstyled } from '@storybook/blocks';
+import {
+  H1,
+  H2,
+  H3,
+  H4,
+  H5,
+  H6,
+  P,
+  OL,
+  UL,
+  LI,
+  Link,
+  Blockquote,
+  PageTable,
+  Code,
+} from '../src/components/MDXComponents';
 import '../src/components/MDXComponents/components/index.scss';
 import './styles.scss';
 
-import theme from './theme';
+import theme, { MarkdownTheme } from './theme';
+
+/**
+ * Custom container to render Carbon MDX differently
+ */
+const Container = ({ children, ...props }) => {
+  // MDX pages that aren't associated with a story
+  const isCarbonMdx =
+    children?.type?.name === `MDXContent` &&
+    !props?.context?.attachedCSFFiles.size;
+
+  useEffect(() => {
+    if (isCarbonMdx) {
+      document.documentElement.classList.add('cds--mdx');
+    } else {
+      document.documentElement.classList.remove('cds--mdx');
+    }
+  }, [isCarbonMdx]);
+
+  // Disable Storybook markdown styles and ignore global theme switchers
+  if (isCarbonMdx) {
+    return (
+      <DocsContainer {...props} theme={MarkdownTheme}>
+        <Unstyled>
+          <Theme
+            style={{
+              paddingBottom: '2rem',
+              paddingTop: '1px',
+              marginTop: '-1px',
+            }}
+            theme="g10">
+            {children}
+          </Theme>
+        </Unstyled>
+      </DocsContainer>
+    );
+  }
+
+  return <DocsContainer {...props}>{children}</DocsContainer>;
+};
 
 const devTools = {
   layoutSize: {
@@ -127,7 +183,13 @@ export const parameters = {
     current: 'light',
   },
   docs: {
+    container: Container,
     theme,
+  },
+  options: {
+    storySort: {
+      order: ['Components'],
+    },
   },
   // Small (<672)
   // Medium (672 - 1056px)
@@ -175,12 +237,19 @@ export const parameters = {
   },
 };
 
+// only for stories
 const decorators = [
   (Story, context) => {
-    const { layoutDensity, layoutSize, locale, dir } = context.globals;
     let { theme } = context.globals;
-
+    const { layoutDensity, layoutSize, locale, dir } = context.globals;
     const [randomKey, setRandomKey] = React.useState(1);
+
+    const isMarkdown = context?.kind?.startsWith('MDX Components');
+
+    // Carbon MDX only supports the g10 theme
+    if (isMarkdown) {
+      theme = 'g10';
+    }
 
     React.useEffect(() => {
       document.documentElement.setAttribute('data-carbon-theme', theme);
@@ -192,13 +261,6 @@ const decorators = [
       // Need to set random key to recalculate Popover coordinates
       setRandomKey(Math.floor(Math.random() * 10));
     }, [locale, dir]);
-
-    const isMarkdownComponent =
-      context.kind && context.kind.startsWith('MDX Components');
-
-    if (isMarkdownComponent) {
-      theme = 'g10';
-    }
 
     return (
       <GlobalTheme theme={theme}>

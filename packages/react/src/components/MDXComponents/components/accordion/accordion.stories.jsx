@@ -6,15 +6,14 @@
  */
 
 import React from 'react';
-import { Accordion } from './accordion'
-import { AccordionItem } from '@carbon/react'
-
+import { Accordion } from './accordion';
+import { AccordionItem } from '@carbon/react';
 
 export default {
   title: 'MDX Components/Accordion',
   component: Accordion,
-  subcomponents: { AccordionItem }
-}
+  subcomponents: { AccordionItem },
+};
 
 export const Default = (args) => (
   <Accordion {...args}>
@@ -22,4 +21,4 @@ export const Default = (args) => (
     <AccordionItem title="Title 2">Content Section</AccordionItem>
     <AccordionItem title="Title 3">Content Section</AccordionItem>
   </Accordion>
-)
+);

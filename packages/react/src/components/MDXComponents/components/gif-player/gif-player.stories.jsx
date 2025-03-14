@@ -7,8 +7,8 @@
 
 import React from 'react'
 import { GifPlayer } from './gif-player'
-import cloudGif from '../../../../../.storybook/storybook-images/cloud.gif'
-import cloudJpg from '../../../../../.storybook/storybook-images/cloud.jpg'
+import cloudGif from './cloud.gif'
+import cloudJpg from './cloud.jpg'
 
 const stories = {
   title: 'MDX Components/Images & Video/GifPlayer',

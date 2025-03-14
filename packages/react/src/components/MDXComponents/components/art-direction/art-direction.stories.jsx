@@ -7,9 +7,9 @@
 
 import React from 'react'
 import { ArtDirection } from './art-direction'
-import desktop from '../../../../../.storybook/storybook-images/desktop.jpg'
-import mobile from '../../../../../.storybook/storybook-images/mobile.jpg'
-import tablet from '../../../../../.storybook/storybook-images/tablet.jpg'
+import desktop from './desktop.jpg'
+import mobile from './mobile.jpg'
+import tablet from './tablet.jpg'
 
 export default {
   title: 'MDX Components/Images & Video/ArtDirection',

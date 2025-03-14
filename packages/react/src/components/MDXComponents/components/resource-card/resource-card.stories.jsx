@@ -10,7 +10,7 @@ import { Column } from '@carbon/react'
 
 import { CardGroup } from '../card-group/card-group'
 import { ResourceCard } from './resource-card'
-import sketchIconPng from '../../../../../.storybook/storybook-images/sketch-icon.png'
+import sketchIconPng from '../card-group/sketch-icon.png'
 
 const stories = {
   title: 'MDX Components/Cards/ResourceCard',

@@ -6,8 +6,8 @@
  */
 import React from 'react'
 import { Video } from './video'
-import localPoster from '../../../../../.storybook/storybook-images/local-poster.jpeg'
-import localVideo from '../../../../../.storybook/storybook-images/local-video.mp4'
+import localPoster from './local-poster.jpeg'
+import localVideo from './local-video.mp4'
 
 export default {
   title: 'MDX Components/Images & Video/Video',

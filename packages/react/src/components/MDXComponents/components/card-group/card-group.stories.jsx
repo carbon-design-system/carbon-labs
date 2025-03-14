@@ -9,7 +9,7 @@ import { Column } from '@carbon/react'
 
 import { CardGroup } from './card-group'
 import { ResourceCard } from '../resource-card/resource-card'
-import sketchIconPng from '../../../../../.storybook/storybook-images/sketch-icon.png'
+import sketchIconPng from './sketch-icon.png'
 
 export default {
   title: 'MDX Components/Cards/CardGroup',

@@ -7,7 +7,7 @@
 
 import React from 'react'
 import { ImageWrapper } from './image-wrapper'
-import accordionStyle3Png from '../../../../../.storybook/storybook-images/accordion-style-3.png'
+import accordionStyle3Png from './accordion-style-3.png'
 
 const stories = {
   title: 'MDX Components/Images & Video/ImageWrapper',

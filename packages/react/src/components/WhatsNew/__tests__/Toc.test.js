@@ -10,11 +10,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
-import { Toc } from '../components/Toc';
-import { TocItem } from '../components/TocItem';
-import { TocList } from '../components/TocList';
-import { TocSection } from '../components/TocSection';
-import { TocSections } from '../components/TocSections';
+import { Toc, TocItem, TocList, TocSection, TocSections } from '../index';
 
 jest.mock('./whats-new.scss', () => ({}));
 describe('Toc', () => {

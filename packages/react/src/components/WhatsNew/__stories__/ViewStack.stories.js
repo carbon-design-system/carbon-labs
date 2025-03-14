@@ -8,11 +8,8 @@
  */
 
 import React, { useCallback, useRef, useState } from 'react';
-
 import { PlayingCard } from './components/PlayingCard';
-
-import { View } from '../components/View';
-import { ViewStack } from '../components/ViewStack';
+import { ViewStack, View } from '../index';
 import mdx from './WhatsNew.mdx';
 import './storybook.scss';
 

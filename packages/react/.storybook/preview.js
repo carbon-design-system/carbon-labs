@@ -19,7 +19,18 @@ import {
   Link,
   Blockquote,
   PageTable,
+  Caption,
   Code,
+  AnchorLinks,
+  AnchorLink,
+  Column,
+  DoDont,
+  DoDontRow,
+  GifPlayer,
+  PageDescription,
+  Row,
+  StorybookDemo,
+  Grid,
 } from '../src/components/MDXComponents';
 import '../src/components/MDXComponents/components/index.scss';
 import './styles.scss';
@@ -46,7 +57,7 @@ const Container = ({ children, ...props }) => {
   // Disable Storybook markdown styles and ignore global theme switchers
   if (isCarbonMdx) {
     return (
-      <DocsContainer {...props} theme={MarkdownTheme}>
+      <DocsContainer {...props}>
         <Unstyled>
           <Theme
             style={{
@@ -184,7 +195,34 @@ export const parameters = {
   },
   docs: {
     container: Container,
-    theme,
+    theme: theme,
+    components: {
+      h1: H1,
+      h2: H2,
+      h3: H3,
+      h4: H4,
+      h5: H5,
+      h6: H6,
+      p: P,
+      ol: OL,
+      ul: UL,
+      li: LI,
+      a: Link,
+      blockquote: Blockquote,
+      table: PageTable,
+      pre: Code,
+      AnchorLinks,
+      AnchorLink,
+      Caption,
+      Column,
+      DoDont,
+      DoDontRow,
+      GifPlayer,
+      PageDescription,
+      Row,
+      StorybookDemo,
+      Grid,
+    },
   },
   options: {
     storySort: {

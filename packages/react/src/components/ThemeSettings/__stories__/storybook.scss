@@ -1,0 +1,34 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/theme';
+
+.story-wrapper {
+  margin: 3rem;
+}
+
+.theme-setting-in-context {
+  display: grid;
+  block-size: 100vh;
+  grid-template-rows: 3rem 1fr;
+}
+
+.theme-setting-in-context__header {
+  display: flex;
+  align-items: center;
+  border-block-end: 1px solid theme.$border-subtle-01;
+  padding-inline: 3rem;
+}
+
+.theme-setting-in-context__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  padding-inline: 3rem;
+}

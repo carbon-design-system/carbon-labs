@@ -1,0 +1,128 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as ThemeSettingsStories from './ThemeSettings.stories';
+
+<Meta isTemplate />
+
+# ThemeSettings
+
+- **Initiative owner(s):** Lee Chase
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/ThemeSettings)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/ThemeSettings)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+This is a Theme Settings component, the main part of which offers the options
+`light`, `system` and `dark` to the user. If choosing `system` the user should
+expect there current system settings to dictate the current theming.
+
+<Canvas of={ThemeSettingsStories.InContextUseThemeSetting} />
+
+## Getting started
+
+### Install
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-theme-switcher
+```
+
+### Components
+
+- ThemeSettings: Container component for other ThemeSettings
+- ThemeSwitcher: 3 way switch between light, system and dark ThemeSettings
+- ThemeSetDropdown: Used if user is able to switch between theme sets
+  `white/g90`, `white/g100`, `g10/g90` and `g10/g100`.
+- ThemeMenuComplement: Used if user is permitted to toggle menu complement
+  (often global menu is complement of main theme).
+
+### Utilities
+
+- useThemeSetting: Given a theme setting, theme set and a value for complement
+  returns a Carbon theme based on these settings and users system preferences.
+
+NOTE: Theme set can be a fixed value e.g. `white/g90` if ThemeSetDropdown is not
+used.
+
+### JS (via import)
+
+```javascript
+import { Theme } from '@carbon/react';
+import {
+  ThemeSettings,
+  ThemeMenuComplement,
+  ThemeSetDropdown,
+  ThemeSwitcher,
+  useThemeSetting,
+} from '@carbon-labs/react-theme-switcher/es/index';
+
+function App() {
+  const [themeSetting, setThemeSetting] = useState(`system`);
+  const [themeMenuComplement, setThemeMenuComplement] = useState(false);
+  const [themeSet, setThemeSet] = useState('white/g100');
+  const theme = useThemeSetting(themeSetting, themeSet, false);
+  const themeHeader = useThemeSetting(
+    themeSetting,
+    themeSet,
+    themeMenuComplement
+  );
+
+  return (
+    <Theme className={'theme-setting-in-context'} theme={themeHeader}>
+      <header className="theme-setting-in-context__header">
+        A sample header
+      </header>
+      <Theme as="main" className="theme-setting-in-context__main" theme={theme}>
+        <h2>Your app goes here.</h2>
+
+        <ThemeSettings>
+          <ThemeSwitcher
+            onChange={setThemeSetting}
+            value={themeSetting}></ThemeSwitcher>
+          <ThemeMenuComplement
+            id="theme-menu-complement"
+            labelText="Complement menu theme"
+            checked={themeMenuComplement}
+            onChange={setThemeMenuComplement}
+          />
+          <ThemeSetDropdown
+            id="theme-dropdown"
+            label="Theme set"
+            titleText="Theme set"
+            value={themeSet}
+            onChange={setThemeSet}
+          />
+        </ThemeSettings>
+      </Theme>
+    </Theme>
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-theme-switcher/scss/theme-switcher';
+```

@@ -25,7 +25,8 @@
     "clean": "rm -rf {es,lib,scss}"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "canary"
+    "@carbon-labs/utilities": "canary",
+    "@carbon/ibm-products": "^2.49.0"
   },
   "peerDependencies": {
     "@carbon/ibm-products": "^2.49.0"

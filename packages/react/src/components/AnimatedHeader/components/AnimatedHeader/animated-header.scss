@@ -374,6 +374,7 @@ body {
 }
 
 .#{$prefix}--collapsed {
+  overflow: hidden;
   padding: 0;
   max-block-size: $spacing-09;
   outline: 1px solid $border-subtle-00;

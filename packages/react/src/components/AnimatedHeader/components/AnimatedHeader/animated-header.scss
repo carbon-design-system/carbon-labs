@@ -42,9 +42,9 @@ body {
 .#{$prefix} {
   position: relative;
   display: flex;
-  overflow: hidden;
+  overflow: visible;
   background: $background;
-  inline-size: 100vw;
+  inline-size: 100%;
   max-block-size: 90vh;
   outline: 1px solid transparent;
   padding-block: 0 $spacing-10;
@@ -58,6 +58,7 @@ body {
 .#{$prefix}__static--container {
   position: absolute;
   display: flex;
+  overflow: hidden;
   justify-content: flex-end;
 
   block-size: 100%;
@@ -295,6 +296,7 @@ body {
 .#{$prefix}__lottie-animation--container {
   position: absolute;
   display: flex;
+  overflow: hidden;
   justify-content: flex-end;
 
   block-size: 100%;
@@ -395,10 +397,6 @@ body {
     display: none;
   }
 
-  .#{$prefix}__workspace {
-    margin-block-start: $spacing-06;
-  }
-
   .#{$prefix}__content {
     display: none;
   }
@@ -437,6 +435,7 @@ body {
 
   .#{$prefix}__content {
     display: flex;
+    margin-block-start: $spacing-06;
   }
 
   .#{$prefix}__button-collapse--container .cds--popover-container {
@@ -493,7 +492,7 @@ body {
     background: linear-gradient(90deg, $background 25%, transparent 75%);
   }
 
-  .#{$prefix}__workspace {
+  .#{$prefix}__content {
     margin-block-start: 0;
   }
 

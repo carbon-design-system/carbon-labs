@@ -31,7 +31,8 @@ function App() {
 
   return (
     <AnimatedHeader
-      name="Drew"
+      welcomeText="Welcome"
+      userName="Drew"
       description="Connect, monitor, and manage data."
       buttonText="Manage data"
       buttonType="tertiary"

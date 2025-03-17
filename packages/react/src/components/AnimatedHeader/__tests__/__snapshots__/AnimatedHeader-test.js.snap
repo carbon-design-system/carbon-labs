@@ -38,7 +38,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 class="clabs--animated-header__heading-welcome"
               >
                 Welcome,
-                 
+
               </span>
               <span
                 class="clabs--animated-header__heading-name"

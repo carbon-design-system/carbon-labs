@@ -60,7 +60,10 @@ export default meta;
 type Story = StoryObj<typeof AnimatedHeader>;
 
 const sharedArgTypes = {
-  name: {
+  welcomeText: {
+    description: 'Header welcome text ex. `Welcome` `Welcome back`',
+  },
+  userName: {
     description: 'Header welcome username',
   },
   description: {
@@ -228,7 +231,8 @@ const sharedArgTypes = {
 };
 
 const sharedArgs = {
-  name: 'Drew',
+  welcomeText: 'Welcome',
+  userName: 'Drew',
   description: 'Train, deploy, validate, and govern AI models responsibly.',
   buttonText: 'Customize my journey',
   productName: '[Product name]',

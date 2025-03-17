@@ -34,8 +34,37 @@ import {
 } from '../src/components/MDXComponents';
 import '../src/components/MDXComponents/components/index.scss';
 import './styles.scss';
+import { MDXProvider } from '@mdx-js/react';
 
 import theme, { MarkdownTheme } from './theme';
+
+const customMarkdown = {
+  h1: H1,
+  h2: H2,
+  h3: H3,
+  h4: H4,
+  h5: H5,
+  h6: H6,
+  p: P,
+  ol: OL,
+  ul: UL,
+  li: LI,
+  a: Link,
+  blockquote: Blockquote,
+  table: PageTable,
+  pre: Code,
+  AnchorLinks,
+  AnchorLink,
+  Caption,
+  Column,
+  DoDont,
+  DoDontRow,
+  GifPlayer,
+  PageDescription,
+  Row,
+  StorybookDemo,
+  Grid,
+};
 
 /**
  * Custom container to render Carbon MDX differently
@@ -57,19 +86,21 @@ const Container = ({ children, ...props }) => {
   // Disable Storybook markdown styles and ignore global theme switchers
   if (isCarbonMdx) {
     return (
-      <DocsContainer {...props}>
-        <Unstyled>
-          <Theme
-            style={{
-              paddingBottom: '2rem',
-              paddingTop: '1px',
-              marginTop: '-1px',
-            }}
-            theme="g10">
-            {children}
-          </Theme>
-        </Unstyled>
-      </DocsContainer>
+      <MDXProvider components={customMarkdown}>
+        <DocsContainer {...props}>
+          <Unstyled>
+            <Theme
+              style={{
+                paddingBottom: '2rem',
+                paddingTop: '1px',
+                marginTop: '-1px',
+              }}
+              theme="g10">
+              {children}
+            </Theme>
+          </Unstyled>
+        </DocsContainer>
+      </MDXProvider>
     );
   }
 
@@ -196,33 +227,6 @@ export const parameters = {
   docs: {
     container: Container,
     theme: theme,
-    components: {
-      h1: H1,
-      h2: H2,
-      h3: H3,
-      h4: H4,
-      h5: H5,
-      h6: H6,
-      p: P,
-      ol: OL,
-      ul: UL,
-      li: LI,
-      a: Link,
-      blockquote: Blockquote,
-      table: PageTable,
-      pre: Code,
-      AnchorLinks,
-      AnchorLink,
-      Caption,
-      Column,
-      DoDont,
-      DoDontRow,
-      GifPlayer,
-      PageDescription,
-      Row,
-      StorybookDemo,
-      Grid,
-    },
   },
   options: {
     storySort: {

@@ -1,0 +1,64 @@
+<Meta title="MDX Components/MDX Documentation Guidelines" />
+# MDX Documentation Guidelines  
+
+This document outlines the best practices and rules for writing MDX documentation 
+for components under `@carbon-labs`. 
+
+Following these guidelines will ensure all documented components have the same styles
+as the ones found in the [Carbon Design System](carbondesignsystem.com) page.
+
+
+## Directory Structure  
+- All `.mdx` files **must** be placed under:  
+  ```
+  src/components/ComponentName/docs/
+  ```
+- The `Meta` component must be included at the top of the file with a `title` in the format:  
+  ```mdx
+  <Meta title="ComponentName/Example" />
+  ```
+
+## Unsupported Features  
+This library does **not** support the following MDX features:
+- **Frontmatter** (metadata at the beginning of the file)
+- **HTML comments** (e.g., `<!-- comment -->`)
+- **Markdown image syntax** (e.g., `![alt text](./image.png)`)
+
+## Using Images  
+Instead of markdown image syntax, import images and use the `<img />` tag:  
+```mdx
+import image from './images/1.png';
+
+<img
+  alt="example"
+  src={image}
+/>
+```
+
+## Available MDX Components  
+The following Carbon MDX components are available for use in documentation:  
+
+- `H1`, `H2`, `H3`, `H4`, `H5`, `H6`  
+- `P`
+- `OL` (Ordered List), `UL` (Unordered List), `LI` (List Item)  
+- `Link`  
+- `Blockquote`  
+- `PageTable`  
+- `Caption`  
+- `Code`  
+- `AnchorLinks`, `AnchorLink`  
+- `Column`, `Row`, `Grid`  
+- `DoDont`, `DoDontRow`  
+- `GifPlayer`  
+- `PageDescription`  
+- `StorybookDemo`  
+- `Tabs`, `Tab`  
+- `InlineNotification`  
+- `ArtDirection`  
+
+## Unsupported MDX Components  
+The following component is **not** supported in this documentation,
+but note that it is used in other Carbon sites:
+
+- `A11yStatus`
+

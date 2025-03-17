@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toc renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <nav
+    class="clabs--whats-new__toc-list"
+    data-testid="TestTocList"
+  >
+    <li
+      class="clabs--whats-new__toc-item"
+      data-index="0"
+      data-testid="TestTocListItem"
+    >
+      <a
+        href="#"
+        role="button"
+        tabindex="-1"
+      >
+        List item 1
+      </a>
+    </li>
+  </nav>
+  <div
+    class="clabs--whats-new__toc-sections"
+    data-testid="TestTocSections"
+  >
+    <section
+      data-index="0"
+      data-testid="TestTocSection"
+    >
+      Section 1
+    </section>
+  </div>
+</div>
+`;

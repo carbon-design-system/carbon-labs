@@ -1,171 +1,223 @@
-import { Meta } from '@storybook/blocks';
+import AccordionStyle1 from './images/accordion-style-1.png';
+import AccordionStyle2 from './images/accordion-style-2.png';
+import AccordionStyle3 from './images/accordion-style-3.png';
+import AccordionStyle4 from './images/accordion-style-4.png';
+import AccordionStyle5 from './images/accordion-style-5.png';
+import AccordionStyle6 from './images/accordion-style-6.png';
+import AccordionStyle7 from './images/accordion-style-7.png';
+import AccordionStyleSize from './images/accordion-style-size.png';
 
 <Meta title="Example Component/ExampleButton/Docs/Style" />
 
+<InlineNotification kind="info">
+  This example documentation is from the
+  [Accordion](https://carbondesignsystem.com/components/accordion/style)
+  component
+  ([source](https://github.com/carbon-design-system/carbon-website/blob/main/src/pages/components/accordion/style.mdx)).
+  Documentation templates can be found
+  [here](https://carbondesignsystem.com/contributing/documentation).
+</InlineNotification>
+
 ## Color
 
-The UI Shell can be customized to use any of the four IBM themes by applying an
-inline theme to the shell zone.
+| Element | Property      | Color token      |
+| ------- | ------------- | ---------------- |
+| Title   | color         | `$text-primary`  |
+| Content | color         | `$text-primary`  |
+| Icon    | fill          | `$icon-primary`  |
+| Header  | border-top    | `$border-subtle` |
+|         | background    | Transparent      |
+| Panel   | border-bottom | `$border-subtle` |
+|         | background    | Transparent      |
 
-| Element      | Property         | Color token      |
-| ------------ | ---------------- | ---------------- |
-| Header       | background color | `$background`    |
-|              | border-bottom    | `$border-subtle` |
-| Product name | text color       | `$text-primary`  |
+### Interactive states
 
-![ui shell header](images/header-style-1.png)
-
-### Menu
-
-| State   | Property         | Color token          |
-| ------- | ---------------- | -------------------- |
-| Enabled | svg              | `$icon-primary`      |
-| Hover   | background color | `$background-hover`  |
-|         | svg              | `$icon-primary`      |
-| Focus   | border           | `$focus`             |
-| Active  | background color | `$background-active` |
-|         | svg              | `$icon-primary`      |
+| Element | State    | Property   | Color token      |
+| ------- | -------- | ---------- | ---------------- |
+| Header  | Hover    | background | `$layer-hover`   |
+|         | Focus    | border     | `$focus`         |
+|         | Disabled | border-top | `$border-subtle` |
+| Title   | Disabled | background | `$text-disabled` |
+| Icon    | Disabled | fill       | `$icon-disabled` |
 
 <Row>
-<Column colLg={8}>
+<Column colLg={12}>
 
-![Menu trigger interactive states](images/header-style-5.png)
+<Tabs>
 
-<Caption>Menu-trigger interactive states</Caption>
+<Tab label="Default">
 
-</Column>
-</Row>
+<img
+  alt="default accordion alignment interactive states"
+  src={AccordionStyle2}
+/>
 
-### Header link
+</Tab>
 
-| State    | Property         | Color token           |
-| -------- | ---------------- | --------------------- |
-| Enabled  | text color       | `$text-secondary`     |
-| Hover    | background color | `$background-hover`   |
-|          | text color       | `$text-primary`       |
-| Focus    | border           | `$focus`              |
-| Active   | background color | `$background-active`  |
-|          | text color       | `$text-primary`       |
-| Selected | background color | `$background`         |
-|          | text color       | `$text-primary`       |
-|          | border-bottom    | `$border-interactive` |
+<Tab label="Flush">
 
-<Row>
-<Column colLg={8}>
+<img alt="flush accordion alignment interactive states" src={AccordionStyle3} />
 
-![Menu item interactive states](images/header-style-6.png)
+</Tab>
 
-<Caption>Sub-menu interactive states</Caption>
-
-</Column>
-</Row>
-
-### Sub-menu
-
-| Element  | State    | Property         | Color token           |
-| -------- | -------- | ---------------- | --------------------- |
-| Sub-menu | Enabled  | background color | `$background`         |
-|          |          | text color       | `$text-secondary`     |
-|          |          | svg              | `$icon-secondary`     |
-|          | Hover    | background color | `$background-hover`   |
-|          |          | text color       | `$text-primary`       |
-|          |          | svg              | `$icon-primary`       |
-|          | Focus    | border           | `$focus`              |
-|          | Active   | background color | `$background-active`  |
-|          |          | text color       | `$text-primary`       |
-|          |          | svg              | `$icon-primary`       |
-|          | Selected | background color | `$layer`              |
-|          |          | text color       | `$text-primary`       |
-|          |          | svg              | `$icon-primary`       |
-| Item     | Enabled  | background color | `$layer`              |
-|          |          | text color       | `$text-secondary`     |
-|          |          | svg              | `$icon-secondary`     |
-|          | Hover    | background color | `$layer-hover`        |
-|          |          | text color       | `$text-primary`       |
-|          |          | svg              | `$icon-primary`       |
-|          | Focus    | border           | `$focus`              |
-|          | Active   | background color | `$layer-active`       |
-|          |          | text color       | `$text-primary`       |
-|          |          | svg              | `$icon-primary`       |
-|          | Selected | background color | `$layer-selected`     |
-|          |          | text color       | `$text-primary`       |
-|          |          | svg              | `$icon-primary`       |
-|          |          | border-left      | `$border-interactive` |
-
-![Sub-menu interactive states](images/header-style-7.png)
-
-<Caption></Caption>
-
-### Header actions
-
-| State    | Property         | Color token          |
-| -------- | ---------------- | -------------------- |
-| Enabled  | svg              | `$icon-secondary`    |
-| Hover    | background color | `$background-hover`  |
-|          | svg              | `$icon-primary`      |
-| Focus    | border           | `$focus`             |
-| Active   | background color | `$background-active` |
-|          | svg              | `$icon-primary`      |
-| Selected | background color | `$layer`             |
-|          | border           | `$border-subtle`     |
-|          | svg              | `$icon-primary`      |
-
-<Row>
-<Column colLg={8}>
-
-![Header action interactive states](images/header-style-8.png)
-
-<Caption>Header action interactive states</Caption>
+</Tabs>
 
 </Column>
 </Row>
 
 ## Typography
 
-Menu labels and text should be set in sentence case.
+All accordion titles are set in sentence case. See the accordion
+[content guidelines](/components/accordion/usage#content) for more details.
 
-| Element        | Font-size (px/rem) | Font-weight    | Type token            |
-| -------------- | ------------------ | -------------- | --------------------- |
-| Product name   | 14 / 0.875         | SemiBold / 600 | `$heading-compact-01` |
-| Company prefix | 14 / 0.875         | Regular / 400  | `$body-compact-01`    |
-| Header link    | 14 / 0.875         | Regular / 400  | `$body-compact-01`    |
-| Sub-menu       | 14 / 0.875         | Regular / 400  | `$body-compact-01`    |
+| Element | Font-size (px/rem) | Font-weight   | Type token |
+| ------- | ------------------ | ------------- | ---------- |
+| Title   | 14 / 0.875         | Regular / 400 | `$body-01` |
+| Content | 14 / 0.875         | Regular / 400 | `$body-01` |
 
 ## Structure
 
-The header should span the full width of the browser window. The header can
-either stay sticky to the top of the browser or scroll away.
+There is no max-height for an open panel but an accordion may
+[scroll](/components/accordion/usage#scrolling-content) if constrained by
+vertical space. The width of an accordion varies based on the content, layout,
+and page design. The icon used in the header is a `chevron`. The accordion has
+an indented default alignment but can also be set to have a flush alignment.
 
-| Element       | Property                    | px/rem  | Spacing token |
-| ------------- | --------------------------- | ------- | ------------- |
-| Header        | height                      | 48 / 3  | –             |
-| Menu          | height, width               | 48 / 3  | –             |
-| Product name  | padding-left                | 16 / 1  | `$spacing-05` |
-|               | padding-right               | 32 / 2  | `$spacing-07` |
-| Link          | padding-left, padding right | 16 / 1  | `$spacing-05` |
-| Sub-menu      | padding-left, padding right | 16 / 1  | `$spacing-05` |
-| Chevron       | padding-left                | 8 / 0.5 | `$spacing-03` |
-| Sub-menu item | padding-left, padding right | 16 / 1  | `$spacing-05` |
-| Header action | height, width               | 48 / 3  | –             |
+### Default alignment
 
-![ui shell header spec](images/header-style-2.png)
+| Element | Property       | px/rem   | Spacing token |
+| ------- | -------------- | -------- | ------------- |
+| Header  | height         | 40 / 2.5 | –             |
+| Item    | border-top     | 1        | –             |
+| Title   | margin-left    | 16 / 1   | `$spacing-05` |
+| Panel   | padding-top    | 8 / 0.5  | `$spacing-03` |
+|         | padding-bottom | 24 / 1.5 | `$spacing-06` |
+|         | padding-right  | 25%      | –             |
+|         | padding-left   | 16 / 1   | `$spacing-05` |
+| Icon    | size           | 16 / 1   | –             |
+|         | padding-right  | 16 / 1   | `$spacing-05` |
+
+<Row>
+<Column colLg={12}>
+
+<div className="image--fixed">
+
+<img
+  alt="Structure measurements for default accordion alignment"
+  src={AccordionStyle4}
+/>
+
+</div>
 
 <Caption>
-  Structure and spacing measurements for UI shell header | px | rem
+  Structure measurements for default accordion alignment. | px / rem
 </Caption>
 
-![ui shell header submenu spec](images/header-style-3.png)
+</Column>
+</Row>
+
+<Row>
+<Column colLg={12}>
+
+<div className="image--fixed">
+
+<img
+  alt="Spacing measurements for default accordion alignment"
+  src={AccordionStyle5}
+/>
+
+</div>
 
 <Caption>
-  Structure and spacing measurements for header submenu | px | rem
+  Spacing measurements for default accordion alignment. | px / rem
 </Caption>
 
-### Responsive behavior
+</Column>
+</Row>
 
-In smaller browser windows, `menu items` in the header should collapse into the
-left side nav menu. Items that were once in the header should stack at the top
-of the side nav panel if other items were already present in the panel.
+### Flush alignment
 
-![responsive behavior example](images/header-style-4.png)
+| Element | Property       | px/rem   | Spacing token |
+| ------- | -------------- | -------- | ------------- |
+| Header  | height         | 40 / 2.5 | –             |
+| Item    | border-top     | 1        | –             |
+| Title   | margin-left    | 0        | –             |
+| Panel   | padding-top    | 8 / 0.5  | `$spacing-03` |
+|         | padding-bottom | 24 / 1.5 | `$spacing-06` |
+|         | padding-right  | 25%      | –             |
+|         | padding-left   | 0        | –             |
+| Icon    | size           | 16 / 1   | –             |
+|         | padding-right  | 0        | –             |
 
-<Caption>Responsive behavior for UI shell header</Caption>
+<Row>
+<Column colLg={12}>
+
+<div className="image--fixed">
+
+<img
+  alt="Structure measurements for flush accordion alignment"
+  src={AccordionStyle6}
+/>
+
+</div>
+
+<Caption>
+  Structure measurements for flush accordion alignment. | px / rem
+</Caption>
+
+</Column>
+</Row>
+
+<Row>
+<Column colLg={12}>
+
+<div className="image--fixed">
+
+<img
+  alt="Spacing measurements for flush accordion alignment"
+  src={AccordionStyle7}
+/>
+
+</div>
+
+<Caption>
+  Spacing measurements for flush accordion alignment. | px / rem
+</Caption>
+
+</Column>
+</Row>
+
+### Margin right
+
+Accordions have a variable right margin that changes based on its width.
+Accordions that are 640px and wider have a `margin-right: 25%` with the
+percentage being based off the width of the container it is placed in. At
+smaller widths, the `margin-right` is a fixed size.
+
+Body copy, including titles, in an accordion always follows the margin-right
+rules. However, inputs and other components may still expand to the full width
+of the accordion panel.
+
+| Accordion width | Margin-right | Spacing token |
+| --------------- | ------------ | ------------- |
+| > 640           | 25%          | –             |
+| 420-640px       | 64px / 4rem  | `$spacing-10` |
+| < 420           | 16px / 1rem  | `$spacing-05` |
+
+## Sizes
+
+| Element | Size        | Height (px/rem) |
+| ------- | ----------- | --------------- |
+| Header  | Small (sm)  | 32 / 2          |
+|         | Medium (md) | 40 / 2.5        |
+|         | Large (lg)  | 48 / 3          |
+
+<Row>
+<Column colLg={12}>
+
+<div className="image--fixed">
+  <img alt="Sizes for accordion" src={AccordionStyleSize} />
+</div>
+
+</Column>
+</Row>

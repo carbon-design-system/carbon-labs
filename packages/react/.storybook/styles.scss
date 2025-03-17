@@ -39,3 +39,14 @@ body,
     --cds-grid-columns: 12;
   }
 }
+
+.cds--mdx img {
+  max-width: 100%;
+  background: #fff;
+}
+
+.cds--mdx .image--fixed img {
+  @include breakpoint.breakpoint(lg) {
+    max-width: 736px;
+  }
+}

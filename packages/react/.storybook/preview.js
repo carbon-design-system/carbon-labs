@@ -4,7 +4,7 @@ import { breakpoints } from '@carbon/layout';
 import { GlobalTheme, Theme } from '@carbon/react/es/components/Theme';
 import { Layout } from '@carbon/react/es/components/Layout';
 import { TextDirection } from '@carbon/react/es/components/Text';
-import { DocsContainer, Unstyled } from '@storybook/blocks';
+import { DocsContainer, Meta, Unstyled } from '@storybook/blocks';
 import {
   H1,
   H2,
@@ -31,12 +31,15 @@ import {
   Row,
   StorybookDemo,
   Grid,
+  Tabs,
+  InlineNotification,
+  Tab,
+  ArtDirection,
 } from '../src/components/MDXComponents';
 import '../src/components/MDXComponents/components/index.scss';
 import './styles.scss';
 import { MDXProvider } from '@mdx-js/react';
-
-import theme, { MarkdownTheme } from './theme';
+import theme from './theme';
 
 const customMarkdown = {
   h1: H1,
@@ -64,6 +67,11 @@ const customMarkdown = {
   Row,
   StorybookDemo,
   Grid,
+  Tabs,
+  Tab,
+  Meta,
+  InlineNotification,
+  ArtDirection,
 };
 
 /**
@@ -91,9 +99,8 @@ const Container = ({ children, ...props }) => {
           <Unstyled>
             <Theme
               style={{
-                paddingBottom: '2rem',
-                paddingTop: '1px',
-                marginTop: '-1px',
+                paddingBottom: '5rem',
+                paddingTop: '4rem',
               }}
               theme="g10">
               {children}

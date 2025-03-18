@@ -65,6 +65,21 @@
   margin-block-start: spacing.$spacing-06;
 }
 
+/* Spacing List */
+.#{with-prefix('list-item')} {
+    code  {
+    background-color: $layer-accent-01;
+    border-radius: 4px;
+    bottom: .0625em;
+    color: $text-primary;
+    display: inline;
+
+    @include type.type-style('code-01');
+    padding: 0.5em;
+    position: relative;
+  }
+}
+
 .#{with-prefix('list')} .#{with-prefix('list')} {
   margin-block-start: 0;
 }

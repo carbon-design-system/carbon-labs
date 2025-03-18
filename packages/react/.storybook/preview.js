@@ -49,8 +49,7 @@ import {
   Title,
   UL,
   Video,
-} from '../src/components/MDXComponents';
-import '../src/components/MDXComponents/components/index.scss';
+} from '@carbon-labs/mdx-components';
 import './styles.scss';
 import { MDXProvider } from '@mdx-js/react';
 import theme from './theme';

@@ -20,7 +20,7 @@ export const AnchorLink: MdxComponent<AnchorLinkProps> = ({ to, children }) => {
   const href = to || `#${slugify(children, { lower: true })}`;
 
   return (
-    <a className={withPrefix('link')} href={href} data-anchor-link>
+    <a className={withPrefix('anchor-link')} href={href} data-anchor-link>
       {children}
     </a>
   );

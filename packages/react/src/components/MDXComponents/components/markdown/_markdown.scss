@@ -6,6 +6,9 @@
  */
 
 @use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/styles/scss/themes' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
 @use '@carbon/react/scss/spacing' as spacing;
 @use '@carbon/react/scss/type' as type;
 
@@ -68,12 +71,14 @@
 
 .#{with-prefix('ul')} {
   /* override carbon remove hanging bullet */
-  margin-inline-start: spacing.$spacing-05;
+  /* stylelint-disable-next-line declaration-no-important */
+  margin-inline-start: spacing.$spacing-05 !important;
 }
 
 .#{with-prefix('ol')} {
   /*  override carbon remove hanging bullet */
-  margin-inline-start: spacing.$spacing-06;
+  /* stylelint-disable-next-line declaration-no-important */
+  margin-inline-start: spacing.$spacing-06 !important;
 }
 
 /* Headings */
@@ -101,6 +106,18 @@
 /* Paragraph */
 .#{with-prefix('paragraph')} {
   @include type.type-style('body-long-02');
+
+  code  {
+    background-color: $layer-accent-01;
+    border-radius: 4px;
+    bottom: .0625em;
+    color: $text-primary;
+    display: inline;
+
+    @include type.type-style('code-01');
+    padding: 0.5em;
+    position: relative;
+  }
 }
 
 .#{with-prefix('paragraph--large')} {

@@ -19,7 +19,7 @@
     margin-block-start: calc(spacing.$spacing-11 - spacing.$spacing-03);
   }
 
-  .#{with-prefix('link')} {
+  .#{with-prefix('anchor-link')} {
     @include type.type-style('fluid-heading-03', true);
 
     position: relative;

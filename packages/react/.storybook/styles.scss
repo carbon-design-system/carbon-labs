@@ -2,7 +2,7 @@
   $font-path: '~@ibm/plex'
 );
 @use '@carbon/styles/scss/breakpoint' as breakpoint;
-@use '@carbon-labs/mdx-components/scss/index.scss';
+@use '@carbon-labs/mdx-components/components/index.scss';
 
 :root {
   @include styles.theme(styles.$white);

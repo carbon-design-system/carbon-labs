@@ -67,16 +67,16 @@
 
 /* Spacing List */
 .#{with-prefix('list-item')} {
-    code  {
-    background-color: $layer-accent-01;
-    border-radius: 4px;
-    bottom: .0625em;
-    color: $text-primary;
+  code {
+    position: relative;
+    inset-block-end: 0.0625em;
     display: inline;
+    padding: 0.5em;
+    border-radius: 4px;
+    background-color: $layer-accent-01;
+    color: $text-primary;
 
     @include type.type-style('code-01');
-    padding: 0.5em;
-    position: relative;
   }
 }
 
@@ -122,16 +122,16 @@
 .#{with-prefix('paragraph')} {
   @include type.type-style('body-long-02');
 
-  code  {
-    background-color: $layer-accent-01;
-    border-radius: 4px;
-    bottom: .0625em;
-    color: $text-primary;
+  code {
+    position: relative;
+    inset-block-end: 0.0625em;
     display: inline;
+    padding: 0.5em;
+    border-radius: 4px;
+    background-color: $layer-accent-01;
+    color: $text-primary;
 
     @include type.type-style('code-01');
-    padding: 0.5em;
-    position: relative;
   }
 }
 

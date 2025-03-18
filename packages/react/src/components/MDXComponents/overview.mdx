@@ -1,5 +1,5 @@
-<Meta title="MDX Components/MDX Documentation Guidelines" />
-# MDX Documentation Guidelines  
+<Meta title="MDX Components/Guidelines" />
+# Guidelines  
 
 This document outlines the best practices and rules for writing MDX documentation 
 for components under `@carbon-labs`. 
@@ -8,19 +8,19 @@ Following these guidelines will ensure all documented components have the same s
 as the ones found in the [Carbon Design System](https://carbondesignsystem.com) page.
 
 
-## Directory Structure  
-- The `Meta` component must be included at the top of the file with a `title` in the format:  
+## Meta component
+- The `Meta` Storybook MDX component must be included at the top of the file with a `title`. This allows you to determine where the file is included in the side navigation, instead of it being placed based on directory path by default.  
   ```mdx
   <Meta title="ComponentName/Example" />
   ```
 
-## Unsupported Features  
+## Unsupported features  
 This library does **not** support the following MDX features:
 - **Frontmatter** (metadata at the beginning of the file)
 - **HTML comments** (e.g., `<!-- comment -->`)
 - **Markdown image syntax** (e.g., `![alt text](./image.png)`)
 
-## Using Images  
+## Using images  
 Instead of markdown image syntax, import images and use the `<img />` tag:  
 ```mdx
 import image from './images/1.png';
@@ -31,7 +31,7 @@ import image from './images/1.png';
 />
 ```
 
-## Available MDX Components  
+## Available MDX components  
 The following Carbon MDX components are available for use in documentation:  
 
 - `H1`, `H2`, `H3`, `H4`, `H5`, `H6`  
@@ -64,9 +64,8 @@ The following Carbon MDX components are available for use in documentation:
 - `Title`
 - `Video`
 
-## Unsupported MDX Components  
-The following component is **not** supported in this documentation,
-but note that it is used in other Carbon sites:
+## Unsupported MDX components  
+The following component are **not** currently supported in this documentation, although they may be available in Carbon websites:
 
 - `A11yStatus`
 

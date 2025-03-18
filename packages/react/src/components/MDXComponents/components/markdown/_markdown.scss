@@ -69,12 +69,12 @@
 .#{with-prefix('list-item')} {
   code {
     position: relative;
-    inset-block-end: 0.0625em;
     display: inline;
     padding: 0.5em;
     border-radius: 4px;
     background-color: $layer-accent-01;
     color: $text-primary;
+    inset-block-end: 0.0625em;
 
     @include type.type-style('code-01');
   }
@@ -124,12 +124,12 @@
 
   code {
     position: relative;
-    inset-block-end: 0.0625em;
     display: inline;
     padding: 0.5em;
     border-radius: 4px;
     background-color: $layer-accent-01;
     color: $text-primary;
+    inset-block-end: 0.0625em;
 
     @include type.type-style('code-01');
   }

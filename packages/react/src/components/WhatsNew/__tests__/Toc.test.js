@@ -83,6 +83,7 @@ describe('Toc', () => {
     it('applies a custom class', () => {
       const tocListClass = 'testList2';
       const tocItemClass = 'testItem99';
+      const tocSectionClass = 'testSection42';
 
       const { getByTestId } = render(
         <Toc>
@@ -92,15 +93,22 @@ describe('Toc', () => {
             </TocItem>
           </TocList>
           <TocSections>
-            <TocSection>Section 1</TocSection>
+            <TocSection
+              as="div"
+              className={tocSectionClass}
+              data-testid="TestTocSection">
+              Section 1
+            </TocSection>
           </TocSections>
         </Toc>
       );
       const listElement = getByTestId('TestTocList');
       const itemElement = getByTestId('TestTocListItem');
+      const sectionElement = getByTestId('TestTocSection');
 
       expect(listElement).toHaveClass(tocListClass);
       expect(itemElement).toHaveClass(tocItemClass);
+      expect(sectionElement).toHaveClass(tocSectionClass);
     });
   });
 

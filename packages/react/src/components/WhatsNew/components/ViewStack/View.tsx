@@ -20,10 +20,6 @@ interface ViewProps extends Omit<React.HTMLProps<HTMLLIElement>, 'title'> {
    * Internally used and passed in programmatically. Any value provided will be overwritten.
    **/
   index?: number;
-  /**
-   * Internally used and passed in programmatically. Any value provided will be overwritten.
-   **/
-  isRecycled?: boolean;
 }
 
 const View = ({ className, title, index = Infinity, ...rest }: ViewProps) => {

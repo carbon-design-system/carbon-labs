@@ -13,6 +13,7 @@ export { Aside } from './components/aside/aside';
 export { Caption } from './components/caption/caption';
 export { CardGroup } from './components/card-group/card-group';
 export { Code } from './components/code/code';
+export { InlineCode } from './components/code/inline-code';
 export { Divider } from './components/divider/divider';
 export { DoDont } from './components/do-dont/do-dont';
 export { DoDontRow } from './components/do-dont/do-dont-row';

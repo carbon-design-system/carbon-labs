@@ -33,8 +33,6 @@ export const Code: MdxComponent<CodeProps> = ({ children }) => {
   const src = children.props.src;
   const language = children.props.className || 'language-plain';
 
-  console.log(children);
-
   return (
     <Grid condensed>
       <Column sm={4} md={8} lg={8}>

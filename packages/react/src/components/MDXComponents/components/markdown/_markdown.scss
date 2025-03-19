@@ -65,21 +65,6 @@
   margin-block-start: spacing.$spacing-06;
 }
 
-/* Spacing List */
-.#{with-prefix('list-item')} {
-  code {
-    position: relative;
-    display: inline;
-    padding: 0.5em;
-    border-radius: 4px;
-    background-color: $layer-accent-01;
-    color: $text-primary;
-    inset-block-end: 0.0625em;
-
-    @include type.type-style('code-01');
-  }
-}
-
 .#{with-prefix('list')} .#{with-prefix('list')} {
   margin-block-start: 0;
 }
@@ -121,18 +106,6 @@
 /* Paragraph */
 .#{with-prefix('paragraph')} {
   @include type.type-style('body-long-02');
-
-  code {
-    position: relative;
-    display: inline;
-    padding: 0.5em;
-    border-radius: 4px;
-    background-color: $layer-accent-01;
-    color: $text-primary;
-    inset-block-end: 0.0625em;
-
-    @include type.type-style('code-01');
-  }
 }
 
 .#{with-prefix('paragraph--large')} {

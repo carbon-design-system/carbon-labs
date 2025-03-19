@@ -18,7 +18,7 @@
 
 // override carbon styles
 .#{with-prefix('accordion')} .cds--accordion__heading {
-  padding-block: 0.625rem;
+  padding-block: spacing.$spacing-04;
 }
 
 // override carbon, accordion inset-inline-end spacing

@@ -30,7 +30,7 @@ export const AnchorLinks: MdxComponent<AnchorLinksProps> = ({
   children,
   small,
 }) => {
-  const isColumn = Children.count(children) > 9;
+  const isColumn = Children.count(children) > 4;
   const classNames = clsx({
     [withPrefix('list--small')]: small,
     [withPrefix('multiple-columns')]: isColumn,

@@ -32,11 +32,3 @@ Default.args = {
   width: 720,
   height: 405
 }
-
-export const Vimeo = Template.bind({})
-Vimeo.args = {
-  title: 'Vimeo example',
-  vimeoId: '310583077',
-  src: undefined,
-  poster: undefined
-}

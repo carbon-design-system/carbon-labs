@@ -8,6 +8,7 @@
 import React from 'react'
 import { Column } from './column'
 import { Grid } from './grid'
+import { Row } from './row'
 
 export default {
   title: 'MDX Components/Grid',
@@ -39,5 +40,24 @@ const Template = () => (
   </Grid>
 )
 
+const GatsbyTemplate = () => (
+  <Row>
+    <Column sm={4} md={4} lg={4}>
+      Span 4
+    </Column>
+    <Column sm={4} md={4} lg={4}>
+      Span 4
+    </Column>
+    <Column sm={4} md={4} lg={4}>
+      Span 4
+    </Column>
+    <Column sm={4} md={4} lg={4}>
+      Span 4
+    </Column>
+  </Row>
+)
+
 export const Default = Template.bind({})
 Default.args = {}
+
+export const Gatsby = GatsbyTemplate.bind({});

@@ -19,9 +19,13 @@ interface GridProps {
 }
 
 /**
- * The Platform allows for easy use of the Carbon `<Grid>` and `<Column>`
+ * The carbon-labs MDX package allows for easy use of the Carbon `<Grid>` and `<Column>`
  * components. See full docs in the Carbon React Storybook.
  * https://react.carbondesignsystem.com/?path=/story/elements-grid--default
+ *
+ * Additionally, this package also supports the Gatsby theme's `<Row>` and `<Column>`.
+ * See full docs in the Carbon theme Gatsby website.
+ * https://gatsby.carbondesignsystem.com/components/Grid/
  */
 export const Grid: MdxComponent<GridProps> = ({
   children,

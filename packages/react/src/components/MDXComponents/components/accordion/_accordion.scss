@@ -16,6 +16,11 @@
   margin-block-start: spacing.$spacing-06;
 }
 
+// override carbon styles
+.#{with-prefix('accordion')} .cds--accordion__heading {
+  padding-block: 0.625rem;
+}
+
 // override carbon, accordion inset-inline-end spacing
 .#{with-prefix('accordion')} .cds--accordion__content {
   padding-inline-end: spacing.$spacing-10;
@@ -24,4 +29,7 @@
 // override carbon, title font and spacing
 .#{with-prefix('accordion')} .cds--accordion__title {
   @include type.type-style('heading-02');
+
+  margin: 0 0 0 1rem;
+  padding-inline-start: 0;
 }

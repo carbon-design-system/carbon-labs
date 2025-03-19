@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.27.0...@carbon-labs/react-ui-shell@0.28.0) (2025-03-13)
+
+
+### Features
+
+* **UIShell:** add onClick hook to SideNavMenu ([#513](https://github.com/carbon-design-system/carbon-labs/issues/513)) ([edb8d9c](https://github.com/carbon-design-system/carbon-labs/commit/edb8d9cb7f40033d860055808434063ed4a0f417))
+
+
+
+
+
+# [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.26.0...@carbon-labs/react-ui-shell@0.27.0) (2025-03-06)
+
+
+### Bug Fixes
+
+* **SideNavToggle:** show on screen height resize ([#500](https://github.com/carbon-design-system/carbon-labs/issues/500)) ([89fbc2a](https://github.com/carbon-design-system/carbon-labs/commit/89fbc2ad44c9f6f9258787beb4dfc47f63190ae0))
+
+
+
+
+
 # [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.25.0...@carbon-labs/react-ui-shell@0.26.0) (2025-03-05)
 
 

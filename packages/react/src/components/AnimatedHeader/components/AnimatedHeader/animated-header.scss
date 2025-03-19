@@ -16,20 +16,24 @@
 
 $prefix: 'clabs--animated-header' !default;
 
+:root {
+  @include theme(themes.$g10);
+}
+
 [data-carbon-theme='white'] {
-  @include theme(themes.$white, true);
+  @include theme(themes.$white);
 }
 
 [data-carbon-theme='g10'] {
-  @include theme(themes.$g10, true);
+  @include theme(themes.$g10);
 }
 
 [data-carbon-theme='g90'] {
-  @include theme(themes.$g90, true);
+  @include theme(themes.$g90);
 }
 
 [data-carbon-theme='g100'] {
-  @include theme(themes.$g100, true);
+  @include theme(themes.$g100);
 }
 
 body {
@@ -126,6 +130,7 @@ body {
   padding-inline: var(--cds-grid-margin);
 }
 
+:root .#{$prefix}__container--gradient,
 [data-carbon-theme='white'] .#{$prefix}__container--gradient,
 [data-carbon-theme='g10'] .#{$prefix}__container--gradient {
   background: linear-gradient(0deg, #e0e0e0bf 0%, transparent 100%);
@@ -346,6 +351,7 @@ body {
   inset-inline-end: 0;
 }
 
+:root .#{$prefix}__button-collapse--gradient,
 [data-carbon-theme='white'] .#{$prefix}__button-collapse--gradient,
 [data-carbon-theme='g10'] .#{$prefix}__button-collapse--gradient {
   background: radial-gradient(

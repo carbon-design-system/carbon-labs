@@ -42,6 +42,7 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
   transition: opacity 500ms linear;
 }
 
+:root .#{$prefix}--body::before,
 [data-carbon-theme='white'] .#{$prefix}--body::before,
 [data-carbon-theme='g10'] .#{$prefix}--body::before {
   background-color: $layer-01;

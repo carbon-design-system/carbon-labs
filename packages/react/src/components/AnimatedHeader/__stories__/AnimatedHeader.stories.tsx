@@ -9,7 +9,6 @@
 import React from 'react';
 import mdx from './AnimatedHeader.mdx';
 import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
-import { AIPromptTile, BaseTile, GlassTile } from '../components/Tiles/index';
 import { Launch, Add, DocumentImport } from '@carbon/react/icons';
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -33,11 +32,6 @@ import {
 const meta: Meta<typeof AnimatedHeader> = {
   title: 'Components/Animated Header',
   component: AnimatedHeader,
-  // subcomponents: {
-  //   AIPromptTile,
-  //   BaseTile,
-  //   GlassTile,
-  // },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   //tags: ["autodocs"],
   globals: {

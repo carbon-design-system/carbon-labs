@@ -8,7 +8,6 @@
  */
 
 import React, { useState } from 'react';
-import { GlobalTheme } from '@carbon/react';
 import { AnimatedHeader } from '@carbon-labs/react-animated-header/es/index';
 import {
   watsonXAnimatedLight,
@@ -31,26 +30,24 @@ function App() {
   };
 
   return (
-    <GlobalTheme theme={'g10'}>
-      <AnimatedHeader
-        allTiles={tiles}
-        allWorkspaces={workspaces}
-        buttonIcon="Launch"
-        buttonText="Manage data"
-        buttonType="tertiary"
-        description="Connect, monitor, and manage data."
-        headerAnimation={watsonXAnimatedLight}
-        headerDropdown={false}
-        headerStatic={watsonXStaticLight}
-        productName="[Product name]"
-        selectedTileGroup={selectedTile}
-        selectedWorkspace={selectedWorkspace}
-        setSelectedTileGroup={handleTileGroup}
-        setSelectedWorkspace={handleWorkspaceSelect}
-        userName="Drew"
-        welcomeText="Welcome"
-      />
-    </GlobalTheme>
+    <AnimatedHeader
+      allTiles={tiles}
+      allWorkspaces={workspaces}
+      buttonIcon="Launch"
+      buttonText="Manage data"
+      buttonType="tertiary"
+      description="Connect, monitor, and manage data."
+      headerAnimation={watsonXAnimatedLight}
+      headerDropdown={false}
+      headerStatic={watsonXStaticLight}
+      productName="[Product name]"
+      selectedTileGroup={selectedTile}
+      selectedWorkspace={selectedWorkspace}
+      setSelectedTileGroup={handleTileGroup}
+      setSelectedWorkspace={handleWorkspaceSelect}
+      userName="Drew"
+      welcomeText="Welcome"
+    />
   );
 }
 

@@ -167,7 +167,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
       // Run Looped Animation
       animation.addEventListener('complete', loop);
     }
-  }, []);
+  }, [animationContainer, headerAnimation, isReduced]);
 
   return (
     <section className={`${blockClass} ${!open && collapsed}`}>

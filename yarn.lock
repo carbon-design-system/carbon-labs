@@ -2617,6 +2617,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-theme-settings@workspace:packages/react/src/components/ThemeSettings":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-theme-settings@workspace:packages/react/src/components/ThemeSettings"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UIShell":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UIShell"

@@ -63,6 +63,7 @@ import {
   SquareOutline,
   UserAvatar,
   Help,
+  IbmWatsonxAssistant,
 } from '@carbon/icons-react';
 
 import {
@@ -190,24 +191,31 @@ export const Default = () => (
             </HeaderName>
             <HeaderGlobalBar>
               <Button kind="ghost">Button</Button>
-              <MenuButton label="Switcher 1" kind="ghost">
-                <MenuItemGroup label="MenuItemGroup">
-                  <MenuItemSelectable label="Switcher 1" selected />
-                  <MenuItemSelectable label="Selectable 2" />
-                  <MenuItemSelectable label="Selectable 3" />
-                </MenuItemGroup>
-              </MenuButton>
-              <MenuButton label="Switcher 2" kind="ghost">
-                <MenuItemGroup label="MenuItemGroup">
-                  <MenuItemSelectable label="Switcher 2" selected />
-                  <MenuItemSelectable label="Selectable 2" />
-                  <MenuItemSelectable label="Selectable 3" />
-                </MenuItemGroup>
-              </MenuButton>
+              <Theme theme="g100">
+                <div data-floating-menu-container>
+                  <MenuButton label="Switcher 1" kind="ghost">
+                    <MenuItemGroup label="MenuItemGroup">
+                      <MenuItemSelectable label="Switcher 1" selected />
+                      <MenuItemSelectable label="Selectable 2" />
+                      <MenuItemSelectable label="Selectable 3" />
+                    </MenuItemGroup>
+                  </MenuButton>
+                  <MenuButton label="Switcher 2" kind="ghost">
+                    <MenuItemGroup label="MenuItemGroup">
+                      <MenuItemSelectable label="Switcher 2" selected />
+                      <MenuItemSelectable label="Selectable 2" />
+                      <MenuItemSelectable label="Selectable 3" />
+                    </MenuItemGroup>
+                  </MenuButton>
+                </div>
+              </Theme>
               <HeaderGlobalAction
                 aria-label="Search"
                 tooltipHighContrast={false}>
                 <Search size={20} />
+              </HeaderGlobalAction>
+              <HeaderGlobalAction aria-label="Chat" tooltipHighContrast={false}>
+                <IbmWatsonxAssistant size={20} />
               </HeaderGlobalAction>
               <HeaderGlobalAction aria-label="Help" tooltipHighContrast={false}>
                 <Help size={20} />

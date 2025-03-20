@@ -195,7 +195,19 @@ export const Default = () => {
               <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
                 [Platform]
               </HeaderName>
+              <HeaderDivider />
+              <HeaderNavigation aria-label="Nav 1">
+                <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+                <HeaderMenu aria-label="Link 4" menuLinkName="HeaderMenu">
+                  <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+                  <HeaderMenuItem isActive href="#">
+                    HeaderMenuItem
+                  </HeaderMenuItem>
+                  <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+                </HeaderMenu>
+              </HeaderNavigation>
               <HeaderGlobalBar>
+                <HeaderDivider />
                 <MenuButton
                   kind="ghost"
                   label={selectedCategory || 'Select Category'}>
@@ -220,6 +232,7 @@ export const Default = () => {
                     onChange={(newItem) => setSelectedItem(newItem)}
                   />
                 </MenuButton>
+                <HeaderDivider />
                 <HeaderGlobalAction
                   aria-label="Search"
                   tooltipHighContrast={false}>
@@ -796,7 +809,7 @@ export const HeaderStory = () => {
             onChange={(newItem) => setSelectedItem(newItem)}
           />
         </MenuButton>
-
+        <HeaderDivider />
         <HeaderGlobalAction aria-label="Open">
           <SquareOutline size={20} />
         </HeaderGlobalAction>

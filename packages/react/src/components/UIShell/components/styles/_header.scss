@@ -20,7 +20,8 @@ $prefix: 'cds' !default;
 // Menu button inside Header
 //----------------------------------------------------------------------------
 
-.#{$prefix}--header .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost {
+.#{$prefix}--header
+  .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not([disabled]) {
   color: $text-secondary;
 }
 

@@ -61,6 +61,8 @@ import {
   Notification,
   Switcher as SwitcherIcon,
   SquareOutline,
+  UserAvatar,
+  Help,
 } from '@carbon/icons-react';
 
 import {
@@ -187,11 +189,24 @@ export const Default = () => (
               [Platform]
             </HeaderName>
             <HeaderGlobalBar>
-              <HeaderGlobalAction aria-label="Search">
+              <Button kind="ghost">Button</Button>
+              <HeaderGlobalAction
+                aria-label="Search"
+                tooltipHighContrast={false}>
                 <Search size={20} />
               </HeaderGlobalAction>
-              <HeaderGlobalAction aria-label="Notifications">
+              <HeaderGlobalAction aria-label="Help" tooltipHighContrast={false}>
+                <Help size={20} />
+              </HeaderGlobalAction>
+              <HeaderGlobalAction
+                aria-label="Notifications"
+                tooltipHighContrast={false}>
                 <Notification size={20} />
+              </HeaderGlobalAction>
+              <HeaderGlobalAction
+                aria-label="Profile"
+                tooltipHighContrast={false}>
+                <UserAvatar size={20} />
               </HeaderGlobalAction>
               <HeaderGlobalAction
                 aria-label={
@@ -201,6 +216,7 @@ export const Default = () => (
                 isActive={isSwitcherExpanded}
                 onClick={onClickSwitcherExpand}
                 tooltipAlignment="end"
+                tooltipHighContrast={false}
                 id="switcher-button">
                 <SwitcherIcon size={20} />
               </HeaderGlobalAction>

@@ -167,9 +167,10 @@ export const Default = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
 
-  const optionsMap = {
+  const options = {
     Fruits: ['Apple', 'Banana', 'Orange'],
     Vegetables: ['Carrot', 'Broccoli', 'Spinach'],
+    Animals: ['Cat', 'Dog', 'Snake'],
   };
 
   return (
@@ -213,7 +214,7 @@ export const Default = () => {
                   label={selectedCategory || 'Select Category'}>
                   <MenuItemRadioGroup
                     label="Category"
-                    items={Object.keys(optionsMap)}
+                    items={Object.keys(options)}
                     selectedItem={selectedCategory || null}
                     onChange={(newCategory) => {
                       setSelectedCategory(newCategory);
@@ -227,7 +228,7 @@ export const Default = () => {
                   disabled={!selectedCategory}>
                   <MenuItemRadioGroup
                     label="Items"
-                    items={selectedCategory ? optionsMap[selectedCategory] : []}
+                    items={selectedCategory ? options[selectedCategory] : []}
                     selectedItem={selectedItem || null}
                     onChange={(newItem) => setSelectedItem(newItem)}
                   />
@@ -753,9 +754,10 @@ export const HeaderStory = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
 
-  const optionsMap = {
+  const options = {
     Fruits: ['Apple', 'Banana', 'Orange'],
     Vegetables: ['Carrot', 'Broccoli', 'Spinach'],
+    Animals: ['Cat', 'Dog', 'Snake'],
   };
   return (
     <Header aria-label="IBM Platform Name">
@@ -790,7 +792,7 @@ export const HeaderStory = () => {
         <MenuButton kind="ghost" label={selectedCategory || 'Select Category'}>
           <MenuItemRadioGroup
             label="Category"
-            items={Object.keys(optionsMap)}
+            items={Object.keys(options)}
             selectedItem={selectedCategory || null}
             onChange={(newCategory) => {
               setSelectedCategory(newCategory);
@@ -804,7 +806,7 @@ export const HeaderStory = () => {
           disabled={!selectedCategory}>
           <MenuItemRadioGroup
             label="Items"
-            items={selectedCategory ? optionsMap[selectedCategory] : []}
+            items={selectedCategory ? options[selectedCategory] : []}
             selectedItem={selectedItem || null}
             onChange={(newItem) => setSelectedItem(newItem)}
           />

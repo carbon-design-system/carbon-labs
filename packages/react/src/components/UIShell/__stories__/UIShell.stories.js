@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import mdx from './UIShell.mdx';
 import { SIDE_NAV_TYPE, SideNav } from '../components/SideNav';
 import { SideNavItems } from '../components/SideNavItems';
@@ -16,6 +16,7 @@ import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { HeaderPanel } from '../components/HeaderPanel';
 import { SideNavLink } from '../components/SideNavLink';
 import { HeaderContainer } from '../components/HeaderContainer';
+import { HeaderDivider } from '../components/HeaderDivider';
 import {
   SkipToContent,
   Header,
@@ -28,18 +29,14 @@ import {
   Column,
   HeaderGlobalBar,
   HeaderGlobalAction,
-  // HeaderNavigation,
-  // HeaderMenuItem,
-  // HeaderMenu,
+  HeaderNavigation,
+  HeaderMenuItem,
+  HeaderMenu,
   Switcher,
   SwitcherItem,
   SwitcherDivider,
-  Button,
   MenuButton,
-  MenuItem,
   MenuItemRadioGroup,
-  MenuItemGroup,
-  MenuItemSelectable,
 } from '@carbon/react';
 import {
   Add,
@@ -166,286 +163,307 @@ const StoryContent = () => (
  * Story for UIShell
  * @returns {React.ReactElement} The JSX for the story
  */
-export const Default = () => (
-  <HeaderContainer
-    render={({
-      isSideNavExpanded,
-      isSwitcherExpanded,
-      onClickSideNavExpand,
-      onClickSwitcherExpand,
-    }) => (
-      <>
-        <Theme theme="g100">
-          <Header aria-label="IBM Platform Name">
-            <SkipToContent />
-            <HeaderMenuButton
-              aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
-              onClick={onClickSideNavExpand}
-              isActive={isSideNavExpanded}
-              aria-expanded={isSideNavExpanded}
-              isCollapsible //shows hamburger menu at desktop
-              isFixedNav
-            />
-            <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
-              [Platform]
-            </HeaderName>
-            <HeaderGlobalBar>
-              <Button kind="ghost">Button</Button>
-              <Theme theme="g100">
-                <div data-floating-menu-container>
-                  <MenuButton label="Switcher 1" kind="ghost">
-                    <MenuItemGroup label="MenuItemGroup">
-                      <MenuItemSelectable label="Switcher 1" selected />
-                      <MenuItemSelectable label="Selectable 2" />
-                      <MenuItemSelectable label="Selectable 3" />
-                    </MenuItemGroup>
-                  </MenuButton>
-                  <MenuButton label="Switcher 2" kind="ghost">
-                    <MenuItemGroup label="MenuItemGroup">
-                      <MenuItemSelectable label="Switcher 2" selected />
-                      <MenuItemSelectable label="Selectable 2" />
-                      <MenuItemSelectable label="Selectable 3" />
-                    </MenuItemGroup>
-                  </MenuButton>
-                </div>
-              </Theme>
-              <HeaderGlobalAction
-                aria-label="Search"
-                tooltipHighContrast={false}>
-                <Search size={20} />
-              </HeaderGlobalAction>
-              <HeaderGlobalAction aria-label="Chat" tooltipHighContrast={false}>
-                <IbmWatsonxAssistant size={20} />
-              </HeaderGlobalAction>
-              <HeaderGlobalAction aria-label="Help" tooltipHighContrast={false}>
-                <Help size={20} />
-              </HeaderGlobalAction>
-              <HeaderGlobalAction
-                aria-label="Notifications"
-                tooltipHighContrast={false}>
-                <Notification size={20} />
-              </HeaderGlobalAction>
-              <HeaderGlobalAction
-                aria-label="Profile"
-                tooltipHighContrast={false}>
-                <UserAvatar size={20} />
-              </HeaderGlobalAction>
-              <HeaderGlobalAction
-                aria-label={
-                  isSwitcherExpanded ? 'Close switcher' : 'Open switcher'
-                }
-                aria-expanded={isSwitcherExpanded}
-                isActive={isSwitcherExpanded}
-                onClick={onClickSwitcherExpand}
-                tooltipAlignment="end"
-                tooltipHighContrast={false}
-                id="switcher-button">
-                <SwitcherIcon size={20} />
-              </HeaderGlobalAction>
-            </HeaderGlobalBar>
-            <HeaderPanel
-              expanded={isSwitcherExpanded}
-              onHeaderPanelFocus={onClickSwitcherExpand}
-              href="#switcher-button">
-              <Switcher
-                aria-label="Switcher Container"
-                expanded={isSwitcherExpanded}>
-                <SwitcherItem aria-label="Link 1" href="#">
-                  Link 1
-                </SwitcherItem>
-                <SwitcherDivider />
-                <SwitcherItem href="#" aria-label="Link 2">
-                  Link 2
-                </SwitcherItem>
-                <SwitcherItem href="#" aria-label="Link 3">
-                  Link 3
-                </SwitcherItem>
-                <SwitcherItem href="#" aria-label="Link 4">
-                  Link 4
-                </SwitcherItem>
-                <SwitcherItem href="#" aria-label="Link 5">
-                  Link 5
-                </SwitcherItem>
-                <SwitcherDivider />
-                <SwitcherItem href="#" aria-label="Link 6">
-                  Link 6
-                </SwitcherItem>
-              </Switcher>
-            </HeaderPanel>
-          </Header>
-          <SideNav
-            isTreeview={true}
-            aria-label="Main navigation"
-            expanded={isSideNavExpanded}
-            onSideNavBlur={onClickSideNavExpand}
-            isCollapsible
-            hideOverlay
-            className="nav--global">
-            <SideNavItems>
-              <SideNavMenu renderIcon={CarbonDesignSystem} title="Product 1">
+export const Default = () => {
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedItem, setSelectedItem] = useState('');
+
+  const optionsMap = {
+    Fruits: ['Apple', 'Banana', 'Orange'],
+    Vegetables: ['Carrot', 'Broccoli', 'Spinach'],
+  };
+
+  return (
+    <HeaderContainer
+      render={({
+        isSideNavExpanded,
+        isSwitcherExpanded,
+        onClickSideNavExpand,
+        onClickSwitcherExpand,
+      }) => (
+        <>
+          <Theme theme="g100">
+            <Header aria-label="IBM Platform Name">
+              <SkipToContent />
+              <HeaderMenuButton
+                aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
+                onClick={onClickSideNavExpand}
+                isActive={isSideNavExpanded}
+                aria-expanded={isSideNavExpanded}
+                isCollapsible //shows hamburger menu at desktop
+                isFixedNav
+              />
+              <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
+                [Platform]
+              </HeaderName>
+              <HeaderGlobalBar>
+                <MenuButton
+                  kind="ghost"
+                  label={selectedCategory || 'Select Category'}>
+                  <MenuItemRadioGroup
+                    label="Category"
+                    items={Object.keys(optionsMap)}
+                    selectedItem={selectedCategory || null}
+                    onChange={(newCategory) => {
+                      setSelectedCategory(newCategory);
+                      setSelectedItem('');
+                    }}
+                  />
+                </MenuButton>
+                <MenuButton
+                  kind="ghost"
+                  label={selectedItem || 'Select Item'}
+                  disabled={!selectedCategory}>
+                  <MenuItemRadioGroup
+                    label="Items"
+                    items={selectedCategory ? optionsMap[selectedCategory] : []}
+                    selectedItem={selectedItem || null}
+                    onChange={(newItem) => setSelectedItem(newItem)}
+                  />
+                </MenuButton>
+                <HeaderGlobalAction
+                  aria-label="Search"
+                  tooltipHighContrast={false}>
+                  <Search size={20} />
+                </HeaderGlobalAction>
+                <HeaderGlobalAction
+                  aria-label="Chat"
+                  tooltipHighContrast={false}>
+                  <IbmWatsonxAssistant size={20} />
+                </HeaderGlobalAction>
+                <HeaderGlobalAction
+                  aria-label="Help"
+                  tooltipHighContrast={false}>
+                  <Help size={20} />
+                </HeaderGlobalAction>
+                <HeaderGlobalAction
+                  aria-label="Notifications"
+                  tooltipHighContrast={false}>
+                  <Notification size={20} />
+                </HeaderGlobalAction>
+                <HeaderGlobalAction
+                  aria-label="Profile"
+                  tooltipHighContrast={false}>
+                  <UserAvatar size={20} />
+                </HeaderGlobalAction>
+                <HeaderGlobalAction
+                  aria-label={
+                    isSwitcherExpanded ? 'Close switcher' : 'Open switcher'
+                  }
+                  aria-expanded={isSwitcherExpanded}
+                  isActive={isSwitcherExpanded}
+                  onClick={onClickSwitcherExpand}
+                  tooltipAlignment="end"
+                  tooltipHighContrast={false}
+                  id="switcher-button">
+                  <SwitcherIcon size={20} />
+                </HeaderGlobalAction>
+              </HeaderGlobalBar>
+              <HeaderPanel
+                expanded={isSwitcherExpanded}
+                onHeaderPanelFocus={onClickSwitcherExpand}
+                href="#switcher-button">
+                <Switcher
+                  aria-label="Switcher Container"
+                  expanded={isSwitcherExpanded}>
+                  <SwitcherItem aria-label="Link 1" href="#">
+                    Link 1
+                  </SwitcherItem>
+                  <SwitcherDivider />
+                  <SwitcherItem href="#" aria-label="Link 2">
+                    Link 2
+                  </SwitcherItem>
+                  <SwitcherItem href="#" aria-label="Link 3">
+                    Link 3
+                  </SwitcherItem>
+                  <SwitcherItem href="#" aria-label="Link 4">
+                    Link 4
+                  </SwitcherItem>
+                  <SwitcherItem href="#" aria-label="Link 5">
+                    Link 5
+                  </SwitcherItem>
+                  <SwitcherDivider />
+                  <SwitcherItem href="#" aria-label="Link 6">
+                    Link 6
+                  </SwitcherItem>
+                </Switcher>
+              </HeaderPanel>
+            </Header>
+            <SideNav
+              isTreeview={true}
+              aria-label="Main navigation"
+              expanded={isSideNavExpanded}
+              onSideNavBlur={onClickSideNavExpand}
+              isCollapsible
+              hideOverlay
+              className="nav--global">
+              <SideNavItems>
+                <SideNavMenu renderIcon={CarbonDesignSystem} title="Product 1">
+                  <SideNavMenu renderIcon={Home} title="Home">
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
+                  </SideNavMenu>
+                  <SideNavMenuItem
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={BusinessProcesses}>
+                    Business
+                  </SideNavMenuItem>
+                  <SideNavMenuItem
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Application}>
+                    Applications
+                  </SideNavMenuItem>
+                  <SideNavMenuItem
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Platforms}>
+                    Platforms
+                  </SideNavMenuItem>
+                  <SideNavMenu renderIcon={Layers} title="Infrastructure">
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
+                  </SideNavMenu>
+                </SideNavMenu>
+                <SideNavMenu renderIcon={CarbonIBMDotCom} title="Product 2">
+                  <SideNavMenuItem
+                    renderIcon={Home}
+                    href="http://www.carbondesignsystem.com">
+                    Link
+                  </SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu
+                  renderIcon={CarbonforIBMProducts}
+                  title="Product 3">
+                  <SideNavMenuItem
+                    renderIcon={Home}
+                    href="http://www.carbondesignsystem.com">
+                    Link
+                  </SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu renderIcon={IBMTelemetry} title="Product 4">
+                  <SideNavMenuItem
+                    renderIcon={Home}
+                    href="http://www.carbondesignsystem.com">
+                    Link
+                  </SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavDivider />
+                <SideNavLink
+                  renderIcon={DocumentMultiple_01}
+                  href="http://www.carbondesignsystem.com">
+                  Docs
+                </SideNavLink>
+                <SideNavLink
+                  renderIcon={Settings}
+                  href="http://www.carbondesignsystem.com">
+                  Settings
+                </SideNavLink>
+              </SideNavItems>
+            </SideNav>
+          </Theme>
+          <Theme theme="g100">
+            <SideNav
+              navType={SIDE_NAV_TYPE.PANEL}
+              isChildOfHeader={false}
+              hideOverlay
+              aria-label="Product navigation">
+              <SideNavItems>
                 <SideNavMenu renderIcon={Home} title="Home">
                   <SideNavMenuItem href="http://www.carbondesignsystem.com">
                     Item level 3
                   </SideNavMenuItem>
-                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                  <SideNavMenuItem
+                    isActive
+                    href="http://www.carbondesignsystem.com">
                     Item level 3
                   </SideNavMenuItem>
                   <SideNavMenuItem href="http://www.carbondesignsystem.com">
                     Item level 3
                   </SideNavMenuItem>
                 </SideNavMenu>
-                <SideNavMenuItem
+                <SideNavLink
                   href="http://www.carbondesignsystem.com"
                   renderIcon={BusinessProcesses}>
                   Business
-                </SideNavMenuItem>
-                <SideNavMenuItem
+                </SideNavLink>
+                <SideNavLink
                   href="http://www.carbondesignsystem.com"
                   renderIcon={Application}>
                   Applications
-                </SideNavMenuItem>
-                <SideNavMenuItem
+                </SideNavLink>
+                <SideNavLink
                   href="http://www.carbondesignsystem.com"
                   renderIcon={Platforms}>
                   Platforms
-                </SideNavMenuItem>
-                <SideNavMenu renderIcon={Layers} title="Infrastructure">
-                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                    Item level 3
-                  </SideNavMenuItem>
-                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                    Item level 3
-                  </SideNavMenuItem>
-                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                    Item level 3
-                  </SideNavMenuItem>
-                </SideNavMenu>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={CarbonIBMDotCom} title="Product 2">
-                <SideNavMenuItem
-                  renderIcon={Home}
-                  href="http://www.carbondesignsystem.com">
-                  Link
-                </SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={CarbonforIBMProducts} title="Product 3">
-                <SideNavMenuItem
-                  renderIcon={Home}
-                  href="http://www.carbondesignsystem.com">
-                  Link
-                </SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={IBMTelemetry} title="Product 4">
-                <SideNavMenuItem
-                  renderIcon={Home}
-                  href="http://www.carbondesignsystem.com">
-                  Link
-                </SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavDivider />
-              <SideNavLink
-                renderIcon={DocumentMultiple_01}
-                href="http://www.carbondesignsystem.com">
-                Docs
-              </SideNavLink>
-              <SideNavLink
-                renderIcon={Settings}
-                href="http://www.carbondesignsystem.com">
-                Settings
-              </SideNavLink>
-            </SideNavItems>
-          </SideNav>
-        </Theme>
-        <Theme theme="g100">
-          <SideNav
-            navType={SIDE_NAV_TYPE.PANEL}
-            isChildOfHeader={false}
-            hideOverlay
-            aria-label="Product navigation">
-            <SideNavItems>
-              <SideNavMenu renderIcon={Home} title="Home">
-                <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                  Item level 3
-                </SideNavMenuItem>
-                <SideNavMenuItem
-                  isActive
-                  href="http://www.carbondesignsystem.com">
-                  Item level 3
-                </SideNavMenuItem>
-                <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                  Item level 3
-                </SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={BusinessProcesses}>
-                Business
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Application}>
-                Applications
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Platforms}>
-                Platforms
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Layers}>
-                Infrastructure
-              </SideNavLink>
-              <SideNavDivider />
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Dashboard}>
-                Dashboard
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={DataAnalytics}>
-                Analytics
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={EventIncident}>
-                Incidents
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Security}>
-                Security
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={WorkflowAutomation}>
-                Automations
-              </SideNavLink>
-              <SideNavDivider />
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={DocumentMultiple_01}>
-                Docs
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Settings}>
-                Settings
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={OverflowMenuVertical}>
-                More
-              </SideNavLink>
-            </SideNavItems>
-          </SideNav>
-        </Theme>
-        <StoryContent />
-      </>
-    )}
-  />
-);
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Layers}>
+                  Infrastructure
+                </SideNavLink>
+                <SideNavDivider />
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Dashboard}>
+                  Dashboard
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={DataAnalytics}>
+                  Analytics
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={EventIncident}>
+                  Incidents
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Security}>
+                  Security
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={WorkflowAutomation}>
+                  Automations
+                </SideNavLink>
+                <SideNavDivider />
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={DocumentMultiple_01}>
+                  Docs
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Settings}>
+                  Settings
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={OverflowMenuVertical}>
+                  More
+                </SideNavLink>
+              </SideNavItems>
+            </SideNav>
+          </Theme>
+          <StoryContent />
+        </>
+      )}
+    />
+  );
+};
 
 Default.parameters = {
   controls: { disable: true },
@@ -718,61 +736,75 @@ export const SideNavPanel = () => (
  * @param {object} args Storybook args that control component props
  * @returns {React.ReactElement} The JSX for the story
  */
-export const HeaderStory = () => (
-  <Header aria-label="IBM Platform Name">
-    <SkipToContent />
-    <HeaderMenuButton aria-label="Open menu" isCollapsible isFixedNav />
-    <HeaderName href="#" prefix="IBM">
-      [Platform]
-    </HeaderName>
-    <HeaderGlobalBar>
-      <Button kind="ghost">Ghost button</Button>
-      {/* <HeaderNavigation aria-label="IBM [Platform]">
+export const HeaderStory = () => {
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedItem, setSelectedItem] = useState('');
+
+  const optionsMap = {
+    Fruits: ['Apple', 'Banana', 'Orange'],
+    Vegetables: ['Carrot', 'Broccoli', 'Spinach'],
+  };
+  return (
+    <Header aria-label="IBM Platform Name">
+      <SkipToContent />
+      <HeaderMenuButton aria-label="Open menu" isCollapsible isFixedNav />
+      <HeaderName href="#" prefix="IBM">
+        [Platform]
+      </HeaderName>
+      <HeaderDivider />
+      <HeaderNavigation aria-label="Nav 1">
         <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
         <HeaderMenu aria-label="Link 4" menuLinkName="HeaderMenu">
           <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
-          <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+          <HeaderMenuItem isActive href="#">
+            HeaderMenuItem
+          </HeaderMenuItem>
           <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
         </HeaderMenu>
-      </HeaderNavigation> */}
-      <MenuButton label="MenuButton" kind="ghost">
-        <MenuItem label="MenuItem" />
-        <MenuItem label="MenuItem" />
-        <MenuItemGroup label="MenuItemGroup">
-          <MenuItemSelectable label="Selectable 1" selected />
-          <MenuItemSelectable label="Selectable 2" />
-        </MenuItemGroup>
-        <MenuItemRadioGroup
-          label="MenuItemRadioGroup"
-          items={['Radio 1', 'Radio 2']}
-          selectedItem="Radio 2"
-        />
-      </MenuButton>
-      <MenuButton label="MenuButton" kind="ghost">
-        <MenuItem label="MenuItem" />
-        <MenuItem label="MenuItem" />
-        <MenuItemGroup label="MenuItemGroup">
-          <MenuItemSelectable label="Selectable 1" selected />
-          <MenuItemSelectable label="Selectable 2" />
-        </MenuItemGroup>
-        <MenuItemRadioGroup
-          label="MenuItemRadioGroup"
-          items={['Radio 1', 'Radio 2']}
-          selectedItem="Radio 2"
-        />
-      </MenuButton>
-      <HeaderGlobalAction aria-label="Open">
-        <SquareOutline size={20} />
-      </HeaderGlobalAction>
-      <HeaderGlobalAction aria-label="Open">
-        <SquareOutline size={20} />
-      </HeaderGlobalAction>
-      <HeaderGlobalAction aria-label="Open">
-        <SquareOutline size={20} />
-      </HeaderGlobalAction>
-    </HeaderGlobalBar>
-  </Header>
-);
+      </HeaderNavigation>
+
+      <HeaderGlobalBar>
+        <HeaderGlobalAction aria-label="Open">
+          <SquareOutline size={20} />
+        </HeaderGlobalAction>
+        <HeaderGlobalAction aria-label="Open">
+          <SquareOutline size={20} />
+        </HeaderGlobalAction>
+        <HeaderNavigation aria-label="Nav link">
+          <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+        </HeaderNavigation>
+        <HeaderDivider />
+        <MenuButton kind="ghost" label={selectedCategory || 'Select Category'}>
+          <MenuItemRadioGroup
+            label="Category"
+            items={Object.keys(optionsMap)}
+            selectedItem={selectedCategory || null}
+            onChange={(newCategory) => {
+              setSelectedCategory(newCategory);
+              setSelectedItem('');
+            }}
+          />
+        </MenuButton>
+        <MenuButton
+          kind="ghost"
+          label={selectedItem || 'Select Item'}
+          disabled={!selectedCategory}>
+          <MenuItemRadioGroup
+            label="Items"
+            items={selectedCategory ? optionsMap[selectedCategory] : []}
+            selectedItem={selectedItem || null}
+            onChange={(newItem) => setSelectedItem(newItem)}
+          />
+        </MenuButton>
+
+        <HeaderGlobalAction aria-label="Open">
+          <SquareOutline size={20} />
+        </HeaderGlobalAction>
+      </HeaderGlobalBar>
+    </Header>
+  );
+};
+
 HeaderStory.storyName = 'Header';
 
 /**

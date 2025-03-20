@@ -190,6 +190,20 @@ export const Default = () => (
             </HeaderName>
             <HeaderGlobalBar>
               <Button kind="ghost">Button</Button>
+              <MenuButton label="Switcher 1" kind="ghost">
+                <MenuItemGroup label="MenuItemGroup">
+                  <MenuItemSelectable label="Switcher 1" selected />
+                  <MenuItemSelectable label="Selectable 2" />
+                  <MenuItemSelectable label="Selectable 3" />
+                </MenuItemGroup>
+              </MenuButton>
+              <MenuButton label="Switcher 2" kind="ghost">
+                <MenuItemGroup label="MenuItemGroup">
+                  <MenuItemSelectable label="Switcher 2" selected />
+                  <MenuItemSelectable label="Selectable 2" />
+                  <MenuItemSelectable label="Selectable 3" />
+                </MenuItemGroup>
+              </MenuButton>
               <HeaderGlobalAction
                 aria-label="Search"
                 tooltipHighContrast={false}>

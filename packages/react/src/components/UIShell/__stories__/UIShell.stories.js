@@ -196,7 +196,7 @@ export const Default = () => {
               <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
                 [Platform]
               </HeaderName>
-              <HeaderDivider />
+
               <HeaderNavigation aria-label="Nav 1">
                 <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
                 <HeaderMenu aria-label="Link 4" menuLinkName="HeaderMenu">
@@ -766,7 +766,6 @@ export const HeaderStory = () => {
       <HeaderName href="#" prefix="IBM">
         [Platform]
       </HeaderName>
-      <HeaderDivider />
       <HeaderNavigation aria-label="Nav 1">
         <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
         <HeaderMenu aria-label="Link 4" menuLinkName="HeaderMenu">
@@ -785,9 +784,7 @@ export const HeaderStory = () => {
         <HeaderGlobalAction aria-label="Open">
           <SquareOutline size={20} />
         </HeaderGlobalAction>
-        <HeaderNavigation aria-label="Nav link">
-          <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
-        </HeaderNavigation>
+
         <HeaderDivider />
         <MenuButton kind="ghost" label={selectedCategory || 'Select Category'}>
           <MenuItemRadioGroup

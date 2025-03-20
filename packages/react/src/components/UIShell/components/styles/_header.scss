@@ -24,11 +24,3 @@ $prefix: 'cds' !default;
   .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not([disabled]) {
   color: $text-secondary;
 }
-
-/* TODO ADD a PROP */
-.cds--header__nav {
-  padding-inline-start: 0;
-}
-.cds--header__nav::before {
-  display: none;
-}

@@ -10,7 +10,7 @@
 $prefix: 'cds' !default;
 
 .#{$prefix}--header__divider {
-  width: 1px;
-  height: convert.to-rem(24px);
+  inline-size: 1px;
+  block-size: convert.to-rem(24px);
   background: $border-subtle;
 }

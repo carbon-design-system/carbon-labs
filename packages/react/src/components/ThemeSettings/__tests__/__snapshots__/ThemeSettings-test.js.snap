@@ -25,7 +25,7 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
           >
             <button
               aria-label="Light"
-              aria-labelledby="tooltip-:r0:"
+              aria-labelledby="tooltip-:r1:"
               aria-selected="false"
               class="cds--btn--icon-only cds--content-switcher-btn cds--btn cds--layout--size-lg cds--btn--primary"
               role="tab"
@@ -79,7 +79,7 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
           <span
             aria-hidden="true"
             class="cds--popover"
-            id="tooltip-:r0:"
+            id="tooltip-:r1:"
             role="tooltip"
           >
             <span
@@ -100,7 +100,7 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
           >
             <button
               aria-label="System"
-              aria-labelledby="tooltip-:r3:"
+              aria-labelledby="tooltip-:r5:"
               aria-selected="false"
               class="cds--btn--icon-only cds--content-switcher-btn cds--btn cds--layout--size-lg cds--btn--primary"
               role="tab"
@@ -141,7 +141,7 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
           <span
             aria-hidden="true"
             class="cds--popover"
-            id="tooltip-:r3:"
+            id="tooltip-:r5:"
             role="tooltip"
           >
             <span
@@ -162,7 +162,7 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
           >
             <button
               aria-label="Dark"
-              aria-labelledby="tooltip-:r6:"
+              aria-labelledby="tooltip-:r9:"
               aria-selected="false"
               class="cds--btn--icon-only cds--content-switcher-btn cds--btn cds--layout--size-lg cds--btn--primary"
               role="tab"
@@ -188,7 +188,7 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
           <span
             aria-hidden="true"
             class="cds--popover"
-            id="tooltip-:r6:"
+            id="tooltip-:r9:"
             role="tooltip"
           >
             <span
@@ -207,8 +207,8 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
       >
         <label
           class="cds--label"
-          for="downshift-:rb:-toggle-button"
-          id="downshift-:rb:-label"
+          for="downshift-:re:-toggle-button"
+          id="downshift-:re:-label"
         >
           Theme set
         </label>
@@ -218,12 +218,12 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
         >
           <button
             aria-activedescendant=""
-            aria-controls="downshift-:rb:-menu"
+            aria-controls="downshift-:re:-menu"
             aria-expanded="false"
             aria-haspopup="listbox"
-            aria-labelledby="downshift-:rb:-label"
+            aria-labelledby="downshift-:re:-label"
             class="cds--list-box__field"
-            id="downshift-:rb:-toggle-button"
+            id="downshift-:re:-toggle-button"
             role="combobox"
             tabindex="0"
             title="G10 / G100"
@@ -259,9 +259,9 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
             </div>
           </button>
           <ul
-            aria-labelledby="downshift-:rb:-label"
+            aria-labelledby="downshift-:re:-label"
             class="cds--list-box__menu"
-            id="downshift-:rb:-menu"
+            id="downshift-:re:-menu"
             role="listbox"
           />
         </div>

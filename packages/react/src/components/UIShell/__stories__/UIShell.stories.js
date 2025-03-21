@@ -74,7 +74,17 @@ import '../components/ui-shell.scss';
 
 export default {
   title: 'Components/UIShell',
-  component: SideNav,
+  component: HeaderContainer,
+  subcomponents: {
+    HeaderContainer,
+    HeaderDivider,
+    HeaderPanel,
+    SideNav,
+    SideNavItems,
+    SideNavLink,
+    SideNavMenu,
+    SideNavMenuItem,
+  },
   parameters: {
     docs: {
       page: mdx,

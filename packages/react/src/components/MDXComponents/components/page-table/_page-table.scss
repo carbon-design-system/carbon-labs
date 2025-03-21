@@ -1,0 +1,51 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/type' as type;
+
+@use '../utils' as *;
+
+.#{with-prefix('page-table-container')} {
+  margin-block-start: spacing.$spacing-06;
+  overflow-x: auto;
+
+  .#{with-prefix('page-table')} {
+    inline-size: 100%;
+
+    thead th {
+      @include type.type-style('heading-01');
+
+      padding: spacing.$spacing-05;
+      background: theme.$layer-01;
+      text-align: start;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-block-end: 1px solid theme.$border-subtle;
+    }
+
+    tbody tr td {
+      @include type.type-style('body-compact-01');
+
+      padding: spacing.$spacing-05;
+
+      /* stylelint-disable max-nesting-depth */
+      @include breakpoint.breakpoint('lg') {
+        min-inline-size: 6.25rem;
+      }
+
+      @include breakpoint.breakpoint('xlg') {
+        min-inline-size: 9.375rem;
+      }
+      /* stylelint-enable max-nesting-depth */
+    }
+  }
+}

@@ -9,7 +9,7 @@
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import React, { useCallback, useEffect, useRef } from 'react';
 import cx from 'classnames';
-import { useViewStackContext } from './ViewStack';
+import { useViewStackContext } from './ViewStackContext';
 
 interface ViewProps extends Omit<React.HTMLProps<HTMLLIElement>, 'title'> {
   /**
@@ -20,10 +20,6 @@ interface ViewProps extends Omit<React.HTMLProps<HTMLLIElement>, 'title'> {
    * Internally used and passed in programmatically. Any value provided will be overwritten.
    **/
   index?: number;
-  /**
-   * Internally used and passed in programmatically. Any value provided will be overwritten.
-   **/
-  isRecycled?: boolean;
 }
 
 const View = ({ className, title, index = Infinity, ...rest }: ViewProps) => {

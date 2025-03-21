@@ -11,11 +11,8 @@ import React, { useRef } from 'react';
 
 // import type { Meta, StoryObj } from '@storybook/react';
 
-import { Toc } from '../components/Toc';
-import { TocList } from '../components/TocList';
-import { TocItem } from '../components/TocItem';
-import { TocSection } from '../components/TocSection';
-import { TocSections } from '../components/TocSections';
+import { Toc, TocItem, TocList, TocSection, TocSections } from '../index';
+
 import mdx from './WhatsNew.mdx';
 // import '@carbon/ibm-products/css/index.min.css';
 import './storybook.scss';

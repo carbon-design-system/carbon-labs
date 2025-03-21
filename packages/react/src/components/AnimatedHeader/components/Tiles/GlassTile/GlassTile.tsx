@@ -14,23 +14,23 @@ import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 /** Primary UI component for user interaction */
 
 interface GlassTileProps {
-  id?: string;
   href?: string;
-  open?: boolean;
+  id?: string;
   mainIcon?: string;
+  open?: boolean;
   secondaryIcon?: string;
-  title?: string;
   subtitle?: string;
+  title?: string;
 }
 
 export const GlassTile: React.FC<GlassTileProps> = ({
-  id,
   href,
-  open,
+  id,
   mainIcon,
+  open,
   secondaryIcon,
-  title,
   subtitle,
+  title,
 }: GlassTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__glass-tile`;

@@ -31,21 +31,22 @@ function App() {
 
   return (
     <AnimatedHeader
-      name="Drew"
-      description="Connect, monitor, and manage data."
+      allTiles={tiles}
+      allWorkspaces={workspaces}
+      buttonIcon="Launch"
       buttonText="Manage data"
       buttonType="tertiary"
-      buttonIcon="Launch"
-      headerDropdown={false}
-      productName="[Product name]"
+      description="Connect, monitor, and manage data."
       headerAnimation={watsonXAnimatedLight}
+      headerDropdown={false}
       headerStatic={watsonXStaticLight}
-      selectedWorkspace={selectedWorkspace}
-      setSelectedWorkspace={handleWorkspaceSelect}
-      allWorkspaces={workspaces}
+      productName="[Product name]"
       selectedTileGroup={selectedTile}
+      selectedWorkspace={selectedWorkspace}
       setSelectedTileGroup={handleTileGroup}
-      allTiles={tiles}
+      setSelectedWorkspace={handleWorkspaceSelect}
+      userName="Drew"
+      welcomeText="Welcome"
     />
   );
 }

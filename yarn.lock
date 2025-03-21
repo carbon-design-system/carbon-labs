@@ -2652,7 +2652,7 @@ __metadata:
     "@carbon-labs/utilities": "npm:canary"
     "@carbon/ibm-products": "npm:^2.49.0"
   peerDependencies:
-    "@carbon/react": ^1.78.2
+    "@carbon/ibm-products": ^2.49.0
   languageName: unknown
   linkType: soft
 

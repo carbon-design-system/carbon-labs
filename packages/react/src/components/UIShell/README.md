@@ -35,6 +35,8 @@ components are provided by `@carbon-labs/react-ui-shell`:
 - `SideNavMenu`
 - `SideNavMenuItem`
 - `HeaderPanel`
+- `HeaderDivider`
+- `SharkFinIcon`
 
 ```jsx
 import { SideNav } from '@carbon-labs/react-ui-shell/es/index';

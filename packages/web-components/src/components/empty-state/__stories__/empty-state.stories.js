@@ -39,12 +39,12 @@ const argTypes = {
   link: {
     control: 'object',
     description:
-      'Controls for the link — this is only for Storybook and not a prop on the component.',
+      'Controls for the link — this is only for Storybook and not a prop in the component.',
   },
   action: {
     control: 'object',
     description:
-      'Controls for the action button — this is only for Storybook and not a prop on the component',
+      'Controls for the action button — this is only for Storybook and not a prop in the component',
   },
 };
 

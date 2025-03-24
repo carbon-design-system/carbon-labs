@@ -37,6 +37,7 @@ import {
   SwitcherDivider,
   MenuButton,
   MenuItemRadioGroup,
+  ExpandableSearch,
 } from '@carbon/react';
 import {
   Add,
@@ -218,6 +219,12 @@ export const Default = () => {
                 </HeaderMenu>
               </HeaderNavigation>
               <HeaderGlobalBar>
+                <ExpandableSearch
+                  size="lg"
+                  labelText="Search"
+                  closeButtonLabelText="Clear search input"
+                  id="search-expandable-1"
+                />
                 <HeaderDivider />
                 <MenuButton
                   kind="ghost"
@@ -244,11 +251,6 @@ export const Default = () => {
                   />
                 </MenuButton>
                 <HeaderDivider />
-                <HeaderGlobalAction
-                  aria-label="Search"
-                  tooltipHighContrast={false}>
-                  <Search size={20} />
-                </HeaderGlobalAction>
                 <HeaderGlobalAction
                   aria-label="Chat"
                   tooltipHighContrast={false}>

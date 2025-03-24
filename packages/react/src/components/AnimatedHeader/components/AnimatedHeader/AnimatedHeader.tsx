@@ -68,6 +68,7 @@ export interface AnimatedHeaderProps {
   setSelectedWorkspace: (e) => void;
   userName?: string;
   welcomeText?: string;
+  workspaceLabel?: string;
 }
 
 const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
@@ -87,6 +88,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   setSelectedWorkspace,
   userName,
   welcomeText,
+  workspaceLabel = `Open in: ${userName}'s workspace` || `Select a workspace`,
 }: AnimatedHeaderProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
@@ -123,7 +125,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   };
 
   useEffect(() => {
-    let animation = lottie.loadAnimation({
+    const animation = lottie.loadAnimation({
       container: animationContainer.current as HTMLDivElement,
       animationData: headerAnimation,
       renderer: 'svg',
@@ -167,6 +169,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
       // Run Looped Animation
       animation.addEventListener('complete', loop);
     }
+    return () => {
+      animation?.removeEventListener('DOMLoaded', reducedMotion);
+      animation?.removeEventListener('DOMLoaded', load);
+      animation?.removeEventListener('complete', loop);
+    };
   }, [animationContainer, headerAnimation, isReduced]);
 
   return (
@@ -259,9 +266,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                   className={`${blockClass}__workspace`}
                   size="sm"
                   titleText="Label"
-                  label={
-                    `Open in: ${userName}'s workspace` || 'Select a workspace'
-                  }
+                  label={workspaceLabel}
                   hideLabel
                   type="inline"
                   items={allWorkspaces}
@@ -377,11 +382,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   headerStatic: PropTypes.object,
 
   /**
-   * Specify the current username of active user
-   */
-  name: PropTypes.string,
-
-  /**
    * Provide current product name
    */
   productName: PropTypes.string,
@@ -407,6 +407,21 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Provide function to be called when switching workspace selection
    */
   setSelectedWorkspace: PropTypes.func,
+
+  /**
+   * Specify the current username of active user
+   */
+  userName: PropTypes.string,
+
+  /**
+   * Specify the current welcome text on the header
+   */
+  welcomeText: PropTypes.string,
+
+  /**
+   * Specify the default workspace label above the tiles
+   */
+  workspaceLabel: PropTypes.string,
 };
 
 export default AnimatedHeader;

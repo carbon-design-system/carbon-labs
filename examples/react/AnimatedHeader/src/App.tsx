@@ -47,6 +47,7 @@ function App() {
       setSelectedWorkspace={handleWorkspaceSelect}
       userName="Drew"
       welcomeText="Welcome"
+      workspaceLabel="Open in: Drew's workspace"
     />
   );
 }

@@ -54,52 +54,126 @@ export default meta;
 type Story = StoryObj<typeof AnimatedHeader>;
 
 const sharedArgTypes = {
-  welcomeText: {
-    description: 'Header welcome text ex. `Welcome` `Welcome back`',
-  },
-  userName: {
-    description: 'Header welcome username',
-  },
-  description: {
-    description: 'Header description text',
+  buttonIcon: {
+    description:
+      '(optional), Provide the renderIcon used in the button ex. Launch, Add, ect.',
+    control: {
+      type: 'select',
+      labels: {
+        0: 'None',
+        1: 'Launch',
+        2: 'Add',
+        3: 'Document Import',
+      },
+    },
+    options: [0, 1, 2, 3],
+    mapping: {
+      0: null,
+      1: Launch,
+      2: Add,
+      3: DocumentImport,
+    },
   },
   buttonText: {
-    description: 'Header button text',
+    description:
+      '(optional), Provide content that needs highest attention from the user or content that triggers an action and allow users to directly start working and gain value (within one click)',
   },
-  productName: {
-    description: 'Product name in the AI Chat Tile',
+  buttonType: {
+    description: 'Specify the carbon button type',
+    control: {
+      type: 'select',
+      labels: {
+        0: 'primary',
+        1: 'secondary',
+        2: 'danger',
+        3: 'ghost',
+        4: 'danger--primary',
+        5: 'danger--ghost',
+        6: 'danger--tertiary',
+        7: 'tertiary',
+      },
+    },
+    options: [0, 1, 2, 3, 4, 5, 6, 7],
+    mapping: {
+      0: ButtonKinds[0],
+      1: ButtonKinds[1],
+      2: ButtonKinds[2],
+      3: ButtonKinds[3],
+      4: ButtonKinds[4],
+      5: ButtonKinds[5],
+      6: ButtonKinds[6],
+      7: ButtonKinds[7],
+    },
+  },
+  description: {
+    description:
+      'Provide short sentence in max. 3 lines related to product context',
+  },
+  headerAnimation: {
+    description:
+      'In-product imagery / lottie animation (.json) dim. 1312 x 738 **To update headerAnimation content storybook requires remount in toolbar**',
+    type: 'json',
+    control: {
+      type: 'select',
+      labels: {
+        0: 'None',
+        1: 'data fabric (light theme)',
+        2: 'data fabric (dark theme)',
+        3: 'watsonx (light theme)',
+        4: 'watsonx (dark theme)',
+        5: 'wxbia (light theme)',
+        6: 'wxbia (dark theme)',
+      },
+    },
+    options: [0, 1, 2, 3, 4, 5, 6],
+    mapping: {
+      0: null,
+      1: dataFabricAnimatedLight,
+      2: dataFabricAnimatedDark,
+      3: watsonXAnimatedLight,
+      4: watsonXAnimatedDark,
+      5: wxbiaAnimatedLight,
+      6: wxbiaAnimatedDark,
+    },
   },
   headerDropdown: {
     description:
-      'Header dropdown menu when **button/buttonText is not in use**',
+      'Header dropdown menu **Only active when button/buttonText is not in use**',
     type: 'boolean',
     control: {
       type: 'boolean',
       default: false,
     },
   },
-  selectedWorkspace: {
-    description: 'Options for workspace selection',
-    type: 'array',
+  headerStatic: {
+    description:
+      'In-product imagery / static imagery dim. 1312 x 738 **Only active when headerAnimation is not in use**',
+    type: 'image',
     control: {
       type: 'select',
       labels: {
         0: 'None',
-        1: '1 option',
-        2: '2 options',
-        3: '3 options',
+        1: 'watsonx (light theme)',
+        2: 'watsonx (dark theme)',
+        3: 'data fabric (light theme)',
+        4: 'data fabric (dark theme)',
       },
     },
-    options: [0, 1, 2, 3],
+    options: [0, 1, 2, 3, 4],
     mapping: {
       0: null,
-      1: workspaceData.slice(0, 1),
-      2: workspaceData.slice(0, 2),
-      3: workspaceData,
+      1: watsonXStaticLight,
+      2: watsonXStaticDark,
+      3: dataFabricStaticLight,
+      4: dataFabricStaticDark,
     },
   },
+  productName: {
+    description: 'Provide current product name',
+  },
   selectedTileGroup: {
-    description: 'Set the number of header tiles',
+    description:
+      'The tile group that is active in the header ex. "AI Chat Tile w/ two glass tiles", "Four glass tiles", ect.',
     type: 'object',
     control: {
       type: 'select',
@@ -126,118 +200,52 @@ const sharedArgTypes = {
       7: headerTiles[6],
     },
   },
-  headerAnimation: {
-    description:
-      'Lottie animation (to update headerAnimation content storybook requires remount in toolbar) dim. 1312 x 738',
-    type: 'json',
+  selectedWorkspace: {
+    description: 'Object containing workspace selection `Open in: "_"`',
+    type: 'array',
     control: {
       type: 'select',
       labels: {
         0: 'None',
-        1: 'data fabric (light theme)',
-        2: 'data fabric (dark theme)',
-        3: 'watsonx (light theme)',
-        4: 'watsonx (dark theme)',
-        5: 'wxbia (light theme)',
-        6: 'wxbia (dark theme)',
-      },
-    },
-    options: [0, 1, 2, 3, 4, 5, 6],
-    mapping: {
-      0: null,
-      1: dataFabricAnimatedLight,
-      2: dataFabricAnimatedDark,
-      3: watsonXAnimatedLight,
-      4: watsonXAnimatedDark,
-      5: wxbiaAnimatedLight,
-      6: wxbiaAnimatedDark,
-    },
-  },
-  buttonType: {
-    description: 'Specify the kind of Button you want to create',
-    control: {
-      type: 'select',
-      labels: {
-        0: 'primary',
-        1: 'secondary',
-        2: 'danger',
-        3: 'ghost',
-        4: 'danger--primary',
-        5: 'danger--ghost',
-        6: 'danger--tertiary',
-        7: 'tertiary',
-      },
-    },
-    options: [0, 1, 2, 3, 4, 5, 6, 7],
-    mapping: {
-      0: ButtonKinds[0],
-      1: ButtonKinds[1],
-      2: ButtonKinds[2],
-      3: ButtonKinds[3],
-      4: ButtonKinds[4],
-      5: ButtonKinds[5],
-      6: ButtonKinds[6],
-      7: ButtonKinds[7],
-    },
-  },
-  buttonIcon: {
-    description: 'Specify the kind of Button icon to use',
-    control: {
-      type: 'select',
-      labels: {
-        0: 'None',
-        1: 'Launch',
-        2: 'Add',
-        3: 'Document Import',
+        1: '1 option',
+        2: '2 options',
+        3: '3 options',
       },
     },
     options: [0, 1, 2, 3],
     mapping: {
       0: null,
-      1: Launch,
-      2: Add,
-      3: DocumentImport,
+      1: workspaceData.slice(0, 1),
+      2: workspaceData.slice(0, 2),
+      3: workspaceData,
     },
   },
-  headerStatic: {
+  userName: {
+    description: 'Specify the current username of active user',
+  },
+  welcomeText: {
     description:
-      'Static header image when **headerAnimation is not in use** dim. 1312 x 738',
-    type: 'image',
-    control: {
-      type: 'select',
-      labels: {
-        0: 'None',
-        1: 'watsonx (light theme)',
-        2: 'watsonx (dark theme)',
-        3: 'data fabric (light theme)',
-        4: 'data fabric (dark theme)',
-      },
-    },
-    options: [0, 1, 2, 3, 4],
-    mapping: {
-      0: null,
-      1: watsonXStaticLight,
-      2: watsonXStaticDark,
-      3: dataFabricStaticLight,
-      4: dataFabricStaticDark,
-    },
+      'Specify the current welcome text on the header ex. `Welcome` `Welcome back`',
+  },
+  workspaceLabel: {
+    description: 'Specify the default workspace label above the tiles',
   },
 };
 
 const sharedArgs = {
-  welcomeText: 'Welcome',
-  userName: 'Drew',
-  description: 'Train, deploy, validate, and govern AI models responsibly.',
-  buttonText: 'Customize my journey',
-  productName: '[Product name]',
-  buttonType: 7,
-  buttonIcon: 0,
-  headerStatic: 0,
-  headerDropdown: false,
-  selectedWorkspace: 3,
-  allWorkspaces: workspaceData,
-  selectedTileGroup: 1,
   allTiles: headerTiles,
+  allWorkspaces: workspaceData,
+  buttonIcon: 0,
+  buttonText: 'Customize my journey',
+  buttonType: 7,
+  description: 'Train, deploy, validate, and govern AI models responsibly.',
+  headerDropdown: false,
+  headerStatic: 0,
+  productName: '[Product name]',
+  selectedTileGroup: 1,
+  selectedWorkspace: 3,
+  userName: 'Drew',
+  welcomeText: 'Welcome',
 };
 
 export const ThemeG10 = (args) => {

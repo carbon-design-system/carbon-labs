@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import mdx from './UIShell.mdx';
 import { SIDE_NAV_TYPE, SideNav } from '../components/SideNav';
 import { SideNavItems } from '../components/SideNavItems';
@@ -174,6 +174,7 @@ const StoryContent = () => (
  * @returns {React.ReactElement} The JSX for the story
  */
 export const Default = () => {
+  const headerRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
 
@@ -193,7 +194,7 @@ export const Default = () => {
       }) => (
         <>
           <Theme theme="g100">
-            <Header aria-label="IBM Platform Name">
+            <Header aria-label="IBM Platform Name" ref={headerRef}>
               <SkipToContent />
               <HeaderMenuButton
                 aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
@@ -226,6 +227,7 @@ export const Default = () => {
                 />
                 <HeaderDivider />
                 <MenuButton
+                  menuTarget={headerRef.current}
                   kind="ghost"
                   label={selectedCategory || 'Select Category'}>
                   <MenuItemRadioGroup
@@ -239,6 +241,7 @@ export const Default = () => {
                   />
                 </MenuButton>
                 <MenuButton
+                  menuTarget={headerRef.current}
                   kind="ghost"
                   label={selectedItem || 'Select Item'}
                   disabled={!selectedCategory}>
@@ -256,6 +259,7 @@ export const Default = () => {
                   <IbmWatsonxAssistant size={20} />
                 </HeaderGlobalAction>
                 <HeaderGlobalAction
+                  isActive
                   aria-label="Help"
                   tooltipHighContrast={false}>
                   <Help size={20} />

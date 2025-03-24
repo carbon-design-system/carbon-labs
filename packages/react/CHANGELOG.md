@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.37.0...@carbon-labs/react@0.38.0) (2025-03-21)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.37.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.36.0...@carbon-labs/react@0.37.0) (2025-03-20)
+
+
+### Features
+
+* **MDXComponents:** migrate markdown package to [@carbon-labs](https://github.com/carbon-labs) ([#519](https://github.com/carbon-design-system/carbon-labs/issues/519)) ([5822dd2](https://github.com/carbon-design-system/carbon-labs/commit/5822dd2878a18773f0ea6c463a2b5e13df5c6d60))
+
+
+
+
+
+# [0.36.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.35.0...@carbon-labs/react@0.36.0) (2025-03-19)
+
+
+### Features
+
+* ThemeSettings component with in context example ([#451](https://github.com/carbon-design-system/carbon-labs/issues/451)) ([9a0de11](https://github.com/carbon-design-system/carbon-labs/commit/9a0de11dd8c8be4ecfac329cbfc3695f89b761a6))
+
+
+
+
+
 # [0.35.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.34.0...@carbon-labs/react@0.35.0) (2025-03-13)
 
 

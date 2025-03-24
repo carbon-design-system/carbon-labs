@@ -20,9 +20,12 @@ bottlenecks in publishing and deployments. Here are some available components:
 
 | Package name                                                                                                                                         | Description                |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
-| [`@carbon-labs/react-ui-shell`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/UIShell)                 | UI shell components        |
-| [`@carbon-labs/react-text-highlighter`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/TextHighlighter) | Text highlighter component |
 | [`@carbon-labs/react-animated-header`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/AnimatedHeader)   | Animated header component  |
+| [`@carbon-labs/react-text-highlighter`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/TextHighlighter) | Text highlighter component |
+| [`@carbon-labs/react-theme-switcher`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/ThemeSettings)     | Theme settings             |
+| [`@carbon-labs/react-ui-shell`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/UIShell)                 | UI shell components        |
+| [`@carbon-labs/react-whats-new`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/WhatsNew)               | What's new                 |
+| [`@carbon-labs/mdx-components`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/MDXComponents)           | MDX Components             |
 
 ### Web Components
 

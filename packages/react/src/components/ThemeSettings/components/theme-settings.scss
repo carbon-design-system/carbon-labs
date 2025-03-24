@@ -1,0 +1,18 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/type';
+@use '@carbon/react/scss/config';
+@use '@carbon/react/scss/spacing' as *;
+
+$prefix: 'clabs' !default;
+
+.#{$prefix}--theme-settings__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}

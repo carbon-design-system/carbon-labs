@@ -10,11 +10,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
-import { Toc } from '../components/Toc';
-import { TocItem } from '../components/TocItem';
-import { TocList } from '../components/TocList';
-import { TocSection } from '../components/TocSection';
-import { TocSections } from '../components/TocSections';
+import { Toc, TocItem, TocList, TocSection, TocSections } from '../index';
 
 jest.mock('./whats-new.scss', () => ({}));
 describe('Toc', () => {
@@ -87,6 +83,7 @@ describe('Toc', () => {
     it('applies a custom class', () => {
       const tocListClass = 'testList2';
       const tocItemClass = 'testItem99';
+      const tocSectionClass = 'testSection42';
 
       const { getByTestId } = render(
         <Toc>
@@ -96,15 +93,22 @@ describe('Toc', () => {
             </TocItem>
           </TocList>
           <TocSections>
-            <TocSection>Section 1</TocSection>
+            <TocSection
+              as="div"
+              className={tocSectionClass}
+              data-testid="TestTocSection">
+              Section 1
+            </TocSection>
           </TocSections>
         </Toc>
       );
       const listElement = getByTestId('TestTocList');
       const itemElement = getByTestId('TestTocListItem');
+      const sectionElement = getByTestId('TestTocSection');
 
       expect(listElement).toHaveClass(tocListClass);
       expect(itemElement).toHaveClass(tocItemClass);
+      expect(sectionElement).toHaveClass(tocSectionClass);
     });
   });
 

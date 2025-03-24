@@ -259,7 +259,6 @@ export const Default = () => {
                   <IbmWatsonxAssistant size={20} />
                 </HeaderGlobalAction>
                 <HeaderGlobalAction
-                  isActive
                   aria-label="Help"
                   tooltipHighContrast={false}>
                   <Help size={20} />

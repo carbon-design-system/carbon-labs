@@ -55,7 +55,6 @@ import {
   Platforms,
   EventIncident,
   WorkflowAutomation,
-  Search,
   Notification,
   Switcher as SwitcherIcon,
   SquareOutline,

@@ -30,6 +30,7 @@ bottlenecks in publishing and deployments. Here are some available components:
 | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
 | [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/chat) | AI Chat component |
 | [`@carbon-labs/ai-tag`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/tag)   | AI Tag component  |
+| [`@carbon-labs/empty-state`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/empty-state)   | Empty state component  |
 
 ### Shared
 

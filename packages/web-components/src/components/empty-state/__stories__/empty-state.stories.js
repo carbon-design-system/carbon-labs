@@ -39,12 +39,12 @@ const argTypes = {
   link: {
     control: 'object',
     description:
-      'Props for the link. Refer to the Carbon Components link documentation for full list of props.',
+      'Controls for the link — this is only for Storybook and not a prop on the component.',
   },
   action: {
     control: 'object',
     description:
-      'Props for the action button. Refer to the Carbon Components button documentation for full list of props.',
+      'Controls for the action button — this is only for Storybook and not a prop on the component',
   },
 };
 

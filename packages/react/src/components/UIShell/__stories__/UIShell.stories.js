@@ -16,12 +16,12 @@ import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { HeaderPanel } from '../components/HeaderPanel';
 import { SideNavLink } from '../components/SideNavLink';
 import {
-  HeaderAction,
-  HeaderActionActions,
-  HeaderActionButton,
-  HeaderActionContent,
+  HeaderPopover,
+  HeaderPopoverActions,
+  HeaderPopoverButton,
+  HeaderPopoverContent,
   animationType,
-} from '../components/HeaderAction';
+} from '../components/HeaderPopover';
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderDivider } from '../components/HeaderDivider';
 import {
@@ -268,22 +268,22 @@ export const Default = () => {
                   tooltipHighContrast={false}>
                   <IbmWatsonxAssistant size={20} />
                 </HeaderGlobalAction>
-                <HeaderAction align="bottom-right">
-                  <HeaderActionButton align="bottom" label="Show information">
+                <HeaderPopover align="bottom-right">
+                  <HeaderPopoverButton align="bottom" label="Show information">
                     <Information />
-                  </HeaderActionButton>
-                  <HeaderActionContent>
+                  </HeaderPopoverButton>
+                  <HeaderPopoverContent>
                     <p>
                       Lorem ipsum dolor sit amet, di os consectetur adipiscing
                       elit, sed do eiusmod tempor incididunt ut fsil labore et
                       dolore magna aliqua.
                     </p>
-                    <HeaderActionActions>
+                    <HeaderPopoverActions>
                       <Link href="#">Link action</Link>
                       <Button size="sm">Button</Button>
-                    </HeaderActionActions>
-                  </HeaderActionContent>
-                </HeaderAction>
+                    </HeaderPopoverActions>
+                  </HeaderPopoverContent>
+                </HeaderPopover>
                 <HeaderGlobalAction
                   aria-label="Help"
                   tooltipHighContrast={false}>
@@ -849,22 +849,22 @@ export const HeaderStory = ({ animate }) => {
           />
         </MenuButton>
         <HeaderDivider />
-        <HeaderAction align="bottom-right" animate={animate}>
-          <HeaderActionButton align="bottom" label="Show information">
+        <HeaderPopover align="bottom-right" animate={animate}>
+          <HeaderPopoverButton align="bottom" label="Show information">
             <Information />
-          </HeaderActionButton>
-          <HeaderActionContent>
+          </HeaderPopoverButton>
+          <HeaderPopoverContent>
             <p>
               Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed
               do eiusmod tempor incididunt ut fsil labore et dolore magna
               aliqua.
             </p>
-            <HeaderActionActions>
+            <HeaderPopoverActions>
               <Link href="#">Link action</Link>
               <Button size="sm">Button</Button>
-            </HeaderActionActions>
-          </HeaderActionContent>
-        </HeaderAction>
+            </HeaderPopoverActions>
+          </HeaderPopoverContent>
+        </HeaderPopover>
         <HeaderGlobalAction aria-label="Open">
           <SquareOutline size={20} />
         </HeaderGlobalAction>

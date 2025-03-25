@@ -41,11 +41,11 @@ type ToggleTipContextType =
 
 // Used to coordinate accessibility props between button and content along with
 // the actions to open and close the toggletip
-const HeaderActionContext =
+const HeaderPopoverContext =
   React.createContext<ToggleTipContextType>(undefined);
 
 function useToggletip() {
-  return useContext(HeaderActionContext);
+  return useContext(HeaderPopoverContext);
 }
 
 export enum animationType {
@@ -53,7 +53,7 @@ export enum animationType {
   SLIDE_DOWN = 'slide-down',
 }
 
-type HeaderActionProps = {
+type HeaderPopoverProps = {
   animate: animationType;
 } & ToggletipProps<any>;
 
@@ -62,7 +62,7 @@ type HeaderActionProps = {
  * is responsible for coordinating between interactions with the button and the
  * visibility of the content
  */
-export function HeaderAction({
+export function HeaderPopover({
   align,
   animate = animationType.DEFAULT,
   as,
@@ -71,7 +71,7 @@ export function HeaderAction({
   children,
   defaultOpen = false,
   ...rest
-}: HeaderActionProps) {
+}: HeaderPopoverProps) {
   const ref = useRef<Element>(null);
   const [open, setOpen] = useState(defaultOpen);
   const prefix = usePrefix();
@@ -141,7 +141,7 @@ export function HeaderAction({
   });
 
   return (
-    <HeaderActionContext.Provider value={value}>
+    <HeaderPopoverContext.Provider value={value}>
       <Popover<any>
         align={align}
         autoAlign={autoAlign}
@@ -157,11 +157,11 @@ export function HeaderAction({
         {...rest}>
         {children}
       </Popover>
-    </HeaderActionContext.Provider>
+    </HeaderPopoverContext.Provider>
   );
 }
 
-HeaderAction.propTypes = {
+HeaderPopover.propTypes = {
   /**
    * Specify how the toggletip should align with the button
    */
@@ -231,7 +231,7 @@ HeaderAction.propTypes = {
  * clicks and keyboard interactions.
  */
 
-export function HeaderActionButton<T extends React.ElementType>({
+export function HeaderPopoverButton<T extends React.ElementType>({
   children,
   className: customClassName,
   label = 'Show information',
@@ -257,7 +257,7 @@ export function HeaderActionButton<T extends React.ElementType>({
   );
 }
 
-HeaderActionButton.propTypes = {
+HeaderPopoverButton.propTypes = {
   /**
    * Custom children to be rendered as the content of the label
    */
@@ -280,7 +280,7 @@ HeaderActionButton.propTypes = {
  * `children` passed in as a prop inside of `PopoverContent` so that they will
  * be rendered inside of the popover for this component.
  */
-export function HeaderActionContent({
+export function HeaderPopoverContent({
   children,
   className,
   ...rest
@@ -301,5 +301,5 @@ export function HeaderActionContent({
  * `ToggletipActions` is a container for one or two actions present at the base
  * of a toggletip. It is used for layout of these items.
  */
-const HeaderActionActions = ToggletipActions;
-export { HeaderActionActions };
+const HeaderPopoverActions = ToggletipActions;
+export { HeaderPopoverActions };

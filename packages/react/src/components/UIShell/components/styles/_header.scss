@@ -32,6 +32,11 @@ $prefix: 'cds' !default;
   color: $text-secondary;
 }
 
+.#{$prefix}--header-action.#{$prefix}--popover--open
+  .#{$prefix}--header-action__button {
+  background-color: $layer;
+}
+
 .#{$prefix}--header-action.#{$prefix}--animate--slide-down
   .#{$prefix}--popover
   .#{$prefix}--header-action__content {

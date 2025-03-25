@@ -13,4 +13,5 @@ $prefix: 'cds' !default;
   background: $border-subtle;
   block-size: convert.to-rem(24px);
   inline-size: 1px;
+  flex-shrink: 0;
 }

@@ -9,13 +9,16 @@
 import React from 'react';
 import mdx from './AnimatedHeader.mdx';
 import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
-import { Launch, Add, DocumentImport } from '@carbon/react/icons';
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ButtonKinds } from '@carbon/react';
 import '../components/animated-header.scss';
 
-import { workspaceData, headerTiles } from './data';
+import {
+  workspaceData,
+  headerTiles,
+  tasksConfigButton,
+  tasksConfigDropdown,
+} from './data';
 import {
   dataFabricAnimatedLight,
   dataFabricAnimatedDark,
@@ -54,57 +57,6 @@ export default meta;
 type Story = StoryObj<typeof AnimatedHeader>;
 
 const sharedArgTypes = {
-  buttonIcon: {
-    description:
-      '(optional), Provide the renderIcon used in the button ex. Launch, Add, ect.',
-    control: {
-      type: 'select',
-      labels: {
-        0: 'None',
-        1: 'Launch',
-        2: 'Add',
-        3: 'Document Import',
-      },
-    },
-    options: [0, 1, 2, 3],
-    mapping: {
-      0: null,
-      1: Launch,
-      2: Add,
-      3: DocumentImport,
-    },
-  },
-  buttonText: {
-    description:
-      '(optional), Provide content that needs highest attention from the user or content that triggers an action and allow users to directly start working and gain value (within one click)',
-  },
-  buttonType: {
-    description: 'Specify the carbon button type',
-    control: {
-      type: 'select',
-      labels: {
-        0: 'primary',
-        1: 'secondary',
-        2: 'danger',
-        3: 'ghost',
-        4: 'danger--primary',
-        5: 'danger--ghost',
-        6: 'danger--tertiary',
-        7: 'tertiary',
-      },
-    },
-    options: [0, 1, 2, 3, 4, 5, 6, 7],
-    mapping: {
-      0: ButtonKinds[0],
-      1: ButtonKinds[1],
-      2: ButtonKinds[2],
-      3: ButtonKinds[3],
-      4: ButtonKinds[4],
-      5: ButtonKinds[5],
-      6: ButtonKinds[6],
-      7: ButtonKinds[7],
-    },
-  },
   description: {
     description:
       'Provide short sentence in max. 3 lines related to product context',
@@ -134,15 +86,6 @@ const sharedArgTypes = {
       4: watsonXAnimatedDark,
       5: wxbiaAnimatedLight,
       6: wxbiaAnimatedDark,
-    },
-  },
-  headerDropdown: {
-    description:
-      'Header dropdown menu **Only active when button/buttonText is not in use**',
-    type: 'boolean',
-    control: {
-      type: 'boolean',
-      default: false,
     },
   },
   headerStatic: {
@@ -220,6 +163,24 @@ const sharedArgTypes = {
       3: workspaceData,
     },
   },
+  tasksConfig: {
+    description:
+      'Configuration for Carbon button or dropdown menu in header. Customized tasks are used to allow users that have multiple roles and permissions to experience better tailored content based on their need.',
+    control: {
+      type: 'select',
+      labels: {
+        0: 'None',
+        1: 'Button',
+        2: 'Dropdown',
+      },
+    },
+    options: [0, 1, 2],
+    mapping: {
+      0: null,
+      1: tasksConfigButton,
+      2: tasksConfigDropdown,
+    },
+  },
   userName: {
     description: 'Specify the current username of active user',
   },
@@ -235,15 +196,12 @@ const sharedArgTypes = {
 const sharedArgs = {
   allTiles: headerTiles,
   allWorkspaces: workspaceData,
-  buttonIcon: 0,
-  buttonText: 'Customize my journey',
-  buttonType: 7,
   description: 'Train, deploy, validate, and govern AI models responsibly.',
-  headerDropdown: false,
   headerStatic: 0,
   productName: '[Product name]',
   selectedTileGroup: 1,
   selectedWorkspace: 3,
+  tasksConfig: 2,
   userName: 'Drew',
   welcomeText: 'Welcome',
 };

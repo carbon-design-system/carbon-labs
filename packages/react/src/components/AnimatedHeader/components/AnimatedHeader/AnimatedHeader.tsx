@@ -31,6 +31,19 @@ import { BaseTile } from '../Tiles/index';
 
 /** Animated Header */
 
+export interface TasksConfig {
+  type: 'button' | 'dropdown';
+  button?: {
+    href?: string;
+    icon?: any;
+    text?: string;
+    type?: ButtonKind;
+  };
+  dropdown?: {
+    label?: string;
+  };
+}
+
 export interface SelectedWorkspace {
   id: string;
   text: string;
@@ -54,18 +67,15 @@ export interface TileGroup {
 export interface AnimatedHeaderProps {
   allTiles: TileGroup[];
   allWorkspaces?: SelectedWorkspace[];
-  buttonIcon?: any;
-  buttonText?: string;
-  buttonType?: ButtonKind;
   description?: string;
   headerAnimation?: object;
-  headerDropdown?: boolean;
   headerStatic?: React.JSX.Element;
   productName?: string;
   selectedTileGroup: TileGroup[] | any;
   selectedWorkspace?: SelectedWorkspace[] | any;
   setSelectedTileGroup: (e) => void;
   setSelectedWorkspace: (e) => void;
+  tasksConfig?: TasksConfig;
   userName?: string;
   welcomeText?: string;
   workspaceLabel?: string;
@@ -74,18 +84,15 @@ export interface AnimatedHeaderProps {
 const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   allTiles,
   allWorkspaces,
-  buttonIcon = null,
-  buttonText,
-  buttonType = 'tertiary',
   description,
   headerAnimation,
-  headerDropdown = false,
   headerStatic,
   productName = '[Product name]',
   selectedTileGroup,
   selectedWorkspace,
   setSelectedTileGroup,
   setSelectedWorkspace,
+  tasksConfig,
   userName,
   welcomeText,
   workspaceLabel = `Open in: ${userName}'s workspace` || `Select a workspace`,
@@ -211,7 +218,13 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
           </Tooltip>
         </Column>
 
-        {(description || buttonText || headerDropdown) && (
+        {(description ||
+          (tasksConfig &&
+            tasksConfig.type === 'button' &&
+            tasksConfig.button?.text) ||
+          (tasksConfig &&
+            tasksConfig.type === 'dropdown' &&
+            tasksConfig.dropdown?.label)) && (
           <Column
             sm={4}
             md={8}
@@ -225,32 +238,35 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               </Tooltip>
             )}
 
-            {buttonText && (
+            {tasksConfig?.button?.text && (
               <Button
                 className={`${blockClass}__button`}
-                kind={buttonType}
-                renderIcon={buttonIcon}>
-                {buttonText}
+                kind={tasksConfig.button.type}
+                renderIcon={tasksConfig.button.icon}
+                href={tasksConfig.button.href}>
+                {tasksConfig.button.text}
               </Button>
             )}
 
-            {!buttonText && headerDropdown && allTiles && (
-              <div className={`${blockClass}__header-dropdown--container`}>
-                <Dropdown
-                  id={`${blockClass}__header-dropdown`}
-                  className={`${blockClass}__header-dropdown`}
-                  size="md"
-                  titleText="Label"
-                  initialSelectedItem={allTiles[0]}
-                  label={allTiles[0].name || 'Select an option below'}
-                  hideLabel
-                  type="inline"
-                  items={allTiles}
-                  itemToString={(item) => (item ? item.name : '')}
-                  onChange={(e) => setSelectedTileGroup(e)}
-                />
-              </div>
-            )}
+            {!tasksConfig?.button?.text &&
+              tasksConfig &&
+              tasksConfig.type === 'dropdown' &&
+              allTiles && (
+                <div className={`${blockClass}__header-dropdown--container`}>
+                  <Dropdown
+                    id={`${blockClass}__header-dropdown`}
+                    className={`${blockClass}__header-dropdown`}
+                    size="md"
+                    titleText="Label"
+                    label={tasksConfig.dropdown?.label || allTiles[0].name}
+                    hideLabel
+                    type="inline"
+                    items={allTiles}
+                    itemToString={(item) => (item ? item.name : '')}
+                    onChange={(e) => setSelectedTileGroup(e)}
+                  />
+                </div>
+              )}
           </Column>
         )}
 
@@ -337,24 +353,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   allWorkspaces: PropTypes.arrayOf(PropTypes.object),
 
   /**
-   * (optional), Provide the renderIcon used in the button
-   * ex. Launch, Add, ect.
-   */
-  buttonIcon: PropTypes.any,
-
-  /**
-   * (optional), Provide content that needs highest attention from
-   * the user or content that triggers an action and allow users to
-   * directly start working and gain value (within one click)
-   */
-  buttonText: PropTypes.string,
-
-  /**
-   * Specify the carbon button type
-   */
-  buttonType: ButtonKinds,
-
-  /**
    * Specify an optional className to be added to your Animated Header
    */
   className: PropTypes.string,
@@ -369,11 +367,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * (to update headerAnimation content storybook requires remount in toolbar)
    */
   headerAnimation: PropTypes.object,
-
-  /**
-   * Header dropdown menu when button/buttonText is not in use
-   */
-  headerDropdown: PropTypes.bool,
 
   /**
    * In-product imagery / static imagery dim. 1312 x 738
@@ -407,6 +400,13 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Provide function to be called when switching workspace selection
    */
   setSelectedWorkspace: PropTypes.func,
+
+  /**
+   * Configuration for Carbon button or dropdown menu in header. Customized
+   * tasks are used to allow users that have multiple roles and permissions
+   * to experience better tailored content based on their need.
+   */
+  tasksConfig: PropTypes.object,
 
   /**
    * Specify the current username of active user

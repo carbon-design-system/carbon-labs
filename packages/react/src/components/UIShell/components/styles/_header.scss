@@ -8,6 +8,7 @@
 
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 
 $prefix: 'cds' !default;
 
@@ -35,6 +36,19 @@ $prefix: 'cds' !default;
 .#{$prefix}--header-action.#{$prefix}--popover--open
   .#{$prefix}--header-action__button {
   background-color: $layer;
+}
+
+.#{$prefix}--header-action .#{$prefix}--toggletip-content {
+  @include custom-property.declaration('link-text-color', $link-primary);
+  @include custom-property.declaration(
+    'link-hover-text-color',
+    $link-primary-hover
+  );
+  @include custom-property.declaration(
+    'link-visited-text-color',
+    $link-visited
+  );
+  @include custom-property.declaration('link-focus-text-color', $focus);
 }
 
 .#{$prefix}--header-action.#{$prefix}--animate--slide-down

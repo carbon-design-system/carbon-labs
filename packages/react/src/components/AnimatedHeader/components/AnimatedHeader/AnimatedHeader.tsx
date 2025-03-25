@@ -32,7 +32,7 @@ import { BaseTile } from '../Tiles/index';
 /** Animated Header */
 
 export interface TasksConfig {
-  type: 'button' | 'dropdown';
+  type: 'button' | 'dropdown' | string;
   button?: {
     href?: string;
     icon?: any;

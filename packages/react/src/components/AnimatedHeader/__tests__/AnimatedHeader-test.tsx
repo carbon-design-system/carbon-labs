@@ -12,7 +12,7 @@ import 'jest-canvas-mock';
 import '@testing-library/jest-dom';
 
 import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
-import { headerTiles, workspaceData } from '../data';
+import { headerTiles, workspaceData, tasksConfigDropdown } from '../data';
 
 window.matchMedia =
   window.matchMedia ||
@@ -30,20 +30,18 @@ describe('AnimatedHeader', () => {
     it('should match snapshot', () => {
       const { container } = render(
         <AnimatedHeader
-          welcomeText="Welcome"
-          userName="Drew"
-          description="Connect, monitor, and manage data."
-          buttonText="Manage data"
-          buttonType="tertiary"
-          buttonIcon="Launch"
-          headerDropdown={false}
-          productName="[Product name]"
-          selectedWorkspace={workspaceData[0]}
-          setSelectedWorkspace={() => {}}
-          allWorkspaces={workspaceData}
-          selectedTileGroup={headerTiles[0]}
-          setSelectedTileGroup={() => {}}
           allTiles={headerTiles}
+          allWorkspaces={workspaceData}
+          description="Connect, monitor, and manage data."
+          productName="[Product name]"
+          selectedTileGroup={headerTiles[0]}
+          selectedWorkspace={workspaceData[0]}
+          setSelectedTileGroup={() => {}}
+          setSelectedWorkspace={() => {}}
+          tasksConfig={tasksConfigDropdown}
+          userName="Drew"
+          welcomeText="Welcome"
+          workspaceLabel="Open in: Drew's workspace"
         />
       );
       expect(container).toMatchSnapshot();

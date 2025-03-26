@@ -9,11 +9,10 @@
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/colors' as *;
 @use '@carbon/styles/scss/spacing' as *;
-@use '@carbon/styles/scss/components/button' as *;
 
 $prefix: 'clabs--processing' !default;
 
-#storybook-root {
+#storybook-root:has(.#{$prefix}) {
   display: grid;
   block-size: calc(100vh - 32px);
   place-items: center;

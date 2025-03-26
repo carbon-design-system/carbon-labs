@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.42.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.41.0...@carbon-labs/react@0.42.0) (2025-03-26)
+
+
+### Bug Fixes
+
+* **animated-header:** bug fixes ([#523](https://github.com/carbon-design-system/carbon-labs/issues/523)) ([35781f5](https://github.com/carbon-design-system/carbon-labs/commit/35781f5eb3371d38633f2ba9fbb28e4e25adade4))
+
+
+
+
+
 # [0.41.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.40.0...@carbon-labs/react@0.41.0) (2025-03-26)
 
 

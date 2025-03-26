@@ -20,7 +20,6 @@ import {
   HeaderPopoverActions,
   HeaderPopoverButton,
   HeaderPopoverContent,
-  animationType,
 } from '../components/HeaderPopover';
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderDivider } from '../components/HeaderDivider';
@@ -874,18 +873,6 @@ export const HeaderStory = ({ animate }) => {
 };
 
 HeaderStory.storyName = 'Header';
-HeaderStory.args = {
-  animate: animationType.DEFAULT,
-};
-
-HeaderStory.argTypes = {
-  animate: {
-    options: animationType,
-    control: {
-      type: 'select',
-    },
-  },
-};
 
 /**
  * Story for HeaderPanel

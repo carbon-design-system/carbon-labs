@@ -48,15 +48,6 @@ function useToggletip() {
   return useContext(HeaderPopoverContext);
 }
 
-export enum animationType {
-  DEFAULT = 'default',
-  SLIDE_DOWN = 'slide-down',
-}
-
-type HeaderPopoverProps = {
-  animate: animationType;
-} & ToggletipProps<any>;
-
 /**
  * Used as a container for the button and content of a toggletip. This component
  * is responsible for coordinating between interactions with the button and the
@@ -64,14 +55,13 @@ type HeaderPopoverProps = {
  */
 export function HeaderPopover({
   align,
-  animate = animationType.DEFAULT,
   as,
   autoAlign,
   className: customClassName,
   children,
   defaultOpen = false,
   ...rest
-}: HeaderPopoverProps) {
+}: ToggletipProps<any>) {
   const ref = useRef<Element>(null);
   const [open, setOpen] = useState(defaultOpen);
   const prefix = usePrefix();
@@ -79,8 +69,6 @@ export function HeaderPopover({
   const className = cx(customClassName, {
     [`${prefix}--header-action`]: true,
     [`${prefix}--autoalign`]: autoAlign,
-    [`${prefix}--animate`]: animate !== animationType.DEFAULT,
-    [`${prefix}--animate--slide-down`]: animate === animationType.SLIDE_DOWN,
   });
   const actions = {
     toggle: () => {

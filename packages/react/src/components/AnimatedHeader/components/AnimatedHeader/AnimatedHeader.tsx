@@ -16,7 +16,6 @@ import {
   IconButton,
   Tooltip,
   ButtonKind,
-  ButtonKinds,
 } from '@carbon/react';
 import {
   ChevronUp,
@@ -72,7 +71,7 @@ export interface AnimatedHeaderProps {
   headerStatic?: React.JSX.Element;
   productName?: string;
   selectedTileGroup: TileGroup[] | any;
-  selectedWorkspace?: SelectedWorkspace[] | any;
+  selectedWorkspace?: SelectedWorkspace | any;
   setSelectedTileGroup: (e) => void;
   setSelectedWorkspace: (e) => void;
   tasksConfig?: TasksConfig;

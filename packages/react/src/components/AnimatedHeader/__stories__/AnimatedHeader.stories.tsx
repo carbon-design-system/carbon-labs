@@ -145,23 +145,7 @@ const sharedArgTypes = {
   },
   selectedWorkspace: {
     description: 'Object containing workspace selection `Open in: "_"`',
-    type: 'array',
-    control: {
-      type: 'select',
-      labels: {
-        0: 'None',
-        1: '1 option',
-        2: '2 options',
-        3: '3 options',
-      },
-    },
-    options: [0, 1, 2, 3],
-    mapping: {
-      0: null,
-      1: workspaceData.slice(0, 1),
-      2: workspaceData.slice(0, 2),
-      3: workspaceData,
-    },
+    type: 'object',
   },
   tasksConfig: {
     description:
@@ -200,7 +184,7 @@ const sharedArgs = {
   headerStatic: 0,
   productName: '[Product name]',
   selectedTileGroup: 1,
-  selectedWorkspace: 3,
+  selectedWorkspace: workspaceData[0],
   tasksConfig: 2,
   userName: 'Drew',
   welcomeText: 'Welcome',

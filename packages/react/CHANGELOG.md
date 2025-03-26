@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.40.0...@carbon-labs/react@0.41.0) (2025-03-26)
+
+
+### Features
+
+* **uishell:** add header story with components update carbon/react ([#465](https://github.com/carbon-design-system/carbon-labs/issues/465)) ([a20ab0c](https://github.com/carbon-design-system/carbon-labs/commit/a20ab0c571bf739cbb906dfd08134c1966d06e0b))
+
+
+
+
+
 # [0.40.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.39.0...@carbon-labs/react@0.40.0) (2025-03-26)
 
 

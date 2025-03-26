@@ -3,7 +3,7 @@
 exports[`Processing renders as expected - Component API should match snapshot 1`] = `
 <div>
   <div
-    class="clabs--processing__linear"
+    class="clabs--processing clabs--processing__linear"
   >
     <svg
       class="clabs--processing__dots"

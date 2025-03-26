@@ -33,7 +33,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   subtitle,
 }: GlassTileProps) => {
   const prefix = usePrefix();
-  const blockClass = `${prefix}-animated-header__glass-tile`;
+  const blockClass = `${prefix}--animated-header__glass-tile`;
   const collapsed = `${blockClass}--collapsed`;
 
   const MainIcon = mainIcon ? carbonIcons[mainIcon] : null;
@@ -41,7 +41,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
 
   return (
     <Link
-      className={`${prefix}-animated-header__tile ${blockClass}`}
+      className={`${prefix}--animated-header__tile ${blockClass}`}
       key={id}
       href={href}>
       <div className={`${blockClass}--body ${!open && collapsed}`}>

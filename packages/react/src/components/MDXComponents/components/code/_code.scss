@@ -1,0 +1,110 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/motion' as motion;
+
+@use '../utils' as *;
+
+// override carbon inline code snippet styles
+.cds--snippet--inline {
+  padding: 0;
+  border: none;
+  background-color: theme.$layer-accent;
+  vertical-align: baseline;
+
+  code {
+    font-size: 0.875rem;
+    letter-spacing: normal;
+  }
+}
+
+.#{with-prefix('code')} {
+  .cds--popover-content,
+  .cds--popover-caret {
+    // Override carbon tooltip colors
+    background: theme.$layer-accent-01;
+    color: theme.$text-primary;
+  }
+}
+
+// scoped to div code to override global reset styles
+.#{with-prefix('code')}.cds--snippet--multi {
+  margin-block-start: spacing.$spacing-07;
+  max-inline-size: none;
+
+  .cds--snippet-container {
+    // override carbon snippet container inline-size
+    inline-size: 100%;
+    // override carbon snippet minimum block-size
+    /* stylelint-disable-next-line declaration-no-important */
+    min-block-size: auto !important;
+
+    pre {
+      // remove prism-added tabindex border around code blocks
+      outline: none;
+      // override carbon snippet pre padding
+      padding-block-end: 0;
+    }
+  }
+
+  code {
+    @include type.type-style('code-02');
+  }
+}
+
+.#{with-prefix('path-container')} {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: theme.$layer-01;
+  block-size: 3rem;
+  border-block-end: 1px solid theme.$border-subtle;
+  inline-size: 100%;
+  margin-block-start: spacing.$spacing-07;
+  padding-inline: spacing.$spacing-05 spacing.$spacing-03;
+}
+
+.#{with-prefix('path-container')} + .#{with-prefix('code')} {
+  margin-block-start: 0;
+}
+
+.#{with-prefix('path')} {
+  @include type.type-style('code-02');
+
+  overflow: hidden;
+  color: theme.$text-primary;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.#{with-prefix('icon')} {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  block-size: 32px;
+  cursor: pointer;
+  font-size: 0;
+  inline-size: 32px;
+  outline-offset: -2px;
+  transition: background motion.$duration-fast-02;
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &:hover {
+    background-color: theme.$layer-hover-01;
+  }
+
+  svg {
+    fill: theme.$icon-primary;
+  }
+}

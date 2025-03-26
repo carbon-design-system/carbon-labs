@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ChevronDown } from '@carbon/icons-react';
+import { CaretDown, ChevronDown } from '@carbon/icons-react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
@@ -23,7 +23,8 @@ import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
 import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
-
+import { SharkFinIcon } from './SharkFinIcon';
+import { SideNavFlyoutMenu } from './SideNavFlyoutMenu';
 export interface SideNavMenuProps {
   /**
    * An optional CSS class to apply to the component.
@@ -57,6 +58,12 @@ export interface SideNavMenuProps {
   large?: boolean;
 
   /**
+   *
+   * A custom onClick handler hook that runs when the SideNavMenu is toggled.
+   */
+  onMenuToggle?: () => void;
+
+  /**
    * A custom icon to render next to the SideNavMenu title. This can be a function returning JSX or JSX itself.
    */
   renderIcon?: React.ComponentType;
@@ -65,6 +72,11 @@ export interface SideNavMenuProps {
    * Indicates if the side navigation container is expanded or collapsed.
    */
   isSideNavExpanded?: boolean;
+
+  /**
+   *  The boolean to show the flyout menu has been selected.
+   */
+  selected?: boolean;
 
   /**
    * The tabIndex for the button element.
@@ -89,6 +101,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       renderIcon: IconElement,
       isSideNavExpanded,
       title,
+      onMenuToggle,
     },
     ref: ForwardedRef<HTMLElement>
   ) {
@@ -156,6 +169,59 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       return child;
     });
 
+    /**
+      Defining the children parameter with the type ReactNode | ReactNode[]. This allows for various possibilities:
+      a single element, an array of elements, or null or undefined.
+    **/
+    function hasActiveDescendant(children: ReactNode | ReactNode[]): boolean {
+      if (Array.isArray(children)) {
+        return children.some((child) => {
+          if (!React.isValidElement(child)) {
+            setActive(false);
+            return false;
+          }
+
+          /** Explicitly defining the expected prop types (isActive and 'aria-current) for the children to ensure type
+  safety when accessing their props.
+  **/
+          const props = child.props as {
+            isActive?: boolean;
+            'aria-current'?: string;
+            children: ReactNode | ReactNode[];
+          };
+
+          if (
+            props.isActive === true ||
+            props['aria-current'] ||
+            (props.children instanceof Array &&
+              hasActiveDescendant(props.children))
+          ) {
+            setActive(true);
+            return true;
+          }
+
+          return false;
+        });
+      }
+
+      // We use React.isValidElement(child) to check if the child is a valid React element before accessing its props
+
+      if (React.isValidElement(children)) {
+        const props = children.props as {
+          isActive?: boolean;
+          'aria-current'?: string;
+        };
+
+        if (props.isActive === true || props['aria-current']) {
+          setActive(true);
+
+          return true;
+        }
+      }
+
+      return false;
+    }
+
     useEffect(() => {
       if (navType == SIDE_NAV_TYPE.PANEL) {
         // grab first link to redirect if clicked when not expanded
@@ -190,6 +256,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     function handleKeyDown(event) {
       if (match(event, keys.Escape)) {
         setIsExpanded(false);
+
+        if (onMenuToggle) {
+          onMenuToggle();
+        }
       }
 
       if (isTreeview) {
@@ -201,9 +271,12 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         if (match(event, keys.ArrowLeft)) {
           event.stopPropagation();
 
-          if (isMenu) {
-            // collapse menu
+          // collapse menu
+          if (isMenu && sideNavExpanded) {
             if (isExpanded == 'true') {
+              if (onMenuToggle) {
+                onMenuToggle();
+              }
               setIsExpanded(false);
 
               // go to previous level's side nav menu button
@@ -226,9 +299,13 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         if (match(event, keys.ArrowRight)) {
           event.stopPropagation();
 
-          // expand menu
-          if (isMenu) {
+          // expand menu when sidenav is expanded
+          if (isMenu && sideNavExpanded) {
             setIsExpanded(true);
+
+            if (onMenuToggle) {
+              onMenuToggle();
+            }
 
             // if already expanded, focus on first element
             if (isExpanded == 'true') {
@@ -249,7 +326,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     // save expanded state before SideNav collapse
     const [lastExpandedState, setLastExpandedState] = useState(isExpanded);
 
-    // reset when SideNav is panel
+    // reset to opened/collapsed menu state when Panel SideNav is toggled
     useEffect(() => {
       if (navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded) {
         setLastExpandedState(isExpanded);
@@ -259,7 +336,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       }
     }, [sideNavExpanded]);
 
-    return (
+    const [openPopover, setOpenPopover] = React.useState(false);
+
+    const content = (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <li
         role={isTreeview ? 'treeitem' : undefined}
@@ -271,6 +350,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           aria-expanded={isExpanded}
           className={buttonClassName}
           onClick={() => {
+            if (onMenuToggle) {
+              onMenuToggle();
+            }
+
             // only when sidenav is panel view
             if (
               navType == SIDE_NAV_TYPE.PANEL &&
@@ -278,7 +361,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               firstLink.current &&
               !sideNavExpanded
             ) {
-              window.location.href = firstLink.current;
+              setOpenPopover(!openPopover);
+              // window.location.href = firstLink.current;
             } else {
               setIsExpanded(!isExpanded);
               setLastExpandedState(!isExpanded);
@@ -292,6 +376,14 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               <IconElement />
             </SideNavIcon>
           )}
+          {!sideNavExpanded && (
+            <div
+              className={`${prefix}--side-nav--panel-submenu-caret-container`}>
+              <div className={`${prefix}--side-nav--panel-submenu-caret`}>
+                <SharkFinIcon />
+              </div>
+            </div>
+          )}
           <span className={`${prefix}--side-nav__submenu-title`}>{title}</span>
           <SideNavIcon className={`${prefix}--side-nav__submenu-chevron`} small>
             <ChevronDown size={20} />
@@ -301,6 +393,18 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           {childrenToRender}
         </ul>
       </li>
+    );
+
+    return navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded ? (
+      <SideNavFlyoutMenu
+        selected={active}
+        className={`${prefix}--side-nav-flyout-menu`}
+        title={title}
+        menuContent={children}>
+        {content}
+      </SideNavFlyoutMenu>
+    ) : (
+      content
     );
   }
 );
@@ -348,10 +452,21 @@ SideNavMenu.propTypes = {
   large: PropTypes.bool,
 
   /**
+   *
+   * A custom onClick handler hook that runs when the SideNavMenu is toggled.
+   */
+  onMenuToggle: PropTypes.func,
+
+  /**
    * Pass in a custom icon to render next to the `SideNavMenu` title
    */
   // @ts-expect-error - PropTypes are unable to cover this case.
   renderIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+
+  /**
+   *  The boolean to show the flyout menu has been selected.
+   */
+  selected: PropTypes.bool,
 
   /**
    * Optional prop to specify the tabIndex of the button. If undefined, it will be applied default validation
@@ -363,51 +478,3 @@ SideNavMenu.propTypes = {
    */
   title: PropTypes.string.isRequired,
 };
-
-/**
-Defining the children parameter with the type ReactNode | ReactNode[]. This allows for various possibilities:
-a single element, an array of elements, or null or undefined.
-**/
-function hasActiveDescendant(children: ReactNode | ReactNode[]): boolean {
-  if (Array.isArray(children)) {
-    return children.some((child) => {
-      if (!React.isValidElement(child)) {
-        return false;
-      }
-
-      /** Explicitly defining the expected prop types (isActive and 'aria-current) for the children to ensure type
-  safety when accessing their props.
-  **/
-      const props = child.props as {
-        isActive?: boolean;
-        'aria-current'?: string;
-        children: ReactNode | ReactNode[];
-      };
-
-      if (
-        props.isActive === true ||
-        props['aria-current'] ||
-        (props.children instanceof Array && hasActiveDescendant(props.children))
-      ) {
-        return true;
-      }
-
-      return false;
-    });
-  }
-
-  // We use React.isValidElement(child) to check if the child is a valid React element before accessing its props
-
-  if (React.isValidElement(children)) {
-    const props = children.props as {
-      isActive?: boolean;
-      'aria-current'?: string;
-    };
-
-    if (props.isActive === true || props['aria-current']) {
-      return true;
-    }
-  }
-
-  return false;
-}

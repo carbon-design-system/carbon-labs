@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.39.0...@carbon-labs/react@0.40.0) (2025-03-26)
+
+
+### Bug Fixes
+
+* **processing:** remove button import + fix storybook style ([#534](https://github.com/carbon-design-system/carbon-labs/issues/534)) ([b1d514c](https://github.com/carbon-design-system/carbon-labs/commit/b1d514c1181eeb4442848e5a036b0db27f9b3899))
+
+
+
+
+
 # [0.39.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.38.0...@carbon-labs/react@0.39.0) (2025-03-26)
 
 

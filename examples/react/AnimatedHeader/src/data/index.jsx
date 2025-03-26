@@ -6,6 +6,10 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+import { Add } from '@carbon/react/icons';
+import { ButtonKinds } from '@carbon/react';
+
 export const workspaceData = [
   {
     id: 'workspace-1',
@@ -316,3 +320,20 @@ export const headerTiles = [
     ],
   },
 ];
+
+export const tasksConfigButton = {
+  type: 'button',
+  button: {
+    href: '#',
+    icon: Add,
+    text: 'Action button',
+    type: ButtonKinds[7],
+  },
+};
+
+export const tasksConfigDropdown = {
+  type: 'dropdown',
+  dropdown: {
+    label: 'Customize your journey',
+  },
+};

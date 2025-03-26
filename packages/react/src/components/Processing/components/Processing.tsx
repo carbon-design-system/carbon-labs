@@ -32,7 +32,7 @@ const Processing: React.FC<ProcessingProps> = ({
   };
 
   return (
-    <div className={`${blockClass}__${getAnimationEffect()}`}>
+    <div className={`${blockClass} ${blockClass}__${getAnimationEffect()}`}>
       <svg className={`${blockClass}__dots`} viewBox="0 0 32 32">
         <circle
           className={`${blockClass}__dot ${blockClass}__dot--left`}

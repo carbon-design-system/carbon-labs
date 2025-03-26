@@ -1,0 +1,21 @@
+{
+  "name": "carbon-labs-web-components-empty-state",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf node_modules dist .cache",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "sass": "^1.55.0",
+    "vite": "^3.2.2"
+  },
+  "dependencies": {
+    "@carbon-labs/wc-empty-state": "latest",
+    "@carbon/styles": "^1.70.0"
+  }
+}

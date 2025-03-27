@@ -33,6 +33,11 @@ $prefix: 'cds' !default;
   color: $text-secondary;
 }
 
+// TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
+.#{$prefix}--header-action .#{$prefix}--tooltip-content {
+  color: $text-primary;
+}
+
 .#{$prefix}--header-action.#{$prefix}--popover--open
   .#{$prefix}--header-action__button {
   background-color: $layer;

@@ -786,10 +786,10 @@ export const SideNavPanel = () => (
 
 /**
  * Story for Header
- * @param {string} args.animate The animation type
+ * @param {object} args Storybook args that control component props
  * @returns {React.ReactElement} The JSX for the story
  */
-export const HeaderStory = ({ animate }) => {
+export const HeaderStory = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
 
@@ -848,7 +848,7 @@ export const HeaderStory = ({ animate }) => {
           />
         </MenuButton>
         <HeaderDivider />
-        <HeaderPopover align="bottom-right" animate={animate}>
+        <HeaderPopover align="bottom-right">
           <HeaderPopoverButton align="bottom" label="Show information">
             <Information />
           </HeaderPopoverButton>

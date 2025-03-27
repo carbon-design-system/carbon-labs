@@ -155,22 +155,9 @@ HeaderPopover.propTypes = {
    */
   align: PropTypes.oneOf([
     'top',
-    'top-left', // deprecated use top-start instead
-    'top-right', // deprecated use top-end instead
-
     'bottom',
-    'bottom-left', // deprecated use bottom-start instead
-    'bottom-right', // deprecated use bottom-end instead
-
     'left',
-    'left-bottom', // deprecated use left-end instead
-    'left-top', // deprecated use left-start instead
-
     'right',
-    'right-bottom', // deprecated use right-end instead
-    'right-top', // deprecated use right-start instead
-
-    // new values to match floating-ui
     'top-start',
     'top-end',
     'bottom-start',

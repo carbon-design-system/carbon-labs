@@ -13,8 +13,8 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/UIShell"
   },
-  "main": "./src/index.js",
-  "module": "./src/index.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "files": [
     "es",
     "lib",

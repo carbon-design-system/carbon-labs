@@ -10,8 +10,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
-import { Bubble } from '../components/Bubble';
-import { BubbleHeader } from '../components/BubbleHeader';
+import { Bubble, BubbleHeader } from '../index';
 
 jest.mock('./whats-new.scss', () => ({}));
 

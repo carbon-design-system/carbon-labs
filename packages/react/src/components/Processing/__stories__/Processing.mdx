@@ -1,0 +1,106 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as ProcessingStories from './Processing.stories';
+import Processing from '../components/Processing';
+import AIChatLoop from './images/ai_chat_loop.gif';
+import NoLoopLight from './images/processing_element_load_unload_light_128x128.gif';
+import NoLoopDark from './images/processing_element_load_unload_dark_128x128.gif';
+import LoopLight from './images/processing_element_loop_light_128x128.gif';
+import LoopDark from './images/processing_element_loop_dark_128x128.gif';
+
+<Meta isTemplate />
+
+# Processing
+
+- **Initiative owner(s):** Drew Glapa & Krista Starr
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Processing)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Processing)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+Processing element is used to indicate that data is currently being
+processed/loaded and the user should wait.
+
+<Canvas
+  of={ProcessingStories.LinearLoop}
+  additionalActions={[
+    {
+      title: 'Open in Stackblitz',
+      onClick: () => stackblitzPrefillConfig(ProcessingStories.LinearLoop),
+    },
+  ]}
+/>
+
+<img src={AIChatLoop} alt="AI chat window example" width={319} />
+
+**Ex.** Content processing in a chat shell.
+
+### Using Processing element in Figma
+
+As a designer, you can use the Processing component in Figma to create a more
+interactive prototype. This can be done by downloading the desired `.gif` below
+and adding to Figma.
+
+|             |                                     Light mode (white, g10)                                     |                                    Dark mode (g90, g100)                                    |
+| :---------- | :---------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: |
+| **No Loop** | <div style={{ background: '#ffffff' }}><img src={NoLoopLight} alt="No loop light mode" /></div> | <div style={{background: '#161616'}}><img src={NoLoopDark} alt="No loop dark mode" /></div> |
+| **Loop**    |   <div style={{ background: '#ffffff' }}><img src={LoopLight} alt="Loop light mode" /></div>    |  <div style={{ background: '#161616' }}><img src={LoopDark} alt="Loop dark mode" /></div>   |
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-processing
+```
+
+### JS (via import)
+
+```javascript
+import { Processing } from '@carbon-labs/react-processing/es/index';
+
+function App() {
+  return <Processing />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-processing/scss/processing';
+```
+
+## Component API
+
+<ArgTypes />
+
+## Example usages
+
+Example of Processing element w/ loop
+
+```jsx
+<Processing loop />
+```

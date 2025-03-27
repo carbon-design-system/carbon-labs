@@ -20,17 +20,17 @@ export default class emptyState extends LitElement {
   /**
    * Empty state heading
    */
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   title;
   /**
    * Empty state subtext
    */
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   subtitle;
   /**
    * Empty state subtext
    */
-  @property()
+  @property({ type: String, reflect: true })
   size: 'sm' | 'lg' = 'lg';
   /**
    * Determines which predefined illustration will be displayed
@@ -46,7 +46,7 @@ export default class emptyState extends LitElement {
   /**
    * Empty state illustration theme variations. To ensure you use the correct themed illustrations, you can conditionally specify light or dark based on your app's current theme value.
    */
-  @property()
+  @property({ type: String, reflect: true })
   illustrationTheme?: 'light' | 'dark';
 
   /**

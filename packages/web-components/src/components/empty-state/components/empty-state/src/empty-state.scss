@@ -64,3 +64,17 @@ $css--plex: true !default;
     min-inline-size: $spacing-10;
   }
 }
+
+::slotted(.#{$clabs-prefix}--empty-state__illustration) {
+  block-size: auto;
+  margin-block-end: $spacing-05;
+}
+::slotted(.#{$clabs-prefix}--empty-state__illustration--lg) {
+  max-inline-size: $spacing-11;
+  min-inline-size: $spacing-11;
+}
+::slotted(.#{$clabs-prefix}--empty-state__illustration--sm) {
+  max-inline-size: $spacing-10;
+  min-inline-size: $spacing-10;
+}
+

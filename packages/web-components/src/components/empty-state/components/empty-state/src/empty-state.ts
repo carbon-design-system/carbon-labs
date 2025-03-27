@@ -8,7 +8,7 @@
  */
 
 import { LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 
 // @ts-ignore
 import styles from './empty-state.scss?inline';
@@ -49,9 +49,6 @@ export default class emptyState extends LitElement {
   @property({ type: String, reflect: true })
   illustrationTheme?: 'light' | 'dark';
 
-  /**
-   * Source for the illustration image if you choose to use your own custom image. Passing an illustration prop will supersede the kind option.
-   */
-  @property({ type: String })
-  illustration?;
+  @state()
+  hasIllustration?: boolean;
 }

@@ -25,7 +25,7 @@ import unauthorizedIllustration from './assets/unauthorized-illustration';
  * @returns {TemplateResult<1>} Lit html template
  */
 export function emptyStateTemplate(customElementClass) {
-  const { title, subtitle, size, kind, illustrationTheme, illustration } =
+  const { title, subtitle, size, kind, illustrationTheme, hasIllustration } =
     customElementClass;
   const titleClasses = classMap({
     [`${clabsPrefix}--empty-state__header`]: true,
@@ -35,12 +35,8 @@ export function emptyStateTemplate(customElementClass) {
     [`${clabsPrefix}--empty-state___subtitle`]: true,
     [`${clabsPrefix}--empty-state__subtitle--small`]: size === 'sm',
   });
-  const svgClasses = classMap({
-    [`${clabsPrefix}--empty-state__illustration`]: true,
-    [`${clabsPrefix}--empty-state__illustration--${size}`]: true,
-  });
   let emptyStateSVg;
-  if (!illustration) {
+  if (!hasIllustration) {
     switch (kind) {
       case 'error':
         emptyStateSVg = errorIllustration(illustrationTheme, size);
@@ -61,13 +57,12 @@ export function emptyStateTemplate(customElementClass) {
         emptyStateSVg = unauthorizedIllustration(illustrationTheme, size);
         break;
     }
-  } else {
-    emptyStateSVg = html`
-      <img src="${illustration}" class="${svgClasses}" alt="${title}" />
-    `;
   }
   return html`
-    ${emptyStateSVg}
+    <div>
+        <slot name="illustration"></slot>
+        ${!hasIllustration ? emptyStateSVg : '' }
+    </div>
     <div class="${clabsPrefix}--empty-state__content">
       <h3 class="${titleClasses}">${title}</h3>
       ${subtitle && html`<p class="${subTitleClasses}">${subtitle}</p>`}

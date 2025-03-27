@@ -9,6 +9,7 @@
 
 import '../components/empty-state/empty-state';
 import { html } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import '@carbon/web-components/es/components/link/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 import Add20 from '@carbon/web-components/es/icons/add/20';
@@ -84,7 +85,6 @@ const defaultLinkProps = {
   href: 'https://www.carbondesignsystem.com',
   text: 'View documentation',
 };
-
 /**
  * Renders the template for Storybook
  *
@@ -92,14 +92,22 @@ const defaultLinkProps = {
  * @returns {TemplateResult<1>}
  */
 const renderTemplate = (args) => {
+
+  const svgClasses = classMap({
+    [`clabs--empty-state__illustration`]: true,
+    [`clabs--empty-state__illustration--${args.size}`]: true,
+  });
+  
   return html`
     <clabs-empty-state
-      .title=${args.title}
-      .subtitle=${args.subtitle}
+      title=${args.title}
+      subtitle=${args.subtitle}
       size=${args.size}
-      .kind=${args.kind}
-      .illustrationTheme=${args.illustrationTheme}
-      .illustration=${args.illustration}>
+      kind=${args.kind}
+      illustrationTheme=${args.illustrationTheme}>
+      ${args.illustration && html `
+        <img slot="illustration" class="${svgClasses}" src="${args.illustration}" alt="${args.title}"/>
+      `}
       ${args.action &&
       html`
         <cds-button kind=${args.action.kind} size="sm" slot="action"

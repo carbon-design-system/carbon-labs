@@ -2778,7 +2778,7 @@ __metadata:
   resolution: "@carbon-labs/web-components@workspace:packages/web-components"
   dependencies:
     "@carbon/grid": "npm:^11.21.1"
-    "@carbon/icon-helpers": "npm:10.55.0"
+    "@carbon/icon-helpers": "npm:10.56.0"
     "@carbon/icons": "npm:11.56.0"
     "@carbon/layout": "npm:11.30.2"
     "@carbon/motion": "npm:11.25.0"
@@ -2938,16 +2938,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icon-helpers@npm:10.55.0":
-  version: 10.55.0
-  resolution: "@carbon/icon-helpers@npm:10.55.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/db09a25c161b24137af36d4643c92b4f2ea31b528dbb2ff24acbb93b4734d6ecf5eaca859279f5a2b8e446b18af5d9df8b7599cfcecf17beb73ec9c089317284
-  languageName: node
-  linkType: hard
-
-"@carbon/icon-helpers@npm:^10.56.0":
+"@carbon/icon-helpers@npm:10.56.0, @carbon/icon-helpers@npm:^10.56.0":
   version: 10.56.0
   resolution: "@carbon/icon-helpers@npm:10.56.0"
   dependencies:

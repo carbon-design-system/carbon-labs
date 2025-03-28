@@ -13,8 +13,6 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/utilities"
   },
-  "main": "./src/index.js",
-  "module": "./src/index.js",
   "exports": {
     ".": {
       "default": "./src/index.js"

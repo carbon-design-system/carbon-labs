@@ -33,6 +33,8 @@ describe('AnimatedHeader', () => {
           allTiles={headerTiles}
           allWorkspaces={workspaceData}
           description="Connect, monitor, and manage data."
+          handleHeaderItemsToString={() => ''}
+          handleWorkspaceItemsToString={() => ''}
           productName="[Product name]"
           selectedTileGroup={headerTiles[0]}
           selectedWorkspace={workspaceData[0]}

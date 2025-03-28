@@ -29,11 +29,21 @@ function App() {
     setSelectedTile(e.selectedItem.id);
   };
 
+  const handleHeaderItems = (item: any) => {
+    return item ? item.label : '';
+  };
+
+  const handleWorkspaceItems = (item: any) => {
+    return item ? item.label : '';
+  };
+
   return (
     <AnimatedHeader
       allTiles={tiles}
       allWorkspaces={workspaces}
       description="Connect, monitor, and manage data."
+      handleHeaderItemsToString={handleHeaderItems}
+      handleWorkspaceItemsToString={handleWorkspaceItems}
       headerAnimation={watsonXAnimatedLight}
       headerStatic={watsonXStaticLight}
       productName="[Product name]"

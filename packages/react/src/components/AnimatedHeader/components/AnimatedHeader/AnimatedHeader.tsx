@@ -67,8 +67,8 @@ export interface AnimatedHeaderProps {
   allTiles: TileGroup[];
   allWorkspaces?: SelectedWorkspace[];
   description?: string;
-  handleHeaderItemsToString: (item) => string;
-  handleWorkspaceItemsToString: (item) => string;
+  handleHeaderItemsToString: (item: TileGroup | null) => string;
+  handleWorkspaceItemsToString: (item: SelectedWorkspace | null) => string;
   headerAnimation?: object;
   headerStatic?: React.JSX.Element;
   productName?: string;

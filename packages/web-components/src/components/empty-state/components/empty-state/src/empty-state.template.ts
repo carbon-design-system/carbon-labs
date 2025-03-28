@@ -60,8 +60,8 @@ export function emptyStateTemplate(customElementClass) {
   }
   return html`
     <div>
-        <slot name="illustration"></slot>
-        ${!hasIllustration ? emptyStateSVg : '' }
+      <slot name="illustration"></slot>
+      ${!hasIllustration ? emptyStateSVg : ''}
     </div>
     <div class="${clabsPrefix}--empty-state__content">
       <h3 class="${titleClasses}">${title}</h3>

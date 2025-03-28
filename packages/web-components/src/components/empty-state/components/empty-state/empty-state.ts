@@ -26,7 +26,9 @@ class CLABSEmptyState extends emptyState {
    * Ensures the illustration slot is checked for content.
    */
   firstUpdated() {
-    const slot = this.shadowRoot?.querySelector('slot[name="illustration"]') as HTMLSlotElement | null;
+    const slot = this.shadowRoot?.querySelector(
+      'slot[name="illustration"]'
+    ) as HTMLSlotElement | null;
     slot?.addEventListener('slotchange', () => this.checkSlotContent());
     this.checkSlotContent(); // Initial check
   }
@@ -36,7 +38,9 @@ class CLABSEmptyState extends emptyState {
    * Updates the `hasIllustration` property accordingly.
    */
   checkSlotContent() {
-    const slot = this.shadowRoot?.querySelector('slot[name="illustration"]') as HTMLSlotElement | null;
+    const slot = this.shadowRoot?.querySelector(
+      'slot[name="illustration"]'
+    ) as HTMLSlotElement | null;
     const assignedNodes = slot?.assignedNodes({ flatten: true }) ?? [];
     this.hasIllustration = assignedNodes.length > 0;
   }

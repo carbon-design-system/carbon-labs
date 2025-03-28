@@ -92,12 +92,11 @@ const defaultLinkProps = {
  * @returns {TemplateResult<1>}
  */
 const renderTemplate = (args) => {
-
   const svgClasses = classMap({
     [`clabs--empty-state__illustration`]: true,
     [`clabs--empty-state__illustration--${args.size}`]: true,
   });
-  
+
   return html`
     <clabs-empty-state
       title=${args.title}
@@ -105,8 +104,13 @@ const renderTemplate = (args) => {
       size=${args.size}
       kind=${args.kind}
       illustrationTheme=${args.illustrationTheme}>
-      ${args.illustration && html `
-        <img slot="illustration" class="${svgClasses}" src="${args.illustration}" alt="${args.title}"/>
+      ${args.illustration &&
+      html`
+        <img
+          slot="illustration"
+          class="${svgClasses}"
+          src="${args.illustration}"
+          alt="${args.title}" />
       `}
       ${args.action &&
       html`

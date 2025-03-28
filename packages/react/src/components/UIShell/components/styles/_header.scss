@@ -4,9 +4,27 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+@use '@carbon/styles/scss/theme' as *;
 
 $prefix: 'cds' !default;
 
+.#{$prefix}--header__global {
+  align-items: center;
+}
+
+.#{$prefix}--header__action {
+  flex-shrink: 0;
+}
+
 .#{$prefix}--header__action:focus {
   border-width: 2px;
+}
+
+//----------------------------------------------------------------------------
+// Menu button inside Header
+//----------------------------------------------------------------------------
+
+.#{$prefix}--header
+  .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not([disabled]) {
+  color: $text-secondary;
 }

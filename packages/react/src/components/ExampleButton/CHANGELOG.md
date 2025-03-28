@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-example-button@0.2.0...@carbon-labs/react-example-button@0.3.0) (2025-03-20)
+
+
+### Features
+
+* **MDXComponents:** migrate markdown package to [@carbon-labs](https://github.com/carbon-labs) ([#519](https://github.com/carbon-design-system/carbon-labs/issues/519)) ([5822dd2](https://github.com/carbon-design-system/carbon-labs/commit/5822dd2878a18773f0ea6c463a2b5e13df5c6d60))
+
+
+
+
+
 # [0.2.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-example-button@0.1.0...@carbon-labs/react-example-button@0.2.0) (2025-02-21)
 
 

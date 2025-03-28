@@ -59,10 +59,8 @@ export function emptyStateTemplate(customElementClass) {
     }
   }
   return html`
-    <div>
-      <slot name="illustration"></slot>
-      ${!hasIllustration ? emptyStateSVg : ''}
-    </div>
+    <slot name="illustration"></slot>
+    ${!hasIllustration ? emptyStateSVg : ''}
     <div class="${clabsPrefix}--empty-state__content">
       <h3 class="${titleClasses}">${title}</h3>
       ${subtitle && html`<p class="${subTitleClasses}">${subtitle}</p>`}

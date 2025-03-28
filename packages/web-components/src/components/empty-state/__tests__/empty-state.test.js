@@ -32,8 +32,9 @@ const template = (props = defaultProps) => html` <clabs-empty-state
   subtitle=${props.subtitle}
   size=${props.size}
   .kind=${props.kind}
-  .illustrationTheme=${props.illustrationTheme}
-  .illustration=${props.illustration}>
+  .illustrationTheme=${props.illustrationTheme}>
+  ${props.illustration &&
+  html` <img src=${props.illustration} alt="customillustration" /> `}
   <cds-button kind="tertiary" size="sm" slot="action">Create new</cds-button>
   <cds-link href="https://www.carbondesignsystem.com" slot="link"
     >View documentation</cds-link
@@ -58,6 +59,13 @@ describe('clabs-empty-state', function () {
       '.clabs--empty-state___subtitle'
     );
     expect(subtitleElement).to.exist;
+  });
+  it('should have a img slotted into illustration', async () => {
+    const emptyState = await fixture(template({ ...defaultProps, kind: '' }));
+    const actionSlot = emptyState.shadowRoot.querySelector(
+      'slot[name="illustration"]'
+    );
+    expect(actionSlot).to.exist;
   });
   it('should have a cds-button slotted into action', async () => {
     const emptyState = await fixture(template());
@@ -85,15 +93,7 @@ describe('clabs-empty-state', function () {
     );
     expect(link).to.have.text('View documentation');
   });
-  it('should show the custom illustration if illustration prop is passed', async () => {
-    const emptyState = await fixture(template({ ...defaultProps, kind: '' }));
-    const customIllustration = emptyState.shadowRoot.querySelector(
-      '.clabs--empty-state__illustration'
-    );
-    expect(customIllustration).to.exist;
-    expect(customIllustration.tagName.toLowerCase()).to.equal('img');
-  });
-  it('should show the predefined illustration if kind prop is passed without illustration prop being passed', async () => {
+  it('should show the predefined illustration if kind prop is passed and no illustration slot is filled', async () => {
     const emptyState = await fixture(
       template({ ...defaultProps, illustration: '' })
     );
@@ -105,11 +105,9 @@ describe('clabs-empty-state', function () {
   });
   it('should show the custom illustration even if kind prop and illustration props being passed', async () => {
     const emptyState = await fixture(template());
-    const customIllustration = emptyState.shadowRoot.querySelector(
-      '.clabs--empty-state__illustration'
+    const actionSlot = emptyState.shadowRoot.querySelector(
+      'slot[name="illustration"]'
     );
-    expect(customIllustration).to.exist;
-    expect(customIllustration.tagName.toLowerCase()).to.not.equal('svg');
-    expect(customIllustration.tagName.toLowerCase()).to.equal('img');
+    expect(actionSlot).to.exist;
   });
 });

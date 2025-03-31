@@ -13,7 +13,7 @@ import {
   watsonXAnimatedLight,
   watsonXStaticLight,
 } from '@carbon-labs/react-animated-header/assets';
-import { headerTiles, workspaceData } from './data';
+import { headerTiles, workspaceData, tasksConfigDropdown } from './data';
 
 function App() {
   const [tiles] = useState(headerTiles);
@@ -31,21 +31,20 @@ function App() {
 
   return (
     <AnimatedHeader
-      name="Drew"
+      allTiles={tiles}
+      allWorkspaces={workspaces}
       description="Connect, monitor, and manage data."
-      buttonText="Manage data"
-      buttonType="tertiary"
-      buttonIcon="Launch"
-      headerDropdown={false}
-      productName="[Product name]"
       headerAnimation={watsonXAnimatedLight}
       headerStatic={watsonXStaticLight}
-      selectedWorkspace={selectedWorkspace}
-      setSelectedWorkspace={handleWorkspaceSelect}
-      allWorkspaces={workspaces}
+      productName="[Product name]"
       selectedTileGroup={selectedTile}
+      selectedWorkspace={selectedWorkspace}
       setSelectedTileGroup={handleTileGroup}
-      allTiles={tiles}
+      setSelectedWorkspace={handleWorkspaceSelect}
+      tasksConfig={tasksConfigDropdown}
+      userName="Drew"
+      welcomeText="Welcome"
+      workspaceLabel="Open in: Drew's workspace"
     />
   );
 }

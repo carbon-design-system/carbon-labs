@@ -17,8 +17,7 @@ import {
 } from '@carbon/react/icons';
 // import mdx from './WhatsNew.mdx';
 
-import { Bubble } from '../components/Bubble';
-import { BubbleHeader } from '../components/BubbleHeader';
+import { Bubble, BubbleHeader } from '../index';
 
 import { Button } from '@carbon/react';
 // import '@carbon/ibm-products/css/index.min.css';

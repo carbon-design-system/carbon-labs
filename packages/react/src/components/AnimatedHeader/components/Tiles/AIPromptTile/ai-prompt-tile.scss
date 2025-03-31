@@ -19,7 +19,7 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
   display: flex;
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
-  min-block-size: 176px;
+  min-block-size: 192px;
   text-decoration: none;
 }
 
@@ -35,14 +35,14 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
   flex: 1;
   flex-direction: column;
   justify-content: flex-start;
-  padding: $spacing-05 $spacing-05 $spacing-03 $spacing-05;
+  padding: $spacing-05;
   background-color: transparent;
   color: $text-primary;
-  gap: $spacing-05;
   opacity: 1;
   transition: opacity 500ms linear;
 }
 
+:root .#{$prefix}--body::before,
 [data-carbon-theme='white'] .#{$prefix}--body::before,
 [data-carbon-theme='g10'] .#{$prefix}--body::before {
   background-color: $layer-01;
@@ -101,6 +101,7 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
   z-index: 3;
   display: flex;
   justify-content: space-between;
+  margin-block-end: $spacing-05;
 }
 
 .#{$prefix}--title {
@@ -127,7 +128,12 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
   z-index: 3;
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  margin-block: $spacing-03 calc(-1 * $spacing-05);
+  margin-inline-end: calc(-1 * $spacing-05);
+}
+
+.#{$prefix}--footer > a {
+  padding: 14px $spacing-05;
 }
 
 .#{$prefix}--subtitle {
@@ -144,6 +150,7 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
   border: 1px solid $border-subtle-01;
   border-radius: 8px;
   background-color: $layer-01;
+  margin-block-start: $spacing-06;
   transition: border 200ms motion.motion(standard, expressive);
 }
 

@@ -7,22 +7,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 import PropTypes from 'prop-types';
-import React, { useEffect, createRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Grid,
   Column,
   Button,
   Dropdown,
-  IconButton,
   Tooltip,
   ButtonKind,
 } from '@carbon/react';
-import {
-  ChevronUp,
-  ChevronDown,
-  PlayFilledAlt,
-  PauseFilled,
-} from '@carbon/icons-react';
+import { ChevronUp, ChevronDown } from '@carbon/icons-react';
 import lottie from 'lottie-web';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 
@@ -103,9 +97,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
 
-  const animationContainer = createRef<HTMLDivElement>();
+  const animationContainer = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(true);
-  const [playing, setPlaying] = useState(true);
   const [headingTextAnimation, setHeadingTextAnimation] = useState('');
   const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
 
@@ -124,17 +117,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
       : setHeadingTextAnimation(headingExpanded);
   };
 
-  const handleLottieAnimationClick = () => {
-    if (playing) {
-      lottie.pause();
-    } else {
-      lottie.play();
+  useEffect(() => {
+    if (!animationContainer.current) {
+      return;
     }
 
-    setPlaying(!playing);
-  };
-
-  useEffect(() => {
     const animation = lottie.loadAnimation({
       container: animationContainer.current as HTMLDivElement,
       animationData: headerAnimation,
@@ -144,7 +131,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
     });
 
     const lottieLoadSpeed = 1;
-    const lottieLoopSpeed = 1;
     const animationData = animation['animationData'];
 
     function reducedMotion() {
@@ -159,14 +145,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
       );
     }
 
-    function loop() {
-      animation.setSpeed(lottieLoopSpeed);
-      animation.playSegments(
-        [animationData.markers.at(1).tm, animationData.op],
-        true
-      );
-    }
-
     if (isReduced) {
       // reduced motion on
       animation.addEventListener('DOMLoaded', reducedMotion);
@@ -175,17 +153,13 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
       // Run Start Animation
       animation.addEventListener('DOMLoaded', load);
-
-      // Run Looped Animation
-      animation.addEventListener('complete', loop);
     }
     return () => {
       animation?.removeEventListener('DOMLoaded', reducedMotion);
       animation?.removeEventListener('DOMLoaded', load);
-      animation?.removeEventListener('complete', loop);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [headerAnimation, isReduced]);
+  }, [isReduced]);
 
   return (
     <section className={`${blockClass}${!open ? ` ${collapsed}` : ''}`}>
@@ -317,20 +291,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__button-collapse--gradient`} />
 
         <div className={`${blockClass}__button-collapse--container`}>
-          {headerAnimation && !isReduced && (
-            <IconButton
-              className={`${blockClass}__icon-button`}
-              label={playing ? 'Pause' : 'Play'}
-              kind="ghost"
-              type="button"
-              onClick={handleLottieAnimationClick}>
-              {playing ? (
-                <PauseFilled size={16} fill={`var(--cds-icon-secondary)`} />
-              ) : (
-                <PlayFilledAlt size={16} fill={`var(--cds-icon-secondary)`} />
-              )}
-            </IconButton>
-          )}
           <Button
             id={`${blockClass}__button-collapse`}
             kind="ghost"

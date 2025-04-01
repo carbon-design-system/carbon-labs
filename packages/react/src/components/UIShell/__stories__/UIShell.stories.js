@@ -17,6 +17,7 @@ import { HeaderPanel } from '../components/HeaderPanel';
 import { SideNavLink } from '../components/SideNavLink';
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderDivider } from '../components/HeaderDivider';
+import { TrialCountdown } from '../components/TrialCountdown';
 import {
   SkipToContent,
   Header,
@@ -84,6 +85,7 @@ export default {
     SideNavLink,
     SideNavMenu,
     SideNavMenuItem,
+    TrialCountdown,
   },
   parameters: {
     docs: {
@@ -207,8 +209,8 @@ export const Default = () => {
               <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
                 [Platform]
               </HeaderName>
-
-              <HeaderNavigation aria-label="Nav 1">
+              <TrialCountdown count={30} />
+              {/* <HeaderNavigation aria-label="Nav 1">
                 <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
                 <HeaderMenu aria-label="Link 4" menuLinkName="HeaderMenu">
                   <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
@@ -217,7 +219,7 @@ export const Default = () => {
                   </HeaderMenuItem>
                   <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
                 </HeaderMenu>
-              </HeaderNavigation>
+              </HeaderNavigation> */}
               <HeaderGlobalBar>
                 <ExpandableSearch
                   size="lg"
@@ -834,17 +836,25 @@ export const HeaderStory = () => {
 HeaderStory.storyName = 'Header';
 
 /**
- * Story for HeaderPanel
+ * Story for TrialCountdown
  * @param {object} args Storybook args that control component props
  * @returns {React.ReactElement} The JSX for the story
  */
-export const HeaderPanelStory = (args) => <HeaderPanel {...args} />;
-HeaderPanelStory.storyName = 'HeaderPanel';
+export const TrialCountdownStory = (args) => (
+  <div style={{ padding: '50px' }}>
+    <TrialCountdown {...args} />
+  </div>
+);
+TrialCountdownStory.storyName = 'TrialCountdown';
 
-HeaderPanelStory.args = {
-  expanded: true,
+TrialCountdownStory.args = {
+  count: 30,
+  text: 'Trial days left',
+  warning: false,
 };
 
-HeaderPanelStory.argTypes = {
-  expanded: { control: 'boolean' },
+TrialCountdownStory.argTypes = {
+  isSideNavExpanded: { table: { disable: true } },
+  isSwitcherExpanded: { table: { disable: true } },
+  render: { table: { disable: true } },
 };

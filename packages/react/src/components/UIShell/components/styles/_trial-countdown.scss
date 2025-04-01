@@ -1,0 +1,38 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+
+$prefix: 'cds' !default;
+
+.#{$prefix}--trial-countdown {
+  @include type-style('label-01');
+  color: $text-primary;
+  padding: 0 $spacing-05;
+}
+
+.#{$prefix}--trial-countdown__count {
+  @include type-style('label-02');
+  font-weight: 600;
+  background-image: linear-gradient(135deg, $background, $background),
+    linear-gradient(135deg, $blue-70, $purple-40);
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 0.125rem;
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  min-inline-size: 1rem;
+  display: inline-block;
+  text-align: center;
+}
+
+.#{$prefix}--trial-countdown--warning .#{$prefix}--trial-countdown__count {
+  background-image: none;
+  border: 1px solid $support-error; //check this token
+}

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.4.0...@carbon-labs/react-animated-header@0.5.0) (2025-04-01)
+
+
+### Features
+
+* **animated-header:** add custom itemToString func for Dropdowns ([#542](https://github.com/carbon-design-system/carbon-labs/issues/542)) ([8ae02cf](https://github.com/carbon-design-system/carbon-labs/commit/8ae02cf012adec82e3fd962bf3f84df0752023e9))
+
+
+
+
+
 # [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.3.0...@carbon-labs/react-animated-header@0.4.0) (2025-03-26)
 
 

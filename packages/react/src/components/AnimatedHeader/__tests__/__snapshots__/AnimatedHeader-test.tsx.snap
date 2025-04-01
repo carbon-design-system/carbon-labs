@@ -357,7 +357,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                     class="cds--tooltip-trigger__wrapper"
                   >
                     <button
-                      aria-labelledby="tooltip-:rd:"
+                      aria-labelledby="tooltip-:re:"
                       class="cds--btn--icon-only clabs--animated-header__ai-prompt-tile--icon-button  cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--disabled"
                       disabled=""
                       type="button"
@@ -381,7 +381,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                   <span
                     aria-hidden="true"
                     class="cds--popover"
-                    id="tooltip-:rd:"
+                    id="tooltip-:re:"
                     role="tooltip"
                   >
                     <span

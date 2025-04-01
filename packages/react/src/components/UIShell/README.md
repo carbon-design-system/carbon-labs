@@ -34,6 +34,10 @@ components are provided by `@carbon-labs/react-ui-shell`:
 - `SideNavLink`
 - `SideNavMenu`
 - `SideNavMenuItem`
+- `HeaderPopover`
+- `HeaderPopoverActions`
+- `HeaderPopoverButton`
+- `HeaderPopoverContent`
 - `HeaderPanel`
 - `HeaderDivider`
 - `SharkFinIcon`

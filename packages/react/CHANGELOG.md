@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.44.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.43.0...@carbon-labs/react@0.44.0) (2025-04-01)
+
+
+### Features
+
+* **animated-header:** remove loop animation from header ([#547](https://github.com/carbon-design-system/carbon-labs/issues/547)) ([613ffc3](https://github.com/carbon-design-system/carbon-labs/commit/613ffc358e22b8270dc0535cd6d5d4a352dc8ac8))
+
+
+
+
+
 # [0.43.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.42.0...@carbon-labs/react@0.43.0) (2025-04-01)
 
 

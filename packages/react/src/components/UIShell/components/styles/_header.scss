@@ -33,6 +33,18 @@ $prefix: 'cds' !default;
   color: $text-secondary;
 }
 
+.#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled]) svg {
+  fill: $icon-secondary;
+}
+
+.#{$prefix}--header-action.#{$prefix}--popover--open
+  .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not(
+    [disabled]
+  ):hover
+  svg {
+  fill: $icon-primary;
+}
+
 // TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
 .#{$prefix}--header-action .#{$prefix}--tooltip-content {
   color: $text-primary;
@@ -44,6 +56,7 @@ $prefix: 'cds' !default;
 }
 
 .#{$prefix}--header-action .#{$prefix}--toggletip-content {
+  @include custom-property.declaration('button-focus-color', $focus);
   @include custom-property.declaration('link-text-color', $link-primary);
   @include custom-property.declaration(
     'link-hover-text-color',

@@ -12,9 +12,11 @@
 
 ## Getting started
 
+Install `@carbon-labs/wc-DISPLAY_NAME` to use this package.
+
 ### Storybook
 
-You can view the current state of all components in [React](https://labs.carbondesignsystem.com/react/).
+You can view the current state of all components in [Web Components](https://labs.carbondesignsystem.com/web-components/).
 
 ## 📝 License
 

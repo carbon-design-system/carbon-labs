@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.44.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.43.0...@carbon-labs/react@0.44.0) (2025-04-01)
+
+
+### Features
+
+* **animated-header:** remove loop animation from header ([#547](https://github.com/carbon-design-system/carbon-labs/issues/547)) ([613ffc3](https://github.com/carbon-design-system/carbon-labs/commit/613ffc358e22b8270dc0535cd6d5d4a352dc8ac8))
+
+
+
+
+
+# [0.43.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.42.0...@carbon-labs/react@0.43.0) (2025-04-01)
+
+
+### Features
+
+* **animated-header:** add custom itemToString func for Dropdowns ([#542](https://github.com/carbon-design-system/carbon-labs/issues/542)) ([8ae02cf](https://github.com/carbon-design-system/carbon-labs/commit/8ae02cf012adec82e3fd962bf3f84df0752023e9))
+
+
+
+
+
+# [0.42.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.41.0...@carbon-labs/react@0.42.0) (2025-03-26)
+
+
+### Bug Fixes
+
+* **animated-header:** bug fixes ([#523](https://github.com/carbon-design-system/carbon-labs/issues/523)) ([35781f5](https://github.com/carbon-design-system/carbon-labs/commit/35781f5eb3371d38633f2ba9fbb28e4e25adade4))
+
+
+
+
+
+# [0.41.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.40.0...@carbon-labs/react@0.41.0) (2025-03-26)
+
+
+### Features
+
+* **uishell:** add header story with components update carbon/react ([#465](https://github.com/carbon-design-system/carbon-labs/issues/465)) ([a20ab0c](https://github.com/carbon-design-system/carbon-labs/commit/a20ab0c571bf739cbb906dfd08134c1966d06e0b))
+
+
+
+
+
+# [0.40.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.39.0...@carbon-labs/react@0.40.0) (2025-03-26)
+
+
+### Bug Fixes
+
+* **processing:** remove button import + fix storybook style ([#534](https://github.com/carbon-design-system/carbon-labs/issues/534)) ([b1d514c](https://github.com/carbon-design-system/carbon-labs/commit/b1d514c1181eeb4442848e5a036b0db27f9b3899))
+
+
+
+
+
+# [0.39.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.38.0...@carbon-labs/react@0.39.0) (2025-03-26)
+
+
+### Features
+
+* **processing:** add new processing component ([#490](https://github.com/carbon-design-system/carbon-labs/issues/490)) ([18bd75c](https://github.com/carbon-design-system/carbon-labs/commit/18bd75c0751eae30bab9d965715302c05213234c))
+
+
+
+
+
 # [0.38.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.37.0...@carbon-labs/react@0.38.0) (2025-03-21)
 
 **Note:** Version bump only for package @carbon-labs/react

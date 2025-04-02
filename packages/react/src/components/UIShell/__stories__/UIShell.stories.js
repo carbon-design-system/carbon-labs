@@ -272,8 +272,8 @@ export const Default = () => {
                   <IbmWatsonxAssistant size={20} />
                 </HeaderGlobalAction>
                 <HeaderPopover align="bottom-right">
-                  <HeaderPopoverButton align="bottom" label="Show information">
-                    <Information />
+                  <HeaderPopoverButton align="bottom" label="Help">
+                    <Help size={20} />
                   </HeaderPopoverButton>
                   <HeaderPopoverContent>
                     <p>
@@ -287,16 +287,22 @@ export const Default = () => {
                     </HeaderPopoverActions>
                   </HeaderPopoverContent>
                 </HeaderPopover>
-                <HeaderGlobalAction
-                  aria-label="Help"
-                  tooltipHighContrast={false}>
-                  <Help size={20} />
-                </HeaderGlobalAction>
-                <HeaderGlobalAction
-                  aria-label="Notifications"
-                  tooltipHighContrast={false}>
-                  <Notification size={20} />
-                </HeaderGlobalAction>
+                <HeaderPopover align="bottom-right">
+                  <HeaderPopoverButton align="bottom" label="Notifications">
+                    <Notification size={20} />
+                  </HeaderPopoverButton>
+                  <HeaderPopoverContent>
+                    <p>
+                      Lorem ipsum dolor sit amet, di os consectetur adipiscing
+                      elit, sed do eiusmod tempor incididunt ut fsil labore et
+                      dolore magna aliqua.
+                    </p>
+                    <HeaderPopoverActions>
+                      <Link href="#">Link action</Link>
+                      <Button size="sm">Button</Button>
+                    </HeaderPopoverActions>
+                  </HeaderPopoverContent>
+                </HeaderPopover>
                 <HeaderGlobalAction
                   aria-label="Profile"
                   tooltipHighContrast={false}>

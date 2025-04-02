@@ -88,6 +88,10 @@ export default {
     HeaderContainer,
     HeaderDivider,
     HeaderPanel,
+    HeaderPopover,
+    HeaderPopoverActions,
+    HeaderPopoverButton,
+    HeaderPopoverContent,
     SideNav,
     SideNavItems,
     SideNavLink,
@@ -817,10 +821,10 @@ export const HeaderStory = () => {
       </HeaderNavigation>
 
       <HeaderGlobalBar>
-        <HeaderGlobalAction aria-label="Open">
+        <HeaderGlobalAction aria-label="Open" tooltipHighContrast={false}>
           <SquareOutline size={20} />
         </HeaderGlobalAction>
-        <HeaderGlobalAction aria-label="Open">
+        <HeaderGlobalAction aria-label="Open" tooltipHighContrast={false}>
           <SquareOutline size={20} />
         </HeaderGlobalAction>
 
@@ -864,7 +868,7 @@ export const HeaderStory = () => {
             </HeaderPopoverActions>
           </HeaderPopoverContent>
         </HeaderPopover>
-        <HeaderGlobalAction aria-label="Open">
+        <HeaderGlobalAction aria-label="Open" tooltipHighContrast={false}>
           <SquareOutline size={20} />
         </HeaderGlobalAction>
       </HeaderGlobalBar>

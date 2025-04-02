@@ -16,7 +16,8 @@ Install `@carbon-labs/DISPLAY_NAME` to use this package.
 
 ### Storybook
 
-You can view the current state of the [component](https://labs.carbondesignsystem.com/react/).
+You can view the current state of the
+[component](https://labs.carbondesignsystem.com/react/).
 
 ## 📝 License
 

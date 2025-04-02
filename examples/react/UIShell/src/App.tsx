@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   SIDE_NAV_TYPE,
   SideNav,
@@ -15,6 +15,7 @@ import {
   SideNavLink,
   SideNavMenu,
   SideNavMenuItem,
+  HeaderDivider,
 } from '@carbon-labs/react-ui-shell/es/index';
 import {
   Content,
@@ -27,8 +28,23 @@ import {
   Theme,
   HeaderMenuButton,
   SideNavDivider,
+  HeaderNavigation,
+  HeaderMenu,
+  HeaderMenuItem,
+  HeaderGlobalBar,
+  ExpandableSearch,
+  MenuButton,
+  MenuItemRadioGroup,
+  HeaderGlobalAction,
 } from '@carbon/react';
-import { Fade, SquareOutline } from '@carbon/icons-react';
+import {
+  Fade,
+  SquareOutline,
+  Help,
+  Notification,
+  IbmWatsonxAssistant,
+  UserAvatar,
+} from '@carbon/icons-react';
 
 const StoryContent = () => (
   <Theme as={Content} theme="g10">
@@ -104,7 +120,16 @@ const StoryContent = () => (
 );
 
 function App() {
-  const [expandedPanel, setExpandedPanel] = useState(false);
+  const headerRef = useRef(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedItem, setSelectedItem] = useState('');
+
+  const options = {
+    Fruits: ['Apple', 'Banana', 'Orange'],
+    Vegetables: ['Carrot', 'Broccoli', 'Spinach'],
+    Animals: ['Cat', 'Dog', 'Snake'],
+  };
+
   return (
     <Theme theme="g100">
       <HeaderContainer
@@ -124,6 +149,72 @@ function App() {
                 <HeaderName href="#" prefix="IBM">
                   [Platform]
                 </HeaderName>
+                <HeaderNavigation aria-label="Nav 1">
+                  <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+                  <HeaderMenu aria-label="Link 4" menuLinkName="HeaderMenu">
+                    <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+                    <HeaderMenuItem isActive href="#">
+                      HeaderMenuItem
+                    </HeaderMenuItem>
+                    <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
+                  </HeaderMenu>
+                </HeaderNavigation>
+                <HeaderGlobalBar>
+                  <ExpandableSearch
+                    size="lg"
+                    labelText="Search"
+                    closeButtonLabelText="Clear search input"
+                    id="search-expandable-1"
+                  />
+                  <HeaderDivider />
+                  <MenuButton
+                    menuTarget={headerRef.current}
+                    kind="ghost"
+                    label={selectedCategory || 'Select Category'}>
+                    <MenuItemRadioGroup
+                      label="Category"
+                      items={Object.keys(options)}
+                      selectedItem={selectedCategory || null}
+                      onChange={(newCategory) => {
+                        setSelectedCategory(newCategory);
+                        setSelectedItem('');
+                      }}
+                    />
+                  </MenuButton>
+                  <MenuButton
+                    menuTarget={headerRef.current}
+                    kind="ghost"
+                    label={selectedItem || 'Select Item'}
+                    disabled={!selectedCategory}>
+                    <MenuItemRadioGroup
+                      label="Items"
+                      items={selectedCategory ? options[selectedCategory] : []}
+                      selectedItem={selectedItem || null}
+                      onChange={(newItem) => setSelectedItem(newItem)}
+                    />
+                  </MenuButton>
+                  <HeaderDivider />
+                  <HeaderGlobalAction
+                    aria-label="Chat"
+                    tooltipHighContrast={false}>
+                    <IbmWatsonxAssistant size={20} />
+                  </HeaderGlobalAction>
+                  <HeaderGlobalAction
+                    aria-label="Help"
+                    tooltipHighContrast={false}>
+                    <Help size={20} />
+                  </HeaderGlobalAction>
+                  <HeaderGlobalAction
+                    aria-label="Notifications"
+                    tooltipHighContrast={false}>
+                    <Notification size={20} />
+                  </HeaderGlobalAction>
+                  <HeaderGlobalAction
+                    aria-label="Profile"
+                    tooltipHighContrast={false}>
+                    <UserAvatar size={20} />
+                  </HeaderGlobalAction>
+                </HeaderGlobalBar>
               </Header>
               <SideNav
                 aria-label="Side navigation1"

@@ -1,0 +1,89 @@
+/*
+ * Copyright IBM Corp. 2021, 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+@use '@carbon/react/scss/motion' as motion;
+@use '@carbon/react/scss/colors' as colors;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/spacing' as spacing;
+
+@use '../utils' as *;
+
+.#{with-prefix('video-container')} {
+  position: relative;
+  display: table;
+  inline-size: 100%;
+
+  .#{with-prefix('video')} {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  div.#{with-prefix('video-button')} {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: auto;
+    background-color: colors.$blue-60;
+    block-size: 4.5rem;
+    inline-size: 4.5rem;
+    inset-block: 0% 0%;
+    inset-inline: 0% 0%;
+    transition: all motion.$duration-moderate-01 motion(entrance, productive);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    &:focus {
+      outline: 2px solid theme.$focus;
+      outline-offset: -2px;
+    }
+
+    &:hover {
+      background-color: colors.$gray-90;
+      opacity: 0.8;
+    }
+  }
+
+  div.#{with-prefix('video-button')} > svg {
+    fill: theme.$icon-inverse;
+    margin-inline-start: spacing.$spacing-02;
+    transition: all motion.$duration-moderate-01 motion(entrance, productive);
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  div.#{with-prefix('video--is-playing')} > svg {
+    margin-inline-start: 0;
+  }
+
+  // iframe
+  .#{with-prefix('vimeo')} {
+    position: relative;
+    overflow: hidden;
+    block-size: 0;
+    // hack to allow vimeo videos to display correctly and assume full inline-size available
+    padding-block-end: 56.543%;
+
+    iframe {
+      position: absolute;
+      block-size: 100%;
+      inline-size: 100%;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+    }
+  }
+
+  &:not(:hover) div.#{with-prefix('video--is-playing')},
+  &:not(:hover) div.#{with-prefix('video--is-playing')} > svg {
+    opacity: 0;
+  }
+}

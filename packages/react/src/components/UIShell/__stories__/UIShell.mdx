@@ -41,6 +41,8 @@ package:
 - `SideNavMenu`
 - `SideNavMenuItem`
 - `HeaderPanel`
+- `HeaderDivider`
+- `SharkFinIcon`
 
 <Canvas of={UIShellStories.Default} />
 
@@ -57,7 +59,7 @@ yarn add @carbon-labs/react-ui-shell
 
 In your styles file import
 
-```
+```css
 @use '@carbon/react' with (
   $font-path: '@ibm/plex'
 );
@@ -87,10 +89,16 @@ import {
   Content,
   HeaderGlobalBar,
   HeaderGlobalAction,
+  HeaderPopover,
+  HeaderPopoverButton,
+  HeaderPopoverContent,
+  HeaderPopoverActions,
+  Link,
+  Button,
   Grid,
   Column,
 } from '@carbon/react';
-import { Fade, SquareOutline } from '@carbon/icons-react';
+import { Fade, Information, SquareOutline } from '@carbon/icons-react';
 
 function App() {
   return (
@@ -120,6 +128,22 @@ function App() {
                   onClick={() => setExpandedPanel(!expandedPanel)}>
                   <Fade size={20} />
                 </HeaderGlobalAction>
+                <HeaderPopover align="bottom-right">
+                  <HeaderPopoverButton align="bottom" label="Show information">
+                    <Information />
+                  </HeaderPopoverButton>
+                  <HeaderPopoverContent>
+                    <p>
+                      Lorem ipsum dolor sit amet, di os consectetur adipiscing
+                      elit, sed do eiusmod tempor incididunt ut fsil labore et
+                      dolore magna aliqua.
+                    </p>
+                    <HeaderPopoverActions>
+                      <Link href="#">Link action</Link>
+                      <Button size="sm">Button</Button>
+                    </HeaderPopoverActions>
+                  </HeaderPopoverContent>
+                </HeaderPopover>
               </HeaderGlobalBar>
               <HeaderPanel expanded={expandedPanel} />
             </Header>

@@ -91,7 +91,6 @@ export default {
     SideNavLink,
     SideNavMenu,
     SideNavMenuItem,
-    HeaderPanel,
   },
   parameters: {
     docs: {

@@ -65,7 +65,6 @@ import {
   SquareOutline,
   UserAvatar,
   Help,
-  IbmWatsonxAssistant,
 } from '@carbon/icons-react';
 
 import {

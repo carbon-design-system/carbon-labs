@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.46.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.45.0...@carbon-labs/react@0.46.0) (2025-04-02)
+
+
+### Bug Fixes
+
+* **storybook:** remove background button ([#549](https://github.com/carbon-design-system/carbon-labs/issues/549)) ([759b69f](https://github.com/carbon-design-system/carbon-labs/commit/759b69f905a1dd64b6b7802eb1e561d5d6cc397a))
+
+
+
+
+
+# [0.45.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.44.0...@carbon-labs/react@0.45.0) (2025-04-02)
+
+
+### Features
+
+* **UIShell:** add HeaderPopover ([#518](https://github.com/carbon-design-system/carbon-labs/issues/518)) ([1032d8a](https://github.com/carbon-design-system/carbon-labs/commit/1032d8a703637df97d3914b7fa82769b76d0446b))
+
+
+
+
+
 # [0.44.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.43.0...@carbon-labs/react@0.44.0) (2025-04-01)
 
 

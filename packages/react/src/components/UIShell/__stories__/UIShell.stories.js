@@ -15,6 +15,12 @@ import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { HeaderPanel } from '../components/HeaderPanel';
 import { SideNavLink } from '../components/SideNavLink';
+import {
+  HeaderPopover,
+  HeaderPopoverActions,
+  HeaderPopoverButton,
+  HeaderPopoverContent,
+} from '../components/HeaderPopover';
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderDivider } from '../components/HeaderDivider';
 import {
@@ -38,6 +44,8 @@ import {
   MenuButton,
   MenuItemRadioGroup,
   ExpandableSearch,
+  Link,
+  Button,
 } from '@carbon/react';
 import {
   Add,
@@ -61,6 +69,7 @@ import {
   UserAvatar,
   Help,
   IbmWatsonxAssistant,
+  Information,
 } from '@carbon/icons-react';
 
 import {
@@ -79,6 +88,10 @@ export default {
     HeaderContainer,
     HeaderDivider,
     HeaderPanel,
+    HeaderPopover,
+    HeaderPopoverActions,
+    HeaderPopoverButton,
+    HeaderPopoverContent,
     SideNav,
     SideNavItems,
     SideNavLink,
@@ -258,16 +271,38 @@ export const Default = () => {
                   tooltipHighContrast={false}>
                   <IbmWatsonxAssistant size={20} />
                 </HeaderGlobalAction>
-                <HeaderGlobalAction
-                  aria-label="Help"
-                  tooltipHighContrast={false}>
-                  <Help size={20} />
-                </HeaderGlobalAction>
-                <HeaderGlobalAction
-                  aria-label="Notifications"
-                  tooltipHighContrast={false}>
-                  <Notification size={20} />
-                </HeaderGlobalAction>
+                <HeaderPopover align="bottom-right">
+                  <HeaderPopoverButton align="bottom" label="Help">
+                    <Help size={20} />
+                  </HeaderPopoverButton>
+                  <HeaderPopoverContent>
+                    <p>
+                      Lorem ipsum dolor sit amet, di os consectetur adipiscing
+                      elit, sed do eiusmod tempor incididunt ut fsil labore et
+                      dolore magna aliqua.
+                    </p>
+                    <HeaderPopoverActions>
+                      <Link href="#">Link action</Link>
+                      <Button size="sm">Button</Button>
+                    </HeaderPopoverActions>
+                  </HeaderPopoverContent>
+                </HeaderPopover>
+                <HeaderPopover align="bottom-right">
+                  <HeaderPopoverButton align="bottom" label="Notifications">
+                    <Notification size={20} />
+                  </HeaderPopoverButton>
+                  <HeaderPopoverContent>
+                    <p>
+                      Lorem ipsum dolor sit amet, di os consectetur adipiscing
+                      elit, sed do eiusmod tempor incididunt ut fsil labore et
+                      dolore magna aliqua.
+                    </p>
+                    <HeaderPopoverActions>
+                      <Link href="#">Link action</Link>
+                      <Button size="sm">Button</Button>
+                    </HeaderPopoverActions>
+                  </HeaderPopoverContent>
+                </HeaderPopover>
                 <HeaderGlobalAction
                   aria-label="Profile"
                   tooltipHighContrast={false}>
@@ -792,10 +827,10 @@ export const HeaderStory = () => {
       </HeaderNavigation>
 
       <HeaderGlobalBar>
-        <HeaderGlobalAction aria-label="Open">
+        <HeaderGlobalAction aria-label="Open" tooltipHighContrast={false}>
           <SquareOutline size={20} />
         </HeaderGlobalAction>
-        <HeaderGlobalAction aria-label="Open">
+        <HeaderGlobalAction aria-label="Open" tooltipHighContrast={false}>
           <SquareOutline size={20} />
         </HeaderGlobalAction>
 
@@ -823,7 +858,23 @@ export const HeaderStory = () => {
           />
         </MenuButton>
         <HeaderDivider />
-        <HeaderGlobalAction aria-label="Open">
+        <HeaderPopover align="bottom-right">
+          <HeaderPopoverButton align="bottom" label="Show information">
+            <Information />
+          </HeaderPopoverButton>
+          <HeaderPopoverContent>
+            <p>
+              Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed
+              do eiusmod tempor incididunt ut fsil labore et dolore magna
+              aliqua.
+            </p>
+            <HeaderPopoverActions>
+              <Link href="#">Link action</Link>
+              <Button size="sm">Button</Button>
+            </HeaderPopoverActions>
+          </HeaderPopoverContent>
+        </HeaderPopover>
+        <HeaderGlobalAction aria-label="Open" tooltipHighContrast={false}>
           <SquareOutline size={20} />
         </HeaderGlobalAction>
       </HeaderGlobalBar>

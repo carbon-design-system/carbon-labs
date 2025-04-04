@@ -3,7 +3,7 @@
 exports[`AnimatedHeader renders as expected - Component API should match snapshot 1`] = `
 <div>
   <section
-    class="clabs--animated-header false"
+    class="clabs--animated-header"
   >
     <div
       class="cds--css-grid"

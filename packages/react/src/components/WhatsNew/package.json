@@ -18,11 +18,14 @@
   "files": [
     "es",
     "lib",
-    "scss"
+    "scss",
+    "telemetry.yml"
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rm -rf {es,lib,scss}"
+    "clean": "rm -rf {es,lib,scss}",
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 1e5a49a0-1bc8-4547-8a7c-4b96e1842ead --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
     "@carbon-labs/utilities": "canary",
@@ -30,5 +33,8 @@
   },
   "peerDependencies": {
     "@carbon/ibm-products": "^2.49.0"
+  },
+  "dependencies": {
+    "@ibm/telemetry-js": "^1.9.1"
   }
 }

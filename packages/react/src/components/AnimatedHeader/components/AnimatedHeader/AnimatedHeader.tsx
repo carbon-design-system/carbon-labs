@@ -211,9 +211,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               !open && descriptionCollapsed
             }`}>
             {description && (
-              <Tooltip align="bottom" label={description}>
-                <h2 className={`${blockClass}__description`}>{description}</h2>
-              </Tooltip>
+              <h2 className={`${blockClass}__description`}>{description}</h2>
             )}
 
             {tasksConfig?.button?.text && (

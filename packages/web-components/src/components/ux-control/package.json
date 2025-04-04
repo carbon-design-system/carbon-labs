@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/ai-ux-control",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "publishConfig": {
     "access": "public",

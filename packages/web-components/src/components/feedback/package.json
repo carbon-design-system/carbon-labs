@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/ai-feedback",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "private": true,
   "publishConfig": {
     "access": "public",

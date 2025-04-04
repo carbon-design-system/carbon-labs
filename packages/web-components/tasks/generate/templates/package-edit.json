@@ -1,7 +1,7 @@
 {
   "name": "@carbon-labs/wc-DISPLAY_NAME",
   "version": "0.4.0",
-  "author": "Carbon Labs",
+  "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",
     "provenance": true

@@ -61,6 +61,14 @@ const sharedArgTypes = {
     description:
       'Provide short sentence in max. 3 lines related to product context',
   },
+  handleHeaderItemsToString: {
+    description:
+      'Helper function passed to downshift that allows the library to render a given item to a string label. By default, it extracts the `label` field from a given item to serve as the item label in the list. (Dropdown under description in header).',
+  },
+  handleWorkspaceItemsToString: {
+    description:
+      'Helper function passed to downshift that allows the library to render a given item to a string label. By default, it extracts the `label` field from a given item to serve as the item label in the list. (Dropdown related to workspace selection).',
+  },
   headerAnimation: {
     description:
       'In-product imagery / lottie animation (.json) dim. 1312 x 738 **To update headerAnimation content storybook requires remount in toolbar**',
@@ -201,11 +209,21 @@ export const ThemeG10 = (args) => {
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 
+  const handleHeaderItems = (item) => {
+    return item ? item.label : '';
+  };
+
+  const handleWorkspaceItems = (item) => {
+    return item ? item.label : '';
+  };
+
   return (
     <AnimatedHeader
       {...args}
-      setSelectedWorkspace={(e) => handleWorkspaceSelect(e)}
-      setSelectedTileGroup={(e) => handleTileGroup(e)}></AnimatedHeader>
+      setSelectedWorkspace={handleWorkspaceSelect}
+      setSelectedTileGroup={handleTileGroup}
+      handleHeaderItemsToString={handleHeaderItems}
+      handleWorkspaceItemsToString={handleWorkspaceItems}></AnimatedHeader>
   );
 };
 
@@ -229,11 +247,21 @@ export const ThemeG100 = (args) => {
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 
+  const handleHeaderItems = (item) => {
+    return item ? item.label : '';
+  };
+
+  const handleWorkspaceItems = (item) => {
+    return item ? item.label : '';
+  };
+
   return (
     <AnimatedHeader
       {...args}
-      setSelectedWorkspace={(e) => handleWorkspaceSelect(e)}
-      setSelectedTileGroup={(e) => handleTileGroup(e)}></AnimatedHeader>
+      setSelectedWorkspace={handleWorkspaceSelect}
+      setSelectedTileGroup={handleTileGroup}
+      handleHeaderItemsToString={handleHeaderItems}
+      handleWorkspaceItemsToString={handleWorkspaceItems}></AnimatedHeader>
   );
 };
 

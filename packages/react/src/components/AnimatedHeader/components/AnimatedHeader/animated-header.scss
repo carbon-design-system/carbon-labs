@@ -65,14 +65,7 @@ body {
   overflow: hidden;
   justify-content: flex-end;
 
-  block-size: 100%;
-
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
-
-  inline-size: 100%;
-
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: fill-available;
 
   max-inline-size: 96rem;
@@ -102,14 +95,7 @@ body {
   position: absolute;
   z-index: 1;
 
-  block-size: 100%;
-
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
-
-  inline-size: 100%;
-
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: fill-available;
 
   margin-inline: auto;
@@ -232,7 +218,7 @@ body {
 
 .#{$prefix}__header-dropdown--container {
   inline-size: auto;
-  max-inline-size: 30rem;
+  max-inline-size: 18rem;
 }
 
 .#{$prefix}__header-dropdown {
@@ -304,17 +290,20 @@ body {
   overflow: hidden;
   justify-content: flex-end;
 
-  block-size: 100%;
-
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
-
-  inline-size: 100%;
-
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: fill-available;
 
   max-inline-size: 96rem;
+}
+
+/* support for Safari */
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  .#{$prefix}__gradient--overlay,
+  .#{$prefix}__static--container,
+  .#{$prefix}__lottie-animation--container {
+    block-size: 100%;
+    inline-size: 100%;
+  }
 }
 
 .#{$prefix}__lottie-animation {
@@ -608,9 +597,9 @@ body {
 }
 
 /*
-  If the user has expressed their preference for
-  reduced motion, then don't use animations
-*/
+   If the user has expressed their preference for
+   reduced motion, then don't use animations
+ */
 @media (prefers-reduced-motion: reduce) {
   .#{$prefix},
   .#{$prefix}__static,

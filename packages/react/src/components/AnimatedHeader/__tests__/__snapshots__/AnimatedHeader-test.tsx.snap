@@ -18,7 +18,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         class="clabs--animated-header__lottie-animation--container"
       >
         <div
-          class="clabs--animated-header__lottie-animation false"
+          class="clabs--animated-header__lottie-animation"
         />
       </div>
       <div
@@ -66,7 +66,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         </span>
       </div>
       <div
-        class="clabs--animated-header__left-area-container false cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-4 cds--css-grid-column"
+        class="clabs--animated-header__left-area-container cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-4 cds--css-grid-column"
       >
         <span
           class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip"
@@ -170,7 +170,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         class="clabs--animated-header__content cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-12 cds--css-grid-column"
       >
         <div
-          class="clabs--animated-header__workspace--container false"
+          class="clabs--animated-header__workspace--container"
         >
           <div
             class="cds--dropdown__wrapper cds--list-box__wrapper clabs--animated-header__workspace cds--dropdown__wrapper--inline cds--list-box__wrapper--inline"
@@ -245,8 +245,14 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             id="clabs--animated-header__ai-prompt-tile"
           >
             <div
-              class="clabs--animated-header__ai-prompt-tile--body false"
+              class="clabs--animated-header__ai-prompt-tile--body"
             >
+              <div
+                class="clabs--animated-header__ai-prompt-tile--body-background"
+              />
+              <div
+                class="clabs--animated-header__ai-prompt-tile--body-gradient"
+              />
               <div
                 class="clabs--animated-header__ai-prompt-tile--icons"
               >
@@ -413,8 +419,11 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             href="#"
           >
             <div
-              class="clabs--animated-header__glass-tile--body false"
+              class="clabs--animated-header__glass-tile--body"
             >
+              <div
+                class="clabs--animated-header__glass-tile--body-background"
+              />
               <div
                 class="clabs--animated-header__glass-tile--icons"
               >
@@ -454,8 +463,11 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             href="#"
           >
             <div
-              class="clabs--animated-header__glass-tile--body false"
+              class="clabs--animated-header__glass-tile--body"
             >
+              <div
+                class="clabs--animated-header__glass-tile--body-background"
+              />
               <div
                 class="clabs--animated-header__glass-tile--icons"
               >

@@ -44,7 +44,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
       className={`${prefix}--animated-header__tile ${blockClass}`}
       key={id}
       href={href}>
-      <div className={`${blockClass}--body ${!open && collapsed}`}>
+      <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
         <div className={`${blockClass}--body-background`} />
         <div className={`${blockClass}--icons`}>
           {MainIcon && (

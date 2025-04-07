@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: 40597fb8-d0ed-45fb-a95a-5b1751e22c36
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  jsx:
+    elements:
+      allowedAttributeNames:
+        # General
+        - href
+        - id
+        - mainIcon
+        - open
+        - productName
+        - secondaryIcon
+        - subtitle
+        - title
+        # Animated Header
+        - allTiles
+        - allWorkspaces
+        - className
+        - description
+        - handleHeaderItemsToString
+        - handleWorkspaceItemsToString
+        - headerAnimation
+        - headerStatic
+        - selectedTileGroup
+        - selectedWorkspace
+        - setSelectedTileGroup
+        - setSelectedWorkspace
+        - tasksConfig
+        - userName
+        - welcomeText
+        - workspaceLabel
+        # React
+        - key
+        - ref
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

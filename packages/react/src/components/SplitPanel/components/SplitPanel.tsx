@@ -18,25 +18,25 @@ interface SplitPanelProps {
   /**
    * children placed in the panel after the split
    */
-  childrenAfterSplit?: React.ReactNode;
+  childrenAfterSplit: React.ReactNode;
   /**
    * children placed in the panel before the split
    */
-  childrenBeforeSplit?: React.ReactNode;
+  childrenBeforeSplit: React.ReactNode;
   /**
    * class to add to the outer component
    */
   className?: string;
   /**
-   * initial position/value (0 - 100) of splitter, defaults to 50.
+   * initial position/value (0 to 100) of splitter, defaults to 50.
    */
-  defaultSplitValue: number;
+  defaultSplitValue?: number;
   /**
    * gap between panels used to handle the split
    * sizes default, narrow and none correspond to Carbon grid default,
    * narrow and condensed gaps
    */
-  gap: 'default' | 'narrow' | 'none';
+  gap?: 'default' | 'narrow' | 'none';
   /**
    * onChange event reporting the current split value
    * @param splitValue
@@ -46,23 +46,23 @@ interface SplitPanelProps {
   /**
    *  panel arrangement is horizontal or vertical
    */
-  orientation: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical';
   /**
-   *  lowest possible split value default 0
+   *  lowest possible split value and default 0
    */
-  splitMin: number;
+  splitMin?: number;
   /**
-   *  highest possible split value default 100
+   *  highest possible split value and default 100
    */
-  splitMax: number;
+  splitMax?: number;
   /**
    *  Number of pixels moved using cursor keys
    */
-  splitKeyStepPixels: number;
+  splitKeyStepPixels?: number;
   /**
    *  Number of pixels moved using shift and  cursor keys
    */
-  splitShiftKeyStepPixels: number;
+  splitShiftKeyStepPixels?: number;
 }
 
 type handledKeyType = {
@@ -87,6 +87,9 @@ const toDP = (num, dp) => {
   return parseFloat(num.toFixed(dp));
 };
 
+const sanitizeValue = (value, min = 0, max = 100) =>
+  Math.min(max, Math.max(min, value));
+
 export const SplitPanel = ({
   childrenBeforeSplit,
   childrenAfterSplit,
@@ -106,9 +109,14 @@ export const SplitPanel = ({
   const splitHandleRef = useRef<HTMLInputElement>(null);
   const mousePrev = useRef<{ value: number } | null>(null);
   const [kbInteraction, setKbInteraction] = useState(false);
-  const [splitValue, setSplitValue] = useState<number>(defaultSplitValue);
   const panelSize = useRef(1);
   const isHorizontal = orientation === 'horizontal';
+  const localSplitMin = sanitizeValue(splitMin);
+  const localSplitMax = sanitizeValue(splitMax);
+  // keep value between localSplitMin and localSplitMax
+  const [splitValue, setSplitValue] = useState<number>(
+    sanitizeValue(defaultSplitValue, localSplitMin, localSplitMax)
+  );
 
   const updatePanelSize = () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -131,6 +139,22 @@ export const SplitPanel = ({
     mousePrev.current = null;
   };
 
+  const doSplitChange = (change) => {
+    setSplitValue((prevSplitValue) => {
+      const splitStart = (prevSplitValue * panelSize.current) / 100;
+
+      const newPosition = sanitizeValue(
+        (100 * (splitStart + change)) / panelSize.current,
+        localSplitMin,
+        localSplitMax
+      );
+
+      const result = toDP(newPosition, 3);
+      onChange?.(result);
+      return result;
+    });
+  };
+
   const splitMouseMove = (ev) => {
     if (!mousePrev?.current) {
       return;
@@ -142,18 +166,7 @@ export const SplitPanel = ({
     // update previous mouse position
     mousePrev.current = { value: isHorizontal ? ev.clientX : ev.clientY };
 
-    setSplitValue((prevSplitValue) => {
-      const splitStart = (prevSplitValue * panelSize.current) / 100;
-
-      const newPosition = Math.min(
-        splitMax,
-        Math.max(splitMin, (100 * (splitStart + change)) / panelSize.current)
-      );
-
-      const result = toDP(newPosition, 3);
-      onChange?.(result);
-      return result;
-    });
+    doSplitChange(change);
   };
 
   const style = {
@@ -179,9 +192,9 @@ export const SplitPanel = ({
     setKbInteraction(true);
 
     if (key.Home) {
-      setSplitValue(splitMin);
+      setSplitValue(localSplitMin);
     } else if (key.End) {
-      setSplitValue(splitMax);
+      setSplitValue(localSplitMax);
     } else {
       let change;
       if ((isHorizontal && key.ArrowLeft) || (!isHorizontal && key.ArrowUp)) {
@@ -195,18 +208,7 @@ export const SplitPanel = ({
         change = ev.shiftKey ? splitShiftKeyStepPixels : splitKeyStepPixels;
       }
 
-      setSplitValue((prevSplitValue) => {
-        const splitStart = (prevSplitValue * panelSize.current) / 100;
-
-        const newPosition = Math.min(
-          splitMax,
-          Math.max(splitMin, (100 * (splitStart + change)) / panelSize.current)
-        );
-
-        const result = toDP(newPosition, 3);
-        onChange?.(result);
-        return result;
-      });
+      doSplitChange(change);
     }
   };
 
@@ -240,8 +242,8 @@ export const SplitPanel = ({
           // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={0}
           aria-valuenow={splitValue}
-          aria-valuemin={splitMin}
-          aria-valuemax={splitMax}
+          aria-valuemin={localSplitMin}
+          aria-valuemax={localSplitMax}
           data-key-step={splitKeyStepPixels}
           data-key-shift-step={splitShiftKeyStepPixels}
           ref={splitHandleRef}

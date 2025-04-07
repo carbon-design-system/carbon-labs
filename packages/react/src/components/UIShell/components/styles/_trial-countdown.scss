@@ -15,7 +15,7 @@ $prefix: 'cds' !default;
 :root {
   // these should be set up as component tokens if/when moved to @carbon/styles
   --trial-countdown-start: #{$blue-60};
-  --trial-countdown-end: #{$purple-70};
+  --trial-countdown-end: #{$purple-50};
 }
 
 .cds--g100,

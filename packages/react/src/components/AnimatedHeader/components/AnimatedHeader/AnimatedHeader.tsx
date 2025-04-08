@@ -375,14 +375,14 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
   /**
    * Helper function passed to downshift that allows the library to render a
-   * selected item to as an arbitrary ReactNode. By default it uses standard Carbon renderer that renders only item.label
+   * selected item to as an arbitrary ReactNode. By default it uses standard Carbon renderer that renders only item.label text
    * (Dropdown under description in header)
    */
   renderHeaderSelectedItem: PropTypes.func,
 
   /**
    * Helper function passed to downshift that allows the library to render a
-   * selected item to as an arbitrary ReactNode. By default it uses standard Carbon renderer that renders only item.label
+   * selected item to as an arbitrary ReactNode. By default it uses standard Carbon renderer that renders only item.label text
    * (Dropdown related to workspace selection)
    */
   renderWorkspaceSelectedItem: PropTypes.func,

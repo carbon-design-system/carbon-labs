@@ -14,6 +14,7 @@ import {
   watsonXStaticLight,
 } from '@carbon-labs/react-animated-header/assets';
 import { headerTiles, workspaceData, tasksConfigDropdown } from './data';
+import { SelectedWorkspace, TileGroup } from '@carbon-labs/react-animated-header/es/components/AnimatedHeader/AnimatedHeader';
 
 function App() {
   const [tiles] = useState(headerTiles);
@@ -29,13 +30,13 @@ function App() {
     setSelectedTile(e.selectedItem.id);
   };
 
-  const handleHeaderItems = (item: any) => {
-    return item ? item.label : '';
-  };
+  const handleHeaderItems = (item: TileGroup | null) => item?.label ?? '';
 
-  const handleWorkspaceItems = (item: any) => {
-    return item ? item.label : '';
-  };
+  const handleWorkspaceItems = (item: SelectedWorkspace | null) => item?.label ?? '';
+
+  const selectedWorkspaceItemRenderer = (item: SelectedWorkspace | null) => item?.label ?? '';
+
+  const selectedTileGroupRenderer = (item: TileGroup | null) => item?.label ?? '';
 
   return (
     <AnimatedHeader
@@ -44,6 +45,8 @@ function App() {
       description="Connect, monitor, and manage data."
       handleHeaderItemsToString={handleHeaderItems}
       handleWorkspaceItemsToString={handleWorkspaceItems}
+      renderHeaderSelectedItem={selectedTileGroupRenderer}
+      renderWorkspaceSelectedItem={selectedWorkspaceItemRenderer}
       headerAnimation={watsonXAnimatedLight}
       headerStatic={watsonXStaticLight}
       productName="[Product name]"

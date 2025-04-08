@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.7.0...@carbon-labs/react-animated-header@0.8.0) (2025-04-08)
+
+
+### Features
+
+* **animated-header:** remove strictmode from example app + tooltip ([#548](https://github.com/carbon-design-system/carbon-labs/issues/548)) ([c969903](https://github.com/carbon-design-system/carbon-labs/commit/c969903eab1bd7b78fbb3b7f9770e4839b1d7f6b))
+
+
+
+
+
 # [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.6.0...@carbon-labs/react-animated-header@0.7.0) (2025-04-04)
 
 **Note:** Version bump only for package @carbon-labs/react-animated-header

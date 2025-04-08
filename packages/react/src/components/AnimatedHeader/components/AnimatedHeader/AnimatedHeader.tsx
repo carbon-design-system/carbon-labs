@@ -61,9 +61,9 @@ export interface AnimatedHeaderProps {
   allTiles: TileGroup[];
   allWorkspaces?: SelectedWorkspace[];
   description?: string;
-  handleHeaderItemsToString: (item: TileGroup | null) => string;
+  handleHeaderItemsToString?: (item: TileGroup | null) => string;
   renderHeaderSelectedItem?: (item: TileGroup | null) => ReactNode;
-  handleWorkspaceItemsToString: (item: SelectedWorkspace | null) => string;
+  handleWorkspaceItemsToString?: (item: SelectedWorkspace | null) => string;
   renderWorkspaceSelectedItem?: (item: SelectedWorkspace | null) => ReactNode;
   headerAnimation?: object;
   headerStatic?: React.JSX.Element;
@@ -244,8 +244,10 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     hideLabel
                     type="inline"
                     items={allTiles}
-                    itemToString={(item) => handleHeaderItemsToString(item)}
                     onChange={(e) => setSelectedTileGroup(e)}
+                    {...(handleHeaderItemsToString
+                      ? { itemToString: handleHeaderItemsToString }
+                      : {})}
                     {...(renderHeaderSelectedItem
                       ? { renderSelectedItem: renderHeaderSelectedItem }
                       : {})}
@@ -271,8 +273,10 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                   hideLabel
                   type="inline"
                   items={allWorkspaces}
-                  itemToString={(item) => handleWorkspaceItemsToString(item)}
                   onChange={(e) => setSelectedWorkspace(e)}
+                  {...(handleWorkspaceItemsToString
+                    ? { itemToString: handleWorkspaceItemsToString }
+                    : {})}
                   {...(renderWorkspaceSelectedItem
                     ? { renderSelectedItem: renderWorkspaceSelectedItem }
                     : {})}

@@ -42,13 +42,6 @@
   }
 }
 
-// html,
-// body,
-// .storyBody,
-// .cds--layout,
-// #storybook-root {
-//   block-size: 100vh;
-// }
 .controlHeader {
   display: flex;
   border-block-end: 1px solid $background-inverse;
@@ -56,9 +49,6 @@
 }
 
 .iconBtnRight {
-  // display: flex;
-  // border-block-end: 1px solid $background-inverse;
-  // gap: 1px;
   margin-inline: auto 48px;
 }
 
@@ -69,10 +59,6 @@
 .iconBtnRightBottom {
   margin: 0 auto;
   inline-size: 48px;
-
-  // position: absolute;
-  // inset-block-end: 0;
-  // inset-inline-end: 0;
 }
 
 .PlayingCardViewStack {
@@ -132,7 +118,6 @@
 .ViewStackStoryHistoryEntries {
   flex-grow: 1;
   margin: 8px;
-  //list-style: decimal inside;
   outline: 1px solid rgba(255, 255, 255, 0.5);
   overflow-y: auto;
   padding-block: 4px;

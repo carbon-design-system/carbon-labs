@@ -11,15 +11,17 @@ import React, { useCallback, useRef, useState } from 'react';
 import { Close, Gift, Launch, Notification } from '@carbon/react/icons';
 import mdx from './WhatsNew.mdx';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import { Toc } from '../components/Toc';
-import { TocList } from '../components/TocList';
-import { TocItem } from '../components/TocItem';
-import { TocSection } from '../components/TocSection';
-import { TocSections } from '../components/TocSections';
-import { View } from '../components/View';
-import { ViewStack } from '../components/ViewStack';
-import { Bubble } from '../components/Bubble';
-import { BubbleHeader } from '../components/BubbleHeader';
+import {
+  Toc,
+  TocList,
+  TocItem,
+  TocSection,
+  TocSections,
+  View,
+  ViewStack,
+  Bubble,
+  BubbleHeader,
+} from '../index';
 import { ScrollGradient, Tearsheet, pkg } from '@carbon/ibm-products'; //ScrollGradient, pkg
 import {
   Button,

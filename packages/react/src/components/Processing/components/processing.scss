@@ -1,0 +1,254 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon setting imports
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+
+$prefix: 'clabs--processing' !default;
+
+#storybook-root:has(.#{$prefix}) {
+  display: grid;
+  block-size: calc(100vh - 32px);
+  place-items: center;
+}
+
+.#{$prefix}__dots {
+  block-size: 32px;
+  inline-size: 32px;
+}
+
+.#{$prefix}__dot {
+  fill: none;
+  r: 0;
+  stroke-width: 0;
+  transform: translateY(0);
+}
+
+[data-carbon-theme='white'] .#{$prefix}__dot,
+[data-carbon-theme='g10'] .#{$prefix}__dot {
+  stroke: $blue-90;
+}
+
+[data-carbon-theme='g90'] .#{$prefix}__dot,
+[data-carbon-theme='g100'] .#{$prefix}__dot {
+  stroke: $gray-10;
+}
+
+/* LINEAR */
+.#{$prefix}__linear {
+  .#{$prefix}__dot--left {
+    animation: linear-load-size, linear-load-stroke, linear-loop-size,
+      linear-loop-stroke, linear-unload-size, linear-unload-stroke;
+    animation-delay: 1000ms, 1000ms, 2000ms, 2000ms, 7000ms, 7000ms;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1, 1, 5, 5, 1, 1;
+    transform-origin: 25% 50%;
+  }
+
+  .#{$prefix}__dot--center {
+    animation: linear-load-size, linear-load-stroke, linear-loop-size,
+      linear-loop-stroke, linear-unload-size, linear-unload-stroke;
+    animation-delay: 1167ms, 1167ms, 2167ms, 2167ms, 7167ms, 7167ms;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1, 1, 5, 5, 1, 1;
+    transform-origin: 50% 50%;
+  }
+
+  .#{$prefix}__dot--right {
+    animation: linear-load-size, linear-load-stroke, linear-loop-size,
+      linear-loop-stroke, linear-unload-size, linear-unload-stroke;
+    animation-delay: 1334ms, 1334ms, 2334ms, 2334ms, 7334ms, 7334ms;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1, 1, 5, 5, 1, 1;
+    transform-origin: 75% 50%;
+  }
+}
+
+[dir='rtl'] .#{$prefix}__linear {
+  .#{$prefix}__dot--left {
+    animation-delay: 1334ms, 1334ms, 2334ms, 2334ms, 7334ms, 7334ms;
+  }
+
+  .#{$prefix}__dot--center {
+    animation-delay: 1167ms, 1167ms, 2167ms, 2167ms, 7167ms, 7167ms;
+  }
+
+  .#{$prefix}__dot--right {
+    animation-delay: 1000ms, 1000ms, 2000ms, 2000ms, 7000ms, 7000ms;
+  }
+}
+
+.#{$prefix}__linear--no-loop {
+  .#{$prefix}__dot--left {
+    animation: linear-load-size, linear-load-stroke, linear-unload-size,
+      linear-unload-stroke;
+    animation-delay: 1000ms, 1000ms, 2000ms, 2000ms;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    transform-origin: 25% 50%;
+  }
+
+  .#{$prefix}__dot--center {
+    animation: linear-load-size, linear-load-stroke, linear-unload-size,
+      linear-unload-stroke;
+    animation-delay: 1167ms, 1167ms, 2167ms, 2167ms;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    transform-origin: 50% 50%;
+  }
+
+  .#{$prefix}__dot--right {
+    animation: linear-load-size, linear-load-stroke, linear-unload-size,
+      linear-unload-stroke;
+    animation-delay: 1334ms, 1334ms, 2334ms, 2334ms;
+    animation-duration: 1000ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    transform-origin: 75% 50%;
+  }
+}
+
+[dir='rtl'] .#{$prefix}__linear--no-loop {
+  .#{$prefix}__dot--left {
+    animation-delay: 1334ms, 1334ms, 2334ms, 2334ms;
+  }
+
+  .#{$prefix}__dot--center {
+    animation-delay: 1167ms, 1167ms, 2167ms, 2167ms;
+  }
+
+  .#{$prefix}__dot--right {
+    animation-delay: 1000ms, 1000ms, 2000ms, 2000ms;
+  }
+}
+
+@keyframes linear-load-size {
+  0% {
+    animation-timing-function: cubic-bezier(0, 0, 0.3, 1);
+    r: 0;
+  }
+
+  25% {
+    animation-timing-function: cubic-bezier(0, 0, 0.3, 1);
+    r: 2.5px;
+  }
+
+  83.3% {
+    r: 0.875px;
+  }
+
+  100% {
+    r: 0.875px;
+  }
+}
+
+@keyframes linear-load-stroke {
+  0% {
+    animation-timing-function: cubic-bezier(0, 0, 0.3, 1);
+    stroke-width: 0;
+  }
+
+  8.33% {
+    stroke-width: 1.72;
+  }
+
+  100% {
+    stroke-width: 1.72;
+  }
+}
+
+@keyframes linear-loop-size {
+  0% {
+    animation-timing-function: cubic-bezier(0, 0, 0.3, 1);
+    r: 0.875px;
+  }
+
+  25% {
+    animation-timing-function: cubic-bezier(0, 0, 0.3, 1);
+    r: 2.5px;
+  }
+
+  91.66% {
+    r: 0.875px;
+  }
+
+  100% {
+    r: 0.875px;
+  }
+}
+
+@keyframes linear-loop-stroke {
+  0% {
+    animation-timing-function: cubic-bezier(0.4, 0.14, 1, 1);
+    stroke-width: 1.72;
+  }
+
+  100% {
+    stroke-width: 1.72;
+  }
+}
+
+@keyframes linear-unload-size {
+  0% {
+    r: 0.875px;
+  }
+
+  8.33% {
+    r: 0.875px;
+  }
+
+  33.33% {
+    animation-timing-function: cubic-bezier(0.4, 0.14, 1, 1);
+    r: 2.5px;
+  }
+
+  58.33% {
+    r: 0;
+  }
+
+  100% {
+    r: 0;
+  }
+}
+
+@keyframes linear-unload-stroke {
+  0% {
+    stroke-width: 1.72;
+  }
+
+  50% {
+    stroke-width: 1.72;
+  }
+
+  58.33% {
+    stroke-width: 0;
+  }
+
+  100% {
+    stroke-width: 0;
+  }
+}
+
+/*
+  If the user has expressed their preference for
+  reduced motion, then don't use animations
+*/
+@media (prefers-reduced-motion: reduce) {
+  .#{$prefix}__dot--left,
+  .#{$prefix}__dot--center,
+  .#{$prefix}__dot--right {
+    animation: none;
+    transition: none;
+  }
+}

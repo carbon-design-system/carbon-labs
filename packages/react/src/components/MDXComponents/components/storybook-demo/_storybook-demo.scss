@@ -1,0 +1,57 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/utilities/convert' as convert;
+
+@use '../utils' as *;
+
+.#{with-prefix('demo-dropdowns')} {
+  // override carbon, label inset-inline-start padding
+  .cds--label {
+    padding-inline-start: spacing.$spacing-05;
+  }
+
+  .cds--dropdown {
+    border-block-end: 1px solid theme.$layer-selected-01;
+  }
+}
+
+.#{with-prefix('theme-selector')} {
+  :global(.cds--dropdown)::after {
+    position: absolute;
+    display: block;
+    background-color: theme.$layer-selected;
+    block-size: convert.rem(40px);
+    content: '';
+    inline-size: 1px;
+    inset-block-start: 0;
+    inset-inline-end: -1px;
+  }
+}
+
+.#{with-prefix('storybook-demo')} {
+  padding: spacing.$spacing-03;
+  background: theme.$layer-01;
+  block-size: convert.rem(320px);
+}
+
+.#{with-prefix('tall')},
+.#{with-prefix('wide')} {
+  block-size: convert.rem(480px);
+}
+
+.#{with-prefix('wide')}.#{with-prefix('tall')} {
+  block-size: convert.rem(640px);
+}
+
+.#{with-prefix('iframe')} {
+  block-size: 100%;
+  inline-size: 100%;
+}

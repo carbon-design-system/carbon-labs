@@ -1,0 +1,36 @@
+@use '@carbon/styles/scss/reset';
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/themes';
+
+// :root {
+//   @include theme.theme(themes.$g100); // change this to check all themes
+// }
+
+.toolbar {
+  background: var(--cds-layer);
+  display: inline-flex;
+}
+.toolbar svg {
+  pointer-events: none;
+}
+.toolbar[orientation='vertical'],
+.toolbar-group[orientation='vertical'] {
+  max-inline-size: 2.5rem;
+}
+.toolbar-group {
+  flex-direction: row;
+  border-block-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  border-inline-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+}
+
+.toolbar-group[orientation='vertical'] {
+  border-inline-end: none;
+}
+
+.toolbar-group:last-child {
+  border-inline-end: none;
+}
+
+.toolbar-group[orientation='vertical']:last-child {
+  border-block-end: none;
+}

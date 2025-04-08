@@ -1,3 +1,10 @@
+//
+// Copyright IBM Corp. 2024
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
 @use '@carbon/styles/scss/reset';
 @use '@carbon/styles/scss/theme';
 @use '@carbon/styles/scss/themes';
@@ -5,18 +12,20 @@
 // :root {
 //   @include theme.theme(themes.$g100); // change this to check all themes
 // }
-
 .toolbar {
-  background: var(--cds-layer);
   display: inline-flex;
+  background: var(--cds-layer);
 }
+
 .toolbar svg {
   pointer-events: none;
 }
+
 .toolbar[orientation='vertical'],
 .toolbar-group[orientation='vertical'] {
   max-inline-size: 2.5rem;
 }
+
 .toolbar-group {
   flex-direction: row;
   border-block-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);

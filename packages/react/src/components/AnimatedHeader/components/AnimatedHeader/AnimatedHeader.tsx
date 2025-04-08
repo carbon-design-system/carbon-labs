@@ -246,7 +246,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     items={allTiles}
                     itemToString={(item) => handleHeaderItemsToString(item)}
                     onChange={(e) => setSelectedTileGroup(e)}
-                    {...renderHeaderSelectedItem ? { renderSelectedItem: renderHeaderSelectedItem } : {}}
+                    {...(renderHeaderSelectedItem
+                      ? { renderSelectedItem: renderHeaderSelectedItem }
+                      : {})}
                   />
                 </div>
               )}
@@ -271,7 +273,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                   items={allWorkspaces}
                   itemToString={(item) => handleWorkspaceItemsToString(item)}
                   onChange={(e) => setSelectedWorkspace(e)}
-                  {...renderWorkspaceSelectedItem ? { renderSelectedItem: renderWorkspaceSelectedItem } : {}}
+                  {...(renderWorkspaceSelectedItem
+                    ? { renderSelectedItem: renderWorkspaceSelectedItem }
+                    : {})}
                 />
               </div>
             )}
@@ -376,7 +380,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Helper function passed to downshift that allows the library to render a
    * selected item to as an arbitrary ReactNode. By default it uses standard Carbon renderer that renders only item.label
    * (Dropdown related to workspace selection)
-  */
+   */
   renderWorkspaceSelectedItem: PropTypes.func,
 
   /**

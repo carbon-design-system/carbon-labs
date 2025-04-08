@@ -2783,7 +2783,7 @@ __metadata:
     "@carbon/layout": "npm:11.30.2"
     "@carbon/motion": "npm:11.25.0"
     "@carbon/styles": "npm:^1.70.0"
-    "@carbon/themes": "npm:11.46.0"
+    "@carbon/themes": "npm:11.48.2"
     "@carbon/type": "npm:11.35.0"
     "@custom-elements-manifest/analyzer": "npm:^0.10.0"
     "@lit/react": "npm:^1.0.1"
@@ -2836,15 +2836,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/colors@npm:^11.29.0":
-  version: 11.29.0
-  resolution: "@carbon/colors@npm:11.29.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/2acb575e09a691481ef759d79d887ea0edf538772a672b9cb059e9d5bbc2ae75783aa93b39d35c3b9aba9443f878050d2597985adc500875034438d3aecdb9b0
-  languageName: node
-  linkType: hard
-
 "@carbon/colors@npm:^11.30.0":
   version: 11.30.0
   resolution: "@carbon/colors@npm:11.30.0"
@@ -2880,6 +2871,16 @@ __metadata:
     "@carbon/layout": "npm:^11.29.0"
     "@ibm/telemetry-js": "npm:^1.5.0"
   checksum: 10c0/e2ea4553a3008e7cfa23e5bb8d308e8f5f6f7ea03e130416e57ed579bf097a0b96433237298ad6c3f7f6d888edce15b13f2cc674ada50369a8323fd1504f8783
+  languageName: node
+  linkType: hard
+
+"@carbon/grid@npm:^11.32.2":
+  version: 11.32.2
+  resolution: "@carbon/grid@npm:11.32.2"
+  dependencies:
+    "@carbon/layout": "npm:^11.30.2"
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  checksum: 10c0/7a40d922b9c389274d8459f2c860c9fc5d659a2a4949ed1c7319eb940765f80a8edfd863dc49a82f538456f1570331aaa8a9d0defccdf9f693572795c6c12705
   languageName: node
   linkType: hard
 
@@ -3002,6 +3003,15 @@ __metadata:
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
   checksum: 10c0/13b1f0d329ff1f05fc0577d175ac21ba67cc79cfd4936a7f7e5963191d99d372e142297ec86745db001b586494bf573047425883546b49914753a5682d726b89
+  languageName: node
+  linkType: hard
+
+"@carbon/layout@npm:^11.30.2":
+  version: 11.30.2
+  resolution: "@carbon/layout@npm:11.30.2"
+  dependencies:
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  checksum: 10c0/33c885b9d67e0a99cad6eb4c73b4c0e64d947d5fc22cce31746db23b8dc83327fadd9ae34041ef44a9904a65c80d79b428686aeb6f2cf1009ce16a9e449b50a7
   languageName: node
   linkType: hard
 
@@ -3153,16 +3163,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/themes@npm:11.46.0":
-  version: 11.46.0
-  resolution: "@carbon/themes@npm:11.46.0"
+"@carbon/themes@npm:11.48.2":
+  version: 11.48.2
+  resolution: "@carbon/themes@npm:11.48.2"
   dependencies:
-    "@carbon/colors": "npm:^11.29.0"
-    "@carbon/layout": "npm:^11.29.0"
-    "@carbon/type": "npm:^11.35.0"
+    "@carbon/colors": "npm:^11.30.0"
+    "@carbon/layout": "npm:^11.30.2"
+    "@carbon/type": "npm:^11.36.2"
     "@ibm/telemetry-js": "npm:^1.5.0"
     color: "npm:^4.0.0"
-  checksum: 10c0/f5f751049809af61ce28a56941362b61513596ea48da00896a9f270de7f685fbe2e1816206e0dd1855d4b5ab94ae98bfd03ec32a3cd8c553a941737ca339375a
+  checksum: 10c0/392027105c81352f37499df90087e65b245f46f40f92fd97f74c970eaeae0e39c4cc5b30686dd2d80f67a1c65058fe1ec5fea1576f004b647b984fd8329b9692
   languageName: node
   linkType: hard
 
@@ -3205,7 +3215,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/type@npm:11.35.0, @carbon/type@npm:^11.35.0":
+"@carbon/type@npm:11.35.0":
   version: 11.35.0
   resolution: "@carbon/type@npm:11.35.0"
   dependencies:
@@ -3224,6 +3234,17 @@ __metadata:
     "@carbon/layout": "npm:^11.28.0"
     "@ibm/telemetry-js": "npm:^1.5.0"
   checksum: 10c0/4a65d0daf4b532eb67ca5eb3a61cd2d8ab15c91af4347a5d6d2f8ef8610499974626e23941d1dce66c516d14b22f68f7c7c435a92c194a87837ed076cae5deca
+  languageName: node
+  linkType: hard
+
+"@carbon/type@npm:^11.36.2":
+  version: 11.36.2
+  resolution: "@carbon/type@npm:11.36.2"
+  dependencies:
+    "@carbon/grid": "npm:^11.32.2"
+    "@carbon/layout": "npm:^11.30.2"
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  checksum: 10c0/28d5c895914aac3077e054de6ced7b826f8182124e96c1ec9414604259a503614498cffc3a983d173dbb3dc6edfc53d0ebfcfbd63a3fc5f7d0763852bad245be
   languageName: node
   linkType: hard
 

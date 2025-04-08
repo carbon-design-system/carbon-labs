@@ -22,6 +22,7 @@ $prefix: 'cds' !default;
 
 .#{$prefix}--header__action:focus {
   border-width: 2px;
+  box-shadow: none;
 }
 
 //----------------------------------------------------------------------------

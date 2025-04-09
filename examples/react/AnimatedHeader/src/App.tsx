@@ -51,11 +51,11 @@ function App() {
       description="Connect, monitor, and manage data."
       handleHeaderItemsToString={handleHeaderItems}
       handleWorkspaceItemsToString={handleWorkspaceItems}
-      renderHeaderSelectedItem={selectedTileGroupRenderer}
-      renderWorkspaceSelectedItem={selectedWorkspaceItemRenderer}
       headerAnimation={watsonXAnimatedLight}
       headerStatic={watsonXStaticLight}
       productName="[Product name]"
+      renderHeaderSelectedItem={selectedTileGroupRenderer}
+      renderWorkspaceSelectedItem={selectedWorkspaceItemRenderer}
       selectedTileGroup={selectedTile}
       selectedWorkspace={selectedWorkspace}
       setSelectedTileGroup={handleTileGroup}

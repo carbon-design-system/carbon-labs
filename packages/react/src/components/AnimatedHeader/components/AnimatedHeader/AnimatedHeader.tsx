@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import {
   Grid,
   Column,
@@ -61,8 +61,10 @@ export interface AnimatedHeaderProps {
   allTiles: TileGroup[];
   allWorkspaces?: SelectedWorkspace[];
   description?: string;
-  handleHeaderItemsToString: (item: TileGroup | null) => string;
-  handleWorkspaceItemsToString: (item: SelectedWorkspace | null) => string;
+  handleHeaderItemsToString?: (item: TileGroup | null) => string;
+  renderHeaderSelectedItem?: (item: TileGroup | null) => ReactNode;
+  handleWorkspaceItemsToString?: (item: SelectedWorkspace | null) => string;
+  renderWorkspaceSelectedItem?: (item: SelectedWorkspace | null) => ReactNode;
   headerAnimation?: object;
   headerStatic?: React.JSX.Element;
   productName?: string;
@@ -85,6 +87,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   headerAnimation,
   headerStatic,
   productName = '[Product name]',
+  renderHeaderSelectedItem,
+  renderWorkspaceSelectedItem,
   selectedTileGroup,
   selectedWorkspace,
   setSelectedTileGroup,
@@ -238,8 +242,13 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     hideLabel
                     type="inline"
                     items={allTiles}
-                    itemToString={(item) => handleHeaderItemsToString(item)}
                     onChange={(e) => setSelectedTileGroup(e)}
+                    {...(handleHeaderItemsToString
+                      ? { itemToString: handleHeaderItemsToString }
+                      : {})}
+                    {...(renderHeaderSelectedItem
+                      ? { renderSelectedItem: renderHeaderSelectedItem }
+                      : {})}
                   />
                 </div>
               )}
@@ -262,8 +271,13 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                   hideLabel
                   type="inline"
                   items={allWorkspaces}
-                  itemToString={(item) => handleWorkspaceItemsToString(item)}
                   onChange={(e) => setSelectedWorkspace(e)}
+                  {...(handleWorkspaceItemsToString
+                    ? { itemToString: handleWorkspaceItemsToString }
+                    : {})}
+                  {...(renderWorkspaceSelectedItem
+                    ? { renderSelectedItem: renderWorkspaceSelectedItem }
+                    : {})}
                 />
               </div>
             )}
@@ -356,6 +370,20 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Provide current product name
    */
   productName: PropTypes.string,
+
+  /**
+   * Helper function passed to downshift that allows the library to render a
+   * selected item to as an arbitrary ReactNode. By default it uses standard Carbon renderer that renders only item.label text
+   * (Dropdown under description in header)
+   */
+  renderHeaderSelectedItem: PropTypes.func,
+
+  /**
+   * Helper function passed to downshift that allows the library to render a
+   * selected item to as an arbitrary ReactNode. By default it uses standard Carbon renderer that renders only item.label text
+   * (Dropdown related to workspace selection)
+   */
+  renderWorkspaceSelectedItem: PropTypes.func,
 
   /**
    * The tile group that is active in the header

@@ -15,31 +15,49 @@
 .toolbar {
   display: inline-flex;
   background: var(--cds-layer);
-}
 
-.toolbar svg {
-  pointer-events: none;
-}
+  svg {
+    pointer-events: none;
+  }
 
-.toolbar[orientation='vertical'],
-.toolbar-group[orientation='vertical'] {
-  max-inline-size: 2.5rem;
+  &[orientation='vertical'] {
+    max-inline-size: 2.5rem;
+  }
 }
 
 .toolbar-group {
   flex-direction: row;
   border-block-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
   border-inline-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+
+  &[orientation='vertical'] {
+    border-inline-end: none;
+    max-inline-size: 2.5rem;
+
+    &:last-child {
+      border-block-end: none;
+    }
+  }
+
+  &:last-child {
+    border-inline-end: none;
+  }
 }
 
-.toolbar-group[orientation='vertical'] {
-  border-inline-end: none;
-}
 
-.toolbar-group:last-child {
-  border-inline-end: none;
-}
-
-.toolbar-group[orientation='vertical']:last-child {
-  border-block-end: none;
+.toolbar-button-caret {
+  position: relative;
+  &::before {
+    position: absolute;
+    background: linear-gradient(
+      to right bottom,
+      transparent 50%,
+      var(--cds-icon-primary, #161616) 50%
+    );
+    block-size: calc(0.125rem + 0.25rem);
+    content: '';
+    inline-size: calc(0.125rem + 0.25rem);
+    inset-block-end: 0.175rem;
+    inset-inline-end: 0.175rem;
+  }
 }

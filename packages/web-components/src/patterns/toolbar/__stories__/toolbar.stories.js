@@ -37,7 +37,7 @@ import Move from '@carbon/web-components/es/icons/move/16.js';
 import Rotate from '@carbon/web-components/es/icons/rotate/16.js';
 
 export default {
-  title: 'Patterns/toolbar',
+  title: 'Patterns/Toolbar',
 };
 
 const defaultArgs = {
@@ -141,6 +141,7 @@ export const Horizontal = {
             <span slot="tooltip-content">Minimize</span>
           </cds-icon-button>
           <cds-icon-button
+            class="toolbar-button-caret"
             kind="ghost"
             enter-delay-ms="100"
             leave-delay-ms="100"

@@ -30,12 +30,15 @@ import '@carbon-labs/wc-empty-state/es/index.js';
 <Markdown>{`${cdnJs({ components: ['empty-state'] }, packageJson)}`}</Markdown>
 
 ### HTML
-The `<clabs-empty-state>` component accepts slots for `action` and `link` elements, and props for `title`, `subtitle` and `size`.
+The `<clabs-empty-state>` component accepts slots for `action`, `link` and `illustration` elements, and props for `title`, `subtitle`, `size`, `kind`, and `illustrationTheme`.
+
 ```html
 <clabs-empty-state
   title="Example EmptyState title"
   subtitle="Example subtitle"
-  size="lg">
+  size="lg"
+  kind="notFound"
+  illustrationTheme="light">
     <cds-button kind="tertiary" size="sm" slot="action"
       >Create new</cds-button
     >

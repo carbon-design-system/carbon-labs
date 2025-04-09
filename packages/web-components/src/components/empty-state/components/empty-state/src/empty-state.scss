@@ -16,6 +16,7 @@ $css--plex: true !default;
 
 :host(#{$clabs-prefix}-empty-state) {
   display: flex;
+  flex-direction: column;
   color: $text-primary;
   .#{$clabs-prefix}--empty-state__header {
     @include type-style('heading-03');
@@ -47,4 +48,32 @@ $css--plex: true !default;
   ::slotted(#{$cds-prefix}-link) {
     display: inline-block;
   }
+}
+
+.#{$clabs-prefix}--empty-state__illustration {
+  block-size: auto;
+  margin-block-end: $spacing-05;
+
+  &.#{$clabs-prefix}--empty-state__illustration--lg {
+    max-inline-size: $spacing-11;
+    min-inline-size: $spacing-11;
+  }
+
+  &.#{$clabs-prefix}--empty-state__illustration--sm {
+    max-inline-size: $spacing-10;
+    min-inline-size: $spacing-10;
+  }
+}
+
+::slotted(.#{$clabs-prefix}--empty-state__illustration) {
+  block-size: auto;
+  margin-block-end: $spacing-05;
+}
+::slotted(.#{$clabs-prefix}--empty-state__illustration--lg) {
+  max-inline-size: $spacing-11;
+  min-inline-size: $spacing-11;
+}
+::slotted(.#{$clabs-prefix}--empty-state__illustration--sm) {
+  max-inline-size: $spacing-10;
+  min-inline-size: $spacing-10;
 }

@@ -41,7 +41,7 @@ const argTypes = {
   link: {
     control: 'object',
     description:
-      'Props for the link. Refer to the Carbon Components link documentation for full list of props.',
+      'Object for the link — this is only for Storybook and not a prop in the component.',
   },
   action: {
     control: 'object',
@@ -77,7 +77,7 @@ const argTypes = {
   illustration: {
     control: 'text',
     description:
-      'Source for the illustration image if you choose to use your own custom image. Passing an illustration prop will supersede the kind option.',
+      'Object for the action button — this is only for Storybook and not a prop in the component',
   },
 };
 

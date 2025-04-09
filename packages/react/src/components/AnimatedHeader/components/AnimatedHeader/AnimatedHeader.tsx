@@ -7,22 +7,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 import PropTypes from 'prop-types';
-import React, { useEffect, createRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Grid,
   Column,
   Button,
   Dropdown,
-  IconButton,
   Tooltip,
   ButtonKind,
 } from '@carbon/react';
-import {
-  ChevronUp,
-  ChevronDown,
-  PlayFilledAlt,
-  PauseFilled,
-} from '@carbon/icons-react';
+import { ChevronUp, ChevronDown } from '@carbon/icons-react';
 import lottie from 'lottie-web';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 
@@ -45,7 +39,7 @@ export interface TasksConfig {
 
 export interface SelectedWorkspace {
   id: string;
-  text: string;
+  label: string;
 }
 
 export interface Tile {
@@ -59,7 +53,7 @@ export interface Tile {
 
 export interface TileGroup {
   id: number;
-  name: string;
+  label: string;
   tiles: Tile[];
 }
 
@@ -67,6 +61,8 @@ export interface AnimatedHeaderProps {
   allTiles: TileGroup[];
   allWorkspaces?: SelectedWorkspace[];
   description?: string;
+  handleHeaderItemsToString: (item: TileGroup | null) => string;
+  handleWorkspaceItemsToString: (item: SelectedWorkspace | null) => string;
   headerAnimation?: object;
   headerStatic?: React.JSX.Element;
   productName?: string;
@@ -84,6 +80,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   allTiles,
   allWorkspaces,
   description,
+  handleHeaderItemsToString,
+  handleWorkspaceItemsToString,
   headerAnimation,
   headerStatic,
   productName = '[Product name]',
@@ -99,9 +97,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
 
-  const animationContainer = createRef<HTMLDivElement>();
+  const animationContainer = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(true);
-  const [playing, setPlaying] = useState(true);
   const [headingTextAnimation, setHeadingTextAnimation] = useState('');
   const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
 
@@ -120,17 +117,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
       : setHeadingTextAnimation(headingExpanded);
   };
 
-  const handleLottieAnimationClick = () => {
-    if (playing) {
-      lottie.pause();
-    } else {
-      lottie.play();
+  useEffect(() => {
+    if (!animationContainer.current) {
+      return;
     }
 
-    setPlaying(!playing);
-  };
-
-  useEffect(() => {
     const animation = lottie.loadAnimation({
       container: animationContainer.current as HTMLDivElement,
       animationData: headerAnimation,
@@ -140,7 +131,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
     });
 
     const lottieLoadSpeed = 1;
-    const lottieLoopSpeed = 1;
     const animationData = animation['animationData'];
 
     function reducedMotion() {
@@ -155,14 +145,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
       );
     }
 
-    function loop() {
-      animation.setSpeed(lottieLoopSpeed);
-      animation.playSegments(
-        [animationData.markers.at(1).tm, animationData.op],
-        true
-      );
-    }
-
     if (isReduced) {
       // reduced motion on
       animation.addEventListener('DOMLoaded', reducedMotion);
@@ -171,19 +153,16 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
       // Run Start Animation
       animation.addEventListener('DOMLoaded', load);
-
-      // Run Looped Animation
-      animation.addEventListener('complete', loop);
     }
     return () => {
       animation?.removeEventListener('DOMLoaded', reducedMotion);
       animation?.removeEventListener('DOMLoaded', load);
-      animation?.removeEventListener('complete', loop);
     };
-  }, [animationContainer, headerAnimation, isReduced]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isReduced]);
 
   return (
-    <section className={`${blockClass} ${!open && collapsed}`}>
+    <section className={`${blockClass}${!open ? ` ${collapsed}` : ''}`}>
       <Grid>
         <div className={`${blockClass}__gradient--overlay`} />
 
@@ -232,9 +211,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               !open && descriptionCollapsed
             }`}>
             {description && (
-              <Tooltip align="bottom" label={description}>
-                <h2 className={`${blockClass}__description`}>{description}</h2>
-              </Tooltip>
+              <h2 className={`${blockClass}__description`}>{description}</h2>
             )}
 
             {tasksConfig?.button?.text && (
@@ -257,11 +234,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     className={`${blockClass}__header-dropdown`}
                     size="md"
                     titleText="Label"
-                    label={tasksConfig.dropdown?.label || allTiles[0].name}
+                    label={tasksConfig.dropdown?.label || allTiles[0].label}
                     hideLabel
                     type="inline"
                     items={allTiles}
-                    itemToString={(item) => (item ? item.name : '')}
+                    itemToString={(item) => handleHeaderItemsToString(item)}
                     onChange={(e) => setSelectedTileGroup(e)}
                   />
                 </div>
@@ -285,7 +262,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                   hideLabel
                   type="inline"
                   items={allWorkspaces}
-                  itemToString={(item) => (item ? item['text'] : '')}
+                  itemToString={(item) => handleWorkspaceItemsToString(item)}
                   onChange={(e) => setSelectedWorkspace(e)}
                 />
               </div>
@@ -312,20 +289,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__button-collapse--gradient`} />
 
         <div className={`${blockClass}__button-collapse--container`}>
-          {headerAnimation && !isReduced && (
-            <IconButton
-              className={`${blockClass}__icon-button`}
-              label={playing ? 'Pause' : 'Play'}
-              kind="ghost"
-              type="button"
-              onClick={handleLottieAnimationClick}>
-              {playing ? (
-                <PauseFilled size={16} fill={`var(--cds-icon-secondary)`} />
-              ) : (
-                <PlayFilledAlt size={16} fill={`var(--cds-icon-secondary)`} />
-              )}
-            </IconButton>
-          )}
           <Button
             id={`${blockClass}__button-collapse`}
             kind="ghost"
@@ -360,6 +323,22 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Provide short sentence in max. 3 lines related to product context
    */
   description: PropTypes.string,
+
+  /**
+   * Helper function passed to downshift that allows the library to render a
+   * given item to a string label. By default, it extracts the `label` field
+   * from a given item to serve as the item label in the list. (Dropdown
+   * under description in header).
+   */
+  handleHeaderItemsToString: PropTypes.func,
+
+  /**
+   * Helper function passed to downshift that allows the library to render a
+   * given item to a string label. By default, it extracts the `label` field
+   * from a given item to serve as the item label in the list. (Dropdown
+   * related to workspace selection).
+   */
+  handleWorkspaceItemsToString: PropTypes.func,
 
   /**
    * In-product imagery / lottie animation (.json) dim. 1312 x 738

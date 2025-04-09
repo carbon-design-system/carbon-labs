@@ -9,7 +9,11 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+<<<<<<< HEAD
 import emptyState from './src/empty-state.js';
+=======
+import emptyState from './src/empty-state';
+>>>>>>> upstream/main
 import { emptyStateTemplate } from './src/empty-state.template.js';
 
 const { stablePrefix: clabsPrefix } = settings;
@@ -22,6 +26,7 @@ const { stablePrefix: clabsPrefix } = settings;
 @customElement(`${clabsPrefix}-empty-state`)
 class CLABSEmptyState extends emptyState {
   /**
+<<<<<<< HEAD
    * Lifecycle method called after the first render.
    * Ensures the illustration slot is checked for content.
    */
@@ -46,6 +51,8 @@ class CLABSEmptyState extends emptyState {
   }
 
   /**
+=======
+>>>>>>> upstream/main
    * Renders the template while passing in class functionality
    *
    * @returns {TemplateResult<1>}

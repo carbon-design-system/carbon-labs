@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: 1e5a49a0-1bc8-4547-8a7c-4b96e1842ead
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  jsx:
+    elements:
+      allowedAttributeNames:
+        # General
+        - children
+        - className
+        - index
+        #
+        - rootMargin
+        - threshold
+        # Bubble
+        - align
+        - dropShadow
+        - highContrast
+        - open
+        - target
+        # TocItem
+        - isActive
+        # TocSection
+        - as
+        # View
+        - title
+        # ViewStack
+        - ariaLabel
+        - onViewChangeEnd
+        - onViewChangeStart
+        - role
+        - viewAssistiveTranslator
+        # React
+        - key
+        - ref
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

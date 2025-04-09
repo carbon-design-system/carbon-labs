@@ -26,7 +26,7 @@ function App() {
   };
 
   const handleTileGroup = (e: any) => {
-    setSelectedTile(e.selectedItem.id);
+    setSelectedTile(e.selectedItem);
   };
 
   const handleHeaderItems = (item: any) => {

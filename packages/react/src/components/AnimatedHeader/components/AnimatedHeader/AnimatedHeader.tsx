@@ -180,8 +180,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__lottie-animation--container`}>
           <div
             ref={animationContainer}
-            className={`${blockClass}__lottie-animation ${
-              !open && lottieCollapsed
+            className={`${blockClass}__lottie-animation${
+              !open ? ` ${lottieCollapsed}` : ''
             }`}></div>
         </div>
 
@@ -207,8 +207,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             sm={4}
             md={8}
             lg={4}
-            className={`${blockClass}__left-area-container ${
-              !open && descriptionCollapsed
+            className={`${blockClass}__left-area-container${
+              !open ? ` ${descriptionCollapsed}` : ''
             }`}>
             {description && (
               <h2 className={`${blockClass}__description`}>{description}</h2>
@@ -250,8 +250,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
           <Column sm={4} md={8} lg={12} className={`${blockClass}__content`}>
             {allWorkspaces && (
               <div
-                className={`${blockClass}__workspace--container ${
-                  !open && contentCollapsed
+                className={`${blockClass}__workspace--container${
+                  !open ? ` ${contentCollapsed}` : ''
                 }`}>
                 <Dropdown
                   id={`${blockClass}__workspace`}

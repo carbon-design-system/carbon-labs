@@ -46,7 +46,7 @@ const argTypes = {
   action: {
     control: 'object',
     description:
-      'Props for the action button. Refer to the Carbon Components button documentation for full list of props.',
+      'Object for the action button — this is only for Storybook and not a prop in the component',
   },
   kind: {
     control: 'select',
@@ -77,7 +77,7 @@ const argTypes = {
   illustration: {
     control: 'text',
     description:
-      'Object for the action button — this is only for Storybook and not a prop in the component',
+      'Custom illustration — this is only for Storybook and not a prop in the component',
   },
 };
 

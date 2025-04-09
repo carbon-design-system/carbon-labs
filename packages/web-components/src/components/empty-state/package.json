@@ -1,17 +1,16 @@
 {
-  "name": "@carbon-labs/wc-DISPLAY_NAME",
-  "version": "0.0.1",
-  "author": "Your Name <your@email.com>",
+  "name": "@carbon-labs/wc-empty-state",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "description": "Carbon Labs - DISPLAY_NAME component",
+  "description": "Carbon Labs - empty-state component",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/carbon-design-system/carbon-labs",
-    "directory": "packages/DISPLAY_NAME"
+    "directory": "packages/empty-state"
   },
   "main": "./src/index.js",
   "module": "./src/index.js",
@@ -21,11 +20,16 @@
     },
     "./es/": "./es/"
   },
-  "files": ["**/*.d.ts", "**/*.js", "**/*.js.map", "custom-elements.json"],
+  "files": [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/*.js.map",
+    "custom-elements.json"
+  ],
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
-    "build": "gulp build --option DISPLAY_NAME",
+    "build": "gulp build --option empty-state",
     "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
     "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary"
   },

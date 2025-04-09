@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.50.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.49.0...@carbon-labs/react@0.50.0) (2025-04-08)
+
+
+### Features
+
+* **animated-header:** remove strictmode from example app + tooltip ([#548](https://github.com/carbon-design-system/carbon-labs/issues/548)) ([c969903](https://github.com/carbon-design-system/carbon-labs/commit/c969903eab1bd7b78fbb3b7f9770e4839b1d7f6b))
+
+
+
+
+
 # [0.49.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.48.0...@carbon-labs/react@0.49.0) (2025-04-07)
 
 

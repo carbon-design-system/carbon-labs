@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.8.0...@carbon-labs/react-animated-header@0.9.0) (2025-04-10)
+
+
+### Bug Fixes
+
+* **animated-header:** cleanup Safari issues ([#556](https://github.com/carbon-design-system/carbon-labs/issues/556)) ([530e01a](https://github.com/carbon-design-system/carbon-labs/commit/530e01ae13d94391732bf34a3b26edb87b9ea161))
+
+
+
+
+
 # [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.7.0...@carbon-labs/react-animated-header@0.8.0) (2025-04-08)
 
 

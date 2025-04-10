@@ -7,13 +7,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, fixture, expect, nextFrame } from '@open-wc/testing';
+import { html, fixture, expect } from '@open-wc/testing';
 import '@carbon-labs/wc-empty-state/es/index.js';
+import { stub } from 'sinon';
+const mockFn = stub().returns({});
+const CustomIllustration = mockFn();
 
 const defaultProps = {
   title: 'Empty state heading.',
   subtitle: 'Example subtitle',
   size: 'lg',
+  kind: 'notFound',
+  illustration: CustomIllustration,
 };
 
 /**
@@ -25,7 +30,11 @@ const defaultProps = {
 const template = (props = defaultProps) => html` <clabs-empty-state
   title=${props.title}
   subtitle=${props.subtitle}
-  size=${props.size}>
+  size=${props.size}
+  .kind=${props.kind}
+  .illustrationTheme=${props.illustrationTheme}>
+  ${props.illustration &&
+  html` <img src=${props.illustration} alt="customillustration" /> `}
   <cds-button kind="tertiary" size="sm" slot="action">Create new</cds-button>
   <cds-link href="https://www.carbondesignsystem.com" slot="link"
     >View documentation</cds-link
@@ -35,7 +44,6 @@ describe('clabs-empty-state', function () {
   it('should render clabs-empty-state', async () => {
     const emptyState = await fixture(template());
     expect(emptyState).dom.to.equalSnapshot();
-    await nextFrame();
     expect(emptyState).shadowDom.to.be.accessible();
   });
   it('should contain title element', async () => {
@@ -52,6 +60,13 @@ describe('clabs-empty-state', function () {
     );
     expect(subtitleElement).to.exist;
   });
+  it('should have a img slotted into illustration', async () => {
+    const emptyState = await fixture(template({ ...defaultProps, kind: '' }));
+    const actionSlot = emptyState.shadowRoot.querySelector(
+      'slot[name="illustration"]'
+    );
+    expect(actionSlot).to.exist;
+  });
   it('should have a cds-button slotted into action', async () => {
     const emptyState = await fixture(template());
     const actionSlot = emptyState.shadowRoot.querySelector(
@@ -65,7 +80,6 @@ describe('clabs-empty-state', function () {
     expect(button).to.have.attribute('size', 'sm');
     expect(button).to.have.text('Create new');
   });
-
   it('should have a cds-link slotted into link slot', async () => {
     const emptyState = await fixture(template());
     const linkSlot = emptyState.shadowRoot.querySelector('slot[name="link"]');
@@ -78,5 +92,22 @@ describe('clabs-empty-state', function () {
       'https://www.carbondesignsystem.com'
     );
     expect(link).to.have.text('View documentation');
+  });
+  it('should show the predefined illustration if kind prop is passed and no illustration slot is filled', async () => {
+    const emptyState = await fixture(
+      template({ ...defaultProps, illustration: '' })
+    );
+    const customIllustration = emptyState.shadowRoot.querySelector(
+      '.clabs--empty-state__illustration'
+    );
+    expect(customIllustration).to.exist;
+    expect(customIllustration.tagName.toLowerCase()).to.equal('svg');
+  });
+  it('should show the custom illustration even if kind prop and illustration props being passed', async () => {
+    const emptyState = await fixture(template());
+    const actionSlot = emptyState.shadowRoot.querySelector(
+      'slot[name="illustration"]'
+    );
+    expect(actionSlot).to.exist;
   });
 });

@@ -44,7 +44,7 @@ export interface SelectedWorkspace {
 
 export interface Tile {
   href?: string | null;
-  id?: string;
+  id: string;
   mainIcon?: string | null;
   secondaryIcon?: string | null;
   subtitle?: string | null;

@@ -36,7 +36,6 @@ $trial-countdown-gradient: linear-gradient(135deg, $background, $background),
 .#{$prefix}--trial-countdown {
   @include type-style('label-01');
 
-  padding: 0 $spacing-05;
   color: $text-primary;
 }
 

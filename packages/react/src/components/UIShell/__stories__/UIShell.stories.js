@@ -586,6 +586,26 @@ export const HeaderStory = () => {
           <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
             [Platform]
           </HeaderName>
+          <HeaderPopover align="bottom">
+            <HeaderPopoverButton
+              label="Trial Countdown"
+              as={Button}
+              kind="ghost">
+              <TrialCountdown count={30} />
+            </HeaderPopoverButton>
+            <HeaderPopoverContent>
+              <p>Your trial ends on May 13, 2025</p>
+              <Link href="#" renderIcon={Share}>
+                Invite team members
+              </Link>
+              <Link href="#" renderIcon={User}>
+                Contact sales
+              </Link>
+              <Button size="sm" renderIcon={ShoppingCart}>
+                Buy
+              </Button>
+            </HeaderPopoverContent>
+          </HeaderPopover>
           <HeaderGlobalBar>
             <ExpandableSearch
               size="lg"

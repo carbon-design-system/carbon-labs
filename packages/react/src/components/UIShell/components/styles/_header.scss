@@ -21,7 +21,7 @@ $prefix: 'cds' !default;
 }
 
 .#{$prefix}--header__action:focus {
-  border-width: 2px;
+  box-shadow: inset 0 0 0 1px $focus, inset 0 0 0 2px $background;
 }
 
 //----------------------------------------------------------------------------
@@ -31,6 +31,10 @@ $prefix: 'cds' !default;
 .#{$prefix}--header
   .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not([disabled]) {
   color: $text-secondary;
+}
+
+.#{$prefix}--header-action__button {
+  block-size: 48px;
 }
 
 .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled]) svg {

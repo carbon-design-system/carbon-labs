@@ -43,12 +43,13 @@ export interface SelectedWorkspace {
 }
 
 export interface Tile {
-  href: string | null;
-  id: string;
-  mainIcon: string | null;
+  href?: string | null;
+  id?: string;
+  mainIcon?: string | null;
   secondaryIcon?: string | null;
   subtitle?: string | null;
-  title: string | null;
+  title?: string | null;
+  customContent?: ReactNode | null;
 }
 
 export interface TileGroup {
@@ -278,6 +279,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                   {...(renderWorkspaceSelectedItem
                     ? { renderSelectedItem: renderWorkspaceSelectedItem }
                     : {})}
+                  {...(selectedWorkspace
+                    ? { selectedItem: selectedWorkspace }
+                    : {})}
                 />
               </div>
             )}
@@ -293,7 +297,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     secondaryIcon={tile.secondaryIcon}
                     title={tile.title}
                     subtitle={tile.subtitle}
-                    productName={productName}></BaseTile>
+                    productName={productName}
+                    customContent={tile.customContent}></BaseTile>
                 );
               })}
             </div>

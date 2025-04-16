@@ -24,15 +24,6 @@ $prefix: 'cds' !default;
   box-shadow: inset 0 0 0 1px $focus, inset 0 0 0 2px $background;
 }
 
-//----------------------------------------------------------------------------
-// Menu button inside Header
-//----------------------------------------------------------------------------
-
-.#{$prefix}--header
-  .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not([disabled]) {
-  color: $text-secondary;
-}
-
 .#{$prefix}--header-action__button {
   block-size: convert.rem(48px);
 }
@@ -71,4 +62,20 @@ $prefix: 'cds' !default;
     $link-visited
   );
   @include custom-property.declaration('link-focus-text-color', $focus);
+}
+
+//----------------------------------------------------------------------------
+// Menu button inside Header
+//----------------------------------------------------------------------------
+
+.#{$prefix}--header
+  .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not([disabled]) {
+  color: $text-secondary;
+}
+
+.#{$prefix}--header
+  .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not(
+    [disabled]
+  ):hover {
+  color: $text-primary;
 }

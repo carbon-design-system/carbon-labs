@@ -172,7 +172,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 id="downshift-:r7:-toggle-button"
                 role="combobox"
                 tabindex="0"
-                title="Open in: Drew's workspace"
+                title=""
                 type="button"
               >
                 <span

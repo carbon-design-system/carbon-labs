@@ -11,7 +11,9 @@ import { render } from '@testing-library/react';
 import 'jest-canvas-mock';
 import '@testing-library/jest-dom';
 
-import AnimatedHeader, { SelectedWorkspace } from '../components/AnimatedHeader/AnimatedHeader';
+import AnimatedHeader, {
+  SelectedWorkspace,
+} from '../components/AnimatedHeader/AnimatedHeader';
 import { headerTiles, workspaceData, tasksConfigDropdown } from '../data';
 
 window.matchMedia =
@@ -38,7 +40,9 @@ describe('AnimatedHeader', () => {
           productName="[Product name]"
           selectedTileGroup={headerTiles[0]}
           selectedWorkspace={workspaceData[0]}
-          renderWorkspaceSelectedItem={(item: SelectedWorkspace | null) => item ? `Open in: ${item.label}` : ''}
+          renderWorkspaceSelectedItem={(item: SelectedWorkspace | null) =>
+            item ? `Open in: ${item.label}` : ''
+          }
           setSelectedTileGroup={() => {}}
           setSelectedWorkspace={() => {}}
           tasksConfig={tasksConfigDropdown}

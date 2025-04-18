@@ -129,3 +129,7 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
     white-space: initial;
   }
 }
+
+.#{$prefix}--custom-content {
+  z-index: 2;
+}

@@ -23,6 +23,7 @@ import {
 } from '../components/HeaderPopover';
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderDivider } from '../components/HeaderDivider';
+import { TrialCountdown } from '../components/TrialCountdown';
 import {
   SkipToContent,
   Header,
@@ -65,6 +66,9 @@ import {
   SquareOutline,
   UserAvatar,
   Help,
+  ShoppingCart,
+  Share,
+  User,
 } from '@carbon/icons-react';
 
 import {
@@ -91,6 +95,7 @@ export default {
     SideNavLink,
     SideNavMenu,
     SideNavMenuItem,
+    TrialCountdown,
   },
   parameters: {
     docs: {
@@ -175,7 +180,6 @@ const StoryContent = () => (
     </Grid>
   </Theme>
 );
-
 /**
  * Story for UIShell
  * @returns {React.ReactElement} The JSX for the story
@@ -214,6 +218,26 @@ export const Default = () => {
               <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
                 [Platform]
               </HeaderName>
+              <HeaderPopover align="bottom">
+                <HeaderPopoverButton
+                  label="Trial Countdown"
+                  as={Button}
+                  kind="ghost">
+                  <TrialCountdown count={30} />
+                </HeaderPopoverButton>
+                <HeaderPopoverContent>
+                  <p>Your trial ends on May 13, 2025</p>
+                  <Link href="#" renderIcon={Share}>
+                    Invite team members
+                  </Link>
+                  <Link href="#" renderIcon={User}>
+                    Contact sales
+                  </Link>
+                  <Button size="sm" renderIcon={ShoppingCart}>
+                    Buy
+                  </Button>
+                </HeaderPopoverContent>
+              </HeaderPopover>
               <HeaderGlobalBar>
                 <ExpandableSearch
                   size="lg"
@@ -562,6 +586,26 @@ export const HeaderStory = () => {
           <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
             [Platform]
           </HeaderName>
+          <HeaderPopover align="bottom">
+            <HeaderPopoverButton
+              label="Trial Countdown"
+              as={Button}
+              kind="ghost">
+              <TrialCountdown count={30} />
+            </HeaderPopoverButton>
+            <HeaderPopoverContent>
+              <p>Your trial ends on May 13, 2025</p>
+              <Link href="#" renderIcon={Share}>
+                Invite team members
+              </Link>
+              <Link href="#" renderIcon={User}>
+                Contact sales
+              </Link>
+              <Button size="sm" renderIcon={ShoppingCart}>
+                Buy
+              </Button>
+            </HeaderPopoverContent>
+          </HeaderPopover>
           <HeaderGlobalBar>
             <ExpandableSearch
               size="lg"
@@ -957,3 +1001,27 @@ export const SideNavPanel = () => (
     </Content>
   </>
 );
+
+/**
+ * Story for TrialCountdown
+ * @param {object} args Storybook args that control component props
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const TrialCountdownStory = (args) => (
+  <div style={{ padding: '50px' }}>
+    <TrialCountdown {...args} />
+  </div>
+);
+TrialCountdownStory.storyName = 'TrialCountdown';
+
+TrialCountdownStory.args = {
+  count: 30,
+  text: 'Trial days left',
+  warning: false,
+};
+
+TrialCountdownStory.argTypes = {
+  isSideNavExpanded: { table: { disable: true } },
+  isSwitcherExpanded: { table: { disable: true } },
+  render: { table: { disable: true } },
+};

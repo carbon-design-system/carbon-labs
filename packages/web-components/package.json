@@ -6,9 +6,7 @@
   "description": "Web Components for Carbon Labs",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-labs",
-  "main": "es/index",
   "types": "es/index",
-  "module": "es/index",
   "files": [
     "dist",
     "packages/*/es",

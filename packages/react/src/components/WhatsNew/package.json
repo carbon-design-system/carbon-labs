@@ -1,0 +1,40 @@
+{
+  "name": "@carbon-labs/react-whats-new",
+  "version": "0.4.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - Whats New",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "src/components/WhatsNew"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rm -rf {es,lib,scss}",
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 1e5a49a0-1bc8-4547-8a7c-4b96e1842ead --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "canary",
+    "@carbon/ibm-products": "^2.49.0"
+  },
+  "peerDependencies": {
+    "@carbon/ibm-products": "^2.49.0"
+  },
+  "dependencies": {
+    "@ibm/telemetry-js": "^1.9.1"
+  }
+}

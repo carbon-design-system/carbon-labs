@@ -1,0 +1,71 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+@use '@carbon/styles/scss/theme' as *;
+
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
+
+$prefix: 'cds' !default;
+
+.#{$prefix}--header__global {
+  align-items: center;
+}
+
+.#{$prefix}--header__action {
+  flex-shrink: 0;
+}
+
+.#{$prefix}--header__action:focus {
+  border-width: 2px;
+  box-shadow: none;
+}
+
+//----------------------------------------------------------------------------
+// Menu button inside Header
+//----------------------------------------------------------------------------
+
+.#{$prefix}--header
+  .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not([disabled]) {
+  color: $text-secondary;
+}
+
+.#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled]) svg {
+  fill: $icon-secondary;
+}
+
+.#{$prefix}--header-action.#{$prefix}--popover--open
+  .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not(
+    [disabled]
+  ):hover
+  svg {
+  fill: $icon-primary;
+}
+
+// TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
+.#{$prefix}--header-action .#{$prefix}--tooltip-content {
+  color: $text-primary;
+}
+
+.#{$prefix}--header-action.#{$prefix}--popover--open
+  .#{$prefix}--header-action__button {
+  background-color: $layer;
+}
+
+.#{$prefix}--header-action .#{$prefix}--toggletip-content {
+  @include custom-property.declaration('button-focus-color', $focus);
+  @include custom-property.declaration('link-text-color', $link-primary);
+  @include custom-property.declaration(
+    'link-hover-text-color',
+    $link-primary-hover
+  );
+  @include custom-property.declaration(
+    'link-visited-text-color',
+    $link-visited
+  );
+  @include custom-property.declaration('link-focus-text-color', $focus);
+}

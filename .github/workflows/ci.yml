@@ -6,6 +6,8 @@ on:
   pull_request:
     branches:
       - main
+  merge_group:
+    types: [ checks_requested ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -16,10 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 20.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '18.x'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
@@ -32,10 +34,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 20.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '18.x'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
@@ -50,10 +52,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 20.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '18.x'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
@@ -64,12 +66,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 20.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '18.x'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
       - name: License check
         run: yarn lint:license
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install
+      - name: Run build
+        run: yarn build
+      - name: run React tests
+        working-directory: 'packages/react'
+        run: yarn test
+      - name: run Web Component tests
+        working-directory: 'packages/web-components'
+        run: yarn test

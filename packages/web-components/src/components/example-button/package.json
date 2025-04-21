@@ -1,7 +1,10 @@
 {
-  "name": "@carbon-labs/web-components-example-button",
-  "version": "0.4.0",
-  "private": true,
+  "name": "@carbon-labs/wc-example-button",
+  "version": "0.5.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "description": "Carbon Labs - example-button component",
   "license": "Apache-2.0",
   "repository": {
@@ -27,12 +30,12 @@
   "customElements": "custom-elements.json",
   "scripts": {
     "build": "gulp build --option example-button",
-    "//build:dist": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js",
-    "//build:dist:canary": "rm -rf dist && rollup --config ../../tools/rollup.config.dist.js --configCanary"
+    "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
+    "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.14.0",
-    "@carbon/web-components": "2.19.0"
+    "@carbon-labs/utilities": "0.15.0",
+    "@carbon/web-components": "2.21.0"
   }
 }

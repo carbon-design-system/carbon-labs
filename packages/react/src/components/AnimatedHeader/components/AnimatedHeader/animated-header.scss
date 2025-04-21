@@ -1,0 +1,637 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+@use '@carbon/react/scss/compat/themes' as compat;
+@use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/motion';
+
+$prefix: 'clabs--animated-header' !default;
+
+:root {
+  @include theme(themes.$g10);
+}
+
+[data-carbon-theme='white'] {
+  @include theme(themes.$white);
+}
+
+[data-carbon-theme='g10'] {
+  @include theme(themes.$g10);
+}
+
+[data-carbon-theme='g90'] {
+  @include theme(themes.$g90);
+}
+
+[data-carbon-theme='g100'] {
+  @include theme(themes.$g100);
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: $background;
+  color: $text-primary;
+}
+
+.#{$prefix} {
+  position: relative;
+  display: flex;
+  overflow: visible;
+  background: $background;
+  inline-size: 100%;
+  max-block-size: 90vh;
+  outline: 1px solid transparent;
+  padding-block: 0 $spacing-10;
+  transition: padding 500ms motion.motion(standard, expressive),
+    max-height 500ms motion.motion(standard, expressive), color 200ms linear,
+    background-color 200ms linear,
+    outline 500ms motion.motion(standard, expressive);
+  writing-mode: horizontal-tb;
+}
+
+.#{$prefix}__static--container {
+  position: absolute;
+  display: flex;
+  overflow: hidden;
+  justify-content: flex-end;
+
+  block-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: -webkit-fill-available;
+
+  inline-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: -webkit-fill-available;
+
+  max-inline-size: 96rem;
+  writing-mode: horizontal-tb;
+}
+
+.#{$prefix}__static {
+  position: absolute;
+  z-index: 0;
+  display: flex;
+
+  background-position: top right;
+  background-repeat: no-repeat;
+  transform: translateY(0);
+  transition: transform 500ms motion.motion(standard, expressive);
+}
+
+.#{$prefix}__ui-heading {
+  margin-block-start: $spacing-09;
+}
+
+.#{$prefix}__ui-side-nav {
+  margin-inline-start: $spacing-09;
+}
+
+.#{$prefix}__gradient--overlay {
+  position: absolute;
+  z-index: 1;
+
+  block-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: -webkit-fill-available;
+
+  inline-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: -webkit-fill-available;
+
+  margin-inline: auto;
+  max-inline-size: 99rem;
+  padding-inline: var(--cds-grid-margin);
+}
+
+.#{$prefix}__container--gradient {
+  position: absolute;
+  z-index: 1;
+
+  block-size: 100%;
+  inline-size: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+
+  margin-inline: auto;
+  padding-inline: var(--cds-grid-margin);
+}
+
+:root .#{$prefix}__container--gradient,
+[data-carbon-theme='white'] .#{$prefix}__container--gradient,
+[data-carbon-theme='g10'] .#{$prefix}__container--gradient {
+  background: linear-gradient(0deg, #e0e0e0bf 0%, transparent 100%);
+}
+
+[data-carbon-theme='g90'] .#{$prefix}__container--gradient,
+[data-carbon-theme='g100'] .#{$prefix}__container--gradient {
+  background: linear-gradient(0deg, #262626bf 0%, transparent 100%);
+}
+
+.#{$prefix}__heading {
+  @include type-style('heading-05');
+
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  margin: $spacing-08 0 $spacing-05 0;
+  text-overflow: ellipsis;
+  transition: font-size 500ms motion.motion(standard, expressive),
+    margin 500ms motion.motion(standard, expressive);
+  white-space: nowrap;
+
+  @supports (-webkit-line-clamp: 3) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    white-space: initial;
+  }
+}
+
+/* support for Safari */
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  .#{$prefix}__heading {
+    transition: margin 500ms motion.motion(standard, expressive);
+  }
+}
+
+.#{$prefix}__heading--collapsed {
+  @include type-style('heading-03');
+
+  margin: $spacing-03 0 $spacing-04 0;
+  line-height: 1.25;
+}
+
+.#{$prefix}__heading-welcome {
+  animation: 250ms ease-in fade-in;
+  animation-fill-mode: both;
+}
+
+.#{$prefix}__heading-name {
+  animation: 250ms ease-in fade-in;
+  animation-delay: 125ms;
+  animation-fill-mode: both;
+}
+
+.#{$prefix}__left-area-container {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-07;
+  margin-block-start: $spacing-08;
+  opacity: 1;
+  transition: opacity 500ms linear;
+}
+
+.#{$prefix}__left-area-container--collapsed {
+  opacity: 0;
+}
+
+.#{$prefix}__description {
+  @include type-style('heading-03');
+
+  overflow: hidden;
+  animation: 250ms ease-in fade-in;
+  animation-delay: 300ms;
+  animation-fill-mode: both;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @supports (-webkit-line-clamp: 3) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    white-space: initial;
+  }
+}
+
+.#{$prefix}__button {
+  animation: 250ms ease-in fade-in;
+  animation-delay: 300ms;
+  animation-fill-mode: both;
+
+  max-inline-size: fit-content;
+}
+
+.#{$prefix}__header-dropdown--container {
+  inline-size: auto;
+  max-inline-size: 18rem;
+}
+
+.#{$prefix}__header-dropdown {
+  border-width: 1px;
+  border-style: solid;
+  border-color: $border-inverse;
+  animation: 250ms ease-in fade-in;
+  animation-delay: 300ms;
+  animation-fill-mode: both;
+  background-color: transparent;
+}
+
+##{$prefix}__header-dropdown {
+  inline-size: 100%;
+}
+
+.#{$prefix}__content {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  opacity: 1;
+  transition: opacity 500ms linear;
+}
+
+.#{$prefix}__workspace--container {
+  min-block-size: $spacing-08;
+  opacity: 1;
+  transition: opacity 500ms linear;
+}
+
+.#{$prefix}__workspace {
+  position: relative;
+  z-index: 9999;
+  animation: 500ms motion.motion(standard, expressive) 0ms 1 slide-in;
+  animation-delay: 383.333ms;
+  animation-fill-mode: both;
+  margin-block-end: $spacing-03;
+}
+
+.#{$prefix}__tiles-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-05;
+}
+
+.#{$prefix}__content--collapsed {
+  opacity: 0;
+}
+
+.#{$prefix}__tile {
+  animation: 500ms motion.motion(standard, expressive) 0ms 1 slide-in;
+  animation-fill-mode: both;
+}
+
+.#{$prefix}__tile:nth-child(1) {
+  animation-delay: 383.333ms;
+}
+
+@for $i from 1 through 99 {
+  .#{$prefix}__tile:nth-child(#{$i}n) {
+    animation-delay: #{383.333 + $i * 83.333}ms;
+  }
+}
+
+.#{$prefix}__lottie-animation--container {
+  position: absolute;
+  display: flex;
+  overflow: hidden;
+  justify-content: flex-end;
+
+  block-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: -webkit-fill-available;
+
+  inline-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: -webkit-fill-available;
+
+  max-inline-size: 96rem;
+}
+
+/* support for Safari */
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  .#{$prefix}__gradient--overlay,
+  .#{$prefix}__static--container,
+  .#{$prefix}__lottie-animation--container {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+}
+
+.#{$prefix}__lottie-animation {
+  position: absolute;
+  z-index: 0;
+  display: flex;
+
+  transform: translateY(0);
+  transition: transform 500ms motion.motion(standard, expressive);
+}
+
+.#{$prefix}__lottie-animation--collapsed {
+  transform: translateY(-16px);
+}
+
+.#{$prefix}__button-collapse--container {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  inset-block-end: 0;
+  inset-inline: 0;
+  inset-inline-start: 0;
+  margin-inline-start: auto;
+  padding-block-start: $spacing-05;
+}
+
+.#{$prefix}__button-collapse--gradient {
+  position: absolute;
+  z-index: 1;
+  block-size: 200px;
+  inline-size: 300px;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+}
+
+:root .#{$prefix}__button-collapse--gradient,
+[data-carbon-theme='white'] .#{$prefix}__button-collapse--gradient,
+[data-carbon-theme='g10'] .#{$prefix}__button-collapse--gradient {
+  background: radial-gradient(
+    ellipse 100% 100% at 245px 195px,
+    rgba(#e0e0e0, 1),
+    rgba(#e0e0e0, 0) 80%
+  );
+}
+
+[data-carbon-theme='g90'] .#{$prefix}__button-collapse--gradient,
+[data-carbon-theme='g100'] .#{$prefix}__button-collapse--gradient {
+  background: radial-gradient(
+    ellipse 100% 100% at 245px 195px,
+    rgba(#262626, 1),
+    rgba(#262626, 0) 80%
+  );
+}
+
+##{$prefix}__button-collapse {
+  min-inline-size: 112px;
+}
+
+##{$prefix}__button-collapse,
+##{$prefix}__button-collapse:hover {
+  color: $text-primary;
+}
+
+.#{$prefix}--collapsed {
+  overflow: hidden;
+  padding: 0;
+  max-block-size: $spacing-09;
+  outline: 1px solid $border-subtle-00;
+}
+
+// Small
+@media only screen and (width >= 20rem) {
+  .#{$prefix}__lottie-animation {
+    display: none;
+  }
+
+  .#{$prefix}__static {
+    display: none;
+  }
+
+  .#{$prefix}__gradient--overlay {
+    background: linear-gradient(180deg, $background 25%, transparent 75%);
+  }
+
+  .#{$prefix}__header-dropdown {
+    display: none;
+  }
+
+  .#{$prefix}__content {
+    display: none;
+  }
+
+  .#{$prefix}__button-collapse--container .cds--popover-container {
+    display: none;
+  }
+}
+
+// Medium
+@media only screen and (width >= 42rem) {
+  .#{$prefix}__lottie-animation {
+    display: flex;
+  }
+
+  .#{$prefix}__header-dropdown {
+    display: block;
+  }
+
+  .#{$prefix}__static {
+    display: flex;
+
+    background-size: 203% auto;
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  .#{$prefix}__lottie-animation > canvas {
+    inline-size: 2582px;
+    writing-mode: horizontal-tb;
+  }
+
+  .#{$prefix}__lottie-animation > canvas > svg > g > g > g > g > path {
+    vector-effect: non-scaling-stroke;
+  }
+
+  .#{$prefix}__content {
+    display: flex;
+    margin-block-start: $spacing-06;
+  }
+
+  .#{$prefix}__button-collapse--container .cds--popover-container {
+    display: flex;
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
+    inline-size: calc(33% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :first-child)
+    > ##{$prefix}__ai-prompt-tile {
+    inline-size: calc(100% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :first-child)
+    > ##{$prefix}__ai-prompt-tile
+    ~ .#{$prefix}__glass-tile {
+    inline-size: calc(50% - 16px);
+  }
+}
+
+// Large
+@media only screen and (width >= 66rem) {
+  .#{$prefix}__lottie-animation > canvas {
+    inline-size: 1982px;
+  }
+
+  .#{$prefix}__static {
+    background-size: 100% auto;
+  }
+
+  .#{$prefix}__gradient--overlay {
+    background: linear-gradient(90deg, $background 25%, transparent 75%);
+  }
+
+  .#{$prefix}__content {
+    margin-block-start: 0;
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
+    > .#{$prefix}__tile {
+    inline-size: calc(33% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
+    > .#{$prefix}__tile {
+    inline-size: calc(33% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
+    inline-size: calc(33% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :first-child)
+    > ##{$prefix}__ai-prompt-tile {
+    inline-size: calc(66% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :first-child)
+    > ##{$prefix}__ai-prompt-tile
+    ~ .#{$prefix}__glass-tile {
+    inline-size: calc(33% - 16px);
+  }
+}
+
+// X-Large
+@media only screen and (width >= 82rem) {
+  .#{$prefix}__lottie-animation > canvas {
+    inline-size: 100%;
+  }
+
+  .#{$prefix}__static {
+    background-size: 89% auto;
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
+    > .#{$prefix}__tile {
+    inline-size: calc(25% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
+    > .#{$prefix}__tile {
+    inline-size: calc(33% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
+    > .#{$prefix}__tile {
+    inline-size: calc(25% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
+    inline-size: calc(25% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :first-child)
+    > ##{$prefix}__ai-prompt-tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :first-child)
+    > ##{$prefix}__ai-prompt-tile
+    ~ .#{$prefix}__glass-tile {
+    inline-size: calc(25% - 16px);
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/*
+   If the user has expressed their preference for
+   reduced motion, then don't use animations
+ */
+@media (prefers-reduced-motion: reduce) {
+  .#{$prefix},
+  .#{$prefix}__static,
+  .#{$prefix}__heading,
+  .#{$prefix}__left-area-container,
+  .#{$prefix}__content,
+  .#{$prefix}__lottie-animation {
+    transition: none;
+  }
+
+  .#{$prefix}__heading-welcome,
+  .#{$prefix}__heading-name,
+  .#{$prefix}__description,
+  .#{$prefix}__button,
+  .#{$prefix}__workspace,
+  .#{$prefix}__tile,
+  .#{$prefix}__icon-button {
+    animation: none;
+  }
+}

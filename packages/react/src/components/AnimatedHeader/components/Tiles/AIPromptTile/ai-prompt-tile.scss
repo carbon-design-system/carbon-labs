@@ -1,0 +1,213 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/motion';
+
+$prefix: 'clabs--animated-header__ai-prompt-tile' !default;
+
+.#{$prefix} {
+  position: relative;
+  display: flex;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  min-block-size: 192px;
+  text-decoration: none;
+}
+
+.#{$prefix}:hover,
+.#{$prefix}:active,
+.#{$prefix}:focus {
+  text-decoration: none;
+}
+
+.#{$prefix}--body {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: $spacing-05;
+  background-color: transparent;
+  color: $text-primary;
+  opacity: 1;
+  transition: opacity 500ms linear;
+}
+
+/* Semi-transparent background layer */
+.#{$prefix}--body-background {
+  position: absolute;
+  z-index: 1;
+  background-color: $layer-01;
+  inset: 0;
+  opacity: 0.7;
+  pointer-events: none;
+  transition: opacity 150ms motion.motion(standard, productive);
+}
+
+:root .#{$prefix}--body-background,
+[data-carbon-theme='white'] .#{$prefix}--body-background,
+[data-carbon-theme='g10'] .#{$prefix}--body-background {
+  background-color: $layer-01;
+}
+
+[data-carbon-theme='g90'] .#{$prefix}--body-background,
+[data-carbon-theme='g100'] .#{$prefix}--body-background {
+  background-color: $layer-hover-01;
+}
+
+.#{$prefix}--collapsed {
+  opacity: 0;
+}
+
+/* Animated gradient layer */
+.#{$prefix}--body-gradient {
+  position: absolute;
+  z-index: 2;
+  animation: 1000ms motion.motion(standard, expressive) animate-gradient;
+  animation-delay: 466.666ms;
+  animation-fill-mode: both;
+  background: linear-gradient(0deg, #4589ff4d 0%, transparent 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 64px;
+  inset: 0;
+  opacity: 0.7;
+  pointer-events: none;
+  transition: opacity 150ms motion.motion(standard, productive);
+}
+
+.#{$prefix}--body:hover {
+  .#{$prefix}--body-gradient,
+  .#{$prefix}--body-background {
+    opacity: 0.85;
+  }
+}
+
+.#{$prefix}--body::after {
+  position: absolute;
+  z-index: 3;
+  border: 1px solid transparent;
+  animation: 1000ms motion.motion(standard, expressive) animate-border;
+  animation-delay: 466.666ms;
+  animation-fill-mode: both;
+  background: linear-gradient(180deg, #a6c8ff 64%, #78a9ff) border-box;
+  background-size: 100% 150%;
+  content: '';
+  inset: 0;
+  -webkit-mask: linear-gradient(#ffffff 0 0) padding-box,
+    linear-gradient(#ffffff 0 0);
+  mask: linear-gradient(#ffffff 0 0) padding-box, linear-gradient(#ffffff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+}
+
+.#{$prefix}--icons {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  margin-block-end: $spacing-05;
+}
+
+.#{$prefix}--title {
+  @include type-style('body-compact-02');
+
+  position: relative;
+  z-index: 4;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @supports (-webkit-line-clamp: 3) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    white-space: initial;
+  }
+}
+
+.#{$prefix}--footer {
+  z-index: 4;
+  display: flex;
+  justify-content: flex-end;
+  margin-block: $spacing-03 calc(-1 * $spacing-05);
+  margin-inline-end: calc(-1 * $spacing-05);
+}
+
+.#{$prefix}--footer > a {
+  padding: 14px $spacing-05;
+}
+
+.#{$prefix}--subtitle {
+  @include type-style('body-short-01');
+
+  position: relative;
+  color: $text-secondary;
+}
+
+.#{$prefix}--text-input-container {
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  border: 1px solid $border-subtle-01;
+  border-radius: 8px;
+  background-color: $layer-01;
+  margin-block-start: $spacing-06;
+  transition: border 200ms motion.motion(standard, expressive);
+}
+
+.#{$prefix}--text-input-container__active {
+  border: 1px solid $border-strong-01;
+}
+
+.#{$prefix}--text-input input {
+  border-radius: 7px 0 0 7px;
+  background-color: transparent;
+  border-block-end: none;
+}
+
+.#{$prefix}--icon-button svg {
+  fill: $text-on-color-disabled;
+  transition: fill 200ms motion.motion(standard, expressive);
+}
+
+.#{$prefix}--icon-button__active svg {
+  fill: $icon-primary;
+}
+
+.#{$prefix}--custom-content {
+  z-index: 4;
+}
+
+@keyframes animate-border {
+  0% {
+    background-position: 100% 0%;
+  }
+
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes animate-gradient {
+  0% {
+    background-position: 100% 150%;
+  }
+
+  100% {
+    background-position: 100% 100%;
+  }
+}

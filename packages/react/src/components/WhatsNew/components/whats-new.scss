@@ -1,0 +1,196 @@
+/* stylelint-disable declaration-no-important */
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/zone';
+@use '@carbon/styles/scss/themes';
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/styles/scss/breakpoint' as *;
+@use 'styles/bubble';
+@use 'styles/toc';
+@use 'styles/view-stack';
+
+$prefix: 'clabs--whats-new' !default;
+$carbonPrefix: 'cds';
+$productsPrefix: 'c4p';
+
+.#{$prefix}__wn_pattern__tearsheet {
+  .#{$carbonPrefix}--modal-container {
+    max-inline-size: 1000px;
+  }
+  .#{$productsPrefix}--tearsheet__header {
+    background-color: $background !important;
+    padding-inline-end: $spacing-07 !important;
+  }
+  .#{$carbonPrefix}--tearsheet__main {
+    overflow-y: hidden !important;
+  }
+  .#{$carbonPrefix}--tabs--vertical {
+    block-size: auto !important;
+  }
+  .#{$productsPrefix}--tearsheet__container {
+    background-color: $background;
+  }
+}
+
+.#{$prefix}__wn_pattern__tearsheet_navigation_container {
+  display: grid;
+  grid-area: ContentSwitcher;
+  grid-template-areas: 'ContentSwitcher Link';
+  grid-template-columns: 1fr 1fr;
+  margin-block: $spacing-02 $spacing-06;
+}
+
+.#{$prefix}__wn_pattern__tearsheet__contentswitcher {
+  padding-inline: 0 !important;
+}
+
+.#{$prefix}__wn_pattern__tearsheet__link {
+  align-items: center;
+  grid-area: Link;
+  justify-self: end;
+}
+.#{$prefix}__wn_pattern__tearsheet_influencer_container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-06 $spacing-05 $spacing-07 $spacing-07;
+  block-size: 100%;
+}
+
+.#{$prefix}__wn_pattern__features {
+  block-size: 100%;
+}
+
+.#{$prefix}__wn_pattern__feature__sections {
+  padding-inline: $spacing-07;
+}
+
+.#{$prefix}__wn_pattern__feature__section_group {
+  border-block-end: 1px solid $border-subtle-01;
+  padding-block-start: $spacing-07;
+}
+
+.#{$prefix}__wn_pattern__feature__section_group_heading {
+  @include type-style('heading-compact-01');
+}
+
+.#{$prefix}__wn_pattern__feature__section {
+  padding-block: $spacing-09;
+
+  &:first-of-type {
+    padding-block-start: $spacing-07;
+  }
+
+  &:last-of-type {
+    padding-block-end: $spacing-07;
+  }
+}
+
+.#{$prefix}__wn_pattern__feature__section_image {
+  inline-size: 100%;
+  margin-block-end: $spacing-06;
+}
+
+.#{$prefix}__wn_pattern__tag_container,
+.#{$prefix}__wn_pattern__feature__section_heading,
+.#{$prefix}__wn_pattern__feature__section_body {
+  padding-inline-end: 20%;
+  @include breakpoint-down(lg) {
+    padding-inline-end: 0;
+  }
+}
+
+.#{$prefix}__wn_pattern__tag_container {
+  margin-block-end: $spacing-02;
+
+  .#{$carbonPrefix}--tag:first-of-type {
+    margin-inline-start: 0;
+
+    > span {
+      margin-inline-start: 0;
+    }
+  }
+}
+
+.#{$prefix}__wn_pattern__feature__section_heading {
+  margin-block-end: $spacing-05;
+}
+
+.#{$prefix}__wn_pattern__feature__section_body {
+  @include type-style('body-01');
+
+  color: $text-primary;
+  margin-block-end: $spacing-06;
+
+  p {
+    margin-block-end: $spacing-04;
+  }
+}
+
+// NOTIFICATION STYLES
+
+.#{$prefix}__wn_pattern__bubble_viewstack {
+  block-size: 400px;
+  inline-size: 256px;
+}
+
+.#{$prefix}__wn_pattern__bubble_viewstack-view-image {
+  inline-size: 100%;
+  margin-block-end: $spacing-05;
+}
+
+.#{$prefix}__wn_pattern__bubble_viewstack-view-info {
+  @include type-style('label-01');
+
+  display: flex;
+  align-items: center;
+  margin-block-end: $spacing-03;
+
+  > span {
+    padding-block-start: 1px;
+    padding-inline-start: $spacing-03;
+  }
+}
+
+.#{$prefix}__wn_pattern__bubble_viewstack-view-heading {
+  @include type-style('productive-heading-02');
+}
+.#{$prefix}__wn_pattern__bubble_viewstack-view-description {
+  @include type-style('body-01');
+
+  margin-block-start: $spacing-03;
+
+  > p {
+    @include type-style('body-01');
+
+    margin-block-end: 8px;
+
+    &:last-of-type {
+      margin-block-end: 0;
+    }
+  }
+}
+.#{$prefix}__wn_pattern__bubble_viewstack-view-buttons {
+  margin-block-start: $spacing-05;
+}
+
+.#{$prefix}__wn_pattern__bubble_footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-block-start: $spacing-05;
+}
+
+.#{$prefix}__wn_pattern__bubble_progress {
+  justify-self: flex-start;
+  margin-inline-end: auto;
+  @include type-style('helper-text-01');
+}

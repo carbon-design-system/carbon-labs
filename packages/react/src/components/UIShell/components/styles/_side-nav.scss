@@ -1,0 +1,348 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/utilities/convert' as convert;
+@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
+@use '@carbon/styles/scss/utilities/button-reset' as button-reset;
+@use '@carbon/styles/scss/utilities/focus-outline' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/components/ui-shell/mixins' as *;
+@use '@carbon/styles/scss/components/ui-shell/functions' as *;
+@use '@carbon/styles/scss/spacing' as *;
+
+$prefix: 'cds' !default;
+
+div:has(.#{$prefix}--header)
+  ~ div:has(.#{$prefix}--side-nav)
+  .#{$prefix}--side-nav {
+  block-size: calc(100% - $spacing-09);
+  inset-block-start: $spacing-09;
+}
+
+//----------------------------------------------------------------------------
+// Side-nav Collapsible
+//----------------------------------------------------------------------------
+.#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--ux {
+  inline-size: 0;
+}
+
+.#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--expanded {
+  inline-size: convert.to-rem(256px);
+}
+
+//----------------------------------------------------------------------------
+// Treeview Side-nav
+//----------------------------------------------------------------------------
+
+.#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
+  margin-inline-end: $spacing-05;
+}
+
+.#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active {
+  > span {
+    color: $text-primary;
+    font-weight: 600;
+  }
+
+  .#{$prefix}--side-nav__icon > svg,
+  .#{$prefix}--side-nav__submenu-chevron > svg {
+    fill: $icon-primary;
+  }
+}
+
+.#{$prefix}--side-nav__link:hover,
+.#{$prefix}--side-nav__submenu:hover {
+  .#{$prefix}--side-nav__icon > svg,
+  .#{$prefix}--side-nav__submenu-chevron > svg {
+    fill: $icon-primary;
+  }
+}
+
+// SideNavMenu
+// Level 2
+// without icon
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-10;
+}
+
+// with icon
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-09;
+}
+
+// Nested SideNavMenuItem
+// Level 2
+// without icon
+.#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-10;
+}
+
+// with icon
+.#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+  padding-inline-start: $spacing-09;
+}
+
+// Level 3
+// without icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-11;
+}
+
+// with icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-12;
+}
+
+//----------------------------------------------------------------------------
+// Side-nav Panel
+//----------------------------------------------------------------------------
+.#{$prefix}--side-nav--panel {
+  z-index: 7999; /* needs to be below header */
+  overflow: visible;
+
+  .#{$prefix}--side-nav__items {
+    display: flex;
+    overflow: visible;
+    flex-direction: column;
+  }
+
+  .#{$prefix}--side-nav__items,
+  .#{$prefix}--side-nav__items:hover {
+    overflow: visible;
+  }
+
+  .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
+    margin-inline-end: $spacing-05;
+  }
+
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__link:hover {
+    .#{$prefix}--side-nav__icon > svg {
+      fill: $icon-primary;
+    }
+  }
+
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+    a.#{$prefix}--side-nav__link {
+    padding-inline-start: $spacing-10;
+  }
+
+  // Side Nav Toggle
+  .#{$prefix}--side-nav__toggle {
+    @include button-reset.reset($width: true);
+    @include type-style('heading-compact-01');
+    @include focus-outline('reset');
+
+    display: flex;
+    align-items: center;
+    padding: 0 $spacing-05;
+    block-size: $spacing-09;
+    color: $text-secondary;
+    transition: color $duration-fast-02, background-color $duration-fast-02,
+      outline $duration-fast-02;
+
+    &:hover {
+      background-color: $background-hover;
+      color: $text-primary;
+    }
+
+    &:focus {
+      @include focus-outline('outline');
+    }
+  }
+
+  .#{$prefix}--side-nav__toggle-text {
+    @include text-overflow();
+
+    text-align: start;
+  }
+
+  &:hover {
+    .#{$prefix}--side-nav__items {
+      overflow: visible;
+    }
+  }
+
+  .#{$prefix}--popover-container {
+    display: block;
+    inline-size: 100%;
+  }
+
+  // SharkFinIcon container styles
+  .#{$prefix}--side-nav__submenu {
+    position: relative;
+
+    .#{$prefix}--side-nav--panel-submenu-caret-container {
+      position: absolute;
+      block-size: 100%;
+      inline-size: 100%;
+    }
+
+    .#{$prefix}--side-nav--panel-submenu-caret {
+      position: absolute;
+      inset-block-end: 4px;
+      inset-inline-end: 4px;
+    }
+  }
+
+  // Focused FlyoutMenu button
+  .#{$prefix}--flyout-menu-clicked
+    .#{$prefix}--side-nav--panel-submenu-caret
+    svg {
+    fill: $icon-primary;
+  }
+
+  // menu icon svg
+  .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__icon svg,
+  .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__icon svg,
+  .#{$prefix}--flyout-menu-selected
+    .#{$prefix}--side-nav--panel-submenu-caret
+    svg {
+    fill: $icon-primary;
+  }
+
+  // Change SharkFinIcon color when clicked
+  .#{$prefix}--flyout-menu-clicked .#{$prefix}--side-nav__submenu {
+    background-color: $background-hover;
+
+    .#{$prefix}-shark-fin-icon {
+      fill: $icon-primary;
+    }
+  }
+
+  // Selected + click
+  .#{$prefix}--flyout-menu-selected.#{$prefix}--flyout-menu-clicked
+    .#{$prefix}--side-nav__submenu {
+    background-color: $background-active;
+
+    .#{$prefix}-shark-fin-icon {
+      fill: $icon-primary;
+    }
+  }
+
+  // Selected Panel FlyoutMenuItem styles (checkmark icon)
+  .#{$prefix}--flyout-menu-selected
+    .#{$prefix}--side-nav__menu-item--flyout-menu-item {
+    .#{$prefix}--side-nav__icon {
+      margin-inline-end: $spacing-04;
+    }
+
+    .#{$prefix}--side-nav__link--active {
+      padding-inline-start: $spacing-04;
+    }
+  }
+
+  .#{$prefix}--flyout-menu-selected .#{$prefix}--side-nav__submenu {
+    background-color: $background-selected;
+  }
+
+  // flyout on focus, only displays title
+  .#{$prefix}--flyout-tooltip-content {
+    padding-block: 1px;
+  }
+
+  // make caret smaller in tooltip mode
+  .#{$prefix}--flyout-menu-focused .#{$prefix}--popover-caret {
+    @include custom-property.declaration('popover-caret-width', 0.5rem);
+    @include custom-property.declaration('popover-caret-height', 0.25rem);
+  }
+
+  // Flyout menu content styles
+  .#{$prefix}--side-nav-menu--popover-content {
+    padding: 4px 0;
+
+    .#{$prefix}--label {
+      color: $text-secondary;
+      padding-inline-start: $spacing-05;
+    }
+
+    .#{$prefix}--side-nav__link {
+      @include type-style('body-compact-01');
+
+      padding-inline: $spacing-08;
+    }
+
+    .#{$prefix}--side-nav__link:hover {
+      background-color: $background-hover;
+    }
+  }
+
+  // Flyout menu link on hover styles
+  .#{$prefix}--side-nav-menu--popover-content
+    .#{$prefix}--side-nav__link:hover {
+    .#{$prefix}--side-nav__link-text {
+      color: $text-primary;
+    }
+  }
+
+  // Side Nav Link Popover
+  .#{$prefix}--side-nav-link-popover.#{$prefix}--btn--icon-only {
+    padding: 0;
+    block-size: $spacing-07;
+    min-block-size: initial;
+
+    svg {
+      fill: $icon-secondary;
+    }
+
+    &:hover svg {
+      fill: $icon-primary;
+    }
+
+    .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
+      margin-inline-end: 0;
+    }
+  }
+
+  // TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
+  .#{$prefix}--tooltip-content {
+    color: $text-primary;
+  }
+}
+
+// panel expanded styles
+.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded {
+  overflow: hidden;
+
+  &:hover {
+    .#{$prefix}--side-nav__items {
+      overflow-y: auto;
+    }
+  }
+
+  .#{$prefix}--side-nav__items {
+    overflow-y: auto;
+  }
+
+  .#{$prefix}--side-nav__item {
+    overflow: visible;
+  }
+}
+
+.#{$prefix}--side-nav__toggle-container {
+  position: absolute;
+  background: $background;
+  inline-size: 100%;
+  inset-block-end: 0;
+
+  .#{$prefix}--side-nav__toggle.#{$prefix}--side-nav__toggle--collapsed:hover {
+    background: $background-hover;
+  }
+}

@@ -1,0 +1,135 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/motion';
+
+$prefix: 'clabs--animated-header__glass-tile' !default;
+
+.#{$prefix} {
+  position: relative;
+  display: flex;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  min-block-size: 192px;
+  text-decoration: none;
+}
+
+.#{$prefix}:hover,
+.#{$prefix}:active,
+.#{$prefix}:focus {
+  text-decoration: none;
+}
+
+.#{$prefix}--body {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: $spacing-05;
+  background-color: transparent;
+  color: $text-primary;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 500ms linear;
+}
+
+/* Semi-transparent background layer */
+.#{$prefix}--body-background {
+  position: absolute;
+  z-index: 1;
+  background-color: $layer-01;
+  inset: 0;
+  opacity: 0.7;
+  pointer-events: none;
+  transition: opacity 150ms motion.motion(standard, productive);
+}
+
+:root .#{$prefix}--body-background,
+[data-carbon-theme='white'] .#{$prefix}--body-background,
+[data-carbon-theme='g10'] .#{$prefix}--body-background {
+  background-color: $layer-01;
+}
+
+[data-carbon-theme='g90'] .#{$prefix}--body-background,
+[data-carbon-theme='g100'] .#{$prefix}--body-background {
+  background-color: $layer-hover-01;
+}
+
+.#{$prefix}--collapsed {
+  opacity: 0;
+}
+
+.#{$prefix}--body:hover .#{$prefix}--body-background {
+  opacity: 0.85;
+}
+
+.#{$prefix}--icons {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  margin-block-end: $spacing-05;
+}
+
+.#{$prefix}--title {
+  @include type-style('body-compact-02');
+
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @supports (-webkit-line-clamp: 3) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    white-space: initial;
+  }
+}
+
+.#{$prefix}--footer {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  gap: $spacing-05;
+  inset-block-end: $spacing-05;
+}
+
+.#{$prefix}--subtitle {
+  @include type-style('body-short-01');
+
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  color: $text-secondary;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @supports (-webkit-line-clamp: 1) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    white-space: initial;
+  }
+}
+
+.#{$prefix}--custom-content {
+  z-index: 2;
+}

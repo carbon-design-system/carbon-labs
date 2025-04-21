@@ -1,0 +1,296 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ThemeSettings renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <div
+    class="clabs--theme-settings"
+  >
+    <fieldset
+      class="cds--fieldset clabs--theme-settings__form-group"
+    >
+      <legend
+        class="cds--label"
+      >
+        Theme settings
+      </legend>
+      <div
+        class="cds--content-switcher theme-switcher cds--content-switcher--lg cds--layout--size-lg cds--content-switcher--icon-only cds--layout-constraint--size__default-md cds--layout-constraint--size__min-sm cds--layout-constraint--size__max-lg"
+        role="tablist"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--content-switcher-popover__wrapper cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-label="Light"
+              aria-labelledby="tooltip-:r1:"
+              aria-selected="false"
+              class="cds--btn--icon-only cds--content-switcher-btn cds--btn cds--layout--size-lg cds--btn--primary"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.5 1H8.5V3.5H7.5z"
+                />
+                <path
+                  d="M10.8 3.4H13.3V4.4H10.8z"
+                  transform="rotate(-45.001 12.074 3.922)"
+                />
+                <path
+                  d="M12.5 7.5H15V8.5H12.5z"
+                />
+                <path
+                  d="M11.6 10.8H12.6V13.3H11.6z"
+                  transform="rotate(-45.001 12.077 12.075)"
+                />
+                <path
+                  d="M7.5 12.5H8.5V15H7.5z"
+                />
+                <path
+                  d="M2.7 11.6H5.2V12.6H2.7z"
+                  transform="rotate(-45.001 3.929 12.078)"
+                />
+                <path
+                  d="M1 7.5H3.5V8.5H1z"
+                />
+                <path
+                  d="M3.4 2.7H4.4V5.2H3.4z"
+                  transform="rotate(-45.001 3.926 3.925)"
+                />
+                <path
+                  d="M8,6c1.1,0,2,0.9,2,2s-0.9,2-2,2S6,9.1,6,8S6.9,6,8,6 M8,5C6.3,5,5,6.3,5,8s1.3,3,3,3s3-1.3,3-3S9.7,5,8,5z"
+                />
+              </svg>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-:r1:"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Light
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--content-switcher-popover__wrapper cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-label="System"
+              aria-labelledby="tooltip-:r5:"
+              aria-selected="false"
+              class="cds--btn--icon-only cds--content-switcher-btn cds--btn cds--layout--size-lg cds--btn--primary"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 32 32"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 2H17V5H15zM27 15H30V17H27zM15 27H17V30H15zM2 15H5V17H2z"
+                />
+                <path
+                  d="M6.22 5.73H8.219999999999999V8.73H6.22z"
+                  transform="rotate(-45 7.227 7.236)"
+                />
+                <path
+                  d="M23.27 6.23H26.27V8.23H23.27z"
+                  transform="rotate(-45 24.766 7.232)"
+                />
+                <path
+                  d="M23.77 23.27H25.77V26.27H23.77z"
+                  transform="rotate(-45 24.77 24.77)"
+                />
+                <path
+                  d="M5.47 25.13L7.59 23 9 24.42 6.88 26.54 5.47 25.13zM16 8a8 8 0 108 8A8 8 0 0016 8zm0 14a6 6 0 010-12z"
+                />
+              </svg>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-:r5:"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              System
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top cds--tooltip cds--content-switcher-popover__wrapper cds--icon-tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <button
+              aria-label="Dark"
+              aria-labelledby="tooltip-:r9:"
+              aria-selected="false"
+              class="cds--btn--icon-only cds--content-switcher-btn cds--btn cds--layout--size-lg cds--btn--primary"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.2,2.3c-1,4.4,1.7,8.7,6.1,9.8c0.1,0,0.1,0,0.2,0c-1.1,1.2-2.7,1.8-4.3,1.8c-0.1,0-0.2,0-0.2,0C5.6,13.8,3,11,3.2,7.7 C3.2,5.3,4.8,3.1,7.2,2.3 M8,1L8,1C4.1,1.6,1.5,5.3,2.1,9.1c0.6,3.3,3.4,5.8,6.8,5.9c0.1,0,0.2,0,0.3,0c2.3,0,4.4-1.1,5.8-3 c0.2-0.2,0.1-0.6-0.1-0.7c-0.1-0.1-0.2-0.1-0.3-0.1c-3.9-0.3-6.7-3.8-6.4-7.6C8.3,3,8.4,2.4,8.6,1.8c0.1-0.3,0-0.6-0.3-0.7 C8.1,1,8.1,1,8,1z"
+                />
+              </svg>
+            </button>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-:r9:"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Dark
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </div>
+      <div
+        class="cds--dropdown__wrapper cds--list-box__wrapper theme-set-dropdown"
+      >
+        <label
+          class="cds--label"
+          for="downshift-:re:-toggle-button"
+          id="downshift-:re:-label"
+        >
+          Theme set
+        </label>
+        <div
+          class="cds--dropdown cds--list-box"
+          id="theme-dropdown"
+        >
+          <button
+            aria-activedescendant=""
+            aria-controls="downshift-:re:-menu"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-labelledby="downshift-:re:-label"
+            class="cds--list-box__field"
+            id="downshift-:re:-toggle-button"
+            role="combobox"
+            tabindex="0"
+            title="G10 / G100"
+            type="button"
+          >
+            <span
+              class="cds--list-box__label"
+            >
+              G10 / G100
+            </span>
+            <div
+              class="cds--list-box__menu-icon"
+            >
+              <svg
+                aria-label="Open menu"
+                fill="currentColor"
+                focusable="false"
+                height="16"
+                name="chevron--down"
+                preserveAspectRatio="xMidYMid meet"
+                role="img"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                />
+                <title>
+                  Open menu
+                </title>
+              </svg>
+            </div>
+          </button>
+          <ul
+            aria-labelledby="downshift-:re:-label"
+            class="cds--list-box__menu"
+            id="downshift-:re:-menu"
+            role="listbox"
+          />
+        </div>
+      </div>
+      <div
+        class="cds--form-item cds--checkbox-wrapper theme-menu-complement"
+      >
+        <input
+          class="cds--checkbox"
+          id="theme-menu-complement"
+          type="checkbox"
+        />
+        <label
+          class="cds--checkbox-label"
+          for="theme-menu-complement"
+          title=""
+        >
+          <span
+            class="cds--checkbox-label-text"
+            dir="auto"
+          >
+            Complement menu theme
+          </span>
+        </label>
+        <div
+          class="cds--checkbox__validation-msg"
+        />
+      </div>
+    </fieldset>
+  </div>
+</div>
+`;

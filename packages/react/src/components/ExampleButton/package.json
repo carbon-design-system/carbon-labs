@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-example-button",
-  "version": "0.0.0",
+  "version": "0.3.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -23,5 +23,8 @@
   "scripts": {
     "build": "node ../../../tasks/build.js",
     "clean": "rm -rf {es,lib,scss}"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "canary"
   }
 }

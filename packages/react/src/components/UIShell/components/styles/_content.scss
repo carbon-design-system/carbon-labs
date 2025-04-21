@@ -1,0 +1,24 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/utilities/convert' as convert;
+@use '@carbon/styles/scss/motion' as *;
+
+$prefix: 'cds' !default;
+
+.#{$prefix}--side-nav--panel ~ .#{$prefix}--content,
+div:has(.#{$prefix}--side-nav--panel) ~ .#{$prefix}--content {
+  margin-inline-start: convert.to-rem(48px);
+  transition: margin-inline-start $duration-fast-02, transform $duration-fast-02;
+}
+
+.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded
+  ~ .#{$prefix}--content,
+div:has(.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded)
+  ~ .#{$prefix}--content {
+  margin-inline-start: convert.to-rem(256px);
+}

@@ -6,6 +6,8 @@
  */
 
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import svg from 'rollup-plugin-svg';
 import typescript from '@rollup/plugin-typescript';
 import path from 'path';
 import stripBanner from 'rollup-plugin-strip-banner';
@@ -31,7 +33,7 @@ const packageJSON = JSON.parse(
 async function build() {
   const reactEntrypoint = {
     filepath: path.resolve(process.cwd(), 'index.ts'),
-    rootDir: 'src',
+    rootDir: path.resolve(process.cwd()),
     outputDirectory: path.resolve(process.cwd()),
   };
 
@@ -160,6 +162,10 @@ function getRollupConfig(input, rootDir, outDir) {
         ],
         flatten: false,
       }),
+      json({
+        compact: true,
+      }),
+      svg(),
       typescript({
         noEmitOnError: true,
         noForceEmit: true,

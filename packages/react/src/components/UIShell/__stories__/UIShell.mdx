@@ -1,0 +1,278 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as UIShellStories from './UIShell.stories';
+
+<Meta isTemplate />
+
+# UIShell
+
+- **Initiative owner(s):** Carbon
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** Carbon
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+💡 Check our
+[Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/UIShell)
+example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/UIShell)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+  - [SCSS](#scss)
+  - [JS](#js-imports)
+- [Examples](#examples)
+  - [Header popover](#header-popover)
+  - [Panel navigation type](#panel-navigation-type)
+  - [Treeview](#treeview)
+- [Component API](#component-api)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+To use this package you will need to import components from both `@carbon/react`
+and `@carbon-labs/react-ui-shell` to compose the UI Shell. The following
+components are provided by `@carbon-labs/react-ui-shell`:
+
+- `SideNav`
+- `SideNavItems`
+- `SideNavLink`
+- `SideNavMenu`
+- `SideNavMenuItem`
+- `HeaderPopover`
+- `HeaderPopoverActions`
+- `HeaderPopoverButton`
+- `HeaderPopoverContent`
+- `HeaderPanel`
+- `HeaderDivider`
+- `SharkFinIcon`
+
+<Canvas of={UIShellStories.Default} />
+
+## Getting started
+
+You will need to install both `@carbon/react` and `@carbon-labs/react-ui-shell`
+in your project, you will need to run the following command using
+[npm](https://www.npmjs.com/):
+
+```bash
+npm install -S @carbon-labs/react-ui-shell @carbon/react
+```
+
+If you prefer [Yarn](https://yarnpkg.com/en/), use the following command
+instead:
+
+```bash
+yarn add @carbon-labs/react-ui-shell @carbon/react
+```
+
+### SCSS
+
+Import the styles from `@carbon/react` and `@carbon-labs/react-ui-shell` in your
+stylesheet:
+
+```css
+@use '@carbon/react' with (
+  $font-path: '@ibm/plex'
+);
+@use '@carbon-labs/react-ui-shell/scss/ui-shell';
+```
+
+### JS (imports)
+
+Import components from both `@carbon/react` and `@carbon-labs/react-ui-shell`
+along with any icons needed from `@carbon/icons-react` to build your UI Shell.
+
+```javascript
+import {
+  SIDE_NAV_TYPE,
+  SideNav,
+  SideNavItems,
+  SideNavMenu,
+  SideNavMenuItem,
+  HeaderPanel,
+  SideNavLink,
+  HeaderPopover,
+  HeaderPopoverActions,
+  HeaderPopoverButton,
+  HeaderPopoverContent,
+  HeaderContainer,
+  HeaderDivider,
+} from '@carbon-labs/react-ui-shell/es/index';
+import {
+  SkipToContent,
+  Header,
+  HeaderName,
+  Theme,
+  HeaderMenuButton,
+  SideNavDivider,
+  Content,
+  Grid,
+  Column,
+  HeaderGlobalBar,
+  HeaderGlobalAction,
+  HeaderNavigation,
+  HeaderMenuItem,
+  HeaderMenu,
+  Switcher,
+  SwitcherItem,
+  SwitcherDivider,
+  MenuButton,
+  MenuItemRadioGroup,
+  ExpandableSearch,
+  Link,
+  Button,
+} from '@carbon/react';
+import { Help, Profile, Settings } from '@carbon/icons-react';
+```
+
+### Examples
+
+Check out our
+[Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/UIShell)
+example implementation to see all the components working together in a fully
+functional UI Shell.
+
+### Header popover
+
+```jsx
+import {
+  HeaderPopover,
+  HeaderPopoverContent,
+  HeaderPopoverButton,
+  HeaderPopoverActions,
+} from '@carbon-labs/react-ui-shell/es/index';
+import { Header, HeaderGlobalBar } from '@carbon/react';
+import { Information } from '@carbon/icons-react';
+
+function App() {
+  return (
+    <Header aria-label="IBM Platform Name">
+      <HeaderGlobalBar>
+        <HeaderPopover align="bottom-right">
+          <HeaderPopoverButton align="bottom" label="Show information">
+            <Information />
+          </HeaderPopoverButton>
+          <HeaderPopoverContent>
+            <p>
+              Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed
+              do eiusmod tempor incididunt ut fsil labore et dolore magna
+              aliqua.
+            </p>
+            <HeaderPopoverActions>
+              <Link href="#">Link action</Link>
+              <Button size="sm">Button</Button>
+            </HeaderPopoverActions>
+          </HeaderPopoverContent>
+        </HeaderPopover>
+      </HeaderGlobalBar>
+    </Header>
+  );
+}
+
+export default App;
+```
+
+### Panel navigation type
+
+When using `navType="panel"` and a `SideNavMenu` component, when the `SideNav`
+is in its collapsed state, the menu's icon on the side panel will link to its
+first link automatically. Upon `SideNav` expansion, this functionality will be
+disabled, and click events will be reverted, meaning a click will expand the
+`SideNavMenu` as usual.
+
+```jsx
+import {
+  SIDE_NAV_TYPE,
+  SideNav,
+  SideNavItems,
+  SideNavMenu,
+  SideNavMenuItem,
+} from '@carbon-labs/react-ui-shell/es/index';
+import { Fade } from '@carbon/icons-react';
+
+function App() {
+  return (
+    <SideNav
+      navType={SIDE_NAV_TYPE.PANEL}
+      isChildOfHeader={false}
+      hideOverlay
+      aria-label="Product navigation">
+      <SideNavItems>
+        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+          <SideNavMenuItem href="#">Link 1</SideNavMenuItem>
+          <SideNavMenuItem href="#">Link 2</SideNavMenuItem>
+          <SideNavMenuItem href="#">Link 3</SideNavMenuItem>
+        </SideNavMenu>
+      </SideNavItems>
+    </SideNav>
+  );
+}
+
+export default App;
+```
+
+### Treeview
+
+`SideNav` has a new treeview navigation type that can be enabled by adding the
+`isTreeview` prop. Note that this feature should only be used if there are two
+levels of content within the component.
+
+Also note that it will be automatically enabled if there are more than two
+levels of content within the component.
+
+```jsx
+import {
+  SIDE_NAV_TYPE,
+  SideNav,
+  SideNavItems,
+  SideNavLink,
+  SideNavMenu,
+  SideNavMenuItem,
+  HeaderPanel,
+} from '@carbon-labs/react-ui-shell/es/index';
+import { Fade, SquareOutline } from '@carbon/icons-react';
+
+function App() {
+  return (
+    <SideNav
+      isFixedNav
+      isTreeview
+      expanded={true}
+      isChildOfHeader={false}
+      aria-label="Side navigation">
+      <SideNavItems>
+        <SideNavLink renderIcon={Fade} href="#">
+          Link level 1
+        </SideNavLink>
+        <SideNavMenu
+          defaultExpanded={true}
+          renderIcon={Fade}
+          title="Sub-menu level 1">
+          <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+          <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
+          <SideNavMenu title="Sub-menu level 2" defaultExpanded={true}>
+            <SideNavMenuItem isActive href="#">
+              Link level 3
+            </SideNavMenuItem>
+            <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
+          </SideNavMenu>
+        </SideNavMenu>
+      </SideNavItems>
+    </SideNav>
+  );
+}
+
+export default App;
+```
+
+## Component API
+
+<ArgTypes />
+````

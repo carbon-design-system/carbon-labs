@@ -184,6 +184,18 @@ export const Thumbnails = {
         container-height="156px"
         container-width="156px">
       </clabs-chat-chart>
+      <clabs-chat-chart
+        thumbnail
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","width":700,"height":500,"view":{"stroke":"transparent"},"layer":[{"data":{"url":"https://vega.github.io/vega-lite/examples/data/londonBoroughs.json","format":{"type":"topojson","feature":"boroughs"}},"mark":{"type":"geoshape","stroke":"white","strokeWidth":2},"encoding":{"color":{"value":"#eee"}}},{"data":{"url":"https://vega.github.io/vega-lite/examples/data/londonCentroids.json","format":{"type":"json"}},"transform":[{"calculate":"indexof (datum.name, \' \') > 0  ? substring(datum.name,0,indexof(datum.name, \' \')) : datum.name","as":"bLabel"}],"mark":"text","encoding":{"longitude":{"field":"cx","type":"quantitative"},"latitude":{"field":"cy","type":"quantitative"},"text":{"field":"bLabel","type":"nominal"},"size":{"value":8},"opacity":{"value":0.6}}},{"data":{"url":"https://vega.github.io/vega-lite/examples/data/londonTubeLines.json","format":{"type":"topojson","feature":"line"}},"mark":{"type":"geoshape","filled":false,"strokeWidth":2},"encoding":{"color":{"field":"id","type":"nominal","legend":{"title":null,"orient":"bottom-right","offset":0},"scale":{"domain":["Bakerloo","Central","Circle","District","DLR","Hammersmith & City","Jubilee","Metropolitan","Northern","Piccadilly","Victoria","Waterloo & City"],"range":["rgb(137,78,36)","rgb(220,36,30)","rgb(255,206,0)","rgb(1,114,41)","rgb(0,175,173)","rgb(215,153,175)","rgb(106,114,120)","rgb(114,17,84)","rgb(0,0,0)","rgb(0,24,168)","rgb(0,160,226)","rgb(106,187,170)"]}}}}]}'}"
+        container-height="156px"
+        container-width="156px">
+      </clabs-chat-chart>
+      <clabs-chat-chart
+        thumbnail
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
+        container-height="156px"
+        container-width="156px">
+      </clabs-chat-chart>
     </div>
   `,
 };
@@ -404,6 +416,38 @@ export const FacetingTest = {
               content="${JSON.stringify(item.spec)}">
             </clabs-chat-chart>`
       )}
+      <h4>Interactive multi-scatter plot</h4>
+      <br />
+      <clabs-chat-chart
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
+        container-height="450px"
+        container-width="600px">
+      </clabs-chat-chart>
+      <br />
+      <clabs-chat-chart
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
+        container-height="950px">
+      </clabs-chat-chart>
+      <br />
+      <h4>Multi histogram</h4>
+      <br />
+      <clabs-chat-chart
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":["Horsepower","Miles_per_Gallon","Acceleration","Displacement"],"columns":2,"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"bar","encoding":{"x":{"field":{"repeat":"repeat"},"bin":true},"y":{"aggregate":"count"},"color":{"field":"Origin"}}}}'}"
+        container-height="450px"
+        container-width="800px">
+      </clabs-chat-chart>
+      <br />
+      <clabs-chat-chart
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":["Horsepower","Miles_per_Gallon","Acceleration","Displacement"],"columns":2,"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"bar","encoding":{"x":{"field":{"repeat":"repeat"},"bin":true},"y":{"aggregate":"count"},"color":{"field":"Origin"}}}}'}"
+        container-height="600px"
+        container-width="400px">
+      </clabs-chat-chart>
+      <br />
+      <clabs-chat-chart
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":["Horsepower","Miles_per_Gallon","Acceleration","Displacement"],"columns":2,"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"bar","encoding":{"x":{"field":{"repeat":"repeat"},"bin":true},"y":{"aggregate":"count"},"color":{"field":"Origin"}}}}'}"
+        container-height="1000px">
+      </clabs-chat-chart>
+      <br />
     `,
 };
 

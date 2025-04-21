@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideNav renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <div
+    class="cds--side-nav__overlay"
+  />
+  <nav
+    aria-label="test"
+    class="cds--side-nav__navigation cds--side-nav cds--side-nav--ux"
+    inert="-1"
+    role="navigation"
+    tabindex="-1"
+  />
+</div>
+`;

@@ -18,8 +18,12 @@ export default {
     '^.+\\.(ts|tsx)$': 'ts-jest',
     '^.+\\.(js|jsx)$': ['babel-jest', { configFile: './.babelrc' }],
   },
+  transformIgnorePatterns: ['/node_modules/(?!@carbon-labs)'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
   // Test file patterns to match
-  testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+  testMatch: [
+    '<rootDir>/src/components/**/__tests__/**/*.[jt]s?(x)',
+    '<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)',
+  ],
 };

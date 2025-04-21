@@ -1,0 +1,36 @@
+{
+  "name": "@carbon-labs/react-ui-shell",
+  "version": "0.33.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - Ui Shell",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "src/components/UIShell"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rm -rf {es,lib,scss}",
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 5b9dce15-eeda-4b53-8683-3e3aeb599fd1 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "canary"
+  },
+  "dependencies": {
+    "@ibm/telemetry-js": "^1.9.1"
+  }
+}

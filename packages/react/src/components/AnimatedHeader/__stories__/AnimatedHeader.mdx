@@ -1,0 +1,157 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as AnimatedHeaderStories from './AnimatedHeader.stories';
+import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
+
+<Meta isTemplate />
+
+# Animated Header
+
+- **Initiative owner(s):** Drew Glapa
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/AnimatedHeader)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/AnimatedHeader)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+The animated header is meant to be used on homepages only. It ensures
+consistency throughout landing experiences, providing a cohesive appearance and
+clear call to action for users. The skeleton for this header component ensures
+consistency while flexible page elements allow teams to tailor the leadspace to
+their individual user and product needs.
+
+Lead spaces include a welcome text, a short description communicating the
+products value proposition and feature most relevant content for the user.
+Whether these are links to specific tasks, workspaces or other information is
+defined by each product and their user’s needs. In product-imagery has to be
+very settled and subtil to not distract users in performing their tasks.
+
+<Canvas
+  of={AnimatedHeaderStories.ThemeG10}
+  additionalActions={[
+    {
+      title: 'Open in Stackblitz',
+      onClick: () => stackblitzPrefillConfig(AnimatedHeaderStories.ThemeG10),
+    },
+  ]}
+/>
+
+### Anatomy
+
+**Title:** Welcomes the user (Welcome, username)
+
+**Content:** Short sentence in max. 3 lines related to product context; Action
+button (optional), Expose content that need highest attention from the user or
+content that trigger an action and allow users to directly start working and
+gain value (within one click). It is recommended to display content on cards to
+achieve highest contrast to the background.
+
+**Visual / brand image:** Line-style illustration
+
+**Collapse / Expand:** Icon to collapse or expand the header
+
+### Theming
+
+The default theme for Animated Header is _g10_ (Light theme).
+
+Animated header supports both _g10_ (Light theme) and _g100_ (Dark Theme).
+
+To use dark theme in your product/app wrap the componenet in the Carbon
+[GlobalTheme](https://react.carbondesignsystem.com/?path=/docs/components-theme--overview#setting-the-global-theme)
+component. Following the example from the Carbon website it would like this:
+
+```
+import { useEffect } from 'react';
+import { GlobalTheme } from '@carbon/react';
+
+function App() {
+  const theme = 'g100'; // ← your implementation, e.g. fetching user settings
+
+  useEffect(() => {
+    document.documentElement.dataset.carbonTheme = theme;
+  }, [theme]);
+
+  return (
+    <GlobalTheme theme={theme}>
+      <AnimatedHeader />
+    </GlobalTheme>;
+  );
+}
+```
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-animated-header
+```
+
+### JS (via import)
+
+```javascript
+import { AnimatedHeader } from '@carbon-labs/react-animated-header/es/index';
+
+function App() {
+  return <AnimatedHeader />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-animated-header/scss/animated-header';
+```
+
+## Component API
+
+<ArgTypes />
+
+## Example usages
+
+Example of Animated Header with all prop types enabled.
+
+```jsx
+<AnimatedHeader
+  allTiles={tiles}
+  allWorkspaces={workspaces}
+  description="Connect, monitor, and manage data."
+  handleHeaderItemsToString={handleHeaderItems}
+  handleWorkspaceItemsToString={handleWorkspaceItems}
+  headerAnimation={watsonXAnimatedLight}
+  headerStatic={watsonXStaticLight}
+  productName="[Product name]"
+  renderHeaderSelectedItem={tileGroupSelectedItemRenderer}
+  renderWorkspaceSelectedItem={workspaceSelectedItemRenderer}
+  selectedTileGroup={selectedTile}
+  selectedWorkspace={selectedWorkspace}
+  setSelectedTileGroup={handleTileGroup}
+  setSelectedWorkspace={handleWorkspaceSelect}
+  tasksConfig={tasksConfig}
+  userName="Drew"
+  welcomeText="Welcome"
+  workspaceLabel="Open in: Drew's workspace"
+/>
+```

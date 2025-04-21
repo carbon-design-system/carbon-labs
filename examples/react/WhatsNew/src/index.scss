@@ -1,0 +1,63 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react';
+@use '@carbon-labs/react-whats-new/scss/whats-new';
+@use '@carbon/ibm-products/scss/components/Tearsheet';
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/config';
+@use '@carbon/react/scss/components/button/tokens' as *;
+
+.storyBody {
+  background-color: $background;
+  min-block-size: 600px;
+}
+
+:root[data-carbon-theme='g100'] {
+  .storyBody {
+    @include theme(themes.$g100);
+  }
+}
+
+:root[data-carbon-theme='g90'] {
+  .storyBody {
+    @include theme(themes.$g90);
+  }
+}
+
+:root[data-carbon-theme='g10'] {
+  .storyBody {
+    @include theme(themes.$g10);
+  }
+}
+
+:root[data-carbon-theme='white'] {
+  .storyBody {
+    @include theme(themes.$white);
+  }
+}
+
+.controlHeader {
+  display: flex;
+  border-block-end: 1px solid $background-inverse;
+  gap: 1px;
+}
+
+.iconBtnRight {
+  margin-inline: auto 48px;
+}
+
+.iconBtnBody {
+  margin-block: 128px;
+}
+
+.iconBtnRightBottom {
+  margin: 0 auto;
+  inline-size: 48px;
+}

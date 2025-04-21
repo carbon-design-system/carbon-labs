@@ -1,0 +1,674 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import { ArgsTable } from '@storybook/addon-docs';
+import * as WhatsNewStories from './WhatsNew.stories.js';
+import * as TocStories from './Toc.stories';
+import * as ViewStackStories from './ViewStack.stories';
+import * as BubbleStories from './Bubble.stories';
+import {
+  Toc,
+  TocList,
+  TocItem,
+  TocSection,
+  TocSections,
+  View,
+  ViewStack,
+  Bubble,
+  BubbleHeader,
+} from '../index';
+
+<Meta
+  isTemplate
+  title="Components/WhatsNew"
+  component="Template"
+  subcomponents={{
+    Toc,
+    TocList,
+    TocItem,
+    TocSections,
+    TocSection,
+    ViewStack,
+    View,
+    Bubble,
+    BubbleHeader,
+  }}
+/>
+
+# WhatsNew pattern
+
+- **Initiative owner(s):** Carbon
+- **Status:** Draft
+- **Target library:** @carbon/ibm-products
+- **Target library maintainer(s) / PR Reviewer(s):** Carbon
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/WhatsNew)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/WhatsNew)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+- [Component APIs](#component-apis)
+  - [Toc API](#toc-api)
+  - [ViewStack API](#viewstack-api)
+  - [Bubble API](#bubble-api)
+- [Example usages](#example-usages)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+The "What's New" pattern is comprised of the Carbon for IBM Product's Tearsheet
+component, a few Carbon components and icons, along with the following
+components:
+
+**Toc:**
+
+- `Toc`
+- `TocList`
+- `TocItem`
+- `TocSections`
+- `TocSection`
+
+**Bubble:**
+
+- `Bubble`
+- `BubbleHeader`
+
+**ViewStack:**
+
+- `ViewStack`
+- `View`
+
+<Canvas of={WhatsNewStories.WhatsNewPattern} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react @carbon/ibm-products @carbon-labs/react-whats-new
+```
+
+### JS (via import)
+
+```javascript
+import React, { useCallback, useRef, useState } from 'react';
+
+import {
+  Toc,
+  TocList,
+  TocItem,
+  TocSections,
+  TocSection,
+  Bubble,
+  BubbleHeader,
+  ViewStack,
+  View,
+} from '@carbon-labs/react-whats-new/es/index';
+import { Tearsheet } from '@carbon/ibm-products';
+
+function App() {
+  return (
+    <>
+      {/* Tier 2 - release notification pattern */}
+      <Bubble>
+        <BubbleHeader>...</BubbleHeader>
+        <ViewStack>
+          <View>...</View>
+        </ViewStack>
+        ...
+      </Bubble>
+
+      {/* Tier 1 - what's new center pattern */}
+      <Toc ref={tocRef}>
+        <Tearsheet
+          influencer={
+            <TocList>
+              <TocItem>Feature 1</TocItem>
+              <TocItem>Feature 2</TocItem>
+            </TocList>
+          }>
+          <TocSections threshold={0.2}>
+            <TocSection as="div">...</TocSection>
+            ...
+          </TocSections>
+        </Tearsheet>
+      </Toc>
+    </>
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon/ibm-products/scss/components/Tearsheet';
+@use '@carbon-labs/react-whats-new/scss/whats-new';
+```
+
+## Component APIs
+
+### Toc API
+
+<ArgTypes of={TocStories.TocStory} />
+
+### ViewStack API
+
+<ArgTypes of={ViewStackStories.ViewStackStory} />
+
+### Bubble API
+
+<ArgTypes of={BubbleStories.BubbleStory} />
+
+## Example usages
+
+```javascript
+import React, { useCallback, useRef, useState } from 'react';
+import { Close, Gift, Launch, Notification } from '@carbon/react/icons';
+import {
+  Button,
+  ContentSwitcher,
+  Heading,
+  Link,
+  Section,
+  Switch,
+  Tag,
+} from '@carbon/react';
+import {
+  Toc,
+  TocList,
+  TocItem,
+  TocSections,
+  TocSection,
+  Bubble,
+  BubbleHeader,
+  ViewStack,
+  View,
+} from '@carbon-labs/react-whats-new/es/index';
+import { ScrollGradient, Tearsheet, pkg } from '@carbon/ibm-products';
+
+pkg.component.ScrollGradient = true;
+
+function App() {
+  /* ************************************* */
+  // CONSTANTS
+  const labsPrefix = usePrefix();
+  const prefix = `${labsPrefix}--whats-new`;
+  /* ************************************* */
+  // INTERNAL STATE
+  const [contentIndex, setContentIndex] = useState(0);
+  const [currentReleaseNotifications, setCurrentReleaseNotifications] =
+    useState(0);
+  const [totalReleaseNotifications, setTotalReleaseNotifications] = useState(0);
+  const [shouldShowReleaseNotification, setShouldShowReleaseNotification] =
+    useState(false);
+  const [shouldShowAnnouncement, setShouldShowAnnouncement] = useState(false);
+  /* ************************************* */
+  // REFS
+  const tocRef = useRef(null);
+  const viewStackRef = useRef(null);
+  /* ************************************* */
+  // CALL BACKS
+  const handleContentSwitch = useCallback((value) => {
+    const cleanVal = value ? value : 0;
+    setContentIndex(cleanVal);
+  }, []);
+  /* ************************************* */
+
+  return (
+    <>
+      {/* Tier 2 - release notification pattern */}
+      <Bubble
+        highContrast
+        align="bottom-end"
+        open={shouldShowReleaseNotification}
+        target="#ExampleTarget">
+        <BubbleHeader>
+          <Button
+            kind="ghost"
+            size="sm"
+            renderIcon={Close}
+            iconDescription="Close"
+            hasIconOnly
+            onClick={() => {
+              setShouldShowReleaseNotification(false);
+            }}
+          />
+        </BubbleHeader>
+        <ViewStack
+          ref={viewStackRef}
+          className={`${prefix}__wn_pattern__bubble_viewstack`}
+          ariaLabel="Test view stack"
+          viewAssistiveTranslator={(currentIndex, lastIndex) =>
+            `Affichage de la vue ${currentIndex} sur ${lastIndex}`
+          }
+          onViewChangeEnd={({ currentIndex, lastIndex }) => {
+            setCurrentReleaseNotifications(currentIndex + 1);
+            setTotalReleaseNotifications(lastIndex + 1);
+          }}>
+          <View title="Example View 1">
+            <ScrollGradient>
+              <img
+                alt=""
+                className={`${prefix}__wn_pattern__bubble_viewstack-view-image`}
+                src="https://assets.ibm.com/is/image/ibm/maas360-benefits-enhanced-security-threat-visibility:2x1?$674x337$&fmt=png-alpha"
+              />
+              <div
+                className={`${prefix}__wn_pattern__bubble_viewstack-view-info`}>
+                <Gift size={20} />
+                <span>New!</span>
+              </div>
+              <div className={`${prefix}__wn_pattern__tag_container`}>
+                <Tag
+                  className="some-class"
+                  size="md"
+                  title="Clear filter"
+                  type="purple">
+                  Tag content
+                </Tag>
+              </div>
+              <Heading
+                className={`${prefix}__wn_pattern__bubble_viewstack-view-heading`}>
+                Feature 1
+              </Heading>
+              <div
+                className={`${prefix}__wn_pattern__bubble_viewstack-view-description`}>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Maecenas consequat, nulla in laoreet molestie, metus lectus
+                  eleifend sem, eu malesuada ipsum arcu nec turpis.
+                </p>
+              </div>
+              <div
+                className={`${prefix}__wn_pattern__bubble_viewstack-view-buttons`}>
+                <Button href="https://www.ibm.com" kind="ghost" size="sm">
+                  Start using
+                </Button>
+              </div>
+            </ScrollGradient>
+          </View>
+          <View title="Example View 2">
+            <ScrollGradient>
+              <img
+                alt=""
+                className={`${prefix}__wn_pattern__bubble_viewstack-view-image`}
+                src="https://assets.ibm.com/is/image/ibm/maas360-benefits-enhanced-security-threat-visibility:2x1?$674x337$&fmt=png-alpha"
+              />
+              <div
+                className={`${prefix}__wn_pattern__bubble_viewstack-view-info`}>
+                <Gift size={20} />
+                <span>New!</span>
+              </div>
+              <div className={`${prefix}__wn_pattern__tag_container`}>
+                <Tag
+                  className="some-class"
+                  size="md"
+                  title="Clear filter"
+                  type="purple">
+                  Tag content
+                </Tag>
+              </div>
+              <Heading
+                className={`${prefix}__wn_pattern__bubble_viewstack-view-heading`}>
+                Feature 2
+              </Heading>
+              <div
+                className={`${prefix}__wn_pattern__bubble_viewstack-view-description`}>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Maecenas consequat, nulla in laoreet molestie, metus lectus
+                  eleifend sem, eu malesuada ipsum arcu nec turpis.
+                </p>
+              </div>
+              <div
+                className={`${prefix}__wn_pattern__bubble_viewstack-view-buttons`}>
+                <Button href="https://www.ibm.com" kind="ghost" size="sm">
+                  Start using
+                </Button>
+              </div>
+            </ScrollGradient>
+          </View>
+        </ViewStack>
+        <footer className={`${prefix}__wn_pattern__bubble_footer`}>
+          <div className={`${prefix}__wn_pattern__bubble_progress`}>
+            {currentReleaseNotifications}/{totalReleaseNotifications}
+          </div>
+
+          <Button
+            disabled={currentReleaseNotifications === 1}
+            size="sm"
+            kind="ghost"
+            onClick={() => {
+              viewStackRef.current?.back();
+            }}>
+            Back
+          </Button>
+          {currentReleaseNotifications !== totalReleaseNotifications ? (
+            <Button
+              size="sm"
+              kind="primary"
+              onClick={() => {
+                viewStackRef.current?.next();
+              }}>
+              Next
+            </Button>
+          ) : (
+            <Button
+              size="sm"
+              kind="primary"
+              onClick={() => {
+                setShouldShowReleaseNotification(false);
+              }}>
+              Got it
+            </Button>
+          )}
+        </footer>
+      </Bubble>
+
+      {/* Tier 1 - what's new center pattern */}
+      <Toc ref={tocRef}>
+        <Tearsheet
+          selectorPrimaryFocus="#FeatureSwitcher"
+          title="What's new"
+          open={shouldShowAnnouncement}
+          onClose={() => setShouldShowAnnouncement(false)}
+          className={`${prefix}__wn_pattern__tearsheet`}
+          closeIconDescription="Close the tearsheet"
+          navigation={
+            <div
+              className={`${prefix}__wn_pattern__tearsheet_navigation_container`}>
+              <ContentSwitcher
+                id="FeatureSwitcher"
+                className={`${prefix}__wn_pattern__tearsheet__contentswitcher`}
+                size="md"
+                selectedIndex={contentIndex}
+                onChange={(val) => {
+                  tocRef.current?.reset();
+                  handleContentSwitch(val.index);
+                }}>
+                <Switch name="new" text="Latest highlights" />
+                <Switch name="all" text="All features" />
+              </ContentSwitcher>
+              <Link
+                className={`${prefix}__wn_pattern__tearsheet__link`}
+                size="md"
+                href="https://www.ibm.com"
+                target="_blank"
+                renderIcon={Launch}>
+                View on Docs
+              </Link>
+            </div>
+          }
+          influencer={
+            <div
+              className={`${prefix}__wn_pattern__tearsheet_influencer_container`}>
+              {contentIndex === 0 ? (
+                <TocList>
+                  <TocItem>Feature 1</TocItem>
+                  <TocItem>Feature 2</TocItem>
+                </TocList>
+              ) : (
+                <TocList>
+                  <TocItem>Section 1</TocItem>
+                  <TocItem>Section 2</TocItem>
+                </TocList>
+              )}
+            </div>
+          }>
+          <div className={`${prefix}__wn_pattern__features`}>
+            {contentIndex === 0 ? (
+              <TocSections
+                className={`${prefix}__wn_pattern__feature__sections`}
+                threshold={0.2}>
+                <TocSection
+                  as="div"
+                  className={`${prefix}__wn_pattern__feature__section`}>
+                  <Section level={4}>
+                    <img
+                      className={`${prefix}__wn_pattern__feature__section_image`}
+                      src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
+                      aria-label="Example image"
+                    />
+                    <div className={`${prefix}__wn_pattern__tag_container`}>
+                      <Tag
+                        className="some-class"
+                        size="md"
+                        title="Clear filter"
+                        type="purple">
+                        Tag content
+                      </Tag>
+                    </div>
+                    <Heading
+                      className={`${prefix}__wn_pattern__feature__section_heading`}>
+                      Feature 1
+                    </Heading>
+                    <div
+                      className={`${prefix}__wn_pattern__feature__section_body`}>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Duis consequat rhoncus dolor non dapibus. Proin eu
+                        tempus turpis. Aliquam ornare mi mi. Pellentesque ac
+                        mattis diam.
+                      </p>
+                    </div>
+                    <Button href="https://www.ibm.com" kind="tertiary">
+                      Go Here
+                    </Button>
+                  </Section>
+                </TocSection>
+                <TocSection
+                  as="div"
+                  className={`${prefix}__wn_pattern__feature__section`}>
+                  <Section level={4}>
+                    <img
+                      className={`${prefix}__wn_pattern__feature__section_image`}
+                      src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
+                      aria-label="Example image"
+                    />
+                    <div className={`${prefix}__wn_pattern__tag_container`}>
+                      <Tag
+                        className="some-class"
+                        size="md"
+                        title="Clear filter"
+                        type="purple">
+                        Tag content
+                      </Tag>
+                    </div>
+                    <Heading
+                      className={`${prefix}__wn_pattern__feature__section_heading`}>
+                      Feature 2
+                    </Heading>
+                    <div
+                      className={`${prefix}__wn_pattern__feature__section_body`}>
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Duis consequat rhoncus dolor non dapibus. Proin eu
+                        tempus turpis. Aliquam ornare mi mi. Pellentesque ac
+                        mattis diam.
+                      </p>
+                    </div>
+                    <Button href="https://www.ibm.com" kind="tertiary">
+                      Go Here
+                    </Button>
+                  </Section>
+                </TocSection>
+              </TocSections>
+            ) : (
+              <TocSections
+                className={`${prefix}__wn_pattern__feature__sections`}
+                threshold={0.1}>
+                <TocSection as="div">
+                  <Section
+                    level={3}
+                    className={`${prefix}__wn_pattern__feature__section_group`}>
+                    <Heading
+                      className={`${prefix}__wn_pattern__feature__section_group_heading`}>
+                      Section 1
+                    </Heading>
+                    <Section
+                      className={`${prefix}__wn_pattern__feature__section`}>
+                      <img
+                        className={`${prefix}__wn_pattern__feature__section_image`}
+                        src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
+                        aria-label="Example image"
+                      />
+                      <div className={`${prefix}__wn_pattern__tag_container`}>
+                        <Tag
+                          className="some-class"
+                          size="md"
+                          title="Clear filter"
+                          type="purple">
+                          Tag content
+                        </Tag>
+                      </div>
+                      <Heading
+                        className={`${prefix}__wn_pattern__feature__section_heading`}>
+                        Section 1 - Feature 1
+                      </Heading>
+                      <div
+                        className={`${prefix}__wn_pattern__feature__section_body`}>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Duis consequat rhoncus dolor non dapibus. Proin
+                          eu tempus turpis. Aliquam ornare mi mi. Pellentesque
+                          ac mattis diam.
+                        </p>
+                      </div>
+                      <Button href="https://www.ibm.com" kind="tertiary">
+                        Go Here
+                      </Button>
+                    </Section>
+                    <Section
+                      className={`${prefix}__wn_pattern__feature__section`}>
+                      <img
+                        className={`${prefix}__wn_pattern__feature__section_image`}
+                        src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
+                        aria-label="Example image"
+                      />
+                      <div className={`${prefix}__wn_pattern__tag_container`}>
+                        <Tag
+                          className="some-class"
+                          size="md"
+                          title="Clear filter"
+                          type="purple">
+                          Tag content
+                        </Tag>
+                      </div>
+                      <Heading
+                        className={`${prefix}__wn_pattern__feature__section_heading`}>
+                        Section 1 - Feature 2
+                      </Heading>
+                      <div
+                        className={`${prefix}__wn_pattern__feature__section_body`}>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Duis consequat rhoncus dolor non dapibus. Proin
+                          eu tempus turpis. Aliquam ornare mi mi. Pellentesque
+                          ac mattis diam.
+                        </p>
+                      </div>
+                      <Button href="https://www.ibm.com" kind="tertiary">
+                        Go Here
+                      </Button>
+                    </Section>
+                  </Section>
+                </TocSection>
+                <TocSection as="div">
+                  <Section
+                    level={3}
+                    className={`${prefix}__wn_pattern__feature__section_group`}>
+                    <Heading
+                      className={`${prefix}__wn_pattern__feature__section_group_heading`}>
+                      Section 2
+                    </Heading>
+                    <Section
+                      className={`${prefix}__wn_pattern__feature__section`}>
+                      <img
+                        className={`${prefix}__wn_pattern__feature__section_image`}
+                        src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
+                        aria-label="Example image"
+                      />
+                      <div className={`${prefix}__wn_pattern__tag_container`}>
+                        <Tag
+                          className="some-class"
+                          size="md"
+                          title="Clear filter"
+                          type="purple">
+                          Tag content
+                        </Tag>
+                      </div>
+                      <Heading
+                        className={`${prefix}__wn_pattern__feature__section_heading`}>
+                        Section 2 - Feature 1
+                      </Heading>
+                      <div
+                        className={`${prefix}__wn_pattern__feature__section_body`}>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Duis consequat rhoncus dolor non dapibus. Proin
+                          eu tempus turpis. Aliquam ornare mi mi. Pellentesque
+                          ac mattis diam.
+                        </p>
+                      </div>
+                      <Button href="https://www.ibm.com" kind="tertiary">
+                        Go Here
+                      </Button>
+                    </Section>
+                    <Section
+                      className={`${prefix}__wn_pattern__feature__section`}>
+                      <img
+                        className={`${prefix}__wn_pattern__feature__section_image`}
+                        src="https://assets.ibm.com/is/image/ibm/fs6:2x1?$674x337$&fmt=png-alpha"
+                        aria-label="Example image"
+                      />
+                      <div className={`${prefix}__wn_pattern__tag_container`}>
+                        <Tag
+                          className="some-class"
+                          size="md"
+                          title="Clear filter"
+                          type="purple">
+                          Tag content
+                        </Tag>
+                      </div>
+                      <Heading
+                        className={`${prefix}__wn_pattern__feature__section_heading`}>
+                        Section 2 - Feature 2
+                      </Heading>
+                      <div
+                        className={`${prefix}__wn_pattern__feature__section_body`}>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Duis consequat rhoncus dolor non dapibus. Proin
+                          eu tempus turpis. Aliquam ornare mi mi. Pellentesque
+                          ac mattis diam.
+                        </p>
+                      </div>
+                      <Button href="https://www.ibm.com" kind="tertiary">
+                        Go Here
+                      </Button>
+                    </Section>
+                  </Section>
+                </TocSection>
+              </TocSections>
+            )}
+          </div>
+        </Tearsheet>
+      </Toc>
+    </>
+  );
+}
+
+export default App;
+```

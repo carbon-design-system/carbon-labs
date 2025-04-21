@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-text-highlighter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -18,13 +18,19 @@
   "files": [
     "es",
     "lib",
-    "scss"
+    "scss",
+    "telemetry.yml"
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rm -rf {es,lib,scss}"
+    "clean": "rm -rf {es,lib,scss}",
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 18a7a4e1-d21d-4d71-9dce-20587f4abd2e --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
     "@carbon-labs/utilities": "canary"
+  },
+  "dependencies": {
+    "@ibm/telemetry-js": "^1.9.1"
   }
 }

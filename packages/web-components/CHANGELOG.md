@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.18.0...@carbon-labs/web-components@0.19.0) (2025-04-16)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.17.0...@carbon-labs/web-components@0.18.0) (2025-04-10)
+
+
+### Features
+
+* **empty state:** add custom illustration support ([#499](https://github.com/carbon-design-system/carbon-labs/issues/499)) ([c5096bf](https://github.com/carbon-design-system/carbon-labs/commit/c5096bff16024e32b496360d519adab1a6183568))
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.16.0...@carbon-labs/web-components@0.17.0) (2025-04-08)
+
+
+### Features
+
+* **empty state:** create empty state web component ([#482](https://github.com/carbon-design-system/carbon-labs/issues/482)) ([5ca06c3](https://github.com/carbon-design-system/carbon-labs/commit/5ca06c355756c5467d2f6724df56e7f50256dcf5))
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.15.0...@carbon-labs/web-components@0.16.0) (2025-04-08)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.14.0...@carbon-labs/web-components@0.15.0) (2025-04-04)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.13.0...@carbon-labs/web-components@0.14.0) (2025-03-31)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.12.0...@carbon-labs/web-components@0.13.0) (2025-03-24)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
 # [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.11.0...@carbon-labs/web-components@0.12.0) (2025-03-11)
 
 **Note:** Version bump only for package @carbon-labs/web-components

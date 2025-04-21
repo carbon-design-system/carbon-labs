@@ -1,0 +1,79 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/components/button';
+@use '@carbon/styles/scss/components/link';
+
+:host(#{$clabs-prefix}-empty-state) {
+  display: flex;
+  flex-direction: column;
+  color: $text-primary;
+  .#{$clabs-prefix}--empty-state__header {
+    @include type-style('heading-03');
+
+    margin: 0;
+    padding-block-end: $spacing-03;
+  }
+  .#{$clabs-prefix}--empty-state___subtitle {
+    @include type-style('body-01');
+
+    margin: 0;
+    color: $text-secondary;
+    padding-block-end: $spacing-05;
+  }
+
+  .#{$clabs-prefix}--empty-state__header--small {
+    @include type-style('body-compact-02');
+
+    padding-block-end: $spacing-03;
+  }
+
+  .#{$clabs-prefix}--empty-state__subtitle--small {
+    @include type-style('label-01');
+  }
+  ::slotted(#{$cds-prefix}-button) {
+    display: block;
+    margin-block-end: $spacing-05;
+  }
+  ::slotted(#{$cds-prefix}-link) {
+    display: inline-block;
+  }
+}
+
+.#{$clabs-prefix}--empty-state__illustration {
+  block-size: auto;
+  margin-block-end: $spacing-05;
+
+  &.#{$clabs-prefix}--empty-state__illustration--lg {
+    max-inline-size: $spacing-11;
+    min-inline-size: $spacing-11;
+  }
+
+  &.#{$clabs-prefix}--empty-state__illustration--sm {
+    max-inline-size: $spacing-10;
+    min-inline-size: $spacing-10;
+  }
+}
+
+::slotted(.#{$clabs-prefix}--empty-state__illustration) {
+  block-size: auto;
+  margin-block-end: $spacing-05;
+}
+::slotted(.#{$clabs-prefix}--empty-state__illustration--lg) {
+  max-inline-size: $spacing-11;
+  min-inline-size: $spacing-11;
+}
+::slotted(.#{$clabs-prefix}--empty-state__illustration--sm) {
+  max-inline-size: $spacing-10;
+  min-inline-size: $spacing-10;
+}

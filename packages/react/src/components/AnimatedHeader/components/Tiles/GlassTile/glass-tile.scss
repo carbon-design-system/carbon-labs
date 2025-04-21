@@ -19,7 +19,7 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
   display: flex;
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
-  min-block-size: 176px;
+  min-block-size: 192px;
   text-decoration: none;
 }
 
@@ -31,7 +31,9 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
 
 .#{$prefix}--body {
   position: relative;
+  z-index: 0;
   display: flex;
+  overflow: hidden;
   flex: 1;
   flex-direction: column;
   justify-content: flex-start;
@@ -39,48 +41,53 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
   background-color: transparent;
   color: $text-primary;
   cursor: pointer;
-  gap: $spacing-05;
   opacity: 1;
   transition: opacity 500ms linear;
 }
 
-.#{$prefix}--collapsed {
-  opacity: 0;
-}
-
-[data-carbon-theme='white'] .#{$prefix}--body::before,
-[data-carbon-theme='g10'] .#{$prefix}--body::before {
-  background-color: $layer-01;
-}
-
-[data-carbon-theme='g90'] .#{$prefix}--body::before,
-[data-carbon-theme='g100'] .#{$prefix}--body::before {
-  background-color: $layer-hover-01;
-}
-
-.#{$prefix}--body::before {
+/* Semi-transparent background layer */
+.#{$prefix}--body-background {
   position: absolute;
-  content: '';
+  z-index: 1;
+  background-color: $layer-01;
   inset: 0;
   opacity: 0.7;
   pointer-events: none;
   transition: opacity 150ms motion.motion(standard, productive);
 }
 
-.#{$prefix}--body:hover::before {
+:root .#{$prefix}--body-background,
+[data-carbon-theme='white'] .#{$prefix}--body-background,
+[data-carbon-theme='g10'] .#{$prefix}--body-background {
+  background-color: $layer-01;
+}
+
+[data-carbon-theme='g90'] .#{$prefix}--body-background,
+[data-carbon-theme='g100'] .#{$prefix}--body-background {
+  background-color: $layer-hover-01;
+}
+
+.#{$prefix}--collapsed {
+  opacity: 0;
+}
+
+.#{$prefix}--body:hover .#{$prefix}--body-background {
   opacity: 0.85;
 }
 
 .#{$prefix}--icons {
   position: relative;
+  z-index: 2;
   display: flex;
   justify-content: space-between;
+  margin-block-end: $spacing-05;
 }
 
 .#{$prefix}--title {
   @include type-style('body-compact-02');
 
   position: relative;
+  z-index: 2;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -97,7 +104,7 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
 
 .#{$prefix}--footer {
   position: absolute;
-  z-index: 3;
+  z-index: 2;
   display: flex;
   gap: $spacing-05;
   inset-block-end: $spacing-05;
@@ -107,6 +114,7 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
   @include type-style('body-short-01');
 
   position: relative;
+  z-index: 2;
   overflow: hidden;
   color: $text-secondary;
   text-overflow: ellipsis;
@@ -120,4 +128,8 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
     text-overflow: ellipsis;
     white-space: initial;
   }
+}
+
+.#{$prefix}--custom-content {
+  z-index: 2;
 }

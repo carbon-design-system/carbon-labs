@@ -15,6 +15,12 @@ import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { HeaderPanel } from '../components/HeaderPanel';
 import { SideNavLink } from '../components/SideNavLink';
+import {
+  HeaderPopover,
+  HeaderPopoverActions,
+  HeaderPopoverButton,
+  HeaderPopoverContent,
+} from '../components/HeaderPopover';
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderDivider } from '../components/HeaderDivider';
 import {
@@ -29,15 +35,14 @@ import {
   Column,
   HeaderGlobalBar,
   HeaderGlobalAction,
-  HeaderNavigation,
-  HeaderMenuItem,
-  HeaderMenu,
   Switcher,
   SwitcherItem,
   SwitcherDivider,
   MenuButton,
   MenuItemRadioGroup,
   ExpandableSearch,
+  Link,
+  Button,
 } from '@carbon/react';
 import {
   Add,
@@ -60,7 +65,6 @@ import {
   SquareOutline,
   UserAvatar,
   Help,
-  IbmWatsonxAssistant,
 } from '@carbon/icons-react';
 
 import {
@@ -78,7 +82,10 @@ export default {
   subcomponents: {
     HeaderContainer,
     HeaderDivider,
-    HeaderPanel,
+    HeaderPopover,
+    HeaderPopoverActions,
+    HeaderPopoverButton,
+    HeaderPopoverContent,
     SideNav,
     SideNavItems,
     SideNavLink,
@@ -207,17 +214,6 @@ export const Default = () => {
               <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
                 [Platform]
               </HeaderName>
-
-              <HeaderNavigation aria-label="Nav 1">
-                <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
-                <HeaderMenu aria-label="Link 4" menuLinkName="HeaderMenu">
-                  <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
-                  <HeaderMenuItem isActive href="#">
-                    HeaderMenuItem
-                  </HeaderMenuItem>
-                  <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
-                </HeaderMenu>
-              </HeaderNavigation>
               <HeaderGlobalBar>
                 <ExpandableSearch
                   size="lg"
@@ -225,6 +221,43 @@ export const Default = () => {
                   closeButtonLabelText="Clear search input"
                   id="search-expandable-1"
                 />
+                <HeaderGlobalAction
+                  aria-label="Custom action"
+                  tooltipHighContrast={false}>
+                  <SquareOutline size={20} />
+                </HeaderGlobalAction>
+                <HeaderPopover align="bottom-right">
+                  <HeaderPopoverButton align="bottom" label="Help">
+                    <Help size={20} />
+                  </HeaderPopoverButton>
+                  <HeaderPopoverContent>
+                    <p>
+                      Lorem ipsum dolor sit amet, di os consectetur adipiscing
+                      elit, sed do eiusmod tempor incididunt ut fsil labore et
+                      dolore magna aliqua.
+                    </p>
+                    <HeaderPopoverActions>
+                      <Link href="#">Link action</Link>
+                      <Button size="sm">Button</Button>
+                    </HeaderPopoverActions>
+                  </HeaderPopoverContent>
+                </HeaderPopover>
+                <HeaderPopover align="bottom-right">
+                  <HeaderPopoverButton align="bottom" label="Notifications">
+                    <Notification size={20} />
+                  </HeaderPopoverButton>
+                  <HeaderPopoverContent>
+                    <p>
+                      Lorem ipsum dolor sit amet, di os consectetur adipiscing
+                      elit, sed do eiusmod tempor incididunt ut fsil labore et
+                      dolore magna aliqua.
+                    </p>
+                    <HeaderPopoverActions>
+                      <Link href="#">Link action</Link>
+                      <Button size="sm">Button</Button>
+                    </HeaderPopoverActions>
+                  </HeaderPopoverContent>
+                </HeaderPopover>
                 <HeaderDivider />
                 <MenuButton
                   menuTarget={headerRef.current}
@@ -253,26 +286,22 @@ export const Default = () => {
                   />
                 </MenuButton>
                 <HeaderDivider />
-                <HeaderGlobalAction
-                  aria-label="Chat"
-                  tooltipHighContrast={false}>
-                  <IbmWatsonxAssistant size={20} />
-                </HeaderGlobalAction>
-                <HeaderGlobalAction
-                  aria-label="Help"
-                  tooltipHighContrast={false}>
-                  <Help size={20} />
-                </HeaderGlobalAction>
-                <HeaderGlobalAction
-                  aria-label="Notifications"
-                  tooltipHighContrast={false}>
-                  <Notification size={20} />
-                </HeaderGlobalAction>
-                <HeaderGlobalAction
-                  aria-label="Profile"
-                  tooltipHighContrast={false}>
-                  <UserAvatar size={20} />
-                </HeaderGlobalAction>
+                <HeaderPopover align="bottom-right">
+                  <HeaderPopoverButton align="bottom" label="Profile">
+                    <UserAvatar size={20} />
+                  </HeaderPopoverButton>
+                  <HeaderPopoverContent>
+                    <p>
+                      Lorem ipsum dolor sit amet, di os consectetur adipiscing
+                      elit, sed do eiusmod tempor incididunt ut fsil labore et
+                      dolore magna aliqua.
+                    </p>
+                    <HeaderPopoverActions>
+                      <Link href="#">Link action</Link>
+                      <Button size="sm">Button</Button>
+                    </HeaderPopoverActions>
+                  </HeaderPopoverContent>
+                </HeaderPopover>
                 <HeaderGlobalAction
                   aria-label={
                     isSwitcherExpanded ? 'Close switcher' : 'Open switcher'
@@ -497,6 +526,176 @@ Default.parameters = {
   controls: { disable: true },
   actions: { disable: true },
 };
+
+/**
+ * Story for Header
+ * @param {object} args Storybook args that control component props
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const HeaderStory = () => {
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedItem, setSelectedItem] = useState('');
+
+  const options = {
+    Fruits: ['Apple', 'Banana', 'Orange'],
+    Vegetables: ['Carrot', 'Broccoli', 'Spinach'],
+    Animals: ['Cat', 'Dog', 'Snake'],
+  };
+  return (
+    <HeaderContainer
+      render={({
+        isSideNavExpanded,
+        isSwitcherExpanded,
+        onClickSideNavExpand,
+        onClickSwitcherExpand,
+      }) => (
+        <Header aria-label="IBM Platform Name">
+          <SkipToContent />
+          <HeaderMenuButton
+            aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
+            onClick={onClickSideNavExpand}
+            isActive={isSideNavExpanded}
+            aria-expanded={isSideNavExpanded}
+            isCollapsible //shows hamburger menu at desktop
+            isFixedNav
+          />
+          <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
+            [Platform]
+          </HeaderName>
+          <HeaderGlobalBar>
+            <ExpandableSearch
+              size="lg"
+              labelText="Search"
+              closeButtonLabelText="Clear search input"
+              id="search-expandable-1"
+            />
+            <HeaderGlobalAction
+              aria-label="Custom action"
+              tooltipHighContrast={false}>
+              <SquareOutline size={20} />
+            </HeaderGlobalAction>
+            <HeaderPopover align="bottom-right">
+              <HeaderPopoverButton align="bottom" label="Help">
+                <Help size={20} />
+              </HeaderPopoverButton>
+              <HeaderPopoverContent>
+                <p>
+                  Lorem ipsum dolor sit amet, di os consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt ut fsil labore et dolore
+                  magna aliqua.
+                </p>
+                <HeaderPopoverActions>
+                  <Link href="#">Link action</Link>
+                  <Button size="sm">Button</Button>
+                </HeaderPopoverActions>
+              </HeaderPopoverContent>
+            </HeaderPopover>
+            <HeaderPopover align="bottom-right">
+              <HeaderPopoverButton align="bottom" label="Notifications">
+                <Notification size={20} />
+              </HeaderPopoverButton>
+              <HeaderPopoverContent>
+                <p>
+                  Lorem ipsum dolor sit amet, di os consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt ut fsil labore et dolore
+                  magna aliqua.
+                </p>
+                <HeaderPopoverActions>
+                  <Link href="#">Link action</Link>
+                  <Button size="sm">Button</Button>
+                </HeaderPopoverActions>
+              </HeaderPopoverContent>
+            </HeaderPopover>
+            <HeaderDivider />
+            <MenuButton
+              kind="ghost"
+              label={selectedCategory || 'Select Category'}>
+              <MenuItemRadioGroup
+                label="Category"
+                items={Object.keys(options)}
+                selectedItem={selectedCategory || null}
+                onChange={(newCategory) => {
+                  setSelectedCategory(newCategory);
+                  setSelectedItem('');
+                }}
+              />
+            </MenuButton>
+            <MenuButton
+              kind="ghost"
+              label={selectedItem || 'Select Item'}
+              disabled={!selectedCategory}>
+              <MenuItemRadioGroup
+                label="Items"
+                items={selectedCategory ? options[selectedCategory] : []}
+                selectedItem={selectedItem || null}
+                onChange={(newItem) => setSelectedItem(newItem)}
+              />
+            </MenuButton>
+            <HeaderDivider />
+            <HeaderPopover align="bottom-right">
+              <HeaderPopoverButton align="bottom" label="Profile">
+                <UserAvatar size={20} />
+              </HeaderPopoverButton>
+              <HeaderPopoverContent>
+                <p>
+                  Lorem ipsum dolor sit amet, di os consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt ut fsil labore et dolore
+                  magna aliqua.
+                </p>
+                <HeaderPopoverActions>
+                  <Link href="#">Link action</Link>
+                  <Button size="sm">Button</Button>
+                </HeaderPopoverActions>
+              </HeaderPopoverContent>
+            </HeaderPopover>
+            <HeaderGlobalAction
+              aria-label={
+                isSwitcherExpanded ? 'Close switcher' : 'Open switcher'
+              }
+              aria-expanded={isSwitcherExpanded}
+              isActive={isSwitcherExpanded}
+              onClick={onClickSwitcherExpand}
+              tooltipAlignment="end"
+              tooltipHighContrast={false}
+              id="switcher-button">
+              <SwitcherIcon size={20} />
+            </HeaderGlobalAction>
+          </HeaderGlobalBar>
+          <HeaderPanel
+            expanded={isSwitcherExpanded}
+            onHeaderPanelFocus={onClickSwitcherExpand}
+            href="#switcher-button">
+            <Switcher
+              aria-label="Switcher Container"
+              expanded={isSwitcherExpanded}>
+              <SwitcherItem aria-label="Link 1" href="#">
+                Link 1
+              </SwitcherItem>
+              <SwitcherDivider />
+              <SwitcherItem href="#" aria-label="Link 2">
+                Link 2
+              </SwitcherItem>
+              <SwitcherItem href="#" aria-label="Link 3">
+                Link 3
+              </SwitcherItem>
+              <SwitcherItem href="#" aria-label="Link 4">
+                Link 4
+              </SwitcherItem>
+              <SwitcherItem href="#" aria-label="Link 5">
+                Link 5
+              </SwitcherItem>
+              <SwitcherDivider />
+              <SwitcherItem href="#" aria-label="Link 6">
+                Link 6
+              </SwitcherItem>
+            </Switcher>
+          </HeaderPanel>
+        </Header>
+      )}
+    />
+  );
+};
+HeaderStory.storyName = 'Header';
 
 /**
  * Story for SideNav
@@ -758,93 +957,3 @@ export const SideNavPanel = () => (
     </Content>
   </>
 );
-
-/**
- * Story for Header
- * @param {object} args Storybook args that control component props
- * @returns {React.ReactElement} The JSX for the story
- */
-export const HeaderStory = () => {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedItem, setSelectedItem] = useState('');
-
-  const options = {
-    Fruits: ['Apple', 'Banana', 'Orange'],
-    Vegetables: ['Carrot', 'Broccoli', 'Spinach'],
-    Animals: ['Cat', 'Dog', 'Snake'],
-  };
-  return (
-    <Header aria-label="IBM Platform Name">
-      <SkipToContent />
-      <HeaderMenuButton aria-label="Open menu" isCollapsible isFixedNav />
-      <HeaderName href="#" prefix="IBM">
-        [Platform]
-      </HeaderName>
-      <HeaderNavigation aria-label="Nav 1">
-        <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
-        <HeaderMenu aria-label="Link 4" menuLinkName="HeaderMenu">
-          <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
-          <HeaderMenuItem isActive href="#">
-            HeaderMenuItem
-          </HeaderMenuItem>
-          <HeaderMenuItem href="#">HeaderMenuItem</HeaderMenuItem>
-        </HeaderMenu>
-      </HeaderNavigation>
-
-      <HeaderGlobalBar>
-        <HeaderGlobalAction aria-label="Open">
-          <SquareOutline size={20} />
-        </HeaderGlobalAction>
-        <HeaderGlobalAction aria-label="Open">
-          <SquareOutline size={20} />
-        </HeaderGlobalAction>
-
-        <HeaderDivider />
-        <MenuButton kind="ghost" label={selectedCategory || 'Select Category'}>
-          <MenuItemRadioGroup
-            label="Category"
-            items={Object.keys(options)}
-            selectedItem={selectedCategory || null}
-            onChange={(newCategory) => {
-              setSelectedCategory(newCategory);
-              setSelectedItem('');
-            }}
-          />
-        </MenuButton>
-        <MenuButton
-          kind="ghost"
-          label={selectedItem || 'Select Item'}
-          disabled={!selectedCategory}>
-          <MenuItemRadioGroup
-            label="Items"
-            items={selectedCategory ? options[selectedCategory] : []}
-            selectedItem={selectedItem || null}
-            onChange={(newItem) => setSelectedItem(newItem)}
-          />
-        </MenuButton>
-        <HeaderDivider />
-        <HeaderGlobalAction aria-label="Open">
-          <SquareOutline size={20} />
-        </HeaderGlobalAction>
-      </HeaderGlobalBar>
-    </Header>
-  );
-};
-
-HeaderStory.storyName = 'Header';
-
-/**
- * Story for HeaderPanel
- * @param {object} args Storybook args that control component props
- * @returns {React.ReactElement} The JSX for the story
- */
-export const HeaderPanelStory = (args) => <HeaderPanel {...args} />;
-HeaderPanelStory.storyName = 'HeaderPanel';
-
-HeaderPanelStory.args = {
-  expanded: true,
-};
-
-HeaderPanelStory.argTypes = {
-  expanded: { control: 'boolean' },
-};

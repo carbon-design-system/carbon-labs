@@ -62,7 +62,9 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
       id={`${blockClass}`}
       className={`${prefix}--animated-header__tile ${blockClass}`}
       key={id}>
-      <div className={`${blockClass}--body ${!open && collapsed}`}>
+      <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
+        <div className={`${blockClass}--body-background`} />
+        <div className={`${blockClass}--body-gradient`} />
         <div className={`${blockClass}--icons`}>
           {MainIcon && (
             <MainIcon fill={`var(--cds-icon-secondary)`} size={24} />

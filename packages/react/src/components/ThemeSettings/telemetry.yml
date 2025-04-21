@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: 34d6803f-45c0-46e0-be02-b4499b40336e
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  jsx:
+    elements:
+      allowedAttributeNames:
+        # General
+        - className
+        - id
+        - legendText
+        - onChange
+        - value
+        # ThemeMenuComplement
+        - checked
+        - labelText
+        # ThemeSetDropdown
+        - label
+        - titleText
+        # ThemeSettings
+        - children
+        # ThemeSwitcher
+        - labelDark
+        - labelLight
+        - labelSystem
+        # React
+        - key
+        - ref
+      allowedAttributeStringValues:
+        # General - value
+        - dark
+        - g10/g100
+        - g10/g90
+        - light
+        - system
+        - white/g100
+        - white/g90
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

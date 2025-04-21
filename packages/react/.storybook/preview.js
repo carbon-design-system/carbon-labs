@@ -226,24 +226,7 @@ export const parameters = {
       cellSize: 8,
       opacity: 0.5,
     },
-    values: [
-      {
-        name: 'white',
-        value: white.background,
-      },
-      {
-        name: 'g10',
-        value: g10.background,
-      },
-      {
-        name: 'g90',
-        value: g90.background,
-      },
-      {
-        name: 'g100',
-        value: g100.background,
-      },
-    ],
+    disable: true,
   },
   controls: {
     // https://storybook.js.org/docs/react/essentials/controls#show-full-documentation-for-each-property

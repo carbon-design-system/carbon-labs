@@ -3,6 +3,118 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.53.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.52.0...@carbon-labs/react@0.53.0) (2025-04-18)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.52.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.51.0...@carbon-labs/react@0.52.0) (2025-04-10)
+
+
+### Bug Fixes
+
+* **animated-header:** add backup for autoprefixer ([#563](https://github.com/carbon-design-system/carbon-labs/issues/563)) ([8c3c4a6](https://github.com/carbon-design-system/carbon-labs/commit/8c3c4a6846627b6fbb8e65e50bb731acb52784dc))
+
+
+
+
+
+# [0.51.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.50.0...@carbon-labs/react@0.51.0) (2025-04-10)
+
+
+### Bug Fixes
+
+* **animated-header:** cleanup Safari issues ([#556](https://github.com/carbon-design-system/carbon-labs/issues/556)) ([530e01a](https://github.com/carbon-design-system/carbon-labs/commit/530e01ae13d94391732bf34a3b26edb87b9ea161))
+
+
+
+
+
+# [0.50.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.49.0...@carbon-labs/react@0.50.0) (2025-04-08)
+
+
+### Features
+
+* **animated-header:** remove strictmode from example app + tooltip ([#548](https://github.com/carbon-design-system/carbon-labs/issues/548)) ([c969903](https://github.com/carbon-design-system/carbon-labs/commit/c969903eab1bd7b78fbb3b7f9770e4839b1d7f6b))
+
+
+
+
+
+# [0.49.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.48.0...@carbon-labs/react@0.49.0) (2025-04-07)
+
+
+### Bug Fixes
+
+* **UIShell:** remove box-shadow on header action focus ([#554](https://github.com/carbon-design-system/carbon-labs/issues/554)) ([55a8671](https://github.com/carbon-design-system/carbon-labs/commit/55a8671faf1116f33b27260bef0f5dba2802aed5))
+
+
+
+
+
+# [0.48.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.47.0...@carbon-labs/react@0.48.0) (2025-04-07)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.47.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.46.0...@carbon-labs/react@0.47.0) (2025-04-04)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.46.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.45.0...@carbon-labs/react@0.46.0) (2025-04-02)
+
+
+### Bug Fixes
+
+* **storybook:** remove background button ([#549](https://github.com/carbon-design-system/carbon-labs/issues/549)) ([759b69f](https://github.com/carbon-design-system/carbon-labs/commit/759b69f905a1dd64b6b7802eb1e561d5d6cc397a))
+
+
+
+
+
+# [0.45.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.44.0...@carbon-labs/react@0.45.0) (2025-04-02)
+
+
+### Features
+
+* **UIShell:** add HeaderPopover ([#518](https://github.com/carbon-design-system/carbon-labs/issues/518)) ([1032d8a](https://github.com/carbon-design-system/carbon-labs/commit/1032d8a703637df97d3914b7fa82769b76d0446b))
+
+
+
+
+
+# [0.44.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.43.0...@carbon-labs/react@0.44.0) (2025-04-01)
+
+
+### Features
+
+* **animated-header:** remove loop animation from header ([#547](https://github.com/carbon-design-system/carbon-labs/issues/547)) ([613ffc3](https://github.com/carbon-design-system/carbon-labs/commit/613ffc358e22b8270dc0535cd6d5d4a352dc8ac8))
+
+
+
+
+
+# [0.43.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.42.0...@carbon-labs/react@0.43.0) (2025-04-01)
+
+
+### Features
+
+* **animated-header:** add custom itemToString func for Dropdowns ([#542](https://github.com/carbon-design-system/carbon-labs/issues/542)) ([8ae02cf](https://github.com/carbon-design-system/carbon-labs/commit/8ae02cf012adec82e3fd962bf3f84df0752023e9))
+
+
+
+
+
 # [0.42.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.41.0...@carbon-labs/react@0.42.0) (2025-03-26)
 
 

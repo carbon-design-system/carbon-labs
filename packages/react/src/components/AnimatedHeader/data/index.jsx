@@ -13,22 +13,22 @@ import { ButtonKinds } from '@carbon/react';
 export const workspaceData = [
   {
     id: 'workspace-1',
-    text: 'Workspace 1',
+    label: `Drew's workspace`,
   },
   {
     id: 'workspace-2',
-    text: 'Workspace 2',
+    label: `Mike's workspace`,
   },
   {
     id: 'workspace-3',
-    text: 'Workspace 3',
+    label: `Rebecca's workspace`,
   },
 ];
 
 export const headerTiles = [
   {
     id: 1,
-    name: 'AI Chat Tile w/ two glass tiles',
+    label: 'AI Chat Tile w/ two glass tiles',
     tiles: [
       {
         id: 'ai-tile',
@@ -54,7 +54,7 @@ export const headerTiles = [
   },
   {
     id: 2,
-    name: 'Three glass tiles',
+    label: 'Three glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -81,7 +81,7 @@ export const headerTiles = [
   },
   {
     id: 3,
-    name: 'Four glass tiles',
+    label: 'Four glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -115,7 +115,7 @@ export const headerTiles = [
   },
   {
     id: 4,
-    name: 'Five glass tiles',
+    label: 'Five glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -156,7 +156,7 @@ export const headerTiles = [
   },
   {
     id: 5,
-    name: 'Six glass tiles',
+    label: 'Six glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -204,7 +204,7 @@ export const headerTiles = [
   },
   {
     id: 6,
-    name: 'Seven glass tiles',
+    label: 'Seven glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -259,7 +259,7 @@ export const headerTiles = [
   },
   {
     id: 7,
-    name: 'Eight glass tiles',
+    label: 'Eight glass tiles',
     tiles: [
       {
         id: 'tile-1',

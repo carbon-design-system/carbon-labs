@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.53.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.52.0...@carbon-labs/react@0.53.0) (2025-04-18)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.52.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.51.0...@carbon-labs/react@0.52.0) (2025-04-10)
+
+
+### Bug Fixes
+
+* **animated-header:** add backup for autoprefixer ([#563](https://github.com/carbon-design-system/carbon-labs/issues/563)) ([8c3c4a6](https://github.com/carbon-design-system/carbon-labs/commit/8c3c4a6846627b6fbb8e65e50bb731acb52784dc))
+
+
+
+
+
+# [0.51.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.50.0...@carbon-labs/react@0.51.0) (2025-04-10)
+
+
+### Bug Fixes
+
+* **animated-header:** cleanup Safari issues ([#556](https://github.com/carbon-design-system/carbon-labs/issues/556)) ([530e01a](https://github.com/carbon-design-system/carbon-labs/commit/530e01ae13d94391732bf34a3b26edb87b9ea161))
+
+
+
+
+
 # [0.50.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.49.0...@carbon-labs/react@0.50.0) (2025-04-08)
 
 

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.18.0...@carbon-labs/web-components@0.19.0) (2025-04-16)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.17.0...@carbon-labs/web-components@0.18.0) (2025-04-10)
+
+
+### Features
+
+* **empty state:** add custom illustration support ([#499](https://github.com/carbon-design-system/carbon-labs/issues/499)) ([c5096bf](https://github.com/carbon-design-system/carbon-labs/commit/c5096bff16024e32b496360d519adab1a6183568))
+
+
+
+
+
 # [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.16.0...@carbon-labs/web-components@0.17.0) (2025-04-08)
 
 

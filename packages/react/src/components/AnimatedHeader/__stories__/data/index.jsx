@@ -8,7 +8,9 @@
  */
 
 import { Add } from '@carbon/react/icons';
-import { ButtonKinds } from '@carbon/react';
+import { ButtonKinds, Loading } from '@carbon/react';
+import SampleCustomTaskContent from './SampleCustomTaskContent';
+import React from 'react';
 
 export const workspaceData = [
   {
@@ -316,6 +318,20 @@ export const headerTiles = [
         title: 'Create and run python queries',
         subtitle: 'with Prompt Lab',
         mainIcon: 'DataSet',
+      },
+    ],
+  },
+  {
+    id: 8,
+    label: 'Custom content tasks',
+    tiles: [
+      {
+        id: 'tile-1',
+        customContent: <Loading description="Sample loading state" />
+      },
+      {
+        id: 'tile-2',
+        customContent: <SampleCustomTaskContent />
       },
     ],
   },

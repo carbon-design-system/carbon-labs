@@ -2796,7 +2796,7 @@ __metadata:
   dependencies:
     "@carbon/grid": "npm:^11.21.1"
     "@carbon/icon-helpers": "npm:10.55.0"
-    "@carbon/icons": "npm:11.57.0"
+    "@carbon/icons": "npm:11.58.0"
     "@carbon/layout": "npm:11.30.2"
     "@carbon/motion": "npm:11.25.0"
     "@carbon/styles": "npm:^1.70.0"
@@ -2995,12 +2995,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons@npm:11.57.0":
-  version: 11.57.0
-  resolution: "@carbon/icons@npm:11.57.0"
+"@carbon/icons@npm:11.58.0":
+  version: 11.58.0
+  resolution: "@carbon/icons@npm:11.58.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/ca343643a2cdc7c399e426b735fbaa92df4d01d89646eb8a92fec9365d7e30bc74655c984affde3dcab204c0007c793215357979d33b46d4c96a60befdf181e1
+  checksum: 10c0/a2009fe39eedf52e4d08d495deea25f6b43372dc24944c870ffa65d5468be92198b5d8a0de133f7d2121361f18422b87efe8a7610db5ccb183c082177254f6da
   languageName: node
   linkType: hard
 
@@ -29640,8 +29640,8 @@ __metadata:
   linkType: hard
 
 "vite@npm:^5.0.0":
-  version: 5.4.17
-  resolution: "vite@npm:5.4.17"
+  version: 5.4.18
+  resolution: "vite@npm:5.4.18"
   dependencies:
     esbuild: "npm:^0.21.3"
     fsevents: "npm:~2.3.3"
@@ -29678,7 +29678,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/3322bd6d8da30cbc87b1b24cd14fdbca75abb36de81217d1062c8b4c574a1a0d28d11dfe23a3eed08b3d179d2bdc1510e0d7b9f3e1b722a45bd7631c7cec72eb
+  checksum: 10c0/a8cbbec6bdf399e62c386d70b8485e4f2f1b427beb19bc7c5d52b402a0c3750b7ff469fc20a8333755ea13bc1b0af5df3f22c8fd37d1739ee51d709b7a4740b6
   languageName: node
   linkType: hard
 

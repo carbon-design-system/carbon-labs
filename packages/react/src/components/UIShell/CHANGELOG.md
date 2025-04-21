@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.33.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.32.0...@carbon-labs/react-ui-shell@0.33.0) (2025-04-07)
+
+
+### Bug Fixes
+
+* **UIShell:** remove box-shadow on header action focus ([#554](https://github.com/carbon-design-system/carbon-labs/issues/554)) ([55a8671](https://github.com/carbon-design-system/carbon-labs/commit/55a8671faf1116f33b27260bef0f5dba2802aed5))
+
+
+
+
+
+# [0.32.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.31.0...@carbon-labs/react-ui-shell@0.32.0) (2025-04-07)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
+# [0.31.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.30.0...@carbon-labs/react-ui-shell@0.31.0) (2025-04-04)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
+# [0.30.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.29.0...@carbon-labs/react-ui-shell@0.30.0) (2025-04-02)
+
+
+### Features
+
+* **UIShell:** add HeaderPopover ([#518](https://github.com/carbon-design-system/carbon-labs/issues/518)) ([1032d8a](https://github.com/carbon-design-system/carbon-labs/commit/1032d8a703637df97d3914b7fa82769b76d0446b))
+
+
+
+
+
 # [0.29.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.28.0...@carbon-labs/react-ui-shell@0.29.0) (2025-03-26)
 
 

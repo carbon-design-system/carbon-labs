@@ -13,15 +13,15 @@ import { ButtonKinds } from '@carbon/react';
 export const workspaceData = [
   {
     id: 'workspace-1',
-    label: 'Workspace 1',
+    label: `Drew's workspace`,
   },
   {
     id: 'workspace-2',
-    label: 'Workspace 2',
+    label: `Mike's workspace`,
   },
   {
     id: 'workspace-3',
-    label: 'Workspace 3',
+    label: `Rebecca's workspace`,
   },
 ];
 

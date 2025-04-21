@@ -66,7 +66,12 @@ body {
   justify-content: flex-end;
 
   block-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: -webkit-fill-available;
+
   inline-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: -webkit-fill-available;
 
   max-inline-size: 96rem;
   writing-mode: horizontal-tb;
@@ -96,7 +101,12 @@ body {
   z-index: 1;
 
   block-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: -webkit-fill-available;
+
   inline-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: -webkit-fill-available;
 
   margin-inline: auto;
   max-inline-size: 99rem;
@@ -291,7 +301,12 @@ body {
   justify-content: flex-end;
 
   block-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: -webkit-fill-available;
+
   inline-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: -webkit-fill-available;
 
   max-inline-size: 96rem;
 }

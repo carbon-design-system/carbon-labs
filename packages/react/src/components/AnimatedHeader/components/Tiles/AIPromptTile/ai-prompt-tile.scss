@@ -188,6 +188,10 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
   fill: $icon-primary;
 }
 
+.#{$prefix}--custom-content {
+  z-index: 4;
+}
+
 @keyframes animate-border {
   0% {
     background-position: 100% 0%;

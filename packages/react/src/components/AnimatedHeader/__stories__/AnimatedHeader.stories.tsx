@@ -61,6 +61,14 @@ const sharedArgTypes = {
     description:
       'Provide short sentence in max. 3 lines related to product context',
   },
+  handleHeaderItemsToString: {
+    description:
+      'Helper function passed to downshift that allows the library to render a given item to a string label. By default, it extracts the `label` field from a given item to serve as the item label in the list. (Dropdown under description in header).',
+  },
+  handleWorkspaceItemsToString: {
+    description:
+      'Helper function passed to downshift that allows the library to render a given item to a string label. By default, it extracts the `label` field from a given item to serve as the item label in the list. (Dropdown related to workspace selection).',
+  },
   headerAnimation: {
     description:
       'In-product imagery / lottie animation (.json) dim. 1312 x 738 **To update headerAnimation content storybook requires remount in toolbar**',
@@ -122,16 +130,17 @@ const sharedArgTypes = {
       type: 'select',
       labels: {
         0: 'None',
-        1: headerTiles[0].name,
-        2: headerTiles[1].name,
-        3: headerTiles[2].name,
-        4: headerTiles[3].name,
-        5: headerTiles[4].name,
-        6: headerTiles[5].name,
-        7: headerTiles[6].name,
+        1: headerTiles[0].label,
+        2: headerTiles[1].label,
+        3: headerTiles[2].label,
+        4: headerTiles[3].label,
+        5: headerTiles[4].label,
+        6: headerTiles[5].label,
+        7: headerTiles[6].label,
+        8: headerTiles[7].label,
       },
     },
-    options: [0, 1, 2, 3, 4, 5, 6, 7],
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8],
     mapping: {
       0: null,
       1: headerTiles[0],
@@ -141,6 +150,7 @@ const sharedArgTypes = {
       5: headerTiles[4],
       6: headerTiles[5],
       7: headerTiles[6],
+      8: headerTiles[7],
     },
   },
   selectedWorkspace: {
@@ -201,11 +211,21 @@ export const ThemeG10 = (args) => {
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 
+  const handleHeaderItems = (item) => {
+    return item ? item.label : '';
+  };
+
+  const handleWorkspaceItems = (item) => {
+    return item ? item.label : '';
+  };
+
   return (
     <AnimatedHeader
       {...args}
-      setSelectedWorkspace={(e) => handleWorkspaceSelect(e)}
-      setSelectedTileGroup={(e) => handleTileGroup(e)}></AnimatedHeader>
+      setSelectedWorkspace={handleWorkspaceSelect}
+      setSelectedTileGroup={handleTileGroup}
+      handleHeaderItemsToString={handleHeaderItems}
+      handleWorkspaceItemsToString={handleWorkspaceItems}></AnimatedHeader>
   );
 };
 
@@ -229,11 +249,21 @@ export const ThemeG100 = (args) => {
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 
+  const handleHeaderItems = (item) => {
+    return item ? item.label : '';
+  };
+
+  const handleWorkspaceItems = (item) => {
+    return item ? item.label : '';
+  };
+
   return (
     <AnimatedHeader
       {...args}
-      setSelectedWorkspace={(e) => handleWorkspaceSelect(e)}
-      setSelectedTileGroup={(e) => handleTileGroup(e)}></AnimatedHeader>
+      setSelectedWorkspace={handleWorkspaceSelect}
+      setSelectedTileGroup={handleTileGroup}
+      handleHeaderItemsToString={handleHeaderItems}
+      handleWorkspaceItemsToString={handleWorkspaceItems}></AnimatedHeader>
   );
 };
 

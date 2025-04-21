@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { AIPromptTile } from '../AIPromptTile/AIPromptTile';
 import { GlassTile } from '../GlassTile/GlassTile';
 
@@ -21,6 +21,7 @@ interface BaseTileProps {
   title?: string;
   subtitle?: string;
   productName?: string;
+  customContent?: ReactNode;
 }
 
 export const BaseTile: React.FC<BaseTileProps> = ({
@@ -32,6 +33,7 @@ export const BaseTile: React.FC<BaseTileProps> = ({
   title,
   subtitle,
   productName,
+  customContent,
 }: BaseTileProps) => {
   const props = {
     id,
@@ -42,6 +44,7 @@ export const BaseTile: React.FC<BaseTileProps> = ({
     title,
     subtitle,
     productName,
+    customContent,
   };
   const tile =
     id === 'ai-tile' ? (

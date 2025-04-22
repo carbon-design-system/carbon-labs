@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.55.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.54.0...@carbon-labs/react@0.55.0) (2025-04-22)
+
+
+### Features
+
+* create split panel component ([#501](https://github.com/carbon-design-system/carbon-labs/issues/501)) ([a579b97](https://github.com/carbon-design-system/carbon-labs/commit/a579b978a085b38f4d2f7ea4b853a29e022632b0))
+
+
+
+
+
 # [0.54.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.53.0...@carbon-labs/react@0.54.0) (2025-04-22)
 
 

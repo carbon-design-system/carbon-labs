@@ -42,7 +42,7 @@ export default class chartElement extends LitElement {
    * selectable- enable highlight if clicked
    */
   @property({ type: Boolean, attribute: 'selectable' })
-  selectable = true;
+  selectable;
 
   /**
    * Event listener to check if parent visibility changed
@@ -125,6 +125,12 @@ export default class chartElement extends LitElement {
    */
   @property({ type: Boolean, attribute: 'thumbnail' })
   thumbNail;
+
+  /**
+   * Max thumbnail width
+   */
+  @property({ type: Boolean, attribute: 'thumbnail-width' })
+  thumbNailWidth;
 
   /**
    * thumbnail image dataurl
@@ -336,14 +342,27 @@ export default class chartElement extends LitElement {
     });
     this.intersectionObserver.observe(this);
 
-    this.resizeObserver = new ResizeObserver(async () => {
+    /*this.resizeObserver = new ResizeObserver(async () => {
       if (this._resizeTimeout) {
         clearTimeout(this._resizeTimeout);
+      } else {
+        this._resizeTimeout = await setTimeout(async () => {
+          await this._handleResize();
+        }, 1200);
       }
-      this._resizeTimeout = await setTimeout(async () => {
-        await this._handleResize();
-      }, 200);
     });
+    this.resizeObserver.observe(this);*/
+
+    /*this.resizeObserver = new ResizeObserver(async () => {
+        clearTimeout(this._resizeTimeout);
+        this._resizeTimeout = await setTimeout(async () => {
+          await this._handleResize();
+        }, 200);
+    });
+    this.resizeObserver.observe(this);*/
+
+    this.resizeObserver = new ResizeObserver(() => this._handleResize());
+    this.resizeObserver.observe(this);
 
     /*this.resizeObserver = new ResizeObserver(async () => {
       if(!this.chartResizing){
@@ -354,8 +373,6 @@ export default class chartElement extends LitElement {
       }, 200);
       }
     });*/
-
-    this.resizeObserver.observe(this);
 
     if (this.hasAttribute('container-width')) {
       this.style.setProperty('--chat-chart-element-width', this.containerWidth);
@@ -377,10 +394,31 @@ export default class chartElement extends LitElement {
   /**
    * _handleResize - target resize on component itself
    */
-  async _handleResize() {
-    this.chartResizing = false;
-    this.chartLoading = true;
-    await this._displayVisualization();
+  _handleResize() {
+    if (this._resizeTimeout) {
+      clearTimeout(this._resizeTimeout);
+    }
+    this._resizeTimeout = setTimeout(async () => {
+      await this._handleResizeEnd();
+    }, 200);
+  }
+
+  /**
+   * _handleResizeEnd - check when final resize is triggered after delay
+   */
+  async _handleResizeEnd() {
+    await this._heavyRerendering();
+  }
+
+  /**
+   * _heavyRerendering - seperate render function for computationally expensive operations
+   */
+  async _heavyRerendering() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(this);
+      }, 2000);
+    });
   }
 
   /**
@@ -621,6 +659,11 @@ export default class chartElement extends LitElement {
         })
           .then(({ view }) => {
             this._previousSpec = this._visualizationSpec;
+            if (this.thumbNail) {
+              if (!this.exportedImageURL) {
+                this._generateImage();
+              }
+            }
             if (this._authorizeSingleSelection) {
               try {
                 view.addSignalListener('picker', (_, value) => {
@@ -638,11 +681,6 @@ export default class chartElement extends LitElement {
               } catch (brushError) {
                 this._warningMessage = brushError;
               }
-            }
-            if (this.thumbNail) {
-              setTimeout(() => {
-                this._generateImage();
-              }, 200);
             }
           })
           .catch(async (error) => {
@@ -712,6 +750,13 @@ export default class chartElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(clickEvent);
+  }
+
+  /**
+   * _deselectedChart - remove selected mode on chart
+   */
+  _deselectChart() {
+    this.selected = false;
   }
 
   /**
@@ -1020,17 +1065,30 @@ export default class chartElement extends LitElement {
     if (this.renderMethod === 'svg') {
       //this._exportSvgToImage()
     } else {
-      window.setTimeout(async () => {
-        const targetID = this._getTargetRenderCanvasId();
-        const container = this.shadowRoot?.querySelector(targetID);
+      //window.setTimeout(async () => {
+      const targetID = this._getTargetRenderCanvasId();
+      const container = this.shadowRoot?.querySelector(targetID);
 
-        if (container instanceof HTMLElement) {
-          const canvasDiv = container?.querySelector('canvas');
-          if (canvasDiv instanceof HTMLElement) {
-            this.exportedImageURL = canvasDiv.toDataURL('image/png');
-          }
+      if (container instanceof HTMLElement) {
+        const canvasDiv = container?.querySelector('canvas');
+        if (canvasDiv instanceof HTMLElement) {
+          this.exportedImageURL = canvasDiv.toDataURL('image/png');
+
+          const generatedImageEvent = new CustomEvent(
+            'on-chart-thumbnail-generated',
+            {
+              detail: {
+                action: 'CHART: thumbnail rendering successful',
+                image: canvasDiv.toDataURL('image/png'),
+              },
+              bubbles: true,
+              composed: true,
+            }
+          );
+          this.dispatchEvent(generatedImageEvent);
         }
-      }, 200);
+      }
+      //}, 400);
     }
   }
 
@@ -1972,6 +2030,8 @@ export default class chartElement extends LitElement {
       }
 
       if (addConfig) {
+        const cellTitleWidthLimit = this.cellWidth || 50;
+        const cellTitleHeightLimit = this.cellHeight || 50;
         spec['config'] = {
           font: defaultFont,
           axis: {
@@ -1998,6 +2058,7 @@ export default class chartElement extends LitElement {
             titlePadding: 12,
             titleFont: defaultFont,
             titleFontWeight: 400,
+            titleLimit: cellTitleWidthLimit,
           },
           axisTop: {
             domainColor: gridColor,
@@ -2008,6 +2069,7 @@ export default class chartElement extends LitElement {
             labelOverlap: 'greedy',
             titleFont: defaultFont,
             titleFontWeight: 400,
+            titleLimit: cellTitleWidthLimit,
           },
           axisLeft: {
             domainColor: axisColor,
@@ -2018,6 +2080,7 @@ export default class chartElement extends LitElement {
             titlePadding: 4,
             titleFont: defaultFont,
             titleFontWeight: 400,
+            titleLimit: cellTitleHeightLimit,
           },
           axisRight: {
             domainColor: gridColor,
@@ -2028,6 +2091,7 @@ export default class chartElement extends LitElement {
             titlePadding: 10,
             titleFont: defaultFont,
             titleFontWeight: 400,
+            titleLimit: cellTitleHeightLimit,
           },
           view: {
             stroke: gridColor,
@@ -2049,9 +2113,9 @@ export default class chartElement extends LitElement {
           },
 
           legend: {
+            title: null,
             direction: 'horizontal',
             symbolType: 'square',
-            symbolLimit: 30,
             labelLimit: { signal: 'max(100, width * 0.25)' },
             columns: { signal: 'floor(width / 150)' },
             symbolSize: 256,
@@ -2069,7 +2133,6 @@ export default class chartElement extends LitElement {
             labelFontSize: 12, //fillOpacity: 1,
             strokeWidth: 1, //fontWeight: 'bold',
             offset: 20,
-            symbolBaseFillColor: null,
             gradientLength: { signal: 'width - 32' },
             gradientThickness: 16,
             gradientLabelOffset: 16,
@@ -2121,6 +2184,9 @@ export default class chartElement extends LitElement {
           this._authorizeMultiSelection = false;
           break;
         case 'line':
+          if (spec['mark']) {
+            spec['mark']['point'] = { filled: true };
+          }
           isOrdinal = false;
           break;
         case 'text':

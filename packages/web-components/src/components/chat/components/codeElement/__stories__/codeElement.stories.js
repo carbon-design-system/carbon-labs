@@ -24,13 +24,13 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: () => html` <clabs-chat-code
-    content="${'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n'}">
+    content="${'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True'}">
   </clabs-chat-code>`,
 };
 
 const defaultPlaygroundArgs = {
   content:
-    'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n',
+    'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True',
   editable: false,
   disableLineTicks: false,
   disableEditButton: true,
@@ -53,10 +53,10 @@ const codeExamples = {
   html: '<!doctype html>\n<html>\n\t<head>\n\t\t<title>This is the title of the webpage</title>\n\t<script src="myscripts.js"></script>\n\t</head>\n\t<body>\n\t\t<p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this <strong>p</strong> tag and its contents.</p>\n\t</body>\n</html>',
   CSS: `@import url('style.css');\n@media(min-width:760px) {\n\t.box {\n\t\tgrid-template-rows: auto 1fr;\n\t}\nbody {\n\t--main-color: #ff0;\n\tmargin:0;\n\tanimation: spin 3s infinite;\n}\n.container {\n\tcontent:"test";\n\tdisplay: flex;\n\tpadding: 10px;\n}\n.item[data-id="1"]:hover::after {\n\tcontent: attr(data-id);\n\tcolor:red !important;\n}`,
   'python code':
-    'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True\n',
+    'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True',
   'C++':
-    '#include <iostream>\n#include "llama.cpp/llama.h"\n\nint main() {\n\tllama_model *model = llama_load_model_from_file("path/to/model.bin"); \n\n\tif (model == nullptr) {\n\t\tstd::cerr << "Failed to load model.";\n\t\treturn 1;\n\t}\n\n\tstd::string prompt = "Hello, how are you today?";\n\tllama_context *ctx = llama_new_context_with_model(model, 512); \n\n\tstd::cout << "Prompt: " << prompt << std::endl;\n\tstd::cout << "Response: ";\n\n\tfor (int i = 0; i < 100; ++i) {\n\t\tllama_token token = llama_sample_token(ctx, nullptr);\n\t\tstd::cout << llama_token_to_str(model, token);\n\t}\n\n\tstd::cout << std::endl;\n\n\tllama_free_context(ctx);\n\tllama_free_model(model);\n\n\treturn 0;\n}',
-  'SQL example': `-- Simple SQL file example\n-- Creating a table named 'employees'\nCREATE TABLE employees (\nid INT PRIMARY KEY,\nfirst_name VARCHAR(50),\nlast_name VARCHAR(50),\nemail VARCHAR(100),\ndepartment_id INT,\nhire_date DATE\n);\n-- Creating a table named 'departments'\nCREATE TABLE departments (\nid INT PRIMARY KEY,\nname VARCHAR(50)\n);\n-- Inserting data into the 'departments' table\nINSERT INTO departments (id, name) VALUES\n(1, 'Human Resources'),\n(2, 'Marketing'),\n(3, 'Sales'),\n(4, 'IT');\n-- Inserting data into the 'employees' table\nINSERT INTO employees (id, first_name, last_name, email, department_id, hire_date) VALUES\n(1, 'John', 'Doe', 'john.doe@example.com', 3, '2020-01-01'),\n(2, 'Jane', 'Doe', 'jane.doe@example.com', 2, '2019-06-15'),\n(3, 'Jim', 'Smith', 'jim.smith@example.com', 3, '2021-02-20');\n`,
+    '#include <iostream>\n#include "llama.cpp/llama.h"\n\nint main() {\n\tllama_model *model = llama_load_model_from_file("path/to/model.bin"); \n\n\tif (model == nullptr) {\n\t\tstd::cerr << "Failed to load model.";\n\t\treturn 1;\n\t}\n\n\tstd::string prompt = "Hello, how are you today?";\n\tllama_context *ctx = llama_new_context_with_model(model, 512); \n\n\tstd::cout << "Prompt: " << prompt << std::endl;\n\tstd::cout << "Response: ";\n\n\tfor (int i = 0; i < 100; ++i) {\n\t\tllama_token token = llama_sample_token(ctx, nullptr);\n\t\tstd::cout << llama_token_to_str(model, token);\n\t}\n\n\tstd::cout << std::endl;\n\n\tllama_free_context(ctx);\n\tllama_free_model(model);\n\n\treturn 0;}',
+  'SQL example': `-- Simple SQL file example\n-- Creating a table named 'employees'\nCREATE TABLE employees (\nid INT PRIMARY KEY,\nfirst_name VARCHAR(50),\nlast_name VARCHAR(50),\nemail VARCHAR(100),\ndepartment_id INT,\nhire_date DATE\n);\n-- Creating a table named 'departments'\nCREATE TABLE departments (\nid INT PRIMARY KEY,\nname VARCHAR(50)\n);\n-- Inserting data into the 'departments' table\nINSERT INTO departments (id, name) VALUES\n(1, 'Human Resources'),\n(2, 'Marketing'),\n(3, 'Sales'),\n(4, 'IT');\n-- Inserting data into the 'employees' table\nINSERT INTO employees (id, first_name, last_name, email, department_id, hire_date) VALUES\n(1, 'John', 'Doe', 'john.doe@example.com', 3, '2020-01-01'),\n(2, 'Jane', 'Doe', 'jane.doe@example.com', 2, '2019-06-15'),\n(3, 'Jim', 'Smith', 'jim.smith@example.com', 3, '2021-02-20');`,
   COBOL: `IDENTIFICATION DIVISION.\nPROGRAM-ID. VARS.\nDATA DIVISION.\n\t*> working storage defines variables\n\tWORKING-STORAGE SECTION.\n\t*> define a number with a sign, 3 numbers, a decimal, and then\n\t*> two numbers aafter the decimal. by default it should be 0 filled\n\t01 FIRST-VAR PIC S9(3)V9(2).\n\t*> do the same thing as above but actually initialize\n\t*> to a number -123.45\n\t01 SECOND-VAR PIC S9(3)V9(2) VALUE -123.45.\n\t*> defines an alphabetic string and initialize it to abcdef\n\t01 THIRD-VAR PIC A(6) VALUE 'ABCDEF'.\n\t*> define an alphanumeric string and initialize it to a121$\n\t01 FOURTH-VAR PIC X(5) VALUE 'A121$'.\n\t*> create a grouped variable\n\t01 GROUP-VAR.\n\t\t05 SUBVAR-1 PIC 9(3) VALUE 337.\n\t\t*> create 3 alphanumerics, but use less than\n\t\t*> the allocated space for each of them\n\t\t05 SUBVAR-2 PIC X(15) VALUE 'LALALALA'.\n\t\t05 SUBVAR-3 PIC X(15) VALUE 'LALALA'.\n\t\t05 SUBVAR-4 PIC X(15) VALUE 'LALALA'.\n*> print our variables\nPROCEDURE DIVISION.\n\tDISPLAY "1ST VAR :"FIRST-VAR.\n\tDISPLAY "2ND VAR :"SECOND-VAR.\n\tDISPLAY "3RD VAR :"THIRD-VAR.\n\tDISPLAY "4TH VAR :"FOURTH-VAR.\n\tDISPLAY "GROUP VAR :"GROUP-VAR.\n\tSTOP RUN.`,
   Java: `public class BinaryConverter {\n\t\n\tpublic static void main(String[] args){\n\t\tfor(int i = -5; i < 33; i++){\n\t\t\tSystem.out.println(i + ": " + toBinary(i));\n\t\t\tSystem.out.println(i);\n\t\t\t//always another way\n\t\t\tSystem.out.println(i + ": " + Integer.toBinaryString(i));\n\t\t}\n\t}\n\t\n\t/*\n\t * pre: none\n\t * post: returns a String with base10Num in base 2\n\t */\n\tpublic static String toBinary(int base10Num){\n\t\tboolean isNeg = base10Num < 0;\n\t\tbase10Num = Math.abs(base10Num);\n\t\tString result = "";\n\t\t\n\t\twhile(base10Num > 1){\n\t\t\tresult = (base10Num % 2) + result;\n\t\t\tbase10Num /= 2;\n\t\t}\n\t\tassert base10Num == 0 || base10Num == 1 : "value is not <= 1: " + base10Num;\n\t\t\n\t\tresult = base10Num + result;\n\t\tassert all0sAnd1s(result);\n\t\t\n\t\tif( isNeg )\n\t\t\tresult = "-" + result;\n\t\treturn result;\n\t}\n\t\n\t/*\n\t * pre: cal != null\n\t * post: return true if val consists only of characters 1 and 0, false otherwise\n\t */\n\tpublic static boolean all0sAnd1s(String val){\n\t\tassert val != null : "Failed precondition all0sAnd1s. parameter cannot be null";\n\t\tboolean all = true;\n\t\tint i = 0;\n\t\tchar c;\n\t\t\n\t\twhile(all && i < val.length()){\n\t\t\tc = val.charAt(i);\n\t\t\tall = c == '0' || c == '1';\n\t\t\ti++;\n\t\t}\n\t\treturn all;\n\t}\n}`,
   JavaScript:
@@ -238,6 +238,10 @@ export const OptionShowcase = {
     <h4>C++ with no height set</h4>
     <clabs-chat-code content="${codeExamples['C++']}"> </clabs-chat-code>
     <br />
+    <h4>C++ with no height set and collapsable</h4>
+    <clabs-chat-code enable-block-collapse content="${codeExamples['C++']}">
+    </clabs-chat-code>
+    <br />
     <h4>C++ with max-height 200px</h4>
     <clabs-chat-code max-height="200px" content="${codeExamples['C++']}">
     </clabs-chat-code>
@@ -415,16 +419,149 @@ export const ColorTesting = {
     )}`,
 };
 
+export const Comparison = {
+  /**
+   * Renders the template for Storybook
+   *
+   * @returns {TemplateResult<1>}
+   */
+  render: () =>
+    html`
+      <h3>Comparison</h3>
+      <br />
+      <clabs-chat-code
+        enable-edit-button
+        show-content-differences
+        disable-edit-button
+        content="${'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True'}"
+        new-content="${'from math import sqrt\n#hey\n\n#added lines here\n#prime function to check any number and see if  prime or not:\ndef Prime(number,itr):\n\t#base condition\n\n\n\tif !number % itr == 1:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\tprint("number is not prime")\n\t\treturn False\n\tprint("number is prime")\n\treturn True'}">
+      </clabs-chat-code>
+      <br /><br />
+      <h3>Source code</h3>
+      <br />
+      <clabs-chat-code
+        content="${'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True'}">
+      </clabs-chat-code>
+      <br />
+      <br />
+      <h3>Edited Code</h3>
+      <br />
+      <clabs-chat-code
+        content="${'from math import sqrt\n#hey\n#added lines here\n#prime function to check any number and see if  prime or not:\ndef Prime(number,itr):\n\t#base condition\n\n\n\tif !number % itr == 1:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\tprint("number is not prime")\n\t\treturn False\n\tprint("number is prime")\n\treturn True'}">
+      </clabs-chat-code>
+    `,
+};
+
 export const Editing = {
   /**
    * Renders the template for Storybook
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html`<h4>Python example (no coloring or ticks)</h4>
+  render: () => html` <h4>
+      JSON example without newlines/tabs and ticks, coloring & collapse
+    </h4>
     <clabs-chat-code
       ?editable="${true}"
       max-height="246px"
+      auto-indent
+      disable-line-ticks
+      content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"fields":[{"name":"Country name","num_values":165,"sample_values":["Afghanistan","Albania","Algeria","Angola","Argentina"]},{"max":2023,"min":2005,"name":"year"},{"max":8.019,"min":1.281,"name":"Life Ladder"},{"max":11.676,"min":5.527,"name":"Log GDP per capita"},{"max":0.987,"min":0.228,"name":"Social support"},{"max":74.6,"min":6.72,"name":"Healthy life expectancy at birth"},{"max":0.985,"min":0.228,"name":"Freedom to make life choices"},{"max":0.7,"min":-0.34,"name":"Generosity"},{"max":0.983,"min":0.035,"name":"Perceptions of corruption"},{"max":0.884,"min":0.179,"name":"Positive affect"},{"max":0.705,"min":0.083,"name":"Negative affect"}],"file":"Happiness.csv"},"encoding":{"x":{"field":"Healthy life expectancy at birth","type":"quantitative"},"y":{"field":"Life Ladder","type":"quantitative"}},"mark":"point"}'>
+    </clabs-chat-code>
+    <br />
+
+    <h4>JSON example with ticks, coloring & collapse</h4>
+    <clabs-chat-code
+      ?editable="${true}"
+      max-height="246px"
+      render-language="json"
+      content='{
+	"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	"data": {
+		"fields": [
+			{
+				"name": "Country name",
+				"num_values": 165,
+				"sample_values": [
+					"Afghanistan",
+					"Albania",
+					"Algeria",
+					"Angola",
+					"Argentina"
+				]
+			},
+			{
+				"max": 2023,
+				"min": 2005,
+				"name": "year"
+			},
+			{
+				"max": 8.019,
+				"min": 1.281,
+				"name": "Life Ladder"
+			},
+			{
+				"max": 11.676,
+				"min": 5.527,
+				"name": "Log GDP per capita"
+			},
+			{
+				"max": 0.987,
+				"min": 0.228,
+				"name": "Social support"
+			},
+			{
+				"max": 74.6,
+				"min": 6.72,
+				"name": "Healthy life expectancy at birth"
+			},
+			{
+				"max": 0.985,
+				"min": 0.228,
+				"name": "Freedom to make life choices"
+			},
+			{
+				"max": 0.7,
+				"min": -0.34,
+				"name": "Generosity"
+			},
+			{
+				"max": 0.983,
+				"min": 0.035,
+				"name": "Perceptions of corruption"
+			},
+			{
+				"max": 0.884,
+				"min": 0.179,
+				"name": "Positive affect"
+			},
+			{
+				"max": 0.705,
+				"min": 0.083,
+				"name": "Negative affect"
+			}
+		],
+		"file": "Happiness.csv"
+	},
+	"encoding": {
+		"x": {
+			"field": "Healthy life expectancy at birth",
+			"type": "quantitative"
+		},
+		"y": {
+			"field": "Life Ladder",
+			"type": "quantitative"
+		}
+	},
+	"mark": "point"
+}'>
+    </clabs-chat-code>
+    <br />
+    <h4>Python example (no coloring or ticks)</h4>
+    <clabs-chat-code
+      ?editable="${true}"
+      max-height="246px"
+      enable-block-collapse
       disable-line-ticks
       disable-coloring
       content="${codeExamples['python code']}">
@@ -433,6 +570,7 @@ export const Editing = {
     <h4>Python example (no ticks)</h4>
     <clabs-chat-code
       ?editable="${true}"
+      enable-block-collapse
       disable-line-ticks
       max-height="246px"
       content="${codeExamples['python code']}">
@@ -442,6 +580,7 @@ export const Editing = {
     <clabs-chat-code
       ?editable="${true}"
       disable-coloring
+      enable-block-collapse
       max-height="246px"
       content="${codeExamples['python code']}">
     </clabs-chat-code>
@@ -449,15 +588,30 @@ export const Editing = {
     <h4>SQL example</h4>
     <clabs-chat-code
       ?editable="${true}"
-      max-height="246px"
+      enable-block-collapse
+      max-height="500px"
       content="${codeExamples['SQL example']}">
     </clabs-chat-code>
     <br />
-    <h4>JS carbon example</h4>
+    <h4>FORTRAN example</h4>
     <clabs-chat-code
       max-height="492px"
       ?editable="${true}"
-      content="${codeExamples['carbon datatable']}">
+      content="${codeExamples['FORTRAN']}">
+    </clabs-chat-code>
+    <br />
+    <h4>MATLAB example</h4>
+    <clabs-chat-code
+      max-height="492px"
+      ?editable="${true}"
+      content="${codeExamples['MATLAB']}">
+    </clabs-chat-code>
+    <br />
+    <h4>Dockerfile example</h4>
+    <clabs-chat-code
+      max-height="492px"
+      ?editable="${true}"
+      content="${codeExamples['Dockerfile']}">
     </clabs-chat-code>`,
 };
 

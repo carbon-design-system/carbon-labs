@@ -40,6 +40,7 @@ export function chartElementTemplate(customElementClass) {
     _errorMessage: errorMessage,
     chartLoading,
     content,
+    theme,
     debugMode,
     streaming,
     _buildLoader: buildLoader,
@@ -74,10 +75,12 @@ export function chartElementTemplate(customElementClass) {
     exportedImageURL,
     _handleFullScreenScroll: handleFullScreenScroll,
     selected,
+    isHovered,
+    thumbNail,
   } = customElementClass;
 
   return html`
-    ${showModal
+    ${showModal && !thumbNail
       ? html`
           <div class="${clabsPrefix}--chat-chart-fullscreen-container-close">
             <cds-icon-button
@@ -92,7 +95,7 @@ export function chartElementTemplate(customElementClass) {
           </div>
         `
       : html``}
-    ${content
+    ${content && !thumbNail
       ? html`
     <div class="${clabsPrefix}--chat-chart-fullscreen-container ${
           modalMode === 'fullscreen'
@@ -135,64 +138,67 @@ export function chartElementTemplate(customElementClass) {
               id="${clabsPrefix}--chat-chart-editor-embed-vis-${uniqueID}"></div>`
       }
 
-
-        <div class="${clabsPrefix}--chat-editor-modal-section-code">
-          <div class="${clabsPrefix}--chat-editor-modal-header">
-            <cds-content-switcher value="carbonified">
-              <cds-content-switcher-item
-                value="original"
-                selected
-                data-selection="original"
-                @click="${showOriginalSpec}">
-                Edit Original Spec
-              </cds-content-switcher-item>
-              <cds-content-switcher-item
-                value="carbonified"
-                data-selection="carbonified"
-                @click="${showCarbonSpec}">
-                Edit Carbon Spec
-              </cds-content-switcher-item>
-            </cds-content-switcher>
-          </div>
-          <div class="${clabsPrefix}--chat-editor-modal-code-container">
-          ${
-            !editedContent || !_visualizationSpec
-              ? ''
-              : html`
-                  ${editOriginalSpecification
-                    ? html`
-                        <clabs-chat-code
-                          editable
-                          max-height="calc(100vh - 190px)"
-                          debug
-                          disable-line-ticks
-                          @on-code-edit-change="${handleLiveRawEditorChange}"
-                          @on-code-edit-validation="${handleOriginalEditorValidation}"
-                          content="${JSON.stringify(
-                            JSON.parse(editedContent),
-                            null,
-                            '\t'
-                          )}">
-                        </clabs-chat-code>
-                      `
-                    : html`
-                        <clabs-chat-code
-                          editable
-                          max-height="calc(100vh - 190px)"
-                          disable-line-ticks
-                          @on-code-edit-change="${handleLiveCarbonEditorChange}"
-                          @on-code-edit-validation="${handleCarbonEditorValidation}"
-                          content="${JSON.stringify(
-                            lightenSpec(_visualizationSpec),
-                            null,
-                            '\t'
-                          )}">
-                        </clabs-chat-code>
-                      `}
-                `
-          }
-          </div>
-        </div>
+      ${
+        showModal && !thumbNail
+          ? html` <div class="${clabsPrefix}--chat-editor-modal-section-code">
+              <div class="${clabsPrefix}--chat-editor-modal-header">
+                <cds-content-switcher value="carbonified">
+                  <cds-content-switcher-item
+                    value="original"
+                    selected
+                    data-selection="original"
+                    @click="${showOriginalSpec}">
+                    Edit Original Spec
+                  </cds-content-switcher-item>
+                  <cds-content-switcher-item
+                    value="carbonified"
+                    data-selection="carbonified"
+                    @click="${showCarbonSpec}">
+                    Edit Carbon Spec
+                  </cds-content-switcher-item>
+                </cds-content-switcher>
+              </div>
+              <div class="${clabsPrefix}--chat-editor-modal-code-container">
+                ${!editedContent || !_visualizationSpec
+                  ? ''
+                  : html`
+                      ${editOriginalSpecification
+                        ? html`
+                            <clabs-chat-code
+                              editable
+                              max-height="calc(100vh - 190px)"
+                              debug
+                              disable-line-ticks
+                              render-language="json"
+                              @on-code-edit-change="${handleLiveRawEditorChange}"
+                              @on-code-edit-validation="${handleOriginalEditorValidation}"
+                              content="${JSON.stringify(
+                                JSON.parse(editedContent),
+                                null,
+                                '\t'
+                              )}">
+                            </clabs-chat-code>
+                          `
+                        : html`
+                            <clabs-chat-code
+                              editable
+                              max-height="calc(100vh - 190px)"
+                              disable-line-ticks
+                              render-language="json"
+                              @on-code-edit-change="${handleLiveCarbonEditorChange}"
+                              @on-code-edit-validation="${handleCarbonEditorValidation}"
+                              content="${JSON.stringify(
+                                lightenSpec(_visualizationSpec),
+                                null,
+                                '\t'
+                              )}">
+                            </clabs-chat-code>
+                          `}
+                    `}
+              </div>
+            </div>`
+          : html``
+      }
       </div>
     </div>`
       : html``}
@@ -200,7 +206,7 @@ export function chartElementTemplate(customElementClass) {
       ? html`
           <div
             class="${clabsPrefix}--chat-chart-thumbnail-container${selected
-              ? ' ' + clabsPrefix + '--chat-chart-container-selected'
+              ? ' ' + clabsPrefix + '--chat-chart-thumbnail-container-selected'
               : ''}"
             @click="${chartClicked}"
             @mouseout="${handleMouseOut}"
@@ -270,12 +276,15 @@ export function chartElementTemplate(customElementClass) {
                 </div>
               </div>`}
         `}
-    ${disableOptions || errorMessage || chartLoading || streaming
+    ${!isHovered &&
+    (disableOptions || errorMessage || chartLoading || streaming)
       ? html``
       : html` <div
           class="${clabsPrefix}--chat-chart-options"
           @mouseover="${handleMouseOver}">
-          <div class="${clabsPrefix}--chat-chart-options-prefade">&nbsp;</div>
+          <div class="${clabsPrefix}--chat-chart-options-prefade-${theme}">
+            &nbsp;
+          </div>
           <div class="${clabsPrefix}--chat-chart-options-buttons">
             ${!disableExport
               ? html`

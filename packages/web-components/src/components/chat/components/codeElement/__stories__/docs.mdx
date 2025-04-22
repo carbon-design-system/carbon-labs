@@ -41,100 +41,265 @@ The **Carbon Labs Code** component aims to expand upon the **Carbon
 CodeSnippet** component with more flexibility, dynamic line marks, colored text
 and editing functions.
 
+**C++ example with max height at 300px, custom language name, auto-detection for color rendering, auto-indenting, block-collapsing, editing and undo/save functions enabled**
+<clabs-chat-code
+  max-height="300px"
+  enable-edit-button
+  show-content-differences
+  customLabels={{
+  "code-copypaste-button": "Copier le code",
+  "code-copypaste-success": "Copié!",
+  "code-estimated-warning": "(estimé)",
+  "code-editing-validation": "Appliquer",
+  "code-editing-cancelled": "Annuler",
+  "code-line-descriptor": "lignes"
+}}
+  display-line-count
+  enable-language-display
+  displayed-language="Custom language name (C++ rendering)"
+  enable-block-collapse
+  content={`#include <iostream>\n#include "llama.cpp/llama.h"\n\nint main() {\n\tllama_model *model = llama_load_model_from_file("path/to/model.bin"); \n\n\tif (model == nullptr) {\n\t\tstd::cerr << "Failed to load model.";\n\t\treturn 1;\n\t}\n\n\tstd::string prompt = "Hello, how are you today?";\n\tllama_context *ctx = llama_new_context_with_model(model, 512); \n\n\tstd::cout << "Prompt: " << prompt << std::endl;\n\tstd::cout << "Response: ";\n\n\tfor (int i = 0; i < 100; ++i) {\n\t\tllama_token token = llama_sample_token(ctx, nullptr);\n\t\tstd::cout << llama_token_to_str(model, token);\n\t}\n\n\tstd::cout << std::endl;\n\n\tllama_free_context(ctx);\n\tllama_free_model(model);\n\n\treturn 0;\n}`}>
+
+</clabs-chat-code>
+
+<clabs-chat-code
+enable-language-display
+  displayed-language="Malbolge"
+    content="(=<`$9]7<5YXz7wT.3,+O/o'K%$H'~D|#z@b=`{^Lx8%$Xmrkpohm-kNi;gsedcba`_^][ZYXWVUTSRQPONMLKJIHGFEDCBA@?>=<;:9876543s+O<oLm">
+</clabs-chat-code> 
 ### Attributes and Properties
 
 <a id="attributes-and-properties"></a>
+
+#### General
 <table>
   <thead>
     <tr>
       <td>**Attribute name**</td>
+      <td>**Type**</td>
+      <td>**Effect**</td>
+      <td>**Use case**</td>
+    </tr>
+  </thead>
+  <tbody>
+   <tr>
+      <td>`content`</td><td>`string`</td>
+      <td>Text content to render</td>
+      <td>Obligatory for the component to render</td>
+    </tr>
+   <tr>
+      <td>`max-height`</td><td>`string`</td>
+      <td>Limits total height and scrolls if needed</td>
+      <td>When code is large or height is limited</td>
+    </tr>
+    <tr>
+      <td>`display-line-count`</td><td>`boolean`</td>
+      <td>Shows line count at top of component</td>
+      <td>When code length is variable</td>
+    </tr>
+    <tr>
+      <td>`tab-size`</td><td>`integer`</td>
+      <td>Set tab spacing for new lines</td>
+      <td>When default spacing of 2 is insufficient</td>
+    </tr>
+    <tr>
+      <td>`disable-auto-compacting`</td><td>`boolean`</td>
+      <td>Stops line-ticks from being removed when space isn't sufficient</td>
+      <td>Hide ticks when compacted</td>
+    </tr>
+    <tr>
+      <td>`disable-line-ticks`</td><td>`boolean`</td>
+      <td>Remove line counts on the left side-bar of code</td>
+      <td>When showing code such as console commands</td>
+    </tr>
+    <tr>
+      <td>`disable-copy-button`</td>
+      <td>`boolean`</td>
+      <td>Remove copy button from top-right corner</td>
+      <td>When displaying code not meant to be replicated</td>
+    </tr>
+    <tr>
+      <td>`customLabels`</td>
+      <td>`array object`</td>
+      <td>Define all button labels</td>
+      <td>See below</td>
+    </tr>
+    <tr>
+      <td>`auto-indent`</td>
+      <td>`boolean`</td>
+      <td>Auto-detect and reformat content to add tab spacing</td>
+      <td>When content is missing tabs, uses two/four spaces or LLM response is unreliable</td>
+    </tr>
+  </tbody>
+</table>
+
+
+#### Coloring
+<table>
+  <thead>
+    <tr>
+      <td>**Attribute name**</td>
+      <td>**Type**</td>
+      <td>**Effect**</td>
+      <td>**Use case**</td>
+    </tr>
+  </thead>
+  <tbody>
+     <tr>
+      <td>`disable-coloring`</td><td>`boolean`</td>
+      <td>Disable auto-coloring on render</td>
+      <td>When unneeded</td>
+    </tr>
+    <tr>
+      <td>`disable-coloring-char-threshold`</td><td>`integer`</td>
+      <td>Max character count to auto disable coloring</td>
+      <td>To optimize performance with large code pieces</td>
+    </tr>
+    <tr>
+      <td>`disable-coloring-line-threshold`</td><td>`integer`</td>
+      <td>Max line count to auto disable coloring</td>
+      <td>To optimize performance with large code pieces</td>
+    </tr>
+    <tr>
+      <td>`render-language`</td>
+      <td>`string`</td>
+      <td>Set HLJS rendering language flag</td>
+      <td>To force HighlightJS to use specified language</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Editing
+<table>
+  <thead>
+    <tr>
+      <td>**Attribute name**</td>
+      <td>**Type**</td>
       <td>**Effect**</td>
       <td>**Use case**</td>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>`editable`</td>
+      <td>`editable`</td><td>`boolean`</td>
       <td>Make every line editable by users</td>
       <td>When a user-input is needed to fix an object</td>
     </tr>
     <tr>
-      <td>`streaming`</td>
-      <td>Rerenders component when content is streamed in</td>
-      <td>When streaming is enabled</td>
+      <td>`disable-edit-button`</td><td>`boolean`</td>
+      <td>When editable is invoked, remove edit button</td>
+      <td>Disable button to validate edit</td>
     </tr>
     <tr>
-      <td>`max-height`</td>
-      <td>Limits total height and scrolls if needed</td>
-      <td>When code is large or height is limited</td>
+      <td>`enable-edit-button`</td>
+      <td>`boolean`</td>
+      <td>Show editing button</td>
+      <td>To allow toggling of editing mode</td>
     </tr>
     <tr>
-      <td>`display-line-count`</td>
-      <td>Shows line count at top of component</td>
-      <td>When code length is variable</td>
+      <td>`disable-editing-options`</td>
+      <td>`boolean`</td>
+      <td>Hide confirm/undo buttons in editing mode</td>
+      <td></td>
     </tr>
     <tr>
-      <td>`tab-size`</td>
-      <td>Set tab spacing for new lines</td>
-      <td>When default spacing of 2 is insufficient</td>
+      <td>`debug-editing-mode`</td>
+      <td>`boolean`</td>
+      <td>Show overlapping text in virtual text-area</td>
+      <td>To debug issues with editing mode resizing etc</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Diff checking
+<table>
+  <thead>
+    <tr>
+      <td>**Attribute name**</td>
+      <td>**Type**</td>
+      <td>**Effect**</td>
+      <td>**Use case**</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`new-content`</td><td>`string`</td>
+      <td>Updated text content to compare</td>
+      <td>Obligatory for the diff comparison mode</td>
+    </tr>
+    <tr>
+      <td>`show-content-differences`</td>
+      <td>`boolean`</td>
+      <td>Enable diff comparison mode</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+#### Block collapsing
+<table>
+  <thead>
+    <tr>
+      <td>**Attribute name**</td>
+      <td>**Type**</td>
+      <td>**Effect**</td>
+      <td>**Use case**</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`enable-block-collapse`</td>
+      <td>`boolean`</td>
+      <td>Show carets to collapse code blocks</td>
+      <td>When code is large and space/readibility is paramount</td>
+    </tr>
+    <tr>
+      <td>`auto-indent`</td>
+     <td>`boolean`</td>
+     <td>Auto-detect and reformat content to add tab spacing</td>
+     <td>When content is missing tabs, uses two/four spaces or LLM response is unreliable</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Language management
+<table>
+  <thead>
+    <tr>
+      <td>**Attribute name**</td>
+      <td>**Type**</td>
+      <td>**Effect**</td>
+      <td>**Use case**</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`render-language`</td>
+      <td>`string`</td>
+      <td>Set HLJS rendering language flag</td>
+      <td>To force HighlightJS to use specified language</td>
     </tr>
     <tr>
       <td>`enable-language-display`</td>
+      <td>`boolean`</td>
       <td>Show language at top of component</td>
       <td>When generation offers multiple options</td>
     </tr>
     <tr>
       <td>`displayed-language`</td>
+      <td>`string`</td>
       <td>Force top-level language name</td>
       <td>When automatic detection isn't accurate</td>
     </tr>
     <tr>
       <td>`enable-estimated-language`</td>
+      <td>`boolean`</td>
       <td>Show guessed language from coloring</td>
       <td>When language is unknown</td>
     </tr>
-    <tr>
-      <td>`disable-coloring`</td>
-      <td>Disable auto-coloring on render</td>
-      <td>When unneeded</td>
-    </tr>
-    <tr>
-      <td>`disable-coloring-char-threshold`</td>
-      <td>Max character count to auto disable coloring</td>
-      <td>To optimize performance with large code pieces</td>
-    </tr>
-    <tr>
-      <td>`disable-coloring-line-threshold`</td>
-      <td>Max line count to auto disable coloring</td>
-      <td>To optimize performance with large code pieces</td>
-    </tr>
-    <tr>
-      <td>`disable-auto-compacting`</td>
-      <td>Stops line-ticks from being removed when space isn't sufficient</td>
-      <td>Hide ticks when compacted</td>
-    </tr>
-    <tr>
-      <td>`disable-edit-button`</td>
-      <td>When editable is invoked, remove edit button</td>
-      <td>Disable button to validate edit</td>
-    </tr>
-    <tr>
-      <td>`disable-line-ticks`</td>
-      <td>Remove line counts on the left side-bar of code</td>
-      <td>When showing code such as console commands</td>
-    </tr>
-    <tr>
-      <td>`disable-copy-button`</td>
-      <td>Remove copy button from top-right corner</td>
-      <td>When displaying code not meant to be replicated</td>
-    </tr>
-    <tr>
-      <td>`customLabels`</td>
-      <td>Define all button labels</td>
-      <td>See below</td>
-    </tr>
   </tbody>
 </table>
+
 
 ### Custom Labels for localization ###
 

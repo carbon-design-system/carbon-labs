@@ -84,7 +84,7 @@ const coreExamples = [
   ],
   [
     'link-list',
-    '[IBM Cloud Home](https://www.ibm.com/cloud),[Cloud Solutions](https://www.ibm.com/cloud/solutions),[Cloud products](https://www.ibm.com/cloud/products),[Cloud Docs](https://cloud.ibm.com/docs)',
+    '[IBM Cloud Home, homepage](https://www.ibm.com/cloud),[Cloud Solutions](https://www.ibm.com/cloud/solutions),[Cloud products](https://www.ibm.com/cloud/products),[Cloud Docs](https://cloud.ibm.com/docs)',
     '',
     'List of links in IBM Cloud',
   ],

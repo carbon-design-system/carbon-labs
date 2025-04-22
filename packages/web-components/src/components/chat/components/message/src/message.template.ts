@@ -71,6 +71,7 @@ export function messageTemplate(customElementClass) {
     currentlyStreaming,
     _handleSlotchange,
     _hideFeedBackForm: hideFeedBackForm,
+    disableFeedbackButtons,
     positiveFeedbackSelected,
     negativeFeedbackSelected,
     enableComplexFeedback,
@@ -873,10 +874,13 @@ export function messageTemplate(customElementClass) {
                           : html`
                               <cds-icon-button
                                 size="sm"
-                                kind="ghost"
+                                kind="${disableFeedbackButtons
+                                  ? 'danger-ghost'
+                                  : 'ghost'}"
                                 align="right"
                                 role="button"
                                 aria-expanded="${positiveFeedbackSelected}"
+                                ?disabled="${disableFeedbackButtons}"
                                 aria-controls="${showFeedBackForm
                                   ? clabsPrefix +
                                     '--chat-popup-unique-feedback-' +
@@ -888,19 +892,24 @@ export function messageTemplate(customElementClass) {
                                   ? ThumbsUpFilled16({ slot: 'icon' })
                                   : ThumbsUp16({ slot: 'icon' })}
                                 <span slot="tooltip-content"
-                                  >${renderLabel(
-                                    positiveFeedbackSelected
-                                      ? 'message-undo-like-button'
-                                      : 'message-like-button'
-                                  )}</span
+                                  >${disableFeedbackButtons
+                                    ? renderLabel('message-feedback-disabled')
+                                    : renderLabel(
+                                        positiveFeedbackSelected
+                                          ? 'message-undo-like-button'
+                                          : 'message-like-button'
+                                      )}</span
                                 >
                               </cds-icon-button>
 
                               <cds-icon-button
                                 size="sm"
-                                kind="ghost"
+                                kind="${disableFeedbackButtons
+                                  ? 'danger-ghost'
+                                  : 'ghost'}"
                                 align="right"
                                 role="button"
+                                ?disabled="${disableFeedbackButtons}"
                                 aria-expanded="${negativeFeedbackSelected}"
                                 aria-controls="${showFeedBackForm
                                   ? clabsPrefix +
@@ -914,11 +923,13 @@ export function messageTemplate(customElementClass) {
                                   ? ThumbsDownFilled16({ slot: 'icon' })
                                   : ThumbsDown16({ slot: 'icon' })}
                                 <span slot="tooltip-content"
-                                  >${renderLabel(
-                                    negativeFeedbackSelected
-                                      ? 'message-undo-dislike-button'
-                                      : 'message-dislike-button'
-                                  )}</span
+                                  >${disableFeedbackButtons
+                                    ? renderLabel('message-feedback-disabled')
+                                    : renderLabel(
+                                        negativeFeedbackSelected
+                                          ? 'message-undo-dislike-button'
+                                          : 'message-dislike-button'
+                                      )}</span
                                 >
                               </cds-icon-button>
                               <cds-icon-button

@@ -51,6 +51,12 @@ export default class message extends LitElement {
   disableButtons;
 
   /**
+   * Define name of specific bot or user
+   */
+  @property({ type: Boolean, attribute: 'disable-feedback-buttons' })
+  disableFeedbackButtons;
+
+  /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
    */
   @property({ type: String, attribute: 'raw-text', reflect: true })
@@ -1611,6 +1617,8 @@ export default class message extends LitElement {
         case 'message-loading-aria-label':
           customValue = labels[key] || 'Message sent, please wait...';
           break;
+        case 'message-feedback-disabled':
+          customValue = labels[key] || 'Feedback sent';
       }
     }
     return customValue || key;

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.33.0...@carbon-labs/react-ui-shell@0.34.0) (2025-04-22)
+
+
+### Features
+
+* **UIShell:** add TrialCountdown component ([#545](https://github.com/carbon-design-system/carbon-labs/issues/545)) ([b5e4f33](https://github.com/carbon-design-system/carbon-labs/commit/b5e4f33eef2eaac609bcf5e720c6477c6032b607))
+
+
+
+
+
 # [0.33.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.32.0...@carbon-labs/react-ui-shell@0.33.0) (2025-04-07)
 
 

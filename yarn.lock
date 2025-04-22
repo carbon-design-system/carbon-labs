@@ -2634,6 +2634,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-split-panel@workspace:packages/react/src/components/SplitPanel":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-split-panel@workspace:packages/react/src/components/SplitPanel"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter"

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.55.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.54.0...@carbon-labs/react@0.55.0) (2025-04-22)
+
+
+### Features
+
+* create split panel component ([#501](https://github.com/carbon-design-system/carbon-labs/issues/501)) ([a579b97](https://github.com/carbon-design-system/carbon-labs/commit/a579b978a085b38f4d2f7ea4b853a29e022632b0))
+
+
+
+
+
+# [0.54.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.53.0...@carbon-labs/react@0.54.0) (2025-04-22)
+
+
+### Features
+
+* **UIShell:** add TrialCountdown component ([#545](https://github.com/carbon-design-system/carbon-labs/issues/545)) ([b5e4f33](https://github.com/carbon-design-system/carbon-labs/commit/b5e4f33eef2eaac609bcf5e720c6477c6032b607))
+
+
+
+
+
 # [0.53.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.52.0...@carbon-labs/react@0.53.0) (2025-04-18)
 
 **Note:** Version bump only for package @carbon-labs/react

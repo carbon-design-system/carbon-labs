@@ -6,25 +6,31 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+import { Add } from '@carbon/react/icons';
+import { ButtonKinds, Loading } from '@carbon/react';
+import SampleCustomTaskContent from './SampleCustomTaskContent';
+import React from 'react';
+
 export const workspaceData = [
   {
     id: 'workspace-1',
-    text: 'Workspace 1',
+    label: 'Workspace 1',
   },
   {
     id: 'workspace-2',
-    text: 'Workspace 2',
+    label: 'Workspace 2',
   },
   {
     id: 'workspace-3',
-    text: 'Workspace 3',
+    label: 'Workspace 3',
   },
 ];
 
 export const headerTiles = [
   {
     id: 1,
-    name: 'AI Chat Tile w/ two glass tiles',
+    label: 'AI Chat Tile w/ two glass tiles',
     tiles: [
       {
         id: 'ai-tile',
@@ -50,7 +56,7 @@ export const headerTiles = [
   },
   {
     id: 2,
-    name: 'Three glass tiles',
+    label: 'Three glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -77,7 +83,7 @@ export const headerTiles = [
   },
   {
     id: 3,
-    name: 'Four glass tiles',
+    label: 'Four glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -111,7 +117,7 @@ export const headerTiles = [
   },
   {
     id: 4,
-    name: 'Five glass tiles',
+    label: 'Five glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -152,7 +158,7 @@ export const headerTiles = [
   },
   {
     id: 5,
-    name: 'Six glass tiles',
+    label: 'Six glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -200,7 +206,7 @@ export const headerTiles = [
   },
   {
     id: 6,
-    name: 'Seven glass tiles',
+    label: 'Seven glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -255,7 +261,7 @@ export const headerTiles = [
   },
   {
     id: 7,
-    name: 'Eight glass tiles',
+    label: 'Eight glass tiles',
     tiles: [
       {
         id: 'tile-1',
@@ -315,4 +321,35 @@ export const headerTiles = [
       },
     ],
   },
+  {
+    id: 8,
+    label: 'Custom content tasks',
+    tiles: [
+      {
+        id: 'tile-1',
+        customContent: <Loading description="Sample loading state" />
+      },
+      {
+        id: 'tile-2',
+        customContent: <SampleCustomTaskContent />
+      },
+    ],
+  },
 ];
+
+export const tasksConfigButton = {
+  type: 'button',
+  button: {
+    href: '#',
+    icon: Add,
+    text: 'Action button',
+    type: ButtonKinds[7],
+  },
+};
+
+export const tasksConfigDropdown = {
+  type: 'dropdown',
+  dropdown: {
+    label: 'Customize your journey',
+  },
+};

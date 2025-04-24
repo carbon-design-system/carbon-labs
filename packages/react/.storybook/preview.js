@@ -1,12 +1,147 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { white, g10, g90, g100 } from '@carbon/themes';
 import { breakpoints } from '@carbon/layout';
-import { GlobalTheme } from '@carbon/react/es/components/Theme';
+import { GlobalTheme, Theme } from '@carbon/react/es/components/Theme';
 import { Layout } from '@carbon/react/es/components/Layout';
 import { TextDirection } from '@carbon/react/es/components/Text';
+import { DocsContainer, Meta, Unstyled } from '@storybook/blocks';
+import {
+  Accordion,
+  AccordionItem,
+  AnchorLink,
+  AnchorLinks,
+  ArtDirection,
+  ArticleCard,
+  Aside,
+  Blockquote,
+  Button,
+  Caption,
+  CardGroup,
+  Code,
+  Column,
+  Divider,
+  DoDont,
+  DoDontRow,
+  GifPlayer,
+  Grid,
+  H1,
+  H2,
+  H3,
+  H4,
+  H5,
+  H6,
+  ImageWrapper,
+  InlineCode,
+  InlineNotification,
+  Layer,
+  Link,
+  LI,
+  MiniCard,
+  OL,
+  PageDescription,
+  PageTable,
+  P,
+  Preview,
+  ResourceCard,
+  Row,
+  StorybookDemo,
+  Tabs,
+  Tab,
+  Title,
+  UL,
+  Video,
+} from '@carbon-labs/mdx-components';
 import './styles.scss';
-
+import { MDXProvider } from '@mdx-js/react';
 import theme from './theme';
+
+const customMarkdown = {
+  h1: H1,
+  h2: H2,
+  h3: H3,
+  h4: H4,
+  h5: H5,
+  h6: H6,
+  p: P,
+  ol: OL,
+  ul: UL,
+  li: LI,
+  a: Link,
+  blockquote: Blockquote,
+  table: PageTable,
+  pre: Code,
+  code: InlineCode,
+  hr: Divider,
+  AnchorLinks,
+  AnchorLink,
+  Caption,
+  Column,
+  DoDont,
+  DoDontRow,
+  GifPlayer,
+  PageDescription,
+  Row,
+  StorybookDemo,
+  Grid,
+  Tabs,
+  Tab,
+  Meta,
+  InlineNotification,
+  ArtDirection,
+  Accordion,
+  AccordionItem,
+  ArticleCard,
+  Aside,
+  Button,
+  CardGroup,
+  ImageWrapper,
+  Layer,
+  MiniCard,
+  Preview,
+  ResourceCard,
+  Title,
+  Video,
+};
+
+/**
+ * Custom container to render Carbon MDX differently
+ */
+const Container = ({ children, ...props }) => {
+  // MDX pages that aren't associated with a story
+  const isCarbonMdx =
+    children?.type?.name === `MDXContent` &&
+    !props?.context?.attachedCSFFiles.size;
+
+  useEffect(() => {
+    if (isCarbonMdx) {
+      document.documentElement.classList.add('cds--mdx');
+    } else {
+      document.documentElement.classList.remove('cds--mdx');
+    }
+  }, [isCarbonMdx]);
+
+  // Disable Storybook markdown styles and ignore global theme switchers
+  if (isCarbonMdx) {
+    return (
+      <MDXProvider components={customMarkdown}>
+        <DocsContainer {...props}>
+          <Unstyled>
+            <Theme
+              style={{
+                paddingBottom: '5rem',
+                paddingTop: '4rem',
+              }}
+              theme="g10">
+              {children}
+            </Theme>
+          </Unstyled>
+        </DocsContainer>
+      </MDXProvider>
+    );
+  }
+
+  return <DocsContainer {...props}>{children}</DocsContainer>;
+};
 
 const devTools = {
   layoutSize: {
@@ -91,24 +226,7 @@ export const parameters = {
       cellSize: 8,
       opacity: 0.5,
     },
-    values: [
-      {
-        name: 'white',
-        value: white.background,
-      },
-      {
-        name: 'g10',
-        value: g10.background,
-      },
-      {
-        name: 'g90',
-        value: g90.background,
-      },
-      {
-        name: 'g100',
-        value: g100.background,
-      },
-    ],
+    disable: true,
   },
   controls: {
     // https://storybook.js.org/docs/react/essentials/controls#show-full-documentation-for-each-property
@@ -126,7 +244,13 @@ export const parameters = {
     current: 'light',
   },
   docs: {
-    theme,
+    container: Container,
+    theme: theme,
+  },
+  options: {
+    storySort: {
+      order: ['Components'],
+    },
   },
   // Small (<672)
   // Medium (672 - 1056px)
@@ -174,10 +298,19 @@ export const parameters = {
   },
 };
 
+// only for stories
 const decorators = [
   (Story, context) => {
-    const { layoutDensity, layoutSize, locale, dir, theme } = context.globals;
+    let { theme } = context.globals;
+    const { layoutDensity, layoutSize, locale, dir } = context.globals;
     const [randomKey, setRandomKey] = React.useState(1);
+
+    const isMarkdown = context?.kind?.startsWith('MDX Components');
+
+    // Carbon MDX only supports the g10 theme
+    if (isMarkdown) {
+      theme = 'g10';
+    }
 
     React.useEffect(() => {
       document.documentElement.setAttribute('data-carbon-theme', theme);

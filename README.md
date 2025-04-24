@@ -20,16 +20,21 @@ bottlenecks in publishing and deployments. Here are some available components:
 
 | Package name                                                                                                                                         | Description                |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
-| [`@carbon-labs/react-ui-shell`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/UIShell)                 | UI shell components        |
-| [`@carbon-labs/react-text-highlighter`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/TextHighlighter) | Text highlighter component |
 | [`@carbon-labs/react-animated-header`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/AnimatedHeader)   | Animated header component  |
+| [`@carbon-labs/react-processing`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/Processing)            | Processing                 |
+| [`@carbon-labs/react-text-highlighter`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/TextHighlighter) | Text highlighter component |
+| [`@carbon-labs/react-theme-switcher`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/ThemeSettings)     | Theme settings             |
+| [`@carbon-labs/react-ui-shell`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/UIShell)                 | UI shell components        |
+| [`@carbon-labs/react-whats-new`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/WhatsNew)               | What's new                 |
+| [`@carbon-labs/mdx-components`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/MDXComponents)           | MDX Components             |
 
 ### Web Components
 
-| Package name                                                                                                                        | Description       |
-| ----------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/chat) | AI Chat component |
-| [`@carbon-labs/ai-tag`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/tag)   | AI Tag component  |
+| Package name                                                                                                                                   | Description           |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/chat)            | AI Chat component     |
+| [`@carbon-labs/ai-tag`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/tag)              | AI Tag component      |
+| [`@carbon-labs/empty-state`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/empty-state) | Empty state component |
 
 ### Shared
 

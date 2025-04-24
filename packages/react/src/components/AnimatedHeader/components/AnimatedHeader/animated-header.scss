@@ -16,20 +16,24 @@
 
 $prefix: 'clabs--animated-header' !default;
 
+:root {
+  @include theme(themes.$g10);
+}
+
 [data-carbon-theme='white'] {
-  @include theme(themes.$white, true);
+  @include theme(themes.$white);
 }
 
 [data-carbon-theme='g10'] {
-  @include theme(themes.$g10, true);
+  @include theme(themes.$g10);
 }
 
 [data-carbon-theme='g90'] {
-  @include theme(themes.$g90, true);
+  @include theme(themes.$g90);
 }
 
 [data-carbon-theme='g100'] {
-  @include theme(themes.$g100, true);
+  @include theme(themes.$g100);
 }
 
 body {
@@ -42,9 +46,9 @@ body {
 .#{$prefix} {
   position: relative;
   display: flex;
-  overflow: hidden;
+  overflow: visible;
   background: $background;
-  inline-size: 100vw;
+  inline-size: 100%;
   max-block-size: 90vh;
   outline: 1px solid transparent;
   padding-block: 0 $spacing-10;
@@ -58,17 +62,16 @@ body {
 .#{$prefix}__static--container {
   position: absolute;
   display: flex;
+  overflow: hidden;
   justify-content: flex-end;
 
-  block-size: 100%;
-
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
-
-  inline-size: 100%;
-
   /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: -webkit-fill-available;
+
   inline-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: -webkit-fill-available;
 
   max-inline-size: 96rem;
   writing-mode: horizontal-tb;
@@ -97,15 +100,13 @@ body {
   position: absolute;
   z-index: 1;
 
-  block-size: 100%;
-
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
-
-  inline-size: 100%;
-
   /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: -webkit-fill-available;
+
   inline-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: -webkit-fill-available;
 
   margin-inline: auto;
   max-inline-size: 99rem;
@@ -125,6 +126,7 @@ body {
   padding-inline: var(--cds-grid-margin);
 }
 
+:root .#{$prefix}__container--gradient,
 [data-carbon-theme='white'] .#{$prefix}__container--gradient,
 [data-carbon-theme='g10'] .#{$prefix}__container--gradient {
   background: linear-gradient(0deg, #e0e0e0bf 0%, transparent 100%);
@@ -226,7 +228,7 @@ body {
 
 .#{$prefix}__header-dropdown--container {
   inline-size: auto;
-  max-inline-size: 30rem;
+  max-inline-size: 18rem;
 }
 
 .#{$prefix}__header-dropdown {
@@ -295,19 +297,28 @@ body {
 .#{$prefix}__lottie-animation--container {
   position: absolute;
   display: flex;
+  overflow: hidden;
   justify-content: flex-end;
 
-  block-size: 100%;
-
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
-
-  inline-size: 100%;
-
   /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: -webkit-fill-available;
+
   inline-size: fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: -webkit-fill-available;
 
   max-inline-size: 96rem;
+}
+
+/* support for Safari */
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  .#{$prefix}__gradient--overlay,
+  .#{$prefix}__static--container,
+  .#{$prefix}__lottie-animation--container {
+    block-size: 100%;
+    inline-size: 100%;
+  }
 }
 
 .#{$prefix}__lottie-animation {
@@ -344,6 +355,7 @@ body {
   inset-inline-end: 0;
 }
 
+:root .#{$prefix}__button-collapse--gradient,
 [data-carbon-theme='white'] .#{$prefix}__button-collapse--gradient,
 [data-carbon-theme='g10'] .#{$prefix}__button-collapse--gradient {
   background: radial-gradient(
@@ -372,6 +384,7 @@ body {
 }
 
 .#{$prefix}--collapsed {
+  overflow: hidden;
   padding: 0;
   max-block-size: $spacing-09;
   outline: 1px solid $border-subtle-00;
@@ -393,10 +406,6 @@ body {
 
   .#{$prefix}__header-dropdown {
     display: none;
-  }
-
-  .#{$prefix}__workspace {
-    margin-block-start: $spacing-06;
   }
 
   .#{$prefix}__content {
@@ -437,6 +446,7 @@ body {
 
   .#{$prefix}__content {
     display: flex;
+    margin-block-start: $spacing-06;
   }
 
   .#{$prefix}__button-collapse--container .cds--popover-container {
@@ -493,7 +503,7 @@ body {
     background: linear-gradient(90deg, $background 25%, transparent 75%);
   }
 
-  .#{$prefix}__workspace {
+  .#{$prefix}__content {
     margin-block-start: 0;
   }
 
@@ -602,9 +612,9 @@ body {
 }
 
 /*
-  If the user has expressed their preference for
-  reduced motion, then don't use animations
-*/
+   If the user has expressed their preference for
+   reduced motion, then don't use animations
+ */
 @media (prefers-reduced-motion: reduce) {
   .#{$prefix},
   .#{$prefix}__static,

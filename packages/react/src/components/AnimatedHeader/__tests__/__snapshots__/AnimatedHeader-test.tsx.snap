@@ -1,0 +1,515 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnimatedHeader renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <section
+    class="clabs--animated-header"
+  >
+    <div
+      class="cds--css-grid"
+    >
+      <div
+        class="clabs--animated-header__gradient--overlay"
+      />
+      <div
+        class="clabs--animated-header__container--gradient"
+      />
+      <div
+        class="clabs--animated-header__lottie-animation--container"
+      >
+        <div
+          class="clabs--animated-header__lottie-animation"
+        />
+      </div>
+      <div
+        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+      >
+        <span
+          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip"
+        >
+          <div
+            class="cds--tooltip-trigger__wrapper"
+          >
+            <h1
+              aria-labelledby="tooltip-:r0:"
+              class="clabs--animated-header__heading "
+            >
+              <span
+                class="clabs--animated-header__heading-welcome"
+              >
+                Welcome
+                ,
+                 
+              </span>
+              <span
+                class="clabs--animated-header__heading-name"
+              >
+                Drew
+              </span>
+            </h1>
+          </div>
+          <span
+            aria-hidden="true"
+            class="cds--popover"
+            id="tooltip-:r0:"
+            role="tooltip"
+          >
+            <span
+              class="cds--popover-content cds--tooltip-content"
+            >
+              Welcome, Drew
+            </span>
+            <span
+              class="cds--popover-caret"
+            />
+          </span>
+        </span>
+      </div>
+      <div
+        class="clabs--animated-header__left-area-container cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-4 cds--css-grid-column"
+      >
+        <h2
+          class="clabs--animated-header__description"
+        >
+          Connect, monitor, and manage data.
+        </h2>
+        <div
+          class="clabs--animated-header__header-dropdown--container"
+        >
+          <div
+            class="cds--dropdown__wrapper cds--list-box__wrapper clabs--animated-header__header-dropdown cds--dropdown__wrapper--inline cds--list-box__wrapper--inline"
+          >
+            <label
+              class="cds--label cds--visually-hidden"
+              for="downshift-:r4:-toggle-button"
+              id="downshift-:r4:-label"
+            >
+              Label
+            </label>
+            <div
+              class="cds--dropdown cds--dropdown--inline cds--dropdown--md cds--list-box cds--list-box--md"
+              id="clabs--animated-header__header-dropdown"
+            >
+              <button
+                aria-activedescendant=""
+                aria-controls="downshift-:r4:-menu"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                aria-labelledby="downshift-:r4:-label"
+                class="cds--list-box__field"
+                id="downshift-:r4:-toggle-button"
+                role="combobox"
+                tabindex="0"
+                title="Customize your journey"
+                type="button"
+              >
+                <span
+                  class="cds--list-box__label"
+                >
+                  Customize your journey
+                </span>
+                <div
+                  class="cds--list-box__menu-icon"
+                >
+                  <svg
+                    aria-label="Open menu"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    name="chevron--down"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                    />
+                    <title>
+                      Open menu
+                    </title>
+                  </svg>
+                </div>
+              </button>
+              <ul
+                aria-labelledby="downshift-:r4:-label"
+                class="cds--list-box__menu"
+                id="downshift-:r4:-menu"
+                role="listbox"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="clabs--animated-header__content cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-12 cds--css-grid-column"
+      >
+        <div
+          class="clabs--animated-header__workspace--container"
+        >
+          <div
+            class="cds--dropdown__wrapper cds--list-box__wrapper clabs--animated-header__workspace cds--dropdown__wrapper--inline cds--list-box__wrapper--inline"
+          >
+            <label
+              class="cds--label cds--visually-hidden"
+              for="downshift-:r7:-toggle-button"
+              id="downshift-:r7:-label"
+            >
+              Label
+            </label>
+            <div
+              class="cds--dropdown cds--dropdown--inline cds--dropdown--sm cds--list-box cds--list-box--sm"
+              id="clabs--animated-header__workspace"
+            >
+              <button
+                aria-activedescendant=""
+                aria-controls="downshift-:r7:-menu"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                aria-labelledby="downshift-:r7:-label"
+                class="cds--list-box__field"
+                id="downshift-:r7:-toggle-button"
+                role="combobox"
+                tabindex="0"
+                title=""
+                type="button"
+              >
+                <span
+                  class="cds--list-box__label"
+                >
+                  Open in: Drew's workspace
+                </span>
+                <div
+                  class="cds--list-box__menu-icon"
+                >
+                  <svg
+                    aria-label="Open menu"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    name="chevron--down"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"
+                    />
+                    <title>
+                      Open menu
+                    </title>
+                  </svg>
+                </div>
+              </button>
+              <ul
+                aria-labelledby="downshift-:r7:-label"
+                class="cds--list-box__menu"
+                id="downshift-:r7:-menu"
+                role="listbox"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="clabs--animated-header__tiles-container"
+        >
+          <div
+            class="clabs--animated-header__tile clabs--animated-header__ai-prompt-tile"
+            id="clabs--animated-header__ai-prompt-tile"
+          >
+            <div
+              class="clabs--animated-header__ai-prompt-tile--body"
+            >
+              <div
+                class="clabs--animated-header__ai-prompt-tile--body-background"
+              />
+              <div
+                class="clabs--animated-header__ai-prompt-tile--body-gradient"
+              />
+              <div
+                class="clabs--animated-header__ai-prompt-tile--icons"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="var(--cds-icon-secondary)"
+                  focusable="false"
+                  height="24"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M28,26H25V24h3V8H25V6h3a2.0023,2.0023,0,0,1,2,2V24A2.0027,2.0027,0,0,1,28,26Z"
+                  />
+                  <circle
+                    cx="23"
+                    cy="16"
+                    r="2"
+                  />
+                  <circle
+                    cx="16"
+                    cy="16"
+                    r="2"
+                  />
+                  <circle
+                    cx="9"
+                    cy="16"
+                    r="2"
+                  />
+                  <path
+                    d="M7,26H4a2.0023,2.0023,0,0,1-2-2V8A2.002,2.002,0,0,1,4,6H7V8H4V24H7Z"
+                  />
+                </svg>
+                <div
+                  class="cds--ai-label"
+                  id="AILabel-:r8:"
+                >
+                  <span
+                    class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--auto-align cds--autoalign cds--popover--bottom cds--toggletip cds--autoalign"
+                  >
+                    <button
+                      aria-controls="id-:r9:"
+                      aria-expanded="false"
+                      aria-label="AI Show information"
+                      class="cds--toggletip-button cds--ai-label__button cds--ai-label__button--mini cds--ai-label__button--default"
+                      type="button"
+                    >
+                      <span
+                        class="cds--ai-label__text"
+                      >
+                        AI
+                      </span>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="clabs--animated-header__ai-prompt-tile--title"
+              >
+                Short description of the type of prompt
+              </div>
+              <div
+                class="clabs--animated-header__ai-prompt-tile--text-input-container "
+              >
+                <div
+                  class="cds--form-item clabs--animated-header__ai-prompt-tile--text-input cds--text-input-wrapper"
+                >
+                  <div
+                    class="cds--text-input__label-wrapper"
+                  >
+                    <label
+                      class="cds--label cds--visually-hidden"
+                      dir="auto"
+                      for="clabs--animated-header__ai-prompt-tile--text-input"
+                    >
+                      AI Chat Input
+                    </label>
+                  </div>
+                  <div
+                    class="cds--text-input__field-outer-wrapper"
+                  >
+                    <div
+                      class="cds--text-input__field-wrapper"
+                    >
+                      <input
+                        class="cds--text-input cds--text-input--sm cds--layout--size-sm"
+                        id="clabs--animated-header__ai-prompt-tile--text-input"
+                        placeholder="Start chatting..."
+                        title="Start chatting..."
+                        type="text"
+                        value=""
+                      />
+                      <span
+                        aria-atomic="true"
+                        aria-live="assertive"
+                        class="cds--text-input__counter-alert"
+                        role="alert"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <span
+                  class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--top-end cds--tooltip cds--icon-tooltip cds--icon-tooltip--disabled"
+                >
+                  <div
+                    class="cds--tooltip-trigger__wrapper"
+                  >
+                    <button
+                      aria-labelledby="tooltip-:rc:"
+                      class="cds--btn--icon-only clabs--animated-header__ai-prompt-tile--icon-button  cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--disabled"
+                      disabled=""
+                      type="button"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        fill="currentColor"
+                        focusable="false"
+                        height="16"
+                        preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 32 32"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M27.45,15.11l-22-11a1,1,0,0,0-1.08.12,1,1,0,0,0-.33,1L7,16,4,26.74A1,1,0,0,0,5,28a1,1,0,0,0,.45-.11l22-11a1,1,0,0,0,0-1.78Zm-20.9,10L8.76,17H18V15H8.76L6.55,6.89,24.76,16Z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="cds--popover"
+                    id="tooltip-:rc:"
+                    role="tooltip"
+                  >
+                    <span
+                      class="cds--popover-content cds--tooltip-content"
+                    >
+                      Chat in [Product name]
+                    </span>
+                    <span
+                      class="cds--popover-caret"
+                    />
+                  </span>
+                </span>
+              </div>
+              <div
+                class="clabs--animated-header__ai-prompt-tile--footer"
+              >
+                <a
+                  class="cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost"
+                  href="#"
+                >
+                  Open 
+                  [Product name]
+                </a>
+              </div>
+            </div>
+          </div>
+          <a
+            class="cds--link clabs--animated-header__tile clabs--animated-header__glass-tile"
+            href="#"
+          >
+            <div
+              class="clabs--animated-header__glass-tile--body"
+            >
+              <div
+                class="clabs--animated-header__glass-tile--body-background"
+              />
+              <div
+                class="clabs--animated-header__glass-tile--icons"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="var(--cds-icon-secondary)"
+                  focusable="false"
+                  height="24"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M25 12L25 3 23 3 23 5 20 5 20 7 23 7 23 12 20 12 20 14 28 14 28 12 25 12zM8.5 5c1.9299 0 3.5 1.5701 3.5 3.5s-1.5701 3.5-3.5 3.5-3.5-1.5701-3.5-3.5 1.5701-3.5 3.5-3.5m0-2c-3.0376 0-5.5 2.4624-5.5 5.5s2.4624 5.5 5.5 5.5 5.5-2.4624 5.5-5.5-2.4624-5.5-5.5-5.5h0zM8.5 20c1.9299 0 3.5 1.5701 3.5 3.5s-1.5701 3.5-3.5 3.5-3.5-1.5701-3.5-3.5 1.5701-3.5 3.5-3.5m0-2c-3.0376 0-5.5 2.4624-5.5 5.5s2.4624 5.5 5.5 5.5 5.5-2.4624 5.5-5.5-2.4624-5.5-5.5-5.5h0zM23.5 20c1.9299 0 3.5 1.5701 3.5 3.5s-1.5701 3.5-3.5 3.5-3.5-1.5701-3.5-3.5 1.5701-3.5 3.5-3.5m0-2c-3.0376 0-5.5 2.4624-5.5 5.5s2.4624 5.5 5.5 5.5 5.5-2.4624 5.5-5.5-2.4624-5.5-5.5-5.5h0z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="clabs--animated-header__glass-tile--title"
+              >
+                Load data
+              </div>
+              <div
+                class="clabs--animated-header__glass-tile--footer"
+              >
+                <div
+                  class="clabs--animated-header__glass-tile--subtitle"
+                >
+                  with Data explorer
+                </div>
+              </div>
+            </div>
+          </a>
+          <a
+            class="cds--link clabs--animated-header__tile clabs--animated-header__glass-tile"
+            href="#"
+          >
+            <div
+              class="clabs--animated-header__glass-tile--body"
+            >
+              <div
+                class="clabs--animated-header__glass-tile--body-background"
+              />
+              <div
+                class="clabs--animated-header__glass-tile--icons"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="var(--cds-icon-secondary)"
+                  focusable="false"
+                  height="24"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10.06,17.88A4.25,4.25,0,0,0,11,18a4,4,0,0,0,2.23-.68l3.22,2.87a3.88,3.88,0,0,0-.2,3.17A4,4,0,1,0,22.62,19l2.54-5.09a3.78,3.78,0,0,0,2.91-.53A4,4,0,1,0,23.38,13l-2.54,5.09A3.86,3.86,0,0,0,20,18a4,4,0,0,0-2.23.68l-3.22-2.87a3.88,3.88,0,0,0,.2-3.17A4,4,0,1,0,8.3,16.93L4,25V2H2V28a2,2,0,0,0,2,2H30V28H4.67ZM26,8a2,2,0,1,1-2,2A2,2,0,0,1,26,8ZM22,22a2,2,0,1,1-2-2A2,2,0,0,1,22,22ZM11,12a2,2,0,1,1-2,2A2,2,0,0,1,11,12Z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="clabs--animated-header__glass-tile--title"
+              >
+                Monitor data performance and system capacity
+              </div>
+              <div
+                class="clabs--animated-header__glass-tile--footer"
+              >
+                <div
+                  class="clabs--animated-header__glass-tile--subtitle"
+                >
+                  with Monitoring hub
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div
+        class="clabs--animated-header__button-collapse--gradient"
+      />
+      <div
+        class="clabs--animated-header__button-collapse--container"
+      >
+        <button
+          class="cds--btn cds--btn--ghost"
+          id="clabs--animated-header__button-collapse"
+          type="button"
+        >
+          Collapse
+          <svg
+            aria-hidden="true"
+            class="cds--btn__icon"
+            fill="currentColor"
+            focusable="false"
+            height="16"
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 5L13 10 12.3 10.7 8 6.4 3.7 10.7 3 10z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+`;

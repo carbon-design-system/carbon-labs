@@ -1,6 +1,7 @@
 {
   "name": "@carbon-labs/react-STYLE_NAME",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",
     "provenance": true

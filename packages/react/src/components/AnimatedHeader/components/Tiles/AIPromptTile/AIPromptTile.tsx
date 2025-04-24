@@ -14,21 +14,21 @@ import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 /** Primary UI component for user interaction */
 
 interface AIPromptTileProps {
-  id?: string;
   href?: string;
-  open?: boolean;
+  id?: string;
   mainIcon?: string;
-  title?: string;
+  open?: boolean;
   productName?: string;
+  title?: string;
 }
 
 export const AIPromptTile: React.FC<AIPromptTileProps> = ({
-  id,
   href,
-  open,
+  id,
   mainIcon,
-  title,
+  open,
   productName,
+  title,
 }: AIPromptTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__ai-prompt-tile`;
@@ -44,7 +44,9 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
 
   const openInNewTab = (url) => {
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-    if (newWindow) newWindow.opener = null;
+    if (newWindow) {
+      newWindow.opener = null;
+    }
   };
 
   const handleTextInputKeyDown = (event) => {
@@ -60,7 +62,9 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
       id={`${blockClass}`}
       className={`${prefix}--animated-header__tile ${blockClass}`}
       key={id}>
-      <div className={`${blockClass}--body ${!open && collapsed}`}>
+      <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
+        <div className={`${blockClass}--body-background`} />
+        <div className={`${blockClass}--body-gradient`} />
         <div className={`${blockClass}--icons`}>
           {MainIcon && (
             <MainIcon fill={`var(--cds-icon-secondary)`} size={24} />

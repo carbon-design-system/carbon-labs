@@ -14,9 +14,9 @@ import * as UIShellStories from './UIShell.stories';
 {/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
 {/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
 
-> 💡 Check our
-> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/UIShell)
-> example implementation.
+💡 Check our
+[Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/UIShell)
+example implementation.
 
 [![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/UIShell)
 
@@ -25,178 +25,155 @@ import * as UIShellStories from './UIShell.stories';
 - [Overview](#overview)
 - [Getting started](#getting-started)
   - [SCSS](#scss)
-  - [JS (via import)](#js-via-import)
+  - [JS](#js-imports)
+- [Examples](#examples)
+  - [Header popover](#header-popover)
+  - [Panel navigation type](#panel-navigation-type)
+  - [Treeview](#treeview)
 - [Component API](#component-api)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
 
 ## Overview
 
-Enhancements to core Carbon UIShell components. Components included in this
-package:
+To use this package you will need to import components from both `@carbon/react`
+and `@carbon-labs/react-ui-shell` to compose the UI Shell. The following
+components are provided by `@carbon-labs/react-ui-shell`:
 
 - `SideNav`
 - `SideNavItems`
 - `SideNavLink`
 - `SideNavMenu`
 - `SideNavMenuItem`
+- `HeaderPopover`
+- `HeaderPopoverActions`
+- `HeaderPopoverButton`
+- `HeaderPopoverContent`
 - `HeaderPanel`
+- `HeaderDivider`
+- `SharkFinIcon`
+- `TrialCountdown`
 
 <Canvas of={UIShellStories.Default} />
 
 ## Getting started
 
-Here's a quick example to get you started.
+You will need to install both `@carbon/react` and `@carbon-labs/react-ui-shell`
+in your project, you will need to run the following command using
+[npm](https://www.npmjs.com/):
 
 ```bash
-yarn add @carbon/react
-yarn add @carbon-labs/react-ui-shell
+npm install -S @carbon-labs/react-ui-shell @carbon/react
+```
+
+If you prefer [Yarn](https://yarnpkg.com/en/), use the following command
+instead:
+
+```bash
+yarn add @carbon-labs/react-ui-shell @carbon/react
 ```
 
 ### SCSS
 
-In your styles file import
+Import the styles from `@carbon/react` and `@carbon-labs/react-ui-shell` in your
+stylesheet:
 
-```
+```css
 @use '@carbon/react' with (
   $font-path: '@ibm/plex'
 );
 @use '@carbon-labs/react-ui-shell/scss/ui-shell';
 ```
 
-### JS (via import)
+### JS (imports)
+
+Import components from both `@carbon/react` and `@carbon-labs/react-ui-shell`
+along with any icons needed from `@carbon/icons-react` to build your UI Shell.
 
 ```javascript
 import {
   SIDE_NAV_TYPE,
   SideNav,
   SideNavItems,
-  SideNavLink,
   SideNavMenu,
   SideNavMenuItem,
   HeaderPanel,
+  SideNavLink,
+  HeaderPopover,
+  HeaderPopoverActions,
+  HeaderPopoverButton,
+  HeaderPopoverContent,
+  HeaderContainer,
+  HeaderDivider,
 } from '@carbon-labs/react-ui-shell/es/index';
 import {
   SkipToContent,
-  HeaderContainer,
   Header,
   HeaderName,
   Theme,
   HeaderMenuButton,
   SideNavDivider,
   Content,
-  HeaderGlobalBar,
-  HeaderGlobalAction,
   Grid,
   Column,
+  HeaderGlobalBar,
+  HeaderGlobalAction,
+  HeaderNavigation,
+  HeaderMenuItem,
+  HeaderMenu,
+  Switcher,
+  SwitcherItem,
+  SwitcherDivider,
+  MenuButton,
+  MenuItemRadioGroup,
+  ExpandableSearch,
+  Link,
+  Button,
 } from '@carbon/react';
-import { Fade, SquareOutline } from '@carbon/icons-react';
+import { Help, Profile, Settings } from '@carbon/icons-react';
+```
+
+### Examples
+
+Check out our
+[Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/UIShell)
+example implementation to see all the components working together in a fully
+functional UI Shell.
+
+### Header popover
+
+```jsx
+import {
+  HeaderPopover,
+  HeaderPopoverContent,
+  HeaderPopoverButton,
+  HeaderPopoverActions,
+} from '@carbon-labs/react-ui-shell/es/index';
+import { Header, HeaderGlobalBar } from '@carbon/react';
+import { Information } from '@carbon/icons-react';
 
 function App() {
   return (
-    <Theme theme="g100">
-      <HeaderContainer
-        render={({ isSideNavExpanded, onClickSideNavExpand }) => (
-          <>
-            <Header aria-label="IBM Platform Name">
-              <SkipToContent />
-              <HeaderMenuButton
-                aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
-                onClick={onClickSideNavExpand}
-                isActive={isSideNavExpanded}
-                aria-expanded={isSideNavExpanded}
-                isCollapsible //shows hamburger menu at desktop
-                isFixedNav
-              />
-              <HeaderName href="#" prefix="IBM">
-                [Platform]
-              </HeaderName>
-              <HeaderGlobalBar>
-                <HeaderGlobalAction
-                  aria-label={expandedPanel ? 'Close panel' : 'Open panel'}
-                  isActive={expandedPanel}
-                  aria-expanded={expandedPanel}
-                  tooltipAlignment="end"
-                  onClick={() => setExpandedPanel(!expandedPanel)}>
-                  <Fade size={20} />
-                </HeaderGlobalAction>
-              </HeaderGlobalBar>
-              <HeaderPanel expanded={expandedPanel} />
-            </Header>
-            <SideNav
-              aria-label="Side navigation1"
-              expanded={isSideNavExpanded}
-              onSideNavBlur={onClickSideNavExpand}
-              isCollapsible
-              hideOverlay
-              className="nav--global">
-              <SideNavItems>
-                <SideNavMenu
-                  renderIcon={SquareOutline}
-                  title="Sub-menu level 1">
-                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-                <SideNavDivider />
-                <SideNavLink renderIcon={SquareOutline} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavLink renderIcon={SquareOutline} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Link</SideNavMenuItem>
-                </SideNavMenu>
-              </SideNavItems>
-            </SideNav>
-            <SideNav
-              navType={SIDE_NAV_TYPE.PANEL}
-              isChildOfHeader={false}
-              hideOverlay
-              aria-label="Side navigation">
-              <SideNavItems>
-                <SideNavLink renderIcon={Fade} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavLink renderIcon={Fade} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavLink renderIcon={Fade} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavLink renderIcon={Fade} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavDivider />
-                <SideNavLink renderIcon={Fade} href="#">
-                  Link
-                </SideNavLink>
-                <SideNavLink renderIcon={Fade} href="#">
-                  Link
-                </SideNavLink>
-              </SideNavItems>
-            </SideNav>
-            <Theme theme="white">
-              <StoryContent />
-            </Theme>
-          </>
-        )}
-      />
-    </Theme>
+    <Header aria-label="IBM Platform Name">
+      <HeaderGlobalBar>
+        <HeaderPopover align="bottom-right">
+          <HeaderPopoverButton align="bottom" label="Show information">
+            <Information />
+          </HeaderPopoverButton>
+          <HeaderPopoverContent>
+            <p>
+              Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed
+              do eiusmod tempor incididunt ut fsil labore et dolore magna
+              aliqua.
+            </p>
+            <HeaderPopoverActions>
+              <Link href="#">Link action</Link>
+              <Button size="sm">Button</Button>
+            </HeaderPopoverActions>
+          </HeaderPopoverContent>
+        </HeaderPopover>
+      </HeaderGlobalBar>
+    </Header>
   );
 }
 
@@ -211,7 +188,7 @@ first link automatically. Upon `SideNav` expansion, this functionality will be
 disabled, and click events will be reverted, meaning a click will expand the
 `SideNavMenu` as usual.
 
-```javascript
+```jsx
 import {
   SIDE_NAV_TYPE,
   SideNav,
@@ -251,7 +228,7 @@ levels of content within the component.
 Also note that it will be automatically enabled if there are more than two
 levels of content within the component.
 
-```javascript
+```jsx
 import {
   SIDE_NAV_TYPE,
   SideNav,
@@ -299,3 +276,4 @@ export default App;
 ## Component API
 
 <ArgTypes />
+````

@@ -1,0 +1,32 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+/* stylelint-disable declaration-no-important */
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/utilities/convert' as convert;
+
+@use '../utils' as *;
+
+.#{with-prefix('fixed')},
+.image--fixed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: theme.$layer-01;
+  margin-block-start: spacing.$spacing-07;
+
+  div {
+    display: flex;
+    inline-size: initial !important;
+    max-inline-size: 100%;
+  }
+
+  span {
+    inline-size: convert.rem(736px) !important;
+  }
+}

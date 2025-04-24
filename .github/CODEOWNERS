@@ -11,6 +11,13 @@
 # Carbon UI Shell
 /packages/react/src/components/UIShell/ @carbon-design-system/carbon-ui-shell-labs-devs
 
+# Other packages
+/packages/react/src/components/AnimatedHeader/   @carbon-design-system/animated-header-devs
+/packages/react/src/components/Processing/       @carbon-design-system/processing-devs
+/packages/react/src/components/TextHighlighter/  @carbon-design-system/text-highlighter-devs
+/packages/react/src/components/ThemeSettings/    @carbon-design-system/theme-settings-devs
+
+
 # Admins should be notified of changes to CI/CD workflows
 # codeowners, and any other config present in .github.
 # This should always be the last entry in this file.

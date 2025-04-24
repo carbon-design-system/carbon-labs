@@ -1,0 +1,53 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import * as EmptyStateStories from './empty-state.stories';
+import packageJson from '../package.json';
+
+<Meta of={EmptyStateStories} />
+
+# Empty State
+
+- **Initiative owner(s):** Sangeetha Babu
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+## Overview
+
+The EmptyState component follows the Carbon guidelines for empty states with some added specifications around illustration usage.
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-empty-state/es/index.js';
+```
+
+<Markdown>{`${cdnJs({ components: ['empty-state'] }, packageJson)}`}</Markdown>
+
+### HTML
+The `<clabs-empty-state>` component accepts slots for `action`, `link` and `illustration` elements, and props for `title`, `subtitle`, `size`, `kind`, and `illustrationTheme`.
+
+```html
+<clabs-empty-state
+  title="Example EmptyState title"
+  subtitle="Example subtitle"
+  size="lg"
+  kind="notFound"
+  illustrationTheme="light">
+    <cds-button kind="tertiary" size="sm" slot="action"
+      >Create new</cds-button
+    >
+    <cds-link href="https://www.carbondesignsystem.com" slot="link">
+      View documentation
+    </cds-link>
+</clabs-empty-state>
+```
+
+### &lt;clabs-empty-state&gt; attributes and properties
+
+<ArgTypes of="clabs-empty-state" />

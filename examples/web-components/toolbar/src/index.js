@@ -27,7 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // roving keyboard navigation utility
-function initRovingTabindex(container) {
+/**
+ * Initializes roving tabindex for keyboard navigation within a container.
+ * @param {HTMLElement} container - The container element containing the buttons.
+ */
+function initRovingTabIndex(container) {
   const buttons = Array.from(container.children).flatMap((el) =>
     Array.from(el.children)
   );
@@ -37,6 +41,10 @@ function initRovingTabindex(container) {
     btn.setAttribute('tabindex', index === 0 ? '0' : '-1')
   );
 
+  /**
+   * Updates the active index for keyboard navigation and sets focus on the corresponding button.
+   * @param {number} newIndex - The index of the button to be activated.
+   */
   function updateActiveIndex(newIndex) {
     buttons.forEach((btn, i) =>
       btn.setAttribute('tabindex', i === newIndex ? '0' : '-1')
@@ -71,5 +79,5 @@ function initRovingTabindex(container) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.toolbar').forEach(initRovingTabindex);
+  document.querySelectorAll('.toolbar').forEach(initRovingTabIndex);
 });

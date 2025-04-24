@@ -38,6 +38,9 @@ import Rotate from '@carbon/web-components/es/icons/rotate/16.js';
 
 export default {
   title: 'Patterns/Toolbar',
+  parameters: {
+    docs: { source: { type: 'code' }}
+  },
 };
 
 const defaultArgs = {

@@ -1,4 +1,4 @@
-import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
 import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
 import * as ToolbarStories from './toolbar.stories';
 
@@ -20,9 +20,19 @@ import * as ToolbarStories from './toolbar.stories';
 
 ## Overview
 
-The toolbar pattern. made with carbon design system's web components, 
+The toolbar pattern. made with carbon design system's web components.
 
-Note: This is not a component, and is only a recipe to build a toolbar using carbon components. meant to be scaled as per specific requirements.
+[Pattern Guidance](https://carbondesignsystem.com/patterns/text-toolbar-pattern/)
+
+Note: This is not a component, and is only a recipe that follows the definition of pattern. to build a toolbar using carbon components. meant to be scaled as per specific requirements.
+
+#### Horizontal Example
+
+<Canvas of={ToolbarStories.Horizontal} />
+
+#### Vertical Example
+
+<Canvas of={ToolbarStories.Vertical} />
 
 ingredients used
 
@@ -33,3 +43,254 @@ a js function to achieve roving tab index. for accessibility
 
 Here's a quick example to get you started.
 
+```bash
+yarn add @carbon/web-components
+```
+
+### JS (via import)
+
+```javascript
+import '@carbon/web-components/es/components/stack/index.js';
+import '@carbon/web-components/es/components/icon-button/index.js';
+import '@carbon/web-components/es/components/dropdown/index.js';
+import '@carbon/web-components/es/components/overflow-menu/index.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.toolbar cds-dropdown').forEach((component) => {
+    if (component.shadowRoot) {
+      const style = document.createElement('style');
+      style.textContent = `
+        .cds--list-box {
+          border-block-end: none !important;
+        }
+      `;
+      component.shadowRoot.appendChild(style);
+    }
+  });
+});
+
+// roving keyboard navigation utility
+/**
+ * Initializes roving tabindex for keyboard navigation within a container.
+ * @param {HTMLElement} container - The container element containing the buttons.
+ */
+function initRovingTabIndex(container) {
+  const buttons = Array.from(container.children).flatMap((el) =>
+    Array.from(el.children)
+  );
+  if (buttons.length === 0) return;
+
+  buttons.forEach((btn, index) =>
+    btn.setAttribute('tabindex', index === 0 ? '0' : '-1')
+  );
+
+  /**
+   * Updates the active index for keyboard navigation and sets focus on the corresponding button.
+   * @param {number} newIndex - The index of the button to be activated.
+   */
+  function updateActiveIndex(newIndex) {
+    buttons.forEach((btn, i) =>
+      btn.setAttribute('tabindex', i === newIndex ? '0' : '-1')
+    );
+    buttons[newIndex].focus();
+  }
+
+  container.addEventListener('keydown', (event) => {
+    const currentIndex = buttons.findIndex(
+      (btn) => btn.getAttribute('tabindex') === '0'
+    );
+
+    let newIndex = currentIndex;
+    if (event.key === 'ArrowRight') {
+      newIndex = (currentIndex + 1) % buttons.length;
+    } else if (event.key === 'ArrowLeft') {
+      newIndex = (currentIndex - 1 + buttons.length) % buttons.length;
+    } else {
+      return;
+    }
+
+    updateActiveIndex(newIndex);
+    event.preventDefault();
+  });
+
+  container.addEventListener('click', (event) => {
+    const clickedIndex = buttons.indexOf(event.target);
+    if (clickedIndex !== -1) {
+      updateActiveIndex(clickedIndex);
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.toolbar').forEach(initRovingTabIndex);
+});
+```
+
+### SCSS
+
+In your styles file, add below imports and styles.
+
+```css
+@use '@carbon/styles/scss/reset';
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/themes';
+
+// :root {
+//   @include theme.theme(themes.$g100); // change this to check all themes
+// }
+.toolbar {
+  display: inline-flex;
+  background: var(--cds-layer);
+
+  svg {
+    pointer-events: none;
+  }
+
+  &[orientation='vertical'] {
+    max-inline-size: 2.5rem;
+  }
+}
+
+.toolbar-group {
+  flex-direction: row;
+  border-block-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  border-inline-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+
+  &[orientation='vertical'] {
+    border-inline-end: none;
+    max-inline-size: 2.5rem;
+
+    &:last-child {
+      border-block-end: none;
+    }
+  }
+
+  &:last-child {
+    border-inline-end: none;
+  }
+}
+
+// css for adding caret through class name
+.toolbar-button-caret {
+  position: relative;
+  &::before {
+    position: absolute;
+    background: linear-gradient(
+      to right bottom,
+      transparent 50%,
+      var(--cds-icon-primary, #161616) 50%
+    );
+    block-size: calc(0.125rem + 0.25rem);
+    content: '';
+    inline-size: calc(0.125rem + 0.25rem);
+    inset-block-end: 0.175rem;
+    inset-inline-end: 0.175rem;
+  }
+}
+```
+
+### HTML
+
+```html
+<cds-stack class="toolbar" orientation=${orientation}>
+  <cds-stack class="toolbar-group" orientation=${orientation}>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${Draggable({ slot: 'icon' })}
+      <span slot="tooltip-content">Drag</span>
+    </cds-icon-button>
+  </cds-stack>
+  <cds-stack class="toolbar-group" orientation=${orientation}>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${RulerAlt({ slot: 'icon' })}
+      <span slot="tooltip-content">Ruler</span>
+    </cds-icon-button>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${Pin({ slot: 'icon' })}
+      <span slot="tooltip-content">Pin</span>
+    </cds-icon-button>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      caret
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${ColorPalette({ slot: 'icon' })}
+      <span slot="tooltip-content">Color palette</span>
+    </cds-icon-button>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${TextCreation({ slot: 'icon' })}
+      <span slot="tooltip-content">Text creation</span>
+    </cds-icon-button>
+  </cds-stack>
+  <cds-stack class="toolbar-group" orientation=${orientation}>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${OpenPanelLeft({ slot: 'icon' })}
+      <span slot="tooltip-content">Open panel left</span>
+    </cds-icon-button>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${OpenPanelRight({ slot: 'icon' })}
+      <span slot="tooltip-content">Open panel right</span>
+    </cds-icon-button>
+  </cds-stack>
+  <cds-stack class="toolbar-group" orientation=${orientation}>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${Move({ slot: 'icon' })}
+      <span slot="tooltip-content">Move</span>
+    </cds-icon-button>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${Rotate({ slot: 'icon' })}
+      <span slot="tooltip-content">Rotate</span>
+    </cds-icon-button>
+  </cds-stack>
+  <cds-stack class="toolbar-group" orientation=${orientation}>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${ZoomIn({ slot: 'icon' })}
+      <span slot="tooltip-content">Zoom in</span>
+    </cds-icon-button>
+    <cds-icon-button
+      kind="ghost"
+      enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${orientation === 'vertical' ? 'right' : 'top'}>
+      ${ZoomOut({ slot: 'icon' })}
+      <span slot="tooltip-content">Zoom out</span>
+    </cds-icon-button>
+  </cds-stack>
+</cds-stack>
+```

@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import mdx from './ResizeBar.mdx';
 import { ResizeBar } from '../components/ResizeBar';
 import '../components/resize-bar.scss';
@@ -52,7 +52,8 @@ export const SinglePanelNoBoundaries = () => (
         </h3>
         <p>
           This is a basic resizable panel that can be adjusted vertically using
-          the resize handle below. The panel takes height according to the content, but can also be pre set.
+          the resize handle below. The panel takes height according to the
+          content, but can also be pre set.
         </p>
       </div>
       <ResizeBar orientation="horizontal" />
@@ -83,7 +84,9 @@ export const SinglePanelBounded = () => (
     <div className="single-panel-bounded">
       <div className="single-panel-bounded__container">
         <div className="single-panel-bounded__panel">
-          <h3 className="single-panel-bounded__panel-title">Single Panel (bounded)</h3>
+          <h3 className="single-panel-bounded__panel-title">
+            Single Panel (bounded)
+          </h3>
           <p>
             This panel demonstrates how resizing can be constrained within fixed
             boundaries. The panel is contained within a 600x400 pixel container,
@@ -237,3 +240,203 @@ export const TwoPanelsVertical = () => (
     </div>
   </>
 );
+
+export const FourPanels = () => (
+  <>
+    <style>{`
+    .four-panels {
+	 display: flex;
+	 height: 400px;
+	 width: 600px;
+}
+ .four-panels__column {
+	 overflow: auto;
+	 min-inline-size: 60px;
+	 width: 50%;
+	 display: flex;
+	 flex-direction: column;
+    transition: all 150ms linear;
+}
+ .four-panels__panel {
+	 padding: 1rem;
+	 background-color: var(--cds-layer-01);
+	 overflow: auto;
+	 min-block-size: 60px;
+	 height: 50%;
+	 transition: all 150ms linear;
+}
+ .four-panels__panel--right-top {
+	 height: 40%;
+}
+ .four-panels__panel--right-bottom {
+	 height: 60%;
+}
+ .four-panels__panel-title {
+	 margin-top: 0;
+}
+ 
+    `}</style>
+    <div className="four-panels">
+      <div className="four-panels__column">
+        <div className="four-panels__panel">
+          <h3 className="four-panels__panel-title">Top Left Panel</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
+            voluptatum asperiores harum non quidem quasi labore ducimus, commodi
+            nam minima?
+          </p>
+        </div>
+        <ResizeBar orientation="horizontal" />
+        <div className="four-panels__panel">
+          <h3 className="four-panels__panel-title">Bottom Left Panel</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis sed
+            earum mollitia beatae. Doloremque quos sapiente facere repellendus
+            magnam cumque.
+          </p>
+        </div>
+      </div>
+      <ResizeBar orientation="vertical" />
+      <div className="four-panels__column">
+        <div className="four-panels__panel four-panels__panel--right-top">
+          <h3 className="four-panels__panel-title">Top Right Panel</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic aliquam
+            temporibus fugiat placeat illo voluptas earum perferendis soluta
+            minima quibusdam!
+          </p>
+        </div>
+        <ResizeBar orientation="horizontal" />
+        <div className="four-panels__panel four-panels__panel--right-bottom">
+          <h3 className="four-panels__panel-title">Bottom Right Panel</h3>
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi
+            accusamus quod culpa perferendis natus autem officia tenetur libero
+            consectetur praesentium?
+          </p>
+        </div>
+      </div>
+    </div>
+  </>
+);
+
+export const TwoPanelsVerticalGrid = () => {
+  // fully controlled example
+  const getAriaLabel = (fraction) =>
+    `Left panel: ${Math.round(fraction * 100)}%, Right panel: ${Math.round(
+      (1 - fraction) * 100
+    )}%`;
+
+  const clampFraction = (value) =>
+    Math.max(0.0806723, Math.min(0.919328, value));
+
+  const clampWidth = (width, totalWidth) =>
+    Math.max(48, Math.min(totalWidth - 48, width));
+  const containerRef = useRef(null);
+  const startWidthRef = useRef(0);
+  const currentFractionRef = useRef(0.5);
+  const initialFraction = 0.5;
+
+  const [isKeyboard, setIsKeyboard] = useState(false);
+  const [ariaLabel, setAriaLabel] = useState(getAriaLabel(initialFraction));
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.style.transition = isKeyboard ? '' : 'unset';
+    }
+  }, [isKeyboard]);
+
+  const handleResize = (delta, isKeyboardEvent) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const totalWidth = container.offsetWidth - 5;
+    let newFraction = currentFractionRef.current;
+
+    if (isKeyboardEvent) {
+      setIsKeyboard(true);
+      const step = delta / totalWidth;
+      newFraction = clampFraction(currentFractionRef.current + step);
+    } else {
+      setIsKeyboard(false);
+      const leftPanelWidth = container.firstElementChild?.clientWidth ?? 0;
+      if (startWidthRef.current === 0) {
+        startWidthRef.current = leftPanelWidth;
+      }
+      const newWidth = clampWidth(startWidthRef.current + delta, totalWidth);
+      newFraction = newWidth / totalWidth;
+    }
+
+    currentFractionRef.current = newFraction;
+    container.style.gridTemplateColumns = `${newFraction}fr auto ${
+      1 - newFraction
+    }fr`;
+    // this cause re-renders. need to find a better way, should probably move this to handleResizeEnd to announce on end
+    setAriaLabel(getAriaLabel(newFraction));
+  };
+
+  const handleResizeEnd = () => {
+    const container = containerRef.current;
+    startWidthRef.current = 0;
+    container.style.transition = isKeyboard ? '' : 'unset';
+  };
+
+  const handleDoubleClick = () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    currentFractionRef.current = initialFraction;
+    container.style.gridTemplateColumns = `${initialFraction}fr auto ${
+      1 - initialFraction
+    }fr`;
+    setAriaLabel(`Reset to initial size. ${getAriaLabel(initialFraction)}`);
+  };
+
+  return (
+    <>
+      <style>{`
+      .two-panels-vertical-grid {
+	 display: grid;
+	 grid-template-columns: 0.5fr auto 0.5fr;
+	 width: 600px;
+	 height: 400px;
+	 transition: all 150ms linear;
+}
+ .two-panels-vertical-grid__panel {
+	 background-color: var(--cds-layer-01);
+	 padding: 1rem;
+	 overflow: auto;
+	 min-inline-size: 48px;
+}
+      `}</style>
+      <div className="two-panels-vertical-grid" ref={containerRef}>
+        <div className="two-panels-vertical-grid__panel">
+          <h3>Left Panel</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, ex.
+            Non esse ullam hic, laboriosam nesciunt optio repellat fugiat saepe?
+          </p>
+        </div>
+
+        <ResizeBar
+          orientation="vertical"
+          mode="none" // for fully controlled announcements
+          onResize={handleResize}
+          onResizeEnd={handleResizeEnd}
+          onDoubleClick={handleDoubleClick}
+          aria-label={ariaLabel}
+        />
+
+        <div className="two-panels-vertical-grid__panel">
+          <h3>Right Panel</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Necessitatibus quos, inventore minus sunt consectetur id iure fuga
+            cum ab optio.
+          </p>
+        </div>
+      </div>
+    </>
+  );
+};

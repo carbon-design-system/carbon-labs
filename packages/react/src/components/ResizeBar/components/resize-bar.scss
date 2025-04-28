@@ -1,0 +1,66 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon setting imports
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/components/button' as *;
+
+$prefix: 'clabs' !default;
+
+.#{$prefix}--resize-bar {
+  background-color: $border-subtle-01;
+  flex: none;
+  position: relative;
+
+  &:hover {
+    background-color: $border-interactive;
+    transition: background-color 150ms ease;
+  }
+
+  &:focus {
+    background-color: $border-interactive;
+    outline: none;
+  }
+  
+  &:active {
+    background-color: $border-interactive;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &--horizontal {
+    block-size: 0.3rem;
+    cursor: ns-resize;
+  }
+
+  &--vertical {
+    cursor: ew-resize;
+    inline-size: 0.3rem;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// add transitions to panel resizes
+.smooth-resize {
+    transition: all 150ms linear;
+  }

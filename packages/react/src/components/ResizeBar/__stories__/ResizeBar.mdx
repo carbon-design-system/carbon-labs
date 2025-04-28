@@ -1,0 +1,64 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as ResizeBarStories from './ResizeBar.stories';
+
+<Meta isTemplate />
+
+# ResizeBar
+
+- **Initiative owner(s):** Nandan Devadula
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/ResizeBar)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/ResizeBar)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+`ResizeBar` is an atomic component extracted from `SplitPanel` and made into an independent component. which can be reused where ever there is a resizing requirement in the ui.
+
+<Canvas of={ResizeBarStories.TwoPanelsVertical} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-resize-bar
+```
+
+### JS (via import)
+
+```javascript
+import { ResizeBar } from '@carbon-labs/react-resize-bar/es/index';
+
+function App() {
+  return <ResizeBar />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-resize-bar/scss/resize-bar';
+```

@@ -16,7 +16,11 @@
   },
   "main": "./src/index.js",
   "module": "./src/index.js",
-  "files": ["es", "lib", "scss"],
+  "files": [
+    "es",
+    "lib",
+    "scss"
+  ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
     "clean": "rm -rf {es,lib,scss}"

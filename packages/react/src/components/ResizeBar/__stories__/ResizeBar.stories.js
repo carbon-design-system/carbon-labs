@@ -61,6 +61,9 @@ export const SinglePanelNoBoundaries = () => (
   </>
 );
 
+/**
+ *
+ */
 export const SinglePanelBounded = () => (
   <>
     <style>{`
@@ -100,6 +103,9 @@ export const SinglePanelBounded = () => (
   </>
 );
 
+/**
+ *
+ */
 export const SinglePanelOverlay = () => (
   <>
     <style>{`
@@ -148,7 +154,7 @@ export const SinglePanelOverlay = () => (
           <h3 className="single-panel-overlay__panel-title">Overlay Panel</h3>
           <p>
             This sliding panel overlays the main content and can be resized from
-            the top edge. It's useful for displaying additional information or
+            the top edge. Its useful for displaying additional information or
             controls while maintaining access to the main content above.
           </p>
         </div>
@@ -157,6 +163,9 @@ export const SinglePanelOverlay = () => (
   </>
 );
 
+/**
+ *
+ */
 export const TwoPanelsHorizontal = () => (
   <>
     <style>{`
@@ -190,7 +199,7 @@ export const TwoPanelsHorizontal = () => (
       <div className="two-panels-horizontal__panel">
         <h3 className="two-panels-horizontal__panel-title">Bottom Panel</h3>
         <p>
-          The bottom panel adapts its size in response to the top panel's
+          The bottom panel adapts its size in response to the top panels
           resizing, maintaining a fluid and responsive layout. This setup works
           well for scenarios like log viewers, console outputs, or supplementary
           information displays.
@@ -200,6 +209,9 @@ export const TwoPanelsHorizontal = () => (
   </>
 );
 
+/**
+ *
+ */
 export const TwoPanelsVertical = () => (
   <>
     <style>{`
@@ -241,6 +253,9 @@ export const TwoPanelsVertical = () => (
   </>
 );
 
+/**
+ *
+ */
 export const FourPanels = () => (
   <>
     <style>{`
@@ -281,18 +296,20 @@ export const FourPanels = () => (
         <div className="four-panels__panel">
           <h3 className="four-panels__panel-title">Top Left Panel</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
-            voluptatum asperiores harum non quidem quasi labore ducimus, commodi
-            nam minima?
+            Buttons are used to initialize an action, either in the background
+            or foreground of an experience. There are several kinds of buttons.
+            Primary buttons should be used for the principle call to action on
+            the page.
           </p>
         </div>
         <ResizeBar orientation="horizontal" />
         <div className="four-panels__panel">
           <h3 className="four-panels__panel-title">Bottom Left Panel</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis sed
-            earum mollitia beatae. Doloremque quos sapiente facere repellendus
-            magnam cumque.
+            Buttons are used to initialize an action, either in the background
+            or foreground of an experience. There are several kinds of buttons.
+            Primary buttons should be used for the principle call to action on
+            the page.
           </p>
         </div>
       </div>
@@ -301,18 +318,20 @@ export const FourPanels = () => (
         <div className="four-panels__panel four-panels__panel--right-top">
           <h3 className="four-panels__panel-title">Top Right Panel</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic aliquam
-            temporibus fugiat placeat illo voluptas earum perferendis soluta
-            minima quibusdam!
+            Buttons are used to initialize an action, either in the background
+            or foreground of an experience. There are several kinds of buttons.
+            Primary buttons should be used for the principle call to action on
+            the page.
           </p>
         </div>
         <ResizeBar orientation="horizontal" />
         <div className="four-panels__panel four-panels__panel--right-bottom">
           <h3 className="four-panels__panel-title">Bottom Right Panel</h3>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi
-            accusamus quod culpa perferendis natus autem officia tenetur libero
-            consectetur praesentium?
+            Buttons are used to initialize an action, either in the background
+            or foreground of an experience. There are several kinds of buttons.
+            Primary buttons should be used for the principle call to action on
+            the page.
           </p>
         </div>
       </div>
@@ -320,16 +339,23 @@ export const FourPanels = () => (
   </>
 );
 
+/**
+ *
+ */
 export const TwoPanelsVerticalGrid = () => {
   // fully controlled example
+
+  // eslint-disable-next-line jsdoc/require-jsdoc
   const getAriaLabel = (fraction) =>
     `Left panel: ${Math.round(fraction * 100)}%, Right panel: ${Math.round(
       (1 - fraction) * 100
     )}%`;
 
+  // eslint-disable-next-line jsdoc/require-jsdoc
   const clampFraction = (value) =>
     Math.max(0.0806723, Math.min(0.919328, value));
 
+  // eslint-disable-next-line jsdoc/require-jsdoc
   const clampWidth = (width, totalWidth) =>
     Math.max(48, Math.min(totalWidth - 48, width));
   const containerRef = useRef(null);
@@ -347,9 +373,17 @@ export const TwoPanelsVerticalGrid = () => {
     }
   }, [isKeyboard]);
 
+  /**
+   * Handles the resizing of panels.
+   *
+   * @param {number} delta - The change in size during the resize operation.
+   * @param {boolean} isKeyboardEvent - Indicates if the resize was triggered by a keyboard event.
+   */
   const handleResize = (delta, isKeyboardEvent) => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container) {
+      return;
+    }
 
     const totalWidth = container.offsetWidth - 5;
     let newFraction = currentFractionRef.current;
@@ -376,15 +410,23 @@ export const TwoPanelsVerticalGrid = () => {
     setAriaLabel(getAriaLabel(newFraction));
   };
 
+  /**
+   *
+   */
   const handleResizeEnd = () => {
     const container = containerRef.current;
     startWidthRef.current = 0;
     container.style.transition = isKeyboard ? '' : 'unset';
   };
 
+  /**
+   *
+   */
   const handleDoubleClick = () => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container) {
+      return;
+    }
 
     currentFractionRef.current = initialFraction;
     container.style.gridTemplateColumns = `${initialFraction}fr auto ${
@@ -414,8 +456,10 @@ export const TwoPanelsVerticalGrid = () => {
         <div className="two-panels-vertical-grid__panel">
           <h3>Left Panel</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui, ex.
-            Non esse ullam hic, laboriosam nesciunt optio repellat fugiat saepe?
+            Buttons are used to initialize an action, either in the background
+            or foreground of an experience. There are several kinds of buttons.
+            Primary buttons should be used for the principle call to action on
+            the page.
           </p>
         </div>
 
@@ -431,9 +475,10 @@ export const TwoPanelsVerticalGrid = () => {
         <div className="two-panels-vertical-grid__panel">
           <h3>Right Panel</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Necessitatibus quos, inventore minus sunt consectetur id iure fuga
-            cum ab optio.
+            Buttons are used to initialize an action, either in the background
+            or foreground of an experience. There are several kinds of buttons.
+            Primary buttons should be used for the principle call to action on
+            the page.
           </p>
         </div>
       </div>

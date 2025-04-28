@@ -27,7 +27,7 @@ $prefix: 'clabs' !default;
     background-color: $border-interactive;
     outline: none;
   }
-  
+
   &:active {
     background-color: $border-interactive;
   }
@@ -62,5 +62,5 @@ $prefix: 'clabs' !default;
 
 // add transitions to panel resizes
 .smooth-resize {
-    transition: all 150ms linear;
-  }
+  transition: all 150ms linear;
+}

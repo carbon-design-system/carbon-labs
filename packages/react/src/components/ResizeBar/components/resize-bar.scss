@@ -14,13 +14,15 @@
 $prefix: 'clabs' !default;
 
 .#{$prefix}--resize-bar {
-  background-color: $border-subtle-01;
-  flex: none;
   position: relative;
+  flex: none;
+  background-color: $border-subtle-01;
 
   &:hover {
-    background-color: $border-interactive;
-    transition: background-color 150ms ease;
+    @media (prefers-reduced-motion: no-preference) {
+      background-color: $border-interactive;
+      transition: background-color 150ms ease;
+    }
   }
 
   &:focus {
@@ -33,8 +35,8 @@ $prefix: 'clabs' !default;
   }
 
   &:focus:not(:focus-visible) {
-    outline: none;
     box-shadow: none;
+    outline: none;
   }
 
   &--horizontal {
@@ -43,15 +45,15 @@ $prefix: 'clabs' !default;
   }
 
   &--vertical {
-    cursor: ew-resize;
     inline-size: 0.3rem;
+    cursor: ew-resize;
   }
 }
 
 .sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  inline-size: 1px;
+  block-size: 1px;
   padding: 0;
   margin: -1px;
   overflow: hidden;
@@ -62,5 +64,7 @@ $prefix: 'clabs' !default;
 
 // add transitions to panel resizes
 .smooth-resize {
-  transition: all 150ms linear;
+  @media (prefers-reduced-motion: no-preference) {
+    transition: all 150ms linear;
+  }
 }

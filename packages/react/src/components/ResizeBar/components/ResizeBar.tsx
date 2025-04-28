@@ -247,8 +247,9 @@ export const ResizeBar = ({
         'Home',
         'End',
       ].includes(e.key)
-    )
-      {return}
+    ) {
+      return;
+    }
     e.preventDefault();
 
     if (!ref.current) {
@@ -376,7 +377,9 @@ export const ResizeBar = ({
       role="separator"
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
-      aria-orientation={orientation === 'horizontal' ? 'horizontal' : 'vertical'}
+      aria-orientation={
+        orientation === 'horizontal' ? 'horizontal' : 'vertical'
+      }
       aria-live="polite"
       onMouseDown={handleMouseDown}
       onDoubleClick={handleDoubleClick}

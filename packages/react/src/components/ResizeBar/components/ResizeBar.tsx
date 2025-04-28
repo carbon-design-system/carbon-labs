@@ -187,10 +187,10 @@ export const ResizeBar = ({
       orientation === 'horizontal'
         ? e.clientY - startPos.current.y
         : e.clientX - startPos.current.x;
-    updateSizes(delta);
+    updateSizes(delta, false);
   };
 
-  const handleMouseDown = (e: MouseEvent) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (!ref.current) {
       return;
@@ -218,6 +218,9 @@ export const ResizeBar = ({
   };
 
   const handleMouseUp = () => {
+    if (!ref.current) {
+      return;
+    }
     isResizing.current = false;
     if (onResizeEnd) {
       onResizeEnd();
@@ -245,7 +248,7 @@ export const ResizeBar = ({
         'End',
       ].includes(e.key)
     )
-      return;
+      {return}
     e.preventDefault();
 
     if (!ref.current) {
@@ -298,7 +301,7 @@ export const ResizeBar = ({
     updateSizes(delta, true);
   };
 
-  const handleDoubleClick = (e: MouseEvent) => {
+  const handleDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (!ref.current) {
       return;
@@ -366,12 +369,14 @@ export const ResizeBar = ({
   };
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
     <div
       {...rest}
       ref={rest.ref || ref}
       role="separator"
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
-      aria-orientation={orientation}
+      aria-orientation={orientation === 'horizontal' ? 'horizontal' : 'vertical'}
       aria-live="polite"
       onMouseDown={handleMouseDown}
       onDoubleClick={handleDoubleClick}

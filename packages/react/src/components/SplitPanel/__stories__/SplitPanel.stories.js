@@ -92,7 +92,16 @@ export const Horizontal = (args) => (
       margin: '16px',
     }}
     onChange={(splitValue) => actionSplitValue(splitValue)}
-
+    childrenBeforeSplit={
+      <div>
+        <h2>Children before split</h2>
+        <ul>
+          <li>One</li>
+          <li>Two</li>
+          <li>Three</li>
+        </ul>
+      </div>
+    }
     childrenAfterSplit={
       <div>
         <h2>Children after split</h2>

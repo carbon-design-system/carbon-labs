@@ -337,7 +337,7 @@ export const headerTiles = [
   },
 ];
 
-export const tasksConfigButton = {
+export const tasksControllerConfigButton = {
   type: 'button',
   button: {
     href: '#',
@@ -347,9 +347,21 @@ export const tasksConfigButton = {
   },
 };
 
-export const tasksConfigDropdown = {
+export const tasksControllerConfigDropdown = {
   type: 'dropdown',
   dropdown: {
     label: 'Customize your journey',
+    allTileGroups: headerTiles,
+    selectedTileGroup: headerTiles[0],
+    setSelectedTileGroup: () => {},
   },
 };
+
+export const WorkspaceSelectorConfig = {
+    allWorkspaces: workspaceData,
+    selectedWorkspace: workspaceData[0],
+    setSelectedWorkspace: () => {},
+    propsOverrides: {
+      label: "Open in: Drew's workspace"
+    }
+}

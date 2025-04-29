@@ -9,19 +9,21 @@
 import React, { ReactNode } from 'react';
 import { AIPromptTile } from '../AIPromptTile/AIPromptTile';
 import { GlassTile } from '../GlassTile/GlassTile';
+import { SkeletonPlaceholder } from '@carbon/react';
 
 /** Base Tile */
 
 interface BaseTileProps {
   id?: string;
   open?: boolean;
-  href?: string;
-  mainIcon?: string;
-  secondaryIcon?: string;
-  title?: string;
-  subtitle?: string;
+  href?: string | null;
+  mainIcon?: string | null;
+  secondaryIcon?: string | null;
+  title?: string | null;
+  subtitle?: string | null;
   productName?: string;
   customContent?: ReactNode;
+  isLoading?: boolean;
 }
 
 export const BaseTile: React.FC<BaseTileProps> = ({
@@ -34,6 +36,7 @@ export const BaseTile: React.FC<BaseTileProps> = ({
   subtitle,
   productName,
   customContent,
+  isLoading,
 }: BaseTileProps) => {
   const props = {
     id,
@@ -46,12 +49,14 @@ export const BaseTile: React.FC<BaseTileProps> = ({
     productName,
     customContent,
   };
-  const tile =
-    id === 'ai-tile' ? (
-      <AIPromptTile {...props}></AIPromptTile>
-    ) : (
-      <GlassTile {...props}></GlassTile>
-    );
 
-  return tile;
+  if (isLoading) {
+    return <SkeletonPlaceholder />;
+  }
+
+  if (id === 'ai-tile') {
+    return <AIPromptTile {...props}></AIPromptTile>;
+  }
+
+  return <GlassTile {...props}></GlassTile>;
 };

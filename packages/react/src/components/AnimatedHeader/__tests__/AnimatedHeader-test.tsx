@@ -11,10 +11,12 @@ import { render } from '@testing-library/react';
 import 'jest-canvas-mock';
 import '@testing-library/jest-dom';
 
-import AnimatedHeader, {
-  SelectedWorkspace,
-} from '../components/AnimatedHeader/AnimatedHeader';
-import { headerTiles, workspaceData, tasksConfigDropdown } from '../data';
+import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
+import {
+  tasksControllerConfigDropdown,
+  WorkspaceSelectorConfig,
+} from '../__stories__/data';
+import { TasksControllerConfig } from '../components/TasksController/TasksController';
 
 window.matchMedia =
   window.matchMedia ||
@@ -32,23 +34,14 @@ describe('AnimatedHeader', () => {
     it('should match snapshot', () => {
       const { container } = render(
         <AnimatedHeader
-          allTiles={headerTiles}
-          allWorkspaces={workspaceData}
-          description="Connect, monitor, and manage data."
-          handleHeaderItemsToString={() => ''}
-          handleWorkspaceItemsToString={() => ''}
-          productName="[Product name]"
-          selectedTileGroup={headerTiles[0]}
-          selectedWorkspace={workspaceData[0]}
-          renderWorkspaceSelectedItem={(item: SelectedWorkspace | null) =>
-            item ? `Open in: ${item.label}` : ''
+          tasksControllerConfig={
+            tasksControllerConfigDropdown as TasksControllerConfig
           }
-          setSelectedTileGroup={() => {}}
-          setSelectedWorkspace={() => {}}
-          tasksConfig={tasksConfigDropdown}
+          workspaceSelectorConfig={WorkspaceSelectorConfig}
+          description="Connect, monitor, and manage data."
+          productName="[Product name]"
           userName="Drew"
           welcomeText="Welcome"
-          workspaceLabel="Open in: Drew's workspace"
         />
       );
       expect(container).toMatchSnapshot();

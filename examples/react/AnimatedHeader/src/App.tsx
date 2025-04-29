@@ -8,20 +8,21 @@
  */
 
 import React, { useState } from 'react';
-import { AnimatedHeader } from '@carbon-labs/react-animated-header/es/index';
+import { AnimatedHeader, TasksControllerConfig, WorkspaceSelectorConfig } from '@carbon-labs/react-animated-header/es/index';
 import {
   watsonXAnimatedLight,
   watsonXStaticLight,
 } from '@carbon-labs/react-animated-header/assets';
-import { headerTiles, workspaceData, tasksConfigDropdown } from './data';
 import {
-  SelectedWorkspace,
-  TileGroup,
-} from '@carbon-labs/react-animated-header/es/components/AnimatedHeader/AnimatedHeader';
+  headerTiles,
+  workspaceData,
+  workspaces,
+} from './data';
+import { TileGroup } from '@carbon-labs/react-animated-header/es/components/AnimatedHeader/AnimatedHeader';
+import { Workspace } from '@carbon-labs/react-animated-header/es/components/AnimatedHeader/WorkspaceSelector/WorkspaceSelector';
 
 function App() {
   const [tiles] = useState(headerTiles);
-  const [workspaces] = useState(workspaceData);
   const [selectedTile, setSelectedTile] = useState(tiles[0]);
   const [selectedWorkspace, setSelectedWorkspace] = useState(workspaces[0]);
 
@@ -29,41 +30,55 @@ function App() {
     setSelectedWorkspace(e.selectedItem);
   };
 
-  const handleTileGroup = (e: any) => {
+  const handleTileGroupSelect = (e: any) => {
     setSelectedTile(e.selectedItem);
   };
 
-  const handleHeaderItems = (item: TileGroup | null) => item?.label ?? '';
+  const tasksDropdownItemRenderer = (item: TileGroup | null) => item?.label ?? '';
 
-  const handleWorkspaceItems = (item: SelectedWorkspace | null) =>
-    item?.label ?? '';
+  const workspaceDropdownItemRenderer = (item: Workspace | null) => item?.label ?? '';
 
-  const selectedWorkspaceItemRenderer = (item: SelectedWorkspace | null) =>
+  const selectedWorkspaceItemRenderer = (item: Workspace | null) =>
     item?.label ?? '';
 
   const selectedTileGroupRenderer = (item: TileGroup | null) =>
     item?.label ?? '';
 
+  const tasksControllerConfig: TasksControllerConfig = {
+    type: 'dropdown',
+    dropdown: {
+      allTileGroups: headerTiles,
+      selectedTileGroup: selectedTile,
+      setSelectedTileGroup: handleTileGroupSelect,
+      propsOverrides: {
+        renderSelectedItem: selectedTileGroupRenderer,
+        itemToString: tasksDropdownItemRenderer
+      }
+    }
+  }
+
+  const workspaceSelectorConfig: WorkspaceSelectorConfig = {
+    allWorkspaces: workspaceData,
+    selectedWorkspace,
+    setSelectedWorkspace:handleWorkspaceSelect,
+    propsOverrides: {
+      label: "Open in: Drew's workspace",
+      renderSelectedItem: selectedWorkspaceItemRenderer,
+      itemToString: workspaceDropdownItemRenderer
+    }
+  }
+
   return (
     <AnimatedHeader
-      allTiles={tiles}
-      allWorkspaces={workspaces}
+      tasksControllerConfig={tasksControllerConfig}
+      workspaceSelectorConfig={workspaceSelectorConfig}
       description="Connect, monitor, and manage data."
-      handleHeaderItemsToString={handleHeaderItems}
-      handleWorkspaceItemsToString={handleWorkspaceItems}
       headerAnimation={watsonXAnimatedLight}
       headerStatic={watsonXStaticLight}
       productName="[Product name]"
-      renderHeaderSelectedItem={selectedTileGroupRenderer}
-      renderWorkspaceSelectedItem={selectedWorkspaceItemRenderer}
-      selectedTileGroup={selectedTile}
-      selectedWorkspace={selectedWorkspace}
-      setSelectedTileGroup={handleTileGroup}
-      setSelectedWorkspace={handleWorkspaceSelect}
-      tasksConfig={tasksConfigDropdown}
       userName="Drew"
       welcomeText="Welcome"
-      workspaceLabel="Open in: Drew's workspace"
+      isLoading={false}
     />
   );
 }

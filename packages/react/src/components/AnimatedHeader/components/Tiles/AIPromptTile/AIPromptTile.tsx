@@ -14,12 +14,12 @@ import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 /** Primary UI component for user interaction */
 
 interface AIPromptTileProps {
-  href?: string;
+  href?: string | null;
   id?: string;
-  mainIcon?: string;
+  mainIcon?: string | null;
   open?: boolean;
   productName?: string;
-  title?: string;
+  title?: string | null;
 }
 
 export const AIPromptTile: React.FC<AIPromptTileProps> = ({
@@ -108,7 +108,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
         {/* Prompt Lab - >  https://dataplatform.cloud.ibm.com/wx/prompts?project_id=437e0304-9168-43b9-93ef-88a8dc5e649c&context=wx&primed_chat=drew */}
 
         <div className={`${blockClass}--footer`}>
-          <Button kind="ghost" size="sm" href={href}>
+          <Button kind="ghost" size="sm" href={href ?? undefined}>
             Open {productName}
           </Button>
         </div>

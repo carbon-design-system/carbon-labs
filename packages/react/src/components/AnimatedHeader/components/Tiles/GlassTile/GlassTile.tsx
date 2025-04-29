@@ -14,13 +14,13 @@ import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 /** Primary UI component for user interaction */
 
 interface GlassTileProps {
-  href?: string;
+  href?: string | null;
   id?: string;
-  mainIcon?: string;
+  mainIcon?: string | null;
   open?: boolean;
-  secondaryIcon?: string;
-  subtitle?: string;
-  title?: string;
+  secondaryIcon?: string | null;
+  subtitle?: string | null;
+  title?: string | null;
   customContent?: ReactNode;
 }
 
@@ -45,7 +45,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
     <Link
       className={`${prefix}--animated-header__tile ${blockClass}`}
       key={id}
-      href={href}>
+      href={href ?? undefined}>
       <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
         <div className={`${blockClass}--body-background`} />
         {customContent ? (

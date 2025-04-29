@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import mdx from './AnimatedHeader.mdx';
-import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
+import AnimatedHeader, { AnimatedHeaderProps } from '../components/AnimatedHeader/AnimatedHeader';
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import '../components/animated-header.scss';
@@ -16,8 +16,8 @@ import '../components/animated-header.scss';
 import {
   workspaceData,
   headerTiles,
-  tasksConfigButton,
-  tasksConfigDropdown,
+  tasksControllerConfigButton,
+  tasksControllerConfigDropdown,
 } from './data';
 import {
   dataFabricAnimatedLight,
@@ -60,14 +60,6 @@ const sharedArgTypes = {
   description: {
     description:
       'Provide short sentence in max. 3 lines related to product context',
-  },
-  handleHeaderItemsToString: {
-    description:
-      'Helper function passed to downshift that allows the library to render a given item to a string label. By default, it extracts the `label` field from a given item to serve as the item label in the list. (Dropdown under description in header).',
-  },
-  handleWorkspaceItemsToString: {
-    description:
-      'Helper function passed to downshift that allows the library to render a given item to a string label. By default, it extracts the `label` field from a given item to serve as the item label in the list. (Dropdown related to workspace selection).',
   },
   headerAnimation: {
     description:
@@ -171,8 +163,8 @@ const sharedArgTypes = {
     options: [0, 1, 2],
     mapping: {
       0: null,
-      1: tasksConfigButton,
-      2: tasksConfigDropdown,
+      1: tasksControllerConfigButton,
+      2: tasksControllerConfigDropdown,
     },
   },
   userName: {

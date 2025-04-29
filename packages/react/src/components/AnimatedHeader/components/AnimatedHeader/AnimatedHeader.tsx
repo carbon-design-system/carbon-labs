@@ -77,6 +77,8 @@ export interface AnimatedHeaderProps {
   userName?: string;
   welcomeText?: string;
   workspaceLabel?: string;
+  expandButtonLabel?: string;
+  collapseButtonLabel?: string;
 }
 
 const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
@@ -98,6 +100,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   userName,
   welcomeText,
   workspaceLabel = `Open in: ${userName}'s workspace` || `Select a workspace`,
+  expandButtonLabel = 'Expand',
+  collapseButtonLabel = 'Collapse',
 }: AnimatedHeaderProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
@@ -313,7 +317,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             kind="ghost"
             renderIcon={open ? ChevronUp : ChevronDown}
             onClick={handleButtonCollapseClick}>
-            {open ? `Collapse` : `Expand`}
+            {open ? collapseButtonLabel : expandButtonLabel}
           </Button>
         </div>
       </Grid>
@@ -339,9 +343,19 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   className: PropTypes.string,
 
   /**
+   * Custom collapse button label
+   */
+  collapseButtonLabel: PropTypes.string,
+
+  /**
    * Provide short sentence in max. 3 lines related to product context
    */
   description: PropTypes.string,
+
+  /**
+   * Custom expand button label
+   */
+  expandButtonLabel: PropTypes.string,
 
   /**
    * Helper function passed to downshift that allows the library to render a

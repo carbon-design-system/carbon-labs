@@ -1,5 +1,4 @@
 [   
-<<<<<<< HEAD
     {"name":"weather example",
         "spec":
 {
@@ -146,8 +145,6 @@
 }
 
     },
-=======
->>>>>>> upstream/main
     {"name": "concat",
     "spec":{
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",

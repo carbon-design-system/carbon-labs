@@ -207,7 +207,7 @@ const sharedArgs = {
   userName: 'Drew',
   welcomeText: 'Welcome',
   expandButtonLabel: 'Expand',
-  collapseButtonLabel: 'Collapse'
+  collapseButtonLabel: 'Collapse',
 };
 
 export const ThemeG10 = (args) => {

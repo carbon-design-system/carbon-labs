@@ -185,6 +185,14 @@ const sharedArgTypes = {
   workspaceLabel: {
     description: 'Specify the default workspace label above the tiles',
   },
+  expandButtonLabel: {
+    description: 'Specify custom expand button label',
+    type: 'string',
+  },
+  collapseButtonLabel: {
+    description: 'Specify custom collapse button label',
+    type: 'string',
+  },
 };
 
 const sharedArgs = {
@@ -198,6 +206,8 @@ const sharedArgs = {
   tasksConfig: 2,
   userName: 'Drew',
   welcomeText: 'Welcome',
+  expandButtonLabel: 'Expand',
+  collapseButtonLabel: 'Collapse'
 };
 
 export const ThemeG10 = (args) => {

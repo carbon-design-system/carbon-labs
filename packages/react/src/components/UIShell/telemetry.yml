@@ -1,0 +1,112 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: 5b9dce15-eeda-4b53-8683-3e3aeb599fd1
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  jsx:
+    elements:
+      allowedAttributeNames:
+        # General
+        - addFocusListeners
+        - align
+        - as
+        - autoAlign
+        - children
+        - className
+        - defaultExpanded
+        - defaultOpen
+        - element
+        - enterDelayMs
+        - expanded
+        - href
+        - isActive
+        - isSideNavExpanded
+        - label
+        - large
+        - leaveDelayMs
+        - renderIcon
+        - selected
+        - tabIndex
+        - title
+        # HeaderContainer
+        - isSwitcherExpanded
+        - render
+        # HeaderPanel
+        - onHeaderPanelFocus
+        # HeaderPopover
+        - alignmentAxisOffset
+        # SharkFinIcon
+        - small
+        # SideNav
+        - addMouseListeners
+        - hideOverlay
+        - inert
+        - isChildOfHeader
+        - isCollapsible
+        - isFixedNav
+        - isPersistent
+        - isRail
+        - isTreeview
+        - navType
+        - onOverlayClick
+        - onSideNavBlur
+        - onToggle
+        - translateWithId
+        # SideNavFlyoutMenu
+        - description
+        - dropShadow
+        - highContrast
+        - menuContent
+        # SideNavItems
+        - accessibilityLabel
+        # SideNavLink
+        - aria-label
+        - aria-labelledby
+        # SideNavLinkPopover
+        - closeOnActivation
+        - disabled
+        - isSelected
+        - size
+        - wrapperClasses
+        # SideNavMenu
+        - depth
+        - onMenuToggle
+        # SideNavMenuItem
+        - isFlyoutMenuItem
+        # SideNavToggle
+        - onClick
+        # React
+        - key
+        - ref
+      allowedAttributeStringValues:
+        # General - align
+        - bottom
+        - bottom-end
+        - bottom-left
+        - bottom-right
+        - bottom-start
+        - left
+        - left-bottom
+        - left-end
+        - left-start
+        - left-top
+        - right
+        - right-bottom
+        - right-end
+        - right-start
+        - right-top
+        - top
+        - top-end
+        - top-left
+        - top-right
+        - top-start
+        # SideNavLinkPopover - size
+        - lg
+        - md
+        - sm
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

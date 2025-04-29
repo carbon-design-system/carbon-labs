@@ -407,7 +407,7 @@ export default class codeElement extends LitElement {
       );
     }
     if (this.hasAttribute('render-language')) {
-      console.log('FIRST: ' + this.renderLanguage);
+      //console.log('FIRST: ' + this.renderLanguage);
       this.language = this.renderLanguage;
     }
     if (this.hasAttribute('max-height')) {
@@ -428,6 +428,9 @@ export default class codeElement extends LitElement {
       let autoIndentedCode;
       if (this.autoIndent) {
         autoIndentedCode = this._preIndentCode(this.content);
+        //console.log(autoIndentedCode)
+        //console.log(this.content)
+        this.content = autoIndentedCode;
       }
 
       this._editedContent = autoIndentedCode || this.content;
@@ -497,7 +500,7 @@ export default class codeElement extends LitElement {
    * @param {string} content - content code string
    */
   _clearCode(content) {
-    const match = content.match(new RegExp("^```(w+)?\n([sS]*?)\n```$"));
+    const match = content.match(new RegExp('^```(w+)?\\n([sS]*?)\\n```$'));
     if (match) {
       const [, lang, codeContent] = match;
       return { language: lang || null, codeContent };
@@ -511,7 +514,7 @@ export default class codeElement extends LitElement {
    */
   _cleanCode(content) {
     let foundLanguage = null;
-    const backtickCheck = new RegExp("^```(\\w+)?\\n|```$", "g");
+    const backtickCheck = new RegExp('^```(\\w+)?\\n|```$', 'g');
     const cleanCode = content.replace(backtickCheck, (_match, langString) => {
       if (langString) {
         foundLanguage = langString.trim();
@@ -811,7 +814,7 @@ export default class codeElement extends LitElement {
 
     //const formattedText = this._displayedContent;
     if (formattedText) {
-      const htmlSafeText = formattedText.replace(new RegExp("```", "g"), "");
+      const htmlSafeText = formattedText.replace(new RegExp('```', 'g'), '');
 
       if (this.coloringCharacterThreshold) {
         if (formattedText.length > this.coloringCharacterThreshold) {
@@ -840,8 +843,6 @@ export default class codeElement extends LitElement {
           if (!this.language && !this.streaming) {
             const detection = hljs.highlightAuto(htmlSafeText);
             this.language = detection.language;
-
-            console.log(this.language);
           }
         } catch (e) {
           this.language = 'plaintext';
@@ -925,7 +926,7 @@ export default class codeElement extends LitElement {
         if (this.autoDetectBlocks) {
           tabCount = 0;
         } else {
-          tabCount = (lineCheck.content.match(new RegExp("^\t+")) || [''])[0]
+          tabCount = (lineCheck.content.match(new RegExp('^\\t+')) || [''])[0]
             .length;
         }
         if (!lineCheck.content.trim()) {
@@ -1048,8 +1049,8 @@ export default class codeElement extends LitElement {
     }
 
     return normalizedCode
-      .replace(new RegExp('\n', 'g'), '\n')
-      .replace(new RegExp('\t', 'g'), '\t');
+      .replace(new RegExp('\\n', 'g'), '\n')
+      .replace(new RegExp('\\t', 'g'), '\t');
   }
 
   /**
@@ -1142,7 +1143,6 @@ export default class codeElement extends LitElement {
             newIndex++;
           }
         }
-        console.log(lineRes);
 
         if (lineChanged) {
           //diffDict[i] = 'edited';
@@ -1179,7 +1179,6 @@ export default class codeElement extends LitElement {
         );
         this.disableColoring = true;
         this._comparisonReference = comparisonLineTypes;
-        console.log(comparisonLineTypes);
         this._editedContent = comparedString;
       }
     } else {

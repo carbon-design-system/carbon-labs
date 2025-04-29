@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/utilities",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -29,6 +29,10 @@
     "es/**/*.js",
     "es/index.js"
   ],
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.4",
     "babel-cli": "^6.26.0"

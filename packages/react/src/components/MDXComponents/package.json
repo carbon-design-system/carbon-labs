@@ -1,0 +1,38 @@
+{
+  "name": "@carbon-labs/mdx-components",
+  "version": "0.4.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - MDX Components",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "src/components/MDXComponents"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rm -rf {es,lib,scss}",
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 2f9e5850-9687-434e-9ce0-8aa5ac05fa3f --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
+  },
+  "dependencies": {
+    "@ibm/telemetry-js": "^1.9.1",
+    "clsx": "^1.2.1",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "canary"
+  }
+}

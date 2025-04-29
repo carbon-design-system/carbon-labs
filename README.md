@@ -1,28 +1,61 @@
-# @carbon-labs
+<p align="center">
+  <a href="https://www.carbondesignsystem.com">
+    <img alt="Carbon Design System" src="https://user-images.githubusercontent.com/3901764/57545698-ce5f2380-7320-11e9-8682-903df232d7b0.png" width="100%" />
+  </a>
+</p>
+<h1 align="center">
+  Carbon Labs
+</h1>
 
-> A collection of experimental components and patterns implemented utilizing the
-> [Carbon Design System](https://carbondesignsystem.com/).
+> A community-driven incubation space enabling rapid prototyping, development,
+> and deployment of Carbon-based components.
 
 ## Getting started
 
-This monorepo houses a collection of components, each as their own package.
-Here's a full list of packages that we support!
+Carbon Labs is a collection of components, offered in React and Web Component
+packages. Individual components are their own package, which helps to remove any
+bottlenecks in publishing and deployments. Here are some available components:
+
+### React
+
+| Package name                                                                                                                                         | Description                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| [`@carbon-labs/react-animated-header`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/AnimatedHeader)   | Animated header component  |
+| [`@carbon-labs/react-processing`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/Processing)            | Processing                 |
+| [`@carbon-labs/split-panel`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/SplitPanel)                 | Split panel component      |
+| [`@carbon-labs/react-text-highlighter`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/TextHighlighter) | Text highlighter component |
+| [`@carbon-labs/react-theme-switcher`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/ThemeSettings)     | Theme settings             |
+| [`@carbon-labs/react-ui-shell`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/UIShell)                 | UI shell components        |
+| [`@carbon-labs/react-whats-new`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/WhatsNew)               | What's new                 |
+| [`@carbon-labs/mdx-components`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/react/src/components/MDXComponents)           | MDX Components             |
+
+### Web Components
+
+| Package name                                                                                                                                   | Description           |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/chat)            | AI Chat component     |
+| [`@carbon-labs/ai-tag`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/tag)              | AI Tag component      |
+| [`@carbon-labs/empty-state`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/web-components/src/components/empty-state) | Empty state component |
+
+### Shared
 
 | Package name                                                                                                 | Description                              |
 | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
-| [`@carbon-labs/ai-chat`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/chat)        | AI Chat component                        |
 | [`@carbon-labs/utilities`](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/utilities) | Common utilities shared amongst packages |
 
-A Storybook demo of all component packages is available here:
+### Storybook
 
-- Web Components Storybook: https://labs.carbondesignsystem.com/web-components
-- React Storybook: https://labs.carbondesignsystem.com/react
+You can view the current state of all components in
+[Storybook](https://labs.carbondesignsystem.com). You can also view the
+individual storybooks for
+[Web Components](https://labs.carbondesignsystem.com/web-components/) and
+[React](https://labs.carbondesignsystem.com/react/).
 
 ## 🙌 Contributing
 
-We're always looking for contributors to help us fix bugs, build new features,
-or help us improve the project documentation. If you're interested, definitely
-check out our guides:
+Want to add an asset to `@carbon-labs`? Read through the Carbon Labs
+[contribution section](https://pages.github.ibm.com/carbon/ibm-products/contributing/carbon-labs/#carbon-labs-in-code)
+before diving into our developer guide:
 
 - [Developer Guide](https://github.com/carbon-design-system/carbon-labs/blob/main/docs/developing.md)
 

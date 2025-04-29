@@ -60,7 +60,11 @@ export default class CLABSChat extends LitElement {
   /**
    * user-assigned boolean denoting if the dragging should cancel when the mouse exits the window
    */
-  @property({ type: Boolean, attribute: 'cancel-dragging-on-escape', reflect: true })
+  @property({
+    type: Boolean,
+    attribute: 'cancel-dragging-on-escape',
+    reflect: true,
+  })
   cancelDraggingOnEscape = true;
 
   /**
@@ -651,10 +655,13 @@ export default class CLABSChat extends LitElement {
           window.innerHeight - (event.clientY - originalOffset.y) - chatHeight;
 
         let exitCheck = false;
-        if(this.cancelDraggingOnEscape){
-          if(newPositionX > window.innerWidth - mininumPadding.left - chatWidth ){
+        if (this.cancelDraggingOnEscape) {
+          if (
+            newPositionX >
+            window.innerWidth - mininumPadding.left - chatWidth
+          ) {
             exitCheck = true;
-          }/*
+          } /*
           if(newPositionX < mininumPadding.right){
             exitCheck = true;
           }
@@ -664,7 +671,6 @@ export default class CLABSChat extends LitElement {
           if(newPositionY > mininumPadding.bottom){
             exitCheck = true;
           }*/
-
         }
         newPositionX = Math.min(
           Math.max(mininumPadding.right, newPositionX),
@@ -674,7 +680,6 @@ export default class CLABSChat extends LitElement {
           Math.max(mininumPadding.bottom, newPositionY),
           window.innerHeight - mininumPadding.top - chatHeight
         );
-
 
         if (newPositionX && newPositionY) {
           this.verticalDockPosition = newPositionY;
@@ -689,7 +694,7 @@ export default class CLABSChat extends LitElement {
           );
         }
 
-        if(exitCheck){
+        if (exitCheck) {
           this._isDragging = false;
         }
       }

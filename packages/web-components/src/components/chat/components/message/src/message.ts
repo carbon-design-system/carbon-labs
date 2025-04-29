@@ -33,6 +33,12 @@ export default class message extends LitElement {
   userSubmitted;
 
   /**
+   * Boolean denoting if message is small annotation
+   */
+  @property({ type: Boolean, attribute: 'separator' })
+  isSeparator;
+
+  /**
    * User-imported message sub-elements object, parsing is done on rawText here if none is provided
    */
   @property({ type: Array, attribute: 'elements', reflect: true })
@@ -267,9 +273,13 @@ export default class message extends LitElement {
   @state()
   previousMessageWidth;
 
+  @state()
+  uniqueIconId;
+
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
+    this.uniqueIconId = this.generateUniqueId();
     this._getTheme();
     if (this.hasAttribute('display-color')) {
       this.style.setProperty(

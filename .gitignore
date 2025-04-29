@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 es
+scss
 dist-ssr
 lib
 *.local
@@ -32,3 +33,5 @@ package.tgz
 .nx/*
 agentic.stories.js
 /.history
+
+*storybook.log

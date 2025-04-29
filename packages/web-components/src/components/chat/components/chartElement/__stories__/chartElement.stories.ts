@@ -18,7 +18,6 @@ export default {
   component: 'clabs-chat-chart',
 };
 
-
 const defaultArgs = {
   content: {},
   debugMode: false,
@@ -229,7 +228,7 @@ export const Showcase = {
     <h4>Faceted year-filtered h-concatenated repeating month-filtered chart</h4>
     <clabs-chat-chart
       theme="${chartTheme}"
-      container-height="4000px"
+      container-height="2600px"
       content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"url":"https://vega.github.io/editor/data/weather.csv"},"transform":[{"calculate":"year(datum.date)","as":"year"},{"fold":["temp_max","temp_min"],"as":["type","temperature"]},{"calculate":"[\'Winter\',\'Winter\',\'Spring\',\'Spring\',\'Spring\',\'Summer\',\'Summer\',\'Summer\',\'Fall\',\'Fall\',\'Fall\',\'Winter\'][month(datum.date)]","as":"season"},{"filter":"datum.year >= 2012 && datum.year <= 2015"}],"facet":{"row":{"field":"year","type":"ordinal"}},"spec":{"vconcat":[{"hconcat":[{"mark":"rect","width":600,"height":200,"encoding":{"y":{"field":"date","timeUnit":"date","type":"ordinal","title":"Day","axis":{"labelAngle":0,"format":"%e"}},"x":{"field":"date","timeUnit":"month","type":"ordinal","title":"Month"},"color":{"field":"temp_max","aggregate":"max","type":"quantitative","legend":{"title":null}}}},{"mark":"point","encoding":{"x":{"field":"wind","type":"quantitative"},"y":{"field":"precipitation","type":"quantitative"},"color":{"field":"temp_max","aggregate":"max","type":"quantitative","legend":{"title":null}}}}]},{"repeat":{"column":["precipitation","wind","temperature"]},"spec":{"vconcat":[{"layer":[{"mark":"boxplot","encoding":{"x":{"timeUnit":"month","field":"date","type":"temporal","title":"Month"},"y":{"field":{"repeat":"column"},"aggregate":"sum","type":"quantitative"},"y2":{"field":"temp_min"},"color":{"field":"season","type":"nominal"}}},{"mark":{"type":"point","color":"black","strokeWidth":2},"encoding":{"x":{"timeUnit":"month","field":"date","type":"temporal"},"y":{"aggregate":"mean","field":{"repeat":"column"},"type":"quantitative"}}}]},{"layer":[{"mark":"bar","height":60,"encoding":{"x":{"timeUnit":"month","field":"date","type":"temporal"},"y":{"aggregate":"mean","field":{"repeat":"column"},"type":"quantitative"},"color":{"field":"season","type":"nominal"}}},{"mark":{"type":"line","color":"black","strokeWidth":2},"encoding":{"x":{"timeUnit":"month","field":"date","type":"temporal"},"y":{"aggregate":"mean","field":{"repeat":"column"},"type":"quantitative"}}}]}]}}],"resolve":{"scale":{"y":"independent"}}}}'}">
     </clabs-chat-chart>
     <br />
@@ -452,6 +451,7 @@ export const FacetingTest = {
               content="${JSON.stringify(item.spec)}">
             </clabs-chat-chart>`
       )}
+      <<<<<<< HEAD
       <h4>Multi-scatter-chart</h4>
       <clabs-chat-chart
         content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
@@ -459,6 +459,7 @@ export const FacetingTest = {
         container-width="600px">
       </clabs-chat-chart>
       <br />
+      ======= >>>>>>> upstream/main
       <h4>Interactive multi-scatter plot</h4>
       <br />
       <clabs-chat-chart

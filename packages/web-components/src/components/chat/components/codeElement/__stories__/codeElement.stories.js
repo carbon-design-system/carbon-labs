@@ -246,7 +246,6 @@ export const OptionShowcase = {
     <clabs-chat-code max-height="200px" content="${codeExamples['C++']}">
     </clabs-chat-code>
     <br />
-    <br />
 
     <h3>Coloring and Ticks</h3>
     <br />

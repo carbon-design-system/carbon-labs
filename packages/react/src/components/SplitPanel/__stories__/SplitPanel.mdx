@@ -1,0 +1,124 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as SplitPanelStories from './SplitPanel.stories';
+
+<Meta isTemplate />
+
+# SplitPanel
+
+- **Initiative owner(s):** Lee Chase
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/SplitPanel)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/SplitPanel)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+This component is used to split an area horizontally or vertically. It renders
+two panels `childrenBeforeSplit` and `childrenAfterSplit` with a split handle in
+between.
+
+The split handle can be moved using the mouse or keyboard.
+
+### Mouse interaction
+
+The split handle can be dragged between the minimum to maximum values.
+
+### keyboard interaction
+
+When the split handle has focus it can be moved using the cursor keys. A
+secondary mode, typically used for moving at a different speed can be activated
+by pressing shift at the same time. The default movement sizes are 5px without
+shift and 25px with shift.
+
+The Home/End keys move the split to the splitMin/splitMax values respectively.
+The default splitMin is 0, splitMax 100.
+
+### Events
+
+The onChange event reports the current split value. It may be wise to monitor
+this event and disable interactive controls when a panel is too small to be
+practical.
+
+<Canvas of={SplitPanelStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-split-panel
+```
+
+### JS (via import)
+
+```javascript
+import { SplitPanel } from '@carbon-labs/react-split-panel/es/index';
+
+function App() {
+  return (
+    <SplitPanel
+      childrenBeforeSplit={
+        <div>
+          <h2>Children before split</h2>
+          <ul>
+            <li>One</li>
+            <li>Two</li>
+            <li>Three</li>
+          </ul>
+        </div>
+      }
+      childrenAfterSplit={
+        <div>
+          <h2>Children after split</h2>
+          <ul>
+            <li>Apple</li>
+            <li>Banana</li>
+            <li>Pear</li>
+          </ul>
+        </div>
+      }
+      {...args}
+    />
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+````
+@use '@carbon/react';
+@use '@carbon-labs/react-split-panel/scss/split-panel';
+```./SplitPanel.stories
+````
+
+## Panel backgrounds and layers
+
+Like the tile component the panels of the SplitPanel component are set to the
+current layer color. You should not modify this directly, doing so may affect
+the visibility of the split handle. Where you are using the SplitPanel component
+inside a layer, simply wrap with a layer component.
+
+## Component API
+
+<ArgTypes />

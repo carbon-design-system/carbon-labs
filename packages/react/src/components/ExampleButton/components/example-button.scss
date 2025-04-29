@@ -5,4 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '@carbon/react/scss/components/button';
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+
+$prefix: 'clabs' !default;
+
+.#{$prefix}--example-button__container {
+  padding: $spacing-01;
+  border: 1px solid $border-subtle-01;
+  inline-size: fit-content;
+}

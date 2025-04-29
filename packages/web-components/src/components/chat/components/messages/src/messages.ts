@@ -202,7 +202,11 @@ export default class messages extends LitElement {
     }
 
     if (changedProperties.has('_computedMessages')) {
-      this._scrollMessage();
+      if (!this.forceScrollDown) {
+        this._scrollMessage();
+      } else {
+        this._scrollToBottom();
+      }
     }
 
     if (changedProperties.has('loading')) {

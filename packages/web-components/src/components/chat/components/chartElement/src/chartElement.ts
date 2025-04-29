@@ -645,6 +645,7 @@ export default class chartElement extends LitElement {
         await VegaEmbed.default(targetDiv, chosenSpec, {
           actions: false,
           hover: this.enableTooltip,
+          //theme: 'carbon' + this.theme,
           tooltip: {
             /**
              * custom tooltip renderer for vega
@@ -1344,6 +1345,165 @@ export default class chartElement extends LitElement {
    * prepareVisualization - Prepare and adapt Vega visualization spec to be more Carbon adjacent
    * @param {object} premadeSpec - Vega specification sent in optionally when pre-parsed
    */
+  _prepareVisualizationSizing(premadeSpec?: object) {
+    let spec: any = {};
+
+    if (!premadeSpec) {
+      try {
+        spec = JSON.parse(this.content);
+      } catch (e) {
+        this._errorMessage =
+          'CARBON CHART ERROR: JSON parse() failed, specification is not valid JSON';
+        this._errorLevel = 'JSON-PARSING';
+        return '';
+      }
+    } else {
+      spec = JSON.parse(JSON.stringify(premadeSpec));
+    }
+
+    if (!spec['$schema']) {
+      this._errorMessage =
+        'CHART COMPONENT ERROR: JSON is valid but not a valid schema, missing "$schema" field';
+      this._errorLevel = 'SPEC-VALIDATION';
+      return '';
+    }
+
+    spec.autosize = {
+      type: 'fit',
+      contains: 'padding',
+    };
+
+    spec.resolve = {
+      view: { width: 'independent', height: 'independent' },
+    };
+    const currentContainerWidth = this.clientWidth - 16 * 2;
+    const currentContainerHeight = this.clientHeight - 16 * 2;
+    this.assignSizes(spec, currentContainerWidth, currentContainerHeight, {
+      category: 5,
+    });
+    this._prepareSpecification(spec, true, true, 0);
+
+    this._visualizationSpec = spec;
+    return '';
+  }
+
+  /**
+   * estimateMargins - Prepare and adapt Vega visualization spec submargins
+   * @param {object} spec - Vega subspecification sent in optionally
+   */
+  estimateMargins(spec) {
+    const globalPadding = 20;
+    let top = globalPadding;
+    let right = globalPadding;
+    let left = globalPadding;
+    let bottom = globalPadding;
+    const defaultFontSize = 16;
+    const defaultLegendPadding = 36;
+    const defaultItemWidth = 5;
+    const defaultItemHeight = 5;
+    const defaultTitlePadding = 20;
+
+    if (spec.title) {
+      const fontSize =
+        typeof spec.title === 'object' && spec.title.fontSize
+          ? spec.title.fontSize
+          : defaultFontSize;
+      top += fontSize + defaultTitlePadding;
+    }
+
+    if (spec.encoding) {
+      for (const enc of Object.values(spec.encoding) as any[]) {
+        if (!enc.legend) {
+          continue;
+        }
+        const orient = enc.legend.orient || 'right';
+        //const field = enc.field;
+        //const count = legendNumbers[field] || 1;
+
+        if (['left', 'right'].includes(orient)) {
+          const subWidth = enc.legend
+            ? enc.legend.symbolSize || defaultItemWidth
+            : defaultItemWidth;
+          if (orient === 'left') {
+            left += subWidth + defaultLegendPadding;
+          }
+          if (orient === 'right') {
+            right += subWidth + defaultLegendPadding;
+          }
+        } else {
+          const subHeight = defaultItemHeight;
+          if (orient === 'top') {
+            top += subHeight + defaultLegendPadding;
+          }
+          if (orient === 'bottom') {
+            bottom += subHeight + defaultLegendPadding;
+          }
+        }
+      }
+    }
+    return { top, right, bottom, left };
+  }
+  /** assignSizes - assign sizing for any subspec
+   * @param {object} spec - vega spec
+   * @param {number} width - sub width
+   * @param {number} height - sub height
+   * @param {number} legendNumbers - number of legend elements
+   */
+  assignSizes(spec, width, height, legendNumbers = {}) {
+    const marge = this.estimateMargins(spec);
+    const innerWidth = width - marge.left - marge.right;
+    const innerHeight = height - marge.top - marge.bottom;
+    spec.width = width;
+    spec.height = height;
+
+    if (spec.layer) {
+      spec.layer.forEach((child) =>
+        this.assignSizes(child, innerWidth, innerHeight, legendNumbers)
+      );
+      return;
+    }
+
+    if (spec.hconcat || spec.concat) {
+      const key = spec.hconcat ? 'hconcat' : 'contat';
+      const count = spec[key].length;
+      const childWidth = innerWidth / count;
+      spec[key].forEach((child) =>
+        this.assignSizes(child, childWidth, innerHeight, legendNumbers)
+      );
+      return;
+    }
+
+    if (spec.vconcat) {
+      const count = spec.vconcat.length;
+      const childHeight = innerHeight / count;
+      spec.vconcat.forEach((child) =>
+        this.assignSizes(child, innerWidth, childHeight, legendNumbers)
+      );
+      return;
+    }
+
+    if (spec.repeat && spec.spec) {
+      const rows = Array.isArray(spec.repeat.row) ? spec.repeat.row.length : 1;
+      const cols = Array.isArray(spec.repeat.column)
+        ? spec.repeat.column.length
+        : 1;
+      const childWidth = innerWidth / cols;
+      const childHeight = innerHeight / rows;
+      this.assignSizes(spec.spec, childWidth, childHeight, legendNumbers);
+      return;
+    }
+    if (spec.facet && spec.spec) {
+      this.assignSizes(spec.spec, innerWidth, innerHeight, legendNumbers);
+      return;
+    }
+    spec.width = innerWidth;
+    spec.height = innerHeight;
+  }
+
+  /**
+   * prepareVisualization - Prepare and adapt Vega visualization spec to be more Carbon adjacent
+   * @param {object} premadeSpec - Vega specification sent in optionally when pre-parsed
+   */
   _prepareVisualization(premadeSpec?: object) {
     let spec: any = {};
 
@@ -1602,6 +1762,7 @@ export default class chartElement extends LitElement {
       plainSpec = this._prepareSpecification(spec, true, true, 0);
     }*/
 
+    this._prepareVisualizationSizing(finalSpec);
     this._visualizationSpec = finalSpec;
     return '';
   }

@@ -14,10 +14,7 @@
 # Other packages
 /packages/react/src/components/AnimatedHeader/   @carbon-design-system/animated-header-devs
 /packages/react/src/components/Processing/       @carbon-design-system/processing-devs
-<<<<<<< Updated upstream
 /packages/react/src/components/SplitPanel/       @carbon-design-system/split-panel-devs
-=======
->>>>>>> Stashed changes
 /packages/react/src/components/TextHighlighter/  @carbon-design-system/text-highlighter-devs
 /packages/react/src/components/ThemeSettings/    @carbon-design-system/theme-settings-devs
 

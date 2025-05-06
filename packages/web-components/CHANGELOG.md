@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.22.0...@carbon-labs/web-components@0.23.0) (2025-05-06)
+
+
+### Features
+
+* **chat:** extensive updates to code charts and chat ([#582](https://github.com/carbon-design-system/carbon-labs/issues/582)) ([73772da](https://github.com/carbon-design-system/carbon-labs/commit/73772da806e67eba7314f0de1c17cb0241f3529f))
+
+
+
+
+
 # [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.21.0...@carbon-labs/web-components@0.22.0) (2025-05-06)
 
 **Note:** Version bump only for package @carbon-labs/web-components

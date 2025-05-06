@@ -25,6 +25,12 @@ export default class linkListElement extends LitElement {
   content;
 
   /**
+   * Array of subelements parsed from API reply
+   */
+  @property({ type: Object, attribute: 'linkItems' })
+  linkItems;
+
+  /**
    * internal expanded value to show all links
    */
   @state()
@@ -68,8 +74,10 @@ export default class linkListElement extends LitElement {
   /** detect when component is rendered to process visualization specification object
    */
   firstUpdated() {
-    if (this.content !== undefined) {
-      this._formatList();
+    if (this.linkItems !== undefined) {
+      this._formatList('object');
+    } else if (this.content !== undefined) {
+      this._formatList('string');
       this.requestUpdate();
     }
   }
@@ -81,7 +89,10 @@ export default class linkListElement extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has('content')) {
       //this._linkList = this.content.split(',');
-      this._formatList();
+      this._formatList('string');
+    }
+    if (changedProperties.has('linkItems')) {
+      this._formatList('object');
     }
   }
 
@@ -145,27 +156,61 @@ export default class linkListElement extends LitElement {
   }
 
   /** format list text into html list object
-   * @param {string} inputText - text to be rendered in subelement
+   * @param {string} type - text type to be rendered in subelement
    */
-  _formatList() {
-    if (this.content.indexOf('[') > -1) {
-      const linkArray = this.content.split(',');
-      const markdownLinkRegex = new RegExp('\\[(.*?)\\]\\((.*?)\\)');
-      this._linkList = linkArray.map((link) => {
-        const match = link.match(markdownLinkRegex);
-        if (match) {
-          return { title: match[1], url: match[2] };
-        }
-        return null;
-      });
-      this.trimmedList = this._linkList.slice(0, 4);
-    } else {
-      const splitList = this.content.split(',');
-      this._linkList = splitList.map((link) => ({
-        title: this._getSiteTitle(link),
-        url: link,
-      }));
-      this.trimmedList = this._linkList.slice(0, 4);
+  _formatList(type) {
+    if (type === 'string') {
+      if (this.content.indexOf('[') > -1) {
+        const markdownLinkRegex = new RegExp(
+          '\\[([^\\]]+)\\]\\(([^\\)]+)\\)',
+          'g'
+        );
+        const linkMatches = this.content.matchAll(markdownLinkRegex);
+        console.log(linkMatches);
+        this._linkList = [...linkMatches].map((match) => ({
+          title: match[1].trim(),
+          url: match[2].trim(),
+        }));
+        this.trimmedList = this._linkList.slice(0, 4);
+      } else {
+        const splitList = this.content.split(',');
+        this._linkList = splitList.map((link) => ({
+          title: this._getSiteTitle(link),
+          url: link,
+        }));
+        this.trimmedList = this._linkList.slice(0, 4);
+      }
+    } else if (type === 'object') {
+      console.error('CLABS linkList: input content is not a string');
+    }
+  }
+
+  /** format list text into html list object
+   * @param {string} type - text type to be rendered in subelement
+   */
+  _formatListOld(type) {
+    if (type === 'string') {
+      if (this.content.indexOf('[') > -1) {
+        const linkArray = this.content.split(',');
+        const markdownLinkRegex = new RegExp('\\[(.*?)\\]\\((.*?)\\)');
+        this._linkList = linkArray.map((link) => {
+          const match = link.match(markdownLinkRegex);
+          if (match) {
+            return { title: match[1], url: match[2] };
+          }
+          return null;
+        });
+        this.trimmedList = this._linkList.slice(0, 4);
+      } else {
+        const splitList = this.content.split(',');
+        this._linkList = splitList.map((link) => ({
+          title: this._getSiteTitle(link),
+          url: link,
+        }));
+        this.trimmedList = this._linkList.slice(0, 4);
+      }
+    } else if (type === 'object') {
+      console.error('CLABS linkList: input content is not a string');
     }
   }
 

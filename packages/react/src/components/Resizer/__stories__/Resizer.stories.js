@@ -44,14 +44,15 @@ export const SinglePanelNoBoundaries = () => (
           overflow: auto;
           transition: all 150ms linear;
         }
-          .clabs--resizer--horizontal::before{
+
+        .clabs--resizer--horizontal::before {
           content: "";
           height: calc(100% + 1rem);
           top: -0.5rem;
           width: 100%;
           position: absolute;
           // background: #ff00002e;
-          }
+        }
       `}
     </style>
     <div className="single-panel">
@@ -76,32 +77,35 @@ export const SinglePanelNoBoundaries = () => (
 export const SinglePanelBounded = () => (
   <>
     <style>{`
-.single-panel-bounded {
-	 width: 600px;
-	 height: 400px;
-   overflow: hidden;
-}
- .single-panel-bounded__container {
-	 height: 100%;
-	 display: flex;
-	 flex-direction: column;
-}
- .single-panel-bounded__panel {
-	 padding: 1rem;
-	 background-color: var(--cds-layer-01);
-	 min-block-size: 3rem;
-	 overflow: auto;
-	 transition: all 150ms linear;
-}
-   .clabs--resizer--horizontal::before{
-          content: "";
-          height: calc(100% + 1rem);
-          top: -0.5rem;
-          width: 100%;
-          position: absolute;
-          // background: #ff00002e;
-          }
- `}</style>
+      .single-panel-bounded {
+        width: 600px;
+        height: 400px;
+        overflow: hidden;
+      }
+
+      .single-panel-bounded__container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .single-panel-bounded__panel {
+        padding: 1rem;
+        background-color: var(--cds-layer-01);
+        min-block-size: 3rem;
+        overflow: auto;
+        transition: all 150ms linear;
+      }
+
+      .clabs--resizer--horizontal::before {
+        content: "";
+        height: calc(100% + 1rem);
+        top: -0.5rem;
+        width: 100%;
+        position: absolute;
+        // background: #ff00002e;
+      }
+    `}</style>
     <div className="single-panel-bounded">
       <div className="single-panel-bounded__container">
         <div className="single-panel-bounded__panel">
@@ -135,44 +139,48 @@ export const SinglePanelBounded = () => (
 export const SinglePanelOverlay = () => (
   <>
     <style>{`
-  .single-panel-overlay {
-	 position: relative;
-	 width: 600px;
-	 height: 400px;
-   overflow: hidden;
-}
- .single-panel-overlay__content {
-	 padding: 1rem;
-	 height: 100%;
-	 overflow: auto;
-}
- .single-panel-overlay__panel {
-	 position: absolute;
-	 bottom: 0;
-	 left: 0;
-	 width: 100%;
-	 max-height: 400px;
-	 background-color: var(--cds-layer-01);
-	 z-index: 1;
-	 display: flex;
-	 flex-direction: column;
-}
- .single-panel-overlay__panel-content {
-	 padding: 1rem;
-	 overflow: auto;
-	 height: 200px;
-	 min-block-size: 3rem;
-	 transition: all 150ms linear;
-}
-    .clabs--resizer--horizontal::before{
-          content: "";
-          height: calc(100% + 1rem);
-          top: -0.5rem;
-          width: 100%;
-          position: absolute;
-          // background: #ff00002e;
-          }
-  `}</style>
+      .single-panel-overlay {
+        position: relative;
+        width: 600px;
+        height: 400px;
+        overflow: hidden;
+      }
+
+      .single-panel-overlay__content {
+        padding: 1rem;
+        height: 100%;
+        overflow: auto;
+      }
+
+      .single-panel-overlay__panel {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        max-height: 400px;
+        background-color: var(--cds-layer-01);
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .single-panel-overlay__panel-content {
+        padding: 1rem;
+        overflow: auto;
+        height: 200px;
+        min-block-size: 3rem;
+        transition: all 150ms linear;
+      }
+
+      .clabs--resizer--horizontal::before {
+        content: "";
+        height: calc(100% + 1rem);
+        top: -0.5rem;
+        width: 100%;
+        position: absolute;
+        // background: #ff00002e;
+      }
+    `}</style>
     <div className="single-panel-overlay">
       <div className="single-panel-overlay__content">
         <h3>Main Content</h3>
@@ -203,30 +211,32 @@ export const SinglePanelOverlay = () => (
 export const TwoPanelsHorizontal = () => (
   <>
     <style>{`
-  .two-panels-horizontal {
-	 display: flex;
-	 flex-direction: column;
-	 width: 600px;
-	 height: 400px;
-   overflow: hidden;
-}
- .two-panels-horizontal__panel {
-	 height: 100%;
-	 background-color: var(--cds-layer-01);
-	 padding: 1rem;
-	 overflow: auto;
-	 min-block-size: 48px;
-	 transition: all 150ms linear;
-}
-     .clabs--resizer--horizontal::before{
-          content: "";
-          height: calc(100% + 1rem);
-          top: -0.5rem;
-          width: 100%;
-          position: absolute;
-          // background: #ff00002e;
-          }
-  `}</style>
+      .two-panels-horizontal {
+        display: flex;
+        flex-direction: column;
+        width: 600px;
+        height: 400px;
+        overflow: hidden;
+      }
+
+      .two-panels-horizontal__panel {
+        height: 100%;
+        background-color: var(--cds-layer-01);
+        padding: 1rem;
+        overflow: auto;
+        min-block-size: 48px;
+        transition: all 150ms linear;
+      }
+
+      .clabs--resizer--horizontal::before {
+        content: "";
+        height: calc(100% + 1rem);
+        top: -0.5rem;
+        width: 100%;
+        position: absolute;
+        // background: #ff00002e;
+      }
+    `}</style>
     <div className="two-panels-horizontal">
       <div className="two-panels-horizontal__panel">
         <h3 className="two-panels-horizontal__panel-title">Top Panel</h3>
@@ -257,28 +267,30 @@ export const TwoPanelsHorizontal = () => (
 export const TwoPanelsVertical = () => (
   <>
     <style>{`
-  .two-panels-vertical {
-	 display: flex;
-	 width: 600px;
-	 height: 400px;
-   overflow: hidden
-}
- .two-panels-vertical__panel {
-	 background-color: var(--cds-layer-01);
-	 padding: 1rem;
-	 overflow: auto;
-	 min-inline-size: 48px;
-	 transition: all 150ms linear;
-}
-      .clabs--resizer--vertical::before{
-          content: "";
-          height: 100%;
-          left: -0.5rem;
-          width: calc(100% + 1rem);
-          position: absolute;
-          // background: #ff00002e;
-          }
-  `}</style>
+      .two-panels-vertical {
+        display: flex;
+        width: 600px;
+        height: 400px;
+        overflow: hidden;
+      }
+
+      .two-panels-vertical__panel {
+        background-color: var(--cds-layer-01);
+        padding: 1rem;
+        overflow: auto;
+        min-inline-size: 48px;
+        transition: all 150ms linear;
+      }
+
+      .clabs--resizer--vertical::before {
+        content: "";
+        height: 100%;
+        left: -0.5rem;
+        width: calc(100% + 1rem);
+        position: absolute;
+        // background: #ff00002e;
+      }
+    `}</style>
     <div className="two-panels-vertical">
       <div className="two-panels-vertical__panel">
         <h3 className="two-panels-vertical__panel-title">Left Panel</h3>
@@ -309,55 +321,59 @@ export const TwoPanelsVertical = () => (
 export const FourPanels = () => (
   <>
     <style>{`
-    .four-panels {
-	 display: flex;
-	 height: 400px;
-	 width: 600px;
-}
- .four-panels__column {
-	 overflow: auto;
-	 min-inline-size: 3rem;
-	 width: 50%;
-	 display: flex;
-	 flex-direction: column;
-    transition: all 150ms linear;
-}
- .four-panels__panel {
-	 padding: 1rem;
-	 background-color: var(--cds-layer-01);
-	 overflow: auto;
-	 min-block-size: 3rem;
-	 height: 50%;
-	 transition: all 150ms linear;
-}
- .four-panels__panel--right-top {
-	 height: 40%;
-}
- .four-panels__panel--right-bottom {
-	 height: 60%;
-}
- .four-panels__panel-title {
-	 margin-top: 0;
-}
+      .four-panels {
+        display: flex;
+        height: 400px;
+        width: 600px;
+      }
 
-.clabs--resizer--vertical::before{
-          content: "";
-          height: 100%;
-          left: -0.5rem;
-          width: calc(100% + 1rem);
-          position: absolute;
-          // background: #ff00002e;
-          }
-     .clabs--resizer--horizontal::before{
-          content: "";
-          height: calc(100% + 1rem);
-          top: -0.5rem;
-          width: 100%;
-          position: absolute;
-          // background: #ff00002e;
-          }
+      .four-panels__column {
+        overflow: auto;
+        min-inline-size: 3rem;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        transition: all 150ms linear;
+      }
 
- 
+      .four-panels__panel {
+        padding: 1rem;
+        background-color: var(--cds-layer-01);
+        overflow: auto;
+        min-block-size: 3rem;
+        height: 50%;
+        transition: all 150ms linear;
+      }
+
+      .four-panels__panel--right-top {
+        height: 40%;
+      }
+
+      .four-panels__panel--right-bottom {
+        height: 60%;
+      }
+
+      .four-panels__panel-title {
+        margin-top: 0;
+      }
+
+      .clabs--resizer--vertical::before {
+        content: "";
+        height: 100%;
+        left: -0.5rem;
+        width: calc(100% + 1rem);
+        position: absolute;
+        // background: #ff00002e;
+      }
+
+      .clabs--resizer--horizontal::before {
+        content: "";
+        height: calc(100% + 1rem);
+        top: -0.5rem;
+        width: 100%;
+        position: absolute;
+        // background: #ff00002e;
+      }
     `}</style>
     <div className="four-panels">
       <div className="four-panels__column">
@@ -496,27 +512,29 @@ export const TwoPanelsVerticalGrid = () => {
   return (
     <>
       <style>{`
-      .two-panels-vertical-grid {
-	 display: grid;
-	 grid-template-columns: 0.5fr auto 0.5fr;
-	 width: 600px;
-	 height: 400px;
-	 transition: all 150ms linear;
-}
- .two-panels-vertical-grid__panel {
-	 background-color: var(--cds-layer-01);
-	 padding: 1rem;
-	 overflow: auto;
-	 min-inline-size: 48px;
-}
-   .clabs--resizer--vertical::before{
+        .two-panels-vertical-grid {
+          display: grid;
+          grid-template-columns: 0.5fr auto 0.5fr;
+          width: 600px;
+          height: 400px;
+          transition: all 150ms linear;
+        }
+
+        .two-panels-vertical-grid__panel {
+          background-color: var(--cds-layer-01);
+          padding: 1rem;
+          overflow: auto;
+          min-inline-size: 48px;
+        }
+
+        .clabs--resizer--vertical::before {
           content: "";
           height: 100%;
           left: -0.5rem;
           width: calc(100% + 1rem);
           position: absolute;
-           background: #ff00002e;
-          }
+          // background: #ff00002e;
+        }
       `}</style>
       <div className="two-panels-vertical-grid" ref={containerRef}>
         <div className="two-panels-vertical-grid__panel">

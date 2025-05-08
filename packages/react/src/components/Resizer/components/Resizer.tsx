@@ -238,7 +238,6 @@ export const Resizer = ({
         next.style[prop] = `${initialSizes.current.next[prop]}px`;
       }
     }
-
   };
 
   return (

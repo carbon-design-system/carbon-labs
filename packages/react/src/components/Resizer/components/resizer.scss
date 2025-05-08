@@ -10,6 +10,7 @@
 @use '@carbon/styles/scss/colors' as *;
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/components/button' as *;
+@use '@carbon/motion';
 
 $prefix: 'clabs' !default;
 
@@ -21,7 +22,7 @@ $prefix: 'clabs' !default;
   &:hover {
     @media (prefers-reduced-motion: no-preference) {
       background-color: $border-interactive;
-      transition: background-color 150ms ease;
+      transition: background-color motion.$duration-moderate-01;
     }
   }
 
@@ -40,13 +41,13 @@ $prefix: 'clabs' !default;
   }
 
   &--horizontal {
-    block-size: 0.3rem;
+    block-size: $spacing-02;
     cursor: ns-resize;
   }
 
   &--vertical {
     cursor: ew-resize;
-    inline-size: 0.3rem;
+    inline-size: $spacing-02;
   }
 }
 
@@ -55,16 +56,16 @@ $prefix: 'clabs' !default;
   overflow: hidden;
   padding: 0;
   border: 0;
-  block-size: 1px;
   margin: -1px;
-  inline-size: 1px;
+  block-size: 1px;
   clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
   white-space: nowrap;
 }
 
 // add transitions to panel resizes
 .smooth-resize {
   @media (prefers-reduced-motion: no-preference) {
-    transition: all 150ms linear;
+    transition: all  motion.$duration-moderate-01 linear;
   }
 }

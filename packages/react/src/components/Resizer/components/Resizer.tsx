@@ -14,20 +14,8 @@ import cx from 'classnames';
 
 interface ResizerProps {
   orientation: 'horizontal' | 'vertical';
-
-  /**
-   * Mode for announcing.
-   *
-   * - "pixels" enables announcing in pixel values.
-   * - "percentage" enables announcing in percentage values.
-   * - "none" disables announcing mode.
-   *
-   * Note: Percentages will not work for single panels as there is no comparison value to derive the percentage.
-   */
-  mode?: 'pixels' | 'percentage' | 'none';
-
   onResize?: (delta: number, isKeyboardEvent: boolean) => void;
-  onResizeEnd?: () => void;
+  onResizeEnd?: (ref) => void;
   onDoubleClick?: () => string | void;
 
   // Any other additional props
@@ -36,7 +24,6 @@ interface ResizerProps {
 
 export const Resizer = ({
   orientation,
-  mode = 'pixels',
   onResize,
   onResizeEnd,
   onDoubleClick,
@@ -76,83 +63,6 @@ export const Resizer = ({
     };
   }, []);
 
-  // a11y effect
-  useEffect(() => {
-    if (!ref.current || mode === 'none' || onDoubleClick) {
-      return;
-    }
-
-    const resizeObserver = new ResizeObserver(() => {
-      const prev = ref.current?.previousElementSibling as HTMLElement;
-      const next = ref.current?.nextElementSibling as HTMLElement;
-      const prop = orientation === 'horizontal' ? 'height' : 'width';
-      let message = '';
-
-      if (mode === 'pixels') {
-        if (prev) {
-          const size = Math.round(prev.getBoundingClientRect()[prop]);
-          message = `${
-            orientation === 'horizontal' ? 'Top' : 'Left'
-          } panel: ${size}px`;
-        }
-        if (next) {
-          const size = Math.round(next.getBoundingClientRect()[prop]);
-          if (prev) {
-            message += `, ${
-              orientation === 'horizontal' ? 'Bottom' : 'Right'
-            } panel: ${size}px`;
-          } else {
-            message = `${
-              orientation === 'horizontal' ? 'Bottom' : 'Right'
-            } panel: ${size}px`;
-          }
-        }
-      } else if (mode === 'percentage') {
-        const container = prev?.parentElement || next?.parentElement;
-        if (!container) {
-          return;
-        }
-
-        const totalSize = container.getBoundingClientRect()[prop];
-
-        if (prev) {
-          const percentage = Math.round(
-            (prev.getBoundingClientRect()[prop] / totalSize) * 100
-          );
-          message = `${
-            orientation === 'horizontal' ? 'Top' : 'Left'
-          } panel: ${percentage}%`;
-        }
-        if (next) {
-          const percentage = Math.round(
-            (next.getBoundingClientRect()[prop] / totalSize) * 100
-          );
-          if (prev) {
-            message += `, ${
-              orientation === 'horizontal' ? 'Bottom' : 'Right'
-            } panel: ${percentage}%`;
-          } else {
-            message = `${
-              orientation === 'horizontal' ? 'Bottom' : 'Right'
-            } panel: ${percentage}%`;
-          }
-        }
-      }
-
-      ref.current?.setAttribute('aria-label', message);
-    });
-
-    const prev = ref.current.previousElementSibling as HTMLElement;
-    const next = ref.current.nextElementSibling as HTMLElement;
-
-    prev && resizeObserver.observe(prev);
-    next && resizeObserver.observe(next);
-
-    return () => {
-      resizeObserver?.disconnect();
-    };
-  }, [orientation, mode, onDoubleClick]);
-
   const updateSizes = (delta: number, isKeyboardEvent: boolean) => {
     if (!ref.current) {
       return;
@@ -178,10 +88,11 @@ export const Resizer = ({
   };
 
   const handleMouseMove = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (!isResizing.current) {
       return;
     }
-    e.preventDefault();
 
     const delta =
       orientation === 'horizontal'
@@ -192,6 +103,7 @@ export const Resizer = ({
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     if (!ref.current) {
       return;
     }
@@ -223,7 +135,7 @@ export const Resizer = ({
     }
     isResizing.current = false;
     if (onResizeEnd) {
-      onResizeEnd();
+      onResizeEnd(ref);
     }
     const prev = ref.current.previousElementSibling as HTMLElement;
     const next = ref.current.nextElementSibling as HTMLElement;
@@ -238,6 +150,8 @@ export const Resizer = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    e.key === 'tab' && e.preventDefault();
+    e.stopPropagation();
     if (
       ![
         'ArrowUp',
@@ -250,7 +164,6 @@ export const Resizer = ({
     ) {
       return;
     }
-    e.preventDefault();
 
     if (!ref.current) {
       return;
@@ -300,6 +213,9 @@ export const Resizer = ({
     }
 
     updateSizes(delta, true);
+    if (onResizeEnd) {
+      onResizeEnd(ref);
+    }
   };
 
   const handleDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -321,52 +237,8 @@ export const Resizer = ({
       if (next) {
         next.style[prop] = `${initialSizes.current.next[prop]}px`;
       }
-
-      if (mode === 'pixels') {
-        const message =
-          prev && next
-            ? `Reset to initial size. ${
-                orientation === 'horizontal' ? 'Top' : 'Left'
-              } panel: ${Math.round(initialSizes.current.prev[prop])}px, ${
-                orientation === 'horizontal' ? 'Bottom' : 'Right'
-              } panel: ${Math.round(initialSizes.current.next[prop])}px`
-            : prev
-            ? `Reset to initial size. Panel: ${Math.round(
-                initialSizes.current.prev[prop]
-              )}px`
-            : `Reset to initial size. Panel: ${Math.round(
-                initialSizes.current.next[prop]
-              )}px`;
-        ref.current.setAttribute('aria-label', message);
-      } else if (mode === 'percentage') {
-        const container = prev?.parentElement || next?.parentElement;
-        if (container) {
-          const totalSize = container.getBoundingClientRect()[prop];
-          const prevPercentage = prev
-            ? Math.round((initialSizes.current.prev[prop] / totalSize) * 100)
-            : 0;
-          const nextPercentage = next
-            ? Math.round((initialSizes.current.next[prop] / totalSize) * 100)
-            : 0;
-
-          const message =
-            prev && next
-              ? `Reset to initial size. ${
-                  orientation === 'horizontal' ? 'Top' : 'Left'
-                } panel: ${prevPercentage}%, ${
-                  orientation === 'horizontal' ? 'Bottom' : 'Right'
-                } panel: ${nextPercentage}%`
-              : prev
-              ? `Reset to initial size. Panel: ${prevPercentage}%`
-              : `Reset to initial size. Panel: ${nextPercentage}%`;
-          ref.current.setAttribute('aria-label', message);
-        }
-      }
     }
 
-    requestAnimationFrame(() => {
-      ref.current?.focus();
-    });
   };
 
   return (

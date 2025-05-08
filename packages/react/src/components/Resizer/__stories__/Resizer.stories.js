@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import mdx from './Resizer.mdx';
 import { Resizer } from '../components/Resizer';
 import '../components/resizer.scss';
@@ -34,15 +34,24 @@ export const SinglePanelNoBoundaries = () => (
           display: flex;
           flex-direction: column;
           width: 600px;
+          overflow: hidden;
         }
 
         .single-panel__panel {
           padding: 1rem;
           background-color: var(--cds-layer-01);
-          min-block-size: 60px;
+          min-block-size: 3rem;
           overflow: auto;
           transition: all 150ms linear;
         }
+          .clabs--resizer--horizontal::before{
+          content: "";
+          height: calc(100% + 1rem);
+          top: -0.5rem;
+          width: 100%;
+          position: absolute;
+          // background: #ff00002e;
+          }
       `}
     </style>
     <div className="single-panel">
@@ -70,6 +79,7 @@ export const SinglePanelBounded = () => (
 .single-panel-bounded {
 	 width: 600px;
 	 height: 400px;
+   overflow: hidden;
 }
  .single-panel-bounded__container {
 	 height: 100%;
@@ -79,10 +89,18 @@ export const SinglePanelBounded = () => (
  .single-panel-bounded__panel {
 	 padding: 1rem;
 	 background-color: var(--cds-layer-01);
-	 min-block-size: 60px;
+	 min-block-size: 3rem;
 	 overflow: auto;
 	 transition: all 150ms linear;
 }
+   .clabs--resizer--horizontal::before{
+          content: "";
+          height: calc(100% + 1rem);
+          top: -0.5rem;
+          width: 100%;
+          position: absolute;
+          // background: #ff00002e;
+          }
  `}</style>
     <div className="single-panel-bounded">
       <div className="single-panel-bounded__container">
@@ -97,7 +115,15 @@ export const SinglePanelBounded = () => (
             limits.
           </p>
         </div>
-        <Resizer orientation="horizontal" />
+        <Resizer
+          orientation="horizontal"
+          onResizeEnd={(ref) =>
+            ref.current.setAttribute(
+              'aria-label',
+              `top panel ${ref.current.previousElementSibling.clientHeight} px`
+            )
+          } // for custom a11y announcements.
+        />
       </div>
     </div>
   </>
@@ -113,6 +139,7 @@ export const SinglePanelOverlay = () => (
 	 position: relative;
 	 width: 600px;
 	 height: 400px;
+   overflow: hidden;
 }
  .single-panel-overlay__content {
 	 padding: 1rem;
@@ -134,10 +161,17 @@ export const SinglePanelOverlay = () => (
 	 padding: 1rem;
 	 overflow: auto;
 	 height: 200px;
-	 min-block-size: 60px;
+	 min-block-size: 3rem;
 	 transition: all 150ms linear;
 }
- 
+    .clabs--resizer--horizontal::before{
+          content: "";
+          height: calc(100% + 1rem);
+          top: -0.5rem;
+          width: 100%;
+          position: absolute;
+          // background: #ff00002e;
+          }
   `}</style>
     <div className="single-panel-overlay">
       <div className="single-panel-overlay__content">
@@ -174,6 +208,7 @@ export const TwoPanelsHorizontal = () => (
 	 flex-direction: column;
 	 width: 600px;
 	 height: 400px;
+   overflow: hidden;
 }
  .two-panels-horizontal__panel {
 	 height: 100%;
@@ -183,7 +218,14 @@ export const TwoPanelsHorizontal = () => (
 	 min-block-size: 48px;
 	 transition: all 150ms linear;
 }
- 
+     .clabs--resizer--horizontal::before{
+          content: "";
+          height: calc(100% + 1rem);
+          top: -0.5rem;
+          width: 100%;
+          position: absolute;
+          // background: #ff00002e;
+          }
   `}</style>
     <div className="two-panels-horizontal">
       <div className="two-panels-horizontal__panel">
@@ -219,6 +261,7 @@ export const TwoPanelsVertical = () => (
 	 display: flex;
 	 width: 600px;
 	 height: 400px;
+   overflow: hidden
 }
  .two-panels-vertical__panel {
 	 background-color: var(--cds-layer-01);
@@ -227,7 +270,14 @@ export const TwoPanelsVertical = () => (
 	 min-inline-size: 48px;
 	 transition: all 150ms linear;
 }
- 
+      .clabs--resizer--vertical::before{
+          content: "";
+          height: 100%;
+          left: -0.5rem;
+          width: calc(100% + 1rem);
+          position: absolute;
+          // background: #ff00002e;
+          }
   `}</style>
     <div className="two-panels-vertical">
       <div className="two-panels-vertical__panel">
@@ -266,7 +316,7 @@ export const FourPanels = () => (
 }
  .four-panels__column {
 	 overflow: auto;
-	 min-inline-size: 60px;
+	 min-inline-size: 3rem;
 	 width: 50%;
 	 display: flex;
 	 flex-direction: column;
@@ -276,7 +326,7 @@ export const FourPanels = () => (
 	 padding: 1rem;
 	 background-color: var(--cds-layer-01);
 	 overflow: auto;
-	 min-block-size: 60px;
+	 min-block-size: 3rem;
 	 height: 50%;
 	 transition: all 150ms linear;
 }
@@ -289,6 +339,24 @@ export const FourPanels = () => (
  .four-panels__panel-title {
 	 margin-top: 0;
 }
+
+.clabs--resizer--vertical::before{
+          content: "";
+          height: 100%;
+          left: -0.5rem;
+          width: calc(100% + 1rem);
+          position: absolute;
+          // background: #ff00002e;
+          }
+     .clabs--resizer--horizontal::before{
+          content: "";
+          height: calc(100% + 1rem);
+          top: -0.5rem;
+          width: 100%;
+          position: absolute;
+          // background: #ff00002e;
+          }
+
  
     `}</style>
     <div className="four-panels">
@@ -346,12 +414,6 @@ export const TwoPanelsVerticalGrid = () => {
   // fully controlled example
 
   // eslint-disable-next-line jsdoc/require-jsdoc
-  const getAriaLabel = (fraction) =>
-    `Left panel: ${Math.round(fraction * 100)}%, Right panel: ${Math.round(
-      (1 - fraction) * 100
-    )}%`;
-
-  // eslint-disable-next-line jsdoc/require-jsdoc
   const clampFraction = (value) =>
     Math.max(0.0806723, Math.min(0.919328, value));
 
@@ -363,13 +425,12 @@ export const TwoPanelsVerticalGrid = () => {
   const currentFractionRef = useRef(0.5);
   const initialFraction = 0.5;
 
-  const [isKeyboard, setIsKeyboard] = useState(false);
-  const [ariaLabel, setAriaLabel] = useState(getAriaLabel(initialFraction));
+  const isKeyboard = useRef(false);
 
   useEffect(() => {
     const container = containerRef.current;
     if (container) {
-      container.style.transition = isKeyboard ? '' : 'unset';
+      container.style.transition = isKeyboard.current ? '' : 'unset';
     }
   }, [isKeyboard]);
 
@@ -384,16 +445,14 @@ export const TwoPanelsVerticalGrid = () => {
     if (!container) {
       return;
     }
-
+    isKeyboard.current = isKeyboardEvent;
     const totalWidth = container.offsetWidth - 5;
     let newFraction = currentFractionRef.current;
 
     if (isKeyboardEvent) {
-      setIsKeyboard(true);
       const step = delta / totalWidth;
       newFraction = clampFraction(currentFractionRef.current + step);
     } else {
-      setIsKeyboard(false);
       const leftPanelWidth = container.firstElementChild?.clientWidth ?? 0;
       if (startWidthRef.current === 0) {
         startWidthRef.current = leftPanelWidth;
@@ -406,17 +465,17 @@ export const TwoPanelsVerticalGrid = () => {
     container.style.gridTemplateColumns = `${newFraction}fr auto ${
       1 - newFraction
     }fr`;
-    // this cause re-renders. need to find a better way, should probably move this to handleResizeEnd to announce on end
-    setAriaLabel(getAriaLabel(newFraction));
   };
 
-  /**
-   *
-   */
-  const handleResizeEnd = () => {
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  const handleResizeEnd = (resizerRef) => {
+    resizerRef.current.setAttribute(
+      'aria-label',
+      `left ${resizerRef.current.previousElementSibling.clientWidth} px, right ${resizerRef.current.nextElementSibling.clientWidth} px`
+    ); // custom a11y announcements
     const container = containerRef.current;
     startWidthRef.current = 0;
-    container.style.transition = isKeyboard ? '' : 'unset';
+    container.style.transition = isKeyboard.current ? '' : 'unset';
   };
 
   /**
@@ -432,7 +491,6 @@ export const TwoPanelsVerticalGrid = () => {
     container.style.gridTemplateColumns = `${initialFraction}fr auto ${
       1 - initialFraction
     }fr`;
-    setAriaLabel(`Reset to initial size. ${getAriaLabel(initialFraction)}`);
   };
 
   return (
@@ -451,6 +509,14 @@ export const TwoPanelsVerticalGrid = () => {
 	 overflow: auto;
 	 min-inline-size: 48px;
 }
+   .clabs--resizer--vertical::before{
+          content: "";
+          height: 100%;
+          left: -0.5rem;
+          width: calc(100% + 1rem);
+          position: absolute;
+           background: #ff00002e;
+          }
       `}</style>
       <div className="two-panels-vertical-grid" ref={containerRef}>
         <div className="two-panels-vertical-grid__panel">
@@ -465,11 +531,9 @@ export const TwoPanelsVerticalGrid = () => {
 
         <Resizer
           orientation="vertical"
-          mode="none" // for fully controlled announcements
           onResize={handleResize}
           onResizeEnd={handleResizeEnd}
           onDoubleClick={handleDoubleClick}
-          aria-label={ariaLabel}
         />
 
         <div className="two-panels-vertical-grid__panel">

@@ -1,3 +1,4 @@
+// cspell:ignore resizer
 /**
  * @license
  *
@@ -22,10 +23,7 @@ export default {
   },
 };
 
-/**
- * Default story for Resizer
- */
-// export const Default = () => <Resizer />;
+// eslint-disable-next-line jsdoc/require-jsdoc
 export const SinglePanelNoBoundaries = () => (
   <>
     <style>
@@ -71,9 +69,7 @@ export const SinglePanelNoBoundaries = () => (
   </>
 );
 
-/**
- *
- */
+// eslint-disable-next-line jsdoc/require-jsdoc
 export const SinglePanelBounded = () => (
   <>
     <style>{`
@@ -133,9 +129,7 @@ export const SinglePanelBounded = () => (
   </>
 );
 
-/**
- *
- */
+// eslint-disable-next-line jsdoc/require-jsdoc
 export const SinglePanelOverlay = () => (
   <>
     <style>{`
@@ -205,9 +199,7 @@ export const SinglePanelOverlay = () => (
   </>
 );
 
-/**
- *
- */
+// eslint-disable-next-line jsdoc/require-jsdoc
 export const TwoPanelsHorizontal = () => (
   <>
     <style>{`
@@ -261,9 +253,7 @@ export const TwoPanelsHorizontal = () => (
   </>
 );
 
-/**
- *
- */
+// eslint-disable-next-line jsdoc/require-jsdoc
 export const TwoPanelsVertical = () => (
   <>
     <style>{`
@@ -315,9 +305,7 @@ export const TwoPanelsVertical = () => (
   </>
 );
 
-/**
- *
- */
+// eslint-disable-next-line jsdoc/require-jsdoc
 export const FourPanels = () => (
   <>
     <style>{`
@@ -423,9 +411,7 @@ export const FourPanels = () => (
   </>
 );
 
-/**
- *
- */
+// eslint-disable-next-line jsdoc/require-jsdoc
 export const TwoPanelsVerticalGrid = () => {
   // fully controlled example
 
@@ -450,12 +436,7 @@ export const TwoPanelsVerticalGrid = () => {
     }
   }, [isKeyboard]);
 
-  /**
-   * Handles the resizing of panels.
-   *
-   * @param {number} delta - The change in size during the resize operation.
-   * @param {boolean} isKeyboardEvent - Indicates if the resize was triggered by a keyboard event.
-   */
+  // eslint-disable-next-line jsdoc/require-jsdoc
   const handleResize = (delta, isKeyboardEvent) => {
     const container = containerRef.current;
     if (!container) {
@@ -494,9 +475,7 @@ export const TwoPanelsVerticalGrid = () => {
     container.style.transition = isKeyboard.current ? '' : 'unset';
   };
 
-  /**
-   *
-   */
+  // eslint-disable-next-line jsdoc/require-jsdoc
   const handleDoubleClick = () => {
     const container = containerRef.current;
     if (!container) {

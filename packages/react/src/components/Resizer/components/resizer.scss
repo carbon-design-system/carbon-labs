@@ -52,12 +52,12 @@ $prefix: 'clabs' !default;
 
 .sr-only {
   position: absolute;
-  block-size: 1px;
-  padding: 0;
-  inline-size: 1px;
   overflow: hidden;
-  margin: -1px;
+  padding: 0;
+  block-size: 1px;
+  inline-size: 1px;
   border: 0;
+  margin: -1px;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
 }

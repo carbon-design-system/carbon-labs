@@ -12,7 +12,7 @@
 
 ## Getting started
 
-Install `@carbon-labs/ResizeBar` to use this package.
+Install `@carbon-labs/Resizer` to use this package.
 
 ### Storybook
 

@@ -12,7 +12,7 @@ import cx from 'classnames';
 
 /** Primary UI component for user interaction */
 
-interface ResizeBarProps {
+interface ResizerProps {
   orientation: 'horizontal' | 'vertical';
 
   /**
@@ -34,16 +34,16 @@ interface ResizeBarProps {
   [key: string]: any;
 }
 
-export const ResizeBar = ({
+export const Resizer = ({
   orientation,
   mode = 'pixels',
   onResize,
   onResizeEnd,
   onDoubleClick,
   ...rest
-}: ResizeBarProps) => {
+}: ResizerProps) => {
   const prefix = usePrefix();
-  const blockClass = `${prefix}--resize-bar`;
+  const blockClass = `${prefix}--resizer`;
 
   const ref = useRef<HTMLDivElement>(null);
   const isResizing = useRef(false);

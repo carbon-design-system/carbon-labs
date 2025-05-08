@@ -2634,9 +2634,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-resize-bar@workspace:packages/react/src/components/ResizeBar":
+"@carbon-labs/react-resizer@workspace:packages/react/src/components/Resizer":
   version: 0.0.0-use.local
-  resolution: "@carbon-labs/react-resize-bar@workspace:packages/react/src/components/ResizeBar"
+  resolution: "@carbon-labs/react-resizer@workspace:packages/react/src/components/Resizer"
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
   languageName: unknown

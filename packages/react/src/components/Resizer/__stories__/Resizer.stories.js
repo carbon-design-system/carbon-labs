@@ -8,13 +8,13 @@
  */
 
 import React, { useRef, useState, useEffect } from 'react';
-import mdx from './ResizeBar.mdx';
-import { ResizeBar } from '../components/ResizeBar';
-import '../components/resize-bar.scss';
+import mdx from './Resizer.mdx';
+import { Resizer } from '../components/Resizer';
+import '../components/resizer.scss';
 
 export default {
-  title: 'Components/ResizeBar',
-  component: ResizeBar,
+  title: 'Components/Resizer',
+  component: Resizer,
   parameters: {
     docs: {
       page: mdx,
@@ -23,9 +23,9 @@ export default {
 };
 
 /**
- * Default story for ResizeBar
+ * Default story for Resizer
  */
-// export const Default = () => <ResizeBar />;
+// export const Default = () => <Resizer />;
 export const SinglePanelNoBoundaries = () => (
   <>
     <style>
@@ -56,7 +56,7 @@ export const SinglePanelNoBoundaries = () => (
           content, but can also be pre set.
         </p>
       </div>
-      <ResizeBar orientation="horizontal" />
+      <Resizer orientation="horizontal" />
     </div>
   </>
 );
@@ -97,7 +97,7 @@ export const SinglePanelBounded = () => (
             limits.
           </p>
         </div>
-        <ResizeBar orientation="horizontal" />
+        <Resizer orientation="horizontal" />
       </div>
     </div>
   </>
@@ -149,7 +149,7 @@ export const SinglePanelOverlay = () => (
         </p>
       </div>
       <div className="single-panel-overlay__panel">
-        <ResizeBar orientation="horizontal" />
+        <Resizer orientation="horizontal" />
         <div className="single-panel-overlay__panel-content">
           <h3 className="single-panel-overlay__panel-title">Overlay Panel</h3>
           <p>
@@ -195,7 +195,7 @@ export const TwoPanelsHorizontal = () => (
           information, such as a preview area above and details below.
         </p>
       </div>
-      <ResizeBar orientation="horizontal" />
+      <Resizer orientation="horizontal" />
       <div className="two-panels-horizontal__panel">
         <h3 className="two-panels-horizontal__panel-title">Bottom Panel</h3>
         <p>
@@ -239,7 +239,7 @@ export const TwoPanelsVertical = () => (
           and main content areas.
         </p>
       </div>
-      <ResizeBar orientation="vertical" />
+      <Resizer orientation="vertical" />
       <div className="two-panels-vertical__panel">
         <h3 className="two-panels-vertical__panel-title">Right Panel</h3>
         <p>
@@ -302,7 +302,7 @@ export const FourPanels = () => (
             the page.
           </p>
         </div>
-        <ResizeBar orientation="horizontal" />
+        <Resizer orientation="horizontal" />
         <div className="four-panels__panel">
           <h3 className="four-panels__panel-title">Bottom Left Panel</h3>
           <p>
@@ -313,7 +313,7 @@ export const FourPanels = () => (
           </p>
         </div>
       </div>
-      <ResizeBar orientation="vertical" />
+      <Resizer orientation="vertical" />
       <div className="four-panels__column">
         <div className="four-panels__panel four-panels__panel--right-top">
           <h3 className="four-panels__panel-title">Top Right Panel</h3>
@@ -324,7 +324,7 @@ export const FourPanels = () => (
             the page.
           </p>
         </div>
-        <ResizeBar orientation="horizontal" />
+        <Resizer orientation="horizontal" />
         <div className="four-panels__panel four-panels__panel--right-bottom">
           <h3 className="four-panels__panel-title">Bottom Right Panel</h3>
           <p>
@@ -463,7 +463,7 @@ export const TwoPanelsVerticalGrid = () => {
           </p>
         </div>
 
-        <ResizeBar
+        <Resizer
           orientation="vertical"
           mode="none" // for fully controlled announcements
           onResize={handleResize}

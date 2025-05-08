@@ -11,12 +11,12 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
 
-import { ResizeBar } from '../components/ResizeBar';
+import { Resizer } from '../components/Resizer';
 jest.mock('./resize-bar.scss', () => ({}));
-describe('ResizeBar', () => {
+describe('Resizer', () => {
   describe('renders as expected - Component API', () => {
     it('should match snapshot', () => {
-      const { container } = render(<ResizeBar />);
+      const { container } = render(<Resizer />);
       expect(container).toMatchSnapshot();
     });
   });

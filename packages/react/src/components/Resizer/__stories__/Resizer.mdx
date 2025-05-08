@@ -1,9 +1,9 @@
 import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
-import * as ResizeBarStories from './ResizeBar.stories';
+import * as ResizerStories from './Resizer.stories';
 
 <Meta isTemplate />
 
-# ResizeBar
+# Resizer
 
 - **Initiative owner(s):** Nandan Devadula
 - **Status:** Draft
@@ -15,10 +15,10 @@ import * as ResizeBarStories from './ResizeBar.stories';
 {/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
 
 > 💡 Check our
-> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/ResizeBar)
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Resizer)
 > example implementation.
 
-[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/ResizeBar)
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Resizer)
 
 ## Table of Contents
 
@@ -29,9 +29,9 @@ import * as ResizeBarStories from './ResizeBar.stories';
 
 ## Overview
 
-`ResizeBar` is an atomic component extracted from `SplitPanel` and made into an independent component. which can be reused where ever there is a resizing requirement in the ui.
+`Resizer` is an atomic component extracted from `SplitPanel` and made into an independent component. which can be reused where ever there is a resizing requirement in the ui.
 
-<Canvas of={ResizeBarStories.TwoPanelsVertical} />
+<Canvas of={ResizerStories.TwoPanelsVertical} />
 
 ## Getting started
 
@@ -39,16 +39,16 @@ Here's a quick example to get you started.
 
 ```bash
 yarn add @carbon/react
-yarn add @carbon-labs/react-resize-bar
+yarn add @carbon-labs/react-resizer
 ```
 
 ### JS (via import)
 
 ```javascript
-import { ResizeBar } from '@carbon-labs/react-resize-bar/es/index';
+import { Resizer } from '@carbon-labs/react-resizer/es/index';
 
 function App() {
-  return <ResizeBar />;
+  return <Resizer />;
 }
 
 export default App;
@@ -60,5 +60,5 @@ In your styles file import
 
 ```
 @use '@carbon/react';
-@use '@carbon-labs/react-resize-bar/scss/resize-bar';
+@use '@carbon-labs/react-resizer/scss/resizer';
 ```

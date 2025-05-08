@@ -13,7 +13,7 @@
 
 $prefix: 'clabs' !default;
 
-.#{$prefix}--resize-bar {
+.#{$prefix}--resizer {
   position: relative;
   flex: none;
   background-color: $border-subtle-01;

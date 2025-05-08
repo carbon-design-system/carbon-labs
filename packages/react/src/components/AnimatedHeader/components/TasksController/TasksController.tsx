@@ -40,8 +40,11 @@ const TasksController = ({
 }: TasksControllerProps) => {
   const { className: buttonCustomClass, ...buttonOverrideProps } =
     tasksControllerConfig?.button?.propsOverrides || {};
-  const { className: dropdownCustomClass, ...dropdownOverrideProps } =
-    tasksControllerConfig?.dropdown?.propsOverrides || {};
+  const {
+    className: dropdownCustomClass,
+    onChange: dropdownCustomOnChange,
+    ...dropdownOverrideProps
+  } = tasksControllerConfig?.dropdown?.propsOverrides || {};
 
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
@@ -62,7 +65,10 @@ const TasksController = ({
       type: 'inline',
       items: allTileGroups,
       selectedItem: selectedTileGroup,
-      setSelectedItem: setSelectedTileGroup,
+      onChange: (e) => {
+        setSelectedTileGroup?.(e);
+        dropdownCustomOnChange?.(e);
+      },
       ...dropdownOverrideProps,
     };
   }, [
@@ -72,6 +78,7 @@ const TasksController = ({
     blockClass,
     dropdownCustomClass,
     dropdownOverrideProps,
+    dropdownCustomOnChange,
   ]);
 
   if (isLoading || tasksControllerConfig?.isLoading) {
@@ -99,6 +106,7 @@ const TasksController = ({
   }
 
   if (tasksControllerConfig?.type === 'dropdown' && dropdownProps) {
+    console.log(dropdownProps);
     return (
       <div className={`${blockClass}__header-dropdown--container`}>
         <Dropdown {...dropdownProps} />

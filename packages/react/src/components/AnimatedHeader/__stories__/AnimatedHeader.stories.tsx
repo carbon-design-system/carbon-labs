@@ -220,29 +220,33 @@ export const ThemeG10 = (args) => {
   const [_, updateArgs] = useArgs();
 
   const handleWorkspaceSelect = (e) => {
-    updateArgs({ ...args, selectedWorkspace: e.selectedItem });
+    updateArgs({
+      ...args,
+      workspaceSelectorConfig: {
+        ...args.workspaceSelectorConfig,
+        selectedWorkspace: e.selectedItem,
+      },
+    });
   };
 
-  const handleTileGroup = (e) => {
+  console.log('test');
+
+  const handleTileGroupSelect = (e) => {
+    console.log(e);
+    console.log('test');
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 
-  const handleHeaderItems = (item) => {
-    return item ? item.label : '';
+  const argsWithSelectors = {
+    ...args,
+    workspaceSelectorConfig: {
+      ...args.workspaceSelectorConfig,
+      setSelectedWorkspace: handleWorkspaceSelect,
+    },
+    setSelectedTileGroup: handleTileGroupSelect,
   };
 
-  const handleWorkspaceItems = (item) => {
-    return item ? item.label : '';
-  };
-
-  return (
-    <AnimatedHeader
-      {...args}
-      setSelectedWorkspace={handleWorkspaceSelect}
-      setSelectedTileGroup={handleTileGroup}
-      handleHeaderItemsToString={handleHeaderItems}
-      handleWorkspaceItemsToString={handleWorkspaceItems}></AnimatedHeader>
-  );
+  return <AnimatedHeader {...argsWithSelectors} />;
 };
 
 ThemeG10.argTypes = {
@@ -258,29 +262,29 @@ export const ThemeG100 = (args) => {
   const [_, updateArgs] = useArgs();
 
   const handleWorkspaceSelect = (e) => {
-    updateArgs({ ...args, selectedWorkspace: e.selectedItem });
+    updateArgs({
+      ...args,
+      workspaceSelectorConfig: {
+        ...args.workspaceSelectorConfig,
+        selectedWorkspace: e.selectedItem,
+      },
+    });
   };
 
-  const handleTileGroup = (e) => {
+  const handleTileGroupSelect = (e) => {
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 
-  const handleHeaderItems = (item) => {
-    return item ? item.label : '';
+  const argsWithSelectors = {
+    ...args,
+    workspaceSelectorConfig: {
+      ...args.workspaceSelectorConfig,
+      setSelectedWorkspace: handleWorkspaceSelect,
+    },
+    setSelectedTileGroup: handleTileGroupSelect,
   };
 
-  const handleWorkspaceItems = (item) => {
-    return item ? item.label : '';
-  };
-
-  return (
-    <AnimatedHeader
-      {...args}
-      setSelectedWorkspace={handleWorkspaceSelect}
-      setSelectedTileGroup={handleTileGroup}
-      handleHeaderItemsToString={handleHeaderItems}
-      handleWorkspaceItemsToString={handleWorkspaceItems}></AnimatedHeader>
-  );
+  return <AnimatedHeader {...argsWithSelectors} />;
 };
 
 ThemeG100.argTypes = {

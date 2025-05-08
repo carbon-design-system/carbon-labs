@@ -31,8 +31,11 @@ const WorkspaceSelector = ({
   userName,
   isLoading,
 }: WorkspaceSelectorProps) => {
-  const { className: dropdownCustomClass, ...dropdownOverrideProps } =
-    workspaceSelectorConfig?.propsOverrides || {};
+  const {
+    className: dropdownCustomClass,
+    onChange: dropdownCustomOnChange,
+    ...dropdownOverrideProps
+  } = workspaceSelectorConfig?.propsOverrides || {};
 
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
@@ -53,7 +56,10 @@ const WorkspaceSelector = ({
       type: 'inline',
       items: workspaceSelectorConfig?.allWorkspaces,
       selectedItem: workspaceSelectorConfig?.selectedWorkspace,
-      setSelectedItem: workspaceSelectorConfig?.setSelectedWorkspace,
+      onChange: (e) => {
+        workspaceSelectorConfig?.setSelectedWorkspace?.(e);
+        dropdownCustomOnChange?.(e);
+      },
       ...dropdownOverrideProps,
     };
   }, [
@@ -62,6 +68,7 @@ const WorkspaceSelector = ({
     dropdownOverrideProps,
     userName,
     workspaceSelectorConfig,
+    dropdownCustomOnChange,
   ]);
 
   if (isLoading || workspaceSelectorConfig?.isLoading) {

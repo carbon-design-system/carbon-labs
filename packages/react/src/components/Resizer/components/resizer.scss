@@ -54,10 +54,10 @@ $prefix: 'clabs' !default;
   position: absolute;
   overflow: hidden;
   padding: 0;
-  block-size: 1px;
   border: 0;
-  inline-size: 1px;
+  block-size: 1px;
   margin: -1px;
+  inline-size: 1px;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
 }

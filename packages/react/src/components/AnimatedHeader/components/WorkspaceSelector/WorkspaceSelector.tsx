@@ -1,4 +1,5 @@
-import { Dropdown, DropdownProps, usePrefix } from '@carbon/react';
+import { Dropdown, DropdownProps, SkeletonPlaceholder } from '@carbon/react';
+import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import React, { useMemo } from 'react';
 
 export interface Workspace {
@@ -16,16 +17,19 @@ export type WorkspaceSelectorConfig = {
   allWorkspaces: Workspace[];
   selectedWorkspace?: Workspace;
   setSelectedWorkspace: (e) => void;
+  isLoading?: boolean;
 };
 
 export type WorkspaceSelectorProps = {
   workspaceSelectorConfig?: WorkspaceSelectorConfig;
   userName?: string;
+  isLoading?: boolean;
 };
 
 const WorkspaceSelector = ({
   workspaceSelectorConfig,
   userName,
+  isLoading,
 }: WorkspaceSelectorProps) => {
   const { className: dropdownCustomClass, ...dropdownOverrideProps } =
     workspaceSelectorConfig?.propsOverrides || {};
@@ -59,9 +63,19 @@ const WorkspaceSelector = ({
     userName,
     workspaceSelectorConfig,
   ]);
+
+  if (isLoading || workspaceSelectorConfig?.isLoading) {
+    return (
+      <SkeletonPlaceholder
+        className={`${blockClass}__workspace-selector-skeleton`}
+      />
+    );
+  }
+
   if (!dropdownProps) {
     return null;
   }
+
   return <Dropdown {...dropdownProps} />;
 };
 

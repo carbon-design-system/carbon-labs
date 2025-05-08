@@ -226,6 +226,18 @@ body {
   max-inline-size: fit-content;
 }
 
+.#{$prefix}__task-controller-skeleton {
+  block-size: 40px;
+  inline-size: auto;
+  max-inline-size: 18rem;
+}
+
+.#{$prefix}__workspace-selector-skeleton {
+  block-size: 32px;
+  inline-size: auto;
+  max-inline-size: 18rem;
+}
+
 .#{$prefix}__header-dropdown--container {
   inline-size: auto;
   max-inline-size: 18rem;

@@ -4,21 +4,19 @@ import {
   Dropdown,
   DropdownProps,
   SkeletonPlaceholder,
-  usePrefix,
 } from '@carbon/react';
 import React, { useMemo } from 'react';
 import { TileGroup } from '../AnimatedHeader/AnimatedHeader';
+import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 
 export interface TasksControllerConfig {
   type: 'button' | 'dropdown';
+  isLoading?: boolean;
   button?: {
     text: string;
     propsOverrides?: Partial<ButtonBaseProps>;
   };
   dropdown?: {
-    allTileGroups?: TileGroup[];
-    selectedTileGroup?: TileGroup;
-    setSelectedTileGroup: (e) => void;
     propsOverrides?: Partial<
       Omit<DropdownProps<TileGroup>, 'id' | 'items' | 'selectedItem'>
     >;
@@ -28,11 +26,17 @@ export interface TasksControllerConfig {
 export type TasksControllerProps = {
   tasksControllerConfig?: TasksControllerConfig;
   isLoading?: boolean;
+  allTileGroups?: TileGroup[];
+  selectedTileGroup?: TileGroup;
+  setSelectedTileGroup: (e) => void;
 };
 
 const TasksController = ({
   tasksControllerConfig,
   isLoading,
+  allTileGroups,
+  selectedTileGroup,
+  setSelectedTileGroup,
 }: TasksControllerProps) => {
   const { className: buttonCustomClass, ...buttonOverrideProps } =
     tasksControllerConfig?.button?.propsOverrides || {};
@@ -43,7 +47,7 @@ const TasksController = ({
   const blockClass = `${prefix}--animated-header`;
 
   const dropdownProps: DropdownProps<TileGroup> | null = useMemo(() => {
-    if (!tasksControllerConfig?.dropdown?.allTileGroups) {
+    if (!allTileGroups?.length) {
       return null;
     }
     return {
@@ -53,23 +57,29 @@ const TasksController = ({
       }`,
       size: 'md',
       titleText: 'Label',
-      label: tasksControllerConfig.dropdown.allTileGroups[0].label ?? '',
+      label: allTileGroups[0]?.label ?? '',
       hideLabel: true,
       type: 'inline',
-      items: tasksControllerConfig.dropdown.allTileGroups,
-      selectedItem: tasksControllerConfig.dropdown.selectedTileGroup,
-      setSelectedItem: tasksControllerConfig.dropdown.setSelectedTileGroup,
+      items: allTileGroups,
+      selectedItem: selectedTileGroup,
+      setSelectedItem: setSelectedTileGroup,
       ...dropdownOverrideProps,
     };
   }, [
+    allTileGroups,
+    selectedTileGroup,
+    setSelectedTileGroup,
     blockClass,
     dropdownCustomClass,
     dropdownOverrideProps,
-    tasksControllerConfig?.dropdown,
   ]);
 
-  if (isLoading) {
-    return <SkeletonPlaceholder />;
+  if (isLoading || tasksControllerConfig?.isLoading) {
+    return (
+      <SkeletonPlaceholder
+        className={`${blockClass}__task-controller-skeleton`}
+      />
+    );
   }
 
   // Button

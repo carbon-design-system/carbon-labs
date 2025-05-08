@@ -7,7 +7,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 import React, { useState } from 'react';
-import { AILabel, Button, IconButton, TextInput } from '@carbon/react';
+import {
+  AILabel,
+  Button,
+  IconButton,
+  SkeletonPlaceholder,
+  TextInput,
+} from '@carbon/react';
 import * as carbonIcons from '@carbon/icons-react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 
@@ -20,6 +26,9 @@ interface AIPromptTileProps {
   open?: boolean;
   productName?: string;
   title?: string | null;
+  isLoading?: boolean;
+  isDisabled?: boolean;
+  disabledTaskLabel?: string;
 }
 
 export const AIPromptTile: React.FC<AIPromptTileProps> = ({
@@ -29,10 +38,14 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   open,
   productName,
   title,
+  isLoading,
+  isDisabled,
+  disabledTaskLabel,
 }: AIPromptTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__ai-prompt-tile`;
   const collapsed = `${blockClass}--collapsed`;
+  const disabled = `${blockClass}--disabled`;
 
   const [textInput, setTextInput] = useState('');
   const MainIcon = mainIcon ? carbonIcons[mainIcon] : null;
@@ -60,59 +73,66 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   return (
     <div
       id={`${blockClass}`}
-      className={`${prefix}--animated-header__tile ${blockClass}`}
+      className={`${blockClass}--animated-header__tile ${blockClass}${
+        isDisabled ? ' ' + disabled : ''
+      }`}
+      title={isDisabled ? disabledTaskLabel ?? '' : ''}
       key={id}>
-      <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
-        <div className={`${blockClass}--body-background`} />
-        <div className={`${blockClass}--body-gradient`} />
-        <div className={`${blockClass}--icons`}>
-          {MainIcon && (
-            <MainIcon fill={`var(--cds-icon-secondary)`} size={24} />
-          )}
-          <AILabel autoAlign aiText="AI" size="mini" />
+      {isLoading ? (
+        <SkeletonPlaceholder className={`${blockClass}--loading-skeleton`} />
+      ) : (
+        <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
+          <div className={`${blockClass}--body-background`} />
+          <div className={`${blockClass}--body-gradient`} />
+          <div className={`${blockClass}--icons`}>
+            {MainIcon && (
+              <MainIcon fill={`var(--cds-icon-secondary)`} size={24} />
+            )}
+            <AILabel autoAlign aiText="AI" size="mini" />
+          </div>
+          <div className={`${blockClass}--title`}>{title}</div>
+
+          <div
+            className={`${blockClass}--text-input-container ${
+              textInput && `${blockClass}--text-input-container__active`
+            }`}>
+            <TextInput
+              id={`${blockClass}--text-input`}
+              className={`${blockClass}--text-input`}
+              type="text"
+              labelText="AI Chat Input"
+              hideLabel
+              placeholder="Start chatting..."
+              size="sm"
+              onChange={handleTextInput}
+              onKeyDown={handleTextInputKeyDown}
+              value={textInput}
+            />
+
+            <IconButton
+              className={`${blockClass}--icon-button ${
+                textInput && `${blockClass}--icon-button__active`
+              }`}
+              label={`Chat in ${productName}`}
+              kind="ghost"
+              size="sm"
+              disabled={!textInput}
+              align="top-right"
+              onClick={() => openInNewTab(`${href}&primed_chat=${textInput}`)}
+              onKeyDown={handleTextInputKeyDown}>
+              <Send />
+            </IconButton>
+          </div>
+
+          {/* Prompt Lab - >  https://dataplatform.cloud.ibm.com/wx/prompts?project_id=437e0304-9168-43b9-93ef-88a8dc5e649c&context=wx&primed_chat=drew */}
+
+          <div className={`${blockClass}--footer`}>
+            <Button kind="ghost" size="sm" href={href ?? undefined}>
+              Open {productName}
+            </Button>
+          </div>
         </div>
-        <div className={`${blockClass}--title`}>{title}</div>
-
-        <div
-          className={`${blockClass}--text-input-container ${
-            textInput && `${blockClass}--text-input-container__active`
-          }`}>
-          <TextInput
-            id={`${blockClass}--text-input`}
-            className={`${blockClass}--text-input`}
-            type="text"
-            labelText="AI Chat Input"
-            hideLabel
-            placeholder="Start chatting..."
-            size="sm"
-            onChange={handleTextInput}
-            onKeyDown={handleTextInputKeyDown}
-            value={textInput}
-          />
-
-          <IconButton
-            className={`${blockClass}--icon-button ${
-              textInput && `${blockClass}--icon-button__active`
-            }`}
-            label={`Chat in ${productName}`}
-            kind="ghost"
-            size="sm"
-            disabled={!textInput}
-            align="top-right"
-            onClick={() => openInNewTab(`${href}&primed_chat=${textInput}`)}
-            onKeyDown={handleTextInputKeyDown}>
-            <Send />
-          </IconButton>
-        </div>
-
-        {/* Prompt Lab - >  https://dataplatform.cloud.ibm.com/wx/prompts?project_id=437e0304-9168-43b9-93ef-88a8dc5e649c&context=wx&primed_chat=drew */}
-
-        <div className={`${blockClass}--footer`}>
-          <Button kind="ghost" size="sm" href={href ?? undefined}>
-            Open {productName}
-          </Button>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

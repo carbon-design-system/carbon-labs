@@ -8,16 +8,19 @@
  */
 import React from 'react';
 import mdx from './AnimatedHeader.mdx';
-import AnimatedHeader, { AnimatedHeaderProps } from '../components/AnimatedHeader/AnimatedHeader';
+import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
 import { useArgs } from '@storybook/preview-api';
 import type { Meta, StoryObj } from '@storybook/react';
 import '../components/animated-header.scss';
 
 import {
-  workspaceData,
   headerTiles,
   tasksControllerConfigButton,
   tasksControllerConfigDropdown,
+  tasksControllerConfigLoading,
+  workspaceSelectorConfig,
+  workspaceSelectorConfigLoading,
+  workspaceSelectorConfigNoOverrides,
 } from './data';
 import {
   dataFabricAnimatedLight,
@@ -54,7 +57,6 @@ const meta: Meta<typeof AnimatedHeader> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof AnimatedHeader>;
 
 const sharedArgTypes = {
   description: {
@@ -114,6 +116,9 @@ const sharedArgTypes = {
   productName: {
     description: 'Provide current product name',
   },
+  disabledTaskLabel: {
+    description: 'Provide on hover label for disabled tasks',
+  },
   selectedTileGroup: {
     description:
       'The tile group that is active in the header ex. "AI Chat Tile w/ two glass tiles", "Four glass tiles", ect.',
@@ -130,9 +135,10 @@ const sharedArgTypes = {
         6: headerTiles[5].label,
         7: headerTiles[6].label,
         8: headerTiles[7].label,
+        9: headerTiles[8].label,
       },
     },
-    options: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     mapping: {
       0: null,
       1: headerTiles[0],
@@ -143,13 +149,10 @@ const sharedArgTypes = {
       6: headerTiles[5],
       7: headerTiles[6],
       8: headerTiles[7],
+      9: headerTiles[8],
     },
   },
-  selectedWorkspace: {
-    description: 'Object containing workspace selection `Open in: "_"`',
-    type: 'object',
-  },
-  tasksConfig: {
+  tasksControllerConfig: {
     description:
       'Configuration for Carbon button or dropdown menu in header. Customized tasks are used to allow users that have multiple roles and permissions to experience better tailored content based on their need.',
     control: {
@@ -158,13 +161,33 @@ const sharedArgTypes = {
         0: 'None',
         1: 'Button',
         2: 'Dropdown',
+        3: 'Loading',
+      },
+    },
+    options: [0, 1, 2, 3],
+    mapping: {
+      0: null,
+      1: tasksControllerConfigButton,
+      2: tasksControllerConfigDropdown,
+      3: tasksControllerConfigLoading,
+    },
+  },
+  workspaceSelectorConfig: {
+    description:
+      'Configuration for Carbon button or dropdown menu in header. Customized tasks are used to allow users that have multiple roles and permissions to experience better tailored content based on their need.',
+    control: {
+      type: 'select',
+      labels: {
+        0: 'None',
+        1: 'Sample',
+        2: 'Loading',
       },
     },
     options: [0, 1, 2],
     mapping: {
       0: null,
-      1: tasksControllerConfigButton,
-      2: tasksControllerConfigDropdown,
+      1: workspaceSelectorConfig,
+      2: workspaceSelectorConfigLoading,
     },
   },
   userName: {
@@ -174,22 +197,23 @@ const sharedArgTypes = {
     description:
       'Specify the current welcome text on the header ex. `Welcome` `Welcome back`',
   },
-  workspaceLabel: {
-    description: 'Specify the default workspace label above the tiles',
+  isLoading: {
+    description: 'Specify whether the header should be in the loading state',
   },
 };
 
 const sharedArgs = {
-  allTiles: headerTiles,
-  allWorkspaces: workspaceData,
+  allTileGroups: headerTiles,
+  tasksControllerConfig: 1,
+  workspaceSelectorConfig: 2,
   description: 'Train, deploy, validate, and govern AI models responsibly.',
   headerStatic: 0,
   productName: '[Product name]',
   selectedTileGroup: 1,
-  selectedWorkspace: workspaceData[0],
-  tasksConfig: 2,
   userName: 'Drew',
   welcomeText: 'Welcome',
+  isLoading: false,
+  disabledTaskLabel: 'This task is disabled',
 };
 
 export const ThemeG10 = (args) => {

@@ -8,16 +8,16 @@
  */
 
 import React, { useState } from 'react';
-import { AnimatedHeader, TasksControllerConfig, WorkspaceSelectorConfig } from '@carbon-labs/react-animated-header/es/index';
+import {
+  AnimatedHeader,
+  TasksControllerConfig,
+  WorkspaceSelectorConfig,
+} from '@carbon-labs/react-animated-header/es/index';
 import {
   watsonXAnimatedLight,
   watsonXStaticLight,
 } from '@carbon-labs/react-animated-header/assets';
-import {
-  headerTiles,
-  workspaceData,
-  workspaces,
-} from './data';
+import { headerTiles, workspaceData, workspaces } from './data';
 import { TileGroup } from '@carbon-labs/react-animated-header/es/components/AnimatedHeader/AnimatedHeader';
 import { Workspace } from '@carbon-labs/react-animated-header/es/components/AnimatedHeader/WorkspaceSelector/WorkspaceSelector';
 
@@ -34,9 +34,11 @@ function App() {
     setSelectedTile(e.selectedItem);
   };
 
-  const tasksDropdownItemRenderer = (item: TileGroup | null) => item?.label ?? '';
+  const tasksDropdownItemRenderer = (item: TileGroup | null) =>
+    item?.label ?? '';
 
-  const workspaceDropdownItemRenderer = (item: Workspace | null) => item?.label ?? '';
+  const workspaceDropdownItemRenderer = (item: Workspace | null) =>
+    item?.label ?? '';
 
   const selectedWorkspaceItemRenderer = (item: Workspace | null) =>
     item?.label ?? '';
@@ -52,21 +54,21 @@ function App() {
       setSelectedTileGroup: handleTileGroupSelect,
       propsOverrides: {
         renderSelectedItem: selectedTileGroupRenderer,
-        itemToString: tasksDropdownItemRenderer
-      }
-    }
-  }
+        itemToString: tasksDropdownItemRenderer,
+      },
+    },
+  };
 
   const workspaceSelectorConfig: WorkspaceSelectorConfig = {
     allWorkspaces: workspaceData,
     selectedWorkspace,
-    setSelectedWorkspace:handleWorkspaceSelect,
+    setSelectedWorkspace: handleWorkspaceSelect,
     propsOverrides: {
       label: "Open in: Drew's workspace",
       renderSelectedItem: selectedWorkspaceItemRenderer,
-      itemToString: workspaceDropdownItemRenderer
-    }
-  }
+      itemToString: workspaceDropdownItemRenderer,
+    },
+  };
 
   return (
     <AnimatedHeader

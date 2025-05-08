@@ -32,6 +32,7 @@ export interface Tile {
   title?: string | null;
   customContent?: ReactNode | null;
   isLoading?: boolean;
+  isDisabled?: boolean;
 }
 
 export interface TileGroup {
@@ -41,6 +42,9 @@ export interface TileGroup {
 }
 
 export type AnimatedHeaderProps = {
+  allTileGroups?: TileGroup[];
+  selectedTileGroup?: TileGroup;
+  setSelectedTileGroup: (e) => void;
   description?: string;
   headerAnimation?: object;
   headerStatic?: React.JSX.Element;
@@ -48,10 +52,14 @@ export type AnimatedHeaderProps = {
   userName?: string;
   welcomeText?: string;
   isLoading?: boolean;
+  disabledTaskLabel?: string;
 } & TasksControllerProps &
   WorkspaceSelectorProps;
 
 const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
+  allTileGroups,
+  selectedTileGroup,
+  setSelectedTileGroup,
   description,
   headerAnimation,
   headerStatic,
@@ -61,6 +69,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   tasksControllerConfig,
   workspaceSelectorConfig,
   isLoading,
+  disabledTaskLabel,
 }: AnimatedHeaderProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
@@ -179,11 +188,14 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             <TasksController
               tasksControllerConfig={tasksControllerConfig}
               isLoading={isLoading}
+              allTileGroups={allTileGroups}
+              selectedTileGroup={selectedTileGroup}
+              setSelectedTileGroup={setSelectedTileGroup}
             />
           </Column>
         )}
 
-        {tasksControllerConfig?.dropdown?.selectedTileGroup && (
+        {selectedTileGroup && (
           <Column sm={4} md={8} lg={12} className={`${blockClass}__content`}>
             {workspaceSelectorConfig?.allWorkspaces?.length && (
               <div
@@ -193,29 +205,30 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                 <WorkspaceSelector
                   workspaceSelectorConfig={workspaceSelectorConfig}
                   userName={userName}
+                  isLoading={isLoading}
                 />
               </div>
             )}
             <div className={`${blockClass}__tiles-container`}>
-              {tasksControllerConfig?.dropdown?.selectedTileGroup.tiles.map(
-                (tile) => {
-                  return (
-                    <BaseTile
-                      key={tile.id}
-                      id={tile.id}
-                      open={open}
-                      href={tile.href}
-                      mainIcon={tile.mainIcon}
-                      secondaryIcon={tile.secondaryIcon}
-                      title={tile.title}
-                      subtitle={tile.subtitle}
-                      productName={productName}
-                      customContent={tile.customContent}
-                      isLoading={isLoading || tile.isLoading}
-                    />
-                  );
-                }
-              )}
+              {selectedTileGroup.tiles.map((tile) => {
+                return (
+                  <BaseTile
+                    key={tile.id}
+                    id={tile.id}
+                    open={open}
+                    href={tile.href}
+                    mainIcon={tile.mainIcon}
+                    secondaryIcon={tile.secondaryIcon}
+                    title={tile.title}
+                    subtitle={tile.subtitle}
+                    productName={productName}
+                    customContent={tile.customContent}
+                    isLoading={isLoading || tile.isLoading}
+                    isDisabled={tile.isDisabled}
+                    disabledTaskLabel={disabledTaskLabel}
+                  />
+                );
+              })}
             </div>
           </Column>
         )}
@@ -238,6 +251,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
 (AnimatedHeader as React.FC).displayName = 'Animated Header';
 (AnimatedHeader as React.FC).propTypes = {
+  /**
+   * Array of each tile group setup
+   */
+  allTileGroups: PropTypes.arrayOf(PropTypes.object),
+
   /**
    * Specify an optional className to be added to your Animated Header
    */
@@ -269,6 +287,17 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Provide current product name
    */
   productName: PropTypes.string,
+
+  /**
+   * The tile group that is active in the header
+   * ex. "AI Chat Tile w/ two glass tiles", "Four glass tiles", ect.
+   */
+  selectedTileGroup: PropTypes.object,
+
+  /**
+   * Provide function to be called when switching selected tile group
+   */
+  setSelectedTileGroup: PropTypes.func,
 
   /**
    * Configuration for Carbon button or dropdown menu in header. Customized

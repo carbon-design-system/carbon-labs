@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import React, { ReactNode } from 'react';
-import { Link } from '@carbon/react';
+import { Link, SkeletonPlaceholder } from '@carbon/react';
 import * as carbonIcons from '@carbon/icons-react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 
@@ -22,6 +22,9 @@ interface GlassTileProps {
   subtitle?: string | null;
   title?: string | null;
   customContent?: ReactNode;
+  isLoading?: boolean;
+  isDisabled?: boolean;
+  disabledTaskLabel?: string;
 }
 
 export const GlassTile: React.FC<GlassTileProps> = ({
@@ -33,6 +36,9 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   subtitle,
   title,
   customContent,
+  isLoading,
+  isDisabled,
+  disabledTaskLabel,
 }: GlassTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__glass-tile`;
@@ -45,30 +51,38 @@ export const GlassTile: React.FC<GlassTileProps> = ({
     <Link
       className={`${prefix}--animated-header__tile ${blockClass}`}
       key={id}
-      href={href ?? undefined}>
-      <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
-        <div className={`${blockClass}--body-background`} />
-        {customContent ? (
-          <div className={`${blockClass}--custom-content`}>{customContent}</div>
-        ) : (
-          <>
-            <div className={`${blockClass}--icons`}>
-              {MainIcon && (
-                <MainIcon fill={`var(--cds-icon-secondary)`} size={24} />
-              )}
+      href={href ?? undefined}
+      disabled={isDisabled || isLoading}
+      title={isDisabled ? disabledTaskLabel ?? '' : ''}>
+      {isLoading ? (
+        <SkeletonPlaceholder className={`${blockClass}--loading-skeleton`} />
+      ) : (
+        <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
+          <div className={`${blockClass}--body-background`} />
+          {customContent ? (
+            <div className={`${blockClass}--custom-content`}>
+              {customContent}
             </div>
-            <div className={`${blockClass}--title`}>{title}</div>
-            <div className={`${blockClass}--footer`}>
-              {subtitle && (
-                <div className={`${blockClass}--subtitle`}>{subtitle}</div>
-              )}
-              {SecondaryIcon && (
-                <SecondaryIcon size={16} fill={`var(--cds-icon-secondary)`} />
-              )}
-            </div>
-          </>
-        )}
-      </div>
+          ) : (
+            <>
+              <div className={`${blockClass}--icons`}>
+                {MainIcon && (
+                  <MainIcon fill={`var(--cds-icon-secondary)`} size={24} />
+                )}
+              </div>
+              <div className={`${blockClass}--title`}>{title}</div>
+              <div className={`${blockClass}--footer`}>
+                {subtitle && (
+                  <div className={`${blockClass}--subtitle`}>{subtitle}</div>
+                )}
+                {SecondaryIcon && (
+                  <SecondaryIcon size={16} fill={`var(--cds-icon-secondary)`} />
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      )}
     </Link>
   );
 };

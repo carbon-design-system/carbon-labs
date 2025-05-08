@@ -23,6 +23,17 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
   text-decoration: none;
 }
 
+.#{$prefix}[aria-disabled='true'] {
+  /* stylelint-disable-next-line declaration-no-important */
+  opacity: 0.5 !important;
+  /* stylelint-disable-next-line declaration-no-important */
+  outline: 0 !important;
+
+  * {
+    pointer-events: none;
+  }
+}
+
 .#{$prefix}:hover,
 .#{$prefix}:active,
 .#{$prefix}:focus {
@@ -132,4 +143,9 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
 
 .#{$prefix}--custom-content {
   z-index: 2;
+}
+
+.#{$prefix}--loading-skeleton {
+  block-size: 100%;
+  inline-size: 100%;
 }

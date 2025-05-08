@@ -323,6 +323,42 @@ export const headerTiles = [
   },
   {
     id: 8,
+    label: 'Loading and disabled cards',
+    tiles: [
+      {
+        id: 'tile-1',
+        href: '#',
+        title: 'Load data',
+        subtitle: 'with Data explorer',
+        mainIcon: 'DataSet',
+        isLoading: true,
+      },
+      {
+        id: 'tile-2',
+        href: '#',
+        title: 'Monitor data performance and system capacity',
+        subtitle: 'with Monitoring hub',
+        mainIcon: 'ChartLineData',
+      },
+      {
+        id: 'tile-3',
+        href: '#',
+        title: 'Create and run SQL queries',
+        subtitle: 'with SQL editor',
+        mainIcon: 'Sql',
+        isDisabled: true
+      },
+      {
+        id: 'tile-4',
+        href: '#',
+        title: 'Export data',
+        mainIcon: 'Export',
+        secondaryIcon: 'ArrowRight',
+      },
+    ],
+  },
+  {
+    id: 9,
     label: 'Custom content tasks',
     tiles: [
       {
@@ -357,11 +393,22 @@ export const tasksControllerConfigDropdown = {
   },
 };
 
-export const WorkspaceSelectorConfig = {
+export const tasksControllerConfigLoading = {
+  type: 'none',
+  isLoading: true,
+};
+
+export const workspaceSelectorConfig = {
     allWorkspaces: workspaceData,
-    selectedWorkspace: workspaceData[0],
     setSelectedWorkspace: () => {},
     propsOverrides: {
-      label: "Open in: Drew's workspace"
+      label: "Select workspace",
+      renderSelectedItem: (item) => `Open in: ${item.label}`
     }
+}
+
+export const workspaceSelectorConfigLoading = {
+  allWorkspaces: workspaceData,
+  setSelectedWorkspace: () => {},
+  isLoading: true
 }

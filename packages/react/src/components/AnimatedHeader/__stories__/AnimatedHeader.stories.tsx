@@ -10,7 +10,7 @@ import React from 'react';
 import mdx from './AnimatedHeader.mdx';
 import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
 import { useArgs } from '@storybook/preview-api';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import '../components/animated-header.scss';
 
 import {
@@ -20,7 +20,6 @@ import {
   tasksControllerConfigLoading,
   workspaceSelectorConfig,
   workspaceSelectorConfigLoading,
-  workspaceSelectorConfigNoOverrides,
 } from './data';
 import {
   dataFabricAnimatedLight,

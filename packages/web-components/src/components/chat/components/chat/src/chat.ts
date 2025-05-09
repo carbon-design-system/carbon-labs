@@ -58,9 +58,19 @@ export default class CLABSChat extends LitElement {
   autoUpdate;
 
   /**
+   * user-assigned boolean denoting if the dragging should cancel when the mouse exits the window
+   */
+  @property({
+    type: Boolean,
+    attribute: 'cancel-dragging-on-escape',
+    reflect: true,
+  })
+  cancelDraggingOnEscape = true;
+
+  /**
    * force-auto-update - force scroll down no matter what
    */
-  @property({ type: Boolean, attribute: 'force-auto-update' })
+  @property({ type: Boolean, attribute: 'force-auto-update', reflect: true })
   forceAutoUpdate;
 
   /**
@@ -350,6 +360,12 @@ export default class CLABSChat extends LitElement {
   lastUserMessage;
 
   /**
+   * preset prompt in chat
+   */
+  @property({ type: String, attribute: 'preset-prompt-message' })
+  presetPromptMessage;
+
+  /**
    * set custom message in footer
    */
   @state()
@@ -361,12 +377,22 @@ export default class CLABSChat extends LitElement {
   @state()
   complexFeedbackCount = 0;
 
+  /**
+   * force focus trigger in footer
+   */
+  @property({ type: Boolean, attribute: 'trigger-footer-focus' })
+  triggerFooterFocus;
+
   /** detect when component is rendered to process code object
    */
   firstUpdated() {
     window.addEventListener('resize', (event) => {
       this._checkPositioning(event);
     });
+
+    if (this.hasAttribute('preset-prompt-message')) {
+      this.setUserMessage = this.presetPromptMessage;
+    }
   }
 
   /** internal LIT function to detect updates to the DOM tree, used to auto scroll the compoent
@@ -379,6 +405,10 @@ export default class CLABSChat extends LitElement {
       if (!this.loading) {
         this._interruptStreaming = true;
       }
+    }
+
+    if (changedProperties.has('presetPromptMessage')) {
+      this.setUserMessage = this.presetPromptMessage;
     }
 
     if (changedProperties.has('conversation')) {
@@ -624,6 +654,24 @@ export default class CLABSChat extends LitElement {
         let newPositionY =
           window.innerHeight - (event.clientY - originalOffset.y) - chatHeight;
 
+        let exitCheck = false;
+        if (this.cancelDraggingOnEscape) {
+          if (
+            newPositionX >
+            window.innerWidth - mininumPadding.left - chatWidth
+          ) {
+            exitCheck = true;
+          } /*
+          if(newPositionX < mininumPadding.right){
+            exitCheck = true;
+          }
+          if(newPositionY > window.innerHeight - mininumPadding.top - chatHeight){
+            exitCheck = true;
+          }
+          if(newPositionY > mininumPadding.bottom){
+            exitCheck = true;
+          }*/
+        }
         newPositionX = Math.min(
           Math.max(mininumPadding.right, newPositionX),
           window.innerWidth - mininumPadding.left - chatWidth
@@ -644,6 +692,10 @@ export default class CLABSChat extends LitElement {
             '--chat-docked-right-position',
             newPositionX + 'px'
           );
+        }
+
+        if (exitCheck) {
+          this._isDragging = false;
         }
       }
     }

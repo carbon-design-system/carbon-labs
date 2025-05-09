@@ -7,3 +7,4 @@ collect:
     dependencies: null
   js:
     functions: {}
+    tokens: null

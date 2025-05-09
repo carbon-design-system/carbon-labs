@@ -1,6 +1,7 @@
 {
   "name": "@carbon-labs/wc-DISPLAY_NAME",
-  "version": "0.4.0",
+  "version": "0.0.1",
+  "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -12,8 +13,6 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/DISPLAY_NAME"
   },
-  "main": "./src/index.js",
-  "module": "./src/index.js",
   "exports": {
     ".": {
       "default": "./src/index.js"

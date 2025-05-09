@@ -1,6 +1,7 @@
 {
   "name": "@carbon-labs/react-STYLE_NAME",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -13,8 +14,10 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/DISPLAY_NAME"
   },
-  "main": "./src/index.js",
-  "module": "./src/index.js",
+  "exports": {
+    "import": "./es/index.js",
+    "require": "./lib/index.js"
+  },
   "files": ["es", "lib", "scss"],
   "scripts": {
     "build": "node ../../../tasks/build.js",

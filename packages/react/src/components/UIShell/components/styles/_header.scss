@@ -4,10 +4,10 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-@use '@carbon/styles/scss/theme' as *;
 
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/motion' as *;
+@use '@carbon/react/scss/utilities/convert' as convert;
 @use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 
 $prefix: 'cds' !default;
@@ -21,26 +21,21 @@ $prefix: 'cds' !default;
 }
 
 .#{$prefix}--header__action:focus {
-  border-width: 2px;
+  box-shadow: inset 0 0 0 1px $focus, inset 0 0 0 2px $background;
 }
 
-//----------------------------------------------------------------------------
-// Menu button inside Header
-//----------------------------------------------------------------------------
-
-.#{$prefix}--header
-  .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not([disabled]) {
-  color: $text-secondary;
+.#{$prefix}--header-action__button {
+  block-size: convert.rem(48px);
 }
 
 .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled]) svg {
   fill: $icon-secondary;
 }
 
+.#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled]):hover
+  svg,
 .#{$prefix}--header-action.#{$prefix}--popover--open
-  .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not(
-    [disabled]
-  ):hover
+  .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled])
   svg {
   fill: $icon-primary;
 }
@@ -67,4 +62,20 @@ $prefix: 'cds' !default;
     $link-visited
   );
   @include custom-property.declaration('link-focus-text-color', $focus);
+}
+
+//----------------------------------------------------------------------------
+// Menu button inside Header
+//----------------------------------------------------------------------------
+
+.#{$prefix}--header
+  .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not([disabled]) {
+  color: $text-secondary;
+}
+
+.#{$prefix}--header
+  .#{$prefix}--menu-button__trigger.#{$prefix}--btn--ghost:not(
+    [disabled]
+  ):hover {
+  color: $text-primary;
 }

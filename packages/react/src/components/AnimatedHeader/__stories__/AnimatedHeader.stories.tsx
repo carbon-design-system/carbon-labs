@@ -130,16 +130,17 @@ const sharedArgTypes = {
       type: 'select',
       labels: {
         0: 'None',
-        1: headerTiles[0].name,
-        2: headerTiles[1].name,
-        3: headerTiles[2].name,
-        4: headerTiles[3].name,
-        5: headerTiles[4].name,
-        6: headerTiles[5].name,
-        7: headerTiles[6].name,
+        1: headerTiles[0].label,
+        2: headerTiles[1].label,
+        3: headerTiles[2].label,
+        4: headerTiles[3].label,
+        5: headerTiles[4].label,
+        6: headerTiles[5].label,
+        7: headerTiles[6].label,
+        8: headerTiles[7].label,
       },
     },
-    options: [0, 1, 2, 3, 4, 5, 6, 7],
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8],
     mapping: {
       0: null,
       1: headerTiles[0],
@@ -149,6 +150,7 @@ const sharedArgTypes = {
       5: headerTiles[4],
       6: headerTiles[5],
       7: headerTiles[6],
+      8: headerTiles[7],
     },
   },
   selectedWorkspace: {
@@ -183,6 +185,14 @@ const sharedArgTypes = {
   workspaceLabel: {
     description: 'Specify the default workspace label above the tiles',
   },
+  expandButtonLabel: {
+    description: 'Specify custom expand button label',
+    type: 'string',
+  },
+  collapseButtonLabel: {
+    description: 'Specify custom collapse button label',
+    type: 'string',
+  },
 };
 
 const sharedArgs = {
@@ -196,6 +206,8 @@ const sharedArgs = {
   tasksConfig: 2,
   userName: 'Drew',
   welcomeText: 'Welcome',
+  expandButtonLabel: 'Expand',
+  collapseButtonLabel: 'Collapse',
 };
 
 export const ThemeG10 = (args) => {

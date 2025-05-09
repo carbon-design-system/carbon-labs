@@ -14,9 +14,6 @@
   display: flex;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 0;
-  border: 1px solid var(--chat-chart-border-color, $border-subtle-00);
-  border-radius: 8px;
   background: $text-inverse;
   block-size: var(--chat-chart-element-height, '320px');
   font-family: 'IBM Plex Sans Condensed', sans-serif;
@@ -28,8 +25,14 @@
     display: block;
     overflow: hidden;
     box-sizing: border-box;
+    padding: 0;
+    border: 1px solid var(--chat-chart-border-color, $border-subtle-00);
+    border-radius: 8px;
     block-size: 100%;
     inline-size: 100%;
+  }
+  .#{$clabs-prefix}--chat-chart-container:hover {
+    border-color: $border-interactive;
   }
 
   .#{$clabs-prefix}--chat-chart-container-selected {
@@ -38,14 +41,15 @@
 
   .#{$clabs-prefix}--chat-chart-options {
     position: absolute;
+    z-index: 3;
     display: flex;
     flex-direction: row;
     inset-block-start: 8px;
     inset-inline-end: 0;
-    visibility: var(--chat-chart-thumbnail-visibility, visible);
+    visibility: var(--chat-chart-thumbnail-visibility, 'visible');
   }
 
-  .#{$clabs-prefix}--chat-chart-options-prefade-dark {
+  .#{$clabs-prefix}--chat-chart-options-prefade-g100 {
     background: linear-gradient(
       to right,
       rgba(22, 22, 22, 0),
@@ -56,7 +60,6 @@
     content: '';
     inline-size: 30px;
     pointer-events: none;
-    visibility: hidden;
   }
 
   .#{$clabs-prefix}--chat-chart-thumbnail-container {
@@ -64,16 +67,30 @@
     overflow: hidden;
     box-sizing: border-box;
     padding: 8px;
+    border: 1px solid var(--chat-chart-border-color, $border-subtle-00);
+    border-radius: 8px;
     block-size: var(--chat-chart-element-height, '100%');
+    inline-size: 100%;
+    max-block-size: var(--chat-chart-element-height, '100%');
+  }
+
+  .#{$clabs-prefix}--chat-chart-thumbnail-container:hover {
+    border: 2px solid $border-interactive;
+  }
+
+  .#{$clabs-prefix}--chat-chart-thumbnail-container-selected {
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 8px;
+    border: 2px solid $border-interactive;
+    border-radius: 8px;
     inline-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-chart-thumbnail-container img {
-    position: absolute;
-    block-size: 100%;
+    box-sizing: border-box;
+    aspect-ratio: 4 / 3;
     inline-size: 100%;
-    inset-block-start: 0;
-    inset-inline-start: 0;
   }
 
   .#{$clabs-prefix}--chat-chart-options-prefade {
@@ -88,17 +105,16 @@
     pointer-events: none;
   }
 
-  .#{$clabs-prefix}--chat-chart-options-prefade-light {
+  .#{$clabs-prefix}--chat-chart-options-prefade-white {
     background: linear-gradient(
       to right,
-      rgba(244, 244, 244, 0),
-      rgba(244, 244, 244, 1)
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 1)
     );
     block-size: 32px;
     content: '';
     inline-size: 30px;
     pointer-events: none;
-    visibility: hidden;
   }
 
   .#{$clabs-prefix}--chat-chart-options-buttons {
@@ -106,7 +122,7 @@
     flex-direction: row;
     background: $background;
     gap: 4px;
-    padding-inline-end: 8px;
+    margin-inline-end: 8px;
   }
 
   .#{$clabs-prefix}--chat-chart-modal-custom {
@@ -283,6 +299,7 @@
   .#{$clabs-prefix}--chat-chart-fullscreen-container-close {
     position: fixed;
     z-index: 9999;
+    background: $background;
     inset-block-start: 20px;
     inset-inline-end: 20px;
   }

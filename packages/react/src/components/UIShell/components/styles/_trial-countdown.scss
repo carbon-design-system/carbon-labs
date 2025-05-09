@@ -1,0 +1,59 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+
+$prefix: 'cds' !default;
+
+:root {
+  // these should be set up as component tokens if/when moved to @carbon/styles
+  --trial-countdown-start: #{$blue-60};
+  --trial-countdown-end: #{$purple-50};
+}
+
+.cds--g100,
+.cds--g90,
+[data-carbon-theme='g100'],
+[data-carbon-theme='g90'] {
+  --trial-countdown-start: #{$blue-50};
+  --trial-countdown-end: #{$purple-40};
+}
+
+$trial-countdown-gradient: linear-gradient(135deg, $background, $background),
+  linear-gradient(
+    135deg,
+    var(--trial-countdown-start),
+    var(--trial-countdown-end)
+  );
+
+.#{$prefix}--trial-countdown {
+  @include type-style('label-01');
+
+  color: $text-primary;
+}
+
+.#{$prefix}--trial-countdown__count {
+  @include type-style('label-02');
+
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 0.125rem;
+  background-clip: padding-box, border-box;
+  background-image: $trial-countdown-gradient;
+  background-origin: padding-box, border-box;
+  font-weight: 600;
+  min-inline-size: 1rem;
+  text-align: center;
+}
+
+.#{$prefix}--trial-countdown--warning .#{$prefix}--trial-countdown__count {
+  border: 1px solid $support-error;
+  background-image: none;
+}

@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.35.0...@carbon-labs/react-ui-shell@0.36.0) (2025-05-08)
+
+
+### Bug Fixes
+
+* correct package exports ([#539](https://github.com/carbon-design-system/carbon-labs/issues/539)) ([ef7557e](https://github.com/carbon-design-system/carbon-labs/commit/ef7557e10c1385a6bdc60d32361ce7ba2dad263c))
+
+
+
+
+
+# [0.35.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.34.0...@carbon-labs/react-ui-shell@0.35.0) (2025-05-06)
+
+
+### Features
+
+* **chat:** extensive updates to code charts and chat ([#582](https://github.com/carbon-design-system/carbon-labs/issues/582)) ([73772da](https://github.com/carbon-design-system/carbon-labs/commit/73772da806e67eba7314f0de1c17cb0241f3529f))
+
+
+
+
+
+# [0.34.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.33.0...@carbon-labs/react-ui-shell@0.34.0) (2025-04-22)
+
+
+### Features
+
+* **UIShell:** add TrialCountdown component ([#545](https://github.com/carbon-design-system/carbon-labs/issues/545)) ([b5e4f33](https://github.com/carbon-design-system/carbon-labs/commit/b5e4f33eef2eaac609bcf5e720c6477c6032b607))
+
+
+
+
+
+# [0.33.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.32.0...@carbon-labs/react-ui-shell@0.33.0) (2025-04-07)
+
+
+### Bug Fixes
+
+* **UIShell:** remove box-shadow on header action focus ([#554](https://github.com/carbon-design-system/carbon-labs/issues/554)) ([55a8671](https://github.com/carbon-design-system/carbon-labs/commit/55a8671faf1116f33b27260bef0f5dba2802aed5))
+
+
+
+
+
+# [0.32.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.31.0...@carbon-labs/react-ui-shell@0.32.0) (2025-04-07)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
+# [0.31.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.30.0...@carbon-labs/react-ui-shell@0.31.0) (2025-04-04)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
 # [0.30.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.29.0...@carbon-labs/react-ui-shell@0.30.0) (2025-04-02)
 
 

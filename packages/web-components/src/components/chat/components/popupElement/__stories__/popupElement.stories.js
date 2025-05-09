@@ -14,7 +14,7 @@ import { html } from 'lit';
 export default {
   title: 'Components/AI Components/Feedback',
 };
-
+/*
 const slugContent = {
   title: 'AI explainability',
   prompt: 'IBM Cloud AI assistant',
@@ -43,7 +43,7 @@ const slugContent = {
     },
   ],
   model: { name: 'granite.13.chat.v2', url: 'https://www.google.com' },
-};
+};*/
 
 const defExample = {
   title: 'Example text',
@@ -80,7 +80,7 @@ const hateExample = {
   enableDataCollectionCheck: false,
 };
 
-const customStyle = 'width: 100%; height:500px;display:flex;';
+const customStyle = 'position:relative;width: 50%; min-height:500px;';
 export const Default = {
   /**
    * Renders the template for Storybook
@@ -88,7 +88,7 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: () => html`
-    <div style="display:flex;gap:16px;">
+    <div style="display:flex;flex-direction:column;gap:16px;">
       <div style="${customStyle}">
         <h4>Default</h4>
         <clabs-chat-popup> </clabs-chat-popup>
@@ -104,16 +104,16 @@ export const Default = {
           disclaimer="Place your own legal disclaimer here">
         </clabs-chat-popup>
       </div>
-      <div style="${customStyle}">
-        <h4>Experimental - advanced</h4>
-        <clabs-chat-popup .feedbackFormValues="${slugContent}">
-        </clabs-chat-popup>
-      </div>
 
       <div style="${customStyle}">
         <h4>Experimental - advanced</h4>
         <clabs-chat-popup .feedbackFormValues="${defExample}">
         </clabs-chat-popup>
+      </div>
+
+      <div style="${customStyle}">
+        <h4>Default</h4>
+        <clabs-chat-popup custom-policy-mode> </clabs-chat-popup>
       </div>
 
       <div style="${customStyle}">

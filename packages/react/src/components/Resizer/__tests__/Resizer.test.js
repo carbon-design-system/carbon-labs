@@ -12,17 +12,11 @@ import React from 'react';
 import '@testing-library/jest-dom';
 
 import { Resizer } from '../components/Resizer';
-jest.mock('./resizer.scss', () => ({}));
+jest.mock('./resize-bar.scss', () => ({}));
 describe('Resizer', () => {
   describe('renders as expected - Component API', () => {
     it('should match snapshot', () => {
-      const { container } = render(
-        <>
-          <div></div>
-          <Resizer />
-          <div></div>
-        </>
-      );
+      const { container } = render(<Resizer />);
       expect(container).toMatchSnapshot();
     });
   });

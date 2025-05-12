@@ -9,14 +9,18 @@
 import React, { useRef, useEffect } from 'react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import cx from 'classnames';
-
+import debounce from 'lodash.debounce';
+const DEBOUNCE_DELAY = 100;
 /** Primary UI component for user interaction */
 
 interface ResizerProps {
   orientation: 'horizontal' | 'vertical';
-  onResize?: (delta: number, isKeyboardEvent: boolean) => void;
-  onResizeEnd?: (ref) => void;
-  onDoubleClick?: () => string | void;
+  onResize?: (event: MouseEvent | KeyboardEvent, delta: number) => void;
+  onResizeEnd?: (
+    event: MouseEvent | KeyboardEvent,
+    ref: React.RefObject<HTMLDivElement>
+  ) => void;
+  onDoubleClick?: (event: MouseEvent) => string | void;
 
   // Any other additional props
   [key: string]: any;
@@ -44,6 +48,14 @@ export const Resizer = ({
     next: { width: 0, height: 0 },
   });
 
+  const debouncedResizeEnd = useRef(
+    debounce((event) => {
+      if (ref.current && onResizeEnd) {
+        onResizeEnd(event, ref);
+      }
+    }, DEBOUNCE_DELAY)
+  );
+
   useEffect(() => {
     if (!ref.current) {
       return;
@@ -63,13 +75,13 @@ export const Resizer = ({
     };
   }, []);
 
-  const updateSizes = (delta: number, isKeyboardEvent: boolean) => {
+  const updateSizes = (event, delta: number) => {
     if (!ref.current) {
       return;
     }
 
     if (onResize) {
-      onResize(delta, isKeyboardEvent);
+      onResize(event, delta);
       return;
     }
 
@@ -87,23 +99,23 @@ export const Resizer = ({
     }
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleMouseMove = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     if (!isResizing.current) {
       return;
     }
 
     const delta =
       orientation === 'horizontal'
-        ? e.clientY - startPos.current.y
-        : e.clientX - startPos.current.x;
-    updateSizes(delta, false);
+        ? event.clientY - startPos.current.y
+        : event.clientX - startPos.current.x;
+    updateSizes(event, delta);
   };
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleMouseDown = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     if (!ref.current) {
       return;
     }
@@ -115,7 +127,7 @@ export const Resizer = ({
     next && (next.style.transition = 'none');
 
     isResizing.current = true;
-    startPos.current = { x: e.clientX, y: e.clientY };
+    startPos.current = { x: event.clientX, y: event.clientY };
     currentSizes.current = {
       prev: prev
         ? { width: rect(prev).width, height: rect(prev).height }
@@ -129,13 +141,13 @@ export const Resizer = ({
     window.addEventListener('mouseup', handleMouseUp);
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = (event) => {
     if (!ref.current) {
       return;
     }
     isResizing.current = false;
     if (onResizeEnd) {
-      onResizeEnd(ref);
+      onResizeEnd(event, ref);
     }
     const prev = ref.current.previousElementSibling as HTMLElement;
     const next = ref.current.nextElementSibling as HTMLElement;
@@ -149,77 +161,70 @@ export const Resizer = ({
     window.removeEventListener('mouseup', handleMouseUp);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    e.key === 'tab' && e.preventDefault();
-    e.stopPropagation();
-    if (
-      ![
-        'ArrowUp',
-        'ArrowDown',
-        'ArrowLeft',
-        'ArrowRight',
-        'Home',
-        'End',
-      ].includes(e.key)
-    ) {
+  const handleKeyDown = (event) => {
+    const navigationKeys = [
+      'ArrowUp',
+      'ArrowDown',
+      'ArrowLeft',
+      'ArrowRight',
+      'Home',
+      'End',
+    ];
+
+    if (![...navigationKeys, 'PageUp', 'PageDown'].includes(event.key)) {
       return;
     }
-
     if (!ref.current) {
       return;
     }
+
+    event.preventDefault();
+    event.stopPropagation();
+
     const prev = ref.current.previousElementSibling as HTMLElement;
     const next = ref.current.nextElementSibling as HTMLElement;
-    const rect = (el: Element) => el?.getBoundingClientRect();
 
-    currentSizes.current = {
-      prev: prev
-        ? { width: rect(prev).width, height: rect(prev).height }
-        : { width: 0, height: 0 },
-      next: next
-        ? { width: rect(next).width, height: rect(next).height }
-        : { width: 0, height: 0 },
+    const getSize = (el: Element | null) => {
+      const rect = el?.getBoundingClientRect();
+      return {
+        width: rect?.width || 0,
+        height: rect?.height || 0,
+      };
     };
 
-    const step = e.shiftKey ? 25 : 5;
+    currentSizes.current = {
+      prev: getSize(prev),
+      next: getSize(next),
+    };
+
+    const step = event.shiftKey ? 25 : 5;
     let delta = 0;
 
-    if (orientation === 'horizontal') {
-      if (e.key === 'ArrowUp') {
-        delta = -step;
-      }
-      if (e.key === 'ArrowDown') {
-        delta = step;
-      }
-      if (e.key === 'Home') {
-        delta = -currentSizes.current.prev.height;
-      }
-      if (e.key === 'End') {
-        delta = currentSizes.current.next?.height || 0;
-      }
-    } else {
-      if (e.key === 'ArrowLeft') {
-        delta = -step;
-      }
-      if (e.key === 'ArrowRight') {
-        delta = step;
-      }
-      if (e.key === 'Home') {
-        delta = -currentSizes.current.prev.width;
-      }
-      if (e.key === 'End') {
-        delta = currentSizes.current.next?.width || 0;
-      }
-    }
+    const isHorizontal = orientation === 'horizontal';
 
-    updateSizes(delta, true);
-    if (onResizeEnd) {
-      onResizeEnd(ref);
-    }
+    const keyMap: Record<string, () => void> = {
+      ArrowUp: () => (isHorizontal ? (delta = -step) : null),
+      ArrowDown: () => (isHorizontal ? (delta = step) : null),
+      ArrowLeft: () => (!isHorizontal ? (delta = -step) : null),
+      ArrowRight: () => (!isHorizontal ? (delta = step) : null),
+      Home: () =>
+        (delta = isHorizontal
+          ? -currentSizes.current.prev.height
+          : -currentSizes.current.prev.width),
+      End: () =>
+        (delta = isHorizontal
+          ? currentSizes.current.next.height
+          : currentSizes.current.next.width),
+    };
+
+    keyMap[event.key]?.();
+
+    updateSizes(event, delta);
+    debouncedResizeEnd?.current(event);
   };
 
-  const handleDoubleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
+  const handleDoubleClick = (event) => {
+    event.preventDefault();
     if (!ref.current) {
       return;
     }
@@ -228,7 +233,7 @@ export const Resizer = ({
     const next = ref.current.nextElementSibling as HTMLElement;
 
     if (onDoubleClick) {
-      onDoubleClick();
+      onDoubleClick(event);
     } else {
       const prop = orientation === 'horizontal' ? 'height' : 'width';
       if (prev) {
@@ -251,7 +256,7 @@ export const Resizer = ({
       aria-orientation={
         orientation === 'horizontal' ? 'horizontal' : 'vertical'
       }
-      aria-live="polite"
+      aria-live="assertive"
       onMouseDown={handleMouseDown}
       onDoubleClick={handleDoubleClick}
       onKeyDown={handleKeyDown}

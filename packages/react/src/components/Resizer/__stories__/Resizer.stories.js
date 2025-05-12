@@ -8,7 +8,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import mdx from './Resizer.mdx';
 import { Resizer } from '../components/Resizer';
 import '../components/resizer.scss';
@@ -70,9 +70,11 @@ export const SinglePanelNoBoundaries = () => (
 );
 
 // eslint-disable-next-line jsdoc/require-jsdoc
-export const SinglePanelBounded = () => (
-  <>
-    <style>{`
+export const SinglePanelBounded = () => {
+  const panelRef = useRef(null);
+  return (
+    <>
+      <style>{`
       .single-panel-bounded {
         width: 600px;
         height: 400px;
@@ -102,32 +104,33 @@ export const SinglePanelBounded = () => (
         // background: #ff00002e;
       }
     `}</style>
-    <div className="single-panel-bounded">
-      <div className="single-panel-bounded__container">
-        <div className="single-panel-bounded__panel">
-          <h3 className="single-panel-bounded__panel-title">
-            Single Panel (bounded)
-          </h3>
-          <p>
-            This panel demonstrates how resizing can be constrained within fixed
-            boundaries. The panel is contained within a 600x400 pixel container,
-            ensuring that the resizing behavior remains within these defined
-            limits.
-          </p>
+      <div className="single-panel-bounded">
+        <div className="single-panel-bounded__container">
+          <div className="single-panel-bounded__panel" ref={panelRef}>
+            <h3 className="single-panel-bounded__panel-title">
+              Single Panel (bounded)
+            </h3>
+            <p>
+              This panel demonstrates how resizing can be constrained within
+              fixed boundaries. The panel is contained within a 600x400 pixel
+              container, ensuring that the resizing behavior remains within
+              these defined limits.
+            </p>
+          </div>
+          <Resizer
+            orientation="horizontal"
+            onResizeEnd={(_event,ref) =>
+              ref.current.setAttribute(
+                'aria-label',
+                `top panel ${panelRef?.current?.style.height}`
+              )
+            } // for custom a11y announcements.
+          />
         </div>
-        <Resizer
-          orientation="horizontal"
-          onResizeEnd={(ref) =>
-            ref.current.setAttribute(
-              'aria-label',
-              `top panel ${ref.current.previousElementSibling.clientHeight} px`
-            )
-          } // for custom a11y announcements.
-        />
       </div>
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 // eslint-disable-next-line jsdoc/require-jsdoc
 export const SinglePanelOverlay = () => (
@@ -427,26 +430,17 @@ export const TwoPanelsVerticalGrid = () => {
   const currentFractionRef = useRef(0.5);
   const initialFraction = 0.5;
 
-  const isKeyboard = useRef(false);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (container) {
-      container.style.transition = isKeyboard.current ? '' : 'unset';
-    }
-  }, [isKeyboard]);
-
   // eslint-disable-next-line jsdoc/require-jsdoc
-  const handleResize = (delta, isKeyboardEvent) => {
+  const handleResize = (event, delta) => {
     const container = containerRef.current;
     if (!container) {
       return;
     }
-    isKeyboard.current = isKeyboardEvent;
+    container.style.transition = event.type === 'keydown' ? '' : 'unset';
     const totalWidth = container.offsetWidth - 5;
     let newFraction = currentFractionRef.current;
 
-    if (isKeyboardEvent) {
+    if (event.type === 'keydown') {
       const step = delta / totalWidth;
       newFraction = clampFraction(currentFractionRef.current + step);
     } else {
@@ -465,23 +459,19 @@ export const TwoPanelsVerticalGrid = () => {
   };
 
   // eslint-disable-next-line jsdoc/require-jsdoc
-  const handleResizeEnd = (resizerRef) => {
-    resizerRef.current.setAttribute(
-      'aria-label',
-      `left ${resizerRef.current.previousElementSibling.clientWidth} px, right ${resizerRef.current.nextElementSibling.clientWidth} px`
-    ); // custom a11y announcements
+  const handleResizeEnd = (event, _ref) => {
     const container = containerRef.current;
+    container.style.transition = event.type === 'keydown' ? '' : 'unset';
     startWidthRef.current = 0;
-    container.style.transition = isKeyboard.current ? '' : 'unset';
   };
 
   // eslint-disable-next-line jsdoc/require-jsdoc
-  const handleDoubleClick = () => {
+  const handleDoubleClick = (event) => {
     const container = containerRef.current;
     if (!container) {
       return;
     }
-
+    container.style.transition = event.type !== 'keydown' ? '' : 'unset';
     currentFractionRef.current = initialFraction;
     container.style.gridTemplateColumns = `${initialFraction}fr auto ${
       1 - initialFraction

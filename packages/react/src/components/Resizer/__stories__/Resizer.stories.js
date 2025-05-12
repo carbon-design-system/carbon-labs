@@ -119,7 +119,7 @@ export const SinglePanelBounded = () => {
           </div>
           <Resizer
             orientation="horizontal"
-            onResizeEnd={(_event,ref) =>
+            onResizeEnd={(_event, ref) =>
               ref.current.setAttribute(
                 'aria-label',
                 `top panel ${panelRef?.current?.style.height}`

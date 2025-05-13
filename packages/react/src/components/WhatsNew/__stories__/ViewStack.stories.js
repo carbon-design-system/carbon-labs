@@ -14,7 +14,7 @@ import mdx from './WhatsNew.mdx';
 import './storybook.scss';
 
 export default {
-  title: 'Components/WhatsNew',
+  title: 'Patterns/WhatsNew',
   component: ViewStack,
   subcomponents: {
     View,

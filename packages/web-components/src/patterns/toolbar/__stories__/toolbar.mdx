@@ -24,9 +24,15 @@ The toolbar pattern. made with carbon design system's web components.
 
 [Pattern Guidance](https://carbondesignsystem.com/patterns/text-toolbar-pattern/)
 
-Note: This is not a component, and is only a recipe that follows the definition
-of pattern. to build a toolbar using carbon components. meant to be scaled as
-per specific requirements.
+To build this pattern, we recommend including the following components:
+
+- [cds-stack](https://web-components.carbondesignsystem.com/?path=/docs/layout-stack)
+- [cds-icon-button](https://web-components.carbondesignsystem.com/?path=/docs/components-icon-button)
+- [cds-dropdown](https://web-components.carbondesignsystem.com/?path=/docs/components-dropdown)
+- [cds-overflow-menu](https://web-components.carbondesignsystem.com/?path=/docs/components-overflow-menu)
+
+These components are used within an `clabs-toolbar` wrapper component provided
+as an example to handle state management and some pattern specific behaviors.
 
 #### Horizontal Example
 
@@ -36,18 +42,9 @@ per specific requirements.
 
 <Canvas of={ToolbarStories.Vertical} />
 
-ingredients used
-
-`cds-stack`, `cds-icon-button`, `cds-dropdown`, `cds-overflow-menu` a js
-function to achieve roving tab index. for accessibility
-
 ## Getting started
 
 Here's a quick example to get you started.
-
-```bash
-yarn add @carbon/web-components
-```
 
 ### HTML
 

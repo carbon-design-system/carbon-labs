@@ -1,17 +1,34 @@
-//
-// Copyright IBM Corp. 2024
-//
-// This source code is licensed under the Apache-2.0 license found in the
-// LICENSE file in the root directory of this source tree.
-//
+/*
+* Copyright IBM Corp. 2025, 2025
+*
+* This source code is licensed under the Apache-2.0 license found in the
+* LICENSE file in the root directory of this source tree.
+*/
 
-@use '@carbon/styles/scss/reset';
-@use '@carbon/styles/scss/theme';
+$css--plex: true !default;
+
+/* Other Carbon settings. */
+@use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/colors';
+@use 'sass:map';
+@use '@carbon/styles';
 
-// :root {
-//   @include theme.theme(themes.$g100); // change this to check all themes
-// }
+$prefix: 'c4p';
+$carbon-prefix: 'cds';
+
+$block-class: #{$prefix}--import-modal;
+
+:root {
+  @include theme(themes.$white);
+  background-color: var(--cds-background);
+  color: var(--cds-text-primary);
+}
+cds-stack {
+  background-color: $layer-01;
+}
+
 .toolbar {
   display: inline-flex;
   background: var(--cds-layer);
@@ -61,4 +78,10 @@
     inset-block-end: 0.175rem;
     inset-inline-end: 0.175rem;
   }
+}
+.example-container {
+  margin: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }

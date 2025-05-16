@@ -22,10 +22,12 @@ $block-class: #{$prefix}--import-modal;
 
 :root {
   @include theme(themes.$white);
+
   background-color: var(--cds-background);
   color: var(--cds-text-primary);
 }
-cds-stack {
+
+.#{$prefix}-stack {
   background-color: $layer-01;
 }
 
@@ -79,9 +81,10 @@ cds-stack {
     inset-inline-end: 0.175rem;
   }
 }
+
 .example-container {
-  margin: 3rem;
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  margin: 3rem;
 }

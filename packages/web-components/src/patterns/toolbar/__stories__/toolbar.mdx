@@ -48,3 +48,109 @@ Here's a quick example to get you started.
 ```bash
 yarn add @carbon/web-components
 ```
+
+### HTML
+
+```html
+<cds-stack class="toolbar" orientation=${this.orientation}>
+  <cds-stack class="toolbar-group" orientation=${this.orientation}>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${Draggable({ slot: 'icon' })}
+      <span slot="tooltip-content">Drag</span>
+    </cds-icon-button>
+  </cds-stack class="toolbar-group">
+  <cds-stack class="toolbar-group" orientation=${this.orientation}>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${RulerAlt({ slot: 'icon' })}
+      <span slot="tooltip-content">Ruler</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${Pin({ slot: 'icon' })}
+      <span slot="tooltip-content">Pin</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      caret
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${ColorPalette({ slot: 'icon' })}
+      <span slot="tooltip-content">Color palette</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${TextCreation({ slot: 'icon' })}
+      <span slot="tooltip-content">Text creation</span>
+    </cds-icon-button>
+  </cds-stack class="toolbar-group">
+  <cds-stack class="toolbar-group" orientation=${this.orientation}>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${OpenPanelLeft({ slot: 'icon' })}
+      <span slot="tooltip-content">Open panel left</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${OpenPanelRight({ slot: 'icon' })}
+      <span slot="tooltip-content">Open panel right</span>
+    </cds-icon-button>
+  </cds-stack class="toolbar-group">
+  <cds-stack class="toolbar-group" orientation=${this.orientation}>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${Move({ slot: 'icon' })}
+      <span slot="tooltip-content">Move</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${Rotate({ slot: 'icon' })}
+      <span slot="tooltip-content">Rotate</span>
+    </cds-icon-button>
+  </cds-stack class="toolbar-group">
+  <cds-stack class="toolbar-group" orientation=${this.orientation}>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${ZoomIn({ slot: 'icon' })}
+      <span slot="tooltip-content">Zoom in</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${ZoomOut({ slot: 'icon' })}
+      <span slot="tooltip-content">Zoom out</span>
+    </cds-icon-button>
+  </cds-stack class="toolbar-group">
+</cds-stack class="toolbar">
+```

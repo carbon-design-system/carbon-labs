@@ -1,14 +1,12 @@
 {
   "name": "@carbon-labs/web-components",
-  "version": "0.21.0",
+  "version": "0.25.0",
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-labs",
-  "main": "es/index",
   "types": "es/index",
-  "module": "es/index",
   "files": [
     "dist",
     "packages/*/es",
@@ -34,9 +32,9 @@
   "devDependencies": {
     "@carbon/grid": "^11.34.0",
     "@carbon/icon-helpers": "10.57.0",
-    "@carbon/icons": "11.58.0",
+    "@carbon/icons": "11.59.0",
     "@carbon/layout": "11.32.0",
-    "@carbon/motion": "11.26.0",
+    "@carbon/motion": "11.27.0",
     "@carbon/themes": "11.50.0",
     "@carbon/type": "11.38.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",

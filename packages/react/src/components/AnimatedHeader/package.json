@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-animated-header",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -13,8 +13,10 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/AnimatedHeader"
   },
-  "main": "./src/index.js",
-  "module": "./src/index.js",
+  "exports": {
+    "import": "./es/index.js",
+    "require": "./lib/index.js"
+  },
   "files": [
     "es",
     "lib",

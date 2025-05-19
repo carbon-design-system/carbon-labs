@@ -656,6 +656,7 @@ export default class chartElement extends LitElement {
         const vegaLiteOptions = {
           actions: false,
           hover: this.enableTooltip,
+          //theme: 'carbon' + this.theme,
           tooltip: {
             /**
              * custom tooltip renderer for vega

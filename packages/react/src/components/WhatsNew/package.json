@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-whats-new",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -13,8 +13,10 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/WhatsNew"
   },
-  "main": "./src/index.js",
-  "module": "./src/index.js",
+  "exports": {
+    "import": "./es/index.js",
+    "require": "./lib/index.js"
+  },
   "files": [
     "es",
     "lib",

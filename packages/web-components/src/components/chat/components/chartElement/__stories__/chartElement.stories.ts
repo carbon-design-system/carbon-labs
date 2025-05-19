@@ -248,6 +248,15 @@ export const Showcase = {
       container-height="400px">
     </clabs-chat-chart>
     <br />
+    <h4>Candle stick chart</h4>
+    <br />
+    <clabs-chat-chart
+      theme="${chartTheme}"
+      content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","width":400,"description":"A candlestick chart","data":{"url":"https://vega.github.io/vega-lite/examples/data/ohlc.json"},"encoding":{"x":{"field":"date","type":"temporal","title":"Date in 2009","axis":{"format":"%m/%d","labelAngle":-45,"title":"Date in 2009"}},"y":{"type":"quantitative","scale":{"zero":false},"axis":{"title":"Price"}},"color":{"condition":{"test":"datum.open < datum.close","value":"#24a148"},"value":"#fa4d56"}},"layer":[{"mark":"rule","encoding":{"y":{"field":"low"},"y2":{"field":"high"}}},{"mark":"bar","encoding":{"y":{"field":"open"},"y2":{"field":"close"}}}]}'}"
+      container-height="350px">
+    </clabs-chat-chart>
+    <br />
+    <br />
     <h4>Line Chart</h4>
     <br />
     <clabs-chat-chart
@@ -323,11 +332,12 @@ export const Showcase = {
       container-height="500px">
     </clabs-chat-chart>
     <br />
-    <h4>Orthographic world map</h4>
+    <br />
+    <h4>Radar Plot</h4>
     <br />
     <clabs-chat-chart
       theme="${chartTheme}"
-      content="${'{"$schema": "https://vega.github.io/schema/vega-lite/v5.json","width": 500,"height": 300,"params": [{"name": "projection","value": "orthographic"}],"data": {"url": "https://vega.github.io/vega-lite/examples/data/world-110m.json","format": {"type": "topojson", "feature": "countries"}},"projection": {"type": {"expr": "projection"}},"mark": {"type": "geoshape", "fill": "lightgray", "stroke": "gray"}}'}"
+      content="${'{"$schema":"https://vega.github.io/schema/vega/v5.json","description":"A radar chart example, showing multiple dimensions in a radial layout.","width":400,"height":400,"padding":40,"autosize":{"type":"none","contains":"padding"},"signals":[{"name":"radius","update":"width / 2"}],"data":[{"name":"table","values":[{"key":"key-0","value":19,"category":0},{"key":"key-1","value":22,"category":0},{"key":"key-2","value":14,"category":0},{"key":"key-3","value":38,"category":0},{"key":"key-4","value":23,"category":0},{"key":"key-5","value":5,"category":0},{"key":"key-6","value":27,"category":0},{"key":"key-0","value":13,"category":1},{"key":"key-1","value":12,"category":1},{"key":"key-2","value":42,"category":1},{"key":"key-3","value":13,"category":1},{"key":"key-4","value":6,"category":1},{"key":"key-5","value":15,"category":1},{"key":"key-6","value":8,"category":1}]},{"name":"keys","source":"table","transform":[{"type":"aggregate","groupby":["key"]}]}],"scales":[{"name":"angular","type":"point","range":{"signal":"[-PI, PI]"},"padding":0.5,"domain":{"data":"table","field":"key"}},{"name":"radial","type":"linear","range":{"signal":"[0, radius]"},"zero":true,"nice":false,"domain":{"data":"table","field":"value"},"domainMin":0},{"name":"color","type":"ordinal","domain":{"data":"table","field":"category"},"range":{"scheme":"category10"}}],"encode":{"enter":{"x":{"signal":"radius"},"y":{"signal":"radius"}}},"marks":[{"type":"group","name":"categories","zindex":1,"from":{"facet":{"data":"table","name":"facet","groupby":["category"]}},"marks":[{"type":"line","name":"category-line","from":{"data":"facet"},"encode":{"enter":{"interpolate":{"value":"linear-closed"},"x":{"signal":"scale(\'radial\', datum.value) * cos(scale(\'angular\', datum.key))"},"y":{"signal":"scale(\'radial\', datum.value) * sin(scale(\'angular\', datum.key))"},"stroke":{"scale":"color","field":"category"},"strokeWidth":{"value":1},"fill":{"scale":"color","field":"category"},"fillOpacity":{"value":0.1}}}},{"type":"text","name":"value-text","from":{"data":"category-line"},"encode":{"enter":{"x":{"signal":"datum.x"},"y":{"signal":"datum.y"},"text":{"signal":"datum.datum.value"},"align":{"value":"center"},"baseline":{"value":"middle"},"fill":{"value":"black"}}}}]},{"type":"rule","name":"radial-grid","from":{"data":"keys"},"zindex":0,"encode":{"enter":{"x":{"value":0},"y":{"value":0},"x2":{"signal":"radius * cos(scale(\'angular\', datum.key))"},"y2":{"signal":"radius * sin(scale(\'angular\', datum.key))"},"stroke":{"value":"lightgray"},"strokeWidth":{"value":1}}}},{"type":"text","name":"key-label","from":{"data":"keys"},"zindex":1,"encode":{"enter":{"x":{"signal":"(radius + 5) * cos(scale(\'angular\', datum.key))"},"y":{"signal":"(radius + 5) * sin(scale(\'angular\', datum.key))"},"text":{"field":"key"},"align":[{"test":"abs(scale(\'angular\', datum.key)) > PI / 2","value":"right"},{"value":"left"}],"baseline":[{"test":"scale(\'angular\', datum.key) > 0","value":"top"},{"test":"scale(\'angular\', datum.key) == 0","value":"middle"},{"value":"bottom"}],"fill":{"value":"black"},"fontWeight":{"value":"bold"}}}},{"type":"line","name":"outer-line","from":{"data":"radial-grid"},"encode":{"enter":{"interpolate":{"value":"linear-closed"},"x":{"field":"x2"},"y":{"field":"y2"},"stroke":{"value":"lightgray"},"strokeWidth":{"value":1}}}}]}'}"
       container-height="450px">
     </clabs-chat-chart>
     <br />
@@ -342,6 +352,26 @@ export const Showcase = {
       container-height="650px">
     </clabs-chat-chart>
     <br />
+
+    { "$schema": "https://vega.github.io/schema/vega-lite/v6.json", "width":
+    800, "height": 500, "projection": { "type": "albersUsa" }, "layer": [ {
+    "data": { "url": "data/us-10m.json", "format": { "type": "topojson",
+    "feature": "states" } }, "mark": { "type": "geoshape", "fill": "lightgray",
+    "stroke": "white" } }, { "data": { "url": "data/us-state-capitals.json" },
+    "encoding": { "longitude": { "field": "lon", "type": "quantitative" },
+    "latitude": { "field": "lat", "type": "quantitative" } }, "layer": [{
+    "mark": { "type": "circle", "color": "orange" } }, { "mark": { "type":
+    "text", "dy": -10 }, "encoding": { "text": {"field": "city", "type":
+    "nominal"} } }] } ] } { "$schema":
+    "https://vega.github.io/schema/vega-lite/v6.json", "description": "A simple
+    radial chart with embedded data.", "data": { "values": [12, 23, 47, 6, 52,
+    19] }, "layer": [{ "mark": {"type": "arc", "innerRadius": 20, "stroke":
+    "#fff"} },{ "mark": {"type": "text", "radiusOffset": 10}, "encoding": {
+    "text": {"field": "data", "type": "quantitative"} } }], "encoding": {
+    "theta": {"field": "data", "type": "quantitative", "stack": true}, "radius":
+    {"field": "data", "scale": {"type": "sqrt", "zero": true, "rangeMin": 20}},
+    "color": {"field": "data", "type": "nominal", "legend": null} } }
+
     <h4>Multi histogram</h4>
     <br />
     <clabs-chat-chart
@@ -358,7 +388,8 @@ export const Showcase = {
     <clabs-chat-chart
       theme="${chartTheme}"
       content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","width":700,"height":500,"view":{"stroke":"transparent"},"layer":[{"data":{"url":"https://vega.github.io/vega-lite/examples/data/londonBoroughs.json","format":{"type":"topojson","feature":"boroughs"}},"mark":{"type":"geoshape","stroke":"white","strokeWidth":2},"encoding":{"color":{"value":"#eee"}}},{"data":{"url":"https://vega.github.io/vega-lite/examples/data/londonCentroids.json","format":{"type":"json"}},"transform":[{"calculate":"indexof (datum.name, \' \') > 0  ? substring(datum.name,0,indexof(datum.name, \' \')) : datum.name","as":"bLabel"}],"mark":"text","encoding":{"longitude":{"field":"cx","type":"quantitative"},"latitude":{"field":"cy","type":"quantitative"},"text":{"field":"bLabel","type":"nominal"},"size":{"value":8},"opacity":{"value":0.6}}},{"data":{"url":"https://vega.github.io/vega-lite/examples/data/londonTubeLines.json","format":{"type":"topojson","feature":"line"}},"mark":{"type":"geoshape","filled":false,"strokeWidth":2},"encoding":{"color":{"field":"id","type":"nominal","legend":{"title":null,"orient":"bottom-right","offset":0},"scale":{"domain":["Bakerloo","Central","Circle","District","DLR","Hammersmith & City","Jubilee","Metropolitan","Northern","Piccadilly","Victoria","Waterloo & City"],"range":["rgb(137,78,36)","rgb(220,36,30)","rgb(255,206,0)","rgb(1,114,41)","rgb(0,175,173)","rgb(215,153,175)","rgb(106,114,120)","rgb(114,17,84)","rgb(0,0,0)","rgb(0,24,168)","rgb(0,160,226)","rgb(106,187,170)"]}}}}]}'}"
-      container-height="450px">
+      container-height="450px"
+      container-width="450px">
     </clabs-chat-chart>
     <br />
     <h4>Parallel Coordinates</h4>
@@ -377,12 +408,13 @@ export const Showcase = {
       container-height="350px">
     </clabs-chat-chart>
     <br />
-    <h4>Candle stick chart</h4>
+    <br />
+    <h4>Orthographic world map</h4>
     <br />
     <clabs-chat-chart
       theme="${chartTheme}"
-      content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","width":400,"description":"A candlestick chart","data":{"url":"https://vega.github.io/vega-lite/examples/data/ohlc.json"},"encoding":{"x":{"field":"date","type":"temporal","title":"Date in 2009","axis":{"format":"%m/%d","labelAngle":-45,"title":"Date in 2009"}},"y":{"type":"quantitative","scale":{"zero":false},"axis":{"title":"Price"}},"color":{"condition":{"test":"datum.open < datum.close","value":"#24a148"},"value":"#fa4d56"}},"layer":[{"mark":"rule","encoding":{"y":{"field":"low"},"y2":{"field":"high"}}},{"mark":"bar","encoding":{"y":{"field":"open"},"y2":{"field":"close"}}}]}'}"
-      container-height="350px">
+      content="${'{"$schema": "https://vega.github.io/schema/vega-lite/v5.json","width": 500,"height": 300,"params": [{"name": "projection","value": "orthographic"}],"data": {"url": "https://vega.github.io/vega-lite/examples/data/world-110m.json","format": {"type": "topojson", "feature": "countries"}},"projection": {"type": {"expr": "projection"}},"mark": {"type": "geoshape", "fill": "lightgray", "stroke": "gray"}}'}"
+      container-height="450px">
     </clabs-chat-chart>
     <br />`,
 };
@@ -451,7 +483,6 @@ export const FacetingTest = {
               content="${JSON.stringify(item.spec)}">
             </clabs-chat-chart>`
       )}
-      <<<<<<< HEAD
       <h4>Multi-scatter-chart</h4>
       <clabs-chat-chart
         content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
@@ -459,7 +490,6 @@ export const FacetingTest = {
         container-width="600px">
       </clabs-chat-chart>
       <br />
-      ======= >>>>>>> upstream/main
       <h4>Interactive multi-scatter plot</h4>
       <br />
       <clabs-chat-chart

@@ -91,6 +91,12 @@ export default class chartElement extends LitElement {
   disableOptions;
 
   /**
+   * Disable all chart option buttons, supercedes all other individual button options
+   */
+  @property({ type: Boolean, attribute: 'use-vega-carbon-theme' })
+  forceCarbonTheme;
+
+  /**
    * Disable recontext button to make chart current
    */
   @property({ type: Boolean, attribute: 'enable-context' })
@@ -327,6 +333,10 @@ export default class chartElement extends LitElement {
     if (this.thumbNail) {
       this.disableCodeInspector = true;
       this.disableEditor = true;
+    }
+
+    if (this.forceCarbonTheme) {
+      this.carbonify = false;
     }
 
     if (this.renderMethod !== 'svg' && this.renderMethod !== 'canvas') {
@@ -642,10 +652,10 @@ export default class chartElement extends LitElement {
         if (this.renderMethod === 'canvas') {
           renderMode = 'canvas';
         }
-        await VegaEmbed.default(targetDiv, chosenSpec, {
+
+        const vegaLiteOptions = {
           actions: false,
           hover: this.enableTooltip,
-          //theme: 'carbon' + this.theme,
           tooltip: {
             /**
              * custom tooltip renderer for vega
@@ -657,7 +667,13 @@ export default class chartElement extends LitElement {
             },
           },
           renderer: renderMode as 'canvas' | 'svg',
-        })
+        };
+
+        if (this.forceCarbonTheme) {
+          vegaLiteOptions['theme'] = 'carbon' + this.theme;
+        }
+
+        await VegaEmbed.default(targetDiv, chosenSpec, vegaLiteOptions)
           .then(({ view }) => {
             this._previousSpec = this._visualizationSpec;
             if (this.thumbNail) {

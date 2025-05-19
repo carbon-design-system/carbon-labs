@@ -49,9 +49,9 @@ export function messagesTemplate(customElementClass) {
       aria-labelledby="${clabsPrefix}--chat-messages-target-reader-label"
       class="${clabsPrefix}--chat-messages-container ${streamResponses
         ? clabsPrefix + '--chat-messages-container-streaming'
-        : ''} 
-
-    ${dockingEnabled ? clabsPrefix + '--chat-messages-container-docked' : ''}">
+        : ''} ${dockingEnabled
+        ? clabsPrefix + '--chat-messages-container-docked'
+        : ''}">
       <slot name="message-items" @slotchange="${_handleSlotchange}">
         ${computedMessages
           ? html`

@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/Research/Diagram',
+  title: 'Components/AI Components/Diagram',
 };
 
 const examples = [
@@ -211,6 +211,8 @@ export const Showcase = {
     html` ${examples.map(
       (example) =>
         html`
+          <h3>${example.title}</h3>
+          <br />
           <clabs-chat-diagram
             title="${example.title}"
             width="${example.width}"

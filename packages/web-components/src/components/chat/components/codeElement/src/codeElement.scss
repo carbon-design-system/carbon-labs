@@ -120,7 +120,6 @@ $css--plex: true !default;
     box-sizing: border-box;
     flex: 0 0 20px;
     border-inline-end: 1px solid transparent;
-    cursor: pointer;
     inline-size: 2px;
     max-block-size: 20px;
     padding-inline-end: 0.5em;
@@ -128,6 +127,7 @@ $css--plex: true !default;
   }
   .#{$clabs-prefix}--chat-code-line-collapser svg {
     block-size: 20px;
+    cursor: pointer;
     inline-size: 20px;
   }
 
@@ -370,7 +370,7 @@ $css--plex: true !default;
 
     .hljs-attr,
     .hljs-attribute {
-      color: $teal-60;
+      color: $orange-60;
     }
 
     .hljs-variable,
@@ -501,7 +501,7 @@ $css--plex: true !default;
 
     .hljs-attr,
     .hljs-attribute {
-      color: $teal-50;
+      color: $orange-50;
     }
 
     .hljs-variable,

@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { TextHighlighter } from '@carbon-labs/react-text-highlighter/es/index';
+import { TextHighlighter } from '@carbon-labs/react-text-highlighter';
 
 function App() {
   return <TextHighlighter />;

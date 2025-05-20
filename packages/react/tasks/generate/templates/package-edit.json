@@ -15,8 +15,14 @@
     "directory": "src/components/DISPLAY_NAME"
   },
   "exports": {
-    "import": "./es/index.js",
-    "require": "./lib/index.js"
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js",
+      "type": "./es/index.d.ts"
+    },
+    "./es/": "./es/",
+    "./lib/": "./lib/",
+    "./scss/": "./scss/"
   },
   "files": ["es", "lib", "scss"],
   "scripts": {

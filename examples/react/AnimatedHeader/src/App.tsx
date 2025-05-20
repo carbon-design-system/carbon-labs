@@ -8,7 +8,7 @@
  */
 
 import React, { useState } from 'react';
-import { AnimatedHeader } from '@carbon-labs/react-animated-header/es/index';
+import { AnimatedHeader } from '@carbon-labs/react-animated-header';
 import {
   watsonXAnimatedLight,
   watsonXStaticLight,

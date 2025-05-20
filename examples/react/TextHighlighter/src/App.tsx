@@ -11,7 +11,16 @@ import React from 'react';
 import { TextHighlighter } from '@carbon-labs/react-text-highlighter';
 
 function App() {
-  return <TextHighlighter />;
+  return (
+    <p>
+      This text is not highlighted
+      <TextHighlighter kind='mark' type='default'>
+        {' '}
+        This is some highlighted text{' '}
+      </TextHighlighter>
+      This is also not highlighted
+    </p>
+  );
 }
 
 export default App;

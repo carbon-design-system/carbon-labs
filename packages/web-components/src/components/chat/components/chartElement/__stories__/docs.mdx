@@ -1,4 +1,4 @@
-import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+import { ArgTypes, Markdown, Meta, Canvas } from '@storybook/blocks';
 import { cdnJs, cdnCss } from '../../../../../globals/internal/storybook-cdn';
 import * as ChartElementStories from './chartElement.stories';
 import packageJson from '../../../package.json';
@@ -101,9 +101,9 @@ Here's a quick example to get you started.
       </td>
     </tr>
     <tr>
-      <td>`debug`</td>
+      <td>`debug-mode`</td>
       <td>boolean</td>
-      <td>false</td>
+      <td>true</td>
       <td>
         shows specification editor button and displays all errors in component
         when in error mode, otherwise show: Chart failed to render, see console
@@ -220,6 +220,54 @@ Here's a quick example to get you started.
         show loading animation. When content is provided chart will auto-render
         and this will false. If streaming: raw data is incrementally displayed
         until complete and rendered
+      </td>
+    </tr>
+         <tr>
+      <td>`selected`</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>
+       add selection border to chart container
+      </td>
+    </tr>
+     <tr>
+      <td>`selectable`</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>
+       choose if chart container is hoverable and selectable, append border on click
+      </td>
+    </tr>
+     <tr>
+      <td>`use-vega-carbon-theme`</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>
+       choose to override carbonification process and opt for simple Carbon themes (based on auto-detected carbon theme). Warning: these are sinplified and may not cover most edge cases.
+      </td>
+    </tr>
+     <tr>
+      <td>`enable-context`</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>
+       show button that triggers chart selection event, meant to update chat context
+      </td>
+    </tr>
+     <tr>
+      <td>`streaming`</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>
+       enable streaming animation capabilities for incomplete content
+      </td>
+    </tr>
+     <tr>
+      <td>`thumbnail-width`</td>
+      <td>boolean</td>
+      <td>false</td>
+      <td>
+       choose maximum width of thumbnail object
       </td>
     </tr>
   </tbody>
@@ -427,3 +475,7 @@ charts. Touch/mobile features have not been tested and attributes are still
 subject to change. Features such as legend interactions to filter out data,
 viewing the source data as a table, locale support, and are not currently
 implemented as well. (subject to change)
+
+
+## Showcase
+<Canvas of={ChartElementStories.Showcase} />

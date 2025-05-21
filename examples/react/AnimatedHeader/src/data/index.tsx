@@ -10,7 +10,6 @@
 import { Add } from '@carbon/react/icons';
 import { ButtonKinds, Loading } from '@carbon/react';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
-import React from 'react';
 
 export const workspaceData = [
   {
@@ -327,11 +326,11 @@ export const headerTiles = [
     tiles: [
       {
         id: 'tile-1',
-        customContent: <Loading description="Sample loading state" />
+        customContent: <Loading description="Sample loading state" />,
       },
       {
         id: 'tile-2',
-        customContent: <SampleCustomTaskContent />
+        customContent: <SampleCustomTaskContent />,
       },
     ],
   },

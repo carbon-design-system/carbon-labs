@@ -326,7 +326,7 @@ export const headerTiles = [
     tiles: [
       {
         id: 'tile-1',
-        customContent: <Loading description='Sample loading state' />,
+        customContent: <Loading description="Sample loading state" />,
       },
       {
         id: 'tile-2',

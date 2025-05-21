@@ -53,12 +53,12 @@ function App() {
     <AnimatedHeader
       allTiles={tiles}
       allWorkspaces={workspaces}
-      description='Connect, monitor, and manage data.'
+      description="Connect, monitor, and manage data."
       handleHeaderItemsToString={handleHeaderItems}
       handleWorkspaceItemsToString={handleWorkspaceItems}
       headerAnimation={watsonXAnimatedLight}
       headerStatic={watsonXStaticLight}
-      productName='[Product name]'
+      productName="[Product name]"
       renderHeaderSelectedItem={selectedTileGroupRenderer}
       renderWorkspaceSelectedItem={selectedWorkspaceItemRenderer}
       selectedTileGroup={selectedTile}
@@ -66,8 +66,8 @@ function App() {
       setSelectedTileGroup={handleTileGroup}
       setSelectedWorkspace={handleWorkspaceSelect}
       tasksConfig={tasksConfigDropdown}
-      userName='Drew'
-      welcomeText='Welcome'
+      userName="Drew"
+      welcomeText="Welcome"
       workspaceLabel="Open in: Drew's workspace"
     />
   );

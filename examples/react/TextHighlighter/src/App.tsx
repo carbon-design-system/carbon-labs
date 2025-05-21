@@ -14,7 +14,7 @@ function App() {
   return (
     <p>
       This text is not highlighted
-      <TextHighlighter kind='mark' type='default'>
+      <TextHighlighter kind="mark" type="default">
         {' '}
         This is some highlighted text{' '}
       </TextHighlighter>

@@ -42,7 +42,7 @@ components are provided by `@carbon-labs/react-ui-shell`:
 - `SharkFinIcon`
 
 ```jsx
-import { SideNav } from '@carbon-labs/react-ui-shell/es/index';
+import { SideNav } from '@carbon-labs/react-ui-shell';
 import { Header } from '@carbon/react';
 
 function MyComponent() {

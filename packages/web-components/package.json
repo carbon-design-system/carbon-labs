@@ -26,17 +26,17 @@
     "test:updateSnapshot": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve --update-snapshots"
   },
   "dependencies": {
-    "@carbon/styles": "^1.70.0",
+    "@carbon/styles": "^1.82.0",
     "lit": "^3.2.1"
   },
   "devDependencies": {
-    "@carbon/grid": "^11.34.0",
-    "@carbon/icon-helpers": "10.57.0",
-    "@carbon/icons": "11.59.0",
-    "@carbon/layout": "11.32.0",
+    "@carbon/grid": "^11.36.0",
+    "@carbon/icon-helpers": "10.59.0",
+    "@carbon/icons": "11.60.0",
+    "@carbon/layout": "11.34.0",
     "@carbon/motion": "11.28.0",
-    "@carbon/themes": "11.50.0",
-    "@carbon/type": "11.38.0",
+    "@carbon/themes": "11.53.0",
+    "@carbon/type": "11.40.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",
     "@lit/react": "^1.0.1",
     "@open-wc/testing": "^4.0.0",

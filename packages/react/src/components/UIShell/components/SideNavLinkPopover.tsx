@@ -8,7 +8,7 @@
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactNode } from 'react';
-import { IconButton, IconButtonAlignment, ButtonSize } from '@carbon/react';
+import { IconButton, IconButtonAlignment } from '@carbon/react';
 import { usePrefix } from '../internal/usePrefix';
 
 interface IconButtonProps
@@ -80,7 +80,7 @@ interface IconButtonProps
   /**
    * Specify the size of the Button. Defaults to `md`.
    */
-  size?: ButtonSize;
+  size?: 'sm' | 'md' | 'lg';
 
   /**
    * Specify an optional className to be added to your Tooltip wrapper

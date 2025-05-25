@@ -53,6 +53,8 @@ export type AnimatedHeaderProps = {
   welcomeText?: string;
   isLoading?: boolean;
   disabledTaskLabel?: string;
+  expandButtonLabel?: string;
+  collapseButtonLabel?: string;
 } & TasksControllerProps &
   WorkspaceSelectorProps;
 
@@ -70,6 +72,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   workspaceSelectorConfig,
   isLoading,
   disabledTaskLabel,
+  expandButtonLabel = 'Expand',
+  collapseButtonLabel = 'Collapse',
 }: AnimatedHeaderProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
@@ -241,7 +245,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             kind="ghost"
             renderIcon={open ? ChevronUp : ChevronDown}
             onClick={handleButtonCollapseClick}>
-            {open ? `Collapse` : `Expand`}
+            {open ? collapseButtonLabel : expandButtonLabel}
           </Button>
         </div>
       </Grid>
@@ -262,9 +266,19 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   className: PropTypes.string,
 
   /**
+   * Custom collapse button label
+   */
+  collapseButtonLabel: PropTypes.string,
+
+  /**
    * Provide short sentence in max. 3 lines related to product context
    */
   description: PropTypes.string,
+
+  /**
+   * Custom expand button label
+   */
+  expandButtonLabel: PropTypes.string,
 
   /**
    * In-product imagery / lottie animation (.json) dim. 1312 x 738

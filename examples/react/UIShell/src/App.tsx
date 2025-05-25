@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import {
   SIDE_NAV_TYPE,
   SideNav,
@@ -23,7 +23,7 @@ import {
   HeaderPopoverButton,
   HeaderPopoverContent,
   TrialCountdown,
-} from '@carbon-labs/react-ui-shell/es/index';
+} from '@carbon-labs/react-ui-shell';
 import {
   SkipToContent,
   Header,

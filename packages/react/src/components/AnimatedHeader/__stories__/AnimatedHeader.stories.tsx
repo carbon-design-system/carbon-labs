@@ -199,6 +199,14 @@ const sharedArgTypes = {
   isLoading: {
     description: 'Specify whether the header should be in the loading state',
   },
+  expandButtonLabel: {
+    description: 'Specify custom expand button label',
+    type: 'string',
+  },
+  collapseButtonLabel: {
+    description: 'Specify custom collapse button label',
+    type: 'string',
+  },
 };
 
 const sharedArgs = {
@@ -213,6 +221,8 @@ const sharedArgs = {
   welcomeText: 'Welcome',
   isLoading: false,
   disabledTaskLabel: 'This task is disabled',
+  expandButtonLabel: 'Expand',
+  collapseButtonLabel: 'Collapse',
 };
 
 export const ThemeG10 = (args) => {

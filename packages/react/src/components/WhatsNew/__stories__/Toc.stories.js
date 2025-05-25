@@ -19,7 +19,7 @@ import './storybook.scss';
 
 const meta = {
   component: Toc,
-  title: 'Components/WhatsNew',
+  title: 'Patterns/WhatsNew',
   subcomponents: {
     TocList,
     TocItem,

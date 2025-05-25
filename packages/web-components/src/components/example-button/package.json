@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-example-button",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -12,8 +12,6 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/example-button"
   },
-  "main": "./src/index.js",
-  "module": "./src/index.js",
   "exports": {
     ".": {
       "default": "./src/index.js"
@@ -35,7 +33,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.15.0",
+    "@carbon-labs/utilities": "0.16.0",
     "@carbon/web-components": "2.21.0"
   }
 }

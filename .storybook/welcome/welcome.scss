@@ -19,16 +19,16 @@
 }
 
 .welcome__link {
-  width: fit-content;
+  inline-size: fit-content;
 }
 
 .welcome__link,
 .welcome__link:hover,
 .welcome__link.cds--link:visited {
-  margin-top: 1rem;
   color: colors.$blue-70;
+  margin-block-start: 1rem;
 }
 
 .welcome__link:first-child {
-  margin-top: 2rem;
+  margin-block-start: 2rem;
 }

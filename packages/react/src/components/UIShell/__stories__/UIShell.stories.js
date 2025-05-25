@@ -180,6 +180,7 @@ const StoryContent = () => (
     </Grid>
   </Theme>
 );
+
 /**
  * Story for UIShell
  * @returns {React.ReactElement} The JSX for the story

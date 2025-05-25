@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.62.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.61.0...@carbon-labs/react@0.62.0) (2025-05-21)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.61.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.60.0...@carbon-labs/react@0.61.0) (2025-05-19)
+
+
+### Bug Fixes
+
+* exports in ui shell ([#603](https://github.com/carbon-design-system/carbon-labs/issues/603)) ([9914303](https://github.com/carbon-design-system/carbon-labs/commit/99143038aa94c0a94fec31224bb1bac50d85db0c))
+
+
+
+
+
+# [0.60.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.59.0...@carbon-labs/react@0.60.0) (2025-05-13)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.59.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.58.0...@carbon-labs/react@0.59.0) (2025-05-08)
+
+
+### Bug Fixes
+
+* correct package exports ([#539](https://github.com/carbon-design-system/carbon-labs/issues/539)) ([ef7557e](https://github.com/carbon-design-system/carbon-labs/commit/ef7557e10c1385a6bdc60d32361ce7ba2dad263c))
+
+
+
+
+
+# [0.58.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.57.0...@carbon-labs/react@0.58.0) (2025-05-06)
+
+
+### Features
+
+* **chat:** extensive updates to code charts and chat ([#582](https://github.com/carbon-design-system/carbon-labs/issues/582)) ([73772da](https://github.com/carbon-design-system/carbon-labs/commit/73772da806e67eba7314f0de1c17cb0241f3529f))
+
+
+
+
+
+# [0.57.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.56.0...@carbon-labs/react@0.57.0) (2025-04-29)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.56.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.55.0...@carbon-labs/react@0.56.0) (2025-04-25)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.55.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.54.0...@carbon-labs/react@0.55.0) (2025-04-22)
 
 

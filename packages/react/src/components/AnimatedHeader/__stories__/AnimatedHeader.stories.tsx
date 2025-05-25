@@ -204,7 +204,7 @@ const sharedArgTypes = {
 const sharedArgs = {
   allTileGroups: headerTiles,
   tasksControllerConfig: 1,
-  workspaceSelectorConfig: 2,
+  workspaceSelectorConfig: 1,
   description: 'Train, deploy, validate, and govern AI models responsibly.',
   headerStatic: 0,
   productName: '[Product name]',

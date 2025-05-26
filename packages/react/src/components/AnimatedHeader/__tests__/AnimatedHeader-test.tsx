@@ -13,8 +13,9 @@ import '@testing-library/jest-dom';
 
 import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
 import {
+  headerTiles,
   tasksControllerConfigDropdown,
-  WorkspaceSelectorConfig,
+  workspaceSelectorConfig,
 } from '../__stories__/data';
 import { TasksControllerConfig } from '../components/TasksController/TasksController';
 
@@ -37,11 +38,14 @@ describe('AnimatedHeader', () => {
           tasksControllerConfig={
             tasksControllerConfigDropdown as TasksControllerConfig
           }
-          workspaceSelectorConfig={WorkspaceSelectorConfig}
+          workspaceSelectorConfig={workspaceSelectorConfig}
           description="Connect, monitor, and manage data."
           productName="[Product name]"
           userName="Drew"
           welcomeText="Welcome"
+          selectedTileGroup={headerTiles[0]}
+          setSelectedTileGroup={() => {}}
+          allTileGroups={headerTiles}
         />
       );
       expect(container).toMatchSnapshot();

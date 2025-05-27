@@ -457,8 +457,8 @@ export const Default = () => {
           </Theme>
           <Theme theme="g100">
             <SideNav
-              navType={SIDE_NAV_TYPE.PANEL}
               isChildOfHeader={false}
+              isRail
               hideOverlay
               aria-label="Product navigation">
               <SideNavItems>
@@ -889,6 +889,81 @@ export const SideNavWithThirdLevelIcons = () => (
   </SideNav>
 );
 SideNavWithThirdLevelIcons.storyName = 'SideNav With Third Level Icons';
+
+/**
+ * Story for SideNav panel
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const SideNavRail = () => (
+  <SideNav isRail isChildOfHeader={false} aria-label="Product navigation">
+    <SideNavItems>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavDivider />
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavDivider />
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+    </SideNavItems>
+  </SideNav>
+);
 
 /**
  * Story for SideNav panel

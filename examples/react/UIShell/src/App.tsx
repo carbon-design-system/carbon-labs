@@ -9,7 +9,6 @@
 
 import { useState, useRef } from 'react';
 import {
-  SIDE_NAV_TYPE,
   SideNav,
   SideNavItems,
   SideNavLink,
@@ -377,7 +376,7 @@ function App() {
             </Theme>
             <Theme theme="g100">
               <SideNav
-                navType={SIDE_NAV_TYPE.PANEL}
+                isRail
                 isChildOfHeader={false}
                 hideOverlay
                 aria-label="Side navigation">

@@ -48,6 +48,7 @@ import {
   Share,
   User,
   ShoppingCart,
+  Switcher,
 } from '@carbon/icons-react';
 
 const StoryContent = () => (
@@ -147,6 +148,7 @@ function App() {
               aria-expanded={isSideNavExpanded}
               isCollapsible //shows hamburger menu at desktop
               isFixedNav
+              renderMenuIcon={<Switcher size={20} />}
             />
             <HeaderName href="#" prefix="IBM">
               [Platform]

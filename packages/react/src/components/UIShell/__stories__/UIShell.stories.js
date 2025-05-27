@@ -208,6 +208,7 @@ export const Default = () => {
               aria-expanded={isSideNavExpanded}
               isCollapsible //shows hamburger menu at desktop
               isFixedNav
+              renderMenuIcon={<SwitcherIcon size={20} />}
             />
             <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
               [Platform]

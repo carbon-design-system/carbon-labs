@@ -13,7 +13,6 @@ import { SIDE_NAV_TYPE, SideNav } from '../components/SideNav';
 import { SideNavItems } from '../components/SideNavItems';
 import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
-import { HeaderPanel } from '../components/HeaderPanel';
 import { SideNavLink } from '../components/SideNavLink';
 import {
   HeaderPopover,
@@ -35,9 +34,6 @@ import {
   Column,
   HeaderGlobalBar,
   HeaderGlobalAction,
-  Switcher,
-  SwitcherItem,
-  SwitcherDivider,
   MenuButton,
   MenuItemRadioGroup,
   ExpandableSearch,

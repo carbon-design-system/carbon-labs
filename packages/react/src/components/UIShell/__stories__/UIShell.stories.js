@@ -202,7 +202,7 @@ export const Default = () => {
               onClick={onClickSideNavExpand}
               isActive={isSideNavExpanded}
               aria-expanded={isSideNavExpanded}
-              isCollapsible //shows hamburger menu at desktop
+              isCollapsible //shows menu at desktop
               isFixedNav
               renderMenuIcon={<SwitcherIcon size={20} />}
             />

@@ -197,12 +197,7 @@ export const Default = () => {
 
   return (
     <HeaderContainer
-      render={({
-        isSideNavExpanded,
-        isSwitcherExpanded,
-        onClickSideNavExpand,
-        onClickSwitcherExpand,
-      }) => (
+      render={({ isSideNavExpanded, onClickSideNavExpand }) => (
         <>
           <Header aria-label="IBM Platform Name" ref={headerRef}>
             <SkipToContent />
@@ -325,48 +320,7 @@ export const Default = () => {
                   </HeaderPopoverActions>
                 </HeaderPopoverContent>
               </HeaderPopover>
-              <HeaderGlobalAction
-                aria-label={
-                  isSwitcherExpanded ? 'Close switcher' : 'Open switcher'
-                }
-                aria-expanded={isSwitcherExpanded}
-                isActive={isSwitcherExpanded}
-                onClick={onClickSwitcherExpand}
-                tooltipAlignment="end"
-                tooltipHighContrast={false}
-                id="switcher-button">
-                <SwitcherIcon size={20} />
-              </HeaderGlobalAction>
             </HeaderGlobalBar>
-            <HeaderPanel
-              expanded={isSwitcherExpanded}
-              onHeaderPanelFocus={onClickSwitcherExpand}
-              href="#switcher-button">
-              <Switcher
-                aria-label="Switcher Container"
-                expanded={isSwitcherExpanded}>
-                <SwitcherItem aria-label="Link 1" href="#">
-                  Link 1
-                </SwitcherItem>
-                <SwitcherDivider />
-                <SwitcherItem href="#" aria-label="Link 2">
-                  Link 2
-                </SwitcherItem>
-                <SwitcherItem href="#" aria-label="Link 3">
-                  Link 3
-                </SwitcherItem>
-                <SwitcherItem href="#" aria-label="Link 4">
-                  Link 4
-                </SwitcherItem>
-                <SwitcherItem href="#" aria-label="Link 5">
-                  Link 5
-                </SwitcherItem>
-                <SwitcherDivider />
-                <SwitcherItem href="#" aria-label="Link 6">
-                  Link 6
-                </SwitcherItem>
-              </Switcher>
-            </HeaderPanel>
           </Header>
           <SideNav
             isTreeview={true}

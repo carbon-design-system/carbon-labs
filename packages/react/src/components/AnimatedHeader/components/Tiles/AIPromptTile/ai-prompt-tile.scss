@@ -23,6 +23,16 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
   text-decoration: none;
 }
 
+.#{$prefix}--disabled {
+  outline: 0;
+
+  * {
+    color: $text-disabled;
+    fill: $text-disabled;
+    pointer-events: none;
+  }
+}
+
 .#{$prefix}:hover,
 .#{$prefix}:active,
 .#{$prefix}:focus {
@@ -190,6 +200,11 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
 
 .#{$prefix}--custom-content {
   z-index: 4;
+}
+
+.#{$prefix}--loading-skeleton {
+  block-size: 100%;
+  inline-size: 100%;
 }
 
 @keyframes animate-border {

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.38.0...@carbon-labs/react-ui-shell@0.39.0) (2025-05-27)
+
+
+### Features
+
+* **uishell:** update to use rail instead of panel nav remove inline theme ([#617](https://github.com/carbon-design-system/carbon-labs/issues/617)) ([1f6da4b](https://github.com/carbon-design-system/carbon-labs/commit/1f6da4b9c34591ad2ec4b12c35d231c58473eaf1))
+
+
+
+
+
+# [0.38.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.37.0...@carbon-labs/react-ui-shell@0.38.0) (2025-05-21)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
 # [0.37.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.36.0...@carbon-labs/react-ui-shell@0.37.0) (2025-05-19)
 
 

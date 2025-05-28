@@ -10,13 +10,11 @@
 import React, { useState } from 'react';
 import './storybook.scss';
 import mdx from './WhatsNew.mdx';
-import {
-  PersonalizationInterstitial,
-  WelcomeInterstitial,
-} from './components/FirstTimeOrientation';
 import { InterstitialScreen, pkg } from '@carbon/ibm-products';
 import { Button } from '@carbon/react';
 import { ContentWrapper } from './components/FirstTimeOrientation/ContentWrapper';
+import { WelcomeInterstitial } from './components/FirstTimeOrientation/WelcomeInterstitial';
+import { PersonalizationInterstitial } from './components/FirstTimeOrientation/PersonalizationInterstitial';
 
 export default {
   title: 'Patterns/WhatsNew',

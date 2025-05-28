@@ -1,2 +1,2 @@
- export {PersonalizationInterstitial} from './PersonalizationInterstitial';
-export {WelcomeInterstitial} from './WelcomeInterstitial';
+export { PersonalizationInterstitial } from './PersonalizationInterstitial';
+export { WelcomeInterstitial } from './WelcomeInterstitial';

@@ -1,5 +1,3 @@
-
-
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/type' as *;
@@ -12,12 +10,12 @@ $prefix: 'clabs' !default;
 
 .#{$prefix}__wrapper {
   display: flex;
-  height: 100vh;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  block-size: 100vh;
 }
 .#{$prefix}__flexContainer {
-  height: 100%;
+  block-size: 100%;
   padding-inline-end: 0;
 }
 .#{$prefix}__interstitialTextContainer {
@@ -25,32 +23,35 @@ $prefix: 'clabs' !default;
 
   h3 {
     @include type-style('fluid-heading-05', true);
-    & span.blue-text {
+
+    span.blue-text {
       color: $interactive;
     }
+
+    p {
+      @include type-style('body-02');
+    }
+
     margin-block-end: $spacing-05;
   }
   &.#{$prefix}__firstTimeOrientation {
     h3 {
       @include type-style('heading-04', true);
     }
+
     h4 {
       @include type-style('heading-02', true);
+
       margin-block-end: $spacing-03;
     }
   }
 }
 .#{$prefix}__contentColumn {
-  padding-block-start: $spacing-10;
-  box-sizing: border-box;
   position: relative;
-}
-.#{$prefix}__interstitialTextContainer h3 {
-  p {
-    @include type-style('body-02');
-  }
+  box-sizing: border-box;
+  padding-block-start: $spacing-10;
 }
 
 img.#{$prefix}__interstitialImage {
-  width: 100%;
+  inline-size: 100%;
 }

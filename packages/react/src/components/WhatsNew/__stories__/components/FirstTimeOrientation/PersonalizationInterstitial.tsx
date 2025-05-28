@@ -68,18 +68,16 @@ const PersonalizationInterstitial = () => {
   return (
     <FlexGrid fullWidth className={`${prefix}__flexContainer`}>
       <Row>
-        <Column className= {`${prefix}__contentColumn`}>
-          <div className={`${prefix}__interstitialTextContainer ${prefix}__firstTimeOrientation`}>
+        <Column className={`${prefix}__contentColumn`}>
+          <div
+            className={`${prefix}__interstitialTextContainer ${prefix}__firstTimeOrientation`}>
             <h4>What experience interest you?</h4>
             <p>
               Personalize your experience by selecting all areas you want to
               explore.
             </p>
           </div>
-          <div
-            aria-label="Selectable tags"
-            role="group"
-            >
+          <div aria-label="Selectable tags" role="group">
             {tags.map((tag, index) => (
               <SelectableTag
                 key={index}

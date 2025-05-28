@@ -8,12 +8,12 @@
  */
 
 import React, { useState } from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { settings } from '@carbon-labs/utilities/es/index.js';
 import { Column, FlexGrid, Row, SelectableTag } from '@carbon/react';
 import './styles/_firstTimeOrientation.scss';
 
 const PersonalizationInterstitial = () => {
-  const prefix = usePrefix();
+  const prefix = settings.stablePrefix;
 
   const tags = [
     {

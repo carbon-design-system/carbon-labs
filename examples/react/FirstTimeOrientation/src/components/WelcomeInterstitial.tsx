@@ -8,13 +8,13 @@
  */
 
 import React from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { settings } from '@carbon-labs/utilities/es/index.js';
 import { Column, FlexGrid, Row } from '@carbon/react';
 import welcomeInterstitialImage from './assets/welcomeInterstitial.png';
 import './styles/_firstTimeOrientation.scss';
 
 const WelcomeInterstitial = () => {
-  const prefix = usePrefix();
+  const prefix =settings.stablePrefix;
   return (
     <FlexGrid fullWidth className={`${prefix}__flexContainer`}>
       <Row>

@@ -10,11 +10,8 @@
 import React, { useState } from 'react';
 import { InterstitialScreen, pkg } from '@carbon/ibm-products';
 import { Button } from '@carbon/react';
-import { ContentWrapper } from './components/FirstTimeOrientation/ContentWrapper';
-import {
-  PersonalizationInterstitial,
-  WelcomeInterstitial,
-} from './components/FirstTimeOrientation';
+import { ContentWrapper } from './components/ContentWrapper';
+import { PersonalizationInterstitial, WelcomeInterstitial } from './components';
 
 function App() {
   const [showInterstitialModal, setShowInterstitialModal] = useState(true);

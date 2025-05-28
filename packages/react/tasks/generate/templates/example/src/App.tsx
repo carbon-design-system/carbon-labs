@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { DISPLAY_NAME } from '@carbon-labs/react-STYLE_NAME';
+import { DISPLAY_NAME } from '@carbon-labs/react-STYLE_NAME/es/index';
 
 function App() {
   return <DISPLAY_NAME />;

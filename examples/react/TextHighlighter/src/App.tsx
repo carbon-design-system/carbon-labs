@@ -8,19 +8,10 @@
  */
 
 import React from 'react';
-import { TextHighlighter } from '@carbon-labs/react-text-highlighter';
+import { TextHighlighter } from '@carbon-labs/react-text-highlighter/es/index';
 
 function App() {
-  return (
-    <p>
-      This text is not highlighted
-      <TextHighlighter kind="mark" type="default">
-        {' '}
-        This is some highlighted text{' '}
-      </TextHighlighter>
-      This is also not highlighted
-    </p>
-  );
+  return <TextHighlighter />;
 }
 
 export default App;

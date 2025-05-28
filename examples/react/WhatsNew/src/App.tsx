@@ -30,7 +30,7 @@ import {
   TocSection,
   ViewStack,
   View,
-} from '@carbon-labs/react-whats-new';
+} from '@carbon-labs/react-whats-new/es/index';
 
 pkg.component.ScrollGradient = true;
 

@@ -8,21 +8,16 @@
  */
 
 import React, { useState } from 'react';
+import { AnimatedHeader } from '@carbon-labs/react-animated-header/es/index';
 import {
-  AnimatedHeader,
   watsonXAnimatedLight,
   watsonXStaticLight,
-} from '@carbon-labs/react-animated-header';
-
-import {
-  headerTiles,
-  workspaceData,
-  tasksConfigDropdown,
-} from './data/index.tsx';
+} from '@carbon-labs/react-animated-header/assets';
+import { headerTiles, workspaceData, tasksConfigDropdown } from './data';
 import {
   SelectedWorkspace,
   TileGroup,
-} from '@carbon-labs/react-animated-header/es/components/AnimatedHeader/AnimatedHeader.js';
+} from '@carbon-labs/react-animated-header/es/components/AnimatedHeader/AnimatedHeader';
 
 function App() {
   const [tiles] = useState(headerTiles);

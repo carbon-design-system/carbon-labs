@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { ExampleButton } from '@carbon-labs/react-example-button';
+import { ExampleButton } from '@carbon-labs/react-example-button/es/index';
 
 function App() {
   return <ExampleButton />;

@@ -4,6 +4,7 @@ import * as WhatsNewStories from './WhatsNew.stories.js';
 import * as TocStories from './Toc.stories';
 import * as ViewStackStories from './ViewStack.stories';
 import * as BubbleStories from './Bubble.stories';
+import * as FirstTimeOrientation from './FirstTimeOrientation.stories';
 import {
   Toc,
   TocList,
@@ -59,6 +60,7 @@ import {
   - [ViewStack API](#viewstack-api)
   - [Bubble API](#bubble-api)
 - [Example usages](#example-usages)
+- [First Time Orientation Pattern](#first-time-orienation)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
 
@@ -672,3 +674,15 @@ function App() {
 
 export default App;
 ```
+
+## FirstTimeOrienation
+First Time Orienation pattern is build using [InterstitialScreen](https://ibm-products.carbondesignsystem.com/?path=/docs/experimental-onboarding-interstitialscreen--docs&globals=theme:white;viewport:basic) component from @carbon/ibm-products. 
+
+### Stackblitz Examples
+[![Example](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/FirstTimeOrientation)
+
+### Usage
+
+<Canvas>
+  <Story of={FirstTimeOrientation.FirstTimeOrientationStory} />
+</Canvas>

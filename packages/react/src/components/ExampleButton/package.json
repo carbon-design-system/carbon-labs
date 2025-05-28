@@ -13,11 +13,11 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/ExampleButton"
   },
+  "types": "./es/index.d.ts",
   "exports": {
     ".": {
       "import": "./es/index.js",
-      "require": "./lib/index.js",
-      "type": "./es/index.d.ts"
+      "require": "./lib/index.js"
     },
     "./es/*": "./es/*",
     "./lib/*": "./lib/*",

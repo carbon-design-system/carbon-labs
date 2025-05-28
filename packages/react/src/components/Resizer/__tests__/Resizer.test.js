@@ -1,4 +1,5 @@
 // cspell:ignore resizer
+/* eslint-disable jsdoc/require-jsdoc, react/prop-types, react/forbid-dom-props */
 /**
  * @license
  *

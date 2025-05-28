@@ -13,9 +13,15 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/TextHighlighter"
   },
+  "types": "./es/index.d.ts",
   "exports": {
-    "import": "./es/index.js",
-    "require": "./lib/index.js"
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
   },
   "files": [
     "es",

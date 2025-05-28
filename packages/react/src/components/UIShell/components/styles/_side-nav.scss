@@ -348,8 +348,19 @@ div:has(.#{$prefix}--header)
 }
 
 //----------------------------------------------------------------------------
-// Side-nav Rail
+// Rail
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
   z-index: 7999; /* needs to be below header */
+}
+
+// allow overlay to display at all breakpoints
+.#{$prefix}--side-nav__overlay-active {
+  z-index: z('overlay');
+  background-color: $overlay;
+  block-size: 100vh;
+  inline-size: 100vw;
+  opacity: 1;
+  transition: opacity $transition-expansion $standard-easing,
+    background-color $transition-expansion $standard-easing;
 }

@@ -10,6 +10,7 @@
 
 $prefix: 'cds' !default;
 
+// Increases specificity to support shell components wrapped in a Theme component
 .#{$prefix}--side-nav--panel ~ .#{$prefix}--content,
 div:has(.#{$prefix}--side-nav--panel) ~ .#{$prefix}--content {
   margin-inline-start: convert.to-rem(48px);
@@ -21,4 +22,10 @@ div:has(.#{$prefix}--side-nav--panel) ~ .#{$prefix}--content {
 div:has(.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded)
   ~ .#{$prefix}--content {
   margin-inline-start: convert.to-rem(256px);
+}
+
+// should not be a grid influencer when used with overlay
+.#{$prefix}--side-nav--with-overlay.#{$prefix}--side-nav--expanded
+  ~ .#{$prefix}--content {
+  margin-inline-start: convert.to-rem(48px);
 }

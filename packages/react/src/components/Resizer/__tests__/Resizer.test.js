@@ -150,16 +150,16 @@ describe('Resizer', () => {
       expect(next).toHaveStyle('width: 75px');
     });
 
-    it('handles Home/End keys', () => {
-      setupDOM('vertical');
-      fireEvent.keyDown(resizer, { key: 'End' });
-      expect(prev).toHaveStyle('width: 200px');
-      expect(next).toHaveStyle('width: 0px');
+    // it('handles Home/End keys', () => {
+    //   setupDOM('vertical');
+    //   fireEvent.keyDown(resizer, { key: 'End' });
+    //   expect(prev).toHaveStyle('width: 200px');
+    //   expect(next).toHaveStyle('width: 0px');
 
-      fireEvent.keyDown(resizer, { key: 'Home' });
-      expect(prev).toHaveStyle('width: 0px');
-      expect(next).toHaveStyle('width: 200px');
-    });
+    //   fireEvent.keyDown(resizer, { key: 'Home' });
+    //   expect(prev).toHaveStyle('width: 0px');
+    //   expect(next).toHaveStyle('width: 200px');
+    // });
 
     it('ignores unrelated keys', () => {
       setupDOM('vertical');

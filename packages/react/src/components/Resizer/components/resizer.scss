@@ -4,13 +4,11 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
-// Carbon setting imports
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/colors' as *;
 @use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/motion' as *;
 @use '@carbon/styles/scss/components/button' as *;
-@use '@carbon/motion';
 
 $prefix: 'clabs' !default;
 
@@ -22,7 +20,7 @@ $prefix: 'clabs' !default;
   &:hover {
     @media (prefers-reduced-motion: no-preference) {
       background-color: $border-interactive;
-      transition: background-color motion.$duration-moderate-01;
+      transition: background-color $duration-moderate-01;
     }
   }
 
@@ -66,6 +64,6 @@ $prefix: 'clabs' !default;
 // add transitions to panel resizes
 .smooth-resize {
   @media (prefers-reduced-motion: no-preference) {
-    transition: all motion.$duration-moderate-01 linear;
+    transition: all $duration-moderate-01 linear;
   }
 }

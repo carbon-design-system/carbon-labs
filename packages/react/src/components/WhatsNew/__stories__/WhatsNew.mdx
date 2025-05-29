@@ -4,7 +4,7 @@ import * as WhatsNewStories from './WhatsNew.stories.js';
 import * as TocStories from './Toc.stories';
 import * as ViewStackStories from './ViewStack.stories';
 import * as BubbleStories from './Bubble.stories';
-import * as FirstTimeOrientation from './FirstTimeOrientation.stories';
+import  {FirstTimeOrientationStory} from './FirstTimeOrientation.stories.jsx';
 import {
   Toc,
   TocList,
@@ -675,7 +675,7 @@ function App() {
 export default App;
 ```
 
-## FirstTimeOrienation
+## First Time Orienation
 First Time Orienation pattern is build using [InterstitialScreen](https://ibm-products.carbondesignsystem.com/?path=/docs/experimental-onboarding-interstitialscreen--docs&globals=theme:white;viewport:basic) component from @carbon/ibm-products. 
 
 ### Stackblitz Examples
@@ -683,6 +683,6 @@ First Time Orienation pattern is build using [InterstitialScreen](https://ibm-pr
 
 ### Usage
 
-<Canvas>
-  <Story of={FirstTimeOrientation.FirstTimeOrientationStory} />
-</Canvas>
+
+<Canvas of={FirstTimeOrientationStory} />
+

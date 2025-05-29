@@ -37,7 +37,7 @@ export const FirstTimeOrientationStory = () => {
   pkg.component.InterstitialScreen = true;
 
   return (
-    <>
+    <div  className="storyBody">
       <Button
         onClick={() => {
           setShowInterstitialModal(true);
@@ -69,7 +69,7 @@ export const FirstTimeOrientationStory = () => {
         />
         <InterstitialScreen.Footer />
       </InterstitialScreen>
-    </>
+    </div>
   );
 };
 FirstTimeOrientationStory.storyName = 'First Time Orientation';

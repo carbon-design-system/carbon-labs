@@ -14,7 +14,7 @@ import welcomeInterstitialImage from './assets/welcomeInterstitial.png';
 import './styles/_firstTimeOrientation.scss';
 
 const WelcomeInterstitial = () => {
-  const prefix =settings.stablePrefix;
+  const prefix = settings.stablePrefix;
   return (
     <FlexGrid fullWidth className={`${prefix}__flexContainer`}>
       <Row>

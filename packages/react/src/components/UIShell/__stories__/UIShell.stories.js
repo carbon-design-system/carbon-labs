@@ -582,7 +582,11 @@ export const SideNavDoubleWideStory = () => (
     isChildOfHeader={false}
     aria-label="Side navigation">
     <SideNavItems>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary defaultExpanded>
+      <SideNavMenu
+        renderIcon={Fade}
+        title="Sub-menu level 1"
+        primary
+        defaultExpanded>
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
         </SideNavMenuItem>

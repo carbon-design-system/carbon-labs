@@ -5,7 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { CaretDown, ChevronDown } from '@carbon/icons-react';
+import {
+  CaretDown,
+  ChevronDown,
+  ChevronRight,
+  ArrowLeft,
+} from '@carbon/icons-react';
+import { breakpoints } from '@carbon/layout';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
@@ -18,13 +24,18 @@ import React, {
   useState,
 } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import { SideNavIcon } from '@carbon/react';
+import { SideNavIcon, Button } from '@carbon/react';
 import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
 import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
 import { SharkFinIcon } from './SharkFinIcon';
 import { SideNavFlyoutMenu } from './SideNavFlyoutMenu';
+import { SideNavItems } from './SideNavItems';
+
+import { useMatchMedia } from '../internal/useMatchMedia';
+const smMediaQuery = `(max-width: ${breakpoints.md.width})`;
+
 export interface SideNavMenuProps {
   /**
    * An optional CSS class to apply to the component.
@@ -74,6 +85,11 @@ export interface SideNavMenuProps {
   isSideNavExpanded?: boolean;
 
   /**
+   *  Specifices if it's the primary sidenav
+   */
+  primary?: boolean;
+
+  /**
    *  The boolean to show the flyout menu has been selected.
    */
   selected?: boolean;
@@ -102,6 +118,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       isSideNavExpanded,
       title,
       onMenuToggle,
+      primary,
     },
     ref: ForwardedRef<HTMLElement>
   ) {
@@ -116,8 +133,14 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
     const [prevExpanded, setPrevExpanded] = useState<boolean>(defaultExpanded);
 
+    const [isSecondaryOpen, setSecondaryOpen] =
+      useState<boolean>(defaultExpanded);
+    const { currentPrimaryMenu, setCurrentPrimaryMenu } =
+      useContext(SideNavContext);
+
     const className = cx({
       [`${prefix}--side-nav__item`]: true,
+      [`${prefix}--side-nav__item--primary`]: primary,
       [`${prefix}--side-nav__item--active`]:
         active || (hasActiveDescendant(children) && !isExpanded),
       [`${prefix}--side-nav__item--icon`]: IconElement,
@@ -129,6 +152,12 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       [`${prefix}--side-nav__submenu`]: true,
       [`${prefix}--side-nav__submenu--active`]:
         active || (hasActiveDescendant(children) && isExpanded),
+    });
+
+    const primaryClassNames = cx({
+      [`${prefix}--side-nav__menu-secondary-wrapper`]: true,
+      [`${prefix}--side-nav__menu-secondary-wrapper-expanded`]:
+        isSideNavExpanded && isSecondaryOpen && currentPrimaryMenu === title,
     });
 
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -323,6 +352,20 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       }
     }
 
+    useEffect(() => {
+      if (isExpanded && primary) {
+        setCurrentPrimaryMenu(title);
+      }
+
+      setSecondaryOpen(isExpanded);
+    }, [isExpanded]);
+
+    useEffect(() => {
+      if (currentPrimaryMenu !== title) {
+        setIsExpanded(false);
+      }
+    }, [currentPrimaryMenu]);
+
     // save expanded state before SideNav collapse
     const [lastExpandedState, setLastExpandedState] = useState(isExpanded);
 
@@ -337,6 +380,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }, [sideNavExpanded]);
 
     const [openPopover, setOpenPopover] = React.useState(false);
+
+    const isSm = useMatchMedia(smMediaQuery);
 
     const content = (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
@@ -386,9 +431,30 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           )}
           <span className={`${prefix}--side-nav__submenu-title`}>{title}</span>
           <SideNavIcon className={`${prefix}--side-nav__submenu-chevron`} small>
-            <ChevronDown size={20} />
+            {primary ? <ChevronRight size={20} /> : <ChevronDown size={20} />}
           </SideNavIcon>
         </button>
+
+        {primary && (
+          <div className={primaryClassNames}>
+            <SideNavItems
+              accessibilityLabel={{ 'aria-label': `${title} submenu` }}>
+              {isSm && (
+                <Button
+                kind="ghost"
+                  onClick={() => setIsExpanded(false)}
+                  className={`${prefix}--side-nav__back-button`}
+                  renderIcon={() => (
+                    <ArrowLeft size={16} aria-label="Arrow left" />
+                  )}>
+                  My products
+                </Button>
+              )}
+              {childrenToRender}
+            </SideNavItems>
+          </div>
+        )}
+
         <ul className={`${prefix}--side-nav__menu`} role="group">
           {childrenToRender}
         </ul>

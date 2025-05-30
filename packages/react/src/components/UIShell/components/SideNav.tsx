@@ -84,6 +84,8 @@ interface SideNavContextData {
   navType?: SIDE_NAV_TYPE;
   isTreeview?: boolean;
   setIsTreeview?: (value: boolean) => void;
+  currentPrimaryMenu?: string;
+  setCurrentPrimaryMenu?: (value: string) => void;
 }
 
 export const SideNavContext = createContext<SideNavContextData>(
@@ -129,6 +131,7 @@ function SideNavRenderFunction(
   const expanded = controlled ? expandedProp : expandedState;
   const sideNavRef = useRef<HTMLDivElement>(null);
   const navRef = useMergedRefs([sideNavRef, ref]);
+  const [currentPrimaryMenu, setCurrentPrimaryMenu] = useState<string | undefined>();
 
   const sideNavToggleText = expandedState
     ? t('collapse.sidenav')
@@ -244,7 +247,15 @@ function SideNavRenderFunction(
       ) as HTMLElement;
 
       if (firstElement && (navType == SIDE_NAV_TYPE.PANEL || expanded)) {
-        firstElement.tabIndex = 0;
+        const parentHasPrimary = firstElement.parentElement.classList.contains('cds--side-nav__item--primary');
+        const hasSubMemu = firstElement.nextElementSibling.querySelector(
+          'a, button'
+        ) as HTMLElement;
+        if(parentHasPrimary && hasSubMemu){
+          hasSubMemu.tabIndex = 0;
+        } else {
+          firstElement.tabIndex = 0;
+        }
       }
     }
   }, [expanded]);
@@ -525,6 +536,8 @@ function SideNavRenderFunction(
         navType,
         isTreeview: internalIsTreeview,
         setIsTreeview,
+        currentPrimaryMenu,
+        setCurrentPrimaryMenu,
       }}>
       {isFixedNav || hideOverlay ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions

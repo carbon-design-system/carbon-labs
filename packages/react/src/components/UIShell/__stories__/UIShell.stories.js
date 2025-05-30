@@ -328,7 +328,11 @@ export const Default = () => {
             hideOverlay
             className="nav--global">
             <SideNavItems>
-              <SideNavMenu renderIcon={CarbonDesignSystem} title="Product 1">
+              <SideNavMenu
+                renderIcon={CarbonDesignSystem}
+                title="Product 1"
+                primary
+                defaultExpanded>
                 <SideNavMenu renderIcon={Home} title="Home">
                   <SideNavMenuItem href="http://www.carbondesignsystem.com">
                     Item level 3
@@ -367,21 +371,27 @@ export const Default = () => {
                   </SideNavMenuItem>
                 </SideNavMenu>
               </SideNavMenu>
-              <SideNavMenu renderIcon={CarbonIBMDotCom} title="Product 2">
+              <SideNavMenu
+                renderIcon={CarbonIBMDotCom}
+                title="Product 2"
+                primary>
                 <SideNavMenuItem
                   renderIcon={Home}
                   href="http://www.carbondesignsystem.com">
                   Link
                 </SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={CarbonforIBMProducts} title="Product 3">
+              <SideNavMenu
+                renderIcon={CarbonforIBMProducts}
+                title="Product 3"
+                primary>
                 <SideNavMenuItem
                   renderIcon={Home}
                   href="http://www.carbondesignsystem.com">
                   Link
                 </SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={IBMTelemetry} title="Product 4">
+              <SideNavMenu renderIcon={IBMTelemetry} title="Product 4" primary>
                 <SideNavMenuItem
                   renderIcon={Home}
                   href="http://www.carbondesignsystem.com">
@@ -507,7 +517,7 @@ export const SideNavStory = () => (
     isChildOfHeader={false}
     aria-label="Side navigation">
     <SideNavItems>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
         </SideNavMenuItem>
@@ -518,22 +528,22 @@ export const SideNavStory = () => (
           Link
         </SideNavMenuItem>
       </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
         </SideNavMenuItem>
       </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
         </SideNavMenuItem>
       </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
         </SideNavMenuItem>
       </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
         </SideNavMenuItem>
@@ -545,7 +555,7 @@ export const SideNavStory = () => (
       <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
         Link
       </SideNavLink>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
         </SideNavMenuItem>

@@ -517,7 +517,72 @@ export const SideNavStory = () => (
     isChildOfHeader={false}
     aria-label="Side navigation">
     <SideNavItems>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavDivider />
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Link
+        </SideNavMenuItem>
+      </SideNavMenu>
+    </SideNavItems>
+  </SideNav>
+);
+SideNavStory.storyName = 'SideNav';
+
+/**
+ * Story for SideNavDoublewide
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const SideNavDoubleWideStory = () => (
+  <SideNav
+    isFixedNav
+    expanded
+    isChildOfHeader={false}
+    aria-label="Side navigation">
+    <SideNavItems>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary defaultExpanded>
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
         </SideNavMenuItem>
@@ -569,7 +634,7 @@ export const SideNavStory = () => (
     </SideNavItems>
   </SideNav>
 );
-SideNavStory.storyName = 'SideNav';
+SideNavDoubleWideStory.storyName = 'SideNav with Double Wide';
 
 /**
  * Story for SideNav w/TreeView

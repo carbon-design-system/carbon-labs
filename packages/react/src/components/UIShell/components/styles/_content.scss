@@ -27,5 +27,5 @@ div:has(.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded)
 // should not be a grid influencer when used with overlay
 .#{$prefix}--side-nav--with-overlay.#{$prefix}--side-nav--expanded
   ~ .#{$prefix}--content {
-  margin-inline-start: convert.to-rem(48px);
+  margin-inline-start: $spacing-09;
 }

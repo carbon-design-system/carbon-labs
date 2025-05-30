@@ -14,7 +14,7 @@ $prefix: 'cds' !default;
 // Increases specificity to support shell components wrapped in a Theme component
 .#{$prefix}--side-nav--panel ~ .#{$prefix}--content,
 div:has(.#{$prefix}--side-nav--panel) ~ .#{$prefix}--content {
-  margin-inline-start: convert.to-rem(48px);
+  margin-inline-start: $spacing-09;
   transition: margin-inline-start $duration-fast-02, transform $duration-fast-02;
 }
 

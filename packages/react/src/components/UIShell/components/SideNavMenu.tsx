@@ -24,6 +24,7 @@ import React, {
   useState,
 } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
+import { useId } from '../internal/useId';
 import { SideNavIcon, Button } from '@carbon/react';
 import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
@@ -67,6 +68,11 @@ export interface SideNavMenuProps {
    * SideNavMenu depth to determine spacing
    */
   depth?: number;
+
+  /**
+   * Provide a unique id
+   */
+  id?: string;
 
   /**
    * Indicates whether the SideNavMenu is active.
@@ -126,6 +132,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       children,
       defaultExpanded = false,
       depth: propDepth,
+      id,
       isActive = false,
       large = false,
       renderIcon: IconElement,
@@ -144,6 +151,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
     const [active, setActive] = useState<boolean>(isActive);
     const firstLink = useRef<string | null>(null);
+    const uid = useId('side-nav-menu');
+    const uniqueId = id || uid;
 
     const [prevExpanded, setPrevExpanded] = useState<boolean>(defaultExpanded);
 
@@ -171,7 +180,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const primaryClassNames = cx({
       [`${prefix}--side-nav__menu-secondary-wrapper`]: true,
       [`${prefix}--side-nav__menu-secondary-wrapper-expanded`]:
-        isSideNavExpanded && isSecondaryOpen && currentPrimaryMenu === title,
+        isSideNavExpanded && isSecondaryOpen && currentPrimaryMenu === uniqueId,
     });
 
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -368,14 +377,14 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
     useEffect(() => {
       if (isExpanded && primary && setCurrentPrimaryMenu) {
-        setCurrentPrimaryMenu(title);
+        setCurrentPrimaryMenu(uniqueId);
       }
 
       setSecondaryOpen(isExpanded);
     }, [isExpanded]);
 
     useEffect(() => {
-      if (currentPrimaryMenu !== title) {
+      if (currentPrimaryMenu !== uniqueId) {
         setIsExpanded(false);
       }
     }, [currentPrimaryMenu]);
@@ -521,6 +530,11 @@ SideNavMenu.propTypes = {
    * SideNavMenu depth to determine spacing
    */
   depth: PropTypes.number,
+
+  /**
+   * Provide a unique id
+   */
+  id: PropTypes.string,
 
   /**
    * Specify whether the `SideNavMenu` is "active". `SideNavMenu` should be

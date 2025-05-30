@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/mdx-components",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -13,16 +13,8 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/MDXComponents"
   },
-  "types": "./es/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./es/index.js",
-      "require": "./lib/index.js"
-    },
-    "./es/*": "./es/*",
-    "./lib/*": "./lib/*",
-    "./scss/*": "./scss/*"
-  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
   "files": [
     "es",
     "lib",

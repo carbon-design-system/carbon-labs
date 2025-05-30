@@ -45,6 +45,7 @@ export interface SideNavMenuProps {
 
   /**
    * A custom icon to render on the back button in sm screen
+   * default is ArrowLeft
    */
   backButtonRenderIcon?: React.ComponentType;
 
@@ -101,7 +102,9 @@ export interface SideNavMenuProps {
   isSideNavExpanded?: boolean;
 
   /**
-   *  Specifices if it's the primary sidenav
+   * Specifies if this is the primary SideNav.
+   * If true, child components will open to the right,
+   * creating the double-wide navigation layout
    */
   primary?: boolean;
 

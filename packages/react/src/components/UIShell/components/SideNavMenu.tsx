@@ -5,7 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { CaretDown, ChevronDown } from '@carbon/icons-react';
+import {
+  CaretDown,
+  ChevronDown,
+  ChevronRight,
+  ArrowLeft,
+} from '@carbon/icons-react';
+import { breakpoints } from '@carbon/layout';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, {
@@ -18,14 +24,31 @@ import React, {
   useState,
 } from 'react';
 import { CARBON_SIDENAV_ITEMS } from './_utils';
-import { SideNavIcon } from '@carbon/react';
+import { useId } from '../internal/useId';
+import { SideNavIcon, Button } from '@carbon/react';
 import { keys, match } from '../internal/keyboard';
 import { usePrefix } from '../internal/usePrefix';
 import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { useMergedRefs } from '../internal/useMergedRefs';
 import { SharkFinIcon } from './SharkFinIcon';
 import { SideNavFlyoutMenu } from './SideNavFlyoutMenu';
+import { SideNavItems } from './SideNavItems';
+
+import { useMatchMedia } from '../internal/useMatchMedia';
+const smMediaQuery = `(max-width: ${breakpoints.md.width})`;
+
 export interface SideNavMenuProps {
+  /**
+   * Title for back button in sm screen
+   */
+  backButtonTitle?: string;
+
+  /**
+   * A custom icon to render on the back button in sm screen
+   * default is ArrowLeft
+   */
+  backButtonRenderIcon?: React.ComponentType;
+
   /**
    * An optional CSS class to apply to the component.
    */
@@ -46,6 +69,11 @@ export interface SideNavMenuProps {
    * SideNavMenu depth to determine spacing
    */
   depth?: number;
+
+  /**
+   * Provide a unique id
+   */
+  id?: string;
 
   /**
    * Indicates whether the SideNavMenu is active.
@@ -74,6 +102,13 @@ export interface SideNavMenuProps {
   isSideNavExpanded?: boolean;
 
   /**
+   * Specifies if this is the primary SideNav.
+   * If true, child components will open to the right,
+   * creating the double-wide navigation layout
+   */
+  primary?: boolean;
+
+  /**
    *  The boolean to show the flyout menu has been selected.
    */
   selected?: boolean;
@@ -92,16 +127,22 @@ export interface SideNavMenuProps {
 export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
   function SideNavMenu(
     {
+      backButtonRenderIcon = () => (
+        <ArrowLeft size={16} aria-label="Arrow left" />
+      ),
+      backButtonTitle = 'My products',
       className: customClassName,
       children,
       defaultExpanded = false,
       depth: propDepth,
+      id,
       isActive = false,
       large = false,
       renderIcon: IconElement,
       isSideNavExpanded,
       title,
       onMenuToggle,
+      primary,
     },
     ref: ForwardedRef<HTMLElement>
   ) {
@@ -113,11 +154,19 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
     const [active, setActive] = useState<boolean>(isActive);
     const firstLink = useRef<string | null>(null);
+    const uid = useId('side-nav-menu');
+    const uniqueId = id || uid;
 
     const [prevExpanded, setPrevExpanded] = useState<boolean>(defaultExpanded);
 
+    const [isSecondaryOpen, setSecondaryOpen] =
+      useState<boolean>(defaultExpanded);
+    const { currentPrimaryMenu, setCurrentPrimaryMenu } =
+      useContext(SideNavContext);
+
     const className = cx({
       [`${prefix}--side-nav__item`]: true,
+      [`${prefix}--side-nav__item--primary`]: primary,
       [`${prefix}--side-nav__item--active`]:
         active || (hasActiveDescendant(children) && !isExpanded),
       [`${prefix}--side-nav__item--icon`]: IconElement,
@@ -129,6 +178,12 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       [`${prefix}--side-nav__submenu`]: true,
       [`${prefix}--side-nav__submenu--active`]:
         active || (hasActiveDescendant(children) && isExpanded),
+    });
+
+    const primaryClassNames = cx({
+      [`${prefix}--side-nav__menu-secondary-wrapper`]: true,
+      [`${prefix}--side-nav__menu-secondary-wrapper-expanded`]:
+        isSideNavExpanded && isSecondaryOpen && currentPrimaryMenu === uniqueId,
     });
 
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -323,6 +378,20 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       }
     }
 
+    useEffect(() => {
+      if (isExpanded && primary && setCurrentPrimaryMenu) {
+        setCurrentPrimaryMenu(uniqueId);
+      }
+
+      setSecondaryOpen(isExpanded);
+    }, [isExpanded]);
+
+    useEffect(() => {
+      if (currentPrimaryMenu !== uniqueId) {
+        setIsExpanded(false);
+      }
+    }, [currentPrimaryMenu]);
+
     // save expanded state before SideNav collapse
     const [lastExpandedState, setLastExpandedState] = useState(isExpanded);
 
@@ -337,6 +406,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }, [sideNavExpanded]);
 
     const [openPopover, setOpenPopover] = React.useState(false);
+
+    const isSm = useMatchMedia(smMediaQuery);
 
     const content = (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
@@ -386,9 +457,28 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           )}
           <span className={`${prefix}--side-nav__submenu-title`}>{title}</span>
           <SideNavIcon className={`${prefix}--side-nav__submenu-chevron`} small>
-            <ChevronDown size={20} />
+            {primary ? <ChevronRight size={20} /> : <ChevronDown size={20} />}
           </SideNavIcon>
         </button>
+
+        {primary && (
+          <div className={primaryClassNames}>
+            <SideNavItems
+              accessibilityLabel={{ 'aria-label': `${title} submenu` }}>
+              {isSm && (
+                <Button
+                  kind="ghost"
+                  onClick={() => setIsExpanded(false)}
+                  className={`${prefix}--side-nav__back-button`}
+                  renderIcon={backButtonRenderIcon}>
+                  {backButtonTitle}
+                </Button>
+              )}
+              {childrenToRender}
+            </SideNavItems>
+          </div>
+        )}
+
         <ul className={`${prefix}--side-nav__menu`} role="group">
           {childrenToRender}
         </ul>
@@ -412,6 +502,17 @@ SideNavMenu.displayName = 'SideNavMenu';
 
 SideNavMenu.propTypes = {
   /**
+   * A custom icon to render on the back button in sm screen
+   */
+  // @ts-expect-error - PropTypes are unable to cover this case.
+  backButtonRenderIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+
+  /**
+   * Title for back button in sm screen
+   */
+  backButtonTitle: PropTypes.string,
+
+  /**
    * Provide <SideNavMenuItem>'s inside of the `SideNavMenu`
    */
   children: PropTypes.node as unknown as React.Validator<React.ReactNode>,
@@ -432,6 +533,11 @@ SideNavMenu.propTypes = {
    * SideNavMenu depth to determine spacing
    */
   depth: PropTypes.number,
+
+  /**
+   * Provide a unique id
+   */
+  id: PropTypes.string,
 
   /**
    * Specify whether the `SideNavMenu` is "active". `SideNavMenu` should be

@@ -269,7 +269,7 @@ function App() {
             onSideNavBlur={onClickSideNavExpand}
             isCollapsible
             isTreeview
-            hideOverlay
+            onOverlayClick={onClickSideNavExpand}
             className="nav--global">
             <SideNavItems>
               <SideNavMenu renderIcon={SquareOutline} title="Sub-menu level 1">
@@ -313,11 +313,7 @@ function App() {
               </SideNavMenu>
             </SideNavItems>
           </SideNav>
-          <SideNav
-            isRail
-            isChildOfHeader={false}
-            hideOverlay
-            aria-label="Side navigation">
+          <SideNav isRail isChildOfHeader={false} aria-label="Side navigation">
             <SideNavItems>
               <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
                 <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>

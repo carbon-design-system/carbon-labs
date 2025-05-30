@@ -325,7 +325,7 @@ export const Default = () => {
             expanded={isSideNavExpanded}
             onSideNavBlur={onClickSideNavExpand}
             isCollapsible
-            hideOverlay
+            onOverlayClick={onClickSideNavExpand}
             className="nav--global">
             <SideNavItems>
               <SideNavMenu renderIcon={CarbonDesignSystem} title="Product 1">
@@ -404,7 +404,6 @@ export const Default = () => {
           <SideNav
             isChildOfHeader={false}
             isRail
-            hideOverlay
             aria-label="Product navigation">
             <SideNavItems>
               <SideNavMenu renderIcon={Home} title="Home">
@@ -649,7 +648,11 @@ SideNavWithThirdLevelIcons.storyName = 'SideNav With Third Level Icons';
  * @returns {React.ReactElement} The JSX for the story
  */
 export const SideNavRail = () => (
-  <SideNav isRail isChildOfHeader={false} aria-label="Product navigation">
+  <SideNav
+    isRail
+    hideOverlay
+    isChildOfHeader={false}
+    aria-label="Product navigation">
     <SideNavItems>
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
@@ -728,6 +731,7 @@ export const SideNavPanel = () => (
     <SideNav
       navType={SIDE_NAV_TYPE.PANEL}
       isChildOfHeader={false}
+      hideOverlay
       aria-label="Product navigation">
       <SideNavItems>
         <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">

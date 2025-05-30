@@ -354,7 +354,7 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav--rail {
   z-index: 7999; /* needs to be below header */
 
-  @include breakpoint-down('lg') {
+  @include breakpoint-down('md') {
     display: none;
   }
 }

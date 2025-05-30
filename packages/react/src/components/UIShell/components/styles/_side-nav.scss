@@ -9,6 +9,7 @@
 @use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 @use '@carbon/styles/scss/utilities/button-reset' as button-reset;
 @use '@carbon/styles/scss/utilities/focus-outline' as *;
+@use '@carbon/styles/scss/breakpoint' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/motion' as *;
 @use '@carbon/styles/scss/type' as *;
@@ -352,6 +353,10 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
   z-index: 7999; /* needs to be below header */
+
+  @include breakpoint-down('lg') {
+    display: none;
+  }
 }
 
 // allow overlay to display at all breakpoints

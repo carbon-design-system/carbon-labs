@@ -38,6 +38,16 @@ const smMediaQuery = `(max-width: ${breakpoints.md.width})`;
 
 export interface SideNavMenuProps {
   /**
+   * Title for back button in sm screen
+   */
+  backButtonTitle?: string;
+
+  /**
+   * A custom icon to render on the back button in sm screen
+   */
+  backButtonRenderIcon?: React.ComponentType;
+
+  /**
    * An optional CSS class to apply to the component.
    */
   className?: string;
@@ -108,6 +118,10 @@ export interface SideNavMenuProps {
 export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
   function SideNavMenu(
     {
+      backButtonRenderIcon = () => (
+        <ArrowLeft size={16} aria-label="Arrow left" />
+      ),
+      backButtonTitle = 'My products',
       className: customClassName,
       children,
       defaultExpanded = false,
@@ -353,7 +367,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }
 
     useEffect(() => {
-      if (isExpanded && primary) {
+      if (isExpanded && primary && setCurrentPrimaryMenu) {
         setCurrentPrimaryMenu(title);
       }
 
@@ -441,13 +455,11 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               accessibilityLabel={{ 'aria-label': `${title} submenu` }}>
               {isSm && (
                 <Button
-                kind="ghost"
+                  kind="ghost"
                   onClick={() => setIsExpanded(false)}
                   className={`${prefix}--side-nav__back-button`}
-                  renderIcon={() => (
-                    <ArrowLeft size={16} aria-label="Arrow left" />
-                  )}>
-                  My products
+                  renderIcon={backButtonRenderIcon}>
+                  {backButtonTitle}
                 </Button>
               )}
               {childrenToRender}
@@ -477,6 +489,17 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 SideNavMenu.displayName = 'SideNavMenu';
 
 SideNavMenu.propTypes = {
+  /**
+   * A custom icon to render on the back button in sm screen
+   */
+  // @ts-expect-error - PropTypes are unable to cover this case.
+  backButtonRenderIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+
+  /**
+   * Title for back button in sm screen
+   */
+  backButtonTitle: PropTypes.string,
+
   /**
    * Provide <SideNavMenuItem>'s inside of the `SideNavMenu`
    */

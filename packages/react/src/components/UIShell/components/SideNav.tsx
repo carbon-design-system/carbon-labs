@@ -131,7 +131,9 @@ function SideNavRenderFunction(
   const expanded = controlled ? expandedProp : expandedState;
   const sideNavRef = useRef<HTMLDivElement>(null);
   const navRef = useMergedRefs([sideNavRef, ref]);
-  const [currentPrimaryMenu, setCurrentPrimaryMenu] = useState<string | undefined>();
+  const [currentPrimaryMenu, setCurrentPrimaryMenu] = useState<
+    string | undefined
+  >();
 
   const sideNavToggleText = expandedState
     ? t('collapse.sidenav')
@@ -247,11 +249,13 @@ function SideNavRenderFunction(
       ) as HTMLElement;
 
       if (firstElement && (navType == SIDE_NAV_TYPE.PANEL || expanded)) {
-        const parentHasPrimary = firstElement.parentElement.classList.contains('cds--side-nav__item--primary');
-        const hasSubMemu = firstElement.nextElementSibling.querySelector(
+        const parentHasPrimary = firstElement.parentElement?.classList.contains(
+          `${prefix}--side-nav__item--primary`
+        );
+        const hasSubMemu = firstElement.nextElementSibling?.querySelector(
           'a, button'
         ) as HTMLElement;
-        if(parentHasPrimary && hasSubMemu){
+        if (parentHasPrimary && hasSubMemu) {
           hasSubMemu.tabIndex = 0;
         } else {
           firstElement.tabIndex = 0;

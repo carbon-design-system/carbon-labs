@@ -114,6 +114,13 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-09;
 }
 
+// with icon inside primary menu (double wide)
+.#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  .cds--side-nav__menu-secondary-wrapper
+  a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+  padding-inline-start: $spacing-05;
+}
+
 // Level 3
 // without icon parent
 .#{$prefix}--side-nav__menu

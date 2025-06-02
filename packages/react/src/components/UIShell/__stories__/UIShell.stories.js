@@ -624,54 +624,41 @@ export const SideNavDoubleWideStory = () => (
         title="Sub-menu level 1"
         primary
         defaultExpanded>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
+        <SideNavMenu renderIcon={Fade} title="Sub-menu level 2">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 3
+          </SideNavMenuItem>
+        </SideNavMenu>
+        <SideNavMenuItem
+          renderIcon={Fade}
+          href="http://www.carbondesignsystem.com">
+          Item level 2
         </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
+        <SideNavMenuItem
+          renderIcon={Fade}
+          href="http://www.carbondesignsystem.com">
+          Item level 2
         </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
+        <SideNavMenuItem
+          renderIcon={Fade}
+          href="http://www.carbondesignsystem.com">
+          Item level 2
         </SideNavMenuItem>
       </SideNavMenu>
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
+        <SideNavMenuItem
+          renderIcon={Fade}
+          href="http://www.carbondesignsystem.com">
+          Item level 2
         </SideNavMenuItem>
       </SideNavMenu>
       <SideNavDivider />
       <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link
+        Link level 1
       </SideNavLink>
       <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link
+        Link level 1
       </SideNavLink>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-      </SideNavMenu>
     </SideNavItems>
   </SideNav>
 );

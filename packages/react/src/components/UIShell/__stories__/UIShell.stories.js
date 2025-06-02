@@ -337,39 +337,77 @@ export const Default = () => {
                   <SideNavMenuItem href="http://www.carbondesignsystem.com">
                     Item level 3
                   </SideNavMenuItem>
-                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                  <SideNavMenuItem
+                    isActive
+                    href="http://www.carbondesignsystem.com">
                     Item level 3
                   </SideNavMenuItem>
                   <SideNavMenuItem href="http://www.carbondesignsystem.com">
                     Item level 3
                   </SideNavMenuItem>
                 </SideNavMenu>
-                <SideNavMenuItem
+                <SideNavLink
                   href="http://www.carbondesignsystem.com"
                   renderIcon={BusinessProcesses}>
                   Business
-                </SideNavMenuItem>
-                <SideNavMenuItem
+                </SideNavLink>
+                <SideNavLink
                   href="http://www.carbondesignsystem.com"
                   renderIcon={Application}>
                   Applications
-                </SideNavMenuItem>
-                <SideNavMenuItem
+                </SideNavLink>
+                <SideNavLink
                   href="http://www.carbondesignsystem.com"
                   renderIcon={Platforms}>
                   Platforms
-                </SideNavMenuItem>
-                <SideNavMenu renderIcon={Layers} title="Infrastructure">
-                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                    Item level 3
-                  </SideNavMenuItem>
-                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                    Item level 3
-                  </SideNavMenuItem>
-                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                    Item level 3
-                  </SideNavMenuItem>
-                </SideNavMenu>
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Layers}>
+                  Infrastructure
+                </SideNavLink>
+                <SideNavDivider />
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Dashboard}>
+                  Dashboard
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={DataAnalytics}>
+                  Analytics
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={EventIncident}>
+                  Incidents
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Security}>
+                  Security
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={WorkflowAutomation}>
+                  Automations
+                </SideNavLink>
+                <SideNavDivider />
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={DocumentMultiple_01}>
+                  Docs
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Settings}>
+                  Settings
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={OverflowMenuVertical}>
+                  More
+                </SideNavLink>
               </SideNavMenu>
               <SideNavMenu
                 renderIcon={CarbonIBMDotCom}
@@ -378,7 +416,7 @@ export const Default = () => {
                 <SideNavMenuItem
                   renderIcon={Home}
                   href="http://www.carbondesignsystem.com">
-                  Link
+                  Home product 2
                 </SideNavMenuItem>
               </SideNavMenu>
               <SideNavMenu
@@ -388,14 +426,14 @@ export const Default = () => {
                 <SideNavMenuItem
                   renderIcon={Home}
                   href="http://www.carbondesignsystem.com">
-                  Link
+                  Home product 3
                 </SideNavMenuItem>
               </SideNavMenu>
               <SideNavMenu renderIcon={IBMTelemetry} title="Product 4" primary>
                 <SideNavMenuItem
                   renderIcon={Home}
                   href="http://www.carbondesignsystem.com">
-                  Link
+                  Home product 4
                 </SideNavMenuItem>
               </SideNavMenu>
               <SideNavDivider />

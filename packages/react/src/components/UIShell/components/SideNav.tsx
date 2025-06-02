@@ -605,6 +605,7 @@ SideNav.propTypes = {
   /**
    * Specify the breakpoint at which the SideNav will be hidden.
    * Can be one of `sm`, `md`, `lg`, `xlg`, or `max`.
+   * Only applies when `isRail` is `true`.
    */
   hideOnBreakpoint: PropTypes.oneOf(['sm', 'md', 'lg', 'xlg', 'max']),
 

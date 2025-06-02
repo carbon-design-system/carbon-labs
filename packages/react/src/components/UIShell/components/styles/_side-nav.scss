@@ -402,7 +402,7 @@ div:has(.#{$prefix}--header)
     inset-inline-start: 0;
   }
 
-  .#{$prefix}--side-nav__back-button {
+  .#{$prefix}--side-nav__back-button.cds--btn--ghost {
     flex-direction: row-reverse;
     justify-content: flex-end;
     gap: 1rem;
@@ -414,7 +414,7 @@ div:has(.#{$prefix}--header)
     }
   }
 
-  .#{$prefix}--side-nav__back-button:not([disabled]) {
+  .#{$prefix}--side-nav__back-button.cds--btn--ghost:not([disabled]) {
     svg {
       align-self: center;
       fill: $icon-interactive;

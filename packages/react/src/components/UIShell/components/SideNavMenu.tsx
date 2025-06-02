@@ -127,9 +127,7 @@ export interface SideNavMenuProps {
 export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
   function SideNavMenu(
     {
-      backButtonRenderIcon = () => (
-        <ArrowLeft size={16} />
-      ),
+      backButtonRenderIcon = () => <ArrowLeft size={16} />,
       backButtonTitle = 'My products',
       className: customClassName,
       children,

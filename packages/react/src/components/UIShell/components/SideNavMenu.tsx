@@ -330,8 +330,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               if (onMenuToggle) {
                 onMenuToggle();
               }
-              setIsExpanded(false);
-
+              if(!primary && isExpanded){
+                setIsExpanded(false);
+              }
               // go to previous level's side nav menu button
             } else {
               // since we're in a menu, it finds its own <li>, we go up one more
@@ -387,6 +388,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     useEffect(() => {
       if (currentPrimaryMenu !== uniqueId) {
         setIsExpanded(false);
+      } else {
+        setIsExpanded(true)
       }
     }, [currentPrimaryMenu]);
 
@@ -414,7 +417,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         aria-expanded={isExpanded}
         className={className}
         ref={listRef}
-        onKeyDown={handleKeyDown}>
+        onKeyDown={handleKeyDown}
+        id={uniqueId}>
         <button
           aria-expanded={isExpanded}
           className={buttonClassName}

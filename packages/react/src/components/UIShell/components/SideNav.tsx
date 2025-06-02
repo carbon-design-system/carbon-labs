@@ -363,8 +363,14 @@ function SideNavRenderFunction(
               previousSideNavMenu?.previousElementSibling as HTMLElement;
           }
 
-          // when previous sibling is open, go to its last item
-          if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
+          if ((treeWalker.currentNode as HTMLElement).classList.contains(
+            `${prefix}--side-nav__item--primary`
+          )) {
+            nextFocusNode = treeWalker.currentNode.previousSibling;
+            setCurrentPrimaryMenu((nextFocusNode as HTMLElement).id)
+
+          } // when previous sibling is open, go to its last item
+          else if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
             const allItems = previousSideNavMenu.querySelectorAll(
               `.${prefix}--side-nav__item`
             );
@@ -400,6 +406,11 @@ function SideNavRenderFunction(
               ) as HTMLElement;
               nextFocusNode = parent?.nextElementSibling;
             }
+          } else if ((treeWalker.currentNode as HTMLElement).classList.contains(
+            `${prefix}--side-nav__item--primary`
+          )) {
+            nextFocusNode = treeWalker.currentNode.nextSibling;
+            setCurrentPrimaryMenu((nextFocusNode as HTMLElement).id)
           } else {
             nextFocusNode = treeWalker.nextNode();
           }

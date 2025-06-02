@@ -356,7 +356,7 @@ div:has(.#{$prefix}--header)
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
-  .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-on-#{$breakpoint} {
+  .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint} {
     @include breakpoint-down($breakpoint) {
       display: none;
     }

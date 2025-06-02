@@ -314,7 +314,7 @@ function App() {
             </SideNavItems>
           </SideNav>
           <SideNav
-            hideOnBreakpoint="sm"
+            hideRailBreakpointDown="md"
             isRail
             isChildOfHeader={false}
             aria-label="Side navigation">

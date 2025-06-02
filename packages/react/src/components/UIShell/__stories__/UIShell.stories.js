@@ -402,6 +402,7 @@ export const Default = () => {
             </SideNavItems>
           </SideNav>
           <SideNav
+            hideOnBreakpoint="sm"
             isChildOfHeader={false}
             isRail
             aria-label="Product navigation">

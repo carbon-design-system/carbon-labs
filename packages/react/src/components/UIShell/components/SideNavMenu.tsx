@@ -432,7 +432,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
             ) {
               setOpenPopover(!openPopover);
               // window.location.href = firstLink.current;
-            } else if (!primary || currentPrimaryMenu !== uniqueId) {
+            } else if (isSm || !primary || currentPrimaryMenu !== uniqueId) {
               setIsExpanded(!isExpanded);
               setLastExpandedState(!isExpanded);
             }

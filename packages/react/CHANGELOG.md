@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.66.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.65.0...@carbon-labs/react@0.66.0) (2025-06-02)
+
+
+### Features
+
+* **uishell:** update navigation to be overlay and not grid influencer ([#620](https://github.com/carbon-design-system/carbon-labs/issues/620)) ([17cfb90](https://github.com/carbon-design-system/carbon-labs/commit/17cfb9017725eb1db4a58237d319b0dd60276d16))
+
+
+
+
+
 # [0.65.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.64.0...@carbon-labs/react@0.65.0) (2025-05-29)
 
 **Note:** Version bump only for package @carbon-labs/react

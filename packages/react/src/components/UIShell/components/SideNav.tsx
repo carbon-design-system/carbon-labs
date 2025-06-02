@@ -165,6 +165,7 @@ function SideNavRenderFunction(
     [`${prefix}--side-nav--ux`]: isChildOfHeader,
     [`${prefix}--side-nav--hidden`]: !isPersistent,
     [`${prefix}--side-nav--collapsible`]: isCollapsible,
+    [`${prefix}--side-nav--with-overlay`]: !hideOverlay,
   });
 
   const overlayClassName = cx({

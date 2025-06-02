@@ -62,6 +62,7 @@ export interface SideNavProps
     event: FocusEvent<HTMLElement> | KeyboardEvent<HTMLElement> | boolean,
     value: boolean
   ) => void;
+  hideOnBreakpoint?: 'sm' | 'md' | 'lg' | 'xlg' | 'max';
   href?: string;
   isFixedNav?: boolean;
   isRail?: boolean;
@@ -100,6 +101,7 @@ function SideNavRenderFunction(
     children,
     onToggle,
     className: customClassName,
+    hideOnBreakpoint,
     href,
     isFixedNav = false,
     isRail,
@@ -155,6 +157,7 @@ function SideNavRenderFunction(
     [`${prefix}--side-nav`]: true,
     [`${prefix}--side-nav--expanded`]: expanded || expandedViaHoverState,
     [`${prefix}--side-nav--collapsed`]: !expanded && isFixedNav,
+    [`${prefix}--side-nav--hide-on-${hideOnBreakpoint}`]: hideOnBreakpoint,
     [`${prefix}--side-nav--rail`]: isRail,
     [`${prefix}--side-nav--panel`]: navType === SIDE_NAV_TYPE.PANEL,
     [`${prefix}--side-nav--ux`]: isChildOfHeader,
@@ -598,6 +601,12 @@ SideNav.propTypes = {
    * Using this prop causes SideNav to become a controled component.
    */
   expanded: PropTypes.bool,
+
+  /**
+   * Specify the breakpoint at which the SideNav will be hidden.
+   * Can be one of `sm`, `md`, `lg`, `xlg`, or `max`.
+   */
+  hideOnBreakpoint: PropTypes.oneOf(['sm', 'md', 'lg', 'xlg', 'max']),
 
   /**
    * If `true`, the overlay will be hidden. Defaults to `false`.

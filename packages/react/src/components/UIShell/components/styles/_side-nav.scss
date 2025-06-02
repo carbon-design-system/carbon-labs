@@ -353,9 +353,13 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
   z-index: 7999; /* needs to be below header */
+}
 
-  @include breakpoint-down('md') {
-    display: none;
+@each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
+  .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-on-#{$breakpoint} {
+    @include breakpoint-down($breakpoint) {
+      display: none;
+    }
   }
 }
 

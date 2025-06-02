@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.40.0...@carbon-labs/react-ui-shell@0.41.0) (2025-06-02)
+
+
+### Features
+
+* **uishell:** update navigation to be overlay and not grid influencer ([#620](https://github.com/carbon-design-system/carbon-labs/issues/620)) ([17cfb90](https://github.com/carbon-design-system/carbon-labs/commit/17cfb9017725eb1db4a58237d319b0dd60276d16))
+
+
+
+
+
 # [0.40.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.39.0...@carbon-labs/react-ui-shell@0.40.0) (2025-05-28)
 
 

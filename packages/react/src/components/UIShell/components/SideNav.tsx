@@ -347,9 +347,8 @@ function SideNavRenderFunction(
             treeWalker.currentNode
           ) as HTMLElement;
 
-          let previousSideNavMenu =
-            parentNode?.previousElementSibling as HTMLElement;
-
+          let previousSideNavMenu = treeWalker.currentNode
+            ?.previousSibling as HTMLElement;
           // skip the divider
           if (
             previousSideNavMenu?.classList.contains(

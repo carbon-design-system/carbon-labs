@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-processing@0.4.0...@carbon-labs/react-processing@0.5.0) (2025-06-03)
+
+
+### Features
+
+* **processing:** set default theme g10 ([#535](https://github.com/carbon-design-system/carbon-labs/issues/535)) ([14fb24a](https://github.com/carbon-design-system/carbon-labs/commit/14fb24a6818e124df9afeb9cb1ddb2a0b8dcfebb))
+
+
+
+
+
 # [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-processing@0.3.0...@carbon-labs/react-processing@0.4.0) (2025-05-28)
 
 

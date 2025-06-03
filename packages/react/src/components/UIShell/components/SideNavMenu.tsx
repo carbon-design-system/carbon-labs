@@ -344,10 +344,17 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
             // go to side nav menu button
           } else if (parent) {
-            const button = parent.querySelector('button');
-            if (button) {
-              button.tabIndex = 0;
-              button.focus();
+            if (parent.hasAttribute('aria-expanded')) {
+              const button = parent.querySelector('button');
+              if (button) {
+                button.tabIndex = 0;
+                button.focus();
+              }
+            } else {
+              const previousMenu = parentSideNavMenu(parent) as HTMLElement;
+              const button = previousMenu.querySelector('button');
+              button!.tabIndex = 0;
+              button?.focus();
             }
           }
         }

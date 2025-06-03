@@ -391,7 +391,12 @@ function SideNavRenderFunction(
             nextFocusNode = treeWalker.previousSibling();
 
             // first item in the menu, go back up to SideNavMenu button
-            if (nextFocusNode == null) {
+            if (
+              nextFocusNode == null &&
+              !parentNode.classList.contains(
+                `${prefix}--side-nav__item--primary`
+              )
+            ) {
               nextFocusNode = parentNode;
             }
           }
@@ -418,7 +423,9 @@ function SideNavRenderFunction(
           ) {
             nextFocusNode = treeWalker.currentNode.nextSibling as HTMLElement;
             if (
-              (nextFocusNode as HTMLElement)?.classList.contains(`${prefix}--side-nav__divider`)
+              (nextFocusNode as HTMLElement)?.classList.contains(
+                `${prefix}--side-nav__divider`
+              )
             ) {
               nextFocusNode = nextFocusNode!.nextSibling;
             }

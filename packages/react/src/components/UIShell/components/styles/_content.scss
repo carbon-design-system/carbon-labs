@@ -7,12 +7,14 @@
 
 @use '@carbon/styles/scss/utilities/convert' as convert;
 @use '@carbon/styles/scss/motion' as *;
+@use '@carbon/styles/scss/spacing' as *;
 
 $prefix: 'cds' !default;
 
+// Increases specificity to support shell components wrapped in a Theme component
 .#{$prefix}--side-nav--panel ~ .#{$prefix}--content,
 div:has(.#{$prefix}--side-nav--panel) ~ .#{$prefix}--content {
-  margin-inline-start: convert.to-rem(48px);
+  margin-inline-start: $spacing-09;
   transition: margin-inline-start $duration-fast-02, transform $duration-fast-02;
 }
 
@@ -21,4 +23,10 @@ div:has(.#{$prefix}--side-nav--panel) ~ .#{$prefix}--content {
 div:has(.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded)
   ~ .#{$prefix}--content {
   margin-inline-start: convert.to-rem(256px);
+}
+
+// should not be a grid influencer when used with overlay
+.#{$prefix}--side-nav--with-overlay.#{$prefix}--side-nav--expanded
+  ~ .#{$prefix}--content {
+  margin-inline-start: $spacing-09;
 }

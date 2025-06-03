@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.66.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.65.0...@carbon-labs/react@0.66.0) (2025-06-02)
+
+
+### Features
+
+* **uishell:** update navigation to be overlay and not grid influencer ([#620](https://github.com/carbon-design-system/carbon-labs/issues/620)) ([17cfb90](https://github.com/carbon-design-system/carbon-labs/commit/17cfb9017725eb1db4a58237d319b0dd60276d16))
+
+
+
+
+
+# [0.65.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.64.0...@carbon-labs/react@0.65.0) (2025-05-29)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.64.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.63.0...@carbon-labs/react@0.64.0) (2025-05-28)
+
+
+### Bug Fixes
+
+* update exports to match UI shell ([#605](https://github.com/carbon-design-system/carbon-labs/issues/605)) ([1bf4682](https://github.com/carbon-design-system/carbon-labs/commit/1bf46822620b44cc1ad9ce58913bf26e9c3a2ca1))
+
+
+
+
+
+# [0.63.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.62.0...@carbon-labs/react@0.63.0) (2025-05-27)
+
+
+### Features
+
+* **uishell:** update to use rail instead of panel nav remove inline theme ([#617](https://github.com/carbon-design-system/carbon-labs/issues/617)) ([1f6da4b](https://github.com/carbon-design-system/carbon-labs/commit/1f6da4b9c34591ad2ec4b12c35d231c58473eaf1))
+
+
+
+
+
 # [0.62.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.61.0...@carbon-labs/react@0.62.0) (2025-05-21)
 
 **Note:** Version bump only for package @carbon-labs/react

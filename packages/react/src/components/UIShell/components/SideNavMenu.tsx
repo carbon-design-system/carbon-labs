@@ -152,6 +152,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
     const [active, setActive] = useState<boolean>(isActive);
     const firstLink = useRef<string | null>(null);
+    const backButtonRef = useRef<HTMLButtonElement>(null);
     const uid = useId('side-nav-menu');
     const uniqueId = id || uid;
 
@@ -334,7 +335,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
                 setIsExpanded(false);
               }
               // go to previous level's side nav menu button
-            } else {
+            } else if (!isSm) {
               // since we're in a menu, it finds its own <li>, we go up one more
               const previousMenu = parentSideNavMenu(parent) as HTMLElement;
               const button = previousMenu.querySelector('button');
@@ -350,7 +351,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
                 button.tabIndex = 0;
                 button.focus();
               }
-            } else {
+            } else if (!isSm) {
               const previousMenu = parentSideNavMenu(parent) as HTMLElement;
               const button = previousMenu.querySelector('button');
               button!.tabIndex = 0;
@@ -460,6 +461,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               setIsExpanded(!isExpanded);
               setLastExpandedState(!isExpanded);
             }
+
+            if (isSm && backButtonRef.current) {
+              backButtonRef.current.focus();
+            }
           }}
           ref={menuRef as Ref<HTMLButtonElement>}
           type="button"
@@ -489,6 +494,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               accessibilityLabel={{ 'aria-label': `${title} submenu` }}>
               {isSm && (
                 <Button
+                  ref={backButtonRef}
                   kind="ghost"
                   size="md"
                   onClick={handleOnBackButtonClick}

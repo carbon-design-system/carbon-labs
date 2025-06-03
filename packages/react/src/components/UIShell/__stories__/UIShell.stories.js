@@ -9,7 +9,7 @@
 
 import React, { useState, useRef } from 'react';
 import mdx from './UIShell.mdx';
-import { SIDE_NAV_TYPE, SideNav } from '../components/SideNav';
+import { SideNav } from '../components/SideNav';
 import { SideNavItems } from '../components/SideNavItems';
 import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';

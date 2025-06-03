@@ -370,10 +370,10 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 
 .#{$prefix}--side-nav__slot {
-  margin: 0 $spacing-05;
-  block-size: 2rem;
   display: flex;
   align-items: center;
+  margin: 0 $spacing-05;
+  block-size: 2rem;
 }
 
 // icon shown when rail is collapsed

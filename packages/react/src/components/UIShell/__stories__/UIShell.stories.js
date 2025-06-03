@@ -14,6 +14,7 @@ import { SideNavItems } from '../components/SideNavItems';
 import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { SideNavLink } from '../components/SideNavLink';
+import { SideNavSlot } from '../components/SideNavSlot';
 import {
   HeaderPopover,
   HeaderPopoverActions,
@@ -39,6 +40,7 @@ import {
   ExpandableSearch,
   Link,
   Button,
+  Search,
 } from '@carbon/react';
 import {
   Add,
@@ -64,6 +66,7 @@ import {
   ShoppingCart,
   Share,
   User,
+  Search as SearchIcon,
 } from '@carbon/icons-react';
 
 import {
@@ -506,6 +509,15 @@ export const SideNavStory = () => (
     isChildOfHeader={false}
     aria-label="Side navigation">
     <SideNavItems>
+      <SideNavSlot>
+        <Search
+          size="sm"
+          placeholder="Filter"
+          closeButtonLabelText="Clear input"
+          id="filter-1"
+        />
+      </SideNavSlot>
+      <SideNavDivider />
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
@@ -654,6 +666,15 @@ export const SideNavRail = () => (
     isChildOfHeader={false}
     aria-label="Product navigation">
     <SideNavItems>
+      <SideNavSlot renderIcon={SearchIcon}>
+        <Search
+          size="sm"
+          placeholder="Filter"
+          closeButtonLabelText="Clear input"
+          id="filter-1"
+        />
+      </SideNavSlot>
+      <SideNavDivider />
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Item level 2
@@ -720,120 +741,6 @@ export const SideNavRail = () => (
       </SideNavLink>
     </SideNavItems>
   </SideNav>
-);
-
-/**
- * Story for SideNav panel
- * @returns {React.ReactElement} The JSX for the story
- */
-export const SideNavPanel = () => (
-  <>
-    <SideNav
-      navType={SIDE_NAV_TYPE.PANEL}
-      isChildOfHeader={false}
-      hideOverlay
-      aria-label="Product navigation">
-      <SideNavItems>
-        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-        </SideNavMenu>
-        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-        </SideNavMenu>
-        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-        </SideNavMenu>
-        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 2
-          </SideNavMenuItem>
-        </SideNavMenu>
-        <SideNavDivider />
-        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavLink>
-        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavLink>
-        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavLink>
-        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavLink>
-        <SideNavDivider />
-        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavLink>
-        <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavLink>
-      </SideNavItems>
-    </SideNav>
-    <Content>
-      <Grid align="start">
-        <Column sm={4} md={8} lg={12}>
-          <h2 style={{ margin: '0 0 30px 0' }}>Purpose and function</h2>
-          <p>
-            The shell is perhaps the most crucial piece of any UI built with{' '}
-            {''}
-            <a href="www.carbondesignsystem.com">Carbon</a>. It contains the
-            shared navigation framework for the entire design system and ties
-            the products in IBM’s portfolio together in a cohesive and elegant
-            way. The shell is the home of the topmost navigation, where users
-            can quickly and dependably gain their bearings and move between
-            pages.
-            <br />
-            <br />
-            The shell was designed with maximum flexibility built in, to serve
-            the needs of a broad range of products and users. Adopting the shell
-            ensures compliance with IBM design standards, simplifies development
-            efforts, and provides great user experiences. All IBM products built
-            with Carbon are required to use the shell’s header.
-            <br />
-            <br />
-            To better understand the purpose and function of the UI shell,
-            consider the “shell” of MacOS, which contains the Apple menu,
-            top-level navigation, and universal, OS-level controls at the top of
-            the screen, as well as a universal dock along the bottom or side of
-            the screen. The Carbon UI shell is roughly analogous in function to
-            these parts of the Mac UI. For example, the app switcher portion of
-            the shell can be compared to the dock in MacOS.
-          </p>
-        </Column>
-      </Grid>
-    </Content>
-  </>
 );
 
 /**

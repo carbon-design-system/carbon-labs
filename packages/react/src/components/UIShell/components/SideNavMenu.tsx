@@ -330,7 +330,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               if (onMenuToggle) {
                 onMenuToggle();
               }
-              if(!primary && isExpanded){
+              if (!primary && isExpanded) {
                 setIsExpanded(false);
               }
               // go to previous level's side nav menu button
@@ -345,8 +345,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
             // go to side nav menu button
           } else if (parent) {
             const button = parent.querySelector('button');
-            button!.tabIndex = 0;
-            button?.focus();
+            if (button) {
+              button.tabIndex = 0;
+              button.focus();
+            }
           }
         }
 
@@ -377,6 +379,17 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       }
     }
 
+    function handleOnBackButtonClick(event) {
+      const node = event.target as HTMLElement;
+      const parent = parentSideNavMenu(node) as HTMLElement;
+      const button = parent.querySelector('button');
+      if (button) {
+        button.tabIndex = 0;
+        button.focus();
+      }
+      setIsExpanded(false);
+    }
+
     useEffect(() => {
       if (isExpanded && primary && setCurrentPrimaryMenu) {
         setCurrentPrimaryMenu(uniqueId);
@@ -389,7 +402,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       if (currentPrimaryMenu !== uniqueId) {
         setIsExpanded(false);
       } else {
-        setIsExpanded(true)
+        setIsExpanded(true);
       }
     }, [currentPrimaryMenu]);
 
@@ -470,7 +483,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               {isSm && (
                 <Button
                   kind="ghost"
-                  onClick={() => setIsExpanded(false)}
+                  size="md"
+                  onClick={handleOnBackButtonClick}
                   className={`${prefix}--side-nav__back-button`}
                   renderIcon={backButtonRenderIcon}>
                   {backButtonTitle}

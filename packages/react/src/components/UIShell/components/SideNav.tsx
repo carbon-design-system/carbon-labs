@@ -245,20 +245,17 @@ function SideNavRenderFunction(
 
   useEffect(() => {
     if (sideNavRef.current) {
+      const currentElement = sideNavRef?.current.querySelector(
+        `.${prefix}--side-nav__link--current`
+      ) as HTMLElement;
       const firstElement = sideNavRef?.current?.querySelector(
         'a, button'
       ) as HTMLElement;
 
-      if (firstElement && (navType == SIDE_NAV_TYPE.PANEL || expanded)) {
-        const parentHasPrimary = firstElement.parentElement?.classList.contains(
-          `${prefix}--side-nav__item--primary`
-        );
-        const hasSubMemu = firstElement.nextElementSibling?.querySelector(
-          'a, button'
-        ) as HTMLElement;
-        if (parentHasPrimary && hasSubMemu) {
-          hasSubMemu.tabIndex = 0;
-        } else {
+      if (navType == SIDE_NAV_TYPE.PANEL || expanded) {
+        if (currentElement) {
+          currentElement.tabIndex = 0;
+        } else if (firstElement) {
           firstElement.tabIndex = 0;
         }
       }
@@ -363,14 +360,22 @@ function SideNavRenderFunction(
               previousSideNavMenu?.previousElementSibling as HTMLElement;
           }
 
-          if ((treeWalker.currentNode as HTMLElement).classList.contains(
-            `${prefix}--side-nav__item--primary`
-          )) {
+          if (
+            previousSideNavMenu?.classList.contains(
+              `${prefix}--side-nav__item--primary`
+            )
+          ) {
+            nextFocusNode = previousSideNavMenu;
+          } else if (
+            (treeWalker.currentNode as HTMLElement).classList.contains(
+              `${prefix}--side-nav__item--primary`
+            )
+          ) {
             nextFocusNode = treeWalker.currentNode.previousSibling;
-            setCurrentPrimaryMenu((nextFocusNode as HTMLElement).id)
-
           } // when previous sibling is open, go to its last item
-          else if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
+          else if (
+            previousSideNavMenu?.getAttribute('aria-expanded') == 'true'
+          ) {
             const allItems = previousSideNavMenu.querySelectorAll(
               `.${prefix}--side-nav__item`
             );
@@ -406,11 +411,17 @@ function SideNavRenderFunction(
               ) as HTMLElement;
               nextFocusNode = parent?.nextElementSibling;
             }
-          } else if ((treeWalker.currentNode as HTMLElement).classList.contains(
-            `${prefix}--side-nav__item--primary`
-          )) {
-            nextFocusNode = treeWalker.currentNode.nextSibling;
-            setCurrentPrimaryMenu((nextFocusNode as HTMLElement).id)
+          } else if (
+            (treeWalker.currentNode as HTMLElement).classList.contains(
+              `${prefix}--side-nav__item--primary`
+            )
+          ) {
+            nextFocusNode = treeWalker.currentNode.nextSibling as HTMLElement;
+            if (
+              (nextFocusNode as HTMLElement)?.classList.contains(`${prefix}--side-nav__divider`)
+            ) {
+              nextFocusNode = nextFocusNode!.nextSibling;
+            }
           } else {
             nextFocusNode = treeWalker.nextNode();
           }

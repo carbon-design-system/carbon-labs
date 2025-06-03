@@ -333,7 +333,7 @@ export const Default = () => {
                 title="Product 1"
                 primary
                 defaultExpanded>
-                <SideNavMenu renderIcon={Home} title="Home">
+                <SideNavMenu renderIcon={Home} title="Home" defaultExpanded>
                   <SideNavMenuItem href="http://www.carbondesignsystem.com">
                     Item level 3
                   </SideNavMenuItem>

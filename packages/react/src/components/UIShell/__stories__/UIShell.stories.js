@@ -67,7 +67,6 @@ import {
   ShoppingCart,
   Share,
   User,
-  Search as SearchIcon,
   VirtualColumnKey,
 } from '@carbon/icons-react';
 
@@ -512,15 +511,6 @@ export const SideNavStory = () => (
     isChildOfHeader={false}
     aria-label="Side navigation">
     <SideNavItems>
-      <SideNavSlot renderIcon={SearchIcon}>
-        <Search
-          size="sm"
-          placeholder="Filter"
-          closeButtonLabelText="Clear input"
-          id="filter-1"
-        />
-      </SideNavSlot>
-      <SideNavDivider />
       <SideNavSlot renderIcon={VirtualColumnKey}>
         <Dropdown
           id="default"
@@ -531,7 +521,7 @@ export const SideNavStory = () => (
             { text: 'Option 2' },
             { text: 'Option 3' },
           ]}
-          label="Dropdown"
+          label="Choose an option"
         />
       </SideNavSlot>
       <SideNavDivider />
@@ -683,15 +673,6 @@ export const SideNavRail = () => (
     isChildOfHeader={false}
     aria-label="Product navigation">
     <SideNavItems>
-      <SideNavSlot renderIcon={SearchIcon}>
-        <Search
-          size="sm"
-          placeholder="Filter"
-          closeButtonLabelText="Clear input"
-          id="filter-1"
-        />
-      </SideNavSlot>
-      <SideNavDivider />
       <SideNavSlot renderIcon={VirtualColumnKey}>
         <Dropdown
           id="default"
@@ -702,7 +683,7 @@ export const SideNavRail = () => (
             { text: 'Option 2' },
             { text: 'Option 3' },
           ]}
-          label="Dropdown"
+          label="Choose an option"
         />
       </SideNavSlot>
       <SideNavDivider />

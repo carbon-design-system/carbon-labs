@@ -6,16 +6,11 @@
  */
 
 // Carbon setting imports
-@use '@carbon/styles/scss/themes';
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/colors' as *;
 @use '@carbon/styles/scss/spacing' as *;
 
 $prefix: 'clabs--processing' !default;
-
-:root {
-  @include theme(themes.$g10);
-}
 
 #storybook-root:has(.#{$prefix}) {
   display: grid;
@@ -35,7 +30,6 @@ $prefix: 'clabs--processing' !default;
   transform: translateY(0);
 }
 
-:root .#{$prefix}__dot,
 [data-carbon-theme='white'] .#{$prefix}__dot,
 [data-carbon-theme='g10'] .#{$prefix}__dot {
   stroke: $blue-90;

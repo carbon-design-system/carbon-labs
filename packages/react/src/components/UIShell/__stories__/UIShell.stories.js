@@ -458,7 +458,8 @@ export const Default = () => {
             hideRailBreakpointDown="md"
             isChildOfHeader={false}
             isRail
-            aria-label="Product navigation">
+            aria-label="Product navigation"
+            className="nav--local">
             <SideNavItems>
               <SideNavMenu renderIcon={Home} title="Home">
                 <SideNavMenuItem href="http://www.carbondesignsystem.com">

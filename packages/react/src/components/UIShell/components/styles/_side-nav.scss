@@ -396,6 +396,7 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
   z-index: 7999; /* needs to be below header */
+  border-inline-end: 1px solid $border-subtle;
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
@@ -485,4 +486,14 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded
   .#{$prefix}--side-nav__slot-item {
   display: block;
+// Side nav pin
+.#{$prefix}--side-nav__pin {
+  @include focus-outline('reset');
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-05 $spacing-05 0;
+  min-block-size: $spacing-05;
 }

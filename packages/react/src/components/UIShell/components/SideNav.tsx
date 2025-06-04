@@ -30,6 +30,7 @@ import { useMatchMedia } from '../internal/useMatchMedia';
 import { TranslateWithId } from '../types/common';
 import { SidePanelClose, SidePanelOpen } from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
+import SideNavPin from './SideNavPin';
 
 export enum SIDE_NAV_TYPE {
   DEFAULT = 'default',
@@ -55,6 +56,7 @@ const defaultTranslateWithId = (id: TranslationKey): string =>
 export interface SideNavProps
   extends ComponentProps<'nav'>,
     TranslateWithId<TranslationKey> {
+  enableRailPin?: boolean;
   expanded?: boolean;
   defaultExpanded?: boolean;
   isChildOfHeader?: boolean;
@@ -103,6 +105,7 @@ function SideNavRenderFunction(
     children,
     onToggle,
     className: customClassName,
+    enableRailPin,
     hideRailBreakpointDown,
     href,
     isFixedNav = false,
@@ -177,10 +180,8 @@ function SideNavRenderFunction(
     [`${prefix}--side-nav__overlay-active`]: expanded || expandedViaHoverState,
   });
 
-  let childrenToRender = children;
-
   // Pass the expansion state as a prop, so children can update themselves to match
-  childrenToRender = React.Children.map(children, (child) => {
+  const childrenToRender = React.Children.map(children, (child) => {
     // if we are controlled, check for if we have hovered over or the expanded state, else just use the expanded state (uncontrolled)
     const currentExpansionState = controlled
       ? expandedViaHoverState || expanded
@@ -593,6 +594,9 @@ function SideNavRenderFunction(
         {...accessibilityLabel}
         {...eventHandlers}
         {...other}>
+        {!isChildOfHeader && isRail && (
+          <SideNavPin enableRailPin={enableRailPin} expanded={expanded} />
+        )}
         {childrenToRender}
         {navType === SIDE_NAV_TYPE.PANEL &&
           (expandedState ? (
@@ -636,6 +640,12 @@ SideNav.propTypes = {
    * If `true`, the SideNav will be open on initial render.
    */
   defaultExpanded: PropTypes.bool,
+
+  /**
+   * If `true`, the Pin icon will be rendered.
+   * This prop is used to enable side rail pinning functionality.
+   */
+  enableRailPin: PropTypes.bool,
 
   /**
    * Specify the duration in milliseconds to delay before displaying the sidenavigation

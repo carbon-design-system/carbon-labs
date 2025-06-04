@@ -8,23 +8,23 @@
  */
 
 import React, { useState } from 'react';
+import { headerTiles, workspaceData } from './data';
 import {
   AnimatedHeader,
   TasksControllerConfig,
   WorkspaceSelectorConfig,
+  type TileGroup,
+  type Workspace,
 } from '@carbon-labs/react-animated-header/es/index';
 import {
   watsonXAnimatedLight,
   watsonXStaticLight,
 } from '@carbon-labs/react-animated-header/assets';
-import { headerTiles, workspaceData, workspaces } from './data';
-import { TileGroup } from '@carbon-labs/react-animated-header/es/components/AnimatedHeader/AnimatedHeader';
-import { Workspace } from '@carbon-labs/react-animated-header/es/components/AnimatedHeader/WorkspaceSelector/WorkspaceSelector';
 
 function App() {
   const [tiles] = useState(headerTiles);
   const [selectedTile, setSelectedTile] = useState(tiles[0]);
-  const [selectedWorkspace, setSelectedWorkspace] = useState(workspaces[0]);
+  const [selectedWorkspace, setSelectedWorkspace] = useState(workspaceData[0]);
 
   const handleWorkspaceSelect = (e: any) => {
     setSelectedWorkspace(e.selectedItem);

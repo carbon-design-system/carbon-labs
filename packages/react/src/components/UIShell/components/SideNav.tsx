@@ -30,6 +30,7 @@ import { useMatchMedia } from '../internal/useMatchMedia';
 import { TranslateWithId } from '../types/common';
 import { SidePanelClose, SidePanelOpen } from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
+import SideNavDecorativeIcon from './SideNavDecorativeIcon';
 
 export enum SIDE_NAV_TYPE {
   DEFAULT = 'default',
@@ -172,10 +173,8 @@ function SideNavRenderFunction(
     [`${prefix}--side-nav__overlay-active`]: expanded || expandedViaHoverState,
   });
 
-  let childrenToRender = children;
-
   // Pass the expansion state as a prop, so children can update themselves to match
-  childrenToRender = React.Children.map(children, (child) => {
+  const childrenToRender = React.Children.map(children, (child) => {
     // if we are controlled, check for if we have hovered over or the expanded state, else just use the expanded state (uncontrolled)
     const currentExpansionState = controlled
       ? expandedViaHoverState || expanded
@@ -548,6 +547,7 @@ function SideNavRenderFunction(
         {...accessibilityLabel}
         {...eventHandlers}
         {...other}>
+        {!isChildOfHeader && expanded && <SideNavDecorativeIcon />}
         {childrenToRender}
         {navType === SIDE_NAV_TYPE.PANEL &&
           (expandedState ? (

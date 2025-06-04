@@ -26,6 +26,17 @@ div:has(.#{$prefix}--header)
   inset-block-start: $spacing-09;
 }
 
+.#{$prefix}--side-nav--expanded:not(.#{$prefix}--side-nav--ux) {
+  z-index: 9999;
+  inset-block-start: 0;
+  block-size: 100%;
+}
+
+.#{$prefix}--side-nav__overlay-active {
+  inset-block-start: 0;
+  z-index: 9999;
+}
+
 //----------------------------------------------------------------------------
 // Side-nav Collapsible
 //----------------------------------------------------------------------------
@@ -372,4 +383,16 @@ div:has(.#{$prefix}--header)
   opacity: 1;
   transition: opacity $transition-expansion $standard-easing,
     background-color $transition-expansion $standard-easing;
+}
+
+// Decorative Icon
+.#{$prefix}--side-nav__decorative-icon {
+  @include focus-outline('reset');
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: mini-units(2) mini-units(2) 0;
+  min-block-size: mini-units(4);
 }

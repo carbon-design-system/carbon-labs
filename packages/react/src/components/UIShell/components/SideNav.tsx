@@ -548,7 +548,7 @@ function SideNavRenderFunction(
         {...accessibilityLabel}
         {...eventHandlers}
         {...other}>
-        {!isChildOfHeader && expanded && <SideNavDecorativeIcon />}
+        {!isChildOfHeader && <SideNavDecorativeIcon expanded={expanded} />}
         {childrenToRender}
         {navType === SIDE_NAV_TYPE.PANEL &&
           (expandedState ? (

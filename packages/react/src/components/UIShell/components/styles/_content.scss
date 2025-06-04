@@ -32,12 +32,7 @@ div:has(.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded)
   margin-inline-start: $spacing-09;
 }
 
-// remove margin when rail is hidden
-// .cds--side-nav--rail.cds--side-nav--hide-rail-breakpoint-down-md
-//   ~ .#{$prefix}--content {
-//   margin-inline-start: 0;
-// }
-
+// when rail is hidden, remove spacing that accounts for rail
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
   .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint}
     ~ .#{$prefix}--content {

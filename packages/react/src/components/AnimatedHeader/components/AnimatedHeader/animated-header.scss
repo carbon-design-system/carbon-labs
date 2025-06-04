@@ -465,10 +465,33 @@ body {
     display: flex;
   }
 
-  .#{$prefix}__tiles-container > .#{$prefix}__tile {
-    flex-basis: 0;
-    flex-grow: 1;
-    min-inline-size: 0;
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
+    > .#{$prefix}__tile {
+    inline-size: calc(50% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
+    inline-size: calc(33% - 16px);
+  }
+
+  .#{$prefix}__tiles-container:has(> :first-child)
+    > ##{$prefix}__ai-prompt-tile {
+    inline-size: calc(100% - 16px);
   }
 
   .#{$prefix}__tiles-container > ##{$prefix}__ai-prompt-tile {

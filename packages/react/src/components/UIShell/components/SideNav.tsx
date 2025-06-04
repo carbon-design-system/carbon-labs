@@ -85,6 +85,8 @@ interface SideNavContextData {
   navType?: SIDE_NAV_TYPE;
   isTreeview?: boolean;
   setIsTreeview?: (value: boolean) => void;
+  currentPrimaryMenu?: string;
+  setCurrentPrimaryMenu?: (value: string) => void;
 }
 
 export const SideNavContext = createContext<SideNavContextData>(
@@ -131,6 +133,9 @@ function SideNavRenderFunction(
   const expanded = controlled ? expandedProp : expandedState;
   const sideNavRef = useRef<HTMLDivElement>(null);
   const navRef = useMergedRefs([sideNavRef, ref]);
+  const [currentPrimaryMenu, setCurrentPrimaryMenu] = useState<
+    string | undefined
+  >();
 
   const sideNavToggleText = expandedState
     ? t('collapse.sidenav')
@@ -244,12 +249,19 @@ function SideNavRenderFunction(
 
   useEffect(() => {
     if (sideNavRef.current) {
+      const currentElement = sideNavRef?.current.querySelector(
+        `.${prefix}--side-nav__link--current`
+      ) as HTMLElement;
       const firstElement = sideNavRef?.current?.querySelector(
         'a, button'
       ) as HTMLElement;
 
-      if (firstElement && (navType == SIDE_NAV_TYPE.PANEL || expanded)) {
-        firstElement.tabIndex = 0;
+      if (navType == SIDE_NAV_TYPE.PANEL || expanded) {
+        if (currentElement) {
+          currentElement.tabIndex = 0;
+        } else if (firstElement) {
+          firstElement.tabIndex = 0;
+        }
       }
     }
   }, [expanded]);
@@ -339,9 +351,8 @@ function SideNavRenderFunction(
             treeWalker.currentNode
           ) as HTMLElement;
 
-          let previousSideNavMenu =
-            parentNode?.previousElementSibling as HTMLElement;
-
+          let previousSideNavMenu = treeWalker.currentNode
+            ?.previousSibling as HTMLElement;
           // skip the divider
           if (
             previousSideNavMenu?.classList.contains(
@@ -352,8 +363,22 @@ function SideNavRenderFunction(
               previousSideNavMenu?.previousElementSibling as HTMLElement;
           }
 
-          // when previous sibling is open, go to its last item
-          if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
+          if (
+            previousSideNavMenu?.classList.contains(
+              `${prefix}--side-nav__item--primary`
+            )
+          ) {
+            nextFocusNode = previousSideNavMenu;
+          } else if (
+            (treeWalker.currentNode as HTMLElement).classList.contains(
+              `${prefix}--side-nav__item--primary`
+            )
+          ) {
+            nextFocusNode = treeWalker.currentNode.previousSibling;
+          } // when previous sibling is open, go to its last item
+          else if (
+            previousSideNavMenu?.getAttribute('aria-expanded') == 'true'
+          ) {
             const allItems = previousSideNavMenu.querySelectorAll(
               `.${prefix}--side-nav__item`
             );
@@ -369,7 +394,12 @@ function SideNavRenderFunction(
             nextFocusNode = treeWalker.previousSibling();
 
             // first item in the menu, go back up to SideNavMenu button
-            if (nextFocusNode == null) {
+            if (
+              nextFocusNode == null &&
+              !parentNode.classList.contains(
+                `${prefix}--side-nav__item--primary`
+              )
+            ) {
               nextFocusNode = parentNode;
             }
           }
@@ -388,6 +418,19 @@ function SideNavRenderFunction(
                 treeWalker.currentNode
               ) as HTMLElement;
               nextFocusNode = parent?.nextElementSibling;
+            }
+          } else if (
+            (treeWalker.currentNode as HTMLElement).classList.contains(
+              `${prefix}--side-nav__item--primary`
+            )
+          ) {
+            nextFocusNode = treeWalker.currentNode.nextSibling as HTMLElement;
+            if (
+              (nextFocusNode as HTMLElement)?.classList.contains(
+                `${prefix}--side-nav__divider`
+              )
+            ) {
+              nextFocusNode = nextFocusNode!.nextSibling;
             }
           } else {
             nextFocusNode = treeWalker.nextNode();
@@ -530,6 +573,8 @@ function SideNavRenderFunction(
         navType,
         isTreeview: internalIsTreeview,
         setIsTreeview,
+        currentPrimaryMenu,
+        setCurrentPrimaryMenu,
       }}>
       {isFixedNav || hideOverlay ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions

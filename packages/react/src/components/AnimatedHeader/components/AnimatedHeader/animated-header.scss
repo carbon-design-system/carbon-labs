@@ -49,7 +49,6 @@ body {
   overflow: visible;
   background: $background;
   inline-size: 100%;
-  max-block-size: 90vh;
   outline: 1px solid transparent;
   padding-block: 0 $spacing-10;
   transition: padding 500ms motion.motion(standard, expressive),

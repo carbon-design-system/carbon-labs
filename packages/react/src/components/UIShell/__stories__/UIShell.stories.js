@@ -41,6 +41,7 @@ import {
   Link,
   Button,
   Search,
+  MenuItem,
 } from '@carbon/react';
 import {
   Add,
@@ -93,6 +94,7 @@ export default {
     SideNavLink,
     SideNavMenu,
     SideNavMenuItem,
+    SideNavSlot,
     TrialCountdown,
   },
   parameters: {
@@ -518,6 +520,14 @@ export const SideNavStory = () => (
         />
       </SideNavSlot>
       <SideNavDivider />
+      {/* <SideNavSlot>
+        <MenuButton size="sm" kind="tertiary" label="Menu button">
+          <MenuItem label="First action" />
+          <MenuItem label="Second action" />
+          <MenuItem label="Third action" />
+        </MenuButton>
+      </SideNavSlot>
+      <SideNavDivider /> */}
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link

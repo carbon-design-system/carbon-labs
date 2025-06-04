@@ -547,7 +547,7 @@ function SideNavRenderFunction(
         {...accessibilityLabel}
         {...eventHandlers}
         {...other}>
-        {!isChildOfHeader && <SideNavPin expanded={expanded} />}
+        {!isChildOfHeader && isRail && <SideNavPin expanded={expanded} />}
         {childrenToRender}
         {navType === SIDE_NAV_TYPE.PANEL &&
           (expandedState ? (

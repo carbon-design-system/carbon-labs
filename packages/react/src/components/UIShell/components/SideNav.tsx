@@ -171,6 +171,7 @@ function SideNavRenderFunction(
   const overlayClassName = cx({
     [`${prefix}--side-nav__overlay`]: true,
     [`${prefix}--side-nav__overlay-active`]: expanded || expandedViaHoverState,
+    [`${prefix}--side-nav__overlay-hover`]: expandedViaHoverState,
   });
 
   // Pass the expansion state as a prop, so children can update themselves to match

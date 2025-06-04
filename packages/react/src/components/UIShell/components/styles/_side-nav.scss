@@ -32,7 +32,7 @@ div:has(.#{$prefix}--header)
   block-size: 100%;
 }
 
-.#{$prefix}--side-nav__overlay-active {
+.#{$prefix}--side-nav__overlay-hover.#{$prefix}--side-nav__overlay-active {
   inset-block-start: 0;
   z-index: 9999;
 }

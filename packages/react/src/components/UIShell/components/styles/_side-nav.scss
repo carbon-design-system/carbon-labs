@@ -353,6 +353,7 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
   z-index: 7999; /* needs to be below header */
+  border-right: 1px solid $border-subtle;
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
@@ -382,6 +383,6 @@ div:has(.#{$prefix}--header)
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: mini-units(2) mini-units(2) 0;
-  min-block-size: mini-units(4);
+  padding: $spacing-05 $spacing-05 0;
+  min-block-size: $spacing-05;
 }

@@ -417,7 +417,6 @@ div:has(.#{$prefix}--header)
   transition: opacity $transition-expansion $standard-easing,
     background-color $transition-expansion $standard-easing;
 }
-
 // mobile
 @include breakpoint.breakpoint-down(md) {
   .#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--expanded {
@@ -453,6 +452,7 @@ div:has(.#{$prefix}--header)
       fill: $link-primary-hover;
     }
   }
+}
 //----------------------------------------------------------------------------
 // Slot
 //----------------------------------------------------------------------------
@@ -486,6 +486,8 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded
   .#{$prefix}--side-nav__slot-item {
   display: block;
+}
+
 // Side nav pin
 .#{$prefix}--side-nav__pin {
   @include focus-outline('reset');

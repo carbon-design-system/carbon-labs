@@ -42,6 +42,7 @@ import {
   Button,
   Search,
   Dropdown,
+  Layer,
 } from '@carbon/react';
 import {
   Add,
@@ -338,6 +339,22 @@ export const Default = () => {
                 title="Product 1"
                 primary
                 defaultExpanded>
+                <SideNavSlot renderIcon={VirtualColumnKey}>
+                  <Layer>
+                    <Dropdown
+                      id="default"
+                      size="sm"
+                      itemToString={(item) => (item ? item.text : '')}
+                      items={[
+                        { text: 'Option 1' },
+                        { text: 'Option 2' },
+                        { text: 'Option 3' },
+                      ]}
+                      label="Choose an option"
+                    />
+                  </Layer>
+                </SideNavSlot>
+                <SideNavDivider />
                 <SideNavMenu renderIcon={Home} title="Home" defaultExpanded>
                   <SideNavMenuItem href="http://www.carbondesignsystem.com">
                     Item level 3
@@ -461,6 +478,20 @@ export const Default = () => {
             aria-label="Product navigation"
             className="nav--local">
             <SideNavItems>
+              <SideNavSlot renderIcon={VirtualColumnKey}>
+                <Dropdown
+                  id="default"
+                  size="sm"
+                  itemToString={(item) => (item ? item.text : '')}
+                  items={[
+                    { text: 'Option 1' },
+                    { text: 'Option 2' },
+                    { text: 'Option 3' },
+                  ]}
+                  label="Choose an option"
+                />
+              </SideNavSlot>
+              <SideNavDivider />
               <SideNavMenu renderIcon={Home} title="Home">
                 <SideNavMenuItem href="http://www.carbondesignsystem.com">
                   Item level 3
@@ -779,20 +810,6 @@ export const SideNavRail = () => (
     isChildOfHeader={false}
     aria-label="Product navigation">
     <SideNavItems>
-      <SideNavSlot renderIcon={VirtualColumnKey}>
-        <Dropdown
-          id="default"
-          size="sm"
-          itemToString={(item) => (item ? item.text : '')}
-          items={[
-            { text: 'Option 1' },
-            { text: 'Option 2' },
-            { text: 'Option 3' },
-          ]}
-          label="Choose an option"
-        />
-      </SideNavSlot>
-      <SideNavDivider />
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Item level 2

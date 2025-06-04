@@ -8,6 +8,7 @@
 @use '@carbon/styles/scss/utilities/convert' as convert;
 @use '@carbon/styles/scss/motion' as *;
 @use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/breakpoint' as *;
 
 $prefix: 'cds' !default;
 
@@ -29,4 +30,19 @@ div:has(.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded)
 .#{$prefix}--side-nav--with-overlay.#{$prefix}--side-nav--expanded
   ~ .#{$prefix}--content {
   margin-inline-start: $spacing-09;
+}
+
+// remove margin when rail is hidden
+// .cds--side-nav--rail.cds--side-nav--hide-rail-breakpoint-down-md
+//   ~ .#{$prefix}--content {
+//   margin-inline-start: 0;
+// }
+
+@each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
+  .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint}
+    ~ .#{$prefix}--content {
+    @include breakpoint-down($breakpoint) {
+      margin-inline-start: 0;
+    }
+  }
 }

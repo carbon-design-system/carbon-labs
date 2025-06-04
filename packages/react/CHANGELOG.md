@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.68.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.67.0...@carbon-labs/react@0.68.0) (2025-06-04)
+
+
+### Reverts
+
+* Revert "feat(processing): set default theme g10 (#535)" (#641) ([e01d6f2](https://github.com/carbon-design-system/carbon-labs/commit/e01d6f2a35fa553cdf9ac020938cfa21e84d5ca5)), closes [#535](https://github.com/carbon-design-system/carbon-labs/issues/535) [#641](https://github.com/carbon-design-system/carbon-labs/issues/641)
+
+
+
+
+
 # [0.67.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.66.0...@carbon-labs/react@0.67.0) (2025-06-03)
 
 

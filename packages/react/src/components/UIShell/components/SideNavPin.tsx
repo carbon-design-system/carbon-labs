@@ -10,10 +10,10 @@ import PropTypes from 'prop-types';
 import { Menu, Pin } from '@carbon/icons-react';
 import { usePrefix } from '../internal/usePrefix';
 
-export default function SideNavDecorativeIcon({ expanded }) {
+export default function SideNavPin({ expanded }) {
   const prefix = usePrefix();
   const className = cx({
-    [`${prefix}--side-nav__decorative-icon`]: true,
+    [`${prefix}--side-nav__pin`]: true,
     [`${prefix}--side-nav__item`]: true,
   });
   return (
@@ -24,7 +24,7 @@ export default function SideNavDecorativeIcon({ expanded }) {
   );
 }
 
-SideNavDecorativeIcon.propTypes = {
+SideNavPin.propTypes = {
   /**
    * If `true`, the SideNav will be expanded, otherwise it will be collapsed.
    * This prop is used to conditionally render the Pin icon.

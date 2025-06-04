@@ -375,8 +375,8 @@ div:has(.#{$prefix}--header)
     background-color $transition-expansion $standard-easing;
 }
 
-// Decorative Icon
-.#{$prefix}--side-nav__decorative-icon {
+// Side nav pin
+.#{$prefix}--side-nav__pin {
   @include focus-outline('reset');
 
   position: relative;

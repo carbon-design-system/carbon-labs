@@ -30,7 +30,7 @@ import { useMatchMedia } from '../internal/useMatchMedia';
 import { TranslateWithId } from '../types/common';
 import { SidePanelClose, SidePanelOpen } from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
-import SideNavDecorativeIcon from './SideNavDecorativeIcon';
+import SideNavPin from './SideNavPin';
 
 export enum SIDE_NAV_TYPE {
   DEFAULT = 'default',
@@ -547,7 +547,7 @@ function SideNavRenderFunction(
         {...accessibilityLabel}
         {...eventHandlers}
         {...other}>
-        {!isChildOfHeader && <SideNavDecorativeIcon expanded={expanded} />}
+        {!isChildOfHeader && <SideNavPin expanded={expanded} />}
         {childrenToRender}
         {navType === SIDE_NAV_TYPE.PANEL &&
           (expandedState ? (

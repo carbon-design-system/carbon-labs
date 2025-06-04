@@ -353,7 +353,7 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
   z-index: 7999; /* needs to be below header */
-  border-right: 1px solid $border-subtle;
+  border-inline-end: 1px solid $border-subtle;
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {

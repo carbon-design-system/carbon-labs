@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.69.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.68.0...@carbon-labs/react@0.69.0) (2025-06-04)
+
+
+### Bug Fixes
+
+* add breakpoint utility for responsive side-nav rail ([#624](https://github.com/carbon-design-system/carbon-labs/issues/624)) ([f0e422a](https://github.com/carbon-design-system/carbon-labs/commit/f0e422a1a2685fb6bb14f252c9321d43aec3bae1))
+
+
+
+
+
+# [0.68.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.67.0...@carbon-labs/react@0.68.0) (2025-06-04)
+
+
+### Reverts
+
+* Revert "feat(processing): set default theme g10 (#535)" (#641) ([e01d6f2](https://github.com/carbon-design-system/carbon-labs/commit/e01d6f2a35fa553cdf9ac020938cfa21e84d5ca5)), closes [#535](https://github.com/carbon-design-system/carbon-labs/issues/535) [#641](https://github.com/carbon-design-system/carbon-labs/issues/641)
+
+
+
+
+
+# [0.67.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.66.0...@carbon-labs/react@0.67.0) (2025-06-03)
+
+
+### Features
+
+* **processing:** set default theme g10 ([#535](https://github.com/carbon-design-system/carbon-labs/issues/535)) ([14fb24a](https://github.com/carbon-design-system/carbon-labs/commit/14fb24a6818e124df9afeb9cb1ddb2a0b8dcfebb))
+
+
+
+
+
 # [0.66.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.65.0...@carbon-labs/react@0.66.0) (2025-06-02)
 
 

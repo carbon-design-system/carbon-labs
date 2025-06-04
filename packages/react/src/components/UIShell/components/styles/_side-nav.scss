@@ -368,12 +368,15 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 // Slot
 //----------------------------------------------------------------------------
-
 .#{$prefix}--side-nav__slot {
   display: flex;
   align-items: center;
   margin: 0 $spacing-05;
   block-size: 2rem;
+}
+
+.#{$prefix}--side-nav__slot-item {
+  inline-size: 100%;
 }
 
 // icon shown when rail is collapsed
@@ -396,3 +399,16 @@ div:has(.#{$prefix}--header)
   .#{$prefix}--side-nav__slot-item {
   display: block;
 }
+
+//dropdown within slot
+// .#{$prefix}--side-nav__slot .#{$prefix}--dropdown__wrapper {
+//   width: 100%;
+// }
+
+// .cds--list-box {
+//   width: 100%;
+// }
+
+// .cds--dropdown__field {
+//   width: 100%;
+// }

@@ -41,7 +41,7 @@ import {
   Link,
   Button,
   Search,
-  MenuItem,
+  Dropdown,
 } from '@carbon/react';
 import {
   Add,
@@ -68,6 +68,7 @@ import {
   Share,
   User,
   Search as SearchIcon,
+  VirtualColumnKey,
 } from '@carbon/icons-react';
 
 import {
@@ -511,7 +512,7 @@ export const SideNavStory = () => (
     isChildOfHeader={false}
     aria-label="Side navigation">
     <SideNavItems>
-      <SideNavSlot>
+      <SideNavSlot renderIcon={SearchIcon}>
         <Search
           size="sm"
           placeholder="Filter"
@@ -520,14 +521,20 @@ export const SideNavStory = () => (
         />
       </SideNavSlot>
       <SideNavDivider />
-      {/* <SideNavSlot>
-        <MenuButton size="sm" kind="tertiary" label="Menu button">
-          <MenuItem label="First action" />
-          <MenuItem label="Second action" />
-          <MenuItem label="Third action" />
-        </MenuButton>
+      <SideNavSlot renderIcon={VirtualColumnKey}>
+        <Dropdown
+          id="default"
+          size="sm"
+          itemToString={(item) => (item ? item.text : '')}
+          items={[
+            { text: 'Option 1' },
+            { text: 'Option 2' },
+            { text: 'Option 3' },
+          ]}
+          label="Dropdown"
+        />
       </SideNavSlot>
-      <SideNavDivider /> */}
+      <SideNavDivider />
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
@@ -682,6 +689,20 @@ export const SideNavRail = () => (
           placeholder="Filter"
           closeButtonLabelText="Clear input"
           id="filter-1"
+        />
+      </SideNavSlot>
+      <SideNavDivider />
+      <SideNavSlot renderIcon={VirtualColumnKey}>
+        <Dropdown
+          id="default"
+          size="sm"
+          itemToString={(item) => (item ? item.text : '')}
+          items={[
+            { text: 'Option 1' },
+            { text: 'Option 2' },
+            { text: 'Option 3' },
+          ]}
+          label="Dropdown"
         />
       </SideNavSlot>
       <SideNavDivider />

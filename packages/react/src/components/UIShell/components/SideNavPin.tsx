@@ -10,7 +10,15 @@ import PropTypes from 'prop-types';
 import { Menu, Pin } from '@carbon/icons-react';
 import { usePrefix } from '../internal/usePrefix';
 
-export default function SideNavPin({ expanded }) {
+export interface SideNavPinProps {
+  enableRailPin?: boolean;
+  expanded?: boolean;
+}
+
+export default function SideNavPin({
+  enableRailPin = false,
+  expanded,
+}: SideNavPinProps) {
   const prefix = usePrefix();
   const className = cx({
     [`${prefix}--side-nav__pin`]: true,
@@ -19,12 +27,18 @@ export default function SideNavPin({ expanded }) {
   return (
     <div className={className}>
       <Menu />
-      {expanded && <Pin />}
+      {enableRailPin && expanded && <Pin />}
     </div>
   );
 }
 
 SideNavPin.propTypes = {
+  /**
+   * If `true`, the Pin icon will be rendered.
+   * This prop is used to conditionally render the Pin icon.
+   */
+  enableRailPin: PropTypes.bool,
+
   /**
    * If `true`, the SideNav will be expanded, otherwise it will be collapsed.
    * This prop is used to conditionally render the Pin icon.

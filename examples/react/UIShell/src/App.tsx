@@ -317,7 +317,8 @@ function App() {
             hideRailBreakpointDown="md"
             isRail
             isChildOfHeader={false}
-            aria-label="Side navigation">
+            aria-label="Side navigation"
+            className="nav--local">
             <SideNavItems>
               <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
                 <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>

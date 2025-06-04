@@ -353,6 +353,7 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
   z-index: 7999; /* needs to be below header */
+  border-inline-end: 1px solid $border-subtle;
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
@@ -372,4 +373,16 @@ div:has(.#{$prefix}--header)
   opacity: 1;
   transition: opacity $transition-expansion $standard-easing,
     background-color $transition-expansion $standard-easing;
+}
+
+// Side nav pin
+.#{$prefix}--side-nav__pin {
+  @include focus-outline('reset');
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-05 $spacing-05 0;
+  min-block-size: $spacing-05;
 }

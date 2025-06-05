@@ -7,7 +7,7 @@
 
 import cx from 'classnames';
 import PropTypes from 'prop-types';
-import React, { ComponentType } from 'react';
+import React, { ComponentType, KeyboardEvent, useCallback } from 'react';
 import { usePrefix } from '../internal/usePrefix';
 
 export interface SideNavSlotProps {
@@ -36,6 +36,10 @@ export const SideNavSlot: React.FC<SideNavSlotProps> = ({
   const prefix = usePrefix();
   const className = cx(`${prefix}--side-nav__slot`, customClassName);
 
+  const handleKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  }, []);
+
   return (
     <li className={className}>
       {IconElement && (
@@ -43,7 +47,13 @@ export const SideNavSlot: React.FC<SideNavSlotProps> = ({
           <IconElement />
         </div>
       )}
-      <div className={`${prefix}--side-nav__slot-item`}>{children}</div>
+      <div
+        role="presentation"
+        tabIndex={-1}
+        onKeyDown={handleKeyDown}
+        className={`${prefix}--side-nav__slot-item`}>
+        {children}
+      </div>
     </li>
   );
 };

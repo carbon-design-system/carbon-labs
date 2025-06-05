@@ -507,6 +507,7 @@ Default.parameters = {
  */
 export const SideNavStory = () => (
   <SideNav
+    isTreeview
     isFixedNav
     expanded
     isChildOfHeader={false}

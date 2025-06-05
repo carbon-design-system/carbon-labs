@@ -238,7 +238,6 @@ export const ThemeG10 = (args) => {
     });
   };
 
-
   const handleTileGroupSelect = (e) => {
     console.log(e);
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });

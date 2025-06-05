@@ -238,11 +238,9 @@ export const ThemeG10 = (args) => {
     });
   };
 
-  console.log('test');
 
   const handleTileGroupSelect = (e) => {
     console.log(e);
-    console.log('test');
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 

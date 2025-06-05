@@ -291,7 +291,8 @@ body {
   opacity: 0;
 }
 
-.#{$prefix}__tile {
+// Fix for broken skeletons on Safari
+.#{$prefix}__tile:not(:has([class*='--loading-skeleton'])) {
   animation: 500ms motion.motion(standard, expressive) 0ms 1 slide-in;
   animation-fill-mode: both;
 }

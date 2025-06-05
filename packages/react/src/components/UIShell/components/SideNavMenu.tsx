@@ -381,7 +381,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
                 'a, button'
               ) as HTMLElement;
 
-              if (nextNode) {                nextNode.tabIndex = 0;
+              if (nextNode) {
+                nextNode.tabIndex = 0;
                 nextNode.focus();
               }
 

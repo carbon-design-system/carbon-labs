@@ -96,7 +96,7 @@ div:has(.#{$prefix}--header)
 }
 
 .#{$prefix}--side-nav__item--primary
-  .#{$prefix}--side-nav__submenu[aria-expanded='true']
+  > .#{$prefix}--side-nav__submenu[aria-expanded='true']
   .#{$prefix}--side-nav__submenu-chevron
   > svg {
   transform: none;

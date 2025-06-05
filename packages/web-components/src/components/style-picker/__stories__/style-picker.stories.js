@@ -7,9 +7,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '../components/style-picker/style-picker';
 import { html } from 'lit';
+import '../components/style-picker/style-picker';
 import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
+import { POPOVER_ALIGNMENT } from '@carbon/web-components/es/components/popover/defs';
+import '@carbon/web-components/es/components/button/button.js';
 
 /**
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
@@ -35,7 +37,7 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: (args) =>
-    html` <clabs-style-picker>
-      ${args.label}${ArrowRight16({ slot: 'icon' })}
+    html` <clabs-style-picker open>
+      <cds-button slot="trigger">Trigger</cds-button>
     </clabs-style-picker>`,
 };

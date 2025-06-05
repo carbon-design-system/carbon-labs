@@ -7,5 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import './components/style-picker/style-picker.js';
-import './components/style-picker-modules/style-picker-modules.js';
+export type Kind = 'single';

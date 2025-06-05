@@ -8,6 +8,9 @@
  */
 
 import { html } from 'lit';
+import '../../style-picker-modules/style-picker-modules';
+import '@carbon/web-components/es/components/popover/popover';
+import '@carbon/web-components/es/components/popover/popover-content';
 
 /**
  * Lit template for card
@@ -16,6 +19,11 @@ import { html } from 'lit';
  * @returns {TemplateResult<1>} Lit html template
  */
 export const stylePickerTemplate = (customElementClass) => {
-  console.log(customElementClass)
-  return html`<h1>hello</h1>`;
-}
+  return html`<cds-popover open>
+    <slot name="trigger"></slot>
+    <cds-popover-content>
+      <!-- <clabs-style-picker-modules></clabs-style-picker-modules> -->
+      Hello modules
+    </cds-popover-content>
+  </cds-popover>`;
+};

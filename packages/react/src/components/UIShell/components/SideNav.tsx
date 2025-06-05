@@ -243,19 +243,29 @@ function SideNavRenderFunction(
     }
   }, [prefix, internalIsTreeview]);
 
+  const smMediaQuery = `(min-width: ${breakpoints.sm.width})`;
+  const isSm = useMatchMedia(smMediaQuery);
+
   useEffect(() => {
     if (sideNavRef.current) {
-      const currentElement = sideNavRef?.current.querySelector(
-        `.${prefix}--side-nav__link--current`
+      const backButton = sideNavRef?.current.querySelector(
+        `.${prefix}--side-nav__back-button`
       ) as HTMLElement;
       const firstElement = sideNavRef?.current?.querySelector(
         'a, button'
       ) as HTMLElement;
 
       if (navType == SIDE_NAV_TYPE.PANEL || expanded) {
-        if (currentElement) {
-          currentElement.tabIndex = 0;
-        } else if (firstElement) {
+        if (isSm && backButton) {
+          backButton.tabIndex = 0;
+          const firstElementAfterBack =
+            backButton.nextElementSibling?.querySelector(
+              'a, button'
+            ) as HTMLElement;
+          if (firstElementAfterBack) {
+            firstElementAfterBack.tabIndex = 0;
+          }
+        } else {
           firstElement.tabIndex = 0;
         }
       }
@@ -531,7 +541,10 @@ function SideNavRenderFunction(
   function resetNodeTabIndices() {
     const items = sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [];
     items.forEach((item) => {
-      if (item.classList.contains(`${prefix}--side-nav__toggle`)) {
+      if (
+        item.classList.contains(`${prefix}--side-nav__toggle`) ||
+        item.classList.contains(`${prefix}--side-nav__back-button`)
+      ) {
         return;
       }
       item.tabIndex = -1;

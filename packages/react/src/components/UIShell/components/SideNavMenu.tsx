@@ -360,7 +360,11 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           }
         }
 
-        if (match(event, keys.ArrowRight)) {
+        if (
+          match(event, keys.ArrowRight) ||
+          match(event, keys.Enter) ||
+          match(event, keys.Space)
+        ) {
           event.stopPropagation();
 
           // expand menu when sidenav is expanded
@@ -372,14 +376,21 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
             }
 
             // if already expanded, focus on first element
-            if (isExpanded == 'true') {
-              let nextNode = node.nextElementSibling?.querySelector(
+            if (isExpanded == 'true' || isSm) {
+              const nextNode = node.nextElementSibling?.querySelector(
                 'a, button'
               ) as HTMLElement;
 
-              if (nextNode) {
-                nextNode.tabIndex = 0;
+              if (nextNode) {                nextNode.tabIndex = 0;
                 nextNode.focus();
+              }
+
+              if (isSm) {
+                const nextNodeAfterBackButton =
+                  nextNode.nextElementSibling?.querySelector(
+                    'a, button'
+                  ) as HTMLElement;
+                nextNodeAfterBackButton.tabIndex = 0;
               }
             }
           }
@@ -430,6 +441,13 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const [openPopover, setOpenPopover] = React.useState(false);
 
     const isSm = useMatchMedia(smMediaQuery);
+
+    // keeps the secondary open when moving from small to large breakpoints
+    useEffect(() => {
+      if (!isSm && uniqueId === currentPrimaryMenu) {
+        setIsExpanded(true);
+      }
+    }, [isSm]);
 
     const content = (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions

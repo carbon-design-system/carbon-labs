@@ -49,10 +49,11 @@ body {
   overflow: visible;
   background: $background;
   inline-size: 100%;
+  max-block-size: 200vh;
   outline: 1px solid transparent;
   padding-block: 0 $spacing-10;
   transition: padding 500ms motion.motion(standard, expressive),
-    max-height 500ms motion.motion(standard, expressive), color 200ms linear,
+    max-block-size 500ms motion.motion(standard, expressive), color 200ms linear,
     background-color 200ms linear,
     outline 500ms motion.motion(standard, expressive);
   writing-mode: horizontal-tb;

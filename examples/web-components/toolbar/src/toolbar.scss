@@ -1,0 +1,90 @@
+/*
+* Copyright IBM Corp. 2025, 2025
+*
+* This source code is licensed under the Apache-2.0 license found in the
+* LICENSE file in the root directory of this source tree.
+*/
+
+$css--plex: true !default;
+
+/* Other Carbon settings. */
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/colors';
+@use 'sass:map';
+@use '@carbon/styles';
+
+$prefix: 'c4p';
+$carbon-prefix: 'cds';
+
+$block-class: #{$prefix}--import-modal;
+
+:root {
+  @include theme(themes.$white);
+
+  background-color: var(--cds-background);
+  color: var(--cds-text-primary);
+}
+
+.#{$prefix}-stack {
+  background-color: $layer-01;
+}
+
+.toolbar {
+  display: inline-flex;
+  background: var(--cds-layer);
+
+  svg {
+    pointer-events: none;
+  }
+
+  &[orientation='vertical'] {
+    max-inline-size: 2.5rem;
+  }
+}
+
+.toolbar-group {
+  flex-direction: row;
+  border-block-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+  border-inline-end: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+
+  &[orientation='vertical'] {
+    border-inline-end: none;
+    max-inline-size: 2.5rem;
+
+    &:last-child {
+      border-block-end: none;
+    }
+  }
+
+  &:last-child {
+    border-inline-end: none;
+  }
+}
+
+// css for adding caret through class name
+.toolbar-button-caret {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    background: linear-gradient(
+      to right bottom,
+      transparent 50%,
+      var(--cds-icon-primary, #161616) 50%
+    );
+    block-size: calc(0.125rem + 0.25rem);
+    content: '';
+    inline-size: calc(0.125rem + 0.25rem);
+    inset-block-end: 0.175rem;
+    inset-inline-end: 0.175rem;
+  }
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  margin: 3rem;
+  gap: 3rem;
+}

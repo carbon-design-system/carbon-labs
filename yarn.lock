@@ -2798,6 +2798,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.14.0"
+    "@carbon/web-components": "npm:2.19.0"
+    "@lit/context": "npm:^1.1.5"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/web-components@workspace:packages/web-components":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/web-components@workspace:packages/web-components"
@@ -4922,12 +4933,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@lit/context@npm:^1.1.5":
+  version: 1.1.5
+  resolution: "@lit/context@npm:1.1.5"
+  dependencies:
+    "@lit/reactive-element": "npm:^1.6.2 || ^2.1.0"
+  checksum: 10c0/16ab105c8fa32db9407199ee5d0ef3751946490946bcdbbd6fe87ab7e09dbce1e00a58c46638340958e4520b69406b3b797ead00017c68db9b268d30c5eda5c3
+  languageName: node
+  linkType: hard
+
 "@lit/react@npm:^1.0.1":
   version: 1.0.3
   resolution: "@lit/react@npm:1.0.3"
   peerDependencies:
     "@types/react": 17 || 18
   checksum: 10c0/b1bd4adf7628fb0abc1c8ab6814d6fcfc5ac144397a3bc7a785e47aea1bee91f44be3695ff9411b8234c3d0a5e5d6e28808cf476b521ef5873503abb7782bb2b
+  languageName: node
+  linkType: hard
+
+"@lit/reactive-element@npm:^1.6.2 || ^2.1.0":
+  version: 2.1.0
+  resolution: "@lit/reactive-element@npm:2.1.0"
+  dependencies:
+    "@lit-labs/ssr-dom-shim": "npm:^1.2.0"
+  checksum: 10c0/3cd61c4e7cc8effeb2c246d5dada8fbe0a730e9e0dd488eb38c91a4f63b773e3b7f86f8384051677298e73de470c7ca6b5634df3ca190b307f8bb8e0d51bb91c
   languageName: node
   linkType: hard
 

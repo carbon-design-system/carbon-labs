@@ -49,11 +49,11 @@ body {
   overflow: visible;
   background: $background;
   inline-size: 100%;
-  max-block-size: 90vh;
+  max-block-size: 200vh;
   outline: 1px solid transparent;
   padding-block: 0 $spacing-10;
   transition: padding 500ms motion.motion(standard, expressive),
-    max-height 500ms motion.motion(standard, expressive), color 200ms linear,
+    max-block-size 500ms motion.motion(standard, expressive), color 200ms linear,
     background-color 200ms linear,
     outline 500ms motion.motion(standard, expressive);
   writing-mode: horizontal-tb;
@@ -226,6 +226,18 @@ body {
   max-inline-size: fit-content;
 }
 
+.#{$prefix}__task-controller-skeleton {
+  block-size: $spacing-08;
+  inline-size: auto;
+  max-inline-size: 18rem;
+}
+
+.#{$prefix}__workspace-selector-skeleton {
+  block-size: $spacing-07;
+  inline-size: auto;
+  max-inline-size: 18rem;
+}
+
 .#{$prefix}__header-dropdown--container {
   inline-size: auto;
   max-inline-size: 18rem;
@@ -279,7 +291,8 @@ body {
   opacity: 0;
 }
 
-.#{$prefix}__tile {
+// Fix for broken skeletons on Safari
+.#{$prefix}__tile:not(:has([class*='--loading-skeleton'])) {
   animation: 500ms motion.motion(standard, expressive) 0ms 1 slide-in;
   animation-fill-mode: both;
 }
@@ -482,10 +495,8 @@ body {
     inline-size: calc(100% - 16px);
   }
 
-  .#{$prefix}__tiles-container:has(> :first-child)
-    > ##{$prefix}__ai-prompt-tile
-    ~ .#{$prefix}__glass-tile {
-    inline-size: calc(50% - 16px);
+  .#{$prefix}__tiles-container > ##{$prefix}__ai-prompt-tile {
+    flex-grow: 0.5;
   }
 }
 

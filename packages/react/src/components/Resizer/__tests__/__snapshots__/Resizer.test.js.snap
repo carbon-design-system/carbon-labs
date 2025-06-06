@@ -5,7 +5,7 @@ exports[`Resizer renders as expected - Component API should match snapshot 1`] =
   <div
     aria-live="assertive"
     aria-orientation="vertical"
-    class="clabs--resizer clabs--resizer--vertical"
+    class="clabs__resizer clabs__resizer--vertical"
     data-testid="resizer"
     role="separator"
     tabindex="0"

@@ -43,7 +43,7 @@ export const SinglePanelNoBoundaries = () => (
           transition: all 150ms linear;
         }
 
-        .clabs--resizer--horizontal::before {
+        .clabs__resizer--horizontal::before {
           content: "";
           height: calc(100% + 1rem);
           top: -0.5rem;
@@ -95,7 +95,7 @@ export const SinglePanelBounded = () => {
         transition: all 150ms linear;
       }
 
-      .clabs--resizer--horizontal::before {
+      .clabs__resizer--horizontal::before {
         content: "";
         height: calc(100% + 1rem);
         top: -0.5rem;
@@ -169,7 +169,7 @@ export const SinglePanelOverlay = () => (
         transition: all 150ms linear;
       }
 
-      .clabs--resizer--horizontal::before {
+      .clabs__resizer--horizontal::before {
         content: "";
         height: calc(100% + 1rem);
         top: -0.5rem;
@@ -223,7 +223,7 @@ export const TwoPanelsHorizontal = () => (
         transition: all 150ms linear;
       }
 
-      .clabs--resizer--horizontal::before {
+      .clabs__resizer--horizontal::before {
         content: "";
         height: calc(100% + 1rem);
         top: -0.5rem;
@@ -275,7 +275,7 @@ export const TwoPanelsVertical = () => (
         transition: all 150ms linear;
       }
 
-      .clabs--resizer--vertical::before {
+      .clabs__resizer--vertical::before {
         content: "";
         height: 100%;
         left: -0.5rem;
@@ -348,7 +348,7 @@ export const FourPanels = () => (
         margin-top: 0;
       }
 
-      .clabs--resizer--vertical::before {
+      .clabs__resizer--vertical::before {
         content: "";
         height: 100%;
         left: -0.5rem;
@@ -357,7 +357,7 @@ export const FourPanels = () => (
         // background: #ff00002e;
       }
 
-      .clabs--resizer--horizontal::before {
+      .clabs__resizer--horizontal::before {
         content: "";
         height: calc(100% + 1rem);
         top: -0.5rem;
@@ -496,7 +496,7 @@ export const TwoPanelsVerticalGrid = () => {
           min-inline-size: 48px;
         }
 
-        .clabs--resizer--vertical::before {
+        .clabs__resizer--vertical::before {
           content: "";
           height: 100%;
           left: -0.5rem;

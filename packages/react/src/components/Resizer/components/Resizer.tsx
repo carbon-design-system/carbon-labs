@@ -44,14 +44,14 @@ const getRefElement = <T extends HTMLElement>(
 
 export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
   (
-    { orientation, onResize, onResizeEnd, onDoubleClick, ...rest },
+    { orientation, onResize, onResizeEnd, onDoubleClick, className, ...rest },
     forwardedRef
   ) => {
     const prefix = usePrefix();
-    const blockClass = `${prefix}--resizer`;
+    const blockClass = `${prefix}__resizer`;
 
     const internalRef = useRef<HTMLDivElement>(null);
-    const ref = forwardedRef || internalRef;
+    const ref = forwardedRef || internalRef; // combine refs, forwarded ref takes priority over internal ref
     const [isResizing, setIsResizing] = useState(false);
     const startPos = useRef({ x: 0, y: 0 });
     // Sizes of the previous and next siblings, gets modified during resizing
@@ -307,28 +307,23 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
       }
     };
 
-    // destructure ref
-    const { ref: _, ...restWithoutRef } = rest;
-
     return (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <div
-        {...restWithoutRef}
+        {...rest}
         ref={ref as React.RefObject<HTMLDivElement>}
         role="separator"
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
-        aria-orientation={
-          orientation === 'horizontal' ? 'horizontal' : 'vertical'
-        }
+        aria-orientation={orientation}
         aria-live="assertive"
         onMouseDown={handleMouseDown}
         onDoubleClick={handleDoubleClick}
         onKeyDown={handleKeyDown}
         className={cx([
+          className,
           blockClass,
           `${blockClass}--${orientation}`,
-          rest.className,
         ])}>
         <span className="sr-only">
           Use arrow keys to resize, hold Shift for larger steps. Double-click to

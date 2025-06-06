@@ -272,7 +272,10 @@ function App() {
             onOverlayClick={onClickSideNavExpand}
             className="nav--global">
             <SideNavItems>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu level 1">
+              <SideNavMenu
+                renderIcon={SquareOutline}
+                title="Sub-menu level 1"
+                primary>
                 <SideNavMenuItem renderIcon={SquareOutline} href="#">
                   Item level 2
                 </SideNavMenuItem>
@@ -287,16 +290,16 @@ function App() {
                   <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                 </SideNavMenu>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
               <SideNavDivider />
@@ -306,7 +309,7 @@ function App() {
               <SideNavLink renderIcon={SquareOutline} href="#">
                 Link
               </SideNavLink>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>

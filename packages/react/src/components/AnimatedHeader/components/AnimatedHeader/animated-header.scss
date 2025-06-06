@@ -250,11 +250,13 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
+  margin-block-start: $spacing-08;
   opacity: 1;
   transition: opacity 500ms linear;
 }
 
 .#{$prefix}__workspace--container {
+  margin-block-start: calc(-1 * $spacing-08);
   min-block-size: $spacing-08;
   opacity: 1;
   transition: opacity 500ms linear;
@@ -449,6 +451,10 @@ body {
     margin-block-start: $spacing-06;
   }
 
+  .#{$prefix}__workspace--container {
+    margin-block-start: 0;
+  }
+
   .#{$prefix}__button-collapse--container .cds--popover-container {
     display: flex;
   }
@@ -484,7 +490,11 @@ body {
   }
 
   .#{$prefix}__content {
-    margin-block-start: 0;
+    margin-block-start: $spacing-08;
+  }
+
+  .#{$prefix}__workspace--container {
+    margin-block-start: calc(-1 * $spacing-08);
   }
 
   .#{$prefix}__tiles-container > .#{$prefix}__tile {

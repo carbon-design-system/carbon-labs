@@ -365,6 +365,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           match(event, keys.Enter) ||
           match(event, keys.Space)
         ) {
+          if(primary && node.hasAttribute('aria-expanded')){
+            event.preventDefault();
+          }
+
           event.stopPropagation();
 
           // expand menu when sidenav is expanded
@@ -391,7 +395,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
                   nextNode.nextElementSibling?.querySelector(
                     'a, button'
                   ) as HTMLElement;
-                nextNodeAfterBackButton.tabIndex = 0;
+                if(nextNodeAfterBackButton){
+                  nextNodeAfterBackButton.tabIndex = 0;
+                }
               }
             }
           }

@@ -227,13 +227,13 @@ body {
 }
 
 .#{$prefix}__task-controller-skeleton {
-  block-size: 40px;
+  block-size: $spacing-08;
   inline-size: auto;
   max-inline-size: 18rem;
 }
 
 .#{$prefix}__workspace-selector-skeleton {
-  block-size: 32px;
+  block-size: $spacing-07;
   inline-size: auto;
   max-inline-size: 18rem;
 }

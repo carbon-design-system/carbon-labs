@@ -115,7 +115,6 @@ const TasksController = ({
   }
 
   if (tasksControllerConfig?.type === 'dropdown' && dropdownProps) {
-    console.log(dropdownProps);
     return (
       <div className={`${blockClass}__header-dropdown--container`}>
         <Dropdown {...dropdownProps} />

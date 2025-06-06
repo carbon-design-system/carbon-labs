@@ -453,28 +453,8 @@ body {
     display: flex;
   }
 
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
-    > .#{$prefix}__tile {
+  .#{$prefix}__tiles-container > .#{$prefix}__tile {
     inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
-    inline-size: calc(33% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :first-child)
@@ -507,27 +487,11 @@ body {
     margin-block-start: 0;
   }
 
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
-    > .#{$prefix}__tile {
+  .#{$prefix}__tiles-container > .#{$prefix}__tile {
     inline-size: calc(33% - 16px);
   }
 
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
-    > .#{$prefix}__tile {
-    inline-size: calc(33% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
+  .#{$prefix}__tiles-container:has(> :nth-child(5)) > .#{$prefix}__tile {
     inline-size: calc(33% - 16px);
   }
 
@@ -553,27 +517,11 @@ body {
     background-size: 89% auto;
   }
 
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
-    > .#{$prefix}__tile {
+  .#{$prefix}__tiles-container > .#{$prefix}__tile {
     inline-size: calc(25% - 16px);
   }
 
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
-    > .#{$prefix}__tile {
-    inline-size: calc(33% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
-    > .#{$prefix}__tile {
-    inline-size: calc(25% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
+  .#{$prefix}__tiles-container:has(> :nth-child(5)) > .#{$prefix}__tile {
     inline-size: calc(25% - 16px);
   }
 

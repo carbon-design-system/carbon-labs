@@ -614,6 +614,7 @@ SideNavStory.storyName = 'SideNav';
  */
 export const SideNavDoubleWideStory = () => (
   <SideNav
+    isTreeview
     isFixedNav
     expanded
     isChildOfHeader={false}

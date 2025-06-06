@@ -360,11 +360,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           }
         }
 
-        if (
-          match(event, keys.ArrowRight) ||
-          match(event, keys.Enter) ||
-          match(event, keys.Space)
-        ) {
+        if (match(event, keys.ArrowRight)) {
+          setIsExpanded(true);
+
           if (primary && node.hasAttribute('aria-expanded')) {
             event.preventDefault();
           }
@@ -373,8 +371,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
           // expand menu when sidenav is expanded
           if (isMenu && sideNavExpanded) {
-            setIsExpanded(true);
-
             if (onMenuToggle) {
               onMenuToggle();
             }

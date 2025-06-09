@@ -15,7 +15,7 @@ $prefix: 'clabs' !default;
 .#{$prefix}__resizer {
   position: relative;
   flex: none;
-  background-color: $border-subtle-01;
+  background-color: $border-subtle;
 
   &:hover {
     @media (prefers-reduced-motion: no-preference) {

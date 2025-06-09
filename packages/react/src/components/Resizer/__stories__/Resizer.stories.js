@@ -37,7 +37,7 @@ export const SinglePanelNoBoundaries = () => (
 
         .single-panel__panel {
           padding: 1rem;
-          background-color: var(--cds-layer-01);
+          background-color: var(--cds-layer);
           min-block-size: 3rem;
           overflow: auto;
           transition: all 150ms linear;
@@ -89,7 +89,7 @@ export const SinglePanelBounded = () => {
 
       .single-panel-bounded__panel {
         padding: 1rem;
-        background-color: var(--cds-layer-01);
+        background-color: var(--cds-layer);
         min-block-size: 3rem;
         overflow: auto;
         transition: all 150ms linear;
@@ -155,7 +155,7 @@ export const SinglePanelOverlay = () => (
         left: 0;
         width: 100%;
         max-height: 400px;
-        background-color: var(--cds-layer-01);
+        background-color: var(--cds-layer);
         z-index: 1;
         display: flex;
         flex-direction: column;
@@ -216,7 +216,7 @@ export const TwoPanelsHorizontal = () => (
 
       .two-panels-horizontal__panel {
         height: 100%;
-        background-color: var(--cds-layer-01);
+        background-color: var(--cds-layer);
         padding: 1rem;
         overflow: auto;
         min-block-size: 48px;
@@ -268,7 +268,7 @@ export const TwoPanelsVertical = () => (
       }
 
       .two-panels-vertical__panel {
-        background-color: var(--cds-layer-01);
+        background-color: var(--cds-layer);
         padding: 1rem;
         overflow: auto;
         min-inline-size: 48px;
@@ -329,7 +329,7 @@ export const FourPanels = () => (
 
       .four-panels__panel {
         padding: 1rem;
-        background-color: var(--cds-layer-01);
+        background-color: var(--cds-layer);
         overflow: auto;
         min-block-size: 3rem;
         height: 50%;
@@ -490,7 +490,7 @@ export const TwoPanelsVerticalGrid = () => {
         }
 
         .two-panels-vertical-grid__panel {
-          background-color: var(--cds-layer-01);
+          background-color: var(--cds-layer);
           padding: 1rem;
           overflow: auto;
           min-inline-size: 48px;

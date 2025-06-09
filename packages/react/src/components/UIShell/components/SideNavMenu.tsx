@@ -318,6 +318,17 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         const isExpanded = node.getAttribute('aria-expanded');
         const parent = parentSideNavMenu(node) as HTMLElement;
 
+        if (match(event, keys.Tab)) {
+          const slotElement = node.closest(`.${prefix}--side-nav__slot`);
+          if (slotElement) {
+            (
+              slotElement.nextElementSibling?.nextElementSibling?.querySelector(
+                'a, button'
+              ) as HTMLElement
+            ).tabIndex = 0;
+          }
+        }
+
         if (match(event, keys.ArrowLeft)) {
           event.stopPropagation();
 

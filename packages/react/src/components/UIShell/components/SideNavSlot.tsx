@@ -37,7 +37,7 @@ export const SideNavSlot: React.FC<SideNavSlotProps> = ({
   const className = cx(`${prefix}--side-nav__slot`, customClassName);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    if (e.key === 'ArrowDown') {
       e.stopPropagation();
     }
   };

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.70.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.69.0...@carbon-labs/react@0.70.0) (2025-06-09)
+
+
+### Features
+
+* **ui-shell:** double wide ([#628](https://github.com/carbon-design-system/carbon-labs/issues/628)) ([cae7b12](https://github.com/carbon-design-system/carbon-labs/commit/cae7b124e0669957cf6d3a6c94da8d020b882381))
+
+
+
+
+
 # [0.69.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.68.0...@carbon-labs/react@0.69.0) (2025-06-04)
 
 

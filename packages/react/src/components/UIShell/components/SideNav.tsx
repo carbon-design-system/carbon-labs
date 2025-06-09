@@ -547,7 +547,11 @@ function SideNavRenderFunction(
     items.forEach((item) => {
       if (
         item.classList.contains(`${prefix}--side-nav__toggle`) ||
-        item.classList.contains(`${prefix}--side-nav__back-button`)
+        item.classList.contains(`${prefix}--side-nav__back-button`) ||
+        // checks if a link is in primary nav
+        (item.classList.contains(`${prefix}--side-nav__link`) &&
+          (item as HTMLElement).closest(`ul`)?.getAttribute('aria-label') ===
+            ariaLabel)
       ) {
         return;
       }

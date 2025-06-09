@@ -473,7 +473,8 @@ export const Default = () => {
             hideRailBreakpointDown="md"
             isChildOfHeader={false}
             isRail
-            aria-label="Product navigation">
+            aria-label="Product navigation"
+            className="nav--local">
             <SideNavItems>
               <SideNavSlot renderIcon={Menu}>
                 <Menu />

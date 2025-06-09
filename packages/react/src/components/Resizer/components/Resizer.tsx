@@ -182,7 +182,7 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
         event.stopPropagation();
 
         const element = getRefElement(ref);
-        if (!element) {
+        if (!element || event.button !== 0) {
           return;
         }
 

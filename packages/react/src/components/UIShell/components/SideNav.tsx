@@ -265,7 +265,7 @@ function SideNavRenderFunction(
           if (firstElementAfterBack) {
             firstElementAfterBack.tabIndex = 0;
           }
-        } else {
+        } else if (firstElement) {
           firstElement.tabIndex = 0;
         }
       }

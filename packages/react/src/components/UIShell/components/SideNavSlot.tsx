@@ -36,9 +36,11 @@ export const SideNavSlot: React.FC<SideNavSlotProps> = ({
   const prefix = usePrefix();
   const className = cx(`${prefix}--side-nav__slot`, customClassName);
 
-  const handleKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-  }, []);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.stopPropagation();
+    }
+  };
 
   return (
     <li className={className}>

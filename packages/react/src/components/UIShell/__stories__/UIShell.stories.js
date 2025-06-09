@@ -340,6 +340,7 @@ export const Default = () => {
                 defaultExpanded>
                 <SideNavSlot renderIcon={VirtualColumnKey}>
                   <Dropdown
+                    aria-label="Choose an option"
                     id="default"
                     size="sm"
                     itemToString={(item) => (item ? item.text : '')}
@@ -677,6 +678,21 @@ export const SideNavDoubleWideStory = () => (
         title="Sub-menu level 1"
         primary
         defaultExpanded>
+        <SideNavSlot>
+          <Dropdown
+            aria-label="Choose an option"
+            id="default"
+            size="sm"
+            itemToString={(item) => (item ? item.text : '')}
+            items={[
+              { text: 'Option 1' },
+              { text: 'Option 2' },
+              { text: 'Option 3' },
+            ]}
+            label="Choose an option"
+          />
+        </SideNavSlot>
+        <SideNavDivider />
         <SideNavMenu renderIcon={Fade} title="Sub-menu level 2">
           <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
@@ -813,6 +829,7 @@ export const SideNavRail = () => (
     <SideNavItems>
       <SideNavSlot renderIcon={VirtualColumnKey}>
         <Dropdown
+          aria-label="Choose an option"
           id="default"
           size="sm"
           itemToString={(item) => (item ? item.text : '')}

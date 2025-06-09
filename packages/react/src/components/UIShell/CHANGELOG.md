@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.43.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.42.0...@carbon-labs/react-ui-shell@0.43.0) (2025-06-09)
+
+
+### Features
+
+* **ui-shell:** double wide ([#628](https://github.com/carbon-design-system/carbon-labs/issues/628)) ([cae7b12](https://github.com/carbon-design-system/carbon-labs/commit/cae7b124e0669957cf6d3a6c94da8d020b882381))
+
+
+
+
+
+# [0.42.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.41.0...@carbon-labs/react-ui-shell@0.42.0) (2025-06-04)
+
+
+### Bug Fixes
+
+* add breakpoint utility for responsive side-nav rail ([#624](https://github.com/carbon-design-system/carbon-labs/issues/624)) ([f0e422a](https://github.com/carbon-design-system/carbon-labs/commit/f0e422a1a2685fb6bb14f252c9321d43aec3bae1))
+
+
+
+
+
 # [0.41.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.40.0...@carbon-labs/react-ui-shell@0.41.0) (2025-06-02)
 
 

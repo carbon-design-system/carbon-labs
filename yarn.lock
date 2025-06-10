@@ -2579,6 +2579,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/firstTimeOrientation@workspace:packages/react/src/components/FirstTimeOrientation":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/firstTimeOrientation@workspace:packages/react/src/components/FirstTimeOrientation"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+    "@ibm/telemetry-js": "npm:^1.9.1"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/mdx-components@workspace:packages/react/src/components/MDXComponents":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/mdx-components@workspace:packages/react/src/components/MDXComponents"

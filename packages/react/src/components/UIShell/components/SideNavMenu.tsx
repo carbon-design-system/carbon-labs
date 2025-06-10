@@ -421,7 +421,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }, [isExpanded]);
 
     useEffect(() => {
-      if (currentPrimaryMenu !== uniqueId) {
+      if (primary && currentPrimaryMenu !== uniqueId) {
         setIsExpanded(false);
       } else {
         setIsExpanded(true);
@@ -429,15 +429,15 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }, [currentPrimaryMenu]);
 
     // save expanded state before SideNav collapse
-    const [lastExpandedState, setLastExpandedState] = useState(isExpanded);
+    // const [lastExpandedState, setLastExpandedState] = useState(isExpanded); // this seems to be causing issues and not really needed?
 
     // reset to opened/collapsed menu state when Panel SideNav is toggled
     useEffect(() => {
       if (navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded) {
-        setLastExpandedState(isExpanded);
+        // setLastExpandedState(isExpanded);
         setIsExpanded(false);
       } else {
-        setIsExpanded(lastExpandedState);
+        // setIsExpanded(lastExpandedState);
       }
     }, [sideNavExpanded]);
 
@@ -480,7 +480,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               // window.location.href = firstLink.current;
             } else if (isSm || !primary || currentPrimaryMenu !== uniqueId) {
               setIsExpanded(!isExpanded);
-              setLastExpandedState(!isExpanded);
+              // setLastExpandedState(!isExpanded);
             }
 
             if (isSm && backButtonRef.current) {

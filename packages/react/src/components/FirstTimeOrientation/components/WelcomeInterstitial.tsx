@@ -12,6 +12,7 @@ import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import { Column, FlexGrid, Row } from '@carbon/react';
 // @ts-ignore
 import welcomeInterstitialImage from './assets/welcomeInterstitial.png';
+import './styles/_firstTimeOrientation.scss';
 
 const WelcomeInterstitial = () => {
   const prefix = usePrefix();

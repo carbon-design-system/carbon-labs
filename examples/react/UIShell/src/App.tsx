@@ -21,6 +21,7 @@ import {
   HeaderPopoverButton,
   HeaderPopoverContent,
   TrialCountdown,
+  SideNavSlot,
 } from '@carbon-labs/react-ui-shell';
 import {
   SkipToContent,
@@ -38,6 +39,7 @@ import {
   ExpandableSearch,
   Link,
   Button,
+  Dropdown,
 } from '@carbon/react';
 import {
   Fade,
@@ -49,6 +51,7 @@ import {
   User,
   ShoppingCart,
   Switcher,
+  Menu,
 } from '@carbon/icons-react';
 
 const StoryContent = () => (
@@ -276,6 +279,21 @@ function App() {
                 renderIcon={SquareOutline}
                 title="Sub-menu level 1"
                 primary>
+                <SideNavSlot renderIcon={Fade}>
+                  <Dropdown
+                    aria-label="Choose an option"
+                    id="default"
+                    size="sm"
+                    itemToString={(item) => (item ? item.text : '')}
+                    items={[
+                      { text: 'Option 1' },
+                      { text: 'Option 2' },
+                      { text: 'Option 3' },
+                    ]}
+                    label="Choose an option"
+                  />
+                </SideNavSlot>
+                <SideNavDivider />
                 <SideNavMenuItem renderIcon={SquareOutline} href="#">
                   Item level 2
                 </SideNavMenuItem>
@@ -322,6 +340,23 @@ function App() {
             isChildOfHeader={false}
             aria-label="Side navigation">
             <SideNavItems>
+              <SideNavSlot renderIcon={Menu}>
+                <Menu />
+              </SideNavSlot>
+              <SideNavSlot renderIcon={VirtuFadelColumnKey}>
+                <Dropdown
+                  id="default"
+                  size="sm"
+                  itemToString={(item) => (item ? item.text : '')}
+                  items={[
+                    { text: 'Option 1' },
+                    { text: 'Option 2' },
+                    { text: 'Option 3' },
+                  ]}
+                  label="Choose an option"
+                />
+              </SideNavSlot>
+              <SideNavDivider />
               <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
                 <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
                 <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>

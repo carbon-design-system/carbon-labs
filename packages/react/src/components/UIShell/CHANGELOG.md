@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.44.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.43.0...@carbon-labs/react-ui-shell@0.44.0) (2025-06-10)
+
+
+### Bug Fixes
+
+* **ui-shell:** tabbing fixes ([#651](https://github.com/carbon-design-system/carbon-labs/issues/651)) ([b5d509b](https://github.com/carbon-design-system/carbon-labs/commit/b5d509b718b60d5b187cf2855e4383bb5c60c051))
+
+
+
+
+
 # [0.43.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.42.0...@carbon-labs/react-ui-shell@0.43.0) (2025-06-09)
 
 

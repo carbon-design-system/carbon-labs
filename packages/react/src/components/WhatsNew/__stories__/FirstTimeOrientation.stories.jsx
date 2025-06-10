@@ -72,4 +72,4 @@ export const FirstTimeOrientationStory = () => {
     </div>
   );
 };
-FirstTimeOrientationStory.storyName = 'First Time Orientation';
+FirstTimeOrientationStory.storyName = 'First-time orientation';

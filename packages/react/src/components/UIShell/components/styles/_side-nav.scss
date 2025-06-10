@@ -8,7 +8,9 @@
 @use '@carbon/styles/scss/utilities/convert' as convert;
 @use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 @use '@carbon/styles/scss/utilities/button-reset' as button-reset;
+@use '@carbon/react/scss/breakpoint' as breakpoint;
 @use '@carbon/styles/scss/utilities/focus-outline' as *;
+@use '@carbon/styles/scss/breakpoint' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/motion' as *;
 @use '@carbon/styles/scss/type' as *;
@@ -23,6 +25,10 @@ div:has(.#{$prefix}--header)
   .#{$prefix}--side-nav {
   block-size: calc(100% - $spacing-09);
   inset-block-start: $spacing-09;
+}
+
+.#{$prefix}--side-nav {
+  overflow: visible;
 }
 
 //----------------------------------------------------------------------------
@@ -90,10 +96,30 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-10;
 }
 
+.#{$prefix}--side-nav__item--primary
+  > .#{$prefix}--side-nav__submenu[aria-expanded='true']
+  .#{$prefix}--side-nav__submenu-chevron
+  > svg {
+  transform: none;
+}
+
+.#{$prefix}--side-nav__item--primary
+  > .#{$prefix}--side-nav__submenu[aria-expanded='true'] {
+  background-color: $background-selected;
+  color: $text-primary;
+}
+
 // with icon
 .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
   a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
   padding-inline-start: $spacing-09;
+}
+
+// with icon inside primary menu (double wide)
+.#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  .cds--side-nav__menu-secondary-wrapper
+  a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+  padding-inline-start: $spacing-05;
 }
 
 // Level 3
@@ -109,6 +135,24 @@ div:has(.#{$prefix}--header)
   .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
   a.#{$prefix}--side-nav__link {
   padding-inline-start: $spacing-12;
+}
+
+.#{$prefix}--side-nav__menu-secondary-wrapper {
+  position: absolute;
+  background-color: $layer-01;
+  block-size: 100%;
+  inline-size: 0;
+  inset-block-start: 0;
+  inset-inline-start: 100%;
+  transform: translateX(-100%);
+  transition: color $duration-fast-02, background-color $duration-fast-02,
+    outline $duration-fast-02;
+  will-change: inline-size;
+}
+
+.#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
+  inline-size: 16rem;
+  transform: translateX(0);
 }
 
 //----------------------------------------------------------------------------
@@ -354,6 +398,14 @@ div:has(.#{$prefix}--header)
   z-index: 7999; /* needs to be below header */
 }
 
+@each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
+  .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint} {
+    @include breakpoint-down($breakpoint) {
+      display: none;
+    }
+  }
+}
+
 // allow overlay to display at all breakpoints
 .#{$prefix}--side-nav__overlay-active {
   z-index: z('overlay');
@@ -363,4 +415,41 @@ div:has(.#{$prefix}--header)
   opacity: 1;
   transition: opacity $transition-expansion $standard-easing,
     background-color $transition-expansion $standard-easing;
+}
+
+// mobile
+@include breakpoint.breakpoint-down(md) {
+  .#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--expanded {
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
+  .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
+    z-index: 1;
+    inline-size: 100%;
+    inset-inline-start: 0;
+  }
+
+  .#{$prefix}--side-nav__back-button.#{$prefix}--btn--ghost {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 1rem;
+    inline-size: 100%;
+    max-inline-size: 100%;
+
+    &:focus {
+      box-shadow: inset 0 0 0 1px $focus;
+    }
+  }
+
+  .#{$prefix}--side-nav__back-button.#{$prefix}--btn--ghost:not([disabled]) {
+    svg {
+      align-self: center;
+      fill: $icon-interactive;
+    }
+
+    &:hover svg {
+      fill: $link-primary-hover;
+    }
+  }
 }

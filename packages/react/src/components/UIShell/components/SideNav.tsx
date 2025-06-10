@@ -62,6 +62,7 @@ export interface SideNavProps
     event: FocusEvent<HTMLElement> | KeyboardEvent<HTMLElement> | boolean,
     value: boolean
   ) => void;
+  hideRailBreakpointDown?: 'sm' | 'md' | 'lg' | 'xlg' | 'max';
   href?: string;
   isFixedNav?: boolean;
   isRail?: boolean;
@@ -84,6 +85,8 @@ interface SideNavContextData {
   navType?: SIDE_NAV_TYPE;
   isTreeview?: boolean;
   setIsTreeview?: (value: boolean) => void;
+  currentPrimaryMenu?: string;
+  setCurrentPrimaryMenu?: (value: string) => void;
 }
 
 export const SideNavContext = createContext<SideNavContextData>(
@@ -100,6 +103,7 @@ function SideNavRenderFunction(
     children,
     onToggle,
     className: customClassName,
+    hideRailBreakpointDown,
     href,
     isFixedNav = false,
     isRail,
@@ -129,6 +133,9 @@ function SideNavRenderFunction(
   const expanded = controlled ? expandedProp : expandedState;
   const sideNavRef = useRef<HTMLDivElement>(null);
   const navRef = useMergedRefs([sideNavRef, ref]);
+  const [currentPrimaryMenu, setCurrentPrimaryMenu] = useState<
+    string | undefined
+  >();
 
   const sideNavToggleText = expandedState
     ? t('collapse.sidenav')
@@ -155,6 +162,8 @@ function SideNavRenderFunction(
     [`${prefix}--side-nav`]: true,
     [`${prefix}--side-nav--expanded`]: expanded || expandedViaHoverState,
     [`${prefix}--side-nav--collapsed`]: !expanded && isFixedNav,
+    [`${prefix}--side-nav--hide-rail-breakpoint-down-${hideRailBreakpointDown}`]:
+      hideRailBreakpointDown,
     [`${prefix}--side-nav--rail`]: isRail,
     [`${prefix}--side-nav--panel`]: navType === SIDE_NAV_TYPE.PANEL,
     [`${prefix}--side-nav--ux`]: isChildOfHeader,
@@ -238,14 +247,31 @@ function SideNavRenderFunction(
     }
   }, [prefix, internalIsTreeview]);
 
+  const smMediaQuery = `(min-width: ${breakpoints.sm.width})`;
+  const isSm = useMatchMedia(smMediaQuery);
+
   useEffect(() => {
     if (sideNavRef.current) {
+      const backButton = sideNavRef?.current.querySelector(
+        `.${prefix}--side-nav__back-button`
+      ) as HTMLElement;
       const firstElement = sideNavRef?.current?.querySelector(
         'a, button'
       ) as HTMLElement;
 
-      if (firstElement && (navType == SIDE_NAV_TYPE.PANEL || expanded)) {
-        firstElement.tabIndex = 0;
+      if (navType == SIDE_NAV_TYPE.PANEL || expanded) {
+        if (isSm && backButton) {
+          backButton.tabIndex = 0;
+          const firstElementAfterBack =
+            backButton.nextElementSibling?.querySelector(
+              'a, button'
+            ) as HTMLElement;
+          if (firstElementAfterBack) {
+            firstElementAfterBack.tabIndex = 0;
+          }
+        } else if (firstElement) {
+          firstElement.tabIndex = 0;
+        }
       }
     }
   }, [expanded]);
@@ -335,9 +361,8 @@ function SideNavRenderFunction(
             treeWalker.currentNode
           ) as HTMLElement;
 
-          let previousSideNavMenu =
-            parentNode?.previousElementSibling as HTMLElement;
-
+          let previousSideNavMenu = treeWalker.currentNode
+            ?.previousSibling as HTMLElement;
           // skip the divider
           if (
             previousSideNavMenu?.classList.contains(
@@ -348,8 +373,22 @@ function SideNavRenderFunction(
               previousSideNavMenu?.previousElementSibling as HTMLElement;
           }
 
-          // when previous sibling is open, go to its last item
-          if (previousSideNavMenu?.getAttribute('aria-expanded') == 'true') {
+          if (
+            previousSideNavMenu?.classList.contains(
+              `${prefix}--side-nav__item--primary`
+            )
+          ) {
+            nextFocusNode = previousSideNavMenu;
+          } else if (
+            (treeWalker.currentNode as HTMLElement).classList.contains(
+              `${prefix}--side-nav__item--primary`
+            )
+          ) {
+            nextFocusNode = treeWalker.currentNode.previousSibling;
+          } // when previous sibling is open, go to its last item
+          else if (
+            previousSideNavMenu?.getAttribute('aria-expanded') == 'true'
+          ) {
             const allItems = previousSideNavMenu.querySelectorAll(
               `.${prefix}--side-nav__item`
             );
@@ -365,7 +404,12 @@ function SideNavRenderFunction(
             nextFocusNode = treeWalker.previousSibling();
 
             // first item in the menu, go back up to SideNavMenu button
-            if (nextFocusNode == null) {
+            if (
+              nextFocusNode == null &&
+              !parentNode.classList.contains(
+                `${prefix}--side-nav__item--primary`
+              )
+            ) {
               nextFocusNode = parentNode;
             }
           }
@@ -384,6 +428,19 @@ function SideNavRenderFunction(
                 treeWalker.currentNode
               ) as HTMLElement;
               nextFocusNode = parent?.nextElementSibling;
+            }
+          } else if (
+            (treeWalker.currentNode as HTMLElement).classList.contains(
+              `${prefix}--side-nav__item--primary`
+            )
+          ) {
+            nextFocusNode = treeWalker.currentNode.nextSibling as HTMLElement;
+            if (
+              (nextFocusNode as HTMLElement)?.classList.contains(
+                `${prefix}--side-nav__divider`
+              )
+            ) {
+              nextFocusNode = nextFocusNode!.nextSibling;
             }
           } else {
             nextFocusNode = treeWalker.nextNode();
@@ -488,7 +545,10 @@ function SideNavRenderFunction(
   function resetNodeTabIndices() {
     const items = sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [];
     items.forEach((item) => {
-      if (item.classList.contains(`${prefix}--side-nav__toggle`)) {
+      if (
+        item.classList.contains(`${prefix}--side-nav__toggle`) ||
+        item.classList.contains(`${prefix}--side-nav__back-button`)
+      ) {
         return;
       }
       item.tabIndex = -1;
@@ -526,6 +586,8 @@ function SideNavRenderFunction(
         navType,
         isTreeview: internalIsTreeview,
         setIsTreeview,
+        currentPrimaryMenu,
+        setCurrentPrimaryMenu,
       }}>
       {isFixedNav || hideOverlay ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
@@ -603,6 +665,13 @@ SideNav.propTypes = {
    * If `true`, the overlay will be hidden. Defaults to `false`.
    */
   hideOverlay: PropTypes.bool,
+
+  /**
+   * Specify the breakpoint at which the SideNav will be hidden.
+   * Can be one of `sm`, `md`, `lg`, `xlg`, or `max`.
+   * Only applies when `isRail` is `true`.
+   */
+  hideRailBreakpointDown: PropTypes.oneOf(['sm', 'md', 'lg', 'xlg', 'max']),
 
   /**
    * Provide the `href` to the id of the element on your package that is the

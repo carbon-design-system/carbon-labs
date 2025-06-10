@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-import '../../style-picker-modules/style-picker-modules';
+
 import '@carbon/web-components/es/components/popover/popover';
 import '@carbon/web-components/es/components/popover/popover-content';
 
@@ -19,11 +19,16 @@ import '@carbon/web-components/es/components/popover/popover-content';
  * @returns {TemplateResult<1>} Lit html template
  */
 export const stylePickerTemplate = (customElementClass) => {
-  return html`<cds-popover open>
+  const { align, kind, open, title } = customElementClass;
+
+  return html`<cds-popover
+    ?open=${open}
+    align=${align}
+    kind=${kind}
+    title=${title}>
     <slot name="trigger"></slot>
     <cds-popover-content>
-      <!-- <clabs-style-picker-modules></clabs-style-picker-modules> -->
-      Hello modules
+      <slot name="modules"></slot>
     </cds-popover-content>
   </cds-popover>`;
 };

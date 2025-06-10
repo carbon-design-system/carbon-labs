@@ -17,7 +17,6 @@ import { html } from 'lit';
  */
 export const stylePickerModulesTemplate = (customElementClass) => {
   const kind = customElementClass.stylePickerContext?.kind ?? 'default';
-  console.log(kind);
 
-  return html`<h1>Modules - ${kind}</h1>`;
+  return html`<slot></slot>`;
 };

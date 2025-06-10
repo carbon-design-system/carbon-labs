@@ -33,7 +33,6 @@ class CLABSStylePickerModules extends LitElement {
    * @returns {TemplateResult<1>}
    */
   render() {
-    console.log(this.stylePickerContext);
     return stylePickerModulesTemplate(this);
   }
 }

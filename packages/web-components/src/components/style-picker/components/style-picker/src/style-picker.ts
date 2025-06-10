@@ -36,12 +36,6 @@ class stylePicker extends LitElement {
   align = '';
 
   /**
-   * Specify whether a auto align functionality should be applied
-   */
-  @property({ type: Boolean, reflect: true })
-  autoalign = false;
-
-  /**
    * Define the picker variant
    */
   @property({ reflect: true })

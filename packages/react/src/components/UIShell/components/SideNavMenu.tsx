@@ -517,23 +517,25 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         </button>
 
         {primary ? (
-          <div className={primaryClassNames}>
-            <SideNavItems
-              accessibilityLabel={{ 'aria-label': `${title} submenu` }}>
-              {isSm && (
-                <Button
-                  ref={backButtonRef}
-                  kind="ghost"
-                  size="md"
-                  onClick={handleOnBackButtonClick}
-                  className={`${prefix}--side-nav__back-button`}
-                  renderIcon={backButtonRenderIcon}>
-                  {backButtonTitle}
-                </Button>
-              )}
-              <Layer>{childrenToRender}</Layer>
-            </SideNavItems>
-          </div>
+          <Layer>
+            <div className={primaryClassNames}>
+              <SideNavItems
+                accessibilityLabel={{ 'aria-label': `${title} submenu` }}>
+                {isSm && (
+                  <Button
+                    ref={backButtonRef}
+                    kind="ghost"
+                    size="md"
+                    onClick={handleOnBackButtonClick}
+                    className={`${prefix}--side-nav__back-button`}
+                    renderIcon={backButtonRenderIcon}>
+                    {backButtonTitle}
+                  </Button>
+                )}
+                {childrenToRender}
+              </SideNavItems>
+            </div>
+          </Layer>
         ) : (
           <ul className={`${prefix}--side-nav__menu`} role="group">
             {childrenToRender}

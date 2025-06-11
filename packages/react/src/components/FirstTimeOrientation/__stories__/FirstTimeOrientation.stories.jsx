@@ -9,7 +9,6 @@
 
 import React, { useState } from 'react';
 import './storybook.scss';
-import '../components/styles/_firstTimeOrientation.scss';
 import mdx from './FirstTimeOrientation.mdx';
 import { InterstitialScreen, pkg } from '@carbon/ibm-products';
 import { Button } from '@carbon/react';

@@ -255,6 +255,11 @@ function SideNavRenderFunction(
       const backButton = sideNavRef?.current.querySelector(
         `.${prefix}--side-nav__back-button`
       ) as HTMLElement;
+
+      const slotElement = sideNavRef?.current.querySelector(
+        `.${prefix}--side-nav__slot`
+      ) as HTMLElement;
+
       const firstElement = sideNavRef?.current?.querySelector(
         'a, button'
       ) as HTMLElement;
@@ -271,6 +276,17 @@ function SideNavRenderFunction(
           }
         } else if (firstElement) {
           firstElement.tabIndex = 0;
+
+          if (slotElement) {
+            const firstElementAfterSlot =
+              slotElement.nextElementSibling?.nextElementSibling?.querySelector(
+                'a, button'
+              ) as HTMLElement;
+
+            if (firstElementAfterSlot) {
+              firstElementAfterSlot.tabIndex = 0;
+            }
+          }
         }
       }
     }
@@ -548,9 +564,9 @@ function SideNavRenderFunction(
       if (
         item.classList.contains(`${prefix}--side-nav__toggle`) ||
         item.classList.contains(`${prefix}--side-nav__back-button`) ||
-        // checks if a link is in primary nav
+        item.closest(`.${prefix}--side-nav__slot-item`) ||
         (item.classList.contains(`${prefix}--side-nav__link`) &&
-          (item as HTMLElement).closest(`ul`)?.getAttribute('aria-label') ===
+          (item as HTMLElement).closest('ul')?.getAttribute('aria-label') ===
             ariaLabel)
       ) {
         return;

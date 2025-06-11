@@ -32,7 +32,7 @@ div:has(.#{$prefix}--header)
 }
 
 //----------------------------------------------------------------------------
-// Side-nav Collapsible
+// Collapsible
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--ux {
   inline-size: 0;
@@ -43,7 +43,7 @@ div:has(.#{$prefix}--header)
 }
 
 //----------------------------------------------------------------------------
-// Treeview Side-nav
+// Treeview
 //----------------------------------------------------------------------------
 
 .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
@@ -156,7 +156,7 @@ div:has(.#{$prefix}--header)
 }
 
 //----------------------------------------------------------------------------
-// Side-nav Panel
+// Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
   z-index: 7999; /* needs to be below header */
@@ -396,6 +396,7 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
   z-index: 7999; /* needs to be below header */
+  border-inline-end: 1px solid $border-subtle;
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
@@ -417,7 +418,44 @@ div:has(.#{$prefix}--header)
     background-color $transition-expansion $standard-easing;
 }
 
-// mobile
+//----------------------------------------------------------------------------
+// Slot
+//----------------------------------------------------------------------------
+.#{$prefix}--side-nav__slot {
+  display: flex;
+  align-items: center;
+  margin: 0 $spacing-05;
+  block-size: 2rem;
+}
+
+.#{$prefix}--side-nav__slot-item {
+  inline-size: 100%;
+}
+
+// icon shown when rail is collapsed
+.#{$prefix}--side-nav__slot .#{$prefix}--side-nav__icon {
+  display: none;
+}
+
+.#{$prefix}--side-nav--rail:not(.#{$prefix}--side-nav--expanded)
+  .#{$prefix}--side-nav__slot
+  .#{$prefix}--side-nav__icon {
+  display: block;
+}
+
+// hide slot item when rail collapsed
+.#{$prefix}--side-nav--rail .#{$prefix}--side-nav__slot-item {
+  display: none;
+}
+
+.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded
+  .#{$prefix}--side-nav__slot-item {
+  display: block;
+}
+
+//----------------------------------------------------------------------------
+// Mobile
+//----------------------------------------------------------------------------
 @include breakpoint.breakpoint-down(md) {
   .#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--expanded {
     inline-size: 100%;

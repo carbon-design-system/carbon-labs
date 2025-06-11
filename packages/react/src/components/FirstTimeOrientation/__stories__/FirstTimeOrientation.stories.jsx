@@ -9,6 +9,7 @@
 
 import React, { useState } from 'react';
 import './storybook.scss';
+import '../components/styles/_firstTimeOrientation.scss';
 import mdx from './FirstTimeOrientation.mdx';
 import { InterstitialScreen, pkg } from '@carbon/ibm-products';
 import { Button } from '@carbon/react';
@@ -37,7 +38,7 @@ export const FirstTimeOrientationStory = () => {
   pkg.component.InterstitialScreen = true;
 
   return (
-    <div  className="storyBody">
+    <div className="storyBody">
       <Button
         onClick={() => {
           setShowInterstitialModal(true);

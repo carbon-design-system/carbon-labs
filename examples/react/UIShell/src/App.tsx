@@ -278,7 +278,8 @@ function App() {
               <SideNavMenu
                 renderIcon={SquareOutline}
                 title="Sub-menu level 1"
-                primary>
+                primary
+                defaultExpanded>
                 <SideNavSlot renderIcon={Fade}>
                   <Dropdown
                     aria-label="Choose an option"
@@ -302,8 +303,11 @@ function App() {
                 </SideNavMenuItem>
                 <SideNavMenu
                   renderIcon={SquareOutline}
-                  title="Sub-menu level 2">
-                  <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                  title="Sub-menu level 2"
+                  defaultExpanded>
+                  <SideNavMenuItem isActive href="#">
+                    Item level 3
+                  </SideNavMenuItem>
                   <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                   <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                 </SideNavMenu>
@@ -343,7 +347,8 @@ function App() {
               <SideNavSlot renderIcon={Menu}>
                 <Menu />
               </SideNavSlot>
-              <SideNavSlot renderIcon={VirtuFadelColumnKey}>
+
+              <SideNavSlot renderIcon={SquareOutline}>
                 <Dropdown
                   id="default"
                   size="sm"

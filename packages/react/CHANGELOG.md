@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.72.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.71.0...@carbon-labs/react@0.72.0) (2025-06-11)
+
+
+### Features
+
+* **uishell:** add new SideNavSlot component and rail updates ([#639](https://github.com/carbon-design-system/carbon-labs/issues/639)) ([076b1ee](https://github.com/carbon-design-system/carbon-labs/commit/076b1ee91ac421085d4a2cd05475dad5d27cdd49))
+
+
+
+
+
 # [0.71.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.70.0...@carbon-labs/react@0.71.0) (2025-06-10)
 
 

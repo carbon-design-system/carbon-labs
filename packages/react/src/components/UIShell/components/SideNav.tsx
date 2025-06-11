@@ -564,7 +564,10 @@ function SideNavRenderFunction(
       if (
         item.classList.contains(`${prefix}--side-nav__toggle`) ||
         item.classList.contains(`${prefix}--side-nav__back-button`) ||
-        item.closest(`.${prefix}--side-nav__slot-item`)
+        item.closest(`.${prefix}--side-nav__slot-item`) ||
+        (item.classList.contains(`${prefix}--side-nav__link`) &&
+          (item as HTMLElement).closest('ul')?.getAttribute('aria-label') ===
+            ariaLabel)
       ) {
         return;
       }

@@ -516,7 +516,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           </SideNavIcon>
         </button>
 
-        {primary && (
+        {primary ? (
           <div className={primaryClassNames}>
             <SideNavItems
               accessibilityLabel={{ 'aria-label': `${title} submenu` }}>
@@ -534,11 +534,11 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               <Layer>{childrenToRender}</Layer>
             </SideNavItems>
           </div>
+        ) : (
+          <ul className={`${prefix}--side-nav__menu`} role="group">
+            {childrenToRender}
+          </ul>
         )}
-
-        <ul className={`${prefix}--side-nav__menu`} role="group">
-          {childrenToRender}
-        </ul>
       </li>
     );
 

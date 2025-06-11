@@ -12,6 +12,7 @@ import React, { useRef } from 'react';
 import mdx from './Resizer.mdx';
 import { Resizer } from '../components/Resizer';
 import '../components/resizer.scss';
+import { DragVertical } from '@carbon/react/icons';
 
 export default {
   title: 'Components/Resizer',
@@ -49,7 +50,6 @@ export const SinglePanelNoBoundaries = () => (
           top: -0.5rem;
           width: 100%;
           position: absolute;
-          // background: #ff00002e;
         }
       `}
     </style>
@@ -101,7 +101,6 @@ export const SinglePanelBounded = () => {
         top: -0.5rem;
         width: 100%;
         position: absolute;
-        // background: #ff00002e;
       }
     `}</style>
       <div className="single-panel-bounded">
@@ -175,7 +174,6 @@ export const SinglePanelOverlay = () => (
         top: -0.5rem;
         width: 100%;
         position: absolute;
-        // background: #ff00002e;
       }
     `}</style>
     <div className="single-panel-overlay">
@@ -229,7 +227,6 @@ export const TwoPanelsHorizontal = () => (
         top: -0.5rem;
         width: 100%;
         position: absolute;
-        // background: #ff00002e;
       }
     `}</style>
     <div className="two-panels-horizontal">
@@ -281,7 +278,6 @@ export const TwoPanelsVertical = () => (
         left: -0.5rem;
         width: calc(100% + 1rem);
         position: absolute;
-        // background: #ff00002e;
       }
     `}</style>
     <div className="two-panels-vertical">
@@ -354,7 +350,6 @@ export const FourPanels = () => (
         left: -0.5rem;
         width: calc(100% + 1rem);
         position: absolute;
-        // background: #ff00002e;
       }
 
       .clabs__resizer--horizontal::before {
@@ -363,7 +358,6 @@ export const FourPanels = () => (
         top: -0.5rem;
         width: 100%;
         position: absolute;
-        // background: #ff00002e;
       }
     `}</style>
     <div className="four-panels">
@@ -502,7 +496,7 @@ export const TwoPanelsVerticalGrid = () => {
           left: -0.5rem;
           width: calc(100% + 1rem);
           position: absolute;
-          // background: #ff00002e;
+
         }
       `}</style>
       <div className="two-panels-vertical-grid" ref={containerRef}>
@@ -531,6 +525,215 @@ export const TwoPanelsVerticalGrid = () => {
             Primary buttons should be used for the principle call to action on
             the page.
           </p>
+        </div>
+      </div>
+    </>
+  );
+};
+
+// eslint-disable-next-line jsdoc/require-jsdoc
+export const WithCustomHandles = () => {
+  const panelRef = useRef(null);
+  return (
+    <>
+      <style>{`
+        .single-panel-bounded {
+          width: 400px;
+          height: 200px;
+          overflow: hidden;
+        }
+
+        .single-panel-bounded__container {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .single-panel-bounded__panel {
+          padding: 1rem;
+          background-color: var(--cds-layer);
+          min-block-size: 3rem;
+          overflow: auto;
+          transition: all 150ms linear;
+        }
+
+        .custom-drag-handler-1 {
+          position: absolute;
+          top: -6px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .custom-drag-handler-2 {
+          position: absolute;
+          transition: all 0.2s ease-out;
+          display: none;
+          top: -6px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .custom-resizer-2:hover .custom-drag-handler-2 {
+          display: unset;
+        }
+
+
+        .custom-drag-handler-3 {
+          position: absolute;
+          top: 2px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .clabs__resizer--horizontal::before {
+          content: "";
+          height: calc(100% + 1rem);
+          top: -0.5rem;
+          width: 100%;
+          position: absolute;
+        }
+
+        .line-1::before,
+        .line-1::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0.5rem;
+          height: 2px;
+          background-color: transparent;
+          transition: all 0.2s ease-out;
+        }
+
+        .line-1::before {
+          top: 0;
+        }
+
+        .line-1::after {
+          bottom: 0;
+        }
+
+        .line-2::before,
+        .line-2::after {
+          content: '';
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 1.5rem;
+          height: 2px;
+          background-color: transparent;
+          transition: all 0.2s ease-out 0.1s;
+        }
+
+        .line-2::before {
+          top: 0;
+        }
+
+        .line-2::after {
+          bottom: 0;
+        }
+
+        /* Hover effects - trigger the animation */
+        .custom-resizer-3:hover .line-1::before {
+          top: -10px;
+          background-color: var(--cds-border-interactive);
+        }
+
+        .custom-resizer-3:hover .line-1::after {
+          bottom: -10px;
+          background-color: var(--cds-border-interactive);
+        }
+
+        .custom-resizer-3:hover .line-2::before {
+          top: -6px;
+          background-color: var(--cds-border-interactive);
+        }
+
+        .custom-resizer-3:hover .line-2::after {
+          bottom: -6px;
+          background-color: var(--cds-border-interactive);
+        }
+
+        /* Hover effects - trigger the animation */
+        .custom-resizer-4 .line-1::before {
+          top: -8px;
+          background-color: var(--cds-border-subtle);
+        }
+
+        .custom-resizer-4 .line-1::after {
+          bottom: -8px;
+          background-color: var(--cds-border-subtle);
+        }
+
+        .custom-resizer-4 .line-2::before {
+          top: -4px;
+          background-color: var(--cds-border-subtle);
+        }
+
+        .custom-resizer-4 .line-2::after {
+          bottom: -4px;
+          background-color: var(--cds-border-subtle);
+        }
+    `}</style>
+      <div className="single-panel-bounded">
+        <div className="single-panel-bounded__container">
+          <div className="single-panel-bounded__panel" ref={panelRef}>
+            <h3 className="single-panel-bounded__panel-title">
+              Single Panel (bounded)
+            </h3>
+            <p>This panel demonstrates custom drag handle</p>
+          </div>
+          <Resizer orientation="horizontal">
+            <DragVertical className="custom-drag-handler-1" />
+          </Resizer>
+        </div>
+      </div>
+      <br />
+      <div className="single-panel-bounded">
+        <div className="single-panel-bounded__container">
+          <div className="single-panel-bounded__panel" ref={panelRef}>
+            <h3 className="single-panel-bounded__panel-title">
+              Single Panel (bounded)
+            </h3>
+            <p>This panel demonstrates custom drag handle on hover</p>
+          </div>
+          <Resizer orientation="horizontal" className="custom-resizer-2">
+            <DragVertical className="custom-drag-handler-2" />
+          </Resizer>
+        </div>
+      </div>
+      <br />
+      <div className="single-panel-bounded">
+        <div className="single-panel-bounded__container">
+          <div className="single-panel-bounded__panel" ref={panelRef}>
+            <h3 className="single-panel-bounded__panel-title">
+              Single Panel (bounded)
+            </h3>
+            <p>This panel demonstrates custom drag handle</p>
+          </div>
+          <Resizer orientation="horizontal" className="custom-resizer-3">
+            <div className="custom-drag-handler-3">
+              <div className="line-1"></div>
+              <div className="line-2"></div>
+            </div>
+          </Resizer>
+        </div>
+      </div>
+      <br />
+      <div className="single-panel-bounded">
+        <div className="single-panel-bounded__container">
+          <div className="single-panel-bounded__panel" ref={panelRef}>
+            <h3 className="single-panel-bounded__panel-title">
+              Single Panel (bounded)
+            </h3>
+            <p>This panel demonstrates custom drag handle</p>
+          </div>
+          <Resizer orientation="horizontal" className="custom-resizer-4">
+            <div className="custom-drag-handler-4">
+              <div className="line-1"></div>
+              <div className="line-2"></div>
+            </div>
+          </Resizer>
         </div>
       </div>
     </>

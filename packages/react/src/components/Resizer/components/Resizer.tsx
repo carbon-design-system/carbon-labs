@@ -28,6 +28,7 @@ interface ResizerProps {
   ) => void;
   onDoubleClick?: (event: MouseEvent) => string | void;
   className?: string;
+  children?: React.ReactNode;
 
   // Any other additional props
   [key: string]: any;
@@ -44,7 +45,15 @@ const getRefElement = <T extends HTMLElement>(
 
 export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
   (
-    { orientation, onResize, onResizeEnd, onDoubleClick, className, ...rest },
+    {
+      orientation,
+      onResize,
+      onResizeEnd,
+      onDoubleClick,
+      className,
+      children,
+      ...rest
+    },
     forwardedRef
   ) => {
     const prefix = usePrefix();
@@ -329,6 +338,7 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
           Use arrow keys to resize, hold Shift for larger steps. Double-click to
           reset.
         </span>
+        {children}
       </div>
     );
   }

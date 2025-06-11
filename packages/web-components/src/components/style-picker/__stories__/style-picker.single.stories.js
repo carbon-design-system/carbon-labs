@@ -30,6 +30,8 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 // StylePicker
 import '../components/style-picker/style-picker';
 import '../components/style-picker-modules/style-picker-modules';
+import '../components/style-picker-color-module/style-picker-color-module';
+import { colors } from './_placeholders';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -111,7 +113,10 @@ export const Color = {
             <span slot="tooltip-content">Color palette</span>
           </cds-icon-button>
           <clabs-style-picker-modules slot="modules">
-            Hello
+            <clabs-style-picker-color-module
+              title="Color"
+              size="sm"
+              .items=${colors}></clabs-style-picker-color-module>
           </clabs-style-picker-modules>
         </clabs-style-picker>
         <cds-icon-button kind=${BUTTON_KIND.GHOST}>

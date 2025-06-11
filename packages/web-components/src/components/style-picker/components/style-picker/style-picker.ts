@@ -10,7 +10,7 @@
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { stylePickerTemplate } from './src/style-picker.template.js';
-import stylePicker from './src/style-picker.js';
+import StylePicker from './src/style-picker.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -18,7 +18,7 @@ const { stablePrefix: clabsPrefix } = settings;
  * Component extending the @carbon/web-components' button
  */
 @customElement(`${clabsPrefix}-style-picker`)
-class CLABSStylePicker extends stylePicker {
+class CLABSStylePicker extends StylePicker {
   /**
    * Renders the template while passing in class functionality
    *

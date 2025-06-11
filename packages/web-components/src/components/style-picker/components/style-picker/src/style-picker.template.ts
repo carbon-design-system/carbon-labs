@@ -11,6 +11,12 @@ import { html } from 'lit';
 
 import '@carbon/web-components/es/components/popover/popover';
 import '@carbon/web-components/es/components/popover/popover-content';
+import '@carbon/web-components/es/components/layer/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+
+const { stablePrefix: clabsPrefix } = settings;
+
+export const blockClass = `${clabsPrefix}--style-picker`;
 
 /**
  * Lit template for card
@@ -28,7 +34,14 @@ export const stylePickerTemplate = (customElementClass) => {
     title=${title}>
     <slot name="trigger"></slot>
     <cds-popover-content>
-      <slot name="modules"></slot>
+      <div class=${`${blockClass}__content`}>
+        <div class=${`${blockClass}__header`}>
+          <strong className=${`${blockClass}__heading`}>${title}</strong>
+        </div>
+        <cds-layer className=${`${blockClass}__modules`}>
+          <slot name="modules"></slot>
+        </cds-layer>
+      </div>
     </cds-popover-content>
   </cds-popover>`;
 };

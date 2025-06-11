@@ -8,24 +8,20 @@
  */
 
 import { consume } from '@lit/context';
-import { LitElement } from 'lit';
 import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../../context/style-picker-context';
-import styles from './style-picker-module.scss?inline';
+import styles from './style-picker-color-module.scss?inline';
+import { property } from 'lit/decorators';
+import StylePickerModule from '../../style-picker-module/src/style-picker-module';
+import { LitElement } from 'lit';
 
 /**
- *
+ * Color picker module
  */
-class StylePickerModules extends LitElement {
+class StylePickerColorModule<Color> extends StylePickerModule<Color> {
   static styles = styles;
-
-  /**
-   * Consume style-picker-context
-   */
-  @consume({ context: stylePickerContext, subscribe: true })
-  stylePickerContext?: StylePickerContextType;
 }
 
-export default StylePickerModules;
+export default StylePickerColorModule;

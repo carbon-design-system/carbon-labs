@@ -7,8 +7,70 @@
 
 $css--plex: true !default;
 
+@use '@carbon/react/scss/type';
+@use '@carbon/react/scss/spacing' as *;
+
 @use '../../../../../globals/scss/vars' as *;
 
-:host(#{$clabs-prefix}-style-picker) {
-  
+$block-class: #{$clabs-prefix}--style-picker;
+
+
+.#{$block-class}__content {
+  width: 13.5rem;
+  max-height: min(24rem, 100vh);
+  display: grid;
+  grid-template-rows: max-content 1fr;
 }
+
+.#{$block-class}__header {
+  position: relative;
+}
+
+.#{$block-class}__search {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: end;
+}
+
+.#{$block-class}__heading {
+  @include type.type-style('heading-01');
+  padding-inline: $spacing-05;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.#{$block-class}__modules {
+  overflow: auto;
+}
+
+.#{$block-class}-modules__container--empty {
+  display: none;
+}
+
+.#{$block-class}-modules__empty-state {
+  padding: $spacing-05;
+}
+
+// Carbon overwrites
+
+// .#{$block-class}-module .#{config.$carbon-prefix}--contained-list__header {
+//   z-index: 2;
+// }
+
+// .#{$block-class}-modules__container,
+// .#{$block-class}-modules__container .#{config.$carbon-prefix}--accordion {
+//   height: 100%;
+// }
+
+// .#{$block-class}-modules__container .#{config.$carbon-prefix}--accordion__item,
+// .#{$block-class}-modules__container .#{config.$carbon-prefix}--accordion__heading,
+// .#{$block-class}-modules__container .#{config.$carbon-prefix}--accordion__content {
+//   animation-duration: 0ms !important;
+//   transition: none !important;
+// }
+
+// .#{$block-class}__modules .#{config.$carbon-prefix}--accordion__item--active {
+//   height: calc(100% - (var(--#{$block-class}-module-count) - 1) * 2.5rem - 0.0625rem);
+// }

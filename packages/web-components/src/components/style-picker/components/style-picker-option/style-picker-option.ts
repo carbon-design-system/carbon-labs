@@ -9,21 +9,21 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { stylePickerModulesTemplate } from './src/style-picker-modules.template.js';
+import { stylePickerOptionTemplate } from './src/style-picker-option.template.js';
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../context/style-picker-context.js';
-import StylePickerModules from './src/style-picker-modules.js';
+import StylePickerOption from './src/style-picker-option.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * A wrapper wrap multiple `style-picker-module` components
+ * Style picker option
  */
-@customElement(`${clabsPrefix}-style-picker-modules`)
-class CLABSStylePickerModules extends StylePickerModules {
+@customElement(`${clabsPrefix}-style-picker-option`)
+class CLABSStylePickerOption extends StylePickerOption {
   @consume({ context: stylePickerContext, subscribe: true })
   stylePickerContext?: StylePickerContextType;
 
@@ -33,8 +33,8 @@ class CLABSStylePickerModules extends StylePickerModules {
    * @returns {TemplateResult<1>}
    */
   render() {
-    return stylePickerModulesTemplate(this);
+    return stylePickerOptionTemplate(this);
   }
 }
 
-export default CLABSStylePickerModules;
+export default CLABSStylePickerOption;

@@ -1,0 +1,70 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/type';
+
+@use '../../../../../globals/scss/vars' as *;
+
+$block-class: #{$clabs-prefix}--style-picker-module;
+
+.#{$block-class}__group > ul,
+.#{$block-class}__items {
+  display: grid;
+  gap: $spacing-03;
+  padding: $spacing-05;
+  list-style: none;
+}
+
+$sizes: (
+  sm: $spacing-06,
+  lg: $spacing-09,
+);
+
+@each $size, $value in $sizes {
+  .#{$block-class}--#{$size} {
+    .#{$block-class}__group > ul,
+    .#{$block-class}__items {
+      grid-template-columns: repeat(auto-fill, $value);
+    }
+  }
+}
+
+.#{$block-class}__header {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  column-gap: $spacing-05;
+}
+
+// .#{$block-class}--flat .#{$block-class}__header {
+//   height: 2rem;
+//   padding-inline: $spacing-05;
+//   border-block-start: 0.0625rem solid theme.$border-subtle;
+//   padding-block-start: $spacing-03;
+// }
+
+// .#{$block-class}--disclosed .#{$block-class}__header {
+//   height: calc(1.5rem + 0.125rem);
+//   align-items: center;
+// }
+
+.#{$block-class}__heading {
+  @include type.type-style('body-01');
+}
+
+// .#{$block-class}--disclosed .#{config.$carbon-prefix}--accordion__wrapper {
+//   height: calc(100% - 2.5rem);
+//   overflow: auto;
+// }
+
+// .#{$block-class}--disclosed .#{config.$carbon-prefix}--accordion__wrapper,
+// .#{$block-class}--disclosed .#{config.$carbon-prefix}--accordion__content {
+//   padding: 0;
+// }

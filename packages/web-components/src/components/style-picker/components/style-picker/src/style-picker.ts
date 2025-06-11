@@ -20,7 +20,7 @@ import { Kind } from '../../../defs/style-picker.types';
 /**
  * Component extending the @carbon/web-components' button
  */
-class stylePicker extends LitElement {
+class StylePicker extends LitElement {
   static styles = styles;
 
   /**
@@ -54,4 +54,4 @@ class stylePicker extends LitElement {
   title = '';
 }
 
-export default stylePicker;
+export default StylePicker;

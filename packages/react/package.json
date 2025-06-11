@@ -72,7 +72,6 @@
     "prop-types": "^15.8.1",
     "remark-gfm": "^4.0.0",
     "rollup-plugin-copy": "^3.5.0",
-    "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-strip-banner": "^3.0.0",
     "rollup-plugin-svg": "^2.0.0",
     "sass-loader": "^16.0.4",

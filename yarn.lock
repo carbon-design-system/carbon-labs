@@ -2744,7 +2744,6 @@ __metadata:
     react-dom: "npm:^18.3.1"
     remark-gfm: "npm:^4.0.0"
     rollup-plugin-copy: "npm:^3.5.0"
-    rollup-plugin-postcss: "npm:^4.0.2"
     rollup-plugin-strip-banner: "npm:^3.0.0"
     rollup-plugin-svg: "npm:^2.0.0"
     sass-loader: "npm:^16.0.4"

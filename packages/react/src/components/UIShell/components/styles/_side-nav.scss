@@ -152,6 +152,7 @@ div:has(.#{$prefix}--header)
 
 .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
   inline-size: 16rem;
+  overflow-y: auto;
   transform: translateX(0);
 }
 

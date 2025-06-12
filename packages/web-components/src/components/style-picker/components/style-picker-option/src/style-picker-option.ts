@@ -7,7 +7,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { consume } from '@lit/context';
 import { LitElement } from 'lit';
 import styles from './style-picker-option.scss?inline';
 import { property } from 'lit/decorators.js';
@@ -25,16 +24,16 @@ const { stablePrefix: clabsPrefix } = settings;
 class StylePickerOption extends LitElement {
   static styles = styles;
 
-  @property({ type: String, reflect: true })
+  @property({ type: String, reflect: true, attribute: 'label' })
   label = '';
 
-  @property({ type: String, reflect: true })
+  @property({ type: String, reflect: true, attribute: 'value' })
   value = '';
 
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean, reflect: true, attribute: 'is-selected' })
   isSelected = false;
 
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'size' })
   size: Size = 'sm';
 
   /**

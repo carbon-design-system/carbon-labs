@@ -32,25 +32,25 @@ class StylePicker extends LitElement {
   /**
    * Specify direction of alignment
    */
-  @property({ reflect: true, type: String })
+  @property({ reflect: true, type: String, attribute: 'align' })
   align = '';
 
   /**
    * Define the picker variant
    */
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'kind' })
   kind: Kind = 'single';
 
   /**
    * Specify whether the component is currently open or closed
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean, reflect: true, attribute: 'open' })
   open = false;
 
   /**
    * Define title for the picker
    */
-  @property({ type: String, reflect: true })
+  @property({ type: String, reflect: true, attribute: 'title' })
   title = '';
 }
 

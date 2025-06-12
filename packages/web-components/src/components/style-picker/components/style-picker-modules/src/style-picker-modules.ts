@@ -7,12 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { consume } from '@lit/context';
 import { LitElement } from 'lit';
-import {
-  stylePickerContext,
-  StylePickerContextType,
-} from '../../../context/style-picker-context';
 import styles from './style-picker-module.scss?inline';
 
 /**
@@ -20,12 +15,6 @@ import styles from './style-picker-module.scss?inline';
  */
 class StylePickerModules extends LitElement {
   static styles = styles;
-
-  /**
-   * Consume style-picker-context
-   */
-  @consume({ context: stylePickerContext, subscribe: true })
-  stylePickerContext?: StylePickerContextType;
 }
 
 export default StylePickerModules;

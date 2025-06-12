@@ -38,6 +38,8 @@ export const stylePickerModuleTemplate = <T>(
     return !(i[0] as Item<T>).value;
   };
 
+  console.log('>> ', selectedItem);
+
   /**
    *
    * @param {Item<T>[]} items -
@@ -51,7 +53,9 @@ export const stylePickerModuleTemplate = <T>(
             label=${item.label}
             ?isSelected=${selectedItem === item.value}
             size=${size}
-            @clabs-style-picker-option-change=${handleOptionChange}>
+            @clabs-style-picker-option-change=${(e: CustomEvent) =>
+              handleOptionChange(e, item)}
+            tabindex=${selectedItem === item.value ? '0' : '-1'}>
             ${renderItem?.(item)}
           </clabs-style-picker-option>
         `

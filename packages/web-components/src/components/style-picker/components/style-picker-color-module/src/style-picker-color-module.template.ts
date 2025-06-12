@@ -10,8 +10,6 @@
 import { html, TemplateResult } from 'lit';
 import '../../style-picker-module/style-picker-module';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { Group, Item } from '../../../defs/style-picker-module.types';
-import { Size } from '../../../defs/style-picker-option.types';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -27,10 +25,7 @@ export const blockClass = `${clabsPrefix}--style-picker-color-module`;
 export const stylePickerColorModuleTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const kind = customElementClass.stylePickerContext?.kind;
-
-  const { items, title, size } = customElementClass;
-  console.log(items[0].items);
+  const { items, title, size, selectedItem } = customElementClass;
 
   /**
    * @param {object} item Item to be rendered
@@ -47,7 +42,8 @@ export const stylePickerColorModuleTemplate = (
       title=${title}
       size=${size}
       .items=${items}
-      .renderItem=${_render}>
+      .renderItem=${_render}
+      .selectedItem=${selectedItem}>
     </clabs-style-picker-module>
   `;
 };

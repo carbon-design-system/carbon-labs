@@ -15,8 +15,6 @@ import { html } from 'lit';
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export const stylePickerModulesTemplate = (customElementClass) => {
-  const kind = customElementClass.stylePickerContext?.kind ?? 'default';
-
+export const stylePickerModulesTemplate = () => {
   return html`<slot></slot>`;
 };

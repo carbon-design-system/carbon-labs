@@ -8,12 +8,7 @@
  */
 
 import { consume } from '@lit/context';
-import {
-  CSSResultGroup,
-  LitElement,
-  PropertyValues,
-  TemplateResult,
-} from 'lit';
+import { CSSResultGroup, LitElement, TemplateResult } from 'lit';
 import {
   stylePickerContext,
   StylePickerContextType,
@@ -41,31 +36,36 @@ class StylePickerModule<T> extends LitElement {
   @consume({ context: stylePickerContext, subscribe: true })
   stylePickerContext?: StylePickerContextType;
 
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'items' })
   items: Item<T>[] | Group<Item<T>>[] = [];
 
-  @property({ type: String, reflect: true })
+  @property({ type: String, reflect: true, attribute: 'selected-item' })
   selectedItem = '';
 
-  @property({ type: String, reflect: true })
+  @property({ type: String, reflect: true, attribute: 'title' })
   title = '';
 
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'size' })
   size: Size | undefined;
 
-  @property({ type: Function })
+  @property({ type: Function, attribute: 'render-item' })
   renderItem?: (item: Item<T>) => TemplateResult;
 
   /**
    * @param {string} triggeredBy - the element that triggered the change.
+   * @param {Item} item - selected item.
    */
-  protected handleOptionChange(triggeredBy: EventTarget | null) {
+  protected handleOptionChange = (
+    triggeredBy: EventTarget | null,
+    item: Item<T>
+  ) => {
     const init = {
       bubbles: true,
       cancelable: true,
       composed: true,
       detail: {
         triggeredBy,
+        item,
       },
     };
     const newEvent = new CustomEvent(
@@ -74,7 +74,7 @@ class StylePickerModule<T> extends LitElement {
     );
 
     this.dispatchEvent(newEvent);
-  }
+  };
 
   /**
    * The name of the custom event fired after an option is changed in the module.

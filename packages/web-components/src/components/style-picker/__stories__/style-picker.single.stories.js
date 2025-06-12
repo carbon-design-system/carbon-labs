@@ -19,6 +19,8 @@ import OverflowMenuVertical16 from '@carbon/web-components/es/icons/overflow-men
 // Carbon components
 import '@carbon/web-components/es/components/layer/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
+import '@carbon/web-components/es/components/tile/index.js';
+import '@carbon/web-components/es/components/link/index.js';
 
 // Carbon definitions
 import { POPOVER_ALIGNMENT } from '@carbon/web-components/es/components/popover/defs.js';
@@ -33,7 +35,7 @@ import '../components/style-picker-modules/style-picker-modules';
 import '../components/style-picker-color-module/style-picker-color-module';
 import { colors } from './_placeholders';
 
-const { stablePrefix: clabsPrefix } = settings;
+const { stablePrefix: clabsPrefix, prefix: carbonPrefix } = settings;
 
 /**
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
@@ -44,10 +46,22 @@ export default {
 };
 
 const styles = css`
+  .style-picker-story-container {
+    margin-inline-start: 20rem;
+  }
   .toolbar-layer {
     display: inline-block;
     background-color: var(--cds-layer);
     color: var(--cds-text-primary, #161616);
+  }
+
+  .inline-tile-holder {
+    margin-top: 0.2rem;
+  }
+
+  .inline-tile {
+    display: inline-block;
+    border-inline-start: 0.25rem solid rgb(15, 98, 254);
   }
 `;
 
@@ -61,6 +75,20 @@ const toggleButton = () => {
 };
 
 /**
+ * Change color callback
+ * @param {string} color - selected color
+ * @param {object} ev - custom event from color module
+ */
+const changeColor = (ev) => {
+  const color = ev.detail.item;
+  const tileEl = document.querySelector(`${carbonPrefix}-tile`);
+  tileEl.style.borderColor = `${color.color}`;
+
+  const colorModuleEl = ev.target;
+  colorModuleEl.setAttribute('selected-item', color.value);
+};
+
+/**
  * More on writing stories with args: https://storybook.js.org/docs/web-components/writing-stories/args
  *
  * @type {{args: {label: string}, render: (function(*): TemplateResult<1>)}}
@@ -69,7 +97,7 @@ export const Color = {
   args: {
     title: 'Color Picker',
     open: false,
-    align: POPOVER_ALIGNMENT.RIGHT_TOP,
+    align: POPOVER_ALIGNMENT.LEFT_TOP,
   },
 
   argTypes: {
@@ -103,30 +131,46 @@ export const Color = {
       <style>
         ${styles}
       </style>
-      <cds-layer class="toolbar-layer">
-        <clabs-style-picker align=${args.align} ?open=${args.open} title="Choose color">
-          <cds-icon-button
-            slot="trigger"
-            kind=${BUTTON_KIND.GHOST}
-            @click="${toggleButton}">
-            ${ColorPalette16({ slot: 'icon' })}
-            <span slot="tooltip-content">Color palette</span>
+      <div class="style-picker-story-container">
+        <cds-layer class="toolbar-layer">
+          <clabs-style-picker
+            align=${args.align}
+            ?open=${args.open}
+            title="Choose color">
+            <cds-icon-button
+              slot="trigger"
+              kind=${BUTTON_KIND.GHOST}
+              @click="${toggleButton}">
+              ${ColorPalette16({ slot: 'icon' })}
+              <span slot="tooltip-content">Color palette</span>
+            </cds-icon-button>
+            <clabs-style-picker-modules slot="modules">
+              <clabs-style-picker-color-module
+                title="Color"
+                size="sm"
+                .items=${colors}
+                @clabs-style-picker-module-option-change=${(ev) =>
+                  changeColor(ev)}></clabs-style-picker-color-module>
+            </clabs-style-picker-modules>
+          </clabs-style-picker>
+          <cds-icon-button kind=${BUTTON_KIND.GHOST}>
+            ${TrashCan16({ slot: 'icon' })}
+            <span slot="tooltip-content">Edit</span>
           </cds-icon-button>
-          <clabs-style-picker-modules slot="modules">
-            <clabs-style-picker-color-module
-              title="Color"
-              size="sm"
-              .items=${colors}></clabs-style-picker-color-module>
-          </clabs-style-picker-modules>
-        </clabs-style-picker>
-        <cds-icon-button kind=${BUTTON_KIND.GHOST}>
-          ${TrashCan16({ slot: 'icon' })}
-          <span slot="tooltip-content">Edit</span>
-        </cds-icon-button>
-        <cds-icon-button kind=${BUTTON_KIND.GHOST}>
-          ${OverflowMenuVertical16({ slot: 'icon' })}
-          <span slot="tooltip-content">More</span>
-        </cds-icon-button>
-      </cds-layer>
+          <cds-icon-button kind=${BUTTON_KIND.GHOST}>
+            ${OverflowMenuVertical16({ slot: 'icon' })}
+            <span slot="tooltip-content">More</span>
+          </cds-icon-button>
+        </cds-layer>
+        <div class="inline-tile-holder">
+          <cds-tile class="inline-tile">
+            <h6>Primary text</h6>
+            <br />
+            <p>Secondary text or description</p>
+            <br />
+            <cds-link href="#">Link</cds-link>
+          </cds-tile>
+        </div>
+      </div>
     `,
 };

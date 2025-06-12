@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.46.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.45.0...@carbon-labs/react-ui-shell@0.46.0) (2025-06-12)
+
+
+### Bug Fixes
+
+* **layer:** causing tabbing issues ([#655](https://github.com/carbon-design-system/carbon-labs/issues/655)) ([7b3d828](https://github.com/carbon-design-system/carbon-labs/commit/7b3d828b6b840ee683b24d2c419f785cd21621cf))
+
+
+
+
+
+# [0.45.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.44.0...@carbon-labs/react-ui-shell@0.45.0) (2025-06-11)
+
+
+### Features
+
+* **uishell:** add new SideNavSlot component and rail updates ([#639](https://github.com/carbon-design-system/carbon-labs/issues/639)) ([076b1ee](https://github.com/carbon-design-system/carbon-labs/commit/076b1ee91ac421085d4a2cd05475dad5d27cdd49))
+
+
+
+
+
+# [0.44.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.43.0...@carbon-labs/react-ui-shell@0.44.0) (2025-06-10)
+
+
+### Bug Fixes
+
+* **ui-shell:** tabbing fixes ([#651](https://github.com/carbon-design-system/carbon-labs/issues/651)) ([b5d509b](https://github.com/carbon-design-system/carbon-labs/commit/b5d509b718b60d5b187cf2855e4383bb5c60c051))
+
+
+
+
+
+# [0.43.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.42.0...@carbon-labs/react-ui-shell@0.43.0) (2025-06-09)
+
+
+### Features
+
+* **ui-shell:** double wide ([#628](https://github.com/carbon-design-system/carbon-labs/issues/628)) ([cae7b12](https://github.com/carbon-design-system/carbon-labs/commit/cae7b124e0669957cf6d3a6c94da8d020b882381))
+
+
+
+
+
+# [0.42.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.41.0...@carbon-labs/react-ui-shell@0.42.0) (2025-06-04)
+
+
+### Bug Fixes
+
+* add breakpoint utility for responsive side-nav rail ([#624](https://github.com/carbon-design-system/carbon-labs/issues/624)) ([f0e422a](https://github.com/carbon-design-system/carbon-labs/commit/f0e422a1a2685fb6bb14f252c9321d43aec3bae1))
+
+
+
+
+
 # [0.41.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.40.0...@carbon-labs/react-ui-shell@0.41.0) (2025-06-02)
 
 

@@ -1,4 +1,150 @@
 [   
+    {"name":"weather example",
+        "spec":
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": { "url": "https://vega.github.io/editor/data/weather.csv" },
+  "concat": [
+    {
+      "title": "Average Precipitation by Month",
+      "mark": "line",
+      "encoding": {
+        "x": {
+          "timeUnit": "month",
+          "field": "date",
+          "type": "temporal",
+          "axis": { "format": "%b", "title": "Month" }
+        },
+        "y": {
+          "aggregate": "mean",
+          "field": "precipitation",
+          "type": "quantitative",
+          "title": "Average Precipitation"
+        }
+      }
+    },
+    {
+      "title": "2012 Daily Max Temperature Heatmap",
+      "transform": [
+        { "filter": "timeFormat(datum.date, '%Y') === '2012'" },
+        { "timeUnit": "month", "field": "date", "as": "month" },
+        { "timeUnit": "date", "field": "date", "as": "day" }
+      ],
+      "mark": "rect",
+      "encoding": {
+        "x": {
+          "field": "day",
+          "type": "ordinal",
+          "title": "Day",
+          "axis": { "values": [1, 5, 10, 15, 20, 25, 31] }
+        },
+        "y": {
+          "field": "month",
+          "type": "ordinal",
+          "title": "Month",
+          "axis": {
+            "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value - 1]"
+          }
+        },
+        "color": {
+          "field": "temp_max",
+          "type": "quantitative",
+          "title": "Max Temperature",
+          "scale": { "scheme": "inferno" }
+        }
+      }
+    },
+    {
+      "title": "Temperature Distribution by Month",
+      "transform": [
+        { "timeUnit": "month", "field": "date", "as": "month" },
+        { "fold": ["temp_max", "temp_min"], "as": ["variable", "temperature"] }
+      ],
+      "layer": [
+        {
+          "mark": "boxplot",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal",
+              "title": "Month",
+              "axis": {
+                "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value - 1]"
+              }
+            },
+            "y": {
+              "field": "temperature",
+              "type": "quantitative",
+              "title": "Temperature"
+            },
+            "color": {
+              "field": "variable",
+              "type": "nominal",
+              "title": "Temperature Type"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "aggregate": [
+                { "op": "mean", "field": "temperature", "as": "mean_temperature" }
+              ],
+              "groupby": ["month", "variable"]
+            }
+          ],
+          "mark": { "type": "point", "filled": true, "size": 50, "color": "black" },
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal",
+              "axis": {
+                "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value - 1]"
+              }
+            },
+            "y": { "field": "mean_temperature", "type": "quantitative" },
+            "color": { "field": "variable", "type": "nominal" }
+          }
+        }
+      ]
+    },
+    {
+      "title": "Weather Streamgraph Over Time (Weighted by Temp Max)",
+      "transform": [
+        { "timeUnit": "yearmonth", "field": "date", "as": "yearmonth" }
+      ],
+      "mark": "area",
+      "encoding": {
+        "x": {
+          "field": "yearmonth",
+          "type": "temporal",
+          "axis": {
+            "domain": false,
+            "format": "%b %y",
+            "tickSize": 0,
+            "labelOverlap": "parity"
+          },
+          "title": "Year-Month"
+        },
+        "y": {
+          "aggregate": "sum",
+          "field": "temp_max",
+          "stack": "center",
+          "title": "Sum of Temp Max"
+        },
+        "color": {
+          "field": "weather",
+          "type": "nominal",
+          "scale": { "scheme": "category20b" },
+          "title": "Weather"
+        }
+      }
+    }
+  ],
+  "columns": 2
+}
+
+    },
     {"name": "concat",
     "spec":{
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",

@@ -228,6 +228,9 @@ export default class footer extends LitElement {
         }
       }
     }
+    if (changedProperties.has('_contextMessage')) {
+      this.hideContextMessage = false;
+    }
     if (changedProperties.has('_fullscreenMode')) {
       this._checkSize();
     }
@@ -407,7 +410,7 @@ export default class footer extends LitElement {
     this._messageText = value;
     if (event.key == 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      if (!this._forceDisableInput) {
+      if (!this._forceDisableInput && !this.queryProcessing) {
         if (value.length > 0) {
           this._sendInputToParent();
         }

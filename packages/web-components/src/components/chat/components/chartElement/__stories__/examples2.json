@@ -1,7 +1,7 @@
 [
   {
     "title": "",
-    "prompt": "Make a pair-plot of all columns with scatter plots, use bar distributions when coloumns match",
+    "prompt": "Make a pair-plot of all columns with scatter plots, use bar distributions when columns match",
     "result": {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "data": {
@@ -77,6 +77,78 @@
         ]
       }
     }
+  },
+  {
+    "title": "",
+    "prompt": "Make a pair-plot of all columns with scatter plots, use bar distributions when columns match",
+    "result": {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "data": {
+        "url": "https://vega.github.io/editor/data/weather.csv"
+      },
+      "repeat": {
+        "row": [
+          "Row1",
+          "Row2"
+        ],
+        "column": [
+          "Col1",
+          "Col2",
+          "Col3"
+        ]
+      },
+      "spec": {
+        "vconcat": [
+          {"title":"layered Chart",
+        "layer": [
+          {
+            "mark": "line",
+            "encoding": {
+              "x": {
+                "field": "date",
+                "type": "temporal"
+              },
+              "y": {
+                "field": "temp_max",
+                "type": "quantitative"
+              },
+              "color":{"field": "weather", "type":"nominal"}
+            }
+          },
+          {
+            "mark": "point",
+            "encoding": {
+              "x": {
+                "field": "date",
+                "type": "temporal"
+              },
+              "y": {
+                "field": "temp_min",
+                "type": "quantitative"
+              },
+              "color":{"field": "weather", "type":"nominal"}
+            }
+          }
+        ]
+      },
+      {
+        "title":"lower chart",
+        "height":50,
+        "mark":"bar",
+        "encoding": {
+              "x": {
+                "field": "date",
+                "type": "temporal"
+              },
+              "y": {
+                "field": "precipitation",
+                "type": "quantitative"
+              },
+              "color":{"field": "weather", "type":"nominal"}
+            }
+          }
+        ]}
+      }
   },
   {
     "title": "",

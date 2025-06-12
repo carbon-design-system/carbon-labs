@@ -38,7 +38,7 @@ import './storybook.scss';
 pkg.component.ScrollGradient = true;
 
 export default {
-  title: 'Components/WhatsNew',
+  title: 'Patterns/WhatsNew',
   component: 'WhatsNewPattern',
   subcomponents: {
     TocList,

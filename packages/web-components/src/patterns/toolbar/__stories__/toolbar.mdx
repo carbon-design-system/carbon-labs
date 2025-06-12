@@ -1,0 +1,153 @@
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import * as ToolbarStories from './toolbar.stories';
+
+<Meta of={ToolbarStories} />
+
+# Toolbar
+
+- **Initiative owner(s):** Carbon for IBM Products
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/toolbar)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/toolbar)
+
+## Overview
+
+The toolbar pattern. made with carbon design system's web components.
+
+[Pattern Guidance](https://carbondesignsystem.com/patterns/text-toolbar-pattern/)
+
+To build this pattern, we recommend including the following components:
+
+- [cds-stack](https://web-components.carbondesignsystem.com/?path=/docs/layout-stack)
+- [cds-icon-button](https://web-components.carbondesignsystem.com/?path=/docs/components-icon-button)
+- [cds-dropdown](https://web-components.carbondesignsystem.com/?path=/docs/components-dropdown)
+- [cds-overflow-menu](https://web-components.carbondesignsystem.com/?path=/docs/components-overflow-menu)
+
+These components are used within an `clabs-toolbar` wrapper component provided
+as an example to handle state management and some pattern specific behaviors.
+
+#### Horizontal Example
+
+<Canvas of={ToolbarStories.Horizontal} />
+
+#### Vertical Example
+
+<Canvas of={ToolbarStories.Vertical} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### HTML
+
+```html
+<cds-stack class="toolbar" orientation=${this.orientation}>
+  <cds-stack class="toolbar-group" orientation=${this.orientation}>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${Draggable({ slot: 'icon' })}
+      <span slot="tooltip-content">Drag</span>
+    </cds-icon-button>
+  </cds-stack class="toolbar-group">
+  <cds-stack class="toolbar-group" orientation=${this.orientation}>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${RulerAlt({ slot: 'icon' })}
+      <span slot="tooltip-content">Ruler</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${Pin({ slot: 'icon' })}
+      <span slot="tooltip-content">Pin</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      caret
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${ColorPalette({ slot: 'icon' })}
+      <span slot="tooltip-content">Color palette</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${TextCreation({ slot: 'icon' })}
+      <span slot="tooltip-content">Text creation</span>
+    </cds-icon-button>
+  </cds-stack class="toolbar-group">
+  <cds-stack class="toolbar-group" orientation=${this.orientation}>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${OpenPanelLeft({ slot: 'icon' })}
+      <span slot="tooltip-content">Open panel left</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${OpenPanelRight({ slot: 'icon' })}
+      <span slot="tooltip-content">Open panel right</span>
+    </cds-icon-button>
+  </cds-stack class="toolbar-group">
+  <cds-stack class="toolbar-group" orientation=${this.orientation}>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${Move({ slot: 'icon' })}
+      <span slot="tooltip-content">Move</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${Rotate({ slot: 'icon' })}
+      <span slot="tooltip-content">Rotate</span>
+    </cds-icon-button>
+  </cds-stack class="toolbar-group">
+  <cds-stack class="toolbar-group" orientation=${this.orientation}>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${ZoomIn({ slot: 'icon' })}
+      <span slot="tooltip-content">Zoom in</span>
+    </cds-icon-button>
+    <cds-icon-button
+    kind="ghost"
+    enter-delay-ms="100"
+      leave-delay-ms="100"
+      align=${this.orientation === 'vertical' ? 'right' : 'top'}>
+      ${ZoomOut({ slot: 'icon' })}
+      <span slot="tooltip-content">Zoom out</span>
+    </cds-icon-button>
+  </cds-stack class="toolbar-group">
+</cds-stack class="toolbar">
+```

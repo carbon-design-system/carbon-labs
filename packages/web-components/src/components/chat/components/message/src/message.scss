@@ -91,6 +91,17 @@ $css--plex: true !default;
     max-inline-size: 65%;
   }
 
+  .#{$clabs-prefix}--chat-message-separator {
+    box-sizing: border-box;
+    padding: 8px;
+    color: $text-secondary;
+    font-size: 16px;
+    font-style: italic;
+    inline-size: 100%;
+    line-height: 20px;
+    text-align: center;
+  }
+
   .#{$clabs-prefix}--chat-message-dropdown-user {
     clear: both;
     float: inline-end;
@@ -190,81 +201,5 @@ $css--plex: true !default;
     svg:hover {
       fill: $link-primary;
     }
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-light-0 {
-    fill: #ffffff;
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-light-1 {
-    fill: url(#ik7o2yqk8a);
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-light-2 {
-    fill: url(#9hg0dg6llb);
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-light-3 {
-    fill: url(#q1snp4vndc);
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-light-4 {
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-light-5 {
-    mask: url(#eelbk9r8md);
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-light-6 {
-    fill: url(#8ak2l80n4e);
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-light-7 {
-    fill: #001d6c;
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-dark-0 {
-    fill: #ffffff;
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-dark-1 {
-    fill: url(#8913t7g6za);
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-dark-2 {
-    fill: url(#woevpxiuib);
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-dark-3 {
-    fill: url(#je2bg9iagc);
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-dark-4 {
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-dark-5 {
-    mask: url(#brch21jdod);
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-dark-6 {
-    fill: url(#2co5q30b1e);
-    stroke-width: 0;
-  }
-
-  .#{$clabs-prefix}--chat-avatar-element-dark-7 {
-    fill: #f4f4f4;
-    stroke-width: 0;
   }
 }

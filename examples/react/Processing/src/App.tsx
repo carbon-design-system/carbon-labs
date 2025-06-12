@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { Processing } from '@carbon-labs/react-processing/es/index';
+import { Processing } from '@carbon-labs/react-processing';
 
 function App() {
   return <Processing loop />;

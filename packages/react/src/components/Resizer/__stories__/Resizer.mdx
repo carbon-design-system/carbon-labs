@@ -1,0 +1,96 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as ResizerStories from './Resizer.stories';
+
+<Meta isTemplate />
+
+# Resizer
+
+- **Initiative owner(s):** Nandan Devadula
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Resizer)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Resizer)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+`Resizer` is an atomic component extracted from `SplitPanel` and made into an
+independent component, which can be reused wherever there is a resizing
+requirement in the UI.
+
+The `Resizer` captures the sibling sizes internally and resets on double-click.
+This behavior can be overridden by using `onDoubleClick` to handle any custom
+functionality.
+
+The handle trigger cue can be enhanced if needed by writing a pseudo-class to
+make the trigger easier to grab, or any custom elements can be passed as
+children as seen in the `With Custom Handles` story.
+
+A gap can be added to the parent if the design demands.
+
+The minimum inline size or block size of the panels can be customized based on
+the design requirements.
+
+For any kind of custom functionality, the component provides a callback
+`onResize`, which gives access to `delta`, the difference in mouse or keyboard
+movements relative to the initial position. along with the `event`.
+
+Since most parts of this component are designed to be headless and
+unopinionated, it can be extensively tweaked, providing opportunities for
+various custom implementations.
+
+<Canvas of={ResizerStories.TwoPanelsVertical} />
+
+## A11y
+
+The resizer is primarily a visual enhancement and may offer limited benefit for
+screen-reader users, as the core UI elements remain accessible. However, for
+improved screen reader support, developers can apply their own custom aria-label
+to the resizer component ref available in `onResizeEnd` callback. This enables
+users to receive live feedback on layout changes. A reference implementation of
+this approach is included in the `Single Panel Bounded` example.
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-resizer
+```
+
+### JS (via import)
+
+```javascript
+import { Resizer } from '@carbon-labs/react-resizer/es/index';
+
+function App() {
+  return <Resizer />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-resizer/scss/resizer';
+```

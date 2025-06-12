@@ -72,6 +72,7 @@ export function messagesTemplate(customElementClass) {
                   : html` <clabs-chat-message
                       raw-text="${message.text}"
                       origin="${message.origin}"
+                      separator="${message.origin === 'separator' || nothing}"
                       time-stamp="${message.time}"
                       ?user-submitted="${message.userSubmitted ||
                       message.origin === userName}"

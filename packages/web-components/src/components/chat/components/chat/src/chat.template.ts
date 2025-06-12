@@ -65,6 +65,7 @@ export function chatTemplate(customElementClass) {
     enableRequestCancelling,
     _handleHeaderEscape,
     _handleFooterEscape,
+    _triggerFooterFocus: triggerFooterFocus,
     customLabels,
     setUserMessage,
     enableLauncher,
@@ -184,6 +185,7 @@ export function chatTemplate(customElementClass) {
                 ?currently-streaming="${streamResponses && !interruptStreaming}"
                 input-placeholder="${inputFieldPlaceholder}"
                 preset-entry="${setUserMessage}"
+                ?focus-prompt="${triggerFooterFocus}"
                 notification-count="${complexFeedbackCount}"
                 ?query-processing="${queryInProgress}"
                 character-limit="${maxCharacterCount}">

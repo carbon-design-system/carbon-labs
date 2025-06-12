@@ -20,6 +20,9 @@ import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
 import '@carbon/web-components/es/components/copy-button/index.js';
 import Checkmark16 from '@carbon/web-components/es/icons/checkmark/16.js';
 import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
+import ChevronDown from '@carbon/web-components/es/icons/chevron--down/16.js';
+import ChevronLeft from '@carbon/web-components/es/icons/chevron--left/16.js';
+import Compare16 from '@carbon/web-components/es/icons/compare/16.js';
 
 /**
  * Lit template for code
@@ -32,20 +35,28 @@ export function codeElementTemplate(customElementClass) {
     _renderedLines,
     disableLineTicks,
     disableCopyButton,
-    disableEditButton,
+    enableEditButton,
+    disableEditingOptions,
+    showContentDifferences,
+    editingEnabled,
+    _comparisonReference: comparisonReference,
+    comparisonEnabled,
     _handleFullCodeEdit: handleFullCodeEdit,
     _copyCode: copyCode,
     _handleEditValidation: handleEditValidation,
     _handleEditCancellation: handleEditCancellation,
+    _handleComparisonEnabled: handleComparisonEnabled,
+    _handleEditingEnabled: handleEditingEnabled,
     editable,
     assignedLanguage,
     autoAssignLanguage,
-    _editedContent: editedContent,
+    _displayedContent: displayedContent,
     _currentlyEdited: currentlyEdited,
     _highlightLine: highlightLine,
     enableColoring,
     language,
     lineCount,
+    _startFullEdit: startFullEdit,
     displayLineCount,
     enableLanguageDisplay,
     _renderLabel: renderLabel,
@@ -53,9 +64,13 @@ export function codeElementTemplate(customElementClass) {
     _controlTabbing: controlTabbing,
     theme,
     _preRender: preRender,
+    enableBlockCollapse,
+    collapsedList,
+    _collapseBlock: collapseBlock,
+    collapseAvailable,
   } = customElementClass;
 
-  return html` <div class="${clabsPrefix}--chat-code">
+  return html` <div class="${clabsPrefix}--chat-code" @wheel="${handleScroll}">
     ${enableLanguageDisplay || displayLineCount
       ? html`<div class="${clabsPrefix}--chat-code-lang">
           ${enableLanguageDisplay
@@ -78,16 +93,44 @@ export function codeElementTemplate(customElementClass) {
 
     <div class="${clabsPrefix}--chat-code-options">
       <div class="${clabsPrefix}--chat-code-options-buttons">
-        ${!disableEditButton
+        ${showContentDifferences
           ? html`
               <cds-icon-button
-                size="sm"
+                size="md"
+                kind="ghost"
+                align="left"
+                ?disabled="${!showContentDifferences}"
+                aria-label="${comparisonEnabled
+                  ? 'Exit comparison'
+                  : 'Show comparison'}"
+                ?isSelected="${comparisonEnabled}"
+                @click="${handleComparisonEnabled}"
+                role="button">
+                ${Compare16({ slot: 'icon' })}
+                <span slot="tooltip-content"
+                  >${comparisonEnabled
+                    ? 'Exit comparison'
+                    : 'Show comparison'}</span
+                >
+              </cds-icon-button>
+            `
+          : html``}
+        ${enableEditButton
+          ? html`
+              <cds-icon-button
+                size="md"
                 kind="ghost"
                 align="left"
                 aria-label="Edit Code"
+                ?isSelected="${editingEnabled}"
+                @click="${handleEditingEnabled}"
                 role="button">
                 ${Edit16({ slot: 'icon' })}
-                <span slot="tooltip-content">Enable editing</span>
+                <span slot="tooltip-content"
+                  >${!editingEnabled
+                    ? renderLabel('code-enable-editing')
+                    : renderLabel('code-disable-editing')}</span
+                >
               </cds-icon-button>
             `
           : html``}
@@ -110,20 +153,18 @@ export function codeElementTemplate(customElementClass) {
 
     <div
       class="${clabsPrefix}--chat-code-container"
-      @wheel="${handleScroll}"
       @mousemove="${handleScroll}">
       <textarea
         @keydown="${controlTabbing}"
         @input="${handleFullCodeEdit}"
         @click="${handleScroll}"
+        @focus="${startFullEdit}"
+        .value=${displayedContent}
         aria-label="Editable Text"
         spellcheck="false"
         class="${clabsPrefix}--chat-code-edit-area ${!editable
           ? clabsPrefix + '--chat-code-edit-hidden'
-          : ''}">
-${editedContent}</textarea
-      >
-
+          : ''}"></textarea>
       <div
         tabindex="0"
         role="textbox"
@@ -135,18 +176,56 @@ ${editedContent}</textarea
           (lineObject, index) =>
             html`
               <div
-                class="${clabsPrefix}--chat-code-line ${clabsPrefix}--chat-code-line-fade-in">
+                class="${clabsPrefix}--chat-code-line ${comparisonReference[
+                  index
+                ]
+                  ? clabsPrefix +
+                    '--chat-code-line-' +
+                    comparisonReference[index]
+                  : ''} ${clabsPrefix}--chat-code-line-fade-in ${lineObject.hidden
+                  ? clabsPrefix + '--chat-code-line-hidden'
+                  : ''}">
                 ${disableLineTicks || _renderedLines.length < 2
                   ? html``
                   : html`
                       <div class="${clabsPrefix}--chat-code-line-tick">
-                        ${index + 1}
+                        ${
+                          !comparisonReference[index]
+                            ? index + 1
+                            : comparisonReference[index] === 'removed'
+                            ? '-'
+                            : comparisonReference[index] === 'added'
+                            ? '+'
+                            : index + 1
+                        }
                       </div>
-                      <div class="${clabsPrefix}--chat-code-line-divider"></div>
+                      <div class="${clabsPrefix}--chat-code-line-divider">
+                      </div>
+                      
+                      </div>
                     `}
+                ${enableBlockCollapse && collapseAvailable
+                  ? html`
+                      <div
+                        class="${clabsPrefix}--chat-code-line-collapser"
+                        @click="${() => {
+                          collapseBlock(index);
+                        }}">
+                        ${!lineObject.collapsable
+                          ? ''
+                          : collapsedList.includes(index)
+                          ? ChevronLeft()
+                          : ChevronDown()}
+                      </div>
+                    `
+                  : ``}
                 <div
                   class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-${theme ||
-                  'default'}-theme">
+                  'default'}-theme ${editable
+                    ? ''
+                    : clabsPrefix +
+                      '--chat-code-line-offset-level-' +
+                      lineObject.indent}">
                   ${enableColoring
                     ? lineObject.content
                     : unsafeHTML(
@@ -159,7 +238,7 @@ ${editedContent}</textarea
             `
         )}
       </div>
-      ${currentlyEdited
+      ${currentlyEdited && !disableEditingOptions
         ? html` <div class="${clabsPrefix}--chat-code-editing-controls">
             <cds-icon-button
               size="md"

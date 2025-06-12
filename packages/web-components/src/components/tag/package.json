@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/ai-tag",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -13,8 +13,6 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/tag"
   },
-  "main": "./src/index.js",
-  "module": "./src/index.js",
   "exports": {
     ".": {
       "default": "./src/index.js"

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.74.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.73.0...@carbon-labs/react@0.74.0) (2025-06-12)
+
+
+### Bug Fixes
+
+* **layer:** causing tabbing issues ([#655](https://github.com/carbon-design-system/carbon-labs/issues/655)) ([7b3d828](https://github.com/carbon-design-system/carbon-labs/commit/7b3d828b6b840ee683b24d2c419f785cd21621cf))
+
+
+
+
+
 # [0.73.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.72.0...@carbon-labs/react@0.73.0) (2025-06-12)
 
 

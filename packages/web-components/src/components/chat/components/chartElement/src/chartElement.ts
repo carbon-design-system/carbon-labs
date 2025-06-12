@@ -42,7 +42,7 @@ export default class chartElement extends LitElement {
    * selectable- enable highlight if clicked
    */
   @property({ type: Boolean, attribute: 'selectable' })
-  selectable = true;
+  selectable;
 
   /**
    * Event listener to check if parent visibility changed
@@ -125,6 +125,12 @@ export default class chartElement extends LitElement {
    */
   @property({ type: Boolean, attribute: 'thumbnail' })
   thumbNail;
+
+  /**
+   * Max thumbnail width
+   */
+  @property({ type: Boolean, attribute: 'thumbnail-width' })
+  thumbNailWidth;
 
   /**
    * thumbnail image dataurl
@@ -336,14 +342,27 @@ export default class chartElement extends LitElement {
     });
     this.intersectionObserver.observe(this);
 
-    this.resizeObserver = new ResizeObserver(async () => {
+    /*this.resizeObserver = new ResizeObserver(async () => {
       if (this._resizeTimeout) {
         clearTimeout(this._resizeTimeout);
+      } else {
+        this._resizeTimeout = await setTimeout(async () => {
+          await this._handleResize();
+        }, 1200);
       }
-      this._resizeTimeout = await setTimeout(async () => {
-        await this._handleResize();
-      }, 200);
     });
+    this.resizeObserver.observe(this);*/
+
+    /*this.resizeObserver = new ResizeObserver(async () => {
+        clearTimeout(this._resizeTimeout);
+        this._resizeTimeout = await setTimeout(async () => {
+          await this._handleResize();
+        }, 200);
+    });
+    this.resizeObserver.observe(this);*/
+
+    this.resizeObserver = new ResizeObserver(() => this._handleResize());
+    this.resizeObserver.observe(this);
 
     /*this.resizeObserver = new ResizeObserver(async () => {
       if(!this.chartResizing){
@@ -354,8 +373,6 @@ export default class chartElement extends LitElement {
       }, 200);
       }
     });*/
-
-    this.resizeObserver.observe(this);
 
     if (this.hasAttribute('container-width')) {
       this.style.setProperty('--chat-chart-element-width', this.containerWidth);
@@ -377,10 +394,31 @@ export default class chartElement extends LitElement {
   /**
    * _handleResize - target resize on component itself
    */
-  async _handleResize() {
-    this.chartResizing = false;
-    this.chartLoading = true;
-    await this._displayVisualization();
+  _handleResize() {
+    if (this._resizeTimeout) {
+      clearTimeout(this._resizeTimeout);
+    }
+    this._resizeTimeout = setTimeout(async () => {
+      await this._handleResizeEnd();
+    }, 200);
+  }
+
+  /**
+   * _handleResizeEnd - check when final resize is triggered after delay
+   */
+  async _handleResizeEnd() {
+    await this._heavyRerendering();
+  }
+
+  /**
+   * _heavyRerendering - seperate render function for computationally expensive operations
+   */
+  async _heavyRerendering() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(this);
+      }, 2000);
+    });
   }
 
   /**
@@ -607,6 +645,7 @@ export default class chartElement extends LitElement {
         await VegaEmbed.default(targetDiv, chosenSpec, {
           actions: false,
           hover: this.enableTooltip,
+          //theme: 'carbon' + this.theme,
           tooltip: {
             /**
              * custom tooltip renderer for vega
@@ -621,6 +660,11 @@ export default class chartElement extends LitElement {
         })
           .then(({ view }) => {
             this._previousSpec = this._visualizationSpec;
+            if (this.thumbNail) {
+              if (!this.exportedImageURL) {
+                this._generateImage();
+              }
+            }
             if (this._authorizeSingleSelection) {
               try {
                 view.addSignalListener('picker', (_, value) => {
@@ -638,11 +682,6 @@ export default class chartElement extends LitElement {
               } catch (brushError) {
                 this._warningMessage = brushError;
               }
-            }
-            if (this.thumbNail) {
-              setTimeout(() => {
-                this._generateImage();
-              }, 200);
             }
           })
           .catch(async (error) => {
@@ -712,6 +751,13 @@ export default class chartElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(clickEvent);
+  }
+
+  /**
+   * _deselectedChart - remove selected mode on chart
+   */
+  _deselectChart() {
+    this.selected = false;
   }
 
   /**
@@ -1020,17 +1066,30 @@ export default class chartElement extends LitElement {
     if (this.renderMethod === 'svg') {
       //this._exportSvgToImage()
     } else {
-      window.setTimeout(async () => {
-        const targetID = this._getTargetRenderCanvasId();
-        const container = this.shadowRoot?.querySelector(targetID);
+      //window.setTimeout(async () => {
+      const targetID = this._getTargetRenderCanvasId();
+      const container = this.shadowRoot?.querySelector(targetID);
 
-        if (container instanceof HTMLElement) {
-          const canvasDiv = container?.querySelector('canvas');
-          if (canvasDiv instanceof HTMLElement) {
-            this.exportedImageURL = canvasDiv.toDataURL('image/png');
-          }
+      if (container instanceof HTMLElement) {
+        const canvasDiv = container?.querySelector('canvas');
+        if (canvasDiv instanceof HTMLElement) {
+          this.exportedImageURL = canvasDiv.toDataURL('image/png');
+
+          const generatedImageEvent = new CustomEvent(
+            'on-chart-thumbnail-generated',
+            {
+              detail: {
+                action: 'CHART: thumbnail rendering successful',
+                image: canvasDiv.toDataURL('image/png'),
+              },
+              bubbles: true,
+              composed: true,
+            }
+          );
+          this.dispatchEvent(generatedImageEvent);
         }
-      }, 200);
+      }
+      //}, 400);
     }
   }
 
@@ -1286,6 +1345,165 @@ export default class chartElement extends LitElement {
    * prepareVisualization - Prepare and adapt Vega visualization spec to be more Carbon adjacent
    * @param {object} premadeSpec - Vega specification sent in optionally when pre-parsed
    */
+  _prepareVisualizationSizing(premadeSpec?: object) {
+    let spec: any = {};
+
+    if (!premadeSpec) {
+      try {
+        spec = JSON.parse(this.content);
+      } catch (e) {
+        this._errorMessage =
+          'CARBON CHART ERROR: JSON parse() failed, specification is not valid JSON';
+        this._errorLevel = 'JSON-PARSING';
+        return '';
+      }
+    } else {
+      spec = JSON.parse(JSON.stringify(premadeSpec));
+    }
+
+    if (!spec['$schema']) {
+      this._errorMessage =
+        'CHART COMPONENT ERROR: JSON is valid but not a valid schema, missing "$schema" field';
+      this._errorLevel = 'SPEC-VALIDATION';
+      return '';
+    }
+
+    spec.autosize = {
+      type: 'fit',
+      contains: 'padding',
+    };
+
+    spec.resolve = {
+      view: { width: 'independent', height: 'independent' },
+    };
+    const currentContainerWidth = this.clientWidth - 16 * 2;
+    const currentContainerHeight = this.clientHeight - 16 * 2;
+    this.assignSizes(spec, currentContainerWidth, currentContainerHeight, {
+      category: 5,
+    });
+    this._prepareSpecification(spec, true, true, 0);
+
+    this._visualizationSpec = spec;
+    return '';
+  }
+
+  /**
+   * estimateMargins - Prepare and adapt Vega visualization spec submargins
+   * @param {object} spec - Vega subspecification sent in optionally
+   */
+  estimateMargins(spec) {
+    const globalPadding = 20;
+    let top = globalPadding;
+    let right = globalPadding;
+    let left = globalPadding;
+    let bottom = globalPadding;
+    const defaultFontSize = 16;
+    const defaultLegendPadding = 36;
+    const defaultItemWidth = 5;
+    const defaultItemHeight = 5;
+    const defaultTitlePadding = 20;
+
+    if (spec.title) {
+      const fontSize =
+        typeof spec.title === 'object' && spec.title.fontSize
+          ? spec.title.fontSize
+          : defaultFontSize;
+      top += fontSize + defaultTitlePadding;
+    }
+
+    if (spec.encoding) {
+      for (const enc of Object.values(spec.encoding) as any[]) {
+        if (!enc.legend) {
+          continue;
+        }
+        const orient = enc.legend.orient || 'right';
+        //const field = enc.field;
+        //const count = legendNumbers[field] || 1;
+
+        if (['left', 'right'].includes(orient)) {
+          const subWidth = enc.legend
+            ? enc.legend.symbolSize || defaultItemWidth
+            : defaultItemWidth;
+          if (orient === 'left') {
+            left += subWidth + defaultLegendPadding;
+          }
+          if (orient === 'right') {
+            right += subWidth + defaultLegendPadding;
+          }
+        } else {
+          const subHeight = defaultItemHeight;
+          if (orient === 'top') {
+            top += subHeight + defaultLegendPadding;
+          }
+          if (orient === 'bottom') {
+            bottom += subHeight + defaultLegendPadding;
+          }
+        }
+      }
+    }
+    return { top, right, bottom, left };
+  }
+  /** assignSizes - assign sizing for any subspec
+   * @param {object} spec - vega spec
+   * @param {number} width - sub width
+   * @param {number} height - sub height
+   * @param {number} legendNumbers - number of legend elements
+   */
+  assignSizes(spec, width, height, legendNumbers = {}) {
+    const marge = this.estimateMargins(spec);
+    const innerWidth = width - marge.left - marge.right;
+    const innerHeight = height - marge.top - marge.bottom;
+    spec.width = width;
+    spec.height = height;
+
+    if (spec.layer) {
+      spec.layer.forEach((child) =>
+        this.assignSizes(child, innerWidth, innerHeight, legendNumbers)
+      );
+      return;
+    }
+
+    if (spec.hconcat || spec.concat) {
+      const key = spec.hconcat ? 'hconcat' : 'contat';
+      const count = spec[key].length;
+      const childWidth = innerWidth / count;
+      spec[key].forEach((child) =>
+        this.assignSizes(child, childWidth, innerHeight, legendNumbers)
+      );
+      return;
+    }
+
+    if (spec.vconcat) {
+      const count = spec.vconcat.length;
+      const childHeight = innerHeight / count;
+      spec.vconcat.forEach((child) =>
+        this.assignSizes(child, innerWidth, childHeight, legendNumbers)
+      );
+      return;
+    }
+
+    if (spec.repeat && spec.spec) {
+      const rows = Array.isArray(spec.repeat.row) ? spec.repeat.row.length : 1;
+      const cols = Array.isArray(spec.repeat.column)
+        ? spec.repeat.column.length
+        : 1;
+      const childWidth = innerWidth / cols;
+      const childHeight = innerHeight / rows;
+      this.assignSizes(spec.spec, childWidth, childHeight, legendNumbers);
+      return;
+    }
+    if (spec.facet && spec.spec) {
+      this.assignSizes(spec.spec, innerWidth, innerHeight, legendNumbers);
+      return;
+    }
+    spec.width = innerWidth;
+    spec.height = innerHeight;
+  }
+
+  /**
+   * prepareVisualization - Prepare and adapt Vega visualization spec to be more Carbon adjacent
+   * @param {object} premadeSpec - Vega specification sent in optionally when pre-parsed
+   */
   _prepareVisualization(premadeSpec?: object) {
     let spec: any = {};
 
@@ -1387,7 +1605,7 @@ export default class chartElement extends LitElement {
       if (currentContainerWidth) {
         let rowCount;
         let columnCount;
-        const legendHeight = 16 + 16 * Math.floor(currentContainerWidth / 130);
+        const legendHeight = 32; // + 8 * Math.floor(currentContainerWidth / 130);
         const paddingOffset = { vertical: 0, horizontal: 0 };
         const gapSize = 22;
 
@@ -1544,6 +1762,7 @@ export default class chartElement extends LitElement {
       plainSpec = this._prepareSpecification(spec, true, true, 0);
     }*/
 
+    this._prepareVisualizationSizing(finalSpec);
     this._visualizationSpec = finalSpec;
     return '';
   }
@@ -1972,6 +2191,8 @@ export default class chartElement extends LitElement {
       }
 
       if (addConfig) {
+        const cellTitleWidthLimit = this.cellWidth || 50;
+        const cellTitleHeightLimit = this.cellHeight || 50;
         spec['config'] = {
           font: defaultFont,
           axis: {
@@ -1994,9 +2215,11 @@ export default class chartElement extends LitElement {
             labelColor: labelColor,
             titleColor: textColor,
             tickColor: backgroundColor,
+            labelOverlap: 'greedy',
             titlePadding: 12,
             titleFont: defaultFont,
             titleFontWeight: 400,
+            titleLimit: cellTitleWidthLimit,
           },
           axisTop: {
             domainColor: gridColor,
@@ -2004,26 +2227,32 @@ export default class chartElement extends LitElement {
             titleColor: textColor,
             tickColor: backgroundColor,
             titlePadding: 10,
+            labelOverlap: 'greedy',
             titleFont: defaultFont,
             titleFontWeight: 400,
+            titleLimit: cellTitleWidthLimit,
           },
           axisLeft: {
             domainColor: axisColor,
             labelColor: labelColor,
             titleColor: textColor,
+            labelOverlap: 'greedy',
             tickColor: backgroundColor,
             titlePadding: 4,
             titleFont: defaultFont,
             titleFontWeight: 400,
+            titleLimit: cellTitleHeightLimit,
           },
           axisRight: {
             domainColor: gridColor,
             labelColor: labelColor,
             titleColor: textColor,
+            labelOverlap: 'greedy',
             tickColor: backgroundColor,
             titlePadding: 10,
             titleFont: defaultFont,
             titleFontWeight: 400,
+            titleLimit: cellTitleHeightLimit,
           },
           view: {
             stroke: gridColor,
@@ -2043,29 +2272,31 @@ export default class chartElement extends LitElement {
             category: ordinalColors,
             ordinal: ordinalColors,
           },
+
           legend: {
             title: null,
+            direction: 'horizontal',
             symbolType: 'square',
-            symbolLimit: 30,
-            labelLimit: 120,
-            columns: { signal: 'floor(width / 130)' },
+            labelLimit: { signal: 'max(100, width * 0.25)' },
+            columns: { signal: 'floor(width / 150)' },
+            symbolSize: 256,
+            titlePadding: 5,
+            rowPadding: { signal: '12' },
             orient: 'bottom',
             symbolOpacity: 1,
-            direction: 'horizontal',
             titleColor: textColor,
             labelColor: labelColor,
             titleFont: defaultFont,
             labelFont: defaultFont,
             labelOffset: 4,
-            rowPadding: 8,
+            padding: 10,
             titleFontSize: 11,
             labelFontSize: 12, //fillOpacity: 1,
             strokeWidth: 1, //fontWeight: 'bold',
             offset: 20,
-            symbolBaseFillColor: null,
-            gradientLength: 246,
-            gradientThickness: 8,
-            gradientLabelOffset: 8,
+            gradientLength: { signal: 'width - 32' },
+            gradientThickness: 16,
+            gradientLabelOffset: 16,
           },
         };
 
@@ -2114,6 +2345,9 @@ export default class chartElement extends LitElement {
           this._authorizeMultiSelection = false;
           break;
         case 'line':
+          if (spec['mark']) {
+            spec['mark']['point'] = { filled: true };
+          }
           isOrdinal = false;
           break;
         case 'text':

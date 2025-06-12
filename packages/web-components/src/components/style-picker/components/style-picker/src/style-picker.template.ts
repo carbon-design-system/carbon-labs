@@ -36,9 +36,9 @@ export const stylePickerTemplate = (customElementClass) => {
     <cds-popover-content>
       <div class=${`${blockClass}__content`}>
         <div class=${`${blockClass}__header`}>
-          <strong className=${`${blockClass}__heading`}>${title}</strong>
+          <strong class=${`${blockClass}__heading`}>${title}</strong>
         </div>
-        <cds-layer className=${`${blockClass}__modules`}>
+        <cds-layer class=${`${blockClass}__modules`} level="1">
           <slot name="modules"></slot>
         </cds-layer>
       </div>

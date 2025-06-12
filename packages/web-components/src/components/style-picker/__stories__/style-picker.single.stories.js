@@ -46,7 +46,7 @@ export default {
 const styles = css`
   .toolbar-layer {
     display: inline-block;
-    background: var(--cds-layer);
+    background-color: var(--cds-layer);
     color: var(--cds-text-primary, #161616);
   }
 `;
@@ -104,7 +104,7 @@ export const Color = {
         ${styles}
       </style>
       <cds-layer class="toolbar-layer">
-        <clabs-style-picker align=${args.align} ?open=${args.open}>
+        <clabs-style-picker align=${args.align} ?open=${args.open} title="Choose color">
           <cds-icon-button
             slot="trigger"
             kind=${BUTTON_KIND.GHOST}

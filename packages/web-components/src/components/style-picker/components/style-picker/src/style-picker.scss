@@ -7,17 +7,26 @@
 
 $css--plex: true !default;
 
-@use '@carbon/react/scss/type';
-@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/layout' as *;
 
 @use '../../../../../globals/scss/vars' as *;
 
 $block-class: #{$clabs-prefix}--style-picker;
 
+:host(#{$clabs-prefix}-style-picker) {
+  @include emit-layout-tokens();
+}
+
+// 12rem
+$spacing-12-rem: $spacing-13 + $spacing-07;
+// 13.5rem
+$container-width: $spacing-12-rem + $spacing-06;
 
 .#{$block-class}__content {
-  width: 13.5rem;
-  max-height: min(24rem, 100vh);
+  width: $container-width;
+  max-height: min(calc($spacing-12-rem * 2), 100vh);
   display: grid;
   grid-template-rows: max-content 1fr;
 }
@@ -36,7 +45,7 @@ $block-class: #{$clabs-prefix}--style-picker;
 .#{$block-class}__heading {
   @include type.type-style('heading-01');
   padding-inline: $spacing-05;
-  height: 2.5rem;
+  height: $spacing-08;
   display: flex;
   align-items: center;
 }
@@ -55,22 +64,22 @@ $block-class: #{$clabs-prefix}--style-picker;
 
 // Carbon overwrites
 
-// .#{$block-class}-module .#{config.$carbon-prefix}--contained-list__header {
-//   z-index: 2;
-// }
+.#{$block-class}-module .#{$cds-prefix}--contained-list__header {
+  z-index: 2;
+}
 
-// .#{$block-class}-modules__container,
-// .#{$block-class}-modules__container .#{config.$carbon-prefix}--accordion {
-//   height: 100%;
-// }
+.#{$block-class}-modules__container,
+.#{$block-class}-modules__container .#{$cds-prefix}--accordion {
+  height: 100%;
+}
 
-// .#{$block-class}-modules__container .#{config.$carbon-prefix}--accordion__item,
-// .#{$block-class}-modules__container .#{config.$carbon-prefix}--accordion__heading,
-// .#{$block-class}-modules__container .#{config.$carbon-prefix}--accordion__content {
-//   animation-duration: 0ms !important;
-//   transition: none !important;
-// }
+.#{$block-class}-modules__container .#{$cds-prefix}--accordion__item,
+.#{$block-class}-modules__container .#{$cds-prefix}--accordion__heading,
+.#{$block-class}-modules__container .#{$cds-prefix}--accordion__content {
+  animation-duration: 0ms !important;
+  transition: none !important;
+}
 
-// .#{$block-class}__modules .#{config.$carbon-prefix}--accordion__item--active {
-//   height: calc(100% - (var(--#{$block-class}-module-count) - 1) * 2.5rem - 0.0625rem);
-// }
+.#{$block-class}__modules .#{$cds-prefix}--accordion__item--active {
+  height: calc(100% - (var(--#{$block-class}-module-count) - 1) * 2.5rem - 0.0625rem);
+}

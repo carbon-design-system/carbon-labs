@@ -9,15 +9,11 @@
 
 import { html, TemplateResult } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { Group, Item } from '../../../defs/style-picker-module.types';
-import { Size } from '../../../defs/style-picker-option.types';
-// import { Kind } from '../../../defs/style-picker.types';
-// import { StylePickerContextType } from '../../../context/style-picker-context';
 
 import '../../style-picker-option/style-picker-option.ts';
 
-const { stablePrefix: clabsPrefix } = settings;
+const { stablePrefix: clabsPrefix, prefix: carbonPrefix } = settings;
 
 export const blockClass = `${clabsPrefix}--style-picker-module`;
 
@@ -34,8 +30,6 @@ export const stylePickerModuleTemplate = <T>(
   const { items, title, size, renderItem, selectedItem, handleOptionChange } =
     customElementClass;
 
-  console.log('>> ', size);
-
   /**
    *
    * @param {object} i - item
@@ -44,18 +38,13 @@ export const stylePickerModuleTemplate = <T>(
     return !(i[0] as Item<T>).value;
   };
 
-  const sizeClass = classMap({
-    [`${clabsPrefix}--style-picker-module--small`]: size == 'sm',
-    [`${clabsPrefix}--style-picker-module--large`]: size == 'lg',
-  });
-
   /**
    *
-   * @param {Item<T>[]} i -
+   * @param {Item<T>[]} items -
    */
-  const renderItems = (i: Item<T>[]) => {
-    return i.map(
-      (item, index) =>
+  const renderItems = (items: Item<T>[]) => {
+    return items.map(
+      (item) =>
         html`
           <clabs-style-picker-option
             value=${item.value}
@@ -71,21 +60,56 @@ export const stylePickerModuleTemplate = <T>(
 
   /**
    *
-   * @param {Item<T>[]} i -
+   * @param {Item<T>[]} items -
    */
-  const renderUngrouped = (i: Item<T>[]) => {
+  const renderUngrouped = (items: Item<T>[]) => {
     return html` <div
       class=${`${blockClass} ${blockClass}--${size}`}
       role="listbox"
-      aria-label="{heading}"
-      aria-orientation="horizontal"
-      onKeyDown="{handleKeydown}"
-      onBlur="{handleBlur}">
+      aria-label=${title}
+      aria-orientation="horizontal">
       <ul class=${`${blockClass}__items`} role="group">
-        ${renderItems(i)}
+        ${renderItems(items)}
       </ul>
     </div>`;
   };
 
-  return html`<div>${renderUngrouped(items[0]?.items)}</div>`;
+  /**
+   *
+   * @param {Group<T>[]} items -
+   */
+  const renderGrouped = (items: Group<Item<T>>[]) => {
+    return html`
+      <div
+        class=${`${blockClass} ${blockClass}--${size}`}
+        role="listbox"
+        aria-label=${title}
+        aria-orientation="horizontal"
+        onKeyDown="{handleKeydown}"
+        onBlur="{handleBlur}">
+        ${items.map(
+          (group) => html`
+            <ul
+              key=${group.label}
+              class=${`cds--contained-list ${carbonPrefix}--contained-list--disclosed ${blockClass}__group`}
+              role="group"
+              aria-label=${group.label}>
+              <li class=${`cds--contained-list__header`} role="presentation">
+                ${group.label}
+              </li>
+              <ul role="group">
+                ${renderItems(group.items)}
+              </ul>
+            </ul>
+          `
+        )}
+      </div>
+    `;
+  };
+
+  if (kind === 'single' && itemsAreGrouped(items)) {
+    return html`${renderGrouped(items)}`;
+  }
+
+  return html`${renderUngrouped(items)}`;
 };

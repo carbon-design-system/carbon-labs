@@ -13,7 +13,7 @@ import '@carbon/web-components/es/components/code-snippet/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 
 export default {
-  title: 'Components/Chat',
+  title: 'Components/AI Components/[LABS TESTING ONLY] Core Chat',
   component: 'clabs-chat',
 };
 

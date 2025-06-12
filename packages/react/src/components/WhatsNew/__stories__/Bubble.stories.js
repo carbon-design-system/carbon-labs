@@ -24,7 +24,7 @@ import { Button } from '@carbon/react';
 import './storybook.scss';
 import mdx from './WhatsNew.mdx';
 export default {
-  title: 'Components/WhatsNew',
+  title: 'Patterns/WhatsNew',
   component: Bubble,
   subcomponents: {
     BubbleHeader,

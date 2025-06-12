@@ -168,7 +168,6 @@ export function footerTemplate(customElementClass) {
             ? clabsPrefix + '--chat-search-query-disabled'
             : ''}"
           rows="1"
-          ?disabled="${disableInput}"
           id="${clabsPrefix}--chat-footer-prompt-text-area"
           placeholder="${!disableInput
             ? inputPlaceholder

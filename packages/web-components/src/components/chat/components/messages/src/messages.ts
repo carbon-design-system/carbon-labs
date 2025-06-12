@@ -234,13 +234,16 @@ export default class messages extends LitElement {
     if (this._autoScroll) {
       this._updateScroll();
     }
+    if (this.forceScrollDown) {
+      this._scrollToBottom();
+    }
   }
 
   /**
    * handleInternalChange - handle event when children update
    */
   _handleInternalChange() {
-    if (this._autoScroll) {
+    if (this._autoScroll || this.forceScrollDown) {
       this._updateScroll();
     }
   }
@@ -284,7 +287,7 @@ export default class messages extends LitElement {
     if (this.scrollDiv instanceof HTMLElement) {
       if (!this.scrollTimeout) {
         this.scrollTimeout = setTimeout(() => {
-          if (this._autoScroll) {
+          if (this._autoScroll || this.forceScrollDown) {
             let scrollTarget = this.scrollDiv?.scrollHeight;
             if (this._limitScroll) {
               scrollTarget = this._previousScrollHeight;

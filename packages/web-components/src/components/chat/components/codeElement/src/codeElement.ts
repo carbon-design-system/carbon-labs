@@ -32,10 +32,22 @@ export default class codeElement extends LitElement {
   content;
 
   /**
+   * Code string to be parsed into lines and displayed
+   */
+  @property({ type: String, attribute: 'new-content', reflect: true })
+  newContent;
+
+  /**
    * Editable boolean flag to let users know lines can be changed
    */
   @property({ type: Boolean, attribute: 'editable', reflect: true })
   editable;
+
+  /**
+   * Automatically detect blocks based on curly brackets
+   */
+  @property({ type: Boolean, attribute: 'auto-detect-blocks', reflect: true })
+  autoDetectBlocks;
 
   /**
    * character count render limit for coloring performance
@@ -60,6 +72,12 @@ export default class codeElement extends LitElement {
    */
   @property({ type: Boolean, attribute: 'enable-language-display' })
   enableLanguageDisplay;
+
+  /**
+   * show differences when new content arrives
+   */
+  @property({ type: Boolean, attribute: 'show-content-differences' })
+  showContentDifferences;
 
   /**
    * Editable boolean flag to let users know lines can be changed
@@ -104,6 +122,18 @@ export default class codeElement extends LitElement {
   tabSize = 2;
 
   /**
+   * Disable editing options
+   */
+  @property({ type: Boolean, attribute: 'disable-editing-options' })
+  disableEditingOptions;
+
+  /**
+   * Debug editing mode
+   */
+  @property({ type: Boolean, attribute: 'debug-editing-mode' })
+  debugEditingMode;
+
+  /**
    * Editable boolean flag to let users know lines can be changed
    */
   @property({ type: Boolean, attribute: 'disable-copy-button', reflect: true })
@@ -112,8 +142,8 @@ export default class codeElement extends LitElement {
   /**
    * Editable boolean flag to let users know lines can be changed
    */
-  @property({ type: Boolean, attribute: 'disable-edit-button', reflect: true })
-  disableEditButton = true;
+  @property({ type: Boolean, attribute: 'enable-edit-button', reflect: true })
+  enableEditButton;
 
   /**
    * streaming - flag to enable streaming mode
@@ -128,6 +158,30 @@ export default class codeElement extends LitElement {
   enableAutoCompacting = true;
 
   /**
+   * compacting value
+   */
+  @property({ type: Number, attribute: 'auto-compacting-threshold' })
+  autoCompactingThreshold = 300;
+
+  /**
+   * disable collapse
+   */
+  @property({ type: Boolean, attribute: 'enable-block-collapse' })
+  enableBlockCollapse;
+
+  /**
+   * enable auto-indent
+   */
+  @property({ type: Boolean, attribute: 'auto-indent' })
+  autoIndent;
+
+  /**
+   * displayed content string
+   */
+  @state()
+  _displayedContent;
+
+  /**
    * Source content - save original code text content
    */
   @state()
@@ -138,6 +192,9 @@ export default class codeElement extends LitElement {
    */
   @state()
   _editedContent;
+
+  @state()
+  _tickWidth = 0;
 
   /**
    * _currentEditIndex - target line index
@@ -188,13 +245,39 @@ export default class codeElement extends LitElement {
   lineCount;
 
   /**
+   * selection start index
+   */
+  @state()
+  selectionStart;
+
+  /**
+   * selection end index
+   */
+  @state()
+  selectionEnd;
+
+  /**
+   * line indices to collpase/open
+   */
+  @state()
+  collapsedList: number[] = [];
+
+  /**
+   * total editing offset
+   */
+  @state()
+  editAreaSpacing = 0;
+
+  /**
    * Array of lines parsed from content attribute
    */
   @state()
   _renderedLines: {
     content: string;
-    type: string;
     paddingLeft: string;
+    indent: number;
+    collapsable: boolean;
+    hidden: boolean;
   }[] = [];
 
   /**
@@ -203,8 +286,10 @@ export default class codeElement extends LitElement {
   @state()
   _editedLines: {
     content: string;
-    type: string;
     paddingLeft: string;
+    indent: number;
+    collapsable: boolean;
+    hidden: boolean;
   }[] = [];
 
   /**
@@ -213,8 +298,10 @@ export default class codeElement extends LitElement {
   @state()
   _originalLines: {
     content: string;
-    type: string;
     paddingLeft: string;
+    indent: number;
+    collapsable: boolean;
+    hidden: boolean;
   }[] = [];
 
   /**
@@ -229,15 +316,56 @@ export default class codeElement extends LitElement {
   @state()
   theme;
 
+  /**
+   * comparison enabled
+   */
+  @state()
+  comparisonEnabled = false;
+
+  /** internal editing enabled boolean
+   */
+  @state()
+  editingEnabled = false;
+
+  /**
+   * compacted
+   */
+  @state()
+  compacted;
+
+  /**
+   * blockcollapsa check
+   */
+  @state()
+  collapseAvailable = false;
+
+  /**
+   * contentDifferenceDetected
+   */
+  @state()
+  contentDifferenceDetected = false;
+
+  /**
+   * _indented - indent analysis done
+   */
+  @state()
+  _indented = false;
+
+  /**
+   * dict of line diff types by index
+   */
+  @state()
+  _comparisonReference = {};
+
   /** updated - internal LIT function to detect updates to the DOM tree, used to auto update the specification attribute
    * @param {Object} changedProperties - returned inner DOM update object
    **/
   updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('content')) {
-      if (!this._originalContent) {
-        this._originalContent = this.content;
-      }
+      this._editedContent = this.content;
+      this._originalContent = this.content;
+      this._displayedContent = this.content;
 
       if (this.streaming) {
         this._formatCode(false);
@@ -245,40 +373,45 @@ export default class codeElement extends LitElement {
         this._formatCode(false);
       }
     }
-    if (changedProperties.has('disableLineTicks')) {
+    if (
+      changedProperties.has('disableLineTicks') ||
+      changedProperties.has('editable') ||
+      changedProperties.has('editingEnabled')
+    ) {
       this._formatCode(this.editable);
     }
 
     if (changedProperties.has('_editedContent')) {
       this._formatCode(true);
     }
-  }
 
-  /**
-   * _clearCode - get code type if it exists and remove backticks
-   * @param {string} content - content code string
-   */
-  _clearCode(content) {
-    const match = content.match(/^```(\w+)?\n([\s\S]*?)\n```$/);
-    if (match) {
-      const [, lang, codeContent] = match;
-      return { language: lang || null, codeContent };
+    if (changedProperties.has('maxHeight')) {
+      this.style.setProperty('--chat-code-height', this.maxHeight);
     }
-    return { language: null, codeContent: content };
+
+    if (changedProperties.has('editAreaSpacing')) {
+      this.style.setProperty(
+        '--chat-code-editing-area-offset',
+        this.editAreaSpacing + 'px'
+      );
+    }
   }
 
   /** detect when component is rendered to process code object
    */
   firstUpdated() {
+    if (this.debugEditingMode) {
+      this.style.setProperty(
+        '--chat-editing-layer-font-color',
+        'rgba(255,0,0,0.7)'
+      );
+    }
+    if (this.hasAttribute('render-language')) {
+      //console.log('FIRST: ' + this.renderLanguage);
+      this.language = this.renderLanguage;
+    }
     if (this.hasAttribute('max-height')) {
       this.style.setProperty('--chat-code-height', this.maxHeight);
-    }
-    if (!this.disableLineTicks) {
-      this.style.setProperty('--chat-code-tick-offset', '16px');
-      this.style.setProperty('--chat-code-inset-start', '23px');
-    } else {
-      this.style.setProperty('--chat-code-tick-offset', '0px');
-      this.style.setProperty('--chat-code-inset-start', '14px');
     }
 
     if (this.enableLanguageDisplay || this.displayLineCount) {
@@ -286,20 +419,32 @@ export default class codeElement extends LitElement {
     }
 
     if (this.content !== undefined) {
-      const codeAnalysis = this._clearCode(this.content);
+      const codeAnalysis = this._cleanCode(this.content);
       if (codeAnalysis.language) {
-        this.content = codeAnalysis.codeContent;
         this.language = codeAnalysis.language;
       }
-      this._editedContent = this.content;
-      this._originalContent = this.content;
+      this.content = codeAnalysis.code;
+
+      let autoIndentedCode;
+      if (this.autoIndent) {
+        autoIndentedCode = this._preIndentCode(this.content);
+        //console.log(autoIndentedCode)
+        //console.log(this.content)
+        this.content = autoIndentedCode;
+      }
+
+      this._editedContent = autoIndentedCode || this.content;
+      this._originalContent = autoIndentedCode || this.content;
+      this._displayedContent = autoIndentedCode || this.content;
       this._formatCode(false);
     } else {
       this._renderedLines = [
         {
           content: 'CodeElement ERROR: content is empty',
-          type: '',
           paddingLeft: '8px',
+          indent: 0,
+          collapsable: false,
+          hidden: false,
         },
       ];
     }
@@ -309,6 +454,73 @@ export default class codeElement extends LitElement {
     });
 
     this.resizeObserver.observe(this);
+  }
+
+  /**
+   * calculateEditingOffset -  unite all options and find optimal padding for overlapping textarea
+   */
+  calculateEditingOffset() {
+    let editingAreaOffset = 8;
+    if (this.collapseAvailable) {
+      editingAreaOffset += 20 + 8;
+    }
+
+    if (!this.disableLineTicks) {
+      editingAreaOffset += this._tickWidth + 13 + 4;
+    } else {
+      editingAreaOffset += 0;
+    }
+
+    if (this.disableColoring) {
+      editingAreaOffset += 0;
+    }
+    if (
+      this.disableColoring &&
+      !this.disableLineTicks &&
+      this.collapseAvailable
+    ) {
+      editingAreaOffset -= 6;
+    }
+    if (this.disableLineTicks && !this.collapseAvailable) {
+      editingAreaOffset += 8;
+    }
+    if (
+      !this.disableLineTicks &&
+      !this.disableColoring &&
+      this.editable &&
+      this.collapseAvailable
+    ) {
+      editingAreaOffset -= 8;
+    }
+    this.editAreaSpacing = editingAreaOffset;
+  }
+
+  /**
+   * _clearCode - get code type if it exists and remove backticks
+   * @param {string} content - content code string
+   */
+  _clearCode(content) {
+    const match = content.match(new RegExp('^```(w+)?\\n([sS]*?)\\n```$'));
+    if (match) {
+      const [, lang, codeContent] = match;
+      return { language: lang || null, codeContent };
+    }
+    return { language: null, codeContent: content };
+  }
+
+  /**
+   * _cleanCode - remove backticks and retrieve language name i it exists
+   * @param {string} content - content to analyze
+   */
+  _cleanCode(content) {
+    let foundLanguage = null;
+    const backtickCheck = new RegExp('^```(\\w+)?\\n|```$', 'g');
+    const cleanCode = content.replace(backtickCheck, (_match, langString) => {
+      if (langString) {
+        foundLanguage = langString.trim();
+      }
+    });
+    return { language: foundLanguage, code: cleanCode };
   }
 
   /** _handleScroll
@@ -339,10 +551,9 @@ export default class codeElement extends LitElement {
    * @param {event} _event - resize event
    */
   _handleResize(_event) {
-    if (this.enableAutoCompacting) {
-      if (this.clientWidth < 300) {
-        this.disableLineTicks = true;
-      }
+    if (this.enableAutoCompacting && !this.disableLineTicks) {
+      const limiter = this.autoCompactingThreshold;
+      this.compacted = this.clientWidth < limiter;
     }
     this._handleScroll();
   }
@@ -378,25 +589,63 @@ export default class codeElement extends LitElement {
     }
   }
 
-  /** _controlTabbing - block tab event in typing
-   * @param {event} event - key event
+  /** _collapseBlock - toggle blocks to show
+   * @param {string} index -  index of slected line
    */
-  _controlTabbing(event) {
-    //const newLines = event?.target?.value;
-    if (event?.key === 'Tab') {
-      event?.preventDefault();
-      /*let start = this.selectionStart;
-      let end = this.selectionEnd;
+  _collapseBlock = (index) => {
+    const toggleBlocks = !this.collapsedList.includes(index);
+    if (toggleBlocks) {
+      this.collapsedList.push(index);
+    } else {
+      this.collapsedList = this.collapsedList.filter((i) => i !== index);
+    }
+
+    //let lineBlocks = this.shadowRoot.querySelectorAll('.'+clabsPrefix+'--chat-code-line');
+    const indentStart = this._renderedLines[index].indent;
+
+    for (let l = index + 1; l < this._renderedLines.length; l++) {
+      const line = this._renderedLines[l];
+      if (line.indent > indentStart) {
+        this._renderedLines[l].hidden = toggleBlocks;
+      } else {
+        this._renderedLines[l].hidden = false;
+        break;
+      }
+    }
+
+    const splitter = this._editedContent.split('\n');
+    let newTextContent = '';
+    for (let m = 0; m < splitter.length - 1; m++) {
+      if (!this._renderedLines[m].hidden) {
+        newTextContent += splitter[m] + '\n';
+      }
+    }
+    this._displayedContent = newTextContent;
+    this.requestUpdate();
+  };
+
+  /** _controlTabbing - block tab event in typing
+   * @param {event} _event - key event
+   */
+  _controlTabbing(_event) {
+    const newLines = _event?.target?.value;
+    if (_event?.key === 'Tab') {
+      _event?.preventDefault();
+      const start = this.selectionStart;
+      const end = this.selectionEnd;
       let tabbedline = newLines;
 
       // set textarea value to: text before caret + tab + text after caret
-      tabbedline = tabbedline.substring(0, start) +"dksjfjkdkdjsl" + tabbedline.substring(end);
+      tabbedline =
+        tabbedline.substring(0, start) +
+        'dksjfjkdkdjsl' +
+        tabbedline.substring(end);
 
       this.selectionStart = this.selectionEnd = start + 1;
 
-      if(event?.target?.value){
-        event.target.value = tabbedline;
-      }*/
+      if (_event?.target?.value) {
+        _event.target.value = tabbedline;
+      }
     }
     setTimeout(() => {
       this._handleScroll();
@@ -413,7 +662,7 @@ export default class codeElement extends LitElement {
       this._editedContent = newLines;
       const codeEditedEvent = new CustomEvent('on-code-edit-change', {
         detail: {
-          previousLineData: this.content,
+          previousLineData: newLines,
           newLineText: newLines,
         },
         bubbles: true,
@@ -422,6 +671,7 @@ export default class codeElement extends LitElement {
       this.dispatchEvent(codeEditedEvent);
     }
     this._currentlyEdited = this._editedContent !== this._originalContent;
+    this._displayedContent = this._editedContent;
     this._handleScroll();
   }
 
@@ -430,7 +680,8 @@ export default class codeElement extends LitElement {
    */
   _startFullEdit() {
     if (!this._currentlyEdited) {
-      this._editedContent = this.content;
+      this._displayedContent = this._originalContent;
+      this._editedContent = this._originalContent;
     }
     this._currentlyEdited = true;
   }
@@ -459,8 +710,10 @@ export default class codeElement extends LitElement {
         event.preventDefault();
         const newLineObject = {
           content: '',
-          type: '',
           paddingLeft: this._editedLines[lineIndex].paddingLeft,
+          hidden: false,
+          collapsable: false,
+          indent: 0,
         };
         this._editedLines.splice(lineIndex + 1, 0, newLineObject);
       }
@@ -499,8 +752,11 @@ export default class codeElement extends LitElement {
    * _handleEditValidation - button event when user confirms edit of code
    */
   _handleEditValidation() {
-    this.content = this._editedContent;
     this._originalContent = this._editedContent;
+    this._displayedContent = this._editedContent;
+    this.newContent = this._editedContent;
+    this.showContentDifferences = true;
+    this.contentDifferenceDetected = true;
     const codeEditedEvent = new CustomEvent('on-code-edit-validation', {
       detail: {
         previousLineData: this._renderedLines,
@@ -521,8 +777,8 @@ export default class codeElement extends LitElement {
   _handleEditCancellation() {
     //this._editedContent = this.content;
     //this.content=this._originalContent
-    this._editedContent = this.content;
     this._editedContent = this._originalContent;
+    this._displayedContent = this._originalContent;
     this._currentlyEdited = false;
 
     const codeEditedEvent = new CustomEvent('on-code-edit-change', {
@@ -535,8 +791,6 @@ export default class codeElement extends LitElement {
       composed: true,
     });
     this.dispatchEvent(codeEditedEvent);
-    this._formatCode(false);
-    this._handleScroll();
   }
 
   /** _highlightLine - run code coloring system
@@ -552,104 +806,385 @@ export default class codeElement extends LitElement {
    */
   _formatCode(edited) {
     this._getTheme();
-    const formattedText = edited ? this._editedContent : this.content;
-    const htmlSafeText = formattedText.replace(/```/g, '');
+    let formattedText = edited ? this._displayedContent : this._originalContent;
 
-    if (this.coloringCharacterThreshold) {
-      if (formattedText.length > this.coloringCharacterThreshold) {
-        this.disableColoring = true;
-      }
+    if (this.contentDifferenceDetected) {
+      formattedText = this._editedContent;
     }
 
-    const tabConversion = '&nbsp;';
-    let tabHTML = '';
-    if (this.tabSize) {
-      tabHTML = tabConversion.repeat(this.tabSize);
-    }
+    //const formattedText = this._displayedContent;
+    if (formattedText) {
+      const htmlSafeText = formattedText.replace(new RegExp('```', 'g'), '');
 
-    const lines = htmlSafeText.trim().split('\n');
-    //const tabWidth = 24;
-    //const paddingLeft = 8;
-    let textValues: {
-      content: string;
-      type: string;
-      paddingLeft: string;
-    }[] = [];
-
-    this.lineCount = lines.length;
-
-    if (!this.disableColoring) {
-      try {
-        if (!this.language) {
-          const detection = hljs.highlightAuto(htmlSafeText);
-          this.language = detection.language;
+      if (this.coloringCharacterThreshold) {
+        if (formattedText.length > this.coloringCharacterThreshold) {
+          this.disableColoring = true;
         }
-      } catch (e) {
-        this.language = 'javascript';
       }
-    }
 
-    if (this.coloringLineThreshold) {
-      if (lines.length > this.coloringLineThreshold) {
-        this.disableColoring = true;
+      const tabConversion = '&nbsp;';
+      let tabHTML = '';
+      if (this.tabSize) {
+        tabHTML = tabConversion.repeat(this.tabSize);
       }
-    }
+      const lines = htmlSafeText.split('\n');
+      let textValues: {
+        content: string;
+        paddingLeft: string;
+        indent: number;
+        collapsable: boolean;
+        hidden: boolean;
+      }[] = [];
 
-    const highlightMode = !this.disableColoring;
-    if (highlightMode) {
-      const highlightedCode = hljs.highlightAuto(htmlSafeText).value;
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = highlightedCode;
-      const codeLines: string[] = [];
-      let currentLine = '';
-      for (let i = 0; i < tempDiv.childNodes.length; i++) {
-        const node = tempDiv.childNodes[i];
-        if (node.nodeType === Node.TEXT_NODE) {
-          const lines = node.textContent?.split('\n');
-          if (lines) {
-            for (let k = 0; k < lines.length; k++) {
-              if (k > 0) {
-                codeLines.push(currentLine.replace(/\t/g, tabHTML));
-                currentLine = '';
-              }
-              currentLine += lines[k];
-            }
+      this.lineCount = lines.length;
+
+      if (!this.disableColoring) {
+        try {
+          if (!this.language && !this.streaming) {
+            const detection = hljs.highlightAuto(htmlSafeText);
+            this.language = detection.language;
           }
-        } else {
-          const element = node as Element;
-          currentLine += element.outerHTML;
+        } catch (e) {
+          this.language = 'plaintext';
         }
       }
 
-      if (currentLine) {
-        codeLines.push(currentLine.replace(/\t/g, tabHTML));
+      if (this.coloringLineThreshold) {
+        if (lines.length > this.coloringLineThreshold) {
+          this.disableColoring = true;
+        }
       }
-      textValues = codeLines.map((line) => ({
-        content: line,
-        type: '',
-        paddingLeft: '0px',
-      }));
-    } else {
-      for (let i = 0; i < lines.length; i++) {
-        textValues.push({
-          content: lines[i].replace(/\t/g, tabHTML),
-          type: '',
-          paddingLeft: '0px',
-        });
-      }
-    }
 
-    this._editedLines = JSON.parse(JSON.stringify(textValues));
-    this._originalLines = JSON.parse(JSON.stringify(textValues));
-    this._renderedLines = JSON.parse(JSON.stringify(textValues));
-    const tickWidth = 13 * textValues.length.toString().length;
-    if (!this.disableLineTicks) {
+      const checkEmptylines = false;
+      const highlightMode = !this.disableColoring;
+      if (highlightMode) {
+        /*if (this.renderLanguage) {
+        console.log(this.renderLanguage);
+        highlightedCode = hljs.highlight(htmlSafeText, {
+          language: this.renderLanguage,
+        }).value;
+      } else {*/
+        const highlightedCode = hljs.highlightAuto(htmlSafeText).value;
+        //}
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = highlightedCode;
+        const codeLines: string[] = [];
+        let currentLine = '';
+        for (let i = 0; i < tempDiv.childNodes.length; i++) {
+          const node = tempDiv.childNodes[i];
+          if (node.nodeType === Node.TEXT_NODE) {
+            const lines = node.textContent?.split('\n');
+            if (lines) {
+              for (let k = 0; k < lines.length; k++) {
+                if (k > 0) {
+                  codeLines.push(currentLine);
+                  currentLine = '';
+                }
+                if (lines[k]) {
+                  currentLine += lines[k];
+                } else if (k < lines.length - 1 && checkEmptylines) {
+                  currentLine += '&nbsp;';
+                }
+              }
+            }
+          } else {
+            const element = node as Element;
+            currentLine += element.outerHTML;
+          }
+        }
+
+        if (currentLine) {
+          codeLines.push(currentLine);
+        }
+        textValues = codeLines.map((line) => ({
+          content: line,
+          paddingLeft: '0px',
+          indent: 0,
+          collapsable: false,
+          hidden: false,
+        }));
+      } else {
+        for (let i = 0; i < lines.length; i++) {
+          textValues.push({
+            content: lines[i],
+            paddingLeft: '0px',
+            indent: 0,
+            collapsable: false,
+            hidden: false,
+          });
+        }
+      }
+
+      //const openBlock = new RegExp(/(\{|\[|\()/);
+      //const closeBlock = new RegExp(/(\}|\]|\))/);
+      this.collapseAvailable = false;
+      //if (this.enableBlockCollapse) {
+      let indentLevel = 0;
+      for (let m = 0; m < textValues.length; m++) {
+        const lineCheck = textValues[m];
+        let tabCount = 0;
+        if (this.autoDetectBlocks) {
+          tabCount = 0;
+        } else {
+          tabCount = (lineCheck.content.match(new RegExp('^\\t+')) || [''])[0]
+            .length;
+        }
+        if (!lineCheck.content.trim()) {
+          textValues[m].indent = indentLevel;
+        } else {
+          textValues[m].indent = tabCount;
+        }
+
+        textValues[m].content = lineCheck.content.replace(
+          /\t/g,
+          this.editable ? tabHTML : ''
+        );
+        if (m > 1) {
+          textValues[m - 1].collapsable = indentLevel < tabCount;
+        }
+        if (lineCheck.content) {
+          indentLevel = tabCount;
+        }
+        if (tabCount > 1) {
+          this.collapseAvailable = this.enableBlockCollapse;
+        }
+      }
+      //}
+      this._renderedLines = textValues;
+      const tickWidth = 13 * textValues.length.toString().length;
       this.style.setProperty(
         '--chat-code-tick-width',
         tickWidth.toString() + 'px'
       );
+      this._tickWidth = tickWidth;
+    }
+    this.calculateEditingOffset();
+    this._handleScroll();
+  }
+
+  /**
+   * _preIndentCode - check for and remove all 2/4 spaces, tabs and add new lines then prepend tabs
+   * @param {string} content - text to check
+   */
+  _preIndentCode(content) {
+    let code = content;
+    let lines = code.split(/\r?\n/);
+    let minIndent = Infinity;
+    let isIndented = false;
+    for (const line of lines) {
+      const indentCheck = line.match(new RegExp('^( +|\\t+)'));
+      if (indentCheck) {
+        const indent = indentCheck[0];
+        isIndented = true;
+        if (indent.includes('\t')) {
+          minIndent = Math.min(minIndent, indent.length);
+        } else {
+          minIndent = Math.min(
+            minIndent,
+            indent.length / (indent.includes('.   ') ? 4 : 2)
+          );
+        }
+      }
+    }
+    if (!isIndented) {
+      if (/;\s*/.test(code)) {
+        code = code.replace(new RegExp(';', 'g'), ';\n');
+      }
+      if (/{\s*/.test(code)) {
+        code = code
+          .replace(new RegExp('{', 'g'), '{\n')
+          .replace(new RegExp('}', 'g'), '\n}');
+      }
+      if (/:\\s*/.test(code)) {
+        code = code.replace(new RegExp(':', 'g'), ':\n');
+      }
+      lines = code.split(/\r?\n/);
+    }
+    const formattedString = lines
+      .map((line) => {
+        const trimmedLine = line.replace(new RegExp('^\\s+'), '');
+        const indentSize =
+          (line.match(new RegExp('^\\s*'))[0] || '').length / minIndent;
+        return '\t'.repeat(Math.max(0, Math.floor(indentSize))) + trimmedLine;
+      })
+      .join('\n');
+    const concatenatedString = formattedString
+      .replace(new RegExp('\\n', 'g'), '\\n')
+      .replace(new RegExp('\\t', 'g'), '\\t');
+    return concatenatedString;
+  }
+
+  /**
+   * _preIndentCode2 - check for and remove all 2/4 spaces, tabs and add new lines then prepend tabs
+   * @param {string} code - text to check
+   */
+  _preIndentCode2(code) {
+    /*if(!this.language){
+      const detected = hljs.highlightAuto(code);
+      this.language = detection.language || "generic"
+    }*/
+    const indentMode = this._detectIndents(code);
+    //const lowerCaseLang = this.language.toLowerCase();
+
+    let normalizedCode = code
+      .replace(new RegExp('\\s*{\\s*', 'g'), ' {\n' + indentMode)
+      .replace(new RegExp('\\s*}\\s*', 'g'), '\n}')
+      .replace(new RegExp(';\\s*', 'g'), ';\n' + indentMode)
+      .replace(new RegExp(':\\s*$', 'gm'), ':\n' + indentMode)
+      .replace(
+        new RegExp(
+          '\\b(SELECT|FROM|WHERE|GROUP BY|ORDER BY|HAVING|JOIN|ON|AS|LIMIT|OFFSET|INSERT INTO|VALUES|UPDATE|SET|DELETE)\\b',
+          'gi'
+        ),
+        '\n$1 '
+      )
+      .replace(new RegExp('>\\s*<', 'g'), '>\n<')
+      .replace(new RegExp('\\s*(<\\/?.+?>)', 'gi'), '\n$1')
+      .replace(new RegExp('\\s{2,}', 'g'), ' ')
+      .replace(new RegExp('\\n{2,}', 'g'), '\n')
+      .replace(new RegExp('\\s*\\n\\s*', 'g'), '\n')
+      .trim();
+    if (!normalizedCode.includes('\n')) {
+      normalizedCode = normalizedCode.replace(new RegExp(' ', 'g'), '\n');
+    }
+
+    return normalizedCode
+      .replace(new RegExp('\\n', 'g'), '\n')
+      .replace(new RegExp('\\t', 'g'), '\t');
+  }
+
+  /**
+   * _detectIndents - check if code is pre-indented
+   * @param {string} rawContent - text to check
+   * @returns {string} - backslash t for tabs or quad spaces
+   */
+  _detectIndents(rawContent) {
+    const tabCheck = rawContent.match(new RegExp('^\\t+', 'gm')) || [];
+    const spaceCheck = rawContent.match(new RegExp('^ +', 'gm')) || [];
+    return tabCheck.length > spaceCheck.length ? '\t' : '    ';
+  }
+
+  /**
+   * _showDiffs - compare and merge two different code pieces
+   * @param {string} oldCode - previous code string
+   * @param {string} newCode - updated code string
+   */
+  _showDiffs(oldCode, newCode) {
+    const oldLines = oldCode.split('\n');
+    if (!newCode) {
+      newCode = oldCode;
+    }
+    const newLines = newCode.split('\n');
+    const diffDict = {};
+    let result = '';
+
+    const wordDetect = false;
+    if (!wordDetect) {
+      const maxLen = Math.max(oldLines.length, newLines.length);
+      for (let i = 0; i < maxLen; i++) {
+        if (oldLines[i] === newLines[i]) {
+          result += oldLines[i] + '\n';
+        } else {
+          result += oldLines[i] + '\n' + newLines[i] + '\n';
+          diffDict[i] = 'removed';
+          i++;
+          diffDict[i] = 'added';
+        }
+      }
     } else {
-      this.style.setProperty('--chat-code-tick-width', '0px');
+      const maxLen = Math.max(oldLines.length, newLines.length);
+      for (let i = 0; i < maxLen; i++) {
+        const oldWords = oldLines[i]?.split(/\s+/) || [];
+        const newWords = newLines[i]?.split(/\s+/) || [];
+        let lineRes = '';
+
+        if (!oldLines[i]) {
+          diffDict[i] = 'added';
+          result += newLines[i] + '\n';
+          continue;
+        }
+        if (!newLines[i]) {
+          diffDict[i] = 'removed';
+          result += oldLines[i] + '\n';
+          continue;
+        }
+
+        let lineChanged = false;
+        let oldIndex = 0;
+        let newIndex = 0;
+
+        while (oldIndex < oldWords.length || newIndex < newWords.length) {
+          if (
+            oldWords[oldIndex] === newWords[newIndex] &&
+            oldIndex < oldWords.length &&
+            newIndex < newWords.length
+          ) {
+            lineRes += oldWords[oldIndex] + ' ';
+            oldIndex++;
+            newIndex++;
+          } else if (
+            newIndex < newWords.length &&
+            !oldWords.includes(newWords[newIndex])
+          ) {
+            lineRes += newWords[newIndex] + ' ';
+            lineChanged = true;
+            newIndex++;
+          } else if (
+            oldIndex < oldWords.length &&
+            !newWords.includes(oldWords[oldIndex])
+          ) {
+            lineRes += oldWords[oldIndex] + ' ';
+            lineChanged = true;
+            oldIndex++;
+          } else {
+            lineRes += oldWords[oldIndex] + ' ' + newWords[newIndex] + ' ';
+            lineChanged = true;
+            oldIndex++;
+            newIndex++;
+          }
+        }
+
+        if (lineChanged) {
+          //diffDict[i] = 'edited';
+        }
+        lineChanged = false;
+        result += lineRes.trim() + '\n';
+      }
+    }
+    return { comparedString: result, comparisonLineTypes: diffDict };
+  }
+
+  /**
+   * _handleEditingEnabled - check when edit button is toggled
+   * @param {event} _event - icon button click event
+   */
+  _handleEditingEnabled(_event) {
+    this.editingEnabled = !this.editingEnabled;
+    this.editable = this.editingEnabled;
+  }
+
+  /**
+   * _handleEditingEnabled - check when comparison button is toggled
+   * @param {event} _event - icon button click event
+   */
+  _handleComparisonEnabled(_event) {
+    this.comparisonEnabled = !this.comparisonEnabled;
+    if (this.comparisonEnabled) {
+      this.contentDifferenceDetected = this.newContent !== this.content;
+
+      if (this.contentDifferenceDetected) {
+        const { comparedString, comparisonLineTypes } = this._showDiffs(
+          this.content,
+          this.newContent
+        );
+        this.disableColoring = true;
+        this._comparisonReference = comparisonLineTypes;
+        this._editedContent = comparedString;
+      }
+    } else {
+      this.disableColoring = false;
+      this._comparisonReference = {};
+      this._editedContent = this._originalContent;
     }
   }
 
@@ -679,6 +1214,12 @@ export default class codeElement extends LitElement {
           break;
         case 'code-line-descriptor':
           customValue = labels[key] || 'lines';
+          break;
+        case 'code-enable-editing':
+          customValue = labels[key] || 'Enable editing';
+          break;
+        case 'code-disable-editing':
+          customValue = labels[key] || 'Disable editing';
           break;
       }
     }

@@ -19,6 +19,7 @@ $css--plex: true !default;
   border: 1px solid $border-subtle-00;
   border-radius: 8px;
   background: $background;
+  tab-size: 2;
 
   .#{$clabs-prefix}--chat-code-container {
     overflow: hidden;
@@ -30,13 +31,10 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-code-lang {
     color: $text-secondary;
-    font-size: 14px;
+    font-size: 16px;
     font-style: italic;
     padding-block: 16px 4px;
-    padding-inline-start: calc(
-      var(--chat-code-tick-width, '0px') + var(--chat-code-inset-start, '13px') +
-        2px
-    );
+    padding-inline-start: var(--chat-code-tick-width, '16px');
   }
 
   .#{$clabs-prefix}--chat-code-color-area {
@@ -54,10 +52,10 @@ $css--plex: true !default;
 
     letter-spacing: 0.16px;
     line-height: 20px;
+    margin-block: 16px;
+    margin-inline-start: 8px;
     max-block-size: var(--chat-code-height, '100%');
-    min-block-size: 100%;
-    padding-block: 16px;
-    padding-inline-start: 8px;
+    padding-inline-end: 8px;
     tab-size: 2;
   }
 
@@ -71,24 +69,20 @@ $css--plex: true !default;
     background: none;
     block-size: 100%;
     caret-color: $text-primary;
-    color: transparent;
+    color: var(--chat-editing-layer-font-color, transparent);
     font-family: 'IBM Plex Mono', monospace;
     font-size: 14px;
-    inline-size: 100%;
-    inset-block-start: 2px;
+    inline-size: calc(100% - var(--chat-code-editing-area-offset, '0px'));
 
     letter-spacing: 0.16px;
     line-height: 20px;
+    margin-block-start: 16px;
+    margin-inline-start: var(--chat-code-editing-area-offset, '0px');
     max-block-size: var(--chat-code-height, '100%');
 
     outline: none;
     overflow-wrap: anywhere;
     overflow-x: hidden;
-    padding-block-start: 13px;
-    padding-inline-start: calc(
-      var(--chat-code-tick-width, '13px') + var(--chat-code-inset-start, '13px') +
-        2px
-    );
     resize: none;
     tab-size: 2;
 
@@ -97,14 +91,17 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--chat-code-line {
     display: flex;
+    background: var(--chat-code-line-diff-color, none);
     inline-size: 100%;
   }
 
   .#{$clabs-prefix}--chat-code-line-tick {
     flex: 0 0 var(--chat-code-tick-width, '13px');
+    border-inline-end: 1px solid $border-subtle-01;
     color: $text-secondary;
     inline-size: var(--chat-code-tick-width, '13px');
     padding-inline-end: 0.5em;
+    pointer-events: none;
     text-align: end;
     user-select: none;
   }
@@ -112,9 +109,63 @@ $css--plex: true !default;
   .#{$clabs-prefix}--chat-code-line-divider {
     box-sizing: border-box;
     flex: 0 0 2px;
-    border-inline-start: 1px solid $border-subtle-00;
+    block-size: 100%;
+    border-inline-start: 1px solid $border-subtle-01;
     inline-size: 2px;
+    pointer-events: none;
     user-select: none;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-collapser {
+    box-sizing: border-box;
+    flex: 0 0 20px;
+    border-inline-end: 1px solid transparent;
+    cursor: pointer;
+    inline-size: 2px;
+    max-block-size: 20px;
+    padding-inline-end: 0.5em;
+    user-select: none;
+  }
+  .#{$clabs-prefix}--chat-code-line-collapser svg {
+    block-size: 20px;
+    inline-size: 20px;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-hidden {
+    display: none;
+    overflow: hidden;
+    block-size: 0;
+    border-block-start: 1px solid $border-subtle-01;
+    min-block-size: 0;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-removed {
+    background: $support-error-inverse;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-added {
+    background: $support-success-inverse;
+  }
+  .#{$clabs-prefix}--chat-code-line-edited {
+    background: $support-info-inverse;
+  }
+
+  .#{$clabs-prefix}--chat-code-line-hidden2 {
+    display: flex;
+    overflow: hidden;
+    block-size: 1px;
+    border-block-start: 1px solid transparent;
+    inline-size: 100%;
+    margin-inline-start: calc(
+      var(--chat-code-tick-width, '13px') +
+        var(--chat-code-chevron-offset, '0px') +
+        var(--chat-code-inset-start, '13px') + 6px
+    );
+    padding-inline-end: calc(
+      var(--chat-code-tick-width, '13px') +
+        var(--chat-code-chevron-offset, '0px') +
+        var(--chat-code-inset-start, '13px') + 6px
+    );
   }
 
   .#{$clabs-prefix}--chat-code-line-text {
@@ -122,6 +173,7 @@ $css--plex: true !default;
     overflow-wrap: anywhere;
     padding-inline-start: 8px;
     pointer-events: none;
+    tab-size: 2;
     word-wrap: break-word;
   }
 
@@ -151,7 +203,6 @@ $css--plex: true !default;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    inline-size: 100%;
     inset-block-start: 0;
     inset-inline-end: 0;
   }
@@ -226,46 +277,26 @@ $css--plex: true !default;
     resize: none;
     word-break: break-word;
   }
-
-  .#{$clabs-prefix}--chat-code-edit-area-b {
-    display: block;
-    box-sizing: border-box;
-    padding: 0;
-    border: none;
-    background: none;
-    block-size: var(--chat-code-height, 100%);
-    caret-color: $text-primary;
-    font: inherit;
-    font-size: 14px;
-    inline-size: 100%;
-    letter-spacing: 0.16px;
-    line-height: 22px;
-    outline: none;
-
-    padding-inline-start: var(--chat-code-tick-width, '13px');
-    resize: none;
-    tab-size: 2;
-    word-break: break-word;
+  .#{$clabs-prefix}--chat-code-line-offset-level-1 {
+    margin-inline-start: 13px;
   }
-
-  .#{$clabs-prefix}--chat-code-color-area-b {
-    position: absolute;
-    z-index: 2;
-    display: block;
-    overflow: hidden;
-    box-sizing: border-box;
-    padding: 0;
-    border: none;
-    background: none;
-    block-size: 100%;
-    inline-size: 100%;
-    inset-block-start: 16px;
-    inset-inline-start: var(--chat-tick-offset, '0px');
-    letter-spacing: 0.16px;
-    line-height: 1.5;
-    pointer-events: none;
-    tab-size: 2;
-    word-break: break-word;
+  .#{$clabs-prefix}--chat-code-line-offset-level-2 {
+    margin-inline-start: 26px;
+  }
+  .#{$clabs-prefix}--chat-code-line-offset-level-3 {
+    margin-inline-start: 39px;
+  }
+  .#{$clabs-prefix}--chat-code-line-offset-level-4 {
+    margin-inline-start: 52px;
+  }
+  .#{$clabs-prefix}--chat-code-line-offset-level-5 {
+    margin-inline-start: 65px;
+  }
+  .#{$clabs-prefix}--chat-code-line-offset-level-6 {
+    margin-inline-start: 78px;
+  }
+  .#{$clabs-prefix}--chat-code-line-offset-level-7 {
+    margin-inline-start: 91px;
   }
 
   .#{$clabs-prefix}--chat-code-edit-hidden {
@@ -319,7 +350,7 @@ $css--plex: true !default;
     .hljs-number,
     .hljs-symbol,
     .hljs-bullet {
-      color: $teal-60;
+      color: $orange-60;
     }
 
     .hljs-comment,

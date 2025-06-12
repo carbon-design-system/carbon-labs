@@ -7,7 +7,7 @@ exports[`SideNav renders as expected - Component API should match snapshot 1`] =
   />
   <nav
     aria-label="test"
-    class="cds--side-nav__navigation cds--side-nav cds--side-nav--ux"
+    class="cds--side-nav__navigation cds--side-nav cds--side-nav--ux cds--side-nav--with-overlay"
     inert="-1"
     role="navigation"
     tabindex="-1"

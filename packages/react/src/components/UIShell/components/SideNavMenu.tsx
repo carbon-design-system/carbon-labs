@@ -308,7 +308,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }
 
     function handleKeyDown(event) {
-      if (match(event, keys.Escape)) {
+      if (match(event, keys.Escape) && !primary) {
         setIsExpanded(false);
 
         if (onMenuToggle) {

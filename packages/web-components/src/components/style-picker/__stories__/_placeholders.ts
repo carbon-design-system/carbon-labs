@@ -34,6 +34,20 @@ import Seattle from '@carbon/pictograms/es/seattle';
 import Toronto from '@carbon/pictograms/es/toronto';
 import Vancouver from '@carbon/pictograms/es/vancouver';
 import WashingtonDc from '@carbon/pictograms/es/washington-dc';
+import PeruMachuPicchu from '@carbon/pictograms/es/peru--machu-picchu';
+import RioDeJaneiro from '@carbon/pictograms/es/rio-de-janeiro';
+import SaoPaulo from '@carbon/pictograms/es/sao-paulo';
+import BeijingMunicipal from '@carbon/pictograms/es/beijing--municipal';
+import DubaiPalmIslands from '@carbon/pictograms/es/dubai--palm-islands';
+import HongKong from '@carbon/pictograms/es/hong-kong';
+import KualaLumpur from '@carbon/pictograms/es/kuala-lumpur';
+import Moscow from '@carbon/pictograms/es/moscow';
+import SeoulGyeongbokgungPalace from '@carbon/pictograms/es/seoul--gyeongbokgung-palace';
+import Singapore from '@carbon/pictograms/es/singapore';
+import TelAviv from '@carbon/pictograms/es/tel-aviv';
+import TokyoGates from '@carbon/pictograms/es/tokyo--gates';
+import CairoGizaPlateau from '@carbon/pictograms/es/cairo--giza-plateau';
+import Melbourne from '@carbon/pictograms/es/melbourne';
 
 export const colors = [
   ['Yellow', carbonColors.yellow],
@@ -116,32 +130,31 @@ export const pictograms = [
       ['Washington D.C.', WashingtonDc],
     ],
   ],
-  // ['South America', [
-  //   ['Machu Picchu', PeruMachuPicchu],
-  //   ['Rio de Janeiro', RioDeJaneiro],
-  //   ['Sao Paulo', SaoPaulo],
-  // ]],
+  [
+    'South America',
+    [
+      ['Machu Picchu', PeruMachuPicchu],
+      ['Rio de Janeiro', RioDeJaneiro],
+      ['Sao Paulo', SaoPaulo],
+    ],
+  ],
   [
     'Asia',
     [
       ['Bangalore', Bangalore],
-      // ['Beijing', BeijingMunicipal],
-      // ['Dubai', DubaiPalmIslands],
-      // ['Hong Kong', HongKong],
-      // ['Kuala Lumpur', KualaLumpur],
-      // ['Moscow', Moscow],
-      // ['Seoul', SeoulGyeongbokgungPalace],
-      // ['Singapore', Singapore],
-      // ['Tel Aviv', TelAviv],
-      // ['Tokyo', TokyoGates],
+      ['Beijing', BeijingMunicipal],
+      ['Dubai', DubaiPalmIslands],
+      ['Hong Kong', HongKong],
+      ['Kuala Lumpur', KualaLumpur],
+      ['Moscow', Moscow],
+      ['Seoul', SeoulGyeongbokgungPalace],
+      ['Singapore', Singapore],
+      ['Tel Aviv', TelAviv],
+      ['Tokyo', TokyoGates],
     ],
   ],
-  // ['Africa', [
-  //   ['Cairo', CairoGizaPlateau],
-  // ]],
-  // ['Australia', [
-  //   ['Melbourne', Melbourne],
-  // ]],
+  ['Africa', [['Cairo', CairoGizaPlateau]]],
+  ['Australia', [['Melbourne', Melbourne]]],
 ].map(([label, cities]) => ({
   label,
   items: (cities as Array<any>).map(([name, pictogram]) => ({

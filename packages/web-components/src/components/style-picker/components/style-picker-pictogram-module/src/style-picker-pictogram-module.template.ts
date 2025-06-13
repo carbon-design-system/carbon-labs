@@ -13,7 +13,7 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
-export const blockClass = `${clabsPrefix}--style-picker-color-module`;
+export const blockClass = `${clabsPrefix}--style-picker-pictogram-module`;
 
 /**
  * Lit template for card
@@ -22,7 +22,7 @@ export const blockClass = `${clabsPrefix}--style-picker-color-module`;
 
  * @returns {TemplateResult<1>} Lit html template
  */
-export const stylePickerColorModuleTemplate = (
+export const stylePickerPictogramModuleTemplate = (
   customElementClass
 ): TemplateResult<1> => {
   const { items, title, size, selectedItem } = customElementClass;

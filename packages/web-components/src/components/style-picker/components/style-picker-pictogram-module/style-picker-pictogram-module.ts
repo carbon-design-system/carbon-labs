@@ -14,16 +14,18 @@ import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../context/style-picker-context.js';
-import { stylePickerColorModuleTemplate } from './src/style-picker-color-module.template.js';
-import StylePickerColorModule from './src/style-picker-color-module.js';
+import { stylePickerPictogramModuleTemplate } from './src/style-picker-pictogram-module.template.js';
+import StylePickerPictogramModule from './src/style-picker-pictogram-module.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Color module
+ * Pictogram module
  */
-@customElement(`${clabsPrefix}-style-picker-color-module`)
-class CLABSStylePickerColorModule<Color> extends StylePickerColorModule<Color> {
+@customElement(`${clabsPrefix}-style-picker-pictogram-module`)
+class CLABSStylePickerPictogramModule<
+  Pictogram
+> extends StylePickerPictogramModule<Pictogram> {
   @consume({ context: stylePickerContext, subscribe: true })
   stylePickerContext?: StylePickerContextType;
 
@@ -33,8 +35,8 @@ class CLABSStylePickerColorModule<Color> extends StylePickerColorModule<Color> {
    * @returns {TemplateResult<1>}
    */
   render() {
-    return stylePickerColorModuleTemplate(this);
+    return stylePickerPictogramModuleTemplate(this);
   }
 }
 
-export default CLABSStylePickerColorModule;
+export default CLABSStylePickerPictogramModule;

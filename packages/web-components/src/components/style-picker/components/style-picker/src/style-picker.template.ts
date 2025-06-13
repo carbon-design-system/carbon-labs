@@ -25,13 +25,9 @@ export const blockClass = `${clabsPrefix}--style-picker`;
  * @returns {TemplateResult<1>} Lit html template
  */
 export const stylePickerTemplate = (customElementClass) => {
-  const { align, kind, open, title } = customElementClass;
+  const { align, open, title } = customElementClass;
 
-  return html`<cds-popover
-    ?open=${open}
-    align=${align}
-    kind=${kind}
-    title=${title}>
+  return html`<cds-popover ?open=${open} align=${align} title=${title}>
     <slot name="trigger"></slot>
     <cds-popover-content>
       <div class=${`${blockClass}__content`}>

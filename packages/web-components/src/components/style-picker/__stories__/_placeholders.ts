@@ -5,6 +5,35 @@ import Fish16 from '@carbon/web-components/es/icons/fish/16';
 import Wheat16 from '@carbon/web-components/es/icons/wheat/16';
 import FruitBowl16 from '@carbon/web-components/es/icons/fruit-bowl/16';
 import Strawberry16 from '@carbon/web-components/es/icons/strawberry/16';
+import AmsterdamWindmill from '@carbon/pictograms/es/amsterdam--windmill';
+import Barcelona from '@carbon/pictograms/es/barcelona';
+import BerlinBrandenburgGate from '@carbon/pictograms/es/berlin--brandenburg-gate';
+import Bangalore from '@carbon/pictograms/es/bangalore';
+import Budapest from '@carbon/pictograms/es/budapest';
+import CopenhagenSnekkja from '@carbon/pictograms/es/copenhagen--snekkja';
+import DublinBrewery from '@carbon/pictograms/es/dublin--brewery';
+import HamburgPhilharmone from '@carbon/pictograms/es/hamburg--philharmone';
+import London from '@carbon/pictograms/es/london';
+import MadridCathedral from '@carbon/pictograms/es/madrid--cathedral';
+import MilanDuomoDiMilano from '@carbon/pictograms/es/milan--duomo-di-milano';
+import Munich from '@carbon/pictograms/es/munich';
+import Nice from '@carbon/pictograms/es/nice';
+import ParisEiffelTower from '@carbon/pictograms/es/paris--eiffel-tower';
+import PragueCharlesBridgeTower from '@carbon/pictograms/es/prague--charles-bridge-tower';
+import Rome from '@carbon/pictograms/es/rome';
+import Stockholm from '@carbon/pictograms/es/stockholm';
+import Atlanta from '@carbon/pictograms/es/atlanta';
+import Austin from '@carbon/pictograms/es/austin';
+import BostonZakimBridge from '@carbon/pictograms/es/boston--zakim-bridge';
+import Chicago from '@carbon/pictograms/es/chicago';
+import MexicoCityAngelOfIndependence from '@carbon/pictograms/es/mexico-city--angel-of-independence';
+import NycChryslerBuilding from '@carbon/pictograms/es/nyc--chrysler-building';
+import PortlandBuilding from '@carbon/pictograms/es/portland--building';
+import SanFrancisco from '@carbon/pictograms/es/san-francisco';
+import Seattle from '@carbon/pictograms/es/seattle';
+import Toronto from '@carbon/pictograms/es/toronto';
+import Vancouver from '@carbon/pictograms/es/vancouver';
+import WashingtonDc from '@carbon/pictograms/es/washington-dc';
 
 export const colors = [
   ['Yellow', carbonColors.yellow],
@@ -48,67 +77,76 @@ export const icons = [
   renderIcon: icon,
 }));
 
-// export const pictograms: StylePickerPictogramModuleProps["items"] = [
-//   ['Europe', [
-//     ['Amsterdam', AmsterdamWindmill],
-//     ['Barcelona', Barcelona],
-//     ['Berlin', BerlinBrandenburgGate],
-//     ['Budapest', Budapest],
-//     ['Copenhagen', CopenhagenSnekkja],
-//     ['Dublin', DublinBrewery],
-//     ['Hamburg', HamburgPhilharmone],
-//     ['London', London],
-//     ['Madrid', MadridCathedral],
-//     ['Milan', MilanDuomoDiMilano],
-//     ['Munich', Munich],
-//     ['Nice', Nice],
-//     ['Paris', ParisLouvre],
-//     ['Prague', PragueCharlesBridgeTower],
-//     ['Rome', Rome],
-//     ['Stockholm', Stockholm],
-//   ]],
-//   ['North America', [
-//     ['Atlanta', Atlanta],
-//     ['Austin', Austin],
-//     ['Boston', BostonZakimBridge],
-//     ['Chicago', Chicago],
-//     ['Mexico City', MexicoCityAngelOfIndependence],
-//     ['New York City', NycChryslerBuilding],
-//     ['Portland', PortlandBuilding],
-//     ['San Francisco', SanFrancisco],
-//     ['Seattle', Seattle],
-//     ['Toronto', Toronto],
-//     ['Vancouver', Vancouver],
-//     ['Washington D.C.', WashingtonDc],
-//   ]],
-//   ['South America', [
-//     ['Machu Picchu', PeruMachuPicchu],
-//     ['Rio de Janeiro', RioDeJaneiro],
-//     ['Sao Paulo', SaoPaulo],
-//   ]],
-//   ['Asia', [
-//     ['Bangalore', Bangalore],
-//     ['Beijing', BeijingMunicipal],
-//     ['Dubai', DubaiPalmIslands],
-//     ['Hong Kong', HongKong],
-//     ['Kuala Lumpur', KualaLumpur],
-//     ['Moscow', Moscow],
-//     ['Seoul', SeoulGyeongbokgungPalace],
-//     ['Singapore', Singapore],
-//     ['Tel Aviv', TelAviv],
-//     ['Tokyo', TokyoGates],
-//   ]],
-//   ['Africa', [
-//     ['Cairo', CairoGizaPlateau],
-//   ]],
-//   ['Australia', [
-//     ['Melbourne', Melbourne],
-//   ]],
-// ].map(([label, cities]) => ({
-//   label,
-//   items: cities.map(([name, pictogram]) => ({
-//     value: name.toLowerCase().split(' ').join('-'),
-//     label: name,
-//     renderPictogram: pictogram,
-//   })),
-// }));
+export const pictograms = [
+  [
+    'Europe',
+    [
+      ['Amsterdam', AmsterdamWindmill],
+      ['Barcelona', Barcelona],
+      ['Berlin', BerlinBrandenburgGate],
+      ['Budapest', Budapest],
+      ['Copenhagen', CopenhagenSnekkja],
+      ['Dublin', DublinBrewery],
+      ['Hamburg', HamburgPhilharmone],
+      ['London', London],
+      ['Madrid', MadridCathedral],
+      ['Milan', MilanDuomoDiMilano],
+      ['Munich', Munich],
+      ['Nice', Nice],
+      ['Paris', ParisEiffelTower],
+      ['Prague', PragueCharlesBridgeTower],
+      ['Rome', Rome],
+      ['Stockholm', Stockholm],
+    ],
+  ],
+  [
+    'North America',
+    [
+      ['Atlanta', Atlanta],
+      ['Austin', Austin],
+      ['Boston', BostonZakimBridge],
+      ['Chicago', Chicago],
+      ['Mexico City', MexicoCityAngelOfIndependence],
+      ['New York City', NycChryslerBuilding],
+      ['Portland', PortlandBuilding],
+      ['San Francisco', SanFrancisco],
+      ['Seattle', Seattle],
+      ['Toronto', Toronto],
+      ['Vancouver', Vancouver],
+      ['Washington D.C.', WashingtonDc],
+    ],
+  ],
+  // ['South America', [
+  //   ['Machu Picchu', PeruMachuPicchu],
+  //   ['Rio de Janeiro', RioDeJaneiro],
+  //   ['Sao Paulo', SaoPaulo],
+  // ]],
+  [
+    'Asia',
+    [
+      ['Bangalore', Bangalore],
+      // ['Beijing', BeijingMunicipal],
+      // ['Dubai', DubaiPalmIslands],
+      // ['Hong Kong', HongKong],
+      // ['Kuala Lumpur', KualaLumpur],
+      // ['Moscow', Moscow],
+      // ['Seoul', SeoulGyeongbokgungPalace],
+      // ['Singapore', Singapore],
+      // ['Tel Aviv', TelAviv],
+      // ['Tokyo', TokyoGates],
+    ],
+  ],
+  // ['Africa', [
+  //   ['Cairo', CairoGizaPlateau],
+  // ]],
+  // ['Australia', [
+  //   ['Melbourne', Melbourne],
+  // ]],
+].map(([label, cities]) => ({
+  label,
+  items: (cities as Array<any>).map(([name, pictogram]) => ({
+    value: name.toLowerCase().split(' ').join('-'),
+    label: name,
+    renderPictogram: pictogram,
+  })),
+}));

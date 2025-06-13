@@ -14,6 +14,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/reset';
 
 @use '../../../../../globals/scss/vars' as *;
+@use '../../../defs/vars.scss' as *;
 
 $block-class: #{$clabs-prefix}--style-picker-module;
 
@@ -23,11 +24,6 @@ $block-class: #{$clabs-prefix}--style-picker-module;
   gap: $spacing-03;
   padding: $spacing-05;
 }
-
-$sizes: (
-  sm: $spacing-06,
-  lg: $spacing-09,
-);
 
 @each $size, $value in $sizes {
   .#{$block-class}--#{$size} {

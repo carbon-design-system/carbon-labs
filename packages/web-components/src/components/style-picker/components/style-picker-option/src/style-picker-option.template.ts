@@ -24,14 +24,13 @@ export const blockClass = `${clabsPrefix}--style-picker-option`;
 export const stylePickerOptionTemplate = (customElementClass) => {
   const { label, value, isSelected, size, handleClick } = customElementClass;
 
-  console.log(isSelected)
-
   return html`<li
     class=${`${blockClass} ${blockClass}--${size}`}
     data-value=${value}
     role="option"
     aria-label=${label}
     aria-selected=${isSelected}
+    title=${label}
     @click=${handleClick}>
     <div class=${`${blockClass}__container`}>
       <slot></slot>

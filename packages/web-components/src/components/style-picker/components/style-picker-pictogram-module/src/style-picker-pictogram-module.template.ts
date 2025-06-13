@@ -10,6 +10,7 @@
 import { html, TemplateResult } from 'lit';
 import '../../style-picker-module/style-picker-module';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { renderSvg } from '../../../utilities/renderSvg';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -30,17 +31,19 @@ export const stylePickerPictogramModuleTemplate = (
   /**
    * @param {object} item Item to be rendered
    */
-  const _render = (item): TemplateResult =>
-    html`
-      <svg viewBox="0 0 1 1">
-        <rect x="0" y="0" width="1" height="1" fill=${item.color} />
-      </svg>
+  const _render = (item): TemplateResult => {
+    return html`
+      ${renderSvg({
+        ...item.renderPictogram,
+        attrs: { ...item.renderPictogram.attrs, width: '3rem', height: '3rem' },
+      })}
     `;
+  };
 
   return html`
     <clabs-style-picker-module
-      title=${title}
-      size=${size}
+      .title=${title}
+      .size=${size}
       .items=${items}
       .renderItem=${_render}
       .selectedItem=${selectedItem}>

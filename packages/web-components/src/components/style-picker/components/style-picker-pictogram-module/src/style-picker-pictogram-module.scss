@@ -11,3 +11,11 @@ $css--plex: true !default;
 @use '@carbon/react/scss/theme';
 
 $block-class: #{$clabs-prefix}--style-picker-pictogram-module;
+
+::part(#{$block-class}__item) {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}

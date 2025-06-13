@@ -12,6 +12,7 @@ $css--plex: true !default;
 @use '@carbon/react/scss/utilities/button-reset';
 
 @use '../../../../../globals/scss/vars' as *;
+@use '../../../defs/vars.scss' as *;
 
 $block-class: #{$clabs-prefix}--style-picker-option;
 
@@ -30,12 +31,10 @@ $block-class: #{$clabs-prefix}--style-picker-option;
   position: relative;
   cursor: pointer;
   border-radius: $spacing-01;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-
-$sizes: (
-  sm: $spacing-06,
-  lg: $spacing-09,
-);
 
 @each $size, $value in $sizes {
   .#{$block-class}--#{$size} .#{$block-class}__container {

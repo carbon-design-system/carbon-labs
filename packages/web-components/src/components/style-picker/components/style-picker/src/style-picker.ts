@@ -10,6 +10,7 @@
 import { LitElement } from 'lit';
 import { provide } from '@lit/context';
 import { property } from 'lit/decorators.js';
+// @ts-ignore
 import styles from './style-picker.scss?inline';
 import {
   stylePickerContext,

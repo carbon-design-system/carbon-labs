@@ -8,6 +8,7 @@
  */
 
 import { LitElement } from 'lit';
+// @ts-ignore
 import styles from './style-picker-module.scss?inline';
 
 /**

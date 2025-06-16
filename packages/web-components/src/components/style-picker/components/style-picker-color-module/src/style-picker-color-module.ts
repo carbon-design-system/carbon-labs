@@ -7,6 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// @ts-ignore
 import styles from './style-picker-color-module.scss?inline';
 import StylePickerModule from '../../style-picker-module/src/style-picker-module';
 

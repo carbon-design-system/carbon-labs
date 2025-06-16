@@ -13,6 +13,7 @@ import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../../context/style-picker-context';
+// @ts-ignore
 import baseStyles from './style-picker-module.scss?inline';
 import { property } from 'lit/decorators.js';
 import { Group, Item } from '../../../defs/style-picker-module.types';

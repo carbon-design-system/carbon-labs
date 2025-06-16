@@ -8,6 +8,7 @@
  */
 
 import { LitElement } from 'lit';
+// @ts-ignore
 import styles from './style-picker-option.scss?inline';
 import { property } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';

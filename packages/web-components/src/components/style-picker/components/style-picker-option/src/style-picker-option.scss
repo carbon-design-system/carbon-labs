@@ -30,18 +30,18 @@ $min-value: 0.0625rem;
   @include button-reset.reset;
 
   position: relative;
-  color: theme.$icon-primary;
-  border-radius: $min-value;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: $min-value;
+  color: theme.$icon-primary;
+  cursor: pointer;
 }
 
 @each $size, $value in $sizes {
   .#{$block-class}--#{$size} .#{$block-class}__container {
-    inline-size: $value;
     block-size: $value;
+    inline-size: $value;
   }
 }
 
@@ -51,8 +51,8 @@ $min-value: 0.0625rem;
 
 .#{$block-class}__container::before {
   position: absolute;
-  content: '';
   border-radius: inherit;
+  content: '';
   inset: -$min-value;
 }
 
@@ -80,9 +80,9 @@ $min-value: 0.0625rem;
 
 .#{$block-class}__selection-indicator {
   position: absolute;
-  inset-block-start: -$spacing-03;
   z-index: 1;
   color: theme.$layer-selected-inverse;
+  inset-block-start: -$spacing-03;
   inset-inline-end: -$spacing-03;
 }
 

@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { StylePickerModuleBase } from "./style-picker-module.types";
+import { StylePickerModuleBase } from './style-picker-module.types';
 
 export type StylePickerColorModuleProps = StylePickerModuleBase<{
   color: string;

@@ -16,7 +16,7 @@ const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Style picker component.
- * 
+ *
  * @element clabs-style-picker
  */
 @customElement(`${clabsPrefix}-style-picker`)

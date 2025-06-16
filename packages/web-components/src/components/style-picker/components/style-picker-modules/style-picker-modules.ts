@@ -21,7 +21,7 @@ const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * A wrapper wrap multiple `style-picker-module` components
- * 
+ *
  * @elements clabs-style-picker-modules
  */
 @customElement(`${clabsPrefix}-style-picker-modules`)

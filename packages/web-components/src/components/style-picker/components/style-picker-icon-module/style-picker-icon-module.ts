@@ -21,7 +21,7 @@ const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Icon module.
- * 
+ *
  * @element clabs-style-picker-icon-module
  */
 @customElement(`${clabsPrefix}-style-picker-icon-module`)

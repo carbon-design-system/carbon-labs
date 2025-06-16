@@ -21,7 +21,7 @@ const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Color module
- * 
+ *
  * @element clabs-style-picker-color-module
  */
 @customElement(`${clabsPrefix}-style-picker-color-module`)

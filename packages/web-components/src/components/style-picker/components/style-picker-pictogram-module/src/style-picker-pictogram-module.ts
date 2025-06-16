@@ -13,7 +13,9 @@ import StylePickerModule from '../../style-picker-module/src/style-picker-module
 /**
  * Pictogram picker module
  */
-class StylePickerPictogramModule<Pictogram> extends StylePickerModule<Pictogram> {
+class StylePickerPictogramModule<
+  Pictogram
+> extends StylePickerModule<Pictogram> {
   static styles = styles;
 }
 

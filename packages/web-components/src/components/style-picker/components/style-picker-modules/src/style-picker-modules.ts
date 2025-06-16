@@ -11,7 +11,7 @@ import { LitElement } from 'lit';
 import styles from './style-picker-module.scss?inline';
 
 /**
- *
+ * Modules wrapper.
  */
 class StylePickerModules extends LitElement {
   static styles = styles;

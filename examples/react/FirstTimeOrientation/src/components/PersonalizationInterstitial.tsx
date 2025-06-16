@@ -71,7 +71,7 @@ const PersonalizationInterstitial = () => {
         <Column className={`${prefix}__contentColumn`}>
           <div
             className={`${prefix}__interstitialTextContainer ${prefix}__firstTimeOrientation`}>
-            <h4>What experience interest you?</h4>
+            <h4>What experiences interest you?</h4>
             <p>
               Personalize your experience by selecting all areas you want to
               explore.

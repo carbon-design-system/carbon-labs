@@ -15,11 +15,12 @@ $css--plex: true !default;
 @use '../../../defs/vars.scss' as *;
 
 $block-class: #{$clabs-prefix}--style-picker-option;
+$min-value: 0.0625rem;
 
 @mixin -outline($color, $thin: false) {
-  $thickness: $spacing-02;
+  $thickness: $spacing-01 + $min-value;
   @if $thin {
-    $thickness: $spacing-01;
+    $thickness: $min-value;
   }
 
   box-shadow: 0 0 0 $thickness $color;
@@ -30,7 +31,7 @@ $block-class: #{$clabs-prefix}--style-picker-option;
   color: theme.$icon-primary;
   position: relative;
   cursor: pointer;
-  border-radius: $spacing-01;
+  border-radius: $min-value;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -50,7 +51,7 @@ $block-class: #{$clabs-prefix}--style-picker-option;
 .#{$block-class}__container::before {
   content: '';
   position: absolute;
-  inset: -$spacing-01;
+  inset: -$min-value;
   border-radius: inherit;
 }
 

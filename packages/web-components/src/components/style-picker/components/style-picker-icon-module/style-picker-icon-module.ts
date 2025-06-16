@@ -20,7 +20,9 @@ import StylePickerIconModule from './src/style-picker-icon-module.js';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Icon module
+ * Icon module.
+ * 
+ * @element clabs-style-picker-icon-module
  */
 @customElement(`${clabsPrefix}-style-picker-icon-module`)
 class CLABSStylePickerIconModule<Icon> extends StylePickerIconModule<Icon> {

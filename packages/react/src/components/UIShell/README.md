@@ -29,17 +29,19 @@ To use this package you will need to import components from both `@carbon/react`
 and `@carbon-labs/react-ui-shell` to compose the UI Shell. The following
 components are provided by `@carbon-labs/react-ui-shell`:
 
+- `HeaderDivider`
+- `HeaderPanel`
+- `HeaderPopover`
+- `HeaderPopoverActions`
+- `HeaderPopoverButton`
+- `HeaderPopoverContent`
 - `SideNav`
 - `SideNavItems`
 - `SideNavLink`
 - `SideNavMenu`
 - `SideNavMenuItem`
-- `HeaderPopover`
-- `HeaderPopoverActions`
-- `HeaderPopoverButton`
-- `HeaderPopoverContent`
-- `HeaderDivider`
-- `SharkFinIcon`
+- `SideNavSlot`
+- `TrialCountdown`
 
 ```jsx
 import { SideNav } from '@carbon-labs/react-ui-shell';

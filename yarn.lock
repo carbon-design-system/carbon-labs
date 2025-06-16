@@ -2625,6 +2625,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-resizer@workspace:packages/react/src/components/Resizer":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-resizer@workspace:packages/react/src/components/Resizer"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-split-panel@workspace:packages/react/src/components/SplitPanel":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-split-panel@workspace:packages/react/src/components/SplitPanel"
@@ -2814,11 +2822,15 @@ __metadata:
   resolution: "@carbon-labs/web-components@workspace:packages/web-components"
   dependencies:
     "@carbon/grid": "npm:^11.34.0"
-    "@carbon/icon-helpers": "npm:10.57.0"
-    "@carbon/icons": "npm:11.59.0"
+    "@carbon/icon-helpers": "npm:10.58.0"
+    "@carbon/icons": "npm:11.60.0"
     "@carbon/layout": "npm:11.32.0"
+<<<<<<< HEAD
     "@carbon/motion": "npm:11.28.0"
     "@carbon/pictograms": "npm:^12.53.0"
+=======
+    "@carbon/motion": "npm:11.29.0"
+>>>>>>> 995514dd1cc17c0ad9bff7f4d3851705c66d5c41
     "@carbon/styles": "npm:^1.70.0"
     "@carbon/themes": "npm:11.53.0"
     "@carbon/type": "npm:11.38.0"
@@ -3023,12 +3035,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icon-helpers@npm:10.57.0":
-  version: 10.57.0
-  resolution: "@carbon/icon-helpers@npm:10.57.0"
+"@carbon/icon-helpers@npm:10.58.0":
+  version: 10.58.0
+  resolution: "@carbon/icon-helpers@npm:10.58.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/7091ea0c25fe04113ef2c3a3ab709ba44ad96acc4df4fea762dda4f77dfcc6b6ee40c8837a7f2ac52ae7fd45248e2540cb27f6ea9288c9edc5a7b149536f5610
+  checksum: 10c0/696e8cb27af66b572c134364cd9761d12384a3e64697d83e1f7de882647ff1c4dd37175d904b0f2d999ce61fc167bddde1340fcf334fd679fdc98028e7d6d53a
   languageName: node
   linkType: hard
 
@@ -3054,12 +3066,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons@npm:11.59.0":
-  version: 11.59.0
-  resolution: "@carbon/icons@npm:11.59.0"
+"@carbon/icons@npm:11.60.0":
+  version: 11.60.0
+  resolution: "@carbon/icons@npm:11.60.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/1d6ddf0bd23dab69ffa31c15181de8df940974b667b92c6c897248b9de5a946854d5967d91e83f37ff5d5b41aebf66d678d06e68d03c815dd86fe88f019d754a
+  checksum: 10c0/7a08c910376296228ea90b82a6528657ef5d856d233a966ad5d7ceabbaa850066795f6c2816e5349a930d6ad535f05647072a23db92160dd95a71ef289794b25
   languageName: node
   linkType: hard
 
@@ -3108,6 +3120,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@carbon/layout@npm:^11.35.0":
   version: 11.35.0
   resolution: "@carbon/layout@npm:11.35.0"
@@ -3120,9 +3133,14 @@ __metadata:
 "@carbon/motion@npm:11.28.0":
   version: 11.28.0
   resolution: "@carbon/motion@npm:11.28.0"
+=======
+"@carbon/motion@npm:11.29.0":
+  version: 11.29.0
+  resolution: "@carbon/motion@npm:11.29.0"
+>>>>>>> 995514dd1cc17c0ad9bff7f4d3851705c66d5c41
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/15921b415927ef58668a2fcc5daf1b8e7bd5775117016f96ec9cbad32d2ffc76ecbef6a5b2e476e5a736d237cae2b7382e6e4963e1ea4234476f15e336da8a27
+  checksum: 10c0/7e6161e782262ced1464e647b5738ec2e5a16b65c7cd3bcae73234188b2cad4f19584bcf9a830b62807f5f84802829ccda842fe00f2b36badda2f37176a19b33
   languageName: node
   linkType: hard
 
@@ -11125,12 +11143,12 @@ __metadata:
   linkType: hard
 
 "brace-expansion@npm:^1.1.7":
-  version: 1.1.11
-  resolution: "brace-expansion@npm:1.1.11"
+  version: 1.1.12
+  resolution: "brace-expansion@npm:1.1.12"
   dependencies:
     balanced-match: "npm:^1.0.0"
     concat-map: "npm:0.0.1"
-  checksum: 10c0/695a56cd058096a7cb71fb09d9d6a7070113c7be516699ed361317aca2ec169f618e28b8af352e02ab4233fb54eb0168460a40dc320bab0034b36ab59aaad668
+  checksum: 10c0/975fecac2bb7758c062c20d0b3b6288c7cc895219ee25f0a64a9de662dbac981ff0b6e89909c3897c1f84fa353113a721923afdec5f8b2350255b097f12b1f73
   languageName: node
   linkType: hard
 
@@ -27760,8 +27778,8 @@ __metadata:
   linkType: hard
 
 "tar-fs@npm:^3.0.8":
-  version: 3.0.9
-  resolution: "tar-fs@npm:3.0.9"
+  version: 3.0.8
+  resolution: "tar-fs@npm:3.0.8"
   dependencies:
     bare-fs: "npm:^4.0.1"
     bare-path: "npm:^3.0.0"
@@ -27772,7 +27790,7 @@ __metadata:
       optional: true
     bare-path:
       optional: true
-  checksum: 10c0/e7c6c8b7d1bf342bab0e94e0a2d96dc73c18d0cc6b59ee7b57f919adb08f5cee7f417cb4baee8322789292dc51ae67028cfd5d73f3559c919723ec7d71aa8959
+  checksum: 10c0/b70bb2ad0490ab13b48edd10bd648bb54c52b681981cdcdc3aa4517e98ad94c94659ddca1925872ee658d781b9fcdd2b1c808050647f06b1bca157dd2fcae038
   languageName: node
   linkType: hard
 
@@ -29827,8 +29845,8 @@ __metadata:
   linkType: hard
 
 "vite@npm:^5.0.0":
-  version: 5.4.18
-  resolution: "vite@npm:5.4.18"
+  version: 5.4.19
+  resolution: "vite@npm:5.4.19"
   dependencies:
     esbuild: "npm:^0.21.3"
     fsevents: "npm:~2.3.3"
@@ -29865,7 +29883,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/a8cbbec6bdf399e62c386d70b8485e4f2f1b427beb19bc7c5d52b402a0c3750b7ff469fc20a8333755ea13bc1b0af5df3f22c8fd37d1739ee51d709b7a4740b6
+  checksum: 10c0/c97601234dba482cea5290f2a2ea0fcd65e1fab3df06718ea48adc8ceb14bc3129508216c4989329c618f6a0470b42f439677a207aef62b0c76f445091c2d89e
   languageName: node
   linkType: hard
 

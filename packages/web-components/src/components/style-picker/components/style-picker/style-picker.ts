@@ -15,7 +15,9 @@ import StylePicker from './src/style-picker.js';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Component extending the @carbon/web-components' button
+ * Style picker component.
+ * 
+ * @element clabs-style-picker
  */
 @customElement(`${clabsPrefix}-style-picker`)
 class CLABSStylePicker extends StylePicker {

@@ -21,6 +21,8 @@ const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Pictogram module
+ * 
+ * @elements clabs-style-picker-pictogram-module
  */
 @customElement(`${clabsPrefix}-style-picker-pictogram-module`)
 class CLABSStylePickerPictogramModule<

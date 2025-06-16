@@ -29,7 +29,6 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 // StylePicker
 import '../components/style-picker/style-picker';
-import '../components/style-picker-modules/style-picker-modules';
 import '../components/style-picker-color-module/style-picker-color-module';
 import '../components/style-picker-icon-module/style-picker-icon-module';
 import '../components/style-picker-pictogram-module/style-picker-pictogram-module';
@@ -151,26 +150,29 @@ const changePictogram = (ev) => {
   pictogramHolderEl.appendChild(container.firstElementChild);
 };
 
-/**
- * More on writing stories with args: https://storybook.js.org/docs/web-components/writing-stories/args
- *
- * @type {{args: {label: string}, render: (function(*): TemplateResult<1>)}}
- */
+const argTypes = {
+  open: {
+    control: 'radio',
+    description: 'true if the modal is open',
+  },
+  title: {
+    control: 'text',
+    description: 'style picker heading.',
+  },
+  align: {
+    control: 'select',
+    options: [...alignOptions],
+    description: `Specify how the popover should align with the trigger element`,
+  },
+};
+
 export const Color = {
   args: {
     title: 'Color Picker',
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
   },
-
-  argTypes: {
-    align: {
-      control: 'select',
-      options: [...alignOptions],
-      description: `Specify how the popover should align with the trigger element`,
-    },
-  },
-
+  argTypes,
   /**
    * Renders the template for Storybook
    * @param {object} args Storybook arguments
@@ -232,15 +234,7 @@ export const Icon = {
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
   },
-
-  argTypes: {
-    align: {
-      control: 'select',
-      options: [...alignOptions],
-      description: `Specify how the popover should align with the trigger element`,
-    },
-  },
-
+  argTypes,
   /**
    * Renders the template for Storybook
    * @param {object} args Storybook arguments
@@ -299,23 +293,13 @@ export const Icon = {
     `,
 };
 
-console.log(pictograms);
-
 export const Pictogram = {
   args: {
     title: 'Pictogram picker',
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
   },
-
-  argTypes: {
-    align: {
-      control: 'select',
-      options: [...alignOptions],
-      description: `Specify how the popover should align with the trigger element`,
-    },
-  },
-
+  argTypes,
   /**
    * Renders the template for Storybook
    * @param {object} args Storybook arguments

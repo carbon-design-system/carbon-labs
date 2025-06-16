@@ -22,6 +22,8 @@ const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * The base component for different modules eg: color, icon, pictogram, etc.
+ * 
+ * @elements clabs-style-picker-module
  */
 @customElement(`${clabsPrefix}-style-picker-module`)
 class CLABSStylePickerModule<T> extends StylePickerModule<T> {

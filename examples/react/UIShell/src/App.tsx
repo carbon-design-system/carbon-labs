@@ -21,6 +21,7 @@ import {
   HeaderPopoverButton,
   HeaderPopoverContent,
   TrialCountdown,
+  SideNavSlot,
 } from '@carbon-labs/react-ui-shell';
 import {
   SkipToContent,
@@ -38,6 +39,7 @@ import {
   ExpandableSearch,
   Link,
   Button,
+  Dropdown,
 } from '@carbon/react';
 import {
   Fade,
@@ -49,6 +51,7 @@ import {
   User,
   ShoppingCart,
   Switcher,
+  Menu,
 } from '@carbon/icons-react';
 
 const StoryContent = () => (
@@ -272,7 +275,26 @@ function App() {
             onOverlayClick={onClickSideNavExpand}
             className="nav--global">
             <SideNavItems>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu level 1">
+              <SideNavMenu
+                renderIcon={SquareOutline}
+                title="Sub-menu level 1"
+                primary
+                defaultExpanded>
+                <SideNavSlot renderIcon={Fade}>
+                  <Dropdown
+                    aria-label="Choose an option"
+                    id="default"
+                    size="sm"
+                    itemToString={(item) => (item ? item.text : '')}
+                    items={[
+                      { text: 'Option 1' },
+                      { text: 'Option 2' },
+                      { text: 'Option 3' },
+                    ]}
+                    label="Choose an option"
+                  />
+                </SideNavSlot>
+                <SideNavDivider />
                 <SideNavMenuItem renderIcon={SquareOutline} href="#">
                   Item level 2
                 </SideNavMenuItem>
@@ -281,22 +303,25 @@ function App() {
                 </SideNavMenuItem>
                 <SideNavMenu
                   renderIcon={SquareOutline}
-                  title="Sub-menu level 2">
-                  <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                  title="Sub-menu level 2"
+                  defaultExpanded>
+                  <SideNavMenuItem isActive href="#">
+                    Item level 3
+                  </SideNavMenuItem>
                   <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                   <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                 </SideNavMenu>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
               <SideNavDivider />
@@ -306,7 +331,7 @@ function App() {
               <SideNavLink renderIcon={SquareOutline} href="#">
                 Link
               </SideNavLink>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
@@ -319,6 +344,24 @@ function App() {
             isChildOfHeader={false}
             aria-label="Side navigation">
             <SideNavItems>
+              <SideNavSlot renderIcon={Menu}>
+                <Menu />
+              </SideNavSlot>
+
+              <SideNavSlot renderIcon={SquareOutline}>
+                <Dropdown
+                  id="default"
+                  size="sm"
+                  itemToString={(item) => (item ? item.text : '')}
+                  items={[
+                    { text: 'Option 1' },
+                    { text: 'Option 2' },
+                    { text: 'Option 3' },
+                  ]}
+                  label="Choose an option"
+                />
+              </SideNavSlot>
+              <SideNavDivider />
               <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
                 <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
                 <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>

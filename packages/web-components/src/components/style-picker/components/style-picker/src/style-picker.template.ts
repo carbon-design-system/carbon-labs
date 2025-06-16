@@ -9,8 +9,7 @@
 
 import { html } from 'lit';
 
-import '@carbon/web-components/es/components/popover/popover';
-import '@carbon/web-components/es/components/popover/popover-content';
+import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 

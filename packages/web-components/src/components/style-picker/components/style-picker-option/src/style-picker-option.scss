@@ -28,10 +28,11 @@ $min-value: 0.0625rem;
 
 .#{$block-class}__container {
   @include button-reset.reset;
-  color: theme.$icon-primary;
+
   position: relative;
-  cursor: pointer;
+  color: theme.$icon-primary;
   border-radius: $min-value;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -39,8 +40,8 @@ $min-value: 0.0625rem;
 
 @each $size, $value in $sizes {
   .#{$block-class}--#{$size} .#{$block-class}__container {
-    width: $value;
-    height: $value;
+    inline-size: $value;
+    block-size: $value;
   }
 }
 
@@ -49,10 +50,10 @@ $min-value: 0.0625rem;
 }
 
 .#{$block-class}__container::before {
-  content: '';
   position: absolute;
-  inset: -$min-value;
+  content: '';
   border-radius: inherit;
+  inset: -$min-value;
 }
 
 .#{$block-class}:hover .#{$block-class}__container {
@@ -80,14 +81,14 @@ $min-value: 0.0625rem;
 .#{$block-class}__selection-indicator {
   position: absolute;
   inset-block-start: -$spacing-03;
-  inset-inline-end: -$spacing-03;
-  color: theme.$layer-selected-inverse;
   z-index: 1;
+  color: theme.$layer-selected-inverse;
+  inset-inline-end: -$spacing-03;
 }
 
 .#{$block-class}__selection-indicator [data-icon-path='inner-path'] {
-  opacity: 1;
   fill: theme.$icon-inverse;
+  opacity: 1;
 }
 
 .#{$block-class}[aria-selected='false'] .#{$block-class}__selection-indicator {

@@ -25,8 +25,8 @@ $spacing-12-rem: $spacing-13 + $spacing-07;
 $container-width: $spacing-12-rem + $spacing-06;
 
 .#{$block-class}__content {
-  width: $container-width;
-  max-height: min(calc($spacing-12-rem * 2), 100vh);
+  inline-size: $container-width;
+  max-block-size: min(calc($spacing-12-rem * 2), 100vh);
   display: grid;
   grid-template-rows: max-content 1fr;
 }
@@ -37,15 +37,16 @@ $container-width: $spacing-12-rem + $spacing-06;
 
 .#{$block-class}__search {
   position: absolute;
-  inset: 0;
   display: flex;
+  inset: 0;
   justify-content: end;
 }
 
 .#{$block-class}__heading {
   @include type.type-style('heading-01');
+
+  block-size: $spacing-08;
   padding-inline: $spacing-05;
-  height: $spacing-08;
   display: flex;
   align-items: center;
 }
@@ -66,20 +67,4 @@ $container-width: $spacing-12-rem + $spacing-06;
 
 .#{$block-class}-module .#{$cds-prefix}--contained-list__header {
   z-index: 2;
-}
-
-.#{$block-class}-modules__container,
-.#{$block-class}-modules__container .#{$cds-prefix}--accordion {
-  height: 100%;
-}
-
-.#{$block-class}-modules__container .#{$cds-prefix}--accordion__item,
-.#{$block-class}-modules__container .#{$cds-prefix}--accordion__heading,
-.#{$block-class}-modules__container .#{$cds-prefix}--accordion__content {
-  animation-duration: 0ms !important;
-  transition: none !important;
-}
-
-.#{$block-class}__modules .#{$cds-prefix}--accordion__item--active {
-  height: calc(100% - (var(--#{$block-class}-module-count) - 1) * 2.5rem - 0.0625rem);
 }

@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html } from 'lit';
+import { html, TemplateResult } from 'lit';
 
 /**
  * Lit template for card
@@ -15,6 +15,6 @@ import { html } from 'lit';
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export const stylePickerModulesTemplate = () => {
+export const stylePickerModulesTemplate = (): TemplateResult<1> => {
   return html`<slot></slot>`;
 };

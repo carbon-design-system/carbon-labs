@@ -9,5 +9,10 @@
 import AnimatedHeader from './components/AnimatedHeader/AnimatedHeader';
 import { BaseTile } from './components/Tiles/index.js';
 export * from './assets';
+export type {
+  Workspace,
+  WorkspaceSelectorConfig,
+} from './components/WorkspaceSelector/WorkspaceSelector';
+export type { TasksControllerConfig } from './components/TasksController/TasksController';
 
 export { AnimatedHeader, BaseTile };

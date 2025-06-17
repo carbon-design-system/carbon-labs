@@ -439,6 +439,11 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       } else {
         // setIsExpanded(lastExpandedState);
       }
+
+      // will always open to the menu with an active element
+      if(primary && (active || hasActiveDescendant(children))){
+        setIsExpanded(true)
+      }
     }, [sideNavExpanded]);
 
     const [openPopover, setOpenPopover] = React.useState(false);

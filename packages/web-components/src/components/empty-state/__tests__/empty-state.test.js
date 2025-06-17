@@ -44,7 +44,7 @@ describe('clabs-empty-state', function () {
   it('should render clabs-empty-state', async () => {
     const emptyState = await fixture(template());
     expect(emptyState).dom.to.equalSnapshot();
-    expect(emptyState).shadowDom.to.be.accessible();
+    await expect(emptyState).shadowDom.to.be.accessible();
   });
   it('should contain title element', async () => {
     const emptyState = await fixture(template());

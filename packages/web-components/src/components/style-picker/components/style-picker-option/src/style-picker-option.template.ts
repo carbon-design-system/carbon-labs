@@ -9,7 +9,7 @@
 
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import CheckmarkFilled16 from '@carbon/web-components/es/icons/checkmark--filled/16';
+import CheckmarkFilled16 from '@carbon/web-components/es/icons/checkmark--filled/16.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 

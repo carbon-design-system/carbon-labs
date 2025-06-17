@@ -168,7 +168,7 @@ const argTypes = {
 
 export const Color = {
   args: {
-    title: 'Color Picker',
+    title: 'Choose color',
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
   },
@@ -188,7 +188,7 @@ export const Color = {
           <clabs-style-picker
             .align=${args.align}
             ?open=${args.open}
-            .title=${'Choose color'}>
+            .title=${args.title}>
             <cds-icon-button
               slot="trigger"
               .kind=${BUTTON_KIND.GHOST}
@@ -230,7 +230,7 @@ export const Color = {
 
 export const Icon = {
   args: {
-    title: 'Icon picker',
+    title: 'Choose icon',
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
   },
@@ -250,7 +250,7 @@ export const Icon = {
           <clabs-style-picker
             .align=${args.align}
             ?open=${args.open}
-            .title=${'Choose icon'}>
+            .title=${args.title}>
             <cds-icon-button
               slot="trigger"
               .kind=${BUTTON_KIND.GHOST}
@@ -295,7 +295,7 @@ export const Icon = {
 
 export const Pictogram = {
   args: {
-    title: 'Pictogram picker',
+    title: 'Choose pictogram',
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
   },
@@ -315,7 +315,7 @@ export const Pictogram = {
           <clabs-style-picker
             .align=${args.align}
             ?open=${args.open}
-            .title=${'Choose pictogram'}>
+            .title=${args.title}>
             <cds-icon-button
               slot="trigger"
               .kind=${BUTTON_KIND.GHOST}

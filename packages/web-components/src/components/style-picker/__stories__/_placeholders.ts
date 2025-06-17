@@ -57,8 +57,13 @@ import TelAviv from '@carbon/pictograms/es/tel-aviv';
 import TokyoGates from '@carbon/pictograms/es/tokyo--gates';
 import CairoGizaPlateau from '@carbon/pictograms/es/cairo--giza-plateau';
 import Melbourne from '@carbon/pictograms/es/melbourne';
+import { Group, Item } from '../defs/style-picker-module.types';
 
-export const colors = [
+type ColorItem = {
+  color: string;
+};
+
+export const colors: Group<Item<ColorItem>>[] = [
   ['Yellow', carbonColors.yellow],
   ['Orange', carbonColors.orange],
   ['Red', carbonColors.red],
@@ -80,11 +85,13 @@ export const colors = [
   ],
 ].map(([label, swatch]) => ({
   label,
-  items: Object.entries(swatch).map(([step, color]) => ({
-    value: `${label.toLowerCase()}-${step}`,
-    label: `${label} ${step}`,
-    color,
-  })),
+  items: Object.entries(swatch as Record<string, string>).map(
+    ([step, color]) => ({
+      value: `${label.toLowerCase()}-${step}`,
+      label: `${label} ${step}`,
+      color,
+    })
+  ),
 }));
 
 export const icons = [

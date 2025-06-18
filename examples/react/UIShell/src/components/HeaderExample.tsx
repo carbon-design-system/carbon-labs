@@ -11,6 +11,7 @@ import {
   HeaderPopoverButton,
   HeaderPopoverContent,
   TrialCountdown,
+  SideNavSlot,
 } from '@carbon-labs/react-ui-shell';
 import {
   SkipToContent,
@@ -18,6 +19,9 @@ import {
   HeaderName,
   HeaderMenuButton,
   SideNavDivider,
+  Content,
+  Grid,
+  Column,
   HeaderGlobalBar,
   HeaderGlobalAction,
   MenuButton,
@@ -25,11 +29,10 @@ import {
   ExpandableSearch,
   Link,
   Button,
-  HeaderNavigation,
-  HeaderMenuItem,
+  Dropdown,
 } from '@carbon/react';
-
 import {
+  Fade,
   SquareOutline,
   Help,
   Notification,
@@ -38,6 +41,7 @@ import {
   User,
   ShoppingCart,
   Switcher,
+  Menu,
 } from '@carbon/icons-react';
 import { useMemo, useRef, useState } from 'react';
 
@@ -225,43 +229,124 @@ export const HeaderExample = ({ children }) => {
             </HeaderGlobalBar>
           </Header>
           <SideNav
+            aria-label="Side navigation1"
+            expanded={isSideNavExpanded}
+            onSideNavBlur={onClickSideNavExpand}
+            isCollapsible
+            isTreeview
+            onOverlayClick={onClickSideNavExpand}
+            className="nav--global">
+            <SideNavItems>
+              <SideNavMenu
+                renderIcon={SquareOutline}
+                title="Sub-menu level 1"
+                primary
+                defaultExpanded>
+                <SideNavSlot renderIcon={Fade}>
+                  <Dropdown
+                    aria-label="Choose an option"
+                    id="default"
+                    size="sm"
+                    itemToString={(item) => (item ? item.text : '')}
+                    items={[
+                      { text: 'Option 1' },
+                      { text: 'Option 2' },
+                      { text: 'Option 3' },
+                    ]}
+                    label="Choose an option"
+                  />
+                </SideNavSlot>
+                <SideNavDivider />
+                <SideNavMenuItem renderIcon={SquareOutline} href="#">
+                  Item level 2
+                </SideNavMenuItem>
+                <SideNavMenuItem renderIcon={SquareOutline} href="#">
+                  Item level 2
+                </SideNavMenuItem>
+                <SideNavMenu
+                  renderIcon={SquareOutline}
+                  title="Sub-menu level 2"
+                  defaultExpanded>
+                  <SideNavMenuItem isActive href="#">
+                    Item level 3
+                  </SideNavMenuItem>
+                  <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                  <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                </SideNavMenu>
+              </SideNavMenu>
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
+                <SideNavMenuItem href="#">Item</SideNavMenuItem>
+              </SideNavMenu>
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
+                <SideNavMenuItem href="#">Item</SideNavMenuItem>
+              </SideNavMenu>
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
+                <SideNavMenuItem href="#">Item</SideNavMenuItem>
+              </SideNavMenu>
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
+                <SideNavMenuItem href="#">Item</SideNavMenuItem>
+              </SideNavMenu>
+              <SideNavDivider />
+              <SideNavLink renderIcon={SquareOutline} href="#">
+                Link
+              </SideNavLink>
+              <SideNavLink renderIcon={SquareOutline} href="#">
+                Link
+              </SideNavLink>
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
+                <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                <SideNavMenuItem href="#">Item</SideNavMenuItem>
+              </SideNavMenu>
+            </SideNavItems>
+          </SideNav>
+          <SideNav
             hideRailBreakpointDown="md"
             isRail
             isChildOfHeader={false}
             aria-label="Side navigation">
             <SideNavItems>
-              {routesInSideNav.map(({ path, carbon }) =>
-                carbon?.label ? (
-                  carbon?.subMenu ? (
-                    <SideNavMenu
-                      renderIcon={carbon?.icon}
-                      title={carbon?.label}
-                      key={carbon?.label}>
-                      {carbon?.subMenu.map((subRoute) => (
-                        <SideNavMenuItem
-                          as={RouterLink}
-                          to={subRoute.path}
-                          isActive={subRoute.path === location.pathname}
-                          key={path}>
-                          {subRoute.carbon?.label}
-                        </SideNavMenuItem>
-                      ))}
-                    </SideNavMenu>
-                  ) : (
-                    <div key={path}>
-                      <SideNavLink
-                        as={RouterLink}
-                        to={path}
-                        isActive={path === location.pathname}
-                        key={path}
-                        renderIcon={carbon?.icon}>
-                        {carbon?.label}
-                      </SideNavLink>
-                      {carbon?.separator && <SideNavDivider />}
-                    </div>
-                  )
-                ) : null
-              )}
+              <SideNavSlot renderIcon={Menu}>
+                <Menu />
+              </SideNavSlot>
+
+              <SideNavSlot renderIcon={SquareOutline}>
+                <Dropdown
+                  id="default"
+                  size="sm"
+                  itemToString={(item) => (item ? item.text : '')}
+                  items={[
+                    { text: 'Option 1' },
+                    { text: 'Option 2' },
+                    { text: 'Option 3' },
+                  ]}
+                  label="Choose an option"
+                />
+              </SideNavSlot>
+              <SideNavDivider />
+              <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+                <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
+                <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
+              </SideNavMenu>
+              <SideNavLink renderIcon={Fade} href="#">
+                Link
+              </SideNavLink>
+              <SideNavLink renderIcon={Fade} href="#">
+                Link
+              </SideNavLink>
+              <SideNavLink renderIcon={Fade} href="#">
+                Link
+              </SideNavLink>
+              <SideNavLink renderIcon={Fade} href="#">
+                Link
+              </SideNavLink>
+              <SideNavDivider />
+              <SideNavLink renderIcon={Fade} href="#">
+                Link
+              </SideNavLink>
+              <SideNavLink renderIcon={Fade} href="#">
+                Link
+              </SideNavLink>
             </SideNavItems>
           </SideNav>
           {children}

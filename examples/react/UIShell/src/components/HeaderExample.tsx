@@ -33,6 +33,8 @@ import {
   Column,
   HeaderGlobalBar,
   HeaderGlobalAction,
+  HeaderNavigation,
+  HeaderMenuItem,
   MenuButton,
   MenuItemRadioGroup,
   ExpandableSearch,

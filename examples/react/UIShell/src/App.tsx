@@ -342,7 +342,8 @@ function App() {
             hideRailBreakpointDown="md"
             isRail
             isChildOfHeader={false}
-            aria-label="Side navigation">
+            aria-label="Side navigation"
+            className="nav--local">
             <SideNavItems>
               <SideNavSlot renderIcon={Menu}>
                 <Menu />

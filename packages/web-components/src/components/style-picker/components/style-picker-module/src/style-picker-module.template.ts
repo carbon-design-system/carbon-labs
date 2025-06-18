@@ -52,8 +52,7 @@ export const stylePickerModuleTemplate = <T>(
             .isSelected=${selectedItem === item.value}
             .size=${size}
             @clabs-style-picker-option-change=${(e: CustomEvent) =>
-              handleOptionChange(e, item)}
-            tabindex=${selectedItem === item.value ? '0' : '-1'}>
+              handleOptionChange(e, item)}>
             ${renderItem?.(item)}
           </clabs-style-picker-option>
         `
@@ -87,22 +86,19 @@ export const stylePickerModuleTemplate = <T>(
         role="listbox"
         aria-label=${title}
         aria-orientation="horizontal"
-        onKeyDown="{handleKeydown}"
-        onBlur="{handleBlur}">
+        tabindex="-1">
         ${items.map(
           (group) => html`
-            <ul
+            <div
               key=${group.label}
-              class=${`cds--contained-list ${carbonPrefix}--contained-list--disclosed ${blockClass}__group`}
-              role="group"
-              aria-label=${group.label}>
-              <li class=${`cds--contained-list__header`} role="presentation">
+              class=${`cds--contained-list ${carbonPrefix}--contained-list--disclosed ${blockClass}__group`}>
+              <div class=${`cds--contained-list__header`} role="presentation">
                 ${group.label}
-              </li>
+              </div>
               <ul role="group">
                 ${renderItems(group.items)}
               </ul>
-            </ul>
+            </div>
           `
         )}
       </div>

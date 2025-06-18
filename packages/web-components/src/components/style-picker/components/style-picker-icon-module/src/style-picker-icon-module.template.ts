@@ -27,8 +27,6 @@ export const stylePickerIconModuleTemplate = (
 ): TemplateResult<1> => {
   const { items, title, size, selectedItem } = customElementClass;
 
-  console.log(items);
-
   /**
    * @param {object} item Item to be rendered
    */

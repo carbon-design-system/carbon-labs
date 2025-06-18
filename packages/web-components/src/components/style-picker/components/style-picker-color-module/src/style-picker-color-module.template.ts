@@ -32,7 +32,7 @@ export const stylePickerColorModuleTemplate = (
    */
   const _render = (item): TemplateResult =>
     html`
-      <svg viewBox="0 0 1 1">
+      <svg viewBox="0 0 1 1" aria-label=${item.label}>
         <rect x="0" y="0" width="1" height="1" fill=${item.color} />
       </svg>
     `;

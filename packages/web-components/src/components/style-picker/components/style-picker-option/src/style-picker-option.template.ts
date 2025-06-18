@@ -28,6 +28,7 @@ export const stylePickerOptionTemplate = (customElementClass) => {
     class=${`${blockClass} ${blockClass}--${size}`}
     data-value=${value}
     role="option"
+    tabindex=${isSelected ? '0' : '-1'}
     aria-label=${label}
     aria-selected=${isSelected}
     title=${label}

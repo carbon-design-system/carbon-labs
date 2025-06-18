@@ -11,7 +11,7 @@ import { html, TemplateResult } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { Group, Item } from '../../../defs/style-picker-module.types';
 
-import '../../style-picker-option/style-picker-option.ts';
+import '../../style-picker-option/style-picker-option.js';
 
 const { stablePrefix: clabsPrefix, prefix: carbonPrefix } = settings;
 

@@ -22,6 +22,7 @@ interface GlassTileProps {
   subtitle?: string;
   title?: string;
   customContent?: ReactNode;
+  onClick?: () => void;
 }
 
 export const GlassTile: React.FC<GlassTileProps> = ({
@@ -33,6 +34,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   subtitle,
   title,
   customContent,
+  onClick: glassTileClickHandler,
 }: GlassTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__glass-tile`;
@@ -43,6 +45,11 @@ export const GlassTile: React.FC<GlassTileProps> = ({
 
   return (
     <Link
+      onClick={() => {
+        if (glassTileClickHandler) {
+          glassTileClickHandler();
+        }
+      }}
       className={`${prefix}--animated-header__tile ${blockClass}`}
       key={id}
       href={href}>

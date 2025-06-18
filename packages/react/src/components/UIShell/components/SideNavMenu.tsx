@@ -322,7 +322,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           const slotElement = node.closest(`.${prefix}--side-nav__slot`);
           if (slotElement) {
             (
-              slotElement.nextElementSibling?.nextElementSibling?.querySelector(
+              slotElement.nextElementSibling?.querySelector(
                 'a, button'
               ) as HTMLElement
             ).tabIndex = 0;

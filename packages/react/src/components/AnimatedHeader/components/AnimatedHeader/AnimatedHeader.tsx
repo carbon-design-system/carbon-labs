@@ -103,7 +103,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   workspaceLabel = `Open in: ${userName}'s workspace` || `Select a workspace`,
   expandButtonLabel = 'Expand',
   collapseButtonLabel = 'Collapse',
-  tileClickHandler
+  tileClickHandler,
 }: AnimatedHeaderProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
@@ -295,7 +295,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               {selectedTileGroup.tiles.map((tile) => {
                 return (
                   <BaseTile
-                    onClick={()=> tileClickHandler?.(tile)}
+                    onClick={() => tileClickHandler?.(tile)}
                     key={tile.id}
                     id={tile.id}
                     open={open}

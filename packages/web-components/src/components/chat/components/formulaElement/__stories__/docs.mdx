@@ -16,6 +16,24 @@ import packageJson from '../../../package.json';
 * **Target library maintainer(s) / PR Reviewer(s):** N/A
 * **Support channel:** `#carbon-labs`
 
+
+Mathematical formulas are essential to clearly let users understand how the model reasoned for any problem requiring mathematical reasoning:
+* How many 8x8 inch tiles to cover with 20x42ft patio? *
+* How many days until march 25th 2028? *
+* Which planet is closest to earth on average given all orbits? *
+
+These rely on LaTeX - the common language in all Academic/Research publication processes. It's extensive use makes it ideal for LLM-generation
+
+## Example 
+
+### MathJax rendering
+
 <clabs-chat-formula
       content={`\\( S = -\\frac{1}{2}\\int d^2\\sigma \\sqrt{-h} h^{ab}\\partial_a X^\\mu \\partial_b X^\\mu \\\\ \\frac{1}{4 \\pi \\alpha'} \\int d^2\\sigma \\sqrt{-h} \\left( h^{ab} \\partial_a X^\\mu \\partial_b X_\\mu + \\alpha' R \\Phi(X) \\right  \\\\ [\\alpha_m^\\mu, \\alpha_n^\\nu] = m \\delta_{m+n,0} \\eta^{\\mu \\nu}  \\)`}>
     </clabs-chat-formula>
+
+### Underlying code
+
+<clabs-chat-code
+      content={`\\( S = -\\frac{1}{2}\\int d^2\\sigma \\sqrt{-h} h^{ab}\\partial_a X^\\mu \\partial_b X^\\mu \\\\ \\frac{1}{4 \\pi \\alpha'} \\int d^2\\sigma \\sqrt{-h} \\left( h^{ab} \\partial_a X^\\mu \\partial_b X_\\mu + \\alpha' R \\Phi(X) \\right  \\\\ [\\alpha_m^\\mu, \\alpha_n^\\nu] = m \\delta_{m+n,0} \\eta^{\\mu \\nu}  \\)`}>
+</clabs-chat-code>

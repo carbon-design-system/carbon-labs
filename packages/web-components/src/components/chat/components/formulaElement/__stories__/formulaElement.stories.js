@@ -46,18 +46,6 @@ const mathExamples = [
   },
 ];
 
-export const Default = {
-  /**
-   * Renders the template for Storybook
-   *
-   * @returns {TemplateResult<1>}
-   */
-  render: () =>
-    html` <clabs-chat-formula
-      content="\\(x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.\\)">
-    </clabs-chat-formula>`,
-};
-
 export const Showcase = {
   /**
    * Renders the template for Storybook

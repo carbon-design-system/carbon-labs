@@ -79,6 +79,7 @@ export interface AnimatedHeaderProps {
   workspaceLabel?: string;
   expandButtonLabel?: string;
   collapseButtonLabel?: string;
+  tileClickHandler?: (tile: Tile) => void;
 }
 
 const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
@@ -102,6 +103,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   workspaceLabel = `Open in: ${userName}'s workspace` || `Select a workspace`,
   expandButtonLabel = 'Expand',
   collapseButtonLabel = 'Collapse',
+  tileClickHandler
 }: AnimatedHeaderProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
@@ -293,6 +295,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               {selectedTileGroup.tiles.map((tile) => {
                 return (
                   <BaseTile
+                    onClick={()=> tileClickHandler?.(tile)}
                     key={tile.id}
                     id={tile.id}
                     open={open}
@@ -447,6 +450,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Specify the default workspace label above the tiles
    */
   workspaceLabel: PropTypes.string,
+
+  /**
+   * Handler for tile clicks
+   */
+  tileClickHandler: PropTypes.func,
 };
 
 export default AnimatedHeader;

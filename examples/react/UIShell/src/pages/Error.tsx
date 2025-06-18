@@ -16,7 +16,7 @@ export const Error = ({ usingOutlet }: { usingOutlet?: boolean }) => {
   ) : (
     <HeaderExample>
       {/* Theme goes here for non-outlet. Must be just after header */}
-      <Theme as={Content} theme='white'>
+      <Theme as={Content} theme="white">
         An error Error page.
       </Theme>
     </HeaderExample>

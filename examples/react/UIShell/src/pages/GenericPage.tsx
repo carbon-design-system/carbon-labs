@@ -20,7 +20,7 @@ export const GenericPage = ({ usingOutlet }: { usingOutlet?: boolean }) => {
   ) : (
     <HeaderExample>
       {/* Theme goes here for non-outlet. Must be just after header */}
-      <Theme as={Content} theme='white'>
+      <Theme as={Content} theme="white">
         A placeholder page at route "{location.pathname}".
       </Theme>
     </HeaderExample>

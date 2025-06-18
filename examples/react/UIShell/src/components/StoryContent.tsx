@@ -1,12 +1,12 @@
 import { Column, Grid } from '@carbon/react';
 
 export const StoryContent = () => (
-  <Grid align='start'>
+  <Grid align="start">
     <Column sm={4} md={8} lg={12}>
       <h2 style={{ margin: '0 0 30px 0' }}>Purpose and function</h2>
       <p>
         The shell is perhaps the most crucial piece of any UI built with
-        <a href='www.carbondesignsystem.com'> Carbon</a>. It contains the shared
+        <a href="www.carbondesignsystem.com"> Carbon</a>. It contains the shared
         navigation framework for the entire design system and ties the products
         in IBM’s portfolio together in a cohesive and elegant way. The shell is
         the home of the topmost navigation, where users can quickly and

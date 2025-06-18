@@ -46,9 +46,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   return (
     <Link
       onClick={() => {
-        if (glassTileClickHandler) {
-          glassTileClickHandler();
-        }
+        glassTileClickHandler?.();
       }}
       className={`${prefix}--animated-header__tile ${blockClass}`}
       key={id}

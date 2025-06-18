@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.76.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.75.0...@carbon-labs/react@0.76.0) (2025-06-18)
+
+
+### Features
+
+* add-tile-click-prop ([#663](https://github.com/carbon-design-system/carbon-labs/issues/663)) ([a3b1b46](https://github.com/carbon-design-system/carbon-labs/commit/a3b1b4662968f81581357965e584180483708d89))
+
+
+
+
+
 # [0.75.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.74.0...@carbon-labs/react@0.75.0) (2025-06-17)
 
 

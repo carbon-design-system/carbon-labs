@@ -15,6 +15,7 @@ import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { SideNavLink } from '../components/SideNavLink';
 import { SideNavSlot } from '../components/SideNavSlot';
+import { UserInfo } from '../components/UserInfo';
 import {
   HeaderPopover,
   HeaderPopoverActions,
@@ -311,6 +312,10 @@ export const Default = () => {
                   <UserAvatar size={20} />
                 </HeaderPopoverButton>
                 <HeaderPopoverContent>
+                  <UserInfo
+                    name="Thomas J. Watson"
+                    email="thomas.watson@ibm.com"
+                  />
                   <p>
                     Lorem ipsum dolor sit amet, di os consectetur adipiscing
                     elit, sed do eiusmod tempor incididunt ut fsil labore et

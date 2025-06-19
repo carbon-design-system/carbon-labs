@@ -14,15 +14,16 @@ import TrashCan16 from '@carbon/web-components/es/icons/trash-can/16';
 import ColorPalette16 from '@carbon/web-components/es/icons/color-palette/16';
 import OverflowMenuVertical16 from '@carbon/web-components/es/icons/overflow-menu--vertical/16';
 
-// Carbon components
+// Carbon
 import '@carbon/web-components/es/components/layer/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/tile/index.js';
 import '@carbon/web-components/es/components/link/index.js';
-
-// Carbon definitions
 import { POPOVER_ALIGNMENT } from '@carbon/web-components/es/components/popover/defs.js';
 import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js';
+
+// Pictograms
+import Bangalore from '@carbon/pictograms/es/bangalore';
 
 // Carbon labs
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
@@ -34,8 +35,6 @@ import '../components/style-picker-icon-module/style-picker-icon-module';
 import '../components/style-picker-pictogram-module/style-picker-pictogram-module';
 import { renderSvg } from '../utilities/renderSvg';
 import { colors, icons, pictograms } from './_placeholders';
-
-import Bangalore from '@carbon/pictograms/es/bangalore';
 
 const { stablePrefix: clabsPrefix, prefix: carbonPrefix } = settings;
 

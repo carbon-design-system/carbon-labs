@@ -24,23 +24,27 @@ export const blockClass = `${clabsPrefix}--style-picker-module`;
  * @returns {TemplateResult<1>} Lit html template
  */
 export const stylePickerModuleTemplate = <T>(
-  customElementClass
+  customElementClass: object
 ): TemplateResult<1> => {
   const kind = customElementClass.stylePickerContext?.kind ?? 'single';
   const { items, title, size, renderItem, selectedItem, handleOptionChange } =
     customElementClass;
 
   /**
+   * Checks items are grouped or not
    *
-   * @param {object} i - item
+   * @param {object} i - Group item
+   * * @returns {boolean} Items grouped or not
    */
   const itemsAreGrouped = (i: typeof items): i is Group<Item<T>>[] => {
     return !(i[0] as Item<T>).value;
   };
 
   /**
+   * Render options from items
    *
-   * @param {Item<T>[]} items -
+   * @param {Item<T>[]} items - Items array
+   * @returns {TemplateResult<1>} Lit html template
    */
   const renderItems = (items: Item<T>[]) => {
     return items.map(
@@ -60,8 +64,9 @@ export const stylePickerModuleTemplate = <T>(
   };
 
   /**
+   * Render ungrouped items
    *
-   * @param {Item<T>[]} items -
+   * @param {Item<T>[]} items - Group items
    */
   const renderUngrouped = (items: Item<T>[]) => {
     return html` <div
@@ -76,8 +81,9 @@ export const stylePickerModuleTemplate = <T>(
   };
 
   /**
+   * Render grouped items
    *
-   * @param {Group<T>[]} items -
+   * @param {Group<T>[]} items - Grouped items array
    */
   const renderGrouped = (items: Group<Item<T>>[]) => {
     return html`

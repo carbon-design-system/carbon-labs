@@ -58,9 +58,18 @@ import TokyoGates from '@carbon/pictograms/es/tokyo--gates';
 import CairoGizaPlateau from '@carbon/pictograms/es/cairo--giza-plateau';
 import Melbourne from '@carbon/pictograms/es/melbourne';
 import { Group, Item } from '../defs/style-picker-module.types';
+import { SVGTemplateResult } from 'lit';
 
 type ColorItem = {
   color: string;
+};
+
+type IconItem = {
+  renderIcon: string | ((args?: any) => SVGTemplateResult);
+};
+
+type PictogramItem = {
+  renderPictogram: string | ((args?: any) => SVGTemplateResult);
 };
 
 export const colors: Group<Item<ColorItem>>[] = [
@@ -94,7 +103,7 @@ export const colors: Group<Item<ColorItem>>[] = [
   ),
 }));
 
-export const icons = [
+export const icons: Item<IconItem>[] = [
   ['Apple', Apple16],
   ['Corn', Corn16],
   ['Fish', Fish16],
@@ -103,11 +112,11 @@ export const icons = [
   ['Wheat', Wheat16],
 ].map(([label, icon]) => ({
   value: label?.toString().toLowerCase().split(' ').join('-'),
-  label,
+  label: label as string,
   renderIcon: icon,
 }));
 
-export const pictograms = [
+export const pictograms: Group<Item<PictogramItem>>[] = [
   [
     'Europe',
     [
@@ -172,7 +181,7 @@ export const pictograms = [
   ['Africa', [['Cairo', CairoGizaPlateau]]],
   ['Australia', [['Melbourne', Melbourne]]],
 ].map(([label, cities]) => ({
-  label,
+  label: label as string,
   items: (cities as Array<any>).map(([name, pictogram]) => ({
     value: name.toLowerCase().split(' ').join('-'),
     label: name,

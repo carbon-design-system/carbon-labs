@@ -49,7 +49,7 @@ class StylePickerModule<T> extends LitElement {
   @property({ type: String, reflect: true, attribute: 'size' })
   size: Size | undefined;
 
-  @property({ type: Function, attribute: 'render-item' })
+  @property({ attribute: false })
   renderItem?: (item: Item<T>) => TemplateResult;
 
   /**

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.77.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.76.0...@carbon-labs/react@0.77.0) (2025-06-18)
+
+
+### Bug Fixes
+
+* **sidenav:** focus on active ([#653](https://github.com/carbon-design-system/carbon-labs/issues/653)) ([ab3620f](https://github.com/carbon-design-system/carbon-labs/commit/ab3620f2596df16b06f95e9716526b4dd45146b7))
+
+
+
+
+
+# [0.76.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.75.0...@carbon-labs/react@0.76.0) (2025-06-18)
+
+
+### Features
+
+* add-tile-click-prop ([#663](https://github.com/carbon-design-system/carbon-labs/issues/663)) ([a3b1b46](https://github.com/carbon-design-system/carbon-labs/commit/a3b1b4662968f81581357965e584180483708d89))
+
+
+
+
+
 # [0.75.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.74.0...@carbon-labs/react@0.75.0) (2025-06-17)
 
 

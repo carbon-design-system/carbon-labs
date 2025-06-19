@@ -20,7 +20,7 @@ import {
   HeaderPopoverButton,
   HeaderPopoverContent,
   TrialCountdown,
-  SideNavSlot,
+  // SideNavSlot,
 } from '@carbon-labs/react-ui-shell';
 import {
   SkipToContent,
@@ -28,9 +28,6 @@ import {
   HeaderName,
   HeaderMenuButton,
   SideNavDivider,
-  Content,
-  Grid,
-  Column,
   HeaderGlobalBar,
   HeaderGlobalAction,
   HeaderNavigation,
@@ -40,10 +37,10 @@ import {
   ExpandableSearch,
   Link,
   Button,
-  Dropdown,
+  // Dropdown,
 } from '@carbon/react';
 import {
-  Fade,
+  // Fade,
   SquareOutline,
   Help,
   Notification,
@@ -52,7 +49,7 @@ import {
   User,
   ShoppingCart,
   Switcher,
-  Menu,
+  // Menu,
 } from '@carbon/icons-react';
 import { useMemo, useRef, useState } from 'react';
 
@@ -251,13 +248,14 @@ export const HeaderExample = ({ children }) => {
               <SideNavMenu
                 renderIcon={SquareOutline}
                 title="Sub-menu level 1"
-                primary
-                defaultExpanded></SideNavMenu>
+                // primary
+                // defaultExpanded
+              ></SideNavMenu>
               {routesInSideNav.map(({ path, carbon }) =>
                 carbon?.label ? (
                   carbon?.subMenu ? (
                     <SideNavMenu
-                      primary
+                      // primary
                       renderIcon={carbon?.icon}
                       title={carbon?.label}
                       key={carbon?.label}>
@@ -308,23 +306,23 @@ export const HeaderExample = ({ children }) => {
             isChildOfHeader={false}
             aria-label="Side navigation">
             <SideNavItems>
-              <SideNavSlot renderIcon={Menu}>
+              {/* <SideNavSlot renderIcon={Menu}>
                 <Menu />
               </SideNavSlot>
 
               <SideNavSlot renderIcon={SquareOutline}>
                 <Dropdown
-                  id="default"
-                  size="sm"
+                  id='default'
+                  size='sm'
                   itemToString={(item) => (item ? item.text : '')}
                   items={[
                     { text: 'Option 1' },
                     { text: 'Option 2' },
                     { text: 'Option 3' },
                   ]}
-                  label="Choose an option"
+                  label='Choose an option'
                 />
-              </SideNavSlot>
+              </SideNavSlot> */}
               <SideNavDivider />
               {routesInSideNav.map(({ path, carbon }) =>
                 carbon?.label ? (

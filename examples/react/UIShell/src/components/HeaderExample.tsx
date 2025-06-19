@@ -252,63 +252,54 @@ export const HeaderExample = ({ children }) => {
                 renderIcon={SquareOutline}
                 title="Sub-menu level 1"
                 primary
-                defaultExpanded>
-                <SideNavSlot renderIcon={Fade}>
-                  <Dropdown
-                    aria-label="Choose an option"
-                    id="default"
-                    size="sm"
-                    itemToString={(item) => (item ? item.text : '')}
-                    items={[
-                      { text: 'Option 1' },
-                      { text: 'Option 2' },
-                      { text: 'Option 3' },
-                    ]}
-                    label="Choose an option"
-                  />
-                </SideNavSlot>
-                <SideNavDivider />
-                <SideNavMenuItem renderIcon={SquareOutline} href="#">
-                  Item level 2
-                </SideNavMenuItem>
-                <SideNavMenuItem renderIcon={SquareOutline} href="#">
-                  Item level 2
-                </SideNavMenuItem>
-                <SideNavMenu
-                  renderIcon={SquareOutline}
-                  title="Sub-menu level 2"
-                  defaultExpanded>
-                  <SideNavMenuItem isActive href="#">
-                    Item level 3
-                  </SideNavMenuItem>
-                  <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
-                  <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
-                </SideNavMenu>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
-                <SideNavMenuItem href="#">Item</SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
-                <SideNavMenuItem href="#">Item</SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
-                <SideNavMenuItem href="#">Item</SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
-                <SideNavMenuItem href="#">Item</SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavDivider />
-              <SideNavLink renderIcon={SquareOutline} href="#">
-                Link
-              </SideNavLink>
-              <SideNavLink renderIcon={SquareOutline} href="#">
-                Link
-              </SideNavLink>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
-                <SideNavMenuItem href="#">Item</SideNavMenuItem>
-                <SideNavMenuItem href="#">Item</SideNavMenuItem>
-                <SideNavMenuItem href="#">Item</SideNavMenuItem>
-              </SideNavMenu>
+                defaultExpanded></SideNavMenu>
+              {routesInSideNav.map(({ path, carbon }) =>
+                carbon?.label ? (
+                  carbon?.subMenu ? (
+                    <SideNavMenu
+                      primary
+                      renderIcon={carbon?.icon}
+                      title={carbon?.label}
+                      key={carbon?.label}>
+                      {/* <SideNavSlot renderIcon={SquareOutline}>
+                        <Dropdown
+                          id="default"
+                          size="sm"
+                          itemToString={(item) => (item ? item.text : "")}
+                          items={[
+                            { text: "Option 1" },
+                            { text: "Option 2" },
+                            { text: "Option 3" },
+                          ]}
+                          label="Choose an option"
+                        />
+                      </SideNavSlot> */}
+
+                      {carbon?.subMenu.map((subRoute) => (
+                        <SideNavMenuItem
+                          as={RouterLink}
+                          to={subRoute.path}
+                          isActive={subRoute.path === location.pathname}
+                          key={path}>
+                          {subRoute.carbon?.label}
+                        </SideNavMenuItem>
+                      ))}
+                    </SideNavMenu>
+                  ) : (
+                    <div key={path}>
+                      <SideNavLink
+                        as={RouterLink}
+                        to={path}
+                        isActive={path === location.pathname}
+                        key={path}
+                        renderIcon={carbon?.icon}>
+                        {carbon?.label}
+                      </SideNavLink>
+                      {carbon?.separator && <SideNavDivider />}
+                    </div>
+                  )
+                ) : null
+              )}
             </SideNavItems>
           </SideNav>
           <SideNav
@@ -335,29 +326,38 @@ export const HeaderExample = ({ children }) => {
                 />
               </SideNavSlot>
               <SideNavDivider />
-              <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-                <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
-                <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavLink renderIcon={Fade} href="#">
-                Link
-              </SideNavLink>
-              <SideNavLink renderIcon={Fade} href="#">
-                Link
-              </SideNavLink>
-              <SideNavLink renderIcon={Fade} href="#">
-                Link
-              </SideNavLink>
-              <SideNavLink renderIcon={Fade} href="#">
-                Link
-              </SideNavLink>
-              <SideNavDivider />
-              <SideNavLink renderIcon={Fade} href="#">
-                Link
-              </SideNavLink>
-              <SideNavLink renderIcon={Fade} href="#">
-                Link
-              </SideNavLink>
+              {routesInSideNav.map(({ path, carbon }) =>
+                carbon?.label ? (
+                  carbon?.subMenu ? (
+                    <SideNavMenu
+                      renderIcon={carbon?.icon}
+                      title={carbon?.label}
+                      key={carbon?.label}>
+                      {carbon?.subMenu.map((subRoute) => (
+                        <SideNavMenuItem
+                          as={RouterLink}
+                          to={subRoute.path}
+                          isActive={subRoute.path === location.pathname}
+                          key={path}>
+                          {subRoute.carbon?.label}
+                        </SideNavMenuItem>
+                      ))}
+                    </SideNavMenu>
+                  ) : (
+                    <div key={path}>
+                      <SideNavLink
+                        as={RouterLink}
+                        to={path}
+                        isActive={path === location.pathname}
+                        key={path}
+                        renderIcon={carbon?.icon}>
+                        {carbon?.label}
+                      </SideNavLink>
+                      {carbon?.separator && <SideNavDivider />}
+                    </div>
+                  )
+                ) : null
+              )}
             </SideNavItems>
           </SideNav>
           {children}

@@ -304,7 +304,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }
 
     function handleKeyDown(event) {
-      if (match(event, keys.Escape)) {
+      if (match(event, keys.Escape) && !primary) {
         setIsExpanded(false);
 
         if (onMenuToggle) {
@@ -428,23 +428,21 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }, [isExpanded]);
 
     useEffect(() => {
-      if (currentPrimaryMenu !== uniqueId) {
+      if (primary && currentPrimaryMenu !== uniqueId) {
         setIsExpanded(false);
       } else {
         setIsExpanded(true);
       }
     }, [currentPrimaryMenu]);
-
-    // save expanded state before SideNav collapse
-    const [lastExpandedState, setLastExpandedState] = useState(isExpanded);
-
     // reset to opened/collapsed menu state when Panel SideNav is toggled
     useEffect(() => {
       if (navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded) {
-        setLastExpandedState(isExpanded);
         setIsExpanded(false);
-      } else {
-        setIsExpanded(lastExpandedState);
+      }
+
+      // will always open to the menu with an active element
+      if (primary && (active || hasActiveDescendant(children))) {
+        setIsExpanded(true);
       }
     }, [sideNavExpanded]);
 
@@ -487,7 +485,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               // window.location.href = firstLink.current;
             } else if (isSm || !primary || currentPrimaryMenu !== uniqueId) {
               setIsExpanded(!isExpanded);
-              setLastExpandedState(!isExpanded);
             }
 
             if (isSm && backButtonRef.current) {

@@ -264,6 +264,10 @@ function SideNavRenderFunction(
         'a, button'
       ) as HTMLElement;
 
+      const currentElement = sideNavRef?.current?.querySelector(
+        `.cds--side-nav__link--current`
+      ) as HTMLElement;
+
       if (navType == SIDE_NAV_TYPE.PANEL || expanded) {
         if (isSm && backButton) {
           backButton.tabIndex = 0;
@@ -274,6 +278,11 @@ function SideNavRenderFunction(
           if (firstElementAfterBack) {
             firstElementAfterBack.tabIndex = 0;
           }
+        } else if (
+          currentElement &&
+          currentElement.closest(`[id="${currentPrimaryMenu}"]`)
+        ) {
+          currentElement.tabIndex = 0;
         } else if (firstElement) {
           firstElement.tabIndex = 0;
 

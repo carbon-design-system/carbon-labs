@@ -10,18 +10,14 @@
 import { HeaderExample } from '../components/HeaderExample';
 import { Content, Theme } from '@carbon/react';
 
-import { useLocation } from 'react-router';
-
-export const Placeholder = ({ usingOutlet }: { usingOutlet?: boolean }) => {
-  const location = useLocation();
-
+export const NotFound = ({ usingOutlet }: { usingOutlet?: boolean }) => {
   return usingOutlet ? (
-    <>A placeholder page, in an outlet, at route "{location.pathname}".</>
+    <>Page not found - in the outlet.</>
   ) : (
     <HeaderExample>
       {/* Theme goes here for non-outlet. Must be just after header */}
       <Theme as={Content} theme="white">
-        A placeholder page at route "{location.pathname}".
+        Page not found page.
       </Theme>
     </HeaderExample>
   );

@@ -11,6 +11,7 @@ import { Home } from '../pages/Home';
 import { About } from '../pages/About';
 import { Placeholder } from '../pages/Placeholder';
 import { CarbonIconType, Fade } from '@carbon/icons-react';
+import { NotFound } from '../pages/NotFound';
 
 type carbonRouteType = {
   label: string;
@@ -142,6 +143,10 @@ export const routes: routesType[] = [
       inSideNav: true,
       icon: Fade,
     },
+  },
+  {
+    path: '*',
+    element: NotFound,
   },
 ];
 

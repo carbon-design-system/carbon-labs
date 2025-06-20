@@ -43,7 +43,7 @@ export const UserInfo: React.FC<UserInfoProps> = ({
   });
   return (
     <div className={className}>
-      <UserAvatar size="lg" {...rest} />
+      <UserAvatar size="lg" name={name} {...rest} />
       <div className={`${prefix}--user-info__text-wrapper`}>
         <div className={`${prefix}--user-info__name`}>{name}</div>
         <div className={`${prefix}--user-info__email`}>{email}</div>

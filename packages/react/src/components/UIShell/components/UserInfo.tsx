@@ -27,7 +27,7 @@ export interface UserInfoProps {
   /**
    * When passing the name prop, either send the initials to be used or the user's full name. The first two capital letters of the user's name will be used as the name.
    */
-  name?: string;
+  name: string;
 }
 
 export const UserInfo: React.FC<UserInfoProps> = ({
@@ -66,5 +66,5 @@ UserInfo.propTypes = {
   /**
    * When passing the name prop, either send the initials to be used or the user's full name. The first two capital letters of the user's name will be used as the name.
    */
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
 };

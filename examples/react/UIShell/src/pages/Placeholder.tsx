@@ -12,7 +12,7 @@ import { Content, Theme } from '@carbon/react';
 
 import { useLocation } from 'react-router';
 
-export const GenericPage = ({ usingOutlet }: { usingOutlet?: boolean }) => {
+export const PlaceholderPage = ({ usingOutlet }: { usingOutlet?: boolean }) => {
   const location = useLocation();
 
   return usingOutlet ? (

@@ -9,7 +9,7 @@
 
 import { Home } from '../pages/Home';
 import { About } from '../pages/About';
-import { GenericPage } from '../pages/GenericPage';
+import { Placeholder } from '../pages/Placeholder';
 import { CarbonIconType, Fade } from '@carbon/icons-react';
 
 type carbonRouteType = {
@@ -55,7 +55,7 @@ export const routes: routesType[] = [
   {
     // flat so processed correctly by react router - declare after parent
     path: '/sub-menu-1/link-1',
-    element: GenericPage,
+    element: Placeholder,
     carbon: {
       label: 'Sub link 1',
       inSideNav: true,
@@ -64,7 +64,7 @@ export const routes: routesType[] = [
   {
     // flat so processed correctly by react router - declare after parent
     path: '/sub-menu-1/link-2',
-    element: GenericPage,
+    element: Placeholder,
     carbon: {
       label: 'Sub Link 2',
       inSideNav: true,
@@ -72,7 +72,7 @@ export const routes: routesType[] = [
   },
   {
     path: '/link-1',
-    element: GenericPage,
+    element: Placeholder,
     carbon: {
       label: 'Link 1',
       inSideNav: true,
@@ -81,7 +81,7 @@ export const routes: routesType[] = [
   },
   {
     path: '/link-2',
-    element: GenericPage,
+    element: Placeholder,
     carbon: {
       label: 'Link 2',
       inSideNav: true,
@@ -90,7 +90,7 @@ export const routes: routesType[] = [
   },
   {
     path: '/link-3',
-    element: GenericPage,
+    element: Placeholder,
     carbon: {
       label: 'Link 3',
       inSideNav: true,
@@ -99,7 +99,7 @@ export const routes: routesType[] = [
   },
   {
     path: '/link-4',
-    element: GenericPage,
+    element: Placeholder,
     carbon: {
       label: 'Link 4',
       inSideNav: true,
@@ -108,7 +108,7 @@ export const routes: routesType[] = [
   },
   {
     path: '/link-5',
-    element: GenericPage,
+    element: Placeholder,
     carbon: {
       label: 'Link 5',
       inSideNav: true,
@@ -117,7 +117,7 @@ export const routes: routesType[] = [
   },
   {
     path: '/link-6',
-    element: GenericPage,
+    element: Placeholder,
     carbon: {
       label: 'Link 6',
       inSideNav: true,
@@ -127,7 +127,7 @@ export const routes: routesType[] = [
   },
   {
     path: '/link-7',
-    element: GenericPage,
+    element: Placeholder,
     carbon: {
       label: 'Link 7',
       inSideNav: true,
@@ -136,7 +136,7 @@ export const routes: routesType[] = [
   },
   {
     path: '/link-8',
-    element: GenericPage,
+    element: Placeholder,
     carbon: {
       label: 'Link 8',
       inSideNav: true,

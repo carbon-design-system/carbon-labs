@@ -9,3 +9,13 @@
   $font-path: '@ibm/plex'
 );
 @use '@carbon-labs/react-ui-shell/scss/ui-shell';
+
+#root {
+  overflow: hidden;
+  block-size: 100vh;
+  min-block-size: 100vh;
+}
+
+.cds--content.cds--content {
+  min-block-size: calc(100% - 3rem);
+}

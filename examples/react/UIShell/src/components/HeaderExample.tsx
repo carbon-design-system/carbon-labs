@@ -51,9 +51,9 @@ import {
   Switcher,
   // Menu,
 } from '@carbon/icons-react';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
-import { routes } from '../config/routes';
+import { routesInHeader, routesInSideNav } from '../config/routes';
 import { useLocation, Link as RouterLink } from 'react-router';
 
 export const HeaderExample = ({ children }) => {
@@ -67,27 +67,6 @@ export const HeaderExample = ({ children }) => {
     Vegetables: ['Carrot', 'Broccoli', 'Spinach'],
     Animals: ['Cat', 'Dog', 'Snake'],
   };
-
-  const routesProcessed = useMemo(() => {
-    return routes.map((route) => {
-      const subMenus = routes.filter((subRoute) =>
-        subRoute.path.startsWith(`${route.path}/`)
-      );
-
-      if (subMenus && subMenus.length > 0) {
-        route.carbon = route.carbon ?? {};
-        route.carbon.subMenu = subMenus ?? [];
-      }
-      return route;
-    });
-  }, [routes]);
-
-  const routesInHeader = routesProcessed.filter(
-    (route) => route?.carbon?.inHeader && !route?.carbon?.inSubMenu
-  );
-  const routesInSideNav = routesProcessed.filter(
-    (route) => route?.carbon?.inSideNav && !route?.carbon?.inSubMenu
-  );
 
   return (
     <HeaderContainer
@@ -247,12 +226,12 @@ export const HeaderExample = ({ children }) => {
             <SideNavItems>
               <SideNavMenu
                 renderIcon={SquareOutline}
-                title="Sub-menu level 1"
+                title="Sub-menu level 1x"
                 // primary
                 // defaultExpanded
               ></SideNavMenu>
               {routesInSideNav.map(({ path, carbon }) =>
-                carbon?.label ? (
+                !carbon?.inSubMenu && carbon?.label ? (
                   carbon?.subMenu ? (
                     <SideNavMenu
                       // primary
@@ -325,7 +304,7 @@ export const HeaderExample = ({ children }) => {
               </SideNavSlot> */}
               <SideNavDivider />
               {routesInSideNav.map(({ path, carbon }) =>
-                carbon?.label ? (
+                !carbon?.inSubMenu && carbon?.label ? (
                   carbon?.subMenu ? (
                     <SideNavMenu
                       renderIcon={carbon?.icon}

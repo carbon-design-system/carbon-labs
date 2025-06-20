@@ -10,9 +10,26 @@
 import { Home } from '../pages/Home';
 import { About } from '../pages/About';
 import { GenericPage } from '../pages/GenericPage';
-import { Fade } from '@carbon/icons-react';
+import { CarbonIconType, Fade } from '@carbon/icons-react';
 
-export const routes = [
+type carbonRouteType = {
+  label: string;
+  inHeader?: boolean;
+  inSideNav?: boolean;
+  separator?: boolean;
+  icon?: CarbonIconType;
+  subMenu?: routesType[];
+  inSubMenu?: boolean;
+};
+
+type routesType = {
+  path: string;
+  index?: boolean;
+  element?: ({ usingOutlet }: { usingOutlet?: boolean }) => JSX.Element;
+  carbon?: carbonRouteType;
+};
+
+export const routes: routesType[] = [
   {
     path: '/',
     index: true,
@@ -23,7 +40,7 @@ export const routes = [
     element: About,
     carbon: {
       label: 'About',
-      seperator: true,
+      separator: true,
       inHeader: true,
     },
   },
@@ -33,32 +50,29 @@ export const routes = [
       label: 'Sub menu level 1',
       inSideNav: true,
       icon: Fade,
-      subMenu: [],
     },
   },
   {
     // flat so processed correctly by react router - declare after parent
     path: '/sub-menu-1/link-1',
-    element: (props) => <GenericPage {...props} />,
+    element: GenericPage,
     carbon: {
       label: 'Sub link 1',
       inSideNav: true,
-      inSubMenu: true,
     },
   },
   {
     // flat so processed correctly by react router - declare after parent
     path: '/sub-menu-1/link-2',
-    element: (props) => <GenericPage {...props} />,
+    element: GenericPage,
     carbon: {
       label: 'Sub Link 2',
       inSideNav: true,
-      inSubMenu: true,
     },
   },
   {
     path: '/link-1',
-    element: (props) => <GenericPage {...props} />,
+    element: GenericPage,
     carbon: {
       label: 'Link 1',
       inSideNav: true,
@@ -67,7 +81,7 @@ export const routes = [
   },
   {
     path: '/link-2',
-    element: (props) => <GenericPage {...props} />,
+    element: GenericPage,
     carbon: {
       label: 'Link 2',
       inSideNav: true,
@@ -76,7 +90,7 @@ export const routes = [
   },
   {
     path: '/link-3',
-    element: (props) => <GenericPage {...props} />,
+    element: GenericPage,
     carbon: {
       label: 'Link 3',
       inSideNav: true,
@@ -85,7 +99,7 @@ export const routes = [
   },
   {
     path: '/link-4',
-    element: (props) => <GenericPage {...props} />,
+    element: GenericPage,
     carbon: {
       label: 'Link 4',
       inSideNav: true,
@@ -94,7 +108,7 @@ export const routes = [
   },
   {
     path: '/link-5',
-    element: (props) => <GenericPage {...props} />,
+    element: GenericPage,
     carbon: {
       label: 'Link 5',
       inSideNav: true,
@@ -103,7 +117,7 @@ export const routes = [
   },
   {
     path: '/link-6',
-    element: (props) => <GenericPage {...props} />,
+    element: GenericPage,
     carbon: {
       label: 'Link 6',
       inSideNav: true,
@@ -113,7 +127,7 @@ export const routes = [
   },
   {
     path: '/link-7',
-    element: (props) => <GenericPage {...props} />,
+    element: GenericPage,
     carbon: {
       label: 'Link 7',
       inSideNav: true,
@@ -122,7 +136,7 @@ export const routes = [
   },
   {
     path: '/link-8',
-    element: (props) => <GenericPage {...props} />,
+    element: GenericPage,
     carbon: {
       label: 'Link 8',
       inSideNav: true,
@@ -130,3 +144,38 @@ export const routes = [
     },
   },
 ];
+
+// The routes config is a flat structure defined for use with react-router.
+// Here we organize the routes into a hierarchy for use by the Carbon header and sidenav
+// NOTE: The routes are processed outside of a component as they are not dynamic.
+const routesProcessed = routes.map((route) => {
+  if (!route.carbon) {
+    return route;
+  }
+
+  const subMenu = routes.filter(
+    (subRoute) => !route.index && subRoute.path.startsWith(`${route.path}/`)
+  );
+
+  if (subMenu && subMenu.length > 0) {
+    // add sub menu to parent
+    route.carbon = route.carbon ?? {};
+    route.carbon.subMenu = subMenu;
+
+    // mark child as in sub menu
+    subMenu.forEach((menu) => {
+      // Carbon should never by blank
+      menu.carbon = menu.carbon ?? { label: menu.path };
+      menu.carbon.inSubMenu = true;
+    });
+  }
+
+  return route;
+});
+
+export const routesInHeader = routesProcessed.filter(
+  (route) => route?.carbon?.inHeader && !route?.carbon?.inSubMenu
+);
+export const routesInSideNav = routesProcessed.filter(
+  (route) => route?.carbon?.inSideNav && !route?.carbon?.inSubMenu
+);

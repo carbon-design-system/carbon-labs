@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+@use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/motion' as *;
 @use '@carbon/react/scss/utilities/convert' as convert;
@@ -62,6 +63,12 @@ $prefix: 'cds' !default;
     $link-visited
   );
   @include custom-property.declaration('link-focus-text-color', $focus);
+
+  padding: 0;
+
+  > * {
+    padding: $spacing-05;
+  }
 }
 
 //----------------------------------------------------------------------------

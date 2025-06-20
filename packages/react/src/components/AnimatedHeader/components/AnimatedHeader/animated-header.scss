@@ -230,12 +230,26 @@ body {
   block-size: $spacing-08;
   inline-size: auto;
   max-inline-size: 18rem;
+
+  background: $layer-01;
+  opacity: .7;
+}
+
+.#{$prefix}__task-controller-skeleton::before {
+  background: $layer-02;
 }
 
 .#{$prefix}__workspace-selector-skeleton {
   block-size: $spacing-07;
   inline-size: auto;
   max-inline-size: 18rem;
+
+  background: $layer-01;
+  opacity: .7;
+}
+
+.#{$prefix}__workspace-selector-skeleton::before {
+  background: $layer-02;
 }
 
 .#{$prefix}__header-dropdown--container {

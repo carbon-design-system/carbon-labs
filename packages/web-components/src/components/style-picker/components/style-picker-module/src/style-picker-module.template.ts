@@ -24,7 +24,7 @@ export const blockClass = `${clabsPrefix}--style-picker-module`;
  * @returns {TemplateResult<1>} Lit html template
  */
 export const stylePickerModuleTemplate = <T>(
-  customElementClass: object
+  customElementClass
 ): TemplateResult<1> => {
   const kind = customElementClass.stylePickerContext?.kind ?? 'single';
   const { items, title, size, renderItem, selectedItem, handleOptionChange } =

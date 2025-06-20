@@ -327,7 +327,8 @@ export const Default = () => {
           <SideNav
             isTreeview={true}
             aria-label="Main navigation"
-            expanded={isSideNavExpanded}
+            // expanded={isSideNavExpanded}
+            expanded={true}
             onSideNavBlur={onClickSideNavExpand}
             isCollapsible
             onOverlayClick={onClickSideNavExpand}
@@ -356,11 +357,27 @@ export const Default = () => {
                   <SideNavMenuItem href="http://www.carbondesignsystem.com">
                     Item level 3
                   </SideNavMenuItem>
-                  <SideNavMenuItem
-                    isActive
-                    href="http://www.carbondesignsystem.com">
-                    Item level 3
-                  </SideNavMenuItem>
+                  <SideNavMenu title="Menu level 3" defaultExpanded>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 4
+                    </SideNavMenuItem>
+                    <SideNavMenu title="Menu level 4" defaultExpanded>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Item level 5
+                      </SideNavMenuItem>
+                      <SideNavMenuItem
+                        isActive
+                        href="http://www.carbondesignsystem.com">
+                        Item level 5
+                      </SideNavMenuItem>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Item level 5
+                      </SideNavMenuItem>
+                    </SideNavMenu>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 4
+                    </SideNavMenuItem>
+                  </SideNavMenu>
                   <SideNavMenuItem href="http://www.carbondesignsystem.com">
                     Item level 3
                   </SideNavMenuItem>
@@ -495,11 +512,27 @@ export const Default = () => {
                 <SideNavMenuItem href="http://www.carbondesignsystem.com">
                   Item level 3
                 </SideNavMenuItem>
-                <SideNavMenuItem
-                  isActive
-                  href="http://www.carbondesignsystem.com">
-                  Item level 3
-                </SideNavMenuItem>
+                <SideNavMenu title="Menu level 3" defaultExpanded>
+                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    Item level 4
+                  </SideNavMenuItem>
+                  <SideNavMenu title="Menu level 4" defaultExpanded>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 5
+                    </SideNavMenuItem>
+                    <SideNavMenuItem
+                      isActive
+                      href="http://www.carbondesignsystem.com">
+                      Item level 5
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 5
+                    </SideNavMenuItem>
+                  </SideNavMenu>
+                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    Item level 4
+                  </SideNavMenuItem>
+                </SideNavMenu>
                 <SideNavMenuItem href="http://www.carbondesignsystem.com">
                   Item level 3
                 </SideNavMenuItem>

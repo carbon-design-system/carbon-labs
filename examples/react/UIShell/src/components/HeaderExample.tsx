@@ -237,7 +237,7 @@ export const HeaderExample = ({ children }) => {
                       // primary
                       renderIcon={carbon?.icon}
                       title={carbon?.label}
-                      key={carbon?.label}>
+                      key={path}>
                       {/* <SideNavSlot renderIcon={SquareOutline}>
                         <Dropdown
                           id="default"
@@ -257,7 +257,7 @@ export const HeaderExample = ({ children }) => {
                           as={RouterLink}
                           to={subRoute.path}
                           isActive={subRoute.path === location.pathname}
-                          key={path}>
+                          key={subRoute.path}>
                           {subRoute.carbon?.label}
                         </SideNavMenuItem>
                       ))}
@@ -268,7 +268,6 @@ export const HeaderExample = ({ children }) => {
                         as={RouterLink}
                         to={path}
                         isActive={path === location.pathname}
-                        key={path}
                         renderIcon={carbon?.icon}>
                         {carbon?.label}
                       </SideNavLink>
@@ -309,13 +308,13 @@ export const HeaderExample = ({ children }) => {
                     <SideNavMenu
                       renderIcon={carbon?.icon}
                       title={carbon?.label}
-                      key={carbon?.label}>
+                      key={path}>
                       {carbon?.subMenu.map((subRoute) => (
                         <SideNavMenuItem
                           as={RouterLink}
                           to={subRoute.path}
                           isActive={subRoute.path === location.pathname}
-                          key={path}>
+                          key={subRoute.path}>
                           {subRoute.carbon?.label}
                         </SideNavMenuItem>
                       ))}
@@ -326,7 +325,6 @@ export const HeaderExample = ({ children }) => {
                         as={RouterLink}
                         to={path}
                         isActive={path === location.pathname}
-                        key={path}
                         renderIcon={carbon?.icon}>
                         {carbon?.label}
                       </SideNavLink>

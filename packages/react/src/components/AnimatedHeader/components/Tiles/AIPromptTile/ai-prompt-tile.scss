@@ -205,6 +205,13 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
 .#{$prefix}--loading-skeleton {
   block-size: 100%;
   inline-size: 100%;
+
+  background: $layer-01;
+  opacity: .7;
+}
+
+.#{$prefix}--loading-skeleton::before {
+  background: $layer-02;
 }
 
 @keyframes animate-border {

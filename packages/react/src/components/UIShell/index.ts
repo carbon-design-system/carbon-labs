@@ -23,3 +23,4 @@ export { HeaderPanel } from './components/HeaderPanel';
 export { SharkFinIcon } from './components/SharkFinIcon';
 export { HeaderDivider } from './components/HeaderDivider';
 export { TrialCountdown } from './components/TrialCountdown';
+export { SideNavSlot } from './components/SideNavSlot';

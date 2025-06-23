@@ -22,6 +22,7 @@ interface BaseTileProps {
   subtitle?: string;
   productName?: string;
   customContent?: ReactNode;
+  onClick?: () => void;
 }
 
 export const BaseTile: React.FC<BaseTileProps> = ({
@@ -34,6 +35,7 @@ export const BaseTile: React.FC<BaseTileProps> = ({
   subtitle,
   productName,
   customContent,
+  onClick,
 }: BaseTileProps) => {
   const props = {
     id,
@@ -45,6 +47,7 @@ export const BaseTile: React.FC<BaseTileProps> = ({
     subtitle,
     productName,
     customContent,
+    onClick,
   };
   const tile =
     id === 'ai-tile' ? (

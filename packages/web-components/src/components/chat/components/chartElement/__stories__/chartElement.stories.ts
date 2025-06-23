@@ -164,6 +164,7 @@ export const Thumbnails = {
         thumbnail
         content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Boxplot example with random data","data":{"values":[{"group":"Group A","value":34},{"group":"Group A","value":28},{"group":"Group A","value":55},{"group":"Group B","value":91},{"group":"Group B","value":81},{"group":"Group B","value":67},{"group":"Group C","value":45},{"group":"Group C","value":66},{"group":"Group C","value":73},{"group":"Group D","value":28},{"group":"Group D","value":35},{"group":"Group D","value":56},{"group":"Group E","value":12},{"group":"Group E","value":45},{"group":"Group E","value":99}]},"mark":"boxplot","encoding":{"y":{"field":"group","type":"nominal"},"x":{"field":"value","type":"quantitative"}}}'}"
         container-height="156px"
+        selected
         container-width="156px">
       </clabs-chat-chart>
       <clabs-chat-chart
@@ -222,6 +223,13 @@ export const Showcase = {
       theme="${chartTheme}"
       content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"Stock prices of 5 Tech Companies over Time.","data":{"url":"https://vega.github.io/vega-lite/data/stocks.csv"},"mark":{"type":"line","point":{"filled":false}},"encoding":{"x":{"timeUnit":"year","field":"date"},"y":{"aggregate":"mean","field":"price","type":"quantitative"},"color":{"field":"symbol","type":"nominal"}}}'}"
       container-height="400px">
+    </clabs-chat-chart>
+    <br />
+    <h4>Faceted year-filtered h-concatenated repeating month-filtered chart</h4>
+    <clabs-chat-chart
+      theme="${chartTheme}"
+      container-height="2600px"
+      content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"url":"https://vega.github.io/editor/data/weather.csv"},"transform":[{"calculate":"year(datum.date)","as":"year"},{"fold":["temp_max","temp_min"],"as":["type","temperature"]},{"calculate":"[\'Winter\',\'Winter\',\'Spring\',\'Spring\',\'Spring\',\'Summer\',\'Summer\',\'Summer\',\'Fall\',\'Fall\',\'Fall\',\'Winter\'][month(datum.date)]","as":"season"},{"filter":"datum.year >= 2012 && datum.year <= 2015"}],"facet":{"row":{"field":"year","type":"ordinal"}},"spec":{"vconcat":[{"hconcat":[{"mark":"rect","width":600,"height":200,"encoding":{"y":{"field":"date","timeUnit":"date","type":"ordinal","title":"Day","axis":{"labelAngle":0,"format":"%e"}},"x":{"field":"date","timeUnit":"month","type":"ordinal","title":"Month"},"color":{"field":"temp_max","aggregate":"max","type":"quantitative","legend":{"title":null}}}},{"mark":"point","encoding":{"x":{"field":"wind","type":"quantitative"},"y":{"field":"precipitation","type":"quantitative"},"color":{"field":"temp_max","aggregate":"max","type":"quantitative","legend":{"title":null}}}}]},{"repeat":{"column":["precipitation","wind","temperature"]},"spec":{"vconcat":[{"layer":[{"mark":"boxplot","encoding":{"x":{"timeUnit":"month","field":"date","type":"temporal","title":"Month"},"y":{"field":{"repeat":"column"},"aggregate":"sum","type":"quantitative"},"y2":{"field":"temp_min"},"color":{"field":"season","type":"nominal"}}},{"mark":{"type":"point","color":"black","strokeWidth":2},"encoding":{"x":{"timeUnit":"month","field":"date","type":"temporal"},"y":{"aggregate":"mean","field":{"repeat":"column"},"type":"quantitative"}}}]},{"layer":[{"mark":"bar","height":60,"encoding":{"x":{"timeUnit":"month","field":"date","type":"temporal"},"y":{"aggregate":"mean","field":{"repeat":"column"},"type":"quantitative"},"color":{"field":"season","type":"nominal"}}},{"mark":{"type":"line","color":"black","strokeWidth":2},"encoding":{"x":{"timeUnit":"month","field":"date","type":"temporal"},"y":{"aggregate":"mean","field":{"repeat":"column"},"type":"quantitative"}}}]}]}}],"resolve":{"scale":{"y":"independent"}}}}'}">
     </clabs-chat-chart>
     <br />
     <h4>Box Plot</h4>
@@ -386,6 +394,33 @@ export const ComplexExamples = {
    */
   render: () =>
     html`
+      <h4>Interactive multi-scatter plot</h4>
+      <br />
+      <clabs-chat-chart
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
+        container-height="450px"
+        container-width="600px">
+      </clabs-chat-chart>
+      <br />
+      <clabs-chat-chart
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
+        container-height="950px">
+      </clabs-chat-chart>
+      <br />
+      <h4>Multi histogram</h4>
+      <br />
+      <clabs-chat-chart
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":["Horsepower","Miles_per_Gallon","Acceleration","Displacement"],"columns":2,"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"bar","encoding":{"x":{"field":{"repeat":"repeat"},"bin":true},"y":{"aggregate":"count"},"color":{"field":"Origin"}}}}'}"
+        container-height="450px"
+        container-width="800px">
+      </clabs-chat-chart>
+      <br />
+      <clabs-chat-chart
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":["Horsepower","Miles_per_Gallon","Acceleration","Displacement"],"columns":2,"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"bar","encoding":{"x":{"field":{"repeat":"repeat"},"bin":true},"y":{"aggregate":"count"},"color":{"field":"Origin"}}}}'}"
+        container-height="600px"
+        container-width="400px">
+      </clabs-chat-chart>
+      <br />
       ${complexExamples.map(
         (item) =>
           html` <h4>${item.title}</h4>
@@ -416,6 +451,13 @@ export const FacetingTest = {
               content="${JSON.stringify(item.spec)}">
             </clabs-chat-chart>`
       )}
+      <h4>Multi-scatter-chart</h4>
+      <clabs-chat-chart
+        content="${'{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","repeat":{"row":["Horsepower","Acceleration","Miles_per_Gallon"],"column":["Miles_per_Gallon","Acceleration","Horsepower"]},"spec":{"data":{"url":"https://vega.github.io/vega-lite/examples/data/cars.json"},"mark":"point","params":[{"name":"brush","select":{"type":"interval","resolve":"union","on":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","translate":"[pointerdown[event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![event.shiftKey]"}},{"name":"grid","select":{"type":"interval","resolve":"global","translate":"[pointerdown[!event.shiftKey], window:pointerup] > window:pointermove!","zoom":"wheel![!event.shiftKey]"},"bind":"scales"}],"encoding":{"x":{"field":{"repeat":"column"},"type":"quantitative"},"y":{"field":{"repeat":"row"},"type":"quantitative","axis":{"minExtent":30}},"color":{"condition":{"param":"brush","field":"Origin","type":"nominal"},"value":"grey"}}}}'}"
+        container-height="450px"
+        container-width="600px">
+      </clabs-chat-chart>
+      <br />
       <h4>Interactive multi-scatter plot</h4>
       <br />
       <clabs-chat-chart

@@ -3,6 +3,233 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.77.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.76.0...@carbon-labs/react@0.77.0) (2025-06-18)
+
+
+### Bug Fixes
+
+* **sidenav:** focus on active ([#653](https://github.com/carbon-design-system/carbon-labs/issues/653)) ([ab3620f](https://github.com/carbon-design-system/carbon-labs/commit/ab3620f2596df16b06f95e9716526b4dd45146b7))
+
+
+
+
+
+# [0.76.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.75.0...@carbon-labs/react@0.76.0) (2025-06-18)
+
+
+### Features
+
+* add-tile-click-prop ([#663](https://github.com/carbon-design-system/carbon-labs/issues/663)) ([a3b1b46](https://github.com/carbon-design-system/carbon-labs/commit/a3b1b4662968f81581357965e584180483708d89))
+
+
+
+
+
+# [0.75.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.74.0...@carbon-labs/react@0.75.0) (2025-06-17)
+
+
+### Features
+
+* add first time orientation pattern using interstitialScreen ([#615](https://github.com/carbon-design-system/carbon-labs/issues/615)) ([fd557cd](https://github.com/carbon-design-system/carbon-labs/commit/fd557cd54183b772acd01509a442dce7ab995610))
+
+
+
+
+
+# [0.74.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.73.0...@carbon-labs/react@0.74.0) (2025-06-12)
+
+
+### Bug Fixes
+
+* **layer:** causing tabbing issues ([#655](https://github.com/carbon-design-system/carbon-labs/issues/655)) ([7b3d828](https://github.com/carbon-design-system/carbon-labs/commit/7b3d828b6b840ee683b24d2c419f785cd21621cf))
+
+
+
+
+
+# [0.73.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.72.0...@carbon-labs/react@0.73.0) (2025-06-12)
+
+
+### Features
+
+* Resizer initial commit ([#579](https://github.com/carbon-design-system/carbon-labs/issues/579)) ([d085ab5](https://github.com/carbon-design-system/carbon-labs/commit/d085ab5e6f6a562d0f9220eea0d25b6404ed7d4a))
+
+
+
+
+
+# [0.72.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.71.0...@carbon-labs/react@0.72.0) (2025-06-11)
+
+
+### Features
+
+* **uishell:** add new SideNavSlot component and rail updates ([#639](https://github.com/carbon-design-system/carbon-labs/issues/639)) ([076b1ee](https://github.com/carbon-design-system/carbon-labs/commit/076b1ee91ac421085d4a2cd05475dad5d27cdd49))
+
+
+
+
+
+# [0.71.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.70.0...@carbon-labs/react@0.71.0) (2025-06-10)
+
+
+### Bug Fixes
+
+* **ui-shell:** tabbing fixes ([#651](https://github.com/carbon-design-system/carbon-labs/issues/651)) ([b5d509b](https://github.com/carbon-design-system/carbon-labs/commit/b5d509b718b60d5b187cf2855e4383bb5c60c051))
+
+
+
+
+
+# [0.70.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.69.0...@carbon-labs/react@0.70.0) (2025-06-09)
+
+
+### Features
+
+* **ui-shell:** double wide ([#628](https://github.com/carbon-design-system/carbon-labs/issues/628)) ([cae7b12](https://github.com/carbon-design-system/carbon-labs/commit/cae7b124e0669957cf6d3a6c94da8d020b882381))
+
+
+
+
+
+# [0.69.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.68.0...@carbon-labs/react@0.69.0) (2025-06-04)
+
+
+### Bug Fixes
+
+* add breakpoint utility for responsive side-nav rail ([#624](https://github.com/carbon-design-system/carbon-labs/issues/624)) ([f0e422a](https://github.com/carbon-design-system/carbon-labs/commit/f0e422a1a2685fb6bb14f252c9321d43aec3bae1))
+
+
+
+
+
+# [0.68.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.67.0...@carbon-labs/react@0.68.0) (2025-06-04)
+
+
+### Reverts
+
+* Revert "feat(processing): set default theme g10 (#535)" (#641) ([e01d6f2](https://github.com/carbon-design-system/carbon-labs/commit/e01d6f2a35fa553cdf9ac020938cfa21e84d5ca5)), closes [#535](https://github.com/carbon-design-system/carbon-labs/issues/535) [#641](https://github.com/carbon-design-system/carbon-labs/issues/641)
+
+
+
+
+
+# [0.67.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.66.0...@carbon-labs/react@0.67.0) (2025-06-03)
+
+
+### Features
+
+* **processing:** set default theme g10 ([#535](https://github.com/carbon-design-system/carbon-labs/issues/535)) ([14fb24a](https://github.com/carbon-design-system/carbon-labs/commit/14fb24a6818e124df9afeb9cb1ddb2a0b8dcfebb))
+
+
+
+
+
+# [0.66.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.65.0...@carbon-labs/react@0.66.0) (2025-06-02)
+
+
+### Features
+
+* **uishell:** update navigation to be overlay and not grid influencer ([#620](https://github.com/carbon-design-system/carbon-labs/issues/620)) ([17cfb90](https://github.com/carbon-design-system/carbon-labs/commit/17cfb9017725eb1db4a58237d319b0dd60276d16))
+
+
+
+
+
+# [0.65.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.64.0...@carbon-labs/react@0.65.0) (2025-05-29)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.64.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.63.0...@carbon-labs/react@0.64.0) (2025-05-28)
+
+
+### Bug Fixes
+
+* update exports to match UI shell ([#605](https://github.com/carbon-design-system/carbon-labs/issues/605)) ([1bf4682](https://github.com/carbon-design-system/carbon-labs/commit/1bf46822620b44cc1ad9ce58913bf26e9c3a2ca1))
+
+
+
+
+
+# [0.63.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.62.0...@carbon-labs/react@0.63.0) (2025-05-27)
+
+
+### Features
+
+* **uishell:** update to use rail instead of panel nav remove inline theme ([#617](https://github.com/carbon-design-system/carbon-labs/issues/617)) ([1f6da4b](https://github.com/carbon-design-system/carbon-labs/commit/1f6da4b9c34591ad2ec4b12c35d231c58473eaf1))
+
+
+
+
+
+# [0.62.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.61.0...@carbon-labs/react@0.62.0) (2025-05-21)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.61.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.60.0...@carbon-labs/react@0.61.0) (2025-05-19)
+
+
+### Bug Fixes
+
+* exports in ui shell ([#603](https://github.com/carbon-design-system/carbon-labs/issues/603)) ([9914303](https://github.com/carbon-design-system/carbon-labs/commit/99143038aa94c0a94fec31224bb1bac50d85db0c))
+
+
+
+
+
+# [0.60.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.59.0...@carbon-labs/react@0.60.0) (2025-05-13)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.59.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.58.0...@carbon-labs/react@0.59.0) (2025-05-08)
+
+
+### Bug Fixes
+
+* correct package exports ([#539](https://github.com/carbon-design-system/carbon-labs/issues/539)) ([ef7557e](https://github.com/carbon-design-system/carbon-labs/commit/ef7557e10c1385a6bdc60d32361ce7ba2dad263c))
+
+
+
+
+
+# [0.58.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.57.0...@carbon-labs/react@0.58.0) (2025-05-06)
+
+
+### Features
+
+* **chat:** extensive updates to code charts and chat ([#582](https://github.com/carbon-design-system/carbon-labs/issues/582)) ([73772da](https://github.com/carbon-design-system/carbon-labs/commit/73772da806e67eba7314f0de1c17cb0241f3529f))
+
+
+
+
+
+# [0.57.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.56.0...@carbon-labs/react@0.57.0) (2025-04-29)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.56.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.55.0...@carbon-labs/react@0.56.0) (2025-04-25)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.55.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.54.0...@carbon-labs/react@0.55.0) (2025-04-22)
 
 

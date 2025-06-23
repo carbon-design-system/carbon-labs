@@ -33,6 +33,12 @@ export default class message extends LitElement {
   userSubmitted;
 
   /**
+   * Boolean denoting if message is small annotation
+   */
+  @property({ type: Boolean, attribute: 'separator' })
+  isSeparator;
+
+  /**
    * User-imported message sub-elements object, parsing is done on rawText here if none is provided
    */
   @property({ type: Array, attribute: 'elements', reflect: true })
@@ -49,6 +55,12 @@ export default class message extends LitElement {
    */
   @property({ type: Boolean, attribute: 'disable-buttons' })
   disableButtons;
+
+  /**
+   * Define name of specific bot or user
+   */
+  @property({ type: Boolean, attribute: 'disable-feedback-buttons' })
+  disableFeedbackButtons;
 
   /**
    * string url denoting where the message query will be sent, either BAM or watsonx.ai or any other service
@@ -261,9 +273,13 @@ export default class message extends LitElement {
   @state()
   previousMessageWidth;
 
+  @state()
+  uniqueIconId;
+
   /** detect when component is rendered to process rawtext
    */
   firstUpdated() {
+    this.uniqueIconId = this.generateUniqueId();
     this._getTheme();
     if (this.hasAttribute('display-color')) {
       this.style.setProperty(
@@ -1611,6 +1627,8 @@ export default class message extends LitElement {
         case 'message-loading-aria-label':
           customValue = labels[key] || 'Message sent, please wait...';
           break;
+        case 'message-feedback-disabled':
+          customValue = labels[key] || 'Feedback sent';
       }
     }
     return customValue || key;

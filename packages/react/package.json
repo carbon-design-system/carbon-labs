@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react",
-  "version": "0.66.0",
+  "version": "0.77.0",
   "private": true,
   "type": "module",
   "description": "React components for Carbon Labs",
@@ -38,6 +38,7 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-typescript": "^12.1.1",
+    "@rollup/plugin-url": "^8.0.2",
     "@storybook/addon-docs": "^8.4.7",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",

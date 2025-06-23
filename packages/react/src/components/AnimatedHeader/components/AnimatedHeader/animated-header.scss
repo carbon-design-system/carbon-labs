@@ -305,10 +305,16 @@ body {
   opacity: 0;
 }
 
-// Fix for broken skeletons on Safari
-.#{$prefix}__tile:not(:has([class*='--loading-skeleton'])) {
+.#{$prefix}__tile{
   animation: 500ms motion.motion(standard, expressive) 0ms 1 slide-in;
   animation-fill-mode: both;
+}
+
+/* support for Safari */
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  .#{$prefix}__tile {
+    animation: none;
+  }
 }
 
 .#{$prefix}__tile:nth-child(1) {

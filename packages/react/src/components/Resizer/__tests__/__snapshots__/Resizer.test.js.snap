@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Resizer renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <div
+    aria-live="assertive"
+    aria-orientation="vertical"
+    class="clabs__resizer clabs__resizer--vertical"
+    data-testid="resizer"
+    role="separator"
+    tabindex="0"
+  >
+    <span
+      class="sr-only"
+    >
+      Use arrow keys to resize, hold Shift for larger steps. Double-click to reset.
+    </span>
+  </div>
+</div>
+`;

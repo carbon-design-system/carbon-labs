@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/web-components",
-  "version": "0.28.0",
+  "version": "0.31.0",
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",
@@ -31,10 +31,10 @@
   },
   "devDependencies": {
     "@carbon/grid": "^11.34.0",
-    "@carbon/icon-helpers": "10.57.0",
-    "@carbon/icons": "11.59.0",
+    "@carbon/icon-helpers": "10.60.0",
+    "@carbon/icons": "11.60.0",
     "@carbon/layout": "11.32.0",
-    "@carbon/motion": "11.28.0",
+    "@carbon/motion": "11.29.0",
     "@carbon/themes": "11.53.0",
     "@carbon/type": "11.38.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",

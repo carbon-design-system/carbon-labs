@@ -10,7 +10,7 @@
 import { html, TemplateResult } from 'lit';
 import '../../style-picker-module/style-picker-module';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { renderSvg } from '../../../utilities/renderSvg';
+import { renderCarbonPictogram } from '../../../utilities/renderCarbonPictogram';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -33,9 +33,14 @@ export const stylePickerPictogramModuleTemplate = (
    */
   const _render = (item): TemplateResult => {
     return html`
-      ${renderSvg({
+      ${renderCarbonPictogram({
         ...item.renderPictogram,
-        attrs: { ...item.renderPictogram.attrs, width: '3rem', height: '3rem' },
+        attrs: {
+          ...item.renderPictogram.attrs,
+          width: '3rem',
+          height: '3rem',
+          'aria-label': item.label,
+        },
       })}
     `;
   };

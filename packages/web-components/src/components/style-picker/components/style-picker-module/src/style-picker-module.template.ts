@@ -73,7 +73,8 @@ export const stylePickerModuleTemplate = <T>(
       class=${`${blockClass} ${blockClass}--${size}`}
       role="listbox"
       aria-label=${title}
-      aria-orientation="horizontal">
+      aria-orientation="horizontal"
+      tabindex="0">
       <ul class=${`${blockClass}__items`} role="group">
         ${renderItems(items)}
       </ul>
@@ -92,7 +93,7 @@ export const stylePickerModuleTemplate = <T>(
         role="listbox"
         aria-label=${title}
         aria-orientation="horizontal"
-        tabindex="-1">
+        tabindex="0">
         ${items.map(
           (group) => html`
             <div

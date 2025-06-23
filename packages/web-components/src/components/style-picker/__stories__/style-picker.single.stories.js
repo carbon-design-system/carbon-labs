@@ -23,7 +23,7 @@ import { POPOVER_ALIGNMENT } from '@carbon/web-components/es/components/popover/
 import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js';
 
 // Pictograms
-import Bangalore from '@carbon/pictograms/es/bangalore';
+import Bangalore from '@carbon/pictograms/lib/bangalore';
 
 // Carbon labs
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
@@ -33,7 +33,7 @@ import '../components/style-picker/style-picker';
 import '../components/style-picker-color-module/style-picker-color-module';
 import '../components/style-picker-icon-module/style-picker-icon-module';
 import '../components/style-picker-pictogram-module/style-picker-pictogram-module';
-import { renderSvg } from '../utilities/renderSvg';
+import { renderCarbonPictogram } from '../utilities/renderCarbonPictogram';
 import { colors, icons, pictograms } from './_placeholders';
 
 const { stablePrefix: clabsPrefix, prefix: carbonPrefix } = settings;
@@ -142,7 +142,7 @@ const changePictogram = (ev) => {
   colorModuleEl.setAttribute('selected-item', pictogram.value);
 
   const pictogramHolderEl = document.getElementById('inline-tile-pictogram');
-  const pictogramTemplate = renderSvg(pictogram.renderPictogram);
+  const pictogramTemplate = renderCarbonPictogram(pictogram.renderPictogram);
   const container = document.createElement('div');
   render(pictogramTemplate, container);
   pictogramHolderEl.innerHTML = '';
@@ -343,7 +343,12 @@ export const Pictogram = {
         </cds-layer>
         <div class="inline-tile-holder">
           <cds-tile class="inline-tile">
-            <div id="inline-tile-pictogram">${renderSvg(Bangalore)}</div>
+            <div id="inline-tile-pictogram">
+              ${renderCarbonPictogram({
+                ...Bangalore,
+                attrs: { ...Bangalore.attrs, 'aria-label': Bangalore.name },
+              })}
+            </div>
             <br />
             <h6>Primary text</h6>
             <div class="inline-pictogram-secondary-text">

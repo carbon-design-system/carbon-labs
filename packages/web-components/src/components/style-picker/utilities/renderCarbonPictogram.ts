@@ -10,7 +10,7 @@
 import { svg } from 'lit';
 import spread, {
   AttributesInfo,
-} from '@carbon/web-components/es/globals/directives/spread';
+} from '@carbon/web-components/es/globals/directives/spread.js';
 
 /**
  * A dedicated function to render svg from `@carbon/pictograms` package

@@ -72,7 +72,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   return (
     <div
       id={`${blockClass}`}
-      className={`${blockClass}--animated-header__tile ${blockClass}${
+      className={`${prefix}--animated-header__tile ${blockClass}${
         isDisabled ? ' ' + disabled : ''
       }`}
       title={isDisabled ? disabledTaskLabel ?? '' : ''}

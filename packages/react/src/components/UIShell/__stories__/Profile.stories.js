@@ -17,9 +17,7 @@ import {
   HeaderName,
   HeaderGlobalBar,
 } from '@carbon/react';
-import {
-  UserAvatar,
-} from '@carbon/icons-react';
+import { UserAvatar } from '@carbon/icons-react';
 
 import '../components/ui-shell.scss';
 import {

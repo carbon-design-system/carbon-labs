@@ -10,13 +10,8 @@
 import React from 'react';
 import mdx from './Profile.mdx';
 
-import { Profile, HeaderDivider } from '../index';
-import {
-  SkipToContent,
-  Header,
-  HeaderName,
-  HeaderGlobalBar,
-} from '@carbon/react';
+import { Profile } from '../index';
+import { Header, HeaderGlobalBar } from '@carbon/react';
 import { UserAvatar } from '@carbon/icons-react';
 
 import '../components/ui-shell.scss';
@@ -45,12 +40,7 @@ export default {
 export const Default = () => {
   return (
     <Header aria-label="IBM Platform Name">
-      <SkipToContent />
-      <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
-        [Platform]
-      </HeaderName>
       <HeaderGlobalBar>
-        <HeaderDivider />
         <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
           <Profile.UserInfo
             name="Thomas J. Watson"

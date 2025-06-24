@@ -48,7 +48,7 @@ $prefix: 'cds' !default;
 
 .#{$prefix}--header-action.#{$prefix}--popover--open
   .#{$prefix}--header-action__button {
-  background-color: $layer;
+  // background-color: $layer;
 }
 
 .#{$prefix}--header-action .#{$prefix}--toggletip-content {

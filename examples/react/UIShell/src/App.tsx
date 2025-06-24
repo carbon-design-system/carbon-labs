@@ -256,6 +256,16 @@ function App() {
                   name="Thomas J. Watson"
                   email="thomas.watson@ibm.com"
                 />
+                <Profile.ReadOnly
+                  items={[
+                    { label: 'Instance', title: 'APIC-MB-DEV' },
+                    {
+                      label: 'Instance owner',
+                      title: 'thomas.j.watson@ibm.com',
+                    },
+                    { label: 'Region', title: 'us-east-1 (N Virgina)' },
+                  ]}
+                />
               </Profile.Root>
             </HeaderGlobalBar>
           </Header>

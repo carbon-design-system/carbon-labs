@@ -26,7 +26,7 @@ export default {
   component: ProfileDirect,
   subcomponents: {
     ProfileUserInfo,
-    ProfileReadOnly
+    ProfileReadOnly,
   },
   parameters: {
     docs: {

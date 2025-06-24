@@ -177,7 +177,7 @@ const ProfileReadOnly = React.forwardRef<HTMLDivElement, ProfileReadOnlyProps>(
     });
     return (
       <div className={className}>
-        {items?.map((item, index ) => (
+        {items?.map((item, index) => (
           <div className={`${prefix}--profile-read-only__items`} key={index}>
             <div className={`${prefix}--profile-read-only__label`}>
               {item.label}

@@ -14,7 +14,7 @@
 
 $prefix: 'cds' !default;
 
-.#{$prefix}--user-info {
+.#{$prefix}--profile-user-info {
   display: flex;
 
   &:not(:last-child) {
@@ -22,14 +22,14 @@ $prefix: 'cds' !default;
   }
 }
 
-.#{$prefix}--user-info__text-wrapper {
+.#{$prefix}--profile-user-info__text-wrapper {
   margin-inline-start: $spacing-05;
 }
 
-.#{$prefix}--user-info__name {
+.#{$prefix}--profile-user-info__name {
   @include type-style('productive-heading-03');
 }
 
-.#{$prefix}--user-info__email {
+.#{$prefix}--profile-user-info__email {
   @include type-style('label-01');
 }

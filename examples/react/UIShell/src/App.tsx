@@ -22,6 +22,7 @@ import {
   HeaderPopoverContent,
   TrialCountdown,
   SideNavSlot,
+  Profile,
 } from '@carbon-labs/react-ui-shell';
 import {
   SkipToContent,
@@ -248,22 +249,14 @@ function App() {
                 />
               </MenuButton>
               <HeaderDivider />
-              <HeaderPopover align="bottom-right">
-                <HeaderPopoverButton align="bottom" label="Profile">
-                  <UserAvatar size={20} />
-                </HeaderPopoverButton>
-                <HeaderPopoverContent>
-                  <p>
-                    Lorem ipsum dolor sit amet, di os consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut fsil labore et
-                    dolore magna aliqua.
-                  </p>
-                  <HeaderPopoverActions>
-                    <Link href="#">Link action</Link>
-                    <Button size="sm">Button</Button>
-                  </HeaderPopoverActions>
-                </HeaderPopoverContent>
-              </HeaderPopover>
+              <Profile.Root
+                label="Profile"
+                renderIcon={<UserAvatar size={20} />}>
+                <Profile.UserInfo
+                  name="Thomas J. Watson"
+                  email="thomas.watson@ibm.com"
+                />
+              </Profile.Root>
             </HeaderGlobalBar>
           </Header>
           <SideNav

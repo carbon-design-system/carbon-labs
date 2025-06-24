@@ -115,15 +115,15 @@ const ProfileUserInfo = React.forwardRef<HTMLDivElement, ProfileUserInfoProps>(
   }: ProfileUserInfoProps) {
     const prefix = usePrefix();
     const className = cx({
-      [`${prefix}--user-info`]: true,
+      [`${prefix}--profile-user-info`]: true,
       [customClassName as string]: !!customClassName,
     });
     return (
       <div className={className}>
         <UserAvatar size="lg" name={name} {...rest} />
-        <div className={`${prefix}--user-info__text-wrapper`}>
-          <div className={`${prefix}--user-info__name`}>{name}</div>
-          <div className={`${prefix}--user-info__email`}>{email}</div>
+        <div className={`${prefix}--profile-user-info__text-wrapper`}>
+          <div className={`${prefix}--profile-user-info__name`}>{name}</div>
+          <div className={`${prefix}--profile-user-info__email`}>{email}</div>
         </div>
       </div>
     );

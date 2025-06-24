@@ -1,0 +1,62 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as ProfileStories from './Profile.stories';
+
+<Meta isTemplate />
+
+# Profile
+
+- **Initiative owner(s):** Carbon
+- **Status:** Draft
+- **Target library:** @carbon/react
+- **Target library maintainer(s) / PR Reviewer(s):** Carbon
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+💡 Check our
+[Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/UIShell)
+example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/UIShell)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Examples](#examples)
+  - [UserInfo](#userinfo)
+- [Component API](#component-api)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+## UserInfo
+
+`UserInfo` is a component that requires a `name` prop and optionally accepts an
+`email` prop. It extends IBM Product’s
+[UserAvatar](https://ibm-products.carbondesignsystem.com/?path=/docs/components-useravatar--docs&globals=viewport:basic),
+and supports all `UserAvatar` props. Here’s an example of how it can be used
+within `<HeaderPopoverContent>`:
+
+Let me know if you'd like to adjust the tone or add a code snippet.
+
+```javascript
+<HeaderPopover align="bottom-right">
+  <HeaderPopoverButton align="bottom" label="Profile">
+    <UserAvatar size={20} />
+  </HeaderPopoverButton>
+  <HeaderPopoverContent>
+    <UserInfo name="Thomas J. Watson" email="thomas.watson@ibm.com" />
+  </HeaderPopoverContent>
+</HeaderPopover>
+```
+
+## Example
+
+<Canvas of={ProfileStories.Default} />
+
+## Component API
+
+<ArgTypes />
+````

@@ -16,7 +16,10 @@ $prefix: 'cds' !default;
 
 .#{$prefix}--user-info {
   display: flex;
-  border-block-end: convert.to-rem(1px) solid $border-subtle;
+
+  &:not(:last-child) {
+    border-block-end: convert.to-rem(1px) solid $border-subtle;
+  }
 }
 
 .#{$prefix}--user-info__text-wrapper {

@@ -14,8 +14,10 @@
 
 $prefix: 'cds' !default;
 
-.#{$prefix}--profile-user-info {
+// user-info
+.#{$prefix}--header-action .#{$prefix}--profile-user-info {
   display: flex;
+  padding-block-start: $spacing-05;
 
   &:not(:last-child) {
     border-block-end: convert.to-rem(1px) solid $border-subtle;
@@ -32,4 +34,30 @@ $prefix: 'cds' !default;
 
 .#{$prefix}--profile-user-info__email {
   @include type-style('label-01');
+}
+
+// read only
+.#{$prefix}--profile-read-only {
+  padding-block-start: 0;
+
+  &:not(:last-child) {
+    border-block-end: convert.to-rem(1px) solid $border-subtle;
+  }
+}
+
+.#{$prefix}--profile-read-only__items:not(:last-child) {
+  padding-block-end: $spacing-05;
+}
+
+.#{$prefix}--profile-read-only__label {
+  @include type-style('label-01');
+
+  color: $text-secondary;
+  padding-block-end: convert.to-rem(4px);
+}
+
+.#{$prefix}--profile-read-only__title {
+  @include type-style('body-compact-01');
+
+  color: $text-primary;
 }

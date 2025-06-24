@@ -48,7 +48,7 @@ $prefix: 'cds' !default;
 
 .#{$prefix}--header-action.#{$prefix}--popover--open
   .#{$prefix}--header-action__button {
-  // background-color: $layer;
+  background-color: $layer;
 }
 
 .#{$prefix}--header-action .#{$prefix}--toggletip-content {
@@ -67,7 +67,7 @@ $prefix: 'cds' !default;
   padding: 0;
 
   > * {
-    padding: $spacing-05;
+    padding: 0 $spacing-05 $spacing-05 $spacing-05;
   }
 }
 

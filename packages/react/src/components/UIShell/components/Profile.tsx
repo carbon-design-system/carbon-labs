@@ -148,6 +148,63 @@ ProfileUserInfo.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
+interface ProfileReadOnlyItem {
+  label: string;
+  title: string;
+}
+
+interface ProfileReadOnlyProps {
+  /**
+   * Provide an optional class to be applied to the containing node
+   */
+  className?: string;
+
+  /**
+   * List of read-only profile items
+   */
+  items?: ProfileReadOnlyItem[];
+}
+
+const ProfileReadOnly = React.forwardRef<HTMLDivElement, ProfileReadOnlyProps>(
+  function ProfileReadOnly({
+    className: customClassName,
+    items,
+  }: ProfileReadOnlyProps) {
+    const prefix = usePrefix();
+    const className = cx({
+      [`${prefix}--profile-read-only`]: true,
+      [customClassName as string]: !!customClassName,
+    });
+    return (
+      <div className={className}>
+        {items?.map((item, index ) => (
+          <div className={`${prefix}--profile-read-only__items`} key={index}>
+            <div className={`${prefix}--profile-read-only__label`}>
+              {item.label}
+            </div>
+            <div className={`${prefix}--profile-read-only__title`}>
+              {item.title}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+);
+ProfileReadOnly.displayName = 'ProfileReadOnly';
+
+ProfileReadOnly.propTypes = {
+  /**
+   * Provide an optional class to be applied to the containing node
+   */
+  className: PropTypes.string,
+
+  /**
+   * List of read-only profile items
+   */
+  items: PropTypes.array,
+};
+
 /**
  * -------
  * Exports
@@ -159,13 +216,18 @@ Root.displayName = 'Profile.Root';
 const UserInfo = ProfileUserInfo;
 UserInfo.displayName = 'ProfileUserInfo';
 
+const ReadOnly = ProfileReadOnly;
+ReadOnly.displayName = 'ProfileReadOnly';
+
 export {
   // direct exports
   Profile,
   ProfileUserInfo,
+  ProfileReadOnly,
   // namespaced
   Root,
   UserInfo,
+  ReadOnly,
 };
 
 export type { ProfileProps, ProfileUserInfoProps };

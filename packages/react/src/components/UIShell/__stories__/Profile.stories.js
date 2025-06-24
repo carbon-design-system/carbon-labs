@@ -17,6 +17,7 @@ import { UserAvatar } from '@carbon/icons-react';
 import '../components/ui-shell.scss';
 import {
   Profile as ProfileDirect,
+  ProfileReadOnly,
   ProfileUserInfo,
 } from '../components/Profile';
 
@@ -25,6 +26,7 @@ export default {
   component: ProfileDirect,
   subcomponents: {
     ProfileUserInfo,
+    ProfileReadOnly
   },
   parameters: {
     docs: {
@@ -45,6 +47,32 @@ export const Default = () => {
           <Profile.UserInfo
             name="Thomas J. Watson"
             email="thomas.watson@ibm.com"
+          />
+        </Profile.Root>
+      </HeaderGlobalBar>
+    </Header>
+  );
+};
+
+/**
+ * Story for Profile with read only items
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const withReadOnly = () => {
+  return (
+    <Header aria-label="IBM Platform Name">
+      <HeaderGlobalBar>
+        <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
+          <Profile.UserInfo
+            name="Thomas J. Watson"
+            email="thomas.watson@ibm.com"
+          />
+          <Profile.ReadOnly
+            items={[
+              { label: 'Instance', title: 'APIC-MB-DEV' },
+              { label: 'Instance owner', title: 'thomas.j.watson@ibm.com' },
+              { label: 'Region', title: 'us-east-1 (N Virgina)' },
+            ]}
           />
         </Profile.Root>
       </HeaderGlobalBar>

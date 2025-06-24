@@ -11,6 +11,7 @@ import * as ProfileStories from './Profile.stories';
 - [Examples](#examples)
   - [Profile](#prpfile)
   - [Profile.UserInfo](#profileuserinfo)
+  - [Profile.ReadOnly](#profilereadonly)
 - [Component API](#component-api)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
@@ -45,6 +46,13 @@ within `<Profile.Root>`:
   <Profile.UserInfo name="Thomas J. Watson" email="thomas.watson@ibm.com" />
 </Profile.Root>
 ```
+
+## Profile.ReadOnly
+
+The `Profile.ReadOnly` goes inside the `Profile.Root` and accepts a list of
+items that contain objects with a label and title.
+
+<Canvas of={ProfileStories.withReadOnly} />
 
 ## Component API
 

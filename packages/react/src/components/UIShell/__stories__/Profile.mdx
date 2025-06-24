@@ -24,37 +24,42 @@ example implementation.
 
 - [Overview](#overview)
 - [Examples](#examples)
-  - [UserInfo](#userinfo)
+  - [Profile](#prpfile)
+  - [Profile.UserInfo](#profileuserinfo)
 - [Component API](#component-api)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
 
 ## Overview
 
-## UserInfo
-
-`UserInfo` is a component that requires a `name` prop and optionally accepts an
-`email` prop. It extends IBM Product’s
-[UserAvatar](https://ibm-products.carbondesignsystem.com/?path=/docs/components-useravatar--docs&globals=viewport:basic),
-and supports all `UserAvatar` props. Here’s an example of how it can be used
-within `<HeaderPopoverContent>`:
-
-Let me know if you'd like to adjust the tone or add a code snippet.
-
-```javascript
-<HeaderPopover align="bottom-right">
-  <HeaderPopoverButton align="bottom" label="Profile">
-    <UserAvatar size={20} />
-  </HeaderPopoverButton>
-  <HeaderPopoverContent>
-    <UserInfo name="Thomas J. Watson" email="thomas.watson@ibm.com" />
-  </HeaderPopoverContent>
-</HeaderPopover>
-```
-
-## Example
+The `Profile` is a large family of compoments, composed of multiple zones; the
+UserInfo, ThemeSwitcher, ReadOnlyInfo, and Links.
 
 <Canvas of={ProfileStories.Default} />
+
+## Profile.Root
+
+The `Profile.Root` component is used to handle the composed components.
+
+```javascript
+<Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
+  <Profile.UserInfo name="Thomas J. Watson" email="thomas.watson@ibm.com" />
+</Profile.Root>
+```
+
+## Profile.UserInfo
+
+The `Profile.UserInfo` goes inside the `Profile.Root` and requires a `name` prop
+and an optional `email` prop. It extends IBM Product’s
+[UserAvatar](https://ibm-products.carbondesignsystem.com/?path=/docs/components-useravatar--docs&globals=viewport:basic),
+and supports all `UserAvatar` props. Here’s an example of how it can be used
+within `<Profile.Root>`:
+
+```javascript
+<Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
+  <Profile.UserInfo name="Thomas J. Watson" email="thomas.watson@ibm.com" />
+</Profile.Root>
+```
 
 ## Component API
 

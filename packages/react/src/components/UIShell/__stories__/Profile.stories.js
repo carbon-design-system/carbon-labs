@@ -10,7 +10,7 @@
 import React, { useState, useRef } from 'react';
 import mdx from './Profile.mdx';
 
-import { UserInfo } from '../components/UserInfo';
+import { Profile } from '../index';
 import {
   HeaderPopover,
   HeaderPopoverActions,
@@ -42,15 +42,22 @@ import {
 } from '@carbon/icons-react';
 
 import '../components/ui-shell.scss';
+import {
+  Profile as ProfileDirect,
+  ProfileUserInfo,
+} from '../components/Profile';
 
 export default {
   title: 'Components/UIShell/Profile',
-  component: UserInfo,
+  component: ProfileDirect,
+  subcomponents: {
+    ProfileUserInfo,
+  },
   parameters: {
-      docs: {
-        page: mdx,
-      },
+    docs: {
+      page: mdx,
     },
+  },
 };
 
 /**
@@ -163,14 +170,12 @@ export const Default = () => {
           />
         </MenuButton>
         <HeaderDivider />
-        <HeaderPopover align="bottom-right">
-          <HeaderPopoverButton align="bottom" label="Profile">
-            <UserAvatar size={20} />
-          </HeaderPopoverButton>
-          <HeaderPopoverContent>
-            <UserInfo name="Thomas J. Watson" email="thomas.watson@ibm.com" />
-          </HeaderPopoverContent>
-        </HeaderPopover>
+        <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
+          <Profile.UserInfo
+            name="Thomas J. Watson"
+            email="thomas.watson@ibm.com"
+          />
+        </Profile.Root>
       </HeaderGlobalBar>
     </Header>
   );

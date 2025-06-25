@@ -177,23 +177,27 @@ export function popupElementTemplate(customElementClass) {
             `
           : ''}
         ${radioTitle
-          ? html`<div>${radioTitle}</div>
+          ? html`<div class="${clabsPrefix}--chat-popup-element">
+                ${radioTitle}
+              </div>
               <br />`
           : ''}
         ${radioButtons
           ? html`
-              <cds-radio-button-group
-                label-position="right"
-                orientation="vertical"
-                name="radio-group">
-                ${radioButtons?.map(
-                  (item) => html`
-                    <cds-radio-button
-                      label-text="${item.text}"
-                      value="${item.value}"></cds-radio-button>
-                  `
-                )}
-              </cds-radio-button-group>
+              <div class="${clabsPrefix}--chat-popup-element">
+                <cds-radio-button-group
+                  label-position="right"
+                  orientation="vertical"
+                  name="radio-group">
+                  ${radioButtons?.map(
+                    (item) => html`
+                      <cds-radio-button
+                        label-text="${item.text}"
+                        value="${item.value}"></cds-radio-button>
+                    `
+                  )}
+                </cds-radio-button-group>
+              </div>
             `
           : ''}
         ${model

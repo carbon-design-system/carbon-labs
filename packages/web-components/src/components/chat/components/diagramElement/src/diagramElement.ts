@@ -123,7 +123,7 @@ export default class diagramElement extends LitElement {
    * @param {String} mode - fullscreen, test or default
    */
   _buildOptions() {
-    const whiteTheme = {
+    /*const whiteTheme = {
       primaryColor: '#a6c8ff',
       primaryBorderColor: '#0f62fe',
       primaryTextColor: '#161616',
@@ -163,6 +163,194 @@ export default class diagramElement extends LitElement {
       noteBkgColor: '#8a3ffc',
       noteBorderColor: '#6f6f6f',
       noteTextColor: '#f4f4f4',
+    };*/
+
+    const whiteTheme = {
+      // tell Mermaid this is a light theme
+      darkMode: false,
+
+      // general
+      background: '#ffffff',
+      primaryColor: '#0f62fe',
+      secondaryColor: '#393939',
+      mainBkg: '#0f62fe',
+      secondBkg: '#393939',
+      lineColor: '#dcdcdc',
+      border1: '#002d9c',
+      border2: '#6f6f6f',
+      arrowheadColor: '#dcdcdc',
+      fontFamily: "'IBM Plex Sans', sans-serif",
+      fontSize: '16px',
+
+      // derived
+      tertiaryColor: '#0f62fe',
+      primaryBorderColor: '#002d9c',
+      secondaryBorderColor: '#6f6f6f',
+      tertiaryBorderColor: '#002d9c',
+      primaryTextColor: '#ffffff',
+      secondaryTextColor: '#ffffff',
+      tertiaryTextColor: '#ffffff',
+      textColor: '#161616',
+      THEME_COLOR_LIMIT: 12,
+
+      // flowchart
+      nodeBkg: '#0f62fe',
+      nodeBorder: '#002d9c',
+      clusterBkg: '#0f62fe',
+      clusterBorder: '#002d9c',
+      defaultLinkColor: '#dcdcdc',
+      titleColor: '#161616',
+      edgeLabelBackground: '#ffffff',
+
+      // sequence
+      actorBorder: '#002d9c',
+      actorBkg: '#0f62fe',
+      actorTextColor: '#ffffff',
+      actorLineColor: '#002d9c',
+      signalColor: '#161616',
+      signalTextColor: '#161616',
+      labelBoxBkgColor: '#0f62fe',
+      labelBoxBorderColor: '#002d9c',
+      labelTextColor: '#ffffff',
+      loopTextColor: '#ffffff',
+      noteBkgColor: '#da1e28',
+      noteBorderColor: '#da1e28',
+      noteTextColor: '#ffffff',
+      activationBorderColor: '#393939',
+      activationBkgColor: '#393939',
+      sequenceNumberColor: '#dcdcdc',
+
+      // Gantt
+      sectionBkgColor: '#0f62fe',
+      altSectionBkgColor: '#f3f3f3',
+      sectionBkgColor2: '#0f62fe',
+      excludeBkgColor: '#ffffff',
+      taskBorderColor: '#002d9c',
+      taskBkgColor: '#ffffff',
+      taskTextLightColor: '#ffffff',
+      taskTextColor: '#161616',
+      taskTextDarkColor: '#000000',
+      taskTextOutsideColor: '#161616',
+      taskTextClickableColor: '#0f62fe',
+      activeTaskBorderColor: '#002d9c',
+      activeTaskBkgColor: '#0f62fe',
+      gridColor: '#393939',
+      doneTaskBkgColor: '#dcdcdc',
+      doneTaskBorderColor: '#e0e0e0',
+      critBorderColor: '#da1e28',
+      critBkgColor: '#da1e28',
+      todayLineColor: '#da1e28',
+      vertLineColor: '#00bfff',
+
+      // C4 context
+      personBorder: '#002d9c',
+      personBkg: '#0f62fe',
+
+      // architecture
+      archEdgeColor: '#dcdcdc',
+      archEdgeArrowColor: '#dcdcdc',
+      archEdgeWidth: '3',
+      archGroupBorderColor: '#002d9c',
+      archGroupBorderWidth: '2px',
+
+      // state & error
+      labelColor: '#161616',
+      errorBkgColor: '#da1e28',
+      errorTextColor: '#ffffff',
+    };
+
+    const g100Theme = {
+      // dark mode on
+      darkMode: true,
+
+      // general
+      background: '#161616',
+      primaryColor: '#0f62fe',
+      secondaryColor: '#393939',
+      mainBkg: '#0f62fe',
+      secondBkg: '#393939',
+      lineColor: '#262626',
+      border1: '#002d9c',
+      border2: '#6f6f6f',
+      arrowheadColor: '#262626',
+      fontFamily: "'IBM Plex Sans', sans-serif",
+      fontSize: '16px',
+
+      // derived
+      tertiaryColor: '#0f62fe',
+      primaryBorderColor: '#002d9c',
+      secondaryBorderColor: '#6f6f6f',
+      tertiaryBorderColor: '#002d9c',
+      primaryTextColor: '#ffffff',
+      secondaryTextColor: '#ffffff',
+      tertiaryTextColor: '#ffffff',
+      textColor: '#f4f4f4',
+      THEME_COLOR_LIMIT: 12,
+
+      // flowchart
+      nodeBkg: '#0f62fe',
+      nodeBorder: '#002d9c',
+      clusterBkg: '#0f62fe',
+      clusterBorder: '#002d9c',
+      defaultLinkColor: '#262626',
+      titleColor: '#ffffff',
+      edgeLabelBackground: '#161616',
+
+      // sequence
+      actorBorder: '#002d9c',
+      actorBkg: '#0f62fe',
+      actorTextColor: '#ffffff',
+      actorLineColor: '#002d9c',
+      signalColor: '#f4f4f4',
+      signalTextColor: '#f4f4f4',
+      labelBoxBkgColor: '#0f62fe',
+      labelBoxBorderColor: '#002d9c',
+      labelTextColor: '#ffffff',
+      loopTextColor: '#ffffff',
+      noteBkgColor: '#da1e28',
+      noteBorderColor: '#da1e28',
+      noteTextColor: '#ffffff',
+      activationBorderColor: '#393939',
+      activationBkgColor: '#393939',
+      sequenceNumberColor: '#262626',
+
+      // Gantt
+      sectionBkgColor: '#0f62fe',
+      altSectionBkgColor: '#262626',
+      sectionBkgColor2: '#0f62fe',
+      excludeBkgColor: '#161616',
+      taskBorderColor: '#002d9c',
+      taskBkgColor: '#161616',
+      taskTextLightColor: '#ffffff',
+      taskTextColor: '#f4f4f4',
+      taskTextDarkColor: '#000000',
+      taskTextOutsideColor: '#f4f4f4',
+      taskTextClickableColor: '#0f62fe',
+      activeTaskBorderColor: '#002d9c',
+      activeTaskBkgColor: '#0f62fe',
+      gridColor: '#393939',
+      doneTaskBkgColor: '#262626',
+      doneTaskBorderColor: '#3d3d3d',
+      critBorderColor: '#da1e28',
+      critBkgColor: '#da1e28',
+      todayLineColor: '#da1e28',
+      vertLineColor: '#00bfff',
+
+      // C4 context
+      personBorder: '#002d9c',
+      personBkg: '#0f62fe',
+
+      // architecture
+      archEdgeColor: '#262626',
+      archEdgeArrowColor: '#262626',
+      archEdgeWidth: '3',
+      archGroupBorderColor: '#002d9c',
+      archGroupBorderWidth: '2px',
+
+      // state & error
+      labelColor: '#f4f4f4',
+      errorBkgColor: '#da1e28',
+      errorTextColor: '#ffffff',
     };
     const currentTheme = this.theme == 'light' ? whiteTheme : g100Theme;
     const mainTheme: any = 'base';

@@ -1,4 +1,4 @@
-import { Markdown, Meta} from '@storybook/blocks';
+import { Markdown, Meta, Canvas} from '@storybook/blocks';
 import * as elementStories from './diagramElement.stories';
 import packageJson from '../../../package.json';
 
@@ -15,3 +15,6 @@ import packageJson from '../../../package.json';
 * **Target library:** `Carbon AI Chat`
 * **Target library maintainer(s) / PR Reviewer(s):** Ethan Winters, Damon Lundin
 * **Support channel:** `#carbon-ai-chat`
+
+
+<Canvas of={elementStories.Showcase} />

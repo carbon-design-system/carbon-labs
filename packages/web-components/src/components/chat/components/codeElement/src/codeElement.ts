@@ -781,7 +781,7 @@ export default class codeElement extends LitElement {
     this._displayedContent = this._originalContent;
     this._currentlyEdited = false;
 
-    const codeEditedEvent = new CustomEvent('on-code-edit-change', {
+    const codeEditedEvent = new CustomEvent('on-code-edit-cancel', {
       detail: {
         previousLineData: this._originalContent,
         newLineText: this._originalContent,

@@ -192,6 +192,12 @@
     text-align: start;
   }
 
+  .#{$clabs-prefix}--chat-popup-element {
+    margin-block-start: 1rem;
+    padding-inline: 1rem;
+    text-align: start;
+  }
+
   .#{$clabs-prefix}--chat-popup-header-section {
     display: flex;
     box-sizing: border-box;

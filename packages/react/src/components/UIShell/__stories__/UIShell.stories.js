@@ -44,8 +44,6 @@ import {
   Theme,
 } from '@carbon/react';
 import {
-  Add,
-  Fade,
   Dashboard,
   DataAnalytics,
   Home,

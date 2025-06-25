@@ -284,7 +284,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         }
       }
 
-      if (depth === 0) return;
+      if (depth === 0) {
+        return;
+      }
 
       // if depth is more than 0, that means its nested, thus we set treeview mode
       setIsTreeview?.(true);

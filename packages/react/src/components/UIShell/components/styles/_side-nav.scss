@@ -86,7 +86,28 @@ div:has(.#{$prefix}--header)
   + .#{$prefix}--side-nav__menu
   > .#{$prefix}--side-nav__item--icon
   .#{$prefix}--side-nav__submenu {
-  padding-inline-start: $spacing-09;
+  padding-inline-start: $spacing-11;
+}
+
+// Level 3
+// without icon
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-11;
+}
+
+// with icon
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-12;
 }
 
 // Nested SideNavMenuItem
@@ -136,6 +157,32 @@ div:has(.#{$prefix}--header)
   .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
   a.#{$prefix}--side-nav__link {
   padding-inline-start: $spacing-12;
+}
+
+// with icon inside primary menu (double wide)
+.#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  .cds--side-nav__menu-secondary-wrapper
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+  padding-inline-start: $spacing-09;
+}
+
+// Level 4
+// without icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-12;
+}
+
+// with icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-13;
 }
 
 .#{$prefix}--side-nav__menu-secondary-wrapper {

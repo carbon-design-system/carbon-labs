@@ -7,7 +7,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 import PropTypes from 'prop-types';
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, {
+  ElementType,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Grid, Column, Button, Tooltip } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
 import lottie from 'lottie-web';
@@ -26,13 +32,14 @@ import WorkspaceSelector, {
 export interface Tile {
   href?: string | null;
   id: string;
-  mainIcon?: string | null;
-  secondaryIcon?: string | null;
+  mainIcon?: ElementType | null;
+  secondaryIcon?: ElementType | null;
   subtitle?: string | null;
   title?: string | null;
   customContent?: ReactNode | null;
   isLoading?: boolean;
   isDisabled?: boolean;
+  isInteractive?: boolean;
 }
 
 export interface TileGroup {
@@ -233,6 +240,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     isLoading={isLoading || tile.isLoading}
                     isDisabled={tile.isDisabled}
                     disabledTaskLabel={disabledTaskLabel}
+                    isInteractive={tile.isInteractive}
                   />
                 );
               })}

@@ -284,7 +284,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         }
       }
 
-      if (depth === 0) return;
+      if (depth === 0) {
+        return;
+      }
 
       // if depth is more than 0, that means its nested, thus we set treeview mode
       setIsTreeview?.(true);
@@ -322,7 +324,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           const slotElement = node.closest(`.${prefix}--side-nav__slot`);
           if (slotElement) {
             (
-              slotElement.nextElementSibling?.nextElementSibling?.querySelector(
+              slotElement.nextElementSibling?.querySelector(
                 'a, button'
               ) as HTMLElement
             ).tabIndex = 0;

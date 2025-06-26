@@ -295,6 +295,7 @@ function App() {
                       { text: 'Option 3' },
                     ]}
                     label="Choose an option"
+                    titleText="Choose an option"
                   />
                 </SideNavSlot>
                 <SideNavDivider />

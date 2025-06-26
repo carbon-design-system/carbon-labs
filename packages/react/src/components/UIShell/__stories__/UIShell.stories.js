@@ -42,10 +42,9 @@ import {
   Link,
   Button,
   Dropdown,
+  Theme,
 } from '@carbon/react';
 import {
-  Add,
-  Fade,
   Dashboard,
   DataAnalytics,
   Home,
@@ -82,9 +81,8 @@ import '../components/ui-shell.scss';
 
 export default {
   title: 'Components/UIShell',
-  component: HeaderContainer,
+  component: HeaderDivider,
   subcomponents: {
-    HeaderContainer,
     HeaderDivider,
     HeaderPopover,
     HeaderPopoverActions,
@@ -110,7 +108,7 @@ export default {
  * @returns {React.ReactElement} The JSX for the story
  */
 const StoryContent = () => (
-  <Content>
+  <Theme as={Content} theme="g10">
     <Grid align="start">
       <Column sm={4} md={8} lg={12}>
         <h2 style={{ margin: '0 0 30px 0' }}>Purpose and function</h2>
@@ -179,14 +177,14 @@ const StoryContent = () => (
         </p>
       </Column>
     </Grid>
-  </Content>
+  </Theme>
 );
 
 /**
  * Story for UIShell
  * @returns {React.ReactElement} The JSX for the story
  */
-export const Default = () => {
+export const Demo = () => {
   const headerRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
@@ -326,6 +324,7 @@ export const Default = () => {
               </Profile.Root>
             </HeaderGlobalBar>
           </Header>
+
           <SideNav
             isTreeview={true}
             aria-label="Main navigation"
@@ -352,6 +351,7 @@ export const Default = () => {
                       { text: 'Option 3' },
                     ]}
                     label="Choose an option"
+                    titleText="Choose an option"
                   />
                 </SideNavSlot>
                 <SideNavDivider />
@@ -471,106 +471,108 @@ export const Default = () => {
               </SideNavLink>
             </SideNavItems>
           </SideNav>
-          <SideNav
-            hideRailBreakpointDown="md"
-            isChildOfHeader={false}
-            isRail
-            aria-label="Product navigation">
-            <SideNavItems>
-              <SideNavSlot renderIcon={Menu}>
-                <Menu />
-              </SideNavSlot>
-              <SideNavSlot renderIcon={VirtualColumnKey}>
-                <Dropdown
-                  id="default"
-                  size="sm"
-                  itemToString={(item) => (item ? item.text : '')}
-                  items={[
-                    { text: 'Option 1' },
-                    { text: 'Option 2' },
-                    { text: 'Option 3' },
-                  ]}
-                  label="Choose an option"
-                />
-              </SideNavSlot>
-              <SideNavDivider />
-              <SideNavMenu renderIcon={Home} title="Home">
-                <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                  Item level 3
-                </SideNavMenuItem>
-                <SideNavMenuItem
-                  isActive
-                  href="http://www.carbondesignsystem.com">
-                  Item level 3
-                </SideNavMenuItem>
-                <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                  Item level 3
-                </SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={BusinessProcesses}>
-                Business
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Application}>
-                Applications
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Platforms}>
-                Platforms
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Layers}>
-                Infrastructure
-              </SideNavLink>
-              <SideNavDivider />
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Dashboard}>
-                Dashboard
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={DataAnalytics}>
-                Analytics
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={EventIncident}>
-                Incidents
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Security}>
-                Security
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={WorkflowAutomation}>
-                Automations
-              </SideNavLink>
-              <SideNavDivider />
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={DocumentMultiple_01}>
-                Docs
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={Settings}>
-                Settings
-              </SideNavLink>
-              <SideNavLink
-                href="http://www.carbondesignsystem.com"
-                renderIcon={OverflowMenuVertical}>
-                More
-              </SideNavLink>
-            </SideNavItems>
-          </SideNav>
+          <Theme theme="g10">
+            <SideNav
+              hideRailBreakpointDown="md"
+              isChildOfHeader={false}
+              isRail
+              aria-label="Product navigation">
+              <SideNavItems>
+                <SideNavSlot renderIcon={Menu}>
+                  <Menu />
+                </SideNavSlot>
+                <SideNavSlot renderIcon={VirtualColumnKey}>
+                  <Dropdown
+                    id="default"
+                    size="sm"
+                    itemToString={(item) => (item ? item.text : '')}
+                    items={[
+                      { text: 'Option 1' },
+                      { text: 'Option 2' },
+                      { text: 'Option 3' },
+                    ]}
+                    label="Choose an option"
+                  />
+                </SideNavSlot>
+                <SideNavDivider />
+                <SideNavMenu renderIcon={Home} title="Home">
+                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    Item level 3
+                  </SideNavMenuItem>
+                  <SideNavMenuItem
+                    isActive
+                    href="http://www.carbondesignsystem.com">
+                    Item level 3
+                  </SideNavMenuItem>
+                  <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    Item level 3
+                  </SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={BusinessProcesses}>
+                  Business
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Application}>
+                  Applications
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Platforms}>
+                  Platforms
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Layers}>
+                  Infrastructure
+                </SideNavLink>
+                <SideNavDivider />
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Dashboard}>
+                  Dashboard
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={DataAnalytics}>
+                  Analytics
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={EventIncident}>
+                  Incidents
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Security}>
+                  Security
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={WorkflowAutomation}>
+                  Automations
+                </SideNavLink>
+                <SideNavDivider />
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={DocumentMultiple_01}>
+                  Docs
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={Settings}>
+                  Settings
+                </SideNavLink>
+                <SideNavLink
+                  href="http://www.carbondesignsystem.com"
+                  renderIcon={OverflowMenuVertical}>
+                  More
+                </SideNavLink>
+              </SideNavItems>
+            </SideNav>
+          </Theme>
           <StoryContent />
         </>
       )}
@@ -578,360 +580,7 @@ export const Default = () => {
   );
 };
 
-Default.parameters = {
+Demo.parameters = {
   controls: { disable: true },
   actions: { disable: true },
-};
-
-/**
- * Story for SideNav
- * @returns {React.ReactElement} The JSX for the story
- */
-export const SideNavStory = () => (
-  <SideNav
-    isTreeview
-    isFixedNav
-    expanded
-    isChildOfHeader={false}
-    aria-label="Side navigation">
-    <SideNavItems>
-      <SideNavSlot renderIcon={VirtualColumnKey}>
-        <Dropdown
-          id="default"
-          size="sm"
-          itemToString={(item) => (item ? item.text : '')}
-          items={[
-            { text: 'Option 1' },
-            { text: 'Option 2' },
-            { text: 'Option 3' },
-          ]}
-          label="Choose an option"
-        />
-      </SideNavSlot>
-      <SideNavDivider />
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavDivider />
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link
-      </SideNavLink>
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link
-      </SideNavLink>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Link
-        </SideNavMenuItem>
-      </SideNavMenu>
-    </SideNavItems>
-  </SideNav>
-);
-SideNavStory.storyName = 'SideNav';
-
-/**
- * Story for SideNavDoublewide
- * @returns {React.ReactElement} The JSX for the story
- */
-export const SideNavDoubleWideStory = () => (
-  <SideNav
-    isTreeview
-    isFixedNav
-    expanded
-    isChildOfHeader={false}
-    aria-label="Side navigation">
-    <SideNavItems>
-      <SideNavMenu
-        renderIcon={Fade}
-        title="Sub-menu level 1"
-        primary
-        defaultExpanded>
-        <SideNavSlot>
-          <Dropdown
-            aria-label="Choose an option"
-            id="default"
-            size="sm"
-            itemToString={(item) => (item ? item.text : '')}
-            items={[
-              { text: 'Option 1' },
-              { text: 'Option 2' },
-              { text: 'Option 3' },
-            ]}
-            label="Choose an option"
-          />
-        </SideNavSlot>
-        <SideNavDivider />
-        <SideNavMenu renderIcon={Fade} title="Sub-menu level 2">
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 3
-          </SideNavMenuItem>
-        </SideNavMenu>
-        <SideNavMenuItem
-          renderIcon={Fade}
-          href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem
-          renderIcon={Fade}
-          href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem
-          renderIcon={Fade}
-          href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
-        <SideNavMenuItem
-          renderIcon={Fade}
-          href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavDivider />
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link level 1
-      </SideNavLink>
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link level 1
-      </SideNavLink>
-    </SideNavItems>
-  </SideNav>
-);
-SideNavDoubleWideStory.storyName = 'SideNav with Double Wide';
-
-/**
- * Story for SideNav w/TreeView
- * @returns {React.ReactElement} The JSX for the story
- */
-export const SideNavWithThirdLevel = () => (
-  <SideNav
-    isFixedNav
-    expanded={true}
-    isChildOfHeader={false}
-    aria-label="Side navigation">
-    <SideNavItems>
-      <SideNavLink renderIcon={Add} href="http://www.carbondesignsystem.com">
-        Link level 1
-      </SideNavLink>
-      <SideNavMenu
-        defaultExpanded={true}
-        renderIcon={Fade}
-        title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenu title="Sub-menu level 2" defaultExpanded={true}>
-          <SideNavMenuItem isActive href="http://www.carbondesignsystem.com">
-            Item level 3
-          </SideNavMenuItem>
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 3
-          </SideNavMenuItem>
-        </SideNavMenu>
-      </SideNavMenu>
-    </SideNavItems>
-  </SideNav>
-);
-SideNavWithThirdLevel.storyName = 'SideNav With Third Level';
-
-/**
- * Story for SideNav w/TreeView icons
- * @returns {React.ReactElement} The JSX for the story
- */
-export const SideNavWithThirdLevelIcons = () => (
-  <SideNav
-    isFixedNav
-    expanded={true}
-    isChildOfHeader={false}
-    aria-label="Side navigation">
-    <SideNavItems>
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link level 1
-      </SideNavLink>
-      <SideNavMenu
-        defaultExpanded={true}
-        renderIcon={Fade}
-        title="Sub-menu level 1">
-        <SideNavMenuItem
-          renderIcon={Fade}
-          href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem
-          renderIcon={Fade}
-          href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenu
-          renderIcon={Fade}
-          title="Sub-menu level 2"
-          defaultExpanded={true}>
-          <SideNavMenuItem isActive href="http://www.carbondesignsystem.com">
-            Item level 3
-          </SideNavMenuItem>
-          <SideNavMenuItem href="http://www.carbondesignsystem.com">
-            Item level 3
-          </SideNavMenuItem>
-        </SideNavMenu>
-      </SideNavMenu>
-    </SideNavItems>
-  </SideNav>
-);
-SideNavWithThirdLevelIcons.storyName = 'SideNav With Third Level Icons';
-
-/**
- * Story for SideNav panel
- * @returns {React.ReactElement} The JSX for the story
- */
-export const SideNavRail = () => (
-  <SideNav
-    isRail
-    hideOverlay
-    isChildOfHeader={false}
-    aria-label="Product navigation">
-    <SideNavItems>
-      <SideNavSlot renderIcon={VirtualColumnKey}>
-        <Dropdown
-          aria-label="Choose an option"
-          id="default"
-          size="sm"
-          itemToString={(item) => (item ? item.text : '')}
-          items={[
-            { text: 'Option 1' },
-            { text: 'Option 2' },
-            { text: 'Option 3' },
-          ]}
-          label="Choose an option"
-        />
-      </SideNavSlot>
-      <SideNavDivider />
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-        <SideNavMenuItem href="http://www.carbondesignsystem.com">
-          Item level 2
-        </SideNavMenuItem>
-      </SideNavMenu>
-      <SideNavDivider />
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link
-      </SideNavLink>
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link
-      </SideNavLink>
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link
-      </SideNavLink>
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link
-      </SideNavLink>
-      <SideNavDivider />
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link
-      </SideNavLink>
-      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
-        Link
-      </SideNavLink>
-    </SideNavItems>
-  </SideNav>
-);
-
-/**
- * Story for TrialCountdown
- * @param {object} args Storybook args that control component props
- * @returns {React.ReactElement} The JSX for the story
- */
-export const TrialCountdownStory = (args) => (
-  <div style={{ padding: '50px' }}>
-    <TrialCountdown {...args} />
-  </div>
-);
-TrialCountdownStory.storyName = 'TrialCountdown';
-
-TrialCountdownStory.args = {
-  count: 30,
-  text: 'Trial days left',
-  warning: false,
-};
-
-TrialCountdownStory.argTypes = {
-  isSideNavExpanded: { table: { disable: true } },
-  isSwitcherExpanded: { table: { disable: true } },
-  render: { table: { disable: true } },
 };

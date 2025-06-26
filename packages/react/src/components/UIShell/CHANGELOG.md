@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.48.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.47.0...@carbon-labs/react-ui-shell@0.48.0) (2025-06-26)
+
+
+### Bug Fixes
+
+* **uishell:** remove duplicate import ([#683](https://github.com/carbon-design-system/carbon-labs/issues/683)) ([50364b6](https://github.com/carbon-design-system/carbon-labs/commit/50364b6e8e0defd33087551e911a021061922d35))
+
+
+
+
+
+# [0.47.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.46.0...@carbon-labs/react-ui-shell@0.47.0) (2025-06-18)
+
+
+### Bug Fixes
+
+* **sidenav:** focus on active ([#653](https://github.com/carbon-design-system/carbon-labs/issues/653)) ([ab3620f](https://github.com/carbon-design-system/carbon-labs/commit/ab3620f2596df16b06f95e9716526b4dd45146b7))
+
+
+
+
+
 # [0.46.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.45.0...@carbon-labs/react-ui-shell@0.46.0) (2025-06-12)
 
 

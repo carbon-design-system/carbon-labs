@@ -22,9 +22,6 @@ import '@carbon/web-components/es/components/link/index.js';
 import { POPOVER_ALIGNMENT } from '@carbon/web-components/es/components/popover/defs.js';
 import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js';
 
-// Pictograms
-import Bangalore from '@carbon/pictograms/lib/bangalore';
-
 // Carbon labs
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
@@ -78,19 +75,6 @@ const styles = css`
   }
 `;
 
-const colorItems = colors
-  .slice(0, -1)
-  .map((group) => group.items[1])
-  .map((color) => ({ ...color, label: color.label.replace(' 20', '') }));
-const iconItems = icons;
-
-// const color = colorItems.find(
-//   (color) => color.value === selectedItems[0]
-// ).color;
-// const Icon = iconItems.find(
-//   (icon) => icon.value === selectedItems[1]
-// ).renderIcon;
-
 /**
  * remove and add `open` attribute
  */
@@ -141,7 +125,7 @@ const changePictogram = (ev) => {
   colorModuleEl.setAttribute('selected-item', pictogram.value);
 
   const pictogramHolderEl = document.getElementById('inline-tile-pictogram');
-  const pictogramTemplate = renderCarbonPictogram(pictogram.renderPictogram);
+  const pictogramTemplate = renderCarbonPictogram(pictogram.pictogram);
   const container = document.createElement('div');
   render(pictogramTemplate, container);
   pictogramHolderEl.innerHTML = '';
@@ -166,9 +150,10 @@ const argTypes = {
 
 export const ColorAndIcon = {
   args: {
-    title: 'Choose color',
+    title: 'Choose color and icon',
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
+    kind: 'flat',
   },
   argTypes,
   /**
@@ -187,7 +172,7 @@ export const ColorAndIcon = {
             .align=${args.align}
             ?open=${args.open}
             .title=${args.title}
-            .kind=${'flat'}>
+            .kind=${args.kind}>
             <cds-icon-button
               slot="trigger"
               .kind=${BUTTON_KIND.GHOST}
@@ -199,8 +184,8 @@ export const ColorAndIcon = {
               <clabs-style-picker-color-module
                 .title=${'Color'}
                 .size=${'sm'}
-                .items=${colorItems}
-                .selectedItem=${colorItems[0].value}
+                .items=${colors[0].items}
+                .selectedItem=${colors[0].items[0].value}
                 @clabs-style-picker-module-option-change=${(ev) =>
                   changeColor(ev)}></clabs-style-picker-color-module>
               <clabs-style-picker-icon-module
@@ -237,137 +222,78 @@ export const ColorAndIcon = {
     `,
 };
 
-// export const Icon = {
-//   args: {
-//     title: 'Choose icon',
-//     open: true,
-//     align: POPOVER_ALIGNMENT.LEFT_TOP,
-//   },
-//   argTypes,
-//   /**
-//    * Renders the template for Storybook
-//    * @param {object} args Storybook arguments
-//    * @returns {TemplateResult<1>}
-//    */
-//   render: (args) =>
-//     html`
-//       <style>
-//         ${styles}
-//       </style>
-//       <div class="style-picker-story-container">
-//         <cds-layer class="toolbar-layer">
-//           <clabs-style-picker
-//             .align=${args.align}
-//             ?open=${args.open}
-//             .title=${args.title}>
-//             <cds-icon-button
-//               slot="trigger"
-//               .kind=${BUTTON_KIND.GHOST}
-//               @click="${toggleButton}">
-//               ${ColorPalette16({ slot: 'icon' })}
-//               <span slot="tooltip-content">Icon list</span>
-//             </cds-icon-button>
-//             <clabs-style-picker-modules slot="modules">
-//               <clabs-style-picker-icon-module
-//                 .title=${'Icon'}
-//                 .size=${'sm'}
-//                 .items=${icons}
-//                 .selectedItem=${'apple'}
-//                 @clabs-style-picker-module-option-change=${(ev) =>
-//                   changeIcon(ev)}></clabs-style-picker-icon-module>
-//             </clabs-style-picker-modules>
-//           </clabs-style-picker>
-//           <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
-//             ${TrashCan16({ slot: 'icon' })}
-//             <span slot="tooltip-content">Edit</span>
-//           </cds-icon-button>
-//           <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
-//             ${OverflowMenuVertical16({ slot: 'icon' })}
-//             <span slot="tooltip-content">More</span>
-//           </cds-icon-button>
-//         </cds-layer>
-//         <div class="inline-tile-holder">
-//           <cds-tile class="inline-tile">
-//             <div class="inline-tile-header">
-//               <span id="inline-tile-icon">${icons[0].renderIcon()}</span>
-//               <h6>Primary text</h6>
-//             </div>
-//             <br />
-//             <small>Secondary text or description</small>
-//             <br /><br />
-//             <cds-link href="#">Link</cds-link>
-//           </cds-tile>
-//         </div>
-//       </div>
-//     `,
-// };
-
-// export const Pictogram = {
-//   args: {
-//     title: 'Choose pictogram',
-//     open: true,
-//     align: POPOVER_ALIGNMENT.LEFT_TOP,
-//   },
-//   argTypes,
-//   /**
-//    * Renders the template for Storybook
-//    * @param {object} args Storybook arguments
-//    * @returns {TemplateResult<1>}
-//    */
-//   render: (args) =>
-//     html`
-//       <style>
-//         ${styles}
-//       </style>
-//       <div class="style-picker-story-container">
-//         <cds-layer class="toolbar-layer">
-//           <clabs-style-picker
-//             .align=${args.align}
-//             ?open=${args.open}
-//             .title=${args.title}>
-//             <cds-icon-button
-//               slot="trigger"
-//               .kind=${BUTTON_KIND.GHOST}
-//               @click="${toggleButton}">
-//               ${ColorPalette16({ slot: 'icon' })}
-//               <span slot="tooltip-content">Pictogram list</span>
-//             </cds-icon-button>
-//             <clabs-style-picker-modules slot="modules">
-//               <clabs-style-picker-pictogram-module
-//                 .title=${'Pictogram'}
-//                 .size=${'lg'}
-//                 .items=${pictograms}
-//                 .selectedItem=${'bangalore'}
-//                 @clabs-style-picker-module-option-change=${(ev) =>
-//                   changePictogram(ev)}></clabs-style-picker-pictogram-module>
-//             </clabs-style-picker-modules>
-//           </clabs-style-picker>
-//           <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
-//             ${TrashCan16({ slot: 'icon' })}
-//             <span slot="tooltip-content">Edit</span>
-//           </cds-icon-button>
-//           <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
-//             ${OverflowMenuVertical16({ slot: 'icon' })}
-//             <span slot="tooltip-content">More</span>
-//           </cds-icon-button>
-//         </cds-layer>
-//         <div class="inline-tile-holder">
-//           <cds-tile class="inline-tile">
-//             <div id="inline-tile-pictogram">
-//               ${renderCarbonPictogram({
-//                 ...Bangalore,
-//                 attrs: { ...Bangalore.attrs, 'aria-label': Bangalore.name },
-//               })}
-//             </div>
-//             <br />
-//             <h6>Primary text</h6>
-//             <div class="inline-pictogram-secondary-text">
-//               Secondary text or description
-//             </div>
-//             <br />
-//             <cds-link href="#">Link</cds-link>
-//           </cds-tile>
-//         </div>
-//       </div>
-//     `,
-// };
+export const ColorAndPictogram = {
+  args: {
+    title: 'Choose color and pictogram',
+    open: true,
+    align: POPOVER_ALIGNMENT.LEFT_TOP,
+    kind: 'flat',
+  },
+  argTypes,
+  /**
+   * Renders the template for Storybook
+   * @param {object} args Storybook arguments
+   * @returns {TemplateResult<1>}
+   */
+  render: (args) =>
+    html`
+      <style>
+        ${styles}
+      </style>
+      <div class="style-picker-story-container">
+        <cds-layer class="toolbar-layer">
+          <clabs-style-picker
+            .align=${args.align}
+            ?open=${args.open}
+            .title=${args.title}
+            .kind=${args.kind}>
+            <cds-icon-button
+              slot="trigger"
+              .kind=${BUTTON_KIND.GHOST}
+              @click="${toggleButton}">
+              ${ColorPalette16({ slot: 'icon' })}
+              <span slot="tooltip-content">Pictogram list</span>
+            </cds-icon-button>
+            <clabs-style-picker-modules slot="modules">
+              <clabs-style-picker-color-module
+                .title=${'Color'}
+                .size=${'sm'}
+                .items=${colors[0].items}
+                .selectedItem=${colors[0].items[0].value}
+                @clabs-style-picker-module-option-change=${(ev) =>
+                  changeColor(ev)}></clabs-style-picker-color-module>
+              <clabs-style-picker-pictogram-module
+                .title=${'Pictogram'}
+                .size=${'lg'}
+                .items=${pictograms[0].items}
+                .selectedItem=${pictograms[0].items[0].value}
+                @clabs-style-picker-module-option-change=${(ev) =>
+                  changePictogram(ev)}></clabs-style-picker-pictogram-module>
+            </clabs-style-picker-modules>
+          </clabs-style-picker>
+          <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
+            ${TrashCan16({ slot: 'icon' })}
+            <span slot="tooltip-content">Edit</span>
+          </cds-icon-button>
+          <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
+            ${OverflowMenuVertical16({ slot: 'icon' })}
+            <span slot="tooltip-content">More</span>
+          </cds-icon-button>
+        </cds-layer>
+        <div class="inline-tile-holder">
+          <cds-tile class="inline-tile">
+            <div id="inline-tile-pictogram">
+              ${renderCarbonPictogram(pictograms[0].items[0].pictogram)}
+            </div>
+            <br />
+            <h6>Primary text</h6>
+            <div class="inline-pictogram-secondary-text">
+              Secondary text or description
+            </div>
+            <br />
+            <cds-link href="#">Link</cds-link>
+          </cds-tile>
+        </div>
+      </div>
+    `,
+};

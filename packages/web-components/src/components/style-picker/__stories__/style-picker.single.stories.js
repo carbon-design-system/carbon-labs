@@ -128,7 +128,7 @@ const changePictogram = (ev) => {
   colorModuleEl.setAttribute('selected-item', pictogram.value);
 
   const pictogramHolderEl = document.getElementById('inline-tile-pictogram');
-  const pictogramTemplate = renderCarbonPictogram(pictogram.renderPictogram);
+  const pictogramTemplate = renderCarbonPictogram(pictogram.pictogram);
   const container = document.createElement('div');
   render(pictogramTemplate, container);
   pictogramHolderEl.innerHTML = '';

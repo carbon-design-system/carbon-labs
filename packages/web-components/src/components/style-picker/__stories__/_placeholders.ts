@@ -69,7 +69,7 @@ type IconItem = {
 };
 
 type PictogramItem = {
-  renderPictogram: string | ((args?: any) => SVGTemplateResult);
+  pictogram: SVGTemplateResult;
 };
 
 export const colors: Group<Item<ColorItem>>[] = [
@@ -185,6 +185,6 @@ export const pictograms: Group<Item<PictogramItem>>[] = [
   items: (cities as Array<any>).map(([name, pictogram]) => ({
     value: name.toLowerCase().split(' ').join('-'),
     label: name,
-    renderPictogram: pictogram,
+     pictogram,
   })),
 }));

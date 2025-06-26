@@ -203,11 +203,11 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
 }
 
 .#{$prefix}--loading-skeleton {
+  background: $layer-01;
   block-size: 100%;
   inline-size: 100%;
 
-  background: $layer-01;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .#{$prefix}--loading-skeleton::before {

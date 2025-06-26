@@ -227,12 +227,12 @@ body {
 }
 
 .#{$prefix}__task-controller-skeleton {
+  background: $layer-01;
   block-size: $spacing-08;
   inline-size: auto;
   max-inline-size: 18rem;
 
-  background: $layer-01;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .#{$prefix}__task-controller-skeleton::before {
@@ -240,12 +240,12 @@ body {
 }
 
 .#{$prefix}__workspace-selector-skeleton {
+  background: $layer-01;
   block-size: $spacing-07;
   inline-size: auto;
   max-inline-size: 18rem;
 
-  background: $layer-01;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .#{$prefix}__workspace-selector-skeleton::before {
@@ -305,7 +305,7 @@ body {
   opacity: 0;
 }
 
-.#{$prefix}__tile{
+.#{$prefix}__tile {
   animation: 500ms motion.motion(standard, expressive) 0ms 1 slide-in;
   animation-fill-mode: both;
 }

@@ -64,7 +64,6 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
 
   const handleTextInputKeyDown = (event) => {
     if (event.key === 'Enter') {
-
       openInNewTab(`${href}&primed_chat=${textInput}`);
     }
   };

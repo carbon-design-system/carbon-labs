@@ -332,12 +332,12 @@ export const headerTiles = [
   },
   {
     id: 8,
-    label: 'Loading and disabled cards',
+    label: 'Loading, non-interactive and disabled cards',
     tiles: [
       {
         id: 'tile-1',
         href: '#',
-        title: 'Load data',
+        title: 'Loading tile',
         subtitle: 'with Data explorer',
         mainIcon: DataSet,
         isLoading: true,
@@ -345,17 +345,18 @@ export const headerTiles = [
       {
         id: 'tile-2',
         href: '#',
-        title: 'Monitor data performance and system capacity',
+        title: 'Non-interactive tile',
         subtitle: 'with Monitoring hub',
         mainIcon: ChartLineData,
+        isInteractive: false
       },
       {
         id: 'tile-3',
         href: '#',
-        title: 'Create and run SQL queries',
+        title: 'Disabled tile',
         subtitle: 'with SQL editor',
         mainIcon: Sql,
-        isDisabled: true,
+        isDisabled: true
       },
       {
         id: 'tile-4',
@@ -372,13 +373,11 @@ export const headerTiles = [
     tiles: [
       {
         id: 'tile-1',
-        customContent: (
-          <Loading withOverlay={false} description="Sample loading state" />
-        ),
+        customContent: <Loading withOverlay={false} description="Sample loading state" />
       },
       {
         id: 'tile-2',
-        customContent: <SampleCustomTaskContent />,
+        customContent: <SampleCustomTaskContent />
       },
     ],
   },

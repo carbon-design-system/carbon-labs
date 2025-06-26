@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, TemplateResult } from 'lit';
+import { html, nothing, TemplateResult } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { Group, Item } from '../../../defs/style-picker-module.types';
 
@@ -25,7 +25,7 @@ export const blockClass = `${clabsPrefix}--style-picker-module`;
  */
 export const stylePickerModuleTemplate = <T>(
   customElementClass
-): TemplateResult<1> => {
+): TemplateResult<1> | typeof nothing => {
   const kind = customElementClass.stylePickerContext?.kind ?? 'single';
   const { items, title, size, renderItem, selectedItem, handleOptionChange } =
     customElementClass;
@@ -39,6 +39,11 @@ export const stylePickerModuleTemplate = <T>(
   const itemsAreGrouped = (i: typeof items): i is Group<Item<T>>[] => {
     return !(i[0] as Item<T>).value;
   };
+
+  const flattenedItems = !itemsAreGrouped(items)
+    ? items
+    : // @ts-ignore
+      items?.flatMap((group) => group.items);
 
   /**
    * Render options from items
@@ -112,9 +117,32 @@ export const stylePickerModuleTemplate = <T>(
     `;
   };
 
-  if (kind === 'single' && itemsAreGrouped(items)) {
-    return html`${renderGrouped(items)}`;
-  }
+  /**
+   * An internal function to render `flat` variant.
+   * Only to organize the code.
+   */
+  const renderFlatVariant = () => {
+    return html`
+      <div class=${`${blockClass}--flat`}>
+        <div class=${`${blockClass}__header`}>
+          <strong class=${`${blockClass}__heading`}> ${title} </strong>
+        </div>
+        ${renderUngrouped(flattenedItems)}
+      </div>
+    `;
+  };
 
-  return html`${renderUngrouped(items)}`;
+  switch (kind) {
+    case 'single':
+      if (itemsAreGrouped(items)) {
+        return html`${renderGrouped(items)}`;
+      }
+      return html`${renderUngrouped(items)}`;
+
+    case 'flat':
+      return renderFlatVariant();
+
+    default:
+      return nothing;
+  }
 };

@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { LitElement } from 'lit';
+import { LitElement, PropertyValues } from 'lit';
 import { provide } from '@lit/context';
 import { property } from 'lit/decorators.js';
 // @ts-ignore
@@ -53,6 +53,17 @@ class StylePicker extends LitElement {
    */
   @property({ type: String, reflect: true, attribute: 'title' })
   title = '';
+
+  /**
+   * Invoked whenever the element is updated.
+   * 
+   * @param {PropertyValues<this>} changed - A Map of property keys to values.
+   */
+  updated(changed: PropertyValues<this>) {
+    if (changed.has('kind')) {
+      this._stylePickerContext = { kind: this.kind };
+    }
+  }
 }
 
 export default StylePicker;

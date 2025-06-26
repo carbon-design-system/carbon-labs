@@ -10,14 +10,16 @@ import React from 'react';
 import mdx from './AnimatedHeader.mdx';
 import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
 import { useArgs } from '@storybook/preview-api';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import '../components/animated-header.scss';
 
 import {
-  workspaceData,
   headerTiles,
-  tasksConfigButton,
-  tasksConfigDropdown,
+  tasksControllerConfigButton,
+  tasksControllerConfigDropdown,
+  tasksControllerConfigLoading,
+  workspaceSelectorConfig,
+  workspaceSelectorConfigLoading,
 } from './data';
 import {
   dataFabricAnimatedLight,
@@ -54,20 +56,11 @@ const meta: Meta<typeof AnimatedHeader> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof AnimatedHeader>;
 
 const sharedArgTypes = {
   description: {
     description:
       'Provide short sentence in max. 3 lines related to product context',
-  },
-  handleHeaderItemsToString: {
-    description:
-      'Helper function passed to downshift that allows the library to render a given item to a string label. By default, it extracts the `label` field from a given item to serve as the item label in the list. (Dropdown under description in header).',
-  },
-  handleWorkspaceItemsToString: {
-    description:
-      'Helper function passed to downshift that allows the library to render a given item to a string label. By default, it extracts the `label` field from a given item to serve as the item label in the list. (Dropdown related to workspace selection).',
   },
   headerAnimation: {
     description:
@@ -122,6 +115,9 @@ const sharedArgTypes = {
   productName: {
     description: 'Provide current product name',
   },
+  disabledTaskLabel: {
+    description: 'Provide on hover label for disabled tasks',
+  },
   selectedTileGroup: {
     description:
       'The tile group that is active in the header ex. "AI Chat Tile w/ two glass tiles", "Four glass tiles", ect.',
@@ -138,9 +134,10 @@ const sharedArgTypes = {
         6: headerTiles[5].label,
         7: headerTiles[6].label,
         8: headerTiles[7].label,
+        9: headerTiles[8].label,
       },
     },
-    options: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
     mapping: {
       0: null,
       1: headerTiles[0],
@@ -151,13 +148,10 @@ const sharedArgTypes = {
       6: headerTiles[5],
       7: headerTiles[6],
       8: headerTiles[7],
+      9: headerTiles[8],
     },
   },
-  selectedWorkspace: {
-    description: 'Object containing workspace selection `Open in: "_"`',
-    type: 'object',
-  },
-  tasksConfig: {
+  tasksControllerConfig: {
     description:
       'Configuration for Carbon button or dropdown menu in header. Customized tasks are used to allow users that have multiple roles and permissions to experience better tailored content based on their need.',
     control: {
@@ -166,13 +160,33 @@ const sharedArgTypes = {
         0: 'None',
         1: 'Button',
         2: 'Dropdown',
+        3: 'Loading',
+      },
+    },
+    options: [0, 1, 2, 3],
+    mapping: {
+      0: null,
+      1: tasksControllerConfigButton,
+      2: tasksControllerConfigDropdown,
+      3: tasksControllerConfigLoading,
+    },
+  },
+  workspaceSelectorConfig: {
+    description:
+      'Configuration for Carbon button or dropdown menu in header. Customized tasks are used to allow users that have multiple roles and permissions to experience better tailored content based on their need.',
+    control: {
+      type: 'select',
+      labels: {
+        0: 'None',
+        1: 'Sample',
+        2: 'Loading',
       },
     },
     options: [0, 1, 2],
     mapping: {
       0: null,
-      1: tasksConfigButton,
-      2: tasksConfigDropdown,
+      1: workspaceSelectorConfig,
+      2: workspaceSelectorConfigLoading,
     },
   },
   userName: {
@@ -182,8 +196,8 @@ const sharedArgTypes = {
     description:
       'Specify the current welcome text on the header ex. `Welcome` `Welcome back`',
   },
-  workspaceLabel: {
-    description: 'Specify the default workspace label above the tiles',
+  isLoading: {
+    description: 'Specify whether the header should be in the loading state',
   },
   expandButtonLabel: {
     description: 'Specify custom expand button label',
@@ -196,16 +210,17 @@ const sharedArgTypes = {
 };
 
 const sharedArgs = {
-  allTiles: headerTiles,
-  allWorkspaces: workspaceData,
+  allTileGroups: headerTiles,
+  tasksControllerConfig: 1,
+  workspaceSelectorConfig: 1,
   description: 'Train, deploy, validate, and govern AI models responsibly.',
   headerStatic: 0,
   productName: '[Product name]',
   selectedTileGroup: 1,
-  selectedWorkspace: workspaceData[0],
-  tasksConfig: 2,
   userName: 'Drew',
   welcomeText: 'Welcome',
+  isLoading: false,
+  disabledTaskLabel: 'This task is disabled',
   expandButtonLabel: 'Expand',
   collapseButtonLabel: 'Collapse',
 };
@@ -214,29 +229,29 @@ export const ThemeG10 = (args) => {
   const [_, updateArgs] = useArgs();
 
   const handleWorkspaceSelect = (e) => {
-    updateArgs({ ...args, selectedWorkspace: e.selectedItem });
+    updateArgs({
+      ...args,
+      workspaceSelectorConfig: {
+        ...args.workspaceSelectorConfig,
+        selectedWorkspace: e.selectedItem,
+      },
+    });
   };
 
-  const handleTileGroup = (e) => {
+  const handleTileGroupSelect = (e) => {
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 
-  const handleHeaderItems = (item) => {
-    return item ? item.label : '';
+  const argsWithSelectors = {
+    ...args,
+    workspaceSelectorConfig: {
+      ...args.workspaceSelectorConfig,
+      setSelectedWorkspace: handleWorkspaceSelect,
+    },
+    setSelectedTileGroup: handleTileGroupSelect,
   };
 
-  const handleWorkspaceItems = (item) => {
-    return item ? item.label : '';
-  };
-
-  return (
-    <AnimatedHeader
-      {...args}
-      setSelectedWorkspace={handleWorkspaceSelect}
-      setSelectedTileGroup={handleTileGroup}
-      handleHeaderItemsToString={handleHeaderItems}
-      handleWorkspaceItemsToString={handleWorkspaceItems}></AnimatedHeader>
-  );
+  return <AnimatedHeader {...argsWithSelectors} />;
 };
 
 ThemeG10.argTypes = {
@@ -252,29 +267,29 @@ export const ThemeG100 = (args) => {
   const [_, updateArgs] = useArgs();
 
   const handleWorkspaceSelect = (e) => {
-    updateArgs({ ...args, selectedWorkspace: e.selectedItem });
+    updateArgs({
+      ...args,
+      workspaceSelectorConfig: {
+        ...args.workspaceSelectorConfig,
+        selectedWorkspace: e.selectedItem,
+      },
+    });
   };
 
-  const handleTileGroup = (e) => {
+  const handleTileGroupSelect = (e) => {
     updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
   };
 
-  const handleHeaderItems = (item) => {
-    return item ? item.label : '';
+  const argsWithSelectors = {
+    ...args,
+    workspaceSelectorConfig: {
+      ...args.workspaceSelectorConfig,
+      setSelectedWorkspace: handleWorkspaceSelect,
+    },
+    setSelectedTileGroup: handleTileGroupSelect,
   };
 
-  const handleWorkspaceItems = (item) => {
-    return item ? item.label : '';
-  };
-
-  return (
-    <AnimatedHeader
-      {...args}
-      setSelectedWorkspace={handleWorkspaceSelect}
-      setSelectedTileGroup={handleTileGroup}
-      handleHeaderItemsToString={handleHeaderItems}
-      handleWorkspaceItemsToString={handleWorkspaceItems}></AnimatedHeader>
-  );
+  return <AnimatedHeader {...argsWithSelectors} />;
 };
 
 ThemeG100.argTypes = {

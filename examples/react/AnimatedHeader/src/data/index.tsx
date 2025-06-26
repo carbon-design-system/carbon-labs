@@ -348,7 +348,7 @@ export const headerTiles = [
         title: 'Non-interactive tile',
         subtitle: 'with Monitoring hub',
         mainIcon: ChartLineData,
-        isInteractive: false
+        isInteractive: false,
       },
       {
         id: 'tile-3',
@@ -356,7 +356,7 @@ export const headerTiles = [
         title: 'Disabled tile',
         subtitle: 'with SQL editor',
         mainIcon: Sql,
-        isDisabled: true
+        isDisabled: true,
       },
       {
         id: 'tile-4',
@@ -373,11 +373,13 @@ export const headerTiles = [
     tiles: [
       {
         id: 'tile-1',
-        customContent: <Loading withOverlay={false} description="Sample loading state" />
+        customContent: (
+          <Loading withOverlay={false} description="Sample loading state" />
+        ),
       },
       {
         id: 'tile-2',
-        customContent: <SampleCustomTaskContent />
+        customContent: <SampleCustomTaskContent />,
       },
     ],
   },

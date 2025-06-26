@@ -55,6 +55,7 @@ export type AnimatedHeaderProps = {
   disabledTaskLabel?: string;
   expandButtonLabel?: string;
   collapseButtonLabel?: string;
+  tileClickHandler?: (tile: Tile) => void;
 } & TasksControllerProps &
   WorkspaceSelectorProps;
 
@@ -74,6 +75,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   disabledTaskLabel,
   expandButtonLabel = 'Expand',
   collapseButtonLabel = 'Collapse',
+  tileClickHandler,
 }: AnimatedHeaderProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
@@ -217,6 +219,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               {selectedTileGroup.tiles.map((tile) => {
                 return (
                   <BaseTile
+                    onClick={() => tileClickHandler?.(tile)}
                     key={tile.id}
                     id={tile.id}
                     open={open}
@@ -335,6 +338,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
       propsOverrides: PropTypes.object,
     }),
   }),
+
+  /**
+   * Handler for tile clicks
+   */
+  tileClickHandler: PropTypes.func,
 
   /**
    * Specify the current username of active user

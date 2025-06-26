@@ -25,6 +25,7 @@ interface GlassTileProps {
   isLoading?: boolean;
   isDisabled?: boolean;
   disabledTaskLabel?: string;
+  onClick?: () => void;
 }
 
 export const GlassTile: React.FC<GlassTileProps> = ({
@@ -39,6 +40,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   isLoading,
   isDisabled,
   disabledTaskLabel,
+  onClick: glassTileClickHandler,
 }: GlassTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__glass-tile`;
@@ -49,6 +51,9 @@ export const GlassTile: React.FC<GlassTileProps> = ({
 
   return (
     <Link
+      onClick={() => {
+        glassTileClickHandler?.();
+      }}
       className={`${prefix}--animated-header__tile ${blockClass}`}
       key={id}
       href={href ?? undefined}

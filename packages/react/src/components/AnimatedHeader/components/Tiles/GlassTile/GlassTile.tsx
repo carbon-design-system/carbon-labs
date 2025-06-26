@@ -53,10 +53,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
     />
   );
 
-  console.log(isInteractive);
-
   if (isInteractive === false) {
-    console.log(title);
     return (
       <div
         className={`${prefix}--animated-header__tile ${blockClass}`}

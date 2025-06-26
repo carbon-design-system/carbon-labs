@@ -45,7 +45,7 @@ export const pictograms = [
   items: cities.map(([name, pictogram]) => ({
     value: name.toLowerCase().split(' ').join('-'),
     label: name,
-     pictogram,
+    pictogram,
   })),
 }));
 

@@ -56,7 +56,7 @@ class StylePicker extends LitElement {
 
   /**
    * Invoked whenever the element is updated.
-   * 
+   *
    * @param {PropertyValues<this>} changed - A Map of property keys to values.
    */
   updated(changed: PropertyValues<this>) {

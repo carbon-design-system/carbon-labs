@@ -21,7 +21,8 @@ $prefix: 'cds' !default;
 
 div:has(.#{$prefix}--header)
   ~ div:has(.#{$prefix}--side-nav)
-  .#{$prefix}--side-nav {
+  .#{$prefix}--side-nav,
+.#{$prefix}--header ~ div:has(.#{$prefix}--side-nav) .#{$prefix}--side-nav {
   block-size: calc(100% - $spacing-09);
   inset-block-start: $spacing-09;
 }

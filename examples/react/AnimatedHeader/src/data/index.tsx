@@ -7,8 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Add } from '@carbon/react/icons';
-import { ButtonKinds, Loading } from '@carbon/react';
+import { Loading } from '@carbon/react';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
 
 export const workspaceData = [
@@ -335,20 +334,3 @@ export const headerTiles = [
     ],
   },
 ];
-
-export const tasksConfigButton = {
-  type: 'button',
-  button: {
-    href: '#',
-    icon: Add,
-    text: 'Action button',
-    type: ButtonKinds[7],
-  },
-};
-
-export const tasksConfigDropdown = {
-  type: 'dropdown',
-  dropdown: {
-    label: 'Customize your journey',
-  },
-};

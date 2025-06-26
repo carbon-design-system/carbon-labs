@@ -100,13 +100,13 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 id="downshift-:r4:-toggle-button"
                 role="combobox"
                 tabindex="0"
-                title="Customize your journey"
+                title="AI Chat Tile w/ two glass tiles"
                 type="button"
               >
                 <span
                   class="cds--list-box__label"
                 >
-                  Customize your journey
+                  AI Chat Tile w/ two glass tiles
                 </span>
                 <div
                   class="cds--list-box__menu-icon"
@@ -172,13 +172,13 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 id="downshift-:r7:-toggle-button"
                 role="combobox"
                 tabindex="0"
-                title=""
+                title="Select workspace"
                 type="button"
               >
                 <span
                   class="cds--list-box__label"
                 >
-                  Open in: Drew's workspace
+                  Select workspace
                 </span>
                 <div
                   class="cds--list-box__menu-icon"
@@ -217,8 +217,9 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           class="clabs--animated-header__tiles-container"
         >
           <div
-            class="clabs--animated-header__tile clabs--animated-header__ai-prompt-tile"
+            class="clabs--animated-header__ai-prompt-tile--animated-header__tile clabs--animated-header__ai-prompt-tile"
             id="clabs--animated-header__ai-prompt-tile"
+            title=""
           >
             <div
               class="clabs--animated-header__ai-prompt-tile--body"
@@ -393,6 +394,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           <a
             class="cds--link clabs--animated-header__tile clabs--animated-header__glass-tile"
             href="#"
+            title=""
           >
             <div
               class="clabs--animated-header__glass-tile--body"
@@ -437,6 +439,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           <a
             class="cds--link clabs--animated-header__tile clabs--animated-header__glass-tile"
             href="#"
+            title=""
           >
             <div
               class="clabs--animated-header__glass-tile--body"

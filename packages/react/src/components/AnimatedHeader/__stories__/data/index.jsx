@@ -323,6 +323,42 @@ export const headerTiles = [
   },
   {
     id: 8,
+    label: 'Loading and disabled cards',
+    tiles: [
+      {
+        id: 'tile-1',
+        href: '#',
+        title: 'Load data',
+        subtitle: 'with Data explorer',
+        mainIcon: 'DataSet',
+        isLoading: true,
+      },
+      {
+        id: 'tile-2',
+        href: '#',
+        title: 'Monitor data performance and system capacity',
+        subtitle: 'with Monitoring hub',
+        mainIcon: 'ChartLineData',
+      },
+      {
+        id: 'tile-3',
+        href: '#',
+        title: 'Create and run SQL queries',
+        subtitle: 'with SQL editor',
+        mainIcon: 'Sql',
+        isDisabled: true
+      },
+      {
+        id: 'tile-4',
+        href: '#',
+        title: 'Export data',
+        mainIcon: 'Export',
+        secondaryIcon: 'ArrowRight',
+      },
+    ],
+  },
+  {
+    id: 9,
     label: 'Custom content tasks',
     tiles: [
       {
@@ -337,7 +373,7 @@ export const headerTiles = [
   },
 ];
 
-export const tasksConfigButton = {
+export const tasksControllerConfigButton = {
   type: 'button',
   button: {
     href: '#',
@@ -347,9 +383,32 @@ export const tasksConfigButton = {
   },
 };
 
-export const tasksConfigDropdown = {
+export const tasksControllerConfigDropdown = {
   type: 'dropdown',
   dropdown: {
     label: 'Customize your journey',
+    allTileGroups: headerTiles,
+    selectedTileGroup: headerTiles[0],
+    setSelectedTileGroup: () => {},
   },
 };
+
+export const tasksControllerConfigLoading = {
+  type: 'none',
+  isLoading: true,
+};
+
+export const workspaceSelectorConfig = {
+    allWorkspaces: workspaceData,
+    setSelectedWorkspace: () => {},
+    propsOverrides: {
+      label: "Select workspace",
+      renderSelectedItem: (item) => `Open in: ${item.label}`
+    }
+}
+
+export const workspaceSelectorConfigLoading = {
+  allWorkspaces: workspaceData,
+  setSelectedWorkspace: () => {},
+  isLoading: true
+}

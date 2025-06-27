@@ -75,8 +75,8 @@ export interface SideNavProps
   inert?: boolean;
   isCollapsible?: boolean;
   hideOverlay?: boolean;
-  navType: SIDE_NAV_TYPE;
-  isTreeview: boolean;
+  navType?: SIDE_NAV_TYPE;
+  isTreeview?: boolean;
 }
 
 interface SideNavContextData {

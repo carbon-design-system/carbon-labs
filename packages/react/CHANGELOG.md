@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.81.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.80.0...@carbon-labs/react@0.81.0) (2025-06-26)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.80.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.79.0...@carbon-labs/react@0.80.0) (2025-06-26)
+
+
+### Bug Fixes
+
+* **uishell:** remove duplicate import ([#683](https://github.com/carbon-design-system/carbon-labs/issues/683)) ([50364b6](https://github.com/carbon-design-system/carbon-labs/commit/50364b6e8e0defd33087551e911a021061922d35))
+
+
+
+
+
 # [0.79.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.78.0...@carbon-labs/react@0.79.0) (2025-06-26)
 
 **Note:** Version bump only for package @carbon-labs/react

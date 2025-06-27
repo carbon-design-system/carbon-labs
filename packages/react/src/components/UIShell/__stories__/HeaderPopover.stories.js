@@ -63,7 +63,6 @@ export const Default = (args) => (
     </HeaderGlobalBar>
   </Header>
 );
-Default.storyName = 'HeaderPopover';
 
 Default.args = {
   dropShadow: false,

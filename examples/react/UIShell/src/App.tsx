@@ -293,6 +293,7 @@ function App() {
                     ]}
                     label="Choose an option"
                     titleText="Choose an option"
+                    hideLabel
                   />
                 </SideNavSlot>
                 <SideNavDivider />
@@ -348,7 +349,6 @@ function App() {
               <SideNavSlot renderIcon={Menu}>
                 <Menu />
               </SideNavSlot>
-
               <SideNavSlot renderIcon={SquareOutline}>
                 <Dropdown
                   id="default"
@@ -360,6 +360,8 @@ function App() {
                     { text: 'Option 3' },
                   ]}
                   label="Choose an option"
+                  titleText="Choose an option"
+                  hideLabel
                 />
               </SideNavSlot>
               <SideNavDivider />

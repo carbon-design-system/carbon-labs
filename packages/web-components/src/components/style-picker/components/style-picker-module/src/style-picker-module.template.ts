@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, TemplateResult } from 'lit';
+import { html, nothing, TemplateResult } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { Group, Item } from '../../../defs/style-picker-module.types';
 
@@ -21,7 +21,7 @@ export const blockClass = `${clabsPrefix}--style-picker-module`;
  * Lit template for card
  *
  * @param {object} customElementClass Class functionality for the custom element
- * @returns {TemplateResult<1>} Lit html template
+ * @returns {TemplateResult} The template result
  */
 export const stylePickerModuleTemplate = <T>(
   customElementClass
@@ -40,11 +40,15 @@ export const stylePickerModuleTemplate = <T>(
     return !(i[0] as Item<T>).value;
   };
 
+  const flattenedItems = !itemsAreGrouped(items)
+    ? items
+    : // @ts-ignore
+      items?.flatMap((group) => group.items);
+
   /**
    * Render options from items
    *
    * @param {Item<T>[]} items - Items array
-   * @returns {TemplateResult<1>} Lit html template
    */
   const renderItems = (items: Item<T>[]) => {
     return items.map(
@@ -112,9 +116,32 @@ export const stylePickerModuleTemplate = <T>(
     `;
   };
 
-  if (kind === 'single' && itemsAreGrouped(items)) {
-    return html`${renderGrouped(items)}`;
-  }
+  /**
+   * An internal function to render `flat` variant.
+   * Only to organize the code.
+   */
+  const renderFlatVariant = () => {
+    return html`
+      <div class=${`${blockClass}--flat`}>
+        <div class=${`${blockClass}__header`}>
+          <strong class=${`${blockClass}__heading`}> ${title} </strong>
+        </div>
+        ${renderUngrouped(flattenedItems)}
+      </div>
+    `;
+  };
 
-  return html`${renderUngrouped(items)}`;
+  switch (kind) {
+    case 'single':
+      if (itemsAreGrouped(items)) {
+        return html`${renderGrouped(items)}`;
+      }
+      return html`${renderUngrouped(items)}`;
+
+    case 'flat':
+      return renderFlatVariant();
+
+    default:
+      return nothing as unknown as TemplateResult<1>;
+  }
 };

@@ -8,9 +8,7 @@ snapshots["clabs-empty-state should render clabs-empty-state"] =
   title="Empty state heading."
 >
   <img
-    alt="title"
-    class="clabs--empty-state__illustration clabs--empty-state__illustration-lg"
-    slot="illustration"
+    alt="customillustration"
     src="[object Object]"
   >
   <cds-button

@@ -34,9 +34,9 @@ export const stylePickerPictogramModuleTemplate = (
   const _render = (item): TemplateResult => {
     return html`
       ${renderCarbonPictogram({
-        ...item.renderPictogram,
+        ...item.pictogram,
         attrs: {
-          ...item.renderPictogram.attrs,
+          ...item.pictogram.attrs,
           width: '3rem',
           height: '3rem',
           'aria-label': item.label,

@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { Group, Item } from '../../../defs/style-picker-module.types';
 
@@ -139,6 +139,6 @@ export const stylePickerModuleTemplate = <T>(customElementClass) => {
       return renderFlatVariant();
 
     default:
-      return nothing;
+      return html``;
   }
 };

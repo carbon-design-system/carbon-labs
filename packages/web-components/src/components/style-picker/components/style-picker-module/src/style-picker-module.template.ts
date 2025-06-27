@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, nothing, TemplateResult } from 'lit';
+import { html, nothing } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { Group, Item } from '../../../defs/style-picker-module.types';
 
@@ -21,11 +21,8 @@ export const blockClass = `${clabsPrefix}--style-picker-module`;
  * Lit template for card
  *
  * @param {object} customElementClass Class functionality for the custom element
- * @returns {TemplateResult<1>} Lit html template
  */
-export const stylePickerModuleTemplate = <T>(
-  customElementClass
-): TemplateResult<1> | typeof nothing => {
+export const stylePickerModuleTemplate = <T>(customElementClass) => {
   const kind = customElementClass.stylePickerContext?.kind ?? 'single';
   const { items, title, size, renderItem, selectedItem, handleOptionChange } =
     customElementClass;
@@ -49,7 +46,6 @@ export const stylePickerModuleTemplate = <T>(
    * Render options from items
    *
    * @param {Item<T>[]} items - Items array
-   * @returns {TemplateResult<1>} Lit html template
    */
   const renderItems = (items: Item<T>[]) => {
     return items.map(

@@ -17,7 +17,7 @@ export interface SideNavItemsProps {
    * Object to provide an aria-label to the component when used in treeview,
    * to ensure it meets a11y requirements.
    */
-  accessibilityLabel: object;
+  accessibilityLabel?: object;
 
   /**
    * Provide a single icon as the child to `SideNavIcon` to render in the

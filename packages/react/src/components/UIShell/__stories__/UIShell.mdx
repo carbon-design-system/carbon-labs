@@ -26,23 +26,18 @@ example implementation.
 - [Getting started](#getting-started)
   - [SCSS](#scss)
   - [JS](#js-imports)
-- [Examples](#examples)
-  - [Header popover](#header-popover)
-  - [SideNavSlot](#sidenavslot)
-  - [Treeview](#treeview)
-  - [Double wide](#double-wide)
-- [Component API](#component-api)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
 
 ## Overview
 
 To use this package you will need to import components from both `@carbon/react`
-and `@carbon-labs/react-ui-shell` to compose the UI Shell. The following
-components are provided by `@carbon-labs/react-ui-shell`:
+and `@carbon-labs/react-ui-shell` to compose the UI Shell. Additional
+documentation and examples for `@carbon/react` components can be found in the
+[Carbon React Storybook](https://react.carbondesignsystem.com/?path=/docs/components-ui-shell-header--overview).
+The following components are provided by `@carbon-labs/react-ui-shell`:
 
 - `HeaderDivider`
-- `HeaderPanel`
 - `HeaderPopover`
 - `HeaderPopoverActions`
 - `HeaderPopoverButton`
@@ -55,7 +50,7 @@ components are provided by `@carbon-labs/react-ui-shell`:
 - `SideNavSlot`
 - `TrialCountdown`
 
-<Canvas of={UIShellStories.Default} />
+<Canvas of={UIShellStories.Demo} />
 
 ## Getting started
 
@@ -97,7 +92,6 @@ import {
   SideNavItems,
   SideNavMenu,
   SideNavMenuItem,
-  HeaderPanel,
   SideNavLink,
   HeaderPopover,
   HeaderPopoverActions,
@@ -140,180 +134,6 @@ Check out our
 example implementation to see all the components working together in a fully
 functional UI Shell.
 
-### Header popover
-
-```jsx
-import {
-  HeaderPopover,
-  HeaderPopoverContent,
-  HeaderPopoverButton,
-  HeaderPopoverActions,
-} from '@carbon-labs/react-ui-shell';
-import { Header, HeaderGlobalBar } from '@carbon/react';
-import { Information } from '@carbon/icons-react';
-
-function App() {
-  return (
-    <Header aria-label="IBM Platform Name">
-      <HeaderGlobalBar>
-        <HeaderPopover align="bottom-right">
-          <HeaderPopoverButton align="bottom" label="Show information">
-            <Information />
-          </HeaderPopoverButton>
-          <HeaderPopoverContent>
-            <p>
-              Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed
-              do eiusmod tempor incididunt ut fsil labore et dolore magna
-              aliqua.
-            </p>
-            <HeaderPopoverActions>
-              <Link href="#">Link action</Link>
-              <Button size="sm">Button</Button>
-            </HeaderPopoverActions>
-          </HeaderPopoverContent>
-        </HeaderPopover>
-      </HeaderGlobalBar>
-    </Header>
-  );
-}
-
-export default App;
-```
-
-### `SideNavSlot`
-
-`SideNavSlot` is a child component of `SideNavItems`. It renders a `<li>`
-element and accepts `children` to display a custom component inside the side
-navigation. An optional `renderIcon` prop allows you to specify an icon that
-displays when the navigation is in rail mode (`isRail`) and collapsed.
-
-```jsx
-<SideNavItems>
-  <SideNavSlot renderIcon={SearchIcon}>
-    <Search
-      size="sm"
-      placeholder="Filter"
-      closeButtonLabelText="Clear input"
-      id="filter-1"
-    />
-  </SideNavSlot>
-</SideNavItems>
-```
-
-### Treeview
-
-`SideNav` has a new treeview navigation type that can be enabled by adding the
-`isTreeview` prop. Note that this feature should only be used if there are two
-levels of content within the component.
-
-Also note that it will be automatically enabled if there are more than two
-levels of content within the component.
-
-```jsx
-import {
-  SideNav,
-  SideNavItems,
-  SideNavLink,
-  SideNavMenu,
-  SideNavMenuItem,
-  HeaderPanel,
-} from '@carbon-labs/react-ui-shell';
-import { Fade, SquareOutline } from '@carbon/icons-react';
-
-function App() {
-  return (
-    <SideNav
-      isFixedNav
-      isTreeview
-      expanded={true}
-      isChildOfHeader={false}
-      aria-label="Side navigation">
-      <SideNavItems>
-        <SideNavLink renderIcon={Fade} href="#">
-          Link level 1
-        </SideNavLink>
-        <SideNavMenu
-          defaultExpanded={true}
-          renderIcon={Fade}
-          title="Sub-menu level 1">
-          <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-          <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-          <SideNavMenu title="Sub-menu level 2" defaultExpanded={true}>
-            <SideNavMenuItem isActive href="#">
-              Link level 3
-            </SideNavMenuItem>
-            <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-          </SideNavMenu>
-        </SideNavMenu>
-      </SideNavItems>
-    </SideNav>
-  );
-}
-
-export default App;
-```
-
-### Double wide
-
-The double wide feature can be enabled by adding the `primary` prop to each top
-level `SideNavMenu`'s. This should be used with the treeview navigation. In mobile,
-there is a configurable back button, which defaults to using the icon `<ArrowRight/>`
-and text "My products". These can be updated by using the props `backButtonRenderIcon`
-and `backButtonTitle`.
-
-```jsx
-import {
-  SideNav,
-  SideNavItems,
-  SideNavLink,
-  SideNavMenu,
-  SideNavMenuItem,
-  HeaderPanel,
-} from '@carbon-labs/react-ui-shell';
-import { Fade, SquareOutline } from '@carbon/icons-react';
-
-function App() {
-  return (
-    <SideNav
-      isFixedNav
-      isTreeview
-      expanded={true}
-      isChildOfHeader={false}
-      aria-label="Side navigation">
-      <SideNavItems>
-        <SideNavLink renderIcon={Fade} href="#">
-          Link level 1
-        </SideNavLink>
-        <SideNavMenu
-          defaultExpanded={true}
-          renderIcon={Fade}
-          title="Sub-menu level 1"
-          primary>
-          <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-          <SideNavMenuItem href="#">Link level 2</SideNavMenuItem>
-          <SideNavMenu title="Sub-menu level 2" defaultExpanded={true}>
-            <SideNavMenuItem isActive href="#">
-              Link level 3
-            </SideNavMenuItem>
-            <SideNavMenuItem href="#">Link level 3</SideNavMenuItem>
-          </SideNavMenu>
-        </SideNavMenu>
-        <SideNavMenu renderIcon={Fade} title="Sub-menu level 1" primary>
-          <SideNavMenuItem
-            renderIcon={Fade}
-            href="#">
-            Item level 2
-          </SideNavMenuItem>
-        </SideNavMenu>
-      </SideNavItems>
-    </SideNav>
-  );
-}
-
-export default App;
-```
-
 ## Component API
 
 <ArgTypes />
-````

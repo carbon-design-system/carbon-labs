@@ -15,43 +15,23 @@ import { GlassTile } from '../GlassTile/GlassTile';
 interface BaseTileProps {
   id?: string;
   open?: boolean;
-  href?: string;
-  mainIcon?: string;
-  secondaryIcon?: string;
-  title?: string;
-  subtitle?: string;
+  href?: string | null;
+  mainIcon?: string | null;
+  secondaryIcon?: string | null;
+  title?: string | null;
+  subtitle?: string | null;
   productName?: string;
   customContent?: ReactNode;
+  isLoading?: boolean;
+  isDisabled?: boolean;
+  disabledTaskLabel?: string;
+  onClick?: () => void;
 }
 
-export const BaseTile: React.FC<BaseTileProps> = ({
-  id,
-  open,
-  href,
-  mainIcon,
-  secondaryIcon,
-  title,
-  subtitle,
-  productName,
-  customContent,
-}: BaseTileProps) => {
-  const props = {
-    id,
-    open,
-    href,
-    mainIcon,
-    secondaryIcon,
-    title,
-    subtitle,
-    productName,
-    customContent,
-  };
-  const tile =
-    id === 'ai-tile' ? (
-      <AIPromptTile {...props}></AIPromptTile>
-    ) : (
-      <GlassTile {...props}></GlassTile>
-    );
+export const BaseTile: React.FC<BaseTileProps> = (props: BaseTileProps) => {
+  if (props.id === 'ai-tile') {
+    return <AIPromptTile {...props}></AIPromptTile>;
+  }
 
-  return tile;
+  return <GlassTile {...props}></GlassTile>;
 };

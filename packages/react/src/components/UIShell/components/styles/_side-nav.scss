@@ -8,7 +8,6 @@
 @use '@carbon/styles/scss/utilities/convert' as convert;
 @use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 @use '@carbon/styles/scss/utilities/button-reset' as button-reset;
-@use '@carbon/react/scss/breakpoint' as breakpoint;
 @use '@carbon/styles/scss/utilities/focus-outline' as *;
 @use '@carbon/styles/scss/breakpoint' as *;
 @use '@carbon/styles/scss/theme' as *;
@@ -22,7 +21,8 @@ $prefix: 'cds' !default;
 
 div:has(.#{$prefix}--header)
   ~ div:has(.#{$prefix}--side-nav)
-  .#{$prefix}--side-nav {
+  .#{$prefix}--side-nav,
+.#{$prefix}--header ~ div:has(.#{$prefix}--side-nav) .#{$prefix}--side-nav {
   block-size: calc(100% - $spacing-09);
   inset-block-start: $spacing-09;
 }
@@ -152,6 +152,7 @@ div:has(.#{$prefix}--header)
 
 .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
   inline-size: 16rem;
+  overflow-y: auto;
   transform: translateX(0);
 }
 
@@ -456,7 +457,7 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 // Mobile
 //----------------------------------------------------------------------------
-@include breakpoint.breakpoint-down(md) {
+@include breakpoint-down(md) {
   .#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--expanded {
     inline-size: 100%;
     max-inline-size: 100%;

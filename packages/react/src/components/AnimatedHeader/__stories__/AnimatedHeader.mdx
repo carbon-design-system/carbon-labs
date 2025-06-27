@@ -134,26 +134,16 @@ In your styles file import
 Example of Animated Header with all prop types enabled.
 
 ```jsx
-<AnimatedHeader
-  allTiles={tiles}
-  allWorkspaces={workspaces}
-  description="Connect, monitor, and manage data."
-  handleHeaderItemsToString={handleHeaderItems}
-  handleWorkspaceItemsToString={handleWorkspaceItems}
-  headerAnimation={watsonXAnimatedLight}
-  headerStatic={watsonXStaticLight}
-  productName="[Product name]"
-  renderHeaderSelectedItem={tileGroupSelectedItemRenderer}
-  renderWorkspaceSelectedItem={workspaceSelectedItemRenderer}
-  selectedTileGroup={selectedTile}
-  selectedWorkspace={selectedWorkspace}
-  setSelectedTileGroup={handleTileGroup}
-  setSelectedWorkspace={handleWorkspaceSelect}
-  tasksConfig={tasksConfig}
-  userName="Drew"
-  welcomeText="Welcome"
-  workspaceLabel="Open in: Drew's workspace"
-  expandButtonLabel="Expand"
-  collapseButtonLabel="Collapse"
-/>
+  <AnimatedHeader
+    tasksControllerConfig={tasksControllerConfigDropdown as TasksControllerConfig}
+    workspaceSelectorConfig={WorkspaceSelectorConfig}
+    description="Connect, monitor, and manage data."
+    productName="[Product name]"
+    userName="Drew"
+    welcomeText="Welcome"
+    isLoading={false}
+    expandButtonLabel="Expand"
+    collapseButtonLabel="Collapse"
+    tileClickHandler={handleTileClicks}
+  />
 ```

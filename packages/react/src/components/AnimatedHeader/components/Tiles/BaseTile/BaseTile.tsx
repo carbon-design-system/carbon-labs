@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React, { ReactNode } from 'react';
+import React, { ElementType, ReactNode } from 'react';
 import { AIPromptTile } from '../AIPromptTile/AIPromptTile';
 import { GlassTile } from '../GlassTile/GlassTile';
 
@@ -16,8 +16,8 @@ interface BaseTileProps {
   id?: string;
   open?: boolean;
   href?: string | null;
-  mainIcon?: string | null;
-  secondaryIcon?: string | null;
+  mainIcon?: ElementType | null;
+  secondaryIcon?: ElementType | null;
   title?: string | null;
   subtitle?: string | null;
   productName?: string;
@@ -26,6 +26,7 @@ interface BaseTileProps {
   isDisabled?: boolean;
   disabledTaskLabel?: string;
   onClick?: () => void;
+  isInteractive?: boolean;
 }
 
 export const BaseTile: React.FC<BaseTileProps> = (props: BaseTileProps) => {

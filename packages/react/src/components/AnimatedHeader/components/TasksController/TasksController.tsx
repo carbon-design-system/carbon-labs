@@ -19,7 +19,7 @@ import { TileGroup } from '../AnimatedHeader/AnimatedHeader';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 
 export interface TasksControllerConfig {
-  type: 'button' | 'dropdown';
+  type: 'button' | 'dropdown' | null;
   isLoading?: boolean;
   button?: {
     text: string;
@@ -33,10 +33,10 @@ export interface TasksControllerConfig {
 }
 
 export type TasksControllerProps = {
-  tasksControllerConfig?: TasksControllerConfig;
+  tasksControllerConfig?: TasksControllerConfig | null;
   isLoading?: boolean;
   allTileGroups?: TileGroup[];
-  selectedTileGroup?: TileGroup;
+  selectedTileGroup?: TileGroup | null;
   setSelectedTileGroup: (e) => void;
 };
 
@@ -73,7 +73,7 @@ const TasksController = ({
       hideLabel: true,
       type: 'inline',
       items: allTileGroups,
-      selectedItem: selectedTileGroup,
+      selectedItem: selectedTileGroup ?? undefined,
       onChange: (e) => {
         setSelectedTileGroup?.(e);
         dropdownCustomOnChange?.(e);
@@ -89,6 +89,10 @@ const TasksController = ({
     dropdownOverrideProps,
     dropdownCustomOnChange,
   ]);
+
+  if (!tasksControllerConfig?.type) {
+    return null;
+  }
 
   if (isLoading || tasksControllerConfig?.isLoading) {
     return (

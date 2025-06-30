@@ -24,13 +24,13 @@ export type WorkspaceSelectorConfig = {
     >
   >;
   allWorkspaces: Workspace[];
-  selectedWorkspace?: Workspace;
+  selectedWorkspace?: Workspace | null;
   setSelectedWorkspace: (e) => void;
   isLoading?: boolean;
 };
 
 export type WorkspaceSelectorProps = {
-  workspaceSelectorConfig?: WorkspaceSelectorConfig;
+  workspaceSelectorConfig?: WorkspaceSelectorConfig | null;
   userName?: string;
   isLoading?: boolean;
 };
@@ -64,7 +64,7 @@ const WorkspaceSelector = ({
       hideLabel: true,
       type: 'inline',
       items: workspaceSelectorConfig?.allWorkspaces,
-      selectedItem: workspaceSelectorConfig?.selectedWorkspace,
+      selectedItem: workspaceSelectorConfig?.selectedWorkspace ?? undefined,
       onChange: (e) => {
         workspaceSelectorConfig?.setSelectedWorkspace?.(e);
         dropdownCustomOnChange?.(e);

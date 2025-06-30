@@ -352,6 +352,7 @@ export const Demo = () => {
                     ]}
                     label="Choose an option"
                     titleText="Choose an option"
+                    hideLabel
                   />
                 </SideNavSlot>
                 <SideNavDivider />
@@ -492,6 +493,8 @@ export const Demo = () => {
                       { text: 'Option 3' },
                     ]}
                     label="Choose an option"
+                    titleText="Choose an option"
+                    hideLabel
                   />
                 </SideNavSlot>
                 <SideNavDivider />

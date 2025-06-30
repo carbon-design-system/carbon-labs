@@ -96,7 +96,7 @@ export const withReadOnly = () => {
  * Story for Profile with read only items
  * @returns {React.ReactElement} The JSX for the story
  */
-export const withContainedList = () => {
+export const withLinks = () => {
   return (
     <Header aria-label="IBM Platform Name">
       <HeaderGlobalBar>

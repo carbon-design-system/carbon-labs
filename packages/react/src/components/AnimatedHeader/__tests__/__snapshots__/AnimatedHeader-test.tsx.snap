@@ -217,7 +217,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           class="clabs--animated-header__tiles-container"
         >
           <div
-            class="clabs--animated-header__tile clabs--animated-header__ai-prompt-tile"
+            class="clabs--animated-header__ai-prompt-tile--animated-header__tile clabs--animated-header__ai-prompt-tile"
             id="clabs--animated-header__ai-prompt-tile"
             title=""
           >
@@ -341,7 +341,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                   >
                     <button
                       aria-labelledby="tooltip-:rc:"
-                      class="clabs--animated-header__ai-prompt-tile--icon-button  cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
+                      class="cds--btn--icon-only clabs--animated-header__ai-prompt-tile--icon-button  cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--disabled"
                       disabled=""
                       type="button"
                     >

@@ -2680,7 +2680,6 @@ __metadata:
   resolution: "@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UIShell"
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
-    "@carbon/ibm-products": "npm:^2.68.0"
     "@ibm/telemetry-js": "npm:^1.9.1"
   languageName: unknown
   linkType: soft
@@ -3018,7 +3017,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/ibm-products@npm:^2.49.0, @carbon/ibm-products@npm:^2.68.0":
+"@carbon/ibm-products@npm:^2.49.0":
   version: 2.68.0
   resolution: "@carbon/ibm-products@npm:2.68.0"
   dependencies:

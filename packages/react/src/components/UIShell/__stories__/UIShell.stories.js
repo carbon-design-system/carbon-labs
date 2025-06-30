@@ -15,6 +15,7 @@ import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { SideNavLink } from '../components/SideNavLink';
 import { SideNavSlot } from '../components/SideNavSlot';
+import { Profile } from '../index';
 import {
   HeaderPopover,
   HeaderPopoverActions,
@@ -304,22 +305,23 @@ export const Demo = () => {
                 />
               </MenuButton>
               <HeaderDivider />
-              <HeaderPopover align="bottom-right">
-                <HeaderPopoverButton align="bottom" label="Profile">
-                  <UserAvatar size={20} />
-                </HeaderPopoverButton>
-                <HeaderPopoverContent>
-                  <p>
-                    Lorem ipsum dolor sit amet, di os consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut fsil labore et
-                    dolore magna aliqua.
-                  </p>
-                  <HeaderPopoverActions>
-                    <Link href="#">Link action</Link>
-                    <Button size="sm">Button</Button>
-                  </HeaderPopoverActions>
-                </HeaderPopoverContent>
-              </HeaderPopover>
+              <Profile.Root
+                label="Profile"
+                renderIcon={<UserAvatar size={20} />}>
+                <Profile.UserInfo
+                  name="Thomas J. Watson"
+                  email="thomas.watson@ibm.com"
+                />
+                <p>
+                  Lorem ipsum dolor sit amet, di os consectetur adipiscing elit,
+                  sed do eiusmod tempor incididunt ut fsil labore et dolore
+                  magna aliqua.
+                </p>
+                <HeaderPopoverActions>
+                  <Link href="#">Link action</Link>
+                  <Button size="sm">Button</Button>
+                </HeaderPopoverActions>
+              </Profile.Root>
             </HeaderGlobalBar>
           </Header>
 

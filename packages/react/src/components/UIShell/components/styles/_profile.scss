@@ -1,0 +1,63 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/react/scss/utilities/convert' as convert;
+@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
+@use '@carbon/ibm-products/scss/components/UserAvatar';
+
+$prefix: 'cds' !default;
+
+// user-info
+.#{$prefix}--header-action .#{$prefix}--profile-user-info {
+  display: flex;
+  padding-block-start: $spacing-05;
+
+  &:not(:last-child) {
+    border-block-end: convert.to-rem(1px) solid $border-subtle;
+  }
+}
+
+.#{$prefix}--profile-user-info__text-wrapper {
+  margin-inline-start: $spacing-05;
+}
+
+.#{$prefix}--profile-user-info__name {
+  @include type-style('productive-heading-03');
+}
+
+.#{$prefix}--profile-user-info__email {
+  @include type-style('label-01');
+}
+
+// read only
+.#{$prefix}--profile-read-only {
+  padding-block-start: 0;
+
+  &:not(:last-child) {
+    border-block-end: convert.to-rem(1px) solid $border-subtle;
+  }
+}
+
+.#{$prefix}--profile-read-only__items:not(:last-child) {
+  padding-block-end: $spacing-05;
+}
+
+.#{$prefix}--profile-read-only__label {
+  @include type-style('label-01');
+
+  color: $text-secondary;
+  padding-block-end: convert.to-rem(4px);
+}
+
+.#{$prefix}--profile-read-only__title {
+  @include type-style('body-compact-01');
+
+  color: $text-primary;
+}

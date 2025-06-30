@@ -26,10 +26,7 @@ import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 // StylePicker
-import '../components/style-picker/style-picker';
-import '../components/style-picker-color-module/style-picker-color-module';
-import '../components/style-picker-icon-module/style-picker-icon-module';
-import '../components/style-picker-pictogram-module/style-picker-pictogram-module';
+import '../index';
 import { renderCarbonPictogram } from '../utilities/renderCarbonPictogram';
 import { colors, icons, pictograms } from './_placeholders';
 import { alignOptions } from './_story.defs';
@@ -224,7 +221,7 @@ export const ColorAndIcon = {
 
 export const ColorAndPictogram = {
   args: {
-    title: 'Choose color and pictogram',
+    title: 'Select color and pictogram',
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
     kind: 'flat',

@@ -9,6 +9,7 @@
 
 import { html, nothing, TemplateResult } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import '@carbon/web-components/es/components/accordion/accordion-item';
 import { Group, Item } from '../../../defs/style-picker-module.types';
 
 import '../../style-picker-option/style-picker-option.js';
@@ -26,9 +27,18 @@ export const blockClass = `${clabsPrefix}--style-picker-module`;
 export const stylePickerModuleTemplate = <T>(
   customElementClass
 ): TemplateResult<1> => {
-  const kind = customElementClass.stylePickerContext?.kind ?? 'single';
-  const { items, title, size, renderItem, selectedItem, handleOptionChange } =
-    customElementClass;
+  const {
+    items,
+    title,
+    size,
+    renderItem,
+    selectedItem,
+    handleOptionChange,
+    slotIndex,
+    _stylePickerContext,
+  } = customElementClass;
+
+  const { kind, setActiveModule } = _stylePickerContext;
 
   /**
    * Checks items are grouped or not
@@ -131,15 +141,32 @@ export const stylePickerModuleTemplate = <T>(
     `;
   };
 
+  /**
+   *
+   */
+  const renderDefault = () => {
+    if (itemsAreGrouped(items)) {
+      return html`${renderGrouped(items)}`;
+    }
+    return html`${renderUngrouped(items)}`;
+  };
+
   switch (kind) {
     case 'single':
-      if (itemsAreGrouped(items)) {
-        return html`${renderGrouped(items)}`;
-      }
-      return html`${renderUngrouped(items)}`;
+      return renderDefault();
 
     case 'flat':
       return renderFlatVariant();
+
+    case 'disclosed':
+      return html`<cds-accordion-item
+        title=${title}
+        class=${`${blockClass}--disclosed`}
+        @cds-accordion-item-toggled=${() => {
+          setActiveModule?.(slotIndex);
+        }}>
+        ${renderDefault()}
+      </cds-accordion-item>`;
 
     default:
       return nothing as unknown as TemplateResult<1>;

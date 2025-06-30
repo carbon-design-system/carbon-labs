@@ -15,7 +15,7 @@ import {
 } from '../../../context/style-picker-context';
 // @ts-ignore
 import baseStyles from './style-picker-module.scss?inline';
-import { property } from 'lit/decorators.js';
+import { property, query } from 'lit/decorators.js';
 import { Group, Item } from '../../../defs/style-picker-module.types';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import CLABSStylePickerModule from '../style-picker-module';
@@ -31,11 +31,13 @@ const { stablePrefix: clabsPrefix } = settings;
 class StylePickerModule<T> extends LitElement {
   static styles: CSSResultGroup = [baseStyles];
 
+  @query('cds-accordion-item') accordionItem;
+
   /**
    * Consume style-picker-context
    */
   @consume({ context: stylePickerContext, subscribe: true })
-  stylePickerContext?: StylePickerContextType;
+  _stylePickerContext?: StylePickerContextType;
 
   @property({ type: Array, attribute: 'items' })
   items: Item<T>[] | Group<Item<T>>[] = [];
@@ -51,6 +53,9 @@ class StylePickerModule<T> extends LitElement {
 
   @property({ attribute: false })
   renderItem?: (item: Item<T>) => TemplateResult;
+
+  @property({ type: Number, reflect: true, attribute: 'slot-index' })
+  slotIndex?: number;
 
   /**
    * @param {string} triggeredBy - the element that triggered the change.
@@ -76,6 +81,15 @@ class StylePickerModule<T> extends LitElement {
 
     this.dispatchEvent(newEvent);
   };
+
+  /**
+   * Lifecycle method called after the component is updated.
+   */
+  protected updated() {
+    if (this._stylePickerContext?.activeModule !== this.slotIndex) {
+      this.accordionItem?.removeAttribute('open');
+    }
+  }
 
   /**
    * The name of the custom event fired after an option is changed in the module.

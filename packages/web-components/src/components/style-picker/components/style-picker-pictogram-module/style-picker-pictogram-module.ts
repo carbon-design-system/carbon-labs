@@ -28,9 +28,6 @@ const { stablePrefix: clabsPrefix } = settings;
 class CLABSStylePickerPictogramModule<
   Pictogram
 > extends StylePickerPictogramModule<Pictogram> {
-  @consume({ context: stylePickerContext, subscribe: true })
-  stylePickerContext?: StylePickerContextType;
-
   /**
    * Renders the template while passing in class functionality
    *

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.6.0...@carbon-labs/react-theme-settings@0.7.0) (2025-06-30)
+
+
+### Features
+
+* **profile:** create components to add to profile menu ([#671](https://github.com/carbon-design-system/carbon-labs/issues/671)) ([34a8fdb](https://github.com/carbon-design-system/carbon-labs/commit/34a8fdb42f4a676234e3707c15db73bd0d40d49a))
+
+
+
+
+
 # [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.5.0...@carbon-labs/react-theme-settings@0.6.0) (2025-05-28)
 
 

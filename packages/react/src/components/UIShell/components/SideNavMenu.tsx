@@ -428,10 +428,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }, [isExpanded]);
 
     useEffect(() => {
-      if (primary && currentPrimaryMenu !== uniqueId) {
-        setIsExpanded(false);
-      } else {
-        setIsExpanded(true);
+      if (primary) {
+        setIsExpanded(currentPrimaryMenu === uniqueId);
       }
     }, [currentPrimaryMenu]);
     // reset to opened/collapsed menu state when Panel SideNav is toggled

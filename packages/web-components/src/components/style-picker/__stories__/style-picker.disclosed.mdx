@@ -44,21 +44,29 @@ that is implemented.
 
 ### HTML
 
-#### Single variant with color module
+#### Disclosed variant with color and icon module
 
 ```html
 <clabs-style-picker
   .align=${"right"}
-  ?open=${false}
-  .title=${"Choose color"}>
+  ?open=${true}
+  .title=${'Choose color and icon'}
+  .kind=${"disclosed"}>
   <cds-icon-button
     slot="trigger"
-    .kind=${"ghost"}
+    .kind=${BUTTON_KIND.GHOST}
     @click="${toggleButton}">
     ${ColorPalette16({ slot: 'icon' })}
     <span slot="tooltip-content">Color palette</span>
   </cds-icon-button>
   <clabs-style-picker-modules slot="modules">
+    <clabs-style-picker-icon-module
+      .title=${'Icon'}
+      .size=${'sm'}
+      .items=${icons}
+      .selectedItem=${'apple'}
+      @clabs-style-picker-module-option-change=${(ev) =>
+        changeIcon(ev)}></clabs-style-picker-icon-module>
     <clabs-style-picker-color-module
       .title=${'Color'}
       .size=${'sm'}
@@ -70,39 +78,15 @@ that is implemented.
 </clabs-style-picker>
 ```
 
-#### Single variant with icon module
+#### Disclosed variant with color and pictogram module
 
 ```html
 <clabs-style-picker
   .align=${"right"}
   ?open=${false}
-  .title=${'Choose icon'}>
-  <cds-icon-button
-    slot="trigger"
-    .kind=${"ghost"}
-    @click="${toggleButton}">
-    ${ColorPalette16({ slot: 'icon' })}
-    <span slot="tooltip-content">Icon list</span>
-  </cds-icon-button>
-  <clabs-style-picker-modules slot="modules">
-    <clabs-style-picker-icon-module
-      .title=${'Icon'}
-      .size=${'sm'}
-      .items=${icons}
-      .selectedItem=${'apple'}
-      @clabs-style-picker-module-option-change=${(ev) =>
-        changeIcon(ev)}></clabs-style-picker-icon-module>
-  </clabs-style-picker-modules>
-</clabs-style-picker>
-```
-
-#### Single variant with pictogram module
-
-```html
-<clabs-style-picker
-  .align=${"right"}
-  ?open=${false}
-  .title=${'Choose pictogram'}>
+  .title=${'Choose color and pictogram'}
+  .kind=${"disclosed"}
+  >
   <cds-icon-button
     slot="trigger"
     .kind=${"ghost"}
@@ -111,6 +95,13 @@ that is implemented.
     <span slot="tooltip-content">Pictogram list</span>
   </cds-icon-button>
   <clabs-style-picker-modules slot="modules">
+    <clabs-style-picker-color-module
+      .title=${'Color'}
+      .size=${'sm'}
+      .items=${colors}
+      .selectedItem=${'blue-60'}
+      @clabs-style-picker-module-option-change=${(ev) =>
+        changeColor(ev)}></clabs-style-picker-color-module>
     <clabs-style-picker-pictogram-module
       .title=${'Pictogram'}
       .size=${'lg'}

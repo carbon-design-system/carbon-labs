@@ -12,5 +12,5 @@ $css--plex: true !default;
 $block-class: #{$clabs-prefix}--style-picker-modules;
 
 .#{$block-class}__container {
-  height: 100%;
+  block-size: 100%;
 }

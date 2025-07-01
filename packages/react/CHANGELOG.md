@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.87.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.86.0...@carbon-labs/react@0.87.0) (2025-06-30)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.86.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.85.0...@carbon-labs/react@0.86.0) (2025-06-30)
+
+
+### Bug Fixes
+
+* **SideNavMenu:** expanding issue if not primary ([#692](https://github.com/carbon-design-system/carbon-labs/issues/692)) ([904bece](https://github.com/carbon-design-system/carbon-labs/commit/904bece308cdd0a132f12477e23761d779c851c4))
+
+
+
+
+
+# [0.85.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.84.0...@carbon-labs/react@0.85.0) (2025-06-30)
+
+
+### Bug Fixes
+
+* **uishell:** update style import for ibm-products ([#691](https://github.com/carbon-design-system/carbon-labs/issues/691)) ([04b14c1](https://github.com/carbon-design-system/carbon-labs/commit/04b14c18f60c4d55d421ead8201087766877be01))
+
+
+
+
+
+# [0.84.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.83.0...@carbon-labs/react@0.84.0) (2025-06-30)
+
+
+### Bug Fixes
+
+* z-index in sidenav overlay ([#687](https://github.com/carbon-design-system/carbon-labs/issues/687)) ([1198e26](https://github.com/carbon-design-system/carbon-labs/commit/1198e265af2b8e1096d45b5db965ab389159298a))
+
+
+
+
+
+# [0.83.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.82.0...@carbon-labs/react@0.83.0) (2025-06-30)
+
+
+### Features
+
+* **profile:** create components to add to profile menu ([#671](https://github.com/carbon-design-system/carbon-labs/issues/671)) ([34a8fdb](https://github.com/carbon-design-system/carbon-labs/commit/34a8fdb42f4a676234e3707c15db73bd0d40d49a))
+
+
+
+
+
+# [0.82.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.81.0...@carbon-labs/react@0.82.0) (2025-06-27)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.81.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.80.0...@carbon-labs/react@0.81.0) (2025-06-26)
 
 **Note:** Version bump only for package @carbon-labs/react

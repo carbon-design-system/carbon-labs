@@ -52,6 +52,33 @@ div:has(.#{$prefix}--header)
 }
 
 .#{$prefix}--side-nav__item--active
+  .#{$prefix}--side-nav__submenu[aria-expanded='false'] {
+  background-color: transparent;
+
+  &::before {
+    display: none;
+  }
+}
+
+.#{$prefix}--side-nav__item--active
+  .#{$prefix}--side-nav__item--has-active-descendant
+  .#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active[aria-expanded='false'] {
+  position: relative;
+  background-color: $background-selected;
+  color: $text-primary;
+
+  &::before {
+    display: block;
+    position: absolute;
+    background-color: $border-interactive;
+    content: '';
+    inline-size: 3px;
+    inset-block: 0;
+    inset-inline-start: 0;
+  }
+}
+
+.#{$prefix}--side-nav__item--active
   .#{$prefix}--side-nav__submenu:not(.#{$prefix}--side-nav__submenu--active)
   > .#{$prefix}--side-nav__submenu-title {
   font-weight: 500;

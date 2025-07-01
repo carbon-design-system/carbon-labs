@@ -104,6 +104,27 @@ div:has(.#{$prefix}--header)
   }
 }
 
+@include breakpoint-down(md) {
+  .#{$prefix}--side-nav__submenu {
+    padding: 0 $spacing-05 0 convert.to-rem(14px);
+  }
+
+  .#{$prefix}--side-nav__submenu,
+  .#{$prefix}--side-nav__link,
+  .#{$prefix}--side-nav__menu a.#{$prefix}--side-nav__link {
+    block-size: $spacing-08;
+  }
+
+  .#{$prefix}--side-nav__icon {
+    margin-inline-end: convert.to-rem(14px);
+  }
+
+  .#{$prefix}--side-nav__icon > svg {
+    block-size: convert.to-rem(20px);
+    inline-size: convert.to-rem(20px);
+  }
+}
+
 // SideNavMenu
 // Level 2
 // without icon
@@ -175,6 +196,15 @@ div:has(.#{$prefix}--header)
   .cds--side-nav__menu-secondary-wrapper
   a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
   padding-inline-start: $spacing-05;
+}
+
+@include breakpoint-down(md) {
+  // with icon inside primary menu (double wide)
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+    .cds--side-nav__menu-secondary-wrapper
+    a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+    padding-inline-start: convert.to-rem(14px);
+  }
 }
 
 // Level 3

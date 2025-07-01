@@ -164,6 +164,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       [`${prefix}--side-nav__item--primary`]: primary,
       [`${prefix}--side-nav__item--active`]:
         !primary && (active || (hasActiveDescendant(children) && !isExpanded)),
+      [`${prefix}--side-nav__item--has-active-descendant`]:
+        active || (hasActiveDescendant(children) && !isExpanded),
       [`${prefix}--side-nav__item--icon`]: IconElement,
       [`${prefix}--side-nav__item--large`]: large,
       [customClassName as string]: !!customClassName,

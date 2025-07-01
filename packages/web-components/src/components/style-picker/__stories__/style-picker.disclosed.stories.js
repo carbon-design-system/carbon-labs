@@ -219,9 +219,9 @@ export const ColorAndIcon = {
     `,
 };
 
-export const ColorAndPictogram = {
+export const ThreeModules = {
   args: {
-    title: 'Select color and pictogram',
+    title: 'Select color and icon',
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
     kind: 'disclosed',
@@ -266,6 +266,13 @@ export const ColorAndPictogram = {
                 .selectedItem=${pictograms[0].items[0].value}
                 @clabs-style-picker-module-option-change=${(ev) =>
                   changePictogram(ev)}></clabs-style-picker-pictogram-module>
+              <clabs-style-picker-icon-module
+                .title=${'Icon'}
+                .size=${'sm'}
+                .items=${icons}
+                .selectedItem=${'apple'}
+                @clabs-style-picker-module-option-change=${(ev) =>
+                  changeIcon(ev)}></clabs-style-picker-icon-module>
             </clabs-style-picker-modules>
           </clabs-style-picker>
           <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
@@ -283,7 +290,10 @@ export const ColorAndPictogram = {
               ${renderCarbonPictogram(pictograms[0].items[0].pictogram)}
             </div>
             <br />
-            <h6>Primary text</h6>
+            <div class="inline-tile-header">
+              <span id="inline-tile-icon">${icons[0].renderIcon()}</span>
+              <h6>Primary text</h6>
+            </div>
             <div class="inline-pictogram-secondary-text">
               Secondary text or description
             </div>

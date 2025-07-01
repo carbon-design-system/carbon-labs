@@ -100,9 +100,13 @@ $block-class: #{$clabs-prefix}--style-picker-module;
 //   );
 // }
 
-// .#{$block-class}--disclosed[open] {
-//   block-size: calc(
-//     100% - (var(--clabs--style-picker-modules-count) - 1) * 2.5rem -
-//       0.0625rem
-//   );
-// }
+// TODO: Once the __wrapper part is supported in the accordion, we can
+// remove the following styles and use the part directly
+// to control the overflow and block size of the accordion __wrapper.
+// And give --disclosed[open] a block size of 100% and no overflow.
+.#{$block-class}--disclosed[open] {
+  overflow: auto;
+  block-size: calc(
+    100% - ((var(--clabs--style-picker-modules-count) - 1)) * 2.5rem - 0.15rem
+  );
+}

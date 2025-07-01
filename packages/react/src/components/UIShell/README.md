@@ -35,6 +35,7 @@ components are provided by `@carbon-labs/react-ui-shell`:
 - `HeaderPopoverActions`
 - `HeaderPopoverButton`
 - `HeaderPopoverContent`
+- `Profile`
 - `SideNav`
 - `SideNavItems`
 - `SideNavLink`

@@ -61,3 +61,14 @@ $prefix: 'cds' !default;
 
   color: $text-primary;
 }
+
+// contained-list links
+.#{$prefix}--header-action__content .#{$prefix}--contained-list--on-page {
+  padding: 0;
+  margin-block-start: -$spacing-05;
+}
+
+// TODO: remove if we make the contained-list header optional
+.#{$prefix}--header-action__content .#{$prefix}--contained-list__header {
+  display: none;
+}

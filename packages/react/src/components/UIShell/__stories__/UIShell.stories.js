@@ -43,6 +43,8 @@ import {
   Button,
   Dropdown,
   Theme,
+  ContainedList,
+  ContainedListItem,
 } from '@carbon/react';
 import {
   Dashboard,
@@ -68,6 +70,10 @@ import {
   User,
   VirtualColumnKey,
   Menu,
+  IbmCloudKeyProtect,
+  Group,
+  Money,
+  Logout,
 } from '@carbon/icons-react';
 
 import {
@@ -312,15 +318,53 @@ export const Demo = () => {
                   name="Thomas J. Watson"
                   email="thomas.watson@ibm.com"
                 />
-                <p>
-                  Lorem ipsum dolor sit amet, di os consectetur adipiscing elit,
-                  sed do eiusmod tempor incididunt ut fsil labore et dolore
-                  magna aliqua.
-                </p>
-                <HeaderPopoverActions>
-                  <Link href="#">Link action</Link>
-                  <Button size="sm">Button</Button>
-                </HeaderPopoverActions>
+                <Profile.ReadOnly
+                  items={[
+                    { label: 'Instance', title: 'APIC-MB-DEV' },
+                    {
+                      label: 'Instance owner',
+                      title: 'thomas.j.watson@ibm.com',
+                    },
+                    { label: 'Region', title: 'us-east-1 (N Virgina)' },
+                  ]}
+                />
+                <ContainedList label="Profile links">
+                  <ContainedListItem
+                    renderIcon={User}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    User profile
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={IbmCloudKeyProtect}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Access keys
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Group}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    User management
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Money}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Plan and billing
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Logout}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Log out
+                  </ContainedListItem>
+                </ContainedList>
               </Profile.Root>
             </HeaderGlobalBar>
           </Header>

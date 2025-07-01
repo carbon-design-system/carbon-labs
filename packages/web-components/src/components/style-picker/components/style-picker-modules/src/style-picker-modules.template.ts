@@ -8,7 +8,7 @@
  */
 
 import { html, TemplateResult } from 'lit';
-import '@carbon/web-components/es/components/accordion/accordion';
+import '@carbon/web-components/es/components/accordion/accordion.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { Kind } from '../../../defs/style-picker.types';
 

@@ -9,7 +9,7 @@
 
 import { html, nothing, TemplateResult } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import '@carbon/web-components/es/components/accordion/accordion-item';
+import '@carbon/web-components/es/components/accordion/accordion-item.js';
 import { Group, Item } from '../../../defs/style-picker-module.types';
 
 import '../../style-picker-option/style-picker-option.js';

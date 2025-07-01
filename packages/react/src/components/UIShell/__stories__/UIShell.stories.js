@@ -44,7 +44,7 @@ import {
   Dropdown,
   Theme,
   ContainedList,
-  ContainedListItem
+  ContainedListItem,
 } from '@carbon/react';
 import {
   Dashboard,

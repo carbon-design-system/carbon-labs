@@ -57,7 +57,7 @@ import {
   Menu,
   IbmCloudKeyProtect,
   Group,
-  Monster,
+  Money,
   Logout,
 } from '@carbon/icons-react';
 
@@ -295,7 +295,7 @@ function App() {
                     User management
                   </ContainedListItem>
                   <ContainedListItem
-                    renderIcon={Monster}
+                    renderIcon={Money}
                     onClick={() =>
                       (window.location.href = 'https://example.com')
                     }>

@@ -11,8 +11,20 @@ import React from 'react';
 import mdx from './Profile.mdx';
 
 import { Profile } from '../index';
-import { Header, HeaderGlobalBar } from '@carbon/react';
-import { UserAvatar } from '@carbon/icons-react';
+import {
+  Header,
+  HeaderGlobalBar,
+  ContainedList,
+  ContainedListItem,
+} from '@carbon/react';
+import {
+  UserAvatar,
+  User,
+  IbmCloudKeyProtect,
+  Group,
+  Money,
+  Logout,
+} from '@carbon/icons-react';
 
 import '../components/ui-shell.scss';
 import {
@@ -74,6 +86,52 @@ export const withReadOnly = () => {
               { label: 'Region', title: 'us-east-1 (N Virgina)' },
             ]}
           />
+        </Profile.Root>
+      </HeaderGlobalBar>
+    </Header>
+  );
+};
+
+/**
+ * Story for Profile with read only items
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const withLinks = () => {
+  return (
+    <Header aria-label="IBM Platform Name">
+      <HeaderGlobalBar>
+        <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
+          <Profile.UserInfo
+            name="Thomas J. Watson"
+            email="thomas.watson@ibm.com"
+          />
+          <ContainedList label="Profile links">
+            <ContainedListItem
+              renderIcon={User}
+              onClick={() => (window.location.href = 'https://example.com')}>
+              User profile
+            </ContainedListItem>
+            <ContainedListItem
+              renderIcon={IbmCloudKeyProtect}
+              onClick={() => (window.location.href = 'https://example.com')}>
+              Access keys
+            </ContainedListItem>
+            <ContainedListItem
+              renderIcon={Group}
+              onClick={() => (window.location.href = 'https://example.com')}>
+              User management
+            </ContainedListItem>
+            <ContainedListItem
+              renderIcon={Money}
+              onClick={() => (window.location.href = 'https://example.com')}>
+              Plan and billing
+            </ContainedListItem>
+            <ContainedListItem
+              renderIcon={Logout}
+              onClick={() => (window.location.href = 'https://example.com')}>
+              Log out
+            </ContainedListItem>
+          </ContainedList>
         </Profile.Root>
       </HeaderGlobalBar>
     </Header>

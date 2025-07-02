@@ -24,6 +24,8 @@ $prefix: 'cds' !default;
   background-color: $background;
   border-inline-start: 1px solid $border-subtle;
   gap: 0;
+  max-block-size: 100vh;
+  overflow-y: scroll;
 
   > * {
     padding: $spacing-05;

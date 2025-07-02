@@ -26,7 +26,8 @@ export const blockClass = `${clabsPrefix}--style-picker-pictogram-module`;
 export const stylePickerPictogramModuleTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const { items, heading, size, selectedItem, moduleIndex } = customElementClass;
+  const { items, heading, size, selectedItem, moduleIndex } =
+    customElementClass;
 
   /**
    * @param {object} item Item to be rendered

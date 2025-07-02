@@ -25,7 +25,8 @@ export const blockClass = `${clabsPrefix}--style-picker-icon-module`;
 export const stylePickerIconModuleTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const { items, heading, size, selectedItem, moduleIndex } = customElementClass;
+  const { items, heading, size, selectedItem, moduleIndex } =
+    customElementClass;
 
   /**
    * @param {object} item Item to be rendered

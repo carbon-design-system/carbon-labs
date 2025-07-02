@@ -25,7 +25,8 @@ export const blockClass = `${clabsPrefix}--style-picker-color-module`;
 export const stylePickerColorModuleTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const { items, heading, size, selectedItem, moduleIndex } = customElementClass;
+  const { items, heading, size, selectedItem, moduleIndex } =
+    customElementClass;
 
   /**
    * @param {object} item Item to be rendered

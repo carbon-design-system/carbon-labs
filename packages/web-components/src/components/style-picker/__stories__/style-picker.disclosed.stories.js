@@ -134,7 +134,7 @@ const argTypes = {
     control: 'radio',
     description: 'true if the modal is open',
   },
-  title: {
+  heading: {
     control: 'text',
     description: 'style picker heading.',
   },
@@ -147,7 +147,7 @@ const argTypes = {
 
 export const ColorAndIcon = {
   args: {
-    title: 'Choose color and icon',
+    heading: 'Choose color and icon',
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
     kind: 'disclosed',
@@ -166,39 +166,39 @@ export const ColorAndIcon = {
       <div class="style-picker-story-container">
         <cds-layer class="toolbar-layer">
           <clabs-style-picker
-            .align=${args.align}
+            align=${args.align}
             ?open=${args.open}
-            .title=${args.title}
-            .kind=${args.kind}>
+            heading=${args.heading}
+            kind=${args.kind}>
             <cds-icon-button
               slot="trigger"
-              .kind=${BUTTON_KIND.GHOST}
+              kind=${BUTTON_KIND.GHOST}
               @click="${toggleButton}">
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Color palette</span>
             </cds-icon-button>
             <clabs-style-picker-modules slot="modules">
               <clabs-style-picker-icon-module
-                .title=${'Icon'}
-                .size=${'sm'}
+                heading=${'Icon'}
+                size=${'sm'}
                 .items=${icons}
-                .selectedItem=${'apple'}
+                selected-item=${'apple'}
                 @clabs-style-picker-module-option-change=${(ev) =>
                   changeIcon(ev)}></clabs-style-picker-icon-module>
               <clabs-style-picker-color-module
-                .title=${'Color'}
-                .size=${'sm'}
+                heading=${'Color'}
+                size=${'sm'}
                 .items=${colors}
-                .selectedItem=${'blue-60'}
+                selected-item=${'blue-60'}
                 @clabs-style-picker-module-option-change=${(ev) =>
                   changeColor(ev)}></clabs-style-picker-color-module>
             </clabs-style-picker-modules>
           </clabs-style-picker>
-          <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
+          <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}
             <span slot="tooltip-content">Edit</span>
           </cds-icon-button>
-          <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
+          <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${OverflowMenuVertical16({ slot: 'icon' })}
             <span slot="tooltip-content">More</span>
           </cds-icon-button>
@@ -221,7 +221,7 @@ export const ColorAndIcon = {
 
 export const ThreeModules = {
   args: {
-    title: 'Select color and icon',
+    heading: 'Select color and icon',
     open: true,
     align: POPOVER_ALIGNMENT.LEFT_TOP,
     kind: 'disclosed',
@@ -240,46 +240,46 @@ export const ThreeModules = {
       <div class="style-picker-story-container">
         <cds-layer class="toolbar-layer">
           <clabs-style-picker
-            .align=${args.align}
+            align=${args.align}
             ?open=${args.open}
-            .title=${args.title}
-            .kind=${args.kind}>
+            heading=${args.heading}
+            kind=${args.kind}>
             <cds-icon-button
               slot="trigger"
-              .kind=${BUTTON_KIND.GHOST}
+              kind=${BUTTON_KIND.GHOST}
               @click="${toggleButton}">
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Pictogram list</span>
             </cds-icon-button>
             <clabs-style-picker-modules slot="modules">
               <clabs-style-picker-color-module
-                .title=${'Color'}
-                .size=${'sm'}
+                heading=${'Color'}
+                size=${'sm'}
                 .items=${colors}
-                .selectedItem=${'blue-60'}
+                selected-item=${'blue-60'}
                 @clabs-style-picker-module-option-change=${(ev) =>
                   changeColor(ev)}></clabs-style-picker-color-module>
               <clabs-style-picker-pictogram-module
-                .title=${'Pictogram'}
-                .size=${'lg'}
+                heading=${'Pictogram'}
+                size=${'lg'}
                 .items=${pictograms}
-                .selectedItem=${pictograms[0].items[0].value}
+                selected-item=${pictograms[0].items[0].value}
                 @clabs-style-picker-module-option-change=${(ev) =>
                   changePictogram(ev)}></clabs-style-picker-pictogram-module>
               <clabs-style-picker-icon-module
-                .title=${'Icon'}
-                .size=${'sm'}
+                heading=${'Icon'}
+                size=${'sm'}
                 .items=${icons}
-                .selectedItem=${'apple'}
+                selected-item=${'apple'}
                 @clabs-style-picker-module-option-change=${(ev) =>
                   changeIcon(ev)}></clabs-style-picker-icon-module>
             </clabs-style-picker-modules>
           </clabs-style-picker>
-          <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
+          <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}
             <span slot="tooltip-content">Edit</span>
           </cds-icon-button>
-          <cds-icon-button .kind=${BUTTON_KIND.GHOST}>
+          <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${OverflowMenuVertical16({ slot: 'icon' })}
             <span slot="tooltip-content">More</span>
           </cds-icon-button>

@@ -39,14 +39,14 @@ class StylePickerModule<T> extends LitElement {
   @consume({ context: stylePickerContext, subscribe: true })
   _stylePickerContext?: StylePickerContextType;
 
-  @property({ type: Array, attribute: 'items' })
+  @property({ type: Array })
   items: Item<T>[] | Group<Item<T>>[] = [];
 
   @property({ type: String, reflect: true, attribute: 'selected-item' })
   selectedItem = '';
 
-  @property({ type: String, reflect: true, attribute: 'title' })
-  title = '';
+  @property({ type: String, reflect: true, attribute: 'heading' })
+  heading = '';
 
   @property({ type: String, reflect: true, attribute: 'size' })
   size: Size | undefined;

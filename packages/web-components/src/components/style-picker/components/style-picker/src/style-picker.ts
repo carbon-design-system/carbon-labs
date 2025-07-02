@@ -61,10 +61,10 @@ class StylePicker extends LitElement {
   open = false;
 
   /**
-   * Define title for the picker
+   * Define heading for the picker
    */
-  @property({ type: String, reflect: true, attribute: 'title' })
-  title = '';
+  @property({ type: String, reflect: true, attribute: 'heading' })
+  heading = '';
 
   /**
    * Invoked whenever the element is updated.

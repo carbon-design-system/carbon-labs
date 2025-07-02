@@ -91,7 +91,7 @@ const colors = [
 const defaultProps = {
   align: POPOVER_ALIGNMENT.BOTTOM,
   open: true,
-  title: 'Choose color',
+  heading: 'Choose color',
 };
 
 /**
@@ -101,19 +101,19 @@ const defaultProps = {
  */
 const colorTemplate = (props = defaultProps) => html`
   <clabs-style-picker
-    .align=${props.align}
+    align=${props.align}
     ?open=${props.open}
-    .title=${props.title}>
-    <cds-icon-button slot="trigger" .kind=${BUTTON_KIND.GHOST}>
+    heading=${props.heading}>
+    <cds-icon-button slot="trigger" kind=${BUTTON_KIND.GHOST}>
       ${ColorPalette16({ slot: 'icon' })}
       <span slot="tooltip-content">Color palette</span>
     </cds-icon-button>
     <clabs-style-picker-modules slot="modules">
       <clabs-style-picker-color-module
-        .title=${'Color'}
-        .size=${'sm'}
+        heading=${'Color'}
+        size=${'sm'}
         .items=${colors}
-        .selectedItem=${'blue-60'}></clabs-style-picker-color-module>
+        selected-item=${'blue-60'}></clabs-style-picker-color-module>
     </clabs-style-picker-modules>
   </clabs-style-picker>
 `;
@@ -125,19 +125,19 @@ const colorTemplate = (props = defaultProps) => html`
  */
 const iconTemplate = (props = defaultProps) => html`
   <clabs-style-picker
-    .align=${props.align}
+    align=${props.align}
     ?open=${props.open}
-    .title=${props.title}>
-    <cds-icon-button slot="trigger" .kind=${BUTTON_KIND.GHOST}>
+    heading=${props.heading}>
+    <cds-icon-button slot="trigger" kind=${BUTTON_KIND.GHOST}>
       ${ColorPalette16({ slot: 'icon' })}
       <span slot="tooltip-content">Icon picker</span>
     </cds-icon-button>
     <clabs-style-picker-modules slot="modules">
       <clabs-style-picker-icon-module
-        .title=${'Icons'}
-        .size=${'sm'}
+        heading=${'Icons'}
+        size=${'sm'}
         .items=${icons}
-        .selectedItem=${'apple'}></clabs-style-picker-icon-module>
+        selected-item=${'apple'}></clabs-style-picker-icon-module>
     </clabs-style-picker-modules>
   </clabs-style-picker>
 `;
@@ -149,19 +149,19 @@ const iconTemplate = (props = defaultProps) => html`
  */
 const pictogramTemplate = (props = defaultProps) => html`
   <clabs-style-picker
-    .align=${props.align}
+    align=${props.align}
     ?open=${props.open}
-    .title=${props.title}>
-    <cds-icon-button slot="trigger" .kind=${BUTTON_KIND.GHOST}>
+    heading=${props.heading}>
+    <cds-icon-button slot="trigger" kind=${BUTTON_KIND.GHOST}>
       ${ColorPalette16({ slot: 'icon' })}
       <span slot="tooltip-content">Pictogram picker</span>
     </cds-icon-button>
     <clabs-style-picker-modules slot="modules">
       <clabs-style-picker-pictogram-module
-        .title=${'Pictograms'}
-        .size=${'lg'}
+        heading=${'Pictograms'}
+        size=${'lg'}
         .items=${pictograms}
-        .selectedItem=${'austin'}></clabs-style-picker-pictogram-module>
+        selected-item=${'austin'}></clabs-style-picker-pictogram-module>
     </clabs-style-picker-modules>
   </clabs-style-picker>
 `;
@@ -169,7 +169,7 @@ const pictogramTemplate = (props = defaultProps) => html`
 describe('clabs-style-picker', function () {
   it('should render single variant with color picker module', async () => {
     const el = await fixture(
-      colorTemplate({ ...defaultProps, title: 'Choose color' })
+      colorTemplate({ ...defaultProps, heading: 'Choose color' })
     );
 
     expect(el).dom.to.equalSnapshot();
@@ -178,7 +178,7 @@ describe('clabs-style-picker', function () {
 
   it('should render single variant with icon picker module', async () => {
     const el = await fixture(
-      iconTemplate({ ...defaultProps, title: 'Choose icon' })
+      iconTemplate({ ...defaultProps, heading: 'Choose icon' })
     );
 
     expect(el).dom.to.equalSnapshot();
@@ -187,7 +187,7 @@ describe('clabs-style-picker', function () {
 
   it('should render single variant with pictogram picker module', async () => {
     const el = await fixture(
-      pictogramTemplate({ ...defaultProps, title: 'Choose pictogram' })
+      pictogramTemplate({ ...defaultProps, heading: 'Choose pictogram' })
     );
 
     expect(el).dom.to.equalSnapshot();

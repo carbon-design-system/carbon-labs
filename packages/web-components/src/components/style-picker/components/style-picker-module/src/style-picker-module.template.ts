@@ -29,7 +29,7 @@ export const stylePickerModuleTemplate = <T>(
 ): TemplateResult<1> => {
   const {
     items,
-    title,
+    heading,
     size,
     renderItem,
     selectedItem,
@@ -65,10 +65,10 @@ export const stylePickerModuleTemplate = <T>(
       (item) =>
         html`
           <clabs-style-picker-option
-            .value=${item.value}
-            .label=${item.label}
-            .isSelected=${selectedItem === item.value}
-            .size=${size}
+            value=${item.value}
+            label=${item.label}
+            ?selected=${selectedItem === item.value}
+            size=${size}
             @clabs-style-picker-option-change=${(e: CustomEvent) =>
               handleOptionChange(e, item)}>
             ${renderItem?.(item)}
@@ -86,7 +86,7 @@ export const stylePickerModuleTemplate = <T>(
     return html` <div
       class=${`${blockClass} ${blockClass}--${size}`}
       role="listbox"
-      aria-label=${title}
+      aria-label=${heading}
       aria-orientation="horizontal"
       tabindex="0">
       <ul class=${`${blockClass}__items`} role="group">
@@ -105,7 +105,7 @@ export const stylePickerModuleTemplate = <T>(
       <div
         class=${`${blockClass} ${blockClass}--${size}`}
         role="listbox"
-        aria-label=${title}
+        aria-label=${heading}
         aria-orientation="horizontal"
         tabindex="0">
         ${items.map(
@@ -134,7 +134,7 @@ export const stylePickerModuleTemplate = <T>(
     return html`
       <div class=${`${blockClass}--flat`}>
         <div class=${`${blockClass}__header`}>
-          <strong class=${`${blockClass}__heading`}> ${title} </strong>
+          <strong class=${`${blockClass}__heading`}> ${heading} </strong>
         </div>
         ${renderUngrouped(flattenedItems)}
       </div>
@@ -160,7 +160,7 @@ export const stylePickerModuleTemplate = <T>(
 
     case 'disclosed':
       return html`<cds-accordion-item
-        title=${title}
+        .title=${heading}
         class=${`${blockClass}--disclosed`}
         @cds-accordion-item-toggled=${() => {
           setActiveModule?.(slotIndex);

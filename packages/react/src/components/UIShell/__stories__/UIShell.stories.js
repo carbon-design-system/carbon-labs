@@ -123,13 +123,17 @@ function useThemeSettings() {
   const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
 
   const [themeSetting, setThemeSetting] = useState('system');
-  const [themeMenuComplement, setThemeMenuComplement] = useState(false);
-  const [themeSet, setThemeSet] = useState('white/g100');
+  const [themeMenuComplement] = useState(false);
+  const [themeSet] = useState('white/g100');
   const [systemDark, setSystemDark] = useState(mediaQueryList.matches);
   const [currentTheme, setCurrentTheme] = useState('white');
   const [themeHeader, setThemeHeader] = useState('g100');
 
   useEffect(() => {
+    /**
+     *
+     * @param {MediaQueryListEvent} event - The media query change event object.
+     */
     const handleMediaQueryEvent = (event) => {
       setSystemDark(event.matches);
     };

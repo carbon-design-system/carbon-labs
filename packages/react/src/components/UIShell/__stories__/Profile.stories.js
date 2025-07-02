@@ -62,13 +62,17 @@ function useThemeSettings() {
   const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
 
   const [themeSetting, setThemeSetting] = useState('system');
-  const [themeMenuComplement, setThemeMenuComplement] = useState(false);
-  const [themeSet, setThemeSet] = useState('white/g100');
+  const [themeMenuComplement] = useState(false);
+  const [themeSet] = useState('white/g100');
   const [systemDark, setSystemDark] = useState(mediaQueryList.matches);
   const [currentTheme, setCurrentTheme] = useState('white');
   const [themeHeader, setThemeHeader] = useState('g100');
 
   useEffect(() => {
+    /**
+     *
+     * @param {MediaQueryListEvent} event - The media query change event object.
+     */
     const handleMediaQueryEvent = (event) => {
       setSystemDark(event.matches);
     };
@@ -78,6 +82,9 @@ function useThemeSettings() {
       mediaQueryList.removeEventListener('change', handleMediaQueryEvent);
   }, [mediaQueryList]);
 
+  /**
+   *
+   */
   useEffect(() => {
     const [lightTheme, darkTheme] = themeSet.split('/');
 
@@ -106,6 +113,11 @@ function useThemeSettings() {
   };
 }
 
+/**
+ *
+ * @param {{ children: React.ReactNode }} props - The children
+ * @returns {JSX.Element} The rendered BaseProfile component.
+ */
 const BaseProfile = ({ children }) => (
   <Header aria-label="IBM Platform Name">
     <HeaderGlobalBar>
@@ -139,10 +151,10 @@ export const withReadOnly = () => (
 );
 
 /**
- * Story for Profile with theme switcher
- * @returns {React.ReactElement} The JSX for the story
+ * Story for Profile with theme switcher.
+ * @returns {React.ReactElement} The rendered story with theme controls and profile layout.
  */
-export const withThemeSwitcher = () => {
+export const WithThemeSwitcher = () => {
   const { themeSetting, setThemeSetting, themeHeader, currentTheme } =
     useThemeSettings();
 

@@ -41,11 +41,6 @@ $prefix: 'cds' !default;
   fill: $icon-primary;
 }
 
-// TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
-.#{$prefix}--header-action .#{$prefix}--tooltip-content {
-  color: $text-primary;
-}
-
 .#{$prefix}--header-action.#{$prefix}--popover--open
   .#{$prefix}--header-action__button {
   background-color: $layer;
@@ -63,12 +58,6 @@ $prefix: 'cds' !default;
     $link-visited
   );
   @include custom-property.declaration('link-focus-text-color', $focus);
-
-  padding: 0;
-
-  > * {
-    padding: 0 $spacing-05 $spacing-05 $spacing-05;
-  }
 }
 
 //----------------------------------------------------------------------------

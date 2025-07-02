@@ -41,6 +41,8 @@ import {
   Link,
   Button,
   Dropdown,
+  ContainedList,
+  ContainedListItem,
 } from '@carbon/react';
 import {
   Fade,
@@ -53,6 +55,10 @@ import {
   ShoppingCart,
   Switcher,
   Menu,
+  IbmCloudKeyProtect,
+  Group,
+  Money,
+  Logout,
 } from '@carbon/icons-react';
 
 const StoryContent = () => (
@@ -266,6 +272,43 @@ function App() {
                     { label: 'Region', title: 'us-east-1 (N Virgina)' },
                   ]}
                 />
+                <ContainedList label="Profile links">
+                  <ContainedListItem
+                    renderIcon={User}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    User profile
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={IbmCloudKeyProtect}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Access keys
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Group}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    User management
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Money}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Plan and billing
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Logout}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Log out
+                  </ContainedListItem>
+                </ContainedList>
               </Profile.Root>
             </HeaderGlobalBar>
           </Header>

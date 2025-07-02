@@ -335,14 +335,12 @@ export const headerTiles = [
       },
       {
         id: 'tile-2',
-        href: '#',
         title: 'Non-interactive tile',
         subtitle: 'with Monitoring hub',
         mainIcon: ChartLineData,
-        isInteractive: false
       },
       {
-        id: 'tile-3',
+        id: 'tile-3', 
         href: '#',
         title: 'Disabled tile',
         subtitle: 'with SQL editor',

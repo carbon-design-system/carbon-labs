@@ -173,23 +173,23 @@ export const ColorAndIcon = {
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
-              @click="${toggleButton}">
+              @click=${toggleButton}>
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Color palette</span>
             </cds-icon-button>
             <clabs-style-picker-modules slot="modules">
               <clabs-style-picker-icon-module
-                heading=${'Icon'}
-                size=${'sm'}
+                heading="Icon"
+                size="sm"
                 .items=${icons}
-                selected-item=${'apple'}
+                selected-item="apple"
                 @clabs-style-picker-module-option-change=${(ev) =>
                   changeIcon(ev)}></clabs-style-picker-icon-module>
               <clabs-style-picker-color-module
-                heading=${'Color'}
-                size=${'sm'}
+                heading="Color"
+                size="sm"
                 .items=${colors}
-                selected-item=${'blue-60'}
+                selected-item="blue-60"
                 @clabs-style-picker-module-option-change=${(ev) =>
                   changeColor(ev)}></clabs-style-picker-color-module>
             </clabs-style-picker-modules>

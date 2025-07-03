@@ -48,30 +48,30 @@ that is implemented.
 
 ```html
 <clabs-style-picker
-  align=${"right"}
+  align="right"
   ?open=${true}
-  heading=${'Choose color and icon'}
-  kind=${"disclosed"}>
+  heading="Choose color and icon"
+  kind="disclosed">
   <cds-icon-button
     slot="trigger"
     kind=${BUTTON_KIND.GHOST}
-    @click="${toggleButton}">
-    ${ColorPalette16({ slot: 'icon' })}
+    @click=${toggleButton}>
+    ${ColorPalette16({ slot: "icon" })}
     <span slot="tooltip-content">Color palette</span>
   </cds-icon-button>
   <clabs-style-picker-modules slot="modules">
     <clabs-style-picker-icon-module
-      heading=${'Icon'}
-      size=${'sm'}
+      heading="Icon"
+      size="sm"
       .items=${icons}
-      selected-item=${'apple'}
+      selected-item="apple"
       @clabs-style-picker-module-option-change=${(ev) =>
         changeIcon(ev)}></clabs-style-picker-icon-module>
     <clabs-style-picker-color-module
-      heading=${'Color'}
-      size=${'sm'}
+      heading="Color"
+      size="sm"
       .items=${colors}
-      selected-item=${'blue-60'}
+      selected-item="blue-60"
       @clabs-style-picker-module-option-change=${(ev) =>
         changeColor(ev)}></clabs-style-picker-color-module>
   </clabs-style-picker-modules>
@@ -82,15 +82,15 @@ that is implemented.
 
 ```html
 <clabs-style-picker
-  align=${"right"}
+  align="right"
   ?open=${false}
-  heading=${'Choose color and pictogram'}
-  kind=${"disclosed"}
+  heading="Choose color and pictogram"
+  kind="disclosed"
   >
   <cds-icon-button
     slot="trigger"
-    kind=${"ghost"}
-    @click="${toggleButton}">
+    kind="ghost"
+    @click=${toggleButton}>
     ${ColorPalette16({ slot: 'icon' })}
     <span slot="tooltip-content">Pictogram list</span>
   </cds-icon-button>

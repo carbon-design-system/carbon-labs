@@ -20,8 +20,7 @@ interface GlassTileProps {
   isLoading?: boolean;
   isDisabled?: boolean;
   disabledTaskLabel?: string;
-  onClick?: () => void;
-  isInteractive?: boolean;
+  onClick?: (() => void) | null;
 }
 
 export const GlassTile: React.FC<GlassTileProps> = ({
@@ -37,7 +36,6 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   isDisabled,
   disabledTaskLabel,
   onClick: glassTileClickHandler,
-  isInteractive = true,
 }: GlassTileProps & GlassTileBodyProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__glass-tile`;
@@ -54,7 +52,8 @@ export const GlassTile: React.FC<GlassTileProps> = ({
     />
   );
 
-  if (isInteractive === false) {
+  // Non-interactive tile
+  if (!href && !glassTileClickHandler) {
     return (
       <div
         className={`${prefix}--animated-header__tile ${blockClass}`}

@@ -344,11 +344,9 @@ export const headerTiles = [
       },
       {
         id: 'tile-2',
-        href: '#',
         title: 'Non-interactive tile',
         subtitle: 'with Monitoring hub',
         mainIcon: ChartLineData,
-        isInteractive: false,
       },
       {
         id: 'tile-3',

@@ -25,8 +25,7 @@ interface BaseTileProps {
   isLoading?: boolean;
   isDisabled?: boolean;
   disabledTaskLabel?: string;
-  onClick?: () => void;
-  isInteractive?: boolean;
+  onClick?: (() => void) | null;
 }
 
 export const BaseTile: React.FC<BaseTileProps> = (props: BaseTileProps) => {

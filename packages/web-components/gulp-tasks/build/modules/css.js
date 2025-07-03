@@ -42,6 +42,8 @@ const buildModulesCSS = ({ banner }) =>
   .pipe(
     sass({
       includePaths: ['node_modules', '../../node_modules'],
+      api: 'modern',
+      silenceDeprecations: ['mixed-decls', 'legacy-js-api', 'import'],
     })
   )
   .pipe(

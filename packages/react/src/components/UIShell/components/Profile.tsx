@@ -51,7 +51,7 @@ const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(
   }: ProfileProps) {
     const prefix = usePrefix();
     const className = cx({
-      [`${prefix}-profile`]: true,
+      [`${prefix}--profile`]: true,
       [customClassName as string]: !!customClassName,
     });
     return (

@@ -47,6 +47,7 @@ export const ThemeSwitcher = ({
   labelSystem,
   onChange,
   value,
+  ...rest
 }: ThemeSwitcherProps) => {
   const themeLabels: string[] = [
     labelLight ?? themeOptions[0].text,
@@ -62,7 +63,8 @@ export const ThemeSwitcher = ({
         onChange?.(switcherEvent.name as ThemeSettingType)
       }
       size="lg"
-      selectedIndex={themeOptions.findIndex((item) => item.name === value)}>
+      selectedIndex={themeOptions.findIndex((item) => item.name === value)}
+      {...rest}>
       {themeOptions.map(({ name, icon: Icon }, index) => (
         <IconSwitch name={name} text={themeLabels[index]} key={name}>
           <Icon />

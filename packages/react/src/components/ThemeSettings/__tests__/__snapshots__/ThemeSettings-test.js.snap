@@ -25,9 +25,8 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
           >
             <button
               aria-label="Light"
-              aria-labelledby="tooltip-:r1:"
               aria-selected="false"
-              class="cds--btn--icon-only cds--content-switcher-btn cds--btn cds--layout--size-lg cds--btn--primary"
+              class="cds--content-switcher-btn cds--btn cds--btn--lg cds--layout--size-lg cds--btn--primary cds--btn--icon-only"
               role="tab"
               tabindex="-1"
               type="button"
@@ -100,9 +99,8 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
           >
             <button
               aria-label="System"
-              aria-labelledby="tooltip-:r5:"
               aria-selected="false"
-              class="cds--btn--icon-only cds--content-switcher-btn cds--btn cds--layout--size-lg cds--btn--primary"
+              class="cds--content-switcher-btn cds--btn cds--btn--lg cds--layout--size-lg cds--btn--primary cds--btn--icon-only"
               role="tab"
               tabindex="-1"
               type="button"
@@ -162,9 +160,8 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
           >
             <button
               aria-label="Dark"
-              aria-labelledby="tooltip-:r9:"
               aria-selected="false"
-              class="cds--btn--icon-only cds--content-switcher-btn cds--btn cds--layout--size-lg cds--btn--primary"
+              class="cds--content-switcher-btn cds--btn cds--btn--lg cds--layout--size-lg cds--btn--primary cds--btn--icon-only"
               role="tab"
               tabindex="-1"
               type="button"

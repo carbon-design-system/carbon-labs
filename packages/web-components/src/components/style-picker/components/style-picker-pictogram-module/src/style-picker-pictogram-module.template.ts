@@ -26,7 +26,8 @@ export const blockClass = `${clabsPrefix}--style-picker-pictogram-module`;
 export const stylePickerPictogramModuleTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const { items, title, size, selectedItem } = customElementClass;
+  const { items, heading, size, selectedItem, moduleIndex } =
+    customElementClass;
 
   /**
    * @param {object} item Item to be rendered
@@ -34,9 +35,9 @@ export const stylePickerPictogramModuleTemplate = (
   const _render = (item): TemplateResult => {
     return html`
       ${renderCarbonPictogram({
-        ...item.renderPictogram,
+        ...item.pictogram,
         attrs: {
-          ...item.renderPictogram.attrs,
+          ...item.pictogram.attrs,
           width: '3rem',
           height: '3rem',
           'aria-label': item.label,
@@ -47,11 +48,12 @@ export const stylePickerPictogramModuleTemplate = (
 
   return html`
     <clabs-style-picker-module
-      .title=${title}
-      .size=${size}
+      heading=${heading}
+      size=${size}
       .items=${items}
       .renderItem=${_render}
-      .selectedItem=${selectedItem}>
+      selected-item=${selectedItem}
+      slot-index=${moduleIndex}>
     </clabs-style-picker-module>
   `;
 };

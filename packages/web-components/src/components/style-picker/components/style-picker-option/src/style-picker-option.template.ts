@@ -22,15 +22,15 @@ export const blockClass = `${clabsPrefix}--style-picker-option`;
  * @returns {TemplateResult<1>} Lit html template
  */
 export const stylePickerOptionTemplate = (customElementClass) => {
-  const { label, value, isSelected, size, handleClick } = customElementClass;
+  const { label, value, selected, size, handleClick } = customElementClass;
 
   return html`<li
     class=${`${blockClass} ${blockClass}--${size}`}
     data-value=${value}
     role="option"
-    tabindex=${isSelected ? '0' : '-1'}
+    tabindex=${selected ? '0' : '-1'}
     aria-label=${label}
-    aria-selected=${isSelected}
+    aria-selected=${selected}
     title=${label}
     @click=${handleClick}>
     <div class=${`${blockClass}__container`}>

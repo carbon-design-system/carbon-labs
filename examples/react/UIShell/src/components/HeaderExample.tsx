@@ -20,6 +20,7 @@ import {
   HeaderPopoverButton,
   HeaderPopoverContent,
   TrialCountdown,
+  SideNavSlot,
   // SideNavSlot,
 } from '@carbon-labs/react-ui-shell';
 import {
@@ -55,18 +56,13 @@ import { useRef, useState } from 'react';
 
 import { routesInHeader, routesInSideNav } from '../config/routes';
 import { useLocation, Link as RouterLink } from 'react-router';
+import { subMenuParts } from './SubMenuExample';
+import { HeaderGlobalBarExample } from './HeaderGlobalBarExample';
 
 export const HeaderExample = ({ children }) => {
-  const headerRef = useRef(null);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedItem, setSelectedItem] = useState('');
   let location = useLocation();
 
-  const options = {
-    Fruits: ['Apple', 'Banana', 'Orange'],
-    Vegetables: ['Carrot', 'Broccoli', 'Spinach'],
-    Animals: ['Cat', 'Dog', 'Snake'],
-  };
+  console.log(routesInSideNav);
 
   return (
     <HeaderContainer
@@ -80,7 +76,6 @@ export const HeaderExample = ({ children }) => {
               isActive={isSideNavExpanded}
               aria-expanded={isSideNavExpanded}
               isCollapsible //shows menu at desktop
-              isFixedNav
               renderMenuIcon={<Switcher size={20} />}
             />
             <HeaderName as={RouterLink} to="/" prefix="IBM">
@@ -125,214 +120,83 @@ export const HeaderExample = ({ children }) => {
               </HeaderNavigation>
             )}
 
-            <HeaderGlobalBar>
-              <ExpandableSearch
-                size="lg"
-                labelText="Search"
-                closeButtonLabelText="Clear search input"
-                id="search-expandable-1"
-              />
-              <HeaderGlobalAction
-                aria-label="Custom action"
-                tooltipHighContrast={false}>
-                <SquareOutline size={20} />
-              </HeaderGlobalAction>
-              <HeaderPopover align="bottom-right">
-                <HeaderPopoverButton align="bottom" label="Help">
-                  <Help size={20} />
-                </HeaderPopoverButton>
-                <HeaderPopoverContent>
-                  <p>
-                    Lorem ipsum dolor sit amet, di os consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut fsil labore et
-                    dolore magna aliqua.
-                  </p>
-                  <HeaderPopoverActions>
-                    <Link href="#">Link action</Link>
-                    <Button size="sm">Button</Button>
-                  </HeaderPopoverActions>
-                </HeaderPopoverContent>
-              </HeaderPopover>
-              <HeaderPopover align="bottom-right">
-                <HeaderPopoverButton align="bottom" label="Notifications">
-                  <Notification size={20} />
-                </HeaderPopoverButton>
-                <HeaderPopoverContent>
-                  <p>
-                    Lorem ipsum dolor sit amet, di os consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut fsil labore et
-                    dolore magna aliqua.
-                  </p>
-                  <HeaderPopoverActions>
-                    <Link href="#">Link action</Link>
-                    <Button size="sm">Button</Button>
-                  </HeaderPopoverActions>
-                </HeaderPopoverContent>
-              </HeaderPopover>
-              <HeaderDivider />
-              <MenuButton
-                menuTarget={headerRef.current}
-                kind="ghost"
-                label={selectedCategory || 'Select Category'}>
-                <MenuItemRadioGroup
-                  label="Category"
-                  items={Object.keys(options)}
-                  selectedItem={selectedCategory || null}
-                  onChange={(newCategory) => {
-                    setSelectedCategory(newCategory);
-                    setSelectedItem('');
-                  }}
-                />
-              </MenuButton>
-              <MenuButton
-                menuTarget={headerRef.current}
-                kind="ghost"
-                label={selectedItem || 'Select Item'}
-                disabled={!selectedCategory}>
-                <MenuItemRadioGroup
-                  label="Items"
-                  items={selectedCategory ? options[selectedCategory] : []}
-                  selectedItem={selectedItem || null}
-                  onChange={(newItem) => setSelectedItem(newItem)}
-                />
-              </MenuButton>
-              <HeaderDivider />
-              <HeaderPopover align="bottom-right">
-                <HeaderPopoverButton align="bottom" label="Profile">
-                  <UserAvatar size={20} />
-                </HeaderPopoverButton>
-                <HeaderPopoverContent>
-                  <p>
-                    Lorem ipsum dolor sit amet, di os consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut fsil labore et
-                    dolore magna aliqua.
-                  </p>
-                  <HeaderPopoverActions>
-                    <Link href="#">Link action</Link>
-                    <Button size="sm">Button</Button>
-                  </HeaderPopoverActions>
-                </HeaderPopoverContent>
-              </HeaderPopover>
-            </HeaderGlobalBar>
+            <HeaderGlobalBarExample />
           </Header>
-          <SideNav
-            aria-label="Side navigation1"
-            expanded={isSideNavExpanded}
-            onSideNavBlur={onClickSideNavExpand}
-            isCollapsible
-            isTreeview
-            onOverlayClick={onClickSideNavExpand}
-            className="nav--global">
-            <SideNavItems>
-              <SideNavMenu
-                renderIcon={SquareOutline}
-                title="Sub-menu level 1x"
-                // primary
-                // defaultExpanded
-              ></SideNavMenu>
-              {routesInSideNav.map(({ path, carbon }) =>
-                !carbon?.inSubMenu && carbon?.label ? (
-                  carbon?.subMenu ? (
-                    <SideNavMenu
-                      // primary
-                      renderIcon={carbon?.icon}
-                      title={carbon?.label}
-                      key={path}>
-                      {/* <SideNavSlot renderIcon={SquareOutline}>
-                        <Dropdown
-                          id="default"
-                          size="sm"
-                          itemToString={(item) => (item ? item.text : "")}
-                          items={[
-                            { text: "Option 1" },
-                            { text: "Option 2" },
-                            { text: "Option 3" },
-                          ]}
-                          label="Choose an option"
-                        />
-                      </SideNavSlot> */}
-
-                      {carbon?.subMenu.map((subRoute) => (
-                        <SideNavMenuItem
-                          as={RouterLink}
-                          to={subRoute.path}
-                          isActive={subRoute.path === location.pathname}
-                          key={subRoute.path}>
-                          {subRoute.carbon?.label}
-                        </SideNavMenuItem>
-                      ))}
-                    </SideNavMenu>
-                  ) : (
-                    <div key={path}>
-                      <SideNavLink
-                        as={RouterLink}
-                        to={path}
-                        isActive={path === location.pathname}
-                        renderIcon={carbon?.icon}>
-                        {carbon?.label}
-                      </SideNavLink>
-                      {carbon?.separator && <SideNavDivider />}
-                    </div>
-                  )
-                ) : null
-              )}
-            </SideNavItems>
-          </SideNav>
           <SideNav
             hideRailBreakpointDown="md"
             isRail
             isChildOfHeader={false}
             aria-label="Side navigation">
             <SideNavItems>
-              {/* <SideNavSlot renderIcon={Menu}>
-                <Menu />
-              </SideNavSlot>
-
-              <SideNavSlot renderIcon={SquareOutline}>
-                <Dropdown
-                  id='default'
-                  size='sm'
-                  itemToString={(item) => (item ? item.text : '')}
-                  items={[
-                    { text: 'Option 1' },
-                    { text: 'Option 2' },
-                    { text: 'Option 3' },
-                  ]}
-                  label='Choose an option'
-                />
-              </SideNavSlot> */}
-              <SideNavDivider />
-              {routesInSideNav.map(({ path, carbon }) =>
-                !carbon?.inSubMenu && carbon?.label ? (
-                  carbon?.subMenu ? (
-                    <SideNavMenu
-                      renderIcon={carbon?.icon}
-                      title={carbon?.label}
-                      key={path}>
-                      {carbon?.subMenu.map((subRoute) => (
-                        <SideNavMenuItem
-                          as={RouterLink}
-                          to={subRoute.path}
-                          isActive={subRoute.path === location.pathname}
-                          key={subRoute.path}>
-                          {subRoute.carbon?.label}
-                        </SideNavMenuItem>
-                      ))}
-                    </SideNavMenu>
-                  ) : (
-                    <div key={path}>
+              {routesInSideNav.map(({ path, carbon }) => {
+                return carbon?.subMenu ? (
+                  subMenuParts({ path, carbon })
+                ) : (
+                  <>
+                    {carbon?.slot ? (
+                      <SideNavSlot key={path} renderIcon={carbon.icon}>
+                        {carbon.slot()}
+                      </SideNavSlot>
+                    ) : (
                       <SideNavLink
+                        data-key={path}
+                        key={path}
                         as={RouterLink}
                         to={path}
                         isActive={path === location.pathname}
                         renderIcon={carbon?.icon}>
                         {carbon?.label}
                       </SideNavLink>
-                      {carbon?.separator && <SideNavDivider />}
-                    </div>
-                  )
-                ) : null
-              )}
+                    )}
+                    {carbon?.separator && (
+                      <SideNavDivider
+                        data-key={path}
+                        key={`${path}--divider`}
+                      />
+                    )}
+                  </>
+                );
+              })}
+              {/* {routesInSideNav.map(({ path, carbon }) => (
+                <>
+                  {carbon?.subMenu ? (
+                    <SideNavMenu
+                      data-key={path}
+                      renderIcon={carbon?.icon}
+                      title={carbon?.label}
+                      key={path}
+                    >
+                      {carbon?.subMenu.map((subRoute) => (
+                        <SideNavMenuItem
+                          as={RouterLink}
+                          to={subRoute.path}
+                          isActive={subRoute.path === location.pathname}
+                          key={subRoute.path}
+                        >
+                          {subRoute.carbon?.label}
+                        </SideNavMenuItem>
+                      ))}
+                    </SideNavMenu>
+                  ) : carbon?.slot ? (
+                    <SideNavSlot key={path}>{carbon.slot()}</SideNavSlot>
+                  ) : (
+                    <SideNavLink
+                      data-key={path}
+                      key={path}
+                      as={RouterLink}
+                      to={path}
+                      isActive={path === location.pathname}
+                      renderIcon={carbon?.icon}
+                    >
+                      {carbon?.label}
+                    </SideNavLink>
+                  )}
+
+                  {carbon?.separator && (
+                    <SideNavDivider data-key={path} key={`${path}--divider`} />
+                  )}
+                </>
+              ))} */}
             </SideNavItems>
           </SideNav>
           {children}

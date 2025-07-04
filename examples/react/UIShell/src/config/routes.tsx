@@ -7,13 +7,32 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Home } from '../pages/Home';
+import { Home as HomePage } from '../pages/Home';
 import { About } from '../pages/About';
 import { Placeholder } from '../pages/Placeholder';
-import { CarbonIconType, Fade } from '@carbon/icons-react';
+import {
+  CarbonIconType,
+  Fade,
+  Menu,
+  Home,
+  VirtualColumnKey,
+  BusinessProcesses,
+  Application,
+  Platforms,
+  Layers,
+  Dashboard,
+  DataAnalytics,
+  EventIncident,
+  Security,
+  WorkflowAutomation,
+  DocumentMultiple_01,
+  Settings,
+  OverflowMenuVertical,
+} from '@carbon/icons-react';
 import { NotFound } from '../pages/NotFound';
+import { DropdownExample } from '../components/DropdownExample';
 
-type carbonRouteType = {
+export type carbonRouteType = {
   label: string;
   inHeader?: boolean;
   inSideNav?: boolean;
@@ -21,9 +40,10 @@ type carbonRouteType = {
   icon?: CarbonIconType;
   subMenu?: routesType[];
   inSubMenu?: boolean;
+  slot?: () => JSX.Element;
 };
 
-type routesType = {
+export type routesType = {
   path: string;
   index?: boolean;
   element?: ({ usingOutlet }: { usingOutlet?: boolean }) => JSX.Element;
@@ -34,7 +54,7 @@ export const routes: routesType[] = [
   {
     path: '/',
     index: true,
-    element: Home,
+    element: HomePage,
   },
   {
     path: '/about',
@@ -46,102 +66,157 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/sub-menu-1',
+    path: 'slot-1',
     carbon: {
-      label: 'Sub menu level 1',
+      label: '',
       inSideNav: true,
-      icon: Fade,
-    },
-  },
-  {
-    // flat so processed correctly by react router - declare after parent
-    path: '/sub-menu-1/link-1',
-    element: Placeholder,
-    carbon: {
-      label: 'Sub link 1',
-      inSideNav: true,
-    },
-  },
-  {
-    // flat so processed correctly by react router - declare after parent
-    path: '/sub-menu-1/link-2',
-    element: Placeholder,
-    carbon: {
-      label: 'Sub Link 2',
-      inSideNav: true,
-    },
-  },
-  {
-    path: '/link-1',
-    element: Placeholder,
-    carbon: {
-      label: 'Link 1',
-      inSideNav: true,
-      icon: Fade,
-    },
-  },
-  {
-    path: '/link-2',
-    element: Placeholder,
-    carbon: {
-      label: 'Link 2',
-      inSideNav: true,
-      icon: Fade,
-    },
-  },
-  {
-    path: '/link-3',
-    element: Placeholder,
-    carbon: {
-      label: 'Link 3',
-      inSideNav: true,
-      icon: Fade,
-    },
-  },
-  {
-    path: '/link-4',
-    element: Placeholder,
-    carbon: {
-      label: 'Link 4',
-      inSideNav: true,
-      icon: Fade,
-    },
-  },
-  {
-    path: '/link-5',
-    element: Placeholder,
-    carbon: {
-      label: 'Link 5',
-      inSideNav: true,
-      icon: Fade,
-    },
-  },
-  {
-    path: '/link-6',
-    element: Placeholder,
-    carbon: {
-      label: 'Link 6',
-      inSideNav: true,
-      icon: Fade,
+      slot: DropdownExample,
+      icon: VirtualColumnKey,
       separator: true,
     },
   },
   {
-    path: '/link-7',
-    element: Placeholder,
+    path: '/home',
     carbon: {
-      label: 'Link 7',
+      label: 'Home',
       inSideNav: true,
-      icon: Fade,
+      icon: Home,
+      separator: true,
     },
   },
   {
-    path: '/link-8',
+    // flat so processed correctly by react router - declare after parent
+    path: '/home/sub menu 1',
     element: Placeholder,
     carbon: {
-      label: 'Link 8',
+      label: 'Sub menu 1',
       inSideNav: true,
-      icon: Fade,
+    },
+  },
+  {
+    path: '/home/sub menu 2',
+    element: Placeholder,
+    carbon: {
+      label: 'Sub menu 2',
+      inSideNav: true,
+    },
+  },
+  {
+    path: '/home/sub menu 3',
+    element: Placeholder,
+    carbon: {
+      label: 'Sub menu 3',
+      inSideNav: true,
+    },
+  },
+  {
+    path: '/business',
+    element: Placeholder,
+    carbon: {
+      label: 'Business',
+      inSideNav: true,
+      icon: BusinessProcesses,
+    },
+  },
+  {
+    path: '/applications',
+    element: Placeholder,
+    carbon: {
+      label: 'Applications',
+      inSideNav: true,
+      icon: Application,
+    },
+  },
+  {
+    path: '/platforms',
+    element: Placeholder,
+    carbon: {
+      label: 'Platforms',
+      inSideNav: true,
+      icon: Platforms,
+    },
+  },
+  {
+    path: '/infrastructure',
+    element: Placeholder,
+    carbon: {
+      label: 'Infrastructure',
+      inSideNav: true,
+      icon: Layers,
+      separator: true,
+    },
+  },
+  {
+    path: '/dashboard',
+    element: Placeholder,
+    carbon: {
+      label: 'Dashboard',
+      inSideNav: true,
+      icon: Dashboard,
+    },
+  },
+  {
+    path: '/analytics',
+    element: Placeholder,
+    carbon: {
+      label: 'Analytics',
+      inSideNav: true,
+      icon: DataAnalytics,
+    },
+  },
+  {
+    path: '/incidents',
+    element: Placeholder,
+    carbon: {
+      label: 'Incidents',
+      inSideNav: true,
+      icon: EventIncident,
+    },
+  },
+  {
+    path: '/security',
+    element: Placeholder,
+    carbon: {
+      label: 'Security',
+      inSideNav: true,
+      icon: Security,
+    },
+  },
+  {
+    path: '/automations',
+    element: Placeholder,
+    carbon: {
+      label: 'Automations',
+      inSideNav: true,
+      icon: WorkflowAutomation,
+      separator: true,
+    },
+  },
+  {
+    path: '/docs',
+    element: Placeholder,
+    carbon: {
+      label: 'Docs',
+      inSideNav: true,
+      icon: DocumentMultiple_01,
+    },
+  },
+  {
+    path: '/settings',
+    element: Placeholder,
+    carbon: {
+      label: 'Settings',
+      inSideNav: true,
+      icon: Settings,
+    },
+  },
+  {
+    path: '/more',
+    element: Placeholder,
+    carbon: {
+      label: 'More',
+      inSideNav: true,
+      icon: OverflowMenuVertical,
     },
   },
   {

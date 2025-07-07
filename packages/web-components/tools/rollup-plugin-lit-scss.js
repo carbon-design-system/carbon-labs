@@ -79,6 +79,18 @@ function rollupPluginLitSCSS({
         ...options,
         file: id,
         data: finalContent,
+         // suppress mixed-declarations warnings until resolved in
+        // https://github.com/carbon-design-system/carbon/issues/16962
+        logger: {
+          /**
+           * warning message
+           * @param {string} message warning message
+           */
+          warn: (message) =>
+            message.includes('mixed-decls')
+              ? undefined
+              : { type: 'warn', message },
+        },
       });
 
       return {

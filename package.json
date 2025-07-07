@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-labs",
   "engines": {
-    "node": ">=20.x"
+    "node": ">=18.x"
   },
   "workspaces": [
     "packages/*",

@@ -9,26 +9,26 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { stylePickerColorModuleTemplate } from './src/style-picker-color-module.template.js';
-import StylePickerColorModule from './src/style-picker-color-module.js';
+import { stylePickerGroupTemplate } from './src/style-picker-group.template.js';
+import StylePickerGroup from './src/style-picker-group.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Color module
+ * Group wrapper element.
  *
- * @element clabs-style-picker-color-module
+ * @element clabs-style-picker-group
  */
-@customElement(`${clabsPrefix}-style-picker-color-module`)
-class CLABSStylePickerColorModule<Color> extends StylePickerColorModule<Color> {
+@customElement(`${clabsPrefix}-style-picker-group`)
+class CLABSStylePickerGroup extends StylePickerGroup {
   /**
    * Renders the template while passing in class functionality
    *
    * @returns {TemplateResult<1>}
    */
   render() {
-    return stylePickerColorModuleTemplate(this);
+    return stylePickerGroupTemplate(this);
   }
 }
 
-export default CLABSStylePickerColorModule;
+export default CLABSStylePickerGroup;

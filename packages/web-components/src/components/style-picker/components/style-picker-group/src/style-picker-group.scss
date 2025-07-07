@@ -10,4 +10,4 @@ $css--plex: true !default;
 @use '../../../../../globals/scss/vars' as *;
 @use '@carbon/react/scss/theme';
 
-$block-class: #{$clabs-prefix}--style-picker-color-module;
+$block-class: #{$clabs-prefix}--style-picker-group;

@@ -23,7 +23,7 @@ import CLABSStylePickerModule from '../style-picker-module';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * The base component for different modules eg: color, icon, pictogram, etc.
+ * Module element.
  *
  * @fires clabs-style-picker-module-option-change - fired when an option is selected/changed.
  */
@@ -55,6 +55,9 @@ class StylePickerModule<T> extends LitElement {
 
   @property({ type: Number, reflect: true, attribute: 'slot-index' })
   slotIndex?: number;
+
+  @property({ type: Boolean, reflect: true, attribute: 'grouped' })
+  isGrouped?: boolean = false;
 
   /**
    * @param {string} triggeredBy - the element that triggered the change.

@@ -31,6 +31,7 @@ export const stylePickerModuleTemplate = <T>(
     // items,
     heading,
     size,
+    isGrouped,
     // renderItem,
     // selectedItem,
     // handleOptionChange,
@@ -39,17 +40,39 @@ export const stylePickerModuleTemplate = <T>(
   } = customElementClass;
 
   // const { kind, setActiveModule } = _stylePickerContext;
+  if (isGrouped) {
+    return html`<div
+      class=${`${blockClass} ${blockClass}--${size}`}
+      role="listbox"
+      aria-label=${heading}
+      aria-orientation="horizontal"
+      tabindex="0">
+      <div
+        class=${`cds--contained-list ${carbonPrefix}--contained-list--disclosed ${blockClass}__group`}>
+        <div class=${`cds--contained-list__header`} role="presentation">
+          <slot name="group"></slot>
+        </div>
+        <ul class=${`${blockClass}__items`} role="group">
+          <slot></slot>
+        </ul>
+      </div>
+    </div>`;
+  }
 
-  return html`<div
-    class=${`${blockClass} ${blockClass}--${size}`}
-    role="listbox"
-    aria-label=${heading}
-    aria-orientation="horizontal"
-    tabindex="0">
-    <ul class=${`${blockClass}__items`} role="group">
-      <slot></slot>
-    </ul>
-  </div>`;
+  return html`
+    <div
+      class=${`${blockClass} ${blockClass}--${size}`}
+      role="listbox"
+      aria-label=${heading}
+      aria-orientation="horizontal"
+      tabindex="0">
+        <ul class=${`${blockClass}__items`} role="group">
+          <slot></slot>
+        </ul>
+      </div>
+    </div>
+  `;
+
   // /**
   //  * Checks items are grouped or not
   //  *
@@ -111,29 +134,29 @@ export const stylePickerModuleTemplate = <T>(
   //  * @param {Group<T>[]} items - Grouped items array
   //  */
   // const renderGrouped = (items: Group<Item<T>>[]) => {
-  //   return html`
-  //     <div
-  //       class=${`${blockClass} ${blockClass}--${size}`}
-  //       role="listbox"
-  //       aria-label=${heading}
-  //       aria-orientation="horizontal"
-  //       tabindex="0">
-  //       ${items.map(
-  //         (group) => html`
-  //           <div
-  //             key=${group.label}
-  //             class=${`cds--contained-list ${carbonPrefix}--contained-list--disclosed ${blockClass}__group`}>
-  //             <div class=${`cds--contained-list__header`} role="presentation">
-  //               ${group.label}
-  //             </div>
-  //             <ul role="group">
-  //               ${renderItems(group.items)}
-  //             </ul>
+  // return html`
+  //   <div
+  //     class=${`${blockClass} ${blockClass}--${size}`}
+  //     role="listbox"
+  //     aria-label=${heading}
+  //     aria-orientation="horizontal"
+  //     tabindex="0">
+  //     ${items.map(
+  //       (group) => html`
+  //         <div
+  //           key=${group.label}
+  //           class=${`cds--contained-list ${carbonPrefix}--contained-list--disclosed ${blockClass}__group`}>
+  //           <div class=${`cds--contained-list__header`} role="presentation">
+  //             ${group.label}
   //           </div>
-  //         `
-  //       )}
-  //     </div>
-  //   `;
+  //           <ul role="group">
+  //             ${renderItems(group.items)}
+  //           </ul>
+  //         </div>
+  //       `
+  //     )}
+  //   </div>
+  // `;
   // };
 
   // /**

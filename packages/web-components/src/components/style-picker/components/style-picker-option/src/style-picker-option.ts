@@ -45,10 +45,6 @@ class StylePickerOption extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'selected' })
   selected = false;
 
-  // TODO: Remove if not needed
-  // @property({ reflect: true, attribute: 'size' })
-  // size: Size = 'sm';
-
   /**
    * @param {string} triggeredBy - the element that triggered the change.
    */
@@ -60,6 +56,8 @@ class StylePickerOption extends LitElement {
       detail: {
         triggeredBy,
         value: this.value,
+        label: this.label,
+        selected: this.selected,
       },
     };
 

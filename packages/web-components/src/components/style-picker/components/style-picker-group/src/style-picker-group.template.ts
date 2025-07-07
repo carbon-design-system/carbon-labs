@@ -12,22 +12,30 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
-export const blockClass = `${clabsPrefix}--style-picker-icon`;
+export const blockClass = `${clabsPrefix}--style-picker-group`;
 
 /**
- * Lit template for card
+ * Lit template for group
  *
  * @param {object} customElementClass Class functionality for the custom element
 
  * @returns {TemplateResult<1>} Lit html template
  */
-export const stylePickerIconTemplate = (
+export const stylePickerGroupTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const { items, heading, size, selectedItem, moduleIndex } =
-    customElementClass;
+  const { heading, group } = customElementClass;
 
-  return html`<div part=${`${blockClass}__item`}>
-    <slot></slot>
-  </div> `;
+  return html`
+    <div
+      key=${group.label}
+      class=${`cds--contained-list ${carbonPrefix}--contained-list--disclosed ${blockClass}__group`}>
+      <div class=${`cds--contained-list__header`} role="presentation">
+        ${group.label}
+      </div>
+      <ul role="group">
+        <slot></slot>
+      </ul>
+    </div>
+  `;
 };

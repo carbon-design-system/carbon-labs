@@ -8,14 +8,21 @@
  */
 
 // @ts-ignore
-import styles from './style-picker-color-module.scss?inline';
-import StylePickerModule from '../../style-picker-module/src/style-picker-module';
+import { property } from 'lit/decorators.js';
+import styles from './style-picker-color.scss?inline';
+import { LitElement } from 'lit';
 
 /**
- * Color picker module
+ * Color picker element
  */
-class StylePickerColorModule<Color> extends StylePickerModule<Color> {
+class StylePickerColor extends LitElement {
   static styles = styles;
+
+  @property({ type: String, reflect: true, attribute: 'color' })
+  color?: string;
+
+  @property({ type: String, reflect: true, attribute: 'label' })
+  label?: string;
 
   /**
    * Return the slot index from the custom attribute set in the parent module
@@ -25,4 +32,4 @@ class StylePickerColorModule<Color> extends StylePickerModule<Color> {
   }
 }
 
-export default StylePickerColorModule;
+export default StylePickerColor;

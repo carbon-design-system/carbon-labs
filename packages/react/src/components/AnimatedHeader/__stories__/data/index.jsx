@@ -13,10 +13,8 @@ import {
   ChartLineData,
   DataSet,
   Export,
-  FlowModeler,
   Sql,
   Term,
-  Tuning,
 } from '@carbon/react/icons';
 import { ButtonKinds, Loading } from '@carbon/react';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
@@ -73,7 +71,7 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
     ],
   },
@@ -86,14 +84,14 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
     ],
   },

@@ -7,8 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { ProgressIndicator, ProgressStep, Stack } from '@carbon/react';
 import React from 'react';
+import { ProgressIndicator, ProgressStep, Stack } from '@carbon/react';
 
 const SampleCustomTaskContent = () => {
   return (

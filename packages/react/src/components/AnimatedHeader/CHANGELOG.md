@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.18.0...@carbon-labs/react-animated-header@0.19.0) (2025-06-30)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.17.0...@carbon-labs/react-animated-header@0.18.0) (2025-06-30)
+
+
+### Bug Fixes
+
+* **uishell:** update style import for ibm-products ([#691](https://github.com/carbon-design-system/carbon-labs/issues/691)) ([04b14c1](https://github.com/carbon-design-system/carbon-labs/commit/04b14c18f60c4d55d421ead8201087766877be01))
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.16.0...@carbon-labs/react-animated-header@0.17.0) (2025-06-30)
+
+
+### Features
+
+* **profile:** create components to add to profile menu ([#671](https://github.com/carbon-design-system/carbon-labs/issues/671)) ([34a8fdb](https://github.com/carbon-design-system/carbon-labs/commit/34a8fdb42f4a676234e3707c15db73bd0d40d49a))
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.15.0...@carbon-labs/react-animated-header@0.16.0) (2025-06-26)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.14.0...@carbon-labs/react-animated-header@0.15.0) (2025-06-18)
+
+
+### Features
+
+* add-tile-click-prop ([#663](https://github.com/carbon-design-system/carbon-labs/issues/663)) ([a3b1b46](https://github.com/carbon-design-system/carbon-labs/commit/a3b1b4662968f81581357965e584180483708d89))
+
+
+
+
+
 # [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.13.0...@carbon-labs/react-animated-header@0.14.0) (2025-05-28)
 
 

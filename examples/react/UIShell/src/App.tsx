@@ -21,6 +21,8 @@ import {
   HeaderPopoverButton,
   HeaderPopoverContent,
   TrialCountdown,
+  SideNavSlot,
+  Profile,
 } from '@carbon-labs/react-ui-shell';
 import {
   SkipToContent,
@@ -38,6 +40,9 @@ import {
   ExpandableSearch,
   Link,
   Button,
+  Dropdown,
+  ContainedList,
+  ContainedListItem,
 } from '@carbon/react';
 import {
   Fade,
@@ -49,6 +54,11 @@ import {
   User,
   ShoppingCart,
   Switcher,
+  Menu,
+  IbmCloudKeyProtect,
+  Group,
+  Money,
+  Logout,
 } from '@carbon/icons-react';
 
 const StoryContent = () => (
@@ -245,22 +255,61 @@ function App() {
                 />
               </MenuButton>
               <HeaderDivider />
-              <HeaderPopover align="bottom-right">
-                <HeaderPopoverButton align="bottom" label="Profile">
-                  <UserAvatar size={20} />
-                </HeaderPopoverButton>
-                <HeaderPopoverContent>
-                  <p>
-                    Lorem ipsum dolor sit amet, di os consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut fsil labore et
-                    dolore magna aliqua.
-                  </p>
-                  <HeaderPopoverActions>
-                    <Link href="#">Link action</Link>
-                    <Button size="sm">Button</Button>
-                  </HeaderPopoverActions>
-                </HeaderPopoverContent>
-              </HeaderPopover>
+              <Profile.Root
+                label="Profile"
+                renderIcon={<UserAvatar size={20} />}>
+                <Profile.UserInfo
+                  name="Thomas J. Watson"
+                  email="thomas.watson@ibm.com"
+                />
+                <Profile.ReadOnly
+                  items={[
+                    { label: 'Instance', title: 'APIC-MB-DEV' },
+                    {
+                      label: 'Instance owner',
+                      title: 'thomas.j.watson@ibm.com',
+                    },
+                    { label: 'Region', title: 'us-east-1 (N Virgina)' },
+                  ]}
+                />
+                <ContainedList label="Profile links">
+                  <ContainedListItem
+                    renderIcon={User}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    User profile
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={IbmCloudKeyProtect}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Access keys
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Group}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    User management
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Money}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Plan and billing
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Logout}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Log out
+                  </ContainedListItem>
+                </ContainedList>
+              </Profile.Root>
             </HeaderGlobalBar>
           </Header>
           <SideNav
@@ -272,7 +321,28 @@ function App() {
             onOverlayClick={onClickSideNavExpand}
             className="nav--global">
             <SideNavItems>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu level 1">
+              <SideNavMenu
+                renderIcon={SquareOutline}
+                title="Sub-menu level 1"
+                primary
+                defaultExpanded>
+                <SideNavSlot renderIcon={Fade}>
+                  <Dropdown
+                    aria-label="Choose an option"
+                    id="default"
+                    size="sm"
+                    itemToString={(item) => (item ? item.text : '')}
+                    items={[
+                      { text: 'Option 1' },
+                      { text: 'Option 2' },
+                      { text: 'Option 3' },
+                    ]}
+                    label="Choose an option"
+                    titleText="Choose an option"
+                    hideLabel
+                  />
+                </SideNavSlot>
+                <SideNavDivider />
                 <SideNavMenuItem renderIcon={SquareOutline} href="#">
                   Item level 2
                 </SideNavMenuItem>
@@ -281,22 +351,25 @@ function App() {
                 </SideNavMenuItem>
                 <SideNavMenu
                   renderIcon={SquareOutline}
-                  title="Sub-menu level 2">
-                  <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                  title="Sub-menu level 2"
+                  defaultExpanded>
+                  <SideNavMenuItem isActive href="#">
+                    Item level 3
+                  </SideNavMenuItem>
                   <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                   <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                 </SideNavMenu>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
               </SideNavMenu>
               <SideNavDivider />
@@ -306,7 +379,7 @@ function App() {
               <SideNavLink renderIcon={SquareOutline} href="#">
                 Link
               </SideNavLink>
-              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
+              <SideNavMenu renderIcon={SquareOutline} title="Sub-menu" primary>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
                 <SideNavMenuItem href="#">Item</SideNavMenuItem>
@@ -319,6 +392,25 @@ function App() {
             isChildOfHeader={false}
             aria-label="Side navigation">
             <SideNavItems>
+              <SideNavSlot renderIcon={Menu}>
+                <Menu />
+              </SideNavSlot>
+              <SideNavSlot renderIcon={SquareOutline}>
+                <Dropdown
+                  id="default"
+                  size="sm"
+                  itemToString={(item) => (item ? item.text : '')}
+                  items={[
+                    { text: 'Option 1' },
+                    { text: 'Option 2' },
+                    { text: 'Option 3' },
+                  ]}
+                  label="Choose an option"
+                  titleText="Choose an option"
+                  hideLabel
+                />
+              </SideNavSlot>
+              <SideNavDivider />
               <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
                 <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
                 <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>

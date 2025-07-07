@@ -15,6 +15,8 @@ import copy from 'rollup-plugin-copy';
 import { babel } from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { rollup } from 'rollup';
+import url from '@rollup/plugin-url';
+
 import {
   loadBaseTsCompilerOpts,
   loadTsCompilerOpts,
@@ -178,6 +180,11 @@ function getRollupConfig(input, rootDir, outDir) {
       }),
       babel(babelConfig),
       stripBanner(),
+      url({
+        include: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.svg', '**/*.gif'],
+        limit: 8192, // Optional: files < 8kb will be inlined as base64
+        emitFiles: true, // Optional: copy files to output dir
+      }),
     ],
   };
 }

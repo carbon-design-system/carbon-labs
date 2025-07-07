@@ -7,9 +7,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Add } from '@carbon/react/icons';
-import { ButtonKinds, Loading } from '@carbon/react';
+import React from 'react';
+import { Loading } from '@carbon/react';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
+import {
+  ArrowRight,
+  ChartLineData,
+  DataSet,
+  Export,
+  Sql,
+  Term,
+} from '@carbon/react/icons';
 
 export const workspaceData = [
   {
@@ -35,21 +43,21 @@ export const headerTiles = [
         id: 'ai-tile',
         href: '#',
         title: 'Short description of the type of prompt',
-        mainIcon: 'Term',
+        mainIcon: Term,
       },
       {
         id: 'tile-1',
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
     ],
   },
@@ -95,21 +103,21 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
       {
         id: 'tile-3',
         href: '#',
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
       },
     ],
   },
@@ -122,38 +130,75 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
       {
         id: 'tile-3',
         href: '#',
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
       },
       {
         id: 'tile-4',
         href: '#',
         title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
+        mainIcon: Export,
+        secondaryIcon: ArrowRight,
       },
     ],
   },
   {
     id: 6,
+    label: 'Loading, non-interactive and disabled cards',
+    tiles: [
+      {
+        id: 'tile-1',
+        href: '#',
+        title: 'Loading tile',
+        subtitle: 'with Data explorer',
+        mainIcon: DataSet,
+        isLoading: true,
+      },
+      {
+        id: 'tile-2',
+        title: 'Non-interactive tile',
+        subtitle: 'with Monitoring hub',
+        mainIcon: ChartLineData,
+      },
+      {
+        id: 'tile-3',
+        href: '#',
+        title: 'Disabled tile',
+        subtitle: 'with SQL editor',
+        mainIcon: Sql,
+        isDisabled: true,
+      },
+      {
+        id: 'tile-4',
+        href: '#',
+        title: 'Export data',
+        mainIcon: Export,
+        secondaryIcon: ArrowRight,
+      },
+    ],
+  },
+  {
+    id: 7,
     label: 'Custom content tasks',
     tiles: [
       {
         id: 'tile-1',
-        customContent: <Loading description="Sample loading state" />,
+        customContent: (
+          <Loading withOverlay={false} description="Sample loading state" />
+        ),
       },
       {
         id: 'tile-2',
@@ -162,20 +207,3 @@ export const headerTiles = [
     ],
   },
 ];
-
-export const tasksConfigButton = {
-  type: 'button',
-  button: {
-    href: '#',
-    icon: Add,
-    text: 'Action button',
-    type: ButtonKinds[7],
-  },
-};
-
-export const tasksConfigDropdown = {
-  type: 'dropdown',
-  dropdown: {
-    label: 'Customize your journey',
-  },
-};

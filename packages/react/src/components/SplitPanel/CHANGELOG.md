@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.4.0...@carbon-labs/react-split-panel@0.5.0) (2025-07-02)
+
+
+### Bug Fixes
+
+* **styles:** remove unnessary button imports ([#697](https://github.com/carbon-design-system/carbon-labs/issues/697)) ([81b0500](https://github.com/carbon-design-system/carbon-labs/commit/81b050009c61dbc635c22f3457719566282d06e9))
+
+
+
+
+
 # [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.3.0...@carbon-labs/react-split-panel@0.4.0) (2025-05-28)
 
 

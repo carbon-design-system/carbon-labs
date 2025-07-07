@@ -64,8 +64,8 @@ export function HeaderContainer<P extends HeaderContainerRenderProps>({
 
   const handleProfileClick = useCallback((e) => {
     if (
-      !(e.target as HTMLElement).classList.contains(
-        `${prefix}--content-switcher-btn`
+      !(e.target as HTMLElement).closest(
+        `.${prefix}--profile .${prefix}--popover`
       )
     ) {
       setIsProfileExpandedState((prev) => !prev);

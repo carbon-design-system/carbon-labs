@@ -6,65 +6,102 @@
  */
 
 import PropTypes from 'prop-types';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useLayoutEffect, useRef } from 'react';
 import { keys, match } from '../internal/keyboard';
 import { useWindowEvent } from '../internal/useEvent';
+import { usePrefix } from '../internal/usePrefix';
 
 export interface HeaderContainerRenderProps {
   isSideNavExpanded: boolean;
   isSwitcherExpanded: boolean;
+  isProfileExpanded: boolean;
   onClickSideNavExpand: () => void;
   onClickSwitcherExpand: () => void;
+  onClickProfileExpand: () => void;
+  themeSetting: string;
 }
 
 export type HeaderContainerProps<P extends HeaderContainerRenderProps> = {
   isSideNavExpanded?: boolean;
   isSwitcherExpanded?: boolean;
+  isProfileExpanded?: boolean;
   render: React.ComponentType<P>;
+  themeSetting?: string;
 } & { [K in keyof Omit<P, keyof HeaderContainerRenderProps>]: P[K] };
 
 export function HeaderContainer<P extends HeaderContainerRenderProps>({
   render: Children,
   isSideNavExpanded = false,
   isSwitcherExpanded = false,
+  isProfileExpanded = false,
+  themeSetting, // <-- pass this in from the story
   ...rest
 }: HeaderContainerProps<P>) {
+  const prefix = usePrefix();
+
   const [isSideNavExpandedState, setIsSideNavExpandedState] =
     useState(isSideNavExpanded);
   const [isSwitcherExpandedState, setSwitcherExpandedState] =
     useState(isSwitcherExpanded);
+  const [isProfileExpandedState, setIsProfileExpandedState] =
+    useState(isProfileExpanded);
 
   useWindowEvent('keydown', (event) => {
     if (match(event, keys.Escape)) {
       setIsSideNavExpandedState(false);
       setSwitcherExpandedState(false);
+      setIsProfileExpandedState(false); // close profile on ESC
     }
   });
 
   const handleHeaderMenuButtonClick = useCallback(() => {
-    setIsSideNavExpandedState(
-      (prevIsSideNavExpanded) => !prevIsSideNavExpanded
-    );
-  }, [setIsSideNavExpandedState]);
+    setIsSideNavExpandedState((prev) => !prev);
+  }, []);
 
   const handleSwitcherClick = useCallback(() => {
-    setSwitcherExpandedState(
-      (prevIsSwitcherExpanded) => !prevIsSwitcherExpanded
-    );
-  }, [setSwitcherExpandedState]);
+    setSwitcherExpandedState((prev) => !prev);
+  }, []);
+
+  const handleProfileClick = useCallback((e) => {
+    if (
+      !(e.target as HTMLElement).classList.contains(
+        `${prefix}--content-switcher-btn`
+      )
+    ) {
+      setIsProfileExpandedState((prev) => !prev);
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    setTimeout(function () {
+      (
+        document.querySelector(
+          `.${prefix}--profile .${prefix}--content-switcher--selected`
+        ) as HTMLElement
+      ).focus();
+    });
+  }, [themeSetting]);
 
   return (
     <Children
       {...(rest as any)}
       isSideNavExpanded={isSideNavExpandedState}
       isSwitcherExpanded={isSwitcherExpandedState}
+      isProfileExpanded={isProfileExpandedState}
       onClickSideNavExpand={handleHeaderMenuButtonClick}
       onClickSwitcherExpand={handleSwitcherClick}
+      onClickProfileExpand={handleProfileClick}
+      themeSetting={themeSetting}
     />
   );
 }
 
 HeaderContainer.propTypes = {
+  /**
+   * `true` if the profile is expanded.
+   */
+  isProfileExpanded: PropTypes.bool,
+
   /**
    * `true` if the side navigation is expanded.
    */

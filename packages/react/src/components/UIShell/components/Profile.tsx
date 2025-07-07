@@ -48,6 +48,7 @@ const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(
     label,
     children,
     renderIcon: IconElement,
+    ...rest
   }: ProfileProps) {
     const prefix = usePrefix();
     const className = cx({
@@ -55,7 +56,7 @@ const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(
       [customClassName as string]: !!customClassName,
     });
     return (
-      <HeaderPopover align="bottom-right" className={className}>
+      <HeaderPopover align="bottom-right" className={className} {...rest}>
         <HeaderPopoverButton align="bottom" label={label}>
           {IconElement}
         </HeaderPopoverButton>

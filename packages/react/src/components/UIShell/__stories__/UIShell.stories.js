@@ -266,7 +266,13 @@ export const Demo = () => {
   return (
     <Theme theme={themeHeader}>
       <HeaderContainer
-        render={({ isSideNavExpanded, onClickSideNavExpand }) => (
+        themeSetting={themeSetting}
+        render={({
+          isSideNavExpanded,
+          onClickSideNavExpand,
+          isProfileExpanded,
+          onClickProfileExpand
+        }) => (
           <>
             <Header aria-label="IBM Platform Name" ref={headerRef}>
               <SkipToContent />
@@ -375,6 +381,8 @@ export const Demo = () => {
                 </MenuButton>
                 <HeaderDivider />
                 <Profile.Root
+                  open={isProfileExpanded}
+                  onClick={onClickProfileExpand}
                   label="Profile"
                   renderIcon={<UserAvatar size={20} />}>
                   <Profile.UserInfo

@@ -271,7 +271,7 @@ export const Demo = () => {
           isSideNavExpanded,
           onClickSideNavExpand,
           isProfileExpanded,
-          onClickProfileExpand
+          onClickProfileExpand,
         }) => (
           <>
             <Header aria-label="IBM Platform Name" ref={headerRef}>

@@ -206,7 +206,13 @@ function App() {
   return (
     <Theme theme={themeHeader}>
       <HeaderContainer
-        render={({ isSideNavExpanded, onClickSideNavExpand }) => (
+        themeSetting={themeSetting}
+        render={({
+          isSideNavExpanded,
+          onClickSideNavExpand,
+          isProfileExpanded,
+          onClickProfileExpand,
+        }) => (
           <>
             <Header aria-label="IBM Platform Name">
               <SkipToContent />
@@ -315,6 +321,8 @@ function App() {
                 </MenuButton>
                 <HeaderDivider />
                 <Profile.Root
+                  open={isProfileExpanded}
+                  onClick={onClickProfileExpand}
                   label="Profile"
                   renderIcon={<UserAvatar size={20} />}>
                   <Profile.UserInfo

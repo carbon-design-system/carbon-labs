@@ -47,7 +47,7 @@ export const HeaderGlobalBarExample = () => {
       >
         <SquareOutline size={20} />
       </HeaderGlobalAction>
-      <HeaderPopover align='bottom-right'>
+      <HeaderPopover align='bottom-end'>
         <HeaderPopoverButton align='bottom' label='Help'>
           <Help size={20} />
         </HeaderPopoverButton>
@@ -62,7 +62,7 @@ export const HeaderGlobalBarExample = () => {
           </HeaderPopoverActions>
         </HeaderPopoverContent>
       </HeaderPopover>
-      <HeaderPopover align='bottom-right'>
+      <HeaderPopover align='bottom-end'>
         <HeaderPopoverButton align='bottom' label='Notifications'>
           <Notification size={20} />
         </HeaderPopoverButton>
@@ -107,7 +107,7 @@ export const HeaderGlobalBarExample = () => {
         />
       </MenuButton>
       <HeaderDivider />
-      <HeaderPopover align='bottom-right'>
+      <HeaderPopover align='bottom-end'>
         <HeaderPopoverButton align='bottom' label='Profile'>
           <UserAvatar size={20} />
         </HeaderPopoverButton>

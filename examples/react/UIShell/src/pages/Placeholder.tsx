@@ -16,12 +16,12 @@ export const Placeholder = ({ usingOutlet }: { usingOutlet?: boolean }) => {
   const location = useLocation();
 
   return usingOutlet ? (
-    <>A placeholder page, in an outlet, at route "{location.pathname}".</>
+    <h1>{location.pathname}</h1>
   ) : (
     <HeaderExample>
       {/* Theme goes here for non-outlet. Must be just after header */}
-      <Theme as={Content} theme="white">
-        A placeholder page at route "{location.pathname}".
+      <Theme as={Content} theme='white'>
+        <h1>{location.pathname}</h1>
       </Theme>
     </HeaderExample>
   );

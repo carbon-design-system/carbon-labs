@@ -12,12 +12,12 @@ import { Content, Theme } from '@carbon/react';
 
 export const NotFound = ({ usingOutlet }: { usingOutlet?: boolean }) => {
   return usingOutlet ? (
-    <>Page not found - in the outlet.</>
+    <h1>Page not found - in the outlet.</h1>
   ) : (
     <HeaderExample>
       {/* Theme goes here for non-outlet. Must be just after header */}
-      <Theme as={Content} theme="white">
-        Page not found page.
+      <Theme as={Content} theme='white'>
+        <h1>Page not found page.</h1>
       </Theme>
     </HeaderExample>
   );

@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@carbon/react": "^1.78.2",
+    "@carbon/ibm-products": "latest",
+    "@carbon/react": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^7.6.1"

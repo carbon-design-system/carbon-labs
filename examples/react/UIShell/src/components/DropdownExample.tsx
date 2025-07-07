@@ -8,5 +8,6 @@ export const DropdownExample = () => (
     itemToString={(item) => (item ? item.text : '')}
     items={[{ text: 'Option 1' }, { text: 'Option 2' }, { text: 'Option 3' }]}
     label='Choose an option'
+    titleText={''}
   />
 );

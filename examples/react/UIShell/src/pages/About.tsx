@@ -12,12 +12,12 @@ import { Content, Theme } from '@carbon/react';
 
 export const About = ({ usingOutlet }: { usingOutlet?: boolean }) => {
   return usingOutlet ? (
-    <>An empty about page in the outlet.</>
+    <h1>An empty about page in the outlet.</h1>
   ) : (
     <HeaderExample>
       {/* Theme goes here for non-outlet. Must be just after header */}
-      <Theme as={Content} theme="white">
-        An empty about page.
+      <Theme as={Content} theme='white'>
+        <h1>An empty about page.</h1>
       </Theme>
     </HeaderExample>
   );

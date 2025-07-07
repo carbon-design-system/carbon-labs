@@ -186,12 +186,6 @@ function getRollupConfig(input, rootDir, outDir) {
         emitFiles: true, // Optional: copy files to output dir
       }),
     ],
-    onwarn(warning, warn) {
-      if (warning.code === 'Circular dependency') {
-        return;
-      }
-      warn(warning);
-    },
   };
 }
 

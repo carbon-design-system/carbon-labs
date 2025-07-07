@@ -87,13 +87,16 @@ const toggleButton = () => {
 /**
  * Change color callback
  * @param {object} ev - custom event from color module
+ * @param {boolean} grouped - true if the color module is grouped
+ *
+ * @returns {void}
  */
-const changeColor = (ev) => {
+const changeColor = (ev, grouped = false) => {
   const selectedColor = ev.detail.value;
   const colorModuleEl = ev.target.parentElement;
-  const allOptionsEl = colorModuleEl.querySelectorAll(
-    `${clabsPrefix}-style-picker-option`
-  );
+  const allOptionsEl = grouped
+    ? document.querySelectorAll(`${clabsPrefix}-style-picker-option`)
+    : colorModuleEl.querySelectorAll(`${clabsPrefix}-style-picker-option`);
 
   allOptionsEl.forEach((optionEl) => {
     if (optionEl.value === selectedColor) {
@@ -288,7 +291,7 @@ export const Color = {
                           label=${item.label}
                           ?selected=${item.label === 'Yellow 30'}
                           @clabs-style-picker-option-change=${(ev) =>
-                            changeColor(ev)}>
+                            changeColor(ev, true)}>
                           <clabs-style-picker-color
                             color=${item.color}
                             label=${item.label}></clabs-style-picker-color>

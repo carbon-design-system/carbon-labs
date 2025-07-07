@@ -182,7 +182,7 @@ export const Icon = {
               <span slot="tooltip-content">Icon list</span>
             </cds-icon-button>
             <clabs-style-picker-modules slot="modules">
-              <clabs-style-picker-module size="lg">
+              <clabs-style-picker-module>
                 ${icons.map(
                   (item) =>
                     html`

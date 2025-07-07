@@ -48,7 +48,7 @@ class StylePickerModule<T> extends LitElement {
   heading = '';
 
   @property({ type: String, reflect: true, attribute: 'size' })
-  size: Size | undefined;
+  size?: Size = 'sm';
 
   @property({ attribute: false })
   renderItem?: (item: Item<T>) => TemplateResult;

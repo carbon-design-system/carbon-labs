@@ -8,16 +8,18 @@
  */
 
 // @ts-ignore
-import styles from './style-picker-pictogram-module.scss?inline';
-import StylePickerModule from '../../style-picker-module/src/style-picker-module';
+import { property } from 'lit/decorators.js';
+import styles from './style-picker-pictogram.scss?inline';
+import { LitElement } from 'lit';
 
 /**
- * Pictogram picker module
+ * Pictogram picker element.
  */
-class StylePickerPictogramModule<
-  Pictogram
-> extends StylePickerModule<Pictogram> {
+class StylePickerPictogram extends LitElement {
   static styles = styles;
+
+  @property({ type: Object })
+  item;
 
   /**
    * Return the slot index from the custom attribute set in the parent module
@@ -27,4 +29,4 @@ class StylePickerPictogramModule<
   }
 }
 
-export default StylePickerPictogramModule;
+export default StylePickerPictogram;

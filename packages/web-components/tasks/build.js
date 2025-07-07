@@ -65,11 +65,11 @@ async function build() {
       }),
     ],
     onwarn(warning, warn) {
-    if (warning.code === 'CIRCULAR_DEPENDENCY') {
-      return;
-    }
-    warn(warning);
-  },
+      if (warning.code === 'CIRCULAR_DEPENDENCY') {
+        return;
+      }
+      warn(warning);
+    },
   });
 
   // ES module output

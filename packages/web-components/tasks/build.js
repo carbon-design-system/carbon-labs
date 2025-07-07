@@ -1,4 +1,11 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
+import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { rollup } from 'rollup';
 import path from 'path';
@@ -17,9 +24,11 @@ const input = path.join(componentDir, 'index.ts');
 const esOutputDir = path.join(componentDir, 'es');
 const cjsOutputDir = path.join(componentDir, 'lib');
 
-import * as packageJson from '../package.json' with { type: 'json' };
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const packageJson = JSON.parse(
+  readFileSync(path.resolve(__dirname, '../package.json'), 'utf8')
+);
 
 /**
  * Build process
@@ -28,8 +37,8 @@ async function build() {
   const bundle = await rollup({
     input,
     external: [
-      ...Object.keys(packageJson.default.dependencies),
-      ...Object.keys(packageJson.default.devDependencies),
+      ...Object.keys(packageJson.dependencies),
+      ...Object.keys(packageJson.devDependencies),
     ].map((name) => {
       // Transform the name of each dependency into a regex so that imports from
       // nested paths are correctly marked as external.
@@ -64,12 +73,6 @@ async function build() {
         },
       }),
     ],
-    onwarn(warning, warn) {
-      if (warning.code === 'CIRCULAR_DEPENDENCY') {
-        return;
-      }
-      warn(warning);
-    },
   });
 
   // ES module output
@@ -92,7 +95,9 @@ async function build() {
     exports: 'named',
   });
 
-  console.log(`Built ${componentDir} to ${esOutputDir} (ESM) and ${cjsOutputDir} (CJS)`);
+  console.log(
+    `Built ${componentDir} to ${esOutputDir} (ESM) and ${cjsOutputDir} (CJS)`
+  );
 }
 
 build().catch((err) => {

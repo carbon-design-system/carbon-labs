@@ -12,5 +12,5 @@ import './components/style-picker-modules/style-picker-modules.js';
 import './components/style-picker-module/style-picker-module.js';
 import './components/style-picker-option/style-picker-option.js';
 import './components/style-picker-color-module/style-picker-color-module.js';
-import './components/style-picker-icon-module/style-picker-icon-module.js';
+import './components/style-picker-icon/style-picker-icon.js';
 import './components/style-picker-pictogram-module/style-picker-pictogram-module.js';

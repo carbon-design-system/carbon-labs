@@ -13,7 +13,7 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
-export const blockClass = `${clabsPrefix}--style-picker-icon-module`;
+export const blockClass = `${clabsPrefix}--style-picker-icon`;
 
 /**
  * Lit template for card
@@ -22,26 +22,30 @@ export const blockClass = `${clabsPrefix}--style-picker-icon-module`;
 
  * @returns {TemplateResult<1>} Lit html template
  */
-export const stylePickerIconModuleTemplate = (
+export const stylePickerIconTemplate = (
   customElementClass
 ): TemplateResult<1> => {
   const { items, heading, size, selectedItem, moduleIndex } =
     customElementClass;
 
+  return html`<div part=${`${blockClass}__item`}>
+    <slot></slot>
+  </div> `;
+
   /**
    * @param {object} item Item to be rendered
    */
-  const _render = (item): TemplateResult =>
-    html` <div part=${`${blockClass}__item`}>${item.renderIcon()}</div> `;
+  // const _render = (item): TemplateResult =>
+  //   html` <div part=${`${blockClass}__item`}>${item.renderIcon()}</div> `;
 
-  return html`
-    <clabs-style-picker-module
-      heading=${heading}
-      size=${size}
-      .items=${items}
-      .renderItem=${_render}
-      selected-item=${selectedItem}
-      slot-index=${moduleIndex}>
-    </clabs-style-picker-module>
-  `;
+  // return html`
+  //   <clabs-style-picker-module
+  //     heading=${heading}
+  //     size=${size}
+  //     .items=${items}
+  //     .renderItem=${_render}
+  //     selected-item=${selectedItem}
+  //     slot-index=${moduleIndex}>
+  //   </clabs-style-picker-module>
+  // `;
 };

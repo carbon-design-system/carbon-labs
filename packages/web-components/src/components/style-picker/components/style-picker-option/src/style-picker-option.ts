@@ -14,6 +14,11 @@ import { property } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import CLABSStylePickerOption from '../style-picker-option';
 import { Size } from '../../../defs/style-picker-option.types';
+import { consume } from '@lit/context';
+import {
+  stylePickerContext,
+  StylePickerContextType,
+} from '../../../context/style-picker-context';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -25,6 +30,12 @@ const { stablePrefix: clabsPrefix } = settings;
 class StylePickerOption extends LitElement {
   static styles = styles;
 
+  /**
+   * Consume style-picker-context
+   */
+  @consume({ context: stylePickerContext, subscribe: true })
+  _stylePickerContext?: StylePickerContextType;
+
   @property({ type: String, reflect: true, attribute: 'label' })
   label = '';
 
@@ -34,8 +45,9 @@ class StylePickerOption extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'selected' })
   selected = false;
 
-  @property({ reflect: true, attribute: 'size' })
-  size: Size = 'sm';
+  // TODO: Remove if not needed
+  // @property({ reflect: true, attribute: 'size' })
+  // size: Size = 'sm';
 
   /**
    * @param {string} triggeredBy - the element that triggered the change.
@@ -47,6 +59,7 @@ class StylePickerOption extends LitElement {
       composed: true,
       detail: {
         triggeredBy,
+        value: this.value,
       },
     };
 

@@ -14,12 +14,11 @@ import {
   StylePickerContextType,
 } from '../../../context/style-picker-context';
 // @ts-ignore
-import baseStyles from './style-picker-module.scss?inline';
+import styles from './style-picker-module.scss?inline';
 import { property, query } from 'lit/decorators.js';
-import { Group, Item } from '../../../defs/style-picker-module.types';
+import { Group, Item, Size } from '../../../defs/style-picker-module.types';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import CLABSStylePickerModule from '../style-picker-module';
-import { Size } from '../../../defs/style-picker-option.types';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -29,7 +28,7 @@ const { stablePrefix: clabsPrefix } = settings;
  * @fires clabs-style-picker-module-option-change - fired when an option is selected/changed.
  */
 class StylePickerModule<T> extends LitElement {
-  static styles: CSSResultGroup = [baseStyles];
+  static styles: CSSResultGroup = [styles];
 
   @query('cds-accordion-item') accordionItem;
 
@@ -84,10 +83,16 @@ class StylePickerModule<T> extends LitElement {
 
   /**
    * Lifecycle method called after the component is updated.
+   * @param changedProperties
    */
-  protected updated() {
+  protected updated(changedProperties) {
     if (this._stylePickerContext?.activeModule !== this.slotIndex) {
       this.accordionItem?.removeAttribute('open');
+    }
+
+    if (changedProperties.has('size')) {
+      // Update the module size in the context
+      this._stylePickerContext?.setModuleSize?.(this.size);
     }
   }
 

@@ -17,6 +17,7 @@ import {
   StylePickerContextType,
 } from '../../../context/style-picker-context';
 import { Kind } from '../../../defs/style-picker.types';
+import { Size } from '../../../defs/style-picker-module.types';
 
 /**
  * Component extending the @carbon/web-components' button
@@ -38,6 +39,17 @@ class StylePicker extends LitElement {
       this._stylePickerContext = {
         ...this._stylePickerContext,
         activeModule: index,
+      };
+    },
+    /**
+     * Set the size of the module
+     * @description This method updates the module size in the context.
+     * @param {Size} _size - The size to be set for the module
+     */
+    setModuleSize: (_size: Size) => {
+      this._stylePickerContext = {
+        ...this._stylePickerContext,
+        moduleSize: _size,
       };
     },
   };

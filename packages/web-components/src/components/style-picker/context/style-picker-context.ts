@@ -9,11 +9,14 @@
 
 import { createContext } from '@lit/context';
 import { Kind } from '../defs/style-picker.types';
+import { Size } from '../defs/style-picker-module.types';
 
 export interface StylePickerContextType {
   kind?: Kind;
   activeModule?: number;
   setActiveModule?: (moduleIndex: number) => void;
+  moduleSize?: Size;
+  setModuleSize?: (size?: Size) => void;
 }
 
 export const stylePickerContext = createContext<StylePickerContextType>(

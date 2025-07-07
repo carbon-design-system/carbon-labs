@@ -17,9 +17,12 @@ export type Group<T> = {
   items: T[];
 };
 
-export type StylePickerModuleBase<T> = {
-  items: Item<T>[] | Group<Item<T>>[];
-  selectedItem: string;
-  onChange: (value: string) => void;
-  includeSearch?: boolean;
-};
+// TODO: Remove if not needed
+// export type StylePickerModuleType<T> = {
+//   items: Item<T>[] | Group<Item<T>>[];
+//   selectedItem: string;
+//   onChange: (value: string) => void;
+//   includeSearch?: boolean;
+// };
+
+export type Size = 'sm' | 'lg';

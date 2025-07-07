@@ -9,8 +9,8 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { stylePickerIconModuleTemplate } from './src/style-picker-icon-module.template.js';
-import StylePickerIconModule from './src/style-picker-icon-module.js';
+import { stylePickerIconTemplate } from './src/style-picker-icon.template.js';
+import StylePickerIcon from './src/style-picker-icon.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -19,16 +19,16 @@ const { stablePrefix: clabsPrefix } = settings;
  *
  * @element clabs-style-picker-icon-module
  */
-@customElement(`${clabsPrefix}-style-picker-icon-module`)
-class CLABSStylePickerIconModule<Icon> extends StylePickerIconModule<Icon> {
+@customElement(`${clabsPrefix}-style-picker-icon`)
+class CLABSStylePickerIcon extends StylePickerIcon {
   /**
    * Renders the template while passing in class functionality
    *
    * @returns {TemplateResult<1>}
    */
   render() {
-    return stylePickerIconModuleTemplate(this);
+    return stylePickerIconTemplate(this);
   }
 }
 
-export default CLABSStylePickerIconModule;
+export default CLABSStylePickerIcon;

@@ -8,13 +8,13 @@
  */
 
 // @ts-ignore
-import styles from './style-picker-icon-module.scss?inline';
-import StylePickerModule from '../../style-picker-module/src/style-picker-module';
+import styles from './style-picker-icon.scss?inline';
+import { LitElement } from 'lit';
 
 /**
- * Icon picker module
+ * Icon picker element.
  */
-class StylePickerIconModule<Icon> extends StylePickerModule<Icon> {
+class StylePickerIcon extends LitElement {
   static styles = styles;
 
   /**
@@ -25,4 +25,4 @@ class StylePickerIconModule<Icon> extends StylePickerModule<Icon> {
   }
 }
 
-export default StylePickerIconModule;
+export default StylePickerIcon;

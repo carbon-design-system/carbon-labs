@@ -1,4 +1,4 @@
-import { routesType } from '../config/routes';
+import type { routesType } from '../config/routes';
 import { SideNavDivider, SideNavMenu, SideNavMenuItem } from '@carbon/react';
 import { Link, useLocation } from 'react-router';
 
@@ -24,8 +24,7 @@ export const SideNavSubMenuExample = (route: routesType) => {
               <SideNavMenuItem
                 as={Link}
                 to={subRoute.path}
-                isActive={subRoute.path === location.pathname}
-              >
+                isActive={subRoute.path === location.pathname}>
                 {carbonSub?.label}
               </SideNavMenuItem>
               {carbonSub?.separator && <SideNavDivider />}

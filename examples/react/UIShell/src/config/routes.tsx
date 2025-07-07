@@ -13,8 +13,8 @@
 import { Home as HomePage } from '../pages/Home';
 import { About } from '../pages/About';
 import { Placeholder } from '../pages/Placeholder';
+import type { CarbonIconType } from '@carbon/icons-react';
 import {
-  CarbonIconType,
   Home,
   VirtualColumnKey,
   BusinessProcesses,
@@ -235,7 +235,7 @@ const routesProcessed = routes.map((route) => {
   }
 
   const subMenu = routes.filter(
-    (subRoute) => !route.index && subRoute.path.startsWith(`${route.path}/`),
+    (subRoute) => !route.index && subRoute.path.startsWith(`${route.path}/`)
   );
 
   if (subMenu && subMenu.length > 0) {
@@ -255,8 +255,8 @@ const routesProcessed = routes.map((route) => {
 });
 
 export const routesInHeader = routesProcessed.filter(
-  (route) => route?.carbon?.inHeader && !route?.carbon?.inSubMenu,
+  (route) => route?.carbon?.inHeader && !route?.carbon?.inSubMenu
 );
 export const routesInSideNav = routesProcessed.filter(
-  (route) => route?.carbon?.inSideNav && !route?.carbon?.inSubMenu,
+  (route) => route?.carbon?.inSideNav && !route?.carbon?.inSubMenu
 );

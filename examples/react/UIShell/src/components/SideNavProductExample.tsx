@@ -2,7 +2,7 @@ import { SideNavSlot, SideNavLink } from '@carbon-labs/react-ui-shell';
 import { SideNavDivider } from '@carbon/react';
 import { Link, useLocation } from 'react-router';
 import { SideNavSubMenuExample } from './SideNavSubMenuExample';
-import { routesType } from '../config/routes';
+import type { routesType } from '../config/routes';
 
 type SideNavProductExampleProps = {
   routesInSideNav: routesType[];
@@ -31,8 +31,7 @@ export const SideNavProductExample = ({
                 as={Link}
                 to={path}
                 isActive={path === location.pathname}
-                renderIcon={carbon?.icon}
-              >
+                renderIcon={carbon?.icon}>
                 {carbon?.label}
               </SideNavLink>
             )}

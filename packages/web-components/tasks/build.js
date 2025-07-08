@@ -30,15 +30,55 @@ const packageJson = JSON.parse(
   readFileSync(path.resolve(__dirname, '../package.json'), 'utf8')
 );
 
+const componentPackageJson = JSON.parse(
+  readFileSync(path.resolve(input, '../package.json'), 'utf8')
+);
+
+async function build() {
+  const formats = [
+    {
+      type: 'esm',
+      directory: 'es',
+    },
+    {
+      type: 'commonjs',
+      directory: 'lib',
+    },
+  ];
+
+  for (const format of formats) {
+    const rollupConfig = getRollupConfig(
+      format.type === 'esm' ? esOutputDir : cjsOutputDir,
+    );
+
+    const bundle = await rollup(rollupConfig);
+
+    await bundle.write({
+      dir: format.type === 'esm' ? esOutputDir : cjsOutputDir,
+      format: format.type,
+      sourcemap: true,
+      preserveModules: true,
+      preserveModulesRoot: componentDir,
+      exports: 'named',
+      sourcemap: true,
+    });
+  }
+
+  console.log(
+    `Built ${componentDir} to ${esOutputDir} (ESM) and ${cjsOutputDir} (CJS)`
+  );
+}
+
 /**
  * Build process
  */
-async function build() {
-  const bundle = await rollup({
+function getRollupConfig(outDir) {
+  return {
     input,
     external: [
       ...Object.keys(packageJson.dependencies),
       ...Object.keys(packageJson.devDependencies),
+      ...Object.keys(componentPackageJson.dependencies)
     ].map((name) => {
       // Transform the name of each dependency into a regex so that imports from
       // nested paths are correctly marked as external.
@@ -57,7 +97,10 @@ async function build() {
       }),
       typescript({
         tsconfig: path.join(componentDir, '../../../tsconfig.json'),
-        declaration: false,
+        compilerOptions: {
+          rootDir: componentDir,
+          outDir,
+        },
       }),
       litSCSS({
         includePaths: [
@@ -73,31 +116,7 @@ async function build() {
         },
       }),
     ],
-  });
-
-  // ES module output
-  await bundle.write({
-    dir: esOutputDir,
-    format: 'esm',
-    sourcemap: true,
-    preserveModules: true,
-    preserveModulesRoot: componentDir,
-    exports: 'named',
-  });
-
-  // CommonJS output
-  await bundle.write({
-    dir: cjsOutputDir,
-    format: 'cjs',
-    sourcemap: true,
-    preserveModules: true,
-    preserveModulesRoot: componentDir,
-    exports: 'named',
-  });
-
-  console.log(
-    `Built ${componentDir} to ${esOutputDir} (ESM) and ${cjsOutputDir} (CJS)`
-  );
+  }
 }
 
 build().catch((err) => {

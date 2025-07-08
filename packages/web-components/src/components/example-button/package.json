@@ -16,12 +16,12 @@
     ".": {
       "default": "./src/index.js"
     },
-    "./es/": "./es/"
+    "./es/*": "./es/*"
   },
   "files": [
-    "**/*.d.ts",
-    "**/*.js",
-    "**/*.js.map",
+    "src/index.js",
+    "es/",
+    "lib/",
     "custom-elements.json"
   ],
   "types": "./src/index.d.ts",

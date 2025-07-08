@@ -22,11 +22,15 @@ $prefix: 'cds' !default;
 }
 
 .#{$prefix}--header__action:focus {
-  box-shadow: inset 0 0 0 1px $focus, inset 0 0 0 2px $background;
+  outline-offset: -2px;
 }
 
 .#{$prefix}--header-action__button {
   block-size: convert.rem(48px);
+
+  &:focus {
+    outline-offset: -2px;
+  }
 }
 
 .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled]) svg {

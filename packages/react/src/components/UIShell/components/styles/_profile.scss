@@ -14,14 +14,28 @@
 
 $prefix: 'cds' !default;
 
-// user-info
-.#{$prefix}--header-action .#{$prefix}--profile-user-info {
-  display: flex;
-  padding-block-start: $spacing-05;
+// profile
+.#{$prefix}--profile.#{$prefix}--popover--open {
+  background-color: $background;
+}
 
-  &:not(:last-child) {
+.#{$prefix}--profile .#{$prefix}--toggletip-content {
+  padding: 0;
+  background-color: $background;
+  border-inline-start: 1px solid $border-subtle;
+  gap: 0;
+  max-block-size: 100vh;
+  overflow-y: scroll;
+
+  > * {
+    padding: $spacing-05;
     border-block-end: convert.to-rem(1px) solid $border-subtle;
   }
+}
+
+// user-info
+.#{$prefix}--profile .#{$prefix}--profile-user-info {
+  display: flex;
 }
 
 .#{$prefix}--profile-user-info__text-wrapper {
@@ -37,14 +51,6 @@ $prefix: 'cds' !default;
 }
 
 // read only
-.#{$prefix}--profile-read-only {
-  padding-block-start: 0;
-
-  &:not(:last-child) {
-    border-block-end: convert.to-rem(1px) solid $border-subtle;
-  }
-}
-
 .#{$prefix}--profile-read-only__items:not(:last-child) {
   padding-block-end: $spacing-05;
 }
@@ -65,10 +71,9 @@ $prefix: 'cds' !default;
 // contained-list links
 .#{$prefix}--header-action__content .#{$prefix}--contained-list--on-page {
   padding: 0;
-  margin-block-start: -$spacing-05;
 }
 
-// TODO: remove if we make the contained-list header optional
+// TODO: remove when https://github.com/carbon-design-system/carbon/pull/19813 is released
 .#{$prefix}--header-action__content .#{$prefix}--contained-list__header {
   display: none;
 }

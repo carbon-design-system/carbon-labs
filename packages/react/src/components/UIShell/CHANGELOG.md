@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.58.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.57.0...@carbon-labs/react-ui-shell@0.58.0) (2025-07-08)
+
+
+### Features
+
+* **uishell:** remove unused HeaderPanel component ([#694](https://github.com/carbon-design-system/carbon-labs/issues/694)) ([925b762](https://github.com/carbon-design-system/carbon-labs/commit/925b762ecdec70480044d66e8ae1818f2651679b))
+
+
+
+
+
 # [0.57.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.56.0...@carbon-labs/react-ui-shell@0.57.0) (2025-07-08)
 
 

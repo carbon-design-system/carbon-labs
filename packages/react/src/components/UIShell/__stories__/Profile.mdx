@@ -12,6 +12,7 @@ import * as ProfileStories from './Profile.stories';
   - [Profile](#prpfile)
   - [Profile.UserInfo](#profileuserinfo)
   - [Profile.ReadOnly](#profilereadonly)
+  - [With links](#with-links)
 - [Component API](#component-api)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
@@ -53,6 +54,13 @@ The `Profile.ReadOnly` goes inside the `Profile.Root` and accepts a list of
 items that contain objects with a label and title.
 
 <Canvas of={ProfileStories.withReadOnly} />
+
+## With links
+
+In order to add links to the Profile one can utilize the `ContainedList` and
+`ContainedListItem` components from `@carbon/react`.
+
+<Canvas of={ProfileStories.withLinks} />
 
 ## Component API
 

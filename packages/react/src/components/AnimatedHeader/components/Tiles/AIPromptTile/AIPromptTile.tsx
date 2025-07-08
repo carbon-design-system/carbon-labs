@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React, { useState } from 'react';
+import React, { ElementType, useState } from 'react';
 import {
   AILabel,
   Button,
@@ -14,33 +14,35 @@ import {
   SkeletonPlaceholder,
   TextInput,
 } from '@carbon/react';
-import * as carbonIcons from '@carbon/icons-react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { Send } from '@carbon/react/icons';
 
 /** Primary UI component for user interaction */
 
 interface AIPromptTileProps {
   href?: string | null;
   id?: string;
-  mainIcon?: string | null;
+  mainIcon?: ElementType | null;
   open?: boolean;
   productName?: string;
   title?: string | null;
   isLoading?: boolean;
   isDisabled?: boolean;
   disabledTaskLabel?: string;
+  onClick?: (() => void) | null;
 }
 
 export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   href,
   id,
-  mainIcon,
+  mainIcon: MainIcon,
   open,
   productName,
   title,
   isLoading,
   isDisabled,
   disabledTaskLabel,
+  onClick,
 }: AIPromptTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__ai-prompt-tile`;
@@ -48,8 +50,6 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   const disabled = `${blockClass}--disabled`;
 
   const [textInput, setTextInput] = useState('');
-  const MainIcon = mainIcon ? carbonIcons[mainIcon] : null;
-  const Send = carbonIcons['Send'];
 
   const handleTextInput = (e) => {
     setTextInput(e.target.value);
@@ -116,7 +116,10 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
               size="sm"
               disabled={!textInput}
               align="top-right"
-              onClick={() => openInNewTab(`${href}&primed_chat=${textInput}`)}
+              onClick={() => {
+                onClick?.();
+                openInNewTab(`${href}&primed_chat=${textInput}`);
+              }}
               onKeyDown={handleTextInputKeyDown}>
               <Send />
             </IconButton>

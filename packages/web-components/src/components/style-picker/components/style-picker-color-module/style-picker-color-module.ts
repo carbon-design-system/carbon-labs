@@ -9,11 +9,6 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { consume } from '@lit/context';
-import {
-  stylePickerContext,
-  StylePickerContextType,
-} from '../../context/style-picker-context.js';
 import { stylePickerColorModuleTemplate } from './src/style-picker-color-module.template.js';
 import StylePickerColorModule from './src/style-picker-color-module.js';
 
@@ -26,9 +21,6 @@ const { stablePrefix: clabsPrefix } = settings;
  */
 @customElement(`${clabsPrefix}-style-picker-color-module`)
 class CLABSStylePickerColorModule<Color> extends StylePickerColorModule<Color> {
-  @consume({ context: stylePickerContext, subscribe: true })
-  stylePickerContext?: StylePickerContextType;
-
   /**
    * Renders the template while passing in class functionality
    *

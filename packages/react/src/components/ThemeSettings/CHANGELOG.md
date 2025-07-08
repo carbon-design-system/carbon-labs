@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.8.0...@carbon-labs/react-theme-settings@0.9.0) (2025-07-08)
+
+
+### Features
+
+* **profile:** add theme-switcher ([#699](https://github.com/carbon-design-system/carbon-labs/issues/699)) ([12a7d2d](https://github.com/carbon-design-system/carbon-labs/commit/12a7d2dbacb16485b8955f9b7b5efebf829eaa1f))
+
+
+
+
+
 # [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.7.0...@carbon-labs/react-theme-settings@0.8.0) (2025-06-30)
 
 

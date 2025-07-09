@@ -16,20 +16,20 @@
     ".": {
       "default": "./src/index.js"
     },
-    "./es/*": "./es/*"
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*"
   },
   "files": [
-    "src/index.js",
     "es/",
-    "lib/",
-    "custom-elements.json"
+    "lib/"
   ],
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
     "build": "node ../../../tasks/build.js",
     "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
-    "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary"
+    "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary",
+    "clean": "rimraf es lib"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",

@@ -7,6 +7,7 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-labs",
   "scripts": {
+    "clean": "rimraf es lib scss storybook-static",
     "storybook": "storybook dev -p 6008",
     "generate": "node tasks/generate",
     "storybook:build": "storybook build",
@@ -34,10 +35,6 @@
     "@babel/preset-typescript": "^7.26.0",
     "@mdx-js/react": "^3.1.0",
     "@rollup/plugin-babel": "^6.0.0",
-    "@rollup/plugin-commonjs": "^28.0.0",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^16.0.0",
-    "@rollup/plugin-typescript": "^12.1.1",
     "@rollup/plugin-url": "^8.0.2",
     "@storybook/addon-docs": "^8.4.7",
     "@storybook/addon-essentials": "^8.4.7",

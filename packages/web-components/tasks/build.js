@@ -51,7 +51,7 @@ async function build() {
 
   for (const format of formats) {
     const rollupConfig = getRollupConfig(
-      format.type === 'esm' ? esOutputDir : cjsOutputDir,
+      format.type === 'esm' ? esOutputDir : cjsOutputDir
     );
 
     const bundle = await rollup(rollupConfig);
@@ -82,7 +82,7 @@ function getRollupConfig(outDir) {
     external: [
       ...Object.keys(packageJson.dependencies),
       ...Object.keys(packageJson.devDependencies),
-      ...Object.keys(componentPackageJson.dependencies)
+      ...Object.keys(componentPackageJson.dependencies),
     ].map((name) => {
       // Transform the name of each dependency into a regex so that imports from
       // nested paths are correctly marked as external.
@@ -120,7 +120,7 @@ function getRollupConfig(outDir) {
         },
       }),
     ],
-  }
+  };
 }
 
 build().catch((err) => {

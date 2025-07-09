@@ -34,6 +34,9 @@ const componentPackageJson = JSON.parse(
   readFileSync(path.resolve(input, '../package.json'), 'utf8')
 );
 
+/**
+ * Build
+ */
 async function build() {
   const formats = [
     {
@@ -60,7 +63,6 @@ async function build() {
       preserveModules: true,
       preserveModulesRoot: componentDir,
       exports: 'named',
-      sourcemap: true,
     });
   }
 
@@ -71,6 +73,8 @@ async function build() {
 
 /**
  * Build process
+ *
+ * @param {string} outDir output directory
  */
 function getRollupConfig(outDir) {
   return {

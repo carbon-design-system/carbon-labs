@@ -2716,6 +2716,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.26.0"
     "@babel/preset-react": "npm:^7.26.3"
     "@babel/preset-typescript": "npm:^7.26.0"
+    "@carbon/icons-react": "npm:^11.62.0"
     "@carbon/react": "npm:^1.85.1"
     "@carbon/styles": "npm:^1.84.0"
     "@mdx-js/react": "npm:^3.1.0"
@@ -2745,6 +2746,7 @@ __metadata:
     babel-jest: "npm:^29.7.0"
     babel-plugin-dev-expression: "npm:^0.2.3"
     browserslist-config-carbon: "npm:^11.2.0"
+    classnames: "npm:^2.5.1"
     css-loader: "npm:^7.1.2"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
@@ -2815,6 +2817,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon/web-components": "npm:2.19.0"
+    uuid: "npm:^9.0.1"
   languageName: unknown
   linkType: soft
 
@@ -11761,7 +11764,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.5.1":
+"classnames@npm:2.5.1, classnames@npm:^2.5.1":
   version: 2.5.1
   resolution: "classnames@npm:2.5.1"
   checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69

@@ -6,3 +6,11 @@
  */
 
 $css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+
+$block-class: #{$clabs-prefix}--style-picker-modules;
+
+.#{$block-class}__container {
+  block-size: 100%;
+}

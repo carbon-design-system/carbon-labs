@@ -35,7 +35,7 @@ class CLABSStylePickerModules extends StylePickerModules {
    * @returns {TemplateResult<1>}
    */
   render() {
-    return stylePickerModulesTemplate();
+    return stylePickerModulesTemplate(this);
   }
 }
 

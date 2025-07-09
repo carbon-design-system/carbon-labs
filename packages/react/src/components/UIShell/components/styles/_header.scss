@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+@use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/motion' as *;
 @use '@carbon/react/scss/utilities/convert' as convert;
@@ -21,11 +22,15 @@ $prefix: 'cds' !default;
 }
 
 .#{$prefix}--header__action:focus {
-  box-shadow: inset 0 0 0 1px $focus, inset 0 0 0 2px $background;
+  outline-offset: -2px;
 }
 
 .#{$prefix}--header-action__button {
   block-size: convert.rem(48px);
+
+  &:focus {
+    outline-offset: -2px;
+  }
 }
 
 .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled]) svg {
@@ -38,11 +43,6 @@ $prefix: 'cds' !default;
   .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled])
   svg {
   fill: $icon-primary;
-}
-
-// TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
-.#{$prefix}--header-action .#{$prefix}--tooltip-content {
-  color: $text-primary;
 }
 
 .#{$prefix}--header-action.#{$prefix}--popover--open

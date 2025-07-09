@@ -7,7 +7,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 import PropTypes from 'prop-types';
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, {
+  ElementType,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Grid, Column, Button, Tooltip } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
 import lottie from 'lottie-web';
@@ -26,13 +32,14 @@ import WorkspaceSelector, {
 export interface Tile {
   href?: string | null;
   id: string;
-  mainIcon?: string | null;
-  secondaryIcon?: string | null;
+  mainIcon?: ElementType | null;
+  secondaryIcon?: ElementType | null;
   subtitle?: string | null;
   title?: string | null;
   customContent?: ReactNode | null;
   isLoading?: boolean;
   isDisabled?: boolean;
+  onClick?: () => void;
 }
 
 export interface TileGroup {
@@ -203,7 +210,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
         {selectedTileGroup && (
           <Column sm={4} md={8} lg={12} className={`${blockClass}__content`}>
-            {workspaceSelectorConfig?.allWorkspaces?.length && (
+            {!!workspaceSelectorConfig?.allWorkspaces?.length && (
               <div
                 className={`${blockClass}__workspace--container${
                   !open ? ` ${contentCollapsed}` : ''
@@ -219,7 +226,14 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               {selectedTileGroup.tiles.map((tile) => {
                 return (
                   <BaseTile
-                    onClick={() => tileClickHandler?.(tile)}
+                    onClick={
+                      tile.href || tile.onClick
+                        ? () => {
+                            tileClickHandler?.(tile);
+                            tile.onClick?.();
+                          }
+                        : null
+                    }
                     key={tile.id}
                     id={tile.id}
                     open={open}

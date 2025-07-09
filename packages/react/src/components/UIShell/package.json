@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-ui-shell",
-  "version": "0.50.0",
+  "version": "0.58.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -36,7 +36,8 @@
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 5b9dce15-eeda-4b53-8683-3e3aeb599fd1 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "canary"
+    "@carbon-labs/utilities": "canary",
+    "@carbon/ibm-products": "^2.68.0"
   },
   "dependencies": {
     "@ibm/telemetry-js": "^1.9.1"

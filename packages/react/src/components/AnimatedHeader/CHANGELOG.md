@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.20.0...@carbon-labs/react-animated-header@0.21.0) (2025-07-08)
+
+
+### Features
+
+* **profile:** add theme-switcher ([#699](https://github.com/carbon-design-system/carbon-labs/issues/699)) ([12a7d2d](https://github.com/carbon-design-system/carbon-labs/commit/12a7d2dbacb16485b8955f9b7b5efebf829eaa1f))
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.19.0...@carbon-labs/react-animated-header@0.20.0) (2025-07-07)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.18.0...@carbon-labs/react-animated-header@0.19.0) (2025-06-30)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.17.0...@carbon-labs/react-animated-header@0.18.0) (2025-06-30)
+
+
+### Bug Fixes
+
+* **uishell:** update style import for ibm-products ([#691](https://github.com/carbon-design-system/carbon-labs/issues/691)) ([04b14c1](https://github.com/carbon-design-system/carbon-labs/commit/04b14c18f60c4d55d421ead8201087766877be01))
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.16.0...@carbon-labs/react-animated-header@0.17.0) (2025-06-30)
+
+
+### Features
+
+* **profile:** create components to add to profile menu ([#671](https://github.com/carbon-design-system/carbon-labs/issues/671)) ([34a8fdb](https://github.com/carbon-design-system/carbon-labs/commit/34a8fdb42f4a676234e3707c15db73bd0d40d49a))
+
+
+
+
+
 # [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.15.0...@carbon-labs/react-animated-header@0.16.0) (2025-06-26)
 
 **Note:** Version bump only for package @carbon-labs/react-animated-header

@@ -18,6 +18,13 @@ class StylePickerPictogramModule<
   Pictogram
 > extends StylePickerModule<Pictogram> {
   static styles = styles;
+
+  /**
+   * Return the slot index from the custom attribute set in the parent module
+   */
+  get moduleIndex() {
+    return this.getAttribute('data-slot-index');
+  }
 }
 
 export default StylePickerPictogramModule;

@@ -41,7 +41,6 @@ $block-class: #{$clabs-prefix}--style-picker-module;
 }
 
 .#{$block-class}--flat .#{$block-class}__header {
-  block-size: 2rem;
   border-block-start: 0.0625rem solid theme.$border-subtle;
   padding-block-start: $spacing-03;
   padding-inline: $spacing-05;
@@ -57,39 +56,57 @@ $block-class: #{$clabs-prefix}--style-picker-module;
   @include type.type-style('body-01');
 }
 
-.#{$block-class}--disclosed .#{$cds-prefix}--accordion__wrapper {
-  overflow: auto;
-  block-size: calc(100% - 2.5rem);
-}
-
-.#{$block-class}--disclosed .#{$cds-prefix}--accordion__wrapper,
-.#{$block-class}--disclosed .#{$cds-prefix}--accordion__content {
-  padding: 0;
-}
-
 .#{$block-class} .#{$cds-prefix}--contained-list__header {
   z-index: 2;
 }
 
-.#{$block-class}--style-picker-modules__container,
-.#{$block-class}--style-picker-modules__container .#{$cds-prefix}--accordion {
-  block-size: 100%;
+.#{$block-class}--disclosed {
+  &::part(content) {
+    padding: 0;
+  }
 }
 
-.#{$block-class}--style-picker-modules__container
-  .#{$cds-prefix}--accordion__item,
-.#{$block-class}--style-picker-modules__container
-  .#{$cds-prefix}--accordion__heading,
-.#{$block-class}--style-picker-modules__container
-  .#{$cds-prefix}--accordion__content {
-  animation-duration: 0ms;
-  transition: none;
-}
+// .#{$block-class}--disclosed .#{$cds-prefix}--accordion__wrapper {
+//   overflow: auto;
+//   block-size: calc(100% - 2.5rem);
+//   background-color: #ff0;
+// }
 
-.#{$block-class}--style-picker__modules
-  .#{$cds-prefix}--accordion__item--active {
+// .#{$block-class}--disclosed .#{$cds-prefix}--accordion__wrapper,
+// .#{$block-class}--disclosed .#{$cds-prefix}--accordion__content {
+//   padding-inline-end: 0;
+// }
+
+// .#{$block-class}--style-picker-modules__container,
+// .#{$block-class}--style-picker-modules__container .#{$cds-prefix}--accordion {
+//   block-size: 100%;
+// }
+
+// .#{$block-class}--style-picker-modules__container
+//   .#{$cds-prefix}--accordion__item,
+// .#{$block-class}--style-picker-modules__container
+//   .#{$cds-prefix}--accordion__heading,
+// .#{$block-class}--style-picker-modules__container
+//   .#{$cds-prefix}--accordion__content {
+//   animation-duration: 0ms;
+//   transition: none;
+// }
+
+// .#{$block-class}--style-picker__modules
+//   .#{$cds-prefix}--accordion__item--active {
+//   block-size: calc(
+//     100% - (var(--#{$block-class}--style-picker-module-count) - 1) * 2.5rem -
+//       0.0625rem
+//   );
+// }
+
+// TODO: Once the __wrapper part is supported in the accordion, we can
+// remove the following styles and use the part directly
+// to control the overflow and block size of the accordion __wrapper.
+// And give --disclosed[open] a block size of 100% and no overflow.
+.#{$block-class}--disclosed[open] {
+  overflow: auto;
   block-size: calc(
-    100% - (var(--#{$block-class}--style-picker-module-count) - 1) * 2.5rem -
-      0.0625rem
+    100% - ((var(--clabs--style-picker-modules-count) - 1)) * 2.5rem - 0.15rem
   );
 }

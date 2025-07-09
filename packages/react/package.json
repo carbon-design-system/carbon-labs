@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react",
-  "version": "0.82.0",
+  "version": "0.93.0",
   "private": true,
   "type": "module",
   "description": "React components for Carbon Labs",
@@ -19,8 +19,8 @@
     "react-dom": "^16.8.6 || ^17.0.1 || ^18.2.0"
   },
   "dependencies": {
-    "@carbon/react": "^1.78.2",
-    "@carbon/styles": "^1.77.2",
+    "@carbon/react": "^1.85.1",
+    "@carbon/styles": "^1.84.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

@@ -7,8 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, TemplateResult } from 'lit';
+import { html, nothing, TemplateResult } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import '@carbon/web-components/es/components/accordion/accordion-item.js';
 import { Group, Item } from '../../../defs/style-picker-module.types';
 
 import '../../style-picker-option/style-picker-option.js';
@@ -21,14 +22,23 @@ export const blockClass = `${clabsPrefix}--style-picker-module`;
  * Lit template for card
  *
  * @param {object} customElementClass Class functionality for the custom element
- * @returns {TemplateResult<1>} Lit html template
+ * @returns {TemplateResult} The template result
  */
 export const stylePickerModuleTemplate = <T>(
   customElementClass
 ): TemplateResult<1> => {
-  const kind = customElementClass.stylePickerContext?.kind ?? 'single';
-  const { items, title, size, renderItem, selectedItem, handleOptionChange } =
-    customElementClass;
+  const {
+    items,
+    heading,
+    size,
+    renderItem,
+    selectedItem,
+    handleOptionChange,
+    slotIndex,
+    _stylePickerContext,
+  } = customElementClass;
+
+  const { kind, setActiveModule } = _stylePickerContext;
 
   /**
    * Checks items are grouped or not
@@ -40,21 +50,25 @@ export const stylePickerModuleTemplate = <T>(
     return !(i[0] as Item<T>).value;
   };
 
+  const flattenedItems = !itemsAreGrouped(items)
+    ? items
+    : // @ts-ignore
+      items?.flatMap((group) => group.items);
+
   /**
    * Render options from items
    *
    * @param {Item<T>[]} items - Items array
-   * @returns {TemplateResult<1>} Lit html template
    */
   const renderItems = (items: Item<T>[]) => {
     return items.map(
       (item) =>
         html`
           <clabs-style-picker-option
-            .value=${item.value}
-            .label=${item.label}
-            .isSelected=${selectedItem === item.value}
-            .size=${size}
+            value=${item.value}
+            label=${item.label}
+            ?selected=${selectedItem === item.value}
+            size=${size}
             @clabs-style-picker-option-change=${(e: CustomEvent) =>
               handleOptionChange(e, item)}>
             ${renderItem?.(item)}
@@ -72,7 +86,7 @@ export const stylePickerModuleTemplate = <T>(
     return html` <div
       class=${`${blockClass} ${blockClass}--${size}`}
       role="listbox"
-      aria-label=${title}
+      aria-label=${heading}
       aria-orientation="horizontal"
       tabindex="0">
       <ul class=${`${blockClass}__items`} role="group">
@@ -91,7 +105,7 @@ export const stylePickerModuleTemplate = <T>(
       <div
         class=${`${blockClass} ${blockClass}--${size}`}
         role="listbox"
-        aria-label=${title}
+        aria-label=${heading}
         aria-orientation="horizontal"
         tabindex="0">
         ${items.map(
@@ -112,9 +126,49 @@ export const stylePickerModuleTemplate = <T>(
     `;
   };
 
-  if (kind === 'single' && itemsAreGrouped(items)) {
-    return html`${renderGrouped(items)}`;
-  }
+  /**
+   * An internal function to render `flat` variant.
+   * Only to organize the code.
+   */
+  const renderFlatVariant = () => {
+    return html`
+      <div class=${`${blockClass}--flat`}>
+        <div class=${`${blockClass}__header`}>
+          <strong class=${`${blockClass}__heading`}> ${heading} </strong>
+        </div>
+        ${renderUngrouped(flattenedItems)}
+      </div>
+    `;
+  };
 
-  return html`${renderUngrouped(items)}`;
+  /**
+   *
+   */
+  const renderDefault = () => {
+    if (itemsAreGrouped(items)) {
+      return html`${renderGrouped(items)}`;
+    }
+    return html`${renderUngrouped(items)}`;
+  };
+
+  switch (kind) {
+    case 'single':
+      return renderDefault();
+
+    case 'flat':
+      return renderFlatVariant();
+
+    case 'disclosed':
+      return html`<cds-accordion-item
+        .title=${heading}
+        class=${`${blockClass}--disclosed`}
+        @cds-accordion-item-toggled=${() => {
+          setActiveModule?.(slotIndex);
+        }}>
+        ${renderDefault()}
+      </cds-accordion-item>`;
+
+    default:
+      return nothing as unknown as TemplateResult<1>;
+  }
 };

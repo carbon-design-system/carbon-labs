@@ -9,11 +9,6 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { consume } from '@lit/context';
-import {
-  stylePickerContext,
-  StylePickerContextType,
-} from '../../context/style-picker-context.js';
 import { stylePickerPictogramModuleTemplate } from './src/style-picker-pictogram-module.template.js';
 import StylePickerPictogramModule from './src/style-picker-pictogram-module.js';
 
@@ -28,9 +23,6 @@ const { stablePrefix: clabsPrefix } = settings;
 class CLABSStylePickerPictogramModule<
   Pictogram
 > extends StylePickerPictogramModule<Pictogram> {
-  @consume({ context: stylePickerContext, subscribe: true })
-  stylePickerContext?: StylePickerContextType;
-
   /**
    * Renders the template while passing in class functionality
    *

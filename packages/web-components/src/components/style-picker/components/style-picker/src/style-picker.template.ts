@@ -24,14 +24,14 @@ export const blockClass = `${clabsPrefix}--style-picker`;
  * @returns {TemplateResult<1>} Lit html template
  */
 export const stylePickerTemplate = (customElementClass) => {
-  const { align, open, title } = customElementClass;
+  const { align, open, heading } = customElementClass;
 
-  return html`<cds-popover ?open=${open} align=${align} title=${title}>
+  return html`<cds-popover ?open=${open} align=${align}>
     <slot name="trigger"></slot>
     <cds-popover-content>
       <div class=${`${blockClass}__content`}>
         <div class=${`${blockClass}__header`}>
-          <strong class=${`${blockClass}__heading`}>${title}</strong>
+          <strong class=${`${blockClass}__heading`}>${heading}</strong>
         </div>
         <cds-layer class=${`${blockClass}__modules`} level="1">
           <slot name="modules"></slot>

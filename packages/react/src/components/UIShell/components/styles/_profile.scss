@@ -22,14 +22,16 @@ $prefix: 'cds' !default;
 .#{$prefix}--profile .#{$prefix}--toggletip-content {
   padding: 0;
   background-color: $background;
+  border-block-end: 1px solid $border-subtle;
   border-inline-start: 1px solid $border-subtle;
   gap: 0;
+  inline-size: convert.to-rem(256px);
   max-block-size: 100vh;
   overflow-y: scroll;
 
   > * {
     padding: $spacing-05;
-    border-block-end: convert.to-rem(1px) solid $border-subtle;
+    outline: convert.to-rem(0.5px) solid $border-subtle;
   }
 }
 

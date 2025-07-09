@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-processing",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "publishConfig": {
     "access": "public",
     "provenance": true

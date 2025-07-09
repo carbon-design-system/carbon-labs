@@ -546,6 +546,17 @@ function SideNavRenderFunction(
     };
   }
 
+  useWindowEvent('click', (event) => {
+    const target = event.target as HTMLElement;
+    const isNavItemClick = target.closest(
+      `.${prefix}--side-nav a, .${prefix}--side-nav button`
+    );
+    const isInRail = isNavItemClick?.closest(`.${prefix}--side-nav--rail`);
+    if (isNavItemClick) {
+      isInRail ? handleToggle(false, false) : onSideNavBlur?.();
+    }
+  });
+
   useWindowEvent('keydown', (event: Event) => {
     const focusedElement = document.activeElement;
 
@@ -607,6 +618,15 @@ function SideNavRenderFunction(
     </SideNavToggle>
   );
 
+  // const handleItemClick = (event) => {
+  //   const target = event.target as HTMLElement;
+  //   const isNavItemClick = target.closest('a, button');
+  //   if (isNavItemClick) {
+  //     handleToggle(event, false);
+  //     onSideNavBlur?.();
+  //   }
+  // };
+
   return (
     <SideNavContext.Provider
       value={{
@@ -634,7 +654,9 @@ function SideNavRenderFunction(
         }
         {...accessibilityLabel}
         {...eventHandlers}
-        {...other}>
+        {...other}
+        // onClick={handleItemClick}
+      >
         {childrenToRender}
         {navType === SIDE_NAV_TYPE.PANEL &&
           (expandedState ? (

@@ -1,0 +1,30 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/react/scss/theme';
+
+$block-class: #{$clabs-prefix}--style-picker-disclosed;
+
+.#{$block-class}--disclosed {
+  &::part(content) {
+    padding: 0;
+  }
+}
+
+// TODO: Once the __wrapper part is supported in the accordion, we can
+// remove the following styles and use the part directly
+// to control the overflow and block size of the accordion __wrapper.
+// And give --disclosed[open] a block size of 100% and no overflow.
+.#{$block-class}--disclosed[open] {
+  overflow: auto;
+  block-size: calc(
+    100% - ((var(--clabs--style-picker-modules-count) - 1)) * 2.5rem - 0.15rem
+  );
+}

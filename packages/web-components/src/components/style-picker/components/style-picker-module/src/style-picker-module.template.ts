@@ -36,11 +36,34 @@ export const stylePickerModuleTemplate = <T>(
     // selectedItem,
     // handleOptionChange,
     // slotIndex,
-    // _stylePickerContext,
+    _stylePickerContext,
   } = customElementClass;
 
-  // const { kind, setActiveModule } = _stylePickerContext;
-  if (isGrouped) {
+  const { kind } = _stylePickerContext;
+
+  /**
+   * Render ungrouped items.
+   */
+  const renderUngrouped = () => {
+    return html`
+      <div
+        class=${`${blockClass} ${blockClass}--${size}`}
+        role="listbox"
+        aria-label=${heading}
+        aria-orientation="horizontal"
+        tabindex="0">
+          <ul class=${`${blockClass}__items`} role="group">
+            <slot></slot>
+          </ul>
+        </div>
+      </div>
+    `;
+  };
+
+  /**
+   * Render grouped items.
+   */
+  const renderGrouped = () => {
     return html`<div
       class=${`${blockClass} ${blockClass}--${size}`}
       role="listbox"
@@ -57,21 +80,56 @@ export const stylePickerModuleTemplate = <T>(
         </ul>
       </div>
     </div>`;
+  };
+
+  /**
+   * Render flat variant.
+   */
+  const renderFlat = () => {
+    return html`
+      <div class=${`${blockClass}--flat`}>
+        <div class=${`${blockClass}__header`}>
+          <strong class=${`${blockClass}__heading`}> ${heading} </strong>
+        </div>
+        ${renderUngrouped()}
+      </div>
+    `;
+  };
+
+  /**
+   * Render grouped or ungrouped items based on the `isGrouped` property.
+   */
+  const renderDefault = () => {
+    if (isGrouped) {
+      return renderGrouped();
+    }
+    return renderUngrouped();
+  };
+
+  // if (kind === 'single') {
+  //   return renderDefault();
+  // }
+
+  if (kind === 'flat') {
+    return renderFlat();
   }
 
-  return html`
-    <div
-      class=${`${blockClass} ${blockClass}--${size}`}
-      role="listbox"
-      aria-label=${heading}
-      aria-orientation="horizontal"
-      tabindex="0">
-        <ul class=${`${blockClass}__items`} role="group">
-          <slot></slot>
-        </ul>
-      </div>
-    </div>
-  `;
+  // if (kind === 'disclosed') {
+  //   return html` <cds-accordion-item
+  //     .title=${heading}
+  //     class=${`${blockClass}--disclosed`}
+  //     @cds-accordion-item-toggled=${() => {
+  //       setActiveModule?.(customElementClass.slotIndex);
+  //     }}>
+  //     ${renderDefault()}
+  //   </cds-accordion-item>`;
+  // }
+
+  if (kind === 'disclosed') {
+    return html` ${renderDefault()} `;
+  }
+
+  return renderDefault();
 
   // /**
   //  * Checks items are grouped or not

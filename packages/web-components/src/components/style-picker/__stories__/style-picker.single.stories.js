@@ -378,7 +378,7 @@ export const Pictogram = {
                           label=${item.label}
                           ?selected=${item.label === 'Bangalore'}
                           @clabs-style-picker-option-change=${(ev) =>
-                            changePictogram(ev)}>
+                            changePictogram(ev, true)}>
                           ${renderCarbonPictogram({
                             ...item.pictogram,
                             attrs: {

@@ -35,21 +35,10 @@ class StylePicker extends LitElement {
      * @param {number} index - Index of the module to be set as active
      * @description This method updates the active module index in the context.
      */
-    setActiveModule: (index: number) => {
+    setActiveSection: (index: number) => {
       this._stylePickerContext = {
         ...this._stylePickerContext,
-        activeModule: index,
-      };
-    },
-    /**
-     * Set the size of the module
-     * @description This method updates the module size in the context.
-     * @param {Size} _size - The size to be set for the module
-     */
-    setModuleSize: (_size: Size) => {
-      this._stylePickerContext = {
-        ...this._stylePickerContext,
-        moduleSize: _size,
+        activeSection: index,
       };
     },
   };

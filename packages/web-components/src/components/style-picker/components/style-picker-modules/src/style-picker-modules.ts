@@ -7,16 +7,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { LitElement } from 'lit';
+import { LitElement, PropertyValues } from 'lit';
 // @ts-ignore
 import styles from './style-picker-modules.scss?inline';
 import { query, state } from 'lit/decorators.js';
+import { consume } from '@lit/context';
+import {
+  stylePickerContext,
+  StylePickerContextType,
+} from '../../../context/style-picker-context';
 
 /**
  * Modules wrapper.
  */
 class StylePickerModules extends LitElement {
   static styles = styles;
+
+  /**
+   * Consume style-picker-context
+   */
+  @consume({ context: stylePickerContext, subscribe: true })
+  _stylePickerContext?: StylePickerContextType;
 
   /**
    * The tag name of the custom element.
@@ -62,6 +73,27 @@ class StylePickerModules extends LitElement {
     this.defaultSlot.addEventListener('slotchange', () =>
       this.updateSlotIndexes()
     );
+  }
+
+  /**
+   * Lifecycle method called after the component is updated.
+   * @param {object} changedProperties - Properties that have changed since the last update.
+   */
+  protected updated() {
+    const disclosedItems = this.querySelectorAll(
+      'clabs-style-picker-disclosed'
+    );
+
+    disclosedItems.forEach((item) => {
+      if (
+        this._stylePickerContext?.activeSection ===
+        Number(item.getAttribute('data-slot-index'))
+      ) {
+        item.setAttribute('open', '');
+      } else {
+        item.removeAttribute('open');
+      }
+    });
   }
 }
 

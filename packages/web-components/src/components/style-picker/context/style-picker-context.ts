@@ -13,10 +13,10 @@ import { Size } from '../defs/style-picker-module.types';
 
 export interface StylePickerContextType {
   kind?: Kind;
-  activeModule?: number;
-  setActiveModule?: (moduleIndex: number) => void;
-  moduleSize?: Size;
-  setModuleSize?: (size?: Size) => void;
+  activeSection?: number;
+  setActiveSection?: (moduleIndex: number) => void;
+  size?: Size;
+  setSize?: (_size?: Size) => void;
 }
 
 export const stylePickerContext = createContext<StylePickerContextType>(

@@ -6,7 +6,12 @@
  */
 
 import PropTypes from 'prop-types';
-import React, { useState, useCallback, useLayoutEffect, useRef } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useLayoutEffect,
+  useEffect,
+} from 'react';
 import { keys, match } from '../internal/keyboard';
 import { useWindowEvent } from '../internal/useEvent';
 import { usePrefix } from '../internal/usePrefix';
@@ -34,7 +39,7 @@ export function HeaderContainer<P extends HeaderContainerRenderProps>({
   isSideNavExpanded = false,
   isSwitcherExpanded = false,
   isProfileExpanded = false,
-  themeSetting, // <-- pass this in from the story
+  themeSetting,
   ...rest
 }: HeaderContainerProps<P>) {
   const prefix = usePrefix();
@@ -81,6 +86,24 @@ export function HeaderContainer<P extends HeaderContainerRenderProps>({
       ).focus();
     });
   }, [themeSetting]);
+
+  useEffect(() => {
+    function handleProfileClosing(event) {
+      const profile = document.querySelector(
+        `.${prefix}--profile.${prefix}--popover--open`
+      ) as HTMLElement;
+      if (profile && !profile.contains(event.target as Node)) {
+        setIsProfileExpandedState(false);
+      }
+    }
+
+    document.addEventListener('focusin', handleProfileClosing);
+    document.addEventListener('mousedown', handleProfileClosing);
+    return () => {
+      document.removeEventListener('mousedown', handleProfileClosing);
+      document.removeEventListener('focusin', handleProfileClosing);
+    };
+  }, []);
 
   return (
     <Children

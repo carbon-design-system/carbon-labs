@@ -35,7 +35,9 @@ div:has(.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded)
 // when rail is hidden, remove spacing that accounts for rail
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
   .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint}
-    ~ .#{$prefix}--content {
+    ~ .#{$prefix}--content,
+  div:has(.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint})
+    + .#{$prefix}--content {
     @include breakpoint-down($breakpoint) {
       margin-inline-start: 0;
     }

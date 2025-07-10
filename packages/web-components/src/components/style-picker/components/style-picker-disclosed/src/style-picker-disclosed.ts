@@ -42,9 +42,7 @@ class StylePickerDisclosed extends LitElement {
    * @param {object} changedProperties - Properties that have changed since the last update.
    */
   protected updated(): void {
-    if (this.hasAttribute('open')) {
-      this.accordionItem.setAttribute('open', '');
-    } else {
+    if (!this.hasAttribute('open')) {
       this.accordionItem.removeAttribute('open');
     }
   }

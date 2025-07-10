@@ -87,16 +87,15 @@ const toggleButton = () => {
 /**
  * Change color callback
  * @param {object} ev - custom event from color module
- * @param {boolean} grouped - true if the color module is grouped
  *
  * @returns {void}
  */
-const changeColor = (ev, grouped = false) => {
+const changeColor = (ev) => {
   const selectedColor = ev.detail.value;
-  const colorModuleEl = ev.target.parentElement;
-  const allOptionsEl = grouped
-    ? document.querySelectorAll(`${clabsPrefix}-style-picker-option`)
-    : colorModuleEl.querySelectorAll(`${clabsPrefix}-style-picker-option`);
+  const colorModuleEl = ev.target.parentElement?.parentElement;
+  const allOptionsEl = colorModuleEl.querySelectorAll(
+    `${clabsPrefix}-style-picker-option`
+  );
 
   allOptionsEl.forEach((optionEl) => {
     if (optionEl.value === selectedColor) {
@@ -143,16 +142,14 @@ const changeIcon = (ev) => {
 /**
  * Change pictogram callback
  * @param {object} ev - custom event from color module
- * @param {boolean} grouped - true if the pictogram module is grouped
  */
-const changePictogram = (ev, grouped) => {
+const changePictogram = (ev) => {
   const pictogramName = ev.detail.value;
   const flatPictograms = pictograms.flatMap((group) => group.items);
   const pictogram = flatPictograms.find((item) => item.value === pictogramName);
-  const pictogramModuleEl = ev.target.parentElement;
-  const allOptionsEl = grouped
-    ? document.querySelectorAll(`${clabsPrefix}-style-picker-option`)
-    : pictogramModuleEl.querySelectorAll(`${clabsPrefix}-style-picker-option`);
+  const pictogramModuleEl = ev.target.parentElement?.parentElement;
+
+  const allOptionsEl = pictogramModuleEl.querySelectorAll(`${clabsPrefix}-style-picker-option`);
 
   allOptionsEl.forEach((optionEl) => {
     if (optionEl.value === pictogramName) {
@@ -228,7 +225,7 @@ export const Color = {
                           label=${item.label}
                           ?selected=${item.label === 'Yellow 30'}
                           @clabs-style-picker-option-change=${(ev) =>
-                            changeColor(ev, true)}>
+                            changeColor(ev)}>
                           <clabs-style-picker-color
                             color=${item.color}
                             label=${item.label}></clabs-style-picker-color>
@@ -378,7 +375,7 @@ export const Pictogram = {
                           label=${item.label}
                           ?selected=${item.label === 'Bangalore'}
                           @clabs-style-picker-option-change=${(ev) =>
-                            changePictogram(ev, true)}>
+                            changePictogram(ev)}>
                           ${renderCarbonPictogram({
                             ...item.pictogram,
                             attrs: {

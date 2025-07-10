@@ -220,7 +220,7 @@ export const ColorAndIcon = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Color palette</span>
             </cds-icon-button>
-            <clabs-style-picker-sections slot="modules">
+            <clabs-style-picker-sections>
               <clabs-style-picker-section heading="Icons">
                 <clabs-style-picker-module heading="Icons">
                   ${icons.map(

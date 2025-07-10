@@ -90,18 +90,18 @@ const toggleButton = () => {
  */
 const changeColor = (ev) => {
   const selectedColor = ev.detail.value;
-  const colorModuleEl = ev.target.parentElement?.parentElement;
-  const allOptionsEl = colorModuleEl.querySelectorAll(
-    `${clabsPrefix}-style-picker-option`
-  );
+  // const colorModuleEl = ev.target.parentElement?.parentElement;
+  // const allOptionsEl = colorModuleEl.querySelectorAll(
+  //   `${clabsPrefix}-style-picker-option`
+  // );
 
-  allOptionsEl.forEach((optionEl) => {
-    if (optionEl.value === selectedColor) {
-      optionEl.setAttribute('selected', '');
-    } else {
-      optionEl.removeAttribute('selected');
-    }
-  });
+  // allOptionsEl.forEach((optionEl) => {
+  //   if (optionEl.value === selectedColor) {
+  //     optionEl.setAttribute('selected', '');
+  //   } else {
+  //     optionEl.removeAttribute('selected');
+  //   }
+  // });
 
   const tileEl = document.querySelector(`${carbonPrefix}-tile`);
   tileEl.style.borderColor = `${selectedColor}`;
@@ -117,7 +117,6 @@ const changeColor = (ev) => {
 const changeIcon = (ev) => {
   const selectedIcon = ev.detail.value;
 
-  const iconModuleEl = ev.target.parentElement;
   const headerIconEl = document.getElementById('inline-tile-icon');
 
   const iconTemplate = icons
@@ -128,17 +127,18 @@ const changeIcon = (ev) => {
   headerIconEl.innerHTML = '';
   headerIconEl.appendChild(container.firstElementChild);
 
-  const allOptionsEl = iconModuleEl.querySelectorAll(
-    `${clabsPrefix}-style-picker-option`
-  );
+  // const iconModuleEl = ev.target.parentElement;
+  // const allOptionsEl = iconModuleEl.querySelectorAll(
+  //   `${clabsPrefix}-style-picker-option`
+  // );
 
-  allOptionsEl.forEach((optionEl) => {
-    if (optionEl.value === selectedIcon) {
-      optionEl.setAttribute('selected', '');
-    } else {
-      optionEl.removeAttribute('selected');
-    }
-  });
+  // allOptionsEl.forEach((optionEl) => {
+  //   if (optionEl.value === selectedIcon) {
+  //     optionEl.setAttribute('selected', '');
+  //   } else {
+  //     optionEl.removeAttribute('selected');
+  //   }
+  // });
 };
 
 /**
@@ -150,19 +150,19 @@ const changePictogram = (ev) => {
   const pictogramName = ev.detail.value;
   const flatPictograms = pictograms.flatMap((group) => group.items);
   const pictogram = flatPictograms.find((item) => item.value === pictogramName);
-  const pictogramModuleEl = ev.target.parentElement?.parentElement;
 
-  const allOptionsEl = pictogramModuleEl.querySelectorAll(
-    `${clabsPrefix}-style-picker-option`
-  );
+  // const pictogramModuleEl = ev.target.parentElement?.parentElement;
+  // const allOptionsEl = pictogramModuleEl.querySelectorAll(
+  //   `${clabsPrefix}-style-picker-option`
+  // );
 
-  allOptionsEl.forEach((optionEl) => {
-    if (optionEl.value === pictogramName) {
-      optionEl.setAttribute('selected', '');
-    } else {
-      optionEl.removeAttribute('selected');
-    }
-  });
+  // allOptionsEl.forEach((optionEl) => {
+  //   if (optionEl.value === pictogramName) {
+  //     optionEl.setAttribute('selected', '');
+  //   } else {
+  //     optionEl.removeAttribute('selected');
+  //   }
+  // });
 
   const pictogramHolderEl = document.getElementById('inline-tile-pictogram');
   const pictogramTemplate = renderCarbonPictogram(pictogram.pictogram);

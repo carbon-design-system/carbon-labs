@@ -90,18 +90,18 @@ const changeColor = (ev) => {
   const tileEl = document.querySelector(`${carbonPrefix}-tile`);
   tileEl.style.borderColor = `${color}`;
 
-  const colorModuleEl = ev.target.parentElement;
-  const allOptionsEl = colorModuleEl.querySelectorAll(
-    `${clabsPrefix}-style-picker-option`
-  );
+  // const colorModuleEl = ev.target.parentElement;
+  // const allOptionsEl = colorModuleEl.querySelectorAll(
+  //   `${clabsPrefix}-style-picker-option`
+  // );
 
-  allOptionsEl.forEach((optionEl) => {
-    if (optionEl.value === color) {
-      optionEl.setAttribute('selected', '');
-    } else {
-      optionEl.removeAttribute('selected');
-    }
-  });
+  // allOptionsEl.forEach((optionEl) => {
+  //   if (optionEl.value === color) {
+  //     optionEl.setAttribute('selected', '');
+  //   } else {
+  //     optionEl.removeAttribute('selected');
+  //   }
+  // });
 };
 
 /**
@@ -119,18 +119,18 @@ const changeIcon = (ev) => {
   headerIconEl.innerHTML = '';
   headerIconEl.appendChild(container.firstElementChild);
 
-  const iconModuleEl = ev.target.parentElement;
-  const allOptionsEl = iconModuleEl.querySelectorAll(
-    `${clabsPrefix}-style-picker-option`
-  );
+  // const iconModuleEl = ev.target.parentElement;
+  // const allOptionsEl = iconModuleEl.querySelectorAll(
+  //   `${clabsPrefix}-style-picker-option`
+  // );
 
-  allOptionsEl.forEach((optionEl) => {
-    if (optionEl.value === selectedIcon) {
-      optionEl.setAttribute('selected', '');
-    } else {
-      optionEl.removeAttribute('selected');
-    }
-  });
+  // allOptionsEl.forEach((optionEl) => {
+  //   if (optionEl.value === selectedIcon) {
+  //     optionEl.setAttribute('selected', '');
+  //   } else {
+  //     optionEl.removeAttribute('selected');
+  //   }
+  // });
 };
 
 /**
@@ -142,18 +142,18 @@ const changePictogram = (ev) => {
   const flatPictograms = pictograms.flatMap((group) => group.items);
   const pictogram = flatPictograms.find((item) => item.value === pictogramName);
 
-  const pictogramModuleEl = ev.target.parentElement;
-  const allOptionsEl = pictogramModuleEl.querySelectorAll(
-    `${clabsPrefix}-style-picker-option`
-  );
+  // const pictogramModuleEl = ev.target.parentElement;
+  // const allOptionsEl = pictogramModuleEl.querySelectorAll(
+  //   `${clabsPrefix}-style-picker-option`
+  // );
 
-  allOptionsEl.forEach((optionEl) => {
-    if (optionEl.value === pictogramName) {
-      optionEl.setAttribute('selected', '');
-    } else {
-      optionEl.removeAttribute('selected');
-    }
-  });
+  // allOptionsEl.forEach((optionEl) => {
+  //   if (optionEl.value === pictogramName) {
+  //     optionEl.setAttribute('selected', '');
+  //   } else {
+  //     optionEl.removeAttribute('selected');
+  //   }
+  // });
 
   const pictogramHolderEl = document.getElementById('inline-tile-pictogram');
   const pictogramTemplate = renderCarbonPictogram(pictogram.pictogram);

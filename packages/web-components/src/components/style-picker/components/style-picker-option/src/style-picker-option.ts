@@ -49,6 +49,26 @@ class StylePickerOption extends LitElement {
    * @param {string} triggeredBy - the element that triggered the change.
    */
   protected handleClick(triggeredBy: EventTarget | null) {
+    this.selected = true;
+
+    const isGrouped = this.parentElement?.hasAttribute('grouped');
+
+    const allOptions = isGrouped
+      ? this.parentElement?.parentElement?.querySelectorAll(
+          `${clabsPrefix}-style-picker-option`
+        )
+      : this.parentElement?.querySelectorAll(
+          `${clabsPrefix}-style-picker-option`
+        );
+
+    allOptions?.forEach((optionEl) => {
+      if (optionEl?.getAttribute('value') === this.value) {
+        optionEl.setAttribute('selected', '');
+      } else {
+        optionEl.removeAttribute('selected');
+      }
+    });
+
     const init = {
       bubbles: true,
       cancelable: true,

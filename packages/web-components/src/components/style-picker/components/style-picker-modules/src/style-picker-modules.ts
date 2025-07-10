@@ -80,11 +80,11 @@ class StylePickerModules extends LitElement {
    * @param {object} changedProperties - Properties that have changed since the last update.
    */
   protected updated() {
-    const disclosedItems = this.querySelectorAll(
-      'clabs-style-picker-disclosed'
+    const sectionElements = this.querySelectorAll(
+      'clabs-style-picker-section'
     );
 
-    disclosedItems.forEach((item) => {
+    sectionElements.forEach((item) => {
       if (
         this._stylePickerContext?.activeSection ===
         Number(item.getAttribute('data-slot-index'))

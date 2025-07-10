@@ -10,7 +10,7 @@ $css--plex: true !default;
 @use '../../../../../globals/scss/vars' as *;
 @use '@carbon/react/scss/theme';
 
-$block-class: #{$clabs-prefix}--style-picker-disclosed;
+$block-class: #{$clabs-prefix}--style-picker-section;
 
 .#{$block-class}--disclosed {
   &::part(content) {

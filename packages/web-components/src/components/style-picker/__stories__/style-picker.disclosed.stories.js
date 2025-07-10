@@ -221,7 +221,7 @@ export const ColorAndIcon = {
               <span slot="tooltip-content">Color palette</span>
             </cds-icon-button>
             <clabs-style-picker-modules slot="modules">
-              <clabs-style-picker-disclosed heading="Icons">
+              <clabs-style-picker-section heading="Icons">
                 <clabs-style-picker-module heading="Icons">
                   ${icons.map(
                     (item) =>
@@ -239,8 +239,8 @@ export const ColorAndIcon = {
                       `
                   )}
                 </clabs-style-picker-module>
-              </clabs-style-picker-disclosed>
-              <clabs-style-picker-disclosed heading="Colors">
+              </clabs-style-picker-section>
+              <clabs-style-picker-section heading="Colors">
                 ${colors.map(
                   (group) =>
                     html`<clabs-style-picker-module
@@ -263,7 +263,7 @@ export const ColorAndIcon = {
                       )}
                     </clabs-style-picker-module> `
                 )}
-              </clabs-style-picker-disclosed>
+              </clabs-style-picker-section>
             </clabs-style-picker-modules>
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>

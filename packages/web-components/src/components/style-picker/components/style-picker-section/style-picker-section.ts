@@ -9,26 +9,26 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { stylePickerDisclosedTemplate } from './src/style-picker-disclosed.template.js';
-import StylePickerDisclosed from './src/style-picker-disclosed.js';
+import { stylePickerSectionTemplate } from './src/style-picker-section.template.js';
+import StylePickerSection from './src/style-picker-section.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Accordion item wrapper element.
  *
- * @element clabs-style-picker-disclosed
+ * @element clabs-style-picker-section
  */
-@customElement(`${clabsPrefix}-style-picker-disclosed`)
-class CLABSStylePickerDisclosed extends StylePickerDisclosed {
+@customElement(`${clabsPrefix}-style-picker-section`)
+class CLABSStylePickerSection extends StylePickerSection {
   /**
    * Renders the template while passing in class functionality
    *
    * @returns {TemplateResult<1>}
    */
   render() {
-    return stylePickerDisclosedTemplate(this);
+    return stylePickerSectionTemplate(this);
   }
 }
 
-export default CLABSStylePickerDisclosed;
+export default CLABSStylePickerSection;

@@ -13,16 +13,16 @@ import '@carbon/web-components/es/components/accordion/accordion-item.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
-export const blockClass = `${clabsPrefix}--style-picker-disclosed`;
+export const blockClass = `${clabsPrefix}--style-picker-section`;
 
 /**
- * Lit template for disclosed item.
+ * Lit template for section item.
  *
  * @param {object} customElementClass Class functionality for the custom element
 
  * @returns {TemplateResult<1>} Lit html template
  */
-export const stylePickerDisclosedTemplate = (
+export const stylePickerSectionTemplate = (
   customElementClass
 ): TemplateResult<1> => {
   const { heading, slotIndex, _stylePickerContext } = customElementClass;

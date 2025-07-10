@@ -9,8 +9,8 @@
 
 // @ts-ignore
 import { property, query } from 'lit/decorators.js';
-import styles from './style-picker-disclosed.scss?inline';
-import { LitElement, PropertyValues } from 'lit';
+import styles from './style-picker-section.scss?inline';
+import { LitElement } from 'lit';
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
@@ -18,9 +18,9 @@ import {
 } from '../../../context/style-picker-context';
 
 /**
- * Disclosed accordion element.
+ * Section element.
  */
-class StylePickerDisclosed extends LitElement {
+class StylePickerSection extends LitElement {
   static styles = styles;
 
   @query('cds-accordion-item') accordionItem;
@@ -33,9 +33,6 @@ class StylePickerDisclosed extends LitElement {
 
   @property({ type: String, reflect: true, attribute: 'heading' })
   heading = '';
-
-  // @property({ type: Number, reflect: true, attribute: 'slot-index' })
-  // slotIndex?: number;
 
   /**
    * Lifecycle method called after the component is updated.
@@ -53,13 +50,6 @@ class StylePickerDisclosed extends LitElement {
   get slotIndex() {
     return Number(this.getAttribute('data-slot-index'));
   }
-
-  /**
-   * Getter for the open state of the disclosed component.
-   */
-  // get open() {
-  //   return this.accordionItem?.hasAttribute('open');
-  // }
 }
 
-export default StylePickerDisclosed;
+export default StylePickerSection;

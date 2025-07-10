@@ -8,3 +8,15 @@
  */
 
 export type Kind = 'single' | 'flat' | 'disclosed';
+
+export type Item<T> = {
+  value: string;
+  label: string;
+} & T;
+
+export type Group<T> = {
+  label: string;
+  items: T[];
+};
+
+export type Size = 'sm' | 'lg';

@@ -222,7 +222,7 @@ export const ColorAndIcon = {
             </cds-icon-button>
             <clabs-style-picker-sections>
               <clabs-style-picker-section heading="Icons">
-                <clabs-style-picker-module heading="Icons">
+                <clabs-style-picker-group heading="Icons">
                   ${icons.map(
                     (item) =>
                       html`
@@ -238,12 +238,12 @@ export const ColorAndIcon = {
                         </clabs-style-picker-option>
                       `
                   )}
-                </clabs-style-picker-module>
+                </clabs-style-picker-group>
               </clabs-style-picker-section>
               <clabs-style-picker-section heading="Colors">
                 ${colors.map(
                   (group) =>
-                    html`<clabs-style-picker-module
+                    html`<clabs-style-picker-group
                       grouped
                       heading=${group.label}>
                       <div slot="group">${group.label}</div>
@@ -261,7 +261,7 @@ export const ColorAndIcon = {
                           </clabs-style-picker-option>
                         `
                       )}
-                    </clabs-style-picker-module> `
+                    </clabs-style-picker-group> `
                 )}
               </clabs-style-picker-section>
             </clabs-style-picker-sections>

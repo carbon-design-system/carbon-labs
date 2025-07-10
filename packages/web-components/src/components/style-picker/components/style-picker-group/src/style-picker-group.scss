@@ -16,7 +16,7 @@ $css--plex: true !default;
 @use '../../../../../globals/scss/vars' as *;
 @use '../../../defs/vars.scss' as *;
 
-$block-class: #{$clabs-prefix}--style-picker-module;
+$block-class: #{$clabs-prefix}--style-picker-group;
 
 .#{$block-class}__group > ul,
 .#{$block-class}__items {

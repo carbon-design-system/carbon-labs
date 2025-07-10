@@ -17,7 +17,6 @@ import {
   StylePickerContextType,
 } from '../../../context/style-picker-context';
 import { Kind } from '../../../defs/style-picker.types';
-import { Size } from '../../../defs/style-picker-module.types';
 
 /**
  * Component extending the @carbon/web-components' button

@@ -33,7 +33,7 @@ export const stylePickerTemplate = (customElementClass) => {
         <div class=${`${blockClass}__header`}>
           <strong class=${`${blockClass}__heading`}>${heading}</strong>
         </div>
-        <cds-layer class=${`${blockClass}__modules`} level="1">
+        <cds-layer class=${`${blockClass}__sections`} level="1">
           <slot></slot>
         </cds-layer>
       </div>

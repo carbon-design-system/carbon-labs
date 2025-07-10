@@ -51,7 +51,7 @@ $container-width: $spacing-12-rem + $spacing-06;
   padding-inline: $spacing-05;
 }
 
-.#{$block-class}__modules {
+.#{$block-class}__sections {
   overflow: auto;
 }
 
@@ -65,6 +65,6 @@ $container-width: $spacing-12-rem + $spacing-06;
 
 // Carbon overwrites
 
-.#{$block-class}-module .#{$cds-prefix}--contained-list__header {
+.#{$block-class}-group .#{$cds-prefix}--contained-list__header {
   z-index: 2;
 }

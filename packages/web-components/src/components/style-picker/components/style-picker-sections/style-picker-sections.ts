@@ -9,23 +9,23 @@
 
 import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { stylePickerModulesTemplate } from './src/style-picker-modules.template.js';
+import { stylePickerSectionsTemplate } from './src/style-picker-sections.template.js';
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../context/style-picker-context.js';
-import StylePickerModules from './src/style-picker-modules.js';
+import StylePickerSections from './src/style-picker-sections.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * A wrapper wrap multiple `style-picker-module` components
+ * A wrapper wraps multiple `style-picker-section` components
  *
- * @elements clabs-style-picker-modules
+ * @elements clabs-style-picker-sections
  */
-@customElement(`${clabsPrefix}-style-picker-modules`)
-class CLABSStylePickerModules extends StylePickerModules {
+@customElement(`${clabsPrefix}-style-picker-sections`)
+class CLABSStylePickerSections extends StylePickerSections {
   @consume({ context: stylePickerContext, subscribe: true })
   stylePickerContext?: StylePickerContextType;
 
@@ -35,8 +35,8 @@ class CLABSStylePickerModules extends StylePickerModules {
    * @returns {TemplateResult<1>}
    */
   render() {
-    return stylePickerModulesTemplate(this);
+    return stylePickerSectionsTemplate(this);
   }
 }
 
-export default CLABSStylePickerModules;
+export default CLABSStylePickerSections;

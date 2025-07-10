@@ -25,6 +25,6 @@ $block-class: #{$clabs-prefix}--style-picker-section;
 .#{$block-class}--disclosed[open] {
   overflow: auto;
   block-size: calc(
-    100% - ((var(--clabs--style-picker-modules-count) - 1)) * 2.5rem - 0.15rem
+    100% - ((var(--clabs--style-picker-sections-count) - 1)) * 2.5rem - 0.15rem
   );
 }

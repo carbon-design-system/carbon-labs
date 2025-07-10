@@ -14,7 +14,7 @@ import { Kind } from '../../../defs/style-picker.types';
 
 const { stablePrefix: clabsPrefix } = settings;
 
-const blockClass = `${clabsPrefix}--style-picker-modules`;
+const blockClass = `${clabsPrefix}--style-picker-sections`;
 
 /**
  * Lit template for card
@@ -22,7 +22,7 @@ const blockClass = `${clabsPrefix}--style-picker-modules`;
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export const stylePickerModulesTemplate = (
+export const stylePickerSectionsTemplate = (
   customElementClass
 ): TemplateResult<1> => {
   const kind: Kind = customElementClass.stylePickerContext.kind;

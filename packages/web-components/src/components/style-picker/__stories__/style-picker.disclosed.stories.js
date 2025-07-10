@@ -220,7 +220,7 @@ export const ColorAndIcon = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Color palette</span>
             </cds-icon-button>
-            <clabs-style-picker-modules slot="modules">
+            <clabs-style-picker-sections slot="modules">
               <clabs-style-picker-section heading="Icons">
                 <clabs-style-picker-module heading="Icons">
                   ${icons.map(
@@ -264,7 +264,7 @@ export const ColorAndIcon = {
                     </clabs-style-picker-module> `
                 )}
               </clabs-style-picker-section>
-            </clabs-style-picker-modules>
+            </clabs-style-picker-sections>
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}

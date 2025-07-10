@@ -55,11 +55,11 @@ $container-width: $spacing-12-rem + $spacing-06;
   overflow: auto;
 }
 
-.#{$block-class}-modules__container--empty {
+.#{$block-class}-sections__container--empty {
   display: none;
 }
 
-.#{$block-class}-modules__empty-state {
+.#{$block-class}-sections__empty-state {
   padding: $spacing-05;
 }
 

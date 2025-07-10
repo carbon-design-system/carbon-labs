@@ -7,9 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { LitElement, PropertyValues } from 'lit';
+import { LitElement } from 'lit';
 // @ts-ignore
-import styles from './style-picker-modules.scss?inline';
+import styles from './style-picker-sections.scss?inline';
 import { query, state } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import {
@@ -18,9 +18,9 @@ import {
 } from '../../../context/style-picker-context';
 
 /**
- * Modules wrapper.
+ * Sections wrapper.
  */
-class StylePickerModules extends LitElement {
+class StylePickerSections extends LitElement {
   static styles = styles;
 
   /**
@@ -97,4 +97,4 @@ class StylePickerModules extends LitElement {
   }
 }
 
-export default StylePickerModules;
+export default StylePickerSections;

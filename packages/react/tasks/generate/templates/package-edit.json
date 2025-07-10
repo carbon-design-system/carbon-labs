@@ -27,7 +27,7 @@
   "files": ["es", "lib", "scss"],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rm -rf {es,lib,scss}"
+    "clean": "rimraf es lib scss",
   },
   "devDependencies": {
     "@carbon-labs/utilities": "canary"

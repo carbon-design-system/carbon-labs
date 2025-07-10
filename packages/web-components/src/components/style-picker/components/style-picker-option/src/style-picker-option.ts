@@ -31,8 +31,8 @@ class StylePickerOption extends LitElement {
   @property({ type: String, reflect: true, attribute: 'value' })
   value = '';
 
-  @property({ type: Boolean, reflect: true, attribute: 'is-selected' })
-  isSelected = false;
+  @property({ type: Boolean, reflect: true, attribute: 'selected' })
+  selected = false;
 
   @property({ reflect: true, attribute: 'size' })
   size: Size = 'sm';

@@ -62,6 +62,8 @@ export const Default = () => (
             { text: 'Option 3' },
           ]}
           label="Choose an option"
+          titleText="Choose an option"
+          hideLabel
         />
       </SideNavSlot>
       <SideNavDivider />
@@ -147,6 +149,8 @@ export const SideNavDoubleWideStory = () => (
               { text: 'Option 3' },
             ]}
             label="Choose an option"
+            titleText="Choose an option"
+            hideLabel
           />
         </SideNavSlot>
         <SideNavDivider />
@@ -296,6 +300,8 @@ export const Rail = () => (
             { text: 'Option 3' },
           ]}
           label="Choose an option"
+          titleText="Choose an option"
+          hideLabel
         />
       </SideNavSlot>
       <SideNavDivider />

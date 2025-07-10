@@ -30,7 +30,6 @@ and `@carbon-labs/react-ui-shell` to compose the UI Shell. The following
 components are provided by `@carbon-labs/react-ui-shell`:
 
 - `HeaderDivider`
-- `HeaderPanel`
 - `HeaderPopover`
 - `HeaderPopoverActions`
 - `HeaderPopoverButton`

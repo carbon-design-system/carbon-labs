@@ -16,6 +16,13 @@ import StylePickerModule from '../../style-picker-module/src/style-picker-module
  */
 class StylePickerIconModule<Icon> extends StylePickerModule<Icon> {
   static styles = styles;
+
+  /**
+   * Return the slot index from the custom attribute set in the parent module
+   */
+  get moduleIndex() {
+    return this.getAttribute('data-slot-index');
+  }
 }
 
 export default StylePickerIconModule;

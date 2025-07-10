@@ -8,6 +8,13 @@
  */
 
 import { html, TemplateResult } from 'lit';
+import '@carbon/web-components/es/components/accordion/accordion.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { Kind } from '../../../defs/style-picker.types';
+
+const { stablePrefix: clabsPrefix } = settings;
+
+const blockClass = `${clabsPrefix}--style-picker-modules`;
 
 /**
  * Lit template for card
@@ -15,6 +22,25 @@ import { html, TemplateResult } from 'lit';
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
  */
-export const stylePickerModulesTemplate = (): TemplateResult<1> => {
-  return html`<slot></slot>`;
+export const stylePickerModulesTemplate = (
+  customElementClass
+): TemplateResult<1> => {
+  const kind: Kind = customElementClass.stylePickerContext.kind;
+  const { updateSlotCount, slotCount } = customElementClass;
+
+  // If the kind is 'disclosed', we wrap the slot in an accordion
+  // Otherwise, we just render the slot directly
+  if (kind === 'disclosed') {
+    return html`
+      <div
+        class=${`${blockClass}__container`}
+        style=${`--${blockClass}-count: ${slotCount}`}>
+        <cds-accordion>
+          <slot @slotchange=${updateSlotCount}></slot>
+        </cds-accordion>
+      </div>
+    `;
+  } else {
+    return html`<slot></slot>`;
+  }
 };

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/firstTimeOrientation",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rm -rf {es,lib,scss}",
+    "clean": "rimraf es lib scss",
     "postinstall": "ibmtelemetry --config=telemetry.yml",
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 18a7a4e1-d21d-4d71-9dce-20587f4abd2e --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },

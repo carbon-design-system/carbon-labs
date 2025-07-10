@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { LitElement } from 'lit';
+import { LitElement, PropertyValues } from 'lit';
 import { provide } from '@lit/context';
 import { property } from 'lit/decorators.js';
 // @ts-ignore
@@ -28,7 +28,19 @@ class StylePicker extends LitElement {
    * Provide style-picker-context
    */
   @provide({ context: stylePickerContext })
-  _stylePickerContext: StylePickerContextType = { kind: 'single' };
+  _stylePickerContext: StylePickerContextType = {
+    /**
+     * Set the active module index
+     * @param {number} index - Index of the module to be set as active
+     * @description This method updates the active module index in the context.
+     */
+    setActiveModule: (index: number) => {
+      this._stylePickerContext = {
+        ...this._stylePickerContext,
+        activeModule: index,
+      };
+    },
+  };
 
   /**
    * Specify direction of alignment
@@ -49,10 +61,24 @@ class StylePicker extends LitElement {
   open = false;
 
   /**
-   * Define title for the picker
+   * Define heading for the picker
    */
-  @property({ type: String, reflect: true, attribute: 'title' })
-  title = '';
+  @property({ type: String, reflect: true, attribute: 'heading' })
+  heading = '';
+
+  /**
+   * Invoked whenever the element is updated.
+   *
+   * @param {PropertyValues<this>} changed - A Map of property keys to values.
+   */
+  updated(changed: PropertyValues<this>) {
+    if (changed.has('kind')) {
+      this._stylePickerContext = {
+        kind: this.kind,
+        ...this._stylePickerContext,
+      };
+    }
+  }
 }
 
 export default StylePicker;

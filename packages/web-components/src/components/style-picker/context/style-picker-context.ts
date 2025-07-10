@@ -12,6 +12,8 @@ import { Kind } from '../defs/style-picker.types';
 
 export interface StylePickerContextType {
   kind?: Kind;
+  activeModule?: number;
+  setActiveModule?: (moduleIndex: number) => void;
 }
 
 export const stylePickerContext = createContext<StylePickerContextType>(

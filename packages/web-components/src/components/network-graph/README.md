@@ -1,4 +1,4 @@
-# @carbon-labs/network-graph
+# @carbon-labs/wc-network-graph
 
 ## 📝 License
 

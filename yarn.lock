@@ -2546,6 +2546,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/mdx-components@workspace:packages/react/src/components/MDXComponents":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/mdx-components@workspace:packages/react/src/components/MDXComponents"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+    "@ibm/telemetry-js": "npm:^1.9.1"
+    clsx: "npm:^1.2.1"
+    slugify: "npm:^1.6.6"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-animated-header@workspace:packages/react/src/components/AnimatedHeader":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-animated-header@workspace:packages/react/src/components/AnimatedHeader"
@@ -2571,17 +2582,6 @@ __metadata:
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
     "@ibm/telemetry-js": "npm:^1.9.1"
-  languageName: unknown
-  linkType: soft
-
-"@carbon-labs/react-mdx-components@workspace:packages/react/src/components/MDXComponents":
-  version: 0.0.0-use.local
-  resolution: "@carbon-labs/react-mdx-components@workspace:packages/react/src/components/MDXComponents"
-  dependencies:
-    "@carbon-labs/utilities": "npm:canary"
-    "@ibm/telemetry-js": "npm:^1.9.1"
-    clsx: "npm:^1.2.1"
-    slugify: "npm:^1.6.6"
   languageName: unknown
   linkType: soft
 

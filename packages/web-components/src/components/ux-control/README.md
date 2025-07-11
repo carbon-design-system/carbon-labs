@@ -1,4 +1,4 @@
-# @carbon-labs/ai-ux-control
+# @carbon-labs/wc-ai-ux-control
 
 ## 📝 License
 

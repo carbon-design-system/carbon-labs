@@ -84,7 +84,6 @@ const toggleButton = () => {
 /**
  * Change color callback
  * @param {object} ev - custom event from color module
- * @param {boolean} grouped - true if the color module is grouped
  *
  * @returns {void}
  */
@@ -126,43 +125,16 @@ const changeIcon = (ev) => {
   render(iconTemplate, container);
   headerIconEl.innerHTML = '';
   headerIconEl.appendChild(container.firstElementChild);
-
-  // const iconModuleEl = ev.target.parentElement;
-  // const allOptionsEl = iconModuleEl.querySelectorAll(
-  //   `${clabsPrefix}-style-picker-option`
-  // );
-
-  // allOptionsEl.forEach((optionEl) => {
-  //   if (optionEl.value === selectedIcon) {
-  //     optionEl.setAttribute('selected', '');
-  //   } else {
-  //     optionEl.removeAttribute('selected');
-  //   }
-  // });
 };
 
 /**
  * Change pictogram callback
  * @param {object} ev - custom event from color module
- * @param {boolean} grouped - true if the pictogram module is grouped
  */
 const changePictogram = (ev) => {
   const pictogramName = ev.detail.value;
   const flatPictograms = pictograms.flatMap((group) => group.items);
   const pictogram = flatPictograms.find((item) => item.value === pictogramName);
-
-  // const pictogramModuleEl = ev.target.parentElement?.parentElement;
-  // const allOptionsEl = pictogramModuleEl.querySelectorAll(
-  //   `${clabsPrefix}-style-picker-option`
-  // );
-
-  // allOptionsEl.forEach((optionEl) => {
-  //   if (optionEl.value === pictogramName) {
-  //     optionEl.setAttribute('selected', '');
-  //   } else {
-  //     optionEl.removeAttribute('selected');
-  //   }
-  // });
 
   const pictogramHolderEl = document.getElementById('inline-tile-pictogram');
   const pictogramTemplate = renderCarbonPictogram(pictogram.pictogram);
@@ -222,30 +194,26 @@ export const ColorAndIcon = {
             </cds-icon-button>
             <clabs-style-picker-sections>
               <clabs-style-picker-section heading="Icons">
-                <clabs-style-picker-group heading="Icons">
-                  ${icons.map(
-                    (item) =>
-                      html`
-                        <clabs-style-picker-option
-                          value=${item.value}
-                          label=${item.label}
-                          ?selected=${item.value === 'apple'}
-                          @clabs-style-picker-option-change=${(ev) =>
-                            changeIcon(ev)}>
-                          <clabs-style-picker-icon>
-                            ${item.renderIcon()}
-                          </clabs-style-picker-icon>
-                        </clabs-style-picker-option>
-                      `
-                  )}
-                </clabs-style-picker-group>
+                ${icons.map(
+                  (item) =>
+                    html`
+                      <clabs-style-picker-option
+                        value=${item.value}
+                        label=${item.label}
+                        ?selected=${item.value === 'apple'}
+                        @clabs-style-picker-option-change=${(ev) =>
+                          changeIcon(ev)}>
+                        <clabs-style-picker-icon>
+                          ${item.renderIcon()}
+                        </clabs-style-picker-icon>
+                      </clabs-style-picker-option>
+                    `
+                )}
               </clabs-style-picker-section>
               <clabs-style-picker-section heading="Colors">
                 ${colors.map(
                   (group) =>
-                    html`<clabs-style-picker-group
-                      grouped
-                      heading=${group.label}>
+                    html`<clabs-style-picker-group heading=${group.label}>
                       <div slot="group">${group.label}</div>
                       ${group.items.map(
                         (item) => html`

@@ -7,6 +7,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { POPOVER_ALIGNMENT } from '@carbon/web-components/es/components/popover/defs.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+const { stablePrefix: clabsPrefix } = settings;
+
 export type Kind = 'single' | 'flat' | 'disclosed';
 
 export type Item<T> = {
@@ -20,3 +24,7 @@ export type Group<T> = {
 };
 
 export type Size = 'sm' | 'lg';
+
+export const prefix = `${clabsPrefix}-style-picker`;
+
+export const STYLE_PICKER_ALIGNMENT = POPOVER_ALIGNMENT;

@@ -16,7 +16,7 @@ import {
 // @ts-ignore
 import styles from './style-picker-group.scss?inline';
 import { property } from 'lit/decorators.js';
-import { Group, Item, Size } from '../../../defs/style-picker.types';
+import { Group, Item, Size } from '../../../defs';
 
 /**
  * Group element.
@@ -67,9 +67,6 @@ class StylePickerGroup<T> extends LitElement {
 
   @property({ attribute: false })
   renderItem?: (item: Item<T>) => TemplateResult;
-
-  @property({ type: Boolean, reflect: true, attribute: 'grouped' })
-  isGrouped?: boolean = false;
 
   /**
    * Lifecycle method called after the component is updated.

@@ -25,15 +25,54 @@ export const blockClass = `${clabsPrefix}--style-picker-section`;
 export const stylePickerSectionTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const { heading, slotIndex, _stylePickerContext } = customElementClass;
-  const { setActiveSection } = _stylePickerContext;
+  const { heading, slotIndex, _stylePickerContext, hasGroup } =
+    customElementClass;
+  const { kind, size, setActiveSection } = _stylePickerContext;
 
-  return html`<cds-accordion-item
-    .title=${heading}
-    class=${`${blockClass}--disclosed`}
-    @cds-accordion-item-toggled=${() => {
-      setActiveSection?.(slotIndex);
-    }}>
-    <slot></slot>
-  </cds-accordion-item>`;
+  /**
+   * Renders the default slot content.
+   * If the section has a group, it renders the slot directly.
+   * Otherwise, it wraps the slot in a listbox and show the items.
+   */
+  const renderDefault = () => {
+    if (hasGroup) {
+      return html`<slot></slot>`;
+    } else {
+      return html`
+        <div
+          class=${`${blockClass} ${blockClass}--${size}`}
+          role="listbox"
+          aria-label=${heading}
+          aria-orientation="horizontal"
+          tabindex="0">
+            <ul class=${`${blockClass}__items`} role="group">
+              <slot></slot>
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+  };
+
+  if (kind === 'disclosed') {
+    return html`<cds-accordion-item
+      .title=${heading}
+      class=${`${blockClass}--disclosed`}
+      @cds-accordion-item-toggled=${() => {
+        setActiveSection?.(slotIndex);
+      }}>
+      ${renderDefault()}
+    </cds-accordion-item>`;
+  } else if (kind === 'flat') {
+    return html`
+      <div class=${`${blockClass}--flat`}>
+        <div class=${`${blockClass}__header`}>
+          <strong class=${`${blockClass}__heading`}> ${heading} </strong>
+        </div>
+        ${renderDefault()}
+      </div>
+    `;
+  } else {
+    return renderDefault();
+  }
 };

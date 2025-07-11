@@ -8,9 +8,9 @@
  */
 
 // @ts-ignore
-import { property, query } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
 import styles from './style-picker-section.scss?inline';
-import { LitElement } from 'lit';
+import { LitElement, PropertyValues } from 'lit';
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
@@ -25,6 +25,8 @@ class StylePickerSection extends LitElement {
 
   @query('cds-accordion-item') accordionItem;
 
+  @query('slot') defaultSlot;
+
   /**
    * Consume style-picker-context
    */
@@ -35,11 +37,30 @@ class StylePickerSection extends LitElement {
   heading = '';
 
   /**
+   * Indicates whether the section has a group of items.
+   * This is set to true if there are any `clabs-style-picker-group` elements inside the section.
+   */
+  @state()
+  hasGroup = false;
+
+  /**
+   * Lifecycle method called when the component is first updated.
+   */
+  protected firstUpdated() {
+    if (this.querySelectorAll(`clabs-style-picker-group`).length > 0) {
+      this.hasGroup = true;
+    }
+  }
+
+  /**
    * Lifecycle method called after the component is updated.
    * @param {object} changedProperties - Properties that have changed since the last update.
    */
   protected updated(): void {
-    if (!this.hasAttribute('open')) {
+    if (
+      this._stylePickerContext?.kind === 'disclosed' &&
+      !this.hasAttribute('open')
+    ) {
       this.accordionItem.removeAttribute('open');
     }
   }

@@ -211,8 +211,8 @@ export const ColorAndIcon = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Color palette</span>
             </cds-icon-button>
-            <clabs-style-picker-modules slot="modules">
-              <clabs-style-picker-module heading="Colors">
+            <clabs-style-picker-sections>
+              <clabs-style-picker-section heading="Colors">
                 ${colors[0].items.map(
                   (item) => html`
                     <clabs-style-picker-option
@@ -227,8 +227,8 @@ export const ColorAndIcon = {
                     </clabs-style-picker-option>
                   `
                 )}
-              </clabs-style-picker-module>
-              <clabs-style-picker-module heading="Icons">
+              </clabs-style-picker-section>
+              <clabs-style-picker-section heading="Icons">
                 ${icons.map(
                   (item) =>
                     html`
@@ -244,8 +244,8 @@ export const ColorAndIcon = {
                       </clabs-style-picker-option>
                     `
                 )}
-              </clabs-style-picker-module>
-            </clabs-style-picker-modules>
+              </clabs-style-picker-section>
+            </clabs-style-picker-sections>
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}

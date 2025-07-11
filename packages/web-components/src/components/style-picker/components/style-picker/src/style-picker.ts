@@ -16,7 +16,7 @@ import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../../context/style-picker-context';
-import { Kind } from '../../../defs/style-picker.types';
+import { Kind } from '../../../defs';
 
 /**
  * Component extending the @carbon/web-components' button
@@ -29,6 +29,7 @@ class StylePicker extends LitElement {
    */
   @provide({ context: stylePickerContext })
   _stylePickerContext: StylePickerContextType = {
+    size: 'sm',
     /**
      * Set the active module index
      * @param {number} index - Index of the module to be set as active

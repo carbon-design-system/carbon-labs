@@ -8,7 +8,7 @@
  */
 
 import { createContext } from '@lit/context';
-import { Kind } from '../defs/style-picker.types';
+import { Kind } from '../defs';
 import { Size } from '../defs/style-picker-group.types';
 
 export interface StylePickerContextType {

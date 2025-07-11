@@ -11,16 +11,13 @@ import { LitElement } from 'lit';
 // @ts-ignore
 import styles from './style-picker-option.scss?inline';
 import { property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import CLABSStylePickerOption from '../style-picker-option';
-import { Size } from '../../../defs/style-picker-option.types';
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../../context/style-picker-context';
-
-const { stablePrefix: clabsPrefix } = settings;
+import { prefix } from '../../../defs';
 
 /**
  * Style picker option.
@@ -50,16 +47,9 @@ class StylePickerOption extends LitElement {
    */
   protected handleClick(triggeredBy: EventTarget | null) {
     this.selected = true;
-
-    const isGrouped = this.parentElement?.hasAttribute('grouped');
-
-    const allOptions = isGrouped
-      ? this.parentElement?.parentElement?.querySelectorAll(
-          `${clabsPrefix}-style-picker-option`
-        )
-      : this.parentElement?.querySelectorAll(
-          `${clabsPrefix}-style-picker-option`
-        );
+    
+    const section = this.closest(`${prefix}-section`);
+    const allOptions = section?.querySelectorAll(`${prefix}-option`);
 
     allOptions?.forEach((optionEl) => {
       if (optionEl?.getAttribute('value') === this.value) {
@@ -93,7 +83,7 @@ class StylePickerOption extends LitElement {
    * The name of the custom event fired after an option is changed.
    */
   static get eventOptionChange() {
-    return `${clabsPrefix}-style-picker-option-change`;
+    return `${prefix}-option-change`;
   }
 }
 

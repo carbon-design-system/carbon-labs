@@ -26,38 +26,28 @@ export const blockClass = `${clabsPrefix}--style-picker-group`;
 export const stylePickerGroupTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const {
-    // items,
-    heading,
-    size,
-    isGrouped,
-    // renderItem,
-    // selectedItem,
-    // handleOptionChange,
-    // slotIndex,
-    _stylePickerContext,
-  } = customElementClass;
+  const { heading, size, _stylePickerContext } = customElementClass;
 
   const { kind } = _stylePickerContext;
 
   /**
    * Render ungrouped items.
    */
-  const renderUngrouped = () => {
-    return html`
-      <div
-        class=${`${blockClass} ${blockClass}--${size}`}
-        role="listbox"
-        aria-label=${heading}
-        aria-orientation="horizontal"
-        tabindex="0">
-          <ul class=${`${blockClass}__items`} role="group">
-            <slot></slot>
-          </ul>
-        </div>
-      </div>
-    `;
-  };
+  // const renderUngrouped = () => {
+  //   return html`
+  //     <div
+  //       class=${`${blockClass} ${blockClass}--${size}`}
+  //       role="listbox"
+  //       aria-label=${heading}
+  //       aria-orientation="horizontal"
+  //       tabindex="0">
+  //         <ul class=${`${blockClass}__items`} role="group">
+  //           <slot></slot>
+  //         </ul>
+  //       </div>
+  //     </div>
+  //   `;
+  // };
 
   /**
    * Render grouped items.
@@ -72,7 +62,7 @@ export const stylePickerGroupTemplate = (
       <div
         class=${`cds--contained-list ${carbonPrefix}--contained-list--disclosed ${blockClass}__group`}>
         <div class=${`cds--contained-list__header`} role="presentation">
-          <slot name="group"></slot>
+          ${heading}
         </div>
         <ul class=${`${blockClass}__items`} role="group">
           <slot></slot>
@@ -84,30 +74,27 @@ export const stylePickerGroupTemplate = (
   /**
    * Render flat variant.
    */
-  const renderFlat = () => {
-    return html`
-      <div class=${`${blockClass}--flat`}>
-        <div class=${`${blockClass}__header`}>
-          <strong class=${`${blockClass}__heading`}> ${heading} </strong>
-        </div>
-        ${renderUngrouped()}
-      </div>
-    `;
-  };
+  // const renderFlat = () => {
+  //   return html`
+  //     <div class=${`${blockClass}--flat`}>
+  //       <div class=${`${blockClass}__header`}>
+  //         <strong class=${`${blockClass}__heading`}> ${heading} </strong>
+  //       </div>
+  //       <slot></slot>
+  //     </div>
+  //   `;
+  // };
 
   /**
-   * Render grouped or ungrouped items based on the `isGrouped` property.
+   * Render grouped items because we wrapped items with this components.
    */
   const renderDefault = () => {
-    if (isGrouped) {
-      return renderGrouped();
-    }
-    return renderUngrouped();
+    return renderGrouped();
   };
 
-  if (kind === 'flat') {
-    return renderFlat();
-  }
+  // if (kind === 'flat') {
+  //   return renderFlat();
+  // }
 
   if (kind === 'disclosed') {
     return html` ${renderDefault()} `;

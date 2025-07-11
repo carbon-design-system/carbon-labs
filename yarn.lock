@@ -2850,7 +2850,7 @@ __metadata:
     "@carbon/icon-helpers": "npm:10.60.0"
     "@carbon/icons": "npm:11.60.0"
     "@carbon/layout": "npm:11.32.0"
-    "@carbon/motion": "npm:11.29.0"
+    "@carbon/motion": "npm:11.30.0"
     "@carbon/pictograms": "npm:^12.53.0"
     "@carbon/styles": "npm:^1.70.0"
     "@carbon/themes": "npm:11.53.0"
@@ -3156,12 +3156,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/motion@npm:11.29.0, @carbon/motion@npm:^11.29.0":
-  version: 11.29.0
-  resolution: "@carbon/motion@npm:11.29.0"
+"@carbon/motion@npm:11.30.0, @carbon/motion@npm:^11.30.0":
+  version: 11.30.0
+  resolution: "@carbon/motion@npm:11.30.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/7e6161e782262ced1464e647b5738ec2e5a16b65c7cd3bcae73234188b2cad4f19584bcf9a830b62807f5f84802829ccda842fe00f2b36badda2f37176a19b33
+  checksum: 10c0/3dbc3b879482322ca8f19b71266b7c757e02ee6d7e4102bc1d6ac8469101685d2be02e046fbebd03346ad8a8861109a98871d34c00acc2f053f5b5e2d1d80b6a
   languageName: node
   linkType: hard
 
@@ -3183,12 +3183,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/motion@npm:^11.30.0":
-  version: 11.30.0
-  resolution: "@carbon/motion@npm:11.30.0"
+"@carbon/motion@npm:^11.29.0":
+  version: 11.29.0
+  resolution: "@carbon/motion@npm:11.29.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/3dbc3b879482322ca8f19b71266b7c757e02ee6d7e4102bc1d6ac8469101685d2be02e046fbebd03346ad8a8861109a98871d34c00acc2f053f5b5e2d1d80b6a
+  checksum: 10c0/7e6161e782262ced1464e647b5738ec2e5a16b65c7cd3bcae73234188b2cad4f19584bcf9a830b62807f5f84802829ccda842fe00f2b36badda2f37176a19b33
   languageName: node
   linkType: hard
 

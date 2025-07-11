@@ -11,11 +11,12 @@
 import { property, query, state } from 'lit/decorators.js';
 import styles from './style-picker-section.scss?inline';
 import { LitElement, PropertyValues } from 'lit';
-import { consume } from '@lit/context';
+import { consume, provide } from '@lit/context';
 import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../../context/style-picker-context';
+import { Size } from '../../../defs';
 
 /**
  * Section element.
@@ -25,7 +26,7 @@ class StylePickerSection extends LitElement {
 
   @query('cds-accordion-item') accordionItem;
 
-  @query('slot') defaultSlot;
+  // @query('slot') defaultSlot;
 
   /**
    * Consume style-picker-context
@@ -33,8 +34,30 @@ class StylePickerSection extends LitElement {
   @consume({ context: stylePickerContext, subscribe: true })
   _stylePickerContext?: StylePickerContextType;
 
+  /**
+   * Provide style-picker-context
+   */
+  @provide({ context: stylePickerContext })
+  _groupContext: StylePickerContextType = {
+    /**
+     * Set the size of the group.
+     * @description This method updates the group & option size in the context.
+     * @param {Size} _size - The size to be set for the group and options.
+     * @returns {void}
+     */
+    setSize: (_size?: Size) => {
+      this._groupContext = {
+        ...this._groupContext,
+        size: _size,
+      };
+    },
+  };
+
   @property({ type: String, reflect: true, attribute: 'heading' })
   heading = '';
+
+  @property({ type: String, reflect: true, attribute: 'size' })
+  size?: Size = 'sm';
 
   /**
    * Indicates whether the section has a group of items.
@@ -56,12 +79,17 @@ class StylePickerSection extends LitElement {
    * Lifecycle method called after the component is updated.
    * @param {object} changedProperties - Properties that have changed since the last update.
    */
-  protected updated(): void {
+  protected updated(changedProperties: PropertyValues): void {
     if (
       this._stylePickerContext?.kind === 'disclosed' &&
       !this.hasAttribute('open')
     ) {
       this.accordionItem.removeAttribute('open');
+    }
+
+    if (changedProperties.has('size')) {
+      // Update the group and options size in the context
+      this._groupContext?.setSize?.(this.size);
     }
   }
 

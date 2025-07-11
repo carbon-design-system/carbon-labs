@@ -25,9 +25,9 @@ export const blockClass = `${clabsPrefix}--style-picker-section`;
 export const stylePickerSectionTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const { heading, slotIndex, _stylePickerContext, hasGroup } =
+  const { heading, slotIndex, size, _stylePickerContext, hasGroup } =
     customElementClass;
-  const { kind, size, setActiveSection } = _stylePickerContext;
+  const { kind, setActiveSection } = _stylePickerContext;
 
   /**
    * Renders the default slot content.

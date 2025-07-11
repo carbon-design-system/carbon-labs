@@ -324,12 +324,10 @@ export const Pictogram = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Pictogram list</span>
             </cds-icon-button>
-            <clabs-style-picker-section>
+            <clabs-style-picker-section size="lg">
               ${pictograms.map(
                 (group) =>
-                  html`<clabs-style-picker-group
-                    size="lg"
-                    heading=${group.label}>
+                  html`<clabs-style-picker-group heading=${group.label}>
                     ${group.items.map(
                       (item) => html`
                         <clabs-style-picker-option

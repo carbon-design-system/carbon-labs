@@ -34,24 +34,24 @@ class StylePickerGroup<T> extends LitElement {
   @consume({ context: stylePickerContext, subscribe: true })
   _stylePickerContext?: StylePickerContextType;
 
-  /**
-   * Provide style-picker-context
-   */
-  @provide({ context: stylePickerContext })
-  _groupContext: StylePickerContextType = {
-    /**
-     * Set the size of the group.
-     * @description This method updates the group & option size in the context.
-     * @param {Size} _size - The size to be set for the group and options.
-     * @returns {void}
-     */
-    setSize: (_size?: Size) => {
-      this._groupContext = {
-        ...this._groupContext,
-        size: _size,
-      };
-    },
-  };
+  // /**
+  //  * Provide style-picker-context
+  //  */
+  // @provide({ context: stylePickerContext })
+  // _groupContext: StylePickerContextType = {
+  //   /**
+  //    * Set the size of the group.
+  //    * @description This method updates the group & option size in the context.
+  //    * @param {Size} _size - The size to be set for the group and options.
+  //    * @returns {void}
+  //    */
+  //   setSize: (_size?: Size) => {
+  //     this._groupContext = {
+  //       ...this._groupContext,
+  //       size: _size,
+  //     };
+  //   },
+  // };
 
   @property({ type: Array })
   items: Item<T>[] | Group<Item<T>>[] = [];
@@ -62,8 +62,8 @@ class StylePickerGroup<T> extends LitElement {
   @property({ type: String, reflect: true, attribute: 'heading' })
   heading = '';
 
-  @property({ type: String, reflect: true, attribute: 'size' })
-  size?: Size = 'sm';
+  // @property({ type: String, reflect: true, attribute: 'size' })
+  // size?: Size = 'sm';
 
   @property({ attribute: false })
   renderItem?: (item: Item<T>) => TemplateResult;
@@ -72,12 +72,12 @@ class StylePickerGroup<T> extends LitElement {
    * Lifecycle method called after the component is updated.
    * @param {object} changedProperties - Properties that have changed since the last update.
    */
-  protected updated(changedProperties) {
-    if (changedProperties.has('size')) {
-      // Update the group and options size in the context
-      this._groupContext?.setSize?.(this.size);
-    }
-  }
+  // protected updated(changedProperties) {
+  //   if (changedProperties.has('size')) {
+  //     // Update the group and options size in the context
+  //     this._groupContext?.setSize?.(this.size);
+  //   }
+  // }
 }
 
 export default StylePickerGroup;

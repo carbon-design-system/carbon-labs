@@ -26,9 +26,9 @@ export const blockClass = `${clabsPrefix}--style-picker-group`;
 export const stylePickerGroupTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const { heading, size, _stylePickerContext } = customElementClass;
+  const { heading, _stylePickerContext } = customElementClass;
 
-  const { kind } = _stylePickerContext;
+  const { size, kind } = _stylePickerContext;
 
   /**
    * Render ungrouped items.

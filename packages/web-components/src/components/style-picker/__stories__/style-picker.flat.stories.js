@@ -19,7 +19,6 @@ import '@carbon/web-components/es/components/layer/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/tile/index.js';
 import '@carbon/web-components/es/components/link/index.js';
-import { POPOVER_ALIGNMENT } from '@carbon/web-components/es/components/popover/defs.js';
 import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js';
 
 // Carbon labs
@@ -27,6 +26,7 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 // StylePicker
 import '../index';
+import { STYLE_PICKER_ALIGNMENT } from '../defs';
 import { renderCarbonPictogram } from '../utilities/renderCarbonPictogram';
 import { colors, icons, pictograms } from './_placeholders';
 import { alignOptions } from './_story.defs';
@@ -183,7 +183,7 @@ export const ColorAndIcon = {
   args: {
     heading: 'Choose color and icon',
     open: true,
-    align: POPOVER_ALIGNMENT.LEFT_TOP,
+    align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
     kind: 'flat',
   },
   argTypes,
@@ -276,7 +276,7 @@ export const ColorAndPictogram = {
   args: {
     heading: 'Select color and pictogram',
     open: true,
-    align: POPOVER_ALIGNMENT.LEFT_TOP,
+    align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
     kind: 'flat',
   },
   argTypes,
@@ -304,8 +304,8 @@ export const ColorAndPictogram = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Pictogram list</span>
             </cds-icon-button>
-            <clabs-style-picker-modules slot="modules">
-              <clabs-style-picker-module heading="Colors">
+            <clabs-style-picker-sections>
+              <clabs-style-picker-section heading="Colors">
                 ${colors[0].items.map(
                   (item) => html`
                     <clabs-style-picker-option
@@ -320,8 +320,8 @@ export const ColorAndPictogram = {
                     </clabs-style-picker-option>
                   `
                 )}
-              </clabs-style-picker-module>
-              <clabs-style-picker-module heading="Pictograms" size="lg">
+              </clabs-style-picker-section>
+              <clabs-style-picker-section heading="Pictograms" size="lg">
                 ${pictograms[0].items.map(
                   (item) => html`
                     <clabs-style-picker-option
@@ -342,8 +342,8 @@ export const ColorAndPictogram = {
                     </clabs-style-picker-option>
                   `
                 )}
-              </clabs-style-picker-module>
-            </clabs-style-picker-modules>
+              </clabs-style-picker-section>
+            </clabs-style-picker-section>
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}

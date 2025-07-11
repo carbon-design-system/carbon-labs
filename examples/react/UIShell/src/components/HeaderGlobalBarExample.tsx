@@ -1,3 +1,12 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import {
   HeaderDivider,
   HeaderPopover,
@@ -36,19 +45,18 @@ export const HeaderGlobalBarExample = () => {
   return (
     <HeaderGlobalBar>
       <ExpandableSearch
-        size='lg'
-        labelText='Search'
-        closeButtonLabelText='Clear search input'
-        id='search-expandable-1'
+        size="lg"
+        labelText="Search"
+        closeButtonLabelText="Clear search input"
+        id="search-expandable-1"
       />
       <HeaderGlobalAction
-        aria-label='Custom action'
-        tooltipHighContrast={false}
-      >
+        aria-label="Custom action"
+        tooltipHighContrast={false}>
         <SquareOutline size={20} />
       </HeaderGlobalAction>
-      <HeaderPopover align='bottom-end'>
-        <HeaderPopoverButton align='bottom' label='Help'>
+      <HeaderPopover align="bottom-end">
+        <HeaderPopoverButton align="bottom" label="Help">
           <Help size={20} />
         </HeaderPopoverButton>
         <HeaderPopoverContent>
@@ -57,13 +65,13 @@ export const HeaderGlobalBarExample = () => {
             do eiusmod tempor incididunt ut fsil labore et dolore magna aliqua.
           </p>
           <HeaderPopoverActions>
-            <Link href='#'>Link action</Link>
-            <Button size='sm'>Button</Button>
+            <Link href="#">Link action</Link>
+            <Button size="sm">Button</Button>
           </HeaderPopoverActions>
         </HeaderPopoverContent>
       </HeaderPopover>
-      <HeaderPopover align='bottom-end'>
-        <HeaderPopoverButton align='bottom' label='Notifications'>
+      <HeaderPopover align="bottom-end">
+        <HeaderPopoverButton align="bottom" label="Notifications">
           <Notification size={20} />
         </HeaderPopoverButton>
         <HeaderPopoverContent>
@@ -72,19 +80,18 @@ export const HeaderGlobalBarExample = () => {
             do eiusmod tempor incididunt ut fsil labore et dolore magna aliqua.
           </p>
           <HeaderPopoverActions>
-            <Link href='#'>Link action</Link>
-            <Button size='sm'>Button</Button>
+            <Link href="#">Link action</Link>
+            <Button size="sm">Button</Button>
           </HeaderPopoverActions>
         </HeaderPopoverContent>
       </HeaderPopover>
       <HeaderDivider />
       <MenuButton
         menuTarget={headerRef.current}
-        kind='ghost'
-        label={selectedCategory || 'Select Category'}
-      >
+        kind="ghost"
+        label={selectedCategory || 'Select Category'}>
         <MenuItemRadioGroup
-          label='Category'
+          label="Category"
           items={Object.keys(options)}
           selectedItem={selectedCategory || null}
           onChange={(newCategory) => {
@@ -95,20 +102,19 @@ export const HeaderGlobalBarExample = () => {
       </MenuButton>
       <MenuButton
         menuTarget={headerRef.current}
-        kind='ghost'
+        kind="ghost"
         label={selectedItem || 'Select Item'}
-        disabled={!selectedCategory}
-      >
+        disabled={!selectedCategory}>
         <MenuItemRadioGroup
-          label='Items'
+          label="Items"
           items={selectedCategory ? options[selectedCategory] : []}
           selectedItem={selectedItem || null}
           onChange={(newItem) => setSelectedItem(newItem)}
         />
       </MenuButton>
       <HeaderDivider />
-      <HeaderPopover align='bottom-end'>
-        <HeaderPopoverButton align='bottom' label='Profile'>
+      <HeaderPopover align="bottom-end">
+        <HeaderPopoverButton align="bottom" label="Profile">
           <UserAvatar size={20} />
         </HeaderPopoverButton>
         <HeaderPopoverContent>
@@ -117,8 +123,8 @@ export const HeaderGlobalBarExample = () => {
             do eiusmod tempor incididunt ut fsil labore et dolore magna aliqua.
           </p>
           <HeaderPopoverActions>
-            <Link href='#'>Link action</Link>
-            <Button size='sm'>Button</Button>
+            <Link href="#">Link action</Link>
+            <Button size="sm">Button</Button>
           </HeaderPopoverActions>
         </HeaderPopoverContent>
       </HeaderPopover>

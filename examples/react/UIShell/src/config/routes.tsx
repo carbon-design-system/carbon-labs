@@ -29,6 +29,9 @@ import {
   DocumentMultiple_01,
   Settings,
   OverflowMenuVertical,
+  Bee,
+  Box,
+  BoxPlot,
 } from '@carbon/icons-react';
 import { NotFound } from '../pages/NotFound';
 import { DropdownExample } from '../components/DropdownExample';
@@ -42,6 +45,9 @@ export type carbonRouteType = {
   subMenu?: routesType[];
   inSubMenu?: boolean;
   slot?: () => JSX.Element;
+
+  // platform level
+  product?: { defaultExpanded?: boolean };
 };
 
 export type routesType = {
@@ -67,7 +73,16 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: 'slot-1',
+    path: '/product-1',
+    carbon: {
+      label: 'Product 1',
+      inSideNav: true,
+      icon: Bee,
+      product: { defaultExpanded: true },
+    },
+  },
+  {
+    path: '/product-1/slot-1',
     carbon: {
       label: '',
       inSideNav: true,
@@ -77,7 +92,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/home',
+    path: '/product-1/home',
     carbon: {
       label: 'Home',
       inSideNav: true,
@@ -87,7 +102,7 @@ export const routes: routesType[] = [
   },
   {
     // flat so processed correctly by react router - declare after parent
-    path: '/home/sub-menu-1',
+    path: '/product-1/home/sub-menu-1',
     element: Placeholder,
     carbon: {
       label: 'Sub menu 1',
@@ -95,7 +110,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/home/sub-menu-2',
+    path: '/product-1/home/sub-menu-2',
     element: Placeholder,
     carbon: {
       label: 'Sub menu 2',
@@ -103,7 +118,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/home/sub-menu-3',
+    path: '/product-1/home/sub-menu-3',
     element: Placeholder,
     carbon: {
       label: 'Sub menu 3',
@@ -111,7 +126,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/business',
+    path: '/product-1/business',
     element: Placeholder,
     carbon: {
       label: 'Business',
@@ -120,7 +135,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/applications',
+    path: '/product-1/applications',
     element: Placeholder,
     carbon: {
       label: 'Applications',
@@ -129,7 +144,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/platforms',
+    path: '/product-1/platforms',
     element: Placeholder,
     carbon: {
       label: 'Platforms',
@@ -138,7 +153,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/infrastructure',
+    path: '/product-1/infrastructure',
     element: Placeholder,
     carbon: {
       label: 'Infrastructure',
@@ -148,7 +163,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/dashboard',
+    path: '/product-1/dashboard',
     element: Placeholder,
     carbon: {
       label: 'Dashboard',
@@ -157,7 +172,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/analytics',
+    path: '/product-1/analytics',
     element: Placeholder,
     carbon: {
       label: 'Analytics',
@@ -166,7 +181,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/incidents',
+    path: '/product-1/incidents',
     element: Placeholder,
     carbon: {
       label: 'Incidents',
@@ -175,7 +190,7 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/security',
+    path: '/product-1/security',
     element: Placeholder,
     carbon: {
       label: 'Security',
@@ -184,13 +199,94 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/automations',
+    path: '/product-1/automations',
     element: Placeholder,
     carbon: {
       label: 'Automations',
       inSideNav: true,
       icon: WorkflowAutomation,
       separator: true,
+    },
+  },
+  {
+    path: '/product-1/docs',
+    element: Placeholder,
+    carbon: {
+      label: 'Docs',
+      inSideNav: true,
+      icon: DocumentMultiple_01,
+    },
+  },
+  {
+    path: '/product-1/settings',
+    element: Placeholder,
+    carbon: {
+      label: 'Settings',
+      inSideNav: true,
+      icon: Settings,
+    },
+  },
+  {
+    path: '/product-1/more',
+    element: Placeholder,
+    carbon: {
+      label: 'More',
+      inSideNav: true,
+      icon: OverflowMenuVertical,
+    },
+  },
+  {
+    path: '/product-2',
+    carbon: {
+      label: 'Product 2',
+      inSideNav: true,
+      icon: Application,
+      product: {},
+    },
+  },
+  {
+    path: '/product-2/home',
+    element: Placeholder,
+    carbon: {
+      label: 'Home product 2',
+      inSideNav: true,
+      icon: Home,
+    },
+  },
+  {
+    path: '/product-3',
+    carbon: {
+      label: 'Product 3',
+      inSideNav: true,
+      icon: Box,
+      product: {},
+    },
+  },
+  {
+    path: '/product-3/home',
+    element: Placeholder,
+    carbon: {
+      label: 'Home product 3',
+      inSideNav: true,
+      icon: Home,
+    },
+  },
+  {
+    path: '/product-4',
+    carbon: {
+      label: 'Product 4',
+      inSideNav: true,
+      icon: BoxPlot,
+      product: {},
+    },
+  },
+  {
+    path: '/product-4/home',
+    element: Placeholder,
+    carbon: {
+      label: 'Home product 4',
+      inSideNav: true,
+      icon: Home,
     },
   },
   {
@@ -212,15 +308,6 @@ export const routes: routesType[] = [
     },
   },
   {
-    path: '/more',
-    element: Placeholder,
-    carbon: {
-      label: 'More',
-      inSideNav: true,
-      icon: OverflowMenuVertical,
-    },
-  },
-  {
     path: '*',
     element: NotFound,
   },
@@ -235,7 +322,7 @@ const routesProcessed = routes.map((route) => {
   }
 
   const subMenu = routes.filter(
-    (subRoute) => !route.index && subRoute.path.startsWith(`${route.path}/`)
+    (subRoute) => !route.index && subRoute.path.startsWith(`${route.path}/`),
   );
 
   if (subMenu && subMenu.length > 0) {
@@ -255,8 +342,8 @@ const routesProcessed = routes.map((route) => {
 });
 
 export const routesInHeader = routesProcessed.filter(
-  (route) => route?.carbon?.inHeader && !route?.carbon?.inSubMenu
+  (route) => route?.carbon?.inHeader && !route?.carbon?.inSubMenu,
 );
 export const routesInSideNav = routesProcessed.filter(
-  (route) => route?.carbon?.inSideNav && !route?.carbon?.inSubMenu
+  (route) => route?.carbon?.inSideNav && !route?.carbon?.inSubMenu,
 );

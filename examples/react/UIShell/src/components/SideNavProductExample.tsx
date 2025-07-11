@@ -1,3 +1,12 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import { SideNavSlot, SideNavLink } from '@carbon-labs/react-ui-shell';
 import { SideNavDivider } from '@carbon/react';
 import { Link, useLocation } from 'react-router';
@@ -19,7 +28,7 @@ export const SideNavProductExample = ({
         const { path, carbon } = route;
 
         return carbon?.subMenu ? (
-          <SideNavSubMenuExample path={path} carbon={carbon} />
+          <SideNavSubMenuExample path={path} carbon={carbon} key={path} />
         ) : (
           <div key={path}>
             {carbon?.slot ? (

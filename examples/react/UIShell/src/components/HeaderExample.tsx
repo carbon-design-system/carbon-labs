@@ -27,6 +27,8 @@ import {
   Button,
   SideNavDivider,
   SideNavLink,
+  HeaderNavigation,
+  HeaderMenuItem,
 } from '@carbon/react';
 import {
   // Fade,
@@ -41,12 +43,29 @@ import {
   // Menu,
 } from '@carbon/icons-react';
 
-import { Link as RouterLink } from 'react-router';
+import { Link as RouterLink, useLocation } from 'react-router';
 import { HeaderGlobalBarExample } from './HeaderGlobalBarExample';
 import { SideNavProductExample } from './SideNavProductExample';
 import { routesInSideNav } from '../config/routes';
+import { HeaderNavigationExample } from './HeaderNavigationExample';
+import { useEffect, useMemo, useState } from 'react';
 
 export const HeaderExample = ({ children }) => {
+  const location = useLocation();
+  const [productPath, setProductPath] = useState('/product-1');
+
+  useEffect(() => {
+    const productPathMaybe = location.pathname.split('/')[1];
+    if (productPathMaybe.startsWith('product')) {
+      setProductPath(`/${productPathMaybe}`);
+    }
+  }, [location.pathname]);
+
+  const currentProductSubMenu = routesInSideNav.find(({ path }) => {
+    // a better mechanism to switch product would be useful
+    return path.startsWith(productPath);
+  });
+
   return (
     <HeaderContainer
       render={({ isSideNavExpanded, onClickSideNavExpand }) => (
@@ -87,6 +106,8 @@ export const HeaderExample = ({ children }) => {
               </HeaderPopoverContent>
             </HeaderPopover>
 
+            <HeaderNavigationExample />
+
             <HeaderGlobalBarExample />
           </Header>
 
@@ -101,51 +122,26 @@ export const HeaderExample = ({ children }) => {
             className='nav--global'
           >
             <SideNavItems>
-              <SideNavMenu
-                renderIcon={SquareOutline}
-                title='Product 1'
-                primary
-                defaultExpanded
-              >
-                <SideNavProductExample routesInSideNav={routesInSideNav} />
-              </SideNavMenu>
-              <SideNavMenu title='Product 2' primary>
-                <SideNavMenuItem
-                  renderIcon={Home}
-                  href='http://www.carbondesignsystem.com'
-                >
-                  Home product 2
-                </SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu title='Product 3' primary>
-                <SideNavMenuItem
-                  renderIcon={Home}
-                  href='http://www.carbondesignsystem.com'
-                >
-                  Home product 3
-                </SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavMenu title='Product 4' primary>
-                <SideNavMenuItem
-                  renderIcon={Home}
-                  href='http://www.carbondesignsystem.com'
-                >
-                  Home product 4
-                </SideNavMenuItem>
-              </SideNavMenu>
-              <SideNavDivider />
-              <SideNavLink
-                renderIcon={DocumentMultiple_01}
-                href='http://www.carbondesignsystem.com'
-              >
-                Docs
-              </SideNavLink>
-              <SideNavLink
-                renderIcon={Settings}
-                href='http://www.carbondesignsystem.com'
-              >
-                Settings
-              </SideNavLink>
+              {routesInSideNav.map(({ path, carbon }) =>
+                carbon?.subMenu ? (
+                  <SideNavMenu
+                    renderIcon={carbon?.icon}
+                    title={carbon?.label!}
+                    primary
+                    defaultExpanded={carbon?.product?.defaultExpanded}
+                  >
+                    <SideNavProductExample routesInSideNav={carbon?.subMenu!} />
+                  </SideNavMenu>
+                ) : (
+                  <SideNavLink
+                    renderIcon={carbon?.icon}
+                    as={RouterLink}
+                    to={path}
+                  >
+                    {carbon?.label!}
+                  </SideNavLink>
+                ),
+              )}
             </SideNavItems>
           </SideNav>
 
@@ -157,7 +153,9 @@ export const HeaderExample = ({ children }) => {
             aria-label='Side navigation'
           >
             <SideNavItems>
-              <SideNavProductExample routesInSideNav={routesInSideNav} />
+              <SideNavProductExample
+                routesInSideNav={currentProductSubMenu?.carbon?.subMenu!}
+              />
             </SideNavItems>
           </SideNav>
           {children}

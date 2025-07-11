@@ -471,26 +471,16 @@ export const Demo = () => {
                   </SideNavSlot>
                   <SideNavDivider />
                   <SideNavMenu renderIcon={Home} title="Home" defaultExpanded>
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                    <SideNavMenuItem isActive href="#">
                       Item level 3
                     </SideNavMenuItem>
-                    <SideNavMenuItem
-                      isActive
-                      href="http://www.carbondesignsystem.com">
-                      Item level 3
-                    </SideNavMenuItem>
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Item level 3
-                    </SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={BusinessProcesses}>
+                  <SideNavLink href="#" renderIcon={BusinessProcesses}>
                     Business
                   </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={Application}>
+                  <SideNavLink href="#" renderIcon={Application}>
                     Applications
                   </SideNavLink>
                   <SideNavLink
@@ -616,26 +606,16 @@ export const Demo = () => {
                   </SideNavSlot>
                   <SideNavDivider />
                   <SideNavMenu renderIcon={Home} title="Home">
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                    <SideNavMenuItem isActive href="#">
                       Item level 3
                     </SideNavMenuItem>
-                    <SideNavMenuItem
-                      isActive
-                      href="http://www.carbondesignsystem.com">
-                      Item level 3
-                    </SideNavMenuItem>
-                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
-                      Item level 3
-                    </SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={BusinessProcesses}>
+                  <SideNavLink href="#" renderIcon={BusinessProcesses}>
                     Business
                   </SideNavLink>
-                  <SideNavLink
-                    href="http://www.carbondesignsystem.com"
-                    renderIcon={Application}>
+                  <SideNavLink href="#" renderIcon={Application}>
                     Applications
                   </SideNavLink>
                   <SideNavLink

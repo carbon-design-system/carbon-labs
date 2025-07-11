@@ -1,5 +1,5 @@
 {
-  "name": "@carbon-labs/firstTimeOrientation",
+  "name": "@carbon-labs/react-first-time-orientation",
   "version": "0.6.0",
   "publishConfig": {
     "access": "public",

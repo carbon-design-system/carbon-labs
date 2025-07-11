@@ -18,7 +18,7 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build": "cem analyze --config ./custom-elements-manifest.config.js",
+    "build": "lerna run build --scope '@carbon-labs/wc-*' --scope '@carbon-labs/ai-chat' --include-dependencies && cem analyze --config ./custom-elements-manifest.config.js",
     "clean": "rimraf es lib storybook-static",
     "storybook": "storybook dev -p 6007",
     "generate": "node tasks/generate",
@@ -64,6 +64,7 @@
     "commander": "^13.0.0",
     "cssnano": "^7.0.0",
     "gitignore-to-glob": "^0.3.0",
+    "lerna": "^8.2.3",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

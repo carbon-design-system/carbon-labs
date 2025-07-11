@@ -1,4 +1,4 @@
-# @carbon-labs/ai-tag
+# @carbon-labs/wc-ai-tag
 
 ## 📝 License
 

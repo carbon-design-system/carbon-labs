@@ -1,4 +1,4 @@
-# @carbon-labs/ai-feedback
+# @carbon-labs/wc-ai-feedback
 
 ## 📝 License
 

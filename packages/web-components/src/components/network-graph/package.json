@@ -1,5 +1,5 @@
 {
-  "name": "@carbon-labs/network-graph",
+  "name": "@carbon-labs/wc-network-graph",
   "version": "0.15.0",
   "private": true,
   "publishConfig": {

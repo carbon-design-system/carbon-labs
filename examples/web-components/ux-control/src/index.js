@@ -7,4 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '@carbon-labs/ai-ux-control/es/index.js';
+import '@carbon-labs/wc-ai-ux-control/es/index.js';

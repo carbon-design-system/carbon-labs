@@ -52,7 +52,7 @@ export const stylePickerGroupTemplate = (
   /**
    * Render grouped items.
    */
-  const renderGrouped = () => {
+  const renderDefault = () => {
     return html`<div
       class=${`${blockClass} ${blockClass}--${size}`}
       role="listbox"
@@ -85,20 +85,20 @@ export const stylePickerGroupTemplate = (
   //   `;
   // };
 
-  /**
-   * Render grouped items because we wrapped items with this components.
-   */
-  const renderDefault = () => {
-    return renderGrouped();
-  };
+  // /**
+  //  * Render grouped items because we wrapped items with this components.
+  //  */
+  // const renderDefault = () => {
+  //   return renderGrouped();
+  // };
 
-  // if (kind === 'flat') {
-  //   return renderFlat();
+  // // if (kind === 'flat') {
+  // //   return renderFlat();
+  // // }
+
+  // if (kind === 'disclosed') {
+  //   return html` ${renderDefault()} `;
   // }
-
-  if (kind === 'disclosed') {
-    return html` ${renderDefault()} `;
-  }
 
   return renderDefault();
 };

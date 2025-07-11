@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { consume, provide } from '@lit/context';
+import { consume } from '@lit/context';
 import { CSSResultGroup, LitElement, TemplateResult } from 'lit';
 import {
   stylePickerContext,
@@ -16,14 +16,14 @@ import {
 // @ts-ignore
 import styles from './style-picker-group.scss?inline';
 import { property } from 'lit/decorators.js';
-import { Group, Item, Size } from '../../../defs';
+// import { Group, Item } from '../../../defs';
 
 /**
  * Group element.
  *
  * @fires clabs-style-picker-group-option-change - fired when an option is selected/changed.
  */
-class StylePickerGroup<T> extends LitElement {
+class StylePickerGroup extends LitElement {
   static styles: CSSResultGroup = [styles];
 
   // @query('cds-accordion-item') accordionItem;
@@ -53,11 +53,11 @@ class StylePickerGroup<T> extends LitElement {
   //   },
   // };
 
-  @property({ type: Array })
-  items: Item<T>[] | Group<Item<T>>[] = [];
+  // @property({ type: Array })
+  // items: Item<T>[] | Group<Item<T>>[] = [];
 
-  @property({ type: String, reflect: true, attribute: 'selected-item' })
-  selectedItem = '';
+  // @property({ type: String, reflect: true, attribute: 'selected-item' })
+  // selectedItem = '';
 
   @property({ type: String, reflect: true, attribute: 'heading' })
   heading = '';
@@ -65,19 +65,19 @@ class StylePickerGroup<T> extends LitElement {
   // @property({ type: String, reflect: true, attribute: 'size' })
   // size?: Size = 'sm';
 
-  @property({ attribute: false })
-  renderItem?: (item: Item<T>) => TemplateResult;
+  // @property({ attribute: false })
+  // renderItem?: (item: Item<T>) => TemplateResult;
 
-  /**
-   * Lifecycle method called after the component is updated.
-   * @param {object} changedProperties - Properties that have changed since the last update.
-   */
-  // protected updated(changedProperties) {
-  //   if (changedProperties.has('size')) {
-  //     // Update the group and options size in the context
-  //     this._groupContext?.setSize?.(this.size);
-  //   }
-  // }
+  // /**
+  //  * Lifecycle method called after the component is updated.
+  //  * @param {object} changedProperties - Properties that have changed since the last update.
+  //  */
+  // // protected updated(changedProperties) {
+  // //   if (changedProperties.has('size')) {
+  // //     // Update the group and options size in the context
+  // //     this._groupContext?.setSize?.(this.size);
+  // //   }
+  // // }
 }
 
 export default StylePickerGroup;

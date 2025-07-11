@@ -26,7 +26,7 @@ const { stablePrefix: clabsPrefix } = settings;
  * @elements clabs-style-picker-group
  */
 @customElement(`${clabsPrefix}-style-picker-group`)
-class CLABSStylePickerGroup<T> extends StylePickerGroup<T> {
+class CLABSStylePickerGroup extends StylePickerGroup {
   @consume({ context: stylePickerContext, subscribe: true })
   stylePickerContext?: StylePickerContextType;
 

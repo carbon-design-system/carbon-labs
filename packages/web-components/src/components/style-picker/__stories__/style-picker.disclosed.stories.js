@@ -19,7 +19,6 @@ import '@carbon/web-components/es/components/layer/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/tile/index.js';
 import '@carbon/web-components/es/components/link/index.js';
-import { POPOVER_ALIGNMENT } from '@carbon/web-components/es/components/popover/defs.js';
 import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js';
 
 // Carbon labs
@@ -27,6 +26,7 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 // StylePicker
 import '../index';
+import { STYLE_PICKER_ALIGNMENT } from '../defs';
 import { renderCarbonPictogram } from '../utilities/renderCarbonPictogram';
 import { colors, icons, pictograms } from './_placeholders';
 import { alignOptions } from './_story.defs';
@@ -89,24 +89,8 @@ const toggleButton = () => {
  */
 const changeColor = (ev) => {
   const selectedColor = ev.detail.value;
-  // const colorModuleEl = ev.target.parentElement?.parentElement;
-  // const allOptionsEl = colorModuleEl.querySelectorAll(
-  //   `${clabsPrefix}-style-picker-option`
-  // );
-
-  // allOptionsEl.forEach((optionEl) => {
-  //   if (optionEl.value === selectedColor) {
-  //     optionEl.setAttribute('selected', '');
-  //   } else {
-  //     optionEl.removeAttribute('selected');
-  //   }
-  // });
-
   const tileEl = document.querySelector(`${carbonPrefix}-tile`);
   tileEl.style.borderColor = `${selectedColor}`;
-
-  // const colorModuleEl = ev.target;
-  // colorModuleEl.setAttribute('selected-item', color.value);
 };
 
 /**
@@ -164,7 +148,7 @@ export const ColorAndIcon = {
   args: {
     heading: 'Choose color and icon',
     open: true,
-    align: POPOVER_ALIGNMENT.LEFT_TOP,
+    align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
     kind: 'disclosed',
   },
   argTypes,
@@ -214,7 +198,6 @@ export const ColorAndIcon = {
                 ${colors.map(
                   (group) =>
                     html`<clabs-style-picker-group heading=${group.label}>
-                      <div slot="group">${group.label}</div>
                       ${group.items.map(
                         (item) => html`
                           <clabs-style-picker-option
@@ -259,11 +242,11 @@ export const ColorAndIcon = {
     `,
 };
 
-export const ThreeModules = {
+export const IconColorPictogram = {
   args: {
-    heading: 'Select color and icon',
+    heading: 'Select color and icons',
     open: true,
-    align: POPOVER_ALIGNMENT.LEFT_TOP,
+    align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
     kind: 'disclosed',
   },
   argTypes,
@@ -291,33 +274,28 @@ export const ThreeModules = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Pictogram list</span>
             </cds-icon-button>
-            <clabs-style-picker-modules slot="modules">
-              <clabs-style-picker-disclosed heading="Icons">
-                <clabs-style-picker-module heading="Icons">
-                  ${icons.map(
-                    (item) =>
-                      html`
-                        <clabs-style-picker-option
-                          value=${item.value}
-                          label=${item.label}
-                          ?selected=${item.value === 'apple'}
-                          @clabs-style-picker-option-change=${(ev) =>
-                            changeIcon(ev)}>
-                          <clabs-style-picker-icon>
-                            ${item.renderIcon()}
-                          </clabs-style-picker-icon>
-                        </clabs-style-picker-option>
-                      `
-                  )}
-                </clabs-style-picker-module>
-              </clabs-style-picker-disclosed>
-              <clabs-style-picker-disclosed heading="Colors">
+            <clabs-style-picker-sections>
+              <clabs-style-picker-section heading="Icons">
+                ${icons.map(
+                  (item) =>
+                    html`
+                      <clabs-style-picker-option
+                        value=${item.value}
+                        label=${item.label}
+                        ?selected=${item.value === 'apple'}
+                        @clabs-style-picker-option-change=${(ev) =>
+                          changeIcon(ev)}>
+                        <clabs-style-picker-icon>
+                          ${item.renderIcon()}
+                        </clabs-style-picker-icon>
+                      </clabs-style-picker-option>
+                    `
+                )}
+              </clabs-style-picker-section>
+              <clabs-style-picker-section heading="Colors">
                 ${colors.map(
                   (group) =>
-                    html`<clabs-style-picker-module
-                      grouped
-                      heading=${group.label}>
-                      <div slot="group">${group.label}</div>
+                    html`<clabs-style-picker-group heading=${group.label}>
                       ${group.items.map(
                         (item) => html`
                           <clabs-style-picker-option
@@ -332,14 +310,13 @@ export const ThreeModules = {
                           </clabs-style-picker-option>
                         `
                       )}
-                    </clabs-style-picker-module> `
+                    </clabs-style-picker-group> `
                 )}
-              </clabs-style-picker-disclosed>
-              <clabs-style-picker-disclosed heading="Pictograms">
+              </clabs-style-picker-section>
+              <clabs-style-picker-section heading="Pictograms" size="lg">
                 ${pictograms.map(
                   (group) =>
-                    html`<clabs-style-picker-module size="lg" grouped>
-                      <div slot="group">${group.label}</div>
+                    html`<clabs-style-picker-group heading=${group.label}>
                       ${group.items.map(
                         (item) => html`
                           <clabs-style-picker-option
@@ -360,10 +337,10 @@ export const ThreeModules = {
                           </clabs-style-picker-option>
                         `
                       )}
-                    </clabs-style-picker-module> `
+                    </clabs-style-picker-group> `
                 )}
-              </clabs-style-picker-disclosed>
-            </clabs-style-picker-modules>
+              </clabs-style-picker-section>
+            </clabs-style-picker-sections>
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}

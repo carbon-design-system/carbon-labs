@@ -12,17 +12,10 @@ import styles from './style-picker-icon.scss?inline';
 import { LitElement } from 'lit';
 
 /**
- * Icon picker element.
+ * Icon picker option element extending LitElement.
  */
 class StylePickerIcon extends LitElement {
   static styles = styles;
-
-  /**
-   * Return the slot index from the custom attribute set in the parent module
-   */
-  get moduleIndex() {
-    return this.getAttribute('data-slot-index');
-  }
 }
 
 export default StylePickerIcon;

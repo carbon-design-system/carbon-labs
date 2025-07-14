@@ -8,18 +8,16 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { stylePickerColorTemplate } from './src/style-picker-color.template.js';
 import StylePickerColor from './src/style-picker-color.js';
-
-const { stablePrefix: clabsPrefix } = settings;
+import { prefix } from '../../defs/index.js';
 
 /**
- * Color element
+ * Color picker option component extending the StylePickerColor base class.
  *
- * @element clabs-style-picker-color-module
+ * @element clabs-style-picker-color
  */
-@customElement(`${clabsPrefix}-style-picker-color`)
+@customElement(`${prefix}-color`)
 class CLABSStylePickerColor extends StylePickerColor {
   /**
    * Renders the template while passing in class functionality

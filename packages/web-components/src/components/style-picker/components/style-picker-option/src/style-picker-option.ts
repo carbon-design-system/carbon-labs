@@ -20,7 +20,7 @@ import {
 import { prefix } from '../../../defs';
 
 /**
- * Style picker option.
+ * style-picker-option extends LitElement.
  *
  * @fires clabs-style-picker-option-change - fired when an option is selected/changed.
  */
@@ -47,7 +47,7 @@ class StylePickerOption extends LitElement {
    */
   protected handleClick(triggeredBy: EventTarget | null) {
     this.selected = true;
-    
+
     const section = this.closest(`${prefix}-section`);
     const allOptions = section?.querySelectorAll(`${prefix}-option`);
 

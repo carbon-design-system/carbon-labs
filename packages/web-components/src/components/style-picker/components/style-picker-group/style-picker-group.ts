@@ -8,7 +8,6 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { stylePickerGroupTemplate } from './src/style-picker-group.template';
 import { consume } from '@lit/context';
 import {
@@ -17,15 +16,14 @@ import {
 } from '../../context/style-picker-context.js';
 import StylePickerGroup from './src/style-picker-group';
 import { TemplateResult } from 'lit';
-
-const { stablePrefix: clabsPrefix } = settings;
+import { prefix } from '../../defs';
 
 /**
- * To group each style picker options.
+ * StylePickerGroup component class extending the StylePickerGroup base class.
  *
  * @elements clabs-style-picker-group
  */
-@customElement(`${clabsPrefix}-style-picker-group`)
+@customElement(`${prefix}-group`)
 class CLABSStylePickerGroup extends StylePickerGroup {
   @consume({ context: stylePickerContext, subscribe: true })
   stylePickerContext?: StylePickerContextType;

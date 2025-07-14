@@ -11,11 +11,3 @@ $css--plex: true !default;
 @use '@carbon/react/scss/theme';
 
 $block-class: #{$clabs-prefix}--style-picker-icon;
-
-::part(#{$block-class}__item) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  block-size: 100%;
-  inline-size: 100%;
-}

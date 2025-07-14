@@ -8,7 +8,6 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { stylePickerOptionTemplate } from './src/style-picker-option.template.js';
 import { consume } from '@lit/context';
 import {
@@ -16,15 +15,14 @@ import {
   StylePickerContextType,
 } from '../../context/style-picker-context.js';
 import StylePickerOption from './src/style-picker-option.js';
-
-const { stablePrefix: clabsPrefix } = settings;
+import { prefix } from '../../defs/index.js';
 
 /**
- * Style picker option
+ * Style picker option extends StylePickerOption base class.
  *
  * @elements clabs-style-picker-option
  */
-@customElement(`${clabsPrefix}-style-picker-option`)
+@customElement(`${prefix}-option`)
 class CLABSStylePickerOption extends StylePickerOption {
   @consume({ context: stylePickerContext, subscribe: true })
   stylePickerContext?: StylePickerContextType;

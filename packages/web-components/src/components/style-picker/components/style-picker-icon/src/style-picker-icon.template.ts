@@ -15,18 +15,11 @@ const { stablePrefix: clabsPrefix } = settings;
 export const blockClass = `${clabsPrefix}--style-picker-icon`;
 
 /**
- * Lit template for card
+ * Template for the style-picker-icon component.
  *
- * @param {object} customElementClass Class functionality for the custom element
-
  * @returns {TemplateResult<1>} Lit html template
  */
-export const stylePickerIconTemplate = (
-  customElementClass
-): TemplateResult<1> => {
-  const { items, heading, size, selectedItem, moduleIndex } =
-    customElementClass;
-
+export const stylePickerIconTemplate = (): TemplateResult<1> => {
   return html`<div part=${`${blockClass}__item`}>
     <slot></slot>
   </div> `;

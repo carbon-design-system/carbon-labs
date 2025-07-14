@@ -16,6 +16,7 @@ import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../../context/style-picker-context';
+import { prefix } from '../../../defs';
 
 /**
  * Sections wrapper.
@@ -70,9 +71,6 @@ class StylePickerSections extends LitElement {
    */
   firstUpdated() {
     this.updateSlotIndexes();
-    this.defaultSlot.addEventListener('slotchange', () =>
-      this.updateSlotIndexes()
-    );
   }
 
   /**
@@ -80,9 +78,7 @@ class StylePickerSections extends LitElement {
    * @param {object} changedProperties - Properties that have changed since the last update.
    */
   protected updated() {
-    const sectionElements = this.querySelectorAll(
-      'clabs-style-picker-section'
-    );
+    const sectionElements = this.querySelectorAll(`${prefix}-section`);
 
     sectionElements.forEach((item) => {
       if (

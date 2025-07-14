@@ -33,6 +33,7 @@ export const stylePickerSectionTemplate = (
    * Renders the default slot content.
    * If the section has a group, it renders the slot directly.
    * Otherwise, it wraps the slot in a listbox and show the items.
+   * So we can avoid the style-picker-sections wrapper, if not needed.
    */
   const renderDefault = () => {
     if (hasGroup) {
@@ -54,6 +55,7 @@ export const stylePickerSectionTemplate = (
     }
   };
 
+  // If the section is disclosed, we use cds-accordion-item to wrap the content.
   if (kind === 'disclosed') {
     return html`<cds-accordion-item
       .title=${heading}
@@ -64,6 +66,7 @@ export const stylePickerSectionTemplate = (
       ${renderDefault()}
     </cds-accordion-item>`;
   } else if (kind === 'flat') {
+    // If the section is flat, we render it as a simple div with a header.
     return html`
       <div class=${`${blockClass}--flat`}>
         <div class=${`${blockClass}__header`}>

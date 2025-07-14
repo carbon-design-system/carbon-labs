@@ -8,7 +8,7 @@
  */
 
 import { consume } from '@lit/context';
-import { CSSResultGroup, LitElement, TemplateResult } from 'lit';
+import { CSSResultGroup, LitElement } from 'lit';
 import {
   stylePickerContext,
   StylePickerContextType,
@@ -16,17 +16,12 @@ import {
 // @ts-ignore
 import styles from './style-picker-group.scss?inline';
 import { property } from 'lit/decorators.js';
-// import { Group, Item } from '../../../defs';
 
 /**
- * Group element.
- *
- * @fires clabs-style-picker-group-option-change - fired when an option is selected/changed.
+ * Group element extending LitElement.
  */
 class StylePickerGroup extends LitElement {
   static styles: CSSResultGroup = [styles];
-
-  // @query('cds-accordion-item') accordionItem;
 
   /**
    * Consume style-picker-context
@@ -34,50 +29,8 @@ class StylePickerGroup extends LitElement {
   @consume({ context: stylePickerContext, subscribe: true })
   _stylePickerContext?: StylePickerContextType;
 
-  // /**
-  //  * Provide style-picker-context
-  //  */
-  // @provide({ context: stylePickerContext })
-  // _groupContext: StylePickerContextType = {
-  //   /**
-  //    * Set the size of the group.
-  //    * @description This method updates the group & option size in the context.
-  //    * @param {Size} _size - The size to be set for the group and options.
-  //    * @returns {void}
-  //    */
-  //   setSize: (_size?: Size) => {
-  //     this._groupContext = {
-  //       ...this._groupContext,
-  //       size: _size,
-  //     };
-  //   },
-  // };
-
-  // @property({ type: Array })
-  // items: Item<T>[] | Group<Item<T>>[] = [];
-
-  // @property({ type: String, reflect: true, attribute: 'selected-item' })
-  // selectedItem = '';
-
   @property({ type: String, reflect: true, attribute: 'heading' })
   heading = '';
-
-  // @property({ type: String, reflect: true, attribute: 'size' })
-  // size?: Size = 'sm';
-
-  // @property({ attribute: false })
-  // renderItem?: (item: Item<T>) => TemplateResult;
-
-  // /**
-  //  * Lifecycle method called after the component is updated.
-  //  * @param {object} changedProperties - Properties that have changed since the last update.
-  //  */
-  // // protected updated(changedProperties) {
-  // //   if (changedProperties.has('size')) {
-  // //     // Update the group and options size in the context
-  // //     this._groupContext?.setSize?.(this.size);
-  // //   }
-  // // }
 }
 
 export default StylePickerGroup;

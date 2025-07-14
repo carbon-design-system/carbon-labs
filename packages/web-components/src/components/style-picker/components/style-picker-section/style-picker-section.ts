@@ -8,18 +8,18 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { stylePickerSectionTemplate } from './src/style-picker-section.template.js';
 import StylePickerSection from './src/style-picker-section.js';
-
-const { stablePrefix: clabsPrefix } = settings;
+import { prefix } from '../../defs/index.js';
 
 /**
- * Accordion item wrapper element.
+ * Section element extends StylePickerSection base components
+ * Denotes the each section of a style picker.
+ * Can use to distinguish between different sections of a style picker.
  *
  * @element clabs-style-picker-section
  */
-@customElement(`${clabsPrefix}-style-picker-section`)
+@customElement(`${prefix}-section`)
 class CLABSStylePickerSection extends StylePickerSection {
   /**
    * Renders the template while passing in class functionality

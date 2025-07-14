@@ -8,7 +8,6 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { stylePickerSectionsTemplate } from './src/style-picker-sections.template.js';
 import { consume } from '@lit/context';
 import {
@@ -16,15 +15,14 @@ import {
   StylePickerContextType,
 } from '../../context/style-picker-context.js';
 import StylePickerSections from './src/style-picker-sections.js';
-
-const { stablePrefix: clabsPrefix } = settings;
+import { prefix } from '../../defs/index.js';
 
 /**
- * A wrapper wraps multiple `style-picker-section` components
+ * A wrapper wraps multiple `style-picker-section` components.
  *
  * @elements clabs-style-picker-sections
  */
-@customElement(`${clabsPrefix}-style-picker-sections`)
+@customElement(`${prefix}-sections`)
 class CLABSStylePickerSections extends StylePickerSections {
   @consume({ context: stylePickerContext, subscribe: true })
   stylePickerContext?: StylePickerContextType;

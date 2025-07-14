@@ -19,14 +19,12 @@ import {
 import { Size } from '../../../defs';
 
 /**
- * Section element.
+ * style-picker-section extends LitElement.
  */
 class StylePickerSection extends LitElement {
   static styles = styles;
 
   @query('cds-accordion-item') accordionItem;
-
-  // @query('slot') defaultSlot;
 
   /**
    * Consume style-picker-context
@@ -38,16 +36,15 @@ class StylePickerSection extends LitElement {
    * Provide style-picker-context
    */
   @provide({ context: stylePickerContext })
-  _groupContext: StylePickerContextType = {
+  _sectionContext: StylePickerContextType = {
     /**
-     * Set the size of the group.
-     * @description This method updates the group & option size in the context.
-     * @param {Size} _size - The size to be set for the group and options.
+     * Set the size of the section. So preceding options and groups could use this size.
+     * @param {Size} _size - The size to be set for the options.
      * @returns {void}
      */
     setSize: (_size?: Size) => {
-      this._groupContext = {
-        ...this._groupContext,
+      this._sectionContext = {
+        ...this._sectionContext,
         size: _size,
       };
     },
@@ -88,8 +85,8 @@ class StylePickerSection extends LitElement {
     }
 
     if (changedProperties.has('size')) {
-      // Update the group and options size in the context
-      this._groupContext?.setSize?.(this.size);
+      // Update the options size in the context
+      this._sectionContext?.setSize?.(this.size);
     }
   }
 

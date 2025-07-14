@@ -8,18 +8,16 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { stylePickerIconTemplate } from './src/style-picker-icon.template.js';
 import StylePickerIcon from './src/style-picker-icon.js';
-
-const { stablePrefix: clabsPrefix } = settings;
+import { prefix } from '../../defs/index.js';
 
 /**
- * Icon module.
+ * Icon option component class extending the StylePickerIcon base class.
  *
  * @element clabs-style-picker-icon-module
  */
-@customElement(`${clabsPrefix}-style-picker-icon`)
+@customElement(`${prefix}-icon`)
 class CLABSStylePickerIcon extends StylePickerIcon {
   /**
    * Renders the template while passing in class functionality
@@ -27,7 +25,7 @@ class CLABSStylePickerIcon extends StylePickerIcon {
    * @returns {TemplateResult<1>}
    */
   render() {
-    return stylePickerIconTemplate(this);
+    return stylePickerIconTemplate();
   }
 }
 

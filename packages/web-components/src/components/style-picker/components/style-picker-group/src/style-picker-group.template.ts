@@ -18,7 +18,7 @@ const { stablePrefix: clabsPrefix, prefix: carbonPrefix } = settings;
 export const blockClass = `${clabsPrefix}--style-picker-group`;
 
 /**
- * Lit template for card
+ * Lit template style-picker-group component.
  *
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult} The template result
@@ -27,30 +27,10 @@ export const stylePickerGroupTemplate = (
   customElementClass
 ): TemplateResult<1> => {
   const { heading, _stylePickerContext } = customElementClass;
-
-  const { size, kind } = _stylePickerContext;
-
-  /**
-   * Render ungrouped items.
-   */
-  // const renderUngrouped = () => {
-  //   return html`
-  //     <div
-  //       class=${`${blockClass} ${blockClass}--${size}`}
-  //       role="listbox"
-  //       aria-label=${heading}
-  //       aria-orientation="horizontal"
-  //       tabindex="0">
-  //         <ul class=${`${blockClass}__items`} role="group">
-  //           <slot></slot>
-  //         </ul>
-  //       </div>
-  //     </div>
-  //   `;
-  // };
+  const { size } = _stylePickerContext;
 
   /**
-   * Render grouped items.
+   * Wrap group options here.
    */
   const renderDefault = () => {
     return html`<div
@@ -70,35 +50,6 @@ export const stylePickerGroupTemplate = (
       </div>
     </div>`;
   };
-
-  /**
-   * Render flat variant.
-   */
-  // const renderFlat = () => {
-  //   return html`
-  //     <div class=${`${blockClass}--flat`}>
-  //       <div class=${`${blockClass}__header`}>
-  //         <strong class=${`${blockClass}__heading`}> ${heading} </strong>
-  //       </div>
-  //       <slot></slot>
-  //     </div>
-  //   `;
-  // };
-
-  // /**
-  //  * Render grouped items because we wrapped items with this components.
-  //  */
-  // const renderDefault = () => {
-  //   return renderGrouped();
-  // };
-
-  // // if (kind === 'flat') {
-  // //   return renderFlat();
-  // // }
-
-  // if (kind === 'disclosed') {
-  //   return html` ${renderDefault()} `;
-  // }
 
   return renderDefault();
 };

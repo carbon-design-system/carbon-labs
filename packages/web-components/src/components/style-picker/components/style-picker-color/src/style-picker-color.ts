@@ -13,7 +13,7 @@ import styles from './style-picker-color.scss?inline';
 import { LitElement } from 'lit';
 
 /**
- * Color picker element
+ * Color picker option element extending LitElement.
  */
 class StylePickerColor extends LitElement {
   static styles = styles;

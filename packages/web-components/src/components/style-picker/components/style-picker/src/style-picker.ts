@@ -19,7 +19,7 @@ import {
 import { Kind } from '../../../defs';
 
 /**
- * Component extending the @carbon/web-components' button
+ * Component extending the LitElement class.
  */
 class StylePicker extends LitElement {
   static styles = styles;
@@ -31,9 +31,9 @@ class StylePicker extends LitElement {
   _stylePickerContext: StylePickerContextType = {
     size: 'sm',
     /**
-     * Set the active module index
-     * @param {number} index - Index of the module to be set as active
-     * @description This method updates the active module index in the context.
+     * Set the active section index
+     * @param {number} index - Index of the section to be set as active
+     * @description This method updates the active section index in the context.
      */
     setActiveSection: (index: number) => {
       this._stylePickerContext = {

@@ -15,7 +15,7 @@ const { stablePrefix: clabsPrefix } = settings;
 export const blockClass = `${clabsPrefix}--style-picker-color`;
 
 /**
- * Lit template for card
+ * Lit template style-picker-color option component.
  *
  * @param {object} customElementClass Class functionality for the custom element
 
@@ -24,33 +24,13 @@ export const blockClass = `${clabsPrefix}--style-picker-color`;
 export const stylePickerColorTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const { items, heading, size, selectedItem, moduleIndex, label, color } =
-    customElementClass;
+  const { label, color } = customElementClass;
 
   return html`
-  <div class=${`${blockClass}__item`}>
-    <svg  viewBox="0 0 1 1" aria-label=${label}>
-      <rect x="0" y="0" width="1" height="1" fill=${color} />
-    </svg>
-  </div>
-
+    <div class=${`${blockClass}__item`}>
+      <svg viewBox="0 0 1 1" aria-label=${label}>
+        <rect x="0" y="0" width="1" height="1" fill=${color} />
+      </svg>
+    </div>
   `;
-
-  // /** // * @param {object} item Item to be rendered // */ // const _render
-  // = (item): TemplateResult => // html`;
-  //     <svg viewBox="0 0 1 1" aria-label=${item.label}>
-  //       <rect x="0" y="0" width="1" height="1" fill=${item.color} />
-  //     </svg>
-  //   `;
-
-  // return html`
-  //   <clabs-style-picker-module
-  //     heading=${heading}
-  //     size=${size}
-  //     .items=${items}
-  //     .renderItem=${_render}
-  //     selected-item=${selectedItem}
-  //     slot-index=${moduleIndex}>
-  //   </clabs-style-picker-module>
-  // `;
 };

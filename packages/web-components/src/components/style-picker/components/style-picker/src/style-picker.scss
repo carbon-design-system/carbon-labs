@@ -31,16 +31,9 @@ $container-width: $spacing-12-rem + $spacing-06;
   max-block-size: min(calc($spacing-12-rem * 2), 100vh);
 }
 
-.#{$block-class}__header {
-  position: relative;
-}
-
-.#{$block-class}__search {
-  position: absolute;
-  display: flex;
-  justify-content: end;
-  inset: 0;
-}
+// .#{$block-class}__header {
+//   position: relative;
+// }
 
 .#{$block-class}__heading {
   @include type.type-style('heading-01');
@@ -55,16 +48,16 @@ $container-width: $spacing-12-rem + $spacing-06;
   overflow: auto;
 }
 
-.#{$block-class}-sections__container--empty {
-  display: none;
-}
+// .#{$block-class}-sections__container--empty {
+//   display: none;
+// }
 
-.#{$block-class}-sections__empty-state {
-  padding: $spacing-05;
-}
+// .#{$block-class}-sections__empty-state {
+//   padding: $spacing-05;
+// }
 
 // Carbon overwrites
 
-.#{$block-class}-group .#{$cds-prefix}--contained-list__header {
-  z-index: 2;
-}
+// .#{$block-class}-group .#{$cds-prefix}--contained-list__header {
+//   z-index: 2;
+// }

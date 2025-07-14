@@ -10,14 +10,13 @@
 import { html, TemplateResult } from 'lit';
 import '@carbon/web-components/es/components/accordion/accordion.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { Kind } from '../../../defs';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 const blockClass = `${clabsPrefix}--style-picker-sections`;
 
 /**
- * Lit template for card
+ * Lit template for style-picker-section component
  *
  * @param {object} customElementClass Class functionality for the custom element
  * @returns {TemplateResult<1>} Lit html template
@@ -25,8 +24,9 @@ const blockClass = `${clabsPrefix}--style-picker-sections`;
 export const stylePickerSectionsTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const kind: Kind = customElementClass.stylePickerContext.kind;
-  const { updateSlotCount, slotCount } = customElementClass;
+  const { updateSlotCount, slotCount, _stylePickerContext } =
+    customElementClass;
+  const { kind } = _stylePickerContext;
 
   // If the kind is 'disclosed', we wrap the slot in an accordion
   // Otherwise, we just render the slot directly

@@ -29,6 +29,7 @@ interface AIPromptTileProps {
   isLoading?: boolean;
   isDisabled?: boolean;
   disabledTaskLabel?: string;
+  onClick?: (() => void) | null;
 }
 
 export const AIPromptTile: React.FC<AIPromptTileProps> = ({
@@ -41,6 +42,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   isLoading,
   isDisabled,
   disabledTaskLabel,
+  onClick,
 }: AIPromptTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__ai-prompt-tile`;
@@ -114,7 +116,10 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
               size="sm"
               disabled={!textInput}
               align="top-right"
-              onClick={() => openInNewTab(`${href}&primed_chat=${textInput}`)}
+              onClick={() => {
+                onClick?.();
+                openInNewTab(`${href}&primed_chat=${textInput}`);
+              }}
               onKeyDown={handleTextInputKeyDown}>
               <Send />
             </IconButton>

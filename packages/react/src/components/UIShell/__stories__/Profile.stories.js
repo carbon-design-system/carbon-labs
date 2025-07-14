@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import mdx from './Profile.mdx';
 
 import { Profile } from '../index';
@@ -16,6 +16,7 @@ import {
   HeaderGlobalBar,
   ContainedList,
   ContainedListItem,
+  Theme,
 } from '@carbon/react';
 import {
   UserAvatar,
@@ -25,6 +26,7 @@ import {
   Money,
   Logout,
 } from '@carbon/icons-react';
+import { ThemeSettings, ThemeSwitcher } from '../../ThemeSettings';
 
 import '../components/ui-shell.scss';
 import {
@@ -47,53 +49,135 @@ export default {
   },
 };
 
+const readOnlyItems = [
+  { label: 'Instance', title: 'APIC-MB-DEV' },
+  { label: 'Instance owner', title: 'ruth.leach@ibm.com' },
+  { label: 'Region', title: 'us-east-1 (N Virginia)' },
+];
+
+/**
+ *
+ */
+function useThemeSettings() {
+  const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const [themeSetting, setThemeSetting] = useState('system');
+  const [themeMenuComplement] = useState(false);
+  const [themeSet] = useState('white/g100');
+  const [systemDark, setSystemDark] = useState(mediaQueryList.matches);
+  const [currentTheme, setCurrentTheme] = useState('white');
+  const [themeHeader, setThemeHeader] = useState('g100');
+
+  useEffect(() => {
+    /**
+     *
+     * @param {MediaQueryListEvent} event - The media query change event object.
+     */
+    const handleMediaQueryEvent = (event) => {
+      setSystemDark(event.matches);
+    };
+
+    mediaQueryList.addEventListener('change', handleMediaQueryEvent);
+    return () =>
+      mediaQueryList.removeEventListener('change', handleMediaQueryEvent);
+  }, [mediaQueryList]);
+
+  /**
+   *
+   */
+  useEffect(() => {
+    const [lightTheme, darkTheme] = themeSet.split('/');
+
+    if (themeSetting === 'system') {
+      setCurrentTheme(systemDark ? darkTheme : lightTheme);
+      setThemeHeader(
+        (systemDark && !themeMenuComplement) ||
+          (!systemDark && themeMenuComplement)
+          ? darkTheme
+          : lightTheme
+      );
+    } else if (themeSetting === 'light') {
+      setCurrentTheme(lightTheme);
+      setThemeHeader(themeMenuComplement ? darkTheme : lightTheme);
+    } else {
+      setCurrentTheme(darkTheme);
+      setThemeHeader(themeMenuComplement ? lightTheme : darkTheme);
+    }
+  }, [systemDark, themeSetting, themeMenuComplement, themeSet]);
+
+  return {
+    themeSetting,
+    setThemeSetting,
+    themeHeader,
+    currentTheme,
+  };
+}
+
+/**
+ *
+ * @param {{ children: React.ReactNode }} props - The children
+ * @returns {JSX.Element} The rendered BaseProfile component.
+ */
+const BaseProfile = ({ children }) => (
+  <Header aria-label="IBM Platform Name">
+    <HeaderGlobalBar>
+      <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
+        <Profile.UserInfo name="Ruth Leach" email="ruth.leach@ibm.com" />
+        {children}
+      </Profile.Root>
+    </HeaderGlobalBar>
+  </Header>
+);
+
 /**
  * Story for Profile
  * @returns {React.ReactElement} The JSX for the story
  */
 export const Default = () => {
-  return (
-    <Header aria-label="IBM Platform Name">
-      <HeaderGlobalBar>
-        <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
-          <Profile.UserInfo
-            name="Thomas J. Watson"
-            email="thomas.watson@ibm.com"
-          />
-        </Profile.Root>
-      </HeaderGlobalBar>
-    </Header>
-  );
+  return <BaseProfile></BaseProfile>;
 };
 
 /**
  * Story for Profile with read only items
  * @returns {React.ReactElement} The JSX for the story
  */
-export const withReadOnly = () => {
+export const withReadOnly = () => (
+  <BaseProfile>
+    <Profile.ReadOnly items={readOnlyItems} />
+  </BaseProfile>
+);
+
+/**
+ * Story for Profile with theme switcher.
+ * @returns {React.ReactElement} The rendered story with theme controls and profile layout.
+ */
+export const WithThemeSwitcher = () => {
+  const { themeSetting, setThemeSetting, themeHeader, currentTheme } =
+    useThemeSettings();
+
   return (
-    <Header aria-label="IBM Platform Name">
-      <HeaderGlobalBar>
-        <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
-          <Profile.UserInfo
-            name="Thomas J. Watson"
-            email="thomas.watson@ibm.com"
-          />
-          <Profile.ReadOnly
-            items={[
-              { label: 'Instance', title: 'APIC-MB-DEV' },
-              { label: 'Instance owner', title: 'thomas.j.watson@ibm.com' },
-              { label: 'Region', title: 'us-east-1 (N Virgina)' },
-            ]}
-          />
-        </Profile.Root>
-      </HeaderGlobalBar>
-    </Header>
+    <Theme theme={themeHeader}>
+      <Theme
+        as="main"
+        className="theme-setting-in-context__main"
+        theme={currentTheme}>
+        <BaseProfile>
+          <ThemeSettings legendText="Theme">
+            <ThemeSwitcher
+              lowContrast
+              size="sm"
+              value={themeSetting}
+              onChange={setThemeSetting}
+            />
+          </ThemeSettings>
+        </BaseProfile>
+      </Theme>
+    </Theme>
   );
 };
 
 /**
- * Story for Profile with read only items
+ * Story for Profile with links
  * @returns {React.ReactElement} The JSX for the story
  */
 export const withLinks = () => {
@@ -101,10 +185,7 @@ export const withLinks = () => {
     <Header aria-label="IBM Platform Name">
       <HeaderGlobalBar>
         <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
-          <Profile.UserInfo
-            name="Thomas J. Watson"
-            email="thomas.watson@ibm.com"
-          />
+          <Profile.UserInfo name="Ruth Leach" email="ruth.leach@ibm.com" />
           <ContainedList label="Profile links">
             <ContainedListItem
               renderIcon={User}

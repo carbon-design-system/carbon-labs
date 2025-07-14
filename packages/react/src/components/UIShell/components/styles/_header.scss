@@ -22,11 +22,15 @@ $prefix: 'cds' !default;
 }
 
 .#{$prefix}--header__action:focus {
-  box-shadow: inset 0 0 0 1px $focus, inset 0 0 0 2px $background;
+  outline-offset: -2px;
 }
 
 .#{$prefix}--header-action__button {
   block-size: convert.rem(48px);
+
+  &:focus {
+    outline-offset: -2px;
+  }
 }
 
 .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled]) svg {
@@ -39,11 +43,6 @@ $prefix: 'cds' !default;
   .#{$prefix}--header-action__button.#{$prefix}--btn--ghost:not([disabled])
   svg {
   fill: $icon-primary;
-}
-
-// TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
-.#{$prefix}--header-action .#{$prefix}--tooltip-content {
-  color: $text-primary;
 }
 
 .#{$prefix}--header-action.#{$prefix}--popover--open
@@ -63,12 +62,6 @@ $prefix: 'cds' !default;
     $link-visited
   );
   @include custom-property.declaration('link-focus-text-color', $focus);
-
-  padding: 0;
-
-  > * {
-    padding: 0 $spacing-05 $spacing-05 $spacing-05;
-  }
 }
 
 //----------------------------------------------------------------------------

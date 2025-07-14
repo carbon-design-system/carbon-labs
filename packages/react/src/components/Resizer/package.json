@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-resizer",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",
@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rm -rf {es,lib,scss}"
+    "clean": "rimraf es lib scss"
   },
   "devDependencies": {
     "@carbon-labs/utilities": "canary"

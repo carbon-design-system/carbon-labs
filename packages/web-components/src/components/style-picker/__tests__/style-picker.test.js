@@ -22,7 +22,7 @@ import Atlanta from '@carbon/pictograms/es/atlanta/index.js';
 import Austin from '@carbon/pictograms/es/austin/index.js';
 import BostonZakimBridge from '@carbon/pictograms/es/boston--zakim-bridge/index.js';
 import '../es/index.js';
-import { renderCarbonPictogram } from '../utilities/renderCarbonPictogram.js';
+import { renderCarbonPictogram } from '../es/utilities/renderCarbonPictogram.js';
 
 export const pictograms = [
   [

@@ -1,0 +1,4 @@
+.clabs--theme-settings__form-group{display:flex;flex-direction:column;gap:1rem}
+.story-wrapper{margin:3rem}.theme-setting-in-context{display:grid;block-size:100vh;grid-template-rows:3rem 1fr}.theme-setting-in-context__header{display:flex;align-items:center;-webkit-border-after:1px solid var(--cds-border-subtle-01, #c6c6c6);border-block-end:1px solid var(--cds-border-subtle-01, #c6c6c6);padding-inline:3rem}.theme-setting-in-context__main{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3rem;padding-inline:3rem}
+
+/*# sourceMappingURL=components-ThemeSettings-__stories__-ThemeSettings-mdx.342b73e5e0ee59815277.css.map*/

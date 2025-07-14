@@ -618,15 +618,6 @@ function SideNavRenderFunction(
     </SideNavToggle>
   );
 
-  // const handleItemClick = (event) => {
-  //   const target = event.target as HTMLElement;
-  //   const isNavItemClick = target.closest('a, button');
-  //   if (isNavItemClick) {
-  //     handleToggle(event, false);
-  //     onSideNavBlur?.();
-  //   }
-  // };
-
   return (
     <SideNavContext.Provider
       value={{
@@ -654,9 +645,7 @@ function SideNavRenderFunction(
         }
         {...accessibilityLabel}
         {...eventHandlers}
-        {...other}
-        // onClick={handleItemClick}
-      >
+        {...other}>
         {childrenToRender}
         {navType === SIDE_NAV_TYPE.PANEL &&
           (expandedState ? (

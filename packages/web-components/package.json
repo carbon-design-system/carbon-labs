@@ -68,7 +68,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "replace-ext": "^2.0.0",
-    "sass": "~1.85.0",
+    "sass": "~1.89.0",
     "sinon": "^19.0.0",
     "storybook": "^8.4.7",
     "through2": "^4.0.2",

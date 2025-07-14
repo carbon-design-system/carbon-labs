@@ -22,6 +22,7 @@ import Atlanta from '@carbon/pictograms/es/atlanta/index.js';
 import Austin from '@carbon/pictograms/es/austin/index.js';
 import BostonZakimBridge from '@carbon/pictograms/es/boston--zakim-bridge/index.js';
 import '../es/index.js';
+import { renderCarbonPictogram } from '../utilities/renderCarbonPictogram.js';
 
 export const pictograms = [
   [
@@ -108,13 +109,25 @@ const colorTemplate = (props = defaultProps) => html`
       ${ColorPalette16({ slot: 'icon' })}
       <span slot="tooltip-content">Color palette</span>
     </cds-icon-button>
-    <clabs-style-picker-modules slot="modules">
-      <clabs-style-picker-color-module
-        heading=${'Color'}
-        size=${'sm'}
-        .items=${colors}
-        selected-item=${'blue-60'}></clabs-style-picker-color-module>
-    </clabs-style-picker-modules>
+    <clabs-style-picker-section>
+      ${colors.map(
+        (group) =>
+          html`<clabs-style-picker-group heading=${group.label}>
+            ${group.items.map(
+              (item) => html`
+                <clabs-style-picker-option
+                  value=${item.color}
+                  label=${item.label}
+                  ?selected=${item.label === 'Blue 60'}>
+                  <clabs-style-picker-color
+                    color=${item.color}
+                    label=${item.label}></clabs-style-picker-color>
+                </clabs-style-picker-option>
+              `
+            )}
+          </clabs-style-picker-group> `
+      )}
+    </clabs-style-picker-section>
   </clabs-style-picker>
 `;
 
@@ -132,13 +145,21 @@ const iconTemplate = (props = defaultProps) => html`
       ${ColorPalette16({ slot: 'icon' })}
       <span slot="tooltip-content">Icon picker</span>
     </cds-icon-button>
-    <clabs-style-picker-modules slot="modules">
-      <clabs-style-picker-icon-module
-        heading=${'Icons'}
-        size=${'sm'}
-        .items=${icons}
-        selected-item=${'apple'}></clabs-style-picker-icon-module>
-    </clabs-style-picker-modules>
+    <clabs-style-picker-section>
+      ${icons.map(
+        (item) =>
+          html`
+            <clabs-style-picker-option
+              value=${item.value}
+              label=${item.label}
+              ?selected=${item.value === 'apple'}>
+              <clabs-style-picker-icon>
+                ${item.renderIcon()}
+              </clabs-style-picker-icon>
+            </clabs-style-picker-option>
+          `
+      )}
+    </clabs-style-picker-section>
   </clabs-style-picker>
 `;
 
@@ -156,18 +177,36 @@ const pictogramTemplate = (props = defaultProps) => html`
       ${ColorPalette16({ slot: 'icon' })}
       <span slot="tooltip-content">Pictogram picker</span>
     </cds-icon-button>
-    <clabs-style-picker-modules slot="modules">
-      <clabs-style-picker-pictogram-module
-        heading=${'Pictograms'}
-        size=${'lg'}
-        .items=${pictograms}
-        selected-item=${'austin'}></clabs-style-picker-pictogram-module>
-    </clabs-style-picker-modules>
+    <clabs-style-picker-section size="lg">
+      ${pictograms.map(
+        (group) =>
+          html`<clabs-style-picker-group heading=${group.label}>
+            ${group.items.map(
+              (item) => html`
+                <clabs-style-picker-option
+                  value=${item.value}
+                  label=${item.label}
+                  ?selected=${item.label === 'Bangalore'}>
+                  ${renderCarbonPictogram({
+                    ...item.pictogram,
+                    attrs: {
+                      ...item.pictogram.attrs,
+                      width: '3rem',
+                      height: '3rem',
+                      'aria-label': item.label,
+                    },
+                  })}
+                </clabs-style-picker-option>
+              `
+            )}
+          </clabs-style-picker-group> `
+      )}
+    </clabs-style-picker-section>
   </clabs-style-picker>
 `;
 
 describe('clabs-style-picker', function () {
-  it('should render single variant with color picker module', async () => {
+  it('should render single variant with color picker options', async () => {
     const el = await fixture(
       colorTemplate({ ...defaultProps, heading: 'Choose color' })
     );
@@ -176,7 +215,7 @@ describe('clabs-style-picker', function () {
     await expect(el).shadowDom.to.be.accessible();
   });
 
-  it('should render single variant with icon picker module', async () => {
+  it('should render single variant with icon picker options', async () => {
     const el = await fixture(
       iconTemplate({ ...defaultProps, heading: 'Choose icon' })
     );
@@ -185,7 +224,7 @@ describe('clabs-style-picker', function () {
     await expect(el).shadowDom.to.be.accessible();
   });
 
-  it('should render single variant with pictogram picker module', async () => {
+  it('should render single variant with pictogram picker options', async () => {
     const el = await fixture(
       pictogramTemplate({ ...defaultProps, heading: 'Choose pictogram' })
     );

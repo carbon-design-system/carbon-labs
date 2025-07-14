@@ -546,6 +546,17 @@ function SideNavRenderFunction(
     };
   }
 
+  useWindowEvent('click', (event) => {
+    const target = event.target as HTMLElement;
+    const isNavItemClick = target.closest(
+      `.${prefix}--side-nav a, .${prefix}--side-nav button`
+    );
+    const isInRail = isNavItemClick?.closest(`.${prefix}--side-nav--rail`);
+    if (isNavItemClick) {
+      isInRail ? handleToggle(false, false) : onSideNavBlur?.();
+    }
+  });
+
   useWindowEvent('keydown', (event: Event) => {
     const focusedElement = document.activeElement;
 

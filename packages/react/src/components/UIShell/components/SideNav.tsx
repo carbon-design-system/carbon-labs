@@ -552,7 +552,10 @@ function SideNavRenderFunction(
       `.${prefix}--side-nav a, .${prefix}--side-nav button`
     );
     const isInRail = isNavItemClick?.closest(`.${prefix}--side-nav--rail`);
-    if (isNavItemClick) {
+    if (
+      isNavItemClick &&
+      !isNavItemClick.classList.contains(`${prefix}--side-nav__submenu`)
+    ) {
       isInRail ? handleToggle(false, false) : onSideNavBlur?.();
     }
   });

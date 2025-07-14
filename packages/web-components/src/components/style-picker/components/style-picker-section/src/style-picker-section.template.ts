@@ -43,7 +43,7 @@ export const stylePickerSectionTemplate = (
         <div
           class=${`${blockClass} ${blockClass}--${size}`}
           role="listbox"
-          aria-label=${heading}
+          aria-label=${heading || 'section'}
           aria-orientation="horizontal"
           tabindex="0">
             <ul class=${`${blockClass}__items`} role="group">

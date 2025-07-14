@@ -341,7 +341,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                   >
                     <button
                       aria-labelledby="tooltip-:rc:"
-                      class="cds--btn--icon-only clabs--animated-header__ai-prompt-tile--icon-button  cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--disabled"
+                      class="clabs--animated-header__ai-prompt-tile--icon-button  cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
                       disabled=""
                       type="button"
                     >

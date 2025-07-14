@@ -44,6 +44,8 @@ const config = {
         preprocessorOptions: {
           scss: {
             implementation: sass,
+            api: 'modern',
+            silenceDeprecations: ['mixed-decls'],
           },
         },
       },
@@ -55,6 +57,7 @@ const config = {
             'src/**/*.scss',
             'src/**/*.scss?*',
           ],
+          exclude: ['**/*.js', '**/*.scss.js'],
         }),
       ],
     });

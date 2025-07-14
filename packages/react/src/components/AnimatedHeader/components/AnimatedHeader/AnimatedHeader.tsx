@@ -39,7 +39,7 @@ export interface Tile {
   customContent?: ReactNode | null;
   isLoading?: boolean;
   isDisabled?: boolean;
-  isInteractive?: boolean;
+  onClick?: () => void;
 }
 
 export interface TileGroup {
@@ -210,7 +210,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
         {selectedTileGroup && (
           <Column sm={4} md={8} lg={12} className={`${blockClass}__content`}>
-            {workspaceSelectorConfig?.allWorkspaces?.length && (
+            {!!workspaceSelectorConfig?.allWorkspaces?.length && (
               <div
                 className={`${blockClass}__workspace--container${
                   !open ? ` ${contentCollapsed}` : ''
@@ -226,7 +226,14 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               {selectedTileGroup.tiles.map((tile) => {
                 return (
                   <BaseTile
-                    onClick={() => tileClickHandler?.(tile)}
+                    onClick={
+                      tile.href || tile.onClick
+                        ? () => {
+                            tileClickHandler?.(tile);
+                            tile.onClick?.();
+                          }
+                        : null
+                    }
                     key={tile.id}
                     id={tile.id}
                     open={open}
@@ -240,7 +247,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     isLoading={isLoading || tile.isLoading}
                     isDisabled={tile.isDisabled}
                     disabledTaskLabel={disabledTaskLabel}
-                    isInteractive={tile.isInteractive}
                   />
                 );
               })}

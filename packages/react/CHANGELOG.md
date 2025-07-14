@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.96.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.95.0...@carbon-labs/react@0.96.0) (2025-07-09)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.95.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.94.0...@carbon-labs/react@0.95.0) (2025-07-09)
+
+
+### Bug Fixes
+
+* **uishell:** hide rail spacing at small screens when inside layer ([#705](https://github.com/carbon-design-system/carbon-labs/issues/705)) ([86dfcf3](https://github.com/carbon-design-system/carbon-labs/commit/86dfcf381703f9cc023150ccd8a927f6a56d1d45))
+
+
+
+
+
+# [0.94.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.93.0...@carbon-labs/react@0.94.0) (2025-07-09)
+
+
+### Bug Fixes
+
+* **profile:** keyboard updates ([#703](https://github.com/carbon-design-system/carbon-labs/issues/703)) ([1fc3e6e](https://github.com/carbon-design-system/carbon-labs/commit/1fc3e6e2d8ae9fc763cf3824e04bd0f2b1833c6f))
+
+
+
+
+
+# [0.93.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.92.0...@carbon-labs/react@0.93.0) (2025-07-08)
+
+
+### Features
+
+* **uishell:** remove unused HeaderPanel component ([#694](https://github.com/carbon-design-system/carbon-labs/issues/694)) ([925b762](https://github.com/carbon-design-system/carbon-labs/commit/925b762ecdec70480044d66e8ae1818f2651679b))
+
+
+
+
+
+# [0.92.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.91.0...@carbon-labs/react@0.92.0) (2025-07-08)
+
+
+### Features
+
+* **profile:** add theme-switcher ([#699](https://github.com/carbon-design-system/carbon-labs/issues/699)) ([12a7d2d](https://github.com/carbon-design-system/carbon-labs/commit/12a7d2dbacb16485b8955f9b7b5efebf829eaa1f))
+
+
+
+
+
+# [0.91.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.90.0...@carbon-labs/react@0.91.0) (2025-07-07)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.90.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.89.0...@carbon-labs/react@0.90.0) (2025-07-02)
 
 

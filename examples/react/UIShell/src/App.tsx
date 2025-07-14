@@ -326,8 +326,8 @@ function App() {
                   label="Profile"
                   renderIcon={<UserAvatar size={20} />}>
                   <Profile.UserInfo
-                    name="Thomas J. Watson"
-                    email="thomas.watson@ibm.com"
+                    name="Ruth Leach"
+                    email="ruth.leach@ibm.com"
                   />
                   <ThemeSettings legendText="Theme">
                     <ThemeSwitcher
@@ -342,7 +342,7 @@ function App() {
                       { label: 'Instance', title: 'APIC-MB-DEV' },
                       {
                         label: 'Instance owner',
-                        title: 'thomas.j.watson@ibm.com',
+                        title: 'ruth.leach@ibm.com',
                       },
                       { label: 'Region', title: 'us-east-1 (N Virgina)' },
                     ]}

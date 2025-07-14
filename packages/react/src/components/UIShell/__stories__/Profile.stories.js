@@ -51,7 +51,7 @@ export default {
 
 const readOnlyItems = [
   { label: 'Instance', title: 'APIC-MB-DEV' },
-  { label: 'Instance owner', title: 'thomas.j.watson@ibm.com' },
+  { label: 'Instance owner', title: 'ruth.leach@ibm.com' },
   { label: 'Region', title: 'us-east-1 (N Virginia)' },
 ];
 
@@ -122,10 +122,7 @@ const BaseProfile = ({ children }) => (
   <Header aria-label="IBM Platform Name">
     <HeaderGlobalBar>
       <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
-        <Profile.UserInfo
-          name="Thomas J. Watson"
-          email="thomas.watson@ibm.com"
-        />
+        <Profile.UserInfo name="Ruth Leach" email="ruth.leach@ibm.com" />
         {children}
       </Profile.Root>
     </HeaderGlobalBar>
@@ -188,10 +185,7 @@ export const withLinks = () => {
     <Header aria-label="IBM Platform Name">
       <HeaderGlobalBar>
         <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
-          <Profile.UserInfo
-            name="Thomas J. Watson"
-            email="thomas.watson@ibm.com"
-          />
+          <Profile.UserInfo name="Ruth Leach" email="ruth.leach@ibm.com" />
           <ContainedList label="Profile links">
             <ContainedListItem
               renderIcon={User}

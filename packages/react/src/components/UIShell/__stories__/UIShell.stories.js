@@ -112,7 +112,7 @@ export default {
 
 const readOnlyItems = [
   { label: 'Instance', title: 'APIC-MB-DEV' },
-  { label: 'Instance owner', title: 'thomas.j.watson@ibm.com' },
+  { label: 'Instance owner', title: 'ruth.leach@ibm.com' },
   { label: 'Region', title: 'us-east-1 (N Virginia)' },
 ];
 
@@ -386,8 +386,8 @@ export const Demo = () => {
                   label="Profile"
                   renderIcon={<UserAvatar size={20} />}>
                   <Profile.UserInfo
-                    name="Thomas J. Watson"
-                    email="thomas.watson@ibm.com"
+                    name="Ruth Leach"
+                    email="ruth.leach@ibm.com"
                   />
                   <ThemeSettings legendText="Theme">
                     <ThemeSwitcher

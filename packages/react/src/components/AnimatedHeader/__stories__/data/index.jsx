@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Add } from '@carbon/react/icons';
+import { Add, ArrowRight, ChartLineData, DataSet, Export, FlowModeler, Sql, Term, Tuning } from '@carbon/react/icons';
 import { ButtonKinds, Loading } from '@carbon/react';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
 import React from 'react';
@@ -36,21 +36,21 @@ export const headerTiles = [
         id: 'ai-tile',
         href: '#',
         title: 'Short description of the type of prompt',
-        mainIcon: 'Term',
+        mainIcon: Term,
       },
       {
         id: 'tile-1',
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
     ],
   },
@@ -63,21 +63,21 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
       {
         id: 'tile-3',
         href: '#',
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
       },
     ],
   },
@@ -90,28 +90,28 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
       {
         id: 'tile-3',
         href: '#',
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
       },
       {
         id: 'tile-4',
         href: '#',
         title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
+        mainIcon: Export,
+        secondaryIcon: ArrowRight,
       },
     ],
   },
@@ -124,35 +124,35 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
       {
         id: 'tile-3',
         href: '#',
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
       },
       {
         id: 'tile-4',
         href: '#',
         title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
+        mainIcon: Export,
+        secondaryIcon: ArrowRight,
       },
       {
         id: 'tile-5',
         href: '#',
         title: 'Chat and build prompts with foundation models',
         subtitle: 'with Prompt Lab',
-        mainIcon: 'Term',
+        mainIcon: Term,
       },
     ],
   },
@@ -165,42 +165,42 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
       {
         id: 'tile-3',
         href: '#',
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
       },
       {
         id: 'tile-4',
         href: '#',
         title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
+        mainIcon: Export,
+        secondaryIcon: ArrowRight,
       },
       {
         id: 'tile-5',
         href: '#',
         title: 'Chat and build prompts with foundation models',
         subtitle: 'with Prompt Lab',
-        mainIcon: 'Term',
+        mainIcon: Term,
       },
       {
         id: 'tile-6',
         href: '#',
         title: 'Tune a foundation model with labeled data',
         subtitle: 'with Tuning Studio',
-        mainIcon: 'Tuning',
+        mainIcon: Tuning,
       },
     ],
   },
@@ -213,49 +213,49 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
       {
         id: 'tile-3',
         href: '#',
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
       },
       {
         id: 'tile-4',
         href: '#',
         title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
+        mainIcon: Export,
+        secondaryIcon: ArrowRight,
       },
       {
         id: 'tile-5',
         href: '#',
         title: 'Chat and build prompts with foundation models',
         subtitle: 'with Prompt Lab',
-        mainIcon: 'Term',
+        mainIcon: Term,
       },
       {
         id: 'tile-6',
         href: '#',
         title: 'Tune a foundation model with labeled data',
         subtitle: 'with Tuning Studio',
-        mainIcon: 'Tuning',
+        mainIcon: Tuning,
       },
       {
         id: 'tile-7',
         href: '#',
         title: 'Build models as a visual flow',
         subtitle: 'with SPSS Modeler',
-        mainIcon: 'FlowModeler',
+        mainIcon: FlowModeler,
       },
     ],
   },
@@ -268,66 +268,101 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
       },
       {
         id: 'tile-3',
         href: '#',
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
       },
       {
         id: 'tile-4',
         href: '#',
         title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
+        mainIcon: Export,
+        secondaryIcon: ArrowRight,
       },
       {
         id: 'tile-5',
         href: '#',
         title: 'Chat and build prompts with foundation models',
         subtitle: 'with Prompt Lab',
-        mainIcon: 'Term',
+        mainIcon: Term,
       },
       {
         id: 'tile-6',
         href: '#',
         title: 'Tune a foundation model with labeled data',
         subtitle: 'with Tuning Studio',
-        mainIcon: 'Tuning',
+        mainIcon: Tuning,
       },
       {
         id: 'tile-7',
         href: '#',
         title: 'Build models as a visual flow',
         subtitle: 'with SPSS Modeler',
-        mainIcon: 'FlowModeler',
+        mainIcon: FlowModeler,
       },
       {
         id: 'tile-8',
         href: '#',
         title: 'Create and run python queries',
         subtitle: 'with Prompt Lab',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
       },
     ],
   },
   {
     id: 8,
+    label: 'Loading, non-interactive and disabled cards',
+    tiles: [
+      {
+        id: 'tile-1',
+        href: '#',
+        title: 'Loading tile',
+        subtitle: 'with Data explorer',
+        mainIcon: DataSet,
+        isLoading: true,
+      },
+      {
+        id: 'tile-2',
+        title: 'Non-interactive tile',
+        subtitle: 'with Monitoring hub',
+        mainIcon: ChartLineData,
+      },
+      {
+        id: 'tile-3', 
+        href: '#',
+        title: 'Disabled tile',
+        subtitle: 'with SQL editor',
+        mainIcon: Sql,
+        isDisabled: true
+      },
+      {
+        id: 'tile-4',
+        href: '#',
+        title: 'Export data',
+        mainIcon: Export,
+        secondaryIcon: ArrowRight,
+      },
+    ],
+  },
+  {
+    id: 9,
     label: 'Custom content tasks',
     tiles: [
       {
         id: 'tile-1',
-        customContent: <Loading description="Sample loading state" />
+        customContent: <Loading withOverlay={false} description="Sample loading state" />
       },
       {
         id: 'tile-2',
@@ -337,7 +372,7 @@ export const headerTiles = [
   },
 ];
 
-export const tasksConfigButton = {
+export const tasksControllerConfigButton = {
   type: 'button',
   button: {
     href: '#',
@@ -347,9 +382,32 @@ export const tasksConfigButton = {
   },
 };
 
-export const tasksConfigDropdown = {
+export const tasksControllerConfigDropdown = {
   type: 'dropdown',
   dropdown: {
     label: 'Customize your journey',
+    allTileGroups: headerTiles,
+    selectedTileGroup: headerTiles[0],
+    setSelectedTileGroup: () => {},
   },
 };
+
+export const tasksControllerConfigLoading = {
+  type: 'none',
+  isLoading: true,
+};
+
+export const workspaceSelectorConfig = {
+    allWorkspaces: workspaceData,
+    setSelectedWorkspace: () => {},
+    propsOverrides: {
+      label: "Select workspace",
+      renderSelectedItem: (item) => `Open in: ${item.label}`
+    }
+}
+
+export const workspaceSelectorConfigLoading = {
+  allWorkspaces: workspaceData,
+  setSelectedWorkspace: () => {},
+  isLoading: true
+}

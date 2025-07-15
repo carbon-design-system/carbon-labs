@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.36.0...@carbon-labs/web-components@0.37.0) (2025-07-14)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.36.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.35.0...@carbon-labs/web-components@0.36.0) (2025-07-14)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.35.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.34.0...@carbon-labs/web-components@0.35.0) (2025-07-11)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.34.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.33.0...@carbon-labs/web-components@0.34.0) (2025-07-09)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.33.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.32.0...@carbon-labs/web-components@0.33.0) (2025-07-03)
+
+
+### Features
+
+* **style-picker:** implement flat and disclosed variants ([#684](https://github.com/carbon-design-system/carbon-labs/issues/684)) ([0f53ba3](https://github.com/carbon-design-system/carbon-labs/commit/0f53ba3d3b4d9860a72c2ea09e36580018c50fa9))
+
+
+
+
+
+# [0.32.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.31.0...@carbon-labs/web-components@0.32.0) (2025-06-25)
+
+
+### Features
+
+* **style-picker:** implement style picker base components ([#660](https://github.com/carbon-design-system/carbon-labs/issues/660)) ([75f1af5](https://github.com/carbon-design-system/carbon-labs/commit/75f1af53a6556564c10698109f19def1950acb16))
+
+
+
+
+
+# [0.31.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.30.0...@carbon-labs/web-components@0.31.0) (2025-06-23)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
 # [0.30.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.29.0...@carbon-labs/web-components@0.30.0) (2025-06-17)
 
 **Note:** Version bump only for package @carbon-labs/web-components

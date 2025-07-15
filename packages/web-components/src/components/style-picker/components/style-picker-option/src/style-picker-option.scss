@@ -1,0 +1,100 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/utilities/button-reset';
+
+@use '../../../../../globals/scss/vars' as *;
+@use '../../../defs/vars.scss' as *;
+
+$block-class: #{$clabs-prefix}--style-picker-option;
+$min-value: 0.0625rem;
+
+@mixin -outline($color, $thin: false) {
+  $thickness: $spacing-01 + $min-value;
+  @if $thin {
+    $thickness: $min-value;
+  }
+
+  box-shadow: 0 0 0 $thickness $color;
+}
+
+.#{$block-class}__container {
+  @include button-reset.reset;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $min-value;
+  color: theme.$icon-primary;
+  cursor: pointer;
+}
+
+@each $size, $value in $sizes {
+  .#{$block-class}--#{$size} .#{$block-class}__container {
+    block-size: $value;
+    inline-size: $value;
+  }
+}
+
+.#{$block-class}:focus {
+  outline: none;
+}
+
+.#{$block-class}__container::before {
+  position: absolute;
+  border-radius: inherit;
+  content: '';
+  inset: -$min-value;
+}
+
+.#{$block-class}:hover .#{$block-class}__container {
+  background-color: theme.$layer-hover;
+}
+
+.#{$block-class}:hover .#{$block-class}__container::before {
+  @include -outline(theme.$layer-hover);
+}
+
+.#{$block-class}:active .#{$block-class}__container::before {
+  @include -outline(theme.$layer-active);
+}
+
+.#{$block-class}:focus .#{$block-class}__container::before,
+.#{$block-class}[aria-selected='true']:focus
+  .#{$block-class}__container::before {
+  @include -outline(theme.$focus);
+}
+
+.#{$block-class}[aria-selected='true'] .#{$block-class}__container::before {
+  @include -outline(theme.$layer-selected-inverse, true);
+}
+
+.#{$block-class}__selection-indicator {
+  position: absolute;
+  z-index: 1;
+  color: theme.$layer-selected-inverse;
+  inset-block-start: -$spacing-03;
+  inset-inline-end: -$spacing-03;
+}
+
+.#{$block-class}__selection-indicator [data-icon-path='inner-path'] {
+  fill: theme.$icon-inverse;
+  opacity: 1;
+}
+
+.#{$block-class}[aria-selected='false'] .#{$block-class}__selection-indicator {
+  display: none;
+}
+
+.#{$block-class}:focus .#{$block-class}__selection-indicator {
+  color: theme.$focus;
+}

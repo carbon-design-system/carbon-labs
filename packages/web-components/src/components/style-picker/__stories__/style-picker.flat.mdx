@@ -1,0 +1,117 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import * as StylePickerFlatStories from './style-picker.flat.stories';
+import packageJson from '../package.json';
+
+<Meta of={StylePickerFlatStories} />
+
+# Style Picker
+
+- **Initiative owner(s):** Afsal K
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/style-picker)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/style-picker)
+
+## Overview
+
+The style picker allows users to customize icons, colors, or shapes in their UI, based on their preferences or requirements.
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-style-picker/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['style-picker'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+#### Flat variant with color and icon module
+
+```html
+  <clabs-style-picker
+    align="right"
+    ?open=${true}
+    heading="Choose color and pictogram"
+    kind="flat">
+    <cds-icon-button
+      slot="trigger"
+      kind="ghost"
+      @click=${toggleButton}>
+      ${ColorPalette16({ slot: 'icon' })}
+      <span slot="tooltip-content">Pictogram list</span>
+    </cds-icon-button>
+    <clabs-style-picker-modules slot="modules">
+      <clabs-style-picker-color-module
+        heading="Color"
+        size="sm"
+        .items=${colors}
+        selected-item="blue-60"
+        @clabs-style-picker-module-option-change=${(ev) =>
+          changeColor(ev)}></clabs-style-picker-color-module>
+      <clabs-style-picker-icon-module
+        heading="Icon"
+        size="sm"
+        .items=${icons}
+        selected-item="apple"
+        @clabs-style-picker-module-option-change=${(ev) =>
+          changeIcon(ev)}></clabs-style-picker-icon-module>
+    </clabs-style-picker-modules>
+  </clabs-style-picker>
+```
+
+#### Flat variant with color and pictogram module
+
+```html
+  <clabs-style-picker
+    .align="right"
+    ?open=${true}
+    heading="Choose color and pictogram"
+    kind="flat">
+    <cds-icon-button
+      slot="trigger"
+      kind="ghost"
+      @click=${toggleButton}>
+      ${ColorPalette16({ slot: 'icon' })}
+      <span slot="tooltip-content">Pictogram list</span>
+    </cds-icon-button>
+    <clabs-style-picker-modules slot="modules">
+      <clabs-style-picker-color-module
+        heading="Color"
+        size="sm"
+        .items=${colors}
+        selected-item="blue-60"
+        @clabs-style-picker-module-option-change=${(ev) =>
+          changeColor(ev)}></clabs-style-picker-color-module>
+      <clabs-style-picker-pictogram-module
+        heading="Pictogram"
+        size="lg"
+        .items=${pictograms}
+        selected-item="bangalore"
+        @clabs-style-picker-module-option-change=${(ev) =>
+          changePictogram(ev)}></clabs-style-picker-pictogram-module>
+    </clabs-style-picker-modules>
+  </clabs-style-picker>
+```
+
+### &lt;clabs-style-picker&gt; attributes and properties
+
+<ArgTypes of="clabs-style-picker" />

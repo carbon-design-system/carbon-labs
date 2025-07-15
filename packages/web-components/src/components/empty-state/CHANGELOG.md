@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.3.0...@carbon-labs/wc-empty-state@0.4.0) (2025-07-09)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.2.0...@carbon-labs/wc-empty-state@0.3.0) (2025-07-03)
+
+
+### Features
+
+* **style-picker:** implement flat and disclosed variants ([#684](https://github.com/carbon-design-system/carbon-labs/issues/684)) ([0f53ba3](https://github.com/carbon-design-system/carbon-labs/commit/0f53ba3d3b4d9860a72c2ea09e36580018c50fa9))
+
+
+
+
+
 # [0.2.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.1.0...@carbon-labs/wc-empty-state@0.2.0) (2025-04-10)
 
 

@@ -13,7 +13,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/reset';
 
 @use '../../../../../globals/scss/vars' as *;
-@use '@carbon/react/scss/theme';
+@use '@carbon/styles/scss/theme';
 @use '../../../defs/vars.scss' as *;
 
 $block-class: #{$clabs-prefix}--style-picker-section;

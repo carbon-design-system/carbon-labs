@@ -16,7 +16,6 @@ const config = {
     '@storybook/addon-onboarding',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-storysource',
     '@storybook/addon-webpack5-compiler-babel',
     'storybook-addon-accessibility-checker',
     {

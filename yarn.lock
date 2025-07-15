@@ -2661,7 +2661,6 @@ __metadata:
     "@storybook/addon-essentials": "npm:^8.4.7"
     "@storybook/addon-interactions": "npm:^8.4.7"
     "@storybook/addon-onboarding": "npm:^8.4.7"
-    "@storybook/addon-storysource": "npm:^8.4.7"
     "@storybook/addon-webpack5-compiler-babel": "npm:^3.0.3"
     "@storybook/blocks": "npm:^8.4.7"
     "@storybook/react": "npm:^8.4.7"
@@ -6944,19 +6943,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/addon-storysource@npm:^8.4.7":
-  version: 8.6.14
-  resolution: "@storybook/addon-storysource@npm:8.6.14"
-  dependencies:
-    "@storybook/source-loader": "npm:8.6.14"
-    estraverse: "npm:^5.2.0"
-    tiny-invariant: "npm:^1.3.1"
-  peerDependencies:
-    storybook: ^8.6.14
-  checksum: 10c0/5d8a6322477b3773eacdceef47456c2125b91e0dd0846b415679f83a6263b04d60ce8a3372d844030c63ea59d1c368c5f21793a397411c6feed913a6ee1309ef
-  languageName: node
-  linkType: hard
-
 "@storybook/addon-styling@npm:^1.3.7":
   version: 1.3.7
   resolution: "@storybook/addon-styling@npm:1.3.7"
@@ -7580,19 +7566,6 @@ __metadata:
     memoizerific: "npm:^1.11.3"
     qs: "npm:^6.10.0"
   checksum: 10c0/0057c348acc84c0a733a9833d405fc20ccc1e434c8a9cf7c8011ed04450a71d05cfc6bbccae1cbff5594b6a4a1bdfeff43a36a8e645cc2643879d13f384ef58e
-  languageName: node
-  linkType: hard
-
-"@storybook/source-loader@npm:8.6.14":
-  version: 8.6.14
-  resolution: "@storybook/source-loader@npm:8.6.14"
-  dependencies:
-    es-toolkit: "npm:^1.22.0"
-    estraverse: "npm:^5.2.0"
-    prettier: "npm:^3.1.1"
-  peerDependencies:
-    storybook: ^8.6.14
-  checksum: 10c0/66304a3724047eafab7d11bd50e439b1ebfedb3ef4ef314424777e512b0241cb50e9c82c3dc7b27e87afa1f040227ffa73e235520c26ab2b0b75cb7c33923dc8
   languageName: node
   linkType: hard
 
@@ -14304,7 +14277,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es-toolkit@npm:^1.22.0, es-toolkit@npm:^1.27.0":
+"es-toolkit@npm:^1.27.0":
   version: 1.39.7
   resolution: "es-toolkit@npm:1.39.7"
   dependenciesMeta:
@@ -23561,15 +23534,6 @@ __metadata:
   bin:
     prettier: bin-prettier.js
   checksum: 10c0/463ea8f9a0946cd5b828d8cf27bd8b567345cf02f56562d5ecde198b91f47a76b7ac9eae0facd247ace70e927143af6135e8cf411986b8cb8478784a4d6d724a
-  languageName: node
-  linkType: hard
-
-"prettier@npm:^3.1.1":
-  version: 3.6.2
-  resolution: "prettier@npm:3.6.2"
-  bin:
-    prettier: bin/prettier.cjs
-  checksum: 10c0/488cb2f2b99ec13da1e50074912870217c11edaddedeadc649b1244c749d15ba94e846423d062e2c4c9ae683e2d65f754de28889ba06e697ac4f988d44f45812
   languageName: node
   linkType: hard
 

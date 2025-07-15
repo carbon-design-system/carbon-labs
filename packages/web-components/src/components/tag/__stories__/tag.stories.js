@@ -84,7 +84,11 @@ export const Default = {
   args: defaultArgs,
   /**
    * Renders the template for Storybook
-   * @param {string} args.content - content to generate from
+   * @param {string} text - text
+   * @param {string} color - color
+   * @param {string} tooltipPosition - tooltip position
+   * @param {string} tooltipText - tooltip text
+   * @param {function} onClick - onclick
    * @returns {TemplateResult<1>}
    */
   render: ({ text, color, tooltipPosition, tooltipText, onClick }) =>

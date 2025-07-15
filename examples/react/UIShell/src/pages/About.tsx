@@ -16,7 +16,7 @@ export const About = ({ usingOutlet }: { usingOutlet?: boolean }) => {
   ) : (
     <HeaderExample>
       {/* Theme goes here for non-outlet. Must be just after header */}
-      <Theme as={Content} theme='white'>
+      <Theme as={Content} theme="white">
         <h1>An empty about page.</h1>
       </Theme>
     </HeaderExample>

@@ -70,7 +70,7 @@ export const HeaderExample = ({ children }) => {
     <HeaderContainer
       render={({ isSideNavExpanded, onClickSideNavExpand }) => (
         <>
-          <Header aria-label='IBM Platform Name'>
+          <Header aria-label="IBM Platform Name">
             <SkipToContent />
             <HeaderMenuButton
               aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
@@ -80,27 +80,26 @@ export const HeaderExample = ({ children }) => {
               isCollapsible //shows menu at desktop
               renderMenuIcon={<Switcher size={20} />}
             />
-            <HeaderName as={RouterLink} to='/' prefix='IBM'>
+            <HeaderName as={RouterLink} to="/" prefix="IBM">
               [Platform]
             </HeaderName>
 
-            <HeaderPopover align='bottom'>
+            <HeaderPopover align="bottom">
               <HeaderPopoverButton
-                label='Trial Countdown'
+                label="Trial Countdown"
                 as={Button}
-                kind='ghost'
-              >
+                kind="ghost">
                 <TrialCountdown count={30} />
               </HeaderPopoverButton>
               <HeaderPopoverContent>
                 <p>Your trial ends on May 13, 2025</p>
-                <Link href='#' renderIcon={Share}>
+                <Link href="#" renderIcon={Share}>
                   Invite team members
                 </Link>
-                <Link href='#' renderIcon={User}>
+                <Link href="#" renderIcon={User}>
                   Contact sales
                 </Link>
-                <Button size='sm' renderIcon={ShoppingCart}>
+                <Button size="sm" renderIcon={ShoppingCart}>
                   Buy
                 </Button>
               </HeaderPopoverContent>
@@ -114,13 +113,12 @@ export const HeaderExample = ({ children }) => {
           {/* Define platform level side nav (multi product) */}
           <SideNav
             isTreeview={true}
-            aria-label='Main navigation'
+            aria-label="Main navigation"
             expanded={isSideNavExpanded}
             onSideNavBlur={onClickSideNavExpand}
             isCollapsible
             onOverlayClick={onClickSideNavExpand}
-            className='nav--global'
-          >
+            className="nav--global">
             <SideNavItems>
               {routesInSideNav.map(({ path, carbon }) =>
                 carbon?.subMenu ? (
@@ -128,30 +126,27 @@ export const HeaderExample = ({ children }) => {
                     renderIcon={carbon?.icon}
                     title={carbon?.label!}
                     primary
-                    defaultExpanded={carbon?.product?.defaultExpanded}
-                  >
+                    defaultExpanded={carbon?.product?.defaultExpanded}>
                     <SideNavProductExample routesInSideNav={carbon?.subMenu!} />
                   </SideNavMenu>
                 ) : (
                   <SideNavLink
                     renderIcon={carbon?.icon}
                     as={RouterLink}
-                    to={path}
-                  >
+                    to={path}>
                     {carbon?.label!}
                   </SideNavLink>
-                ),
+                )
               )}
             </SideNavItems>
           </SideNav>
 
           {/* Define current product side nav */}
           <SideNav
-            hideRailBreakpointDown='md'
+            hideRailBreakpointDown="md"
             isRail
             isChildOfHeader={false}
-            aria-label='Side navigation'
-          >
+            aria-label="Side navigation">
             <SideNavItems>
               <SideNavProductExample
                 routesInSideNav={currentProductSubMenu?.carbon?.subMenu!}

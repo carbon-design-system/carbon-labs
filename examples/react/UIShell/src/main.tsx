@@ -33,10 +33,10 @@ import { Content, Theme } from '@carbon/react';
 
 // With outlet
 const Layout = () => (
-  <Theme theme='g100'>
+  <Theme theme="g100">
     <HeaderExample>
       {/* Theme can go here for an outlet, must be just after header */}
-      <Theme as={Content} theme='white'>
+      <Theme as={Content} theme="white">
         <Outlet />
       </Theme>
     </HeaderExample>
@@ -58,5 +58,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </Route>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

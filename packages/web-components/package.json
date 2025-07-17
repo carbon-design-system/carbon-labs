@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/web-components",
-  "version": "0.35.0",
+  "version": "0.37.0",
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",
@@ -18,7 +18,7 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build": "cem analyze --config ./custom-elements-manifest.config.js",
+    "build": "lerna run build --scope '@carbon-labs/wc-*' --scope '@carbon-labs/ai-chat' --include-dependencies && cem analyze --config ./custom-elements-manifest.config.js",
     "clean": "rimraf es lib storybook-static",
     "storybook": "storybook dev -p 6007",
     "generate": "node tasks/generate",
@@ -36,7 +36,7 @@
     "@carbon/icon-helpers": "10.60.0",
     "@carbon/icons": "11.60.0",
     "@carbon/layout": "11.32.0",
-    "@carbon/motion": "11.29.0",
+    "@carbon/motion": "11.30.0",
     "@carbon/pictograms": "^12.53.0",
     "@carbon/themes": "11.55.0",
     "@carbon/type": "11.38.0",
@@ -64,6 +64,7 @@
     "commander": "^13.0.0",
     "cssnano": "^7.0.0",
     "gitignore-to-glob": "^0.3.0",
+    "lerna": "^8.2.3",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

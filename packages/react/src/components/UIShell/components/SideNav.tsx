@@ -288,7 +288,7 @@ function SideNavRenderFunction(
 
           if (slotElement) {
             const firstElementAfterSlot =
-              slotElement.nextElementSibling?.nextElementSibling?.querySelector(
+              slotElement.nextElementSibling?.querySelector(
                 'a, button'
               ) as HTMLElement;
 

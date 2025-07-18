@@ -11,19 +11,27 @@ import { LitElement } from 'lit';
 // @ts-ignore
 import styles from './style-picker-option.scss?inline';
 import { property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import CLABSStylePickerOption from '../style-picker-option';
-import { Size } from '../../../defs/style-picker-option.types';
-
-const { stablePrefix: clabsPrefix } = settings;
+import { consume } from '@lit/context';
+import {
+  stylePickerContext,
+  StylePickerContextType,
+} from '../../../context/style-picker-context';
+import { prefix } from '../../../defs';
 
 /**
- * Style picker option.
+ * style-picker-option extends LitElement.
  *
  * @fires clabs-style-picker-option-change - fired when an option is selected/changed.
  */
 class StylePickerOption extends LitElement {
   static styles = styles;
+
+  /**
+   * Consume style-picker-context
+   */
+  @consume({ context: stylePickerContext, subscribe: true })
+  _stylePickerContext?: StylePickerContextType;
 
   @property({ type: String, reflect: true, attribute: 'label' })
   label = '';
@@ -34,19 +42,32 @@ class StylePickerOption extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'selected' })
   selected = false;
 
-  @property({ reflect: true, attribute: 'size' })
-  size: Size = 'sm';
-
   /**
    * @param {string} triggeredBy - the element that triggered the change.
    */
   protected handleClick(triggeredBy: EventTarget | null) {
+    this.selected = true;
+
+    const section = this.closest(`${prefix}-section`);
+    const allOptions = section?.querySelectorAll(`${prefix}-option`);
+
+    allOptions?.forEach((optionEl) => {
+      if (optionEl?.getAttribute('value') === this.value) {
+        optionEl.setAttribute('selected', '');
+      } else {
+        optionEl.removeAttribute('selected');
+      }
+    });
+
     const init = {
       bubbles: true,
       cancelable: true,
       composed: true,
       detail: {
         triggeredBy,
+        value: this.value,
+        label: this.label,
+        selected: this.selected,
       },
     };
 
@@ -62,7 +83,7 @@ class StylePickerOption extends LitElement {
    * The name of the custom event fired after an option is changed.
    */
   static get eventOptionChange() {
-    return `${clabsPrefix}-style-picker-option-change`;
+    return `${prefix}-option-change`;
   }
 }
 

@@ -7,9 +7,9 @@
 
 $css--plex: true !default;
 
-@use '@carbon/react/scss/spacing' as *;
-@use '@carbon/react/scss/theme';
-@use '@carbon/react/scss/utilities/button-reset';
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/utilities/button-reset';
 
 @use '../../../../../globals/scss/vars' as *;
 @use '../../../defs/vars.scss' as *;

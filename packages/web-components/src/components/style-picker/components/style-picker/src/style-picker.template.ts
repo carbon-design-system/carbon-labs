@@ -18,10 +18,9 @@ const { stablePrefix: clabsPrefix } = settings;
 export const blockClass = `${clabsPrefix}--style-picker`;
 
 /**
- * Lit template for card
+ * Lit template for style-picker component.
  *
  * @param {object} customElementClass Class functionality for the custom element
- * @returns {TemplateResult<1>} Lit html template
  */
 export const stylePickerTemplate = (customElementClass) => {
   const { align, open, heading } = customElementClass;
@@ -33,8 +32,8 @@ export const stylePickerTemplate = (customElementClass) => {
         <div class=${`${blockClass}__header`}>
           <strong class=${`${blockClass}__heading`}>${heading}</strong>
         </div>
-        <cds-layer class=${`${blockClass}__modules`} level="1">
-          <slot name="modules"></slot>
+        <cds-layer class=${`${blockClass}__sections`} level="1">
+          <slot></slot>
         </cds-layer>
       </div>
     </cds-popover-content>

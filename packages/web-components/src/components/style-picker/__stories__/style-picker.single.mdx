@@ -44,7 +44,7 @@ that is implemented.
 
 ### HTML
 
-#### Single variant with color module
+#### Single variant with color options
 
 ```html
 <clabs-style-picker
@@ -58,19 +58,31 @@ that is implemented.
     ${ColorPalette16({ slot: 'icon' })}
     <span slot="tooltip-content">Color palette</span>
   </cds-icon-button>
-  <clabs-style-picker-modules slot="modules">
-    <clabs-style-picker-color-module
-      heading="Color"
-      size="sm"
-      .items=${colors}
-      selected-item="blue-60"
-      @clabs-style-picker-module-option-change=${(ev) =>
-        changeColor(ev)}></clabs-style-picker-color-module>
-  </clabs-style-picker-modules>
+  <clabs-style-picker-section>
+    ${colors.map(
+      (group) =>
+        html`<clabs-style-picker-group heading=${group.label}>
+          ${group.items.map(
+            (item) => html`
+              <clabs-style-picker-option
+                value=${item.color}
+                label=${item.label}
+                ?selected=${item.label === 'Blue 60'}
+                @clabs-style-picker-option-change=${(ev) =>
+                  changeColor(ev)}>
+                <clabs-style-picker-color
+                  color=${item.color}
+                  label=${item.label}></clabs-style-picker-color>
+              </clabs-style-picker-option>
+            `
+          )}
+        </clabs-style-picker-group> `
+    )}
+  </clabs-style-picker-section>
 </clabs-style-picker>
 ```
 
-#### Single variant with icon module
+#### Single variant with icon options
 
 ```html
 <clabs-style-picker
@@ -84,19 +96,27 @@ that is implemented.
     ${ColorPalette16({ slot: 'icon' })}
     <span slot="tooltip-content">Icon list</span>
   </cds-icon-button>
-  <clabs-style-picker-modules slot="modules">
-    <clabs-style-picker-icon-module
-      heading="Icon"
-      size="sm"
-      .items=${icons}
-      selected-item="apple"
-      @clabs-style-picker-module-option-change=${(ev) =>
-        changeIcon(ev)}></clabs-style-picker-icon-module>
-  </clabs-style-picker-modules>
+    <clabs-style-picker-section>
+    ${icons.map(
+      (item) =>
+        html`
+          <clabs-style-picker-option
+            value=${item.value}
+            label=${item.label}
+            ?selected=${item.value === 'apple'}
+            @clabs-style-picker-option-change=${(ev) =>
+              changeIcon(ev)}>
+            <clabs-style-picker-icon>
+              ${item.renderIcon()}
+            </clabs-style-picker-icon>
+          </clabs-style-picker-option>
+        `
+    )}
+  </clabs-style-picker-section>
 </clabs-style-picker>
 ```
 
-#### Single variant with pictogram module
+#### Single variant with pictogram options
 
 ```html
 <clabs-style-picker
@@ -110,15 +130,33 @@ that is implemented.
     ${ColorPalette16({ slot: 'icon' })}
     <span slot="tooltip-content">Pictogram list</span>
   </cds-icon-button>
-  <clabs-style-picker-modules slot="modules">
-    <clabs-style-picker-pictogram-module
-      heading="Pictogram"
-      size="lg"
-      .items=${pictograms}
-      selected-item="bangalore"
-      @clabs-style-picker-module-option-change=${(ev) =>
-        changePictogram(ev)}></clabs-style-picker-pictogram-module>
-  </clabs-style-picker-modules>
+  <clabs-style-picker-section size="lg">
+    ${pictograms.map(
+      (group) =>
+        html`<clabs-style-picker-group heading=${group.label}>
+          ${group.items.map(
+            (item) => html`
+              <clabs-style-picker-option
+                value=${item.value}
+                label=${item.label}
+                ?selected=${item.label === 'Bangalore'}
+                @clabs-style-picker-option-change=${(ev) =>
+                  changePictogram(ev)}>
+                ${renderCarbonPictogram({
+                  ...item.pictogram,
+                  attrs: {
+                    ...item.pictogram.attrs,
+                    width: '3rem',
+                    height: '3rem',
+                    'aria-label': item.label,
+                  },
+                })}
+              </clabs-style-picker-option>
+            `
+          )}
+        </clabs-style-picker-group> `
+    )}
+  </clabs-style-picker-section>
 </clabs-style-picker>
 ```
 

@@ -15,7 +15,7 @@ import StylePicker from './src/style-picker.js';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Style picker component.
+ * Style picker component class extending the base StylePicker class.
  *
  * @element clabs-style-picker
  */

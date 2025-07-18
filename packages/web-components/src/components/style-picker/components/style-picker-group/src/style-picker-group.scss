@@ -1,0 +1,39 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/components/contained-list' as *;
+@use '@carbon/styles/scss/reset';
+
+@use '../../../../../globals/scss/vars' as *;
+@use '../../../defs/vars.scss' as *;
+
+$block-class: #{$clabs-prefix}--style-picker-group;
+
+.#{$block-class}__group > ul,
+.#{$block-class}__items {
+  display: grid;
+  padding: $spacing-05;
+  gap: $spacing-03;
+}
+
+@each $size, $value in $sizes {
+  .#{$block-class}--#{$size} {
+    .#{$block-class}__group > ul,
+    .#{$block-class}__items {
+      grid-template-columns: repeat(auto-fill, $value);
+    }
+  }
+}
+
+.#{$block-class} .#{$cds-prefix}--contained-list__header {
+  z-index: 2;
+}

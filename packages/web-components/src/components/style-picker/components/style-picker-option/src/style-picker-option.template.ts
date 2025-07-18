@@ -19,10 +19,12 @@ export const blockClass = `${clabsPrefix}--style-picker-option`;
  * Lit template for style-picker-option component
  *
  * @param {object} customElementClass Class functionality for the custom element
- * @returns {TemplateResult<1>} Lit html template
+ *
  */
 export const stylePickerOptionTemplate = (customElementClass) => {
-  const { label, value, selected, size, handleClick } = customElementClass;
+  const { label, value, selected, handleClick, _stylePickerContext } =
+    customElementClass;
+  const { size } = _stylePickerContext;
 
   return html`<li
     class=${`${blockClass} ${blockClass}--${size}`}

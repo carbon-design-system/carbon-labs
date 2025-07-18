@@ -8,22 +8,23 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { stylePickerOptionTemplate } from './src/style-picker-option.template.js';
+import { stylePickerGroupTemplate } from './src/style-picker-group.template';
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../context/style-picker-context.js';
-import StylePickerOption from './src/style-picker-option.js';
-import { prefix } from '../../defs/index.js';
+import StylePickerGroup from './src/style-picker-group';
+import { TemplateResult } from 'lit';
+import { prefix } from '../../defs';
 
 /**
- * Style picker option extends StylePickerOption base class.
+ * StylePickerGroup component class extending the StylePickerGroup base class.
  *
- * @elements clabs-style-picker-option
+ * @elements clabs-style-picker-group
  */
-@customElement(`${prefix}-option`)
-class CLABSStylePickerOption extends StylePickerOption {
+@customElement(`${prefix}-group`)
+class CLABSStylePickerGroup extends StylePickerGroup {
   @consume({ context: stylePickerContext, subscribe: true })
   stylePickerContext?: StylePickerContextType;
 
@@ -32,9 +33,9 @@ class CLABSStylePickerOption extends StylePickerOption {
    *
    * @returns {TemplateResult<1>}
    */
-  render() {
-    return stylePickerOptionTemplate(this);
+  render(): TemplateResult<1> {
+    return stylePickerGroupTemplate(this);
   }
 }
 
-export default CLABSStylePickerOption;
+export default CLABSStylePickerGroup;

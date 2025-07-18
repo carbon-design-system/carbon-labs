@@ -15,10 +15,8 @@ import {
   ChartLineData,
   DataSet,
   Export,
-  FlowModeler,
   Sql,
   Term,
-  Tuning,
 } from '@carbon/react/icons';
 
 export const workspaceData = [
@@ -65,6 +63,39 @@ export const headerTiles = [
   },
   {
     id: 2,
+    label: 'One glass tile',
+    tiles: [
+      {
+        id: 'tile-1',
+        href: '#',
+        title: 'Load data',
+        subtitle: 'with Data explorer',
+        mainIcon: DataSet,
+      },
+    ],
+  },
+  {
+    id: 3,
+    label: 'Two glass tiles',
+    tiles: [
+      {
+        id: 'tile-1',
+        href: '#',
+        title: 'Load data',
+        subtitle: 'with Data explorer',
+        mainIcon: DataSet,
+      },
+      {
+        id: 'tile-2',
+        href: '#',
+        title: 'Monitor data performance and system capacity',
+        subtitle: 'with Monitoring hub',
+        mainIcon: ChartLineData,
+      },
+    ],
+  },
+  {
+    id: 4,
     label: 'Three glass tiles',
     tiles: [
       {
@@ -91,7 +122,7 @@ export const headerTiles = [
     ],
   },
   {
-    id: 3,
+    id: 5,
     label: 'Four glass tiles',
     tiles: [
       {
@@ -125,213 +156,7 @@ export const headerTiles = [
     ],
   },
   {
-    id: 4,
-    label: 'Five glass tiles',
-    tiles: [
-      {
-        id: 'tile-1',
-        href: '#',
-        title: 'Load data',
-        subtitle: 'with Data explorer',
-        mainIcon: DataSet,
-      },
-      {
-        id: 'tile-2',
-        href: '#',
-        title: 'Monitor data performance and system capacity',
-        subtitle: 'with Monitoring hub',
-        mainIcon: ChartLineData,
-      },
-      {
-        id: 'tile-3',
-        href: '#',
-        title: 'Create and run SQL queries',
-        subtitle: 'with SQL editor',
-        mainIcon: Sql,
-      },
-      {
-        id: 'tile-4',
-        href: '#',
-        title: 'Export data',
-        mainIcon: Export,
-        secondaryIcon: ArrowRight,
-      },
-      {
-        id: 'tile-5',
-        href: '#',
-        title: 'Chat and build prompts with foundation models',
-        subtitle: 'with Prompt Lab',
-        mainIcon: Term,
-      },
-    ],
-  },
-  {
-    id: 5,
-    label: 'Six glass tiles',
-    tiles: [
-      {
-        id: 'tile-1',
-        href: '#',
-        title: 'Load data',
-        subtitle: 'with Data explorer',
-        mainIcon: DataSet,
-      },
-      {
-        id: 'tile-2',
-        href: '#',
-        title: 'Monitor data performance and system capacity',
-        subtitle: 'with Monitoring hub',
-        mainIcon: ChartLineData,
-      },
-      {
-        id: 'tile-3',
-        href: '#',
-        title: 'Create and run SQL queries',
-        subtitle: 'with SQL editor',
-        mainIcon: Sql,
-      },
-      {
-        id: 'tile-4',
-        href: '#',
-        title: 'Export data',
-        mainIcon: Export,
-        secondaryIcon: ArrowRight,
-      },
-      {
-        id: 'tile-5',
-        href: '#',
-        title: 'Chat and build prompts with foundation models',
-        subtitle: 'with Prompt Lab',
-        mainIcon: Term,
-      },
-      {
-        id: 'tile-6',
-        href: '#',
-        title: 'Tune a foundation model with labeled data',
-        subtitle: 'with Tuning Studio',
-        mainIcon: Tuning,
-      },
-    ],
-  },
-  {
     id: 6,
-    label: 'Seven glass tiles',
-    tiles: [
-      {
-        id: 'tile-1',
-        href: '#',
-        title: 'Load data',
-        subtitle: 'with Data explorer',
-        mainIcon: DataSet,
-      },
-      {
-        id: 'tile-2',
-        href: '#',
-        title: 'Monitor data performance and system capacity',
-        subtitle: 'with Monitoring hub',
-        mainIcon: ChartLineData,
-      },
-      {
-        id: 'tile-3',
-        href: '#',
-        title: 'Create and run SQL queries',
-        subtitle: 'with SQL editor',
-        mainIcon: Sql,
-      },
-      {
-        id: 'tile-4',
-        href: '#',
-        title: 'Export data',
-        mainIcon: Export,
-        secondaryIcon: ArrowRight,
-      },
-      {
-        id: 'tile-5',
-        href: '#',
-        title: 'Chat and build prompts with foundation models',
-        subtitle: 'with Prompt Lab',
-        mainIcon: Term,
-      },
-      {
-        id: 'tile-6',
-        href: '#',
-        title: 'Tune a foundation model with labeled data',
-        subtitle: 'with Tuning Studio',
-        mainIcon: Tuning,
-      },
-      {
-        id: 'tile-7',
-        href: '#',
-        title: 'Build models as a visual flow',
-        subtitle: 'with SPSS Modeler',
-        mainIcon: FlowModeler,
-      },
-    ],
-  },
-  {
-    id: 7,
-    label: 'Eight glass tiles',
-    tiles: [
-      {
-        id: 'tile-1',
-        href: '#',
-        title: 'Load data',
-        subtitle: 'with Data explorer',
-        mainIcon: DataSet,
-      },
-      {
-        id: 'tile-2',
-        href: '#',
-        title: 'Monitor data performance and system capacity',
-        subtitle: 'with Monitoring hub',
-        mainIcon: ChartLineData,
-      },
-      {
-        id: 'tile-3',
-        href: '#',
-        title: 'Create and run SQL queries',
-        subtitle: 'with SQL editor',
-        mainIcon: Sql,
-      },
-      {
-        id: 'tile-4',
-        href: '#',
-        title: 'Export data',
-        mainIcon: Export,
-        secondaryIcon: ArrowRight,
-      },
-      {
-        id: 'tile-5',
-        href: '#',
-        title: 'Chat and build prompts with foundation models',
-        subtitle: 'with Prompt Lab',
-        mainIcon: Term,
-      },
-      {
-        id: 'tile-6',
-        href: '#',
-        title: 'Tune a foundation model with labeled data',
-        subtitle: 'with Tuning Studio',
-        mainIcon: Tuning,
-      },
-      {
-        id: 'tile-7',
-        href: '#',
-        title: 'Build models as a visual flow',
-        subtitle: 'with SPSS Modeler',
-        mainIcon: FlowModeler,
-      },
-      {
-        id: 'tile-8',
-        href: '#',
-        title: 'Create and run python queries',
-        subtitle: 'with Prompt Lab',
-        mainIcon: DataSet,
-      },
-    ],
-  },
-  {
-    id: 8,
     label: 'Loading, non-interactive and disabled cards',
     tiles: [
       {
@@ -366,7 +191,7 @@ export const headerTiles = [
     ],
   },
   {
-    id: 9,
+    id: 7,
     label: 'Custom content tasks',
     tiles: [
       {

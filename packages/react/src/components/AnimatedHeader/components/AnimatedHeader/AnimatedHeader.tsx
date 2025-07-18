@@ -152,7 +152,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   }, [isReduced]);
 
   return (
-    <section className={`${blockClass}${!open ? ` ${collapsed}` : ''}`}>
+    <header
+      className={`${blockClass}${!open ? ` ${collapsed}` : ''}`}
+      aria-label="Animated header">
       <Grid>
         <div className={`${blockClass}__gradient--overlay`} />
 
@@ -164,6 +166,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               className={`${blockClass}__static`}
               // eslint-disable-next-line react/forbid-dom-props
               style={{ backgroundImage: `url(${headerStatic})` }}
+              aria-hidden="true"
             />
           </div>
         )}
@@ -173,7 +176,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             ref={animationContainer}
             className={`${blockClass}__lottie-animation${
               !open ? ` ${lottieCollapsed}` : ''
-            }`}></div>
+            }`}
+            aria-hidden="true"></div>
         </div>
 
         <Column sm={4} md={8} lg={16}>
@@ -192,6 +196,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             sm={4}
             md={8}
             lg={4}
+            id={`${blockClass}-content`}
             className={`${blockClass}__left-area-container${
               !open ? ` ${descriptionCollapsed}` : ''
             }`}>
@@ -222,7 +227,10 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                 />
               </div>
             )}
-            <div className={`${blockClass}__tiles-container`}>
+            <div
+              className={`${blockClass}__tiles-container`}
+              aria-label="Task Tiles"
+              role="list">
               {selectedTileGroup.tiles.map((tile) => {
                 return (
                   <BaseTile
@@ -261,12 +269,17 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             id={`${blockClass}__button-collapse`}
             kind="ghost"
             renderIcon={open ? ChevronUp : ChevronDown}
-            onClick={handleButtonCollapseClick}>
+            onClick={handleButtonCollapseClick}
+            aria-expanded={open}
+            aria-controls={`${blockClass}-content`}
+            aria-label={
+              open ? `Collapse header details` : `Expand header details`
+            }>
             {open ? collapseButtonLabel : expandButtonLabel}
           </Button>
         </div>
       </Grid>
-    </section>
+    </header>
   );
 };
 

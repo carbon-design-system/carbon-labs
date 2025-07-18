@@ -78,6 +78,8 @@ const TasksController = ({
         setSelectedTileGroup?.(e);
         dropdownCustomOnChange?.(e);
       },
+      'aria-label':
+        dropdownOverrideProps['aria-label'] || 'Task group selector',
       ...dropdownOverrideProps,
     };
   }, [

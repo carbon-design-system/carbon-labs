@@ -69,6 +69,11 @@ const WorkspaceSelector = ({
         workspaceSelectorConfig?.setSelectedWorkspace?.(e);
         dropdownCustomOnChange?.(e);
       },
+      'aria-label':
+        dropdownOverrideProps['aria-label'] ||
+        (userName
+          ? `Workspace selector for ${userName}`
+          : 'Workspace selector'),
       ...dropdownOverrideProps,
     };
   }, [

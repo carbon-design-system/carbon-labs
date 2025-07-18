@@ -57,7 +57,12 @@ export const GlassTile: React.FC<GlassTileProps> = ({
     return (
       <div
         className={`${prefix}--animated-header__tile ${blockClass}`}
-        key={id}>
+        key={id}
+        aria-label={
+          title ? `${title} (not interactive)` : 'Glass Tile (not interactive)'
+        }
+        title={isDisabled ? disabledTaskLabel ?? '' : ''}
+        tabIndex={-1}>
         {body}
       </div>
     );
@@ -69,6 +74,15 @@ export const GlassTile: React.FC<GlassTileProps> = ({
         glassTileClickHandler?.();
       }}
       className={`${prefix}--animated-header__tile ${blockClass}`}
+      aria-label={
+        title
+          ? isDisabled || isLoading
+            ? `${title} (disabled)`
+            : `Open ${title}`
+          : 'Glass Tile'
+      }
+      role="listitem"
+      tabIndex={isDisabled || isLoading ? -1 : 0}
       key={id}
       href={href ?? undefined}
       disabled={isDisabled || isLoading}

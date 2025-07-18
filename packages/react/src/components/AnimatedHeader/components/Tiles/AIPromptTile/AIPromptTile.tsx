@@ -74,6 +74,8 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
       className={`${prefix}--animated-header__tile ${blockClass}${
         isDisabled ? ' ' + disabled : ''
       }`}
+      aria-label={title ? `AI Prompt for ${title}` : 'AI Prompt Tile'}
+      role="listitem"
       title={isDisabled ? disabledTaskLabel ?? '' : ''}
       key={id}>
       {isLoading ? (

@@ -442,7 +442,8 @@ export const Demo = () => {
             <SideNav
               isTreeview={true}
               aria-label="Main navigation"
-              expanded={isSideNavExpanded}
+              // expanded={isSideNavExpanded}
+              expanded={true}
               onSideNavBlur={onClickSideNavExpand}
               isCollapsible
               onOverlayClick={onClickSideNavExpand}
@@ -473,9 +474,7 @@ export const Demo = () => {
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
                     </SideNavMenuItem>
-                    <SideNavMenuItem
-                      isActive
-                      href="http://www.carbondesignsystem.com">
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
                     </SideNavMenuItem>
                     <SideNavMenu title="Menu level 3">

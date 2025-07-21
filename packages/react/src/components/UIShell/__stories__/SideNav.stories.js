@@ -219,12 +219,36 @@ export const SideNavWithThirdLevel = () => (
           Item level 2
         </SideNavMenuItem>
         <SideNavMenu title="Sub-menu level 2" defaultExpanded={true}>
-          <SideNavMenuItem isActive href="http://www.carbondesignsystem.com">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
           </SideNavMenuItem>
           <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
           </SideNavMenuItem>
+          <SideNavMenu
+            renderIcon={Fade}
+            title="Sub-menu level 3"
+            defaultExpanded={true}>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenu
+              renderIcon={Fade}
+              title="Sub-menu level 4"
+              defaultExpanded={true}>
+              <SideNavMenuItem
+                isActive
+                href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+              <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+            </SideNavMenu>
+          </SideNavMenu>
         </SideNavMenu>
       </SideNavMenu>
     </SideNavItems>
@@ -264,12 +288,36 @@ export const SideNavWithThirdLevelIcons = () => (
           renderIcon={Fade}
           title="Sub-menu level 2"
           defaultExpanded={true}>
-          <SideNavMenuItem isActive href="http://www.carbondesignsystem.com">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
           </SideNavMenuItem>
           <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
           </SideNavMenuItem>
+          <SideNavMenu
+            renderIcon={Fade}
+            title="Sub-menu level 3"
+            defaultExpanded={true}>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenu
+              renderIcon={Fade}
+              title="Sub-menu level 4"
+              defaultExpanded={true}>
+              <SideNavMenuItem
+                isActive
+                href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+              <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+            </SideNavMenu>
+          </SideNavMenu>
         </SideNavMenu>
       </SideNavMenu>
     </SideNavItems>

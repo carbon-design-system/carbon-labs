@@ -185,7 +185,7 @@ export const ColorAndIcon = {
                         value=${item.value}
                         label=${item.label}
                         ?selected=${item.value === 'apple'}
-                        @clabs-style-picker-option-change=${(ev) =>
+                        @clabs-style-picker-option-select=${(ev) =>
                           changeIcon(ev)}>
                         <clabs-style-picker-icon>
                           ${item.renderIcon()}
@@ -204,7 +204,7 @@ export const ColorAndIcon = {
                             value=${item.color}
                             label=${item.label}
                             ?selected=${item.label === 'Blue 60'}
-                            @clabs-style-picker-option-change=${(ev) =>
+                            @clabs-style-picker-option-select=${(ev) =>
                               changeColor(ev)}>
                             <clabs-style-picker-color
                               color=${item.color}
@@ -283,7 +283,7 @@ export const IconColorPictogram = {
                         value=${item.value}
                         label=${item.label}
                         ?selected=${item.value === 'apple'}
-                        @clabs-style-picker-option-change=${(ev) =>
+                        @clabs-style-picker-option-select=${(ev) =>
                           changeIcon(ev)}>
                         <clabs-style-picker-icon>
                           ${item.renderIcon()}
@@ -302,7 +302,7 @@ export const IconColorPictogram = {
                             value=${item.color}
                             label=${item.label}
                             ?selected=${item.label === 'Blue 60'}
-                            @clabs-style-picker-option-change=${(ev) =>
+                            @clabs-style-picker-option-select=${(ev) =>
                               changeColor(ev)}>
                             <clabs-style-picker-color
                               color=${item.color}
@@ -323,7 +323,7 @@ export const IconColorPictogram = {
                             value=${item.value}
                             label=${item.label}
                             ?selected=${item.label === 'Amsterdam'}
-                            @clabs-style-picker-option-change=${(ev) =>
+                            @clabs-style-picker-option-select=${(ev) =>
                               changePictogram(ev, true)}>
                             ${renderCarbonPictogram({
                               ...item.pictogram,

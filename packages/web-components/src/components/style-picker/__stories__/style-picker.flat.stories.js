@@ -178,8 +178,8 @@ export const ColorAndIcon = {
                   <clabs-style-picker-option
                     value=${item.color}
                     label=${item.label}
-                    ?selected=${item.label === 'Yellow 30'}
-                    @clabs-style-picker-option-change=${(ev) =>
+                    ?selected=${item.label === 'Yellow 20'}
+                    @clabs-style-picker-option-select=${(ev) =>
                       changeColor(ev)}>
                     <clabs-style-picker-color
                       color=${item.color}
@@ -196,7 +196,7 @@ export const ColorAndIcon = {
                       value=${item.value}
                       label=${item.label}
                       ?selected=${item.value === 'apple'}
-                      @clabs-style-picker-option-change=${(ev) =>
+                      @clabs-style-picker-option-select=${(ev) =>
                         changeIcon(ev)}>
                       <clabs-style-picker-icon>
                         ${item.renderIcon()}
@@ -269,8 +269,8 @@ export const ColorAndPictogram = {
                   <clabs-style-picker-option
                     value=${item.color}
                     label=${item.label}
-                    ?selected=${item.label === 'Yellow 30'}
-                    @clabs-style-picker-option-change=${(ev) =>
+                    ?selected=${item.label === 'Yellow 20'}
+                    @clabs-style-picker-option-select=${(ev) =>
                       changeColor(ev)}>
                     <clabs-style-picker-color
                       color=${item.color}
@@ -286,7 +286,7 @@ export const ColorAndPictogram = {
                     value=${item.value}
                     label=${item.label}
                     ?selected=${item.label === 'Amsterdam'}
-                    @clabs-style-picker-option-change=${(ev) =>
+                    @clabs-style-picker-option-select=${(ev) =>
                       changePictogram(ev)}>
                     ${renderCarbonPictogram({
                       ...item.pictogram,

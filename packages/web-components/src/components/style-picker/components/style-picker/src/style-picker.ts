@@ -75,8 +75,8 @@ class StylePicker extends LitElement {
   updated(changed: PropertyValues<this>) {
     if (changed.has('kind')) {
       this._stylePickerContext = {
-        kind: this.kind,
         ...this._stylePickerContext,
+        kind: this.kind,
       };
     }
   }

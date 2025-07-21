@@ -187,7 +187,7 @@ export const Color = {
                           value=${item.color}
                           label=${item.label}
                           ?selected=${item.label === 'Blue 60'}
-                          @clabs-style-picker-option-change=${(ev) =>
+                          @clabs-style-picker-option-select=${(ev) =>
                             changeColor(ev)}>
                           <clabs-style-picker-color
                             color=${item.color}
@@ -259,7 +259,7 @@ export const Icon = {
                       value=${item.value}
                       label=${item.label}
                       ?selected=${item.value === 'apple'}
-                      @clabs-style-picker-option-change=${(ev) =>
+                      @clabs-style-picker-option-select=${(ev) =>
                         changeIcon(ev)}>
                       <clabs-style-picker-icon>
                         ${item.renderIcon()}
@@ -334,7 +334,7 @@ export const Pictogram = {
                           value=${item.value}
                           label=${item.label}
                           ?selected=${item.label === 'Bangalore'}
-                          @clabs-style-picker-option-change=${(ev) =>
+                          @clabs-style-picker-option-select=${(ev) =>
                             changePictogram(ev)}>
                           ${renderCarbonPictogram({
                             ...item.pictogram,

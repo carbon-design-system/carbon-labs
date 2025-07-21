@@ -2,7 +2,8 @@
 
 exports[`AnimatedHeader renders as expected - Component API should match snapshot 1`] = `
 <div>
-  <section
+  <header
+    aria-label="Animated header"
     class="clabs--animated-header"
   >
     <div
@@ -18,6 +19,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         class="clabs--animated-header__lottie-animation--container"
       >
         <div
+          aria-hidden="true"
           class="clabs--animated-header__lottie-animation"
         />
       </div>
@@ -67,6 +69,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
       </div>
       <div
         class="clabs--animated-header__left-area-container cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-4 cds--css-grid-column"
+        id="clabs--animated-header-content"
       >
         <h2
           class="clabs--animated-header__description"
@@ -95,7 +98,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 aria-controls="downshift-:r4:-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-:r4:-label"
+                aria-label="Task group selector"
                 class="cds--list-box__field"
                 id="downshift-:r4:-toggle-button"
                 role="combobox"
@@ -167,7 +170,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 aria-controls="downshift-:r7:-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby="downshift-:r7:-label"
+                aria-label="Workspace selector for Drew"
                 class="cds--list-box__field"
                 id="downshift-:r7:-toggle-button"
                 role="combobox"
@@ -214,11 +217,15 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           </div>
         </div>
         <div
+          aria-label="Task Tiles"
           class="clabs--animated-header__tiles-container"
+          role="list"
         >
           <div
+            aria-label="AI Prompt for Short description of the type of prompt"
             class="clabs--animated-header__tile clabs--animated-header__ai-prompt-tile"
             id="clabs--animated-header__ai-prompt-tile"
+            role="listitem"
             title=""
           >
             <div
@@ -392,8 +399,11 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             </div>
           </div>
           <a
+            aria-label="Open Load data"
             class="cds--link clabs--animated-header__tile clabs--animated-header__glass-tile"
             href="#"
+            role="listitem"
+            tabindex="0"
             title=""
           >
             <div
@@ -437,8 +447,11 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             </div>
           </a>
           <a
+            aria-label="Open Monitor data performance and system capacity"
             class="cds--link clabs--animated-header__tile clabs--animated-header__glass-tile"
             href="#"
+            role="listitem"
+            tabindex="0"
             title=""
           >
             <div
@@ -490,6 +503,9 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         class="clabs--animated-header__button-collapse--container"
       >
         <button
+          aria-controls="clabs--animated-header-content"
+          aria-expanded="true"
+          aria-label="Collapse header details"
           class="cds--btn cds--btn--ghost"
           id="clabs--animated-header__button-collapse"
           type="button"
@@ -513,6 +529,6 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         </button>
       </div>
     </div>
-  </section>
+  </header>
 </div>
 `;

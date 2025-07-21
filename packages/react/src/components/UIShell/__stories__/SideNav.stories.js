@@ -198,7 +198,7 @@ SideNavDoubleWideStory.storyName = 'Double Wide';
  * Story for SideNav w/TreeView
  * @returns {React.ReactElement} The JSX for the story
  */
-export const SideNavWithThirdLevel = () => (
+export const SideNavWithFifthLevel = () => (
   <SideNav
     isFixedNav
     expanded={true}
@@ -225,20 +225,14 @@ export const SideNavWithThirdLevel = () => (
           <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
           </SideNavMenuItem>
-          <SideNavMenu
-            renderIcon={Fade}
-            title="Sub-menu level 3"
-            defaultExpanded={true}>
+          <SideNavMenu title="Sub-menu level 3" defaultExpanded={true}>
             <SideNavMenuItem href="http://www.carbondesignsystem.com">
               Item level 4
             </SideNavMenuItem>
             <SideNavMenuItem href="http://www.carbondesignsystem.com">
               Item level 4
             </SideNavMenuItem>
-            <SideNavMenu
-              renderIcon={Fade}
-              title="Sub-menu level 4"
-              defaultExpanded={true}>
+            <SideNavMenu title="Sub-menu level 4" defaultExpanded={true}>
               <SideNavMenuItem
                 isActive
                 href="http://www.carbondesignsystem.com">
@@ -254,13 +248,13 @@ export const SideNavWithThirdLevel = () => (
     </SideNavItems>
   </SideNav>
 );
-SideNavWithThirdLevel.storyName = 'With Third Level';
+SideNavWithFifthLevel.storyName = 'With Fifth Level';
 
 /**
  * Story for SideNav w/TreeView icons
  * @returns {React.ReactElement} The JSX for the story
  */
-export const SideNavWithThirdLevelIcons = () => (
+export const SideNavWithFifthLevelIcons = () => (
   <SideNav
     isFixedNav
     expanded={true}
@@ -294,20 +288,14 @@ export const SideNavWithThirdLevelIcons = () => (
           <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
           </SideNavMenuItem>
-          <SideNavMenu
-            renderIcon={Fade}
-            title="Sub-menu level 3"
-            defaultExpanded={true}>
+          <SideNavMenu title="Sub-menu level 3" defaultExpanded={true}>
             <SideNavMenuItem href="http://www.carbondesignsystem.com">
               Item level 4
             </SideNavMenuItem>
             <SideNavMenuItem href="http://www.carbondesignsystem.com">
               Item level 4
             </SideNavMenuItem>
-            <SideNavMenu
-              renderIcon={Fade}
-              title="Sub-menu level 4"
-              defaultExpanded={true}>
+            <SideNavMenu title="Sub-menu level 4" defaultExpanded={true}>
               <SideNavMenuItem
                 isActive
                 href="http://www.carbondesignsystem.com">
@@ -323,7 +311,7 @@ export const SideNavWithThirdLevelIcons = () => (
     </SideNavItems>
   </SideNav>
 );
-SideNavWithThirdLevelIcons.storyName = 'With Third Level Icons';
+SideNavWithFifthLevelIcons.storyName = 'With Fifth Level Icons';
 
 /**
  * Story for SideNav panel
@@ -417,6 +405,94 @@ export const Rail = () => (
       <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
         Link
       </SideNavLink>
+    </SideNavItems>
+  </SideNav>
+);
+
+/**
+ * Story for Test
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const TestLevels = () => (
+  <SideNav
+    isTreeview
+    isFixedNav
+    expanded
+    isChildOfHeader={false}
+    aria-label="Side navigation">
+    <SideNavItems>
+      <SideNavMenu
+        renderIcon={Fade}
+        title="Sub-menu level 1"
+        primary
+        defaultExpanded>
+        <SideNavMenu
+          defaultExpanded={true}
+          renderIcon={Fade}
+          title="Sub-menu level 2">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 3
+          </SideNavMenuItem>
+          <SideNavMenu title="Sub-menu level 3" defaultExpanded={true}>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenu title="Sub-menu level 4" defaultExpanded={true}>
+              <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+              <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+            </SideNavMenu>
+          </SideNavMenu>
+        </SideNavMenu>
+      </SideNavMenu>
+      <SideNavMenu
+        defaultExpanded={true}
+        renderIcon={Fade}
+        title="Sub-menu level 1">
+        <SideNavMenuItem
+          renderIcon={Fade}
+          href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem
+          renderIcon={Fade}
+          href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenu
+          renderIcon={Fade}
+          title="Sub-menu level 2"
+          defaultExpanded={true}>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 3
+          </SideNavMenuItem>
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
+            Item level 3
+          </SideNavMenuItem>
+          <SideNavMenu title="Sub-menu level 3" defaultExpanded={true}>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenu title="Sub-menu level 4" defaultExpanded={true}>
+              <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+              <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+            </SideNavMenu>
+          </SideNavMenu>
+        </SideNavMenu>
+      </SideNavMenu>
     </SideNavItems>
   </SideNav>
 );

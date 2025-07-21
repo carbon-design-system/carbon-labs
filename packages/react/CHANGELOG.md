@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.99.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.98.0...@carbon-labs/react@0.99.0) (2025-07-14)
+
+
+### Bug Fixes
+
+* **side-nav:** don't close on submenu ([#712](https://github.com/carbon-design-system/carbon-labs/issues/712)) ([7768e2f](https://github.com/carbon-design-system/carbon-labs/commit/7768e2fd963bfc34c8b44b80aa4088027150b676))
+
+
+
+
+
+# [0.98.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.97.0...@carbon-labs/react@0.98.0) (2025-07-14)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.97.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.96.0...@carbon-labs/react@0.97.0) (2025-07-14)
+
+
+### Bug Fixes
+
+* **ui-shell:** sidenav closing on item click ([#707](https://github.com/carbon-design-system/carbon-labs/issues/707)) ([7fa8711](https://github.com/carbon-design-system/carbon-labs/commit/7fa8711f74b979a2a86457bb8fd6102835159ea0))
+
+
+
+
+
 # [0.96.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.95.0...@carbon-labs/react@0.96.0) (2025-07-09)
 
 **Note:** Version bump only for package @carbon-labs/react

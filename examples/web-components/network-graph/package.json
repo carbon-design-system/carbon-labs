@@ -15,7 +15,7 @@
     "vite": "^3.2.2"
   },
   "dependencies": {
-    "@carbon-labs/network-graph": "latest",
+    "@carbon-labs/wc-network-graph": "latest",
     "@carbon/styles": "^1.70.0"
   }
 }

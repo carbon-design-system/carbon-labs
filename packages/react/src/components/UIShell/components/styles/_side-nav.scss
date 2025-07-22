@@ -126,7 +126,7 @@ div:has(.#{$prefix}--header)
 }
 
 // SideNavMenu
-// Level 2
+// Level 2 / Doublewide Level 3
 // without icon
 .#{$prefix}--side-nav__submenu
   + .#{$prefix}--side-nav__menu
@@ -143,8 +143,8 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-09;
 }
 
-// Level 3
-// without icon
+// Level 3 / Doublewide Level 4
+// without icon, icon not supported at this level
 .#{$prefix}--side-nav__submenu
   + .#{$prefix}--side-nav__menu
   > .#{$prefix}--side-nav__item
@@ -154,31 +154,46 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-11;
 }
 
-// with icon
-.#{$prefix}--side-nav__submenu
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
   + .#{$prefix}--side-nav__menu
   > .#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  > .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-12;
+}
+
+// Level 4 / / Doesn't exist in doublewide
+// without icon, icon not supported at this level
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
   .#{$prefix}--side-nav__menu
-  > .#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
   .#{$prefix}--side-nav__submenu {
   padding-inline-start: $spacing-12;
 }
 
-// Level 4
-// without icon
-.#{$prefix}--side-nav__submenu
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
   + .#{$prefix}--side-nav__menu
-  > .#{$prefix}--side-nav__item
+  > .#{$prefix}--side-nav__item--icon
   .#{$prefix}--side-nav__menu
   > .#{$prefix}--side-nav__item
   .#{$prefix}--side-nav__menu
   > .#{$prefix}--side-nav__item
   .#{$prefix}--side-nav__submenu {
-  padding-inline-start: $spacing-12;
+  padding-inline-start: convert.to-rem(112px);
 }
 
 // Nested SideNavMenuItem
-// Level 2
+// Level 2  / Doublewide Level 3
 // without icon
 .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
   a.#{$prefix}--side-nav__link {
@@ -204,9 +219,9 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-09;
 }
 
-// with icon inside primary menu (double wide)
+// with icon inside primary menu (double wide), Level 2
 .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
-  .cds--side-nav__menu-secondary-wrapper
+  .#{$prefix}--side-nav__menu-secondary-wrapper
   a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
   padding-inline-start: $spacing-05;
 }
@@ -214,13 +229,13 @@ div:has(.#{$prefix}--header)
 @include breakpoint-down(md) {
   // with icon inside primary menu (double wide)
   .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
-    .cds--side-nav__menu-secondary-wrapper
+    .#{$prefix}--side-nav__menu-secondary-wrapper
     a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
     padding-inline-start: convert.to-rem(14px);
   }
 }
 
-// Level 3
+// Level 3 / Doublewide level 4
 // without icon parent
 .#{$prefix}--side-nav__menu
   .#{$prefix}--side-nav__menu
@@ -232,10 +247,10 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__menu
   .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
   a.#{$prefix}--side-nav__link {
-  padding-inline-start: $spacing-11;
+  padding-inline-start: $spacing-12;
 }
 
-// Level 4
+// Level 4 / Doublewide level 5
 // without icon parent
 .#{$prefix}--side-nav__menu
   .#{$prefix}--side-nav__menu
@@ -244,23 +259,35 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-12;
 }
 
-// with icon parent
-.#{$prefix}--side-nav__menu
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item--icon
   .#{$prefix}--side-nav__menu
   .#{$prefix}--side-nav__menu
-  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
   a.#{$prefix}--side-nav__link {
-  padding-inline-start: $spacing-13;
+  padding-inline-start: convert.to-rem(112px);
 }
 
-// Level 5
-// without icon parent
-.#{$prefix}--side-nav__menu
+// Level 5 / Doesn't exist in doublewide
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
   .#{$prefix}--side-nav__menu
   .#{$prefix}--side-nav__menu
   .#{$prefix}--side-nav__menu
   a.#{$prefix}--side-nav__link {
-  padding-inline-start: 112px;
+  padding-inline-start: convert.to-rem(112px);
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: convert.to-rem(128px);
 }
 
 .#{$prefix}--side-nav__menu-secondary-wrapper {

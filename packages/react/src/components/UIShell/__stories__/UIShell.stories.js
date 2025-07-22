@@ -442,8 +442,7 @@ export const Demo = () => {
             <SideNav
               isTreeview={true}
               aria-label="Main navigation"
-              // expanded={isSideNavExpanded}
-              expanded={true}
+              expanded={isSideNavExpanded}
               onSideNavBlur={onClickSideNavExpand}
               isCollapsible
               onOverlayClick={onClickSideNavExpand}

@@ -646,9 +646,7 @@ export const Demo = () => {
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
                     </SideNavMenuItem>
-                    <SideNavMenuItem
-                      isActive
-                      href="http://www.carbondesignsystem.com">
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
                     </SideNavMenuItem>
                     <SideNavMenu title="Menu level 3">

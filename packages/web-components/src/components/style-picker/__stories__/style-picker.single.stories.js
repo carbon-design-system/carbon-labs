@@ -145,6 +145,10 @@ const argTypes = {
     options: [...alignOptions],
     description: `Specify how the popover should align with the trigger element`,
   },
+  enableSearch: {
+    control: 'boolean',
+    description: 'Enable search option',
+  },
 };
 
 export const Color = {
@@ -152,6 +156,7 @@ export const Color = {
     heading: 'Choose color',
     open: true,
     align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
+    enableSearch: true,
   },
   argTypes,
   /**
@@ -169,7 +174,8 @@ export const Color = {
           <clabs-style-picker
             align=${args.align}
             ?open=${args.open}
-            heading=${args.heading}>
+            heading=${args.heading}
+            ?enable-search=${args.enableSearch}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
@@ -299,6 +305,7 @@ export const Pictogram = {
     heading: 'Choose pictogram',
     open: true,
     align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
+    enableSearch: true,
   },
   argTypes,
   /**
@@ -316,7 +323,8 @@ export const Pictogram = {
           <clabs-style-picker
             align=${args.align}
             ?open=${args.open}
-            heading=${args.heading}>
+            heading=${args.heading}
+            ?enable-search=${args.enableSearch}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}

@@ -16,7 +16,7 @@ import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../../context/style-picker-context';
-import { Size } from '../../../defs';
+import { prefix, Size } from '../../../defs';
 
 /**
  * style-picker-section extends LitElement.
@@ -64,10 +64,24 @@ class StylePickerSection extends LitElement {
   hasGroup = false;
 
   /**
+   *
+   */
+  _handleSearch() {
+    const _searchTerm = this._stylePickerContext?.searchTerm?.trim();
+
+    this.querySelectorAll(`${prefix}-option`).forEach((_option) => {
+      const _optionLabel = _option.getAttribute('label')?.toLowerCase();
+      const _show = _optionLabel?.includes?.(_searchTerm ?? '');
+
+      _option.toggleAttribute('hidden', !_show);
+    });
+  }
+
+  /**
    * Lifecycle method called when the component is first updated.
    */
   protected firstUpdated() {
-    if (this.querySelectorAll(`clabs-style-picker-group`).length > 0) {
+    if (this.querySelectorAll(`${prefix}-group`).length > 0) {
       this.hasGroup = true;
     }
   }
@@ -88,6 +102,16 @@ class StylePickerSection extends LitElement {
       // Update the options size in the context
       this._sectionContext?.setSize?.(this.size);
     }
+
+    if (this._stylePickerContext?.enableSearch) {
+      this._handleSearch();
+    }
+
+    this._sectionContext = {
+      ...this._sectionContext,
+      enableSearch: this._stylePickerContext?.enableSearch,
+      searchTerm: this._stylePickerContext?.searchTerm,
+    };
   }
 
   /**

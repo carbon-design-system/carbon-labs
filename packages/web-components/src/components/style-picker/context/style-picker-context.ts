@@ -8,8 +8,7 @@
  */
 
 import { createContext } from '@lit/context';
-import { Kind } from '../defs';
-import { Size } from '../defs/style-picker-group.types';
+import { Kind, Size } from '../defs';
 
 export interface StylePickerContextType {
   kind?: Kind;
@@ -17,6 +16,8 @@ export interface StylePickerContextType {
   setActiveSection?: (moduleIndex: number) => void;
   size?: Size;
   setSize?: (_size?: Size) => void;
+  enableSearch?: boolean;
+  searchTerm?: string;
 }
 
 export const stylePickerContext = createContext<StylePickerContextType>(

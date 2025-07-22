@@ -68,15 +68,44 @@ class StylePicker extends LitElement {
   heading = '';
 
   /**
+   * Enable search in the style picker
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'enable-search' })
+  enableSearch = false;
+
+  /**
+   * Update search term in the context
+   * @param {object} e - Event raised when search input is changed
+   */
+  searchInput(e) {
+    const _searchTerm = e.detail?.value;
+
+    this._stylePickerContext = {
+      ...this._stylePickerContext,
+      searchTerm: _searchTerm,
+    };
+  }
+
+  /**
    * Invoked whenever the element is updated.
    *
    * @param {PropertyValues<this>} changed - A Map of property keys to values.
    */
   updated(changed: PropertyValues<this>) {
+    const _newContextValues: Partial<StylePickerContextType> = {};
+
     if (changed.has('kind')) {
+      _newContextValues.kind = this.kind;
+    }
+
+    if (changed.has('enableSearch')) {
+      _newContextValues.enableSearch = this.enableSearch;
+    }
+
+    if (Object.keys(_newContextValues).length) {
       this._stylePickerContext = {
         ...this._stylePickerContext,
-        kind: this.kind,
+        ..._newContextValues,
       };
     }
   }

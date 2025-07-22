@@ -469,7 +469,6 @@ export const Demo = () => {
                       hideLabel
                     />
                   </SideNavSlot>
-                  <SideNavDivider />
                   <SideNavMenu renderIcon={Home} title="Home" defaultExpanded>
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
@@ -641,7 +640,6 @@ export const Demo = () => {
                       hideLabel
                     />
                   </SideNavSlot>
-                  <SideNavDivider />
                   <SideNavMenu renderIcon={Home} title="Home">
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3

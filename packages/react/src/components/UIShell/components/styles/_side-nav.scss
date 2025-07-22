@@ -582,7 +582,7 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__slot {
   display: flex;
   align-items: center;
-  margin: 0 $spacing-05;
+  margin: 0 $spacing-05 $spacing-05;
   block-size: 2rem;
 }
 

@@ -470,6 +470,7 @@ export const Demo = () => {
                       hideLabel
                     />
                   </SideNavSlot>
+                  <SideNavDivider />
                   <SideNavMenu renderIcon={Home} title="Home" defaultExpanded>
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3

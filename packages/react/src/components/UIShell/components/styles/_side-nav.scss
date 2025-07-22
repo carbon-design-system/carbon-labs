@@ -68,8 +68,8 @@ div:has(.#{$prefix}--header)
   color: $text-primary;
 
   &::before {
-    display: block;
     position: absolute;
+    display: block;
     background-color: $border-interactive;
     content: '';
     inline-size: 3px;

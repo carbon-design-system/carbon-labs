@@ -30,6 +30,7 @@ interface AIPromptTileProps {
   isDisabled?: boolean;
   disabledTaskLabel?: string;
   onClick?: (() => void) | null;
+  ariaLabel?: string;
 }
 
 export const AIPromptTile: React.FC<AIPromptTileProps> = ({
@@ -43,6 +44,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   isDisabled,
   disabledTaskLabel,
   onClick,
+  ariaLabel,
 }: AIPromptTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__ai-prompt-tile`;
@@ -74,7 +76,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
       className={`${prefix}--animated-header__tile ${blockClass}${
         isDisabled ? ' ' + disabled : ''
       }`}
-      aria-label={title ? `AI Prompt for ${title}` : 'AI Prompt Tile'}
+      aria-label={ariaLabel}
       role="listitem"
       title={isDisabled ? disabledTaskLabel ?? '' : ''}
       key={id}>

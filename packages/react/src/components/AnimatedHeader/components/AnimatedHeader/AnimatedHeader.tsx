@@ -29,6 +29,18 @@ import WorkspaceSelector, {
 
 /** Animated Header */
 
+export interface AriaLabels {
+  welcome?: string;
+  description?: string;
+  collapseButton?: string;
+  expandButton?: string;
+  tilesContainer?: string;
+  tiles?: { [tileId: string]: string };
+  tasksDropdown?: string;
+  workspaceDropdown?: string;
+  [key: string]: any;
+}
+
 export interface Tile {
   href?: string | null;
   id: string;
@@ -40,6 +52,7 @@ export interface Tile {
   isLoading?: boolean;
   isDisabled?: boolean;
   onClick?: () => void;
+  ariaLabel?: string;
 }
 
 export interface TileGroup {
@@ -50,6 +63,7 @@ export interface TileGroup {
 
 export type AnimatedHeaderProps = {
   allTileGroups?: TileGroup[];
+  ariaLabels?: AriaLabels;
   selectedTileGroup?: TileGroup;
   setSelectedTileGroup: (e) => void;
   description?: string;
@@ -68,6 +82,7 @@ export type AnimatedHeaderProps = {
 
 const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   allTileGroups,
+  ariaLabels = {},
   selectedTileGroup,
   setSelectedTileGroup,
   description,
@@ -152,9 +167,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   }, [isReduced]);
 
   return (
-    <header
-      className={`${blockClass}${!open ? ` ${collapsed}` : ''}`}
-      aria-label="Animated header">
+    <header className={`${blockClass}${!open ? ` ${collapsed}` : ''}`}>
       <Grid>
         <div className={`${blockClass}__gradient--overlay`} />
 
@@ -182,7 +195,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
         <Column sm={4} md={8} lg={16}>
           <Tooltip align="bottom" label={`${welcomeText}, ${userName}`}>
-            <h1 className={`${blockClass}__heading ${headingTextAnimation}`}>
+            <h1
+              className={`${blockClass}__heading ${headingTextAnimation}`}
+              aria-label={ariaLabels?.welcome ?? `${welcomeText}, ${userName}`}>
               <span className={`${blockClass}__heading-welcome`}>
                 {welcomeText},{' '}
               </span>
@@ -201,7 +216,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               !open ? ` ${descriptionCollapsed}` : ''
             }`}>
             {description && (
-              <h2 className={`${blockClass}__description`}>{description}</h2>
+              <h2
+                className={`${blockClass}__description`}
+                aria-label={ariaLabels?.description ?? `Header description`}>
+                {description}
+              </h2>
             )}
             <TasksController
               tasksControllerConfig={tasksControllerConfig}
@@ -209,6 +228,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               allTileGroups={allTileGroups}
               selectedTileGroup={selectedTileGroup}
               setSelectedTileGroup={setSelectedTileGroup}
+              ariaLabel={ariaLabels?.tasksDropdown ?? `Tasks dropdown menu`}
             />
           </Column>
         )}
@@ -224,12 +244,16 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                   workspaceSelectorConfig={workspaceSelectorConfig}
                   userName={userName}
                   isLoading={isLoading}
+                  ariaLabel={
+                    ariaLabels?.workspaceDropdown ??
+                    `Workspace selector dropdown`
+                  }
                 />
               </div>
             )}
             <div
               className={`${blockClass}__tiles-container`}
-              aria-label="Task Tiles"
+              aria-label={ariaLabels?.tilesContainer ?? `Feature tiles`}
               role="list">
               {selectedTileGroup.tiles.map((tile) => {
                 return (
@@ -255,6 +279,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     isLoading={isLoading || tile.isLoading}
                     isDisabled={tile.isDisabled}
                     disabledTaskLabel={disabledTaskLabel}
+                    ariaLabel={ariaLabels?.tiles?.[tile.id] ?? tile.ariaLabel}
                   />
                 );
               })}
@@ -273,7 +298,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             aria-expanded={open}
             aria-controls={`${blockClass}-content`}
             aria-label={
-              open ? `Collapse header details` : `Expand header details`
+              open
+                ? ariaLabels?.collapseButton ?? 'Collapse header details'
+                : ariaLabels?.expandButton ?? 'Expand header details'
             }>
             {open ? collapseButtonLabel : expandButtonLabel}
           </Button>
@@ -289,6 +316,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Array of each tile group setup
    */
   allTileGroups: PropTypes.arrayOf(PropTypes.object),
+
+  /**
+   * Provide custom aria labels for each part of the header.
+   */
+  ariaLabels: PropTypes.object,
 
   /**
    * Specify an optional className to be added to your Animated Header

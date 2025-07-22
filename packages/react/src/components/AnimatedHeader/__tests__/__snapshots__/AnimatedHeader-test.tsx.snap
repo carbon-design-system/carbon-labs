@@ -3,7 +3,6 @@
 exports[`AnimatedHeader renders as expected - Component API should match snapshot 1`] = `
 <div>
   <header
-    aria-label="Animated header"
     class="clabs--animated-header"
   >
     <div
@@ -33,7 +32,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             class="cds--tooltip-trigger__wrapper"
           >
             <h1
-              aria-labelledby="tooltip-:r0:"
+              aria-label="Welcome, Drew"
               class="clabs--animated-header__heading "
             >
               <span
@@ -72,6 +71,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         id="clabs--animated-header-content"
       >
         <h2
+          aria-label="Header description"
           class="clabs--animated-header__description"
         >
           Connect, monitor, and manage data.
@@ -98,7 +98,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 aria-controls="downshift-:r4:-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-label="Task group selector"
+                aria-label="Tasks dropdown menu"
                 class="cds--list-box__field"
                 id="downshift-:r4:-toggle-button"
                 role="combobox"
@@ -170,7 +170,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 aria-controls="downshift-:r7:-menu"
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-label="Workspace selector for Drew"
+                aria-label="Workspace selector dropdown"
                 class="cds--list-box__field"
                 id="downshift-:r7:-toggle-button"
                 role="combobox"
@@ -217,12 +217,12 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           </div>
         </div>
         <div
-          aria-label="Task Tiles"
+          aria-label="Feature tiles"
           class="clabs--animated-header__tiles-container"
           role="list"
         >
           <div
-            aria-label="AI Prompt for Short description of the type of prompt"
+            aria-label="Start a conversation with the AI assistant"
             class="clabs--animated-header__tile clabs--animated-header__ai-prompt-tile"
             id="clabs--animated-header__ai-prompt-tile"
             role="listitem"
@@ -399,7 +399,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             </div>
           </div>
           <a
-            aria-label="Open Load data"
+            aria-label="Load data using Data explorer"
             class="cds--link clabs--animated-header__tile clabs--animated-header__glass-tile"
             href="#"
             role="listitem"
@@ -447,7 +447,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
             </div>
           </a>
           <a
-            aria-label="Open Monitor data performance and system capacity"
+            aria-label="Monitor data using Monitoring hub"
             class="cds--link clabs--animated-header__tile clabs--animated-header__glass-tile"
             href="#"
             role="listitem"

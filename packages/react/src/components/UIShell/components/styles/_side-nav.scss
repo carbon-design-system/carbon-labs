@@ -51,8 +51,10 @@ div:has(.#{$prefix}--header)
   margin-inline-end: $spacing-05;
 }
 
-.#{$prefix}--side-nav__item--active
-  .#{$prefix}--side-nav__submenu[aria-expanded='false'] {
+.#{$prefix}--side-nav__item--active.#{$prefix}--side-nav__item--has-active-descendant
+  .#{$prefix}--side-nav__submenu:not(
+    .#{$prefix}--side-nav__item--has-active-descendant
+  )[aria-expanded='false'] {
   background-color: transparent;
 
   &::before {
@@ -60,6 +62,8 @@ div:has(.#{$prefix}--header)
   }
 }
 
+.#{$prefix}--side-nav__item--active.#{$prefix}--side-nav__item--has-active-descendant[aria-expanded='false']
+  .#{$prefix}--side-nav__submenu[aria-expanded='false'],
 .#{$prefix}--side-nav__item--active
   .#{$prefix}--side-nav__item--has-active-descendant
   .#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active[aria-expanded='false'] {

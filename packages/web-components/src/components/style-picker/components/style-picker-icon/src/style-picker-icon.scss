@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '@carbon/styles/scss/spacing' as *;
+$css--plex: true !default;
 
-$sizes: (
-  sm: $spacing-06,
-  lg: $spacing-09 + $spacing-03,
-);
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/theme';
+
+$block-class: #{$clabs-prefix}--style-picker-icon;

@@ -16,10 +16,10 @@ import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../../context/style-picker-context';
-import { Kind } from '../../../defs/style-picker.types';
+import { Kind } from '../../../defs';
 
 /**
- * Component extending the @carbon/web-components' button
+ * Component extending the LitElement class.
  */
 class StylePicker extends LitElement {
   static styles = styles;
@@ -29,15 +29,16 @@ class StylePicker extends LitElement {
    */
   @provide({ context: stylePickerContext })
   _stylePickerContext: StylePickerContextType = {
+    size: 'sm',
     /**
-     * Set the active module index
-     * @param {number} index - Index of the module to be set as active
-     * @description This method updates the active module index in the context.
+     * Set the active section index
+     * @param {number} index - Index of the section to be set as active
+     * @description This method updates the active section index in the context.
      */
-    setActiveModule: (index: number) => {
+    setActiveSection: (index: number) => {
       this._stylePickerContext = {
         ...this._stylePickerContext,
-        activeModule: index,
+        activeSection: index,
       };
     },
   };
@@ -74,8 +75,8 @@ class StylePicker extends LitElement {
   updated(changed: PropertyValues<this>) {
     if (changed.has('kind')) {
       this._stylePickerContext = {
-        kind: this.kind,
         ...this._stylePickerContext,
+        kind: this.kind,
       };
     }
   }

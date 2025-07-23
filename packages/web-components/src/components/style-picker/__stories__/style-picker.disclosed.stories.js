@@ -225,7 +225,7 @@ export const ColorAndIcon = {
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}
-            <span slot="tooltip-content">Edit</span>
+            <span slot="tooltip-content">Delete</span>
           </cds-icon-button>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${OverflowMenuVertical16({ slot: 'icon' })}
@@ -352,7 +352,7 @@ export const IconColorPictogram = {
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}
-            <span slot="tooltip-content">Edit</span>
+            <span slot="tooltip-content">Delete</span>
           </cds-icon-button>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${OverflowMenuVertical16({ slot: 'icon' })}

@@ -24,7 +24,7 @@ import { prefix, Size } from '../../../defs';
 class StylePickerSection extends LitElement {
   static styles = styles;
 
-  @query('cds-accordion-item') accordionItem;
+  @query('cds-accordion-item') _accordionItem?: HTMLElement;
 
   /**
    * Consume style-picker-context
@@ -64,17 +64,31 @@ class StylePickerSection extends LitElement {
   hasGroup = false;
 
   /**
-   *
+   * Stores the number options in the section after search.
+   */
+  @state()
+  itemsCount = 0;
+
+  /**
+   * Handle search term changes.
    */
   _handleSearch() {
     const _searchTerm = this._stylePickerContext?.searchTerm?.trim();
+    let _optionsCount = 0;
 
     this.querySelectorAll(`${prefix}-option`).forEach((_option) => {
       const _optionLabel = _option.getAttribute('label')?.toLowerCase();
       const _show = _optionLabel?.includes?.(_searchTerm ?? '');
 
       _option.toggleAttribute('hidden', !_show);
+
+      if (_show) {
+        _optionsCount++;
+      }
     });
+
+    this.itemsCount = _optionsCount;
+    this.hidden = !_optionsCount;
   }
 
   /**
@@ -95,7 +109,7 @@ class StylePickerSection extends LitElement {
       this._stylePickerContext?.kind === 'disclosed' &&
       !this.hasAttribute('open')
     ) {
-      this.accordionItem.removeAttribute('open');
+      this._accordionItem?.removeAttribute('open');
     }
 
     if (changedProperties.has('size')) {

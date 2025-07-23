@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.38.0...@carbon-labs/web-components@0.39.0) (2025-07-22)
+
+
+### Bug Fixes
+
+* **style-picker:** change architecture ([#711](https://github.com/carbon-design-system/carbon-labs/issues/711)) ([c8927c9](https://github.com/carbon-design-system/carbon-labs/commit/c8927c927f5256b1491d7a27301023440a7adce4))
+
+
+
+
+
+# [0.38.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.37.0...@carbon-labs/web-components@0.38.0) (2025-07-18)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
 # [0.37.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.36.0...@carbon-labs/web-components@0.37.0) (2025-07-14)
 
 **Note:** Version bump only for package @carbon-labs/web-components

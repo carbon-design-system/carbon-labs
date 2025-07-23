@@ -7,9 +7,9 @@
 
 $css--plex: true !default;
 
-@use '@carbon/react/scss/spacing' as *;
-@use '@carbon/react/scss/theme';
-@use '@carbon/react/scss/utilities/button-reset';
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/utilities/button-reset';
 
 @use '../../../../../globals/scss/vars' as *;
 @use '../../../defs/vars.scss' as *;
@@ -26,6 +26,14 @@ $min-value: 0.0625rem;
   box-shadow: 0 0 0 $thickness $color;
 }
 
+:host([aria-selected='false']) .#{$block-class}__selection-indicator {
+  display: none;
+}
+
+:host(:focus) .#{$block-class}__selection-indicator {
+  color: theme.$focus;
+}
+
 .#{$block-class}__container {
   @include button-reset.reset;
 
@@ -39,14 +47,39 @@ $min-value: 0.0625rem;
 }
 
 @each $size, $value in $sizes {
-  .#{$block-class}--#{$size} .#{$block-class}__container {
+  .#{$block-class}__container.#{$block-class}__container--#{$size} {
     block-size: $value;
     inline-size: $value;
   }
 }
 
-.#{$block-class}:focus {
+:host(:focus) {
   outline: none;
+}
+
+:host(:hover) {
+  .#{$block-class}__container {
+    background-color: theme.$layer-hover;
+  }
+
+  .#{$block-class}__container::before {
+    @include -outline(theme.$layer-hover);
+  }
+}
+
+:host(:active) .#{$block-class}__container::before {
+  @include -outline(theme.$layer-active);
+}
+
+:host(:focus) .#{$block-class}__container::before,
+:host([aria-selected='true']:focus) .#{$block-class}__container::before {
+  @include -outline(theme.$focus);
+}
+
+:host([aria-selected='true']) {
+  .#{$block-class}__container::before {
+    @include -outline(theme.$layer-selected-inverse, true);
+  }
 }
 
 .#{$block-class}__container::before {
@@ -54,28 +87,6 @@ $min-value: 0.0625rem;
   border-radius: inherit;
   content: '';
   inset: -$min-value;
-}
-
-.#{$block-class}:hover .#{$block-class}__container {
-  background-color: theme.$layer-hover;
-}
-
-.#{$block-class}:hover .#{$block-class}__container::before {
-  @include -outline(theme.$layer-hover);
-}
-
-.#{$block-class}:active .#{$block-class}__container::before {
-  @include -outline(theme.$layer-active);
-}
-
-.#{$block-class}:focus .#{$block-class}__container::before,
-.#{$block-class}[aria-selected='true']:focus
-  .#{$block-class}__container::before {
-  @include -outline(theme.$focus);
-}
-
-.#{$block-class}[aria-selected='true'] .#{$block-class}__container::before {
-  @include -outline(theme.$layer-selected-inverse, true);
 }
 
 .#{$block-class}__selection-indicator {
@@ -89,12 +100,4 @@ $min-value: 0.0625rem;
 .#{$block-class}__selection-indicator [data-icon-path='inner-path'] {
   fill: theme.$icon-inverse;
   opacity: 1;
-}
-
-.#{$block-class}[aria-selected='false'] .#{$block-class}__selection-indicator {
-  display: none;
-}
-
-.#{$block-class}:focus .#{$block-class}__selection-indicator {
-  color: theme.$focus;
 }

@@ -198,7 +198,7 @@ SideNavDoubleWideStory.storyName = 'Double Wide';
  * Story for SideNav w/TreeView
  * @returns {React.ReactElement} The JSX for the story
  */
-export const SideNavWithThirdLevel = () => (
+export const SideNavWithFifthLevel = () => (
   <SideNav
     isFixedNav
     expanded={true}
@@ -219,24 +219,42 @@ export const SideNavWithThirdLevel = () => (
           Item level 2
         </SideNavMenuItem>
         <SideNavMenu title="Sub-menu level 2" defaultExpanded={true}>
-          <SideNavMenuItem isActive href="http://www.carbondesignsystem.com">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
           </SideNavMenuItem>
           <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
           </SideNavMenuItem>
+          <SideNavMenu title="Sub-menu level 3" defaultExpanded={true}>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenu title="Sub-menu level 4" defaultExpanded={true}>
+              <SideNavMenuItem
+                isActive
+                href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+              <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+            </SideNavMenu>
+          </SideNavMenu>
         </SideNavMenu>
       </SideNavMenu>
     </SideNavItems>
   </SideNav>
 );
-SideNavWithThirdLevel.storyName = 'With Third Level';
+SideNavWithFifthLevel.storyName = 'With Fifth Level';
 
 /**
  * Story for SideNav w/TreeView icons
  * @returns {React.ReactElement} The JSX for the story
  */
-export const SideNavWithThirdLevelIcons = () => (
+export const SideNavWithFifthLevelIcons = () => (
   <SideNav
     isFixedNav
     expanded={true}
@@ -264,18 +282,36 @@ export const SideNavWithThirdLevelIcons = () => (
           renderIcon={Fade}
           title="Sub-menu level 2"
           defaultExpanded={true}>
-          <SideNavMenuItem isActive href="http://www.carbondesignsystem.com">
+          <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
           </SideNavMenuItem>
           <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3
           </SideNavMenuItem>
+          <SideNavMenu title="Sub-menu level 3" defaultExpanded={true}>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenuItem href="http://www.carbondesignsystem.com">
+              Item level 4
+            </SideNavMenuItem>
+            <SideNavMenu title="Sub-menu level 4" defaultExpanded={true}>
+              <SideNavMenuItem
+                isActive
+                href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+              <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                Item level 5
+              </SideNavMenuItem>
+            </SideNavMenu>
+          </SideNavMenu>
         </SideNavMenu>
       </SideNavMenu>
     </SideNavItems>
   </SideNav>
 );
-SideNavWithThirdLevelIcons.storyName = 'With Third Level Icons';
+SideNavWithFifthLevelIcons.storyName = 'With Fifth Level Icons';
 
 /**
  * Story for SideNav panel

@@ -29,6 +29,15 @@ import WorkspaceSelector, {
 
 /** Animated Header */
 
+const NAME_FIRST_LANGS = [
+  'ar', // Arabic
+  'he', // Hebrew
+  'fa', // Farsi/Persian
+  'ur', // Urdu
+  'ja', // Japanese
+  'zh', // Chinese
+];
+
 export interface AriaLabels {
   welcome?: string;
   description?: string;
@@ -106,6 +115,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const [open, setOpen] = useState(true);
   const [headingTextAnimation, setHeadingTextAnimation] = useState('');
   const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
+  const currentLang =
+    typeof window !== 'undefined'
+      ? document.documentElement.lang || 'en'
+      : 'en';
+  const isNameFirst = NAME_FIRST_LANGS.includes(currentLang.slice(0, 2));
 
   const collapsed = `${blockClass}--collapsed`;
   const contentCollapsed = `${blockClass}__content--collapsed`;
@@ -198,10 +212,25 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             <h1
               className={`${blockClass}__heading ${headingTextAnimation}`}
               aria-label={ariaLabels?.welcome ?? `${welcomeText}, ${userName}`}>
-              <span className={`${blockClass}__heading-welcome`}>
-                {welcomeText},{' '}
-              </span>
-              <span className={`${blockClass}__heading-name`}>{userName}</span>
+              {isNameFirst ? (
+                <>
+                  <span className={`${blockClass}__heading-first`}>
+                    {userName}
+                  </span>
+                  <span className={`${blockClass}__heading-second`}>
+                    {welcomeText}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className={`${blockClass}__heading-first`}>
+                    {welcomeText},{' '}
+                  </span>
+                  <span className={`${blockClass}__heading-second`}>
+                    {userName}
+                  </span>
+                </>
+              )}
             </h1>
           </Tooltip>
         </Column>

@@ -12,24 +12,28 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/AI Components/Diagram',
+  title: 'Generative A.I. Components/Diagram',
 };
 
 const examples = [
   {
-    title: 'Diagram test',
-    width: 126,
-    height: 126,
-    thumbnail: true,
-    definition: `%% Basic example
-      graph TD;
-      A[start] --> B[End];
-      `,
+    title: 'Gantt Chart',
+    width: '100%',
+    height: 512,
+    definition: `gantt
+    title A Gantt Diagram
+    dateFormat  YYYY-MM-DD
+    section Section
+    A task           :a1, 2014-01-01, 30d
+    Another task     :after a1  , 20d
+    section Another
+    Task in sec      :2014-01-12  , 12d
+    another task      : 24d`,
   },
   {
-    title: 'Diagram test 3',
-    width: 512,
-    height: 246,
+    title: 'Flow Chart',
+    width: '100%',
+    height: 512,
     thumbnail: false,
     definition: `
   flowchart LR
@@ -39,7 +43,290 @@ const examples = [
     D --> B
     B -- No ----> E[End]`,
   },
+  {
+    title: 'Git Graph',
+    width: '100%',
+    height: 512,
+    thumbnail: false,
+    definition: `
+    gitGraph
+    commit
+    commit
+    branch develop
+    checkout develop
+    commit
+    commit
+    checkout main
+    merge develop
+    commit
+    commit
+    `,
+  },
+  {
+    title: 'ER Diagram',
+    width: '100%',
+    height: 512,
+    thumbnail: false,
+    definition: `erDiagram
+    CUSTOMER }|..|{ DELIVERY-ADDRESS : has
+    CUSTOMER ||--o{ ORDER : places
+    CUSTOMER ||--o{ INVOICE : "liable for"
+    DELIVERY-ADDRESS ||--o{ ORDER : receives
+    INVOICE ||--|{ ORDER : covers
+    ORDER ||--|{ ORDER-ITEM : includes
+    PRODUCT-CATEGORY ||--|{ PRODUCT : contains
+    PRODUCT ||--o{ ORDER-ITEM : "ordered in"
+    `,
+  },
 
+  {
+    title: 'Mind Map',
+    width: '100%',
+    height: 512,
+    thumbnail: false,
+    definition: `mindmap
+    root((mindmap))
+      Origins
+        Long history
+        ::icon(fa fa-book)
+        Popularisation
+          British popular psychology author Tony Buzan
+      Research
+        On effectiveness<br/>and features
+        On Automatic creation
+          Uses
+              Creative techniques
+              Strategic planning
+              Argument mapping
+      Tools
+        Pen and paper
+    Mermaid
+`,
+  },
+  {
+    title: 'Quadrant Chart',
+    width: '100%',
+    height: 512,
+    thumbnail: false,
+    definition: `
+    quadrantChart
+    title Reach and engagement of campaigns
+    x-axis Low Reach --> High Reach
+    y-axis Low Engagement --> High Engagement
+    quadrant-1 We should expand
+    quadrant-2 Need to promote
+    quadrant-3 Re-evaluate
+    quadrant-4 May be improved
+    Campaign A: [0.3, 0.6]
+    Campaign B: [0.45, 0.23]
+    Campaign C: [0.57, 0.69]
+    Campaign D: [0.78, 0.34]
+    Campaign E: [0.40, 0.34]
+    Campaign F: [0.35, 0.78]
+    `,
+  },
+  {
+    title: 'Mindmap 3',
+    width: '100%',
+    height: 512,
+    thumbnail: false,
+    definition: `mindmap
+  root((mindmap))
+    Planning((📋 Planning))
+    Requirements((Requirements))
+    Stakeholders((Stakeholders))
+    Goals((Goals))
+    Schedule((Schedule))
+    Milestones((Milestones))
+    Deadlines((Deadlines))
+    Design((🎨 Design))
+    UX((User Experience))
+    Wireframes((Wireframes))
+    Prototypes((Prototypes))
+    UI((User Interface))
+    StyleGuide((Style Guide))
+    Branding((Branding))
+    Development((💻 Development))
+    Frontend((Frontend))
+    Components((Components))
+    StateMgmt((State Management))
+    Backend((Backend))
+    API((API))
+    REST((REST))
+    GraphQL((GraphQL))
+    Database((Database))
+    Schema((Schema Design))
+    Migrations((Migrations))
+    Testing((🧪 Testing))
+    UnitTests((Unit Tests))
+    Integration((Integration Tests))
+    E2E((End-to-End Tests))
+    Deployment((🚀 Deployment))
+    CI_CD((CI/CD Pipeline))
+    Infra((Infrastructure))
+    Docker((Docker))
+    K8s((Kubernetes))
+    Maintenance((🔧 Maintenance))
+    Monitoring((Monitoring))
+    Logs((Logs))
+    Metrics((Metrics))
+    Updates((Updates))
+    Patches((Patches))
+    Features((Feature Requests))
+Mermaid`,
+  },
+
+  {
+    title: 'Mind Map 4',
+    width: '100%',
+    height: 512,
+    thumbnail: false,
+    definition: `mindmap
+root(("🌐<br>IBM"))
+History(("🏛️<br>History"))
+Founding(("1911:<br>CTR"))
+Renamed(("1924:<br>IBM"))
+Milestones(("Key<br>Milestones"))
+Products_and_Services(("💼<br>Products<br>and<br>Services"))
+Hardware(("Hardware"))
+Mainframes(("Z<br>Series"))
+Servers(("Power<br>Systems"))
+Software(("Software"))
+Middleware(("WebSphere"))
+Analytics(("Cognos"))
+AI(("Watson"))
+Cloud(("Cloud<br>and<br>Infrastructure"))
+IaaS(("IBM<br>Cloud"))
+PaaS(("Cloud<br>Paks"))
+Services(("Services"))
+Consulting(("IBM<br>Consulting"))
+Support(("Technical<br>Support"))
+Research_and_Innovation(("🔬<br>Research<br>and<br>Innovation"))
+IBM_Research(("IBM<br>Research"))
+Quantum(("Quantum<br>Computing"))
+AI_Labs(("AI<br>Labs"))
+Blockchain(("Blockchain<br>Solutions"))
+Industries(("🏭<br>Industries"))
+Finance(("Financial<br>Services"))
+Healthcare(("Healthcare"))
+Manufacturing(("Manufacturing"))
+Retail(("Retail"))
+Government(("Government"))
+Corporate(("🏢<br>Corporate"))
+Leadership(("Leadership"))
+Culture(("Values<br>and<br>Culture"))
+CSR(("Social<br>Responsibility"))
+Global_Presence(("🌍<br>Global<br>Presence"))
+Americas(("Americas"))
+EMEA(("EMEA"))
+APAC(("APAC"))
+Partnerships(("🤝<br>Partnerships"))
+Red_Hat(("Red<br>Hat"))
+Open_Source(("Open<br>Source"))
+Academia(("Academic<br>Collaborations"))
+Sustainability(("♻️<br>Sustainability"))
+Green_Computing(("Green<br>Computing"))
+Climate_Pledge(("Climate<br>Pledge"))
+    `,
+  },
+
+  {
+    title: 'Relationship Graph',
+    width: '100%',
+    height: 512,
+    thumbnail: false,
+    definition: `graph LR
+  DukeLeto["Duke Leto Atreides"] --> Paul["Paul Atreides"]
+  LadyJessica["Lady Jessica"] --> Paul
+LadyJessica --> Alia["Alia Atreides"]
+DukeLeto --> Gurney["Gurney Halleck"]
+DukeLeto --> Duncan["Duncan Idaho"]
+Thufir["Thufir Hawat"] --> DukeLeto
+DrYueh["Dr. Wellington Yueh"] --> DukeLeto
+Thufir --- Baron["Baron Vladimir Harkonnen"]
+DrYueh --- Baron
+Baron --> Feyd["Feyd-Rautha Harkonnen"]
+Shaddam["Emperor Shaddam IV"] --- DukeLeto
+Shaddam --- Baron
+%% Fremen & alliances
+Paul --- Stilgar["Stilgar"]
+Paul --- Chani["Chani"]
+Stilgar --> Chani
+Gurney --- Paul
+Duncan --> Paul
+
+%% Styles
+classDef atreides fill:#4f83cc,stroke:#ffffff,stroke-width:2px,color:#ffffff;
+classDef hark fill:#cc4f4f,stroke:#ffffff,stroke-width:2px,color:#ffffff;
+classDef fremen fill:#4fcc6e,stroke:#ffffff,stroke-width:2px,color:#ffffff;
+classDef bene fill:#cc9f4f,stroke:#ffffff,stroke-width:2px,color:#ffffff;
+classDef emperor fill:#9b4fcc,stroke:#ffffff,stroke-width:2px,color:#ffffff;
+classDef advisor fill:#6e6e6e,stroke:#ffffff,stroke-width:2px,color:#ffffff;
+classDef retainer fill:#888888,stroke:#ffffff,stroke-width:1px,color:#ffffff;
+
+%% Apply styles
+class DukeLeto,Paul,LadyJessica,Alia atreides;
+class Baron,Feyd hark;
+class Stilgar,Chani fremen;
+class LadyJessica bene;
+class Shaddam emperor;
+class Thufir,DrYueh advisor;
+class Gurney,Duncan retainer;
+    `,
+  },
+  {
+    title: 'Mind Map 2',
+    width: '100%',
+    height: 512,
+    thumbnail: false,
+    definition: `mindmap
+  root((mindmap))
+    Origins
+      Long history
+      ::icon(fa fa-book)
+      Popularisation
+        British popular psychology author Tony Buzan
+    Research
+      On effectiveness<br/>and features
+      On Automatic creation
+        Uses
+            Creative techniques
+            Strategic planning
+            Argument mapping
+    Tools
+      Pen and paper
+      Mermaid
+    `,
+  },
+  {
+    title: 'UML Chart',
+    width: 512,
+    height: 512,
+    thumbnail: false,
+    definition: `
+    zenuml
+    title Order Service
+    @Actor Client #FFEBE6
+    @Boundary OrderController #0747A6
+    @EC2 <<BFF>> OrderService #E3FCEF
+    group BusinessService {
+      @Lambda PurchaseService
+      @AzureFunction InvoiceService
+    }
+
+    @Starter(Client)
+    OrderController.post(payload) {
+      OrderService.create(payload) {
+        order = new Order(payload)
+        if(order != null) {
+          par {
+            PurchaseService.createPO(order)
+            InvoiceService.createInvoice(order)      
+          }      
+        }
+      }
+    }`,
+  },
   {
     title: 'Diagram test 4',
     thumbnail: false,
@@ -213,6 +500,8 @@ export const Showcase = {
         html`
           <h3>${example.title}</h3>
           <br />
+          <div style="display:inline-flex; min-width:100%;">
+          <div style="flex:1;">
           <clabs-chat-diagram
             title="${example.title}"
             width="${example.width}"
@@ -220,6 +509,17 @@ export const Showcase = {
             ?thumbnail-mode=${example.thumbnail}
             definition="${example.definition}">
           </clabs-chat-diagram>
+          </div>
+          <div style="flex: 0 0 30%">
+          <clabs-chat-code
+            max-width="100%"
+            content="${example.definition}">
+          <clabs-chat-code/>
+          </div>
+          </div>
+          <br/>
+          <br/>
+          <br/>
         `
     )}`,
 };

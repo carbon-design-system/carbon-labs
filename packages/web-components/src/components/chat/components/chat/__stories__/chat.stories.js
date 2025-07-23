@@ -13,7 +13,7 @@ import '@carbon/web-components/es/components/code-snippet/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 
 export default {
-  title: 'Components/AI Components/[LABS TESTING ONLY] Core Chat',
+  title: 'Generative A.I. Components/[Experimental]/Experimental Chat',
   component: 'clabs-chat',
 };
 
@@ -177,39 +177,28 @@ const coreExamples = [
     '',
     'Smiles representation of Thyroxine from PubChem',
   ],
-  /*[
+  [
     'diagram',
-    `sequenceDiagram
-    participant web as Web Browser
-    participant blog as Blog Service
-    participant account as Account Service
-    participant mail as Mail Service
-    participant db as Storage
-
-    Note over web,db: The user must be logged in to submit blog posts
-    web->>+account: Logs in using credentials
-    account->>db: Query stored accounts
-    db->>account: Respond with query result
-
-    alt Credentials not found
-        account->>web: Invalid credentials
-    else Credentials found
-        account->>-web: Successfully logged in
-
-        Note over web,db: When the user is authenticated, they can now submit new posts
-        web->>+blog: Submit new post
-        blog->>db: Store post data
-
-        par Notifications
-            blog--)mail: Send mail to blog subscribers
-            blog--)db: Store in-site notifications
-        and Response
-            blog-->>-web: Successfully posted
-        end
-    end`,
+    `mindmap
+root((mindmap))
+  Origins
+    Long history
+    ::icon(fa fa-book)
+    Popularisation
+      British popular psychology author Tony Buzan
+  Research
+    On effectiveness<br/>and features
+    On Automatic creation
+      Uses
+          Creative techniques
+          Strategic planning
+          Argument mapping
+  Tools
+    Pen and paper
+Mermaid`,
     '',
     'Architecture Diagram example',
-  ],*/
+  ],
   [
     'chart',
     '{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","description":"A scatterplot showing body mass and flipper lengths of penguins.","data":{"url":"https://vega.github.io/vega-lite/examples/data/penguins.json"},"mark":"point","encoding":{"x":{"field":"Flipper Length (mm)","type":"quantitative","scale":{"zero":false}},"y":{"field":"Body Mass (g)","type":"quantitative","scale":{"zero":false}},"color":{"field":"Species","type":"nominal"}}}',

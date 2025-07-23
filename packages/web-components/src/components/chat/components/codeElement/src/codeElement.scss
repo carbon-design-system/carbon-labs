@@ -453,6 +453,70 @@ $css--plex: true !default;
     .hljs-subst {
       color: $gray-60;
     }
+
+    .hljs-atom-c {
+      color: #525252;
+    }
+
+    .hljs-atom-o {
+      color: #da1e28;
+    }
+
+    .hljs-atom-n {
+      color: #1192e8;
+    }
+
+    .hljs-atom-f {
+      color: #24a148;
+    }
+
+    .hljs-atom-cl {
+      color: #009d9a;
+    }
+
+    .hljs-atom-br {
+      color: #ba4e00;
+    }
+
+    .hljs-atom-i {
+      color: #8a3ffc;
+    }
+
+    .hljs-atom-p {
+      color: #db5b00;
+    }
+
+    .hljs-atom-s {
+      color: #d6a602;
+    }
+
+    .hljs-atom-b {
+      color: #c29800;
+    }
+
+    .hljs-atom-si {
+      color: #cca002;
+    }
+
+    .hljs-atom-h {
+      color: #525252;
+    }
+
+    .hljs-bond {
+      color: $gray-60;
+    }
+
+    .hljs-branch {
+      color: $gray-60;
+    }
+
+    .hljs-ring {
+      color: $gray-60;
+    }
+
+    .hljs-atom-bracket {
+      color: $gray-60;
+    }
   }
 
   .#{$clabs-prefix}--chat-code-default-theme {
@@ -584,6 +648,70 @@ $css--plex: true !default;
     .hljs-subst {
       color: $gray-50;
     }
+
+    .hljs-atom-c {
+      color: #525252;
+    }
+
+    .hljs-atom-o {
+      color: #da1e28;
+    }
+
+    .hljs-atom-n {
+      color: #1192e8;
+    }
+
+    .hljs-atom-f {
+      color: #24a148;
+    }
+
+    .hljs-atom-cl {
+      color: #009d9a;
+    }
+
+    .hljs-atom-br {
+      color: #ba4e00;
+    }
+
+    .hljs-atom-i {
+      color: #8a3ffc;
+    }
+
+    .hljs-atom-p {
+      color: #db5b00;
+    }
+
+    .hljs-atom-s {
+      color: #d6a602;
+    }
+
+    .hljs-atom-b {
+      color: #c29800;
+    }
+
+    .hljs-atom-si {
+      color: #cca002;
+    }
+
+    .hljs-atom-h {
+      color: #525252;
+    }
+
+    .hljs-bond {
+      color: $gray-60;
+    }
+
+    .hljs-branch {
+      color: $gray-60;
+    }
+
+    .hljs-ring {
+      color: $gray-60;
+    }
+
+    .hljs-atom-bracket {
+      color: $gray-60;
+    }
   }
 
   .#{$clabs-prefix}--chat-code-g100-theme {
@@ -713,6 +841,70 @@ $css--plex: true !default;
     }
 
     .hljs-subst {
+      color: $gray-40;
+    }
+
+    .hljs-atom-c {
+      color: #c6c6c6;
+    }
+
+    .hljs-atom-o {
+      color: #f45d56;
+    }
+
+    .hljs-atom-n {
+      color: #33b1ff;
+    }
+
+    .hljs-atom-f {
+      color: #42be65;
+    }
+
+    .hljs-atom-cl {
+      color: #08bdba;
+    }
+
+    .hljs-atom-br {
+      color: #ff832b;
+    }
+
+    .hljs-atom-i {
+      color: #be95ff;
+    }
+
+    .hljs-atom-p {
+      color: #ff832b;
+    }
+
+    .hljs-atom-s {
+      color: #fdd13a;
+    }
+
+    .hljs-atom-b {
+      color: #f1c21b;
+    }
+
+    .hljs-atom-si {
+      color: #f1c21b;
+    }
+
+    .hljs-atom-h {
+      color: #c6c6c6;
+    }
+
+    .hljs-bond {
+      color: $gray-40;
+    }
+
+    .hljs-branch {
+      color: $gray-40;
+    }
+
+    .hljs-ring {
+      color: $gray-40;
+    }
+
+    .hljs-atom-bracket {
       color: $gray-40;
     }
   }

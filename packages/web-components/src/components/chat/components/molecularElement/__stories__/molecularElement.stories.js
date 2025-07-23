@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/AI Components/Molecule',
+  title: 'Generative A.I. Components/Molecules',
 };
 
 const examples = [
@@ -149,12 +149,8 @@ export const Showcase = {
               </p>`
             : ``}
           <br />
-          <clabs-chat-code
-            ?disable-line-ticks="${true}"
-            ?disable-copy-button="${true}"
-            content="SMILES String: ${example.smiles}">
-          </clabs-chat-code>
-
+          <p>SMILES String:</p>
+          <br />
           <clabs-chat-molecule
             title="${example.title}"
             width="${example.width}"

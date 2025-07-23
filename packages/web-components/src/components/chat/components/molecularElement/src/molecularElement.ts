@@ -57,6 +57,30 @@ export default class molecularElement extends LitElement {
   streaming;
 
   /**
+   * show-smiles - denotes if showing the source smiles at the bottom
+   */
+  @property({ type: Boolean, attribute: 'show-smiles' })
+  showSMILES = true;
+
+  /**
+   * show-code - denotes if showing the source smiles at the bottom
+   */
+  @property({ type: Boolean, attribute: 'show-code' })
+  showCode = true;
+
+  /**
+   * enable-editing - denotes if displayed code can be changed to redraw
+   */
+  @property({ type: Boolean, attribute: 'enable-editing' })
+  enableCodeEditing = true;
+
+  /**
+   * show-smiles-one-line - denotes if showing code should be minimized and scrollable
+   */
+  @property({ type: Boolean, attribute: 'show-single-line-code' })
+  showSingleLineCode;
+
+  /**
    * Disable all chart option buttons, supercedes all other individual button options
    */
   @property({ type: Boolean, attribute: 'disable-options' })
@@ -193,6 +217,10 @@ export default class molecularElement extends LitElement {
 
     this.style.setProperty('--chat-molecule-container-visibility', 'hidden');
 
+    if (this.showSingleLineCode) {
+      this.showCode = true;
+    }
+
     this.molecularRenderer = new SmileDrawer.SmiDrawer(
       this._buildOptions('default')
     );
@@ -218,12 +246,12 @@ export default class molecularElement extends LitElement {
    */
   _buildOptions(mode) {
     let fontSizeLarge = 6;
-    let fontSizeSmall = 3;
-    let bondThickness = 0.7;
+    let fontSizeSmall = 4;
+    let bondThickness = 0.6;
     let compactDrawing = false;
     let scale: any = null;
     let padding = 16;
-    let bondSpacing = 0.18 * 10;
+    let bondSpacing = 0.18 * 15;
     const bondLength = 15;
     let atomVisualization = 'default';
 
@@ -259,7 +287,7 @@ export default class molecularElement extends LitElement {
       explicitHydrogens: false,
       overlapSensitivity: 0.1,
       overlapResolutionIterations: this.streaming ? 1 : 10,
-      experimental: false,
+      experimental: true,
       themes: {
         dark: {
           C: '#c6c6c6',
@@ -399,7 +427,8 @@ export default class molecularElement extends LitElement {
     //const enableTextStyling = false;
     //const enableCircleStyling = false;
     //const enableZooming = false;
-    const shortenWedges = true;
+    const shortenWedges = false; //true;
+    console.log('changed!');
 
     /*if(enableZooming){
 
@@ -409,6 +438,23 @@ export default class molecularElement extends LitElement {
       }
 
     }*/
+    if (this.thumbNailMode) {
+      this.shadowRoot?.querySelectorAll('circle').forEach((circle) => {
+        circle.remove();
+      });
+    }
+
+    this.shadowRoot?.querySelectorAll('text').forEach((text) => {
+      let strokeColor = '#161616';
+      if (this.theme == 'light') {
+        strokeColor = '#f4f4f4';
+      }
+      text.setAttribute('stroke', strokeColor);
+      text.setAttribute('stroke-width', '2.4');
+      text.setAttribute('paint-order', 'stroke');
+      //text.setAttribute('text-anchor',"end")
+      //text.setAttribute('dominant-baseline',"central")
+    });
 
     if (shortenWedges) {
       const wedgeElements = this.shadowRoot?.querySelectorAll('polygon');
@@ -550,14 +596,17 @@ export default class molecularElement extends LitElement {
           encodeURIComponent(this.content) +
           '/cids/JSON'
       );
-      const data = await pubChemResponse.json();
-
+      try {
+        const _data = await pubChemResponse.json();
+      } catch (e) {
+        console.log(e);
+      }
       if (
-        data['IdentifierList'] &&
-        data['IdentifierList']['CID'] &&
-        data['IdentifierList']['CID'].length > 0
+        _data['IdentifierList'] &&
+        _data['IdentifierList']['CID'] &&
+        _data['IdentifierList']['CID'].length > 0
       ) {
-        const cid = data['IdentifierList']['CID'][0];
+        const cid = _data['IdentifierList']['CID'][0];
         if (cid) {
           this.pubChemUrl = 'https://pubchem.ncbi.nlm.nih.gov/compound/' + cid;
         }
@@ -599,6 +648,23 @@ export default class molecularElement extends LitElement {
         tempImage.src = 'data:image/svg+xml;base64,' + btoa(svgData);
       }
     }, 200);
+  }
+
+  /**
+   * _handleOriginalEditorValidation - check when the edited code is valid
+   * @param {object} event - event from clabs code event
+   */
+  _handleOriginalEditorValidation(event) {
+    const editedSmiles = event.detail.newLineText;
+    console.log(editedSmiles);
+  }
+
+  /**
+   * _handleLiveRawEditorChange - check when the edited code is changed
+   * @param {object} event - event from clabs code event
+   */
+  _handleLiveRawEditorChange(event) {
+    console.log(event.detail);
   }
 
   /**

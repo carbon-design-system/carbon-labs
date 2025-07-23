@@ -99,6 +99,11 @@ export default class messages extends LitElement {
   @property({ type: Object, attribute: 'feedbackFormDefinitions' })
   feedbackFormDefinitions;
 
+  /** Maximum chat area width
+   */
+  @property({ type: String, attribute: 'max-container-width' })
+  maxContainerWidth;
+
   /**
    * string denoting parent theme
    */
@@ -153,6 +158,9 @@ export default class messages extends LitElement {
       '.clabs--chat-messages-container'
     );*/
     this._scrollToBottom();
+    if (this.maxContainerWidth) {
+      this.style.setProperty('--max-container-width', this.maxContainerWidth);
+    }
   }
 
   /**

@@ -15,6 +15,7 @@ import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
 import Download16 from '@carbon/web-components/es/icons/download/16.js';
 import Launch16 from '@carbon/web-components/es/icons/launch/16.js';
 import Close16 from '@carbon/web-components/es/icons/close/16.js';
+import '../../codeElement/codeElement.js';
 
 /**
  * Lit template for card
@@ -41,10 +42,16 @@ export function molecularElementTemplate(customElementClass) {
     _handleMouseOver: handleMouseOver,
     _handleMouseOut: handleMouseOut,
     isHovered,
+    showSMILES,
+    enableCodeEditing,
+    showCode,
+    showSingleLineCode,
     _exportToImage: exportToImage,
     disableCodeInspector,
     pubChemUrl,
     _handleFullScreenScroll: handleFullScreenScroll,
+    _handleLiveRawEditorChange: handleLiveRawEditorChange,
+    _handleOriginalEditorValidation: handleOriginalEditorValidation,
   } = customElementClass;
 
   return html`
@@ -137,11 +144,11 @@ export function molecularElementTemplate(customElementClass) {
             </div>
           </div>`}
     </div>
-
-    <div class="${clabsPrefix}--chat-molecule-tester">
-      <svg id="clabs--chat-molecule-test-${uniqueID}"></svg>
-    </div>
-
+    ${showSMILES
+      ? html` <div class="${clabsPrefix}--chat-molecule-tester">
+          <svg id="clabs--chat-molecule-test-${uniqueID}"></svg>
+        </div>`
+      : ''}
     ${fullscreenMode
       ? html` <div
           class="${clabsPrefix}--chat-molecule-fullscreen-container-close">
@@ -166,5 +173,26 @@ export function molecularElementTemplate(customElementClass) {
         class="${clabsPrefix}--chat-molecule-target-fullscreen"
         id="clabs--chat-molecule-fullscreen-${uniqueID}"></svg>
     </div>
+    ${showCode
+      ? html` <div
+          class="${clabsPrefix}--chat-molecule-code-viewer${showSingleLineCode
+            ? '-single'
+            : ''}">
+          <div
+            class="${clabsPrefix}--chat-molecule-code-viewer-content${showSingleLineCode
+              ? '-single'
+              : ''}">
+            <clabs-chat-code
+              ?disable-line-ticks="${true}"
+              ?disable-copy-button="${false}"
+              ?editable="${enableCodeEditing}"
+              @on-code-edit-change="${handleLiveRawEditorChange}"
+              @on-code-edit-validation="${handleOriginalEditorValidation}"
+              render-language="smiles"
+              content="${smilesContent}">
+            </clabs-chat-code>
+          </div>
+        </div>`
+      : ''}
   `;
 }

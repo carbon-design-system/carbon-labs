@@ -74,6 +74,12 @@ export default class CLABSChat extends LitElement {
   forceAutoUpdate = true;
 
   /**
+   * max-inner-width - set max inner chat width
+   */
+  @property({ type: String, attribute: 'max-inner-width' })
+  maxInnerChatWidth;
+
+  /**
    * show launcher when closed
    */
   @property({ type: Boolean, attribute: 'enable-launcher' })

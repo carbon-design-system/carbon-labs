@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.64.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.63.0...@carbon-labs/react-ui-shell@0.64.0) (2025-07-23)
+
+
+### Features
+
+* **SideNav:** support additional levels of nesting and fix mobile sizing ([#672](https://github.com/carbon-design-system/carbon-labs/issues/672)) ([f84cf41](https://github.com/carbon-design-system/carbon-labs/commit/f84cf414933edd17f8fbdb2ef8472f74130842c6))
+
+
+
+
+
 # [0.63.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.62.0...@carbon-labs/react-ui-shell@0.63.0) (2025-07-14)
 
 

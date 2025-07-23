@@ -215,7 +215,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               {isNameFirst ? (
                 <>
                   <span className={`${blockClass}__heading-first`}>
-                    {userName}
+                    {userName},{' '}
                   </span>
                   <span className={`${blockClass}__heading-second`}>
                     {welcomeText}

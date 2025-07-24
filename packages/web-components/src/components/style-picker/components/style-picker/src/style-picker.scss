@@ -7,6 +7,7 @@
 
 $css--plex: true !default;
 
+@use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type';
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/layout' as *;
@@ -67,4 +68,15 @@ $container-width: $spacing-12-rem + $spacing-06;
   inset: 0;
   display: flex;
   justify-content: end;
+}
+
+.#{$block-class}--empty-state {
+  padding-inline: $spacing-05;
+  padding-block: $spacing-06;
+
+  .#{$block-class}--empty-state__subtitle {
+    @include type.type-style('label-01');
+
+    color: $text-secondary;
+  }
 }

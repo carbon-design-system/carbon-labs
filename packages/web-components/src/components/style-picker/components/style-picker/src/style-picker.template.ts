@@ -12,6 +12,7 @@ import { html, nothing } from 'lit';
 import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 import '@carbon/web-components/es/components/search/index.js';
+import '@carbon/web-components/es/components/heading/index.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 const { stablePrefix: clabsPrefix } = settings;
@@ -24,7 +25,7 @@ export const blockClass = `${clabsPrefix}--style-picker`;
  * @param {object} customElementClass Class functionality for the custom element
  */
 export const stylePickerTemplate = (customElementClass) => {
-  const { align, open, heading, enableSearch, searchInput } =
+  const { align, open, heading, enableSearch, searchInput, showEmptyState } =
     customElementClass;
 
   return html`<cds-popover ?open=${open} align=${align}>
@@ -46,6 +47,16 @@ export const stylePickerTemplate = (customElementClass) => {
             : nothing}
         </div>
         <cds-layer class=${`${blockClass}__sections`} level="1">
+          ${showEmptyState
+            ? html`<div class=${`${blockClass}--empty-state`}>
+                <cds-section level="4">
+                  <cds-heading>No results found</cds-heading></cds-section
+                >
+                <p class=${`${blockClass}--empty-state__subtitle`}>
+                  Try a different search
+                </p>
+              </div>`
+            : html`<slot></slot>`}
           <slot></slot>
         </cds-layer>
       </div>

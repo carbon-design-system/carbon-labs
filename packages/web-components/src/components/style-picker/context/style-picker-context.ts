@@ -18,6 +18,8 @@ export interface StylePickerContextType {
   setSize?: (_size?: Size) => void;
   enableSearch?: boolean;
   searchTerm?: string;
+  setSearchTerm?: (_searchTerm: string) => void;
+  onSectionVisibilityChange?: () => void;
 }
 
 export const stylePickerContext = createContext<StylePickerContextType>(

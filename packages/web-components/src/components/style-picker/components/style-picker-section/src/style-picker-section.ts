@@ -89,6 +89,8 @@ class StylePickerSection extends LitElement {
 
     this.itemsCount = _optionsCount;
     this.hidden = !_optionsCount;
+
+    this._stylePickerContext?.onSectionVisibilityChange?.();
   }
 
   /**

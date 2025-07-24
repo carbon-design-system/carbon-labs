@@ -13,6 +13,7 @@ import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 import '@carbon/web-components/es/components/search/index.js';
 import '@carbon/web-components/es/components/heading/index.js';
+import '../../../../empty-state/index.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 const { stablePrefix: clabsPrefix } = settings;
@@ -48,14 +49,14 @@ export const stylePickerTemplate = (customElementClass) => {
         </div>
         <cds-layer class=${`${blockClass}__sections`} level="1">
           ${showEmptyState
-            ? html`<div class=${`${blockClass}--empty-state`}>
-                <cds-section level="4">
-                  <cds-heading>No results found</cds-heading></cds-section
-                >
-                <p class=${`${blockClass}--empty-state__subtitle`}>
-                  Try a different search
-                </p>
-              </div>`
+            ? html`
+                <div class=${`${blockClass}__empty-state`}>
+                  <clabs-empty-state
+                    kind="notFound"
+                    title="No results found"
+                    subtitle="Try a different search"></clabs-empty-state>
+                </div>
+              `
             : html`<slot></slot>`}
           <slot></slot>
         </cds-layer>

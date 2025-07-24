@@ -70,13 +70,7 @@ $container-width: $spacing-12-rem + $spacing-06;
   justify-content: end;
 }
 
-.#{$block-class}--empty-state {
+.#{$block-class}__empty-state {
   padding-inline: $spacing-05;
-  padding-block: $spacing-06;
-
-  .#{$block-class}--empty-state__subtitle {
-    @include type.type-style('label-01');
-
-    color: $text-secondary;
-  }
+  padding-block-start: $spacing-06;
 }

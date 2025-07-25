@@ -500,10 +500,6 @@ body {
     > ##{$prefix}__ai-prompt-tile {
     inline-size: calc(100% - 16px);
   }
-
-  .#{$prefix}__tiles-container > ##{$prefix}__ai-prompt-tile {
-    flex-grow: 0.5;
-  }
 }
 
 // Large

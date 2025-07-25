@@ -649,3 +649,15 @@ div:has(.#{$prefix}--header)
     }
   }
 }
+
+// Side nav pin
+.#{$prefix}--side-nav__pin {
+  @include focus-outline('reset');
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-05 $spacing-05 0;
+  min-block-size: $spacing-05;
+}

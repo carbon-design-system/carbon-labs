@@ -70,7 +70,6 @@ import {
   Share,
   User,
   VirtualColumnKey,
-  Menu,
   IbmCloudKeyProtect,
   Group,
   Money,
@@ -620,11 +619,9 @@ export const Demo = () => {
                 hideRailBreakpointDown="md"
                 isChildOfHeader={false}
                 isRail
+                enableRailPin
                 aria-label="Product navigation">
                 <SideNavItems>
-                  <SideNavSlot renderIcon={Menu}>
-                    <Menu />
-                  </SideNavSlot>
                   <SideNavSlot renderIcon={VirtualColumnKey}>
                     <Dropdown
                       id="default"

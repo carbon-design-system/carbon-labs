@@ -65,8 +65,8 @@ $container-width: $spacing-12-rem + $spacing-06;
 
 .#{$block-class}__search {
   position: absolute;
-  inset: 0;
   display: flex;
+  inset: 0;
   justify-content: end;
 }
 

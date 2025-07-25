@@ -51,16 +51,16 @@ $block-class: #{$clabs-prefix}--style-picker-section;
 
 .#{$block-class}__header {
   display: grid;
-  grid-template-columns: 1fr max-content;
-  column-gap: 1rem;
   align-items: center;
+  column-gap: 1rem;
+  grid-template-columns: 1fr max-content;
 }
 
 .#{$block-class}--flat .#{$block-class}__header {
   border-block-start: 0.0625rem solid theme.$border-subtle;
   padding-block-start: $spacing-03;
-  padding-inline: $spacing-05;
   block-size: $spacing-07;
+  padding-inline: $spacing-05;
 }
 
 .#{$block-class}__heading {

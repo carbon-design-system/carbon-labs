@@ -469,16 +469,42 @@ export const Demo = () => {
                       hideLabel
                     />
                   </SideNavSlot>
-                  <SideNavDivider />
                   <SideNavMenu renderIcon={Home} title="Home" defaultExpanded>
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
                     </SideNavMenuItem>
-                    <SideNavMenuItem
-                      isActive
-                      href="http://www.carbondesignsystem.com">
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
                     </SideNavMenuItem>
+                    <SideNavMenu title="Menu level 3">
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Item level 4
+                      </SideNavMenuItem>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Item level 4
+                      </SideNavMenuItem>
+                    </SideNavMenu>
+                    <SideNavMenu title="Menu level 3" defaultExpanded>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Item level 4
+                      </SideNavMenuItem>
+                      <SideNavMenu title="Menu level 4" defaultExpanded>
+                        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                          Item level 5
+                        </SideNavMenuItem>
+                        <SideNavMenuItem
+                          isActive
+                          href="http://www.carbondesignsystem.com">
+                          Item level 5
+                        </SideNavMenuItem>
+                        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                          Item level 5
+                        </SideNavMenuItem>
+                      </SideNavMenu>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Item level 4
+                      </SideNavMenuItem>
+                    </SideNavMenu>
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
                     </SideNavMenuItem>
@@ -614,16 +640,42 @@ export const Demo = () => {
                       hideLabel
                     />
                   </SideNavSlot>
-                  <SideNavDivider />
                   <SideNavMenu renderIcon={Home} title="Home">
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
                     </SideNavMenuItem>
-                    <SideNavMenuItem
-                      isActive
-                      href="http://www.carbondesignsystem.com">
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
                     </SideNavMenuItem>
+                    <SideNavMenu title="Menu level 3">
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Item level 4
+                      </SideNavMenuItem>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Item level 4
+                      </SideNavMenuItem>
+                    </SideNavMenu>
+                    <SideNavMenu title="Menu level 3" defaultExpanded>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Item level 4
+                      </SideNavMenuItem>
+                      <SideNavMenu title="Menu level 4" defaultExpanded>
+                        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                          Item level 5
+                        </SideNavMenuItem>
+                        <SideNavMenuItem
+                          isActive
+                          href="http://www.carbondesignsystem.com">
+                          Item level 5
+                        </SideNavMenuItem>
+                        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                          Item level 5
+                        </SideNavMenuItem>
+                      </SideNavMenu>
+                      <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                        Item level 4
+                      </SideNavMenuItem>
+                    </SideNavMenu>
                     <SideNavMenuItem href="http://www.carbondesignsystem.com">
                       Item level 3
                     </SideNavMenuItem>

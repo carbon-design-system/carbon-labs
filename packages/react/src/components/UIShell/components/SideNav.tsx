@@ -288,7 +288,7 @@ function SideNavRenderFunction(
 
           if (slotElement) {
             const firstElementAfterSlot =
-              slotElement.nextElementSibling?.nextElementSibling?.querySelector(
+              slotElement.nextElementSibling?.querySelector(
                 'a, button'
               ) as HTMLElement;
 
@@ -554,7 +554,8 @@ function SideNavRenderFunction(
     const isInRail = isNavItemClick?.closest(`.${prefix}--side-nav--rail`);
     if (
       isNavItemClick &&
-      !isNavItemClick.classList.contains(`${prefix}--side-nav__submenu`)
+      !isNavItemClick.classList.contains(`${prefix}--side-nav__submenu`) &&
+      !isNavItemClick.classList.contains(`${prefix}--side-nav__back-button`)
     ) {
       isInRail ? handleToggle(false, false) : onSideNavBlur?.();
     }

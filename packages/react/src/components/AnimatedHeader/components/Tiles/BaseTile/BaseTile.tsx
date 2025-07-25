@@ -26,6 +26,7 @@ interface BaseTileProps {
   isDisabled?: boolean;
   disabledTaskLabel?: string;
   onClick?: (() => void) | null;
+  ariaLabel?: string;
 }
 
 export const BaseTile: React.FC<BaseTileProps> = (props: BaseTileProps) => {

@@ -44,6 +44,7 @@ export const headerTiles = [
         href: '#',
         title: 'Short description of the type of prompt',
         mainIcon: Term,
+        ariaLabel: 'Start a conversation with the AI assistant',
       },
       {
         id: 'tile-1',
@@ -51,6 +52,7 @@ export const headerTiles = [
         title: 'Load data',
         subtitle: 'with Data explorer',
         mainIcon: DataSet,
+        ariaLabel: 'Load data using Data explorer',
       },
       {
         id: 'tile-2',
@@ -58,6 +60,7 @@ export const headerTiles = [
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
         mainIcon: ChartLineData,
+        ariaLabel: 'Monitor data using Monitoring hub',
       },
     ],
   },
@@ -71,6 +74,7 @@ export const headerTiles = [
         title: 'Load data',
         subtitle: 'with Data explorer',
         mainIcon: DataSet,
+        ariaLabel: 'Load data using Data explorer',
       },
     ],
   },
@@ -84,6 +88,7 @@ export const headerTiles = [
         title: 'Load data',
         subtitle: 'with Data explorer',
         mainIcon: DataSet,
+        ariaLabel: 'Load data using Data explorer',
       },
       {
         id: 'tile-2',
@@ -91,6 +96,7 @@ export const headerTiles = [
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
         mainIcon: ChartLineData,
+        ariaLabel: 'Monitor data using Monitoring hub',
       },
     ],
   },
@@ -104,6 +110,7 @@ export const headerTiles = [
         title: 'Load data',
         subtitle: 'with Data explorer',
         mainIcon: DataSet,
+        ariaLabel: 'Load data using Data explorer',
       },
       {
         id: 'tile-2',
@@ -111,6 +118,7 @@ export const headerTiles = [
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
         mainIcon: ChartLineData,
+        ariaLabel: 'Monitor data using Monitoring hub',
       },
       {
         id: 'tile-3',
@@ -118,6 +126,7 @@ export const headerTiles = [
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
         mainIcon: Sql,
+        ariaLabel: 'Create and run SQL queries using SQL editor',
       },
     ],
   },
@@ -131,6 +140,7 @@ export const headerTiles = [
         title: 'Load data',
         subtitle: 'with Data explorer',
         mainIcon: DataSet,
+        ariaLabel: 'Load data using Data explorer',
       },
       {
         id: 'tile-2',
@@ -138,6 +148,7 @@ export const headerTiles = [
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
         mainIcon: ChartLineData,
+        ariaLabel: 'Monitor data using Monitoring hub',
       },
       {
         id: 'tile-3',
@@ -145,6 +156,7 @@ export const headerTiles = [
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
         mainIcon: Sql,
+        ariaLabel: 'Create and run SQL queries using SQL editor',
       },
       {
         id: 'tile-4',
@@ -152,6 +164,7 @@ export const headerTiles = [
         title: 'Export data',
         mainIcon: Export,
         secondaryIcon: ArrowRight,
+        ariaLabel: 'Export data',
       },
     ],
   },
@@ -166,12 +179,14 @@ export const headerTiles = [
         subtitle: 'with Data explorer',
         mainIcon: DataSet,
         isLoading: true,
+        ariaLabel: 'Loading tile',
       },
       {
         id: 'tile-2',
         title: 'Non-interactive tile',
         subtitle: 'with Monitoring hub',
         mainIcon: ChartLineData,
+        ariaLabel: 'Non-interactive tile',
       },
       {
         id: 'tile-3',
@@ -180,6 +195,7 @@ export const headerTiles = [
         subtitle: 'with SQL editor',
         mainIcon: Sql,
         isDisabled: true,
+        ariaLabel: 'Disabled tile',
       },
       {
         id: 'tile-4',
@@ -187,6 +203,7 @@ export const headerTiles = [
         title: 'Export data',
         mainIcon: Export,
         secondaryIcon: ArrowRight,
+        ariaLabel: 'Export data',
       },
     ],
   },
@@ -199,10 +216,12 @@ export const headerTiles = [
         customContent: (
           <Loading withOverlay={false} description="Sample loading state" />
         ),
+        ariaLabel: 'Custom content tile with loading state',
       },
       {
         id: 'tile-2',
         customContent: <SampleCustomTaskContent />,
+        ariaLabel: 'Custom content tile',
       },
     ],
   },

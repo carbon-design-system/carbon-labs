@@ -33,12 +33,14 @@ export type WorkspaceSelectorProps = {
   workspaceSelectorConfig?: WorkspaceSelectorConfig | null;
   userName?: string;
   isLoading?: boolean;
+  ariaLabel?: string;
 };
 
 const WorkspaceSelector = ({
   workspaceSelectorConfig,
   userName,
   isLoading,
+  ariaLabel,
 }: WorkspaceSelectorProps) => {
   const {
     className: dropdownCustomClass,
@@ -69,9 +71,11 @@ const WorkspaceSelector = ({
         workspaceSelectorConfig?.setSelectedWorkspace?.(e);
         dropdownCustomOnChange?.(e);
       },
+      'aria-label': ariaLabel,
       ...dropdownOverrideProps,
     };
   }, [
+    ariaLabel,
     blockClass,
     dropdownCustomClass,
     dropdownOverrideProps,

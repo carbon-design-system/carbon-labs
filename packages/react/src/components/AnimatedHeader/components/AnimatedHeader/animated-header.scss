@@ -173,12 +173,12 @@ body {
   line-height: 1.25;
 }
 
-.#{$prefix}__heading-welcome {
+.#{$prefix}__heading-first {
   animation: 250ms ease-in fade-in;
   animation-fill-mode: both;
 }
 
-.#{$prefix}__heading-name {
+.#{$prefix}__heading-second {
   animation: 250ms ease-in fade-in;
   animation-delay: 125ms;
   animation-fill-mode: both;
@@ -500,10 +500,6 @@ body {
     > ##{$prefix}__ai-prompt-tile {
     inline-size: calc(100% - 16px);
   }
-
-  .#{$prefix}__tiles-container > ##{$prefix}__ai-prompt-tile {
-    flex-grow: 0.5;
-  }
 }
 
 // Large
@@ -601,9 +597,9 @@ body {
 }
 
 /*
-   If the user has expressed their preference for
-   reduced motion, then don't use animations
- */
+    If the user has expressed their preference for
+    reduced motion, then don't use animations
+  */
 @media (prefers-reduced-motion: reduce) {
   .#{$prefix},
   .#{$prefix}__static,
@@ -614,8 +610,8 @@ body {
     transition: none;
   }
 
-  .#{$prefix}__heading-welcome,
-  .#{$prefix}__heading-name,
+  .#{$prefix}__heading-first,
+  .#{$prefix}__heading-second,
   .#{$prefix}__description,
   .#{$prefix}__button,
   .#{$prefix}__workspace,

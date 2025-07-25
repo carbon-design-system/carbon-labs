@@ -66,11 +66,11 @@ $container-width: $spacing-12-rem + $spacing-06;
 .#{$block-class}__search {
   position: absolute;
   display: flex;
-  inset: 0;
   justify-content: end;
+  inset: 0;
 }
 
 .#{$block-class}__empty-state {
-  padding-inline: $spacing-05;
   padding-block-start: $spacing-06;
+  padding-inline: $spacing-05;
 }

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.66.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.65.0...@carbon-labs/react-ui-shell@0.66.0) (2025-07-25)
+
+
+### Bug Fixes
+
+* **uishell:** profile overflow scroll ([#725](https://github.com/carbon-design-system/carbon-labs/issues/725)) ([cb6e7b0](https://github.com/carbon-design-system/carbon-labs/commit/cb6e7b0acf59fe508c534bb9776254dcc7477849))
+
+
+
+
+
 # [0.65.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.64.0...@carbon-labs/react-ui-shell@0.65.0) (2025-07-24)
 
 

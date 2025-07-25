@@ -13,7 +13,7 @@ import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 import '@carbon/web-components/es/components/search/index.js';
 import '@carbon/web-components/es/components/heading/index.js';
-import '../../../../empty-state/index.js';
+import '@carbon-labs/wc-empty-state/es/index.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 const { stablePrefix: clabsPrefix } = settings;

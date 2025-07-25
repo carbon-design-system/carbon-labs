@@ -6,7 +6,8 @@
     "access": "public",
     "provenance": true
   },
-  "type": "module",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "description": "Carbon Labs - Resize Bar",
   "license": "Apache-2.0",
   "repository": {

@@ -16,6 +16,7 @@ import {
 // @ts-ignore
 import styles from './style-picker-group.scss?inline';
 import { property } from 'lit/decorators.js';
+import { prefix } from '../../../defs';
 
 /**
  * Group element extending LitElement.
@@ -31,6 +32,27 @@ class StylePickerGroup extends LitElement {
 
   @property({ type: String, reflect: true, attribute: 'heading' })
   heading = '';
+
+  /**
+   * Handle search based on change in the searchTerm from style-picker-context.
+   */
+  _handleSearch() {
+    const _allOptionElements = this.querySelectorAll(`${prefix}-option`);
+    const anyVisible = Array.from(_allOptionElements).some(
+      (opt) => !opt.hasAttribute('hidden')
+    );
+
+    this.hidden = !anyVisible;
+  }
+
+  /**
+   * Invoked whenever the element is updated.
+   */
+  updated() {
+    if (this._stylePickerContext?.enableSearch) {
+      this._handleSearch();
+    }
+  }
 }
 
 export default StylePickerGroup;

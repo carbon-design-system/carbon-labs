@@ -142,14 +142,19 @@ const argTypes = {
     options: [...alignOptions],
     description: `Specify how the popover should align with the trigger element`,
   },
+  enableSearch: {
+    control: 'boolean',
+    description: 'Enable search option',
+  },
 };
 
 export const ColorAndIcon = {
   args: {
-    heading: 'Choose color and icon',
+    heading: 'Customize',
     open: true,
     align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
     kind: 'disclosed',
+    enableSearch: true,
   },
   argTypes,
   /**
@@ -168,7 +173,8 @@ export const ColorAndIcon = {
             align=${args.align}
             ?open=${args.open}
             heading=${args.heading}
-            kind=${args.kind}>
+            kind=${args.kind}
+            ?enable-search=${args.enableSearch}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
@@ -219,7 +225,7 @@ export const ColorAndIcon = {
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}
-            <span slot="tooltip-content">Edit</span>
+            <span slot="tooltip-content">Delete</span>
           </cds-icon-button>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${OverflowMenuVertical16({ slot: 'icon' })}
@@ -244,10 +250,11 @@ export const ColorAndIcon = {
 
 export const IconColorPictogram = {
   args: {
-    heading: 'Select color and icons',
+    heading: 'Customize',
     open: true,
     align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
     kind: 'disclosed',
+    enableSearch: true,
   },
   argTypes,
   /**
@@ -266,7 +273,8 @@ export const IconColorPictogram = {
             align=${args.align}
             ?open=${args.open}
             heading=${args.heading}
-            kind=${args.kind}>
+            kind=${args.kind}
+            ?enable-search=${args.enableSearch}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
@@ -344,7 +352,7 @@ export const IconColorPictogram = {
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}
-            <span slot="tooltip-content">Edit</span>
+            <span slot="tooltip-content">Delete</span>
           </cds-icon-button>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${OverflowMenuVertical16({ slot: 'icon' })}

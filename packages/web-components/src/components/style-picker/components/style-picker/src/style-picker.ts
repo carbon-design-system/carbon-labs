@@ -9,20 +9,23 @@
 
 import { LitElement, PropertyValues } from 'lit';
 import { provide } from '@lit/context';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 // @ts-ignore
 import styles from './style-picker.scss?inline';
 import {
   stylePickerContext,
   StylePickerContextType,
 } from '../../../context/style-picker-context';
-import { Kind } from '../../../defs';
+import { Kind, prefix } from '../../../defs';
 
 /**
  * Component extending the LitElement class.
  */
 class StylePicker extends LitElement {
   static styles = styles;
+
+  @state()
+  showEmptyState = false;
 
   /**
    * Provide style-picker-context
@@ -40,6 +43,26 @@ class StylePicker extends LitElement {
         ...this._stylePickerContext,
         activeSection: index,
       };
+    },
+
+    /**
+     * Keep the search text in the context.
+     * @param {string} _searchTerm Search text.
+     */
+    setSearchTerm: (_searchTerm: string) => {
+      this._stylePickerContext = {
+        ...this._stylePickerContext,
+        searchTerm: _searchTerm,
+      };
+    },
+
+    /**
+     * Check the all items are hidden.
+     */
+    onSectionVisibilityChange: () => {
+      this.showEmptyState = Array.from(
+        this.querySelectorAll(`${prefix}-section`)
+      )?.every((_section) => _section.hasAttribute('hidden'));
     },
   };
 
@@ -68,15 +91,39 @@ class StylePicker extends LitElement {
   heading = '';
 
   /**
+   * Enable search in the style picker
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'enable-search' })
+  enableSearch = false;
+
+  /**
+   * Update search term in the context
+   * @param {object} e - Event raised when search input is changed
+   */
+  searchInput(e) {
+    this._stylePickerContext?.setSearchTerm?.(e.detail?.value);
+  }
+
+  /**
    * Invoked whenever the element is updated.
    *
    * @param {PropertyValues<this>} changed - A Map of property keys to values.
    */
   updated(changed: PropertyValues<this>) {
+    const _newContextValues: Partial<StylePickerContextType> = {};
+
     if (changed.has('kind')) {
+      _newContextValues.kind = this.kind;
+    }
+
+    if (changed.has('enableSearch')) {
+      _newContextValues.enableSearch = this.enableSearch;
+    }
+
+    if (Object.keys(_newContextValues).length) {
       this._stylePickerContext = {
         ...this._stylePickerContext,
-        kind: this.kind,
+        ..._newContextValues,
       };
     }
   }

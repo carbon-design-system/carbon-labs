@@ -30,6 +30,7 @@ import { useMatchMedia } from '../internal/useMatchMedia';
 import { TranslateWithId } from '../types/common';
 import { SidePanelClose, SidePanelOpen } from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
+import SideNavPin from './SideNavPin';
 
 export enum SIDE_NAV_TYPE {
   DEFAULT = 'default',
@@ -55,6 +56,11 @@ const defaultTranslateWithId = (id: TranslationKey): string =>
 export interface SideNavProps
   extends ComponentProps<'nav'>,
     TranslateWithId<TranslationKey> {
+  enableRailPin?: boolean;
+  sideNavPinProps?: {
+    onSideNavPinClick?: () => void;
+    renderIcon?: React.ComponentType;
+  };
   expanded?: boolean;
   defaultExpanded?: boolean;
   isChildOfHeader?: boolean;
@@ -103,6 +109,8 @@ function SideNavRenderFunction(
     children,
     onToggle,
     className: customClassName,
+    enableRailPin,
+    sideNavPinProps,
     hideRailBreakpointDown,
     href,
     isFixedNav = false,
@@ -131,6 +139,7 @@ function SideNavRenderFunction(
   const [expandedViaHoverState, setExpandedViaHoverState] =
     useDelayedState(defaultExpanded);
   const expanded = controlled ? expandedProp : expandedState;
+  const [pinned, setPinned] = useState(false);
   const sideNavRef = useRef<HTMLDivElement>(null);
   const navRef = useMergedRefs([sideNavRef, ref]);
   const [currentPrimaryMenu, setCurrentPrimaryMenu] = useState<
@@ -153,6 +162,11 @@ function SideNavRenderFunction(
     }
   };
 
+  const handlePin = () => {
+    setPinned(!pinned);
+    setExpandedState(!pinned);
+  };
+
   const accessibilityLabel = {
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
@@ -161,15 +175,16 @@ function SideNavRenderFunction(
   const className = cx(customClassName, {
     [`${prefix}--side-nav`]: true,
     [`${prefix}--side-nav--expanded`]: expanded || expandedViaHoverState,
+    [`${prefix}--side-nav--pinned`]: pinned,
     [`${prefix}--side-nav--collapsed`]: !expanded && isFixedNav,
     [`${prefix}--side-nav--hide-rail-breakpoint-down-${hideRailBreakpointDown}`]:
       hideRailBreakpointDown,
-    [`${prefix}--side-nav--rail`]: isRail,
-    [`${prefix}--side-nav--panel`]: navType === SIDE_NAV_TYPE.PANEL,
+    [`${prefix}--side-nav--rail`]: !pinned && isRail,
+    [`${prefix}--side-nav--panel`]: pinned || navType === SIDE_NAV_TYPE.PANEL,
     [`${prefix}--side-nav--ux`]: isChildOfHeader,
     [`${prefix}--side-nav--hidden`]: !isPersistent,
     [`${prefix}--side-nav--collapsible`]: isCollapsible,
-    [`${prefix}--side-nav--with-overlay`]: !hideOverlay,
+    [`${prefix}--side-nav--with-overlay`]: !pinned && !hideOverlay,
   });
 
   const overlayClassName = cx({
@@ -321,7 +336,7 @@ function SideNavRenderFunction(
       }
     };
     eventHandlers.onBlur = (event) => {
-      if (navType === SIDE_NAV_TYPE.PANEL) {
+      if (navType === SIDE_NAV_TYPE.PANEL || pinned) {
         return;
       }
 
@@ -532,6 +547,10 @@ function SideNavRenderFunction(
       handleToggle(true, true);
     };
     eventHandlers.onMouseLeave = () => {
+      if (pinned) {
+        return;
+      }
+
       setExpandedState(false);
       setExpandedViaHoverState(false);
       handleToggle(false, false);
@@ -631,7 +650,7 @@ function SideNavRenderFunction(
         currentPrimaryMenu,
         setCurrentPrimaryMenu,
       }}>
-      {isFixedNav || hideOverlay ? null : (
+      {isFixedNav || pinned || hideOverlay ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className={overlayClassName} onClick={onOverlayClick} />
       )}
@@ -648,6 +667,13 @@ function SideNavRenderFunction(
         {...accessibilityLabel}
         {...eventHandlers}
         {...other}>
+        {!isChildOfHeader && enableRailPin && (
+          <SideNavPin
+            {...sideNavPinProps}
+            handlePin={handlePin}
+            pinned={pinned}
+          />
+        )}
         {childrenToRender}
         {navType === SIDE_NAV_TYPE.PANEL &&
           (expandedState ? (
@@ -691,6 +717,12 @@ SideNav.propTypes = {
    * If `true`, the SideNav will be open on initial render.
    */
   defaultExpanded: PropTypes.bool,
+
+  /**
+   * If `true`, the Pin icon will be rendered.
+   * This prop is used to enable side rail pinning functionality.
+   */
+  enableRailPin: PropTypes.bool,
 
   /**
    * Specify the duration in milliseconds to delay before displaying the sidenavigation

@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.102.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.101.0...@carbon-labs/react@0.102.0) (2025-07-24)
+
+
+### Bug Fixes
+
+* **uishell:** back button prevent close ([#724](https://github.com/carbon-design-system/carbon-labs/issues/724)) ([3fabb26](https://github.com/carbon-design-system/carbon-labs/commit/3fabb26b6d3b761bf4011d33e1a265d3f41bea32))
+
+
+
+
+
+# [0.101.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.100.0...@carbon-labs/react@0.101.0) (2025-07-23)
+
+
+### Features
+
+* **SideNav:** support additional levels of nesting and fix mobile sizing ([#672](https://github.com/carbon-design-system/carbon-labs/issues/672)) ([f84cf41](https://github.com/carbon-design-system/carbon-labs/commit/f84cf414933edd17f8fbdb2ef8472f74130842c6))
+
+
+
+
+
+# [0.100.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.99.0...@carbon-labs/react@0.100.0) (2025-07-22)
+
+
+### Features
+
+* **animated-header:** Tile rework ([#646](https://github.com/carbon-design-system/carbon-labs/issues/646)) ([ffb9d58](https://github.com/carbon-design-system/carbon-labs/commit/ffb9d58abb688a8ca98fa79c93b0d5a4d67a6499))
+
+
+
+
+
 # [0.99.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.98.0...@carbon-labs/react@0.99.0) (2025-07-14)
 
 

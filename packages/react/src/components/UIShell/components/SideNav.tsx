@@ -633,7 +633,7 @@ function SideNavRenderFunction(
         currentPrimaryMenu,
         setCurrentPrimaryMenu,
       }}>
-      {!isFixedNav && !hideOverlay && navType !== SIDE_NAV_TYPE.PANEL && (
+      {isFixedNav || hideOverlay || navType === SIDE_NAV_TYPE.PANEL ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className={overlayClassName} onClick={onOverlayClick} />
       )}

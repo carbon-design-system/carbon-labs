@@ -1,4 +1,4 @@
-# @carbon-labs/firstTimeOrientation
+# @carbon-labs/react-first-time-orientation
 
 ## 📝 License
 

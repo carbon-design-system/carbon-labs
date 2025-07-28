@@ -8,12 +8,12 @@
 @use '@carbon/styles/scss/utilities/convert' as convert;
 @use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 @use '@carbon/styles/scss/utilities/button-reset' as button-reset;
-@use '@carbon/react/scss/breakpoint' as breakpoint;
 @use '@carbon/styles/scss/utilities/focus-outline' as *;
 @use '@carbon/styles/scss/breakpoint' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/motion' as *;
 @use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/utilities/z-index' as *;
 @use '@carbon/styles/scss/components/ui-shell/mixins' as *;
 @use '@carbon/styles/scss/components/ui-shell/functions' as *;
 @use '@carbon/styles/scss/spacing' as *;
@@ -22,7 +22,8 @@ $prefix: 'cds' !default;
 
 div:has(.#{$prefix}--header)
   ~ div:has(.#{$prefix}--side-nav)
-  .#{$prefix}--side-nav {
+  .#{$prefix}--side-nav,
+.#{$prefix}--header ~ div:has(.#{$prefix}--side-nav) .#{$prefix}--side-nav {
   block-size: calc(100% - $spacing-09);
   inset-block-start: $spacing-09;
 }
@@ -50,6 +51,43 @@ div:has(.#{$prefix}--header)
   margin-inline-end: $spacing-05;
 }
 
+.#{$prefix}--side-nav__item--active.#{$prefix}--side-nav__item--has-active-descendant
+  .#{$prefix}--side-nav__submenu:not(
+    .#{$prefix}--side-nav__item--has-active-descendant
+  )[aria-expanded='false'] {
+  background-color: transparent;
+
+  &::before {
+    display: none;
+  }
+}
+
+.#{$prefix}--side-nav__item--active.#{$prefix}--side-nav__item--has-active-descendant[aria-expanded='false']
+  .#{$prefix}--side-nav__submenu[aria-expanded='false'],
+.#{$prefix}--side-nav__item--active
+  .#{$prefix}--side-nav__item--has-active-descendant
+  .#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active[aria-expanded='false'] {
+  position: relative;
+  background-color: $background-selected;
+  color: $text-primary;
+
+  &::before {
+    position: absolute;
+    display: block;
+    background-color: $border-interactive;
+    content: '';
+    inline-size: 3px;
+    inset-block: 0;
+    inset-inline-start: 0;
+  }
+}
+
+.#{$prefix}--side-nav__item--active
+  .#{$prefix}--side-nav__submenu:not(.#{$prefix}--side-nav__submenu--active)
+  > .#{$prefix}--side-nav__submenu-title {
+  font-weight: 500;
+}
+
 .#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active {
   > span {
     color: $text-primary;
@@ -70,8 +108,29 @@ div:has(.#{$prefix}--header)
   }
 }
 
+@include breakpoint-down(md) {
+  .#{$prefix}--side-nav__submenu {
+    padding: 0 $spacing-05 0 convert.to-rem(14px);
+  }
+
+  .#{$prefix}--side-nav__submenu,
+  .#{$prefix}--side-nav__link,
+  .#{$prefix}--side-nav__menu a.#{$prefix}--side-nav__link {
+    block-size: $spacing-08;
+  }
+
+  .#{$prefix}--side-nav__icon {
+    margin-inline-end: convert.to-rem(14px);
+  }
+
+  .#{$prefix}--side-nav__icon > svg {
+    block-size: convert.to-rem(20px);
+    inline-size: convert.to-rem(20px);
+  }
+}
+
 // SideNavMenu
-// Level 2
+// Level 2 / Doublewide Level 3
 // without icon
 .#{$prefix}--side-nav__submenu
   + .#{$prefix}--side-nav__menu
@@ -84,12 +143,61 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__submenu
   + .#{$prefix}--side-nav__menu
   > .#{$prefix}--side-nav__item--icon
-  .#{$prefix}--side-nav__submenu {
+  > .#{$prefix}--side-nav__submenu {
   padding-inline-start: $spacing-09;
 }
 
+// Level 3 / Doublewide Level 4
+// without icon, icon not supported at this level
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-11;
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  > .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-12;
+}
+
+// Level 4 / / Doesn't exist in doublewide
+// without icon, icon not supported at this level
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-12;
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: convert.to-rem(112px);
+}
+
 // Nested SideNavMenuItem
-// Level 2
+// Level 2  / Doublewide Level 3
 // without icon
 .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
   a.#{$prefix}--side-nav__link {
@@ -115,14 +223,23 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-09;
 }
 
-// with icon inside primary menu (double wide)
+// with icon inside primary menu (double wide), Level 2
 .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
-  .cds--side-nav__menu-secondary-wrapper
+  .#{$prefix}--side-nav__menu-secondary-wrapper
   a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
   padding-inline-start: $spacing-05;
 }
 
-// Level 3
+@include breakpoint-down(md) {
+  // with icon inside primary menu (double wide)
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+    .#{$prefix}--side-nav__menu-secondary-wrapper
+    a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+    padding-inline-start: convert.to-rem(14px);
+  }
+}
+
+// Level 3 / Doublewide level 4
 // without icon parent
 .#{$prefix}--side-nav__menu
   .#{$prefix}--side-nav__menu
@@ -135,6 +252,46 @@ div:has(.#{$prefix}--header)
   .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
   a.#{$prefix}--side-nav__link {
   padding-inline-start: $spacing-12;
+}
+
+// Level 4 / Doublewide level 5
+// without icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-12;
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: convert.to-rem(112px);
+}
+
+// Level 5 / Doesn't exist in doublewide
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: convert.to-rem(112px);
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: convert.to-rem(128px);
 }
 
 .#{$prefix}--side-nav__menu-secondary-wrapper {
@@ -425,7 +582,7 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__slot {
   display: flex;
   align-items: center;
-  margin: 0 $spacing-05;
+  margin: 0 $spacing-05 $spacing-05;
   block-size: 2rem;
 }
 
@@ -457,7 +614,7 @@ div:has(.#{$prefix}--header)
 //----------------------------------------------------------------------------
 // Mobile
 //----------------------------------------------------------------------------
-@include breakpoint.breakpoint-down(md) {
+@include breakpoint-down(md) {
   .#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--expanded {
     inline-size: 100%;
     max-inline-size: 100%;

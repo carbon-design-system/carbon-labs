@@ -75,8 +75,8 @@ export interface SideNavProps
   inert?: boolean;
   isCollapsible?: boolean;
   hideOverlay?: boolean;
-  navType: SIDE_NAV_TYPE;
-  isTreeview: boolean;
+  navType?: SIDE_NAV_TYPE;
+  isTreeview?: boolean;
 }
 
 interface SideNavContextData {
@@ -288,7 +288,7 @@ function SideNavRenderFunction(
 
           if (slotElement) {
             const firstElementAfterSlot =
-              slotElement.nextElementSibling?.nextElementSibling?.querySelector(
+              slotElement.nextElementSibling?.querySelector(
                 'a, button'
               ) as HTMLElement;
 
@@ -545,6 +545,21 @@ function SideNavRenderFunction(
       handleToggle(true, true);
     };
   }
+
+  useWindowEvent('click', (event) => {
+    const target = event.target as HTMLElement;
+    const isNavItemClick = target.closest(
+      `.${prefix}--side-nav a, .${prefix}--side-nav button`
+    );
+    const isInRail = isNavItemClick?.closest(`.${prefix}--side-nav--rail`);
+    if (
+      isNavItemClick &&
+      !isNavItemClick.classList.contains(`${prefix}--side-nav__submenu`) &&
+      !isNavItemClick.classList.contains(`${prefix}--side-nav__back-button`)
+    ) {
+      isInRail ? handleToggle(false, false) : onSideNavBlur?.();
+    }
+  });
 
   useWindowEvent('keydown', (event: Event) => {
     const focusedElement = document.activeElement;

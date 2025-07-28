@@ -1,0 +1,56 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import * as HeaderPopoverStories from './HeaderPopover.stories';
+
+<Meta isTemplate />
+
+# HeaderPopover
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Header Popover](#header-popover)
+- [Component API](#component-api)
+
+## Overview
+
+The `HeaderPopover` component provides an interactive popover menu within the
+`Header`. It can display additional information or actions without navigating
+away from the page. The popover is triggered by a `HeaderPopoverButton`, which
+can include an icon or label. The content is defined using
+`HeaderPopoverContent`, with optional action buttons or links in
+`HeaderPopoverActions`.
+
+```jsx
+import {
+  HeaderPopover,
+  HeaderPopoverContent,
+  HeaderPopoverButton,
+  HeaderPopoverActions,
+} from '@carbon-labs/react-ui-shell';
+import { Header, HeaderGlobalBar } from '@carbon/react';
+import { Information } from '@carbon/icons-react';
+
+<Header aria-label="IBM Platform Name">
+  <HeaderGlobalBar>
+    <HeaderPopover align="bottom-right">
+      <HeaderPopoverButton align="bottom" label="Show information">
+        <Information />
+      </HeaderPopoverButton>
+      <HeaderPopoverContent>
+        <p>
+          Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut fsil labore et dolore magna aliqua.
+        </p>
+        <HeaderPopoverActions>
+          <Link href="#">Link action</Link>
+          <Button size="sm">Button</Button>
+        </HeaderPopoverActions>
+      </HeaderPopoverContent>
+    </HeaderPopover>
+  </HeaderGlobalBar>
+</Header>;
+```
+
+## Component API
+
+<ArgTypes />

@@ -1,0 +1,193 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import * as StylePickerDisclosedStories from './style-picker.disclosed.stories';
+import packageJson from '../package.json';
+
+<Meta of={StylePickerDisclosedStories} />
+
+# Style Picker
+
+- **Initiative owner(s):** Afsal K
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/style-picker)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/style-picker)
+
+## Overview
+
+The style picker allows users to customize icons, colors, or shapes in their UI, based on their preferences or requirements.
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-style-picker/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['style-picker'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+#### Disclosed variant with color and icon options
+
+```html
+<clabs-style-picker
+  align="right"
+  ?open=${true}
+  heading="Choose color and icon"
+  kind="disclosed">
+  <cds-icon-button
+    slot="trigger"
+    kind=${BUTTON_KIND.GHOST}
+    @click=${toggleButton}>
+    ${ColorPalette16({ slot: "icon" })}
+    <span slot="tooltip-content">Color palette</span>
+  </cds-icon-button>
+  <clabs-style-picker-sections>
+    <clabs-style-picker-section heading="Icons">
+      ${icons.map(
+        (item) =>
+          html`
+            <clabs-style-picker-option
+              value=${item.value}
+              label=${item.label}
+              ?selected=${item.value === 'apple'}
+              @clabs-style-picker-option-select=${(ev) =>
+                changeIcon(ev)}>
+              <clabs-style-picker-icon>
+                ${item.renderIcon()}
+              </clabs-style-picker-icon>
+            </clabs-style-picker-option>
+          `
+      )}
+    </clabs-style-picker-section>
+    <clabs-style-picker-section heading="Colors">
+      ${colors.map(
+        (group) =>
+          html`<clabs-style-picker-group heading=${group.label}>
+            ${group.items.map(
+              (item) => html`
+                <clabs-style-picker-option
+                  value=${item.color}
+                  label=${item.label}
+                  ?selected=${item.label === 'Blue 60'}
+                  @clabs-style-picker-option-select=${(ev) =>
+                    changeColor(ev)}>
+                  <clabs-style-picker-color
+                    color=${item.color}
+                    label=${item.label}></clabs-style-picker-color>
+                </clabs-style-picker-option>
+              `
+            )}
+          </clabs-style-picker-group> `
+      )}
+    </clabs-style-picker-section>
+  </clabs-style-picker-sections>
+</clabs-style-picker>
+```
+
+#### Disclosed variant with color and pictogram options
+
+```html
+<clabs-style-picker
+  align="right"
+  ?open=${false}
+  heading="Choose color and pictogram"
+  kind="disclosed"
+  >
+  <cds-icon-button
+    slot="trigger"
+    kind="ghost"
+    @click=${toggleButton}>
+    ${ColorPalette16({ slot: 'icon' })}
+    <span slot="tooltip-content">Pictogram list</span>
+  </cds-icon-button>
+  <clabs-style-picker-sections>
+    <clabs-style-picker-section heading="Icons">
+      ${icons.map(
+        (item) =>
+          html`
+            <clabs-style-picker-option
+              value=${item.value}
+              label=${item.label}
+              ?selected=${item.value === 'apple'}
+              @clabs-style-picker-option-select=${(ev) =>
+                changeIcon(ev)}>
+              <clabs-style-picker-icon>
+                ${item.renderIcon()}
+              </clabs-style-picker-icon>
+            </clabs-style-picker-option>
+          `
+      )}
+    </clabs-style-picker-section>
+    <clabs-style-picker-section heading="Colors">
+      ${colors.map(
+        (group) =>
+          html`<clabs-style-picker-group heading=${group.label}>
+            ${group.items.map(
+              (item) => html`
+                <clabs-style-picker-option
+                  value=${item.color}
+                  label=${item.label}
+                  ?selected=${item.label === 'Blue 60'}
+                  @clabs-style-picker-option-select=${(ev) =>
+                    changeColor(ev)}>
+                  <clabs-style-picker-color
+                    color=${item.color}
+                    label=${item.label}></clabs-style-picker-color>
+                </clabs-style-picker-option>
+              `
+            )}
+          </clabs-style-picker-group> `
+      )}
+    </clabs-style-picker-section>
+    <clabs-style-picker-section heading="Pictograms" size="lg">
+      ${pictograms.map(
+        (group) =>
+          html`<clabs-style-picker-group heading=${group.label}>
+            ${group.items.map(
+              (item) => html`
+                <clabs-style-picker-option
+                  value=${item.value}
+                  label=${item.label}
+                  ?selected=${item.label === 'Amsterdam'}
+                  @clabs-style-picker-option-select=${(ev) =>
+                    changePictogram(ev, true)}>
+                  ${renderCarbonPictogram({
+                    ...item.pictogram,
+                    attrs: {
+                      ...item.pictogram.attrs,
+                      width: '3rem',
+                      height: '3rem',
+                      'aria-label': item.label,
+                    },
+                  })}
+                </clabs-style-picker-option>
+              `
+            )}
+          </clabs-style-picker-group> `
+      )}
+    </clabs-style-picker-section>
+  </clabs-style-picker-sections>
+</clabs-style-picker>
+```
+
+### &lt;clabs-style-picker&gt; attributes and properties
+
+<ArgTypes of="clabs-style-picker" />

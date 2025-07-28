@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.9.0...@carbon-labs/react-whats-new@0.10.0) (2025-07-28)
+
+
+### Bug Fixes
+
+* Whats new export update ([#616](https://github.com/carbon-design-system/carbon-labs/issues/616)) ([73ade6a](https://github.com/carbon-design-system/carbon-labs/commit/73ade6abbd63ce8b9d5169774c07fbf33657ffa1))
+
+
+
+
+
 # [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.8.0...@carbon-labs/react-whats-new@0.9.0) (2025-07-09)
 
 **Note:** Version bump only for package @carbon-labs/react-whats-new

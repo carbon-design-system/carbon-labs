@@ -31,7 +31,7 @@ export const stylePickerTemplate = (customElementClass) => {
     open,
     heading,
     enableSearch,
-    searchInput,
+    onChangeSearchInput,
     showEmptyState,
     searchCloseButtonLabel,
     emptyStateTitle,
@@ -51,7 +51,7 @@ export const stylePickerTemplate = (customElementClass) => {
                     expandable
                     close-button-label-text=${searchCloseButtonLabel}
                     type="text"
-                    @cds-search-input="${searchInput}"></cds-search>
+                    @cds-search-input="${onChangeSearchInput}"></cds-search>
                 </div>
               `
             : nothing}

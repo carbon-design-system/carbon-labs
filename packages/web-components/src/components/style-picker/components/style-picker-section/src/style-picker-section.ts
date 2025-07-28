@@ -48,6 +48,30 @@ class StylePickerSection extends LitElement {
         size: _size,
       };
     },
+
+    /**
+     * Update enable search in the Section's context.
+     *
+     * @param {boolean} _isEnable - Enable or disable search.
+     */
+    setEnableSearch: (_isEnable?: boolean) => {
+      this._sectionContext = {
+        ...this._sectionContext,
+        enableSearch: _isEnable,
+      };
+    },
+
+    /**
+     * Update searchTerm in the Section's context.
+     *
+     * @param {string} _text - Search term.
+     */
+    setSearchTerm: (_text: string) => {
+      this._sectionContext = {
+        ...this._sectionContext,
+        searchTerm: _text,
+      };
+    },
   };
 
   @property({ type: String, reflect: true, attribute: 'heading' })
@@ -73,7 +97,9 @@ class StylePickerSection extends LitElement {
    * Handle search term changes.
    */
   _handleSearch() {
-    const _searchTerm = this._stylePickerContext?.searchTerm?.trim();
+    const _searchTerm = this._stylePickerContext?.searchTerm
+      ?.trim()
+      ?.toLowerCase();
     let _optionsCount = 0;
 
     this.querySelectorAll(`${prefix}-option`).forEach((_option) => {
@@ -119,15 +145,29 @@ class StylePickerSection extends LitElement {
       this._sectionContext?.setSize?.(this.size);
     }
 
-    if (this._stylePickerContext?.enableSearch) {
+    if (
+      this._stylePickerContext?.enableSearch &&
+      this._sectionContext?.searchTerm !== this._stylePickerContext?.searchTerm
+    ) {
       this._handleSearch();
     }
 
-    this._sectionContext = {
-      ...this._sectionContext,
-      enableSearch: this._stylePickerContext?.enableSearch,
-      searchTerm: this._stylePickerContext?.searchTerm,
-    };
+    if (
+      this._sectionContext?.searchTerm !== this._stylePickerContext?.searchTerm
+    ) {
+      this._sectionContext?.setSearchTerm?.(
+        this._stylePickerContext?.searchTerm || ''
+      );
+    }
+
+    if (
+      this._sectionContext?.enableSearch !==
+      this._stylePickerContext?.enableSearch
+    ) {
+      this._sectionContext?.setEnableSearch?.(
+        !!this._stylePickerContext?.enableSearch
+      );
+    }
   }
 
   /**

@@ -137,7 +137,7 @@ class StylePicker extends LitElement {
    * Update search term in the context
    * @param {object} e - Event raised when search input is changed
    */
-  searchInput(e) {
+  onChangeSearchInput(e) {
     this._stylePickerContext?.setSearchTerm?.(e.detail?.value);
   }
 

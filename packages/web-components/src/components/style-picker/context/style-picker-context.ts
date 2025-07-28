@@ -17,6 +17,7 @@ export interface StylePickerContextType {
   size?: Size;
   setSize?: (_size?: Size) => void;
   enableSearch?: boolean;
+  setEnableSearch?: (_isEnable: boolean) => void;
   searchTerm?: string;
   setSearchTerm?: (_searchTerm: string) => void;
   onSectionVisibilityChange?: () => void;

@@ -24,10 +24,17 @@ import { Kind, prefix } from '../../../defs';
 class StylePicker extends LitElement {
   static styles = styles;
 
+  /**
+   * @internal
+   *
+   * According to search result decide whether need to show the empty state or not.
+   */
   @state()
   showEmptyState = false;
 
   /**
+   * @internal
+   *
    * Provide style-picker-context
    */
   @provide({ context: stylePickerContext })
@@ -95,6 +102,36 @@ class StylePicker extends LitElement {
    */
   @property({ type: Boolean, reflect: true, attribute: 'enable-search' })
   enableSearch = false;
+
+  /**
+   * Search close close button label
+   */
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'search-close-button-label',
+  })
+  searchCloseButtonLabel = 'Clear search input';
+
+  /**
+   * Title for empty state displayed when no items found in search.
+   */
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'empty-state-title',
+  })
+  emptyStateTitle = 'No results found';
+
+  /**
+   * Subtitle for empty state displayed when no items found in search.
+   */
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'empty-state-subtitle',
+  })
+  emptyStateSubtitle = 'Try a different search';
 
   /**
    * Update search term in the context

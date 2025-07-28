@@ -26,8 +26,17 @@ export const blockClass = `${clabsPrefix}--style-picker`;
  * @param {object} customElementClass Class functionality for the custom element
  */
 export const stylePickerTemplate = (customElementClass) => {
-  const { align, open, heading, enableSearch, searchInput, showEmptyState } =
-    customElementClass;
+  const {
+    align,
+    open,
+    heading,
+    enableSearch,
+    searchInput,
+    showEmptyState,
+    searchCloseButtonLabel,
+    emptyStateTitle,
+    emptyStateSubtitle,
+  } = customElementClass;
 
   return html`<cds-popover ?open=${open} align=${align}>
     <slot name="trigger"></slot>
@@ -40,7 +49,7 @@ export const stylePickerTemplate = (customElementClass) => {
                 <div class=${`${blockClass}__search`}>
                   <cds-search
                     expandable
-                    close-button-label-text="Clear search input"
+                    close-button-label-text=${searchCloseButtonLabel}
                     type="text"
                     @cds-search-input="${searchInput}"></cds-search>
                 </div>
@@ -53,8 +62,8 @@ export const stylePickerTemplate = (customElementClass) => {
                 <div class=${`${blockClass}__empty-state`}>
                   <clabs-empty-state
                     kind="notFound"
-                    title="No results found"
-                    subtitle="Try a different search"></clabs-empty-state>
+                    title=${emptyStateTitle}
+                    subtitle=${emptyStateSubtitle}></clabs-empty-state>
                 </div>
               `
             : html`<slot></slot>`}

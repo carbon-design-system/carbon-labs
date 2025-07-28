@@ -26,17 +26,9 @@ import TasksController, {
 import WorkspaceSelector, {
   WorkspaceSelectorProps,
 } from '../WorkspaceSelector/WorkspaceSelector';
+import HeaderTitle from '../HeaderTitle/HeaderTitle';
 
 /** Animated Header */
-
-const NAME_FIRST_LANGS = [
-  'ar', // Arabic
-  'he', // Hebrew
-  'fa', // Farsi/Persian
-  'ur', // Urdu
-  'ja', // Japanese
-  'zh', // Chinese
-];
 
 export interface AriaLabels {
   welcome?: string;
@@ -113,27 +105,15 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
   const animationContainer = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(true);
-  const [headingTextAnimation, setHeadingTextAnimation] = useState('');
   const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
-  const currentLang =
-    typeof window !== 'undefined'
-      ? document.documentElement.lang || 'en'
-      : 'en';
-  const isNameFirst = NAME_FIRST_LANGS.includes(currentLang.slice(0, 2));
 
   const collapsed = `${blockClass}--collapsed`;
   const contentCollapsed = `${blockClass}__content--collapsed`;
   const descriptionCollapsed = `${blockClass}__left-area-container--collapsed`;
-  const headingCollapsed = `${blockClass}__heading--collapsed`;
-  const headingExpanded = `${blockClass}__heading--expanded`;
   const lottieCollapsed = `${blockClass}__lottie-animation--collapsed`;
 
   const handleButtonCollapseClick = () => {
     setOpen(!open);
-
-    open
-      ? setHeadingTextAnimation(headingCollapsed)
-      : setHeadingTextAnimation(headingExpanded);
   };
 
   useEffect(() => {
@@ -208,31 +188,12 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         </div>
 
         <Column sm={4} md={8} lg={16}>
-          <Tooltip align="bottom" label={`${welcomeText}, ${userName}`}>
-            <h1
-              className={`${blockClass}__heading ${headingTextAnimation}`}
-              aria-label={ariaLabels?.welcome ?? `${welcomeText}, ${userName}`}>
-              {isNameFirst ? (
-                <>
-                  <span className={`${blockClass}__heading-first`}>
-                    {userName},{' '}
-                  </span>
-                  <span className={`${blockClass}__heading-second`}>
-                    {welcomeText}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span className={`${blockClass}__heading-first`}>
-                    {welcomeText},{' '}
-                  </span>
-                  <span className={`${blockClass}__heading-second`}>
-                    {userName}
-                  </span>
-                </>
-              )}
-            </h1>
-          </Tooltip>
+          <HeaderTitle
+            userName={userName}
+            welcomeText={welcomeText}
+            headerExpanded={open}
+            ariaLabels={ariaLabels}
+          />
         </Column>
 
         {(description || tasksControllerConfig) && (

@@ -7,6 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import AnimatedHeader from './components/AnimatedHeader/AnimatedHeader';
+import HeaderTitle from './components/HeaderTitle/HeaderTitle';
 import { BaseTile } from './components/Tiles/index.js';
 export * from './assets';
 export type {
@@ -15,4 +16,4 @@ export type {
 } from './components/WorkspaceSelector/WorkspaceSelector';
 export type { TasksControllerConfig } from './components/TasksController/TasksController';
 
-export { AnimatedHeader, BaseTile };
+export { AnimatedHeader, BaseTile, HeaderTitle };

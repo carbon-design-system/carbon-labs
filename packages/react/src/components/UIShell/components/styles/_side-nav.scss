@@ -582,7 +582,7 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__slot {
   display: flex;
   align-items: center;
-  margin: 0 $spacing-05 $spacing-05;
+  margin: 0 $spacing-05;
   block-size: 2rem;
 }
 
@@ -590,25 +590,29 @@ div:has(.#{$prefix}--header)
   inline-size: 100%;
 }
 
-// icon shown when rail is collapsed
+// icon shown when rail or panel is collapsed
 .#{$prefix}--side-nav__slot .#{$prefix}--side-nav__icon {
   display: none;
 }
 
-.#{$prefix}--side-nav--rail:not(.#{$prefix}--side-nav--expanded)
-  .#{$prefix}--side-nav__slot
-  .#{$prefix}--side-nav__icon {
-  display: block;
+.#{$prefix}--side-nav--rail:not(.#{$prefix}--side-nav--expanded),
+.#{$prefix}--side-nav--panel:not(.#{$prefix}--side-nav--expanded) {
+  .#{$prefix}--side-nav__slot .#{$prefix}--side-nav__icon {
+    display: block;
+  }
 }
 
-// hide slot item when rail collapsed
-.#{$prefix}--side-nav--rail .#{$prefix}--side-nav__slot-item {
+// hide slot item when rail or pnael collapsed
+.#{$prefix}--side-nav--rail .#{$prefix}--side-nav__slot-item,
+.#{$prefix}--side-nav--panel .#{$prefix}--side-nav__slot-item {
   display: none;
 }
 
-.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded
+.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded,
+.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded {
   .#{$prefix}--side-nav__slot-item {
-  display: block;
+    display: block;
+  }
 }
 
 //----------------------------------------------------------------------------

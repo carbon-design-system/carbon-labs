@@ -615,7 +615,7 @@ export const Demo = () => {
                 </SideNavLink>
               </SideNavItems>
             </SideNav>
-            <Theme theme={currentTheme}>
+            <Theme theme={currentTheme === 'white' ? 'g10' : 'g90'}>
               <SideNav
                 hideRailBreakpointDown="md"
                 isChildOfHeader={false}
@@ -1101,7 +1101,7 @@ export const DemoPanel = () => {
                 </SideNavLink>
               </SideNavItems>
             </SideNav>
-            <Theme theme={currentTheme}>
+            <Theme theme={currentTheme === 'white' ? 'g10' : 'g90'}>
               <SideNav
                 hideRailBreakpointDown="md"
                 isChildOfHeader={false}

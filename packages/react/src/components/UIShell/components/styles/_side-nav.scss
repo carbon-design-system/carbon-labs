@@ -319,6 +319,7 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav--panel {
   z-index: 7999; /* needs to be below header */
   overflow: visible;
+  border-inline-end: 1px solid $border-subtle;
 
   .#{$prefix}--side-nav__items {
     display: flex;

@@ -340,7 +340,6 @@ export const Rail = () => (
           hideLabel
         />
       </SideNavSlot>
-      <SideNavDivider />
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Item level 2
@@ -436,7 +435,6 @@ export const RailPanel = () => (
           hideLabel
         />
       </SideNavSlot>
-      <SideNavDivider />
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Item level 2

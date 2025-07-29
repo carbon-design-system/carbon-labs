@@ -31,12 +31,12 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav {
   overflow: visible;
 
-  // opening side-nav transition
+  // closing side-nav transition
   transition: $fast-02 motion(exit, productive);
 }
 
 .#{$prefix}--side-nav.#{$prefix}--side-nav--expanded {
-  // closing side-nav transition
+  // opening side-nav transition
   transition: $moderate-01 motion(standard, productive);
   transition-delay: 40ms;
 }

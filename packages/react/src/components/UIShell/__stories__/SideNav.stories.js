@@ -9,7 +9,7 @@
 
 import React from 'react';
 import mdx from './SideNav.mdx';
-import { SideNav } from '../components/SideNav';
+import { SIDE_NAV_TYPE, SideNav } from '../components/SideNav';
 import { SideNavItems } from '../components/SideNavItems';
 import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
@@ -314,7 +314,7 @@ export const SideNavWithFifthLevelIcons = () => (
 SideNavWithFifthLevelIcons.storyName = 'With Fifth Level Icons';
 
 /**
- * Story for SideNav panel
+ * Story for SideNav rail
  * @returns {React.ReactElement} The JSX for the story
  */
 export const Rail = () => (
@@ -408,3 +408,101 @@ export const Rail = () => (
     </SideNavItems>
   </SideNav>
 );
+
+/**
+ * Story for SideNav panel with flyouts
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const RailPanel = () => (
+  <SideNav
+    navType={SIDE_NAV_TYPE.PANEL}
+    hideOverlay
+    isChildOfHeader={false}
+    aria-label="Product navigation">
+    <SideNavItems>
+      <SideNavSlot renderIcon={VirtualColumnKey}>
+        <Dropdown
+          aria-label="Choose an option"
+          id="default"
+          size="sm"
+          itemToString={(item) => (item ? item.text : '')}
+          items={[
+            { text: 'Option 1' },
+            { text: 'Option 2' },
+            { text: 'Option 3' },
+          ]}
+          label="Choose an option"
+          titleText="Choose an option"
+          hideLabel
+        />
+      </SideNavSlot>
+      <SideNavDivider />
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+        <SideNavMenuItem href="http://www.carbondesignsystem.com">
+          Item level 2
+        </SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavDivider />
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavDivider />
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} href="http://www.carbondesignsystem.com">
+        Link
+      </SideNavLink>
+    </SideNavItems>
+  </SideNav>
+);
+
+RailPanel.storyName = 'Rail with flyouts';

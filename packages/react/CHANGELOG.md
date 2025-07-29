@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.105.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.104.0...@carbon-labs/react@0.105.0) (2025-07-29)
+
+
+### Bug Fixes
+
+* **uishell:** add panel variant back to storybook with fixes ([#731](https://github.com/carbon-design-system/carbon-labs/issues/731)) ([919b292](https://github.com/carbon-design-system/carbon-labs/commit/919b292390a57abce991edd75442f6de0d752de9))
+
+
+
+
+
 # [0.104.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.103.0...@carbon-labs/react@0.104.0) (2025-07-28)
 
 

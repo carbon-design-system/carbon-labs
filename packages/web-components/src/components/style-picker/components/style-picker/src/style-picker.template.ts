@@ -40,8 +40,6 @@ export const stylePickerTemplate = (customElementClass) => {
     emptyStateSubtitle,
   } = customElementClass;
 
-  console.log(searchInputPlaceholder);
-
   return html`<cds-popover ?open=${open} align=${align}>
     <slot name="trigger"></slot>
     <cds-popover-content>

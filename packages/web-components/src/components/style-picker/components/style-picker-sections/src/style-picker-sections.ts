@@ -90,6 +90,13 @@ class StylePickerSections extends LitElement {
         item.removeAttribute('open');
       }
     });
+
+    if (
+      this._stylePickerContext?.sectionCount !== undefined &&
+      this._stylePickerContext?.sectionCount !== this.slotCount
+    ) {
+      this.slotCount = this._stylePickerContext?.sectionCount;
+    }
   }
 }
 

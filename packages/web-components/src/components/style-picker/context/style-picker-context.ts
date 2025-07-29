@@ -21,6 +21,8 @@ export interface StylePickerContextType {
   searchTerm?: string;
   setSearchTerm?: (_searchTerm: string) => void;
   onSectionVisibilityChange?: () => void;
+  sectionCount?: number;
+  setSectionCount?: (_count: number) => void;
 }
 
 export const stylePickerContext = createContext<StylePickerContextType>(

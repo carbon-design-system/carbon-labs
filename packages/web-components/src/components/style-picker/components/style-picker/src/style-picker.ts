@@ -64,12 +64,31 @@ class StylePicker extends LitElement {
     },
 
     /**
+     *
+     * @param {number} _count New count value
+     */
+    setSectionCount: (_count?: number) => {
+      this._stylePickerContext = {
+        ...this._stylePickerContext,
+        sectionCount: _count,
+      };
+    },
+
+    /**
      * Check the all items are hidden.
      */
     onSectionVisibilityChange: () => {
-      this.showEmptyState = Array.from(
-        this.querySelectorAll(`${prefix}-section`)
-      )?.every((_section) => _section.hasAttribute('hidden'));
+      const _sectionElements = this.querySelectorAll(`${prefix}-section`);
+
+      this.showEmptyState = Array.from(_sectionElements)?.every((_section) =>
+        _section.hasAttribute('hidden')
+      );
+
+      const _sectionCount = Array.from(_sectionElements)?.filter(
+        (_section) => !_section.hasAttribute('hidden')
+      )?.length;
+
+      this._stylePickerContext?.setSectionCount?.(_sectionCount);
     },
   };
 

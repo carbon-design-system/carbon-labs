@@ -39,7 +39,6 @@ export interface AriaLabels {
   tiles?: { [tileId: string]: string };
   tasksDropdown?: string;
   workspaceDropdown?: string;
-  [key: string]: any;
 }
 
 export interface Tile {

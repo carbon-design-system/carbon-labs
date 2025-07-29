@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.104.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.103.0...@carbon-labs/react@0.104.0) (2025-07-28)
+
+
+### Bug Fixes
+
+* add main and module entry point in package.json ([#727](https://github.com/carbon-design-system/carbon-labs/issues/727)) ([262dd93](https://github.com/carbon-design-system/carbon-labs/commit/262dd939cc7b1103e5c2dd177fb3f61bc6910c6e))
+* Whats new export update ([#616](https://github.com/carbon-design-system/carbon-labs/issues/616)) ([73ade6a](https://github.com/carbon-design-system/carbon-labs/commit/73ade6abbd63ce8b9d5169774c07fbf33657ffa1))
+
+
+
+
+
 # [0.103.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.102.0...@carbon-labs/react@0.103.0) (2025-07-25)
 
 

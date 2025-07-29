@@ -114,6 +114,16 @@ class StylePicker extends LitElement {
   searchCloseButtonLabel = 'Clear search input';
 
   /**
+   * Search close close button label
+   */
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'search-input-placeholder',
+  })
+  searchInputPlaceholder;
+
+  /**
    * Title for empty state displayed when no items found in search.
    */
   @property({

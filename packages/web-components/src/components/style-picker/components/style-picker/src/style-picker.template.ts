@@ -15,6 +15,7 @@ import '@carbon/web-components/es/components/search/index.js';
 import '@carbon/web-components/es/components/heading/index.js';
 import '@carbon-labs/wc-empty-state/es/index.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import spread from '@carbon/web-components/es/globals/directives/spread';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -33,10 +34,13 @@ export const stylePickerTemplate = (customElementClass) => {
     enableSearch,
     onChangeSearchInput,
     showEmptyState,
+    searchInputPlaceholder,
     searchCloseButtonLabel,
     emptyStateTitle,
     emptyStateSubtitle,
   } = customElementClass;
+
+  console.log(searchInputPlaceholder);
 
   return html`<cds-popover ?open=${open} align=${align}>
     <slot name="trigger"></slot>
@@ -49,9 +53,12 @@ export const stylePickerTemplate = (customElementClass) => {
                 <div class=${`${blockClass}__search`}>
                   <cds-search
                     expandable
-                    close-button-label-text=${searchCloseButtonLabel}
                     type="text"
-                    @cds-search-input="${onChangeSearchInput}"></cds-search>
+                    @cds-search-input="${onChangeSearchInput}"
+                    close-button-label-text=${searchCloseButtonLabel}
+                    ...="${spread({
+                      placeholder: searchInputPlaceholder,
+                    })}"></cds-search>
                 </div>
               `
             : nothing}

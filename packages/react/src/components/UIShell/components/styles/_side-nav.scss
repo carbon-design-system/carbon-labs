@@ -30,6 +30,15 @@ div:has(.#{$prefix}--header)
 
 .#{$prefix}--side-nav {
   overflow: visible;
+
+  // opening side-nav transition
+  transition: $fast-02 motion(exit, productive);
+}
+
+.#{$prefix}--side-nav.#{$prefix}--side-nav--expanded {
+  // closing side-nav transition
+  transition: $moderate-01 motion(standard, productive);
+  transition-delay: 40ms;
 }
 
 //----------------------------------------------------------------------------
@@ -302,15 +311,18 @@ div:has(.#{$prefix}--header)
   inset-block-start: 0;
   inset-inline-start: 100%;
   transform: translateX(-100%);
-  transition: color $duration-fast-02, background-color $duration-fast-02,
-    outline $duration-fast-02;
+  transition: $fast-02 motion(exit, productive);
   will-change: inline-size;
 }
 
 .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
+  box-shadow: $spacing-01 0 $spacing-02 $overlay;
   inline-size: 16rem;
   overflow-y: auto;
   transform: translateX(0);
+
+  transition: $moderate-01 motion(standard, productive);
+  transition-delay: 40ms;
 }
 
 //----------------------------------------------------------------------------
@@ -558,6 +570,11 @@ div:has(.#{$prefix}--header)
   border-inline-end: 1px solid $border-subtle;
 }
 
+.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded {
+  border-inline-end: none;
+  box-shadow: $spacing-01 0 $spacing-02 $overlay;
+}
+
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
   .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint} {
     @include breakpoint-down($breakpoint) {
@@ -568,13 +585,7 @@ div:has(.#{$prefix}--header)
 
 // allow overlay to display at all breakpoints
 .#{$prefix}--side-nav__overlay-active {
-  z-index: z('overlay');
-  background-color: $overlay;
-  block-size: 100vh;
-  inline-size: 100vw;
-  opacity: 1;
-  transition: opacity $transition-expansion $standard-easing,
-    background-color $transition-expansion $standard-easing;
+  background-color: transparent;
 }
 
 //----------------------------------------------------------------------------

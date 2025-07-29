@@ -245,6 +245,7 @@ export const tasksControllerConfigDropdown = {
     allTileGroups: headerTiles,
     selectedTileGroup: headerTiles[0],
     setSelectedTileGroup: () => {},
+    ariaLabel: 'Select a task group',
   },
 };
 
@@ -260,6 +261,7 @@ export const workspaceSelectorConfig = {
     label: 'Select workspace',
     renderSelectedItem: (item) => `Open in: ${item.label}`,
   },
+  ariaLabel: 'Select a workspace',
 };
 
 export const workspaceSelectorConfigLoading = {

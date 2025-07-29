@@ -219,6 +219,13 @@ const sharedArgs = {
   disabledTaskLabel: 'This task is disabled',
   expandButtonLabel: 'Expand',
   collapseButtonLabel: 'Collapse',
+  ariaLabels: {
+    welcome: 'Welcomes the user',
+    description: 'Short description of the product',
+    collapseButton: 'Collapse header details',
+    expandButton: 'Expand header details',
+    tilesContainer: 'Feature tiles list',
+  },
 };
 
 export const ThemeG10 = (args) => {

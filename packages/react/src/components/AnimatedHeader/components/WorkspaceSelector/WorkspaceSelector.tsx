@@ -23,6 +23,7 @@ export type WorkspaceSelectorConfig = {
       'id' | 'items' | 'selectedItem' | 'setSelectedWorkspace'
     >
   >;
+  ariaLabel?: string;
   allWorkspaces: Workspace[];
   selectedWorkspace?: Workspace | null;
   setSelectedWorkspace: (e) => void;
@@ -33,14 +34,12 @@ export type WorkspaceSelectorProps = {
   workspaceSelectorConfig?: WorkspaceSelectorConfig | null;
   userName?: string;
   isLoading?: boolean;
-  ariaLabel?: string;
 };
 
 const WorkspaceSelector = ({
   workspaceSelectorConfig,
   userName,
   isLoading,
-  ariaLabel,
 }: WorkspaceSelectorProps) => {
   const {
     className: dropdownCustomClass,
@@ -71,11 +70,10 @@ const WorkspaceSelector = ({
         workspaceSelectorConfig?.setSelectedWorkspace?.(e);
         dropdownCustomOnChange?.(e);
       },
-      'aria-label': ariaLabel,
+      'aria-label': workspaceSelectorConfig?.ariaLabel ?? 'Select a workspace',
       ...dropdownOverrideProps,
     };
   }, [
-    ariaLabel,
     blockClass,
     dropdownCustomClass,
     dropdownOverrideProps,

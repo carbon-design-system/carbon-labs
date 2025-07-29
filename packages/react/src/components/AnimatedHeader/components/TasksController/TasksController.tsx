@@ -29,6 +29,7 @@ export interface TasksControllerConfig {
     propsOverrides?: Partial<
       Omit<DropdownProps<TileGroup>, 'id' | 'items' | 'selectedItem'>
     >;
+    ariaLabel?: string;
   };
 }
 
@@ -38,7 +39,6 @@ export type TasksControllerProps = {
   allTileGroups?: TileGroup[];
   selectedTileGroup?: TileGroup | null;
   setSelectedTileGroup: (e) => void;
-  ariaLabel?: string;
 };
 
 const TasksController = ({
@@ -47,7 +47,6 @@ const TasksController = ({
   allTileGroups,
   selectedTileGroup,
   setSelectedTileGroup,
-  ariaLabel,
 }: TasksControllerProps) => {
   const { className: buttonCustomClass, ...buttonOverrideProps } =
     tasksControllerConfig?.button?.propsOverrides || {};
@@ -80,17 +79,18 @@ const TasksController = ({
         setSelectedTileGroup?.(e);
         dropdownCustomOnChange?.(e);
       },
-      'aria-label': ariaLabel,
+      'aria-label':
+        tasksControllerConfig?.dropdown?.ariaLabel ?? 'Select a task group',
       ...dropdownOverrideProps,
     };
   }, [
     allTileGroups,
-    ariaLabel,
-    selectedTileGroup,
-    setSelectedTileGroup,
     blockClass,
     dropdownCustomClass,
+    selectedTileGroup,
+    tasksControllerConfig?.dropdown?.ariaLabel,
     dropdownOverrideProps,
+    setSelectedTileGroup,
     dropdownCustomOnChange,
   ]);
 

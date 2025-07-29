@@ -14,7 +14,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Grid, Column, Button, Tooltip } from '@carbon/react';
+import { Grid, Column, Button } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
 import lottie from 'lottie-web';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
@@ -36,9 +36,6 @@ export interface AriaLabels {
   collapseButton?: string;
   expandButton?: string;
   tilesContainer?: string;
-  tiles?: { [tileId: string]: string };
-  tasksDropdown?: string;
-  workspaceDropdown?: string;
 }
 
 export interface Tile {
@@ -217,7 +214,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               allTileGroups={allTileGroups}
               selectedTileGroup={selectedTileGroup}
               setSelectedTileGroup={setSelectedTileGroup}
-              ariaLabel={ariaLabels?.tasksDropdown ?? `Tasks dropdown menu`}
             />
           </Column>
         )}
@@ -233,10 +229,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                   workspaceSelectorConfig={workspaceSelectorConfig}
                   userName={userName}
                   isLoading={isLoading}
-                  ariaLabel={
-                    ariaLabels?.workspaceDropdown ??
-                    `Workspace selector dropdown`
-                  }
                 />
               </div>
             )}
@@ -268,7 +260,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     isLoading={isLoading || tile.isLoading}
                     isDisabled={tile.isDisabled}
                     disabledTaskLabel={disabledTaskLabel}
-                    ariaLabel={ariaLabels?.tiles?.[tile.id] ?? tile.ariaLabel}
+                    ariaLabel={tile.ariaLabel}
                   />
                 );
               })}

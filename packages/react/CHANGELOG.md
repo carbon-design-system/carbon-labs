@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.106.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.105.0...@carbon-labs/react@0.106.0) (2025-07-29)
+
+
+### Features
+
+* **animated-header:** add accessibility role and aria- attributes ([#715](https://github.com/carbon-design-system/carbon-labs/issues/715)) ([875a5e1](https://github.com/carbon-design-system/carbon-labs/commit/875a5e102237d5faedb140f2b29a958aa0ee1b69))
+
+
+
+
+
 # [0.105.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.104.0...@carbon-labs/react@0.105.0) (2025-07-29)
 
 

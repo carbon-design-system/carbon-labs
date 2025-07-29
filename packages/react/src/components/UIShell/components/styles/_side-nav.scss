@@ -603,7 +603,7 @@ div:has(.#{$prefix}--header)
   }
 }
 
-// hide slot item when rail or pnael collapsed
+// hide slot item when rail or panel collapsed
 .#{$prefix}--side-nav--rail .#{$prefix}--side-nav__slot-item,
 .#{$prefix}--side-nav--panel .#{$prefix}--side-nav__slot-item {
   display: none;

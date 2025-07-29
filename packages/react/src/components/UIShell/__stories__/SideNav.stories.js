@@ -66,7 +66,6 @@ export const Default = () => (
           hideLabel
         />
       </SideNavSlot>
-      <SideNavDivider />
       <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
         <SideNavMenuItem href="http://www.carbondesignsystem.com">
           Link
@@ -153,7 +152,6 @@ export const SideNavDoubleWideStory = () => (
             hideLabel
           />
         </SideNavSlot>
-        <SideNavDivider />
         <SideNavMenu renderIcon={Fade} title="Sub-menu level 2">
           <SideNavMenuItem href="http://www.carbondesignsystem.com">
             Item level 3

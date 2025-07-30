@@ -137,53 +137,6 @@ body {
   background: linear-gradient(0deg, #262626bf 0%, transparent 100%);
 }
 
-.#{$prefix}__heading {
-  @include type-style('heading-05');
-
-  position: relative;
-  z-index: 2;
-  overflow: hidden;
-  margin: $spacing-08 0 $spacing-05 0;
-  text-overflow: ellipsis;
-  transition: font-size 500ms motion.motion(standard, expressive),
-    margin 500ms motion.motion(standard, expressive);
-  white-space: nowrap;
-
-  @supports (-webkit-line-clamp: 3) {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    text-overflow: ellipsis;
-    white-space: initial;
-  }
-}
-
-/* support for Safari */
-@supports (font: -apple-system-body) and (-webkit-appearance: none) {
-  .#{$prefix}__heading {
-    transition: margin 500ms motion.motion(standard, expressive);
-  }
-}
-
-.#{$prefix}__heading--collapsed {
-  @include type-style('heading-03');
-
-  margin: $spacing-03 0 $spacing-04 0;
-  line-height: 1.25;
-}
-
-.#{$prefix}__heading-welcome {
-  animation: 250ms ease-in fade-in;
-  animation-fill-mode: both;
-}
-
-.#{$prefix}__heading-name {
-  animation: 250ms ease-in fade-in;
-  animation-delay: 125ms;
-  animation-fill-mode: both;
-}
-
 .#{$prefix}__left-area-container {
   z-index: 3;
   display: flex;
@@ -500,10 +453,6 @@ body {
     > ##{$prefix}__ai-prompt-tile {
     inline-size: calc(100% - 16px);
   }
-
-  .#{$prefix}__tiles-container > ##{$prefix}__ai-prompt-tile {
-    flex-grow: 0.5;
-  }
 }
 
 // Large
@@ -601,21 +550,21 @@ body {
 }
 
 /*
-   If the user has expressed their preference for
-   reduced motion, then don't use animations
- */
+    If the user has expressed their preference for
+    reduced motion, then don't use animations
+  */
 @media (prefers-reduced-motion: reduce) {
   .#{$prefix},
   .#{$prefix}__static,
-  .#{$prefix}__heading,
+  .#{$prefix}__title,
   .#{$prefix}__left-area-container,
   .#{$prefix}__content,
   .#{$prefix}__lottie-animation {
     transition: none;
   }
 
-  .#{$prefix}__heading-welcome,
-  .#{$prefix}__heading-name,
+  .#{$prefix}__title-first,
+  .#{$prefix}__title-second,
   .#{$prefix}__description,
   .#{$prefix}__button,
   .#{$prefix}__workspace,

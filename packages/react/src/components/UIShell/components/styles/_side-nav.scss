@@ -30,6 +30,7 @@ div:has(.#{$prefix}--header)
 
 .#{$prefix}--side-nav {
   overflow: visible;
+  z-index: z('header') - 1;
 
   // closing side-nav transition
   transition: $fast-02 motion(exit, productive);
@@ -316,11 +317,12 @@ div:has(.#{$prefix}--header)
 }
 
 .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
-  box-shadow: $spacing-01 0 convert.to-rem(6px) $shadow;
+  box-shadow: 4px 0 6px -3px rgba(0, 0, 0, 0.2); //visually matches @mixin box-shadow but only on right side
+  box-shadow: 4px 0 6px -3px green; //visually matches @mixin box-shadow but only on right side
+
   inline-size: 16rem;
   overflow-y: auto;
   transform: translateX(0);
-
   transition: $moderate-01 motion(standard, productive);
   transition-delay: 40ms;
 }
@@ -329,7 +331,7 @@ div:has(.#{$prefix}--header)
 // Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
-  z-index: 7999; /* needs to be below header */
+  z-index: z('header') - 1;
   overflow: visible;
   border-inline-end: 1px solid $border-subtle;
 
@@ -566,13 +568,13 @@ div:has(.#{$prefix}--header)
 // Rail
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
-  z-index: 7999; /* needs to be below header */
+  z-index: z('header') - 2;
   border-inline-end: 1px solid $border-subtle;
 }
 
 .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded {
   border-inline-end: none;
-  box-shadow: $spacing-01 0 convert.to-rem(6px) $shadow;
+  box-shadow: 4px 0 6px -3px rgba(0, 0, 0, 0.2); //visually matches @mixin box-shadow but only on right side
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {

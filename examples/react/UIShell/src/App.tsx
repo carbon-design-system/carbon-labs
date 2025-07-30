@@ -7,9 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
-  SIDE_NAV_TYPE,
   SideNav,
   SideNavItems,
   SideNavLink,
@@ -17,18 +16,22 @@ import {
   SideNavMenuItem,
   HeaderDivider,
   HeaderContainer,
-  HeaderPanel,
   HeaderPopover,
   HeaderPopoverActions,
   HeaderPopoverButton,
   HeaderPopoverContent,
   TrialCountdown,
+  SideNavSlot,
+  Profile,
 } from '@carbon-labs/react-ui-shell';
+import {
+  ThemeSettings,
+  ThemeSwitcher,
+} from '@carbon-labs/react-theme-settings';
 import {
   SkipToContent,
   Header,
   HeaderName,
-  Theme,
   HeaderMenuButton,
   SideNavDivider,
   Content,
@@ -36,29 +39,86 @@ import {
   Column,
   HeaderGlobalBar,
   HeaderGlobalAction,
-  Switcher,
-  SwitcherItem,
-  SwitcherDivider,
   MenuButton,
   MenuItemRadioGroup,
   ExpandableSearch,
   Link,
   Button,
+  Dropdown,
+  ContainedList,
+  ContainedListItem,
+  Theme,
 } from '@carbon/react';
 import {
   Fade,
   SquareOutline,
   Help,
   Notification,
-  Switcher as SwitcherIcon,
   UserAvatar,
   Share,
   User,
   ShoppingCart,
+  Switcher,
+  Menu,
+  IbmCloudKeyProtect,
+  Group,
+  Money,
+  Logout,
 } from '@carbon/icons-react';
 
+/**
+ *
+ */
+function useThemeSettings() {
+  const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const [themeSetting, setThemeSetting] = useState('system');
+  const [themeMenuComplement, setThemeMenuComplement] = useState(false);
+  const [themeSet, setThemeSet] = useState('white/g100');
+  const [systemDark, setSystemDark] = useState(mediaQueryList.matches);
+  const [currentTheme, setCurrentTheme] = useState('white');
+  const [themeHeader, setThemeHeader] = useState('g100');
+
+  useEffect(() => {
+    const handleMediaQueryEvent = (event) => {
+      setSystemDark(event.matches);
+    };
+
+    mediaQueryList.addEventListener('change', handleMediaQueryEvent);
+    return () =>
+      mediaQueryList.removeEventListener('change', handleMediaQueryEvent);
+  }, [mediaQueryList]);
+
+  useEffect(() => {
+    const [lightTheme, darkTheme] = themeSet.split('/');
+
+    if (themeSetting === 'system') {
+      setCurrentTheme(systemDark ? darkTheme : lightTheme);
+      setThemeHeader(
+        (systemDark && !themeMenuComplement) ||
+          (!systemDark && themeMenuComplement)
+          ? darkTheme
+          : lightTheme
+      );
+    } else if (themeSetting === 'light') {
+      setCurrentTheme(lightTheme);
+      setThemeHeader(themeMenuComplement ? darkTheme : lightTheme);
+    } else {
+      setCurrentTheme(darkTheme);
+      setThemeHeader(themeMenuComplement ? lightTheme : darkTheme);
+    }
+  }, [systemDark, themeSetting, themeMenuComplement, themeSet]);
+
+  return {
+    themeSetting,
+    setThemeSetting,
+    themeHeader,
+    currentTheme,
+  };
+}
+
 const StoryContent = () => (
-  <Theme as={Content} theme="g10">
+  <Content>
     <Grid align="start">
       <Column sm={4} md={8} lg={12}>
         <h2 style={{ margin: '0 0 30px 0' }}>Purpose and function</h2>
@@ -127,13 +187,15 @@ const StoryContent = () => (
         </p>
       </Column>
     </Grid>
-  </Theme>
+  </Content>
 );
 
 function App() {
   const headerRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
+  const { themeSetting, setThemeSetting, themeHeader, currentTheme } =
+    useThemeSettings();
 
   const options = {
     Fruits: ['Apple', 'Banana', 'Orange'],
@@ -142,246 +204,304 @@ function App() {
   };
 
   return (
-    <Theme theme="g100">
+    <Theme theme={themeHeader}>
       <HeaderContainer
+        themeSetting={themeSetting}
         render={({
           isSideNavExpanded,
-          isSwitcherExpanded,
           onClickSideNavExpand,
-          onClickSwitcherExpand,
+          isProfileExpanded,
+          onClickProfileExpand,
         }) => (
           <>
-            <Theme theme="g100">
-              <Header aria-label="IBM Platform Name">
-                <SkipToContent />
-                <HeaderMenuButton
-                  aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
-                  onClick={onClickSideNavExpand}
-                  isActive={isSideNavExpanded}
-                  aria-expanded={isSideNavExpanded}
-                  isCollapsible //shows hamburger menu at desktop
-                  isFixedNav
+            <Header aria-label="IBM Platform Name">
+              <SkipToContent />
+              <HeaderMenuButton
+                aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
+                onClick={onClickSideNavExpand}
+                isActive={isSideNavExpanded}
+                aria-expanded={isSideNavExpanded}
+                isCollapsible //shows menu at desktop
+                isFixedNav
+                renderMenuIcon={<Switcher size={20} />}
+              />
+              <HeaderName href="#" prefix="IBM">
+                [Platform]
+              </HeaderName>
+              <HeaderPopover align="bottom">
+                <HeaderPopoverButton
+                  label="Trial Countdown"
+                  as={Button}
+                  kind="ghost">
+                  <TrialCountdown count={30} />
+                </HeaderPopoverButton>
+                <HeaderPopoverContent>
+                  <p>Your trial ends on May 13, 2025</p>
+                  <Link href="#" renderIcon={Share}>
+                    Invite team members
+                  </Link>
+                  <Link href="#" renderIcon={User}>
+                    Contact sales
+                  </Link>
+                  <Button size="sm" renderIcon={ShoppingCart}>
+                    Buy
+                  </Button>
+                </HeaderPopoverContent>
+              </HeaderPopover>
+              <HeaderGlobalBar>
+                <ExpandableSearch
+                  size="lg"
+                  labelText="Search"
+                  closeButtonLabelText="Clear search input"
+                  id="search-expandable-1"
                 />
-                <HeaderName href="#" prefix="IBM">
-                  [Platform]
-                </HeaderName>
-                <HeaderPopover align="bottom">
-                  <HeaderPopoverButton
-                    label="Trial Countdown"
-                    as={Button}
-                    kind="ghost">
-                    <TrialCountdown count={30} />
+                <HeaderGlobalAction
+                  aria-label="Custom action"
+                  tooltipHighContrast={false}>
+                  <SquareOutline size={20} />
+                </HeaderGlobalAction>
+                <HeaderPopover align="bottom-right">
+                  <HeaderPopoverButton align="bottom" label="Help">
+                    <Help size={20} />
                   </HeaderPopoverButton>
                   <HeaderPopoverContent>
-                    <p>Your trial ends on May 13, 2025</p>
-                    <Link href="#" renderIcon={Share}>
-                      Invite team members
-                    </Link>
-                    <Link href="#" renderIcon={User}>
-                      Contact sales
-                    </Link>
-                    <Button size="sm" renderIcon={ShoppingCart}>
-                      Buy
-                    </Button>
+                    <p>
+                      Lorem ipsum dolor sit amet, di os consectetur adipiscing
+                      elit, sed do eiusmod tempor incididunt ut fsil labore et
+                      dolore magna aliqua.
+                    </p>
+                    <HeaderPopoverActions>
+                      <Link href="#">Link action</Link>
+                      <Button size="sm">Button</Button>
+                    </HeaderPopoverActions>
                   </HeaderPopoverContent>
                 </HeaderPopover>
-                <HeaderGlobalBar>
-                  <ExpandableSearch
-                    size="lg"
-                    labelText="Search"
-                    closeButtonLabelText="Clear search input"
-                    id="search-expandable-1"
+                <HeaderPopover align="bottom-right">
+                  <HeaderPopoverButton align="bottom" label="Notifications">
+                    <Notification size={20} />
+                  </HeaderPopoverButton>
+                  <HeaderPopoverContent>
+                    <p>
+                      Lorem ipsum dolor sit amet, di os consectetur adipiscing
+                      elit, sed do eiusmod tempor incididunt ut fsil labore et
+                      dolore magna aliqua.
+                    </p>
+                    <HeaderPopoverActions>
+                      <Link href="#">Link action</Link>
+                      <Button size="sm">Button</Button>
+                    </HeaderPopoverActions>
+                  </HeaderPopoverContent>
+                </HeaderPopover>
+                <HeaderDivider />
+                <MenuButton
+                  menuTarget={headerRef.current}
+                  kind="ghost"
+                  label={selectedCategory || 'Select Category'}>
+                  <MenuItemRadioGroup
+                    label="Category"
+                    items={Object.keys(options)}
+                    selectedItem={selectedCategory || null}
+                    onChange={(newCategory) => {
+                      setSelectedCategory(newCategory);
+                      setSelectedItem('');
+                    }}
                   />
-                  <HeaderGlobalAction
-                    aria-label="Custom action"
-                    tooltipHighContrast={false}>
-                    <SquareOutline size={20} />
-                  </HeaderGlobalAction>
-                  <HeaderPopover align="bottom-right">
-                    <HeaderPopoverButton align="bottom" label="Help">
-                      <Help size={20} />
-                    </HeaderPopoverButton>
-                    <HeaderPopoverContent>
-                      <p>
-                        Lorem ipsum dolor sit amet, di os consectetur adipiscing
-                        elit, sed do eiusmod tempor incididunt ut fsil labore et
-                        dolore magna aliqua.
-                      </p>
-                      <HeaderPopoverActions>
-                        <Link href="#">Link action</Link>
-                        <Button size="sm">Button</Button>
-                      </HeaderPopoverActions>
-                    </HeaderPopoverContent>
-                  </HeaderPopover>
-                  <HeaderPopover align="bottom-right">
-                    <HeaderPopoverButton align="bottom" label="Notifications">
-                      <Notification size={20} />
-                    </HeaderPopoverButton>
-                    <HeaderPopoverContent>
-                      <p>
-                        Lorem ipsum dolor sit amet, di os consectetur adipiscing
-                        elit, sed do eiusmod tempor incididunt ut fsil labore et
-                        dolore magna aliqua.
-                      </p>
-                      <HeaderPopoverActions>
-                        <Link href="#">Link action</Link>
-                        <Button size="sm">Button</Button>
-                      </HeaderPopoverActions>
-                    </HeaderPopoverContent>
-                  </HeaderPopover>
-                  <HeaderDivider />
-                  <MenuButton
-                    menuTarget={headerRef.current}
-                    kind="ghost"
-                    label={selectedCategory || 'Select Category'}>
-                    <MenuItemRadioGroup
-                      label="Category"
-                      items={Object.keys(options)}
-                      selectedItem={selectedCategory || null}
-                      onChange={(newCategory) => {
-                        setSelectedCategory(newCategory);
-                        setSelectedItem('');
-                      }}
+                </MenuButton>
+                <MenuButton
+                  menuTarget={headerRef.current}
+                  kind="ghost"
+                  label={selectedItem || 'Select Item'}
+                  disabled={!selectedCategory}>
+                  <MenuItemRadioGroup
+                    label="Items"
+                    items={selectedCategory ? options[selectedCategory] : []}
+                    selectedItem={selectedItem || null}
+                    onChange={(newItem) => setSelectedItem(newItem)}
+                  />
+                </MenuButton>
+                <HeaderDivider />
+                <Profile.Root
+                  open={isProfileExpanded}
+                  onClick={onClickProfileExpand}
+                  label="Profile"
+                  renderIcon={<UserAvatar size={20} />}>
+                  <Profile.UserInfo
+                    name="Ruth Leach"
+                    email="ruth.leach@ibm.com"
+                  />
+                  <ThemeSettings legendText="Theme">
+                    <ThemeSwitcher
+                      lowContrast
+                      size="sm"
+                      value={themeSetting}
+                      onChange={setThemeSetting}
                     />
-                  </MenuButton>
-                  <MenuButton
-                    menuTarget={headerRef.current}
-                    kind="ghost"
-                    label={selectedItem || 'Select Item'}
-                    disabled={!selectedCategory}>
-                    <MenuItemRadioGroup
-                      label="Items"
-                      items={selectedCategory ? options[selectedCategory] : []}
-                      selectedItem={selectedItem || null}
-                      onChange={(newItem) => setSelectedItem(newItem)}
+                  </ThemeSettings>
+                  <Profile.ReadOnly
+                    items={[
+                      { label: 'Instance', title: 'APIC-MB-DEV' },
+                      {
+                        label: 'Instance owner',
+                        title: 'ruth.leach@ibm.com',
+                      },
+                      { label: 'Region', title: 'us-east-1 (N Virgina)' },
+                    ]}
+                  />
+                  <ContainedList label="Profile links">
+                    <ContainedListItem
+                      renderIcon={User}
+                      onClick={() =>
+                        (window.location.href = 'https://example.com')
+                      }>
+                      User profile
+                    </ContainedListItem>
+                    <ContainedListItem
+                      renderIcon={IbmCloudKeyProtect}
+                      onClick={() =>
+                        (window.location.href = 'https://example.com')
+                      }>
+                      Access keys
+                    </ContainedListItem>
+                    <ContainedListItem
+                      renderIcon={Group}
+                      onClick={() =>
+                        (window.location.href = 'https://example.com')
+                      }>
+                      User management
+                    </ContainedListItem>
+                    <ContainedListItem
+                      renderIcon={Money}
+                      onClick={() =>
+                        (window.location.href = 'https://example.com')
+                      }>
+                      Plan and billing
+                    </ContainedListItem>
+                    <ContainedListItem
+                      renderIcon={Logout}
+                      onClick={() =>
+                        (window.location.href = 'https://example.com')
+                      }>
+                      Log out
+                    </ContainedListItem>
+                  </ContainedList>
+                </Profile.Root>
+              </HeaderGlobalBar>
+            </Header>
+            <SideNav
+              aria-label="Side navigation1"
+              expanded={isSideNavExpanded}
+              onSideNavBlur={onClickSideNavExpand}
+              isCollapsible
+              isTreeview
+              onOverlayClick={onClickSideNavExpand}
+              className="nav--global">
+              <SideNavItems>
+                <SideNavMenu
+                  renderIcon={SquareOutline}
+                  title="Sub-menu level 1"
+                  primary
+                  defaultExpanded>
+                  <SideNavSlot renderIcon={Fade}>
+                    <Dropdown
+                      aria-label="Choose an option"
+                      id="default"
+                      size="sm"
+                      itemToString={(item) => (item ? item.text : '')}
+                      items={[
+                        { text: 'Option 1' },
+                        { text: 'Option 2' },
+                        { text: 'Option 3' },
+                      ]}
+                      label="Choose an option"
+                      titleText="Choose an option"
+                      hideLabel
                     />
-                  </MenuButton>
-                  <HeaderDivider />
-                  <HeaderPopover align="bottom-right">
-                    <HeaderPopoverButton align="bottom" label="Profile">
-                      <UserAvatar size={20} />
-                    </HeaderPopoverButton>
-                    <HeaderPopoverContent>
-                      <p>
-                        Lorem ipsum dolor sit amet, di os consectetur adipiscing
-                        elit, sed do eiusmod tempor incididunt ut fsil labore et
-                        dolore magna aliqua.
-                      </p>
-                      <HeaderPopoverActions>
-                        <Link href="#">Link action</Link>
-                        <Button size="sm">Button</Button>
-                      </HeaderPopoverActions>
-                    </HeaderPopoverContent>
-                  </HeaderPopover>
-                  {/* <HeaderGlobalAction
-                    aria-label="Custom action"
-                    tooltipHighContrast={false}
-                  >
-                    <SwitcherIcon size={20} />
-                  </HeaderGlobalAction> */}
-                  <HeaderGlobalAction
-                    aria-label={
-                      isSwitcherExpanded ? 'Close switcher' : 'Open switcher'
-                    }
-                    aria-expanded={isSwitcherExpanded}
-                    isActive={isSwitcherExpanded}
-                    onClick={onClickSwitcherExpand}
-                    tooltipAlignment="end"
-                    tooltipHighContrast={false}
-                    id="switcher-button">
-                    <SwitcherIcon size={20} />
-                  </HeaderGlobalAction>
-                </HeaderGlobalBar>
-                <HeaderPanel
-                  expanded={isSwitcherExpanded}
-                  onHeaderPanelFocus={onClickSwitcherExpand}
-                  href="#switcher-button">
-                  <Switcher
-                    aria-label="Switcher Container"
-                    expanded={isSwitcherExpanded}>
-                    <SwitcherItem aria-label="Link 1" href="#">
-                      Link 1
-                    </SwitcherItem>
-                    <SwitcherDivider />
-                    <SwitcherItem href="#" aria-label="Link 2">
-                      Link 2
-                    </SwitcherItem>
-                    <SwitcherItem href="#" aria-label="Link 3">
-                      Link 3
-                    </SwitcherItem>
-                    <SwitcherItem href="#" aria-label="Link 4">
-                      Link 4
-                    </SwitcherItem>
-                    <SwitcherItem href="#" aria-label="Link 5">
-                      Link 5
-                    </SwitcherItem>
-                    <SwitcherDivider />
-                    <SwitcherItem href="#" aria-label="Link 6">
-                      Link 6
-                    </SwitcherItem>
-                  </Switcher>
-                </HeaderPanel>
-              </Header>
-              <SideNav
-                aria-label="Side navigation1"
-                expanded={isSideNavExpanded}
-                onSideNavBlur={onClickSideNavExpand}
-                isCollapsible
-                isTreeview
-                hideOverlay
-                className="nav--global">
-                <SideNavItems>
+                  </SideNavSlot>
+                  <SideNavDivider />
+                  <SideNavMenuItem renderIcon={SquareOutline} href="#">
+                    Item level 2
+                  </SideNavMenuItem>
+                  <SideNavMenuItem renderIcon={SquareOutline} href="#">
+                    Item level 2
+                  </SideNavMenuItem>
                   <SideNavMenu
                     renderIcon={SquareOutline}
-                    title="Sub-menu level 1">
-                    <SideNavMenuItem renderIcon={SquareOutline} href="#">
-                      Item level 2
+                    title="Sub-menu level 2"
+                    defaultExpanded>
+                    <SideNavMenuItem isActive href="#">
+                      Item level 3
                     </SideNavMenuItem>
-                    <SideNavMenuItem renderIcon={SquareOutline} href="#">
-                      Item level 2
-                    </SideNavMenuItem>
-                    <SideNavMenu
-                      renderIcon={SquareOutline}
-                      title="Sub-menu level 2">
-                      <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
-                      <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
-                      <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
-                    </SideNavMenu>
+                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
-                  </SideNavMenu>
-                  <SideNavDivider />
-                  <SideNavLink renderIcon={SquareOutline} href="#">
-                    Link
-                  </SideNavLink>
-                  <SideNavLink renderIcon={SquareOutline} href="#">
-                    Link
-                  </SideNavLink>
-                  <SideNavMenu renderIcon={SquareOutline} title="Sub-menu">
-                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Item</SideNavMenuItem>
-                  </SideNavMenu>
-                </SideNavItems>
-              </SideNav>
-            </Theme>
-            <Theme theme="g100">
+                </SideNavMenu>
+                <SideNavMenu
+                  renderIcon={SquareOutline}
+                  title="Sub-menu"
+                  primary>
+                  <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu
+                  renderIcon={SquareOutline}
+                  title="Sub-menu"
+                  primary>
+                  <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu
+                  renderIcon={SquareOutline}
+                  title="Sub-menu"
+                  primary>
+                  <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavMenu
+                  renderIcon={SquareOutline}
+                  title="Sub-menu"
+                  primary>
+                  <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                </SideNavMenu>
+                <SideNavDivider />
+                <SideNavLink renderIcon={SquareOutline} href="#">
+                  Link
+                </SideNavLink>
+                <SideNavLink renderIcon={SquareOutline} href="#">
+                  Link
+                </SideNavLink>
+                <SideNavMenu
+                  renderIcon={SquareOutline}
+                  title="Sub-menu"
+                  primary>
+                  <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                  <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                  <SideNavMenuItem href="#">Item</SideNavMenuItem>
+                </SideNavMenu>
+              </SideNavItems>
+            </SideNav>
+            <Theme theme={currentTheme}>
               <SideNav
-                navType={SIDE_NAV_TYPE.PANEL}
+                hideRailBreakpointDown="md"
+                isRail
                 isChildOfHeader={false}
-                hideOverlay
                 aria-label="Side navigation">
                 <SideNavItems>
+                  <SideNavSlot renderIcon={Menu}>
+                    <Menu />
+                  </SideNavSlot>
+                  <SideNavSlot renderIcon={SquareOutline}>
+                    <Dropdown
+                      id="default"
+                      size="sm"
+                      itemToString={(item) => (item ? item.text : '')}
+                      items={[
+                        { text: 'Option 1' },
+                        { text: 'Option 2' },
+                        { text: 'Option 3' },
+                      ]}
+                      label="Choose an option"
+                      titleText="Choose an option"
+                      hideLabel
+                    />
+                  </SideNavSlot>
+                  <SideNavDivider />
                   <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
                     <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
                     <SideNavMenuItem href="#">Item level 2</SideNavMenuItem>
@@ -408,7 +528,11 @@ function App() {
                 </SideNavItems>
               </SideNav>
             </Theme>
-            <StoryContent />
+            <Theme
+              as={Content}
+              theme={currentTheme === 'white' ? 'g10' : 'g90'}>
+              <StoryContent />
+            </Theme>
           </>
         )}
       />

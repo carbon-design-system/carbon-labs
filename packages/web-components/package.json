@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/web-components",
-  "version": "0.26.0",
+  "version": "0.43.0",
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",
@@ -18,7 +18,8 @@
     "./packages/*/es/": "./package/*/es/"
   },
   "scripts": {
-    "build": "cem analyze --config ./custom-elements-manifest.config.js",
+    "build": "lerna run build --scope '@carbon-labs/wc-*' --scope '@carbon-labs/ai-chat' --include-dependencies && cem analyze --config ./custom-elements-manifest.config.js",
+    "clean": "rimraf es lib storybook-static",
     "storybook": "storybook dev -p 6007",
     "generate": "node tasks/generate",
     "storybook:build": "npx storybook build",
@@ -27,27 +28,25 @@
   },
   "dependencies": {
     "@carbon/styles": "^1.70.0",
-    "lit": "^3.2.1"
+    "lit": "^3.2.1",
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@carbon/grid": "^11.34.0",
-    "@carbon/icon-helpers": "10.57.0",
-    "@carbon/icons": "11.59.0",
+    "@carbon/icon-helpers": "10.61.0",
+    "@carbon/icons": "11.63.0",
     "@carbon/layout": "11.32.0",
-    "@carbon/motion": "11.28.0",
-    "@carbon/themes": "11.50.0",
-    "@carbon/type": "11.38.0",
+    "@carbon/motion": "11.31.0",
+    "@carbon/pictograms": "^12.53.0",
+    "@carbon/themes": "11.56.0",
+    "@carbon/type": "11.43.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",
     "@lit/react": "^1.0.1",
     "@open-wc/testing": "^4.0.0",
     "@playwright/test": "^1.39.0",
-    "@rollup/plugin-alias": "^5.1.0",
-    "@rollup/plugin-commonjs": "^28.0.0",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-replace": "^6.0.0",
     "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^12.1.1",
     "@rollup/pluginutils": "^5.0.5",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-links": "^8.4.7",
@@ -65,15 +64,17 @@
     "commander": "^13.0.0",
     "cssnano": "^7.0.0",
     "gitignore-to-glob": "^0.3.0",
+    "lerna": "^8.2.3",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "replace-ext": "^2.0.0",
-    "sass": "~1.85.0",
+    "sass": "~1.89.0",
     "sinon": "^19.0.0",
     "storybook": "^8.4.7",
     "through2": "^4.0.2",
     "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "vite-plugin-lit-css": "^2.1.0"
   }
 }

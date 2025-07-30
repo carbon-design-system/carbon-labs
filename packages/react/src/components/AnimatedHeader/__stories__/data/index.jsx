@@ -7,7 +7,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Add } from '@carbon/react/icons';
+import {
+  Add,
+  ArrowRight,
+  ChartLineData,
+  DataSet,
+  Export,
+  Sql,
+  Term,
+} from '@carbon/react/icons';
 import { ButtonKinds, Loading } from '@carbon/react';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
 import React from 'react';
@@ -36,26 +44,65 @@ export const headerTiles = [
         id: 'ai-tile',
         href: '#',
         title: 'Short description of the type of prompt',
-        mainIcon: 'Term',
+        mainIcon: Term,
+        ariaLabel: 'Start a conversation with the AI assistant',
       },
       {
         id: 'tile-1',
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
+        ariaLabel: 'Load data using Data explorer',
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
+        ariaLabel: 'Monitor data using Monitoring hub',
       },
     ],
   },
   {
     id: 2,
+    label: 'One glass tile',
+    tiles: [
+      {
+        id: 'tile-1',
+        href: '#',
+        title: 'Load data',
+        subtitle: 'with Data explorer',
+        mainIcon: DataSet,
+        ariaLabel: 'Load data using Data explorer',
+      },
+    ],
+  },
+  {
+    id: 3,
+    label: 'Two glass tiles',
+    tiles: [
+      {
+        id: 'tile-1',
+        href: '#',
+        title: 'Load data',
+        subtitle: 'with Data explorer',
+        mainIcon: DataSet,
+        ariaLabel: 'Load data using Data explorer',
+      },
+      {
+        id: 'tile-2',
+        href: '#',
+        title: 'Monitor data performance and system capacity',
+        subtitle: 'with Monitoring hub',
+        mainIcon: ChartLineData,
+        ariaLabel: 'Monitor data using Monitoring hub',
+      },
+    ],
+  },
+  {
+    id: 4,
     label: 'Three glass tiles',
     tiles: [
       {
@@ -63,26 +110,29 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
+        ariaLabel: 'Load data using Data explorer',
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
+        ariaLabel: 'Monitor data using Monitoring hub',
       },
       {
         id: 'tile-3',
         href: '#',
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
+        ariaLabel: 'Create and run SQL queries using SQL editor',
       },
     ],
   },
   {
-    id: 3,
+    id: 5,
     label: 'Four glass tiles',
     tiles: [
       {
@@ -90,254 +140,95 @@ export const headerTiles = [
         href: '#',
         title: 'Load data',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
+        ariaLabel: 'Load data using Data explorer',
       },
       {
         id: 'tile-2',
         href: '#',
         title: 'Monitor data performance and system capacity',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
+        ariaLabel: 'Monitor data using Monitoring hub',
       },
       {
         id: 'tile-3',
         href: '#',
         title: 'Create and run SQL queries',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
+        ariaLabel: 'Create and run SQL queries using SQL editor',
       },
       {
         id: 'tile-4',
         href: '#',
         title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
-      },
-    ],
-  },
-  {
-    id: 4,
-    label: 'Five glass tiles',
-    tiles: [
-      {
-        id: 'tile-1',
-        href: '#',
-        title: 'Load data',
-        subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
-      },
-      {
-        id: 'tile-2',
-        href: '#',
-        title: 'Monitor data performance and system capacity',
-        subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
-      },
-      {
-        id: 'tile-3',
-        href: '#',
-        title: 'Create and run SQL queries',
-        subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
-      },
-      {
-        id: 'tile-4',
-        href: '#',
-        title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
-      },
-      {
-        id: 'tile-5',
-        href: '#',
-        title: 'Chat and build prompts with foundation models',
-        subtitle: 'with Prompt Lab',
-        mainIcon: 'Term',
-      },
-    ],
-  },
-  {
-    id: 5,
-    label: 'Six glass tiles',
-    tiles: [
-      {
-        id: 'tile-1',
-        href: '#',
-        title: 'Load data',
-        subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
-      },
-      {
-        id: 'tile-2',
-        href: '#',
-        title: 'Monitor data performance and system capacity',
-        subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
-      },
-      {
-        id: 'tile-3',
-        href: '#',
-        title: 'Create and run SQL queries',
-        subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
-      },
-      {
-        id: 'tile-4',
-        href: '#',
-        title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
-      },
-      {
-        id: 'tile-5',
-        href: '#',
-        title: 'Chat and build prompts with foundation models',
-        subtitle: 'with Prompt Lab',
-        mainIcon: 'Term',
-      },
-      {
-        id: 'tile-6',
-        href: '#',
-        title: 'Tune a foundation model with labeled data',
-        subtitle: 'with Tuning Studio',
-        mainIcon: 'Tuning',
+        mainIcon: Export,
+        secondaryIcon: ArrowRight,
+        ariaLabel: 'Export data',
       },
     ],
   },
   {
     id: 6,
-    label: 'Seven glass tiles',
+    label: 'Loading, non-interactive and disabled cards',
     tiles: [
       {
         id: 'tile-1',
         href: '#',
-        title: 'Load data',
+        title: 'Loading tile',
         subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
+        mainIcon: DataSet,
+        isLoading: true,
+        ariaLabel: 'Loading tile',
       },
       {
         id: 'tile-2',
-        href: '#',
-        title: 'Monitor data performance and system capacity',
+        title: 'Non-interactive tile',
         subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
+        mainIcon: ChartLineData,
+        ariaLabel: 'Non-interactive tile',
       },
       {
         id: 'tile-3',
         href: '#',
-        title: 'Create and run SQL queries',
+        title: 'Disabled tile',
         subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
+        mainIcon: Sql,
+        isDisabled: true,
+        ariaLabel: 'Disabled tile',
       },
       {
         id: 'tile-4',
         href: '#',
         title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
-      },
-      {
-        id: 'tile-5',
-        href: '#',
-        title: 'Chat and build prompts with foundation models',
-        subtitle: 'with Prompt Lab',
-        mainIcon: 'Term',
-      },
-      {
-        id: 'tile-6',
-        href: '#',
-        title: 'Tune a foundation model with labeled data',
-        subtitle: 'with Tuning Studio',
-        mainIcon: 'Tuning',
-      },
-      {
-        id: 'tile-7',
-        href: '#',
-        title: 'Build models as a visual flow',
-        subtitle: 'with SPSS Modeler',
-        mainIcon: 'FlowModeler',
+        mainIcon: Export,
+        secondaryIcon: ArrowRight,
+        ariaLabel: 'Export data',
       },
     ],
   },
   {
     id: 7,
-    label: 'Eight glass tiles',
-    tiles: [
-      {
-        id: 'tile-1',
-        href: '#',
-        title: 'Load data',
-        subtitle: 'with Data explorer',
-        mainIcon: 'DataSet',
-      },
-      {
-        id: 'tile-2',
-        href: '#',
-        title: 'Monitor data performance and system capacity',
-        subtitle: 'with Monitoring hub',
-        mainIcon: 'ChartLineData',
-      },
-      {
-        id: 'tile-3',
-        href: '#',
-        title: 'Create and run SQL queries',
-        subtitle: 'with SQL editor',
-        mainIcon: 'Sql',
-      },
-      {
-        id: 'tile-4',
-        href: '#',
-        title: 'Export data',
-        mainIcon: 'Export',
-        secondaryIcon: 'ArrowRight',
-      },
-      {
-        id: 'tile-5',
-        href: '#',
-        title: 'Chat and build prompts with foundation models',
-        subtitle: 'with Prompt Lab',
-        mainIcon: 'Term',
-      },
-      {
-        id: 'tile-6',
-        href: '#',
-        title: 'Tune a foundation model with labeled data',
-        subtitle: 'with Tuning Studio',
-        mainIcon: 'Tuning',
-      },
-      {
-        id: 'tile-7',
-        href: '#',
-        title: 'Build models as a visual flow',
-        subtitle: 'with SPSS Modeler',
-        mainIcon: 'FlowModeler',
-      },
-      {
-        id: 'tile-8',
-        href: '#',
-        title: 'Create and run python queries',
-        subtitle: 'with Prompt Lab',
-        mainIcon: 'DataSet',
-      },
-    ],
-  },
-  {
-    id: 8,
     label: 'Custom content tasks',
     tiles: [
       {
         id: 'tile-1',
-        customContent: <Loading description="Sample loading state" />
+        customContent: (
+          <Loading withOverlay={false} description="Sample loading state" />
+        ),
+        ariaLabel: 'Custom content tile with loading state',
       },
       {
         id: 'tile-2',
-        customContent: <SampleCustomTaskContent />
+        customContent: <SampleCustomTaskContent />,
+        ariaLabel: 'Custom content tile',
       },
     ],
   },
 ];
 
-export const tasksConfigButton = {
+export const tasksControllerConfigButton = {
   type: 'button',
   button: {
     href: '#',
@@ -347,9 +238,34 @@ export const tasksConfigButton = {
   },
 };
 
-export const tasksConfigDropdown = {
+export const tasksControllerConfigDropdown = {
   type: 'dropdown',
   dropdown: {
     label: 'Customize your journey',
+    allTileGroups: headerTiles,
+    selectedTileGroup: headerTiles[0],
+    setSelectedTileGroup: () => {},
+    ariaLabel: 'Select a task group',
   },
+};
+
+export const tasksControllerConfigLoading = {
+  type: 'none',
+  isLoading: true,
+};
+
+export const workspaceSelectorConfig = {
+  allWorkspaces: workspaceData,
+  setSelectedWorkspace: () => {},
+  propsOverrides: {
+    label: 'Select workspace',
+    renderSelectedItem: (item) => `Open in: ${item.label}`,
+  },
+  ariaLabel: 'Select a workspace',
+};
+
+export const workspaceSelectorConfigLoading = {
+  allWorkspaces: workspaceData,
+  setSelectedWorkspace: () => {},
+  isLoading: true,
 };

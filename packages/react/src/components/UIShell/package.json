@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-ui-shell",
-  "version": "0.38.0",
+  "version": "0.67.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -13,15 +13,15 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/UIShell"
   },
+  "types": "./es/index.d.ts",
   "exports": {
     ".": {
       "import": "./es/index.js",
-      "require": "./lib/index.js",
-      "type": "./es/index.d.ts"
+      "require": "./lib/index.js"
     },
-    "./es/": "./es/",
-    "./lib/": "./lib/",
-    "./scss/": "./scss/"
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
   },
   "files": [
     "es",
@@ -31,12 +31,13 @@
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rm -rf {es,lib,scss}",
+    "clean": "rimraf es lib scss",
     "postinstall": "ibmtelemetry --config=telemetry.yml",
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 5b9dce15-eeda-4b53-8683-3e3aeb599fd1 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "canary"
+    "@carbon-labs/utilities": "canary",
+    "@carbon/ibm-products": "^2.68.0"
   },
   "dependencies": {
     "@ibm/telemetry-js": "^1.9.1"

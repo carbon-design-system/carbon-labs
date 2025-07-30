@@ -1,6 +1,6 @@
 {
-  "name": "@carbon-labs/ai-feedback",
-  "version": "0.17.0",
+  "name": "@carbon-labs/wc-ai-feedback",
+  "version": "0.19.0",
   "private": true,
   "publishConfig": {
     "access": "public",
@@ -18,25 +18,27 @@
     ".": {
       "default": "./src/index.js"
     },
-    "./es/": "./es/"
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*"
   },
   "files": [
-    "es/**/*",
-    "custom-elements.json",
+    "es/",
+    "lib/",
     "telemetry.yml"
   ],
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
-    "build": "gulp build --option feedback",
+    "build": "node ../../../tasks/build.js",
     "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
     "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary",
+    "clean": "rimraf es lib",
     "postinstall": "ibmtelemetry --config=telemetry.yml"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.16.0",
+    "@carbon-labs/utilities": "0.17.0",
     "@carbon/grid": "^11.21.0",
     "@carbon/web-components": "2.21.0",
     "@ibm/telemetry-js": "^1.9.1",

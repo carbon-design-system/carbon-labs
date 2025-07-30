@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-whats-new",
-  "version": "0.6.0",
+  "version": "0.10.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -13,9 +13,16 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/WhatsNew"
   },
+  "types": "./es/index.d.ts",
   "exports": {
-    "import": "./es/index.js",
-    "require": "./lib/index.js"
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js",
+      "type": "./es/index.d.ts"
+    },
+    "./es/": "./es/",
+    "./lib/": "./lib/",
+    "./scss/": "./scss/"
   },
   "files": [
     "es",
@@ -25,7 +32,7 @@
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rm -rf {es,lib,scss}",
+    "clean": "rimraf es lib scss",
     "postinstall": "ibmtelemetry --config=telemetry.yml",
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 1e5a49a0-1bc8-4547-8a7c-4b96e1842ead --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },

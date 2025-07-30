@@ -17,7 +17,7 @@ export interface SideNavItemsProps {
    * Object to provide an aria-label to the component when used in treeview,
    * to ensure it meets a11y requirements.
    */
-  accessibilityLabel: object;
+  accessibilityLabel?: object;
 
   /**
    * Provide a single icon as the child to `SideNavIcon` to render in the
@@ -43,7 +43,7 @@ export const SideNavItems: React.FC<SideNavItemsProps> = ({
   isSideNavExpanded,
   accessibilityLabel: accessibilityLabel,
 }) => {
-  const { isTreeview } = useContext(SideNavContext);
+  const { isTreeview, currentPrimaryMenu } = useContext(SideNavContext);
   const listRef = useRef<HTMLUListElement>(null); // Adjust type if necessary
   const prefix = usePrefix();
   const className = cx([`${prefix}--side-nav__items`], customClassName);
@@ -86,6 +86,7 @@ export const SideNavItems: React.FC<SideNavItemsProps> = ({
       {...(isTreeview && accessibilityLabel)}
       ref={listRef}
       className={className}
+      tabIndex={currentPrimaryMenu ? -1 : undefined}
       role={isTreeview ? 'tree' : ''}>
       {childrenWithExpandedState}
     </ul>

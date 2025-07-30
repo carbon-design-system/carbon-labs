@@ -1,0 +1,63 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/layout' as *;
+
+@use '../../../../../globals/scss/vars' as *;
+
+$block-class: #{$clabs-prefix}--style-picker;
+
+:host(#{$clabs-prefix}-style-picker) {
+  @include emit-layout-tokens();
+}
+
+// 12rem
+$spacing-12-rem: $spacing-13 + $spacing-07;
+// 13.5rem
+$container-width: $spacing-12-rem + $spacing-06;
+
+.#{$block-class}__content {
+  display: grid;
+  grid-template-rows: max-content 1fr;
+  inline-size: $container-width;
+  max-block-size: min(calc($spacing-12-rem * 2), 100vh);
+}
+
+// .#{$block-class}__header {
+//   position: relative;
+// }
+
+.#{$block-class}__heading {
+  @include type.type-style('heading-01');
+
+  display: flex;
+  align-items: center;
+  block-size: $spacing-08;
+  padding-inline: $spacing-05;
+}
+
+.#{$block-class}__sections {
+  overflow: auto;
+}
+
+// .#{$block-class}-sections__container--empty {
+//   display: none;
+// }
+
+// .#{$block-class}-sections__empty-state {
+//   padding: $spacing-05;
+// }
+
+// Carbon overwrites
+
+// .#{$block-class}-group .#{$cds-prefix}--contained-list__header {
+//   z-index: 2;
+// }

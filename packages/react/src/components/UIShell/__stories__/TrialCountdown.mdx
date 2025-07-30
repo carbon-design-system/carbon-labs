@@ -1,0 +1,58 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+
+<Meta isTemplate />
+
+# TrialCountdown
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Component API](#component-api)
+
+## Overview
+
+The `TrialCountdown` component displays a visual countdown indicator, typically
+used to show the number of days remaining in a product trial. It can be placed
+directly in the `Header` or inside a `HeaderPopover`, depending on whether you
+want to provide additional details when clicked. The `count` prop sets the
+number of days remaining, and the optional `warning` prop applies a warning
+style when the trial is close to expiring.
+
+```jsx
+import { TrialCountdown } from '@carbon-labs/react-ui-shell';
+
+<TrialCountdown count={2} warning />;
+```
+
+```jsx
+import {
+  HeaderPopover,
+  HeaderPopoverContent,
+  HeaderPopoverButton,
+  HeaderPopoverActions,
+  TrialCountdown,
+} from '@carbon-labs/react-ui-shell';
+import { Link, Button } from '@carbon/react';
+
+<HeaderPopover align="bottom">
+  <HeaderPopoverButton label="Trial Countdown" as={Button} kind="ghost">
+    <TrialCountdown count={2} warning />
+  </HeaderPopoverButton>
+  <HeaderPopoverContent>
+    <p>Your trial ends on May 13, 2025</p>
+    <Link href="#" renderIcon={Share}>
+      Invite team members
+    </Link>
+    <Link href="#" renderIcon={User}>
+      Contact sales
+    </Link>
+    <Button size="sm" renderIcon={ShoppingCart}>
+      Buy
+    </Button>
+  </HeaderPopoverContent>
+</HeaderPopover>;
+```
+
+## Component API
+
+<ArgTypes />

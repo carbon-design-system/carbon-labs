@@ -1,12 +1,13 @@
 {
   "name": "@carbon-labs/react-resizer",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "type": "module",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "description": "Carbon Labs - Resize Bar",
   "license": "Apache-2.0",
   "repository": {

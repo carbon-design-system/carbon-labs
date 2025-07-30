@@ -112,7 +112,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
   label,
   description,
   enterDelayMs = 100,
-  leaveDelayMs = 300,
+  leaveDelayMs = 100,
   defaultOpen = false,
   dropShadow = true,
   highContrast = false,

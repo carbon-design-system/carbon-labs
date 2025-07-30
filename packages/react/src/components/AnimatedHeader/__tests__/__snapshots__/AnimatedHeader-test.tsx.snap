@@ -33,6 +33,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <h1
               aria-label="Welcome, Drew"
+              aria-labelledby="tooltip-:r0:"
               class="clabs--animated-header__title clabs--animated-header__title-expanded"
             >
               <span
@@ -347,7 +348,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                   >
                     <button
                       aria-labelledby="tooltip-:rc:"
-                      class="clabs--animated-header__ai-prompt-tile--icon-button  cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--disabled cds--btn--icon-only"
+                      class="cds--btn--icon-only clabs--animated-header__ai-prompt-tile--icon-button  cds--btn cds--btn--sm cds--layout--size-sm cds--btn--ghost cds--btn--disabled"
                       disabled=""
                       type="button"
                     >

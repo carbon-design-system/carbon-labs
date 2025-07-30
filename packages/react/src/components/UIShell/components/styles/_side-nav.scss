@@ -305,7 +305,7 @@ div:has(.#{$prefix}--header)
 
 .#{$prefix}--side-nav__menu-secondary-wrapper {
   position: absolute;
-  z-index: z('header') - 2;
+  z-index: z('header') - 1;
   background-color: $layer-01;
   block-size: 100%;
   inline-size: 0;

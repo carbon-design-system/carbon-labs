@@ -316,7 +316,7 @@ div:has(.#{$prefix}--header)
 }
 
 .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
-  box-shadow: $spacing-01 0 convert.to-rem(6px) $overlay;
+  box-shadow: $spacing-01 0 convert.to-rem(6px) $shadow;
   inline-size: 16rem;
   overflow-y: auto;
   transform: translateX(0);
@@ -572,7 +572,7 @@ div:has(.#{$prefix}--header)
 
 .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded {
   border-inline-end: none;
-  box-shadow: $spacing-01 0 $spacing-02 $overlay;
+  box-shadow: $spacing-01 0 convert.to-rem(6px) $shadow;
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {

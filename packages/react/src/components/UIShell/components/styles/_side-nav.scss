@@ -29,8 +29,8 @@ div:has(.#{$prefix}--header)
 }
 
 .#{$prefix}--side-nav {
-  overflow: visible;
   z-index: z('header') - 1;
+  overflow: visible;
 
   // closing side-nav transition
   transition: $fast-02 motion(exit, productive);
@@ -317,8 +317,7 @@ div:has(.#{$prefix}--header)
 }
 
 .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
-  box-shadow: 4px 0 6px -3px rgba(0, 0, 0, 0.2); //visually matches @mixin box-shadow but only on right side
-  box-shadow: 4px 0 6px -3px green; //visually matches @mixin box-shadow but only on right side
+  box-shadow: $spacing-02 0 convert.to-rem(6px) convert.to-rem(-3px) $shadow;
 
   inline-size: 16rem;
   overflow-y: auto;
@@ -331,7 +330,7 @@ div:has(.#{$prefix}--header)
 // Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
-  z-index: z('header') - 1;
+  z-index: z('header') - 2;
   overflow: visible;
   border-inline-end: 1px solid $border-subtle;
 
@@ -574,7 +573,7 @@ div:has(.#{$prefix}--header)
 
 .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded {
   border-inline-end: none;
-  box-shadow: 4px 0 6px -3px rgba(0, 0, 0, 0.2); //visually matches @mixin box-shadow but only on right side
+  box-shadow: $spacing-02 0 convert.to-rem(6px) convert.to-rem(-3px) $shadow;
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {

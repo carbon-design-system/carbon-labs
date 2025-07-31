@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.108.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.107.0...@carbon-labs/react@0.108.0) (2025-07-30)
+
+
+### Bug Fixes
+
+* Whats new typescript issue with TOCSection ([#735](https://github.com/carbon-design-system/carbon-labs/issues/735)) ([5215c3f](https://github.com/carbon-design-system/carbon-labs/commit/5215c3fbef3e432b29ae4ce5eb052ff0c2a6f9a4))
+
+
+
+
+
+# [0.107.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.106.0...@carbon-labs/react@0.107.0) (2025-07-30)
+
+
+### Bug Fixes
+
+* **uishell:** update delay for flyout menu ([#736](https://github.com/carbon-design-system/carbon-labs/issues/736)) ([6779c29](https://github.com/carbon-design-system/carbon-labs/commit/6779c295e826c1551ff8ce36c28ac771f596636c))
+
+
+
+
+
+# [0.106.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.105.0...@carbon-labs/react@0.106.0) (2025-07-29)
+
+
+### Features
+
+* **animated-header:** add accessibility role and aria- attributes ([#715](https://github.com/carbon-design-system/carbon-labs/issues/715)) ([875a5e1](https://github.com/carbon-design-system/carbon-labs/commit/875a5e102237d5faedb140f2b29a958aa0ee1b69))
+
+
+
+
+
+# [0.105.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.104.0...@carbon-labs/react@0.105.0) (2025-07-29)
+
+
+### Bug Fixes
+
+* **uishell:** add panel variant back to storybook with fixes ([#731](https://github.com/carbon-design-system/carbon-labs/issues/731)) ([919b292](https://github.com/carbon-design-system/carbon-labs/commit/919b292390a57abce991edd75442f6de0d752de9))
+
+
+
+
+
 # [0.104.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.103.0...@carbon-labs/react@0.104.0) (2025-07-28)
 
 

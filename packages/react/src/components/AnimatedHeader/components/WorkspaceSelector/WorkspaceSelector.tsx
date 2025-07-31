@@ -23,6 +23,7 @@ export type WorkspaceSelectorConfig = {
       'id' | 'items' | 'selectedItem' | 'setSelectedWorkspace'
     >
   >;
+  ariaLabel?: string;
   allWorkspaces: Workspace[];
   selectedWorkspace?: Workspace | null;
   setSelectedWorkspace: (e) => void;
@@ -69,6 +70,7 @@ const WorkspaceSelector = ({
         workspaceSelectorConfig?.setSelectedWorkspace?.(e);
         dropdownCustomOnChange?.(e);
       },
+      'aria-label': workspaceSelectorConfig?.ariaLabel ?? 'Select a workspace',
       ...dropdownOverrideProps,
     };
   }, [

@@ -33,6 +33,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <h1
               aria-label="Welcome, Drew"
+              aria-labelledby="tooltip-:r0:"
               class="clabs--animated-header__title clabs--animated-header__title-expanded"
             >
               <span

@@ -587,6 +587,8 @@ div:has(.#{$prefix}--header)
 // allow overlay to display at all breakpoints
 .#{$prefix}--side-nav__overlay-active {
   background-color: transparent;
+  block-size: 100vh;
+  inline-size: 100vw;
 }
 
 //----------------------------------------------------------------------------

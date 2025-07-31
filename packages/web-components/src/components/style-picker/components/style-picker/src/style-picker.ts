@@ -130,7 +130,7 @@ class StylePicker extends LitElement {
     reflect: true,
     attribute: 'search-close-button-label',
   })
-  searchCloseButtonLabel = 'Clear search input';
+  searchCloseButtonLabel;
 
   /**
    * Search close close button label
@@ -150,7 +150,7 @@ class StylePicker extends LitElement {
     reflect: true,
     attribute: 'empty-state-title',
   })
-  emptyStateTitle = 'No results found';
+  emptyStateTitle;
 
   /**
    * Subtitle for empty state displayed when no items found in search.
@@ -160,7 +160,7 @@ class StylePicker extends LitElement {
     reflect: true,
     attribute: 'empty-state-subtitle',
   })
-  emptyStateSubtitle = 'Try a different search';
+  emptyStateSubtitle;
 
   /**
    * Update search term in the context

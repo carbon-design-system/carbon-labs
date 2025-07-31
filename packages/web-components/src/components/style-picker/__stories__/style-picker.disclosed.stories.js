@@ -142,9 +142,26 @@ const argTypes = {
     options: [...alignOptions],
     description: `Specify how the popover should align with the trigger element`,
   },
+  kind: {
+    description:
+      "There are three different variants `'single' | 'flat' | 'disclosed'` ",
+    control: 'disabled',
+  },
   enableSearch: {
     control: 'boolean',
     description: 'Enable search option',
+  },
+  searchCloseButtonLabel: {
+    control: 'text',
+  },
+  emptyStateTitle: {
+    control: 'text',
+  },
+  emptyStateSubtitle: {
+    control: 'text',
+  },
+  searchInputPlaceholder: {
+    control: 'text',
   },
 };
 
@@ -155,6 +172,9 @@ export const ColorAndIcon = {
     align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
     kind: 'disclosed',
     enableSearch: true,
+    searchCloseButtonLabel: 'Clear search input',
+    emptyStateTitle: 'No results found',
+    emptyStateSubtitle: 'Try a different search',
   },
   argTypes,
   /**
@@ -174,7 +194,10 @@ export const ColorAndIcon = {
             ?open=${args.open}
             heading=${args.heading}
             kind=${args.kind}
-            ?enable-search=${args.enableSearch}>
+            ?enable-search=${args.enableSearch}
+            search-close-button-label=${args.searchCloseButtonLabel}
+            empty-state-title=${args.emptyStateTitle}
+            empty-state-subtitle=${args.emptyStateSubtitle}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
@@ -255,6 +278,9 @@ export const IconColorPictogram = {
     align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
     kind: 'disclosed',
     enableSearch: true,
+    searchCloseButtonLabel: 'Clear search input',
+    emptyStateTitle: 'No results found',
+    emptyStateSubtitle: 'Try a different search',
   },
   argTypes,
   /**
@@ -274,7 +300,10 @@ export const IconColorPictogram = {
             ?open=${args.open}
             heading=${args.heading}
             kind=${args.kind}
-            ?enable-search=${args.enableSearch}>
+            ?enable-search=${args.enableSearch}
+            search-close-button-label=${args.searchCloseButtonLabel}
+            empty-state-title=${args.emptyStateTitle}
+            empty-state-subtitle=${args.emptyStateSubtitle}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}

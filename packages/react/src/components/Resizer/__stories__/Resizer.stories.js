@@ -22,10 +22,22 @@ export default {
       page: mdx,
     },
   },
+  argTypes: {
+    orientation: {
+      control: false,
+    },
+    children: {
+      control: false,
+    },
+  },
 };
 
-// eslint-disable-next-line jsdoc/require-jsdoc
-export const SinglePanelNoBoundaries = () => (
+/**
+ * SinglePanelNoBoundaries example
+ *
+ * @param {any} args - props from story controls
+ */
+export const SinglePanelNoBoundaries = (args) => (
   <>
     <style>
       {`
@@ -64,13 +76,17 @@ export const SinglePanelNoBoundaries = () => (
           content, but can also be pre set.
         </p>
       </div>
-      <Resizer orientation="horizontal" />
+      <Resizer {...args} orientation="horizontal" />
     </div>
   </>
 );
 
-// eslint-disable-next-line jsdoc/require-jsdoc
-export const SinglePanelBounded = () => {
+/**
+ * SinglePanelBounded example
+ *
+ * @param {any} args - props from story controls
+ */
+export const SinglePanelBounded = (args) => {
   const panelRef = useRef(null);
   return (
     <>
@@ -117,6 +133,7 @@ export const SinglePanelBounded = () => {
             </p>
           </div>
           <Resizer
+            {...args}
             orientation="horizontal"
             onResizeEnd={(_event, ref) =>
               ref.current.setAttribute(
@@ -131,8 +148,12 @@ export const SinglePanelBounded = () => {
   );
 };
 
-// eslint-disable-next-line jsdoc/require-jsdoc
-export const SinglePanelOverlay = () => (
+/**
+ * SinglePanelOverlay example
+ *
+ * @param {any} args - props from story controls
+ */
+export const SinglePanelOverlay = (args) => (
   <>
     <style>{`
       .single-panel-overlay {
@@ -186,7 +207,7 @@ export const SinglePanelOverlay = () => (
         </p>
       </div>
       <div className="single-panel-overlay__panel">
-        <Resizer orientation="horizontal" />
+        <Resizer {...args} orientation="horizontal" />
         <div className="single-panel-overlay__panel-content">
           <h3 className="single-panel-overlay__panel-title">Overlay Panel</h3>
           <p>
@@ -200,8 +221,12 @@ export const SinglePanelOverlay = () => (
   </>
 );
 
-// eslint-disable-next-line jsdoc/require-jsdoc
-export const TwoPanelsHorizontal = () => (
+/**
+ * TwoPanelsHorizontal example
+ *
+ * @param {any} args - props from story controls
+ */
+export const TwoPanelsHorizontal = (args) => (
   <>
     <style>{`
       .two-panels-horizontal {
@@ -239,7 +264,7 @@ export const TwoPanelsHorizontal = () => (
           information, such as a preview area above and details below.
         </p>
       </div>
-      <Resizer orientation="horizontal" />
+      <Resizer {...args} orientation="horizontal" />
       <div className="two-panels-horizontal__panel">
         <h3 className="two-panels-horizontal__panel-title">Bottom Panel</h3>
         <p>
@@ -253,8 +278,12 @@ export const TwoPanelsHorizontal = () => (
   </>
 );
 
-// eslint-disable-next-line jsdoc/require-jsdoc
-export const TwoPanelsVertical = () => (
+/**
+ * TwoPanelsVertical example
+ *
+ * @param {any} args - props from story controls
+ */
+export const TwoPanelsVertical = (args) => (
   <>
     <style>{`
       .two-panels-vertical {
@@ -290,7 +319,7 @@ export const TwoPanelsVertical = () => (
           and main content areas.
         </p>
       </div>
-      <Resizer orientation="vertical" />
+      <Resizer {...args} orientation="vertical" />
       <div className="two-panels-vertical__panel">
         <h3 className="two-panels-vertical__panel-title">Right Panel</h3>
         <p>
@@ -304,8 +333,12 @@ export const TwoPanelsVertical = () => (
   </>
 );
 
-// eslint-disable-next-line jsdoc/require-jsdoc
-export const FourPanels = () => (
+/**
+ * FourPanels example
+ *
+ * @param {any} args - props from story controls
+ */
+export const FourPanels = (args) => (
   <>
     <style>{`
       .four-panels {
@@ -371,7 +404,7 @@ export const FourPanels = () => (
             the page.
           </p>
         </div>
-        <Resizer orientation="horizontal" />
+        <Resizer {...args} orientation="horizontal" />
         <div className="four-panels__panel">
           <h3 className="four-panels__panel-title">Bottom Left Panel</h3>
           <p>
@@ -382,7 +415,7 @@ export const FourPanels = () => (
           </p>
         </div>
       </div>
-      <Resizer orientation="vertical" />
+      <Resizer {...args} orientation="vertical" />
       <div className="four-panels__column">
         <div className="four-panels__panel four-panels__panel--right-top">
           <h3 className="four-panels__panel-title">Top Right Panel</h3>
@@ -393,7 +426,7 @@ export const FourPanels = () => (
             the page.
           </p>
         </div>
-        <Resizer orientation="horizontal" />
+        <Resizer {...args} orientation="horizontal" />
         <div className="four-panels__panel four-panels__panel--right-bottom">
           <h3 className="four-panels__panel-title">Bottom Right Panel</h3>
           <p>
@@ -408,8 +441,12 @@ export const FourPanels = () => (
   </>
 );
 
-// eslint-disable-next-line jsdoc/require-jsdoc
-export const TwoPanelsVerticalGrid = () => {
+/**
+ * TwoPanelsVerticalGrid example
+ *
+ * @param {any} args - props from story controls
+ */
+export const TwoPanelsVerticalGrid = (args) => {
   // fully controlled example
 
   // eslint-disable-next-line jsdoc/require-jsdoc
@@ -510,6 +547,7 @@ export const TwoPanelsVerticalGrid = () => {
         </div>
 
         <Resizer
+          {...args}
           orientation="vertical"
           onResize={handleResize}
           onResizeEnd={handleResizeEnd}
@@ -530,8 +568,12 @@ export const TwoPanelsVerticalGrid = () => {
   );
 };
 
-// eslint-disable-next-line jsdoc/require-jsdoc
-export const WithCustomHandles = () => {
+/**
+ * WithCustomHandles example
+ *
+ * @param {any} args - props from story controls
+ */
+export const WithCustomHandles = (args) => {
   return (
     <>
       <style>{`
@@ -806,7 +848,7 @@ export const WithCustomHandles = () => {
             <div className="single-panel-bounded__panel">
               <p>This panel demonstrates custom drag handle with icons</p>
             </div>
-            <Resizer orientation="horizontal">
+            <Resizer {...args} orientation="horizontal">
               <DragVertical className="custom-drag-handler-1" />
             </Resizer>
           </div>
@@ -820,7 +862,10 @@ export const WithCustomHandles = () => {
                 This panel demonstrates custom drag handle with icons on hover
               </p>
             </div>
-            <Resizer orientation="horizontal" className="custom-resizer-2">
+            <Resizer
+              {...args}
+              orientation="horizontal"
+              className="custom-resizer-2">
               <DragVertical className="custom-drag-handler-2" />
             </Resizer>
           </div>
@@ -835,7 +880,10 @@ export const WithCustomHandles = () => {
                 transitions on hover
               </p>
             </div>
-            <Resizer orientation="horizontal" className="custom-resizer-3">
+            <Resizer
+              {...args}
+              orientation="horizontal"
+              className="custom-resizer-3">
               <div className="custom-drag-handler-3">
                 <div className="line-1"></div>
                 <div className="line-2"></div>
@@ -850,7 +898,10 @@ export const WithCustomHandles = () => {
             <div className="single-panel-bounded__panel">
               <p>This panel demonstrates custom drag handle with static divs</p>
             </div>
-            <Resizer orientation="horizontal" className="custom-resizer-4">
+            <Resizer
+              {...args}
+              orientation="horizontal"
+              className="custom-resizer-4">
               <div className="custom-drag-handler-4">
                 <div className="line-1"></div>
                 <div className="line-2"></div>
@@ -868,7 +919,10 @@ export const WithCustomHandles = () => {
                 arrow
               </p>
             </div>
-            <Resizer orientation="horizontal" className="custom-resizer-5">
+            <Resizer
+              {...args}
+              orientation="horizontal"
+              className="custom-resizer-5">
               <div className="custom-drag-handler-5" />
             </Resizer>
           </div>
@@ -883,7 +937,10 @@ export const WithCustomHandles = () => {
                 and arrow
               </p>
             </div>
-            <Resizer orientation="horizontal" className="custom-resizer-6">
+            <Resizer
+              {...args}
+              orientation="horizontal"
+              className="custom-resizer-6">
               <div className="custom-drag-handler-6" />
             </Resizer>
           </div>
@@ -897,7 +954,10 @@ export const WithCustomHandles = () => {
                 This panel demonstrates custom drag handle with static arrows
               </p>
             </div>
-            <Resizer orientation="horizontal" className="custom-resizer-7">
+            <Resizer
+              {...args}
+              orientation="horizontal"
+              className="custom-resizer-7">
               <div className="custom-drag-handler-7" />
             </Resizer>
           </div>

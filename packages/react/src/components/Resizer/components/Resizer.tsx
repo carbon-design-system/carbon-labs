@@ -29,6 +29,7 @@ interface ResizerProps {
   onDoubleClick?: (event: MouseEvent) => string | void;
   className?: string;
   children?: React.ReactNode;
+  thickness?: number;
 
   // Any other additional props
   [key: string]: any;
@@ -52,6 +53,7 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
       onDoubleClick,
       className,
       children,
+      thickness = 4,
       ...rest
     },
     forwardedRef
@@ -92,6 +94,10 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
         return;
       }
 
+      element.style[
+        orientation === 'horizontal' ? 'blockSize' : 'inlineSize'
+      ] = `${thickness}px`;
+
       const prevSibling = element.previousElementSibling as HTMLElement;
       const nextSibling = element.nextElementSibling as HTMLElement;
       const rect = (el: Element) => el?.getBoundingClientRect();
@@ -104,7 +110,7 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
           ? { width: rect(nextSibling).width, height: rect(nextSibling).height }
           : { width: 0, height: 0 },
       };
-    }, [ref]);
+    }, [ref, thickness, orientation]);
 
     const updateSizes = useCallback(
       (event, delta: number) => {

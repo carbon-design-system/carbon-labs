@@ -38,13 +38,11 @@ $prefix: 'clabs' !default;
   }
 
   &--horizontal {
-    block-size: $spacing-02;
     cursor: ns-resize;
   }
 
   &--vertical {
     cursor: ew-resize;
-    inline-size: $spacing-02;
   }
 }
 

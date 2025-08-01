@@ -35,7 +35,6 @@ export function chartElementV2Template(customElementClass) {
     _toggleFullscreen,
     _uniqueID,
     _exportSpec,
-    _exportPreSpec,
     streaming,
     _loading,
     specStr,

@@ -13,7 +13,10 @@ const { stablePrefix: clabsPrefix } = settings;
 import { LitElement } from 'lit';
 
 import { property, state } from 'lit/decorators.js';
-import embed, { VegaEmbedResult, EmbedOptions } from 'vega-embed';
+// @ts-ignore
+import embed from 'vega-embed';
+// @ts-ignore
+import { VegaEmbedResult, EmbedOptions } from 'vega-embed';
 
 // @ts-ignore
 import styles from './chartElementV2.scss?inline';
@@ -68,16 +71,25 @@ export default class chartElementV2 extends LitElement {
   @state() private _hovered = false;
   /** Save if chart was selected and retain selection border*/
   @state() private _selected = false;
+  /** Show modal for options */
+  @state() private showModal = false;
+  /** injectable css */
+  @state() private tooltipCss;
+  /** Modal mode to display spec */
+  @state() private modalMode = null;
+  /** SVG or Canvas switcher*/
+  @state() private renderMethod = 'canvas';
 
   private _parentTheme: 'white' | 'g100' = 'white';
   private _view: any;
   private _error: string | null = null;
   private _loading = false;
   private _thumbSrc: string | null = null;
-  private _uniqueID: string;
+  private _uniqueID: string | null = null;
   private containerWidthString: string | null = null;
   private containerHeightString: string | null = null;
   private carbonSpec: any = null;
+  private _visualizationSpec: any = null;
 
   private _themeConfig: any = {};
 
@@ -128,7 +140,9 @@ export default class chartElementV2 extends LitElement {
    * First update LIT function to pre-set behavior on creation
    */
   async firstUpdated() {
-    this.generateUniqueId();
+    const randomString: string = Math.random().toString(36).substr(2, 9);
+    this._uniqueID = randomString;
+
     this._getTheme();
     if (this.enableAllEvents) {
       this.enableZoom = true;
@@ -145,6 +159,22 @@ export default class chartElementV2 extends LitElement {
       //}
     });
     this.resizeObserver.observe(this);
+    console.log(
+      'hovered: ' +
+        this._hovered +
+        ' selected: ' +
+        this._selected +
+        ' error: ' +
+        this._error +
+        ' loading: ' +
+        this._loading +
+        ' showModal: ' +
+        this.showModal +
+        ' themeConfig: ' +
+        this._themeConfig +
+        ' thumbSrc: ' +
+        this._thumbSrc
+    );
     await this.updateComplete;
     this._renderSpec();
   }
@@ -194,7 +224,10 @@ export default class chartElementV2 extends LitElement {
       'streaming',
       'selectable',
     ];
-    if (Array.from(changedProperties.keys()).some((k) => watch.includes(k))) {
+    /*if (Array.from(changedProperties.keys()).some((k) => watch.includes(k))) {
+      this._renderSpec();
+    }*/
+    if (watch.some((key) => changedProperties.has(key))) {
       this._renderSpec();
     }
   }
@@ -217,7 +250,7 @@ export default class chartElementV2 extends LitElement {
    * invoked to remove chosen user even when not applicable to subchart leaf
    * @param {object} spec - current specification
    */
-  private _autoDisableEvents(spec: any) {
+  /*private _autoDisableEvents(spec: any) {
     if (this.enableZoom && !this._supportsEvent(spec, 'zoom')) {
       this.enableZoom = false;
     }
@@ -227,10 +260,10 @@ export default class chartElementV2 extends LitElement {
     if (this.enableHover && !this._supportsEvent(spec, 'hover')) {
       this.enableHover = false;
     }
-    if (this.enableSelect && !this._supportsEvent(spec, 'select')) {
-      this.enableSelect = false;
+    if (this.enableSelection && !this._supportsEvent(spec, 'select')) {
+      this.enableSelection = false;
     }
-  }
+  }*/
 
   /**
    * _updateSCSS - internal SCSS injection method
@@ -246,14 +279,6 @@ export default class chartElementV2 extends LitElement {
       '--clabs-chart-element-height',
       this.containerHeightString
     );
-  }
-
-  /**
-   * generateUniqueId - create random string to give the target visualization div
-   */
-  generateUniqueId() {
-    const randomString: string = Math.random().toString(36).substr(2, 9);
-    this._uniqueID = randomString;
   }
 
   /**
@@ -294,17 +319,17 @@ export default class chartElementV2 extends LitElement {
    * applyAutosize - force vega autosizing when applicable
    * @param {object} spec - vegalite specification
    */
-  private _applyAutosize(spec: any): any {
+  /*private _applyAutosize(spec: any): any {
     spec.autosize = { type: 'fit-x', contains: 'padding' };
     delete spec.height;
     return spec;
-  }
+  }*/
 
   /**
    * onClick- set behavior externally for vega click event
    * @param {object} event - click event from parent
    */
-  private _onClick(event: MouseEvent) {
+  /*private _onClick(event: MouseEvent) {
     if (!this.selectable) {
       return;
     }
@@ -315,7 +340,7 @@ export default class chartElementV2 extends LitElement {
       })
     );
     event.stopPropagation();
-  }
+  }*/
   /**
    * core spec rendering function to apply to dom spec object
    */
@@ -506,7 +531,7 @@ export default class chartElementV2 extends LitElement {
     if (!container) {
       return;
     } else {
-      container.innerHtml = '';
+      container.innerHTML = '';
     }
     // Build embed options
     const opts: EmbedOptions = {
@@ -523,21 +548,21 @@ export default class chartElementV2 extends LitElement {
     //try {
     const embedResult: VegaEmbedResult = await embed(container, spec, opts);
     this._view = embedResult.view;
-    this._originalSpec = spec;
+    this.originalSpec = spec;
     if (!this.thumbnailMode) {
       //this._attachSelectionListeners();
       this._attachParamListeners();
     }
     this.carbonSpec = spec;
     if (this.thumbnailMode) {
-      const _uri = await this._view
+      await this._view
         .toImageURL('png')
         .then((_uri) => {
           this._thumbSrc = _uri;
           this._view.finalize();
           this.dispatchEvent(
             new CustomEvent('on-chart-thumbnail-generated', {
-              detail: { image: url },
+              detail: { image: _uri },
             })
           );
         })
@@ -556,31 +581,6 @@ export default class chartElementV2 extends LitElement {
 
     this._loading = false;
     this.requestUpdate();
-  }
-
-  /** _applyThemeConfig2 - applying themes to correct sub configs
-   * @param {object} spec - core specification
-   */
-  private _applyThemeConfig2(spec: any): any {
-    const baseConfig = this._getThemeConfigByParent();
-    spec.config = baseConfig;
-    /** merge - merge sub configs
-     * @param {object} node - subnode in spec
-     */
-    const merge = (node: any) => {
-      node.config = { ...baseConfig, ...node.config };
-      ['layer', 'hconcat', 'vconcat', 'concat', 'facet', 'repeat'].forEach(
-        (k) => {
-          if (Array.isArray(node[k])) {
-            node[k].forEach(merge);
-          } else if (k === 'facet' && node.facet?.spec) {
-            merge(node.facet.spec);
-          }
-        }
-      );
-    };
-    merge(spec);
-    return spec;
   }
 
   /** _applyThemeConfig - applying themes to correct sub configs
@@ -638,7 +638,6 @@ export default class chartElementV2 extends LitElement {
   private _prepareConfig() {
     let ordinalColors: string[] = [];
     let quantitativeColors: string[] = [];
-    let newConfig = {};
 
     const darkOrdinalColors = [
       '#8a3ffc',
@@ -750,8 +749,8 @@ export default class chartElementV2 extends LitElement {
       quantitativeColors = sequentialScales[1];
     }
 
-    if (this.enableCarbonStyling) {
-      /*let colorScale: any[] = [];
+    //if (this.enableCarbonStyling) {
+    /*let colorScale: any[] = [];
 
       let chartType = '';
       if (typeof spec.mark === 'string') {
@@ -772,7 +771,7 @@ export default class chartElementV2 extends LitElement {
           }
         }
       }*/
-      /*let titleOffset = -8;
+    /*let titleOffset = -8;
       const defaultPadding = 16;
 
       if (spec.description && !spec.title) {
@@ -812,175 +811,175 @@ export default class chartElementV2 extends LitElement {
           bottom: defaultPadding,
         };
       }*/
-      const titleOffset = 2;
-      newConfig = {
-        background: backgroundColor,
-        font: defaultFont,
-        axis: {
-          domainColor: gridColor,
-          grid: true,
-          gridColor: gridColor,
-          titleFontSize: 13,
-          labelFontSize: 11,
-          labelColor: labelColor,
-          labelFont: defaultFont,
-          titleFont: defaultFont,
-        },
-        axisX: {
-          labelAngle: 0,
-        },
-        line: { interpolate: 'monotone' },
-        mark: { tooltip: this.enableTooltip },
-        axisBottom: {
-          domainColor: axisColor,
-          labelColor: labelColor,
-          titleColor: textColor,
-          tickColor: backgroundColor,
-          labelOverlap: 'greedy',
-          titlePadding: 12,
-          titleFont: defaultFont,
-          titleFontWeight: 400,
-        },
-        axisTop: {
-          domainColor: gridColor,
-          labelColor: labelColor,
-          titleColor: textColor,
-          tickColor: backgroundColor,
-          titlePadding: 10,
-          labelOverlap: 'greedy',
-          titleFont: defaultFont,
-          titleFontWeight: 400,
-        },
-        axisLeft: {
-          domainColor: axisColor,
-          labelColor: labelColor,
-          titleColor: textColor,
-          labelOverlap: 'greedy',
-          tickColor: backgroundColor,
-          titlePadding: 4,
-          titleFont: defaultFont,
-          titleFontWeight: 400,
-        },
-        axisRight: {
-          domainColor: gridColor,
-          labelColor: labelColor,
-          titleColor: textColor,
-          labelOverlap: 'greedy',
-          tickColor: backgroundColor,
-          titlePadding: 10,
-          titleFont: defaultFont,
-          titleFontWeight: 400,
-        },
-        view: {
-          stroke: gridColor,
-        },
-        title: {
-          font: titleFont,
-          color: textColor,
-          anchor: 'start',
-          fontWeight: 500,
-          fontSize: 16,
-          offset: 16,
-          dx: titleOffset,
-        },
-        range: {
-          heatmap: [gradientColorBottom, gradientColorTop],
-          ramp: [gradientColorBottom, gradientColorTop],
-          category: ordinalColors,
-          ordinal: ordinalColors,
-          diverging: quantitativeColors,
-        },
-        legend: {
-          direction: 'horizontal',
-          symbolType: 'square',
-          //labelLimit: { signal: 'max(100, width * 0.25)' },
-          //columns: { signal: 'floor(width / 150)' },
-          symbolSize: 256,
-          //rowPadding: { signal: '12' },
-          orient: 'bottom',
-          symbolOpacity: 1,
-          titleColor: labelColor,
-          titlePadding: 16,
-          labelColor: labelColor,
-          titleFont: defaultFont,
-          labelFont: defaultFont,
-          labelOffset: 4,
-          padding: 10,
-          titleFontSize: 11,
-          labelFontSize: 12, //fillOpacity: 1,
-          strokeWidth: 1, //fontWeight: 'bold',
-          offset: 20,
-          gradientLength: { signal: 'width - 32' },
-          gradientThickness: 16,
-          gradientLabelOffset: 16,
-        },
-      };
-
-      //custom submarks
-      newConfig['boxplot'] = {
-        box: {
-          fill: defaultColor,
-          fillOpacity: 0.3,
-          stroke: defaultColor,
-          strokeOpacity: 1,
-        },
-        median: {
-          stroke: defaultColor,
-          strokeWidth: 2,
-        },
-        outliers: {
-          fill: 'white',
-          fillOpacity: 1,
-          stroke: 'yellow',
-          strokeOpacity: 1,
-        },
-        rule: { stroke: defaultColor, strokeOpacity: 1, strokeWidth: 1 },
-        ticks: { stroke: defaultColor, strokeOpacity: 1, strokeWidth: 1 },
-      };
-      newConfig['point'] = {
-        fillOpacity: 1.0,
-        size: 40,
-        strokeOpacity: 1.0,
-        strokeWidth: 1.0,
-        filled: true,
-      };
-      newConfig['square'] = {
-        fillOpacity: 1.0,
-        size: 40,
-        strokeOpacity: 1.0,
-        strokeWidth: 1.0,
-        filled: true,
-      };
-
-      newConfig['circle'] = {
-        fillOpacity: 1.0,
-        size: 40,
-        strokeOpacity: 1.0,
-        strokeWidth: 1.0,
-        filled: true,
-      };
-      newConfig['bar'] = { discreteBandSize: 12 };
-
-      newConfig['geoshape'] = {
-        grid: false,
-        range: {
-          sequential: {
-            scheme: [gradientColorBottom, gradientColorTop],
-          },
-        },
-        color: backgroundColor,
-        fillColor: backgroundColor,
-      };
-
-      newConfig['arc'] = {
+    const titleOffset = 2;
+    const newConfig = {
+      background: backgroundColor,
+      font: defaultFont,
+      axis: {
+        domainColor: gridColor,
+        grid: true,
+        gridColor: gridColor,
+        titleFontSize: 13,
+        labelFontSize: 11,
+        labelColor: labelColor,
+        labelFont: defaultFont,
+        titleFont: defaultFont,
+      },
+      axisX: {
+        labelAngle: 0,
+      },
+      line: { interpolate: 'monotone' },
+      mark: { tooltip: this.enableTooltip },
+      axisBottom: {
+        domainColor: axisColor,
+        labelColor: labelColor,
+        titleColor: textColor,
+        tickColor: backgroundColor,
+        labelOverlap: 'greedy',
+        titlePadding: 12,
+        titleFont: defaultFont,
+        titleFontWeight: 400,
+      },
+      axisTop: {
+        domainColor: gridColor,
+        labelColor: labelColor,
+        titleColor: textColor,
+        tickColor: backgroundColor,
+        titlePadding: 10,
+        labelOverlap: 'greedy',
+        titleFont: defaultFont,
+        titleFontWeight: 400,
+      },
+      axisLeft: {
+        domainColor: axisColor,
+        labelColor: labelColor,
+        titleColor: textColor,
+        labelOverlap: 'greedy',
+        tickColor: backgroundColor,
+        titlePadding: 4,
+        titleFont: defaultFont,
+        titleFontWeight: 400,
+      },
+      axisRight: {
+        domainColor: gridColor,
+        labelColor: labelColor,
+        titleColor: textColor,
+        labelOverlap: 'greedy',
+        tickColor: backgroundColor,
+        titlePadding: 10,
+        titleFont: defaultFont,
+        titleFontWeight: 400,
+      },
+      view: {
         stroke: gridColor,
-        strokeWidth: 1,
-      };
-      newConfig['text'] = {
+      },
+      title: {
+        font: titleFont,
         color: textColor,
-      };
+        anchor: 'start',
+        fontWeight: 500,
+        fontSize: 16,
+        offset: 16,
+        dx: titleOffset,
+      },
+      range: {
+        heatmap: [gradientColorBottom, gradientColorTop],
+        ramp: [gradientColorBottom, gradientColorTop],
+        category: ordinalColors,
+        ordinal: ordinalColors,
+        diverging: quantitativeColors,
+      },
+      legend: {
+        direction: 'horizontal',
+        symbolType: 'square',
+        //labelLimit: { signal: 'max(100, width * 0.25)' },
+        //columns: { signal: 'floor(width / 150)' },
+        symbolSize: 256,
+        //rowPadding: { signal: '12' },
+        orient: 'bottom',
+        symbolOpacity: 1,
+        titleColor: labelColor,
+        titlePadding: 16,
+        labelColor: labelColor,
+        titleFont: defaultFont,
+        labelFont: defaultFont,
+        labelOffset: 4,
+        padding: 10,
+        titleFontSize: 11,
+        labelFontSize: 12, //fillOpacity: 1,
+        strokeWidth: 1, //fontWeight: 'bold',
+        offset: 20,
+        gradientLength: { signal: 'width - 32' },
+        gradientThickness: 16,
+        gradientLabelOffset: 16,
+      },
+    };
 
-      /*let isOrdinal: boolean;
+    //custom submarks
+    newConfig['boxplot'] = {
+      box: {
+        fill: defaultColor,
+        fillOpacity: 0.3,
+        stroke: defaultColor,
+        strokeOpacity: 1,
+      },
+      median: {
+        stroke: defaultColor,
+        strokeWidth: 2,
+      },
+      outliers: {
+        fill: 'white',
+        fillOpacity: 1,
+        stroke: 'yellow',
+        strokeOpacity: 1,
+      },
+      rule: { stroke: defaultColor, strokeOpacity: 1, strokeWidth: 1 },
+      ticks: { stroke: defaultColor, strokeOpacity: 1, strokeWidth: 1 },
+    };
+    newConfig['point'] = {
+      fillOpacity: 1.0,
+      size: 40,
+      strokeOpacity: 1.0,
+      strokeWidth: 1.0,
+      filled: true,
+    };
+    newConfig['square'] = {
+      fillOpacity: 1.0,
+      size: 40,
+      strokeOpacity: 1.0,
+      strokeWidth: 1.0,
+      filled: true,
+    };
+
+    newConfig['circle'] = {
+      fillOpacity: 1.0,
+      size: 40,
+      strokeOpacity: 1.0,
+      strokeWidth: 1.0,
+      filled: true,
+    };
+    newConfig['bar'] = { discreteBandSize: 12 };
+
+    newConfig['geoshape'] = {
+      grid: false,
+      range: {
+        sequential: {
+          scheme: [gradientColorBottom, gradientColorTop],
+        },
+      },
+      color: backgroundColor,
+      fillColor: backgroundColor,
+    };
+
+    newConfig['arc'] = {
+      stroke: gridColor,
+      strokeWidth: 1,
+    };
+    newConfig['text'] = {
+      color: textColor,
+    };
+
+    /*let isOrdinal: boolean;
       switch (chartType) {
         case 'bar':
           isOrdinal = false;
@@ -1149,7 +1148,7 @@ export default class chartElementV2 extends LitElement {
 
         //this._addInteractions(spec, 'point');
       }*/
-    }
+    //}
 
     return newConfig;
   }
@@ -1158,7 +1157,7 @@ export default class chartElementV2 extends LitElement {
    * _cleanSelectionDefs - remove all external definitions that could cause conflicts if present
    * @param {object} spec - core specification
    */
-  private _cleanSelectionDefs(spec: any): any {
+  /*private _cleanSelectionDefs(spec: any): any {
     if (spec.selection) {
       const allowed = {
         zoom: this.enableZoom && this._supportsEvent(spec, 'zoom'),
@@ -1167,21 +1166,28 @@ export default class chartElementV2 extends LitElement {
         hover: this.enableHover && this._supportsEvent(spec, 'hover'),
         legend: this.enableLegendSelection,
       };
-      spec.selection = Object.fromEntries(
-        Object.entries(spec.selection).filter(([k]) => allowed[k])
-      );
+      const filteredSelections = {};
+      for (const [k, v] of Object.entries(spec.selection)) {
+        if (allowed[k]) filteredSelections[k] = v;
+      }
+      spec.selection = filteredSelections;
+
       if (spec.resolve?.selection) {
-        spec.resolve.selection = Object.fromEntries(
-          Object.entries(spec.resolve.selection).filter(([k]) => allowed[k])
-        );
+        const filteredResolvedSelections = {};
+        for (const [k, v] of Object.entries(spec.resolve.selection)) {
+          if (allowed[k]) filteredResolvedSelections[k] = v;
+        }
+
+        spec.resolve.selection = filteredResolvedSelections;
       }
     }
     return spec;
-  }
+  }*/
   /**
    * _applySelectionDefs2 - old function to apply all new event definitions
    * @param {object} spec - core specification
    */
+  // @ts-ignore
   private _applySelectionDefs2(spec: any): any {
     const defs: Record<string, any> = {};
     if (this.enableZoom && this._supportsEvent(spec, 'zoom')) {
@@ -1222,9 +1228,12 @@ export default class chartElementV2 extends LitElement {
 
       if (composite) {
         const resolve = { ...(spec.resolve || {}) };
-        resolve.selection = Object.fromEntries(
-          Object.keys(defs).map((k) => [k, 'union'])
-        );
+
+        const resolvedSelections = {};
+        for (const k of Object.keys(defs)) {
+          resolvedSelections[k] = 'union';
+        }
+        resolve.selection = resolvedSelections;
         resolve.scale = {
           ...(resolve.scale || {}),
           x: 'independent',
@@ -1240,7 +1249,7 @@ export default class chartElementV2 extends LitElement {
    * Check if legend
    * @param {object} node - vega subnode element
    */
-  private _legendHeight(node: any): boolean {
+  private _legendHeight(node: any): number {
     if (!node || typeof node !== 'object') {
       return 0;
     }
@@ -1248,7 +1257,8 @@ export default class chartElementV2 extends LitElement {
     const legendTitleHeight = 22;
     let maxLegendHeight = 0;
     if (node.encoding) {
-      for (const enc of Object.values(node.encoding)) {
+      for (const key of Object.keys(node.encoding)) {
+        const enc: any = node.encoding[key];
         if (
           enc &&
           typeof enc === 'object' &&
@@ -1257,17 +1267,16 @@ export default class chartElementV2 extends LitElement {
           enc.legend !== false
         ) {
           let nValues = 0;
-          if (enc.scale && Array.isArray(enc.scale.domain)) {
-            nValues = enc.scale.domain.length;
-          } else if (enc.bin || (enc.type && enc.type === 'quantitative')) {
+          const scale = enc.scale;
+          const bin = enc.bin;
+          const type = enc.type;
+          const field = enc.field;
+          if (scale && Array.isArray(scale.domain)) {
+            nValues = scale.domain.length;
+          } else if (bin || (type && type === 'quantitative')) {
             nValues = 5;
-          } else if (
-            node.data &&
-            Array.isArray(node.data.values) &&
-            enc.field
-          ) {
-            nValues = new Set(node.data.values.map((d: any) => d[enc.field]))
-              .size;
+          } else if (node.data && Array.isArray(node.data.values) && field) {
+            nValues = new Set(node.data.values.map((d: any) => d[field])).size;
           }
           if (!nValues) {
             nValues = 4;
@@ -1422,10 +1431,12 @@ export default class chartElementV2 extends LitElement {
       ].some((k) => !!spec[k]);
 
       if (composite) {
-        spec.resolve = spec.resolve || {};
-        spec.resolve.selection = Object.fromEntries(
-          params.map((p) => [p.name, 'union'])
-        );
+        const resolve = spec.resolve || {};
+        const resolvedParams = {};
+        for (const p of params) {
+          resolvedParams[p.name] = 'union';
+        }
+        resolve.selection = resolvedParams;
         resolve.scale = {
           ...(resolve.scale || {}),
           x: 'independent',
@@ -1445,7 +1456,14 @@ export default class chartElementV2 extends LitElement {
     if (!this._view) {
       return;
     }
-    ['zoom', 'brush', 'select', 'hover', 'legend'].forEach((name) => {
+    const compositionTypes: string[] = [
+      'zoom',
+      'brush',
+      'select',
+      'hover',
+      'legend',
+    ];
+    compositionTypes.forEach((name) => {
       const upperName = name.charAt(0).toUpperCase() + name.slice(1);
       const flag = `enable${upperName}`;
       if ((this as any)[flag] && this._supportsEvent(this.originalSpec, name)) {
@@ -1516,6 +1534,7 @@ export default class chartElementV2 extends LitElement {
    * _applyLegendPosition - function to apply all legend definitions
    * @param {object} spec - core specification
    */
+  // @ts-ignore
   private _applyLegendPosition(spec: any): any {
     /**
      * setLegend - apply legend system
@@ -1585,6 +1604,7 @@ export default class chartElementV2 extends LitElement {
    * @param {number} w - sub width
    * @param {number} h - sub height
    */
+  // @ts-ignore
   private _processSpec(spec: any, w: number, h: number): any {
     const cleaned = this._applyParamDefs(spec);
 
@@ -1667,6 +1687,7 @@ export default class chartElementV2 extends LitElement {
   /**
    * _attachSelectionListeners - apply listeners for pre-selected purged subevents
    */
+  // @ts-ignore
   private _attachSelectionListeners(): void {
     if (!this._view) {
       return;
@@ -1688,7 +1709,7 @@ export default class chartElementV2 extends LitElement {
 
             this.dispatchEvent(selectionEvent);
           });
-        } catch (e) {
+        } catch (e: any) {
           console.log(e.message);
         }
       }
@@ -1760,6 +1781,7 @@ export default class chartElementV2 extends LitElement {
   /**
    * external fullscreen toggle event
    */
+  // @ts-ignore
   private _toggleFullscreen() {
     if (!document.fullscreenElement) {
       this.shadowRoot?.host.requestFullscreen();
@@ -1771,7 +1793,7 @@ export default class chartElementV2 extends LitElement {
   /**
    * _openEditorView -
    */
-  private _exportPreSpec() {
+  /*private _exportPreSpec() {
     this.showModal = true;
     const vegaURL = 'https://vega.github.io/editor/';
     const openNewWindow = window?.open(vegaURL, '_blank');
@@ -1788,11 +1810,12 @@ export default class chartElementV2 extends LitElement {
     } else {
       console.log('window is undefined');
     }
-  }
+  }*/
 
   /**
    * _openEditorView -
    */
+  // @ts-ignore
   private _exportSpec() {
     this.showModal = true;
     const vegaURL = 'https://vega.github.io/editor/';

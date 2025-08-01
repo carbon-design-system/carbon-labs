@@ -17,6 +17,7 @@ import './components/editableTextElement/editableTextElement.js';
 import './components/textElement/textElement.js';
 import './components/cardElement/cardElement.js';
 import './components/chartElement/chartElement.js';
+import './components/chartElement/chartElementV2.js';
 import './components/tableElement/tableElement.js';
 import './components/codeElement/codeElement.js';
 import './components/tagListElement/tagListElement.js';

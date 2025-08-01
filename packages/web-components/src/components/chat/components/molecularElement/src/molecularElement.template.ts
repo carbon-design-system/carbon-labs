@@ -52,6 +52,7 @@ export function molecularElementTemplate(customElementClass) {
     _handleFullScreenScroll: handleFullScreenScroll,
     _handleLiveRawEditorChange: handleLiveRawEditorChange,
     _handleOriginalEditorValidation: handleOriginalEditorValidation,
+    _handleOriginalEditorCancelled: handleOriginalEditorCancelled,
   } = customElementClass;
 
   return html`
@@ -188,6 +189,7 @@ export function molecularElementTemplate(customElementClass) {
               ?editable="${enableCodeEditing}"
               @on-code-edit-change="${handleLiveRawEditorChange}"
               @on-code-edit-validation="${handleOriginalEditorValidation}"
+              @on-code-edit-cancel="${handleOriginalEditorCancelled}"
               render-language="smiles"
               content="${smilesContent}">
             </clabs-chat-code>

@@ -31,6 +31,277 @@ const examples = [
     another task      : 24d`,
   },
   {
+    title: 'Architecture Diagram',
+    thumbnail: false,
+    width: '512px',
+    definition: `%%{init: {
+"theme": "base",
+"themeVariables": {
+"primaryColor": "#ffffff",
+"primaryTextColor": "#161616",
+"lineColor":"#414141",
+"fontFamily": "IBM Plex Sans, sans-serif",
+"nodeBorderWidth": "5px",
+"clusterBorderWidth": "5px",
+"edgeLabelBackground":"#ffffff",
+"clusterBkg": "#ffffff",
+"clusterBorder": "#0f62fe",
+"primaryBorderColor": "#0f62fe"
+},
+"flowchart": {
+"curve": "step",
+"htmlLabels": true
+}
+}}%%
+
+graph LR
+subgraph IBM_Cloud
+direction 
+subgraph Cloud_Services
+style Cloud_Services stroke:#1192e8
+ActivityTracker["<div style='text-align:left;padding:10px;border-left:5px solid #1192e8;'>Activity Tracker</div><img width='40' src='https://img.icons8.com/color/48/activity-history.png'>"]
+KeyManagement["<div style='text-align:left;padding:10px;border-left:5px solid #da1e28;'>Key Management</div><img width='40' src='https://img.icons8.com/color/48/private-lock.png'>"]
+TransitGateway["<div style='text-align:left;padding:10px;border-left:5px solid #1192e8;'>Transit Gateway</div><img width='40' src='https://img.icons8.com/color/48/router.png'>"]
+ObjectStorage["<div style='text-align:left;padding:10px;border-left:5px solid #1192e8;'>Object Storage</div><img width='40' src='https://img.icons8.com/color/48/cloud-storage.png'>"]
+end
+
+subgraph Management_Resource_Group
+style Management_Resource_Group stroke:#da1e28
+subgraph Management_VPC
+style Management_VPC stroke:#8d8d8d
+subgraph Zone_1
+style Zone_1 stroke:#8d8d8d
+ACL1["<div style='text-align:left;padding:10px;border-left:5px solid #da1e28;'>Management ACL</div>"]
+subgraph Security_Group
+style Security_Group stroke:#8d8d8d
+VSI1["<div style='text-align:left;padding:10px;border-left:5px solid #24a148;'>10.10.10.0/24 : VSI</div><img width='40' src='https://img.icons8.com/color/48/cloud-server.png'>"]
+end
+VPE1["<div style='text-align:left;padding:10px;border-left:5px solid #24a148;'>10.10.20.0/24 : VPE</div><img width='40' src='https://img.icons8.com/color/48/server.png'>"]
+VPN1["<div style='text-align:left;padding:10px;border-left:5px solid #fa4d56;'>10.10.30.0/24 : VPN</div><img width='40' src='https://img.icons8.com/color/48/vpn.png'>"]
+end
+subgraph Zone_2
+style Zone_2 stroke:#8d8d8d
+VSI2["<div style='text-align:left;padding:10px;border-left:5px solid #24a148;'>10.20.10.0/24 : VSI</div><img width='40' src='https://img.icons8.com/color/48/cloud-server.png'>"]
+VPE2["<div style='text-align:left;padding:10px;border-left:5px solid #24a148;'>10.20.20.0/24 : VPE</div><img width='40' src='https://img.icons8.com/color/48/server.png'>"]
+end
+end
+end
+
+subgraph Workload_Resource_Group
+style Workload_Resource_Group stroke:#da1e28
+subgraph Workload_VPC
+style Workload_VPC stroke:#8d8d8d
+subgraph Zone_1_WL
+style Zone_1_WL stroke:#8d8d8d
+ACL2["<div style='text-align:left;padding:10px;border-left:5px solid #da1e28;'>Workload ACL</div>"]
+subgraph Security_Group_WL
+style Security_Group_WL stroke:#8d8d8d
+VSI4["<div style='text-align:left;padding:10px;border-left:5px solid #24a148;'>10.40.10.0/24 : VSI</div><img width='40' src='https://img.icons8.com/color/48/cloud-server.png'>"]
+subgraph Timestamp_Node
+style Timestamp_Node stroke:#24a148
+Date1["<div style='text-align:left;padding:10px;border-left:5px solid #24a148;'>2025-07-25 14:00</div>"]
+end
+end
+VPE4["<div style='text-align:left;padding:10px;border-left:5px solid #24a148;'>10.40.20.0/24 : VPE</div><img width='40' src='https://img.icons8.com/color/48/server.png'>"]
+end
+subgraph Zone_2_WL
+style Zone_2_WL stroke:#8d8d8d
+VSI5["<div style='text-align:left;padding:10px;border-left:5px solid #24a148;'>10.50.10.0/24 : VSI</div><img width='40' src='https://img.icons8.com/color/48/cloud-server.png'>"]
+VPE5["<div style='text-align:left;padding:10px;border-left:5px solid #24a148;'>10.50.20.0/24 : VPE</div><img width='40' src='https://img.icons8.com/color/48/server.png'>"]
+end
+end
+end
+
+%% Connections
+TransitGateway-->VPN1
+TransitGateway-->ACL1
+TransitGateway-->ACL2
+end`,
+  },
+  {
+    title: 'Architecture Diagram 2',
+    thumbnail: false,
+    width: '100%',
+    height: 512,
+    definition: `%%{init: {
+"theme":"base",
+"themeVariables":{
+"primaryColor":"#ffffff",
+"primaryTextColor":"#161616",
+"fontFamily":"IBM Plex Sans, sans-serif",
+"nodeBorderWidth":"5px",
+"clusterBorderWidth":"5px",
+"edgeLabelBackground":"#ffffff"
+},
+"flowchart":{
+"curve":"stepBefore",
+"htmlLabels":true,
+"useMaxWidth":false
+}
+}}%%
+
+graph LR
+
+%% Depth 0
+subgraph IBM_Cloud
+style IBM_Cloud stroke:#0f62fe,fill:#ffffff
+
+%% Depth 1 (blue)
+subgraph Cloud_Services
+style Cloud_Services stroke:#1192e8,fill:#e5f6ff
+
+ActivityTracker["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #1192e8;'>Activity Tracker</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Observability/Activity_Tracker.svg'>"]
+KeyManagement["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #da1e28;'>Key Management</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Security/Key_Management.svg'>"]
+TransitGateway["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #1192e8;'>Transit Gateway</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Network/Transit_Gateway.svg'>"]
+ObjectStorage["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #1192e8;'>Object Storage</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Storage/Object_Storage.svg'>"]
+end
+
+%% Depth 1 (blue)
+subgraph Management_Resource_Group
+style Management_Resource_Group stroke:#da1e28,fill:#e5f6ff
+
+%% Depth 2 (grey)
+subgraph Management_VPC
+style Management_VPC stroke:#8d8d8d,fill:#f4f4f4
+
+%% Depth 3 (red)
+subgraph Zone_1
+style Zone_1 stroke:#8d8d8d,fill:#fde7e9
+
+ACL1["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #da1e28;'>Management ACL</div>"]
+
+%% Depth 4 (green)
+subgraph Security_Group
+style Security_Group stroke:#8d8d8d,fill:#dafbe4
+VSI1["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #24a148;'>10.10.10.0/24 : VSI</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Compute/Cloud_Server.svg'>"]
+end
+
+VPE1["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #24a148;'>10.10.20.0/24 : VPE</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Compute/Server.svg'>"]
+VPN1["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #fa4d56;'>10.10.30.0/24 : VPN</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Security/VPN.svg'>"]
+end
+
+%% Depth 3 (red)
+subgraph Zone_2
+style Zone_2 stroke:#8d8d8d,fill:#fde7e9
+VSI2["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #24a148;'>10.20.10.0/24 : VSI</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Compute/Cloud_Server.svg'>"]
+VPE2["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #24a148;'>10.20.20.0/24 : VPE</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Compute/Server.svg'>"]
+end
+end
+end
+
+%% Depth 1 (blue)
+subgraph Workload_Resource_Group
+style Workload_Resource_Group stroke:#da1e28,fill:#e5f6ff
+
+%% Depth 2 (grey)
+subgraph Workload_VPC
+style Workload_VPC stroke:#8d8d8d,fill:#f4f4f4
+
+%% Depth 3 (red)
+subgraph Zone_1_WL
+style Zone_1_WL stroke:#8d8d8d,fill:#fde7e9
+
+ACL2["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #da1e28;'>Workload ACL</div>"]
+
+%% Depth 4 (green)
+subgraph Security_Group_WL
+style Security_Group_WL stroke:#8d8d8d,fill:#dafbe4
+VSI4["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #24a148;'>10.40.10.0/24 : VSI</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Compute/Cloud_Server.svg'>"]
+
+%% Depth 5 (green)
+subgraph Timestamp_Node
+style Timestamp_Node stroke:#24a148,fill:#dafbe4
+Date1["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #24a148;'>2025-07-25 14:00</div>"]
+end
+end
+
+VPE4["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #24a148;'>10.40.20.0/24 : VPE</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Compute/Server.svg'>"]
+end
+
+%% Depth 3 (red)
+subgraph Zone_2_WL
+style Zone_2_WL stroke:#8d8d8d,fill:#fde7e9
+VSI5["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #24a148;'>10.50.10.0/24 : VSI</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Compute/Cloud_Server.svg'>"]
+VPE5["<div style='text-align:left;padding:8px 12px;margin:2px;border-left:6px solid #24a148;'>10.50.20.0/24 : VPE</div><img width='20' src='https://raw.githubusercontent.com/IBM-Cloud/architecture-icons/main/svg/Compute/Server.svg'>"]
+end
+end
+end
+
+%% Connections
+TransitGateway --> VPN1
+TransitGateway --> ACL1
+TransitGateway --> ACL2
+end`,
+  },
+  {
+    title: 'Architecture Diagram 3',
+    thumbnail: false,
+    definition: `%%{init: {
+"theme": "base",
+"themeVariables": {
+"primaryColor": "#dafbe4",
+"primaryBorderColor": "#0f62fe",
+"primaryTextColor": "#161616",
+"clusterBkg": "#ffffff",
+"clusterBorder": "#0f62fe",
+"lineColor":"#414141",
+"nodeBorder": "#24a148",
+"fontFamily": "IBM Plex Sans, sans-serif",
+"edgeLabelBackground": "#ffffff",
+"tertiaryColor": "#ffffff",
+"clusterPadding": "12px",
+"nodeTextAlign": "left",
+"nodePadding": "10px",
+"labelBoxWidth": "10px"
+},
+"flowchart": {
+"curve": "stepBefore",
+"htmlLabels": true
+}
+}}%%
+
+graph TD
+subgraph IBM_Cloud
+direction LR
+subgraph Cloud_Services
+direction TB
+Activity_Tracker[Activity Tracker]
+Key_Management[Key Management]
+Transit_Gateway[Transit Gateway]
+Object_Storage[Object Storage]
+end
+
+subgraph Management_Resource_Group
+subgraph Management_VPC
+direction TB
+Zone1_ManagementACL[<div style="text-align:left;border-left:3px solid #0f62fe;padding-left:6px;">Zone 1<br/>Management ACL</div>]
+Zone1_VSI[<div style="text-align:left;border-left:3px solid #24a148;padding-left:6px;">10.10.10.0/24 : VSI</div>]
+Zone1_ManagementACL --> Zone1_VSI
+end
+end
+
+subgraph Workload_Resource_Group
+subgraph Workload_VPC
+direction TB
+Zone1_WorkloadACL[<div style="text-align:left;border-left:3px solid #0f62fe;padding-left:6px;">Zone 1<br/>Workload ACL</div>]
+Zone1_Workload_VSI[<div style="text-align:left;border-left:3px solid #24a148;padding-left:6px;">10.40.10.0/24 : VSI</div>]
+Zone1_WorkloadACL --> Zone1_Workload_VSI
+end
+end
+
+%% Connections
+Transit_Gateway --> Zone1_ManagementACL
+Transit_Gateway --> Zone1_WorkloadACL
+end
+
+%% Apply styles
+classDef greenNode fill:#dafbe4,stroke:#24a148,stroke-width:1px,color:#161616;
+class Activity_Tracker,Key_Management,Transit_Gateway,Object_Storage,Zone1_VSI,Zone1_Workload_VSI greenNode;
+
+classDef aclNode fill:#ffffff,stroke:#da1e28,stroke-width:1px,color:#161616;
+class Zone1_ManagementACL,Zone1_WorkloadACL aclNode;`,
+  },
+  {
     title: 'Flow Chart',
     width: '100%',
     height: 512,
@@ -327,165 +598,6 @@ class Gurney,Duncan retainer;
       }
     }`,
   },
-  {
-    title: 'Diagram test 4',
-    thumbnail: false,
-    definition: `sequenceDiagram
-    participant web as Web Browser
-    participant blog as Blog Service
-    participant account as Account Service
-    participant mail as Mail Service
-    participant db as Storage
-
-    Note over web,db: The user must be logged in to submit blog posts
-    web->>+account: Logs in using credentials
-    account->>db: Query stored accounts
-    db->>account: Respond with query result
-
-    alt Credentials not found
-        account->>web: Invalid credentials
-    else Credentials found
-        account->>-web: Successfully logged in
-
-        Note over web,db: When the user is authenticated, they can now submit new posts
-        web->>+blog: Submit new post
-        blog->>db: Store post data
-
-        par Notifications
-            blog--)mail: Send mail to blog subscribers
-            blog--)db: Store in-site notifications
-        and Response
-            blog-->>-web: Successfully posted
-        end
-    end
-
-    `,
-  },
-
-  {
-    title: 'Diagram test 5',
-    width: 512,
-    height: 246,
-    thumbnail: false,
-    definition: `
-architecture-beta
-group vpc(virtual-private-cloud)[VPC]
-group subnet(network)[Subnet]
-group api(cloud)[API Gateway]
-
-service loadBalancer(load-balancer)[Load Balancer] in vpc
-service vm1(virtual-server)[Virtual Server 1] in vpc
-service vm2(virtual-server)[Virtual Server 2] in vpc
-service db(cloudant)[Cloudant DB] in api
-service function1(cloud-function)[Function 1] in api
-service function2(cloud-function)[Function 2] in api
-service networkService(network-service)[Network Service] in subnet
-
-loadBalancer:R -- L:vm1
-loadBalancer:R -- L:vm2
-vm1:B -- T:db
-vm2:B -- T:db
-function1:T --> B:db
-function2:T --> B:db
-vm1:R --> L:networkService
-vm2:R --> L:networkService
-`,
-  },
-
-  {
-    title: 'Diagram test 7',
-    thumbnail: false,
-    definition: `
-  architecture-beta
-group vpc(virtual-private-cloud)[VPC]
-group subnet1(network)[Subnet 1]
-group subnet2(network)[Subnet 2]
-group api(cloud)[API Gateway]
-group security(security)[Security]
-
-service loadBalancer(load-balancer)[Load Balancer] in vpc
-service vm1(virtual-server)[Virtual Server 1] in subnet1
-service vm2(virtual-server)[Virtual Server 2] in subnet1
-service vm3(virtual-server)[Virtual Server 3] in subnet2
-service vm4(virtual-server)[Virtual Server 4] in subnet2
-service db(cloudant)[Cloudant DB] in api
-service queue(mq)[Message Queue] in api
-service auth(authentication)[IAM Authentication] in security
-service firewall(firewall)[Firewall] in security
-
-loadBalancer:R -- L:vm1
-loadBalancer:R -- L:vm2
-loadBalancer:R -- L:vm3
-loadBalancer:R -- L:vm4
-vm1:B -- T:db
-vm2:B -- T:db
-vm3:B -- T:db
-vm4:B -- T:db
-queue:T -- B:db
-auth:R -- L:db
-firewall:L --> R:auth
-
-vm1:R --> L:vm3
-vm2:R --> L:vm4
-vm3:T --> B:vm1
-vm4:T --> B:vm2
-    `,
-  },
-  {
-    title: 'Diagram test 6',
-    thumbnail: false,
-    definition: `
-architecture-beta
-group vpc(virtual-private-cloud)[VPC]
-group subnet1(network)[Subnet 1]
-group subnet2(network)[Subnet 2]
-group api(cloud)[API Gateway]
-group dbGroup(database)[Databases]
-group security(security)[Security]
-group storage(storage)[Storage]
-
-service loadBalancer(load-balancer)[Load Balancer] in vpc
-service vm1(virtual-server)[Virtual Server 1] in subnet1
-service vm2(virtual-server)[Virtual Server 2] in subnet1
-service vm3(virtual-server)[Virtual Server 3] in subnet2
-service vm4(virtual-server)[Virtual Server 4] in subnet2
-service db1(cloudant)[Cloudant DB] in dbGroup
-service db2(postgres)[PostgreSQL] in dbGroup
-service db3(mysql)[MySQL DB] in dbGroup
-service db4(ibmdb2)[DB2] in dbGroup
-service queue(mq)[Message Queue] in api
-service auth(authentication)[IAM Authentication] in security
-service firewall(firewall)[Firewall] in security
-service disk1(block-storage)[Block Storage] in storage
-service disk2(object-storage)[Object Storage] in storage
-service encryption(key-protect)[Key Protect] in security
-
-loadBalancer:R -- L:vm1
-loadBalancer:R -- L:vm2
-loadBalancer:R -- L:vm3
-loadBalancer:R -- L:vm4
-vm1:B -- T:db1
-vm2:B -- T:db2
-vm3:B -- T:db3
-vm4:B -- T:db4
-queue:T -- B:db1
-queue:T -- B:db2
-queue:T -- B:db3
-queue:T -- B:db4
-auth:R -- L:db1
-auth:R -- L:db2
-auth:R -- L:db3
-auth:R -- L:db4
-firewall:L --> R:auth
-encryption:T -- B:disk1
-encryption:T -- B:disk2
-
-disk1:L -- R:db1
-disk2:L -- R:db2
-disk1:L -- R:db3
-disk2:L -- R:db4
-`,
-  },
 ];
 
 export const Showcase = {
@@ -501,7 +613,7 @@ export const Showcase = {
           <h3>${example.title}</h3>
           <br />
           <div style="display:inline-flex; min-width:100%;">
-          <div style="flex:1;">
+          <div style="flex: 0 0 70%">
           <clabs-chat-diagram
             title="${example.title}"
             width="${example.width}"

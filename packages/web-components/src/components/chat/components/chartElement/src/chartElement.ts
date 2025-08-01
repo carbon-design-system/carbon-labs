@@ -1392,7 +1392,7 @@ export default class chartElement extends LitElement {
    * @param {Object} encoding - encoding vega sub definition
    */
   _prepareSelections(encoding) {
-    const coreSelections = {};
+    const coreSelections: { selection: string; value: number }[] = [];
 
     const _blockBrush = [
       'geoshape',
@@ -1404,7 +1404,7 @@ export default class chartElement extends LitElement {
     ];
     const _blockHover = ['boxplot', 'errorbar', 'errorband'];
     const _blockZoom = ['geoshape', 'geopath', 'geopoint', 'arc'];
-    const _blockSelect = ['boxplot', 'errorbar', 'errorband'];
+    //const _blockSelect = ['boxplot','errorbar','errorband'];
     const encodingChanges = [];
 
     const testMark = encoding.mark || '';
@@ -1417,7 +1417,7 @@ export default class chartElement extends LitElement {
     this._authorizeSingleSelection =
       this._authorizeSingleSelection && !_blockZoom.includes(testMark);
 
-    const unionSelection = {};
+    const unionSelection: { [key: string]: string } = {};
 
     if (this._authorizeMultiSelection) {
       coreSelections['brush'] = {

@@ -2798,7 +2798,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/wc-empty-state@workspace:packages/web-components/src/components/empty-state":
+"@carbon-labs/wc-empty-state@workspace:^, @carbon-labs/wc-empty-state@workspace:packages/web-components/src/components/empty-state":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/wc-empty-state@workspace:packages/web-components/src/components/empty-state"
   dependencies:
@@ -2839,6 +2839,7 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
+    "@carbon-labs/wc-empty-state": "workspace:^"
     "@carbon/web-components": "npm:^2.31.0"
     "@lit/context": "npm:^1.1.5"
   languageName: unknown

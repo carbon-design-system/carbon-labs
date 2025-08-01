@@ -1,6 +1,6 @@
 {
-  "name": "@carbon-labs/ai-ux-control",
-  "version": "0.5.0",
+  "name": "@carbon-labs/wc-ai-ux-control",
+  "version": "0.7.0",
   "private": true,
   "publishConfig": {
     "access": "public",
@@ -18,19 +18,21 @@
     ".": {
       "default": "./src/index.js"
     },
-    "./es/": "./es/"
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*"
   },
   "files": [
-    "es/**/*",
-    "custom-elements.json",
+    "es/",
+    "lib/",
     "telemetry.yml"
   ],
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
-    "build": "gulp build --option ux-control",
+    "build": "node ../../../tasks/build.js",
     "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
     "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary",
+    "clean": "rimraf es lib",
     "postinstall": "ibmtelemetry --config=telemetry.yml"
   },
   "dependencies": {

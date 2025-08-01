@@ -95,6 +95,93 @@ function App() {
 }
 ```
 
+### Accessibility
+
+To ensure a fully accessible experience, provide `aria-label`s directly in your
+tile and configuration data.
+
+#### Tile ARIA Labels
+
+Each `Tile` must define an `ariaLabel` property directly within its data object.
+This ensures accessibility information is co-located with the tile configuration
+and is easier to maintain.
+
+```jsx
+const headerTiles = [
+  {
+    id: 1,
+    label: 'AI Chat Tile w/ two glass tiles',
+    tiles: [
+      {
+        id: 'ai-tile',
+        href: '#',
+        title: 'Short description of the type of prompt',
+        mainIcon: Term,
+        ariaLabel: 'Start a conversation with the AI assistant', // ✅ aria-label defined here
+      },
+    ],
+  },
+];
+```
+
+#### Tasks Dropdown ARIA Label
+
+For the tasks controller dropdown, provide the `ariaLabel` directly in the
+config object:
+
+```ts
+export const tasksControllerConfigDropdown = {
+  type: 'dropdown',
+  dropdown: {
+    label: 'Customize your journey',
+    allTileGroups: headerTiles,
+    selectedTileGroup: headerTiles[0],
+    setSelectedTileGroup: () => {},
+    ariaLabel: 'Select a task group', // ✅ aria-label defined here
+  },
+};
+```
+
+#### Workspace Selector ARIA Label
+
+For the workspace selector, define the `ariaLabel` at the top level of the
+config object:
+
+```ts
+export const workspaceSelectorConfig = {
+  allWorkspaces: workspaceData,
+  setSelectedWorkspace: () => {},
+  propsOverrides: {
+    label: 'Select workspace',
+    renderSelectedItem: (item) => `Open in: ${item.label}`,
+  },
+  ariaLabel: 'Select a workspace', // ✅ aria-label defined here
+};
+```
+
+> ✅ Both the **tasks dropdown** and **workspace selector** must define their
+> `aria-label` values in the config to support accessibility. No other methods
+> of passing `aria-label`s are supported.
+
+---
+
+#### Additional ARIA Labels
+
+Set all other component-level `aria-label`s using the `ariaLabels` prop:
+
+```jsx
+const ariaLabels = {
+  welcome: 'Welcomes the user',
+  description: 'Short description of the product',
+  collapseButton: 'Collapse header details',
+  expandButton: 'Expand header details',
+  tilesContainer: 'Feature tiles list',
+};
+```
+
+These labels are applied to non-tile UI elements such as headers, containers,
+and interactive buttons.
+
 ## Getting started
 
 Here's a quick example to get you started.
@@ -134,26 +221,17 @@ In your styles file import
 Example of Animated Header with all prop types enabled.
 
 ```jsx
-<AnimatedHeader
-  allTiles={tiles}
-  allWorkspaces={workspaces}
-  description="Connect, monitor, and manage data."
-  handleHeaderItemsToString={handleHeaderItems}
-  handleWorkspaceItemsToString={handleWorkspaceItems}
-  headerAnimation={watsonXAnimatedLight}
-  headerStatic={watsonXStaticLight}
-  productName="[Product name]"
-  renderHeaderSelectedItem={tileGroupSelectedItemRenderer}
-  renderWorkspaceSelectedItem={workspaceSelectedItemRenderer}
-  selectedTileGroup={selectedTile}
-  selectedWorkspace={selectedWorkspace}
-  setSelectedTileGroup={handleTileGroup}
-  setSelectedWorkspace={handleWorkspaceSelect}
-  tasksConfig={tasksConfig}
-  userName="Drew"
-  welcomeText="Welcome"
-  workspaceLabel="Open in: Drew's workspace"
-  expandButtonLabel="Expand"
-  collapseButtonLabel="Collapse"
-/>
+  <AnimatedHeader
+    ariaLabels={ariaLabelsConfig as AriaLabels}
+    tasksControllerConfig={tasksControllerConfigDropdown as TasksControllerConfig}
+    workspaceSelectorConfig={WorkspaceSelectorConfig}
+    description="Connect, monitor, and manage data."
+    productName="[Product name]"
+    userName="Drew"
+    welcomeText="Welcome"
+    isLoading={false}
+    expandButtonLabel="Expand"
+    collapseButtonLabel="Collapse"
+    tileClickHandler={handleTileClicks}
+  />
 ```

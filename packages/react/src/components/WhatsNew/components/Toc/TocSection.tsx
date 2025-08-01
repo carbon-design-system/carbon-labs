@@ -7,20 +7,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useEffect, useRef, type ElementType } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTocSectionsContext } from './TocSections';
+import { PolymorphicProps } from '../../types/common';
 
-type TocSectionProps<E extends ElementType> = {
-  as?: E;
+interface TocSectionBaseProps extends React.HTMLProps<HTMLElement> {
   index?: number;
-};
+}
+
+type TocSectionProps<T extends React.ElementType> = PolymorphicProps<
+  T,
+  TocSectionBaseProps
+>;
 
 const TocSection = <E extends React.ElementType = 'section'>({
   as,
   index = Infinity,
   ...props
 }: TocSectionProps<E>) => {
-  const Component = as || 'section';
+  const Component = as || ('section' as any);
   const { registerRef } = useTocSectionsContext();
   const ref = useRef<HTMLDivElement>(null);
 

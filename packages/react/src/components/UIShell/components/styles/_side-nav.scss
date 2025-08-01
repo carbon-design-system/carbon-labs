@@ -9,9 +9,11 @@
 @use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 @use '@carbon/styles/scss/utilities/button-reset' as button-reset;
 @use '@carbon/styles/scss/utilities/focus-outline' as *;
+@use '@carbon/styles/scss/breakpoint' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/motion' as *;
 @use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/utilities/z-index' as *;
 @use '@carbon/styles/scss/components/ui-shell/mixins' as *;
 @use '@carbon/styles/scss/components/ui-shell/functions' as *;
 @use '@carbon/styles/scss/spacing' as *;
@@ -20,13 +22,18 @@ $prefix: 'cds' !default;
 
 div:has(.#{$prefix}--header)
   ~ div:has(.#{$prefix}--side-nav)
-  .#{$prefix}--side-nav {
+  .#{$prefix}--side-nav,
+.#{$prefix}--header ~ div:has(.#{$prefix}--side-nav) .#{$prefix}--side-nav {
   block-size: calc(100% - $spacing-09);
   inset-block-start: $spacing-09;
 }
 
+.#{$prefix}--side-nav {
+  overflow: visible;
+}
+
 //----------------------------------------------------------------------------
-// Side-nav Collapsible
+// Collapsible
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--ux {
   inline-size: 0;
@@ -37,11 +44,48 @@ div:has(.#{$prefix}--header)
 }
 
 //----------------------------------------------------------------------------
-// Treeview Side-nav
+// Treeview
 //----------------------------------------------------------------------------
 
 .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
   margin-inline-end: $spacing-05;
+}
+
+.#{$prefix}--side-nav__item--active.#{$prefix}--side-nav__item--has-active-descendant
+  .#{$prefix}--side-nav__submenu:not(
+    .#{$prefix}--side-nav__item--has-active-descendant
+  )[aria-expanded='false'] {
+  background-color: transparent;
+
+  &::before {
+    display: none;
+  }
+}
+
+.#{$prefix}--side-nav__item--active.#{$prefix}--side-nav__item--has-active-descendant[aria-expanded='false']
+  .#{$prefix}--side-nav__submenu[aria-expanded='false'],
+.#{$prefix}--side-nav__item--active
+  .#{$prefix}--side-nav__item--has-active-descendant
+  .#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active[aria-expanded='false'] {
+  position: relative;
+  background-color: $background-selected;
+  color: $text-primary;
+
+  &::before {
+    position: absolute;
+    display: block;
+    background-color: $border-interactive;
+    content: '';
+    inline-size: 3px;
+    inset-block: 0;
+    inset-inline-start: 0;
+  }
+}
+
+.#{$prefix}--side-nav__item--active
+  .#{$prefix}--side-nav__submenu:not(.#{$prefix}--side-nav__submenu--active)
+  > .#{$prefix}--side-nav__submenu-title {
+  font-weight: 500;
 }
 
 .#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active {
@@ -64,8 +108,29 @@ div:has(.#{$prefix}--header)
   }
 }
 
+@include breakpoint-down(md) {
+  .#{$prefix}--side-nav__submenu {
+    padding: 0 $spacing-05 0 convert.to-rem(14px);
+  }
+
+  .#{$prefix}--side-nav__submenu,
+  .#{$prefix}--side-nav__link,
+  .#{$prefix}--side-nav__menu a.#{$prefix}--side-nav__link {
+    block-size: $spacing-08;
+  }
+
+  .#{$prefix}--side-nav__icon {
+    margin-inline-end: convert.to-rem(14px);
+  }
+
+  .#{$prefix}--side-nav__icon > svg {
+    block-size: convert.to-rem(20px);
+    inline-size: convert.to-rem(20px);
+  }
+}
+
 // SideNavMenu
-// Level 2
+// Level 2 / Doublewide Level 3
 // without icon
 .#{$prefix}--side-nav__submenu
   + .#{$prefix}--side-nav__menu
@@ -78,16 +143,78 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__submenu
   + .#{$prefix}--side-nav__menu
   > .#{$prefix}--side-nav__item--icon
-  .#{$prefix}--side-nav__submenu {
+  > .#{$prefix}--side-nav__submenu {
   padding-inline-start: $spacing-09;
 }
 
+// Level 3 / Doublewide Level 4
+// without icon, icon not supported at this level
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-11;
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  > .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-12;
+}
+
+// Level 4 / / Doesn't exist in doublewide
+// without icon, icon not supported at this level
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-12;
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: convert.to-rem(112px);
+}
+
 // Nested SideNavMenuItem
-// Level 2
+// Level 2  / Doublewide Level 3
 // without icon
 .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
   a.#{$prefix}--side-nav__link {
   padding-inline-start: $spacing-10;
+}
+
+.#{$prefix}--side-nav__item--primary
+  > .#{$prefix}--side-nav__submenu[aria-expanded='true']
+  .#{$prefix}--side-nav__submenu-chevron
+  > svg {
+  transform: none;
+}
+
+.#{$prefix}--side-nav__item--primary
+  > .#{$prefix}--side-nav__submenu[aria-expanded='true'] {
+  background-color: $background-selected;
+  color: $text-primary;
 }
 
 // with icon
@@ -96,7 +223,23 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-09;
 }
 
-// Level 3
+// with icon inside primary menu (double wide), Level 2
+.#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu-secondary-wrapper
+  a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+  padding-inline-start: $spacing-05;
+}
+
+@include breakpoint-down(md) {
+  // with icon inside primary menu (double wide)
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+    .#{$prefix}--side-nav__menu-secondary-wrapper
+    a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+    padding-inline-start: convert.to-rem(14px);
+  }
+}
+
+// Level 3 / Doublewide level 4
 // without icon parent
 .#{$prefix}--side-nav__menu
   .#{$prefix}--side-nav__menu
@@ -111,12 +254,72 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-12;
 }
 
+// Level 4 / Doublewide level 5
+// without icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-12;
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: convert.to-rem(112px);
+}
+
+// Level 5 / Doesn't exist in doublewide
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: convert.to-rem(112px);
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: convert.to-rem(128px);
+}
+
+.#{$prefix}--side-nav__menu-secondary-wrapper {
+  position: absolute;
+  background-color: $layer-01;
+  block-size: 100%;
+  inline-size: 0;
+  inset-block-start: 0;
+  inset-inline-start: 100%;
+  transform: translateX(-100%);
+  transition: color $duration-fast-02, background-color $duration-fast-02,
+    outline $duration-fast-02;
+  will-change: inline-size;
+}
+
+.#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
+  inline-size: 16rem;
+  overflow-y: auto;
+  transform: translateX(0);
+}
+
 //----------------------------------------------------------------------------
-// Side-nav Panel
+// Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
   z-index: 7999; /* needs to be below header */
   overflow: visible;
+  border-inline-end: 1px solid $border-subtle;
 
   .#{$prefix}--side-nav__items {
     display: flex;
@@ -344,5 +547,110 @@ div:has(.#{$prefix}--header)
 
   .#{$prefix}--side-nav__toggle.#{$prefix}--side-nav__toggle--collapsed:hover {
     background: $background-hover;
+  }
+}
+
+//----------------------------------------------------------------------------
+// Rail
+//----------------------------------------------------------------------------
+.#{$prefix}--side-nav--rail {
+  z-index: 7999; /* needs to be below header */
+  border-inline-end: 1px solid $border-subtle;
+}
+
+@each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
+  .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint} {
+    @include breakpoint-down($breakpoint) {
+      display: none;
+    }
+  }
+}
+
+// allow overlay to display at all breakpoints
+.#{$prefix}--side-nav__overlay-active {
+  z-index: z('overlay');
+  background-color: $overlay;
+  block-size: 100vh;
+  inline-size: 100vw;
+  opacity: 1;
+  transition: opacity $transition-expansion $standard-easing,
+    background-color $transition-expansion $standard-easing;
+}
+
+//----------------------------------------------------------------------------
+// Slot
+//----------------------------------------------------------------------------
+.#{$prefix}--side-nav__slot {
+  display: flex;
+  align-items: center;
+  margin: 0 $spacing-05 $spacing-05 $spacing-05;
+  block-size: 2rem;
+}
+
+.#{$prefix}--side-nav__slot-item {
+  inline-size: 100%;
+}
+
+// icon shown when rail or panel is collapsed
+.#{$prefix}--side-nav__slot .#{$prefix}--side-nav__icon {
+  display: none;
+}
+
+.#{$prefix}--side-nav--rail:not(.#{$prefix}--side-nav--expanded),
+.#{$prefix}--side-nav--panel:not(.#{$prefix}--side-nav--expanded) {
+  .#{$prefix}--side-nav__slot .#{$prefix}--side-nav__icon {
+    display: block;
+  }
+}
+
+// hide slot item when rail or panel collapsed
+.#{$prefix}--side-nav--rail .#{$prefix}--side-nav__slot-item,
+.#{$prefix}--side-nav--panel .#{$prefix}--side-nav__slot-item {
+  display: none;
+}
+
+.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded,
+.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded {
+  .#{$prefix}--side-nav__slot-item {
+    display: block;
+  }
+}
+
+//----------------------------------------------------------------------------
+// Mobile
+//----------------------------------------------------------------------------
+@include breakpoint-down(md) {
+  .#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--expanded {
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
+  .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
+    z-index: 1;
+    inline-size: 100%;
+    inset-inline-start: 0;
+  }
+
+  .#{$prefix}--side-nav__back-button.#{$prefix}--btn--ghost {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 1rem;
+    inline-size: 100%;
+    max-inline-size: 100%;
+
+    &:focus {
+      box-shadow: inset 0 0 0 1px $focus;
+    }
+  }
+
+  .#{$prefix}--side-nav__back-button.#{$prefix}--btn--ghost:not([disabled]) {
+    svg {
+      align-self: center;
+      fill: $icon-interactive;
+    }
+
+    &:hover svg {
+      fill: $link-primary-hover;
+    }
   }
 }

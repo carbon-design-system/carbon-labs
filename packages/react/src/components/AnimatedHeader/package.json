@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-animated-header",
-  "version": "0.13.0",
+  "version": "0.25.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -13,9 +13,16 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/AnimatedHeader"
   },
+  "types": "./es/index.d.ts",
   "exports": {
-    "import": "./es/index.js",
-    "require": "./lib/index.js"
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*",
+    "./assets/*": "./assets/*"
   },
   "files": [
     "es",
@@ -26,7 +33,7 @@
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rm -rf {es,lib,scss}",
+    "clean": "rimraf es lib scss",
     "postinstall": "ibmtelemetry --config=telemetry.yml",
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 40597fb8-d0ed-45fb-a95a-5b1751e22c36 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },

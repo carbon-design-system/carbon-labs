@@ -49,11 +49,11 @@ body {
   overflow: visible;
   background: $background;
   inline-size: 100%;
-  max-block-size: 90vh;
+  max-block-size: 200vh;
   outline: 1px solid transparent;
   padding-block: 0 $spacing-10;
   transition: padding 500ms motion.motion(standard, expressive),
-    max-height 500ms motion.motion(standard, expressive), color 200ms linear,
+    max-block-size 500ms motion.motion(standard, expressive), color 200ms linear,
     background-color 200ms linear,
     outline 500ms motion.motion(standard, expressive);
   writing-mode: horizontal-tb;
@@ -137,53 +137,6 @@ body {
   background: linear-gradient(0deg, #262626bf 0%, transparent 100%);
 }
 
-.#{$prefix}__heading {
-  @include type-style('heading-05');
-
-  position: relative;
-  z-index: 2;
-  overflow: hidden;
-  margin: $spacing-08 0 $spacing-05 0;
-  text-overflow: ellipsis;
-  transition: font-size 500ms motion.motion(standard, expressive),
-    margin 500ms motion.motion(standard, expressive);
-  white-space: nowrap;
-
-  @supports (-webkit-line-clamp: 3) {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    text-overflow: ellipsis;
-    white-space: initial;
-  }
-}
-
-/* support for Safari */
-@supports (font: -apple-system-body) and (-webkit-appearance: none) {
-  .#{$prefix}__heading {
-    transition: margin 500ms motion.motion(standard, expressive);
-  }
-}
-
-.#{$prefix}__heading--collapsed {
-  @include type-style('heading-03');
-
-  margin: $spacing-03 0 $spacing-04 0;
-  line-height: 1.25;
-}
-
-.#{$prefix}__heading-welcome {
-  animation: 250ms ease-in fade-in;
-  animation-fill-mode: both;
-}
-
-.#{$prefix}__heading-name {
-  animation: 250ms ease-in fade-in;
-  animation-delay: 125ms;
-  animation-fill-mode: both;
-}
-
 .#{$prefix}__left-area-container {
   z-index: 3;
   display: flex;
@@ -226,6 +179,32 @@ body {
   max-inline-size: fit-content;
 }
 
+.#{$prefix}__task-controller-skeleton {
+  background: $layer-01;
+  block-size: $spacing-08;
+  inline-size: auto;
+  max-inline-size: 18rem;
+
+  opacity: 0.7;
+}
+
+.#{$prefix}__task-controller-skeleton::before {
+  background: $layer-02;
+}
+
+.#{$prefix}__workspace-selector-skeleton {
+  background: $layer-01;
+  block-size: $spacing-07;
+  inline-size: auto;
+  max-inline-size: 18rem;
+
+  opacity: 0.7;
+}
+
+.#{$prefix}__workspace-selector-skeleton::before {
+  background: $layer-02;
+}
+
 .#{$prefix}__header-dropdown--container {
   inline-size: auto;
   max-inline-size: 18rem;
@@ -250,11 +229,13 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
+  margin-block-start: $spacing-08;
   opacity: 1;
   transition: opacity 500ms linear;
 }
 
 .#{$prefix}__workspace--container {
+  margin-block-start: calc(-1 * $spacing-08);
   min-block-size: $spacing-08;
   opacity: 1;
   transition: opacity 500ms linear;
@@ -282,6 +263,13 @@ body {
 .#{$prefix}__tile {
   animation: 500ms motion.motion(standard, expressive) 0ms 1 slide-in;
   animation-fill-mode: both;
+}
+
+/* support for Safari */
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  .#{$prefix}__tile {
+    animation: none;
+  }
 }
 
 .#{$prefix}__tile:nth-child(1) {
@@ -449,43 +437,21 @@ body {
     margin-block-start: $spacing-06;
   }
 
+  .#{$prefix}__workspace--container {
+    margin-block-start: 0;
+  }
+
   .#{$prefix}__button-collapse--container .cds--popover-container {
     display: flex;
   }
 
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
-    > .#{$prefix}__tile {
+  .#{$prefix}__tiles-container > .#{$prefix}__tile {
     inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
-    inline-size: calc(33% - 16px);
   }
 
   .#{$prefix}__tiles-container:has(> :first-child)
     > ##{$prefix}__ai-prompt-tile {
     inline-size: calc(100% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :first-child)
-    > ##{$prefix}__ai-prompt-tile
-    ~ .#{$prefix}__glass-tile {
-    inline-size: calc(50% - 16px);
   }
 }
 
@@ -504,30 +470,18 @@ body {
   }
 
   .#{$prefix}__content {
-    margin-block-start: 0;
+    margin-block-start: $spacing-08;
   }
 
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
-    > .#{$prefix}__tile {
+  .#{$prefix}__workspace--container {
+    margin-block-start: calc(-1 * $spacing-08);
+  }
+
+  .#{$prefix}__tiles-container > .#{$prefix}__tile {
     inline-size: calc(33% - 16px);
   }
 
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
-    > .#{$prefix}__tile {
-    inline-size: calc(33% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
+  .#{$prefix}__tiles-container:has(> :nth-child(5)) > .#{$prefix}__tile {
     inline-size: calc(33% - 16px);
   }
 
@@ -553,27 +507,11 @@ body {
     background-size: 89% auto;
   }
 
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(1))
-    > .#{$prefix}__tile {
+  .#{$prefix}__tiles-container > .#{$prefix}__tile {
     inline-size: calc(25% - 16px);
   }
 
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(2))
-    > .#{$prefix}__tile {
-    inline-size: calc(50% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(3))
-    > .#{$prefix}__tile {
-    inline-size: calc(33% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :last-child:nth-child(4))
-    > .#{$prefix}__tile {
-    inline-size: calc(25% - 16px);
-  }
-
-  .#{$prefix}__tiles-container:has(> :nth-child(4)) > .#{$prefix}__tile {
+  .#{$prefix}__tiles-container:has(> :nth-child(5)) > .#{$prefix}__tile {
     inline-size: calc(25% - 16px);
   }
 
@@ -612,21 +550,21 @@ body {
 }
 
 /*
-   If the user has expressed their preference for
-   reduced motion, then don't use animations
- */
+    If the user has expressed their preference for
+    reduced motion, then don't use animations
+  */
 @media (prefers-reduced-motion: reduce) {
   .#{$prefix},
   .#{$prefix}__static,
-  .#{$prefix}__heading,
+  .#{$prefix}__title,
   .#{$prefix}__left-area-container,
   .#{$prefix}__content,
   .#{$prefix}__lottie-animation {
     transition: none;
   }
 
-  .#{$prefix}__heading-welcome,
-  .#{$prefix}__heading-name,
+  .#{$prefix}__title-first,
+  .#{$prefix}__title-second,
   .#{$prefix}__description,
   .#{$prefix}__button,
   .#{$prefix}__workspace,

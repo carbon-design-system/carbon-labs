@@ -100,7 +100,7 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
    */
   @HostListener('keydown', { capture: true })
   handleKeydown(event: KeyboardEvent) {
-    const _keys = [
+    const navKeys = [
       'ArrowLeft',
       'ArrowUp',
       'ArrowRight',
@@ -109,35 +109,50 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
       'End',
     ];
 
-    if (_keys.includes(event.key)) {
-      const _options = Array.from(
-        this.querySelectorAll(`${prefix}-option`) as NodeListOf<HTMLElement>
-      );
+    if (!navKeys.includes(event.key)) {
+      return;
+    }
 
-      const currentIndex = _options?.findIndex(
-        (el) => el === document.activeElement
-      );
-      let nextIndex = currentIndex;
+    const options = Array.from(
+      this.querySelectorAll(`${prefix}-option`) as NodeListOf<HTMLElement>
+    );
 
-      if (_keys.slice(0, 2).includes(event.key)) {
-        nextIndex--;
-      }
+    if (!options.length) {
+      return;
+    }
 
-      if (_keys.slice(2, 4).includes(event.key)) {
-        nextIndex++;
-      }
+    const currentIndex = options.findIndex(
+      (el) => el === document.activeElement
+    );
+    let nextIndex = currentIndex;
 
-      if (event.key === 'Home') {
+    switch (event.key) {
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        nextIndex = Math.max(0, currentIndex - 1);
+        break;
+
+      case 'ArrowRight':
+      case 'ArrowDown':
+        nextIndex = Math.min(options.length - 1, currentIndex + 1);
+        break;
+
+      case 'Home':
         nextIndex = 0;
-      }
+        break;
 
-      if (event.key === 'End') {
-        nextIndex = _options.length - 1;
-      }
+      case 'End':
+        nextIndex = options.length - 1;
+        break;
+    }
 
-      _options[nextIndex]?.focus();
-      _options[nextIndex].setAttribute('tabindex', '0');
-      _options[currentIndex].setAttribute('tabindex', '-1');
+    if (nextIndex !== currentIndex) {
+      options[nextIndex]?.focus();
+      options[nextIndex].setAttribute('tabindex', '0');
+
+      if (currentIndex !== -1) {
+        options[currentIndex].setAttribute('tabindex', '-1');
+      }
     }
   }
 

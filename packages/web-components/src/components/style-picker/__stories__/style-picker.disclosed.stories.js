@@ -21,6 +21,9 @@ import '@carbon/web-components/es/components/tile/index.js';
 import '@carbon/web-components/es/components/link/index.js';
 import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js';
 
+// Pictograms
+import AmsterdamWindmill from '@carbon/pictograms/lib/amsterdam--windmill';
+
 // Carbon labs
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
@@ -118,10 +121,15 @@ const changeIcon = (ev) => {
 const changePictogram = (ev) => {
   const pictogramName = ev.detail.value;
   const flatPictograms = pictograms.flatMap((group) => group.items);
-  const pictogram = flatPictograms.find((item) => item.value === pictogramName);
+  const pictogram = flatPictograms?.find(
+    (item) => item.value === pictogramName
+  )?.pictogram;
 
   const pictogramHolderEl = document.getElementById('inline-tile-pictogram');
-  const pictogramTemplate = renderCarbonPictogram(pictogram.pictogram);
+  const pictogramTemplate = renderCarbonPictogram({
+    ...pictogram,
+    attrs: { ...pictogram.attrs, 'aria-label': pictogramName },
+  });
   const container = document.createElement('div');
   render(pictogramTemplate, container);
   pictogramHolderEl.innerHTML = '';
@@ -398,7 +406,13 @@ export const IconColorPictogram = {
         <div class="inline-tile-holder">
           <cds-tile class="inline-tile">
             <div id="inline-tile-pictogram">
-              ${renderCarbonPictogram(pictograms[0].items[0].pictogram)}
+              ${renderCarbonPictogram({
+                ...AmsterdamWindmill,
+                attrs: {
+                  ...AmsterdamWindmill.attrs,
+                  'aria-label': AmsterdamWindmill.name,
+                },
+              })}
             </div>
             <br />
             <div class="inline-tile-header">

@@ -67,7 +67,7 @@ class StylePickerOption extends HostListenerMixin(LitElement) {
   }
 
   /**
-   *
+   * Handle 'click' or 'Enter' key selection
    */
   handleSelection() {
     this.selected = true;

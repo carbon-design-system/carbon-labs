@@ -52,7 +52,24 @@ class StylePickerOption extends HostListenerMixin(LitElement) {
    * @param {string} triggeredBy - the element that triggered the change.
    */
   @HostListener('click', { capture: true })
-  handleClick(triggeredBy: EventTarget | null) {
+  handleClick() {
+    this.handleSelection();
+  }
+
+  /**
+   * @param {KeyboardEvent} event - the element that triggered the change.
+   */
+  @HostListener('keydown', { capture: true })
+  handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.handleSelection();
+    }
+  }
+
+  /**
+   *
+   */
+  handleSelection() {
     this.selected = true;
     this.setAttribute('aria-selected', 'true');
 
@@ -72,7 +89,7 @@ class StylePickerOption extends HostListenerMixin(LitElement) {
       cancelable: true,
       composed: true,
       detail: {
-        triggeredBy,
+        triggeredBy: this,
         value: this.value,
         label: this.label,
         selected: true,

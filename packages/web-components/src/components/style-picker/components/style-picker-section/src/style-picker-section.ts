@@ -17,11 +17,13 @@ import {
   StylePickerContextType,
 } from '../../../context/style-picker-context';
 import { prefix, Size } from '../../../defs';
+import HostListener from '@carbon/web-components/es/globals/decorators/host-listener.js';
+import HostListenerMixin from '@carbon/web-components/es/globals/mixins/host-listener.js';
 
 /**
  * style-picker-section extends LitElement.
  */
-class StylePickerSection extends LitElement {
+class StylePickerSection extends HostListenerMixin(LitElement) {
   static styles = styles;
 
   @query('cds-accordion-item') _accordionItem?: HTMLElement;
@@ -92,6 +94,52 @@ class StylePickerSection extends LitElement {
    */
   @state()
   itemsCount = 0;
+
+  /**
+   * @param {KeyboardEvent} event Keyboard event object.
+   */
+  @HostListener('keydown', { capture: true })
+  handleKeydown(event: KeyboardEvent) {
+    const _keys = [
+      'ArrowLeft',
+      'ArrowUp',
+      'ArrowRight',
+      'ArrowDown',
+      'Home',
+      'End',
+    ];
+
+    if (_keys.includes(event.key)) {
+      const _options = Array.from(
+        this.querySelectorAll(`${prefix}-option`) as NodeListOf<HTMLElement>
+      );
+
+      const currentIndex = _options?.findIndex(
+        (el) => el === document.activeElement
+      );
+      let nextIndex = currentIndex;
+
+      if (_keys.slice(0, 2).includes(event.key)) {
+        nextIndex--;
+      }
+
+      if (_keys.slice(2, 4).includes(event.key)) {
+        nextIndex++;
+      }
+
+      if (event.key === 'Home') {
+        nextIndex = 0;
+      }
+
+      if (event.key === 'End') {
+        nextIndex = _options.length - 1;
+      }
+
+      _options[nextIndex]?.focus();
+      _options[nextIndex].setAttribute('tabindex', '0');
+      _options[currentIndex].setAttribute('tabindex', '-1');
+    }
+  }
 
   /**
    * Handle search term changes.

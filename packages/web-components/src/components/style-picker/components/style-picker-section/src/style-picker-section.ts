@@ -164,12 +164,20 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
       ?.trim()
       ?.toLowerCase();
     let _optionsCount = 0;
+    const options = this.querySelectorAll(`${prefix}-option`);
 
-    this.querySelectorAll(`${prefix}-option`).forEach((_option) => {
+    options.forEach((_option) => {
       const _optionLabel = _option.getAttribute('label')?.toLowerCase();
       const _show = _optionLabel?.includes?.(_searchTerm ?? '');
 
       _option.toggleAttribute('hidden', !_show);
+
+      if (
+        _option.getAttribute('tabindex') === '0' &&
+        !_option.hasAttribute('selected')
+      ) {
+        _option.setAttribute('tabindex', '-1');
+      }
 
       if (_show) {
         _optionsCount++;
@@ -180,6 +188,22 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
     this.hidden = !_optionsCount;
 
     this._stylePickerContext?.onSectionVisibilityChange?.();
+
+    const visibleOptions = Array.from(options)?.filter(
+      (el) => !el.hasAttribute('hidden')
+    );
+
+    const hasFocusable = visibleOptions.findIndex((el) =>
+      el.hasAttribute('selected')
+    );
+
+    if (hasFocusable === -1) {
+      visibleOptions[0].setAttribute('tabindex', '0');
+    }
+
+    if (hasFocusable >= 0) {
+      visibleOptions?.[hasFocusable]?.setAttribute('tabindex', '0');
+    }
   }
 
   /**

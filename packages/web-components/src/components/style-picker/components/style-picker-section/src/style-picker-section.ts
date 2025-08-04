@@ -114,7 +114,9 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
     }
 
     const options = Array.from(
-      this.querySelectorAll(`${prefix}-option`) as NodeListOf<HTMLElement>
+      this.querySelectorAll(
+        `${prefix}-option:not([hidden])`
+      ) as NodeListOf<HTMLElement>
     );
 
     if (!options.length) {
@@ -163,46 +165,41 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
     const _searchTerm = this._stylePickerContext?.searchTerm
       ?.trim()
       ?.toLowerCase();
-    let _optionsCount = 0;
-    const options = this.querySelectorAll(`${prefix}-option`);
 
+    const options = this.querySelectorAll(`${prefix}-option`);
+    let _optionsCount = 0;
+
+    // Reset all tabindexes
     options.forEach((_option) => {
+      _option.setAttribute('tabindex', '-1');
+
       const _optionLabel = _option.getAttribute('label')?.toLowerCase();
       const _show = _optionLabel?.includes?.(_searchTerm ?? '');
 
       _option.toggleAttribute('hidden', !_show);
-
-      if (
-        _option.getAttribute('tabindex') === '0' &&
-        !_option.hasAttribute('selected')
-      ) {
-        _option.setAttribute('tabindex', '-1');
-      }
-
       if (_show) {
         _optionsCount++;
       }
     });
 
     this.itemsCount = _optionsCount;
-    this.hidden = !_optionsCount;
+    if (this.hidden !== !_optionsCount) {
+      this.hidden = !_optionsCount;
+    }
 
     this._stylePickerContext?.onSectionVisibilityChange?.();
 
-    const visibleOptions = Array.from(options)?.filter(
+    const visibleOptions = Array.from(options).filter(
       (el) => !el.hasAttribute('hidden')
     );
 
-    const hasFocusable = visibleOptions.findIndex((el) =>
-      el.hasAttribute('selected')
-    );
+    if (visibleOptions.length > 0) {
+      const selectedIndex = visibleOptions.findIndex((el) =>
+        el.hasAttribute('selected')
+      );
 
-    if (hasFocusable === -1) {
-      visibleOptions[0].setAttribute('tabindex', '0');
-    }
-
-    if (hasFocusable >= 0) {
-      visibleOptions?.[hasFocusable]?.setAttribute('tabindex', '0');
+      const focusable = selectedIndex >= 0 ? selectedIndex : 0;
+      visibleOptions[focusable].setAttribute('tabindex', '0');
     }
   }
 

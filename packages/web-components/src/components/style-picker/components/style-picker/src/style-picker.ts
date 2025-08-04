@@ -163,6 +163,16 @@ class StylePicker extends LitElement {
   emptyStateSubtitle;
 
   /**
+   * Label text for search input.
+   */
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'search-label',
+  })
+  searchLabel;
+
+  /**
    * Update search term in the context
    * @param {object} e - Event raised when search input is changed
    */

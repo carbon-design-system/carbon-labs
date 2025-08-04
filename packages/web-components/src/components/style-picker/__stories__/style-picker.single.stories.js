@@ -166,6 +166,9 @@ const argTypes = {
   searchInputPlaceholder: {
     control: 'text',
   },
+  searchLabel: {
+    control: 'text',
+  },
 };
 
 export const Color = {
@@ -177,6 +180,7 @@ export const Color = {
     searchCloseButtonLabel: 'Clear search input',
     emptyStateTitle: 'No results found',
     emptyStateSubtitle: 'Try a different search',
+    searchLabel: 'Search',
   },
   argTypes,
   /**
@@ -198,7 +202,8 @@ export const Color = {
             ?enable-search=${args.enableSearch}
             search-close-button-label=${args.searchCloseButtonLabel}
             empty-state-title=${args.emptyStateTitle}
-            empty-state-subtitle=${args.emptyStateSubtitle}>
+            empty-state-subtitle=${args.emptyStateSubtitle}
+            search-label=${args.searchLabel}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
@@ -332,6 +337,7 @@ export const Pictogram = {
     searchCloseButtonLabel: 'Clear search input',
     emptyStateTitle: 'No results found',
     emptyStateSubtitle: 'Try a different search',
+    searchLabel: 'Search',
   },
   argTypes,
   /**
@@ -353,7 +359,8 @@ export const Pictogram = {
             ?enable-search=${args.enableSearch}
             search-close-button-label=${args.searchCloseButtonLabel}
             empty-state-title=${args.emptyStateTitle}
-            empty-state-subtitle=${args.emptyStateSubtitle}>
+            empty-state-subtitle=${args.emptyStateSubtitle}
+            search-label=${args.searchLabel}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}

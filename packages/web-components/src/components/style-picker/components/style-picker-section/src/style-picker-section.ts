@@ -169,8 +169,8 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
     const options = this.querySelectorAll(`${prefix}-option`);
     let _optionsCount = 0;
 
-    // Reset all tabindexes
     options.forEach((_option) => {
+      // Reset all tabindex
       _option.setAttribute('tabindex', '-1');
 
       const _optionLabel = _option.getAttribute('label')?.toLowerCase();

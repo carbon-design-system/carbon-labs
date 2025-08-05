@@ -61,7 +61,9 @@ class StylePickerOption extends HostListenerMixin(LitElement) {
    */
   @HostListener('keydown', { capture: true })
   handleKeydown(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+
       this.handleSelection();
     }
   }

@@ -96,23 +96,23 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
   itemsCount = 0;
 
   /**
+   * Type-ahead value kept till the 500ms timeout.
+   */
+  @state()
+  typeAheadText = '';
+
+  /**
+   * Previously focused option.
+   * @description To keep track of focus coming back after `Tab` or `Shift+Tab`.
+   */
+  @state()
+  previousActiveElement;
+
+  /**
    * @param {KeyboardEvent} event Keyboard event object.
    */
   @HostListener('keydown', { capture: true })
   handleKeydown(event: KeyboardEvent) {
-    const navKeys = [
-      'ArrowLeft',
-      'ArrowUp',
-      'ArrowRight',
-      'ArrowDown',
-      'Home',
-      'End',
-    ];
-
-    if (!navKeys.includes(event.key)) {
-      return;
-    }
-
     const options = Array.from(
       this.querySelectorAll(
         `${prefix}-option:not([hidden])`
@@ -146,6 +146,58 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
       case 'End':
         nextIndex = options.length - 1;
         break;
+
+      case 'Tab':
+      case 'Shift+Tab':
+        // Keeping for future check
+        this.previousActiveElement = document.activeElement;
+
+        options.forEach((_option) => {
+          setTimeout(() => {
+            // Reset all tabindex
+            if (!_option.hasAttribute('selected')) {
+              _option.setAttribute('tabindex', '-1');
+            }
+
+            const selectedIndex = options.findIndex((el) =>
+              el.hasAttribute('selected')
+            );
+
+            let focusable = 0;
+            const previousActiveIndex = options.findIndex(
+              (item) =>
+                item.getAttribute('value') ===
+                this.previousActiveElement?.getAttribute('value')
+            );
+
+            if (selectedIndex !== -1) {
+              focusable = selectedIndex;
+            } else if (previousActiveIndex !== -1) {
+              focusable = previousActiveIndex;
+            }
+
+            options[focusable].setAttribute('tabindex', '0');
+          }, 0);
+        });
+    }
+
+    if (event.key.length) {
+      this.typeAheadText += event.key.toLowerCase();
+
+      this._clearTypeAheadText();
+
+      const matchIndex = options.findIndex((_option) =>
+        _option
+          .getAttribute('label')
+          ?.toLowerCase()
+          ?.startsWith(this.typeAheadText)
+      );
+
+      if (matchIndex !== -1) {
+        event.stopPropagation();
+
+        nextIndex = matchIndex;
+      }
     }
 
     if (nextIndex !== currentIndex) {
@@ -156,6 +208,13 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
         options[currentIndex].setAttribute('tabindex', '-1');
       }
     }
+  }
+
+  /**
+   * Clear the type-ahead characters after a 500ms delay.
+   */
+  _clearTypeAheadText() {
+    setTimeout(() => (this.typeAheadText = ''), 500);
   }
 
   /**

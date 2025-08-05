@@ -178,8 +178,9 @@ function SideNavRenderFunction(
     [`${prefix}--side-nav--collapsed`]: !expanded && isFixedNav,
     [`${prefix}--side-nav--hide-rail-breakpoint-down-${hideRailBreakpointDown}`]:
       hideRailBreakpointDown,
-    [`${prefix}--side-nav--rail`]: isRail,
+    [`${prefix}--side-nav--rail`]: isRail || autoExpand,
     [`${prefix}--side-nav--panel`]: navType === SIDE_NAV_TYPE.PANEL,
+    [`${prefix}--side-nav--pinned`]: pinned,
     [`${prefix}--side-nav--ux`]: isChildOfHeader,
     [`${prefix}--side-nav--hidden`]: !isPersistent,
     [`${prefix}--side-nav--collapsible`]: isCollapsible,
@@ -349,7 +350,11 @@ function SideNavRenderFunction(
 
   if (addFocusListeners) {
     eventHandlers.onFocus = (event) => {
-      if (!event.currentTarget.contains(event.relatedTarget) && isRail) {
+      if (
+        !event.currentTarget.contains(event.relatedTarget) &&
+        (isRail || autoExpand)
+      ) {
+        console.log('aaa');
         handleToggle(event, true);
       }
     };

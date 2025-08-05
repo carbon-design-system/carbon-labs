@@ -65,13 +65,17 @@ body {
   overflow: hidden;
   justify-content: flex-end;
 
-  block-size: fill-available;
+  block-size: 100%;
   /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: -webkit-fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: fill-available;
 
-  inline-size: fill-available;
+  inline-size: 100%;
   /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: -webkit-fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: fill-available;
 
   max-inline-size: 96rem;
   writing-mode: horizontal-tb;
@@ -100,13 +104,17 @@ body {
   position: absolute;
   z-index: 1;
 
-  block-size: fill-available;
+  block-size: 100%;
   /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: -webkit-fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: fill-available;
 
-  inline-size: fill-available;
+  inline-size: 100%;
   /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: -webkit-fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: fill-available;
 
   margin-inline: auto;
   max-inline-size: 99rem;
@@ -288,13 +296,17 @@ body {
   overflow: hidden;
   justify-content: flex-end;
 
-  block-size: fill-available;
+  block-size: 100%;
   /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: -webkit-fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  block-size: fill-available;
 
-  inline-size: fill-available;
+  inline-size: 100%;
   /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: -webkit-fill-available;
+  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
+  inline-size: fill-available;
 
   max-inline-size: 96rem;
 }

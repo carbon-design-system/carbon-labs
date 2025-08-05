@@ -19,7 +19,7 @@ import React, {
 import Link, { LinkProps, LinkPropTypes } from './Link';
 import { SideNavIcon, SideNavItem, SideNavLinkText } from '@carbon/react';
 import { usePrefix } from '../internal/usePrefix';
-import { SideNavContext } from './SideNav';
+import { SIDE_NAV_TYPE, SideNavContext } from './SideNav';
 import { SideNavLinkPopover } from './SideNavLinkPopover';
 
 export type SideNavLinkProps<E extends ElementType> = LinkProps<E> & {
@@ -105,7 +105,7 @@ export const SideNavLink: SideNavLinkComponent = forwardRef(
       </SideNavIcon>
     );
 
-    if (!expanded && navType === 'panel') {
+    if (!expanded && navType === SIDE_NAV_TYPE.PANEL) {
       return (
         <SideNavLinkPopover align="right" label={children} {...rest}>
           {SideNavLinkIcon}

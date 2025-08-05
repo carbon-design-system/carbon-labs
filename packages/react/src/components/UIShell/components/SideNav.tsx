@@ -29,7 +29,12 @@ import { useDelayedState } from '../internal/useDelayedState';
 import { breakpoints } from '@carbon/layout';
 import { useMatchMedia } from '../internal/useMatchMedia';
 import { TranslateWithId } from '../types/common';
-import { Pin, PinFilled } from '@carbon/icons-react';
+import {
+  Pin,
+  PinFilled,
+  SidePanelClose,
+  SidePanelOpen,
+} from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
 
 export enum SIDE_NAV_TYPE {
@@ -43,11 +48,15 @@ export type TranslationKey = keyof typeof translationIds;
 export const translationIds = {
   'collapse.sidenav': 'collapse.sidenav',
   'expand.sidenav': 'expand.sidenav',
+  'enable.autoexpand': 'enable.autoexpand',
+  'disable.autoexpand': 'disable.autoexpand',
 } as const;
 
 const defaultTranslations: Record<TranslationKey, string> = {
   [translationIds['collapse.sidenav']]: 'Unpin',
   [translationIds['expand.sidenav']]: 'Pin open',
+  [translationIds['enable.autoexpand']]: 'Enable auto-expand',
+  [translationIds['disable.autoexpand']]: 'Disable auto-expand',
 };
 
 const defaultTranslateWithId = (id: TranslationKey): string =>
@@ -128,6 +137,7 @@ function SideNavRenderFunction(
   );
   const prefix = usePrefix();
   const { current: controlled } = useRef(expandedProp !== undefined);
+  const [autoExpand, setAutoExpand] = useState(false);
   const [expandedState, setExpandedState] = useDelayedState(defaultExpanded);
   const [expandedViaHoverState, setExpandedViaHoverState] =
     useDelayedState(defaultExpanded);
@@ -140,6 +150,10 @@ function SideNavRenderFunction(
   >();
 
   const pinText = pinned ? t('collapse.sidenav') : t('expand.sidenav');
+
+  const autoExpandText = autoExpand
+    ? t('disable.autoexpand')
+    : t('enable.autoexpand');
 
   const handleToggle: typeof onToggle = (event, value = !expanded) => {
     if (!controlled) {
@@ -546,7 +560,7 @@ function SideNavRenderFunction(
     };
   }
 
-  if (addMouseListeners && isRail) {
+  if (addMouseListeners && !pinned && (isRail || autoExpand)) {
     eventHandlers.onMouseEnter = () => {
       handleToggle(true, true);
     };
@@ -556,6 +570,9 @@ function SideNavRenderFunction(
       handleToggle(false, false);
     };
     eventHandlers.onClick = () => {
+      if (autoExpand) {
+        return;
+      }
       //if delay is enabled, and user intentionally clicks it to see it expanded immediately
       setExpandedState(true);
       setExpandedViaHoverState(true);
@@ -572,7 +589,8 @@ function SideNavRenderFunction(
     if (
       isNavItemClick &&
       !isNavItemClick.classList.contains(`${prefix}--side-nav__submenu`) &&
-      !isNavItemClick.classList.contains(`${prefix}--side-nav__back-button`)
+      !isNavItemClick.classList.contains(`${prefix}--side-nav__back-button`) &&
+      !isNavItemClick.classList.contains(`${prefix}--side-nav__toggle`)
     ) {
       isInRail ? handleToggle(false, false) : onSideNavBlur?.();
     }
@@ -620,6 +638,14 @@ function SideNavRenderFunction(
     }
   };
 
+  const handleAutoExpand = () => {
+    if (pinned) {
+      return;
+    }
+    setExpandedState(!autoExpand);
+    setAutoExpand(!autoExpand);
+  };
+
   return (
     <SideNavContext.Provider
       value={{
@@ -656,6 +682,13 @@ function SideNavRenderFunction(
               onClick={handlePinClick}
               renderIcon={pinned ? PinFilled : Pin}>
               {pinText}
+            </SideNavToggle>
+            <SideNavToggle
+              disabled={pinned}
+              large
+              renderIcon={expandedState ? SidePanelClose : SidePanelOpen}
+              onClick={handleAutoExpand}>
+              {autoExpandText}
             </SideNavToggle>
           </ul>
         )}

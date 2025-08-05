@@ -29,7 +29,7 @@ import { useDelayedState } from '../internal/useDelayedState';
 import { breakpoints } from '@carbon/layout';
 import { useMatchMedia } from '../internal/useMatchMedia';
 import { TranslateWithId } from '../types/common';
-import { SidePanelClose, SidePanelOpen } from '@carbon/icons-react';
+import { Pin, PinFilled } from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
 
 export enum SIDE_NAV_TYPE {
@@ -46,8 +46,8 @@ export const translationIds = {
 } as const;
 
 const defaultTranslations: Record<TranslationKey, string> = {
-  [translationIds['collapse.sidenav']]: 'Collapse',
-  [translationIds['expand.sidenav']]: 'Expand',
+  [translationIds['collapse.sidenav']]: 'Unpin',
+  [translationIds['expand.sidenav']]: 'Pin open',
 };
 
 const defaultTranslateWithId = (id: TranslationKey): string =>
@@ -131,6 +131,7 @@ function SideNavRenderFunction(
   const [expandedState, setExpandedState] = useDelayedState(defaultExpanded);
   const [expandedViaHoverState, setExpandedViaHoverState] =
     useDelayedState(defaultExpanded);
+  const [pinned, setPinned] = useState(false);
   const expanded = controlled ? expandedProp : expandedState;
   const sideNavRef = useRef<HTMLDivElement>(null);
   const navRef = useMergedRefs([sideNavRef, ref]);
@@ -138,9 +139,7 @@ function SideNavRenderFunction(
     string | undefined
   >();
 
-  const sideNavToggleText = expandedState
-    ? t('collapse.sidenav')
-    : t('expand.sidenav');
+  const pinText = pinned ? t('collapse.sidenav') : t('expand.sidenav');
 
   const handleToggle: typeof onToggle = (event, value = !expanded) => {
     if (!controlled) {
@@ -614,14 +613,12 @@ function SideNavRenderFunction(
     }
   };
 
-  const SideNavToggleButton = (
-    <SideNavToggle
-      className={!expandedState ? `${prefix}--side-nav__toggle--collapsed` : ''}
-      renderIcon={expandedState ? SidePanelClose : SidePanelOpen}
-      onClick={() => setExpandedState(!expandedState)}>
-      {sideNavToggleText}
-    </SideNavToggle>
-  );
+  const handlePinClick = () => {
+    setPinned(!pinned);
+    if (!autoExpand) {
+      setExpandedState(!pinned);
+    }
+  };
 
   return (
     <SideNavContext.Provider
@@ -652,14 +649,16 @@ function SideNavRenderFunction(
         {...eventHandlers}
         {...other}>
         {childrenToRender}
-        {navType === SIDE_NAV_TYPE.PANEL &&
-          (expandedState ? (
-            SideNavToggleButton
-          ) : (
-            <div className={`${prefix}--side-nav__toggle-container`}>
-              {SideNavToggleButton}
-            </div>
-          ))}
+        {navType === SIDE_NAV_TYPE.PANEL && (
+          <ul className={`${prefix}--side-nav__toggle-container`}>
+            <SideNavToggle
+              large
+              onClick={handlePinClick}
+              renderIcon={pinned ? PinFilled : Pin}>
+              {pinText}
+            </SideNavToggle>
+          </ul>
+        )}
       </nav>
     </SideNavContext.Provider>
   );

@@ -13,6 +13,7 @@ import React, {
   type MouseEventHandler,
   isValidElement,
   createContext,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -216,6 +217,23 @@ function SideNavRenderFunction(
     >
   > = {};
 
+  const resetNodeTabIndices = useCallback(() => {
+    const items = sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [];
+    items.forEach((item) => {
+      if (
+        item.classList.contains(`${prefix}--side-nav__toggle`) ||
+        item.classList.contains(`${prefix}--side-nav__back-button`) ||
+        item.closest(`.${prefix}--side-nav__slot-item`) ||
+        (item.classList.contains(`${prefix}--side-nav__link`) &&
+          (item as HTMLElement).closest('ul')?.getAttribute('aria-label') ===
+            ariaLabel)
+      ) {
+        return;
+      }
+      item.tabIndex = -1;
+    });
+  }, [prefix, ariaLabel]);
+
   const treeWalkerRef = useRef<TreeWalker | null>(null);
   useEffect(() => {
     if (internalIsTreeview) {
@@ -245,7 +263,7 @@ function SideNavRenderFunction(
         );
       resetNodeTabIndices();
     }
-  }, [prefix, internalIsTreeview]);
+  }, [prefix, internalIsTreeview, resetNodeTabIndices]);
 
   const smMediaQuery = `(min-width: ${breakpoints.sm.width})`;
   const isSm = useMatchMedia(smMediaQuery);
@@ -299,7 +317,7 @@ function SideNavRenderFunction(
         }
       }
     }
-  }, [expanded]);
+  }, [expanded, currentPrimaryMenu, isSm, navType, prefix]);
 
   /**
    * Returns the parent SideNavMenu, if node is actually inside one.
@@ -581,23 +599,6 @@ function SideNavRenderFunction(
   const isLg = useMatchMedia(lgMediaQuery);
 
   hideOverlay;
-
-  function resetNodeTabIndices() {
-    const items = sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [];
-    items.forEach((item) => {
-      if (
-        item.classList.contains(`${prefix}--side-nav__toggle`) ||
-        item.classList.contains(`${prefix}--side-nav__back-button`) ||
-        item.closest(`.${prefix}--side-nav__slot-item`) ||
-        (item.classList.contains(`${prefix}--side-nav__link`) &&
-          (item as HTMLElement).closest('ul')?.getAttribute('aria-label') ===
-            ariaLabel)
-      ) {
-        return;
-      }
-      item.tabIndex = -1;
-    });
-  }
 
   // ensure that changes are in sync with internal treeview prop
   useEffect(() => {

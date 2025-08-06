@@ -149,11 +149,8 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
 
       case 'Tab':
       case 'Shift+Tab':
-        // Keeping for future check
-        this.previousActiveElement = document.activeElement;
-
-        options.forEach((_option) => {
-          setTimeout(() => {
+        setTimeout(() => {
+          options.forEach((_option) => {
             // Reset all tabindex
             if (!_option.hasAttribute('selected')) {
               _option.setAttribute('tabindex', '-1');
@@ -176,9 +173,13 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
               focusable = previousActiveIndex;
             }
 
+            // Keeping for future check
+            this.previousActiveElement = options[focusable];
             options[focusable].setAttribute('tabindex', '0');
-          }, 0);
-        });
+          });
+        }, 0);
+
+        return;
     }
 
     if (event.key.length) {
@@ -202,6 +203,8 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
 
     if (nextIndex !== currentIndex) {
       options[nextIndex]?.focus();
+      // Keeping for future check
+      this.previousActiveElement = options[nextIndex];
       options[nextIndex].setAttribute('tabindex', '0');
 
       if (currentIndex !== -1) {
@@ -258,7 +261,10 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
       );
 
       const focusable = selectedIndex >= 0 ? selectedIndex : 0;
+
       visibleOptions[focusable].setAttribute('tabindex', '0');
+      // Keeping for future check
+      this.previousActiveElement = options[focusable];
     }
   }
 

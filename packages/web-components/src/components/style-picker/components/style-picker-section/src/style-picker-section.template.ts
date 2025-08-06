@@ -77,7 +77,8 @@ export const stylePickerSectionTemplate = (
       class=${`${blockClass}--disclosed`}
       @cds-accordion-item-toggled=${() => {
         setActiveSection?.(slotIndex);
-      }}>
+      }}
+      role="group">
       <div slot="title" class=${`${blockClass}__header`}>
         <strong class=${`${blockClass}__heading`}> ${heading} </strong>
         ${renderTag()}

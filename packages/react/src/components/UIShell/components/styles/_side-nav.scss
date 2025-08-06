@@ -572,6 +572,7 @@ div:has(.#{$prefix}--header)
   background: $background;
   inline-size: 100%;
   inset-block-end: 0;
+  white-space: nowrap;
 }
 
 //----------------------------------------------------------------------------

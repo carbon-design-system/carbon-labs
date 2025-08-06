@@ -114,22 +114,22 @@ class StylePickerOption extends HostListenerMixin(LitElement) {
   }
 
   /**
-   *
+   * Set attributes and classes.
    */
   _updateAttributes() {
     if (!this.hasAttribute('role')) {
       this.setAttribute('role', 'option');
     }
 
-    if (!this.hasAttribute('aria-label')) {
+    if (!this.hasAttribute('aria-label') && this.label?.trim()?.length) {
       this.setAttribute('aria-label', this.label);
     }
 
-    if (!this.hasAttribute('title')) {
+    if (!this.hasAttribute('title') && this.label?.trim()?.length) {
       this.setAttribute('title', this.label);
     }
 
-    if (!this.hasAttribute('data-value')) {
+    if (!this.hasAttribute('data-value') && this.value?.trim()?.length) {
       this.setAttribute('data-value', this.value);
     }
 

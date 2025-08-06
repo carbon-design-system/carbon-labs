@@ -216,7 +216,7 @@ export const Color = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Color palette</span>
             </cds-icon-button>
-            <clabs-style-picker-section>
+            <clabs-style-picker-section heading="Colors">
               ${colors.map(
                 (group) =>
                   html`<clabs-style-picker-group heading=${group.label}>
@@ -290,7 +290,7 @@ export const Icon = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Icon list</span>
             </cds-icon-button>
-            <clabs-style-picker-section>
+            <clabs-style-picker-section heading="Icons">
               ${icons.map(
                 (item) =>
                   html`
@@ -373,7 +373,7 @@ export const Pictogram = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Pictogram list</span>
             </cds-icon-button>
-            <clabs-style-picker-section size="lg">
+            <clabs-style-picker-section size="lg" heading="Pictograms">
               ${pictograms.map(
                 (group) =>
                   html`<clabs-style-picker-group heading=${group.label}>

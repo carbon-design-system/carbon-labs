@@ -269,9 +269,24 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
   }
 
   /**
+   * Update attributes.
+   */
+  _updateAttribute() {
+    if (!this.hasAttribute('role')) {
+      this.setAttribute('role', 'listbox');
+    }
+
+    if (!this.hasAttribute('aria-label') && this.heading?.trim()?.length) {
+      this.setAttribute('aria-label', this.heading);
+    }
+  }
+
+  /**
    * Lifecycle method called when the component is first updated.
    */
   protected firstUpdated() {
+    this._updateAttribute();
+
     if (this.querySelectorAll(`${prefix}-group`).length > 0) {
       this.hasGroup = true;
     }

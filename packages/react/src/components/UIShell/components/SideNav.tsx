@@ -683,14 +683,12 @@ function SideNavRenderFunction(
         {navType === SIDE_NAV_TYPE.PANEL && (
           <ul className={`${prefix}--side-nav__toggle-container`}>
             <SideNavToggle
-              large
               onClick={handlePinClick}
               renderIcon={pinned ? PinFilled : Pin}>
               {pinText}
             </SideNavToggle>
             <SideNavToggle
               disabled={pinned}
-              large
               renderIcon={expandedState ? SidePanelClose : SidePanelOpen}
               onClick={handleAutoExpand}>
               {autoExpandText}

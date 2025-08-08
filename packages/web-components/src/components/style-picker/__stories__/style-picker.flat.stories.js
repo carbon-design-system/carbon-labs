@@ -79,9 +79,23 @@ const styles = css`
  * remove and add `open` attribute
  */
 const toggleButton = () => {
-  document
-    .querySelector(`${clabsPrefix}-style-picker`)
-    ?.toggleAttribute('open');
+  const stylePicker = document.querySelector(`${clabsPrefix}-style-picker`);
+  const trigger = document.querySelector('#trigger');
+
+  if (stylePicker?.hasAttribute('open')) {
+    trigger.setAttribute('aria-expanded', 'false');
+  } else {
+    trigger.setAttribute('aria-expanded', 'true');
+  }
+
+  stylePicker?.toggleAttribute('open');
+};
+
+/**
+ * Event fire when style-picker closed, and change the aria-expanded.
+ */
+const closed = () => {
+  document.querySelector('#trigger').setAttribute('aria-expanded', 'false');
 };
 
 /**
@@ -198,6 +212,7 @@ export const ColorAndIcon = {
       <div class="style-picker-story-container">
         <cds-layer class="toolbar-layer">
           <clabs-style-picker
+            id="style-picker"
             align=${args.align}
             ?open=${args.open}
             heading=${args.heading}
@@ -206,11 +221,15 @@ export const ColorAndIcon = {
             search-close-button-label=${args.searchCloseButtonLabel}
             empty-state-title=${args.emptyStateTitle}
             empty-state-subtitle=${args.emptyStateSubtitle}
-            search-label=${args.searchLabel}>
+            search-label=${args.searchLabel}
+            @clabs-style-picker-close=${closed}>
             <cds-icon-button
+              id="trigger"
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
-              @click=${toggleButton}>
+              @click=${toggleButton}
+              aria-expanded="${args.open}"
+              aria-controls="style-picker">
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Color palette</span>
             </cds-icon-button>
@@ -299,6 +318,7 @@ export const ColorAndPictogram = {
       <div class="style-picker-story-container">
         <cds-layer class="toolbar-layer">
           <clabs-style-picker
+            id="style-picker"
             align=${args.align}
             ?open=${args.open}
             heading=${args.heading}
@@ -307,11 +327,15 @@ export const ColorAndPictogram = {
             search-close-button-label=${args.searchCloseButtonLabel}
             empty-state-title=${args.emptyStateTitle}
             empty-state-subtitle=${args.emptyStateSubtitle}
-            search-label=${args.searchLabel}>
+            search-label=${args.searchLabel}
+            @clabs-style-picker-close=${closed}>
             <cds-icon-button
+              id="trigger"
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
-              @click=${toggleButton}>
+              @click=${toggleButton}
+              aria-expanded="${args.open}"
+              aria-controls="style-picker">
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Pictogram list</span>
             </cds-icon-button>
@@ -368,7 +392,10 @@ export const ColorAndPictogram = {
             <div id="inline-tile-pictogram">
               ${renderCarbonPictogram({
                 ...AmsterdamWindmill,
-                attrs: { ...AmsterdamWindmill.attrs, 'aria-label': AmsterdamWindmill.name },
+                attrs: {
+                  ...AmsterdamWindmill.attrs,
+                  'aria-label': AmsterdamWindmill.name,
+                },
               })}
             </div>
             <br />

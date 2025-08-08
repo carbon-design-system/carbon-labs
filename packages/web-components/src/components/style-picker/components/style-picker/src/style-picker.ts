@@ -17,6 +17,7 @@ import {
   StylePickerContextType,
 } from '../../../context/style-picker-context';
 import { Kind, prefix } from '../../../defs';
+import CLABSStylePicker from '../style-picker';
 
 /**
  * Component extending the LitElement class.
@@ -25,8 +26,29 @@ class StylePicker extends LitElement {
   static styles = styles;
 
   /**
-   *
-   * @param {Event} event Close the popover if the click is outside of the style picker.
+   * Dispatch an event when closing the style-picker.
+   */
+  _dispatchCloseEvent() {
+    const init = {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+      detail: {
+        triggeredBy: this,
+      },
+    };
+
+    const newEvent = new CustomEvent(
+      (this.constructor as typeof CLABSStylePicker).eventOptionChange,
+      init
+    );
+
+    this.dispatchEvent(newEvent);
+  }
+
+  /**
+   * Close the popover if the click is outside of the style picker.
+   * @param {Event} event Event.
    */
   private _handleOutsideClick(event: Event) {
     const target = event.target as Node | null;
@@ -245,6 +267,17 @@ class StylePicker extends LitElement {
         ..._newContextValues,
       };
     }
+
+    if (changed.has('open') && !this.open) {
+      this._dispatchCloseEvent();
+    }
+  }
+
+  /**
+   * The name of the custom event fired after close.
+   */
+  static get eventOptionChange() {
+    return `${prefix}-close`;
   }
 }
 

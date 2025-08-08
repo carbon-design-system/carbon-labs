@@ -10,14 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@carbon/react": "^1.78.2",
+    "@carbon/react": "^1.88.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@carbon-labs/react-ui-shell": "latest",
     "@carbon-labs/react-theme-settings": "latest",
-    "@carbon/ibm-products": "^2.68.0",
+    "@carbon/ibm-products": "^2.72.1",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",

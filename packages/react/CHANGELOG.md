@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.109.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.108.0...@carbon-labs/react@0.109.0) (2025-08-05)
+
+
+### Features
+
+* expose thickness prop, docs and story updates ([#738](https://github.com/carbon-design-system/carbon-labs/issues/738)) ([daa3b6a](https://github.com/carbon-design-system/carbon-labs/commit/daa3b6acd43654cc016b2bde70b611882f428b3e))
+
+
+
+
+
+# [0.108.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.107.0...@carbon-labs/react@0.108.0) (2025-07-30)
+
+
+### Bug Fixes
+
+* Whats new typescript issue with TOCSection ([#735](https://github.com/carbon-design-system/carbon-labs/issues/735)) ([5215c3f](https://github.com/carbon-design-system/carbon-labs/commit/5215c3fbef3e432b29ae4ce5eb052ff0c2a6f9a4))
+
+
+
+
+
+# [0.107.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.106.0...@carbon-labs/react@0.107.0) (2025-07-30)
+
+
+### Bug Fixes
+
+* **uishell:** update delay for flyout menu ([#736](https://github.com/carbon-design-system/carbon-labs/issues/736)) ([6779c29](https://github.com/carbon-design-system/carbon-labs/commit/6779c295e826c1551ff8ce36c28ac771f596636c))
+
+
+
+
+
 # [0.106.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.105.0...@carbon-labs/react@0.106.0) (2025-07-29)
 
 

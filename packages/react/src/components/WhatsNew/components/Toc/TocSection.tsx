@@ -11,7 +11,7 @@ import React, { useEffect, useRef } from 'react';
 import { useTocSectionsContext } from './TocSections';
 import { PolymorphicProps } from '../../types/common';
 
-interface TocSectionBaseProps {
+interface TocSectionBaseProps extends React.HTMLProps<HTMLElement> {
   index?: number;
 }
 
@@ -25,7 +25,7 @@ const TocSection = <E extends React.ElementType = 'section'>({
   index = Infinity,
   ...props
 }: TocSectionProps<E>) => {
-  const Component = as || 'section';
+  const Component = as || ('section' as any);
   const { registerRef } = useTocSectionsContext();
   const ref = useRef<HTMLDivElement>(null);
 

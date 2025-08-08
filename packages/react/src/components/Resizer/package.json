@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-resizer",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",

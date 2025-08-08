@@ -7,9 +7,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, TemplateResult } from 'lit';
+import { html, nothing, TemplateResult } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import '@carbon/web-components/es/components/accordion/accordion-item.js';
+import '@carbon/web-components/es/components/tag/index.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -25,9 +26,16 @@ export const blockClass = `${clabsPrefix}--style-picker-section`;
 export const stylePickerSectionTemplate = (
   customElementClass
 ): TemplateResult<1> => {
-  const { heading, slotIndex, size, _stylePickerContext, hasGroup } =
-    customElementClass;
-  const { kind, setActiveSection } = _stylePickerContext;
+  const {
+    heading,
+    slotIndex,
+    size,
+    _stylePickerContext,
+    hasGroup,
+    itemsCount,
+  } = customElementClass;
+  const { kind, setActiveSection, enableSearch, searchTerm } =
+    _stylePickerContext;
 
   /**
    * Renders the default slot content.
@@ -55,14 +63,28 @@ export const stylePickerSectionTemplate = (
     }
   };
 
+  /**
+   * Render tag to item show count after a search.
+   */
+  const renderTag = () => {
+    if (enableSearch && searchTerm?.trim().length) {
+      return html` <cds-tag size="sm">${itemsCount}</cds-tag> `;
+    }
+
+    return nothing;
+  };
+
   // If the section is disclosed, we use cds-accordion-item to wrap the content.
   if (kind === 'disclosed') {
     return html`<cds-accordion-item
-      .title=${heading}
       class=${`${blockClass}--disclosed`}
       @cds-accordion-item-toggled=${() => {
         setActiveSection?.(slotIndex);
       }}>
+      <div slot="title" class=${`${blockClass}__header`}>
+        <strong class=${`${blockClass}__heading`}> ${heading} </strong>
+        ${renderTag()}
+      </div>
       ${renderDefault()}
     </cds-accordion-item>`;
   } else if (kind === 'flat') {
@@ -71,6 +93,7 @@ export const stylePickerSectionTemplate = (
       <div class=${`${blockClass}--flat`}>
         <div class=${`${blockClass}__header`}>
           <strong class=${`${blockClass}__heading`}> ${heading} </strong>
+          ${renderTag()}
         </div>
         ${renderDefault()}
       </div>

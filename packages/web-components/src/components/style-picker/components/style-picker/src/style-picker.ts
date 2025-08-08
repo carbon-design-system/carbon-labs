@@ -25,6 +25,42 @@ class StylePicker extends LitElement {
   static styles = styles;
 
   /**
+   *
+   * @param {Event} event Close the popover if the click is outside of the style picker.
+   */
+  private _handleOutsideClick(event: Event) {
+    const target = event.target as Node | null;
+
+    if (this.open && target && !this.contains(target)) {
+      this.open = false;
+    }
+  }
+
+  /**
+   *
+   */
+  constructor() {
+    super();
+
+    this._handleOutsideClick = this._handleOutsideClick.bind(this);
+  }
+
+  /**
+   * Connected callback lifecycle method.
+   */
+  connectedCallback() {
+    super.connectedCallback();
+    document.addEventListener('click', this._handleOutsideClick);
+  }
+
+  /**
+   * Disconnected callback lifecycle method.
+   */
+  disconnectedCallback() {
+    document.removeEventListener('click', this._handleOutsideClick);
+  }
+
+  /**
    * @internal
    *
    * According to search result decide whether need to show the empty state or not.

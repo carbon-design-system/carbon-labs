@@ -55,6 +55,11 @@ export default class footer extends LitElement {
   @property({ type: Number, attribute: 'character-limit' })
   _characterLimit;
 
+  /** Maximum chat area width
+   */
+  @property({ type: String, attribute: 'max-container-width' })
+  maxContainerWidth;
+
   /**
    * expanded mode when chat width is large
    */
@@ -172,6 +177,10 @@ export default class footer extends LitElement {
    * LIT firstUpdated cycle to define initial parameters on first render
    */
   firstUpdated() {
+    if (this.maxContainerWidth) {
+      this.style.setProperty('--max-container-width', this.maxContainerWidth);
+    }
+
     this._checkSize();
 
     this._resizeObserver = new ResizeObserver(async () => {

@@ -47,11 +47,9 @@ $css--plex: true !default;
     overflow: hidden;
     flex-direction: row;
     align-items: center;
-    animation: fade-in 600ms forwards;
     border-block-start: 1px solid $border-subtle-00;
 
     gap: 8px;
-    opacity: 0;
     padding-block: 6px;
     padding-inline-end: 6px;
   }
@@ -72,11 +70,9 @@ $css--plex: true !default;
     overflow: hidden;
     flex-direction: row;
     align-items: center;
-    animation: fade-in 600ms forwards;
     border-block-start: 1px solid $border-subtle-00;
 
     gap: 8px;
-    opacity: 0;
   }
 
   .#{$clabs-prefix}--chat-link-list-item-text-sublink {

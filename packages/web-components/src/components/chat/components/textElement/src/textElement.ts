@@ -390,7 +390,8 @@ export default class textElement extends LitElement {
           });
         } else if (regexResult[4]) {
           const checkHtmlContent = this._checkForHTML(regexResult[4]);
-          const textType = checkHtmlContent ? 'html' : 'default';
+          const textType =
+            enableHtmlRendering && checkHtmlContent ? 'html' : 'default';
           const currentLine = regexResult[4];
           temporaryTextArray.push({
             text: this.capitalize

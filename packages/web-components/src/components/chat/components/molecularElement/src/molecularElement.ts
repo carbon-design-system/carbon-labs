@@ -57,6 +57,30 @@ export default class molecularElement extends LitElement {
   streaming;
 
   /**
+   * show-smiles - denotes if showing the source smiles at the bottom
+   */
+  @property({ type: Boolean, attribute: 'show-smiles' })
+  showSMILES = true;
+
+  /**
+   * show-code - denotes if showing the source smiles at the bottom
+   */
+  @property({ type: Boolean, attribute: 'show-code' })
+  showCode = true;
+
+  /**
+   * enable-editing - denotes if displayed code can be changed to redraw
+   */
+  @property({ type: Boolean, attribute: 'enable-editing' })
+  enableCodeEditing = true;
+
+  /**
+   * show-smiles-one-line - denotes if showing code should be minimized and scrollable
+   */
+  @property({ type: Boolean, attribute: 'show-single-line-code' })
+  showSingleLineCode;
+
+  /**
    * Disable all chart option buttons, supercedes all other individual button options
    */
   @property({ type: Boolean, attribute: 'disable-options' })
@@ -97,6 +121,12 @@ export default class molecularElement extends LitElement {
    */
   @state()
   _uniqueID;
+
+  /**
+   * editedContent - new content string from code editor
+   */
+  @state()
+  _editedContent;
 
   /**
    * invalid - if spec fails to render or is missing, an error will be displayed
@@ -193,6 +223,10 @@ export default class molecularElement extends LitElement {
 
     this.style.setProperty('--chat-molecule-container-visibility', 'hidden');
 
+    if (this.showSingleLineCode) {
+      this.showCode = true;
+    }
+
     this.molecularRenderer = new SmileDrawer.SmiDrawer(
       this._buildOptions('default')
     );
@@ -217,14 +251,14 @@ export default class molecularElement extends LitElement {
    * @param {String} mode - fullscreen, test or default
    */
   _buildOptions(mode) {
-    let fontSizeLarge = 6;
-    let fontSizeSmall = 3;
-    let bondThickness = 0.7;
+    let fontSizeLarge = 10;
+    let fontSizeSmall = 7;
+    let bondThickness = 0.6;
     let compactDrawing = false;
     let scale: any = null;
     let padding = 16;
-    let bondSpacing = 0.18 * 10;
-    const bondLength = 15;
+    let bondSpacing = 0.18 * 15;
+    const bondLength = 25;
     let atomVisualization = 'default';
 
     if (mode === 'fullscreen') {
@@ -257,9 +291,9 @@ export default class molecularElement extends LitElement {
       debug: false,
       terminalCarbons: true,
       explicitHydrogens: false,
-      overlapSensitivity: 0.1,
+      overlapSensitivity: 4,
       overlapResolutionIterations: this.streaming ? 1 : 10,
-      experimental: false,
+      experimental: true,
       themes: {
         dark: {
           C: '#c6c6c6',
@@ -330,6 +364,9 @@ export default class molecularElement extends LitElement {
       await this.checkPubChemAvailability();
       this._appendCustomStyles();
     }
+    if (changedProperties.has('_editedContent')) {
+      this._prepareMolecule('edited');
+    }
   }
 
   /**
@@ -399,7 +436,8 @@ export default class molecularElement extends LitElement {
     //const enableTextStyling = false;
     //const enableCircleStyling = false;
     //const enableZooming = false;
-    const shortenWedges = true;
+    const shortenWedges = false; //true;
+    const thinnerWedges = true;
 
     /*if(enableZooming){
 
@@ -409,6 +447,53 @@ export default class molecularElement extends LitElement {
       }
 
     }*/
+    if (this.thumbNailMode) {
+      this.shadowRoot?.querySelectorAll('circle').forEach((circle) => {
+        circle.remove();
+      });
+    }
+
+    this.shadowRoot?.querySelectorAll('text').forEach((text) => {
+      let strokeColor = '#161616';
+      if (this.theme == 'light') {
+        strokeColor = '#f4f4f4';
+      }
+      text.setAttribute('stroke', strokeColor);
+      text.setAttribute('stroke-width', '2.4');
+      text.setAttribute('paint-order', 'stroke');
+      //text.setAttribute('text-anchor',"end")
+      //text.setAttribute('dominant-baseline',"central")
+    });
+
+    if (thinnerWedges) {
+      const wedgeElements = this.shadowRoot?.querySelectorAll('polygon');
+      if (wedgeElements) {
+        wedgeElements.forEach((wedge) => {
+          if (wedge instanceof SVGPolygonElement) {
+            const scale = 0.1;
+            const points: { x: number; y: number }[] = [];
+            for (let m = 0; m < wedge.points.numberOfItems; m++) {
+              const point = wedge.points.getItem(m);
+              points.push({ x: point.x, y: point.y });
+            }
+
+            const cx =
+              points.reduce((sum, pt) => sum + pt.x, 0) / points.length;
+            const cy =
+              points.reduce((sum, pt) => sum + pt.y, 0) / points.length;
+            points.forEach((pt) => {
+              pt.x = cx + (pt.x - cx) * scale;
+              pt.y = cy + (pt.y - cy) * scale;
+            });
+            wedge.setAttribute('fill-opacity', '0.1');
+            wedge.setAttribute(
+              'points',
+              points.map((pt) => `${pt.x},${pt.y}`).join(' ')
+            );
+          }
+        });
+      }
+    }
 
     if (shortenWedges) {
       const wedgeElements = this.shadowRoot?.querySelectorAll('polygon');
@@ -550,17 +635,22 @@ export default class molecularElement extends LitElement {
           encodeURIComponent(this.content) +
           '/cids/JSON'
       );
-      const data = await pubChemResponse.json();
 
-      if (
-        data['IdentifierList'] &&
-        data['IdentifierList']['CID'] &&
-        data['IdentifierList']['CID'].length > 0
-      ) {
-        const cid = data['IdentifierList']['CID'][0];
-        if (cid) {
-          this.pubChemUrl = 'https://pubchem.ncbi.nlm.nih.gov/compound/' + cid;
+      try {
+        const _data = await pubChemResponse.json();
+        if (
+          _data['IdentifierList'] &&
+          _data['IdentifierList']['CID'] &&
+          _data['IdentifierList']['CID'].length > 0
+        ) {
+          const cid = _data['IdentifierList']['CID'][0];
+          if (cid) {
+            this.pubChemUrl =
+              'https://pubchem.ncbi.nlm.nih.gov/compound/' + cid;
+          }
         }
+      } catch (e) {
+        console.log(e);
       }
     } catch (pubChemError) {
       this.pubChemUrl = null;
@@ -602,6 +692,33 @@ export default class molecularElement extends LitElement {
   }
 
   /**
+   * _handleOriginalEditorValidation - check when the edited code is valid
+   * @param {object} event - event from clabs code event
+   */
+  _handleOriginalEditorValidation(event) {
+    const editedSmiles = event.detail.newLineText;
+    this.content = editedSmiles;
+  }
+
+  /**
+   * _handleOriginalEditorCancelled - check when the edited code is undone
+   * @param {object} _event - event from clabs code event
+   */
+  _handleOriginalEditorCancelled(_event) {
+    this._editedContent = '';
+    this._prepareMolecule('default');
+  }
+
+  /**
+   * _handleLiveRawEditorChange - check when the edited code is changed
+   * @param {object} event - event from clabs code event
+   */
+  _handleLiveRawEditorChange(event) {
+    console.log(event.detail);
+    this._editedContent = event.detail.newLineText;
+  }
+
+  /**
    * Prepare molecular object for rendering from content string
    * @param {String} mode - which mode to render with smilesDrawer
    */
@@ -618,11 +735,15 @@ export default class molecularElement extends LitElement {
     const testCanvas = this.shadowRoot?.getElementById(testTargetID);
     const smilesString = this.content.replace(new RegExp('```', 'g'), '');
     this._smilesContent = smilesString;
+    let contentToDraw = smilesString;
+    if (mode === 'edited') {
+      contentToDraw = this._editedContent;
+    }
     let renderTest = false;
     if (canvas instanceof SVGElement && testCanvas instanceof SVGElement) {
       try {
         this.temporaryMolecularRenderer.draw(
-          smilesString,
+          contentToDraw,
           testCanvas,
           this.theme,
           () => {
@@ -635,6 +756,7 @@ export default class molecularElement extends LitElement {
         );
       } catch (err) {
         renderTest = false;
+        this.renderSuccessful = false;
       }
     }
 
@@ -649,7 +771,7 @@ export default class molecularElement extends LitElement {
       }
       if (mode === 'fullscreen') {
         this.fullscreenMolecularRenderer.draw(
-          smilesString,
+          contentToDraw,
           canvas,
           this.theme,
           () => {
@@ -661,7 +783,7 @@ export default class molecularElement extends LitElement {
         );
       } else {
         this.molecularRenderer.draw(
-          smilesString,
+          contentToDraw,
           canvas,
           this.theme,
           () => {

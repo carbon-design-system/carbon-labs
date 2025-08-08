@@ -29,7 +29,7 @@ $css--plex: true !default;
     flex: 1;
     inline-size: 100%;
     margin-inline: auto;
-    max-inline-size: 672px;
+    max-inline-size: var(--max-container-width, 672px);
     padding-block: 32px 32px;
   }
 

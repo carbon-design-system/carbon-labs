@@ -91,7 +91,10 @@ export function codeElementTemplate(customElementClass) {
         </div>`
       : ``}
 
-    <div class="${clabsPrefix}--chat-code-options">
+    <div
+      class="${clabsPrefix}--chat-code-options"
+      role="toolbar"
+      aria-label="Code block controls">
       <div class="${clabsPrefix}--chat-code-options-buttons">
         ${showContentDifferences
           ? html`
@@ -153,6 +156,9 @@ export function codeElementTemplate(customElementClass) {
 
     <div
       class="${clabsPrefix}--chat-code-container"
+      role="group"
+      aria-label="Code lines"
+      tab-index="-1"
       @mousemove="${handleScroll}">
       <textarea
         @keydown="${controlTabbing}"

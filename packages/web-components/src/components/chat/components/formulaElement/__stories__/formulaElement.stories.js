@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/AI Components/Formula',
+  title: 'Generative A.I. Components/Formula',
 };
 
 const mathExamples = [
@@ -45,18 +45,6 @@ const mathExamples = [
     math: '\\(\\begin{align}    \\int_{0}^{\\infty} e^{-x^2} \\, dx & = \\frac{\\sqrt{\\pi}}{2} \\\\    \\sum_{n=1}^{\\infty} \\frac{1}{n^2} & = \\frac{\\pi^2}{6} \\\\    \\mathbf{A} \\mathbf{x} & = \\left[ \\begin{array}{ccc}        a_{11} & a_{12} & a_{13} \\\\        a_{21} & a_{22} & a_{23} \\\\        a_{31} & a_{32} & a_{33}    \\end{array} \\right]     \\left[ \\begin{array}{c}        x_1 \\\\        x_2 \\\\        x_3    \\end{array} \\right] \\\\    e^{i \\pi} + 1 & = 0 \\\\    \\lim_{x \\to 0} \\frac{\\sin x}{x} & = 1 \\\\    \\left( \\sum_{k=1}^n a_k b_k \\right)^2 & \\leq \\left( \\sum_{k=1}^n a_k^2 \\right) \\left( \\sum_{k=1}^n b_k^2 \\right) \\\\    \\begin{bmatrix}        1 & 2 & 3 \\\\        4 & 5 & 6 \\\\        7 & 8 & 9    \\end{bmatrix}    \\begin{bmatrix}        x \\\\        y \\\\        z    \\end{bmatrix} & =     \\begin{bmatrix}        1 \\cdot x + 2 \\cdot y + 3 \\cdot z \\\\        4 \\cdot x + 5 \\cdot y + 6 \\cdot z \\\\        7 \\cdot x + 8 \\cdot y + 9 \\cdot z    \\end{bmatrix} \\\\    \\frac{d}{dx} \\left( \\frac{1}{x} \\right) & = -\\frac{1}{x^2}\\end{align}\\)',
   },
 ];
-
-export const Default = {
-  /**
-   * Renders the template for Storybook
-   *
-   * @returns {TemplateResult<1>}
-   */
-  render: () =>
-    html` <clabs-chat-formula
-      content="\\(x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.\\)">
-    </clabs-chat-formula>`,
-};
 
 export const Showcase = {
   /**

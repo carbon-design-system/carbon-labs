@@ -45,13 +45,16 @@ export function messagesTemplate(customElementClass) {
 
     <div
       @wheel="${handleScroll}"
-      role="tree"
+      role="list"
+      aria-live="polite"
+      aria-relevant="additions"
+      aria-atomic="false"
       aria-labelledby="${clabsPrefix}--chat-messages-target-reader-label"
       class="${clabsPrefix}--chat-messages-container ${streamResponses
         ? clabsPrefix + '--chat-messages-container-streaming'
-        : ''} 
-
-    ${dockingEnabled ? clabsPrefix + '--chat-messages-container-docked' : ''}">
+        : ''} ${dockingEnabled
+        ? clabsPrefix + '--chat-messages-container-docked'
+        : ''}">
       <slot name="message-items" @slotchange="${_handleSlotchange}">
         ${computedMessages
           ? html`

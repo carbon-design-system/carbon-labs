@@ -75,7 +75,14 @@ class StylePicker extends LitElement {
    */
   @provide({ context: stylePickerContext })
   _stylePickerContext: StylePickerContextType = {
+    /**
+     * Default size of options.
+     */
     size: 'sm',
+    /**
+     * Default active section index.
+     */
+    activeSection: 0,
     /**
      * Set the active section index
      * @param {number} index - Index of the section to be set as active

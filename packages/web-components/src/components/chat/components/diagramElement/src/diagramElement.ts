@@ -7,19 +7,254 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { LitElement } from 'lit';
+import { LitElement, css } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import mermaid from 'mermaid';
 
 // @ts-ignore
-import styles from './diagramElement.scss?inline';
+import coreStyles from './diagramElement.scss?inline';
+
 /**
  * Input component using search typeahead api
  */
 export default class diagramElement extends LitElement {
-  static styles = styles;
+  static styles = [
+    coreStyles,
+    css`
+      g.cluster text.label {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        text-anchor: start !important;
+        font-weight: bold !important;
+        padding: 6px 12px !important;
+      }
+      p {
+        color: #1b1b1b;
+      }
+      .G50 {
+        background-color: $green-50;
+        border: 2px solid $green-60;
+      }
+
+      .P50 {
+        background-color: $purple-50;
+        border: 2px solid $purple-60;
+      }
+
+      .B60 {
+        background-color: $blue-60;
+        border: 2px solid $blue-70;
+      }
+
+      .R50 {
+        background-color: $red-50;
+        border: 2px solid $red-60;
+      }
+
+      .M50 {
+        background-color: $magenta-50;
+        border: 2px solid $magenta-60;
+      }
+
+      .CG50 {
+        background-color: $gray-50;
+        border: 2px solid $gray-60;
+      }
+
+      .T50 {
+        background-color: $teal-50;
+        border: 2px solid $teal-60;
+      }
+
+      .T70 {
+        background-color: $teal-70;
+        border: 2px solid $teal-80;
+      }
+
+      .C50 {
+        background-color: $cyan-50;
+        border: 2px solid $cyan-60;
+      }
+
+      .CG60 {
+        background-color: $gray-60;
+        border: 2px solid $gray-70;
+      }
+
+      .B {
+        background-color: $black;
+        border: 2px solid $black;
+      }
+
+      .node.G50 rect,
+      .node.G50 circle {
+        fill: $green-50;
+        stroke: $green-60;
+      }
+
+      .node.P50 rect,
+      .node.P50 circle {
+        fill: $purple-50;
+        stroke: $purple-60;
+      }
+
+      .node.B60 rect,
+      .node.B60 circle {
+        fill: $blue-60;
+        stroke: $blue-70;
+      }
+
+      .node.R50 rect,
+      .node.R50 circle {
+        fill: $red-50;
+        stroke: $red-60;
+      }
+
+      .node.M50 rect,
+      .node.M50 circle {
+        fill: $magenta-50;
+        stroke: $magenta-60;
+      }
+
+      .node.CG50 rect,
+      .node.CG50 circle {
+        fill: $gray-50;
+        stroke: $gray-60;
+      }
+
+      .node.T50 rect,
+      .node.T50 circle {
+        fill: $teal-50;
+        stroke: $teal-60;
+      }
+
+      .node.T70 rect,
+      .node.T70 circle {
+        fill: $teal-70;
+        stroke: $teal-80;
+      }
+
+      .node.C50 rect,
+      .node.C50 circle {
+        fill: $cyan-50;
+        stroke: $cyan-60;
+      }
+
+      .node.CG60 rect,
+      .node.CG60 circle {
+        fill: $gray-60;
+        stroke: $gray-70;
+      }
+
+      .node.B rect,
+      .node.B circle {
+        fill: $black;
+        stroke: $black;
+      }
+
+      path {
+        stroke: #4c4c4c;
+        stroke-width: 2px;
+      }
+      g.cluster#PublicNet > text.label {
+        border-left: 5px solid #0f62fe !important;
+      }
+      g.cluster#IBMCloud > text.label {
+        border-left: 5px solid #0f62fe !important;
+      }
+      g.cluster#Account > text.label {
+        border-left: 5px solid #161616 !important;
+      }
+      g.cluster#RegionA > text.label {
+        border-left: 5px solid #161616 !important;
+      }
+      g.cluster#VPC1 > text.label {
+        border-left: 5px solid #0f62fe !important;
+      }
+      g.cluster#Zone1 > text.label {
+        border-left: 5px solid #6f6f6f !important;
+      }
+      g.cluster#Subnet1 > text.label {
+        border-left: 5px solid #42be65 !important;
+      }
+      g.cluster#SG1 > text.label {
+        border-left: 5px solid #fa4d56 !important;
+      }
+      g.cluster#RG1 > text.label {
+        border-left: 5px solid #6f6f6f !important;
+      }
+      g.cluster#Zone1VPN > text.label {
+        border-left: 5px solid #6f6f6f !important;
+      }
+      g.cluster#Subnet2 > text.label {
+        border-left: 5px solid #42be65 !important;
+      }
+      g.cluster#SG2 > text.label {
+        border-left: 5px solid #fa4d56 !important;
+      }
+      g.cluster#IG1 > text.label {
+        border-left: 5px solid #6f6f6f !important;
+      }
+      g.cluster#Zone2 > text.label {
+        border-left: 5px solid #6f6f6f !important;
+      }
+      g.cluster#Subnet3 > text.label {
+        border-left: 5px solid #42be65 !important;
+      }
+      g.cluster#Subnet4 > text.label {
+        border-left: 5px solid #42be65 !important;
+      }
+      g.cluster#EnterpriseNet > text.label {
+        border-left: 5px solid #0f62fe !important;
+      }
+
+      g.node foreignObject img {
+        width: 48px !important;
+        height: 48px !important;
+      }
+
+      g.node#User rect,
+      g.node#User ellipse,
+      g.node#Internet rect,
+      g.node#Internet ellipse,
+      g.node#VPN rect,
+      g.node#VPN ellipse,
+      g.node#PG1 rect,
+      g.node#PG1 ellipse,
+      g.node#VG1 rect,
+      g.node#VG1 ellipse,
+      g.node#VSI1 rect,
+      g.node#VSI1 ellipse,
+      g.node#VSI2 rect,
+      g.node#VSI2 ellipse,
+      g.node#VSI3 rect,
+      g.node#VSI3 ellipse,
+      g.node#VSI4 rect,
+      g.node#VSI4 ellipse,
+      g.node#PLB rect,
+      g.node#PLB ellipse,
+      g.node#PVTLB rect,
+      g.node#PVTLB ellipse,
+      g.node#EUD rect,
+      g.node#EUD ellipse,
+      g.node#EUSR rect,
+      g.node#EUSR ellipse,
+      g.node#EAPP rect,
+      g.node#EAPP ellipse,
+      g.node#EDATA rect,
+      g.node#EDATA ellipse {
+        fill: transparent !important;
+        stroke: none !important;
+      }
+      .nodeLabel {
+        display: block;
+        width: 500px;
+      }
+    `,
+  ];
+
   /**
    * Array of subelements parsed from API reply
    */
@@ -63,6 +298,12 @@ export default class diagramElement extends LitElement {
   thumbNailMode;
 
   /**
+   * Thumbnail mode
+   */
+  @property({ type: Boolean, attribute: 'architecture-diagram-mode' })
+  archDiagramMode;
+
+  /**
    * is the component hovered upon
    */
   @state()
@@ -95,6 +336,12 @@ export default class diagramElement extends LitElement {
   @state()
   fullscreenMode;
 
+  @state()
+  prependStyling;
+
+  @state()
+  appendStyling;
+
   //private mutationObserver;
 
   /** detect when component is rendered to process visualization specification object
@@ -123,6 +370,28 @@ export default class diagramElement extends LitElement {
    * @param {String} mode - fullscreen, test or default
    */
   _buildOptions() {
+    const mermaidClassDefs = `
+classDef G50 fill:#24a148,stroke:#198038,stroke-width:2px;
+classDef P50 fill:#a56eff,stroke:#8a3ffc,stroke-width:2px;
+classDef R50 fill:#fa4d56,stroke:#da1e28,stroke-width:2px;
+classDef CG50 fill:#A8A8A8,stroke:#8D8D8D,stroke-width:2px;
+classDef B60 fill:#0f62fe,stroke:#0043ce,stroke-width:2px;
+classDef M50 fill:#da1eeb,stroke:#a56eff,stroke-width:2px;
+classDef B fill:#000000,stroke:#000000,stroke-width:2px;
+classDef C50 fill:#00bfa5,stroke:#006f5f,stroke-width:2px;
+classDef T50 fill:#00b8d9,stroke:#005d6b,stroke-width:2px;
+classDef T70 fill:#007d9a,stroke:#005d6b,stroke-width:2px;
+classDef CG60 fill:#697077,stroke:#4d5358,stroke-width:2px;
+`;
+
+    if (this.archDiagramMode) {
+      this.prependStyling =
+        '%%{init:{ flowChart:{ curve:"stepBefore", "htmlLabels":true,"useMaxWidth":true}}}%%\n';
+      this.appendStyling = '\n' + mermaidClassDefs;
+    } else {
+      this.prependStyling = '';
+      this.appendStyling = '';
+    }
     /*const whiteTheme = {
       primaryColor: '#a6c8ff',
       primaryBorderColor: '#0f62fe',
@@ -171,7 +440,7 @@ export default class diagramElement extends LitElement {
 
       // general
       background: '#ffffff',
-      primaryColor: '#0f62fe',
+      //primaryColor: '#0f62fe',
       secondaryColor: '#393939',
       mainBkg: '#0f62fe',
       secondBkg: '#393939',
@@ -196,8 +465,8 @@ export default class diagramElement extends LitElement {
       // flowchart
       nodeBkg: '#0f62fe',
       nodeBorder: '#002d9c',
-      clusterBkg: '#0f62fe',
-      clusterBorder: '#002d9c',
+      clusterBkg: '#f4f4f4',
+      clusterBorder: '#393939',
       defaultLinkColor: '#dcdcdc',
       titleColor: '#161616',
       edgeLabelBackground: '#ffffff',
@@ -353,13 +622,13 @@ export default class diagramElement extends LitElement {
       errorTextColor: '#ffffff',
     };
     const currentTheme = this.theme == 'light' ? whiteTheme : g100Theme;
-    const mainTheme: any = 'base';
+    const mainTheme: any = 'default';
     return {
       startOnLoad: false,
       theme: mainTheme,
       suppressErrorRendering: true,
       themeVariables: currentTheme,
-      flowchart: { useMaxWidth: true, htmlLabels: true },
+      flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'stepBefore' },
       sequenceDiagram: { useMaxWidth: true, htmlLabels: true },
     };
   }
@@ -447,7 +716,10 @@ export default class diagramElement extends LitElement {
    * @param {String} mode - which mode to render with smilesDrawer
    */
   async _prepareDiagram() {
-    const diagramDef = this.definition.replace(/```/g, '');
+    let diagramDef = this.definition.replace(/```/g, '');
+    if (this.archDiagramMode) {
+      diagramDef = diagramDef + this.appendStyling;
+    }
     //const preID = clabsPrefix + '--chat-diagram-previz-id-' + this._uniqueID;
     const targetID =
       clabsPrefix + '--chat-diagram-container-id-' + this._uniqueID;

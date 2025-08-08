@@ -138,6 +138,7 @@ export function chatTemplate(customElementClass) {
                 @on-header-drag-keyboard-initiated="${handleHeaderKeyboardDragStart}"
                 @on-header-escape="${_handleHeaderEscape}"
                 @on-footer-escape="${_handleFooterEscape}"
+                parent-drag-end="${isDragging}"
                 header-slug-content="${aiSlugContent}"
                 .headerSlugObject="${aiSlugObject}"
                 .menuItems="${headerMenuItems}"

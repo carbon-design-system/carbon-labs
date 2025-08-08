@@ -528,6 +528,9 @@ export default class CLABSChat extends LitElement {
       this.parentElement?.addEventListener('mouseup', (e) => {
         this._dragEnd(e);
       });
+      this.parentElement?.addEventListener('mouseleave', (e) => {
+        this._dragEnd(e);
+      });
     }
   }
 

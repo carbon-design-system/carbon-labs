@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.109.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.108.0...@carbon-labs/react@0.109.0) (2025-08-05)
+
+
+### Features
+
+* expose thickness prop, docs and story updates ([#738](https://github.com/carbon-design-system/carbon-labs/issues/738)) ([daa3b6a](https://github.com/carbon-design-system/carbon-labs/commit/daa3b6acd43654cc016b2bde70b611882f428b3e))
+
+
+
+
+
 # [0.108.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.107.0...@carbon-labs/react@0.108.0) (2025-07-30)
 
 

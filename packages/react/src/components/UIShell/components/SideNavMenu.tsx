@@ -501,7 +501,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               <IconElement />
             </SideNavIcon>
           )}
-          {!sideNavExpanded && (
+          {!sideNavExpanded && navType == SIDE_NAV_TYPE.PANEL && (
             <div
               className={`${prefix}--side-nav--panel-submenu-caret-container`}>
               <div className={`${prefix}--side-nav--panel-submenu-caret`}>

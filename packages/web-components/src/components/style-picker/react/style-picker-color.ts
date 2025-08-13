@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { createComponent } from '@lit/react';
-import StylePickerColor from '../components/style-picker-color/style-picker-color.js'
+import StylePickerColor from '../components/style-picker-color/style-picker-color.js';
 
 export const CLABSStylePickerColor = createComponent({
   tagName: 'clabs-style-picker-color',

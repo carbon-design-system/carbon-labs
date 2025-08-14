@@ -13,7 +13,7 @@ import '@carbon/web-components/es/components/button/index.js';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/AI Components/Code',
+  title: 'Generative A.I. Components/Code',
   component: 'clabs-chat-code',
 };
 
@@ -59,6 +59,8 @@ const codeExamples = {
   'SQL example': `-- Simple SQL file example\n-- Creating a table named 'employees'\nCREATE TABLE employees (\nid INT PRIMARY KEY,\nfirst_name VARCHAR(50),\nlast_name VARCHAR(50),\nemail VARCHAR(100),\ndepartment_id INT,\nhire_date DATE\n);\n-- Creating a table named 'departments'\nCREATE TABLE departments (\nid INT PRIMARY KEY,\nname VARCHAR(50)\n);\n-- Inserting data into the 'departments' table\nINSERT INTO departments (id, name) VALUES\n(1, 'Human Resources'),\n(2, 'Marketing'),\n(3, 'Sales'),\n(4, 'IT');\n-- Inserting data into the 'employees' table\nINSERT INTO employees (id, first_name, last_name, email, department_id, hire_date) VALUES\n(1, 'John', 'Doe', 'john.doe@example.com', 3, '2020-01-01'),\n(2, 'Jane', 'Doe', 'jane.doe@example.com', 2, '2019-06-15'),\n(3, 'Jim', 'Smith', 'jim.smith@example.com', 3, '2021-02-20');`,
   COBOL: `IDENTIFICATION DIVISION.\nPROGRAM-ID. VARS.\nDATA DIVISION.\n\t*> working storage defines variables\n\tWORKING-STORAGE SECTION.\n\t*> define a number with a sign, 3 numbers, a decimal, and then\n\t*> two numbers aafter the decimal. by default it should be 0 filled\n\t01 FIRST-VAR PIC S9(3)V9(2).\n\t*> do the same thing as above but actually initialize\n\t*> to a number -123.45\n\t01 SECOND-VAR PIC S9(3)V9(2) VALUE -123.45.\n\t*> defines an alphabetic string and initialize it to abcdef\n\t01 THIRD-VAR PIC A(6) VALUE 'ABCDEF'.\n\t*> define an alphanumeric string and initialize it to a121$\n\t01 FOURTH-VAR PIC X(5) VALUE 'A121$'.\n\t*> create a grouped variable\n\t01 GROUP-VAR.\n\t\t05 SUBVAR-1 PIC 9(3) VALUE 337.\n\t\t*> create 3 alphanumerics, but use less than\n\t\t*> the allocated space for each of them\n\t\t05 SUBVAR-2 PIC X(15) VALUE 'LALALALA'.\n\t\t05 SUBVAR-3 PIC X(15) VALUE 'LALALA'.\n\t\t05 SUBVAR-4 PIC X(15) VALUE 'LALALA'.\n*> print our variables\nPROCEDURE DIVISION.\n\tDISPLAY "1ST VAR :"FIRST-VAR.\n\tDISPLAY "2ND VAR :"SECOND-VAR.\n\tDISPLAY "3RD VAR :"THIRD-VAR.\n\tDISPLAY "4TH VAR :"FOURTH-VAR.\n\tDISPLAY "GROUP VAR :"GROUP-VAR.\n\tSTOP RUN.`,
   Java: `public class BinaryConverter {\n\t\n\tpublic static void main(String[] args){\n\t\tfor(int i = -5; i < 33; i++){\n\t\t\tSystem.out.println(i + ": " + toBinary(i));\n\t\t\tSystem.out.println(i);\n\t\t\t//always another way\n\t\t\tSystem.out.println(i + ": " + Integer.toBinaryString(i));\n\t\t}\n\t}\n\t\n\t/*\n\t * pre: none\n\t * post: returns a String with base10Num in base 2\n\t */\n\tpublic static String toBinary(int base10Num){\n\t\tboolean isNeg = base10Num < 0;\n\t\tbase10Num = Math.abs(base10Num);\n\t\tString result = "";\n\t\t\n\t\twhile(base10Num > 1){\n\t\t\tresult = (base10Num % 2) + result;\n\t\t\tbase10Num /= 2;\n\t\t}\n\t\tassert base10Num == 0 || base10Num == 1 : "value is not <= 1: " + base10Num;\n\t\t\n\t\tresult = base10Num + result;\n\t\tassert all0sAnd1s(result);\n\t\t\n\t\tif( isNeg )\n\t\t\tresult = "-" + result;\n\t\treturn result;\n\t}\n\t\n\t/*\n\t * pre: cal != null\n\t * post: return true if val consists only of characters 1 and 0, false otherwise\n\t */\n\tpublic static boolean all0sAnd1s(String val){\n\t\tassert val != null : "Failed precondition all0sAnd1s. parameter cannot be null";\n\t\tboolean all = true;\n\t\tint i = 0;\n\t\tchar c;\n\t\t\n\t\twhile(all && i < val.length()){\n\t\t\tc = val.charAt(i);\n\t\t\tall = c == '0' || c == '1';\n\t\t\ti++;\n\t\t}\n\t\treturn all;\n\t}\n}`,
+  smiles:
+    'CC(C)(O1)C[C@@H](O)[C@@]1(O2)[C@@H](C)[C@@H]3CC=C4[C@]3(C2)C(=O)C[C@H]5[C@H]4CC[C@@H](C6)[C@]5(C)Cc(n7)c6nc(C[C@@]89(C))c7C[C@@H]8CC[C@@H]%10[C@@H]9C[C@@H](O)[C@@]%11(C)C%10=C[C@H](O%12)[C@]%11(O)[C@H](C)[C@]%12(O%13)[C@H](O)C[C@@]%13(C)CO',
   JavaScript:
     '// A simple JavaScript function to calculate the area of a rectangle\nfunction calculateRectangleArea(length, width) {\n\treturn length * width;\n}\n\n// Example usage:\nlet area = calculateRectangleArea(5, 10);\nconsole.log("Area:", area); // Output: Area: 50',
   R: `# Fibonacci sequence function in R
@@ -244,6 +246,14 @@ export const OptionShowcase = {
     <br />
     <h4>C++ with max-height 200px</h4>
     <clabs-chat-code max-height="200px" content="${codeExamples['C++']}">
+    </clabs-chat-code>
+    <br />
+    <h4>Custom language (smiles molecules)</h4>
+    <clabs-chat-code
+      max-height="246px"
+      disable-line-ticks
+      disable-coloring
+      content="${codeExamples['smiles']}">
     </clabs-chat-code>
     <br />
 
@@ -564,6 +574,8 @@ export const Editing = {
       disable-line-ticks
       disable-coloring
       content="${codeExamples['python code']}">
+    </clabs-chat-code>
+    <br />
     </clabs-chat-code>
     <br />
     <h4>Python example (no ticks)</h4>

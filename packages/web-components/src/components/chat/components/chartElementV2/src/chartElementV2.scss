@@ -1,0 +1,173 @@
+/**
+ * Copyright IBM Corp. 2023, 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '../../../../../globals/scss/vars' as *;
+
+@use '@carbon/styles/scss/theme' as *;
+
+:host {
+  display: block;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 16px;
+
+  border: 1px solid var(--chat-chart-border-color, $border-subtle-00);
+  border-radius: 8px;
+  block-size: var(--clabs-chart-element-height);
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+
+  inline-size: var(--clabs-chart-element-width);
+  min-block-size: 246px;
+  min-inline-size: 246px;
+}
+
+:host(:fullscreen) {
+  padding: 0;
+}
+
+.wrapper {
+  position: relative;
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+:host(:fullscreen) .wrapper {
+  block-size: 100vh;
+  inline-size: 100vw;
+}
+
+.chart {
+  position: relative;
+  z-index: 1;
+  block-size: 100%;
+  inline-size: 100%;
+  object-fit: contain;
+}
+
+.#{$clabs-prefix}--chat-chart-thumbnail-container {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  block-size: var(--chat-chart-element-height, '100%');
+  inline-size: 100%;
+  max-block-size: var(--chat-chart-element-height, '100%');
+  max-inline-size: var(--chat-chart-element-width, '100%');
+}
+
+.#{$clabs-prefix}--chat-chart-thumbnail-container img {
+  box-sizing: border-box;
+  aspect-ratio: 4 / 3;
+  inline-size: 100%;
+}
+
+.grid,
+.grid-error {
+  position: absolute;
+  z-index: 2;
+  display: none;
+  background-image: linear-gradient(to right, #dddddd 1px, transparent 1px),
+    linear-gradient(to bottom, #dddddd 1px, transparent 1px);
+  background-size: 20px 20px;
+  block-size: 100%;
+  inline-size: 100%;
+  inset: 0;
+}
+
+.grid-error {
+  background-image: linear-gradient(
+      to right,
+      $support-error 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, $support-error 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.error {
+  position: absolute;
+  padding: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  color: $support-error;
+  font-family: monospace;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(-50%, -50%);
+  white-space: pre-wrap;
+}
+
+.partial {
+  position: absolute;
+  overflow: auto;
+  padding: 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  font-size: 12px;
+  inset-block-start: 16px;
+  inset-inline: 16px;
+  max-block-size: 25%;
+  white-space: pre-wrap;
+}
+
+.#{$clabs-prefix}--chat-chart-options-buttons {
+  display: flex;
+  flex-direction: row;
+  background: $background;
+  gap: 4px;
+  margin-inline-end: 8px;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .toolbar {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: none;
+  }
+}
+
+.toolbar {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.wrapper:hover .toolbar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.toolbar button {
+  padding: 4px 8px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+
+.vega-embed {
+  .mark-legend-symbol {
+    fill: currentColor;
+    stroke-width: 0;
+  }
+
+  .legend-title-text,
+  .legend-label-text {
+    fill: currentColor;
+  }
+}

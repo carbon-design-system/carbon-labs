@@ -18,7 +18,7 @@ $css--plex: true !default;
   background: none;
   inset-block-end: 0;
   inset-inline: 0;
-  max-inline-size: 672px;
+  max-inline-size: var(--max-container-width, 672px);
   min-block-size: 56px;
   transition: block-size 600ms ease;
 

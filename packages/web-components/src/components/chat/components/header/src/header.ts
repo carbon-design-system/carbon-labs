@@ -51,6 +51,12 @@ export default class header extends LitElement {
   dockingEnabled;
 
   /**
+   * parent signaled drag end event
+   */
+  @property({ type: Boolean, attribute: 'parent-drag-end' })
+  parentDragEnd;
+
+  /**
    * header menu item list
    */
   @property({ type: Object, attribute: 'menuItems' })

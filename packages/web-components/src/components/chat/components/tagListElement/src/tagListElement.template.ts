@@ -63,13 +63,12 @@ export function tagListElementTemplate(customElementClass) {
                         kind="primary"
                         size="sm"
                         type="button"
-                        is-quick-action
                         role="option"
                         aria-selected="${selectionIndex[index] ? true : false}"
                         aria-label="${value +
                         ' ' +
                         (selectionIndex[index] ? 'selected' : 'unselected')}"
-                        ?is-selected="${selectionIndex[index]}"
+                        ?is-selected="${!selectionIndex[index]}"
                         data-content="${value}"
                         data-index="${index}"
                         @click="${handleTagClick}">

@@ -99,6 +99,11 @@ export default class messages extends LitElement {
   @property({ type: Object, attribute: 'feedbackFormDefinitions' })
   feedbackFormDefinitions;
 
+  /** Maximum chat area width
+   */
+  @property({ type: String, attribute: 'max-container-width' })
+  maxContainerWidth;
+
   /**
    * string denoting parent theme
    */
@@ -149,10 +154,13 @@ export default class messages extends LitElement {
    * detect when component is rendered to process rawtext
    */
   firstUpdated() {
-    this.scrollDiv = this.shadowRoot?.querySelector(
+    this.scrollDiv = this; /*this.shadowRoot?.querySelector(
       '.clabs--chat-messages-container'
-    );
+    );*/
     this._scrollToBottom();
+    if (this.maxContainerWidth) {
+      this.style.setProperty('--max-container-width', this.maxContainerWidth);
+    }
   }
 
   /**
@@ -284,7 +292,9 @@ export default class messages extends LitElement {
   /** auto-scroll chat-messages div when a new message has appeared
    **/
   _updateScroll() {
+    console.log('update');
     if (this.scrollDiv instanceof HTMLElement) {
+      console.log('div found');
       if (!this.scrollTimeout) {
         this.scrollTimeout = setTimeout(() => {
           if (this._autoScroll || this.forceScrollDown) {
@@ -292,6 +302,7 @@ export default class messages extends LitElement {
             if (this._limitScroll) {
               scrollTarget = this._previousScrollHeight;
             }
+            console.log(this.scrollDiv);
             this.scrollDiv?.scrollTo({
               top: scrollTarget,
               behavior: 'smooth',

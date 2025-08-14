@@ -71,7 +71,13 @@ export default class CLABSChat extends LitElement {
    * force-auto-update - force scroll down no matter what
    */
   @property({ type: Boolean, attribute: 'force-auto-update', reflect: true })
-  forceAutoUpdate;
+  forceAutoUpdate = true;
+
+  /**
+   * max-inner-width - set max inner chat width
+   */
+  @property({ type: String, attribute: 'max-inner-width' })
+  maxInnerChatWidth;
 
   /**
    * show launcher when closed
@@ -520,6 +526,9 @@ export default class CLABSChat extends LitElement {
         this._dragChat(e, originalOffset);
       });
       this.parentElement?.addEventListener('mouseup', (e) => {
+        this._dragEnd(e);
+      });
+      this.parentElement?.addEventListener('mouseleave', (e) => {
         this._dragEnd(e);
       });
     }

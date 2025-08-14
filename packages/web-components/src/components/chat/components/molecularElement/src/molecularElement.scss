@@ -21,16 +21,31 @@ $css--plex: true !default;
 
     box-sizing: border-box;
     align-items: center;
-    border: 1px solid $border-subtle-01;
+    border: 1px solid $border-subtle-00;
     border-radius: 8px;
     background: $background;
     block-size: var(--chat-molecule-height, 'auto');
     inline-size: var(--chat-molecule-width, 'auto');
-    min-block-size: var(--chat-molecule-height, '246px');
+    min-block-size: var(--chat-molecule-height, 'calc(246px + 40px)');
     min-inline-size: var(--chat-molecule-width, '246px');
   }
   .#{$clabs-prefix}--chat-molecule-target {
     inline-size: var(--chat-molecule-width, 'auto');
+  }
+
+  .#{$clabs-prefix}--chat-molecule-code-viewer {
+    inline-size: var(--chat-molecule-width, 'auto');
+  }
+
+  .#{$clabs-prefix}--chat-molecule-code-viewer-single {
+    inline-size: var(--chat-molecule-width, 'auto');
+    -ms-overflow-style: none;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    white-space: nowrap;
+  }
+  .#{$clabs-prefix}--chat-molecule-code-viewer-content-single {
+    inline-size: 10000%;
   }
 
   .#{$clabs-prefix}--chat-molecule-target .element {
@@ -98,6 +113,7 @@ $css--plex: true !default;
     scrollbar-width: none;
     white-space: nowrap;
   }
+
   .#{$clabs-prefix}--chat-molecule-stream-text-content::-webkit-scrollbar {
     display: none;
   }

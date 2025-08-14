@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.110.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.109.0...@carbon-labs/react@0.110.0) (2025-08-14)
+
+
+### Features
+
+* **ui-shell-sidenav:** animation updates ([#733](https://github.com/carbon-design-system/carbon-labs/issues/733)) ([bca421d](https://github.com/carbon-design-system/carbon-labs/commit/bca421d31dee6c72fa27d6dd37141da4b0004e3e))
+
+
+
+
+
 # [0.109.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.108.0...@carbon-labs/react@0.109.0) (2025-08-05)
 
 

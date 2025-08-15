@@ -143,15 +143,15 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__title {
   @include type-style('label-01');
 
+  display: none;
   color: $text-secondary;
   padding-block-start: $spacing-05;
   padding-inline-start: $spacing-05;
-  visibility: hidden;
   white-space: nowrap;
 }
 
 .#{$prefix}--side-nav--expanded .#{$prefix}--side-nav__title {
-  visibility: visible;
+  display: block;
 }
 
 // SideNavMenu

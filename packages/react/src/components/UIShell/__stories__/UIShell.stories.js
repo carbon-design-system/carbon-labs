@@ -529,7 +529,7 @@ export const Demo = () => {
                     renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
-                  <SideNavTitle>Experience services</SideNavTitle>
+                  <SideNavTitle title="Experience services"></SideNavTitle>
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"
                     renderIcon={Dashboard}>
@@ -697,7 +697,7 @@ export const Demo = () => {
                     renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
-                  <SideNavTitle>Experience services</SideNavTitle>
+                  <SideNavTitle title="Experience services"></SideNavTitle>
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"
                     renderIcon={Dashboard}>
@@ -1013,7 +1013,7 @@ export const DemoPanel = () => {
                     renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
-                  <SideNavTitle>Experience services</SideNavTitle>
+                  <SideNavTitle title="Experience services"></SideNavTitle>
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"
                     renderIcon={Dashboard}>
@@ -1152,7 +1152,7 @@ export const DemoPanel = () => {
                     renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
-                  <SideNavTitle>Experience services</SideNavTitle>
+                  <SideNavTitle title="Experience services"></SideNavTitle>
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"
                     renderIcon={Dashboard}>

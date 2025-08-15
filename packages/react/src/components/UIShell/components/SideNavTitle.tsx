@@ -13,9 +13,9 @@ import { SideNavDivider } from '@carbon/react';
 
 export interface SideNavTitleProps {
   /**
-   * Provide children to be rendered inside the `SideNavTitle`
+   * Provide a title to `SideNavTitle`
    */
-  children?: React.ReactNode;
+  title?: string;
 
   /**
    * Provide an optional class to be applied to the containing node
@@ -24,7 +24,7 @@ export interface SideNavTitleProps {
 }
 
 export const SideNavTitle: React.FC<SideNavTitleProps> = ({
-  children,
+  title,
   className: customClassName,
 }) => {
   const prefix = usePrefix();
@@ -32,7 +32,7 @@ export const SideNavTitle: React.FC<SideNavTitleProps> = ({
 
   return (
     <>
-      <div className={className}>{children}</div>
+      <div className={className}>{title}</div>
       <SideNavDivider></SideNavDivider>
     </>
   );
@@ -40,9 +40,9 @@ export const SideNavTitle: React.FC<SideNavTitleProps> = ({
 
 SideNavTitle.propTypes = {
   /**
-   * Provide children to be rendered inside the `SideNavTitle`
+   * Provide a title to `SideNavTitle`
    */
-  children: PropTypes.node as unknown as React.Validator<React.ReactNode>,
+  title: PropTypes.string,
 
   /**
    * Provide an optional class to be applied to the containing node

@@ -29,7 +29,17 @@ div:has(.#{$prefix}--header)
 }
 
 .#{$prefix}--side-nav {
+  z-index: z('header') - 1;
   overflow: visible;
+
+  // closing side-nav transition
+  transition: $fast-02 motion(exit, productive);
+}
+
+.#{$prefix}--side-nav.#{$prefix}--side-nav--expanded {
+  // opening side-nav transition
+  transition: $moderate-01 motion(standard, productive);
+  transition-delay: 40ms;
 }
 
 //----------------------------------------------------------------------------
@@ -302,22 +312,25 @@ div:has(.#{$prefix}--header)
   inset-block-start: 0;
   inset-inline-start: 100%;
   transform: translateX(-100%);
-  transition: color $duration-fast-02, background-color $duration-fast-02,
-    outline $duration-fast-02;
+  transition: $fast-02 motion(exit, productive);
   will-change: inline-size;
 }
 
 .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
+  box-shadow: $spacing-02 0 convert.to-rem(6px) convert.to-rem(-3px) $shadow;
+
   inline-size: 16rem;
   overflow-y: auto;
   transform: translateX(0);
+  transition: $moderate-01 motion(standard, productive);
+  transition-delay: 40ms;
 }
 
 //----------------------------------------------------------------------------
 // Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
-  z-index: 7999; /* needs to be below header */
+  z-index: z('header') - 2;
   overflow: visible;
   border-inline-end: 1px solid $border-subtle;
 
@@ -554,8 +567,13 @@ div:has(.#{$prefix}--header)
 // Rail
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
-  z-index: 7999; /* needs to be below header */
+  z-index: z('header') - 2;
   border-inline-end: 1px solid $border-subtle;
+}
+
+.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded {
+  border-inline-end: none;
+  box-shadow: $spacing-02 0 convert.to-rem(6px) convert.to-rem(-3px) $shadow;
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
@@ -568,13 +586,9 @@ div:has(.#{$prefix}--header)
 
 // allow overlay to display at all breakpoints
 .#{$prefix}--side-nav__overlay-active {
-  z-index: z('overlay');
-  background-color: $overlay;
+  background-color: transparent;
   block-size: 100vh;
   inline-size: 100vw;
-  opacity: 1;
-  transition: opacity $transition-expansion $standard-easing,
-    background-color $transition-expansion $standard-easing;
 }
 
 //----------------------------------------------------------------------------

@@ -139,6 +139,21 @@ div:has(.#{$prefix}--header)
   }
 }
 
+// SideNavTitle
+.#{$prefix}--side-nav__title {
+  @include type-style('label-01');
+
+  color: $text-secondary;
+  padding-block-start: $spacing-05;
+  padding-inline-start: $spacing-05;
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.#{$prefix}--side-nav--expanded .#{$prefix}--side-nav__title {
+  visibility: visible;
+}
+
 // SideNavMenu
 // Level 2 / Doublewide Level 3
 // without icon

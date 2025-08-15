@@ -15,6 +15,7 @@ import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { SideNavLink } from '../components/SideNavLink';
 import { SideNavSlot } from '../components/SideNavSlot';
+import { SideNavTitle } from '../components/SideNavTitle';
 import { Profile } from '../index';
 import {
   HeaderPopover,
@@ -528,7 +529,7 @@ export const Demo = () => {
                     renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
-                  <SideNavDivider />
+                  <SideNavTitle>Experience services</SideNavTitle>
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"
                     renderIcon={Dashboard}>
@@ -696,7 +697,7 @@ export const Demo = () => {
                     renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
-                  <SideNavDivider />
+                  <SideNavTitle>Experience services</SideNavTitle>
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"
                     renderIcon={Dashboard}>
@@ -1012,7 +1013,7 @@ export const DemoPanel = () => {
                     renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
-                  <SideNavDivider />
+                  <SideNavTitle>Experience services</SideNavTitle>
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"
                     renderIcon={Dashboard}>
@@ -1151,7 +1152,7 @@ export const DemoPanel = () => {
                     renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
-                  <SideNavDivider />
+                  <SideNavTitle>Experience services</SideNavTitle>
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"
                     renderIcon={Dashboard}>

@@ -43,7 +43,7 @@ SideNavTitle.propTypes = {
    * Provide the contents of the SideNavTitle.
    */
   children: PropTypes.node as unknown as React.Validator<React.ReactNode>,
-  
+
   /**
    * Provide an optional class to be applied to the containing node
    */

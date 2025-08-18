@@ -36,6 +36,7 @@ import {
   SidePanelOpen,
 } from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
+import { SideNavDivider } from '@carbon/react';
 
 export enum SIDE_NAV_TYPE {
   DEFAULT = 'default',
@@ -683,6 +684,7 @@ function SideNavRenderFunction(
         {childrenToRender}
         {navType === SIDE_NAV_TYPE.PANEL && (
           <ul className={`${prefix}--side-nav__toggle-container`}>
+            <SideNavDivider />
             <SideNavToggle
               onClick={handlePinClick}
               renderIcon={pinned ? PinFilled : Pin}>

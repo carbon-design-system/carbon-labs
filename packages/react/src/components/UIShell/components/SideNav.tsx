@@ -90,6 +90,7 @@ export interface SideNavProps
 }
 
 interface SideNavContextData {
+  autoExpand?: boolean;
   expanded?: boolean;
   isRail?: boolean;
   navType?: SIDE_NAV_TYPE;
@@ -354,7 +355,6 @@ function SideNavRenderFunction(
         !event.currentTarget.contains(event.relatedTarget) &&
         (isRail || autoExpand)
       ) {
-        console.log('aaa');
         handleToggle(event, true);
       }
     };
@@ -654,6 +654,7 @@ function SideNavRenderFunction(
   return (
     <SideNavContext.Provider
       value={{
+        autoExpand,
         expanded,
         isRail,
         navType,

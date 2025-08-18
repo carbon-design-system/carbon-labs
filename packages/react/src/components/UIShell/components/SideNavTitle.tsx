@@ -32,7 +32,7 @@ export const SideNavTitle: React.FC<SideNavTitleProps> = ({
 
   return (
     <>
-      <div className={className}>{title}</div>
+      <li className={className}>{title}</li>
       <SideNavDivider></SideNavDivider>
     </>
   );

@@ -377,7 +377,7 @@ div:has(.#{$prefix}--header)
 
   // Side Nav Toggle
   .#{$prefix}--side-nav__toggle {
-    @include button-reset.reset($width: true);
+    @include button-reset.reset($width: false);
     @include type-style('label-01');
     @include focus-outline('reset');
 
@@ -573,6 +573,10 @@ div:has(.#{$prefix}--header)
 
   .#{$prefix}--side-nav__item {
     overflow: visible;
+  }
+
+  .#{$prefix}--side-nav__toggle {
+    inline-size: 100%;
   }
 }
 

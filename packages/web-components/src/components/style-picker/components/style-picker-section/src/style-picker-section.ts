@@ -131,11 +131,15 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
     switch (event.key) {
       case 'ArrowLeft':
       case 'ArrowUp':
+        // Prevent default behavior to avoid scrolling
+        event.preventDefault();
+
         nextIndex = Math.max(0, currentIndex - 1);
         break;
 
       case 'ArrowRight':
       case 'ArrowDown':
+        event.preventDefault();
         nextIndex = Math.min(options.length - 1, currentIndex + 1);
         break;
 
@@ -245,9 +249,7 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
     });
 
     this.itemsCount = _optionsCount;
-    if (this.hidden !== !_optionsCount) {
-      this.hidden = !_optionsCount;
-    }
+    this.hidden = !_optionsCount;
 
     this._stylePickerContext?.onSectionVisibilityChange?.();
 
@@ -260,7 +262,7 @@ class StylePickerSection extends HostListenerMixin(LitElement) {
         el.hasAttribute('selected')
       );
 
-      const focusable = selectedIndex >= 0 ? selectedIndex : 0;
+      const focusable = Math.max(0, selectedIndex);
 
       visibleOptions[focusable].setAttribute('tabindex', '0');
       // Keeping for future check

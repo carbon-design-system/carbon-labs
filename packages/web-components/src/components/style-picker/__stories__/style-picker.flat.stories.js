@@ -82,13 +82,8 @@ const toggleButton = () => {
   const stylePicker = document.querySelector(`${clabsPrefix}-style-picker`);
   const trigger = document.querySelector('#trigger');
 
-  if (stylePicker?.hasAttribute('open')) {
-    trigger.setAttribute('aria-expanded', 'false');
-  } else {
-    trigger.setAttribute('aria-expanded', 'true');
-  }
-
   stylePicker?.toggleAttribute('open');
+  trigger.setAttribute('aria-expanded', !!stylePicker?.hasAttribute('open'));
 };
 
 /**

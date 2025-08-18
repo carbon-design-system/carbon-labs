@@ -101,6 +101,7 @@ export default {
     SideNavMenu,
     SideNavMenuItem,
     SideNavSlot,
+    SideNavTitle,
     TrialCountdown,
   },
   parameters: {

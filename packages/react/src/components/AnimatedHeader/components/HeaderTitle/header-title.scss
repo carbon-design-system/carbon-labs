@@ -1,0 +1,60 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/motion';
+
+$prefix: 'clabs--animated-header__title' !default;
+
+.#{$prefix} {
+  @include type-style('heading-05');
+
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  margin: $spacing-08 0 $spacing-05 0;
+  text-overflow: ellipsis;
+  transition: font-size 500ms motion.motion(standard, expressive),
+    margin 500ms motion.motion(standard, expressive);
+  white-space: nowrap;
+
+  @supports (-webkit-line-clamp: 3) {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    white-space: initial;
+  }
+}
+
+/* support for Safari */
+@supports (font: -apple-system-body) and (-webkit-appearance: none) {
+  .#{$prefix} {
+    transition: margin 500ms motion.motion(standard, expressive);
+  }
+}
+
+.#{$prefix}-collapsed {
+  @include type-style('heading-03');
+
+  margin: $spacing-03 0 $spacing-04 0;
+  line-height: 1.25;
+}
+
+.#{$prefix}-first {
+  animation: 250ms ease-in fade-in;
+  animation-fill-mode: both;
+}
+
+.#{$prefix}-second {
+  animation: 250ms ease-in fade-in;
+  animation-delay: 125ms;
+  animation-fill-mode: both;
+}

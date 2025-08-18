@@ -27,7 +27,7 @@ $prefix: 'cds' !default;
   gap: 0;
   inline-size: convert.to-rem(256px);
   max-block-size: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   > * {
     padding: $spacing-05;

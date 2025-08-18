@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-resizer@0.5.0...@carbon-labs/react-resizer@0.6.0) (2025-08-05)
+
+
+### Features
+
+* expose thickness prop, docs and story updates ([#738](https://github.com/carbon-design-system/carbon-labs/issues/738)) ([daa3b6a](https://github.com/carbon-design-system/carbon-labs/commit/daa3b6acd43654cc016b2bde70b611882f428b3e))
+
+
+
+
+
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-resizer@0.4.0...@carbon-labs/react-resizer@0.5.0) (2025-07-28)
+
+
+### Bug Fixes
+
+* add main and module entry point in package.json ([#727](https://github.com/carbon-design-system/carbon-labs/issues/727)) ([262dd93](https://github.com/carbon-design-system/carbon-labs/commit/262dd939cc7b1103e5c2dd177fb3f61bc6910c6e))
+
+
+
+
+
 # [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-resizer@0.3.0...@carbon-labs/react-resizer@0.4.0) (2025-07-09)
 
 **Note:** Version bump only for package @carbon-labs/react-resizer

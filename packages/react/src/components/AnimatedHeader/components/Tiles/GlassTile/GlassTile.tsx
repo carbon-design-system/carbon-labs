@@ -21,6 +21,7 @@ interface GlassTileProps {
   isDisabled?: boolean;
   disabledTaskLabel?: string;
   onClick?: (() => void) | null;
+  ariaLabel?: string;
 }
 
 export const GlassTile: React.FC<GlassTileProps> = ({
@@ -36,6 +37,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   isDisabled,
   disabledTaskLabel,
   onClick: glassTileClickHandler,
+  ariaLabel,
 }: GlassTileProps & GlassTileBodyProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__glass-tile`;
@@ -57,7 +59,10 @@ export const GlassTile: React.FC<GlassTileProps> = ({
     return (
       <div
         className={`${prefix}--animated-header__tile ${blockClass}`}
-        key={id}>
+        key={id}
+        aria-label={ariaLabel ?? title ?? 'Glass Tile'}
+        title={isDisabled ? disabledTaskLabel ?? '' : ''}
+        tabIndex={-1}>
         {body}
       </div>
     );
@@ -69,6 +74,9 @@ export const GlassTile: React.FC<GlassTileProps> = ({
         glassTileClickHandler?.();
       }}
       className={`${prefix}--animated-header__tile ${blockClass}`}
+      aria-label={ariaLabel ?? title ?? 'Glass Tile'}
+      role="listitem"
+      tabIndex={isDisabled || isLoading ? -1 : 0}
       key={id}
       href={href ?? undefined}
       disabled={isDisabled || isLoading}

@@ -86,6 +86,7 @@ export const SideNavToggle: SideNavLinkComponent = forwardRef(
     {
       children,
       className: customClassName,
+      disabled,
       renderIcon: IconElement,
       large = false,
       tabIndex,
@@ -97,6 +98,7 @@ export const SideNavToggle: SideNavLinkComponent = forwardRef(
     const prefix = usePrefix();
     const className = cx({
       [`${prefix}--side-nav__toggle`]: true,
+      [`${prefix}--side-nav__toggle--disabled`]: disabled,
       [customClassName as string]: !!customClassName,
     });
     const SideNavLinkIcon = IconElement && (
@@ -124,6 +126,7 @@ export const SideNavToggle: SideNavLinkComponent = forwardRef(
           ref={ref}
           type="button"
           tabIndex={tabIndex ?? 0}
+          disabled={disabled}
           {...rest}>
           {SideNavLinkIcon}
           <SideNavLinkText>{children}</SideNavLinkText>

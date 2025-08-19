@@ -2581,6 +2581,7 @@ __metadata:
   resolution: "@carbon-labs/react-first-time-orientation@workspace:packages/react/src/components/FirstTimeOrientation"
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
+    "@carbon/ibm-products": "npm:^2.72.1"
     "@ibm/telemetry-js": "npm:^1.9.1"
   languageName: unknown
   linkType: soft

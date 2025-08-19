@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.112.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.111.0...@carbon-labs/react@0.112.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* **firstTimeOrientation:** pattern not opening after upgrade ([#755](https://github.com/carbon-design-system/carbon-labs/issues/755)) ([758cf42](https://github.com/carbon-design-system/carbon-labs/commit/758cf4239902206b72cb9e098a94f140bdb0d4d2))
+
+
+
+
+
+# [0.111.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.110.0...@carbon-labs/react@0.111.0) (2025-08-18)
+
+
+### Features
+
+* **sidenav:** new sideNavTitle ([#752](https://github.com/carbon-design-system/carbon-labs/issues/752)) ([7db53f4](https://github.com/carbon-design-system/carbon-labs/commit/7db53f443c4499fd8877430685fc0014f918a6b7))
+
+
+
+
+
 # [0.110.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.109.0...@carbon-labs/react@0.110.0) (2025-08-14)
 
 

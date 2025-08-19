@@ -41,6 +41,7 @@ components are provided by `@carbon-labs/react-ui-shell`:
 - `SideNavMenu`
 - `SideNavMenuItem`
 - `SideNavSlot`
+- `SideNavTitle`
 - `TrialCountdown`
 
 ```jsx

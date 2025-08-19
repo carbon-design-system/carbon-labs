@@ -7,8 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { SideNavMenu, SideNavMenuItem } from '@carbon-labs/react-ui-shell';
 import type { routesType } from '../config/routes';
-import { SideNavDivider, SideNavMenu, SideNavMenuItem } from '@carbon/react';
+import { SideNavDivider } from '@carbon/react';
 import { Link, useLocation } from 'react-router';
 
 export const SideNavSubMenuExample = (route: routesType) => {
@@ -21,7 +22,7 @@ export const SideNavSubMenuExample = (route: routesType) => {
 
   return (
     <>
-      <SideNavMenu renderIcon={carbon?.icon} title={carbon?.label} key={path}>
+      <SideNavMenu renderIcon={carbon?.icon} title={carbon?.label}>
         {carbon.subMenu.map((subRoute: routesType) => {
           const carbonSub = subRoute.carbon;
           const subPath = path + subRoute.path;

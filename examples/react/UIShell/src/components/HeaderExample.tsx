@@ -11,7 +11,6 @@ import {
   SideNav,
   SideNavItems,
   SideNavMenu,
-  SideNavMenuItem,
   HeaderContainer,
   HeaderPopover,
   HeaderPopoverButton,
@@ -25,30 +24,16 @@ import {
   HeaderMenuButton,
   Link,
   Button,
-  SideNavDivider,
   SideNavLink,
-  HeaderNavigation,
-  HeaderMenuItem,
 } from '@carbon/react';
-import {
-  // Fade,
-  SquareOutline,
-  Share,
-  User,
-  ShoppingCart,
-  Switcher,
-  Home,
-  DocumentMultiple_01,
-  Settings,
-  // Menu,
-} from '@carbon/icons-react';
+import { Share, User, ShoppingCart, Switcher } from '@carbon/icons-react';
 
 import { Link as RouterLink, useLocation } from 'react-router';
 import { HeaderGlobalBarExample } from './HeaderGlobalBarExample';
 import { SideNavProductExample } from './SideNavProductExample';
 import { routesInSideNav } from '../config/routes';
 import { HeaderNavigationExample } from './HeaderNavigationExample';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const HeaderExample = ({ children }) => {
   const location = useLocation();
@@ -123,6 +108,7 @@ export const HeaderExample = ({ children }) => {
               {routesInSideNav.map(({ path, carbon }) =>
                 carbon?.subMenu ? (
                   <SideNavMenu
+                    key={path}
                     renderIcon={carbon?.icon}
                     title={carbon?.label!}
                     primary
@@ -131,6 +117,7 @@ export const HeaderExample = ({ children }) => {
                   </SideNavMenu>
                 ) : (
                   <SideNavLink
+                    key={path}
                     renderIcon={carbon?.icon}
                     as={RouterLink}
                     to={path}>

@@ -15,6 +15,7 @@ import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { SideNavLink } from '../components/SideNavLink';
 import { SideNavSlot } from '../components/SideNavSlot';
+import { SideNavTitle } from '../components/SideNavTitle';
 
 import { SideNavDivider, Dropdown } from '@carbon/react';
 import { Add, Fade, VirtualColumnKey } from '@carbon/icons-react';
@@ -31,6 +32,7 @@ export default {
     SideNavMenu,
     SideNavMenuItem,
     SideNavSlot,
+    SideNavTitle,
   },
   parameters: {
     docs: {

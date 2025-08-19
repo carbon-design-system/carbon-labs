@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.71.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.70.0...@carbon-labs/react-ui-shell@0.71.0) (2025-08-19)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
+# [0.70.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.69.0...@carbon-labs/react-ui-shell@0.70.0) (2025-08-18)
+
+
+### Features
+
+* **sidenav:** new sideNavTitle ([#752](https://github.com/carbon-design-system/carbon-labs/issues/752)) ([7db53f4](https://github.com/carbon-design-system/carbon-labs/commit/7db53f443c4499fd8877430685fc0014f918a6b7))
+
+
+
+
+
 # [0.69.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.68.0...@carbon-labs/react-ui-shell@0.69.0) (2025-08-14)
 
 

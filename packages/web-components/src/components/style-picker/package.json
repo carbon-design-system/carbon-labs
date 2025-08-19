@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-style-picker",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -35,7 +35,7 @@
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.14.0",
     "@carbon-labs/wc-empty-state": "workspace:^",
-    "@carbon/web-components": "^2.31.0",
+    "@carbon/web-components": "^2.36.0",
     "@lit/context": "^1.1.5"
   }
 }

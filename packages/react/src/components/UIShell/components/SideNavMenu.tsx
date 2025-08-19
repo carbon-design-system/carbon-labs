@@ -14,8 +14,10 @@ import React, {
   ForwardedRef,
   ReactNode,
   Ref,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -159,13 +161,97 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const { currentPrimaryMenu, setCurrentPrimaryMenu } =
       useContext(SideNavContext);
 
+    /**
+      Defining the children parameter with the type ReactNode | ReactNode[]. This allows for various possibilities:
+      a single element, an array of elements, or null or undefined.
+    **/
+    const hasActiveDescendantInner = useCallback(
+      (children: ReactNode | ReactNode[]): boolean => {
+        if (Array.isArray(children)) {
+          return children.some((child) => {
+            if (!React.isValidElement(child)) {
+              // setActive(false);
+              return false;
+            }
+
+            /** Explicitly defining the expected prop types (isActive and 'aria-current) for the children to ensure type
+  safety when accessing their props.
+  **/
+            const props = child.props as {
+              isActive?: boolean;
+              'aria-current'?: string;
+              children: ReactNode | ReactNode[];
+            };
+
+            if (
+              props.isActive === true ||
+              props['aria-current'] ||
+              (props.children instanceof Array &&
+                hasActiveDescendantInner(props.children))
+            ) {
+              // setActive(true);
+              return true;
+            }
+
+            return false;
+          });
+        }
+
+        // We use React.isValidElement(child) to check if the child is a valid React element before accessing its props
+
+        if (React.isValidElement(children)) {
+          const props = children.props as {
+            isActive?: boolean;
+            'aria-current'?: string;
+          };
+
+          if (props.isActive === true || props['aria-current']) {
+            // setActive(true);
+
+            return true;
+          }
+        }
+
+        return false;
+      },
+      []
+    );
+
+    const hasActiveDescendant = useMemo(() => {
+      return hasActiveDescendantInner(children);
+    }, [children, hasActiveDescendantInner]);
+
+    useEffect(() => {
+      setActive(hasActiveDescendant);
+    }, [hasActiveDescendant]);
+
+    useEffect(() => {
+      if (navType == SIDE_NAV_TYPE.PANEL) {
+        // grab first link to redirect if clicked when not expanded
+        if (!firstLink?.current && listRef?.current) {
+          const firstLinkElement = listRef.current!.querySelector(
+            `.${prefix}--side-nav__menu-item a`
+          );
+
+          firstLink.current = firstLinkElement?.getAttribute('href') ?? '';
+        }
+      }
+
+      if (depth === 0) {
+        return;
+      }
+
+      // if depth is more than 0, that means its nested, thus we set treeview mode
+      setIsTreeview?.(true);
+    }, [isTreeview]);
+
     const className = cx({
       [`${prefix}--side-nav__item`]: true,
       [`${prefix}--side-nav__item--primary`]: primary,
       [`${prefix}--side-nav__item--active`]:
-        !primary && (active || (hasActiveDescendant(children) && !isExpanded)),
+        !primary && (active || (hasActiveDescendant && !isExpanded)),
       [`${prefix}--side-nav__item--has-active-descendant`]:
-        active || (hasActiveDescendant(children) && !isExpanded),
+        active || (hasActiveDescendant && !isExpanded),
       [`${prefix}--side-nav__item--icon`]: IconElement,
       [`${prefix}--side-nav__item--large`]: large,
       [customClassName as string]: !!customClassName,
@@ -174,7 +260,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const buttonClassName = cx({
       [`${prefix}--side-nav__submenu`]: true,
       [`${prefix}--side-nav__submenu--active`]:
-        active || (hasActiveDescendant(children) && isExpanded),
+        active || (hasActiveDescendant && isExpanded),
     });
 
     const primaryClassNames = cx({
@@ -220,79 +306,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
       return child;
     });
-
-    /**
-      Defining the children parameter with the type ReactNode | ReactNode[]. This allows for various possibilities:
-      a single element, an array of elements, or null or undefined.
-    **/
-    function hasActiveDescendant(children: ReactNode | ReactNode[]): boolean {
-      if (Array.isArray(children)) {
-        return children.some((child) => {
-          if (!React.isValidElement(child)) {
-            setActive(false);
-            return false;
-          }
-
-          /** Explicitly defining the expected prop types (isActive and 'aria-current) for the children to ensure type
-  safety when accessing their props.
-  **/
-          const props = child.props as {
-            isActive?: boolean;
-            'aria-current'?: string;
-            children: ReactNode | ReactNode[];
-          };
-
-          if (
-            props.isActive === true ||
-            props['aria-current'] ||
-            (props.children instanceof Array &&
-              hasActiveDescendant(props.children))
-          ) {
-            setActive(true);
-            return true;
-          }
-
-          return false;
-        });
-      }
-
-      // We use React.isValidElement(child) to check if the child is a valid React element before accessing its props
-
-      if (React.isValidElement(children)) {
-        const props = children.props as {
-          isActive?: boolean;
-          'aria-current'?: string;
-        };
-
-        if (props.isActive === true || props['aria-current']) {
-          setActive(true);
-
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    useEffect(() => {
-      if (navType == SIDE_NAV_TYPE.PANEL) {
-        // grab first link to redirect if clicked when not expanded
-        if (!firstLink?.current && listRef?.current) {
-          const firstLinkElement = listRef.current!.querySelector(
-            `.${prefix}--side-nav__menu-item a`
-          );
-
-          firstLink.current = firstLinkElement?.getAttribute('href') ?? '';
-        }
-      }
-
-      if (depth === 0) {
-        return;
-      }
-
-      // if depth is more than 0, that means its nested, thus we set treeview mode
-      setIsTreeview?.(true);
-    }, [isTreeview]);
 
     /**
      * Returns the parent SideNavMenu, if node is actually inside one.
@@ -443,7 +456,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       }
 
       // will always open to the menu with an active element
-      if (primary && (active || hasActiveDescendant(children))) {
+      if (primary && (active || hasActiveDescendant)) {
         setIsExpanded(true);
       }
     }, [sideNavExpanded]);

@@ -57,6 +57,12 @@ function MyComponent() {
 }
 ```
 
+The `navType` prop can be used to control the behavior of the side navigation.
+Setting the prop to `SIDE_NAV_TYPE.PANEL` will change the interaction model of
+the side navigation. Note that `SIDE_NAV_TYPE.PANEL` requires two levels of
+nesting due to the flyout menus, otherwise it may not function as intended and
+the side navigation will need to be configured as a rail (via the `isRail` prop)
+
 ### SCSS
 
 Import the styles from `@carbon/react` and `@carbon-labs/react-ui-shell` in your

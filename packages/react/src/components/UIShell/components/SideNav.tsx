@@ -41,7 +41,7 @@ import { SideNavDivider } from '@carbon/react';
 export enum SIDE_NAV_TYPE {
   DEFAULT = 'default',
   RAIL = 'rail',
-  PANEL = 'panel',
+  RAIL_PANEL = 'panel',
 }
 
 export type TranslationKey = keyof typeof translationIds;
@@ -181,7 +181,7 @@ function SideNavRenderFunction(
     [`${prefix}--side-nav--hide-rail-breakpoint-down-${hideRailBreakpointDown}`]:
       hideRailBreakpointDown,
     [`${prefix}--side-nav--rail`]: isRail || autoExpand,
-    [`${prefix}--side-nav--panel`]: navType === SIDE_NAV_TYPE.PANEL,
+    [`${prefix}--side-nav--panel`]: navType === SIDE_NAV_TYPE.RAIL_PANEL,
     [`${prefix}--side-nav--pinned`]: pinned,
     [`${prefix}--side-nav--ux`]: isChildOfHeader,
     [`${prefix}--side-nav--hidden`]: !isPersistent,
@@ -302,7 +302,7 @@ function SideNavRenderFunction(
         `.cds--side-nav__link--current`
       ) as HTMLElement;
 
-      if (navType == SIDE_NAV_TYPE.PANEL || expanded) {
+      if (navType == SIDE_NAV_TYPE.RAIL_PANEL || expanded) {
         if (isSm && backButton) {
           backButton.tabIndex = 0;
           const firstElementAfterBack =
@@ -360,7 +360,7 @@ function SideNavRenderFunction(
       }
     };
     eventHandlers.onBlur = (event) => {
-      if (navType === SIDE_NAV_TYPE.PANEL) {
+      if (navType === SIDE_NAV_TYPE.RAIL_PANEL) {
         return;
       }
 
@@ -664,7 +664,9 @@ function SideNavRenderFunction(
         currentPrimaryMenu,
         setCurrentPrimaryMenu,
       }}>
-      {isFixedNav || hideOverlay || navType === SIDE_NAV_TYPE.PANEL ? null : (
+      {isFixedNav ||
+      hideOverlay ||
+      navType === SIDE_NAV_TYPE.RAIL_PANEL ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className={overlayClassName} onClick={onOverlayClick} />
       )}
@@ -674,7 +676,7 @@ function SideNavRenderFunction(
         ref={navRef}
         className={`${prefix}--side-nav__navigation ${className}`}
         inert={
-          !isRail && navType !== SIDE_NAV_TYPE.PANEL && !(expanded || isLg)
+          !isRail && navType !== SIDE_NAV_TYPE.RAIL_PANEL && !(expanded || isLg)
             ? -1
             : undefined
         }
@@ -682,7 +684,7 @@ function SideNavRenderFunction(
         {...eventHandlers}
         {...other}>
         {childrenToRender}
-        {navType === SIDE_NAV_TYPE.PANEL && (
+        {navType === SIDE_NAV_TYPE.RAIL_PANEL && (
           <ul className={`${prefix}--side-nav__toggle-container`}>
             <SideNavDivider />
             <SideNavToggle

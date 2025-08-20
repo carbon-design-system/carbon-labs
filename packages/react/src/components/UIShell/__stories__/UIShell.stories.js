@@ -589,7 +589,7 @@ export const Demo = () => {
               <SideNav
                 hideRailBreakpointDown="md"
                 isChildOfHeader={false}
-                navType={SIDE_NAV_TYPE.PANEL}
+                navType={SIDE_NAV_TYPE.RAIL_PANEL}
                 aria-label="Product navigation">
                 <SideNavItems>
                   <SideNavSlot renderIcon={VirtualColumnKey}>

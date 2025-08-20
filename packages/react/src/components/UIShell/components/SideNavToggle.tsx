@@ -107,7 +107,7 @@ export const SideNavToggle: SideNavLinkComponent = forwardRef(
       </SideNavIcon>
     );
 
-    if (!expanded && navType === SIDE_NAV_TYPE.PANEL) {
+    if (!expanded && navType === SIDE_NAV_TYPE.RAIL_PANEL) {
       return (
         <SideNavLinkPopover
           align="right"

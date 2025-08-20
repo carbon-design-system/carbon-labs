@@ -1,7 +1,7 @@
 /**
  * @license
  *
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2024
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,12 +9,11 @@
 
 import React from 'react';
 import mdx from './StylePicker.mdx';
-import { StylePicker } from '../components/StylePicker';
-import '../components/style-picker.scss';
+import { CLABSStylePicker } from './StylePicker';
 
 export default {
-  title: 'Components/StylePicker',
-  component: StylePicker,
+  title: 'Wrappers/Style Picker',
+  component: CLABSStylePicker,
   parameters: {
     docs: {
       page: mdx,
@@ -23,6 +22,6 @@ export default {
 };
 
 /**
- * Default story for StylePicker
+ * Default story for CLABSStylePicker
  */
-export const Default = () => <StylePicker />;
+export const Default = () => <CLABSStylePicker />;

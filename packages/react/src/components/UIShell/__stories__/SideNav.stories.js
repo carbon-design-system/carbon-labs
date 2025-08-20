@@ -503,4 +503,4 @@ export const RailPanel = () => (
   </SideNav>
 );
 
-RailPanel.storyName = 'Rail with flyouts';
+RailPanel.storyName = 'Panel';

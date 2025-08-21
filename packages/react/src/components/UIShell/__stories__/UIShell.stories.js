@@ -500,7 +500,7 @@ export const Demo = () => {
                     renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
-                  <SideNavDivider />
+                  <SideNavTitle>Experience services</SideNavTitle>
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"
                     renderIcon={Dashboard}>

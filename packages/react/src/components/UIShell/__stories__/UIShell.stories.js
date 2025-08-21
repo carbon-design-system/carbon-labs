@@ -15,6 +15,7 @@ import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { SideNavLink } from '../components/SideNavLink';
 import { SideNavSlot } from '../components/SideNavSlot';
+import { SideNavTitle } from '../components/SideNavTitle';
 import { Profile } from '../index';
 import {
   HeaderPopover,
@@ -638,6 +639,7 @@ export const Demo = () => {
                     renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
+                  <SideNavTitle>Experience services</SideNavTitle>
                   <SideNavDivider />
                   <SideNavLink
                     href="http://www.carbondesignsystem.com"

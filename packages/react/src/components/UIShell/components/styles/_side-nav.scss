@@ -351,9 +351,9 @@ div:has(.#{$prefix}--header)
 
   .#{$prefix}--side-nav__items {
     display: flex;
-    padding-block-end: $spacing-11;
     overflow: visible;
     flex-direction: column;
+    padding-block-end: $spacing-11;
   }
 
   .#{$prefix}--side-nav__items,

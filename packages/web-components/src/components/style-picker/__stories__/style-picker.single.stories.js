@@ -19,7 +19,6 @@ import '@carbon/web-components/es/components/layer/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/tile/index.js';
 import '@carbon/web-components/es/components/link/index.js';
-import { POPOVER_ALIGNMENT } from '@carbon/web-components/es/components/popover/defs.js';
 import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js';
 
 // Pictograms
@@ -30,6 +29,7 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 // StylePicker
 import '../index';
+import { STYLE_PICKER_ALIGNMENT } from '../defs';
 import { renderCarbonPictogram } from '../utilities/renderCarbonPictogram';
 import { colors, icons, pictograms } from './_placeholders';
 import { alignOptions } from './_story.defs';
@@ -87,14 +87,14 @@ const toggleButton = () => {
 /**
  * Change color callback
  * @param {object} ev - custom event from color module
+ *
+ * @returns {void}
  */
 const changeColor = (ev) => {
-  const color = ev.detail.item;
-  const tileEl = document.querySelector(`${carbonPrefix}-tile`);
-  tileEl.style.borderColor = `${color.color}`;
+  const selectedColor = ev.detail.value;
 
-  const colorModuleEl = ev.target;
-  colorModuleEl.setAttribute('selected-item', color.value);
+  const tileEl = document.querySelector(`${carbonPrefix}-tile`);
+  tileEl.style.borderColor = `${selectedColor}`;
 };
 
 /**
@@ -102,16 +102,16 @@ const changeColor = (ev) => {
  * @param {object} ev - custom event from icon module
  */
 const changeIcon = (ev) => {
-  const item = ev.detail.item;
-  const headerIconEl = document.getElementById('inline-tile-icon');
-  const iconTemplate = item.renderIcon();
+  const selectedIcon = ev.detail.value;
+
+  const iconHolderEl = document.getElementById('inline-tile-icon');
+  const iconTemplate = icons
+    .find((icon) => icon.value === selectedIcon)
+    .renderIcon();
   const container = document.createElement('div');
   render(iconTemplate, container);
-  headerIconEl.innerHTML = '';
-  headerIconEl.appendChild(container.firstElementChild);
-
-  const iconModuleEl = ev.target;
-  iconModuleEl.setAttribute('selected-item', item.value);
+  iconHolderEl.innerHTML = '';
+  iconHolderEl.appendChild(container.firstElementChild);
 };
 
 /**
@@ -119,10 +119,9 @@ const changeIcon = (ev) => {
  * @param {object} ev - custom event from color module
  */
 const changePictogram = (ev) => {
-  const pictogram = ev.detail.item;
-
-  const colorModuleEl = ev.target;
-  colorModuleEl.setAttribute('selected-item', pictogram.value);
+  const pictogramName = ev.detail.value;
+  const flatPictograms = pictograms.flatMap((group) => group.items);
+  const pictogram = flatPictograms.find((item) => item.value === pictogramName);
 
   const pictogramHolderEl = document.getElementById('inline-tile-pictogram');
   const pictogramTemplate = renderCarbonPictogram(pictogram.pictogram);
@@ -146,13 +145,38 @@ const argTypes = {
     options: [...alignOptions],
     description: `Specify how the popover should align with the trigger element`,
   },
+  kind: {
+    description:
+      "There are three different variants `'single' | 'flat' | 'disclosed'` ",
+    control: 'disabled',
+  },
+  enableSearch: {
+    control: 'boolean',
+    description: 'Enable search option',
+  },
+  searchCloseButtonLabel: {
+    control: 'text',
+  },
+  emptyStateTitle: {
+    control: 'text',
+  },
+  emptyStateSubtitle: {
+    control: 'text',
+  },
+  searchInputPlaceholder: {
+    control: 'text',
+  },
 };
 
 export const Color = {
   args: {
-    heading: 'Choose color',
     open: true,
-    align: POPOVER_ALIGNMENT.LEFT_TOP,
+    heading: 'Choose color',
+    align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
+    enableSearch: true,
+    searchCloseButtonLabel: 'Clear search input',
+    emptyStateTitle: 'No results found',
+    emptyStateSubtitle: 'Try a different search',
   },
   argTypes,
   /**
@@ -170,7 +194,11 @@ export const Color = {
           <clabs-style-picker
             align=${args.align}
             ?open=${args.open}
-            heading=${args.heading}>
+            heading=${args.heading}
+            ?enable-search=${args.enableSearch}
+            search-close-button-label=${args.searchCloseButtonLabel}
+            empty-state-title=${args.emptyStateTitle}
+            empty-state-subtitle=${args.emptyStateSubtitle}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
@@ -178,19 +206,31 @@ export const Color = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Color palette</span>
             </cds-icon-button>
-            <clabs-style-picker-modules slot="modules">
-              <clabs-style-picker-color-module
-                heading="Color"
-                size="sm"
-                .items=${colors}
-                selected-item="blue-60"
-                @clabs-style-picker-module-option-change=${(ev) =>
-                  changeColor(ev)}></clabs-style-picker-color-module>
-            </clabs-style-picker-modules>
+            <clabs-style-picker-section>
+              ${colors.map(
+                (group) =>
+                  html`<clabs-style-picker-group heading=${group.label}>
+                    ${group.items.map(
+                      (item) => html`
+                        <clabs-style-picker-option
+                          value=${item.color}
+                          label=${item.label}
+                          ?selected=${item.label === 'Blue 60'}
+                          @clabs-style-picker-option-select=${(ev) =>
+                            changeColor(ev)}>
+                          <clabs-style-picker-color
+                            color=${item.color}
+                            label=${item.label}></clabs-style-picker-color>
+                        </clabs-style-picker-option>
+                      `
+                    )}
+                  </clabs-style-picker-group> `
+              )}
+            </clabs-style-picker-section>
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}
-            <span slot="tooltip-content">Edit</span>
+            <span slot="tooltip-content">Delete</span>
           </cds-icon-button>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${OverflowMenuVertical16({ slot: 'icon' })}
@@ -214,7 +254,7 @@ export const Icon = {
   args: {
     heading: 'Choose icon',
     open: true,
-    align: POPOVER_ALIGNMENT.LEFT_TOP,
+    align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
   },
   argTypes,
   /**
@@ -240,19 +280,27 @@ export const Icon = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Icon list</span>
             </cds-icon-button>
-            <clabs-style-picker-modules slot="modules">
-              <clabs-style-picker-icon-module
-                heading="Icon"
-                size="sm"
-                .items=${icons}
-                selected-item="apple"
-                @clabs-style-picker-module-option-change=${(ev) =>
-                  changeIcon(ev)}></clabs-style-picker-icon-module>
-            </clabs-style-picker-modules>
+            <clabs-style-picker-section>
+              ${icons.map(
+                (item) =>
+                  html`
+                    <clabs-style-picker-option
+                      value=${item.value}
+                      label=${item.label}
+                      ?selected=${item.value === 'apple'}
+                      @clabs-style-picker-option-select=${(ev) =>
+                        changeIcon(ev)}>
+                      <clabs-style-picker-icon>
+                        ${item.renderIcon()}
+                      </clabs-style-picker-icon>
+                    </clabs-style-picker-option>
+                  `
+              )}
+            </clabs-style-picker-section>
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}
-            <span slot="tooltip-content">Edit</span>
+            <span slot="tooltip-content">Delete</span>
           </cds-icon-button>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${OverflowMenuVertical16({ slot: 'icon' })}
@@ -279,7 +327,11 @@ export const Pictogram = {
   args: {
     heading: 'Choose pictogram',
     open: true,
-    align: POPOVER_ALIGNMENT.LEFT_TOP,
+    align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
+    enableSearch: true,
+    searchCloseButtonLabel: 'Clear search input',
+    emptyStateTitle: 'No results found',
+    emptyStateSubtitle: 'Try a different search',
   },
   argTypes,
   /**
@@ -297,7 +349,11 @@ export const Pictogram = {
           <clabs-style-picker
             align=${args.align}
             ?open=${args.open}
-            heading=${args.heading}>
+            heading=${args.heading}
+            ?enable-search=${args.enableSearch}
+            search-close-button-label=${args.searchCloseButtonLabel}
+            empty-state-title=${args.emptyStateTitle}
+            empty-state-subtitle=${args.emptyStateSubtitle}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
@@ -305,19 +361,37 @@ export const Pictogram = {
               ${ColorPalette16({ slot: 'icon' })}
               <span slot="tooltip-content">Pictogram list</span>
             </cds-icon-button>
-            <clabs-style-picker-modules slot="modules">
-              <clabs-style-picker-pictogram-module
-                heading=${'Pictogram'}
-                size=${'lg'}
-                .items=${pictograms}
-                selected-item=${'bangalore'}
-                @clabs-style-picker-module-option-change=${(ev) =>
-                  changePictogram(ev)}></clabs-style-picker-pictogram-module>
-            </clabs-style-picker-modules>
+            <clabs-style-picker-section size="lg">
+              ${pictograms.map(
+                (group) =>
+                  html`<clabs-style-picker-group heading=${group.label}>
+                    ${group.items.map(
+                      (item) => html`
+                        <clabs-style-picker-option
+                          value=${item.value}
+                          label=${item.label}
+                          ?selected=${item.label === 'Bangalore'}
+                          @clabs-style-picker-option-select=${(ev) =>
+                            changePictogram(ev)}>
+                          ${renderCarbonPictogram({
+                            ...item.pictogram,
+                            attrs: {
+                              ...item.pictogram.attrs,
+                              width: '3rem',
+                              height: '3rem',
+                              'aria-label': item.label,
+                            },
+                          })}
+                        </clabs-style-picker-option>
+                      `
+                    )}
+                  </clabs-style-picker-group> `
+              )}
+            </clabs-style-picker-section>
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${TrashCan16({ slot: 'icon' })}
-            <span slot="tooltip-content">Edit</span>
+            <span slot="tooltip-content">Delete</span>
           </cds-icon-button>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
             ${OverflowMenuVertical16({ slot: 'icon' })}

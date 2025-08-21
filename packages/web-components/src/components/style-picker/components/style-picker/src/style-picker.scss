@@ -7,6 +7,7 @@
 
 $css--plex: true !default;
 
+@use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/type';
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/layout' as *;
@@ -35,13 +36,6 @@ $container-width: $spacing-12-rem + $spacing-06;
   position: relative;
 }
 
-.#{$block-class}__search {
-  position: absolute;
-  display: flex;
-  justify-content: end;
-  inset: 0;
-}
-
 .#{$block-class}__heading {
   @include type.type-style('heading-01');
 
@@ -51,20 +45,32 @@ $container-width: $spacing-12-rem + $spacing-06;
   padding-inline: $spacing-05;
 }
 
-.#{$block-class}__modules {
+.#{$block-class}__sections {
   overflow: auto;
 }
 
-.#{$block-class}-modules__container--empty {
-  display: none;
-}
+// .#{$block-class}-sections__container--empty {
+//   display: none;
+// }
 
-.#{$block-class}-modules__empty-state {
-  padding: $spacing-05;
-}
+// .#{$block-class}-sections__empty-state {
+//   padding: $spacing-05;
+// }
 
 // Carbon overwrites
 
-.#{$block-class}-module .#{$cds-prefix}--contained-list__header {
-  z-index: 2;
+// .#{$block-class}-group .#{$cds-prefix}--contained-list__header {
+//   z-index: 2;
+// }
+
+.#{$block-class}__search {
+  position: absolute;
+  display: flex;
+  justify-content: end;
+  inset: 0;
+}
+
+.#{$block-class}__empty-state {
+  padding-block-start: $spacing-06;
+  padding-inline: $spacing-05;
 }

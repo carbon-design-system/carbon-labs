@@ -7,23 +7,37 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { LitElement } from 'lit';
+import { LitElement, PropertyValues } from 'lit';
 // @ts-ignore
 import styles from './style-picker-option.scss?inline';
 import { property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import CLABSStylePickerOption from '../style-picker-option';
-import { Size } from '../../../defs/style-picker-option.types';
+import { consume } from '@lit/context';
+import {
+  stylePickerContext,
+  StylePickerContextType,
+} from '../../../context/style-picker-context';
+import { prefix } from '../../../defs';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import HostListener from '@carbon/web-components/es/globals/decorators/host-listener.js';
+import HostListenerMixin from '@carbon/web-components/es/globals/mixins/host-listener.js';
 
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Style picker option.
+ * style-picker-option extends LitElement.
  *
  * @fires clabs-style-picker-option-change - fired when an option is selected/changed.
  */
-class StylePickerOption extends LitElement {
+class StylePickerOption extends HostListenerMixin(LitElement) {
   static styles = styles;
+  blockClass = `${clabsPrefix}--style-picker-option`;
+
+  /**
+   * Consume style-picker-context
+   */
+  @consume({ context: stylePickerContext, subscribe: true })
+  _stylePickerContext?: StylePickerContextType;
 
   @property({ type: String, reflect: true, attribute: 'label' })
   label = '';
@@ -34,19 +48,34 @@ class StylePickerOption extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'selected' })
   selected = false;
 
-  @property({ reflect: true, attribute: 'size' })
-  size: Size = 'sm';
-
   /**
    * @param {string} triggeredBy - the element that triggered the change.
    */
-  protected handleClick(triggeredBy: EventTarget | null) {
+  @HostListener('click', { capture: true })
+  handleClick(triggeredBy: EventTarget | null) {
+    this.selected = true;
+    this.setAttribute('aria-selected', 'true');
+
+    const section = this.closest(`${prefix}-section`);
+    const allOptions = section?.querySelectorAll(`${prefix}-option`);
+
+    allOptions?.forEach((optionEl) => {
+      if (optionEl?.getAttribute('value') === this.value) {
+        optionEl.setAttribute('selected', '');
+      } else {
+        optionEl.removeAttribute('selected');
+      }
+    });
+
     const init = {
       bubbles: true,
       cancelable: true,
       composed: true,
       detail: {
         triggeredBy,
+        value: this.value,
+        label: this.label,
+        selected: true,
       },
     };
 
@@ -62,7 +91,49 @@ class StylePickerOption extends LitElement {
    * The name of the custom event fired after an option is changed.
    */
   static get eventOptionChange() {
-    return `${clabsPrefix}-style-picker-option-change`;
+    return `${prefix}-option-select`;
+  }
+
+  /**
+   *
+   */
+  _updateAttributes() {
+    if (!this.hasAttribute('role')) {
+      this.setAttribute('role', 'option');
+    }
+
+    if (!this.hasAttribute('aria-label')) {
+      this.setAttribute('aria-label', this.label);
+    }
+
+    if (!this.hasAttribute('title')) {
+      this.setAttribute('title', this.label);
+    }
+
+    if (!this.hasAttribute('data-value')) {
+      this.setAttribute('data-value', this.value);
+    }
+
+    this.classList.add(this.blockClass);
+    this.classList.add(`${this.blockClass}--${this._stylePickerContext?.size}`);
+  }
+
+  /**
+   * Invoked whenever the element is updated.
+   * @param {PropertyValues} _changedProperties - Changed properties with old values.
+   */
+  protected updated(_changedProperties: PropertyValues): void {
+    if (_changedProperties.has('selected')) {
+      this.setAttribute('aria-selected', `${this.selected}`);
+      this.setAttribute('tabindex', this.selected ? '0' : '-1');
+    }
+  }
+
+  /**
+   * Lifecycle method called when the element is added to a document.
+   */
+  protected firstUpdated(): void {
+    this._updateAttributes();
   }
 }
 

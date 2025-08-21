@@ -15,7 +15,7 @@
     "vite": "^3.2.2"
   },
   "dependencies": {
-    "@carbon-labs/ai-feedback": "latest",
-    "@carbon/styles": "^1.70.0"
+    "@carbon-labs/wc-ai-feedback": "latest",
+    "@carbon/styles": "^1.88.0"
   }
 }

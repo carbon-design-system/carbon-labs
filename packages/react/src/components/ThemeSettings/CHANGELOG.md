@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.11.0...@carbon-labs/react-theme-settings@0.12.0) (2025-08-19)
+
+**Note:** Version bump only for package @carbon-labs/react-theme-settings
+
+
+
+
+
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.10.0...@carbon-labs/react-theme-settings@0.11.0) (2025-07-30)
+
+
+### Bug Fixes
+
+* Whats new typescript issue with TOCSection ([#735](https://github.com/carbon-design-system/carbon-labs/issues/735)) ([5215c3f](https://github.com/carbon-design-system/carbon-labs/commit/5215c3fbef3e432b29ae4ce5eb052ff0c2a6f9a4))
+
+
+
+
+
 # [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.9.0...@carbon-labs/react-theme-settings@0.10.0) (2025-07-09)
 
 **Note:** Version bump only for package @carbon-labs/react-theme-settings

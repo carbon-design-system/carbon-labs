@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-whats-new",
-  "version": "0.9.0",
+  "version": "0.12.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -17,11 +17,12 @@
   "exports": {
     ".": {
       "import": "./es/index.js",
-      "require": "./lib/index.js"
+      "require": "./lib/index.js",
+      "type": "./es/index.d.ts"
     },
-    "./es/*": "./es/*",
-    "./lib/*": "./lib/*",
-    "./scss/*": "./scss/*"
+    "./es/": "./es/",
+    "./lib/": "./lib/",
+    "./scss/": "./scss/"
   },
   "files": [
     "es",
@@ -37,10 +38,10 @@
   },
   "devDependencies": {
     "@carbon-labs/utilities": "canary",
-    "@carbon/ibm-products": "^2.49.0"
+    "@carbon/ibm-products": "^2.72.1"
   },
   "peerDependencies": {
-    "@carbon/ibm-products": "^2.49.0"
+    "@carbon/ibm-products": "^2.72.1"
   },
   "dependencies": {
     "@ibm/telemetry-js": "^1.9.1"

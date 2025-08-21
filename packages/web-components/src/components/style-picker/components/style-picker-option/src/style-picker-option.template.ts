@@ -8,36 +8,24 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import CheckmarkFilled16 from '@carbon/web-components/es/icons/checkmark--filled/16.js';
-
-const { stablePrefix: clabsPrefix } = settings;
-
-export const blockClass = `${clabsPrefix}--style-picker-option`;
 
 /**
  * Lit template for style-picker-option component
  *
  * @param {object} customElementClass Class functionality for the custom element
- * @returns {TemplateResult<1>} Lit html template
+ *
  */
 export const stylePickerOptionTemplate = (customElementClass) => {
-  const { label, value, selected, size, handleClick } = customElementClass;
+  const { blockClass, _stylePickerContext } = customElementClass;
+  const { size } = _stylePickerContext;
 
-  return html`<li
-    class=${`${blockClass} ${blockClass}--${size}`}
-    data-value=${value}
-    role="option"
-    tabindex=${selected ? '0' : '-1'}
-    aria-label=${label}
-    aria-selected=${selected}
-    title=${label}
-    @click=${handleClick}>
-    <div class=${`${blockClass}__container`}>
+  return html`
+    <div class=${`${blockClass}__container ${blockClass}__container--${size}`}>
       <slot></slot>
       <div class=${`${blockClass}__selection-indicator`} aria-hidden=${false}>
         ${CheckmarkFilled16()}
       </div>
     </div>
-  </li>`;
+  `;
 };

@@ -17,7 +17,7 @@ import spread, {
  *
  * @param {object} svgData - An object with the svg object from @carbon/pictograms package and additional attributes
  * @param {object} svgData.content - SVG content.
- * @param {object} svgData.attrs -
+ * @param {object} svgData.attrs - Attributes object.
  */
 export const renderCarbonPictogram = (svgData: {
   content: any;

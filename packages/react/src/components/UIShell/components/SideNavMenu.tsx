@@ -164,6 +164,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       [`${prefix}--side-nav__item--primary`]: primary,
       [`${prefix}--side-nav__item--active`]:
         !primary && (active || (hasActiveDescendant(children) && !isExpanded)),
+      [`${prefix}--side-nav__item--has-active-descendant`]:
+        active || (hasActiveDescendant(children) && !isExpanded),
       [`${prefix}--side-nav__item--icon`]: IconElement,
       [`${prefix}--side-nav__item--large`]: large,
       [customClassName as string]: !!customClassName,
@@ -284,7 +286,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         }
       }
 
-      if (depth === 0) return;
+      if (depth === 0) {
+        return;
+      }
 
       // if depth is more than 0, that means its nested, thus we set treeview mode
       setIsTreeview?.(true);
@@ -322,7 +326,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           const slotElement = node.closest(`.${prefix}--side-nav__slot`);
           if (slotElement) {
             (
-              slotElement.nextElementSibling?.nextElementSibling?.querySelector(
+              slotElement.nextElementSibling?.querySelector(
                 'a, button'
               ) as HTMLElement
             ).tabIndex = 0;
@@ -497,7 +501,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               <IconElement />
             </SideNavIcon>
           )}
-          {!sideNavExpanded && (
+          {!sideNavExpanded && navType == SIDE_NAV_TYPE.PANEL && (
             <div
               className={`${prefix}--side-nav--panel-submenu-caret-container`}>
               <div className={`${prefix}--side-nav--panel-submenu-caret`}>

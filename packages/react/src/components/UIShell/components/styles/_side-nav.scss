@@ -29,7 +29,17 @@ div:has(.#{$prefix}--header)
 }
 
 .#{$prefix}--side-nav {
+  z-index: z('header') - 1;
   overflow: visible;
+
+  // closing side-nav transition
+  transition: $fast-02 motion(exit, productive);
+}
+
+.#{$prefix}--side-nav.#{$prefix}--side-nav--expanded {
+  // opening side-nav transition
+  transition: $moderate-01 motion(standard, productive);
+  transition-delay: 40ms;
 }
 
 //----------------------------------------------------------------------------
@@ -49,6 +59,43 @@ div:has(.#{$prefix}--header)
 
 .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
   margin-inline-end: $spacing-05;
+}
+
+.#{$prefix}--side-nav__item--active.#{$prefix}--side-nav__item--has-active-descendant
+  .#{$prefix}--side-nav__submenu:not(
+    .#{$prefix}--side-nav__item--has-active-descendant
+  )[aria-expanded='false'] {
+  background-color: transparent;
+
+  &::before {
+    display: none;
+  }
+}
+
+.#{$prefix}--side-nav__item--active.#{$prefix}--side-nav__item--has-active-descendant[aria-expanded='false']
+  .#{$prefix}--side-nav__submenu[aria-expanded='false'],
+.#{$prefix}--side-nav__item--active
+  .#{$prefix}--side-nav__item--has-active-descendant
+  .#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active[aria-expanded='false'] {
+  position: relative;
+  background-color: $background-selected;
+  color: $text-primary;
+
+  &::before {
+    position: absolute;
+    display: block;
+    background-color: $border-interactive;
+    content: '';
+    inline-size: 3px;
+    inset-block: 0;
+    inset-inline-start: 0;
+  }
+}
+
+.#{$prefix}--side-nav__item--active
+  .#{$prefix}--side-nav__submenu:not(.#{$prefix}--side-nav__submenu--active)
+  > .#{$prefix}--side-nav__submenu-title {
+  font-weight: 500;
 }
 
 .#{$prefix}--side-nav__submenu.#{$prefix}--side-nav__submenu--active {
@@ -71,8 +118,44 @@ div:has(.#{$prefix}--header)
   }
 }
 
+@include breakpoint-down(md) {
+  .#{$prefix}--side-nav__submenu {
+    padding: 0 $spacing-05 0 convert.to-rem(14px);
+  }
+
+  .#{$prefix}--side-nav__submenu,
+  .#{$prefix}--side-nav__link,
+  .#{$prefix}--side-nav__menu a.#{$prefix}--side-nav__link {
+    block-size: $spacing-08;
+  }
+
+  .#{$prefix}--side-nav__icon {
+    margin-inline-end: convert.to-rem(14px);
+  }
+
+  .#{$prefix}--side-nav__icon > svg {
+    block-size: convert.to-rem(20px);
+    inline-size: convert.to-rem(20px);
+  }
+}
+
+// SideNavTitle
+.#{$prefix}--side-nav__title {
+  @include type-style('label-01');
+
+  display: none;
+  color: $text-secondary;
+  padding-block-start: $spacing-05;
+  padding-inline-start: $spacing-05;
+  white-space: nowrap;
+}
+
+.#{$prefix}--side-nav--expanded .#{$prefix}--side-nav__title {
+  display: block;
+}
+
 // SideNavMenu
-// Level 2
+// Level 2 / Doublewide Level 3
 // without icon
 .#{$prefix}--side-nav__submenu
   + .#{$prefix}--side-nav__menu
@@ -85,12 +168,61 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__submenu
   + .#{$prefix}--side-nav__menu
   > .#{$prefix}--side-nav__item--icon
-  .#{$prefix}--side-nav__submenu {
+  > .#{$prefix}--side-nav__submenu {
   padding-inline-start: $spacing-09;
 }
 
+// Level 3 / Doublewide Level 4
+// without icon, icon not supported at this level
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-11;
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  > .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-12;
+}
+
+// Level 4 / / Doesn't exist in doublewide
+// without icon, icon not supported at this level
+.#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: $spacing-12;
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  > .#{$prefix}--side-nav__submenu
+  + .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__menu
+  > .#{$prefix}--side-nav__item
+  .#{$prefix}--side-nav__submenu {
+  padding-inline-start: convert.to-rem(112px);
+}
+
 // Nested SideNavMenuItem
-// Level 2
+// Level 2  / Doublewide Level 3
 // without icon
 .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
   a.#{$prefix}--side-nav__link {
@@ -116,14 +248,23 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-09;
 }
 
-// with icon inside primary menu (double wide)
+// with icon inside primary menu (double wide), Level 2
 .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
-  .cds--side-nav__menu-secondary-wrapper
+  .#{$prefix}--side-nav__menu-secondary-wrapper
   a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
   padding-inline-start: $spacing-05;
 }
 
-// Level 3
+@include breakpoint-down(md) {
+  // with icon inside primary menu (double wide)
+  .#{$prefix}--side-nav__item.#{$prefix}--side-nav__item--icon
+    .#{$prefix}--side-nav__menu-secondary-wrapper
+    a.#{$prefix}--side-nav__link:has(.#{$prefix}--side-nav__icon) {
+    padding-inline-start: convert.to-rem(14px);
+  }
+}
+
+// Level 3 / Doublewide level 4
 // without icon parent
 .#{$prefix}--side-nav__menu
   .#{$prefix}--side-nav__menu
@@ -138,6 +279,46 @@ div:has(.#{$prefix}--header)
   padding-inline-start: $spacing-12;
 }
 
+// Level 4 / Doublewide level 5
+// without icon parent
+.#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: $spacing-12;
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: convert.to-rem(112px);
+}
+
+// Level 5 / Doesn't exist in doublewide
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: convert.to-rem(112px);
+}
+
+// with icon parent at level 2
+.#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__item--icon
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  .#{$prefix}--side-nav__menu
+  a.#{$prefix}--side-nav__link {
+  padding-inline-start: convert.to-rem(128px);
+}
+
 .#{$prefix}--side-nav__menu-secondary-wrapper {
   position: absolute;
   background-color: $layer-01;
@@ -146,23 +327,27 @@ div:has(.#{$prefix}--header)
   inset-block-start: 0;
   inset-inline-start: 100%;
   transform: translateX(-100%);
-  transition: color $duration-fast-02, background-color $duration-fast-02,
-    outline $duration-fast-02;
+  transition: $fast-02 motion(exit, productive);
   will-change: inline-size;
 }
 
 .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
+  box-shadow: $spacing-02 0 convert.to-rem(6px) convert.to-rem(-3px) $shadow;
+
   inline-size: 16rem;
   overflow-y: auto;
   transform: translateX(0);
+  transition: $moderate-01 motion(standard, productive);
+  transition-delay: 40ms;
 }
 
 //----------------------------------------------------------------------------
 // Panel
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--panel {
-  z-index: 7999; /* needs to be below header */
+  z-index: z('header') - 2;
   overflow: visible;
+  border-inline-end: 1px solid $border-subtle;
 
   .#{$prefix}--side-nav__items {
     display: flex;
@@ -397,8 +582,13 @@ div:has(.#{$prefix}--header)
 // Rail
 //----------------------------------------------------------------------------
 .#{$prefix}--side-nav--rail {
-  z-index: 7999; /* needs to be below header */
+  z-index: z('header') - 2;
   border-inline-end: 1px solid $border-subtle;
+}
+
+.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded {
+  border-inline-end: none;
+  box-shadow: $spacing-02 0 convert.to-rem(6px) convert.to-rem(-3px) $shadow;
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
@@ -411,13 +601,9 @@ div:has(.#{$prefix}--header)
 
 // allow overlay to display at all breakpoints
 .#{$prefix}--side-nav__overlay-active {
-  z-index: z('overlay');
-  background-color: $overlay;
+  background-color: transparent;
   block-size: 100vh;
   inline-size: 100vw;
-  opacity: 1;
-  transition: opacity $transition-expansion $standard-easing,
-    background-color $transition-expansion $standard-easing;
 }
 
 //----------------------------------------------------------------------------
@@ -426,7 +612,7 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__slot {
   display: flex;
   align-items: center;
-  margin: 0 $spacing-05;
+  margin: 0 $spacing-05 $spacing-05 $spacing-05;
   block-size: 2rem;
 }
 
@@ -434,25 +620,29 @@ div:has(.#{$prefix}--header)
   inline-size: 100%;
 }
 
-// icon shown when rail is collapsed
+// icon shown when rail or panel is collapsed
 .#{$prefix}--side-nav__slot .#{$prefix}--side-nav__icon {
   display: none;
 }
 
-.#{$prefix}--side-nav--rail:not(.#{$prefix}--side-nav--expanded)
-  .#{$prefix}--side-nav__slot
-  .#{$prefix}--side-nav__icon {
-  display: block;
+.#{$prefix}--side-nav--rail:not(.#{$prefix}--side-nav--expanded),
+.#{$prefix}--side-nav--panel:not(.#{$prefix}--side-nav--expanded) {
+  .#{$prefix}--side-nav__slot .#{$prefix}--side-nav__icon {
+    display: block;
+  }
 }
 
-// hide slot item when rail collapsed
-.#{$prefix}--side-nav--rail .#{$prefix}--side-nav__slot-item {
+// hide slot item when rail or panel collapsed
+.#{$prefix}--side-nav--rail .#{$prefix}--side-nav__slot-item,
+.#{$prefix}--side-nav--panel .#{$prefix}--side-nav__slot-item {
   display: none;
 }
 
-.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded
+.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded,
+.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded {
   .#{$prefix}--side-nav__slot-item {
-  display: block;
+    display: block;
+  }
 }
 
 //----------------------------------------------------------------------------

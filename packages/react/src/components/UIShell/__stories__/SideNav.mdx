@@ -10,6 +10,7 @@ import * as SideNavStories from './SideNav.stories';
 - [Overview](#overview)
 - Examples
   - [SideNavSlot](#sidenavslot)
+  - [SideNavTitle](#sidenavtitle)
   - [Treeview](#treeview)
   - [Double wide](#double-wide)
 - [Component API](#component-api)
@@ -39,6 +40,26 @@ mode (`isRail`) and collapsed.
       id="filter-1"
     />
   </SideNavSlot>
+</SideNavItems>
+```
+
+## SideNavTitle
+
+`SideNavTitle` is a child component of `SideNavItems`. It renders a `<li>`
+element and allows you to place custom components inside the side navigation to
+act as a title for a section of links.
+
+```jsx
+<SideNavItems>
+  <SideNavTitle>Experience services</SideNavTitle>
+  <SideNavLink href="http://www.carbondesignsystem.com" renderIcon={Dashboard}>
+    Dashboard
+  </SideNavLink>
+  <SideNavLink
+    href="http://www.carbondesignsystem.com"
+    renderIcon={DataAnalytics}>
+    Analytics
+  </SideNavLink>
 </SideNavItems>
 ```
 

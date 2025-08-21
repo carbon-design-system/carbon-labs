@@ -13,6 +13,7 @@ import {
   AnimatedHeader,
   TasksControllerConfig,
   WorkspaceSelectorConfig,
+  type AriaLabels,
   type TileGroup,
   type Workspace,
 } from '@carbon-labs/react-animated-header/es/index';
@@ -56,6 +57,7 @@ function App() {
         renderSelectedItem: selectedTileGroupRenderer,
         itemToString: tasksDropdownItemRenderer,
       },
+      ariaLabel: 'Select a task group',
     },
   };
 
@@ -68,10 +70,20 @@ function App() {
       renderSelectedItem: selectedWorkspaceItemRenderer,
       itemToString: workspaceDropdownItemRenderer,
     },
+    ariaLabel: 'Select a workspace',
+  };
+
+  const ariaLabelsConfig: AriaLabels = {
+    welcome: 'Welcomes the user',
+    description: 'Short description of the product',
+    collapseButton: 'Collapse header details',
+    expandButton: 'Expand header details',
+    tilesContainer: 'Feature tiles list',
   };
 
   return (
     <AnimatedHeader
+      ariaLabels={ariaLabelsConfig}
       tasksControllerConfig={tasksControllerConfig}
       workspaceSelectorConfig={workspaceSelectorConfig}
       description="Connect, monitor, and manage data."

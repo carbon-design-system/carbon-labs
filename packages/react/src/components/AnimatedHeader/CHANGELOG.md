@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.25.0...@carbon-labs/react-animated-header@0.26.0) (2025-08-19)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.25.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.24.0...@carbon-labs/react-animated-header@0.25.0) (2025-07-30)
+
+
+### Bug Fixes
+
+* Whats new typescript issue with TOCSection ([#735](https://github.com/carbon-design-system/carbon-labs/issues/735)) ([5215c3f](https://github.com/carbon-design-system/carbon-labs/commit/5215c3fbef3e432b29ae4ce5eb052ff0c2a6f9a4))
+
+
+
+
+
+# [0.24.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.23.0...@carbon-labs/react-animated-header@0.24.0) (2025-07-29)
+
+
+### Features
+
+* **animated-header:** add accessibility role and aria- attributes ([#715](https://github.com/carbon-design-system/carbon-labs/issues/715)) ([875a5e1](https://github.com/carbon-design-system/carbon-labs/commit/875a5e102237d5faedb140f2b29a958aa0ee1b69))
+
+
+
+
+
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.22.0...@carbon-labs/react-animated-header@0.23.0) (2025-07-22)
+
+
+### Features
+
+* **animated-header:** Tile rework ([#646](https://github.com/carbon-design-system/carbon-labs/issues/646)) ([ffb9d58](https://github.com/carbon-design-system/carbon-labs/commit/ffb9d58abb688a8ca98fa79c93b0d5a4d67a6499))
+
+
+
+
+
 # [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.21.0...@carbon-labs/react-animated-header@0.22.0) (2025-07-09)
 
 **Note:** Version bump only for package @carbon-labs/react-animated-header

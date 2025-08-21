@@ -3,6 +3,100 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.45.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.44.0...@carbon-labs/web-components@0.45.0) (2025-08-19)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.44.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.43.0...@carbon-labs/web-components@0.44.0) (2025-08-01)
+
+
+### Features
+
+* **style-picker:** implement search ([#723](https://github.com/carbon-design-system/carbon-labs/issues/723)) ([87298e8](https://github.com/carbon-design-system/carbon-labs/commit/87298e8fe29747742ba27620b6b7a197bc90ebbe))
+
+
+
+
+
+# [0.43.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.42.0...@carbon-labs/web-components@0.43.0) (2025-07-29)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.42.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.41.0...@carbon-labs/web-components@0.42.0) (2025-07-29)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.41.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.40.0...@carbon-labs/web-components@0.41.0) (2025-07-28)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.40.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.39.0...@carbon-labs/web-components@0.40.0) (2025-07-28)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.39.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.38.0...@carbon-labs/web-components@0.39.0) (2025-07-22)
+
+
+### Bug Fixes
+
+* **style-picker:** change architecture ([#711](https://github.com/carbon-design-system/carbon-labs/issues/711)) ([c8927c9](https://github.com/carbon-design-system/carbon-labs/commit/c8927c927f5256b1491d7a27301023440a7adce4))
+
+
+
+
+
+# [0.38.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.37.0...@carbon-labs/web-components@0.38.0) (2025-07-18)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.37.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.36.0...@carbon-labs/web-components@0.37.0) (2025-07-14)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.36.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.35.0...@carbon-labs/web-components@0.36.0) (2025-07-14)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.35.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.34.0...@carbon-labs/web-components@0.35.0) (2025-07-11)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
 # [0.34.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.33.0...@carbon-labs/web-components@0.34.0) (2025-07-09)
 
 **Note:** Version bump only for package @carbon-labs/web-components

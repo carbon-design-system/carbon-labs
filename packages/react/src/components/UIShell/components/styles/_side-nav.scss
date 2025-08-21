@@ -602,6 +602,11 @@ div:has(.#{$prefix}--header)
   box-shadow: $spacing-02 0 convert.to-rem(6px) convert.to-rem(-3px) $shadow;
 }
 
+.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded.#{$prefix}--side-nav--pinned {
+  border-inline-end: 1px solid $border-subtle;
+  box-shadow: none;
+}
+
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
   .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint} {
     @include breakpoint-down($breakpoint) {

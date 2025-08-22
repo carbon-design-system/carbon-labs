@@ -137,7 +137,6 @@ export function HeaderPopover({
         isTabTip
         className={className}
         dropShadow={false}
-        highContrast={false}
         open={open}
         onKeyDown={onKeyDown}
         onBlur={handleBlur}
@@ -225,7 +224,6 @@ export function HeaderPopoverButton<T extends React.ElementType>({
       className={className}
       kind={BaseComponent ? null : 'ghost'}
       label={label}
-      highContrast={false}
       {...rest}>
       {children}
     </ComponentToggle>

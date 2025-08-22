@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.116.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.115.0...@carbon-labs/react@0.116.0) (2025-08-22)
+
+
+### Bug Fixes
+
+* **ui-shell:** console errors ([#764](https://github.com/carbon-design-system/carbon-labs/issues/764)) ([2a2debd](https://github.com/carbon-design-system/carbon-labs/commit/2a2debde5900089f9e55a7715755932dc4e7d131))
+
+
+
+
+
 # [0.115.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.114.0...@carbon-labs/react@0.115.0) (2025-08-22)
 
 

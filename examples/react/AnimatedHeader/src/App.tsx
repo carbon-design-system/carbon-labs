@@ -16,11 +16,9 @@ import {
   type AriaLabels,
   type TileGroup,
   type Workspace,
-} from '@carbon-labs/react-animated-header/es/index';
-import {
   watsonXAnimatedLight,
   watsonXStaticLight,
-} from '@carbon-labs/react-animated-header/assets';
+} from '@carbon-labs/react-animated-header';
 
 function App() {
   const [tiles] = useState(headerTiles);

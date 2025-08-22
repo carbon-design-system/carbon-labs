@@ -327,7 +327,6 @@ div:has(.#{$prefix}--header)
   inset-block-start: 0;
   inset-inline-start: 100%;
   transform: translateX(-100%);
-  transition: $fast-02 motion(exit, productive);
   will-change: inline-size;
 }
 
@@ -337,8 +336,6 @@ div:has(.#{$prefix}--header)
   inline-size: 16rem;
   overflow-y: auto;
   transform: translateX(0);
-  transition: $moderate-01 motion(standard, productive);
-  transition-delay: 40ms;
 }
 
 //----------------------------------------------------------------------------

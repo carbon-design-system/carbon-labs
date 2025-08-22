@@ -35,6 +35,7 @@ export function chatTemplate(customElementClass) {
     closed,
     forceAutoUpdate,
     maxCharacterCount,
+    maxInnerChatWidth,
     disableHeaderMenu,
     disableHeaderButtons,
     disableHeaderClose,
@@ -78,6 +79,8 @@ export function chatTemplate(customElementClass) {
   return html`<div
     aria-modal="true"
     role="dialog"
+    tabindex="0"
+    aria-label="IBM AI Chat Window"
     aria-labelledby="${clabsPrefix}--chat-aria-title"
     aria-describedby="${clabsPrefix}--chat-aria-desc"
     class="${clabsPrefix}--chat-container ${closed && !enableLauncher
@@ -135,6 +138,7 @@ export function chatTemplate(customElementClass) {
                 @on-header-drag-keyboard-initiated="${handleHeaderKeyboardDragStart}"
                 @on-header-escape="${_handleHeaderEscape}"
                 @on-footer-escape="${_handleFooterEscape}"
+                parent-drag-end="${isDragging}"
                 header-slug-content="${aiSlugContent}"
                 .headerSlugObject="${aiSlugObject}"
                 .menuItems="${headerMenuItems}"
@@ -158,6 +162,7 @@ export function chatTemplate(customElementClass) {
                 ?loading="${queryInProgress}"
                 ?stream-responses="${streamResponses}"
                 stream-delay="${streamDelay}"
+                max-container-width="${maxInnerChatWidth}"
                 ?feedback-form-enabled="${enableFeedbackForm}"
                 .feedbackFormDefinitions="${feedbackDefinitions}"
                 text-feedback-form-enabled="${enableTextFeedbackForm}"
@@ -179,6 +184,7 @@ export function chatTemplate(customElementClass) {
                 @on-footer-escape="${_handleFooterEscape}"
                 context-message="${promptNotificationMessage}"
                 context-message-type="${promptNotificationType}"
+                max-container-width="${maxInnerChatWidth}"
                 .customLabels="${customLabels}"
                 ?fullscreen-mode="${enableFullscreen}"
                 ?enable-cancellation="${enableRequestCancelling}"

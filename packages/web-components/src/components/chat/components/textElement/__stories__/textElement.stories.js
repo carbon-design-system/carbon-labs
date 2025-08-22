@@ -12,7 +12,7 @@ import { html } from 'lit';
 
 // More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
 export default {
-  title: 'Components/AI Components/Text',
+  title: 'Generative A.I. Components/Interactive Text',
   component: 'clabs-chat-text',
 };
 

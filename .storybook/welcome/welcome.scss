@@ -1,5 +1,6 @@
 @use '@carbon/styles/scss/type';
 @use '@carbon/styles/scss/colors';
+@include type.type-style('productive-heading-07');
 
 .welcome__container {
   position: fixed;
@@ -13,8 +14,6 @@
 }
 
 .welcome__heading {
-  @include type.type-style('productive-heading-07');
-
   color: colors.$gray-80;
 }
 

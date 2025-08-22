@@ -204,7 +204,7 @@ export default class popupElement extends LitElement {
   /** show dropdown with list of violation types, which auto-renders subelements
    */
   @property({ type: Boolean, attribute: 'custom-policy-mode' })
-  customPolicyMode = false;
+  customPolicyMode;
 
   /**
    * feedback ai content

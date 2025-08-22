@@ -212,6 +212,7 @@ export function headerTemplate(customElementClass) {
                 size="sm"
                 aria-label="Move Chat"
                 align="bottom"
+                ?is-selected=${isDragging}
                 class="${clabsPrefix}--chat-header-drag-button"
                 @mousedown="${handleHeaderMouseDown}"
                 @keydown="${handleDragAreaKeydown}"
@@ -233,7 +234,7 @@ export function headerTemplate(customElementClass) {
                   size="sm"
                   slot="slug"
                   autoalign
-                  alignment="bottom">
+                  alignment="bottom-left">
                   <div slot="body-text">
                     <div
                       class="${clabsPrefix}--chat-header-slug-compress"
@@ -247,9 +248,16 @@ export function headerTemplate(customElementClass) {
                 </cds-slug> `
               : useAiLabel
               ? html`
-                  <cds-ai-label kind="inline" ai-text-label="Text goes here">
+                  <cds-ai-label autoalign=${true}>
                     <div slot="body-text">
-                      Explanation of AI-generated content
+                      <div
+                        class="${clabsPrefix}--chat-header-slug-compress"
+                        tabindex="0"
+                        role="textbox">
+                        ${headerSlugContent
+                          ? unsafeHTML(headerSlugContent)
+                          : 'Define your preferred tutorial/explanatory text within chat as an ai-slug-content attribute or as a composable slotted div element'}
+                      </div>
                     </div>
                   </cds-ai-label>
                 `

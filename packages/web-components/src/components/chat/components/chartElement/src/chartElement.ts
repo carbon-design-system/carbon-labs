@@ -91,6 +91,12 @@ export default class chartElement extends LitElement {
   disableOptions;
 
   /**
+   * Disable all chart option buttons, supercedes all other individual button options
+   */
+  @property({ type: Boolean, attribute: 'use-vega-carbon-theme' })
+  forceCarbonTheme;
+
+  /**
    * Disable recontext button to make chart current
    */
   @property({ type: Boolean, attribute: 'enable-context' })
@@ -145,6 +151,12 @@ export default class chartElement extends LitElement {
   enableTooltip = true;
 
   /**
+   * Core Selection allowance object to spread un subChart elements
+   */
+  @state()
+  coreSelections = {};
+
+  /**
    * Enable user-zooming in the chart component
    */
   @property({ type: Boolean, attribute: 'enable-zooming' })
@@ -179,6 +191,30 @@ export default class chartElement extends LitElement {
    */
   @state()
   _authorizeSingleSelection = true;
+
+  /**
+   * Enable user-hover to elements to make targeted query
+   */
+  @property({ type: Boolean, attribute: 'enable-hovering' })
+  enableGlobalHovering = true;
+
+  /**
+   * internal hover/click selection value
+   */
+  @state()
+  _authorizeGlobalHovering = true;
+
+  /**
+   * Enable zooming
+   */
+  @property({ type: Boolean, attribute: 'enable-zooming' })
+  enableGlobalZooming = true;
+
+  /**
+   * internal zoom selection value
+   */
+  @state()
+  _authorizeGlobalZooming = false;
 
   /**
    * errorMessage - specifies error when debugging
@@ -329,6 +365,10 @@ export default class chartElement extends LitElement {
       this.disableEditor = true;
     }
 
+    if (this.forceCarbonTheme) {
+      this.carbonify = false;
+    }
+
     if (this.renderMethod !== 'svg' && this.renderMethod !== 'canvas') {
       this.renderMethod = 'canvas';
     }
@@ -342,37 +382,8 @@ export default class chartElement extends LitElement {
     });
     this.intersectionObserver.observe(this);
 
-    /*this.resizeObserver = new ResizeObserver(async () => {
-      if (this._resizeTimeout) {
-        clearTimeout(this._resizeTimeout);
-      } else {
-        this._resizeTimeout = await setTimeout(async () => {
-          await this._handleResize();
-        }, 1200);
-      }
-    });
-    this.resizeObserver.observe(this);*/
-
-    /*this.resizeObserver = new ResizeObserver(async () => {
-        clearTimeout(this._resizeTimeout);
-        this._resizeTimeout = await setTimeout(async () => {
-          await this._handleResize();
-        }, 200);
-    });
-    this.resizeObserver.observe(this);*/
-
     this.resizeObserver = new ResizeObserver(() => this._handleResize());
     this.resizeObserver.observe(this);
-
-    /*this.resizeObserver = new ResizeObserver(async () => {
-      if(!this.chartResizing){
-      clearTimeout(this._resizeTimeout);
-      this.chartResizing = true;
-      this._resizeTimeout = await setTimeout(async () => {
-        await this._handleResize();
-      }, 200);
-      }
-    });*/
 
     if (this.hasAttribute('container-width')) {
       this.style.setProperty('--chat-chart-element-width', this.containerWidth);
@@ -416,6 +427,7 @@ export default class chartElement extends LitElement {
   async _heavyRerendering() {
     return new Promise((resolve) => {
       setTimeout(() => {
+        this._prepareVisualization();
         resolve(this);
       }, 2000);
     });
@@ -642,7 +654,8 @@ export default class chartElement extends LitElement {
         if (this.renderMethod === 'canvas') {
           renderMode = 'canvas';
         }
-        await VegaEmbed.default(targetDiv, chosenSpec, {
+
+        const vegaLiteOptions = {
           actions: false,
           hover: this.enableTooltip,
           //theme: 'carbon' + this.theme,
@@ -657,7 +670,13 @@ export default class chartElement extends LitElement {
             },
           },
           renderer: renderMode as 'canvas' | 'svg',
-        })
+        };
+
+        if (this.forceCarbonTheme) {
+          vegaLiteOptions['theme'] = 'carbon' + this.theme;
+        }
+
+        await VegaEmbed.default(targetDiv, chosenSpec, vegaLiteOptions)
           .then(({ view }) => {
             this._previousSpec = this._visualizationSpec;
             if (this.thumbNail) {
@@ -665,9 +684,27 @@ export default class chartElement extends LitElement {
                 this._generateImage();
               }
             }
+            /*for(const name of actions){
+              try{
+                view.addSignalListener(name, (_, value) => {
+                  console.log(value)
+                })
+              } catch(err){
+                console.warn(err)
+              }
+            }*/
             if (this._authorizeSingleSelection) {
               try {
-                view.addSignalListener('picker', (_, value) => {
+                view.addSignalListener('select', (_, value) => {
+                  this._singleDataSelected(value);
+                });
+              } catch (selectError) {
+                this._warningMessage = selectError;
+              }
+            }
+            if (this._authorizeGlobalHovering) {
+              try {
+                view.addSignalListener('hover', (_, value) => {
                   this._singleDataSelected(value);
                 });
               } catch (selectError) {
@@ -677,6 +714,15 @@ export default class chartElement extends LitElement {
             if (this._authorizeMultiSelection) {
               try {
                 view.addSignalListener('brush', (_, brush) => {
+                  this._multiDataSelected(brush);
+                });
+              } catch (brushError) {
+                this._warningMessage = brushError;
+              }
+            }
+            if (this._authorizeGlobalZooming) {
+              try {
+                view.addSignalListener('zoom', (_, brush) => {
                   this._multiDataSelected(brush);
                 });
               } catch (brushError) {
@@ -1342,6 +1388,89 @@ export default class chartElement extends LitElement {
   }
 
   /**
+   * _prepareSelections - check all allowed events
+   * @param {Object} encoding - encoding vega sub definition
+   */
+  _prepareSelections(encoding) {
+    const coreSelections: { selection: string; value: number }[] = [];
+
+    const _blockBrush = [
+      'geoshape',
+      'geopath',
+      'geopoint',
+      'image',
+      'arc',
+      'trail',
+    ];
+    const _blockHover = ['boxplot', 'errorbar', 'errorband'];
+    const _blockZoom = ['geoshape', 'geopath', 'geopoint', 'arc'];
+    //const _blockSelect = ['boxplot','errorbar','errorband'];
+    const encodingChanges = [];
+
+    const testMark = encoding.mark || '';
+    this._authorizeGlobalHovering =
+      this._authorizeGlobalHovering && !_blockHover.includes(testMark);
+    this._authorizeMultiSelection =
+      this._authorizeMultiSelection && !_blockBrush.includes(testMark);
+    this._authorizeGlobalZooming =
+      this._authorizeGlobalZooming && !_blockZoom.includes(testMark);
+    this._authorizeSingleSelection =
+      this._authorizeSingleSelection && !_blockZoom.includes(testMark);
+
+    const unionSelection: { [key: string]: string } = {};
+
+    if (this._authorizeMultiSelection) {
+      coreSelections['brush'] = {
+        name: 'brush',
+        type: 'interval',
+        encodings: ['x', 'y'],
+      };
+      unionSelection['brush'] = 'union';
+    }
+    if (this._authorizeGlobalHovering) {
+      coreSelections['hover'] = {
+        name: 'hover',
+        type: 'single',
+        on: 'mouseover',
+        clear: 'mouseout',
+      };
+      unionSelection['hover'] = 'union';
+    }
+    if (this._authorizeGlobalZooming) {
+      coreSelections['zoom'] = {
+        name: 'zoom',
+        type: 'interval',
+        bind: 'scales',
+        encodings: ['x', 'y'],
+        on: 'wheel!',
+      };
+      unionSelection['zoom'] = 'union';
+    }
+    if (this._authorizeSingleSelection) {
+      coreSelections['select'] = {
+        name: 'select',
+        type: 'single',
+        on: 'click!',
+      };
+      unionSelection['select'] = 'union';
+    }
+    this.coreSelections = coreSelections;
+
+    if (this._authorizeGlobalHovering) {
+      encodingChanges.push({ selection: 'hover', value: 1 });
+    }
+    if (this._authorizeMultiSelection) {
+      encodingChanges.push({ selection: 'brush', value: 0.8 });
+    }
+
+    return {
+      allowedSelections: coreSelections,
+      encodingChanges: encodingChanges,
+      unionSelection: unionSelection,
+    };
+  }
+
+  /**
    * prepareVisualization - Prepare and adapt Vega visualization spec to be more Carbon adjacent
    * @param {object} premadeSpec - Vega specification sent in optionally when pre-parsed
    */
@@ -1373,11 +1502,20 @@ export default class chartElement extends LitElement {
       contains: 'padding',
     };
 
+    const unionSelection = {
+      brush: 'union',
+      hover: 'union',
+      zoom: 'union',
+      select: 'union',
+    };
+
     spec.resolve = {
       view: { width: 'independent', height: 'independent' },
+      selection: unionSelection,
     };
     const currentContainerWidth = this.clientWidth - 16 * 2;
     const currentContainerHeight = this.clientHeight - 16 * 2;
+
     this.assignSizes(spec, currentContainerWidth, currentContainerHeight, {
       category: 5,
     });
@@ -1456,7 +1594,17 @@ export default class chartElement extends LitElement {
     spec.width = width;
     spec.height = height;
 
+    const unionSelection = {
+      brush: 'union',
+      hover: 'union',
+      zoom: 'union',
+      select: 'union',
+    };
+
+    spec.resolve = unionSelection;
+
     if (spec.layer) {
+      //spec.resolve = {"selection": unionSelection};
       spec.layer.forEach((child) =>
         this.assignSizes(child, innerWidth, innerHeight, legendNumbers)
       );
@@ -1464,9 +1612,10 @@ export default class chartElement extends LitElement {
     }
 
     if (spec.hconcat || spec.concat) {
-      const key = spec.hconcat ? 'hconcat' : 'contat';
+      const key = spec.hconcat ? 'hconcat' : 'concat';
       const count = spec[key].length;
       const childWidth = innerWidth / count;
+      //spec.resolve = {"selection": unionSelection};
       spec[key].forEach((child) =>
         this.assignSizes(child, childWidth, innerHeight, legendNumbers)
       );
@@ -1476,6 +1625,7 @@ export default class chartElement extends LitElement {
     if (spec.vconcat) {
       const count = spec.vconcat.length;
       const childHeight = innerHeight / count;
+      //spec.resolve = {"selection": unionSelection};
       spec.vconcat.forEach((child) =>
         this.assignSizes(child, innerWidth, childHeight, legendNumbers)
       );
@@ -1483,21 +1633,62 @@ export default class chartElement extends LitElement {
     }
 
     if (spec.repeat && spec.spec) {
-      const rows = Array.isArray(spec.repeat.row) ? spec.repeat.row.length : 1;
-      const cols = Array.isArray(spec.repeat.column)
+      let rows = Array.isArray(spec.repeat.row) ? spec.repeat.row.length : 1;
+      const cols = spec.columns
+        ? spec.columns
+        : Array.isArray(spec.repeat.column)
         ? spec.repeat.column.length
         : 1;
-      const childWidth = innerWidth / cols;
-      const childHeight = innerHeight / rows;
+      if (spec.columns) {
+        rows = (rows % cols) + 1;
+      }
+      const childWidth = innerWidth / cols - 8 * cols;
+      const childHeight = innerHeight / rows - 8 * rows;
+      //spec.resolve = {"selection": unionSelection};
       this.assignSizes(spec.spec, childWidth, childHeight, legendNumbers);
       return;
     }
-    if (spec.facet && spec.spec) {
+    /*if (spec.facet && spec.spec) {
+      spec.resolve = {"selection": unionSelection};
       this.assignSizes(spec.spec, innerWidth, innerHeight, legendNumbers);
+      return;
+    }*/
+    if (spec.facet && spec.spec) {
+      //spec.resolve = {"selection": unionSelection};
+      const rows = Array.isArray(spec.facet.row) ? spec.facet.row.length : 1;
+      const cols = spec.columns
+        ? rows
+          ? rows % cols
+          : spec.columns
+        : Array.isArray(spec.facet.column)
+        ? spec.facet.column.length
+        : 1;
+
+      const childWidth = innerWidth / cols;
+      const childHeight = innerHeight / rows - 8 * rows;
+      //spec.resolve = {"selection": unionSelection};
+      this.assignSizes(spec.spec, childWidth, childHeight, legendNumbers);
       return;
     }
     spec.width = innerWidth;
     spec.height = innerHeight;
+
+    const selectionEncoding = { ...(spec.encoding || {}) };
+    delete selectionEncoding.params;
+    const eventChecker = this._prepareSelections(selectionEncoding);
+    spec.selection = eventChecker.allowedSelections;
+    const opacityConditions = eventChecker.encodingChanges;
+
+    if (opacityConditions.length) {
+      selectionEncoding.opacity = {
+        condition:
+          opacityConditions.length === 1
+            ? opacityConditions[0]
+            : opacityConditions,
+        value: 0.4,
+      };
+    }
+    spec.encoding = selectionEncoding;
   }
 
   /**
@@ -1526,6 +1717,9 @@ export default class chartElement extends LitElement {
       this._errorLevel = 'SPEC-VALIDATION';
       return '';
     }
+
+    this._prepareVisualizationSizing();
+    return '';
 
     if (!spec['repeat']) {
       //spec.width = 'container';
@@ -1734,36 +1928,8 @@ export default class chartElement extends LitElement {
       finalSpec = plainSpec;
     }
 
-    /*const finalSpec={};
-    if ('layer' in spec) {
-      this._specType = 'layered';
-      layeredSpec = this._prepareSpecification(spec, false, true, 0);
-      finalSpec = this._convertToFacet(layeredSpec)
-
-    } else if (spec.encoding?.facet || spec['hconcat'] || spec['vconcat']) {
-      plainSpec = this._prepareSpecification(spec, true, true, 0);//this._configUpdate(spec);
-      finalSpec = this._convertToFacet(plainSpec)
-    } else if (spec['repeat']) {
-      repeatedSpec = this._prepareSpecification(
-        JSON.parse(JSON.stringify(spec)),
-        false,
-        true,
-        0
-      );
-      repeatedSpec['spec'] = this._prepareSpecification(
-        repeatedSpec['spec'],
-        true,
-        false,
-        0
-      );
-      plainSpec = repeatedSpec;
-      finalSpec = this._convertToFacet(plainSpec);
-    }else{
-      plainSpec = this._prepareSpecification(spec, true, true, 0);
-    }*/
-
     this._prepareVisualizationSizing(finalSpec);
-    this._visualizationSpec = finalSpec;
+    //this._visualizationSpec = finalSpec;
     return '';
   }
 
@@ -2308,7 +2474,7 @@ export default class chartElement extends LitElement {
         }
       }
 
-      this._authorizeSingleSelection = false;
+      //this._authorizeSingleSelection = false;
       //this._authorizeMultiSelection = false;
       let isOrdinal: boolean;
       switch (chartType) {
@@ -2486,7 +2652,7 @@ export default class chartElement extends LitElement {
         }
         delete spec.encoding.color.legend;
 
-        this._addInteractions(spec, 'point');
+        //this._addInteractions(spec, 'point');
       }
     }
 

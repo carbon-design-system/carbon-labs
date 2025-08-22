@@ -410,6 +410,9 @@ export default class codeElement extends LitElement {
       //console.log('FIRST: ' + this.renderLanguage);
       this.language = this.renderLanguage;
     }
+    if (this.renderLanguage === 'smiles') {
+      hljs.registerLanguage('smiles', this._addSmilesStyling);
+    }
     if (this.hasAttribute('max-height')) {
       this.style.setProperty('--chat-code-height', this.maxHeight);
     }
@@ -781,7 +784,7 @@ export default class codeElement extends LitElement {
     this._displayedContent = this._originalContent;
     this._currentlyEdited = false;
 
-    const codeEditedEvent = new CustomEvent('on-code-edit-change', {
+    const codeEditedEvent = new CustomEvent('on-code-edit-cancel', {
       detail: {
         previousLineData: this._originalContent,
         newLineText: this._originalContent,
@@ -1186,6 +1189,117 @@ export default class codeElement extends LitElement {
       this._comparisonReference = {};
       this._editedContent = this._originalContent;
     }
+  }
+
+  /**
+   * _addSmilesStyling - custom styling for SMILES molecular code
+   * @param {object} _HLJSContext - internal HLJS object
+   */
+  _addSmilesStyling(_HLJSContext: any) {
+    return {
+      name: 'SMILES',
+      aliases: ['smiles'],
+      case_insensitive: false,
+      contains: [
+        {
+          className: 'atom-bracket',
+          begin: new RegExp('\\[([^\\]]+)\\]'),
+          relevance: 10,
+        },
+        {
+          className: 'atom-br',
+          begin: new RegExp('\\bBr'),
+          relevance: 8,
+        },
+        {
+          className: 'atom-cl',
+          begin: new RegExp('\\bCl'),
+          relevance: 8,
+        },
+        {
+          className: 'atom-c',
+          begin: new RegExp('\\bC\\b'),
+          relevance: 5,
+        },
+        {
+          className: 'atom-n',
+          begin: new RegExp('\\bN\\b'),
+          relevance: 5,
+        },
+        {
+          className: 'atom-o',
+          begin: new RegExp('\\bO\\b'),
+          relevance: 5,
+        },
+        {
+          className: 'atom-s',
+          begin: new RegExp('\\bS\\b'),
+          relevance: 5,
+        },
+        {
+          className: 'atom-p',
+          begin: new RegExp('\\bP\\b'),
+          relevance: 5,
+        },
+        {
+          className: 'atom-f',
+          begin: new RegExp('\\bF\\b'),
+          relevance: 5,
+        },
+        {
+          className: 'atom-i',
+          begin: new RegExp('\\bI\\b'),
+          relevance: 5,
+        },
+        {
+          className: 'atom-b',
+          begin: new RegExp('\\bB\\b'),
+          relevance: 5,
+        },
+        {
+          className: 'atom-h',
+          begin: new RegExp('\\bH\\b'),
+          relevance: 5,
+        },
+        {
+          className: 'atom-aromatic-c',
+          begin: new RegExp('\\bc\\\b'),
+          relevance: 2,
+        },
+        {
+          className: 'atom-aromatic-n',
+          begin: new RegExp('\\bn\\b'),
+          relevance: 2,
+        },
+        {
+          className: 'atom-aromatic-o',
+          begin: new RegExp('\\bo\\b'),
+          relevance: 2,
+        },
+        {
+          className: 'atom-aromatic-s',
+          begin: new RegExp('\\bs\\b'),
+          relevance: 2,
+        },
+        {
+          className: 'atom-aromatic-p',
+          begin: new RegExp('\\bp\\b'),
+          relevance: 2,
+        },
+        {
+          className: 'bond',
+          begin: new RegExp('(-|=|#|:|\\\\|\\/)'),
+          relevance: 1,
+        },
+        {
+          className: 'ring',
+          begin: new RegExp('\\b[1-9][0-9]?\\b'),
+          relevance: 1,
+        },
+
+        { className: 'branch', begin: new RegExp('[()]'), relevance: 0 },
+      ],
+    };
   }
 
   /**

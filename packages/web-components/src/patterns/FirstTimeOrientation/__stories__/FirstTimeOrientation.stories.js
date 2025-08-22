@@ -22,14 +22,11 @@ export default {
 /* eslint-disable jsdoc/require-jsdoc */
 
 export const FirstTimeOrientation = {
- 
   render: () =>
     html`<div class="storyBody">
       <style>
-      ${styles}
+        ${styles}
       </style>
-      <clabs-first-time-orientation ></clabs-first-time-orientation>
-      </div>
-    `,
+      <clabs-first-time-orientation></clabs-first-time-orientation>
+    </div> `,
 };
-

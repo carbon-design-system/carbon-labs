@@ -87,7 +87,7 @@ export class PersonalizationInterstitial extends LitElement {
     `;
   }
 
-   static styles = styles;
+  static styles = styles;
 }
 
 customElements.define(

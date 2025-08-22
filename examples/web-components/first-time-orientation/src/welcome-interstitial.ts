@@ -47,8 +47,7 @@ export class WelcomeInterstitial extends LitElement {
       </cds-grid>
     `;
   }
- static styles = styles;
-  
+  static styles = styles;
 }
 
 customElements.define('welcome-interstitial', WelcomeInterstitial);

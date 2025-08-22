@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.72.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.71.0...@carbon-labs/react-ui-shell@0.72.0) (2025-08-22)
+
+
+### Bug Fixes
+
+* **side-nav:** seconary animation jumping ([#761](https://github.com/carbon-design-system/carbon-labs/issues/761)) ([aa4f25b](https://github.com/carbon-design-system/carbon-labs/commit/aa4f25b1f7bab884d1c754870bb017f246991975))
+
+
+
+
+
 # [0.71.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.70.0...@carbon-labs/react-ui-shell@0.71.0) (2025-08-19)
 
 **Note:** Version bump only for package @carbon-labs/react-ui-shell

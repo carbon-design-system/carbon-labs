@@ -23,15 +23,15 @@ export const CarbonDesignSystem = () => (
         y2="24.402"
         gradientUnits="userSpaceOnUse">
         <stop offset=".25" />
-        <stop offset=".8" stop-opacity="0" />
+        <stop offset=".8" stopOpacity="0" />
       </linearGradient>
       <linearGradient
         id="sr92p1imuc"
         y1="32"
         x2="32"
         gradientUnits="userSpaceOnUse">
-        <stop offset=".1" stop-color="#3ddbd9" />
-        <stop offset=".9" stop-color="#4589ff" />
+        <stop offset=".1" stopColor="#3ddbd9" />
+        <stop offset=".9" stopColor="#4589ff" />
       </linearGradient>
       <mask
         id="xrhnj7550b"
@@ -78,7 +78,7 @@ export const CarbonIBMDotCom = () => (
         y1="9"
         y2="9"
         gradientUnits="userSpaceOnUse">
-        <stop offset=".07" stop-opacity="0" />
+        <stop offset=".07" stopOpacity="0" />
         <stop offset=".977" />
       </linearGradient>
       <linearGradient
@@ -88,7 +88,7 @@ export const CarbonIBMDotCom = () => (
         y1="25"
         y2="25"
         gradientUnits="userSpaceOnUse">
-        <stop offset=".2" stop-opacity="0" />
+        <stop offset=".2" stopOpacity="0" />
         <stop offset=".9" />
       </linearGradient>
       <linearGradient
@@ -98,8 +98,8 @@ export const CarbonIBMDotCom = () => (
         y1="31.638"
         y2=".37"
         gradientUnits="userSpaceOnUse">
-        <stop offset=".1" stop-color="#3ddbd9" />
-        <stop offset=".9" stop-color="#4589ff" />
+        <stop offset=".1" stopColor="#3ddbd9" />
+        <stop offset=".9" stopColor="#4589ff" />
       </linearGradient>
       <mask
         id="c"
@@ -108,16 +108,16 @@ export const CarbonIBMDotCom = () => (
         x="0"
         y="0"
         maskUnits="userSpaceOnUse">
-        <path fill="#fff" stroke-width="0" d="M3 8h25v2H3z" />
-        <path fill="url(#a)" stroke-width="0" d="M14 7h14v4H14z" />
-        <circle cx="7" cy="6" r="1" fill="#fff" stroke-width="0" />
-        <circle cx="11" cy="6" r="1" fill="#fff" stroke-width="0" />
+        <path fill="#fff" strokeWidth="0" d="M3 8h25v2H3z" />
+        <path fill="url(#a)" strokeWidth="0" d="M14 7h14v4H14z" />
+        <circle cx="7" cy="6" r="1" fill="#fff" strokeWidth="0" />
+        <circle cx="11" cy="6" r="1" fill="#fff" strokeWidth="0" />
         <path
           fill="#fff"
-          stroke-width="0"
+          strokeWidth="0"
           d="M28 2H4c-1.103 0-2 .897-2 2v20c0 1.103.897 2 2 2h11v-2H4V4h24v9h2V4c0-1.103-.897-2-2-2z"
         />
-        <path fill="url(#b)" stroke-width="0" d="M4 23h12v4H4z" />
+        <path fill="url(#b)" strokeWidth="0" d="M4 23h12v4H4z" />
       </mask>
     </defs>
     <path
@@ -144,8 +144,8 @@ export const CarbonforIBMProducts = () => (
         y2="5112"
         gradientTransform="translate(1995.7 -5091)"
         gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#000" stop-opacity="0" />
-        <stop offset=".9" stop-color="#000" />
+        <stop offset="0" stopColor="#000" stopOpacity="0" />
+        <stop offset=".9" stopColor="#000" />
       </linearGradient>
       <linearGradient
         id="linear-gradient1"
@@ -155,8 +155,8 @@ export const CarbonforIBMProducts = () => (
         y2="1210.4"
         gradientTransform="translate(1113.2 527) rotate(120)"
         gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#000" stop-opacity="0" />
-        <stop offset=".9" stop-color="#000" />
+        <stop offset="0" stopColor="#000" stopOpacity="0" />
+        <stop offset=".9" stopColor="#000" />
       </linearGradient>
       <linearGradient
         id="linear-gradient2"
@@ -166,8 +166,8 @@ export const CarbonforIBMProducts = () => (
         y2="1393.7"
         gradientTransform="translate(-1294.5 527) rotate(60) scale(1 -1)"
         gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#000" stop-opacity="0" />
-        <stop offset=".9" stop-color="#000" />
+        <stop offset="0" stopColor="#000" stopOpacity="0" />
+        <stop offset=".9" stopColor="#000" />
       </linearGradient>
       <mask
         id="mask"
@@ -204,8 +204,8 @@ export const CarbonforIBMProducts = () => (
         y2="2653"
         gradientTransform="translate(-2621 -6399) rotate(-90)"
         gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#3ddbd9" />
-        <stop offset=".9" stop-color="#4589ff" />
+        <stop offset="0" stopColor="#3ddbd9" />
+        <stop offset=".9" stopColor="#4589ff" />
       </linearGradient>
     </defs>
     <g mask="url(#mask)">

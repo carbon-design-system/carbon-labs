@@ -1,0 +1,70 @@
+
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import * as FirstTimeOrientationStories from './FirstTimeOrientation.stories';
+
+
+<Meta of={FirstTimeOrientationStories} />
+
+
+# First-time orientation pattern
+
+- **Initiative owner(s):** Carbon
+- **Target library maintainer(s) / PR Reviewer(s):** Carbon
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check this out in Stackblitz
+
+[![Open in Stackblitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/first-time-orientation)
+
+
+## Overview
+
+The first-time orientation pattern is built using  [InterstitialScreen component](https://ibm-products-web-components.carbondesignsystem.com/?path=/docs/components-interstitialscreen--overview) component from `@carbon/ibm-products-web-components`
+ of the Carbon for IBM Product's library. 
+
+First-time orientation happens from the moment a user gains access to the product, post login, and guides them to realizing the product’s primary value.
+ The pattern consist of a welcome interstitial and a personalization interstitial. Personalization interstitial uses SelectableTag from Carbon. You can find more details in our [website](https://pages.github.ibm.com/carbon/ibm-products/patterns/onboarding-flows/orientation/).
+
+ 
+
+
+
+<Canvas of={FirstTimeOrientationStories.FirstTimeOrientation} />
+
+## Getting started
+
+Here's a quick example to get you started.
+### HTML
+
+```html
+ <c4p-interstitial-screen
+        ?open=${true}
+        @c4p-interstitial-opened=${(e) => {
+          console.log('event initialize', e.detail);
+        }}
+        @c4p-interstitial-closed=${this.handleClose}>
+        <style>
+          c4p-interstitial-screen-body {
+            block-size: 28rem;
+            display:flex;
+          }
+        </style>
+        <c4p-interstitial-screen-header
+          header-title="Use case-specific title"
+          header-subtitle="Use case-specific sub title"></c4p-interstitial-screen-header>
+        <c4p-interstitial-screen-body>
+          <c4p-interstitial-screen-body-item stepTitle ="Welcome" id="${1}">
+            <welcome-interstitial />
+          </c4p-interstitial-screen-body-item>
+          <c4p-interstitial-screen-body-item stepTitle="Tailor your experience" id="${2}">
+            <personalization-interstitial />
+          </c4p-interstitial-screen-body-item>
+        </c4p-interstitial-screen-body>
+        <c4p-interstitial-screen-footer></c4p-interstitial-screen-footer>
+      </c4p-interstitial-screen>
+```
+

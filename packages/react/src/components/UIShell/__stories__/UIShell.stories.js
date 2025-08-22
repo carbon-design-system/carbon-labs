@@ -274,7 +274,7 @@ export const Demo = () => {
           onClickProfileExpand,
         }) => (
           <>
-            <Header aria-label="IBM Platform Name" ref={headerRef}>
+            <Header aria-label="IBM Platform Name">
               <SkipToContent />
               <HeaderMenuButton
                 aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
@@ -320,7 +320,7 @@ export const Demo = () => {
                   tooltipHighContrast={false}>
                   <SquareOutline size={20} />
                 </HeaderGlobalAction>
-                <HeaderPopover align="bottom-right">
+                <HeaderPopover align="bottom-end">
                   <HeaderPopoverButton align="bottom" label="Help">
                     <Help size={20} />
                   </HeaderPopoverButton>
@@ -336,7 +336,7 @@ export const Demo = () => {
                     </HeaderPopoverActions>
                   </HeaderPopoverContent>
                 </HeaderPopover>
-                <HeaderPopover align="bottom-right">
+                <HeaderPopover align="bottom-end">
                   <HeaderPopoverButton align="bottom" label="Notifications">
                     <Notification size={20} />
                   </HeaderPopoverButton>

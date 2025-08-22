@@ -177,7 +177,18 @@ export const Default = {
   args: defaultArgs,
   /**
    * Renders the template for Storybook
-   * @param {string} args.content - content to generate from
+   * @param {boolean} open - open
+   * @param {array} promptSamples - promptSamples
+   * @param {array} viewList - viewlist
+   * @param {objext} currentView - currentView
+   * @param {function} onSaveRename - onSaveRename
+   * @param {function} onCloseTag - onCloseTag
+   * @param {function} onAddContextVariable - onAddContextVariable
+   * @param {function} onAddParameter - onAddParameter
+   * @param {function} onSavePrompt - onSavePrompt
+   * @param {function} onDeletePrompt - onDeletePrompt
+   * @param {function} onChangeView - onChangeView
+   * @param {function} onAddPrompt - onAddPrompt
    * @returns {TemplateResult<1>}
    */
   render: ({

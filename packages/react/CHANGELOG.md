@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.115.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.114.0...@carbon-labs/react@0.115.0) (2025-08-22)
+
+
+### Features
+
+* **SideNav:** implement pin and auto expand ([#742](https://github.com/carbon-design-system/carbon-labs/issues/742)) ([1792c4f](https://github.com/carbon-design-system/carbon-labs/commit/1792c4f3ddd8dbeaf7a4450bc762864e36ea8afe))
+
+
+
+
+
 # [0.114.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.113.0...@carbon-labs/react@0.114.0) (2025-08-22)
 
 

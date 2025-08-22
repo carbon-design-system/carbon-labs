@@ -9,8 +9,8 @@
 import React from 'react';
 import mdx from './AnimatedHeader.mdx';
 import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
-import { useArgs } from '@storybook/preview-api';
-import type { Meta } from '@storybook/react';
+import { useArgs } from 'storybook/preview-api';
+import type { Meta } from '@storybook/react-webpack5';
 import '../components/animated-header.scss';
 
 import {

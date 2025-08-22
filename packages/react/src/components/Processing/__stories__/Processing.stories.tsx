@@ -10,8 +10,8 @@
 import React from 'react';
 import mdx from './Processing.mdx';
 import Processing from '../components/Processing';
-import { useArgs } from '@storybook/preview-api';
-import type { Meta, StoryObj } from '@storybook/react';
+import { useArgs } from 'storybook/preview-api';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import '../components/processing.scss';
 
 const meta: Meta<typeof Processing> = {

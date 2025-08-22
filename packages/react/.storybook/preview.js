@@ -4,7 +4,7 @@ import { breakpoints } from '@carbon/layout';
 import { GlobalTheme, Theme } from '@carbon/react/es/components/Theme';
 import { Layout } from '@carbon/react/es/components/Layout';
 import { TextDirection } from '@carbon/react/es/components/Text';
-import { DocsContainer, Meta, Unstyled } from '@storybook/blocks';
+import { DocsContainer, Meta, Unstyled } from '@storybook/addon-docs/blocks';
 import {
   Accordion,
   AccordionItem,
@@ -246,6 +246,7 @@ export const parameters = {
   docs: {
     container: Container,
     theme: theme,
+    codePanel: true
   },
   options: {
     storySort: {
@@ -342,6 +343,7 @@ const preview = {
   parameters,
   decorators,
   globalTypes,
+  tags: ['autodocs']
 };
 
 export default preview;

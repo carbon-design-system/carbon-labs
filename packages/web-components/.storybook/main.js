@@ -27,17 +27,18 @@ const config = {
     '../src/**/__stories__/*.mdx',
     '../src/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
+
+  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-docs")],
+
   framework: {
     name: getAbsolutePath('@storybook/web-components-vite'),
     options: {},
   },
-  docs: {
-    autodocs: 'tag',
-  },
+
   features: {
     storyStoreV7: true,
   },
+
   async viteFinal(config) {
     return mergeConfig(config, {
       css: {
@@ -61,6 +62,6 @@ const config = {
         }),
       ],
     });
-  },
+  }
 };
 export default config;

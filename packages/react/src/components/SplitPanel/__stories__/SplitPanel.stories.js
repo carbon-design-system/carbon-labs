@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import mdx from './SplitPanel.mdx';
 import { SplitPanel } from '../components/SplitPanel';
 import '../components/split-panel.scss';

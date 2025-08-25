@@ -11639,7 +11639,7 @@ __metadata:
     lint-staged: "npm:^15.0.2"
     lit: "npm:^3.2.1"
     prettier: "npm:^2.8.8"
-    prettier-config-carbon: "npm:^0.11.0"
+    prettier-config-carbon: "npm:^0.12.0"
     rimraf: "npm:^6.0.1"
     rollup: "npm:^4.0.0"
     rollup-plugin-esbuild: "npm:^6.1.0"
@@ -24228,12 +24228,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-config-carbon@npm:^0.11.0":
-  version: 0.11.0
-  resolution: "prettier-config-carbon@npm:0.11.0"
+"prettier-config-carbon@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "prettier-config-carbon@npm:0.12.0"
   peerDependencies:
-    prettier: 2.x
-  checksum: 10c0/8276bfe359c00b52df4160b0434b16d82ae6d75c593158f1b0e8a7a21e4b97f98da25ca532b93dff33e7f86c20eed50c46130257ba08e1ad125f3a9caa572e7b
+    prettier: 3.x
+  checksum: 10c0/bf3c0dff9b686dd9715ceacfbf4262e380d038033c5358ece3a43fdbf9a2049b013e66bb4052677910686fe7e83ef08cdcd5c7a171732db2efbc9fc7620d684b
   languageName: node
   linkType: hard
 

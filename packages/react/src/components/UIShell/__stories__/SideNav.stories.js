@@ -414,7 +414,7 @@ export const Rail = () => (
  */
 export const RailPanel = () => (
   <SideNav
-    navType={SIDE_NAV_TYPE.PANEL}
+    navType={SIDE_NAV_TYPE.RAIL_PANEL}
     hideOverlay
     isChildOfHeader={false}
     aria-label="Product navigation">
@@ -502,5 +502,3 @@ export const RailPanel = () => (
     </SideNavItems>
   </SideNav>
 );
-
-RailPanel.storyName = 'Rail with flyouts';

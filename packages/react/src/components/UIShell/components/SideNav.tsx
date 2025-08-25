@@ -13,6 +13,7 @@ import React, {
   type MouseEventHandler,
   isValidElement,
   createContext,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -28,13 +29,19 @@ import { useDelayedState } from '../internal/useDelayedState';
 import { breakpoints } from '@carbon/layout';
 import { useMatchMedia } from '../internal/useMatchMedia';
 import { TranslateWithId } from '../types/common';
-import { SidePanelClose, SidePanelOpen } from '@carbon/icons-react';
+import {
+  Pin,
+  PinFilled,
+  SidePanelClose,
+  SidePanelOpen,
+} from '@carbon/icons-react';
 import SideNavToggle from './SideNavToggle';
+import { SideNavDivider } from '@carbon/react';
 
 export enum SIDE_NAV_TYPE {
   DEFAULT = 'default',
   RAIL = 'rail',
-  PANEL = 'panel',
+  RAIL_PANEL = 'panel',
 }
 
 export type TranslationKey = keyof typeof translationIds;
@@ -42,11 +49,15 @@ export type TranslationKey = keyof typeof translationIds;
 export const translationIds = {
   'collapse.sidenav': 'collapse.sidenav',
   'expand.sidenav': 'expand.sidenav',
+  'enable.autoexpand': 'enable.autoexpand',
+  'disable.autoexpand': 'disable.autoexpand',
 } as const;
 
 const defaultTranslations: Record<TranslationKey, string> = {
-  [translationIds['collapse.sidenav']]: 'Collapse',
-  [translationIds['expand.sidenav']]: 'Expand',
+  [translationIds['collapse.sidenav']]: 'Unpin',
+  [translationIds['expand.sidenav']]: 'Pin open',
+  [translationIds['enable.autoexpand']]: 'Enable auto-expand',
+  [translationIds['disable.autoexpand']]: 'Disable auto-expand',
 };
 
 const defaultTranslateWithId = (id: TranslationKey): string =>
@@ -80,6 +91,7 @@ export interface SideNavProps
 }
 
 interface SideNavContextData {
+  autoExpand?: boolean;
   expanded?: boolean;
   isRail?: boolean;
   navType?: SIDE_NAV_TYPE;
@@ -127,9 +139,11 @@ function SideNavRenderFunction(
   );
   const prefix = usePrefix();
   const { current: controlled } = useRef(expandedProp !== undefined);
+  const [autoExpand, setAutoExpand] = useState(false);
   const [expandedState, setExpandedState] = useDelayedState(defaultExpanded);
   const [expandedViaHoverState, setExpandedViaHoverState] =
     useDelayedState(defaultExpanded);
+  const [pinned, setPinned] = useState(false);
   const expanded = controlled ? expandedProp : expandedState;
   const sideNavRef = useRef<HTMLDivElement>(null);
   const navRef = useMergedRefs([sideNavRef, ref]);
@@ -137,9 +151,11 @@ function SideNavRenderFunction(
     string | undefined
   >();
 
-  const sideNavToggleText = expandedState
-    ? t('collapse.sidenav')
-    : t('expand.sidenav');
+  const pinText = pinned ? t('collapse.sidenav') : t('expand.sidenav');
+
+  const autoExpandText = autoExpand
+    ? t('disable.autoexpand')
+    : t('enable.autoexpand');
 
   const handleToggle: typeof onToggle = (event, value = !expanded) => {
     if (!controlled) {
@@ -164,8 +180,9 @@ function SideNavRenderFunction(
     [`${prefix}--side-nav--collapsed`]: !expanded && isFixedNav,
     [`${prefix}--side-nav--hide-rail-breakpoint-down-${hideRailBreakpointDown}`]:
       hideRailBreakpointDown,
-    [`${prefix}--side-nav--rail`]: isRail,
-    [`${prefix}--side-nav--panel`]: navType === SIDE_NAV_TYPE.PANEL,
+    [`${prefix}--side-nav--rail`]: isRail || autoExpand,
+    [`${prefix}--side-nav--panel`]: navType === SIDE_NAV_TYPE.RAIL_PANEL,
+    [`${prefix}--side-nav--pinned`]: pinned,
     [`${prefix}--side-nav--ux`]: isChildOfHeader,
     [`${prefix}--side-nav--hidden`]: !isPersistent,
     [`${prefix}--side-nav--collapsible`]: isCollapsible,
@@ -216,6 +233,23 @@ function SideNavRenderFunction(
     >
   > = {};
 
+  const resetNodeTabIndices = useCallback(() => {
+    const items = sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [];
+    items.forEach((item) => {
+      if (
+        item.classList.contains(`${prefix}--side-nav__toggle`) ||
+        item.classList.contains(`${prefix}--side-nav__back-button`) ||
+        item.closest(`.${prefix}--side-nav__slot-item`) ||
+        (item.classList.contains(`${prefix}--side-nav__link`) &&
+          (item as HTMLElement).closest('ul')?.getAttribute('aria-label') ===
+            ariaLabel)
+      ) {
+        return;
+      }
+      item.tabIndex = -1;
+    });
+  }, [prefix, ariaLabel]);
+
   const treeWalkerRef = useRef<TreeWalker | null>(null);
   useEffect(() => {
     if (internalIsTreeview) {
@@ -245,7 +279,7 @@ function SideNavRenderFunction(
         );
       resetNodeTabIndices();
     }
-  }, [prefix, internalIsTreeview]);
+  }, [prefix, internalIsTreeview, resetNodeTabIndices]);
 
   const smMediaQuery = `(min-width: ${breakpoints.sm.width})`;
   const isSm = useMatchMedia(smMediaQuery);
@@ -268,7 +302,7 @@ function SideNavRenderFunction(
         `.cds--side-nav__link--current`
       ) as HTMLElement;
 
-      if (navType == SIDE_NAV_TYPE.PANEL || expanded) {
+      if (navType == SIDE_NAV_TYPE.RAIL_PANEL || expanded) {
         if (isSm && backButton) {
           backButton.tabIndex = 0;
           const firstElementAfterBack =
@@ -299,7 +333,7 @@ function SideNavRenderFunction(
         }
       }
     }
-  }, [expanded]);
+  }, [expanded, currentPrimaryMenu, isSm, navType, prefix]);
 
   /**
    * Returns the parent SideNavMenu, if node is actually inside one.
@@ -318,12 +352,15 @@ function SideNavRenderFunction(
 
   if (addFocusListeners) {
     eventHandlers.onFocus = (event) => {
-      if (!event.currentTarget.contains(event.relatedTarget) && isRail) {
+      if (
+        !event.currentTarget.contains(event.relatedTarget) &&
+        (isRail || autoExpand)
+      ) {
         handleToggle(event, true);
       }
     };
     eventHandlers.onBlur = (event) => {
-      if (navType === SIDE_NAV_TYPE.PANEL) {
+      if (navType === SIDE_NAV_TYPE.RAIL_PANEL) {
         return;
       }
 
@@ -529,7 +566,7 @@ function SideNavRenderFunction(
     };
   }
 
-  if (addMouseListeners && isRail) {
+  if (addMouseListeners && !pinned && (isRail || autoExpand)) {
     eventHandlers.onMouseEnter = () => {
       handleToggle(true, true);
     };
@@ -539,6 +576,9 @@ function SideNavRenderFunction(
       handleToggle(false, false);
     };
     eventHandlers.onClick = () => {
+      if (autoExpand) {
+        return;
+      }
       //if delay is enabled, and user intentionally clicks it to see it expanded immediately
       setExpandedState(true);
       setExpandedViaHoverState(true);
@@ -555,7 +595,8 @@ function SideNavRenderFunction(
     if (
       isNavItemClick &&
       !isNavItemClick.classList.contains(`${prefix}--side-nav__submenu`) &&
-      !isNavItemClick.classList.contains(`${prefix}--side-nav__back-button`)
+      !isNavItemClick.classList.contains(`${prefix}--side-nav__back-button`) &&
+      !isNavItemClick.classList.contains(`${prefix}--side-nav__toggle`)
     ) {
       isInRail ? handleToggle(false, false) : onSideNavBlur?.();
     }
@@ -582,23 +623,6 @@ function SideNavRenderFunction(
 
   hideOverlay;
 
-  function resetNodeTabIndices() {
-    const items = sideNavRef?.current?.querySelectorAll('[tabIndex="0"]') ?? [];
-    items.forEach((item) => {
-      if (
-        item.classList.contains(`${prefix}--side-nav__toggle`) ||
-        item.classList.contains(`${prefix}--side-nav__back-button`) ||
-        item.closest(`.${prefix}--side-nav__slot-item`) ||
-        (item.classList.contains(`${prefix}--side-nav__link`) &&
-          (item as HTMLElement).closest('ul')?.getAttribute('aria-label') ===
-            ariaLabel)
-      ) {
-        return;
-      }
-      item.tabIndex = -1;
-    });
-  }
-
   // ensure that changes are in sync with internal treeview prop
   useEffect(() => {
     if (isTreeviewProp !== undefined) {
@@ -613,18 +637,25 @@ function SideNavRenderFunction(
     }
   };
 
-  const SideNavToggleButton = (
-    <SideNavToggle
-      className={!expandedState ? `${prefix}--side-nav__toggle--collapsed` : ''}
-      renderIcon={expandedState ? SidePanelClose : SidePanelOpen}
-      onClick={() => setExpandedState(!expandedState)}>
-      {sideNavToggleText}
-    </SideNavToggle>
-  );
+  const handlePinClick = () => {
+    setPinned(!pinned);
+    if (!autoExpand) {
+      setExpandedState(!pinned);
+    }
+  };
+
+  const handleAutoExpand = () => {
+    if (pinned) {
+      return;
+    }
+    setExpandedState(!autoExpand);
+    setAutoExpand(!autoExpand);
+  };
 
   return (
     <SideNavContext.Provider
       value={{
+        autoExpand,
         expanded,
         isRail,
         navType,
@@ -633,7 +664,9 @@ function SideNavRenderFunction(
         currentPrimaryMenu,
         setCurrentPrimaryMenu,
       }}>
-      {isFixedNav || hideOverlay || navType === SIDE_NAV_TYPE.PANEL ? null : (
+      {isFixedNav ||
+      hideOverlay ||
+      navType === SIDE_NAV_TYPE.RAIL_PANEL ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div className={overlayClassName} onClick={onOverlayClick} />
       )}
@@ -643,7 +676,7 @@ function SideNavRenderFunction(
         ref={navRef}
         className={`${prefix}--side-nav__navigation ${className}`}
         inert={
-          !isRail && navType !== SIDE_NAV_TYPE.PANEL && !(expanded || isLg)
+          !isRail && navType !== SIDE_NAV_TYPE.RAIL_PANEL && !(expanded || isLg)
             ? -1
             : undefined
         }
@@ -651,14 +684,22 @@ function SideNavRenderFunction(
         {...eventHandlers}
         {...other}>
         {childrenToRender}
-        {navType === SIDE_NAV_TYPE.PANEL &&
-          (expandedState ? (
-            SideNavToggleButton
-          ) : (
-            <div className={`${prefix}--side-nav__toggle-container`}>
-              {SideNavToggleButton}
-            </div>
-          ))}
+        {navType === SIDE_NAV_TYPE.RAIL_PANEL && (
+          <ul className={`${prefix}--side-nav__toggle-container`}>
+            <SideNavDivider />
+            <SideNavToggle
+              onClick={handlePinClick}
+              renderIcon={pinned ? PinFilled : Pin}>
+              {pinText}
+            </SideNavToggle>
+            <SideNavToggle
+              disabled={pinned}
+              renderIcon={expandedState ? SidePanelClose : SidePanelOpen}
+              onClick={handleAutoExpand}>
+              {autoExpandText}
+            </SideNavToggle>
+          </ul>
+        )}
       </nav>
     </SideNavContext.Provider>
   );

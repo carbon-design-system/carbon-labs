@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.74.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.73.0...@carbon-labs/react-ui-shell@0.74.0) (2025-08-22)
+
+
+### Bug Fixes
+
+* **ui-shell:** console errors ([#764](https://github.com/carbon-design-system/carbon-labs/issues/764)) ([2a2debd](https://github.com/carbon-design-system/carbon-labs/commit/2a2debde5900089f9e55a7715755932dc4e7d131))
+
+
+
+
+
+# [0.73.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.72.0...@carbon-labs/react-ui-shell@0.73.0) (2025-08-22)
+
+
+### Features
+
+* **SideNav:** implement pin and auto expand ([#742](https://github.com/carbon-design-system/carbon-labs/issues/742)) ([1792c4f](https://github.com/carbon-design-system/carbon-labs/commit/1792c4f3ddd8dbeaf7a4450bc762864e36ea8afe))
+
+
+
+
+
+# [0.72.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.71.0...@carbon-labs/react-ui-shell@0.72.0) (2025-08-22)
+
+
+### Bug Fixes
+
+* **side-nav:** seconary animation jumping ([#761](https://github.com/carbon-design-system/carbon-labs/issues/761)) ([aa4f25b](https://github.com/carbon-design-system/carbon-labs/commit/aa4f25b1f7bab884d1c754870bb017f246991975))
+
+
+
+
+
 # [0.71.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.70.0...@carbon-labs/react-ui-shell@0.71.0) (2025-08-19)
 
 **Note:** Version bump only for package @carbon-labs/react-ui-shell

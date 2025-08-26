@@ -8,12 +8,17 @@
  */
 
 import React from 'react';
-import { Layer } from '@carbon/react';
+import { Layer, IconButton } from '@carbon/react';
+import {
+  ColorPalette,
+  TrashCan,
+  OverflowMenuVertical,
+} from '@carbon/react/icons';
 import mdx from './StylePicker.mdx';
 import styles from './_storybook-styles.scss?inline';
 import {
   CLABSStylePicker,
-  // CLABSStylePickerColor,
+  CLABSStylePickerColor,
   CLABSStylePickerGroup,
   // CLABSStylePickerIcon,
   CLABSStylePickerOption,
@@ -25,6 +30,7 @@ export default {
   title: 'Components/StylePicker',
   component: CLABSStylePicker,
   parameters: {
+    layout: 'centered',
     styles,
     docs: {
       page: mdx,
@@ -32,22 +38,36 @@ export default {
   },
 };
 
+const colors = ['red', 'blue', 'green'];
+
 /**
  * Default story for StylePicker
  */
 export const Default = () => (
   <div className="style-picker-story-container">
-    <Layer>
-      <CLABSStylePicker open heading="Example">
+    <Layer className="toolbar-layer">
+      <CLABSStylePicker open heading="Choose color" enableSearch>
+        <div slot="trigger" style={{ display: 'contents' }}>
+          <IconButton label="Color palette" kind="ghost">
+            <ColorPalette />
+          </IconButton>
+        </div>
         <CLABSStylePickerSection>
-          <CLABSStylePickerGroup heading="example group">
-            <CLABSStylePickerOption
-              value="example option"
-              label="example option"
-            />
+          <CLABSStylePickerGroup heading="Color">
+            {colors.map((color) => (
+              <CLABSStylePickerOption key={color} value={color} label={color}>
+                <CLABSStylePickerColor color={color} label={color} />
+              </CLABSStylePickerOption>
+            ))}
           </CLABSStylePickerGroup>
         </CLABSStylePickerSection>
       </CLABSStylePicker>
+      <IconButton label="Delete" kind="ghost">
+        <TrashCan />
+      </IconButton>
+      <IconButton label="More" kind="ghost">
+        <OverflowMenuVertical />
+      </IconButton>
     </Layer>
   </div>
 );

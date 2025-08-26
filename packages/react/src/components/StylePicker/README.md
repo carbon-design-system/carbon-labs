@@ -12,7 +12,7 @@
 
 ## Getting started
 
-Install `@carbon-labs/StylePicker` to use this package.
+Install `@carbon-labs/react-style-picker` to use this package.
 
 ### Storybook
 

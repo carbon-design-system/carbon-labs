@@ -2625,6 +2625,7 @@ __metadata:
   resolution: "@carbon-labs/react-style-picker@workspace:packages/react/src/components/StylePicker"
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
+    "@carbon-labs/wc-style-picker": "workspace:^"
   languageName: unknown
   linkType: soft
 
@@ -2845,7 +2846,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker":
+"@carbon-labs/wc-style-picker@workspace:^, @carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker"
   dependencies:

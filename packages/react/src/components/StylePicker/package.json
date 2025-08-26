@@ -36,5 +36,8 @@
   },
   "devDependencies": {
     "@carbon-labs/utilities": "canary"
+  },
+  "dependencies": {
+    "@carbon-labs/wc-style-picker": "workspace:^"
   }
 }

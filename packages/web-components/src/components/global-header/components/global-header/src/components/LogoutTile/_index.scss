@@ -1,0 +1,52 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/type';
+@use '@carbon/styles/scss/spacing' as layout;
+@use '../../globals/styles/vars' as *;
+
+$component-class: #{$automation-prefix}logout-tile;
+
+.#{$component-class} {
+  width: 25rem;
+  height: 10rem;
+}
+
+.#{$component-class}--brand {
+  @include type.type-style('heading-05');
+
+  margin-right: layout.$spacing-04;
+}
+
+.#{$component-class}--product {
+  @include type.type-style('heading-05');
+
+  font-weight: bold;
+}
+
+.#{$component-class}--description {
+  @include type.type-style('heading-03');
+
+  margin-top: layout.$spacing-02;
+  font-weight: 400;
+}
+
+.#{$component-class}--button {
+  right: 0;
+  bottom: 0;
+  position: absolute;
+
+  a {
+    width: 11rem;
+  }
+
+  button {
+    width: 15rem;
+  }
+}

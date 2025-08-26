@@ -1,0 +1,226 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+
+cds-custom-header-global-action.mcsp-header-user-profile {
+  display: flex;
+  block-size: 48px;
+  inline-size: 48px;
+}
+
+cds-custom-header-global-action apaas-user-profile-image {
+  inline-size: 100%;
+}
+
+.ibm-automation-cds__help-menu {
+  list-style: none;
+
+  svg {
+    fill: #ffffff;
+  }
+
+  ul {
+    transform: translateX(calc(3rem - 100%)) translateY(100%) !important;
+  }
+
+  .ibm-automation-cds--text-truncate--end {
+    display: flex;
+    justify-content: space-between;
+    inline-size: 320px;
+  }
+
+  .ibm-automation-cds--header__menu-item {
+    padding: 12px;
+    block-size: 47px;
+  }
+}
+
+.automation-global-header__notification {
+  svg {
+    fill: #ffffff;
+
+    circle {
+      fill: #d61f28;
+    }
+  }
+}
+
+cds-custom-header-global-action.mcsp-header-user-profile > div {
+  border-radius: 50%;
+  margin: 7px;
+  background-color: #1192e8;
+  block-size: 32px;
+  inline-size: 32px;
+
+  svg {
+    margin: 6px;
+  }
+}
+
+.automation-global-header__divider::before {
+  display: block;
+  background-color: var(--cds-custom-border-subtle);
+  block-size: 2.5rem;
+  content: '';
+  inline-size: 0.0625rem;
+  transform: translateY(0.25rem);
+}
+
+.automation--header__group {
+  position: relative;
+  display: flex;
+}
+
+.automation-global-header--popover-content-container {
+  .ibm-automation-cds--popover {
+    span {
+      display: none !important;
+    }
+
+    .ibm-automation-cds--popover-content {
+      @include type-style('body-01');
+
+      padding: $spacing-01 $spacing-03;
+      background-color: #393939;
+
+      color: #ffffff;
+    }
+
+    .ibm-automation-cds--popover-caret {
+      display: none !important;
+    }
+  }
+}
+
+.ibm-automation-cds--custom-header__nav {
+  display: block !important;
+}
+
+.ibm-automation-cds--header__global {
+  .ibm-automation-cds--popover {
+    span {
+      display: none !important;
+    }
+  }
+}
+
+.c4p--user-profile-image--light {
+  color: #000000;
+}
+
+.automation-global-header__trial-menu__counting-box-alert {
+  background-image:
+    linear-gradient(135deg, #161616, #161616),
+    linear-gradient(135deg, $red-50, $red-50);
+}
+
+.automation-global-header__trial-menu {
+  color: $gray-10;
+
+  &::part(button) {
+    display: flex;
+    align-items: center;
+    padding: 0 $spacing-04;
+    inline-size: unset;
+  }
+
+  p {
+    @include type-style('label-01');
+  }
+
+  .trial-label {
+    color: #f4f4f4;
+    padding-inline-start: 5px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .automation-global-header__trial-menu__counting-box {
+    border: 1px solid transparent;
+    border-radius: 0.125rem;
+    background-clip: padding-box, border-box;
+    background-image:
+      linear-gradient(135deg, $gray-100, $gray-100),
+      linear-gradient(135deg, $blue-70, $purple-40);
+    background-origin: padding-box, border-box;
+    block-size: 1.25rem;
+    color: $gray-10;
+    font-size: 14px;
+    font-weight: 600;
+    min-inline-size: 1rem;
+    text-align: center;
+  }
+
+  .automation-global-header__trial-menu__counting-box-alert {
+    background-image:
+      linear-gradient(135deg, #161616, #161616),
+      linear-gradient(135deg, $red-50, $red-50);
+  }
+}
+
+.automation-global-header__trial-menu:hover {
+  .automation-global-header__trial-menu__counting-box {
+    background-image:
+      linear-gradient(135deg, #353535, #353535),
+      linear-gradient(135deg, $blue-70, $purple-40) !important;
+  }
+
+  .automation-global-header__trial-menu__counting-box-alert {
+    background-image:
+      linear-gradient(135deg, #353535, #353535),
+      linear-gradient(135deg, $red-50, $red-50) !important;
+  }
+}
+
+.ibm-automation-cds--header__action:hover {
+  background-color: #393939;
+}
+
+.ibm-automation-cds--btn.ibm-automation-cds--btn--icon-only.ibm-automation-cds--header__action
+  svg {
+  fill: #ffffff;
+}
+
+// for windows high contrast mode
+@media (forced-colors: active) {
+  .ibm-automation-cds--btn.ibm-automation-cds--btn--icon-only.ibm-automation-cds--header__action
+    svg {
+    fill: #ffffff;
+  }
+}
+
+@media (forced-colors: active) and (-ms-high-contrast: black-on-white) {
+  .ibm-automation-cds--btn.ibm-automation-cds--btn--icon-only.ibm-automation-cds--header__action
+    svg {
+    fill: #000000;
+  }
+}
+
+@media (forced-colors: active) and (-ms-high-contrast: white-on-black) {
+  .ibm-automation-cds--btn.ibm-automation-cds--btn--icon-only.ibm-automation-cds--header__action
+    svg {
+    fill: #ffffff;
+  }
+}
+
+.automation-global-header__switcher {
+  border: 0 !important;
+  block-size: max-content;
+  inline-size: max-content;
+  min-block-size: max-content;
+}
+
+.c4p--notifications-panel__container {
+  border: 0;
+  block-size: max-content;
+  min-block-size: max-content;
+}

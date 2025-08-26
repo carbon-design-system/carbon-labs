@@ -1,0 +1,124 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '../../globals/styles/vars' as *;
+
+.automation-global-header__switcher {
+  border: 0 !important;
+  block-size: max-content;
+  color: $gray-40;
+  inline-size: max-content;
+  min-block-size: max-content;
+}
+
+.automation-global-header__switcher-menu {
+  display: inline-block;
+  block-size: 47px;
+  color: $gray-40;
+  list-style-type: none;
+  min-inline-size: $spacing-12 * 2 !important;
+
+  &-item {
+    &-title {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      span {
+        overflow: hidden;
+        margin-inline-end: $spacing-06;
+        max-inline-size: 224px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &-hidden-checkmark {
+        visibility: hidden;
+      }
+    }
+
+    &-title-icons-left {
+      display: flex;
+
+      div {
+        margin-inline-end: $spacing-05;
+      }
+
+      span {
+        overflow: hidden;
+        margin-inline-end: $spacing-05;
+        max-inline-size: 224px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    * > span {
+      inline-size: 100%;
+    }
+  }
+
+  &-disabled {
+    pointer-events: none;
+  }
+
+  &.hybrid-ipaas {
+    .cds--header__menu-item + .cds--header__menu-title[aria-expanded='false'] {
+      inline-size: 100% !important;
+      min-inline-size: $spacing-12 * 2.5 !important;
+    }
+  }
+
+  &-group-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    block-size: 47px;
+    color: $gray-10;
+    margin-inline-start: $spacing-05;
+    pointer-events: none;
+    @include type-style('heading-compact-01');
+  }
+}
+
+.automation-global-header__switcher-menu-item {
+  > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 224px;
+  }
+}
+
+cds-custom-header-menu::part(menu-body) {
+  inline-size: 100% !important;
+  max-block-size: calc(100vh - 47px);
+  min-inline-size: 15rem !important;
+  overflow-x: hidden;
+}
+
+cds-custom-header-menu::part(trigger) {
+  display: flex !important;
+  overflow: hidden;
+  flex-direction: row !important;
+  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  max-inline-size: 224px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+cds-custom-header-menu-item:nth-last-child(2) {
+  border-block-end: 1px solid $gray-80; /* Divider */
+}

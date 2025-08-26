@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import mdx from './ThemeSettings.mdx';
 import {
   ThemeMenuComplement,

@@ -119,7 +119,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
               kind="ghost"
               size="sm"
               disabled={!textInput}
-              align="top-right"
+              align="top-end"
               onClick={() => {
                 onClick?.();
                 openInNewTab(`${href}&primed_chat=${textInput}`);

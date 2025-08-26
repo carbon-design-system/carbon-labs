@@ -1,6 +1,6 @@
 import './styles.scss';
 
-/** @type { import('@storybook/web-components').Preview } */
+/** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {
   parameters: {
     controls: {

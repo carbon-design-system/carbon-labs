@@ -19,9 +19,21 @@ div:has(.#{$prefix}--side-nav--panel) ~ .#{$prefix}--content {
   transition: $fast-02 motion(exit, productive);
 }
 
-.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded
+.#{$prefix}--side-nav--panel:not(
+    .#{$prefix}--side-nav--rail
+  ).#{$prefix}--side-nav--expanded
   ~ .#{$prefix}--content,
-div:has(.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded)
+.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--pinned.#{$prefix}--side-nav--expanded
+  ~ .#{$prefix}--content,
+div:has(
+    .#{$prefix}--side-nav--panel:not(
+        .#{$prefix}--side-nav--rail
+      ).#{$prefix}--side-nav--expanded
+  )
+  ~ .#{$prefix}--content,
+div:has(
+    .#{$prefix}--side-nav--panel.#{$prefix}--side-nav--pinned.#{$prefix}--side-nav--expanded
+  )
   ~ .#{$prefix}--content {
   margin-inline-start: convert.to-rem(256px);
   transition: $moderate-01 motion(standard, productive);

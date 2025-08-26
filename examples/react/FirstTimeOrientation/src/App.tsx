@@ -32,7 +32,7 @@ function App() {
         Show Interstitial modal
       </Button>
       <InterstitialScreen
-        isOpen={showInterstitialModal}
+        open={showInterstitialModal}
         onClose={() => {
           setShowInterstitialModal(false);
         }}

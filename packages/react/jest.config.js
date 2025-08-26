@@ -18,7 +18,10 @@ export default {
     '^.+\\.(ts|tsx)$': 'ts-jest',
     '^.+\\.(js|jsx)$': ['babel-jest', { configFile: './.babelrc' }],
   },
-  transformIgnorePatterns: ['/node_modules/(?!@carbon-labs)'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!@carbon-labs)/',
+    '/node_modules/(?!@lit)/', // necessary for @lit/react wrapper components
+  ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
   // Test file patterns to match

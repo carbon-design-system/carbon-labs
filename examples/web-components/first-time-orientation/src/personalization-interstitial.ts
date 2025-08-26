@@ -55,10 +55,10 @@ export class PersonalizationInterstitial extends LitElement {
     const prefix = 'clabs';
 
     return html`
-      <div class="${prefix}__flexContainer">
-        <div class="${prefix}__contentColumn">
+      <div class="${prefix}__flex-container">
+        <div class="${prefix}__content-column">
           <div
-            class="${prefix}__interstitialTextContainer ${prefix}__firstTimeOrientation">
+            class="${prefix}__interstitial-text-container ${prefix}__firstTimeOrientation">
             <h4>What experience interest you?</h4>
             <p>
               Personalize your experience by selecting all areas you want to

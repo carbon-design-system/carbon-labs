@@ -25,10 +25,9 @@ export class WelcomeInterstitial extends LitElement {
     const prefix = 'clabs';
 
     return html`
-      <cds-grid class="${prefix}__flexContainer">
-        <cds-column lg="8" md="4" sm="4" class="${prefix}__contentColumn"
-          ><div
-            class="${prefix}__interstitialTextContainer interstitialTextContainer">
+      <cds-grid class="${prefix}__flex-container">
+        <cds-column lg="8" md="4" sm="4" class="${prefix}__content-column"
+          ><div class="${prefix}__interstitial-text-container">
             <h3><span>Built to scale; made for the analyst</span></h3>
             <p>
               Explore how to leverage search-based detection of your logs,
@@ -41,7 +40,7 @@ export class WelcomeInterstitial extends LitElement {
         <cds-column lg="8" md="4" sm="4">
           <img
             src="${welcomeImage}"
-            class="${prefix}__interstitialImage interstitialImage"
+            class="${prefix}__interstitial-image"
             alt="Welcome interstitial"
         /></cds-column>
       </cds-grid>

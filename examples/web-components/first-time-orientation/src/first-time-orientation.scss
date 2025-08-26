@@ -22,11 +22,11 @@ $prefix: 'clabs' !default;
   justify-content: center;
   block-size: 100vh;
 }
-.#{$prefix}__flexContainer {
+.#{$prefix}__flex-container {
   block-size: 100%;
   padding-inline-end: 0;
 }
-.#{$prefix}__interstitialTextContainer {
+.#{$prefix}__interstitial-text-container {
   margin-block-end: $spacing-09;
 
   h3 {
@@ -54,12 +54,12 @@ $prefix: 'clabs' !default;
     }
   }
 }
-.#{$prefix}__contentColumn {
+.#{$prefix}__content-column {
   position: relative;
   box-sizing: border-box;
   padding-block-start: $spacing-10;
 }
 
-img.#{$prefix}__interstitialImage {
+img.#{$prefix}__interstitial-image {
   inline-size: 100%;
 }

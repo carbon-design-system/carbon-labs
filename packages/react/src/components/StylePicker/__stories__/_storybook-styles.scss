@@ -1,0 +1,28 @@
+.style-picker-story-container {
+  margin-inline-start: 20rem;
+}
+
+.toolbar-layer {
+  display: inline-block;
+  background-color: var(--cds-layer);
+  color: var(--cds-text-primary, #161616);
+}
+
+.inline-tile-holder {
+  margin-top: 0.2rem;
+}
+
+.inline-tile {
+  display: inline-block;
+  border-inline-start: 0.25rem solid #0f62fe;
+}
+
+.inline-tile-header {
+  display: flex;
+  align-items: start;
+  gap: 0.25rem;
+}
+
+.inline-pictogram-secondary-text {
+  margin-top: 0.5rem;
+}

@@ -1,4 +1,4 @@
-import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as ResizerStories from './Resizer.stories';
 
 <Meta isTemplate />
@@ -39,7 +39,8 @@ functionality.
 
 The handle trigger cue can be enhanced if needed by writing a pseudo-class to
 make the trigger easier to grab, or any custom elements can be passed as
-children as seen in the `With Custom Handles` story.
+children as seen in the `With Custom Handles` story. It can also be positioned
+relative to the thickness prop to appear centered on the handle.
 
 A gap can be added to the parent if the design demands.
 
@@ -64,6 +65,9 @@ improved screen reader support, developers can apply their own custom aria-label
 to the resizer component ref available in `onResizeEnd` callback. This enables
 users to receive live feedback on layout changes. A reference implementation of
 this approach is included in the `Single Panel Bounded` example.
+
+Note: `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` must be set
+manually, depending on how the resizer is used in the implementation.
 
 ## Getting started
 

@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.6.0...@carbon-labs/wc-style-picker@0.7.0) (2025-08-25)
+
+**Note:** Version bump only for package @carbon-labs/wc-style-picker
+
+
+
+
+
+# [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.5.0...@carbon-labs/wc-style-picker@0.6.0) (2025-08-19)
+
+**Note:** Version bump only for package @carbon-labs/wc-style-picker
+
+
+
+
+
+# [0.5.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.4.0...@carbon-labs/wc-style-picker@0.5.0) (2025-08-01)
+
+
+### Features
+
+* **style-picker:** implement search ([#723](https://github.com/carbon-design-system/carbon-labs/issues/723)) ([87298e8](https://github.com/carbon-design-system/carbon-labs/commit/87298e8fe29747742ba27620b6b7a197bc90ebbe))
+
+
+
+
+
 # [0.4.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.3.0...@carbon-labs/wc-style-picker@0.4.0) (2025-07-22)
 
 

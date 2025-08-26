@@ -3,6 +3,110 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.117.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.116.0...@carbon-labs/react@0.117.0) (2025-08-25)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.116.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.115.0...@carbon-labs/react@0.116.0) (2025-08-22)
+
+
+### Bug Fixes
+
+* **ui-shell:** console errors ([#764](https://github.com/carbon-design-system/carbon-labs/issues/764)) ([2a2debd](https://github.com/carbon-design-system/carbon-labs/commit/2a2debde5900089f9e55a7715755932dc4e7d131))
+
+
+
+
+
+# [0.115.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.114.0...@carbon-labs/react@0.115.0) (2025-08-22)
+
+
+### Features
+
+* **SideNav:** implement pin and auto expand ([#742](https://github.com/carbon-design-system/carbon-labs/issues/742)) ([1792c4f](https://github.com/carbon-design-system/carbon-labs/commit/1792c4f3ddd8dbeaf7a4450bc762864e36ea8afe))
+
+
+
+
+
+# [0.114.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.113.0...@carbon-labs/react@0.114.0) (2025-08-22)
+
+
+### Bug Fixes
+
+* **side-nav:** seconary animation jumping ([#761](https://github.com/carbon-design-system/carbon-labs/issues/761)) ([aa4f25b](https://github.com/carbon-design-system/carbon-labs/commit/aa4f25b1f7bab884d1c754870bb017f246991975))
+
+
+
+
+
+# [0.113.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.112.0...@carbon-labs/react@0.113.0) (2025-08-19)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.112.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.111.0...@carbon-labs/react@0.112.0) (2025-08-19)
+
+
+### Bug Fixes
+
+* **firstTimeOrientation:** pattern not opening after upgrade ([#755](https://github.com/carbon-design-system/carbon-labs/issues/755)) ([758cf42](https://github.com/carbon-design-system/carbon-labs/commit/758cf4239902206b72cb9e098a94f140bdb0d4d2))
+
+
+
+
+
+# [0.111.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.110.0...@carbon-labs/react@0.111.0) (2025-08-18)
+
+
+### Features
+
+* **sidenav:** new sideNavTitle ([#752](https://github.com/carbon-design-system/carbon-labs/issues/752)) ([7db53f4](https://github.com/carbon-design-system/carbon-labs/commit/7db53f443c4499fd8877430685fc0014f918a6b7))
+
+
+
+
+
+# [0.110.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.109.0...@carbon-labs/react@0.110.0) (2025-08-14)
+
+
+### Features
+
+* **ui-shell-sidenav:** animation updates ([#733](https://github.com/carbon-design-system/carbon-labs/issues/733)) ([bca421d](https://github.com/carbon-design-system/carbon-labs/commit/bca421d31dee6c72fa27d6dd37141da4b0004e3e))
+
+
+
+
+
+# [0.109.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.108.0...@carbon-labs/react@0.109.0) (2025-08-05)
+
+
+### Features
+
+* expose thickness prop, docs and story updates ([#738](https://github.com/carbon-design-system/carbon-labs/issues/738)) ([daa3b6a](https://github.com/carbon-design-system/carbon-labs/commit/daa3b6acd43654cc016b2bde70b611882f428b3e))
+
+
+
+
+
+# [0.108.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.107.0...@carbon-labs/react@0.108.0) (2025-07-30)
+
+
+### Bug Fixes
+
+* Whats new typescript issue with TOCSection ([#735](https://github.com/carbon-design-system/carbon-labs/issues/735)) ([5215c3f](https://github.com/carbon-design-system/carbon-labs/commit/5215c3fbef3e432b29ae4ce5eb052ff0c2a6f9a4))
+
+
+
+
+
 # [0.107.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.106.0...@carbon-labs/react@0.107.0) (2025-07-30)
 
 

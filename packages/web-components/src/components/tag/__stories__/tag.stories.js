@@ -8,7 +8,7 @@
  */
 import '../components/tag/tag';
 import { html } from 'lit';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 export default {
   title: 'Components/Research/Tag',

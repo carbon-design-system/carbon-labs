@@ -50,7 +50,11 @@ const trialConfigs: TrialConfigs = {
   trialCount: 30,
   warning: false,
   trialLabel: 'Trial days left',
-  description: `Your trial ends on ${trialDate.toLocaleString('default', { month: 'long', day: 'numeric', year: 'numeric' })}`,
+  description: `Your trial ends on ${trialDate.toLocaleString('default', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })}`,
   links: [
     {
       type: TrialLinkType.requestQuote,
@@ -66,7 +70,7 @@ export const Basic: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6006/hybrid-ipaas/v1/header/options', () => {
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],
@@ -86,7 +90,7 @@ export const BasicWithTrial: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6006/hybrid-ipaas/v1/header/options', () => {
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
         }),
       ],
@@ -106,7 +110,7 @@ export const WithAIChat: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6006/hybrid-ipaas/v1/header/options', () => {
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
         }),
       ],
@@ -151,7 +155,7 @@ export const CustomFooter: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6006/hybrid-ipaas/v1/header/options', () => {
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],
@@ -171,7 +175,7 @@ export const LogoutCallback: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6006/hybrid-ipaas/v1/header/options', () => {
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],
@@ -193,7 +197,7 @@ export const CustomActions: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6006/hybrid-ipaas/v1/header/options', () => {
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],
@@ -223,7 +227,7 @@ export const SearchCallback: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6006/hybrid-ipaas/v1/header/options', () => {
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],

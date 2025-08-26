@@ -118,8 +118,7 @@ cds-custom-header-global-action.mcsp-header-user-profile > div {
 }
 
 .automation-global-header__trial-menu__counting-box-alert {
-  background-image:
-    linear-gradient(135deg, #161616, #161616),
+  background-image: linear-gradient(135deg, #161616, #161616),
     linear-gradient(135deg, $red-50, $red-50);
 }
 
@@ -148,8 +147,7 @@ cds-custom-header-global-action.mcsp-header-user-profile > div {
     border: 1px solid transparent;
     border-radius: 0.125rem;
     background-clip: padding-box, border-box;
-    background-image:
-      linear-gradient(135deg, $gray-100, $gray-100),
+    background-image: linear-gradient(135deg, $gray-100, $gray-100),
       linear-gradient(135deg, $blue-70, $purple-40);
     background-origin: padding-box, border-box;
     block-size: 1.25rem;
@@ -161,22 +159,19 @@ cds-custom-header-global-action.mcsp-header-user-profile > div {
   }
 
   .automation-global-header__trial-menu__counting-box-alert {
-    background-image:
-      linear-gradient(135deg, #161616, #161616),
+    background-image: linear-gradient(135deg, #161616, #161616),
       linear-gradient(135deg, $red-50, $red-50);
   }
 }
 
 .automation-global-header__trial-menu:hover {
   .automation-global-header__trial-menu__counting-box {
-    background-image:
-      linear-gradient(135deg, #353535, #353535),
+    background-image: linear-gradient(135deg, #353535, #353535),
       linear-gradient(135deg, $blue-70, $purple-40) !important;
   }
 
   .automation-global-header__trial-menu__counting-box-alert {
-    background-image:
-      linear-gradient(135deg, #353535, #353535),
+    background-image: linear-gradient(135deg, #353535, #353535),
       linear-gradient(135deg, $red-50, $red-50) !important;
   }
 }

@@ -101,7 +101,11 @@ const headerProps: HeaderProps = {
     trialCount: 30,
     warning: false,
     trialLabel: 'Trial days left',
-    description: `Your trial ends on ${trialDate.toLocaleString('default', { month: 'long', day: 'numeric', year: 'numeric' })}`,
+    description: `Your trial ends on ${trialDate.toLocaleString('default', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    })}`,
     links: [
       { type: TrialLinkType.contact, label: 'Invite team member', href: '#' },
       {
@@ -432,7 +436,10 @@ export const HelpLinks: Story = {
 export const ChatBot: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header .headerProps="${{ ...headerProps, chatBotConfigs }}"></common-header>
+			<apaas-common-header .headerProps="${{
+        ...headerProps,
+        chatBotConfigs,
+      }}"></common-header>
 		</div>
 	`,
 };
@@ -440,7 +447,10 @@ export const ChatBot: Story = {
 export const Notifications: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header .headerProps="${{ ...headerProps, notificationConfigs }}"></common-header>
+			<apaas-common-header .headerProps="${{
+        ...headerProps,
+        notificationConfigs,
+      }}"></common-header>
 		</div>
 	`,
 };
@@ -448,7 +458,10 @@ export const Notifications: Story = {
 export const Search: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header .headerProps="${{ ...headerProps, searchConfigs }}"></common-header>
+			<apaas-common-header .headerProps="${{
+        ...headerProps,
+        searchConfigs,
+      }}"></common-header>
 		</div>
 	`,
 };

@@ -187,7 +187,10 @@ export class CommonHeader extends LitElement {
 												.isSideNavMenuItems="${link.isSideNavMenuItems}"
 												.isActive="${link.isActive}"
 												.menuOpen="${this.isMenuOpen}"
-												.isOnClickAvailable="${typeof this.headerProps?.sideNav?.onClick === 'function'}">	
+												.isOnClickAvailable="${
+                          typeof this.headerProps?.sideNav?.onClick ===
+                          'function'
+                        }">	
 												</apaas-side-nav-item>
                                 </cds-custom-side-nav-menu>
                               `;
@@ -230,7 +233,10 @@ export class CommonHeader extends LitElement {
 									.isSideNavMenuItems="${link.isSideNavMenuItems}"
 									.isActive="${link.isActive}"
 									.menuOpen="${this.isMenuOpen}"
-									.isOnClickAvailable="${typeof this.headerProps?.sideNavPropsV2?.onClick === 'function'}"
+									.isOnClickAvailable="${
+                    typeof this.headerProps?.sideNavPropsV2?.onClick ===
+                    'function'
+                  }"
 									>
 									</apaas-side-nav-item>
                 </cds-custom-side-nav-menu>

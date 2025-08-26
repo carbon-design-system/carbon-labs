@@ -135,7 +135,19 @@ export class SideNavItem extends LitElement {
             </cds-custom-side-nav-menu>
           `
         : this.isOnClickAvailable || this.link?.onClick
-          ? html` <cds-custom-side-nav-link
+        ? html` <cds-custom-side-nav-link
+            class="${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link"
+            role="link"
+            href="${this.link?.href}"
+            @click="${(e: Event) =>
+              this.handleSideNavLinkClick(e, this.link?.label)}"
+            title="${this.link?.label}"
+            ${!this.isHybridIpaas ? 'large' : nothing}>
+            ${this.getIcon(this.link?.iconName, this.link?.productIcon)}${this
+              .link?.label}
+          </cds-custom-side-nav-link>`
+        : html`
+            <cds-custom-side-nav-link
               class="${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link"
               role="link"
               href="${this.link?.href}"
@@ -145,22 +157,8 @@ export class SideNavItem extends LitElement {
               ${!this.isHybridIpaas ? 'large' : nothing}>
               ${this.getIcon(this.link?.iconName, this.link?.productIcon)}${this
                 .link?.label}
-            </cds-custom-side-nav-link>`
-          : html`
-              <cds-custom-side-nav-link
-                class="${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link"
-                role="link"
-                href="${this.link?.href}"
-                @click="${(e: Event) =>
-                  this.handleSideNavLinkClick(e, this.link?.label)}"
-                title="${this.link?.label}"
-                ${!this.isHybridIpaas ? 'large' : nothing}>
-                ${this.getIcon(
-                  this.link?.iconName,
-                  this.link?.productIcon
-                )}${this.link?.label}
-              </cds-custom-side-nav-link>
-            `;
+            </cds-custom-side-nav-link>
+          `;
     }
 
     return html`

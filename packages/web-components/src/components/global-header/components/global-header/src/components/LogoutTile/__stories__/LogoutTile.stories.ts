@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { LogoutTile } from '../LogoutTile';
 
 const meta: Meta = {
-  title: 'Logout Tile',
+  title: 'Components/Global Header/Subcomponents/Logout Tile',
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   render: () => new LogoutTile(),

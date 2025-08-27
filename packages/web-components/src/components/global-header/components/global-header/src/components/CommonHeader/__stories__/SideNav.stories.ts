@@ -252,7 +252,7 @@ const sideNavWithV2: SideNavPropsV2 = {
 };
 
 const meta: Meta = {
-  title: 'Side Nav',
+  title: 'Components/Global Header/Subcomponents/Side Nav',
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   render: () => new CommonHeader(),

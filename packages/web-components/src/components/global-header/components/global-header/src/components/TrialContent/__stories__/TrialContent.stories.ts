@@ -20,7 +20,7 @@ warningDate.setDate(warningDate.getDate() + 2);
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta: Meta = {
-  title: 'Trial Banner',
+  title: 'Components/Global Header/Subcomponents/Trial Banner',
   render: () => new CommonHeader(),
   argTypes: {},
 };

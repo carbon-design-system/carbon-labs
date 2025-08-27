@@ -13,7 +13,7 @@ import { html } from 'lit';
 import { LogoutHeader } from '../LogoutHeader';
 
 const meta: Meta = {
-  title: 'Logout Header',
+  title: 'Components/Global Header/Subcomponents/Logout Header',
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   render: () => new LogoutHeader(),

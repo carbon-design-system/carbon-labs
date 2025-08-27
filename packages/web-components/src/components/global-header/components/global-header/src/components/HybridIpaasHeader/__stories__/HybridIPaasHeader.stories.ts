@@ -28,7 +28,7 @@ import mockHeaderOptions from './headeroptions.json';
 initialize();
 
 const meta: Meta = {
-  title: 'webMethods Hybrid Integration Header',
+  title: 'Components/Global Header/Subcomponents/webMethods Hybrid Integration Header',
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   render: () => new HybridIpaasHeader(),

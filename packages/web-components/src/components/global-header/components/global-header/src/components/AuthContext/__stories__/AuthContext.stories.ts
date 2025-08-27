@@ -14,7 +14,7 @@ import { CommonHeader } from '../../CommonHeader/CommonHeader.ts';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta: Meta = {
-  title: 'Profile Popover (AuthContext)',
+  title: 'Components/Global Header/Subcomponents/Profile Popover (AuthContext)',
   render: () => new CommonHeader(),
   argTypes: {},
 };

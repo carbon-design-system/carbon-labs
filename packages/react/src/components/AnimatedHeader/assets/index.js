@@ -10,6 +10,8 @@ import dataFabricAnimatedLight from './animated/header_1312x738_data_fabric_ligh
 import dataFabricAnimatedDark from './animated/header_1312x738_data_fabric_dark_06.json';
 import dataFabricStaticLight from './static/illustration_data_fabric_light_04.svg';
 import dataFabricStaticDark from './static/illustration_data_fabric_dark_05.svg';
+import db2StaticLight from './static/illustration_db2_light.svg';
+import db2StaticDark from './static/illustration_db2_dark.svg';
 import watsonXAnimatedLight from './animated/header_1312x738_watsonx_data_light_03.json';
 import watsonXAnimatedDark from './animated/header_1312x738_watsonx_data_dark_02.json';
 import watsonXStaticLight from './static/illustration_watson_x_data_light_03.svg';
@@ -22,6 +24,8 @@ export {
   dataFabricAnimatedDark,
   dataFabricStaticLight,
   dataFabricStaticDark,
+  db2StaticLight,
+  db2StaticDark,
   watsonXAnimatedLight,
   watsonXAnimatedDark,
   watsonXStaticLight,

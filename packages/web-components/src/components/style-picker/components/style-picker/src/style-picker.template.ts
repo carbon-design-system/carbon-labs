@@ -34,6 +34,7 @@ export const stylePickerTemplate = (customElementClass) => {
     enableSearch,
     onChangeSearchInput,
     showEmptyState,
+    searchLabel,
     searchInputPlaceholder,
     searchCloseButtonLabel,
     emptyStateTitle,
@@ -52,6 +53,7 @@ export const stylePickerTemplate = (customElementClass) => {
                   <cds-search
                     expandable
                     type="text"
+                    label-text=${searchLabel}
                     @cds-search-input="${onChangeSearchInput}"
                     close-button-label-text=${searchCloseButtonLabel}
                     ...="${spread({

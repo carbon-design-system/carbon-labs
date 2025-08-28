@@ -33,12 +33,7 @@ export const stylePickerGroupTemplate = (
    * Wrap group options here.
    */
   const renderDefault = () => {
-    return html`<div
-      class=${`${blockClass} ${blockClass}--${size}`}
-      role="listbox"
-      aria-label=${heading}
-      aria-orientation="horizontal"
-      tabindex="0">
+    return html`<div class=${`${blockClass} ${blockClass}--${size}`}>
       <div
         class=${`cds--contained-list ${carbonPrefix}--contained-list--disclosed ${blockClass}__group`}>
         <div class=${`cds--contained-list__header`} role="presentation">

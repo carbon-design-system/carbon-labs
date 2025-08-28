@@ -24,17 +24,17 @@ import wxbiaStaticLight from './static/illustration_wxbia_light_01.svg';
 import wxbiaStaticDark from './static/illustration_wxbia_dark_01.svg';
 
 // ------------ Animated (JSON/Lottie) ------------
-import dataFabricAnimatedLight from './animated/header_1312x738_data_fabric_light_03.json';
-import dataFabricAnimatedDark from './animated/header_1312x738_data_fabric_dark_06.json';
+import dataFabricAnimatedLight from './animated/illustration_data_fabric_light_03.json';
+import dataFabricAnimatedDark from './animated/illustration_data_fabric_dark_06.json';
 
-import watsonXAnimatedLight from './animated/header_1312x738_watsonx_data_light_03.json';
-import watsonXAnimatedDark from './animated/header_1312x738_watsonx_data_dark_02.json';
+import watsonXAnimatedLight from './animated/illustration_watsonx_data_light_03.json';
+import watsonXAnimatedDark from './animated/illustration_watsonx_data_dark_02.json';
 
-import watsonXAAnimatedLight from './animated/header_illustration_container_watsonx_a_light_06.json';
-import watsonXAAnimatedDark from './animated/header_illustration_container_watsonx_a_dark_06.json';
+import watsonXAAnimatedLight from './animated/illustration_watsonx_a_light_06.json';
+import watsonXAAnimatedDark from './animated/illustration_watsonx_a_dark_06.json';
 
-import wxbiaAnimatedLight from './animated/header_illustration_container_wxbia_light_08.json';
-import wxbiaAnimatedDark from './animated/header_illustration_container_wxbia_dark_05.json';
+import wxbiaAnimatedLight from './animated/illustration_wxbia_light_08.json';
+import wxbiaAnimatedDark from './animated/illustration_wxbia_dark_05.json';
 
 export {
   // Animated

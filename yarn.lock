@@ -2961,6 +2961,7 @@ __metadata:
     "@carbon-labs/wc-empty-state": "workspace:^"
     "@carbon/web-components": "npm:^2.36.0"
     "@lit/context": "npm:^1.1.5"
+    react: "npm:^18.3.1"
   languageName: unknown
   linkType: soft
 

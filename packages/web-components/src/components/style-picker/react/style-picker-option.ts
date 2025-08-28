@@ -15,5 +15,7 @@ export const CLABSStylePickerOption = createComponent({
   tagName: 'clabs-style-picker-option',
   elementClass: StylePickerOption,
   react: React,
-  events: {},
+  events: {
+    onChange: 'clabs-style-picker-option-select',
+  },
 });

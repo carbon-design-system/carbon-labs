@@ -29,6 +29,9 @@ import { renderCarbonIcon } from '../../globals/utils';
 const iconSlot = 'title-icon';
 const iconSize = 16;
 
+/**
+ * Show the authentication context (profile menu)
+ */
 @customElement('apaas-auth-context')
 export class AuthContext extends LitElement {
   static styles = css`

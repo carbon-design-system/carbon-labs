@@ -18,6 +18,9 @@ import {
 } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
 
+/**
+ * Wrapper component that obtains header options from a backend route
+ */
 @customElement('hybrid-ipaas-header')
 export class HybridIpaasHeader extends LitElement {
   @property({ type: String }) productName = null;

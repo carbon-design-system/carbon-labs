@@ -42,9 +42,9 @@ export const ASSIST_ME_SCRIPT_PROD =
 
 /**
  *
- * @param iconType string value for the carbon icon
- * @param size number to indicate the size of the icon
- * @param slot string name of the slot that the icon will be displayed in
+ * @param {string} iconType string value for the carbon icon
+ * @param {number} size number to indicate the size of the icon
+ * @param {string} slot string name of the slot that the icon will be displayed in
  * @returns an svg of the icon if it is found in CarbonIcons
  */
 export const renderCarbonIcon = (

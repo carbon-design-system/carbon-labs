@@ -11,6 +11,9 @@ import { css } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import CDSSideNav from '@carbon/web-components/es-custom/components/ui-shell/side-nav.js';
 
+/**
+ * Extended width version of SideNav
+ */
 @customElement('apaas-wide-side-nav')
 export class WideSideNav extends CDSSideNav {
   // Make wider than regular cds-side-nav to match React version

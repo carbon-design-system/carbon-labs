@@ -17,6 +17,9 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { renderCarbonIcon, trackEvent } from '../../globals/utils';
 import styles from './SideNavItem.scss?inline';
 
+/**
+ * Entries for the left-hand Apps menu
+ */
 @customElement('apaas-side-nav-item')
 export class SideNavItem extends LitElement {
   static styles = css`

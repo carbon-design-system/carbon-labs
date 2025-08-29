@@ -17,6 +17,9 @@ import { animate, fadeIn, fadeOut } from '@lit-labs/motion';
 import styles from './_index.scss?inline';
 import { TrialConfigs } from '../../types/Header.types';
 
+/**
+ * Content to show when clicking the Trial entry in the header
+ */
 @customElement('apaas-trial-popover')
 export class TrialPopover extends LitElement {
   @property({ type: Boolean }) open = false;

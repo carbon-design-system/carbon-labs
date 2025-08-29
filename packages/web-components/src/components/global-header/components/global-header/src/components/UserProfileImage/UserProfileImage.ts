@@ -18,6 +18,9 @@ import styles from './UserProfileImage.scss?inline' assert { type: 'css' };
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
 const blockClass = `${AUTOMATION_HEADER_BASE_CLASS}__user-profile-image`;
 
+/**
+ * User image for the profile menu
+ */
 @customElement('apaas-user-profile-image')
 export class SideNavItem extends LitElement {
   static styles = css`

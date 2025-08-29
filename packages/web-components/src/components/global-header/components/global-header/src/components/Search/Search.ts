@@ -14,6 +14,9 @@ import '@carbon/web-components/es-custom/components/search/index.js';
 import styles from './_index.scss?inline' assert { type: 'css' };
 import { SearchConfigs } from '../../types/Header.types';
 
+/**
+ * Optional search box for the header
+ */
 @customElement('apaas-header-search')
 export class Search extends LitElement {
   static styles = css`

@@ -28,6 +28,9 @@ const eightBar = html`
   </svg>
 `;
 
+/**
+ * Component to show a company name or logo
+ */
 @customElement('apaas-logout-header')
 export class LogoutHeader extends LitElement {
   static styles = css`

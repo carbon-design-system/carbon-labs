@@ -13,6 +13,9 @@ import styles from './_index.scss?inline';
 import { animate, fadeIn, fadeOut } from '@lit-labs/motion';
 import { HeaderContextProps } from '../HeaderContext/HeaderContext.types';
 
+/**
+ * Contents of the profile menu
+ */
 @customElement('apaas-profile-popover')
 export class AuthContext extends LitElement {
   static styles = css`

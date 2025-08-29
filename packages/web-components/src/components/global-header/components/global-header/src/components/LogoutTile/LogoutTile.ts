@@ -18,6 +18,9 @@ import styles from './_index.scss?inline' assert { type: 'css' };
 
 const blockClass = `${AUTOMATION_HEADER_BASE_CLASS}__logout-tile`;
 
+/**
+ * Logged out dialog
+ */
 @customElement('apaas-logout-tile')
 export class LogoutTile extends LitElement {
   static styles = css`

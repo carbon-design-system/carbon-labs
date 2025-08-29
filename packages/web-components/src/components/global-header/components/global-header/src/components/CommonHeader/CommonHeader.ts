@@ -24,6 +24,9 @@ import '../SideNavItem/SideNavItem';
 import '../HeaderContext/HeaderContext';
 import useScript from '../../globals/useScript';
 
+/**
+ * Main global header component
+ */
 @customElement('apaas-common-header')
 export class CommonHeader extends LitElement {
   createRenderRoot() {

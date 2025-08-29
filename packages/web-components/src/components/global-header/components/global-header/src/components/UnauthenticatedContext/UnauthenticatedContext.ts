@@ -22,6 +22,9 @@ import {
 } from '../../constant';
 import styles from '../_index.scss?inline';
 
+/**
+ * Content to show when not logged in
+ */
 @customElement('apaas-unauthenticated-context')
 export class UnauthenticatedContext extends LitElement {
   static styles = css`

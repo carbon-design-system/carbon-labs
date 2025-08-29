@@ -37,6 +37,10 @@ import { HeaderContextProps, HeaderContextState } from './HeaderContext.types';
 import { isValidObject, renderCarbonIcon } from '../../globals/utils';
 
 import styles from './_index.scss?inline' assert { type: 'css' };
+
+/**
+ * Header entries depending on context
+ */
 @customElement('apaas-header-context')
 export class HeaderContext extends LitElement {
   static styles = css`

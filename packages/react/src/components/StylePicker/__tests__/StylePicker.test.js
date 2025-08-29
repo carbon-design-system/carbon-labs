@@ -7,14 +7,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { render } from '@testing-library/react';
 import React from 'react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import { CLABSStylePicker } from '../index';
+import { StylePicker } from '../index';
 
 describe('StylePicker', () => {
   it('should render', () => {
-    render(<CLABSStylePicker />);
+    render(<StylePicker />);
   });
 });

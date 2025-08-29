@@ -7,11 +7,11 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-labs",
   "scripts": {
-    "build": "NODE_OPTIONS=--max-old-space-size=4096 yarn clean && lerna run build --scope '@carbon-labs/react-*' --scope '@carbon-labs/mdx-components' --include-dependencies",
+    "build": "yarn clean && lerna run build --scope '@carbon-labs/react-*' --scope '@carbon-labs/mdx-components' --include-dependencies",
     "clean": "rimraf es lib scss storybook-static",
     "storybook": "storybook dev -p 6008",
     "generate": "node tasks/generate",
-    "storybook:build": "storybook build",
+    "storybook:build": "NODE_OPTIONS=--max-old-space-size=4096 storybook build",
     "test": "jest",
     "test:updateSnapshot": "jest -u"
   },

@@ -24,12 +24,12 @@ export class SideNavItem extends LitElement {
     ${unsafeCSS(styles)}
   `;
 
-  @property({ type: String }) kind: string = '';
-  @property({ type: String }) size: string = 'lg';
-  @property({ type: String }) image: string = '';
-  @property({ type: String }) initials: string = '';
-  @property({ type: String }) className: string = '';
-  @property({ type: String }) backgroundColor: string = 'light-cyan';
+  @property({ type: String }) kind = '';
+  @property({ type: String }) size = 'lg';
+  @property({ type: String }) image = '';
+  @property({ type: String }) initials = '';
+  @property({ type: String }) className = '';
+  @property({ type: String }) backgroundColor = 'light-cyan';
 
   icons = {
     user: {

@@ -57,7 +57,9 @@ export class Switcher extends LitElement {
 
   handleItemSelection(event: MouseEvent, value: ItemLink, idx: number) {
     this.clickEventAnalytics(value.label);
-    if (this.onClick) this.onClick(event, value, idx); // Need to add event in this
+    if (this.onClick) {
+      this.onClick(event, value, idx); // Need to add event in this
+    }
     if (!value.isLinkItem || !value.isHeading) {
       if (this.items[idx] !== this.selectedItem) {
         this.initialSelectedIndex = idx;

@@ -19,17 +19,17 @@ export class AuthContext extends LitElement {
     ${unsafeCSS([styles])}
   `;
 
-  @property({ type: Boolean }) profileOpen: boolean = false;
+  @property({ type: Boolean }) profileOpen = false;
   @property({ type: Object }) props: HeaderContextProps = {
     footerSectionItems: [],
+    managementConsole: {
+      href: '',
+      text: '',
+    },
     userManagement: {
       href: '',
       text: '',
       icon: '',
-    },
-    managementConsole: {
-      href: '',
-      text: '',
     },
   };
 

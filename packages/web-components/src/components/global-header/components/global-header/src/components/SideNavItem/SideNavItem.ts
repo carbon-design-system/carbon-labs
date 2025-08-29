@@ -71,15 +71,15 @@ export class SideNavItem extends LitElement {
     sideNavMenuItems: [],
   };
   @property({ type: Boolean }) isCollapsible = false;
-  @property({ type: Boolean }) isActive: boolean = false;
+  @property({ type: Boolean }) isActive = false;
   @property({ type: Function }) handleNavItemClick: (e: Event) => void =
     () => {};
-  @property({ type: Boolean }) menuOpen: boolean = false;
-  @property({ type: Boolean }) isSideNavMenuItems: boolean = false;
-  @property({ type: Boolean }) isOnClickAvailable: boolean = false;
-  @property({ type: Boolean }) isHybridIpaas: boolean = false;
+  @property({ type: Boolean }) menuOpen = false;
+  @property({ type: Boolean }) isSideNavMenuItems = false;
+  @property({ type: Boolean }) isOnClickAvailable = false;
+  @property({ type: Boolean }) isHybridIpaas = false;
 
-  @state() private _isHoveringOnSideNavItem: boolean = false;
+  @state() private _isHoveringOnSideNavItem = false;
 
   private _setIsHoveringOnSideNavItem = (isHovering: boolean) => {
     this._isHoveringOnSideNavItem = isHovering;

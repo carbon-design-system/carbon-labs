@@ -34,7 +34,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Function }) notificationOpenCallback:
     | (() => void)
     | undefined;
-  @property({ type: Boolean }) hasNewNotifications: boolean = false;
+  @property({ type: Boolean }) hasNewNotifications = false;
   @property({ type: Object }) searchConfigs: SearchConfigs | null = null;
   @property({ type: Array })
   capabilityProfileFooterLinks: ProfileFooterLinks[] = [];

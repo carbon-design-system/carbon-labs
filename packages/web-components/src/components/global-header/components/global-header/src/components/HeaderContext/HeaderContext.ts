@@ -44,10 +44,10 @@ export class HeaderContext extends LitElement {
   `;
 
   @state()
-  isTrialOpen: boolean = false;
+  isTrialOpen = false;
 
   @state()
-  isProfileOpen: boolean = false;
+  isProfileOpen = false;
 
   @state()
   private state: HeaderContextState = {
@@ -58,19 +58,19 @@ export class HeaderContext extends LitElement {
 
   @property({ type: Object }) props: HeaderContextProps = {
     footerSectionItems: [],
+    managementConsole: {
+      href: '',
+      text: '',
+    },
     userManagement: {
       href: '',
       text: '',
       icon: '',
     },
-    managementConsole: {
-      href: '',
-      text: '',
-    },
   };
 
-  @property({ type: Boolean }) assistMeScriptLoaded: boolean = false;
-  @property({ type: Boolean }) hasNewNotifications: boolean = false;
+  @property({ type: Boolean }) assistMeScriptLoaded = false;
+  @property({ type: Boolean }) hasNewNotifications = false;
 
   _toggleTrialPopup() {
     this.isTrialOpen = !this.isTrialOpen;

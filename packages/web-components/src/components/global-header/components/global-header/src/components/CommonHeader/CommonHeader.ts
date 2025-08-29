@@ -36,10 +36,10 @@ export class CommonHeader extends LitElement {
   @property({ type: Object })
   headerProps: HeaderProps = {};
 
-  @property({ type: Boolean }) hasNewNotifications: boolean = false;
+  @property({ type: Boolean }) hasNewNotifications = false;
 
   @state()
-  private isMenuOpen: boolean = false;
+  private isMenuOpen = false;
 
   @state()
   assistMeScriptLoaded = false;

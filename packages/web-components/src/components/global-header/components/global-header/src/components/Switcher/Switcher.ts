@@ -6,6 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+/* eslint jsdoc/require-jsdoc: 0 */
 
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
@@ -70,7 +71,7 @@ export class Switcher extends LitElement {
     }
 
     //Switcher closes upon selecting an option
-    const headerMenu = this.shadowRoot!.querySelector(
+    const headerMenu = this.shadowRoot?.querySelector(
       'cds-custom-header-menu'
     ) as HTMLElement & { expanded: boolean };
     headerMenu.expanded = false;

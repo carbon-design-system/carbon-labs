@@ -38,9 +38,9 @@ $component-class: #{$automation-prefix}logout-tile;
 }
 
 .#{$component-class}--button {
+  position: absolute;
   right: 0;
   bottom: 0;
-  position: absolute;
 
   a {
     width: 11rem;

@@ -63,15 +63,15 @@
   display: inline-block;
 
   .buttons {
+    display: flex;
     padding: 6px 15px;
     background: $blue-60;
     color: #ffffff;
-    display: flex;
   }
 
   .button-icon {
-    margin-inline-start: 20px;
     display: flex;
+    margin-inline-start: 20px;
   }
 }
 

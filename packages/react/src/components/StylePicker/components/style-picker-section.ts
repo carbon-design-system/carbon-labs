@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { createComponent } from '@lit/react';
-import { CLABSStylePickerSection } from '@carbon-labs/wc-style-picker/es/index';
+import { CLABSStylePickerSection } from '@carbon-labs/wc-style-picker/es/index.js';
 
 export const StylePickerSection = createComponent({
   tagName: 'clabs-style-picker-section',

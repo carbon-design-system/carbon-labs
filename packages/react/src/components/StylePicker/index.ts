@@ -7,10 +7,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export { CLABSStylePickerColor } from '@carbon-labs/wc-style-picker/es/index.js';
-export { CLABSStylePickerGroup } from '@carbon-labs/wc-style-picker/es/index.js';
-export { CLABSStylePickerOption } from '@carbon-labs/wc-style-picker/es/index.js';
-export { CLABSStylePickerSection } from '@carbon-labs/wc-style-picker/es/index.js';
-export { CLABSStylePickerSections } from '@carbon-labs/wc-style-picker/es/index.js';
-export { CLABSStylePickerIcon } from '@carbon-labs/wc-style-picker/es/index.js';
-export { CLABSStylePicker } from '@carbon-labs/wc-style-picker/es/index.js';
+export {
+  StylePicker,
+  StylePickerColor,
+  StylePickerGroup,
+  StylePickerIcon,
+  StylePickerOption,
+  StylePickerSection,
+  StylePickerSections,
+} from './components';

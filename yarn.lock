@@ -2720,6 +2720,7 @@ __metadata:
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
     "@carbon-labs/wc-style-picker": "workspace:^"
+    "@lit/react": "npm:^1.0.1"
   languageName: unknown
   linkType: soft
 

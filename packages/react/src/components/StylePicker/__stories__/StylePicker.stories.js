@@ -18,18 +18,18 @@ import {
 import mdx from './StylePicker.mdx';
 import styles from './_storybook-styles.scss?inline';
 import {
-  CLABSStylePicker,
-  CLABSStylePickerColor,
-  CLABSStylePickerGroup,
-  // CLABSStylePickerIcon,
-  CLABSStylePickerOption,
-  CLABSStylePickerSection,
-  // CLABSStylePickerSections,
-} from '../index';
+  StylePicker,
+  StylePickerColor,
+  StylePickerGroup,
+  // StylePickerIcon,
+  StylePickerOption,
+  StylePickerSection,
+  // StylePickerSections,
+} from '../components';
 
 export default {
   title: 'Components/StylePicker',
-  component: CLABSStylePicker,
+  component: StylePicker,
   parameters: {
     layout: 'centered',
     styles,
@@ -62,26 +62,26 @@ export const Default = () => {
   return (
     <div className="style-picker-story-container">
       <Layer className="toolbar-layer">
-        <CLABSStylePicker open={open} heading="Choose color" enableSearch>
+        <StylePicker open={open} heading="Choose color" enableSearch>
           <div slot="trigger" style={{ display: 'contents' }}>
             <IconButton label="Color palette" kind="ghost" onClick={handleOpen}>
               <ColorPalette />
             </IconButton>
           </div>
-          <CLABSStylePickerSection>
-            <CLABSStylePickerGroup heading="Color">
+          <StylePickerSection>
+            <StylePickerGroup heading="Color">
               {colors.map((color) => (
-                <CLABSStylePickerOption
+                <StylePickerOption
                   key={color}
                   value={color}
                   label={color}
                   onChange={handleOptionChange}>
-                  <CLABSStylePickerColor color={color} label={color} />
-                </CLABSStylePickerOption>
+                  <StylePickerColor color={color} label={color} />
+                </StylePickerOption>
               ))}
-            </CLABSStylePickerGroup>
-          </CLABSStylePickerSection>
-        </CLABSStylePicker>
+            </StylePickerGroup>
+          </StylePickerSection>
+        </StylePicker>
         <IconButton label="Delete" kind="ghost">
           <TrashCan />
         </IconButton>

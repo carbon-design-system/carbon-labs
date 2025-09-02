@@ -129,7 +129,7 @@ cds-custom-header-global-action.mcsp-header-user-profile > div {
     display: flex;
     align-items: center;
     padding: 0 $spacing-04;
-    inline-size: unset;
+    inline-size: fit-content;
   }
 
   p {

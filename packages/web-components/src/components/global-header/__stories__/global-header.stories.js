@@ -9,7 +9,6 @@
 
 import '../components/global-header/global-header';
 import { html } from 'lit';
-import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
 
 /**
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
@@ -47,7 +46,7 @@ const headerPropsUnauthenticated = {
  */
 export const Default = {
   args: {
-    label: 'Global Header',
+    headerProps: headerPropsUnauthenticated,
   },
 
   /**
@@ -56,5 +55,5 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: (args) =>
-    html` <clabs-global-header .headerProps="${headerPropsUnauthenticated}"></clabs-global-header>`,
+    html` <clabs-global-header .headerProps="${args.headerProps}"></clabs-global-header>`,
 };

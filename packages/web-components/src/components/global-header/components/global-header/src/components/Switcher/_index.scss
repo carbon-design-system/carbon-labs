@@ -93,8 +93,8 @@
 .automation-global-header__switcher-menu-item {
   > span {
     overflow: hidden;
+    max-inline-size: 224px;
     text-overflow: ellipsis;
-    max-width: 224px;
     white-space: nowrap;
   }
 }

@@ -14,14 +14,14 @@
 $component-class: #{$automation-prefix}logout-tile;
 
 .#{$component-class} {
-  width: 25rem;
-  height: 10rem;
+  block-size: 10rem;
+  inline-size: 25rem;
 }
 
 .#{$component-class}--brand {
   @include type.type-style('heading-05');
 
-  margin-right: layout.$spacing-04;
+  margin-inline-end: layout.$spacing-04;
 }
 
 .#{$component-class}--product {
@@ -33,20 +33,20 @@ $component-class: #{$automation-prefix}logout-tile;
 .#{$component-class}--description {
   @include type.type-style('heading-03');
 
-  margin-top: layout.$spacing-02;
   font-weight: 400;
+  margin-block-start: layout.$spacing-02;
 }
 
 .#{$component-class}--button {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  inset-block-end: 0;
+  inset-inline-end: 0;
 
   a {
-    width: 11rem;
+    inline-size: 11rem;
   }
 
   button {
-    width: 15rem;
+    inline-size: 15rem;
   }
 }

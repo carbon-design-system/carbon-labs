@@ -7,11 +7,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+@use '@carbon/styles/scss/spacing' as *;
 @use '../../globals/styles/vars' as *;
 
 $component-class: #{$automation-prefix}logout-header;
 
 .#{$component-class} {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-block: $spacing-05;
 }

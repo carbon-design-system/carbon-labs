@@ -55,5 +55,6 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: (args) =>
-    html` <clabs-global-header .headerProps="${args.headerProps}"></clabs-global-header>`,
+    html` <clabs-global-header
+      .headerProps="${args.headerProps}"></clabs-global-header>`,
 };

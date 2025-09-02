@@ -11,7 +11,7 @@
     "clean": "rimraf es lib scss storybook-static",
     "storybook": "storybook dev -p 6008",
     "generate": "node tasks/generate",
-    "storybook:build": "NODE_OPTIONS=--max-old-space-size=4096 storybook build",
+    "storybook:build": "storybook build",
     "test": "jest",
     "test:updateSnapshot": "jest -u"
   },

@@ -16,14 +16,28 @@ $prefix: 'cds' !default;
 .#{$prefix}--side-nav--panel ~ .#{$prefix}--content,
 div:has(.#{$prefix}--side-nav--panel) ~ .#{$prefix}--content {
   margin-inline-start: $spacing-09;
-  transition: margin-inline-start $duration-fast-02, transform $duration-fast-02;
+  transition: $fast-02 motion(exit, productive);
 }
 
-.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded
+.#{$prefix}--side-nav--panel:not(
+    .#{$prefix}--side-nav--rail
+  ).#{$prefix}--side-nav--expanded
   ~ .#{$prefix}--content,
-div:has(.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--expanded)
+.#{$prefix}--side-nav--panel.#{$prefix}--side-nav--pinned.#{$prefix}--side-nav--expanded
+  ~ .#{$prefix}--content,
+div:has(
+    .#{$prefix}--side-nav--panel:not(
+        .#{$prefix}--side-nav--rail
+      ).#{$prefix}--side-nav--expanded
+  )
+  ~ .#{$prefix}--content,
+div:has(
+    .#{$prefix}--side-nav--panel.#{$prefix}--side-nav--pinned.#{$prefix}--side-nav--expanded
+  )
   ~ .#{$prefix}--content {
   margin-inline-start: convert.to-rem(256px);
+  transition: $moderate-01 motion(standard, productive);
+  transition-delay: 40ms;
 }
 
 // should not be a grid influencer when used with overlay

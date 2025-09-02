@@ -42,29 +42,30 @@ interface ProfileProps {
   renderIcon?: React.ReactNode;
 }
 
-const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(
-  function Profile({
+const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(function Profile(
+  {
     className: customClassName,
     label,
     children,
     renderIcon: IconElement,
     ...rest
-  }: ProfileProps) {
-    const prefix = usePrefix();
-    const className = cx({
-      [`${prefix}--profile`]: true,
-      [customClassName as string]: !!customClassName,
-    });
-    return (
-      <HeaderPopover align="bottom-right" className={className} {...rest}>
-        <HeaderPopoverButton align="bottom" label={label}>
-          {IconElement}
-        </HeaderPopoverButton>
-        <HeaderPopoverContent>{children}</HeaderPopoverContent>
-      </HeaderPopover>
-    );
-  }
-);
+  }: ProfileProps,
+  ref
+) {
+  const prefix = usePrefix();
+  const className = cx({
+    [`${prefix}--profile`]: true,
+    [customClassName as string]: !!customClassName,
+  });
+  return (
+    <HeaderPopover ref={ref} align="bottom-end" className={className} {...rest}>
+      <HeaderPopoverButton align="bottom" label={label}>
+        {IconElement}
+      </HeaderPopoverButton>
+      <HeaderPopoverContent>{children}</HeaderPopoverContent>
+    </HeaderPopover>
+  );
+});
 Profile.displayName = 'Profile';
 
 Profile.propTypes = {
@@ -108,19 +109,17 @@ interface ProfileUserInfoProps {
 }
 
 const ProfileUserInfo = React.forwardRef<HTMLDivElement, ProfileUserInfoProps>(
-  function ProfileUserInfo({
-    className: customClassName,
-    name,
-    email,
-    ...rest
-  }: ProfileUserInfoProps) {
+  function ProfileUserInfo(
+    { className: customClassName, name, email, ...rest }: ProfileUserInfoProps,
+    ref
+  ) {
     const prefix = usePrefix();
     const className = cx({
       [`${prefix}--profile-user-info`]: true,
       [customClassName as string]: !!customClassName,
     });
     return (
-      <div className={className}>
+      <div ref={ref} className={className}>
         <UserAvatar size="lg" name={name} {...rest} />
         <div className={`${prefix}--profile-user-info__text-wrapper`}>
           <div className={`${prefix}--profile-user-info__name`}>{name}</div>
@@ -167,17 +166,17 @@ interface ProfileReadOnlyProps {
 }
 
 const ProfileReadOnly = React.forwardRef<HTMLDivElement, ProfileReadOnlyProps>(
-  function ProfileReadOnly({
-    className: customClassName,
-    items,
-  }: ProfileReadOnlyProps) {
+  function ProfileReadOnly(
+    { className: customClassName, items }: ProfileReadOnlyProps,
+    ref
+  ) {
     const prefix = usePrefix();
     const className = cx({
       [`${prefix}--profile-read-only`]: true,
       [customClassName as string]: !!customClassName,
     });
     return (
-      <div className={className}>
+      <div ref={ref} className={className}>
         {items?.map((item, index) => (
           <div className={`${prefix}--profile-read-only__items`} key={index}>
             <div className={`${prefix}--profile-read-only__label`}>

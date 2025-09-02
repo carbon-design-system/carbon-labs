@@ -15,6 +15,7 @@ import { SideNavMenu } from '../components/SideNavMenu';
 import { SideNavMenuItem } from '../components/SideNavMenuItem';
 import { SideNavLink } from '../components/SideNavLink';
 import { SideNavSlot } from '../components/SideNavSlot';
+import { SideNavTitle } from '../components/SideNavTitle';
 
 import { SideNavDivider, Dropdown } from '@carbon/react';
 import { Add, Fade, VirtualColumnKey } from '@carbon/icons-react';
@@ -31,6 +32,7 @@ export default {
     SideNavMenu,
     SideNavMenuItem,
     SideNavSlot,
+    SideNavTitle,
   },
   parameters: {
     docs: {
@@ -412,7 +414,7 @@ export const Rail = () => (
  */
 export const RailPanel = () => (
   <SideNav
-    navType={SIDE_NAV_TYPE.PANEL}
+    navType={SIDE_NAV_TYPE.RAIL_PANEL}
     hideOverlay
     isChildOfHeader={false}
     aria-label="Product navigation">
@@ -500,5 +502,3 @@ export const RailPanel = () => (
     </SideNavItems>
   </SideNav>
 );
-
-RailPanel.storyName = 'Rail with flyouts';

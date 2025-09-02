@@ -1,4 +1,4 @@
-import { ArgTypes, Markdown, Meta } from '@storybook/blocks';
+import { ArgTypes, Markdown, Meta } from '@storybook/addon-docs/blocks';
 import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
 import * as EmptyStateStories from './empty-state.stories';
 import packageJson from '../package.json';
@@ -7,7 +7,7 @@ import packageJson from '../package.json';
 
 # Empty State
 
-- **Initiative owner(s):** Sangeetha Babu
+- **Initiative owner(s):** Carbon for IBM Products
 - **Status:** Draft
 - **Target library:** TBD
 - **Target library maintainer(s) / PR Reviewer(s):** N/A
@@ -15,7 +15,8 @@ import packageJson from '../package.json';
 
 ## Overview
 
-The EmptyState component follows the Carbon guidelines for empty states with some added specifications around illustration usage.
+The EmptyState component follows the Carbon guidelines for empty states with
+some added specifications around illustration usage.
 
 ## Getting started
 
@@ -30,7 +31,10 @@ import '@carbon-labs/wc-empty-state/es/index.js';
 <Markdown>{`${cdnJs({ components: ['empty-state'] }, packageJson)}`}</Markdown>
 
 ### HTML
-The `<clabs-empty-state>` component accepts slots for `action`, `link` and `illustration` elements, and props for `title`, `subtitle`, `size`, `kind`, and `illustrationTheme`.
+
+The `<clabs-empty-state>` component accepts slots for `action`, `link` and
+`illustration` elements, and props for `title`, `subtitle`, `size`, `kind`, and
+`illustrationTheme`.
 
 ```html
 <clabs-empty-state
@@ -39,12 +43,10 @@ The `<clabs-empty-state>` component accepts slots for `action`, `link` and `illu
   size="lg"
   kind="notFound"
   illustrationTheme="light">
-    <cds-button kind="tertiary" size="sm" slot="action"
-      >Create new</cds-button
-    >
-    <cds-link href="https://www.carbondesignsystem.com" slot="link">
-      View documentation
-    </cds-link>
+  <cds-button kind="tertiary" size="sm" slot="action">Create new</cds-button>
+  <cds-link href="https://www.carbondesignsystem.com" slot="link">
+    View documentation
+  </cds-link>
 </clabs-empty-state>
 ```
 

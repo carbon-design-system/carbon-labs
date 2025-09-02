@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.48.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.47.0...@carbon-labs/web-components@0.48.0) (2025-08-28)
+
+
+### Bug Fixes
+
+* Component owners 8036 ([#771](https://github.com/carbon-design-system/carbon-labs/issues/771)) ([cd6f786](https://github.com/carbon-design-system/carbon-labs/commit/cd6f786ee88fbd9e7918aa88b08f8362492e61b3))
+
+
+
+
+
+# [0.47.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.46.0...@carbon-labs/web-components@0.47.0) (2025-08-28)
+
+
+### Features
+
+* implement first-time-orientation pattern using interstitial screen ([#762](https://github.com/carbon-design-system/carbon-labs/issues/762)) ([cdf4e6e](https://github.com/carbon-design-system/carbon-labs/commit/cdf4e6e4c2b969feb19dba74510631f025918fc3))
+
+
+
+
+
+# [0.46.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.45.0...@carbon-labs/web-components@0.46.0) (2025-08-25)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.45.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.44.0...@carbon-labs/web-components@0.45.0) (2025-08-19)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
 # [0.44.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.43.0...@carbon-labs/web-components@0.44.0) (2025-08-01)
 
 

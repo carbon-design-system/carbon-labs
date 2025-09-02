@@ -156,7 +156,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
     const [isSecondaryOpen, setSecondaryOpen] =
       useState<boolean>(defaultExpanded);
-    const { currentPrimaryMenu, setCurrentPrimaryMenu } =
+    const { autoExpand, currentPrimaryMenu, setCurrentPrimaryMenu } =
       useContext(SideNavContext);
 
     const className = cx({
@@ -275,7 +275,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }
 
     useEffect(() => {
-      if (navType == SIDE_NAV_TYPE.PANEL) {
+      if (navType == SIDE_NAV_TYPE.RAIL_PANEL) {
         // grab first link to redirect if clicked when not expanded
         if (!firstLink?.current && listRef?.current) {
           const firstLinkElement = listRef.current!.querySelector(
@@ -438,7 +438,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }, [currentPrimaryMenu]);
     // reset to opened/collapsed menu state when Panel SideNav is toggled
     useEffect(() => {
-      if (navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded) {
+      if (navType == SIDE_NAV_TYPE.RAIL_PANEL && !sideNavExpanded) {
         setIsExpanded(false);
       }
 
@@ -478,7 +478,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
             // only when sidenav is panel view
             if (
-              navType == SIDE_NAV_TYPE.PANEL &&
+              navType == SIDE_NAV_TYPE.RAIL_PANEL &&
               !isExpanded &&
               firstLink.current &&
               !sideNavExpanded
@@ -501,14 +501,16 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
               <IconElement />
             </SideNavIcon>
           )}
-          {!sideNavExpanded && (
-            <div
-              className={`${prefix}--side-nav--panel-submenu-caret-container`}>
-              <div className={`${prefix}--side-nav--panel-submenu-caret`}>
-                <SharkFinIcon />
+          {!autoExpand &&
+            !sideNavExpanded &&
+            navType == SIDE_NAV_TYPE.RAIL_PANEL && (
+              <div
+                className={`${prefix}--side-nav--panel-submenu-caret-container`}>
+                <div className={`${prefix}--side-nav--panel-submenu-caret`}>
+                  <SharkFinIcon />
+                </div>
               </div>
-            </div>
-          )}
+            )}
           <span className={`${prefix}--side-nav__submenu-title`}>{title}</span>
           <SideNavIcon className={`${prefix}--side-nav__submenu-chevron`} small>
             {primary ? <ChevronRight size={20} /> : <ChevronDown size={20} />}
@@ -543,7 +545,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       </li>
     );
 
-    return navType == SIDE_NAV_TYPE.PANEL && !sideNavExpanded ? (
+    return navType == SIDE_NAV_TYPE.RAIL_PANEL && !sideNavExpanded ? (
       <SideNavFlyoutMenu
         selected={active}
         className={`${prefix}--side-nav-flyout-menu`}

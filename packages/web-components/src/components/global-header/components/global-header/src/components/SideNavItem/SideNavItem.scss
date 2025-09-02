@@ -1,0 +1,86 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/utilities/convert' as *;
+@use '../../globals/styles/vars' as *;
+
+.ibm-automation-cds--rail-sidePanel {
+  inline-size: $spacing-09 !important;
+
+  a.ibm-automation-cds--side-nav__link[aria-current='page']::before,
+  a.ibm-automation-cds--side-nav__link--current::before {
+    background-color: #0f62fe !important;
+  }
+}
+
+.ibm-automation-cds--side-nav__items {
+  overflow: visible !important;
+
+  .ibm-automation-cds--popover-container {
+    display: inherit !important;
+  }
+}
+
+.ibm-automation-cds--side-nav__navigation {
+  overflow: visible !important;
+}
+
+.ibm-automation-cds--side-panel-nav-item__popover-content {
+  .ibm-automation-cds--popover-content {
+    @include type-style('body-01');
+
+    padding: rem(8px) rem(16px);
+    background-color: $gray-100;
+    color: $gray-40;
+
+    max-inline-size: rem(176px);
+  }
+
+  .ibm-automation-cds--popover-caret {
+    background-color: $gray-100;
+  }
+}
+
+.ibm-automation-cds--side-nav__link {
+  img {
+    margin-inline-end: 1.5rem;
+    padding-block-end: 2px;
+    vertical-align: middle;
+  }
+}
+
+.ibm-automation-cds--side-nav__link-text {
+  &::part(title) {
+    inline-size: 100%;
+  }
+
+  .ibm-automation-cds--side-panel-nav-item__link {
+    display: flex;
+
+    .launch_icon {
+      margin-inline-start: auto;
+
+      svg {
+        block-size: 100%;
+      }
+    }
+  }
+}
+
+// needed as @carbon/web-components 2.21.0 does not handle the style change for hover
+.ibm-automation-cds--side-nav__link:hover {
+  background-color: $gray-100-hover;
+
+  &::part(title) {
+    color: $white;
+  }
+}

@@ -7,14 +7,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import CDSButton from '@carbon/web-components/es/components/button/button.js';
+import { CommonHeader } from './components/CommonHeader/CommonHeader';
 // @ts-ignore
 import styles from './global-header.scss?inline';
 
 /**
  * Component extending the @carbon/web-components' button
  */
-class globalHeader extends CDSButton {
+class globalHeader extends CommonHeader {
   static styles = styles;
 }
 

@@ -14,7 +14,7 @@ import globalHeader from './src/global-header.template.js';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
- * Component extending the @carbon/web-components' button
+ * Top-level component implementing the global header
  */
 @customElement(`${clabsPrefix}-global-header`)
 class CLABSGlobalHeader extends globalHeader {}

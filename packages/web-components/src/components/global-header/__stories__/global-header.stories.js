@@ -19,6 +19,27 @@ export default {
   component: 'clabs-global-header',
 };
 
+const headerPropsUnauthenticated = {
+  brand: {
+    company: 'IBM',
+    product: 'Platform',
+  },
+  noAuthHeaderLinks: [
+    {
+      text: 'Docs',
+      href: '/docs',
+      carbonIcon: 'Document',
+      arialLabel: 'Docs',
+    },
+    {
+      href: '/login',
+      text: 'Log in',
+      carbonIcon: 'Login',
+      arialLabel: 'Log in',
+    },
+  ],
+};
+
 /**
  * More on writing stories with args: https://storybook.js.org/docs/web-components/writing-stories/args
  *
@@ -35,7 +56,5 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: (args) =>
-    html` <clabs-global-header>
-      ${args.label}${ArrowRight16({ slot: 'icon' })}
-    </clabs-global-header>`,
+    html` <clabs-global-header .headerProps="${headerPropsUnauthenticated}"></clabs-global-header>`,
 };

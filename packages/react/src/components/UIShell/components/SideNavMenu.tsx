@@ -142,7 +142,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     },
     ref: ForwardedRef<HTMLElement>
   ) {
-    const depth = propDepth as number;
+    const depth = (propDepth || 0) as number;
+    const isSideNavCollapsed = isSideNavExpanded === false;
     const { isTreeview, expanded, navType, isRail, setIsTreeview } =
       useContext(SideNavContext);
     const sideNavExpanded = expanded;
@@ -273,10 +274,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const listRef = useRef<HTMLLIElement>(null);
     const menuRef = useMergedRefs([buttonRef, ref]);
 
-    if (!isSideNavExpanded && isExpanded && isRail) {
+    if (isSideNavCollapsed && isExpanded && isRail) {
       setIsExpanded(false);
       setPrevExpanded(true);
-    } else if (isSideNavExpanded && prevExpanded && isRail) {
+    } else if (!isSideNavCollapsed && prevExpanded && isRail) {
       setIsExpanded(true);
       setPrevExpanded(false);
     }
@@ -296,7 +297,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
         return React.cloneElement(child, {
           ...(isCarbonSideNavItem && {
-            isSideNavExpanded: isSideNavExpanded,
+            isSideNavExpanded: !isSideNavCollapsed,
           }),
           ...{
             depth: depth + 1,

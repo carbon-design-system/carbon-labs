@@ -266,7 +266,7 @@ export const ThemeG10 = (args) => {
   };
 
   const handleTileGroupSelect = (e) => {
-    updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
+    updateArgs({ ...args, selectedTileGroup: e.selectedItem });
   };
 
   const argsWithSelectors = {
@@ -281,14 +281,8 @@ export const ThemeG10 = (args) => {
   return <AnimatedHeader {...argsWithSelectors} />;
 };
 
-ThemeG10.argTypes = {
-  ...sharedArgTypes,
-};
-
-ThemeG10.args = {
-  headerAnimation: 3,
-  ...sharedArgs,
-};
+ThemeG10.argTypes = { ...sharedArgTypes };
+ThemeG10.args = { headerAnimation: 3, ...sharedArgs };
 
 export const ThemeG100 = (args) => {
   const [_, updateArgs] = useArgs();
@@ -304,7 +298,7 @@ export const ThemeG100 = (args) => {
   };
 
   const handleTileGroupSelect = (e) => {
-    updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
+    updateArgs({ ...args, selectedTileGroup: e.selectedItem });
   };
 
   const argsWithSelectors = {
@@ -319,14 +313,8 @@ export const ThemeG100 = (args) => {
   return <AnimatedHeader {...argsWithSelectors} />;
 };
 
-ThemeG100.argTypes = {
-  ...sharedArgTypes,
-};
-
-ThemeG100.args = {
-  headerAnimation: 4,
-  ...sharedArgs,
-};
+ThemeG100.argTypes = { ...sharedArgTypes };
+ThemeG100.args = { headerAnimation: 4, ...sharedArgs };
 
 ThemeG100.globals = {
   // 👇 Override background value for this story

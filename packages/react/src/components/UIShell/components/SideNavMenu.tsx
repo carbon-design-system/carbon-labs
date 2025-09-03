@@ -226,7 +226,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     }, [hasActiveDescendant]);
 
     useEffect(() => {
-      if (navType == SIDE_NAV_TYPE.PANEL) {
+      if (navType == SIDE_NAV_TYPE.RAIL_PANEL) {
         // grab first link to redirect if clicked when not expanded
         if (!firstLink?.current && listRef?.current) {
           const firstLinkElement = listRef.current!.querySelector(

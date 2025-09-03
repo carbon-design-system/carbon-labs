@@ -13,13 +13,10 @@ function getAbsolutePath(value) {
 const config = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
-    '@storybook/addon-onboarding',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    '@storybook/addon-webpack5-compiler-babel',
-    'storybook-addon-accessibility-checker',
+    getAbsolutePath("@storybook/addon-onboarding"),
+    getAbsolutePath("@storybook/addon-webpack5-compiler-babel"),
     {
-      name: '@storybook/addon-docs',
+      name: getAbsolutePath("@storybook/addon-docs"),
       options: {
         mdxPluginOptions: {
           mdxCompileOptions: {
@@ -27,7 +24,7 @@ const config = {
           },
         },
       },
-    },
+    }
   ],
   babel: async (config) => {
     return {
@@ -100,8 +97,7 @@ const config = {
     return config;
   },
   docs: {
-    autodocs: true,
-    defaultName: 'Overview',
+    defaultName: 'Overview'
   },
 };
 export default config;

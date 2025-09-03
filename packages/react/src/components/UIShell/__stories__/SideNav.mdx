@@ -1,4 +1,4 @@
-import { ArgTypes, Canvas, Meta } from '@storybook/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as SideNavStories from './SideNav.stories';
 
 <Meta isTemplate />
@@ -22,6 +22,13 @@ The `SideNav` is composed using components from both `@carbon/react` and
 double wide menus, and custom slots for interactive elements. The component can
 be used within the `Header` for global navigation or within the page for in-page
 navigation.
+
+The `navType` prop can be used to control the behavior of the side navigation.
+Setting the prop to `SIDE_NAV_TYPE.RAIL_PANEL` will change the interaction model
+of the side navigation. Note that `SIDE_NAV_TYPE.RAIL_PANEL` requires two levels
+of nesting due to the flyout menus, otherwise it may not function as intended
+and the side navigation will need to be configured as a rail (via the `isRail`
+prop)
 
 ## SideNavSlot
 

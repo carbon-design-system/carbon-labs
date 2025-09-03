@@ -327,7 +327,6 @@ div:has(.#{$prefix}--header)
   inset-block-start: 0;
   inset-inline-start: 100%;
   transform: translateX(-100%);
-  transition: $fast-02 motion(exit, productive);
   will-change: inline-size;
 }
 
@@ -337,8 +336,6 @@ div:has(.#{$prefix}--header)
   inline-size: 16rem;
   overflow-y: auto;
   transform: translateX(0);
-  transition: $moderate-01 motion(standard, productive);
-  transition-delay: 40ms;
 }
 
 //----------------------------------------------------------------------------
@@ -353,6 +350,7 @@ div:has(.#{$prefix}--header)
     display: flex;
     overflow: visible;
     flex-direction: column;
+    padding-block-end: $spacing-11;
   }
 
   .#{$prefix}--side-nav__items,
@@ -377,14 +375,14 @@ div:has(.#{$prefix}--header)
 
   // Side Nav Toggle
   .#{$prefix}--side-nav__toggle {
-    @include button-reset.reset($width: true);
-    @include type-style('heading-compact-01');
+    @include button-reset.reset($width: false);
+    @include type-style('label-01');
     @include focus-outline('reset');
 
     display: flex;
     align-items: center;
     padding: 0 $spacing-05;
-    block-size: $spacing-09;
+    block-size: $spacing-07;
     color: $text-secondary;
     transition: color $duration-fast-02, background-color $duration-fast-02,
       outline $duration-fast-02;
@@ -396,6 +394,15 @@ div:has(.#{$prefix}--header)
 
     &:focus {
       @include focus-outline('outline');
+    }
+  }
+
+  .#{$prefix}--side-nav__toggle--disabled {
+    color: $text-disabled;
+    pointer-events: none;
+
+    svg {
+      fill: $icon-disabled;
     }
   }
 
@@ -565,6 +572,10 @@ div:has(.#{$prefix}--header)
   .#{$prefix}--side-nav__item {
     overflow: visible;
   }
+
+  .#{$prefix}--side-nav__toggle {
+    inline-size: 100%;
+  }
 }
 
 .#{$prefix}--side-nav__toggle-container {
@@ -572,10 +583,7 @@ div:has(.#{$prefix}--header)
   background: $background;
   inline-size: 100%;
   inset-block-end: 0;
-
-  .#{$prefix}--side-nav__toggle.#{$prefix}--side-nav__toggle--collapsed:hover {
-    background: $background-hover;
-  }
+  white-space: nowrap;
 }
 
 //----------------------------------------------------------------------------
@@ -589,6 +597,11 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded {
   border-inline-end: none;
   box-shadow: $spacing-02 0 convert.to-rem(6px) convert.to-rem(-3px) $shadow;
+}
+
+.#{$prefix}--side-nav--rail.#{$prefix}--side-nav--expanded.#{$prefix}--side-nav--pinned {
+  border-inline-end: 1px solid $border-subtle;
+  box-shadow: none;
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {

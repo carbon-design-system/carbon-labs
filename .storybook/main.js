@@ -14,7 +14,7 @@ const config = {
     './welcome/**/*.mdx',
     './welcome/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
-  addons: [getAbsolutePath('@storybook/addon-essentials')],
+  addons: [getAbsolutePath("@storybook/addon-docs")],
   framework: {
     name: getAbsolutePath('@storybook/web-components-vite'),
     options: {},

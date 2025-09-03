@@ -30,7 +30,7 @@
     "telemetry.yml"
   ],
   "scripts": {
-    "build": "node ../../../tasks/build.js",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 node ../../../tasks/build.js",
     "clean": "rimraf es lib scss",
     "postinstall": "ibmtelemetry --config=telemetry.yml",
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 399aab88-efa6-421f-91f7-0be428e0b6c2 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"

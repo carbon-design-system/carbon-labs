@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-example-button@0.6.0...@carbon-labs/react-example-button@0.7.0) (2025-08-25)
+
+**Note:** Version bump only for package @carbon-labs/react-example-button
+
+
+
+
+
 # [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-example-button@0.5.0...@carbon-labs/react-example-button@0.6.0) (2025-07-09)
 
 **Note:** Version bump only for package @carbon-labs/react-example-button

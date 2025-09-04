@@ -11,8 +11,8 @@
 import dataFabricStaticLight from './static/header_static_data_fabric_light_05.svg';
 import dataFabricStaticDark from './static/header_static_data_fabric_dark_06.svg';
 
-import db2StaticLight from './static/header_static_db2_light_01.svg';
-import db2StaticDark from './static/header_static_db2_dark_01.svg';
+import db2StaticLight from './static/header_static_db2_light_02.svg';
+import db2StaticDark from './static/header_static_db2_dark_02.svg';
 
 import watsonXStaticLight from './static/header_static_watsonx_data_light_06.svg';
 import watsonXStaticDark from './static/header_static_watsonx_data_dark_05.svg';

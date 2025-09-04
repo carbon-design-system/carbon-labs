@@ -65,7 +65,7 @@ export type AnimatedHeaderProps = {
   setSelectedTileGroup: (e) => void;
   description?: string;
   headerAnimation?: object;
-  headerStatic?: React.JSX.Element | string;
+  headerStatic?: React.JSX.Element;
   productName?: string;
   userName?: string;
   welcomeText?: string;

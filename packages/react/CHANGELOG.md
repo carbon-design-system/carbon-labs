@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.120.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.119.0...@carbon-labs/react@0.120.0) (2025-09-04)
+
+
+### Features
+
+* add React router to UIShell example ([#648](https://github.com/carbon-design-system/carbon-labs/issues/648)) ([2ade4f5](https://github.com/carbon-design-system/carbon-labs/commit/2ade4f50e84123a21081ab47751da99549624f47))
+
+
+
+
+
 # [0.119.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.118.0...@carbon-labs/react@0.119.0) (2025-09-02)
 
 **Note:** Version bump only for package @carbon-labs/react

@@ -3,17 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.49.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.48.0...@carbon-labs/web-components@0.49.0) (2025-09-02)
-
-
-### Bug Fixes
-
-* **sb:** add storybook package, update blocks import after v9 changes ([#775](https://github.com/carbon-design-system/carbon-labs/issues/775)) ([5de2035](https://github.com/carbon-design-system/carbon-labs/commit/5de2035e428b381d716d6da03b3105a367fa0802))
-
-
-
-
-
 # [0.48.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.47.0...@carbon-labs/web-components@0.48.0) (2025-08-28)
 
 

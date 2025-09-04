@@ -7,7 +7,7 @@ import packageJson from '../package.json';
 
 # Empty State
 
-- **Initiative owner(s):** Carbon for IBM Products
+- **Initiative owner(s):** Sangeetha Babu
 - **Status:** Draft
 - **Target library:** TBD
 - **Target library maintainer(s) / PR Reviewer(s):** N/A
@@ -15,8 +15,7 @@ import packageJson from '../package.json';
 
 ## Overview
 
-The EmptyState component follows the Carbon guidelines for empty states with
-some added specifications around illustration usage.
+The EmptyState component follows the Carbon guidelines for empty states with some added specifications around illustration usage.
 
 ## Getting started
 
@@ -31,10 +30,7 @@ import '@carbon-labs/wc-empty-state/es/index.js';
 <Markdown>{`${cdnJs({ components: ['empty-state'] }, packageJson)}`}</Markdown>
 
 ### HTML
-
-The `<clabs-empty-state>` component accepts slots for `action`, `link` and
-`illustration` elements, and props for `title`, `subtitle`, `size`, `kind`, and
-`illustrationTheme`.
+The `<clabs-empty-state>` component accepts slots for `action`, `link` and `illustration` elements, and props for `title`, `subtitle`, `size`, `kind`, and `illustrationTheme`.
 
 ```html
 <clabs-empty-state
@@ -43,10 +39,12 @@ The `<clabs-empty-state>` component accepts slots for `action`, `link` and
   size="lg"
   kind="notFound"
   illustrationTheme="light">
-  <cds-button kind="tertiary" size="sm" slot="action">Create new</cds-button>
-  <cds-link href="https://www.carbondesignsystem.com" slot="link">
-    View documentation
-  </cds-link>
+    <cds-button kind="tertiary" size="sm" slot="action"
+      >Create new</cds-button
+    >
+    <cds-link href="https://www.carbondesignsystem.com" slot="link">
+      View documentation
+    </cds-link>
 </clabs-empty-state>
 ```
 

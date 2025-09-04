@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-// import '../../../../../../examples/web-components/first-time-orientation/src/first-time-orientation';
+import '../../../../../../examples/web-components/first-time-orientation/src/first-time-orientation';
 
 import styles from './story-styles.scss?lit';
 
@@ -27,7 +27,6 @@ export const FirstTimeOrientation = {
       <style>
         ${styles}
       </style>
-      <div>test</div>
-      // <clabs-first-time-orientation></clabs-first-time-orientation>
+      <clabs-first-time-orientation></clabs-first-time-orientation>
     </div> `,
 };

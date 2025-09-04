@@ -8,7 +8,6 @@
  */
 import AnimatedHeader, {
   AriaLabels,
-  TileGroup,
 } from './components/AnimatedHeader/AnimatedHeader';
 import HeaderTitle from './components/HeaderTitle/HeaderTitle';
 import { BaseTile } from './components/Tiles/index.js';
@@ -19,10 +18,4 @@ export type {
 } from './components/WorkspaceSelector/WorkspaceSelector';
 export type { TasksControllerConfig } from './components/TasksController/TasksController';
 
-export {
-  AnimatedHeader,
-  BaseTile,
-  HeaderTitle,
-  type AriaLabels,
-  type TileGroup,
-};
+export { AnimatedHeader, BaseTile, HeaderTitle, type AriaLabels };

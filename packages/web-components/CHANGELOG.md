@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.50.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.49.0...@carbon-labs/web-components@0.50.0) (2025-09-04)
+
+
+### Bug Fixes
+
+* netlify deploy error ([#786](https://github.com/carbon-design-system/carbon-labs/issues/786)) ([c001406](https://github.com/carbon-design-system/carbon-labs/commit/c001406dba6e70db32a66a867ed9afd1351fb5f1))
+
+
+
+
+
 # [0.49.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.48.0...@carbon-labs/web-components@0.49.0) (2025-09-02)
 
 

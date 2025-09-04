@@ -14,7 +14,7 @@
     "packages/*/**"
   ],
   "scripts": {
-    "build": "NODE_OPTIONS=--max-old-space-size=16384 yarn clean && lerna run build --scope '@carbon-labs/utilities' --scope '@carbon-labs/react' --scope '@carbon-labs/web-components' ",
+    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' --scope '@carbon-labs/react' --scope '@carbon-labs/web-components' ",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "ci-check": "yarn run format:diff && yarn lint:license && yarn lint && yarn lint:styles",

@@ -285,7 +285,7 @@ export const Demo = () => {
                 isFixedNav
                 renderMenuIcon={<SwitcherIcon size={20} />}
               />
-              <HeaderName href="#" prefix="IBM">
+              <HeaderName href="http://www.carbondesignsystem.com" prefix="IBM">
                 [Platform]
               </HeaderName>
               <HeaderPopover align="bottom">
@@ -470,46 +470,76 @@ export const Demo = () => {
                     />
                   </SideNavSlot>
                   <SideNavMenu renderIcon={Home} title="Home" defaultExpanded>
-                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavLink href="#" renderIcon={BusinessProcesses}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={BusinessProcesses}>
                     Business
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={Application}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Application}>
                     Applications
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={Platforms}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Platforms}>
                     Platforms
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={Layers}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
                   <SideNavTitle>Experience services</SideNavTitle>
-                  <SideNavLink href="#" renderIcon={Dashboard}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Dashboard}>
                     Dashboard
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={DataAnalytics}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={DataAnalytics}>
                     Analytics
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={EventIncident}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={EventIncident}>
                     Incidents
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={Security}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Security}>
                     Security
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={WorkflowAutomation}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={WorkflowAutomation}>
                     Automations
                   </SideNavLink>
                   <SideNavDivider />
-                  <SideNavLink href="#" renderIcon={DocumentMultiple_01}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={DocumentMultiple_01}>
                     Docs
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={Settings}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Settings}>
                     Settings
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={OverflowMenuVertical}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={OverflowMenuVertical}>
                     More
                   </SideNavLink>
                 </SideNavMenu>
@@ -517,7 +547,9 @@ export const Demo = () => {
                   renderIcon={CarbonIBMDotCom}
                   title="Product 2"
                   primary>
-                  <SideNavMenuItem renderIcon={Home} href="#">
+                  <SideNavMenuItem
+                    renderIcon={Home}
+                    href="http://www.carbondesignsystem.com">
                     Home product 2
                   </SideNavMenuItem>
                 </SideNavMenu>
@@ -525,7 +557,9 @@ export const Demo = () => {
                   renderIcon={CarbonforIBMProducts}
                   title="Product 3"
                   primary>
-                  <SideNavMenuItem renderIcon={Home} href="#">
+                  <SideNavMenuItem
+                    renderIcon={Home}
+                    href="http://www.carbondesignsystem.com">
                     Home product 3
                   </SideNavMenuItem>
                 </SideNavMenu>
@@ -533,15 +567,21 @@ export const Demo = () => {
                   renderIcon={IBMTelemetry}
                   title="Product 4"
                   primary>
-                  <SideNavMenuItem renderIcon={Home} href="#">
+                  <SideNavMenuItem
+                    renderIcon={Home}
+                    href="http://www.carbondesignsystem.com">
                     Home product 4
                   </SideNavMenuItem>
                 </SideNavMenu>
                 <SideNavDivider />
-                <SideNavLink renderIcon={DocumentMultiple_01} href="#">
+                <SideNavLink
+                  renderIcon={DocumentMultiple_01}
+                  href="http://www.carbondesignsystem.com">
                   Docs
                 </SideNavLink>
-                <SideNavLink renderIcon={Settings} href="#">
+                <SideNavLink
+                  renderIcon={Settings}
+                  href="http://www.carbondesignsystem.com">
                   Settings
                 </SideNavLink>
               </SideNavItems>
@@ -569,46 +609,76 @@ export const Demo = () => {
                     />
                   </SideNavSlot>
                   <SideNavMenu renderIcon={Home} title="Home">
-                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
-                    <SideNavMenuItem href="#">Item level 3</SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
+                    <SideNavMenuItem href="http://www.carbondesignsystem.com">
+                      Item level 3
+                    </SideNavMenuItem>
                   </SideNavMenu>
-                  <SideNavLink href="#" renderIcon={BusinessProcesses}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={BusinessProcesses}>
                     Business
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={Application}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Application}>
                     Applications
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={Platforms}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Platforms}>
                     Platforms
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={Layers}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Layers}>
                     Infrastructure
                   </SideNavLink>
                   <SideNavTitle>Experience services</SideNavTitle>
-                  <SideNavLink href="#" renderIcon={Dashboard}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Dashboard}>
                     Dashboard
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={DataAnalytics}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={DataAnalytics}>
                     Analytics
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={EventIncident}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={EventIncident}>
                     Incidents
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={Security}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Security}>
                     Security
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={WorkflowAutomation}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={WorkflowAutomation}>
                     Automations
                   </SideNavLink>
                   <SideNavDivider />
-                  <SideNavLink href="#" renderIcon={DocumentMultiple_01}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={DocumentMultiple_01}>
                     Docs
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={Settings}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={Settings}>
                     Settings
                   </SideNavLink>
-                  <SideNavLink href="#" renderIcon={OverflowMenuVertical}>
+                  <SideNavLink
+                    href="http://www.carbondesignsystem.com"
+                    renderIcon={OverflowMenuVertical}>
                     More
                   </SideNavLink>
                 </SideNavItems>

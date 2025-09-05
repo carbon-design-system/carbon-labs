@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.78.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.77.0...@carbon-labs/react-ui-shell@0.78.0) (2025-09-05)
+
+
+### Bug Fixes
+
+* mobile sidenav rail styles ([#780](https://github.com/carbon-design-system/carbon-labs/issues/780)) ([fef2d2d](https://github.com/carbon-design-system/carbon-labs/commit/fef2d2d2e2a8a791261d334835f294cf1ce215bf))
+
+
+
+
+
 # [0.77.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.76.0...@carbon-labs/react-ui-shell@0.77.0) (2025-09-04)
 
 

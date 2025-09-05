@@ -1,6 +1,7 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path, { join, dirname } from 'path';
 import remarkGfm from 'remark-gfm';
+// import * from '../../web-components/src'
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -13,10 +14,10 @@ function getAbsolutePath(value) {
 const config = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
-    getAbsolutePath("@storybook/addon-onboarding"),
-    getAbsolutePath("@storybook/addon-webpack5-compiler-babel"),
+    getAbsolutePath('@storybook/addon-onboarding'),
+    getAbsolutePath('@storybook/addon-webpack5-compiler-babel'),
     {
-      name: getAbsolutePath("@storybook/addon-docs"),
+      name: getAbsolutePath('@storybook/addon-docs'),
       options: {
         mdxPluginOptions: {
           mdxCompileOptions: {
@@ -24,7 +25,7 @@ const config = {
           },
         },
       },
-    }
+    },
   ],
   babel: async (config) => {
     return {
@@ -97,7 +98,7 @@ const config = {
     return config;
   },
   docs: {
-    defaultName: 'Overview'
+    defaultName: 'Overview',
   },
 };
 export default config;

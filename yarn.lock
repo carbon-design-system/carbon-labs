@@ -2964,6 +2964,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon/web-components": "npm:2.36.0"
+    "@lit-labs/motion": "npm:^1.0.9"
   languageName: unknown
   linkType: soft
 
@@ -3009,7 +3010,6 @@ __metadata:
     "@carbon/type": "npm:11.45.0"
     "@carbon/web-components": "npm:^2.36.0"
     "@custom-elements-manifest/analyzer": "npm:^0.10.0"
-    "@lit-labs/motion": "npm:^1.0.9"
     "@lit/react": "npm:^1.0.1"
     "@open-wc/testing": "npm:^4.0.0"
     "@playwright/test": "npm:^1.39.0"

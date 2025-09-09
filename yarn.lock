@@ -2703,6 +2703,7 @@ __metadata:
   resolution: "@carbon-labs/react-resizer@workspace:packages/react/src/components/Resizer"
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
+    "@ibm/telemetry-js": "npm:^1.10.1"
   languageName: unknown
   linkType: soft
 
@@ -2903,6 +2904,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon/web-components": "npm:2.36.0"
+    "@ibm/telemetry-js": "npm:^1.10.1"
     uuid: "npm:^9.0.1"
   languageName: unknown
   linkType: soft
@@ -2939,6 +2941,7 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon-labs/wc-empty-state": "workspace:^"
     "@carbon/web-components": "npm:^2.36.0"
+    "@ibm/telemetry-js": "npm:^1.10.1"
     "@lit/context": "npm:^1.1.5"
   languageName: unknown
   linkType: soft
@@ -4403,6 +4406,15 @@ __metadata:
   version: 6.0.0-next.6
   resolution: "@ibm/plex@npm:6.0.0-next.6"
   checksum: 10c0/7f47f9535def1047dff51703fd1041c2f2915df1d405f1d62e785cc55b56478ea91af2e95b838692ef4142835ea765217935e2e336bac5a4437a9092ec0cfb4f
+  languageName: node
+  linkType: hard
+
+"@ibm/telemetry-js@npm:^1.10.1":
+  version: 1.10.1
+  resolution: "@ibm/telemetry-js@npm:1.10.1"
+  bin:
+    ibmtelemetry: dist/collect.js
+  checksum: 10c0/7c4930f99362fc81b82ac07880af5120e40c65792037a120b8d941c3ba81badb867c1481b860799b89e2d253f63d52e92b1a9c9851b11fa0bfc0e5a441957611
   languageName: node
   linkType: hard
 

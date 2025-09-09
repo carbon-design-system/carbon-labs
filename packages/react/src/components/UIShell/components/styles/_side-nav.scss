@@ -118,24 +118,29 @@ div:has(.#{$prefix}--header)
   }
 }
 
+// Mobile styles for side nav - exclude rail and panel variants
 @include breakpoint-down(md) {
-  .#{$prefix}--side-nav__submenu {
-    padding: 0 $spacing-05 0 convert.to-rem(14px);
-  }
+  .#{$prefix}--side-nav:not(.#{$prefix}--side-nav--rail):not(
+      .#{$prefix}--side-nav--panel
+    ) {
+    .#{$prefix}--side-nav__submenu {
+      padding: 0 $spacing-05 0 convert.to-rem(14px);
+    }
 
-  .#{$prefix}--side-nav__submenu,
-  .#{$prefix}--side-nav__link,
-  .#{$prefix}--side-nav__menu a.#{$prefix}--side-nav__link {
-    block-size: $spacing-08;
-  }
+    .#{$prefix}--side-nav__submenu,
+    .#{$prefix}--side-nav__link,
+    .#{$prefix}--side-nav__menu a.#{$prefix}--side-nav__link {
+      block-size: $spacing-08;
+    }
 
-  .#{$prefix}--side-nav__icon {
-    margin-inline-end: convert.to-rem(14px);
-  }
+    .#{$prefix}--side-nav__icon {
+      margin-inline-end: convert.to-rem(14px);
+    }
 
-  .#{$prefix}--side-nav__icon > svg {
-    block-size: convert.to-rem(20px);
-    inline-size: convert.to-rem(20px);
+    .#{$prefix}--side-nav__icon > svg {
+      block-size: convert.to-rem(20px);
+      inline-size: convert.to-rem(20px);
+    }
   }
 }
 
@@ -605,7 +610,8 @@ div:has(.#{$prefix}--header)
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
-  .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint} {
+  .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint},
+  .#{$prefix}--side-nav--panel.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint} {
     @include breakpoint-down($breakpoint) {
       display: none;
     }

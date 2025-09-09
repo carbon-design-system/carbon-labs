@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.52.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.51.0...@carbon-labs/web-components@0.52.0) (2025-09-08)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.51.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.50.0...@carbon-labs/web-components@0.51.0) (2025-09-04)
+
+
+### Features
+
+* add React router to UIShell example ([#648](https://github.com/carbon-design-system/carbon-labs/issues/648)) ([2ade4f5](https://github.com/carbon-design-system/carbon-labs/commit/2ade4f50e84123a21081ab47751da99549624f47))
+
+
+
+
+
+# [0.50.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.49.0...@carbon-labs/web-components@0.50.0) (2025-09-04)
+
+
+### Bug Fixes
+
+* netlify deploy error ([#786](https://github.com/carbon-design-system/carbon-labs/issues/786)) ([c001406](https://github.com/carbon-design-system/carbon-labs/commit/c001406dba6e70db32a66a867ed9afd1351fb5f1))
+
+
+
+
+
+# [0.49.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.48.0...@carbon-labs/web-components@0.49.0) (2025-09-02)
+
+
+### Bug Fixes
+
+* **sb:** add storybook package, update blocks import after v9 changes ([#775](https://github.com/carbon-design-system/carbon-labs/issues/775)) ([5de2035](https://github.com/carbon-design-system/carbon-labs/commit/5de2035e428b381d716d6da03b3105a367fa0802))
+
+
+
+
+
 # [0.48.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.47.0...@carbon-labs/web-components@0.48.0) (2025-08-28)
 
 

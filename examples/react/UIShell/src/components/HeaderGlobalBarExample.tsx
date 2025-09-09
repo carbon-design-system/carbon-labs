@@ -13,7 +13,12 @@ import {
   HeaderPopoverActions,
   HeaderPopoverButton,
   HeaderPopoverContent,
+  Profile,
 } from '@carbon-labs/react-ui-shell';
+import {
+  ThemeSettings,
+  ThemeSwitcher,
+} from '@carbon-labs/react-theme-settings';
 import {
   Button,
   ExpandableSearch,
@@ -21,12 +26,20 @@ import {
   HeaderGlobalBar,
   MenuButton,
   MenuItemRadioGroup,
+  Theme,
+  ContainedList,
+  ContainedListItem,
 } from '@carbon/react';
 import {
   Help,
   Notification,
   UserAvatar,
   SquareOutline,
+  User,
+  IbmCloudKeyProtect,
+  Group,
+  Money,
+  Logout,
 } from '@carbon/react/icons';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router';
@@ -37,7 +50,18 @@ const options = {
   Animals: ['Cat', 'Dog', 'Snake'],
 };
 
-export const HeaderGlobalBarExample = () => {
+const readOnlyItems = [
+  { label: 'Instance', title: 'APIC-MB-DEV' },
+  { label: 'Instance owner', title: 'ruth.leach@ibm.com' },
+  { label: 'Region', title: 'us-east-1 (N Virginia)' },
+];
+
+export const HeaderGlobalBarExample = ({
+  isProfileExpanded,
+  onClickProfileExpand,
+  themeSetting,
+  setThemeSetting,
+}) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
   const headerRef = useRef(null);
@@ -113,21 +137,49 @@ export const HeaderGlobalBarExample = () => {
         />
       </MenuButton>
       <HeaderDivider />
-      <HeaderPopover align="bottom-end">
-        <HeaderPopoverButton align="bottom" label="Profile">
-          <UserAvatar size={20} />
-        </HeaderPopoverButton>
-        <HeaderPopoverContent>
-          <p>
-            Lorem ipsum dolor sit amet, di os consectetur adipiscing elit, sed
-            do eiusmod tempor incididunt ut fsil labore et dolore magna aliqua.
-          </p>
-          <HeaderPopoverActions>
-            <Link href="#">Link action</Link>
-            <Button size="sm">Button</Button>
-          </HeaderPopoverActions>
-        </HeaderPopoverContent>
-      </HeaderPopover>
+      <Profile.Root
+        open={isProfileExpanded}
+        onClick={onClickProfileExpand}
+        label="Profile"
+        renderIcon={<UserAvatar size={20} />}>
+        <Profile.UserInfo name="Ruth Leach" email="ruth.leach@ibm.com" />
+        <ThemeSettings legendText="Theme">
+          <ThemeSwitcher
+            lowContrast
+            size="sm"
+            value={themeSetting}
+            onChange={setThemeSetting}
+          />
+        </ThemeSettings>
+        <Profile.ReadOnly items={readOnlyItems} />
+        <ContainedList label="Profile links">
+          <ContainedListItem
+            renderIcon={User}
+            onClick={() => (window.location.href = 'https://example.com')}>
+            User profile
+          </ContainedListItem>
+          <ContainedListItem
+            renderIcon={IbmCloudKeyProtect}
+            onClick={() => (window.location.href = 'https://example.com')}>
+            Access keys
+          </ContainedListItem>
+          <ContainedListItem
+            renderIcon={Group}
+            onClick={() => (window.location.href = 'https://example.com')}>
+            User management
+          </ContainedListItem>
+          <ContainedListItem
+            renderIcon={Money}
+            onClick={() => (window.location.href = 'https://example.com')}>
+            Plan and billing
+          </ContainedListItem>
+          <ContainedListItem
+            renderIcon={Logout}
+            onClick={() => (window.location.href = 'https://example.com')}>
+            Log out
+          </ContainedListItem>
+        </ContainedList>
+      </Profile.Root>
     </HeaderGlobalBar>
   );
 };

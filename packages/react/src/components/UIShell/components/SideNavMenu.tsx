@@ -14,8 +14,10 @@ import React, {
   ForwardedRef,
   ReactNode,
   Ref,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -140,7 +142,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     },
     ref: ForwardedRef<HTMLElement>
   ) {
-    const depth = propDepth as number;
+    const depth = (propDepth || 0) as number;
+    const isSideNavCollapsed = isSideNavExpanded === false;
     const { isTreeview, expanded, navType, isRail, setIsTreeview } =
       useContext(SideNavContext);
     const sideNavExpanded = expanded;
@@ -159,120 +162,69 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
     const { autoExpand, currentPrimaryMenu, setCurrentPrimaryMenu } =
       useContext(SideNavContext);
 
-    const className = cx({
-      [`${prefix}--side-nav__item`]: true,
-      [`${prefix}--side-nav__item--primary`]: primary,
-      [`${prefix}--side-nav__item--active`]:
-        !primary && (active || (hasActiveDescendant(children) && !isExpanded)),
-      [`${prefix}--side-nav__item--has-active-descendant`]:
-        active || (hasActiveDescendant(children) && !isExpanded),
-      [`${prefix}--side-nav__item--icon`]: IconElement,
-      [`${prefix}--side-nav__item--large`]: large,
-      [customClassName as string]: !!customClassName,
-    });
-
-    const buttonClassName = cx({
-      [`${prefix}--side-nav__submenu`]: true,
-      [`${prefix}--side-nav__submenu--active`]:
-        active || (hasActiveDescendant(children) && isExpanded),
-    });
-
-    const primaryClassNames = cx({
-      [`${prefix}--side-nav__menu-secondary-wrapper`]: true,
-      [`${prefix}--side-nav__menu-secondary-wrapper-expanded`]:
-        isSideNavExpanded && isSecondaryOpen && currentPrimaryMenu === uniqueId,
-    });
-
-    const buttonRef = useRef<HTMLButtonElement>(null);
-    const listRef = useRef<HTMLLIElement>(null);
-    const menuRef = useMergedRefs([buttonRef, ref]);
-
-    if (!isSideNavExpanded && isExpanded && isRail) {
-      setIsExpanded(false);
-      setPrevExpanded(true);
-    } else if (isSideNavExpanded && prevExpanded && isRail) {
-      setIsExpanded(true);
-      setPrevExpanded(false);
-    }
-
-    let childrenToRender = children;
-
-    // modify nested SideNavMenus
-    childrenToRender = React.Children.map(children, (child) => {
-      if (React.isValidElement(child)) {
-        const childJsxElement = child as JSX.Element;
-
-        const childDisplayName =
-          childJsxElement.type?.displayName ?? childJsxElement.type?.name;
-
-        const isCarbonSideNavItem =
-          CARBON_SIDENAV_ITEMS.includes(childDisplayName);
-
-        return React.cloneElement(child, {
-          ...(isCarbonSideNavItem && {
-            isSideNavExpanded: isSideNavExpanded,
-          }),
-          ...{
-            depth: depth + 1,
-          },
-        });
-      }
-
-      return child;
-    });
-
     /**
       Defining the children parameter with the type ReactNode | ReactNode[]. This allows for various possibilities:
       a single element, an array of elements, or null or undefined.
     **/
-    function hasActiveDescendant(children: ReactNode | ReactNode[]): boolean {
-      if (Array.isArray(children)) {
-        return children.some((child) => {
-          if (!React.isValidElement(child)) {
-            setActive(false);
-            return false;
-          }
+    const hasActiveDescendantInner = useCallback(
+      (children: ReactNode | ReactNode[]): boolean => {
+        if (Array.isArray(children)) {
+          return children.some((child) => {
+            if (!React.isValidElement(child)) {
+              // setActive(false);
+              return false;
+            }
 
-          /** Explicitly defining the expected prop types (isActive and 'aria-current) for the children to ensure type
+            /** Explicitly defining the expected prop types (isActive and 'aria-current) for the children to ensure type
   safety when accessing their props.
   **/
-          const props = child.props as {
+            const props = child.props as {
+              isActive?: boolean;
+              'aria-current'?: string;
+              children: ReactNode | ReactNode[];
+            };
+
+            if (
+              props.isActive === true ||
+              props['aria-current'] ||
+              (props.children instanceof Array &&
+                hasActiveDescendantInner(props.children))
+            ) {
+              // setActive(true);
+              return true;
+            }
+
+            return false;
+          });
+        }
+
+        // We use React.isValidElement(child) to check if the child is a valid React element before accessing its props
+
+        if (React.isValidElement(children)) {
+          const props = children.props as {
             isActive?: boolean;
             'aria-current'?: string;
-            children: ReactNode | ReactNode[];
           };
 
-          if (
-            props.isActive === true ||
-            props['aria-current'] ||
-            (props.children instanceof Array &&
-              hasActiveDescendant(props.children))
-          ) {
-            setActive(true);
+          if (props.isActive === true || props['aria-current']) {
+            // setActive(true);
+
             return true;
           }
-
-          return false;
-        });
-      }
-
-      // We use React.isValidElement(child) to check if the child is a valid React element before accessing its props
-
-      if (React.isValidElement(children)) {
-        const props = children.props as {
-          isActive?: boolean;
-          'aria-current'?: string;
-        };
-
-        if (props.isActive === true || props['aria-current']) {
-          setActive(true);
-
-          return true;
         }
-      }
 
-      return false;
-    }
+        return false;
+      },
+      []
+    );
+
+    const hasActiveDescendant = useMemo(() => {
+      return hasActiveDescendantInner(children);
+    }, [children, hasActiveDescendantInner]);
+
+    useEffect(() => {
+      setActive(hasActiveDescendant);
+    }, [hasActiveDescendant]);
 
     useEffect(() => {
       if (navType == SIDE_NAV_TYPE.RAIL_PANEL) {
@@ -293,6 +245,68 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       // if depth is more than 0, that means its nested, thus we set treeview mode
       setIsTreeview?.(true);
     }, [isTreeview]);
+
+    const className = cx({
+      [`${prefix}--side-nav__item`]: true,
+      [`${prefix}--side-nav__item--primary`]: primary,
+      [`${prefix}--side-nav__item--active`]:
+        !primary && (active || (hasActiveDescendant && !isExpanded)),
+      [`${prefix}--side-nav__item--has-active-descendant`]:
+        active || (hasActiveDescendant && !isExpanded),
+      [`${prefix}--side-nav__item--icon`]: IconElement,
+      [`${prefix}--side-nav__item--large`]: large,
+      [customClassName as string]: !!customClassName,
+    });
+
+    const buttonClassName = cx({
+      [`${prefix}--side-nav__submenu`]: true,
+      [`${prefix}--side-nav__submenu--active`]:
+        active || (hasActiveDescendant && isExpanded),
+    });
+
+    const primaryClassNames = cx({
+      [`${prefix}--side-nav__menu-secondary-wrapper`]: true,
+      [`${prefix}--side-nav__menu-secondary-wrapper-expanded`]:
+        isSideNavExpanded && isSecondaryOpen && currentPrimaryMenu === uniqueId,
+    });
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const listRef = useRef<HTMLLIElement>(null);
+    const menuRef = useMergedRefs([buttonRef, ref]);
+
+    if (isSideNavCollapsed && isExpanded && isRail) {
+      setIsExpanded(false);
+      setPrevExpanded(true);
+    } else if (!isSideNavCollapsed && prevExpanded && isRail) {
+      setIsExpanded(true);
+      setPrevExpanded(false);
+    }
+
+    let childrenToRender = children;
+
+    // modify nested SideNavMenus
+    childrenToRender = React.Children.map(children, (child) => {
+      if (React.isValidElement(child)) {
+        const childJsxElement = child as JSX.Element;
+
+        const childDisplayName =
+          childJsxElement.type?.displayName ?? childJsxElement.type?.name;
+
+        const isCarbonSideNavItem =
+          CARBON_SIDENAV_ITEMS.includes(childDisplayName);
+
+        return React.cloneElement(child, {
+          ...(isCarbonSideNavItem && {
+            isSideNavExpanded: !isSideNavCollapsed,
+          }),
+          ...{
+            depth: depth + 1,
+          },
+        });
+      }
+
+      return child;
+    });
 
     /**
      * Returns the parent SideNavMenu, if node is actually inside one.
@@ -443,7 +457,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       }
 
       // will always open to the menu with an active element
-      if (primary && (active || hasActiveDescendant(children))) {
+      if (primary && (active || hasActiveDescendant)) {
         setIsExpanded(true);
       }
     }, [sideNavExpanded]);

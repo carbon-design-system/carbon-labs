@@ -9,11 +9,48 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import { BrowserRouter, Route, Routes, Outlet } from 'react-router';
+import { routes } from './config/routes';
+
 import './index.scss';
+import { HeaderExample } from './components/HeaderExample';
+
+// Relying on React to render - non outlet version
+// ReactDOM.createRoot(document.getElementById('root')!).render(
+//   <React.StrictMode>
+//     <Theme theme="g100">
+//       <BrowserRouter>
+//         <Routes>
+//           {routes.map(({ element: Page, ...rest }) => (
+//             <Route {...rest} element={<Page />} />
+//           ))}
+//         </Routes>
+//       </BrowserRouter>
+//     </Theme>
+//   </React.StrictMode>
+// );
+
+// With outlet
+const Layout = () => (
+  <HeaderExample>
+    <Outlet />
+  </HeaderExample>
+);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          {routes.map(({ element: Page, ...rest }) => (
+            <Route
+              key={rest.path}
+              {...rest}
+              element={Page && <Page usingOutlet />}
+            />
+          ))}
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );

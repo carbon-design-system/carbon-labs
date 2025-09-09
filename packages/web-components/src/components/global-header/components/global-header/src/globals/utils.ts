@@ -126,8 +126,6 @@ export const trackEvent = (eventName: string, props: EventProps) => {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (window as any)?.bluemixAnalytics;
   if (analytics) {
-    props.platformTitle = 'IBM webMethods Hybrid Integration';
-    console.debug('Emit trackEvent', eventName, props);
     analytics.trackEvent(eventName, props);
   }
 };

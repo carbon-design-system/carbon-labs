@@ -2712,6 +2712,7 @@ __metadata:
   resolution: "@carbon-labs/react-split-panel@workspace:packages/react/src/components/SplitPanel"
   dependencies:
     "@carbon-labs/utilities": "npm:canary"
+    "@ibm/telemetry-js": "npm:^1.10.1"
   languageName: unknown
   linkType: soft
 

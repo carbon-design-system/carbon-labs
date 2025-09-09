@@ -1,8 +1,44 @@
 # yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
 version: 1
 projectId: 30eb61b1-2474-4246-a5f4-cdee46ddafb0
-endpoint: 'https://www-api.ibm.com/ibm-telemetry/v1/metrics'
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
 collect:
+  wc:
+    elements:
+      allowedAttributeNames:
+        # clabs-network-graph
+        - background
+        - data
+        - height
+        - isNodeDraggable
+        - isPanInteraction
+        - isPointerInteraction
+        - isZoomInteraction
+        - link-color
+        - link-width
+        - max-zoom
+        - min-zoom
+        - node-bg-color
+        - node-border-accent-color
+        - node-label
+        - node-text-color
+        - node-tooltip-label
+        - nodeDrag
+        - number-of-particle
+        - onon-node-click
+        - onon-node-hover
+        - onon-node-right-click
+        - particle-color
+        - particle-width
+        - text-size
+        - tooltipStyles
+        - width
+        - zoomToFit
+      allowedAttributeStringValues:
+        # General - boolean attributes
+        - "true"
+        - "false"
   npm:
     dependencies: null
   js:

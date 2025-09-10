@@ -40,7 +40,7 @@
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.14.0",
     "@carbon/web-components": "2.36.0",
-    "@ibm/telemetry-js": "^1.10.1",
+    "@ibm/telemetry-js": "^1.10.2",
     "uuid": "^9.0.1"
   }
 }

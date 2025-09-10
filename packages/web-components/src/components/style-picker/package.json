@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-style-picker",
-  "version": "0.8.0",
+  "version": "0.10.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -21,7 +21,8 @@
   },
   "files": [
     "es/",
-    "lib/"
+    "lib/",
+    "telemetry.yml"
   ],
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
@@ -29,13 +30,16 @@
     "build": "node ../../../tasks/build.js",
     "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
     "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary",
-    "clean": "rimraf es lib"
+    "clean": "rimraf es lib",
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 64062a7c-df09-48a9-b109-4464ed8b4211 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(ts|tsx|js|jsx) --wc"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.14.0",
     "@carbon-labs/wc-empty-state": "workspace:^",
     "@carbon/web-components": "^2.36.0",
+    "@ibm/telemetry-js": "^1.10.1",
     "@lit/context": "^1.1.5"
   }
 }

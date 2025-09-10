@@ -109,7 +109,7 @@ const colorTemplate = (props = defaultProps) => html`
       ${ColorPalette16({ slot: 'icon' })}
       <span slot="tooltip-content">Color palette</span>
     </cds-icon-button>
-    <clabs-style-picker-section>
+    <clabs-style-picker-section heading="Colors">
       ${colors.map(
         (group) =>
           html`<clabs-style-picker-group heading=${group.label}>
@@ -145,7 +145,7 @@ const iconTemplate = (props = defaultProps) => html`
       ${ColorPalette16({ slot: 'icon' })}
       <span slot="tooltip-content">Icon picker</span>
     </cds-icon-button>
-    <clabs-style-picker-section>
+    <clabs-style-picker-section heading="Icons">
       ${icons.map(
         (item) =>
           html`

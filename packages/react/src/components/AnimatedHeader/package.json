@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-animated-header",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -38,7 +38,7 @@
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 40597fb8-d0ed-45fb-a95a-5b1751e22c36 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "dependencies": {
-    "@ibm/telemetry-js": "^1.9.1",
+    "@ibm/telemetry-js": "^1.10.1",
     "jest-canvas-mock": "^2.5.2",
     "lottie-web": "^5.12.2"
   },

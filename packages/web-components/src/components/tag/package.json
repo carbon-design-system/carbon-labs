@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-ai-tag",
-  "version": "0.11.0",
+  "version": "0.13.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -32,7 +32,8 @@
     "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
     "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary",
     "clean": "rimraf es lib",
-    "postinstall": "ibmtelemetry --config=telemetry.yml"
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 99a48c00-fd34-4267-80a4-935d08af5880 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(ts|tsx|js|jsx) --wc"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
@@ -40,6 +41,6 @@
     "@carbon-labs/utilities": "0.8.0",
     "@carbon/grid": "^11.41.0",
     "@carbon/web-components": "2.36.0",
-    "@ibm/telemetry-js": "^1.9.1"
+    "@ibm/telemetry-js": "^1.10.1"
   }
 }

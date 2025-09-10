@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.28.0...@carbon-labs/react-animated-header@0.29.0) (2025-09-10)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.27.0...@carbon-labs/react-animated-header@0.28.0) (2025-08-29)
+
+
+### Features
+
+* **animated-header:** Add TileGroup to export list + Firefox fallback ([#739](https://github.com/carbon-design-system/carbon-labs/issues/739)) ([49a175c](https://github.com/carbon-design-system/carbon-labs/commit/49a175ce56c081b4364832ecbf02e4839bbd2279))
+
+
+
+
+
 # [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.26.0...@carbon-labs/react-animated-header@0.27.0) (2025-08-25)
 
 **Note:** Version bump only for package @carbon-labs/react-animated-header

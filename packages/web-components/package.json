@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/web-components",
-  "version": "0.51.0",
+  "version": "0.53.0",
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@carbon/grid": "^11.41.0",
     "@carbon/icon-helpers": "10.65.0",
-    "@carbon/icons": "11.65.0",
+    "@carbon/icons": "11.66.0",
     "@carbon/layout": "11.39.0",
     "@carbon/motion": "11.33.0",
     "@carbon/pictograms": "^12.58.0",

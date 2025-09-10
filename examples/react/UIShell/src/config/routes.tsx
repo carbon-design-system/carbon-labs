@@ -88,7 +88,6 @@ export const routes: routesType[] = [
       inSideNav: true,
       slot: DropdownExample,
       icon: VirtualColumnKey,
-      separator: true,
     },
   },
   {

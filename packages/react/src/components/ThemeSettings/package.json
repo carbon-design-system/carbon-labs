@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-theme-settings",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -39,6 +39,6 @@
     "@carbon-labs/utilities": "canary"
   },
   "dependencies": {
-    "@ibm/telemetry-js": "^1.9.1"
+    "@ibm/telemetry-js": "^1.10.1"
   }
 }

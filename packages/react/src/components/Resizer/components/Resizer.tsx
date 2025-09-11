@@ -13,6 +13,7 @@ import React, {
   useCallback,
   forwardRef,
 } from 'react';
+import { rem } from '@carbon/layout';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import cx from 'classnames';
 import debounce from 'lodash.debounce';
@@ -94,9 +95,8 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
         return;
       }
 
-      element.style[
-        orientation === 'horizontal' ? 'blockSize' : 'inlineSize'
-      ] = `${thickness}px`;
+      element.style[orientation === 'horizontal' ? 'blockSize' : 'inlineSize'] =
+        rem(thickness);
 
       const prevSibling = element.previousElementSibling as HTMLElement;
       const nextSibling = element.nextElementSibling as HTMLElement;

@@ -24,7 +24,27 @@ import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
 ## Table of Contents
 
 - [Overview](#overview)
+  - [Anatomy](#anatomy)
+  - [Theming](#theming)
+  - [Tile Configuration](#tile-configuration)
+    - [New `variant` Prop](#new-variant-prop)
+    - [Required `tileId`](#required-tileid)
+    - [Canonical Icon Props](#canonical-icon-props)
+    - [Variant-specific Props](#variant-specific-props)
+      - [GlassTile (`variant: 'glass'`)](#glasstile-variant-glass)
+      - [AITile (`variant: 'ai'`)](#aitile-variant-ai)
+      - [AIPromptTile (`variant: 'aiPrompt'`)](#aiprompttile-variant-aiprompt)
+    - [Migration Guide](#migration-guide)
+  - [Accessibility](#accessibility)
+    - [Tile ARIA Labels](#tile-aria-labels)
+    - [Tasks Dropdown ARIA Label](#tasks-dropdown-aria-label)
+    - [Workspace Selector ARIA Label](#workspace-selector-aria-label)
+    - [Additional ARIA Labels](#additional-aria-labels)
 - [Getting started](#getting-started)
+  - [JS (via import)](#js-via-import)
+  - [SCSS](#scss)
+- [Component API](#component-api)
+- [Example usages](#example-usages)
 
 {/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
 
@@ -66,6 +86,8 @@ achieve highest contrast to the background.
 
 **Collapse / Expand:** Icon to collapse or expand the header
 
+---
+
 ### Theming
 
 The default theme for Animated Header is _g10_ (Light theme).
@@ -95,6 +117,146 @@ function App() {
 }
 ```
 
+---
+
+### Tile Configuration
+
+The **AnimatedHeader** renders groups of `Tile`s via the `BaseTile` router. Each
+tile must define a `variant` to specify which tile component should render.
+
+#### New `variant` Prop
+
+- **Required** to select the tile type.
+- Supported values: `'glass'`, `'aiPrompt'`, `'ai'`.
+- `glass` remains the default if no variant is specified.
+
+```diff
+- { id: 'ai-tile', mainIcon: Term } // old way to get AIPromptTile
++ { tileId: 'tile-1', variant: 'aiPrompt', primaryIcon: Term } // ✅ new way
+```
+
+⚠️ **Back-compat:** The legacy `id: 'ai-tile'` is still supported but will be
+removed in a future release. Migrate to using `variant`.
+
+#### Required `tileId`
+
+Every tile **must define a `tileId`**. This provides both:
+
+- A stable React `key`
+- The identifier passed to the child tile component
+
+⚠️ **Deprecated:** The old `id` prop is still accepted for legacy builds, but
+should be replaced with `tileId`.
+
+```tsx
+{
+  tileId: 'tile-1',
+  variant: 'glass',
+  title: 'Load data',
+  primaryIcon: DataSet,
+  ariaLabel: 'Load data using Data explorer',
+}
+```
+
+#### Canonical Icon Props
+
+Use `primaryIcon` (leading icon) and `secondaryIcon` (optional trailing icon).
+
+⚠️ **Deprecated:** The older `mainIcon` prop is still supported via a BaseTile
+fallback but should be replaced.
+
+```tsx
+{
+  tileId: 'tile-2',
+  variant: 'glass',
+  title: 'Export data',
+  primaryIcon: Export,
+  secondaryIcon: ArrowRight,
+}
+```
+
+#### Variant-specific Props
+
+##### GlassTile (`variant: 'glass'`)
+
+| Prop                | Type                          | Notes                                              |
+| ------------------- | ----------------------------- | -------------------------------------------------- |
+| `tileId`            | `string \| null`              | Identifier (recommended non-null in configs).      |
+| `href`              | `string \| null`              | Link target; omit for non-interactive tile.        |
+| `title`             | `string \| ReactNode \| null` | Title text.                                        |
+| `subtitle`          | `string \| ReactNode \| null` | Secondary line.                                    |
+| `disabledTaskLabel` | `string \| null`              | Tooltip/label shown when disabled.                 |
+| `customContent`     | `ReactNode \| null`           | Custom body content instead of default.            |
+| `primaryIcon`       | `ElementType \| null`         | Leading icon component.                            |
+| `secondaryIcon`     | `ElementType \| null`         | Optional trailing icon component.                  |
+| `onClick`           | `(() => void) \| null`        | Click handler for interactive tiles.               |
+| `ariaLabel`         | `string`                      | Accessibility label (required for a11y).           |
+| `isLoading`         | `boolean`                     | Shows skeleton state.                              |
+| `isDisabled`        | `boolean`                     | Disables interactions and applies disabled styles. |
+
+##### AITile (`variant: 'ai'`)
+
+| Prop                | Type                          | Notes                                              |
+| ------------------- | ----------------------------- | -------------------------------------------------- |
+| `tileId`            | `string \| null`              | Identifier (recommended non-null in configs).      |
+| `href`              | `string \| null`              | Link target; omit for non-interactive tile.        |
+| `title`             | `string \| ReactNode \| null` | Title text.                                        |
+| `subtitle`          | `string \| ReactNode \| null` | Secondary line.                                    |
+| `disabledTaskLabel` | `string \| null`              | Tooltip/label shown when disabled.                 |
+| `customContent`     | `ReactNode \| null`           | Custom body content instead of default.            |
+| `primaryIcon`       | `ElementType \| null`         | Leading icon component.                            |
+| `secondaryIcon`     | `ElementType \| null`         | Optional trailing icon component.                  |
+| `onClick`           | `(() => void) \| null`        | Click handler for interactive tiles.               |
+| `ariaLabel`         | `string`                      | Accessibility label (required for a11y).           |
+| `isLoading`         | `boolean`                     | Shows skeleton state.                              |
+| `isDisabled`        | `boolean`                     | Disables interactions and applies disabled styles. |
+
+##### AIPromptTile (`variant: 'aiPrompt'`)
+
+| Prop                | Type                          | Notes                                                 |
+| ------------------- | ----------------------------- | ----------------------------------------------------- |
+| `tileId`            | `string \| null`              | Identifier (recommended non-null in configs).         |
+| `href`              | `string \| null`              | Destination for “Open [product]”.                     |
+| `title`             | `string \| ReactNode \| null` | Heading text.                                         |
+| `disabledTaskLabel` | `string \| null`              | Tooltip/label shown when disabled.                    |
+| `productName`       | `string`                      | Used in labels (e.g., “Open [product]”, button text). |
+| `promptPlaceholder` | `string`                      | Placeholder for the chat input.                       |
+| `primaryIcon`       | `ElementType \| null`         | Leading icon component.                               |
+| `onClick`           | `(() => void) \| null`        | Click handler for interactive tiles.                  |
+| `ariaLabel`         | `string`                      | Accessibility label (required for a11y).              |
+| `isLoading`         | `boolean`                     | Shows skeleton state.                                 |
+| `isDisabled`        | `boolean`                     | Disables interactions and applies disabled styles.    |
+
+> Note: AIPromptTile handles text input internally and can optionally call your
+> `onSubmit` in your product integration (if you wire it), but the core public
+> props above are what's typically used in `AnimatedHeader`.
+
+---
+
+#### Migration Guide
+
+- Replace `id` → `tileId`
+- Replace `mainIcon` → `primaryIcon`
+- Use `variant` to explicitly pick the tile type
+- Ensure every tile defines `tileId`
+- Add `ariaLabel` to every tile for accessibility
+
+Example migration:
+
+```diff
+- {
+-   id: 'ai-tile',
+-   title: 'Short description of the type of prompt',
+-   mainIcon: Term
+- }
++ {
++   tileId: 'tile-1',
++   variant: 'aiPrompt',
++   title: 'Short description of the type of prompt',
++   primaryIcon: Term
++ }
+```
+
 ### Accessibility
 
 To ensure a fully accessible experience, provide `aria-label`s directly in your
@@ -110,13 +272,14 @@ and is easier to maintain.
 const headerTiles = [
   {
     id: 1,
-    label: 'AI Chat Tile w/ two glass tiles',
+    label: 'AI Prompt Tile w/ two glass tiles',
     tiles: [
       {
-        id: 'ai-tile',
+        tileId: 'tile-1',
+        variant: 'aiPrompt',
         href: '#',
         title: 'Short description of the type of prompt',
-        mainIcon: Term,
+        primaryIcon: Term,
         ariaLabel: 'Start a conversation with the AI assistant', // ✅ aria-label defined here
       },
     ],
@@ -194,7 +357,7 @@ yarn add @carbon-labs/react-animated-header
 ### JS (via import)
 
 ```javascript
-import { AnimatedHeader } from '@carbon-labs/react-animated-header/es/index';
+import { AnimatedHeader } from '@carbon-labs/react-animated-header';
 
 function App() {
   return <AnimatedHeader />;

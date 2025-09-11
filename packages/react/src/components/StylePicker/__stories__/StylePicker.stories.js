@@ -22,7 +22,7 @@ import {
   StylePickerColor,
   StylePickerGroup,
   StylePickerOption,
-  StylePickerSection
+  StylePickerSection,
 } from '../components';
 
 export default {

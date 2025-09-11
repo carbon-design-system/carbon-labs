@@ -35,7 +35,7 @@
     "clean": "rimraf es lib scss"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "latest",
+    "@carbon-labs/utilities": "canary",
     "@lit/react": "^1.0.1"
   },
   "dependencies": {

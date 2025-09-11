@@ -2720,7 +2720,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-style-picker@workspace:packages/react/src/components/StylePicker"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.17.0"
+    "@carbon-labs/utilities": "npm:latest"
     "@carbon-labs/wc-style-picker": "workspace:^"
     "@lit/react": "npm:^1.0.1"
   languageName: unknown
@@ -2839,15 +2839,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon-labs/utilities@npm:0.17.0":
-  version: 0.17.0
-  resolution: "@carbon-labs/utilities@npm:0.17.0"
+"@carbon-labs/utilities@npm:0.17.0, @carbon-labs/utilities@workspace:packages/utilities":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/utilities@workspace:packages/utilities"
   dependencies:
+    "@rollup/plugin-babel": "npm:^6.0.4"
+    babel-cli: "npm:^6.26.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-  checksum: 10c0/a646277050d0b2e9a06b32b989a1cef165c1389791d8e91cf683055fe01571864e53a115f6f2f9ba8aab34ad3ba7855a3ee4429807a80f8f22b4eb0345ec6a39
-  languageName: node
-  linkType: hard
+    rimraf: "npm:^6.0.1"
+  languageName: unknown
+  linkType: soft
 
 "@carbon-labs/utilities@npm:0.8.0":
   version: 0.8.0
@@ -2866,17 +2868,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon-labs/utilities@workspace:packages/utilities":
-  version: 0.0.0-use.local
-  resolution: "@carbon-labs/utilities@workspace:packages/utilities"
+"@carbon-labs/utilities@npm:latest":
+  version: 0.17.0
+  resolution: "@carbon-labs/utilities@npm:0.17.0"
   dependencies:
-    "@rollup/plugin-babel": "npm:^6.0.4"
-    babel-cli: "npm:^6.26.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    rimraf: "npm:^6.0.1"
-  languageName: unknown
-  linkType: soft
+  checksum: 10c0/a646277050d0b2e9a06b32b989a1cef165c1389791d8e91cf683055fe01571864e53a115f6f2f9ba8aab34ad3ba7855a3ee4429807a80f8f22b4eb0345ec6a39
+  languageName: node
+  linkType: hard
 
 "@carbon-labs/wc-ai-feedback@workspace:packages/web-components/src/components/feedback":
   version: 0.0.0-use.local

@@ -1,0 +1,22 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Config @carbon/styles to use the custom prefix, and then only load the styles that we need
+@use '@carbon/styles/scss/config' with (
+  $prefix: 'cds-custom'
+);
+@use '@carbon/styles/scss/components/ui-shell';
+
+@use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/theme';
+
+apaas-common-header,
+hybrid-ipaas-header {
+  @include theme.theme(themes.$g100);
+}

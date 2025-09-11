@@ -39,6 +39,8 @@ const config = {
     storyStoreV7: true,
   },
 
+  staticDirs: ['../public'],
+
   async viteFinal(config) {
     return mergeConfig(config, {
       css: {

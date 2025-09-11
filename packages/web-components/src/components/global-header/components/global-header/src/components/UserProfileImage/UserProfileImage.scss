@@ -1,0 +1,141 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use 'sass:map';
+@use '@carbon/styles/scss/type' as *;
+@use './color-map' as mappedTokens;
+@use '@carbon/styles/scss/spacing' as layout;
+@use '@carbon/themes/scss/tokens' as themeTokens;
+@use '../../globals/styles/vars' as automation;
+
+$block-class: #{automation.$automation-prefix}user-profile-image;
+$base-colors: 'cyan', 'gray', 'green', 'magenta', 'purple', 'teal';
+$themes: (
+  'light': (
+    'light-contrast': 60,
+    'dark-contrast': 80,
+  ),
+  'dark': (
+    'light-contrast': 50,
+    'dark-contrast': 30,
+  ),
+);
+$theme-keys: map.keys($themes);
+
+@function --get-background-color($color, $key, $contrast-key) {
+  @return map.get(
+    mappedTokens.$carbon-colors,
+    #{$color}#{map.get(map.get($themes, $key), #{$contrast-key}-contrast)}
+  );
+}
+
+$sizes: (
+  xlg: layout.$spacing-09,
+  lg: layout.$spacing-07,
+  md: layout.$spacing-06,
+  sm: calc(#{layout.$spacing-05} + #{layout.$spacing-02}),
+  xs: layout.$spacing-05,
+);
+
+@mixin size($size) {
+  $_size: map.get($sizes, $size);
+
+  block-size: $_size;
+
+  inline-size: $_size;
+}
+
+@mixin user-profile-image {
+  @each $key in $theme-keys {
+    .#{$block-class}--#{$key} {
+      color: #161616;
+    }
+
+    @each $color in $base-colors {
+      @each $contrast-key in $theme-keys {
+        .#{$block-class}--#{$key}.#{$block-class}--#{$contrast-key}-#{$color} {
+          background-color: #1192e8;
+        }
+      }
+    }
+  }
+
+  .#{$block-class} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    text-transform: uppercase;
+  }
+
+  .#{$block-class}__photo {
+    border-radius: 100%;
+    inline-size: 100%;
+  }
+
+  .#{$block-class}__photo--xlg {
+    @include size('xlg');
+  }
+
+  .#{$block-class}__photo--lg {
+    @include size('lg');
+  }
+
+  .#{$block-class}__photo--md {
+    @include size('md');
+  }
+  .#{$block-class}__photo--sm {
+    @include size('sm');
+  }
+
+  .#{$block-class}__photo--xs {
+    @include size('xs');
+  }
+
+  .#{$block-class}--xlg {
+    @include size('xlg');
+    @include type-style('heading-03');
+  }
+
+  .#{$block-class}--lg {
+    @include size('lg');
+    @include type-style('body-short-01');
+  }
+
+  .#{$block-class}--md {
+    @include size('md');
+    @include type-style('label-01');
+
+    font-weight: bold;
+  }
+
+  .#{$block-class}--sm {
+    @include size('sm');
+    @include type-style('label-01');
+
+    font-weight: bold;
+  }
+
+  .#{$block-class}--xs {
+    @include size('xs');
+    @include type-style('label-01');
+
+    font-weight: bold;
+  }
+}
+
+.automation-global-header__user-profile-image {
+  @include user-profile-image;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+}

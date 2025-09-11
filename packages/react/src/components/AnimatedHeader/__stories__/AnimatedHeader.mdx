@@ -98,7 +98,7 @@ To use dark theme in your product/app wrap the componenet in the Carbon
 [GlobalTheme](https://react.carbondesignsystem.com/?path=/docs/components-theme--overview#setting-the-global-theme)
 component. Following the example from the Carbon website it would like this:
 
-```
+```jsx
 import { useEffect } from 'react';
 import { GlobalTheme } from '@carbon/react';
 
@@ -148,7 +148,7 @@ Every tile **must define a `tileId`**. This provides both:
 ⚠️ **Deprecated:** The old `id` prop is still accepted for legacy builds, but
 should be replaced with `tileId`.
 
-```tsx
+```jsx
 {
   tileId: 'tile-1',
   variant: 'glass',
@@ -165,7 +165,7 @@ Use `primaryIcon` (leading icon) and `secondaryIcon` (optional trailing icon).
 ⚠️ **Deprecated:** The older `mainIcon` prop is still supported via a BaseTile
 fallback but should be replaced.
 
-```tsx
+```jsx
 {
   tileId: 'tile-2',
   variant: 'glass',
@@ -294,7 +294,7 @@ export const headerTiles: TileGroup[] = [
 For the tasks controller dropdown, provide the `ariaLabel` directly in the
 config object:
 
-```ts
+```jsx
 export const tasksControllerConfigDropdown = {
   type: 'dropdown',
   dropdown: {
@@ -312,7 +312,7 @@ export const tasksControllerConfigDropdown = {
 For the workspace selector, define the `ariaLabel` at the top level of the
 config object:
 
-```ts
+```jsx
 export const workspaceSelectorConfig = {
   allWorkspaces: workspaceData,
   setSelectedWorkspace: () => {},
@@ -358,7 +358,7 @@ yarn add @carbon-labs/react-animated-header
 
 ### JS (via import)
 
-```javascript
+```jsx
 import { AnimatedHeader } from '@carbon-labs/react-animated-header';
 
 function App() {
@@ -372,7 +372,7 @@ export default App;
 
 In your styles file import
 
-```
+```scss
 @use '@carbon/react';
 @use '@carbon-labs/react-animated-header/scss/animated-header';
 ```
@@ -386,17 +386,17 @@ In your styles file import
 Example of Animated Header with all prop types enabled.
 
 ```jsx
-  <AnimatedHeader
-    ariaLabels={ariaLabelsConfig as AriaLabels}
-    tasksControllerConfig={tasksControllerConfigDropdown as TasksControllerConfig}
-    workspaceSelectorConfig={WorkspaceSelectorConfig}
-    description="Connect, monitor, and manage data."
-    productName="[Product name]"
-    userName="Drew"
-    welcomeText="Welcome"
-    isLoading={false}
-    expandButtonLabel="Expand"
-    collapseButtonLabel="Collapse"
-    tileClickHandler={handleTileClicks}
-  />
+<AnimatedHeader
+  ariaLabels={ariaLabelsConfig as AriaLabels}
+  tasksControllerConfig={tasksControllerConfigDropdown as TasksControllerConfig}
+  workspaceSelectorConfig={WorkspaceSelectorConfig}
+  description="Connect, monitor, and manage data."
+  productName="[Product name]"
+  userName="Drew"
+  welcomeText="Welcome"
+  isLoading={false}
+  expandButtonLabel="Expand"
+  collapseButtonLabel="Collapse"
+  tileClickHandler={handleTileClicks}
+/>
 ```

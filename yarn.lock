@@ -2720,7 +2720,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-style-picker@workspace:packages/react/src/components/StylePicker"
   dependencies:
-    "@carbon-labs/utilities": "npm:latest"
+    "@carbon-labs/utilities": "npm:canary"
     "@carbon-labs/wc-style-picker": "workspace:^"
     "@lit/react": "npm:^1.0.1"
   languageName: unknown
@@ -2839,7 +2839,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon-labs/utilities@npm:0.17.0, @carbon-labs/utilities@npm:latest":
+"@carbon-labs/utilities@npm:0.17.0":
   version: 0.17.0
   resolution: "@carbon-labs/utilities@npm:0.17.0"
   dependencies:

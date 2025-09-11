@@ -6,33 +6,58 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React, { ElementType, ReactNode } from 'react';
-import { AIPromptTile } from '../AIPromptTile/AIPromptTile';
-import { GlassTile } from '../GlassTile/GlassTile';
+import React from 'react';
+import { AITile, type AITileProps } from '../AITile/AITile';
+import {
+  AIPromptTile,
+  type AIPromptTileProps,
+} from '../AIPromptTile/AIPromptTile';
+import { GlassTile, type GlassTileProps } from '../GlassTile/GlassTile';
 
-/** Base Tile */
+/** Base Tile router */
+export type TileVariant = 'glass' | 'aiPrompt' | 'ai';
 
-interface BaseTileProps {
-  id?: string;
-  open?: boolean;
-  href?: string | null;
-  mainIcon?: ElementType | null;
-  secondaryIcon?: ElementType | null;
-  title?: string | null;
-  subtitle?: string | null;
-  productName?: string;
-  customContent?: ReactNode;
-  isLoading?: boolean;
-  isDisabled?: boolean;
-  disabledTaskLabel?: string;
-  onClick?: (() => void) | null;
-  ariaLabel?: string;
+export type BaseTileProps =
+  | ({ variant?: 'glass' } & GlassTileProps)
+  | ({ variant: 'aiPrompt' } & AIPromptTileProps)
+  | (({ variant: 'ai' } & AITileProps) & {
+      id?: string;
+      tileId?: string | null;
+    });
+
+function inferVariant(props: BaseTileProps): TileVariant {
+  if (props.variant) {
+    return props.variant;
+  }
+  if (props.id === 'ai-tile') {
+    return 'aiPrompt';
+  }
+  return 'glass';
 }
 
-export const BaseTile: React.FC<BaseTileProps> = (props: BaseTileProps) => {
-  if (props.id === 'ai-tile') {
-    return <AIPromptTile {...props}></AIPromptTile>;
-  }
+export const BaseTile: React.FC<BaseTileProps> = (props) => {
+  // Back-compat: alias legacy icon prop to the new name
+  const normalizedProps = {
+    ...props,
+    primaryIcon: (props as any).primaryIcon ?? (props as any).mainIcon, // ← fallback
+  };
 
-  return <GlassTile {...props}></GlassTile>;
+  // strip legacy id, but flow it into tileId if needed
+  const { id: legacyId, ...rest } = normalizedProps as BaseTileProps & {
+    id?: string;
+  };
+  const forward = {
+    ...rest,
+    tileId: (rest as any).tileId ?? legacyId,
+  };
+
+  switch (inferVariant(props)) {
+    case 'ai':
+      return <AITile {...(forward as AITileProps)} />;
+    case 'aiPrompt':
+      return <AIPromptTile {...(forward as AIPromptTileProps)} />;
+    case 'glass':
+    default:
+      return <GlassTile {...(forward as GlassTileProps)} />;
+  }
 };

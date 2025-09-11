@@ -133,9 +133,10 @@ const sharedArgTypes = {
         5: headerTiles[4].label,
         6: headerTiles[5].label,
         7: headerTiles[6].label,
+        8: headerTiles[7].label,
       },
     },
-    options: [0, 1, 2, 3, 4, 5, 6, 7],
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8],
     mapping: {
       0: null,
       1: headerTiles[0],
@@ -145,6 +146,7 @@ const sharedArgTypes = {
       5: headerTiles[4],
       6: headerTiles[5],
       7: headerTiles[6],
+      8: headerTiles[7],
     },
   },
   tasksControllerConfig: {

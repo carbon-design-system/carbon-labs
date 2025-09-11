@@ -9,9 +9,9 @@
 
 import React, { ElementType, ReactNode } from 'react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import { SkeletonPlaceholder } from '@carbon/react';
+import { AILabel, SkeletonPlaceholder } from '@carbon/react';
 
-export type GlassTileBodyProps = {
+export type AITileBodyProps = {
   open?: boolean;
   title?: string | null;
   subtitle?: string | null;
@@ -21,7 +21,7 @@ export type GlassTileBodyProps = {
   isLoading?: boolean;
 };
 
-export const GlassTileBody = ({
+export const AITileBody = ({
   open,
   title,
   subtitle,
@@ -29,9 +29,9 @@ export const GlassTileBody = ({
   primaryIcon: PrimaryIcon,
   secondaryIcon: SecondaryIcon,
   isLoading,
-}: GlassTileBodyProps) => {
+}: AITileBodyProps) => {
   const prefix = usePrefix();
-  const blockClass = `${prefix}--animated-header__glass-tile`;
+  const blockClass = `${prefix}--animated-header__ai-tile`;
   const collapsed = `${blockClass}--collapsed`;
 
   if (isLoading) {
@@ -43,6 +43,7 @@ export const GlassTileBody = ({
   return (
     <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
       <div className={`${blockClass}--body-background`} />
+      <div className={`${blockClass}--body-gradient`} />
       {customContent ? (
         <div className={`${blockClass}--custom-content`}>{customContent}</div>
       ) : (
@@ -51,6 +52,7 @@ export const GlassTileBody = ({
             {PrimaryIcon && (
               <PrimaryIcon fill={`var(--cds-icon-secondary)`} size={24} />
             )}
+            <AILabel autoAlign aiText="AI" size="xs" />
           </div>
           <div className={`${blockClass}--title`}>{title}</div>
           <div className={`${blockClass}--footer`}>

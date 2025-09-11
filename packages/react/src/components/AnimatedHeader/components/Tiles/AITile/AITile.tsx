@@ -6,10 +6,12 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
 import React, { ElementType } from 'react';
+import { Link } from '@carbon/react';
+import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { AITileBody, AITileBodyProps } from '../AITile/AITileBody';
 
-export type GlassTileProps = {
+export type AITileProps = {
   tileId: string | null;
   href?: string | null;
   title?: string | null;
@@ -25,11 +27,7 @@ export type GlassTileProps = {
   isDisabled?: boolean;
 } & Record<string, unknown>;
 
-import { Link } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import { GlassTileBody, GlassTileBodyProps } from './GlassTileBody';
-
-export const GlassTile: React.FC<GlassTileProps> = ({
+export const AITile: React.FC<AITileProps> = ({
   tileId,
   href,
   title,
@@ -38,17 +36,17 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   customContent,
   primaryIcon: PrimaryIcon,
   secondaryIcon: SecondaryIcon,
-  onClick: glassTileClickHandler,
+  onClick: aiTileClickHandler,
   ariaLabel,
   open,
   isLoading,
   isDisabled,
-}: GlassTileProps & GlassTileBodyProps) => {
+}: AITileProps & AITileBodyProps) => {
   const prefix = usePrefix();
-  const blockClass = `${prefix}--animated-header__glass-tile`;
+  const blockClass = `${prefix}--animated-header__ai-tile`;
 
   const body = (
-    <GlassTileBody
+    <AITileBody
       open={open}
       primaryIcon={PrimaryIcon}
       secondaryIcon={SecondaryIcon}
@@ -60,12 +58,12 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   );
 
   // Non-interactive tile
-  if (!href && !glassTileClickHandler) {
+  if (!href && !aiTileClickHandler) {
     return (
       <div
         className={`${prefix}--animated-header__tile ${blockClass}`}
         key={tileId}
-        aria-label={ariaLabel ?? title ?? 'Glass Tile'}
+        aria-label={ariaLabel ?? title ?? 'AI Tile'}
         title={isDisabled ? disabledTaskLabel ?? '' : ''}
         tabIndex={-1}>
         {body}
@@ -76,10 +74,10 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   return (
     <Link
       onClick={() => {
-        glassTileClickHandler?.();
+        aiTileClickHandler?.();
       }}
       className={`${prefix}--animated-header__tile ${blockClass}`}
-      aria-label={ariaLabel ?? title ?? 'Glass Tile'}
+      aria-label={ariaLabel ?? title ?? 'AI Tile'}
       role="listitem"
       tabIndex={isDisabled || isLoading ? -1 : 0}
       key={tileId}
@@ -90,3 +88,5 @@ export const GlassTile: React.FC<GlassTileProps> = ({
     </Link>
   );
 };
+
+export default AITile;

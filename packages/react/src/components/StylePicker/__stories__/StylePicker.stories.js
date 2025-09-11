@@ -21,10 +21,8 @@ import {
   StylePicker,
   StylePickerColor,
   StylePickerGroup,
-  // StylePickerIcon,
   StylePickerOption,
-  StylePickerSection,
-  // StylePickerSections,
+  StylePickerSection
 } from '../components';
 
 export default {

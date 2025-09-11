@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-text-highlighter",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -39,6 +39,6 @@
     "@carbon-labs/utilities": "canary"
   },
   "dependencies": {
-    "@ibm/telemetry-js": "^1.10.1"
+    "@ibm/telemetry-js": "^1.10.2"
   }
 }

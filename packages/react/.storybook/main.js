@@ -1,7 +1,6 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path, { join, dirname } from 'path';
 import remarkGfm from 'remark-gfm';
-// import * from '../../web-components/src'
 
 /**
  * This function is used to resolve the absolute path of a package.

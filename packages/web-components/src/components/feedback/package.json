@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-ai-feedback",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "private": true,
   "publishConfig": {
     "access": "public",
@@ -42,7 +42,7 @@
     "@carbon-labs/utilities": "0.17.0",
     "@carbon/grid": "^11.21.0",
     "@carbon/web-components": "2.36.0",
-    "@ibm/telemetry-js": "^1.10.1",
+    "@ibm/telemetry-js": "^1.10.2",
     "uuid": "^9.0.1"
   }
 }

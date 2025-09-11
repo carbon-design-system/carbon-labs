@@ -269,7 +269,9 @@ This ensures accessibility information is co-located with the tile configuration
 and is easier to maintain.
 
 ```jsx
-const headerTiles = [
+import { type TileGroup } from '@carbon-labs/react-animated-header';
+
+export const headerTiles: TileGroup[] = [
   {
     id: 1,
     label: 'AI Prompt Tile w/ two glass tiles',
@@ -284,7 +286,7 @@ const headerTiles = [
       },
     ],
   },
-];
+] satisfies TileGroup[];
 ```
 
 #### Tasks Dropdown ARIA Label

@@ -1,0 +1,409 @@
+import{i as A,x as l,B as T}from"./iframe-CHcAstPb.js";import{S as C,c as f,i as b,s as L,p as x,r as m,A as d,a as G,b as H}from"./_story.defs-Bgj93y6H.js";import{s as I,a as O}from"./16-CiYbTS7U.js";import"./icon-button-D7l0bqbC.js";import"./link-Cjxumwvh.js";import{B as o}from"./button-ShX44T3V.js";/**
+ * @license
+ *
+ * Copyright IBM Corp. 2023
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */const{stablePrefix:M,prefix:w}=H,D={title:"Components/Style Picker/Flat",component:"clabs-style-picker",parameters:{docs:{description:{component:"More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction"}}}},P=A`
+  .style-picker-story-container {
+    margin-inline-start: 20rem;
+  }
+
+  .toolbar-layer {
+    display: inline-block;
+    background-color: var(--cds-layer);
+    color: var(--cds-text-primary, #161616);
+  }
+
+  .inline-tile-holder {
+    margin-top: 0.2rem;
+  }
+
+  .inline-tile {
+    display: inline-block;
+    border-inline-start: 0.25rem solid #fddc69;
+  }
+
+  .inline-tile-header {
+    display: flex;
+    align-items: start;
+    gap: 0.25rem;
+  }
+
+  .inline-pictogram-secondary-text {
+    margin-top: 0.5rem;
+  }
+`,N=()=>{const e=document.querySelector(`${M}-style-picker`),t=document.querySelector("#trigger");e==null||e.toggleAttribute("open"),t.setAttribute("aria-expanded",!!(e!=null&&e.hasAttribute("open")))},_=()=>{document.querySelector("#trigger").setAttribute("aria-expanded","false")},E=e=>{const t=e.detail.value,n=document.querySelector(`${w}-tile`);n.style.borderColor=`${t}`},K=e=>{const t=e.detail.value,n=b.find(r=>r.value===t).renderIcon(),s=document.getElementById("inline-tile-icon"),a=document.createElement("div");T(n,a),s.innerHTML="",s.appendChild(a.firstElementChild)},R=e=>{var g;const t=e.detail.value,n=x.flatMap(p=>p.items),s=(g=n==null?void 0:n.find(p=>p.value===t))==null?void 0:g.pictogram,a=document.getElementById("inline-tile-pictogram"),r=m({...s,attrs:{...s.attrs,"aria-label":t}}),y=document.createElement("div");T(r,y),a.innerHTML="",a.appendChild(y.firstElementChild)},B={open:{control:"radio",description:"true if the modal is open"},heading:{control:"text",description:"style picker heading."},align:{control:"select",options:[...G],description:"Specify how the popover should align with the trigger element"},kind:{description:"There are three different variants `'single' | 'flat' | 'disclosed'` ",control:"disabled"},enableSearch:{control:"boolean",description:"Enable search option"},searchCloseButtonLabel:{control:"text"},emptyStateTitle:{control:"text"},emptyStateSubtitle:{control:"text"},searchInputPlaceholder:{control:"text"},searchLabel:{control:"text"}},i={args:{heading:"Choose color and icon",open:!0,align:C.LEFT_TOP,kind:"flat",enableSearch:!0,searchCloseButtonLabel:"Clear search input",emptyStateTitle:"No results found",emptyStateSubtitle:"Try a different search",searchLabel:"Search"},argTypes:B,render:e=>l`
+      <style>
+        ${P}
+      </style>
+      <div class="style-picker-story-container">
+        <cds-layer class="toolbar-layer">
+          <clabs-style-picker
+            id="style-picker"
+            align=${e.align}
+            ?open=${e.open}
+            heading=${e.heading}
+            kind=${e.kind}
+            ?enable-search=${e.enableSearch}
+            search-close-button-label=${e.searchCloseButtonLabel}
+            empty-state-title=${e.emptyStateTitle}
+            empty-state-subtitle=${e.emptyStateSubtitle}
+            search-label=${e.searchLabel}
+            @clabs-style-picker-close=${_}>
+            <cds-icon-button
+              id="trigger"
+              slot="trigger"
+              kind=${o.GHOST}
+              @click=${N}
+              aria-expanded="${e.open}"
+              aria-controls="style-picker">
+              ${I({slot:"icon"})}
+              <span slot="tooltip-content">Color palette</span>
+            </cds-icon-button>
+            <clabs-style-picker-section heading="Colors">
+              ${f[0].items.map(t=>l`
+                  <clabs-style-picker-option
+                    value=${t.color}
+                    label=${t.label}
+                    ?selected=${t.label==="Yellow 20"}
+                    @clabs-style-picker-option-select=${n=>E(n)}>
+                    <clabs-style-picker-color
+                      color=${t.color}
+                      label=${t.label}></clabs-style-picker-color>
+                  </clabs-style-picker-option>
+                `)}
+            </clabs-style-picker-section>
+            <clabs-style-picker-section heading="Icons">
+              ${b.map(t=>l`
+                    <clabs-style-picker-option
+                      value=${t.value}
+                      label=${t.label}
+                      ?selected=${t.value==="apple"}
+                      @clabs-style-picker-option-select=${n=>K(n)}>
+                      <clabs-style-picker-icon>
+                        ${t.renderIcon()}
+                      </clabs-style-picker-icon>
+                    </clabs-style-picker-option>
+                  `)}
+            </clabs-style-picker-section>
+          </clabs-style-picker>
+          <cds-icon-button kind=${o.GHOST}>
+            ${L({slot:"icon"})}
+            <span slot="tooltip-content">Delete</span>
+          </cds-icon-button>
+          <cds-icon-button kind=${o.GHOST}>
+            ${O({slot:"icon"})}
+            <span slot="tooltip-content">More</span>
+          </cds-icon-button>
+        </cds-layer>
+        <div class="inline-tile-holder">
+          <cds-tile class="inline-tile">
+            <div class="inline-tile-header">
+              <span id="inline-tile-icon">${b[0].renderIcon()}</span>
+              <h6>Primary text</h6>
+            </div>
+            <br />
+            <small>Secondary text or description</small>
+            <br /><br />
+            <cds-link href="#">Link</cds-link>
+          </cds-tile>
+        </div>
+      </div>
+    `},c={args:{heading:"Customize",open:!0,align:C.LEFT_TOP,kind:"flat",enableSearch:!0,searchCloseButtonLabel:"Clear search input",emptyStateTitle:"No results found",emptyStateSubtitle:"Try a different search",searchLabel:"Search"},argTypes:B,render:e=>l`
+      <style>
+        ${P}
+      </style>
+      <div class="style-picker-story-container">
+        <cds-layer class="toolbar-layer">
+          <clabs-style-picker
+            id="style-picker"
+            align=${e.align}
+            ?open=${e.open}
+            heading=${e.heading}
+            kind=${e.kind}
+            ?enable-search=${e.enableSearch}
+            search-close-button-label=${e.searchCloseButtonLabel}
+            empty-state-title=${e.emptyStateTitle}
+            empty-state-subtitle=${e.emptyStateSubtitle}
+            search-label=${e.searchLabel}
+            @clabs-style-picker-close=${_}>
+            <cds-icon-button
+              id="trigger"
+              slot="trigger"
+              kind=${o.GHOST}
+              @click=${N}
+              aria-expanded="${e.open}"
+              aria-controls="style-picker">
+              ${I({slot:"icon"})}
+              <span slot="tooltip-content">Pictogram list</span>
+            </cds-icon-button>
+            <clabs-style-picker-section heading="Colors">
+              ${f[0].items.map(t=>l`
+                  <clabs-style-picker-option
+                    value=${t.color}
+                    label=${t.label}
+                    ?selected=${t.label==="Yellow 20"}
+                    @clabs-style-picker-option-select=${n=>E(n)}>
+                    <clabs-style-picker-color
+                      color=${t.color}
+                      label=${t.label}></clabs-style-picker-color>
+                  </clabs-style-picker-option>
+                `)}
+            </clabs-style-picker-section>
+            <clabs-style-picker-section heading="Pictograms" size="lg">
+              ${x[0].items.map(t=>l`
+                  <clabs-style-picker-option
+                    value=${t.value}
+                    label=${t.label}
+                    ?selected=${t.label==="Amsterdam"}
+                    @clabs-style-picker-option-select=${n=>R(n)}>
+                    ${m({...t.pictogram,attrs:{...t.pictogram.attrs,width:"3rem",height:"3rem","aria-label":t.label}})}
+                  </clabs-style-picker-option>
+                `)}
+            </clabs-style-picker-section>
+          </clabs-style-picker>
+          <cds-icon-button kind=${o.GHOST}>
+            ${L({slot:"icon"})}
+            <span slot="tooltip-content">Delete</span>
+          </cds-icon-button>
+          <cds-icon-button kind=${o.GHOST}>
+            ${O({slot:"icon"})}
+            <span slot="tooltip-content">More</span>
+          </cds-icon-button>
+        </cds-layer>
+        <div class="inline-tile-holder">
+          <cds-tile class="inline-tile">
+            <div id="inline-tile-pictogram">
+              ${m({...d,attrs:{...d.attrs,"aria-label":d.name}})}
+            </div>
+            <br />
+            <h6>Primary text</h6>
+            <div class="inline-pictogram-secondary-text">
+              Secondary text or description
+            </div>
+            <br />
+            <cds-link href="#">Link</cds-link>
+          </cds-tile>
+        </div>
+      </div>
+    `};var h,u,$;i.parameters={...i.parameters,docs:{...(h=i.parameters)==null?void 0:h.docs,source:{originalSource:`{
+  args: {
+    heading: 'Choose color and icon',
+    open: true,
+    align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
+    kind: 'flat',
+    enableSearch: true,
+    searchCloseButtonLabel: 'Clear search input',
+    emptyStateTitle: 'No results found',
+    emptyStateSubtitle: 'Try a different search',
+    searchLabel: 'Search'
+  },
+  argTypes,
+  /**
+   * Renders the template for Storybook
+   * @param {object} args Storybook arguments
+   * @returns {TemplateResult<1>}
+   */
+  render: args => html\`
+      <style>
+        \${styles}
+      </style>
+      <div class="style-picker-story-container">
+        <cds-layer class="toolbar-layer">
+          <clabs-style-picker
+            id="style-picker"
+            align=\${args.align}
+            ?open=\${args.open}
+            heading=\${args.heading}
+            kind=\${args.kind}
+            ?enable-search=\${args.enableSearch}
+            search-close-button-label=\${args.searchCloseButtonLabel}
+            empty-state-title=\${args.emptyStateTitle}
+            empty-state-subtitle=\${args.emptyStateSubtitle}
+            search-label=\${args.searchLabel}
+            @clabs-style-picker-close=\${closed}>
+            <cds-icon-button
+              id="trigger"
+              slot="trigger"
+              kind=\${BUTTON_KIND.GHOST}
+              @click=\${toggleButton}
+              aria-expanded="\${args.open}"
+              aria-controls="style-picker">
+              \${ColorPalette16({
+    slot: 'icon'
+  })}
+              <span slot="tooltip-content">Color palette</span>
+            </cds-icon-button>
+            <clabs-style-picker-section heading="Colors">
+              \${colors[0].items.map(item => html\`
+                  <clabs-style-picker-option
+                    value=\${item.color}
+                    label=\${item.label}
+                    ?selected=\${item.label === 'Yellow 20'}
+                    @clabs-style-picker-option-select=\${ev => changeColor(ev)}>
+                    <clabs-style-picker-color
+                      color=\${item.color}
+                      label=\${item.label}></clabs-style-picker-color>
+                  </clabs-style-picker-option>
+                \`)}
+            </clabs-style-picker-section>
+            <clabs-style-picker-section heading="Icons">
+              \${icons.map(item => html\`
+                    <clabs-style-picker-option
+                      value=\${item.value}
+                      label=\${item.label}
+                      ?selected=\${item.value === 'apple'}
+                      @clabs-style-picker-option-select=\${ev => changeIcon(ev)}>
+                      <clabs-style-picker-icon>
+                        \${item.renderIcon()}
+                      </clabs-style-picker-icon>
+                    </clabs-style-picker-option>
+                  \`)}
+            </clabs-style-picker-section>
+          </clabs-style-picker>
+          <cds-icon-button kind=\${BUTTON_KIND.GHOST}>
+            \${TrashCan16({
+    slot: 'icon'
+  })}
+            <span slot="tooltip-content">Delete</span>
+          </cds-icon-button>
+          <cds-icon-button kind=\${BUTTON_KIND.GHOST}>
+            \${OverflowMenuVertical16({
+    slot: 'icon'
+  })}
+            <span slot="tooltip-content">More</span>
+          </cds-icon-button>
+        </cds-layer>
+        <div class="inline-tile-holder">
+          <cds-tile class="inline-tile">
+            <div class="inline-tile-header">
+              <span id="inline-tile-icon">\${icons[0].renderIcon()}</span>
+              <h6>Primary text</h6>
+            </div>
+            <br />
+            <small>Secondary text or description</small>
+            <br /><br />
+            <cds-link href="#">Link</cds-link>
+          </cds-tile>
+        </div>
+      </div>
+    \`
+}`,...($=(u=i.parameters)==null?void 0:u.docs)==null?void 0:$.source}}};var k,S,v;c.parameters={...c.parameters,docs:{...(k=c.parameters)==null?void 0:k.docs,source:{originalSource:`{
+  args: {
+    heading: 'Customize',
+    open: true,
+    align: STYLE_PICKER_ALIGNMENT.LEFT_TOP,
+    kind: 'flat',
+    enableSearch: true,
+    searchCloseButtonLabel: 'Clear search input',
+    emptyStateTitle: 'No results found',
+    emptyStateSubtitle: 'Try a different search',
+    searchLabel: 'Search'
+  },
+  argTypes,
+  /**
+   * Renders the template for Storybook
+   * @param {object} args Storybook arguments
+   * @returns {TemplateResult<1>}
+   */
+  render: args => html\`
+      <style>
+        \${styles}
+      </style>
+      <div class="style-picker-story-container">
+        <cds-layer class="toolbar-layer">
+          <clabs-style-picker
+            id="style-picker"
+            align=\${args.align}
+            ?open=\${args.open}
+            heading=\${args.heading}
+            kind=\${args.kind}
+            ?enable-search=\${args.enableSearch}
+            search-close-button-label=\${args.searchCloseButtonLabel}
+            empty-state-title=\${args.emptyStateTitle}
+            empty-state-subtitle=\${args.emptyStateSubtitle}
+            search-label=\${args.searchLabel}
+            @clabs-style-picker-close=\${closed}>
+            <cds-icon-button
+              id="trigger"
+              slot="trigger"
+              kind=\${BUTTON_KIND.GHOST}
+              @click=\${toggleButton}
+              aria-expanded="\${args.open}"
+              aria-controls="style-picker">
+              \${ColorPalette16({
+    slot: 'icon'
+  })}
+              <span slot="tooltip-content">Pictogram list</span>
+            </cds-icon-button>
+            <clabs-style-picker-section heading="Colors">
+              \${colors[0].items.map(item => html\`
+                  <clabs-style-picker-option
+                    value=\${item.color}
+                    label=\${item.label}
+                    ?selected=\${item.label === 'Yellow 20'}
+                    @clabs-style-picker-option-select=\${ev => changeColor(ev)}>
+                    <clabs-style-picker-color
+                      color=\${item.color}
+                      label=\${item.label}></clabs-style-picker-color>
+                  </clabs-style-picker-option>
+                \`)}
+            </clabs-style-picker-section>
+            <clabs-style-picker-section heading="Pictograms" size="lg">
+              \${pictograms[0].items.map(item => html\`
+                  <clabs-style-picker-option
+                    value=\${item.value}
+                    label=\${item.label}
+                    ?selected=\${item.label === 'Amsterdam'}
+                    @clabs-style-picker-option-select=\${ev => changePictogram(ev)}>
+                    \${renderCarbonPictogram({
+    ...item.pictogram,
+    attrs: {
+      ...item.pictogram.attrs,
+      width: '3rem',
+      height: '3rem',
+      'aria-label': item.label
+    }
+  })}
+                  </clabs-style-picker-option>
+                \`)}
+            </clabs-style-picker-section>
+          </clabs-style-picker>
+          <cds-icon-button kind=\${BUTTON_KIND.GHOST}>
+            \${TrashCan16({
+    slot: 'icon'
+  })}
+            <span slot="tooltip-content">Delete</span>
+          </cds-icon-button>
+          <cds-icon-button kind=\${BUTTON_KIND.GHOST}>
+            \${OverflowMenuVertical16({
+    slot: 'icon'
+  })}
+            <span slot="tooltip-content">More</span>
+          </cds-icon-button>
+        </cds-layer>
+        <div class="inline-tile-holder">
+          <cds-tile class="inline-tile">
+            <div id="inline-tile-pictogram">
+              \${renderCarbonPictogram({
+    ...AmsterdamWindmill,
+    attrs: {
+      ...AmsterdamWindmill.attrs,
+      'aria-label': AmsterdamWindmill.name
+    }
+  })}
+            </div>
+            <br />
+            <h6>Primary text</h6>
+            <div class="inline-pictogram-secondary-text">
+              Secondary text or description
+            </div>
+            <br />
+            <cds-link href="#">Link</cds-link>
+          </cds-tile>
+        </div>
+      </div>
+    \`
+}`,...(v=(S=c.parameters)==null?void 0:S.docs)==null?void 0:v.source}}};const U=["ColorAndIcon","ColorAndPictogram"],V=Object.freeze(Object.defineProperty({__proto__:null,ColorAndIcon:i,ColorAndPictogram:c,__namedExportsOrder:U,default:D},Symbol.toStringTag,{value:"Module"}));export{V as S};

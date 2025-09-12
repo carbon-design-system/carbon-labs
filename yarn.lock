@@ -2716,6 +2716,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-style-picker@workspace:packages/react/src/components/StylePicker":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-style-picker@workspace:packages/react/src/components/StylePicker"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+    "@carbon-labs/wc-style-picker": "workspace:^"
+    "@lit/react": "npm:^1.0.1"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter"
@@ -2946,7 +2956,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker":
+"@carbon-labs/wc-style-picker@workspace:^, @carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker"
   dependencies:

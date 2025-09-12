@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.57.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.56.0...@carbon-labs/web-components@0.57.0) (2025-09-12)
+
+
+### Bug Fixes
+
+* firstTimeOrientation restore changes to check build issue ([#797](https://github.com/carbon-design-system/carbon-labs/issues/797)) ([bf854be](https://github.com/carbon-design-system/carbon-labs/commit/bf854be6a5e28288cd96b8e05de3ba582435d2e6))
+
+
+
+
+
 # [0.56.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.55.0...@carbon-labs/web-components@0.56.0) (2025-09-11)
 
 **Note:** Version bump only for package @carbon-labs/web-components

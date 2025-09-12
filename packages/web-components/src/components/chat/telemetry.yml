@@ -1,8 +1,99 @@
 # yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
 version: 1
 projectId: 7fbf7425-cf43-4071-a260-d681aade7109
-endpoint: 'https://www-api.ibm.com/ibm-telemetry/v1/metrics'
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
 collect:
+  wc:
+    elements:
+      allowedAttributeNames:
+        # General
+        - loading
+        # clabs-chat
+        - agent-name
+        - ai-slug-content
+        - aiSlugObject
+        - api-url
+        - auto-update
+        - cancel-dragging-on-escape
+        - closed
+        - conversation
+        - conversation-example
+        - customLabels
+        - default-viewing-mode
+        - disable-header-buttons
+        - disable-header-close
+        - disable-header-fullscreen
+        - disable-header-menu
+        - disable-header-minimize
+        - disable-outside-control
+        - dockBoundaries
+        - enable-feedback-form
+        - enable-launcher
+        - enable-request-cancelling
+        - enable-text-feedback-form
+        - feedback-url
+        - feedbackDefinitions
+        - force-auto-update
+        - headerMenuItems
+        - horizontal-dock-position
+        - input-field-placeholder
+        - max-character-count
+        - model
+        - onon-chat-end-streaming
+        - onon-chat-slot-update
+        - onon-submit
+        - onon-user-message-update-request
+        - onon-user-regeneration-request
+        - onuser-input
+        - preset-prompt-message
+        - prompt-notification-message
+        - prompt-notification-type
+        - sample-query
+        - start-with-launcher
+        - stream-delay
+        - stream-responses
+        - temperature
+        - trigger-footer-focus
+        - use-watson-assistant-protocol
+        - user-name
+        - user-prompt
+        - vertical-dock-position
+        # clabs-chat-chart
+        - carbonify
+        - container-height
+        - container-width
+        - content
+        - debug-mode
+        - disable-code-inspector
+        - disable-editor
+        - disable-export
+        - disable-fullscreen
+        - disable-options
+        - enable-context
+        - enable-legend-filtering
+        - enable-multi-selections
+        - enable-single-selections
+        - enable-zooming
+        - onon-chart-append-context
+        - onon-chart-clicked
+        - onon-chart-error
+        - onon-chart-multi-selection
+        - onon-chart-single-selection
+        - onon-chart-specification-edit-validation
+        - onon-chart-specification-ready
+        - onon-chart-thumbnail-generated
+        - render-method
+        - selectable
+        - selected
+        - streaming
+        - theme
+        - thumbnail
+        - thumbnail-width
+      allowedAttributeStringValues:
+        # General - boolean attributes
+        - "true"
+        - "false"
   npm:
     dependencies: null
   js:

@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.80.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.79.0...@carbon-labs/react-ui-shell@0.80.0) (2025-09-11)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
+# [0.79.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.78.0...@carbon-labs/react-ui-shell@0.79.0) (2025-09-10)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
+# [0.78.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.77.0...@carbon-labs/react-ui-shell@0.78.0) (2025-09-05)
+
+
+### Bug Fixes
+
+* mobile sidenav rail styles ([#780](https://github.com/carbon-design-system/carbon-labs/issues/780)) ([fef2d2d](https://github.com/carbon-design-system/carbon-labs/commit/fef2d2d2e2a8a791261d334835f294cf1ce215bf))
+
+
+
+
+
+# [0.77.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.76.0...@carbon-labs/react-ui-shell@0.77.0) (2025-09-04)
+
+
+### Features
+
+* add React router to UIShell example ([#648](https://github.com/carbon-design-system/carbon-labs/issues/648)) ([2ade4f5](https://github.com/carbon-design-system/carbon-labs/commit/2ade4f50e84123a21081ab47751da99549624f47))
+
+
+
+
+
+# [0.76.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.75.0...@carbon-labs/react-ui-shell@0.76.0) (2025-09-02)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
 # [0.75.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.74.0...@carbon-labs/react-ui-shell@0.75.0) (2025-08-25)
 
 **Note:** Version bump only for package @carbon-labs/react-ui-shell

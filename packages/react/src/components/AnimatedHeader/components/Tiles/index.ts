@@ -6,8 +6,9 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import { AITile } from './AITile/AITile';
 import { AIPromptTile } from './AIPromptTile/AIPromptTile';
 import { BaseTile } from './BaseTile/BaseTile';
 import { GlassTile } from './GlassTile/GlassTile';
 
-export { AIPromptTile, BaseTile, GlassTile };
+export { AITile, AIPromptTile, BaseTile, GlassTile };

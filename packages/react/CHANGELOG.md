@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.125.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.124.0...@carbon-labs/react@0.125.0) (2025-09-12)
+
+
+### Features
+
+* react StylePicker ([#770](https://github.com/carbon-design-system/carbon-labs/issues/770)) ([9115d5b](https://github.com/carbon-design-system/carbon-labs/commit/9115d5b27818171f85bab12983a7d771437e6485))
+
+
+
+
+
+# [0.124.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.123.0...@carbon-labs/react@0.124.0) (2025-09-11)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.123.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.122.0...@carbon-labs/react@0.123.0) (2025-09-10)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.122.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.121.0...@carbon-labs/react@0.122.0) (2025-09-09)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.121.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.120.0...@carbon-labs/react@0.121.0) (2025-09-05)
 
 

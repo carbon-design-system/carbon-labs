@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.126.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.125.0...@carbon-labs/react@0.126.0) (2025-09-15)
+
+
+### Features
+
+* **animated-header:** add static header SVGs for db2 ([#773](https://github.com/carbon-design-system/carbon-labs/issues/773)) ([c70a723](https://github.com/carbon-design-system/carbon-labs/commit/c70a7233d6c39c76696757dd9bf7701a583a4f3d))
+
+
+
+
+
+# [0.125.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.124.0...@carbon-labs/react@0.125.0) (2025-09-12)
+
+
+### Features
+
+* react StylePicker ([#770](https://github.com/carbon-design-system/carbon-labs/issues/770)) ([9115d5b](https://github.com/carbon-design-system/carbon-labs/commit/9115d5b27818171f85bab12983a7d771437e6485))
+
+
+
+
+
 # [0.124.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.123.0...@carbon-labs/react@0.124.0) (2025-09-11)
 
 **Note:** Version bump only for package @carbon-labs/react

@@ -8,7 +8,7 @@
  */
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import lottie from 'lottie-web';
+import lottie, { AnimationItem } from 'lottie-web';
 import { Grid, Column, Button } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
@@ -66,6 +66,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const blockClass = `${prefix}--animated-header`;
 
   const animationContainer = useRef<HTMLDivElement>(null);
+  const animRef = useRef<AnimationItem | null>(null);
   const [open, setOpen] = useState(true);
   const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
 
@@ -79,48 +80,58 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   };
 
   useEffect(() => {
-    if (!animationContainer.current) {
-      return;
+    // Make sure any prior instance is destroyed before creating a new one
+    if (animRef.current) {
+      animRef.current.destroy();
+      animRef.current = null;
     }
+    if (!animationContainer.current || !headerAnimation) return;
 
     const animation = lottie.loadAnimation({
       container: animationContainer.current as HTMLDivElement,
-      animationData: headerAnimation,
+      animationData: headerAnimation as any,
       renderer: 'svg',
       loop: false,
       autoplay: false,
+      rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
     });
+    animRef.current = animation;
 
-    const lottieLoadSpeed = 1;
-    const animationData = animation['animationData'];
+    const onDomLoaded = () => {
+      const data: any = (animation as any).animationData;
+      const markers = data?.markers ?? [];
+      const first = markers?.[0]?.tm ?? 0;
 
-    function reducedMotion() {
-      animation.goToAndStop(5000);
-    }
+      const totalFrames = animation.getDuration(true);
+      const second = markers?.[1]?.tm ?? totalFrames;
 
-    function load() {
-      animation.setSpeed(lottieLoadSpeed);
-      animation.playSegments(
-        [animationData.markers.at(0).tm, animationData.markers.at(1).tm],
-        true
-      );
-    }
+      if (isReduced) {
+        // Respect reduced motion
+        const restFrame =
+          (typeof second === 'number' ? second : totalFrames * 0.5) | 0;
+        animation.goToAndStop(restFrame, true);
+        return;
+      }
 
-    if (isReduced) {
-      // reduced motion on
-      animation.addEventListener('DOMLoaded', reducedMotion);
-    } else {
-      // reduced motion off
-
-      // Run Start Animation
-      animation.addEventListener('DOMLoaded', load);
-    }
-    return () => {
-      animation?.removeEventListener('DOMLoaded', reducedMotion);
-      animation?.removeEventListener('DOMLoaded', load);
+      animation.setSpeed(1);
+      requestAnimationFrame(() => {
+        if (typeof first === 'number' && typeof second === 'number') {
+          animation.playSegments([first, second], true);
+        } else {
+          animation.play();
+        }
+      });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isReduced]);
+
+    animation.addEventListener('DOMLoaded', onDomLoaded);
+
+    return () => {
+      animation.removeEventListener('DOMLoaded', onDomLoaded);
+      animation.destroy();
+      animRef.current = null;
+    };
+    // Re-init when the JSON or reduced-motion preference changes
+  }, [headerAnimation, isReduced]);
 
   return (
     <header className={`${blockClass}${!open ? ` ${collapsed}` : ''}`}>

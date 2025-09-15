@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.30.0...@carbon-labs/react-animated-header@0.31.0) (2025-09-15)
+
+
+### Features
+
+* **animated-header:** add static header SVGs for db2 ([#773](https://github.com/carbon-design-system/carbon-labs/issues/773)) ([c70a723](https://github.com/carbon-design-system/carbon-labs/commit/c70a7233d6c39c76696757dd9bf7701a583a4f3d))
+
+
+
+
+
 # [0.30.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.29.0...@carbon-labs/react-animated-header@0.30.0) (2025-09-11)
 
 **Note:** Version bump only for package @carbon-labs/react-animated-header

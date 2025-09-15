@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="illustrations" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 1312 738">
-  <!-- Generator: Adobe Illustrator 29.2.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 116)  -->
+  <!-- Generator: Adobe Illustrator 29.7.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 8)  -->
   <defs>
     <style>
       .st0, .st1 {
         fill: none;
       }
 
-      .st1 {
-        stroke: #003a6d;
-        stroke-miterlimit: 10;
+      .st2 {
+        fill: #d9fbfb;
+        stroke: #03ddbd;
       }
 
-      .st2 {
-        fill: #081a1c;
-        stroke: #005d5d;
+      .st1 {
+        stroke: #adbeaf;
+        stroke-miterlimit: 10;
       }
 
       .st3 {
@@ -27,7 +27,7 @@
   </defs>
   <g id="data_fabric_-_light">
     <g class="st3">
-      <g id="data_fabric_-_light1">
+      <g id="uuid-3c823569-064a-40eb-a878-8af5ce6d3831">
         <g>
           <path class="st1" d="M0,162.6h824"/>
           <path class="st1" d="M0,217.7h823.8"/>

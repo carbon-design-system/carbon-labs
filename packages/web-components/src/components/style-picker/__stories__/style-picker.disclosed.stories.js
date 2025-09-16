@@ -10,9 +10,10 @@
 import { css, html, render } from 'lit';
 
 // Icons
-import TrashCan16 from '@carbon/web-components/es/icons/trash-can/16';
-import ColorPalette16 from '@carbon/web-components/es/icons/color-palette/16';
-import OverflowMenuVertical16 from '@carbon/web-components/es/icons/overflow-menu--vertical/16';
+import TrashCan16 from '@carbon/icons/es/trash-can/16';
+import ColorPalette16 from '@carbon/icons/es/color-palette/16';
+import OverflowMenuVertical16 from '@carbon/icons/es/overflow-menu--vertical/16';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 // Carbon
 import '@carbon/web-components/es/components/layer/index.js';
@@ -114,9 +115,9 @@ const changeIcon = (ev) => {
 
   const headerIconEl = document.getElementById('inline-tile-icon');
 
-  const iconTemplate = icons
-    .find((icon) => icon.value === selectedIcon)
-    .renderIcon();
+  const iconTemplate = icons.find(
+    (icon) => icon.value === selectedIcon
+  ).renderIcon;
   const container = document.createElement('div');
   render(iconTemplate, container);
   headerIconEl.innerHTML = '';
@@ -229,7 +230,7 @@ export const ColorAndIcon = {
               @click=${toggleButton}
               aria-expanded="${args.open}"
               aria-controls="style-picker">
-              ${ColorPalette16({ slot: 'icon' })}
+              ${iconLoader(ColorPalette16, { slot: 'icon' })}
               <span slot="tooltip-content">Color palette</span>
             </cds-icon-button>
             <clabs-style-picker-sections>
@@ -244,7 +245,7 @@ export const ColorAndIcon = {
                         @clabs-style-picker-option-select=${(ev) =>
                           changeIcon(ev)}>
                         <clabs-style-picker-icon>
-                          ${item.renderIcon()}
+                          ${item.renderIcon}
                         </clabs-style-picker-icon>
                       </clabs-style-picker-option>
                     `
@@ -274,18 +275,18 @@ export const ColorAndIcon = {
             </clabs-style-picker-sections>
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
-            ${TrashCan16({ slot: 'icon' })}
+            ${iconLoader(TrashCan16, { slot: 'icon' })}
             <span slot="tooltip-content">Delete</span>
           </cds-icon-button>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
-            ${OverflowMenuVertical16({ slot: 'icon' })}
+            ${iconLoader(OverflowMenuVertical16, { slot: 'icon' })}
             <span slot="tooltip-content">More</span>
           </cds-icon-button>
         </cds-layer>
         <div class="inline-tile-holder">
           <cds-tile class="inline-tile">
             <div class="inline-tile-header">
-              <span id="inline-tile-icon">${icons[0].renderIcon()}</span>
+              <span id="inline-tile-icon">${icons[0].renderIcon}</span>
               <h6>Primary text</h6>
             </div>
             <br />
@@ -342,7 +343,7 @@ export const IconColorPictogram = {
               @click="${toggleButton}"
               aria-expanded="${args.open}"
               aria-controls="style-picker">
-              ${ColorPalette16({ slot: 'icon' })}
+              ${iconLoader(ColorPalette16, { slot: 'icon' })}
               <span slot="tooltip-content">Pictogram list</span>
             </cds-icon-button>
             <clabs-style-picker-sections>
@@ -357,7 +358,7 @@ export const IconColorPictogram = {
                         @clabs-style-picker-option-select=${(ev) =>
                           changeIcon(ev)}>
                         <clabs-style-picker-icon>
-                          ${item.renderIcon()}
+                          ${item.renderIcon}
                         </clabs-style-picker-icon>
                       </clabs-style-picker-option>
                     `
@@ -414,11 +415,11 @@ export const IconColorPictogram = {
             </clabs-style-picker-sections>
           </clabs-style-picker>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
-            ${TrashCan16({ slot: 'icon' })}
+            ${iconLoader(TrashCan16, { slot: 'icon' })}
             <span slot="tooltip-content">Delete</span>
           </cds-icon-button>
           <cds-icon-button kind=${BUTTON_KIND.GHOST}>
-            ${OverflowMenuVertical16({ slot: 'icon' })}
+            ${iconLoader(OverflowMenuVertical16, { slot: 'icon' })}
             <span slot="tooltip-content">More</span>
           </cds-icon-button>
         </cds-layer>
@@ -435,7 +436,7 @@ export const IconColorPictogram = {
             </div>
             <br />
             <div class="inline-tile-header">
-              <span id="inline-tile-icon">${icons[0].renderIcon()}</span>
+              <span id="inline-tile-icon">${icons[0].renderIcon}</span>
               <h6>Primary text</h6>
             </div>
             <div class="inline-pictogram-secondary-text">

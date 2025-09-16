@@ -28,7 +28,7 @@ export type AnimatedHeaderProps = {
   allTileGroups?: TileGroup[];
   ariaLabels?: AriaLabels;
   selectedTileGroup?: TileGroup;
-  setSelectedTileGroup: (e) => void;
+  setSelectedTileGroup?: (e) => void;
   description?: string;
   headerAnimation?: object;
   headerStatic?: React.JSX.Element | string;

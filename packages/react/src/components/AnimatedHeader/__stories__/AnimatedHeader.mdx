@@ -387,16 +387,18 @@ Example of Animated Header with all prop types enabled.
 
 ```jsx
 <AnimatedHeader
-  ariaLabels={ariaLabelsConfig as AriaLabels}
-  tasksControllerConfig={tasksControllerConfigDropdown as TasksControllerConfig}
-  workspaceSelectorConfig={WorkspaceSelectorConfig}
-  description="Connect, monitor, and manage data."
   productName="[Product name]"
-  userName="Drew"
+  description="Connect, monitor, and manage data."
   welcomeText="Welcome"
+  userName="Drew"
+  ariaLabels={ariaLabelsConfig as AriaLabels}
+  headerAnimation={watsonXAnimatedLight}
+  headerStatic={watsonXStaticLight}
+  allTileGroups={tiles}
+  selectedTileGroup={selectedTile}
+  workspaceSelectorConfig={workspaceSelectorConfig}
+  tasksControllerConfig={tasksControllerConfigDropdown as TasksControllerConfig}
   isLoading={false}
-  expandButtonLabel="Expand"
-  collapseButtonLabel="Collapse"
   tileClickHandler={handleTileClicks}
 />
 ```

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.12.0...@carbon-labs/wc-style-picker@0.13.0) (2025-09-16)
+
+
+### Bug Fixes
+
+* stylepicker replace icons ([#806](https://github.com/carbon-design-system/carbon-labs/issues/806)) ([b8583ad](https://github.com/carbon-design-system/carbon-labs/commit/b8583ad57d6721642a3a9b9a99782953cc62cd3b))
+
+
+
+
+
 # [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.11.0...@carbon-labs/wc-style-picker@0.12.0) (2025-09-12)
 
 

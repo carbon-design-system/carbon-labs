@@ -1825,7 +1825,7 @@ __metadata:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon-labs/wc-empty-state": "workspace:^"
-    "@carbon/web-components": "npm:2.36.0"
+    "@carbon/web-components": "npm:^2.38.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
     "@lit/context": "npm:^1.1.5"
   languageName: unknown
@@ -1838,7 +1838,7 @@ __metadata:
     "@carbon/grid": "npm:^11.41.0"
     "@carbon/ibm-products-web-components": "npm:^0.23.0"
     "@carbon/icon-helpers": "npm:10.65.0"
-    "@carbon/icons": "npm:11.66.0"
+    "@carbon/icons": "npm:11.67.0"
     "@carbon/layout": "npm:11.39.0"
     "@carbon/motion": "npm:11.33.0"
     "@carbon/pictograms": "npm:^12.58.0"
@@ -2025,12 +2025,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons@npm:11.66.0":
-  version: 11.66.0
-  resolution: "@carbon/icons@npm:11.66.0"
+"@carbon/icons@npm:11.67.0":
+  version: 11.67.0
+  resolution: "@carbon/icons@npm:11.67.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/beb3fc08c4526a9066bf9413eaffc5320b1a22c2dcb6db12d44b7337833e0255806ed64f78061c8e6b6e23671cf8bcecccce484a5bda001b402837cb2cd04cbb
+  checksum: 10c0/c29d094fef7ff22474f735720785e8b32e431942049f7a80130c29e3b4814cd46a8a9fa8be59be4ad1b7e9867fee3579ee1dcd180a7155d63aa7f748b3142e05
   languageName: node
   linkType: hard
 
@@ -2061,7 +2061,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/motion@npm:^11.30.0, @carbon/motion@npm:^11.35.0":
+"@carbon/motion@npm:^11.30.0, @carbon/motion@npm:^11.33.0, @carbon/motion@npm:^11.35.0":
   version: 11.35.0
   resolution: "@carbon/motion@npm:11.35.0"
   dependencies:
@@ -2140,7 +2140,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/styles@npm:^1.88.0, @carbon/styles@npm:^1.89.0, @carbon/styles@npm:^1.90.0":
+"@carbon/styles@npm:^1.88.0":
+  version: 1.88.0
+  resolution: "@carbon/styles@npm:1.88.0"
+  dependencies:
+    "@carbon/colors": "npm:^11.38.0"
+    "@carbon/feature-flags": "npm:^0.30.0"
+    "@carbon/grid": "npm:^11.41.0"
+    "@carbon/layout": "npm:^11.39.0"
+    "@carbon/motion": "npm:^11.33.0"
+    "@carbon/themes": "npm:^11.58.0"
+    "@carbon/type": "npm:^11.45.0"
+    "@ibm/plex": "npm:6.0.0-next.6"
+    "@ibm/plex-mono": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-arabic": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-devanagari": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-hebrew": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-thai": "npm:0.0.3-alpha.0"
+    "@ibm/plex-sans-thai-looped": "npm:0.0.3-alpha.0"
+    "@ibm/plex-serif": "npm:0.0.3-alpha.0"
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  peerDependencies:
+    sass: ^1.33.0
+  peerDependenciesMeta:
+    sass:
+      optional: true
+  checksum: 10c0/7041a2e152038d6ed56569b5a2d9d6b3ddc0aafff791005f560ea52018c33b7ef2fdbfc463873f17c121d67fc99f457150cf0b46b6c8575bfd81d2edd9634367
+  languageName: node
+  linkType: hard
+
+"@carbon/styles@npm:^1.89.0, @carbon/styles@npm:^1.90.0":
   version: 1.90.0
   resolution: "@carbon/styles@npm:1.90.0"
   dependencies:
@@ -2192,7 +2222,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/themes@npm:^11.55.0, @carbon/themes@npm:^11.60.0":
+"@carbon/themes@npm:^11.55.0, @carbon/themes@npm:^11.58.0, @carbon/themes@npm:^11.60.0":
   version: 11.60.0
   resolution: "@carbon/themes@npm:11.60.0"
   dependencies:
@@ -2288,6 +2318,22 @@ __metadata:
     lodash-es: "npm:^4.17.21"
     tslib: "npm:^2.6.3"
   checksum: 10c0/758e23c128343b6a70ef3c76ab2e0896e0464163086e44b7aa15e17eb5625ffdb7e8af8fe9d88032a06420d57266e693e31b9640c20effa7c38238f650ae3557
+  languageName: node
+  linkType: hard
+
+"@carbon/web-components@npm:^2.38.0":
+  version: 2.38.0
+  resolution: "@carbon/web-components@npm:2.38.0"
+  dependencies:
+    "@carbon/styles": "npm:^1.90.0"
+    "@floating-ui/dom": "npm:^1.6.3"
+    "@ibm/telemetry-js": "npm:^1.10.1"
+    "@lit/context": "npm:^1.1.3"
+    flatpickr: "npm:4.6.13"
+    lit: "npm:^3.1.0"
+    lodash-es: "npm:^4.17.21"
+    tslib: "npm:^2.6.3"
+  checksum: 10c0/953bf8e26be9fb71e538a3636c97bec61b174503665d84ed8825995e435ce6d21e63792476a577c8b5ec27e83b06fd791b282868cf01b2c459dea5798394d46e
   languageName: node
   linkType: hard
 

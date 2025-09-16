@@ -41,7 +41,7 @@
     "@carbon/pictograms": "^12.58.0",
     "@carbon/themes": "11.58.0",
     "@carbon/type": "11.45.0",
-    "@carbon/web-components": "^2.36.0",
+    "@carbon/web-components": "2.36.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",
     "@lit/react": "^1.0.1",
     "@open-wc/testing": "^4.0.0",

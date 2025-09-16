@@ -59,7 +59,7 @@ import CairoGizaPlateau from '@carbon/pictograms/lib/cairo--giza-plateau';
 import Melbourne from '@carbon/pictograms/lib/melbourne';
 import { Group, Item } from '../defs/style-picker-group.types';
 import { SVGTemplateResult } from 'lit';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 type ColorItem = {
   color: string;

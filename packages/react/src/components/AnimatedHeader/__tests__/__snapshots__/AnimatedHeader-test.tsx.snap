@@ -4,9 +4,10 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
 <div>
   <header
     class="clabs--animated-header"
+    data-expanded="true"
   >
     <div
-      class="cds--css-grid"
+      class="clabs--animated-header__grid cds--css-grid"
     >
       <div
         class="clabs--animated-header__gradient--overlay"
@@ -20,6 +21,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         <div
           aria-hidden="true"
           class="clabs--animated-header__lottie-animation"
+          data-expanded="true"
         />
       </div>
       <div
@@ -68,6 +70,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
       </div>
       <div
         class="clabs--animated-header__left-area-container cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-4 cds--css-grid-column"
+        data-expanded="true"
         id="clabs--animated-header-content"
       >
         <h2
@@ -150,6 +153,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
       >
         <div
           class="clabs--animated-header__workspace--container"
+          data-expanded="true"
         >
           <div
             class="cds--dropdown__wrapper cds--list-box__wrapper clabs--animated-header__workspace cds--dropdown__wrapper--inline cds--list-box__wrapper--inline"

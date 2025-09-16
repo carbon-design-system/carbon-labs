@@ -2061,7 +2061,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/motion@npm:^11.30.0, @carbon/motion@npm:^11.33.0, @carbon/motion@npm:^11.35.0":
+"@carbon/motion@npm:^11.30.0, @carbon/motion@npm:^11.35.0":
   version: 11.35.0
   resolution: "@carbon/motion@npm:11.35.0"
   dependencies:
@@ -2140,37 +2140,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/styles@npm:^1.88.0":
-  version: 1.88.0
-  resolution: "@carbon/styles@npm:1.88.0"
-  dependencies:
-    "@carbon/colors": "npm:^11.38.0"
-    "@carbon/feature-flags": "npm:^0.30.0"
-    "@carbon/grid": "npm:^11.41.0"
-    "@carbon/layout": "npm:^11.39.0"
-    "@carbon/motion": "npm:^11.33.0"
-    "@carbon/themes": "npm:^11.58.0"
-    "@carbon/type": "npm:^11.45.0"
-    "@ibm/plex": "npm:6.0.0-next.6"
-    "@ibm/plex-mono": "npm:0.0.3-alpha.0"
-    "@ibm/plex-sans": "npm:0.0.3-alpha.0"
-    "@ibm/plex-sans-arabic": "npm:0.0.3-alpha.0"
-    "@ibm/plex-sans-devanagari": "npm:0.0.3-alpha.0"
-    "@ibm/plex-sans-hebrew": "npm:0.0.3-alpha.0"
-    "@ibm/plex-sans-thai": "npm:0.0.3-alpha.0"
-    "@ibm/plex-sans-thai-looped": "npm:0.0.3-alpha.0"
-    "@ibm/plex-serif": "npm:0.0.3-alpha.0"
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  peerDependencies:
-    sass: ^1.33.0
-  peerDependenciesMeta:
-    sass:
-      optional: true
-  checksum: 10c0/7041a2e152038d6ed56569b5a2d9d6b3ddc0aafff791005f560ea52018c33b7ef2fdbfc463873f17c121d67fc99f457150cf0b46b6c8575bfd81d2edd9634367
-  languageName: node
-  linkType: hard
-
-"@carbon/styles@npm:^1.89.0, @carbon/styles@npm:^1.90.0":
+"@carbon/styles@npm:^1.88.0, @carbon/styles@npm:^1.89.0, @carbon/styles@npm:^1.90.0":
   version: 1.90.0
   resolution: "@carbon/styles@npm:1.90.0"
   dependencies:
@@ -2222,7 +2192,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/themes@npm:^11.55.0, @carbon/themes@npm:^11.58.0, @carbon/themes@npm:^11.60.0":
+"@carbon/themes@npm:^11.55.0, @carbon/themes@npm:^11.60.0":
   version: 11.60.0
   resolution: "@carbon/themes@npm:11.60.0"
   dependencies:
@@ -6363,12 +6333,12 @@ __metadata:
   linkType: hard
 
 "@storybook/icons@npm:^1.4.0":
-  version: 1.5.0
-  resolution: "@storybook/icons@npm:1.5.0"
+  version: 1.6.0
+  resolution: "@storybook/icons@npm:1.6.0"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-  checksum: 10c0/cc8189a7d431929ccc079438b4ad55cd606421cfcd167459d1fd60656798315b620183b7fb95f2dd36859cad08f5ec8160dc8d4fe1a91b96ba8faeee10db8cc7
+  checksum: 10c0/bbec9201a78a730195f9cf377b15856dc414a54d04e30d16c379d062425cc617bfd0d6586ba1716012cfbdab461f0c9693a6a52920f9bd09c7b4291fb116f59c
   languageName: node
   linkType: hard
 
@@ -9696,7 +9666,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"baseline-browser-mapping@npm:^2.8.2":
+"baseline-browser-mapping@npm:^2.8.3":
   version: 2.8.4
   resolution: "baseline-browser-mapping@npm:2.8.4"
   bin:
@@ -9867,17 +9837,17 @@ __metadata:
   linkType: hard
 
 "browserslist@npm:^4.0.0, browserslist@npm:^4.21.4, browserslist@npm:^4.24.0, browserslist@npm:^4.24.4, browserslist@npm:^4.25.1, browserslist@npm:^4.25.3":
-  version: 4.26.0
-  resolution: "browserslist@npm:4.26.0"
+  version: 4.26.2
+  resolution: "browserslist@npm:4.26.2"
   dependencies:
-    baseline-browser-mapping: "npm:^2.8.2"
+    baseline-browser-mapping: "npm:^2.8.3"
     caniuse-lite: "npm:^1.0.30001741"
     electron-to-chromium: "npm:^1.5.218"
     node-releases: "npm:^2.0.21"
     update-browserslist-db: "npm:^1.1.3"
   bin:
     browserslist: cli.js
-  checksum: 10c0/49be9a9cb27ca959f85c23f638c60680e21aab0e34130ff7cb8dae0be9426769124576e834c971150a471561abc67afee4e864262ce7345f5e961ff465879cac
+  checksum: 10c0/1146339dad33fda77786b11ea07f1c40c48899edd897d73a9114ee0dbb1ee6475bb4abda263a678c104508bdca8e66760ff8e10be1947d3e20d34bae01d8b89b
   languageName: node
   linkType: hard
 
@@ -10103,9 +10073,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001669, caniuse-lite@npm:^1.0.30001702, caniuse-lite@npm:^1.0.30001741":
-  version: 1.0.30001741
-  resolution: "caniuse-lite@npm:1.0.30001741"
-  checksum: 10c0/45746f896205a61a8eeb85a32aeca243ebce640cd6eb80d04949d9389a13f4659c737860300d7b988057599f0958c55eeab74ec02ce9ef137feb7d006e75fec1
+  version: 1.0.30001743
+  resolution: "caniuse-lite@npm:1.0.30001743"
+  checksum: 10c0/1bd730ca10d881a1ca9f55ce864d34c3b18501718c03976e0d3419f4694b715159e13fdef6d58ad47b6d2445d315940f3a01266658876828c820a3331aac021d
   languageName: node
   linkType: hard
 
@@ -25382,8 +25352,8 @@ __metadata:
   linkType: hard
 
 "tar-fs@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "tar-fs@npm:3.1.0"
+  version: 3.1.1
+  resolution: "tar-fs@npm:3.1.1"
   dependencies:
     bare-fs: "npm:^4.0.1"
     bare-path: "npm:^3.0.0"
@@ -25394,7 +25364,7 @@ __metadata:
       optional: true
     bare-path:
       optional: true
-  checksum: 10c0/760309677543c03fbc253b5ef1ab4bb2ceafb554471b6cbe4930d1633f35662ec26a1414c66fa6754f5aa7e8c65003f73849242f624c322d3dcba7a8888a6915
+  checksum: 10c0/0c677d711c4aa41f94e1a712aa647022ba1910ff84430739e5d9e95a615e3ea1b7112dc93164fc8ce30dc715befcf9cfdc64da27d4e7958d73c59bda06aa0d8e
   languageName: node
   linkType: hard
 

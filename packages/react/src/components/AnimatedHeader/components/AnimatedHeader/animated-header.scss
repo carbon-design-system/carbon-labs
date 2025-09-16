@@ -46,17 +46,34 @@ body {
 .#{$prefix} {
   position: relative;
   display: flex;
-  overflow: visible;
   background: $background;
   inline-size: 100%;
-  max-block-size: 200vh;
-  outline: 1px solid transparent;
-  padding-block: 0 $spacing-10;
-  transition: padding 500ms motion.motion(standard, expressive),
-    max-block-size 500ms motion.motion(standard, expressive), color 200ms linear,
-    background-color 200ms linear,
-    outline 500ms motion.motion(standard, expressive);
+  max-block-size: 85vh;
   writing-mode: horizontal-tb;
+
+  /* stylelint-disable-next-line a11y/media-prefers-reduced-motion */
+  &[data-expanded='true'] {
+    overflow: visible;
+    max-block-size: 85vh;
+    outline: 1px solid transparent;
+    transition: max-block-size 500ms motion.motion(entrance, expressive),
+      color 200ms linear, background-color 200ms linear,
+      outline 500ms motion.motion(entrance, expressive);
+  }
+
+  /* stylelint-disable-next-line a11y/media-prefers-reduced-motion */
+  &[data-expanded='false'] {
+    overflow: hidden;
+    max-block-size: $spacing-09;
+    outline: 1px solid $border-subtle-00;
+    transition: max-block-size 500ms motion.motion(exit, expressive),
+      outline 500ms motion.motion(exit, expressive);
+    writing-mode: horizontal-tb;
+  }
+}
+
+.#{$prefix}__grid {
+  padding-block: 0 $spacing-10;
 }
 
 .#{$prefix}__static--container {
@@ -88,8 +105,6 @@ body {
 
   background-position: top right;
   background-repeat: no-repeat;
-  transform: translateY(0);
-  transition: transform 500ms motion.motion(standard, expressive);
 }
 
 .#{$prefix}__ui-heading {
@@ -151,12 +166,17 @@ body {
   flex-direction: column;
   gap: $spacing-07;
   margin-block-start: $spacing-08;
-  opacity: 1;
   transition: opacity 500ms linear;
-}
 
-.#{$prefix}__left-area-container--collapsed {
-  opacity: 0;
+  /* stylelint-disable-next-line a11y/media-prefers-reduced-motion */
+  &[data-expanded='true'] {
+    opacity: 1;
+  }
+
+  /* stylelint-disable-next-line a11y/media-prefers-reduced-motion */
+  &[data-expanded='false'] {
+    opacity: 0;
+  }
 }
 
 .#{$prefix}__description {
@@ -245,8 +265,17 @@ body {
 .#{$prefix}__workspace--container {
   margin-block-start: calc(-1 * $spacing-08);
   min-block-size: $spacing-08;
-  opacity: 1;
   transition: opacity 500ms linear;
+
+  /* stylelint-disable-next-line a11y/media-prefers-reduced-motion */
+  &[data-expanded='true'] {
+    opacity: 1;
+  }
+
+  /* stylelint-disable-next-line a11y/media-prefers-reduced-motion */
+  &[data-expanded='false'] {
+    opacity: 0;
+  }
 }
 
 .#{$prefix}__workspace {
@@ -262,10 +291,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: $spacing-05;
-}
-
-.#{$prefix}__content--collapsed {
-  opacity: 0;
 }
 
 .#{$prefix}__tile {
@@ -325,13 +350,17 @@ body {
   position: absolute;
   z-index: 0;
   display: flex;
-
-  transform: translateY(0);
   transition: transform 500ms motion.motion(standard, expressive);
-}
 
-.#{$prefix}__lottie-animation--collapsed {
-  transform: translateY(-16px);
+  /* stylelint-disable-next-line a11y/media-prefers-reduced-motion */
+  &[data-expanded='true'] {
+    transform: translateY(0);
+  }
+
+  /* stylelint-disable-next-line a11y/media-prefers-reduced-motion */
+  &[data-expanded='false'] {
+    transform: translateY(-16px);
+  }
 }
 
 .#{$prefix}__button-collapse--container {
@@ -381,13 +410,6 @@ body {
 ##{$prefix}__button-collapse,
 ##{$prefix}__button-collapse:hover {
   color: $text-primary;
-}
-
-.#{$prefix}--collapsed {
-  overflow: hidden;
-  padding: 0;
-  max-block-size: $spacing-09;
-  outline: 1px solid $border-subtle-00;
 }
 
 // Small

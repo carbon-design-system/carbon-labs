@@ -101,16 +101,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
   const animationContainer = useRef<HTMLDivElement>(null);
   const animRef = useRef<AnimationItem | null>(null);
-  const [open, setOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
 
-  const collapsed = `${blockClass}--collapsed`;
-  const contentCollapsed = `${blockClass}__content--collapsed`;
-  const descriptionCollapsed = `${blockClass}__left-area-container--collapsed`;
-  const lottieCollapsed = `${blockClass}__lottie-animation--collapsed`;
-
   const handleButtonCollapseClick = () => {
-    setOpen(!open);
+    setIsOpen(!isOpen);
   };
 
   useEffect(() => {
@@ -168,8 +163,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   }, [headerAnimation, isReduced]);
 
   return (
-    <header className={`${blockClass}${!open ? ` ${collapsed}` : ''}`}>
-      <Grid>
+    <header className={blockClass} data-expanded={isOpen}>
+      <Grid className={`${blockClass}__grid`}>
         <div className={`${blockClass}__gradient--overlay`} />
 
         <div className={`${blockClass}__container--gradient`} />
@@ -188,9 +183,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__lottie-animation--container`}>
           <div
             ref={animationContainer}
-            className={`${blockClass}__lottie-animation${
-              !open ? ` ${lottieCollapsed}` : ''
-            }`}
+            className={`${blockClass}__lottie-animation`}
+            data-expanded={isOpen}
             aria-hidden="true"></div>
         </div>
 
@@ -198,7 +192,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
           <HeaderTitle
             userName={userName}
             welcomeText={welcomeText}
-            headerExpanded={open}
+            headerExpanded={isOpen}
             ariaLabels={ariaLabels}
           />
         </Column>
@@ -209,9 +203,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             md={8}
             lg={4}
             id={`${blockClass}-content`}
-            className={`${blockClass}__left-area-container${
-              !open ? ` ${descriptionCollapsed}` : ''
-            }`}>
+            className={`${blockClass}__left-area-container`}
+            data-expanded={isOpen}>
             {description && (
               <h2
                 className={`${blockClass}__description`}
@@ -233,9 +226,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
           <Column sm={4} md={8} lg={12} className={`${blockClass}__content`}>
             {!!workspaceSelectorConfig?.allWorkspaces?.length && (
               <div
-                className={`${blockClass}__workspace--container${
-                  !open ? ` ${contentCollapsed}` : ''
-                }`}>
+                className={`${blockClass}__workspace--container`}
+                data-expanded={isOpen}>
                 <WorkspaceSelector
                   workspaceSelectorConfig={workspaceSelectorConfig}
                   userName={userName}
@@ -260,7 +252,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     }
                     key={tile.id}
                     id={tile.id}
-                    open={open}
+                    open={isOpen}
                     href={tile.href}
                     mainIcon={tile.mainIcon}
                     secondaryIcon={tile.secondaryIcon}
@@ -285,16 +277,16 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
           <Button
             id={`${blockClass}__button-collapse`}
             kind="ghost"
-            renderIcon={open ? ChevronUp : ChevronDown}
+            renderIcon={isOpen ? ChevronUp : ChevronDown}
             onClick={handleButtonCollapseClick}
-            aria-expanded={open}
+            aria-expanded={isOpen}
             aria-controls={`${blockClass}-content`}
             aria-label={
-              open
+              isOpen
                 ? ariaLabels?.collapseButton ?? 'Collapse header details'
                 : ariaLabels?.expandButton ?? 'Expand header details'
             }>
-            {open ? collapseButtonLabel : expandButtonLabel}
+            {isOpen ? collapseButtonLabel : expandButtonLabel}
           </Button>
         </div>
       </Grid>

@@ -55,18 +55,23 @@ body {
     overflow: visible;
     max-block-size: 85vh;
     outline: 1px solid transparent;
-    transition: max-block-size 500ms motion.motion(entrance, expressive),
-      color 200ms linear, background-color 200ms linear,
-      outline 500ms motion.motion(entrance, expressive);
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: max-block-size 500ms motion.motion(entrance, expressive),
+        color 200ms linear, background-color 200ms linear,
+        outline 500ms motion.motion(entrance, expressive);
+    }
   }
 
   &[data-expanded='false'] {
     overflow: hidden;
     max-block-size: $spacing-09;
     outline: 1px solid $border-subtle-00;
-    transition: max-block-size 500ms motion.motion(exit, expressive),
-      outline 500ms motion.motion(exit, expressive);
-    writing-mode: horizontal-tb;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: max-block-size 500ms motion.motion(exit, expressive),
+        outline 500ms motion.motion(exit, expressive);
+    }
   }
 }
 
@@ -164,7 +169,10 @@ body {
   flex-direction: column;
   gap: $spacing-07;
   margin-block-start: $spacing-08;
-  transition: opacity 500ms linear;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 500ms linear;
+  }
 
   &[data-expanded='true'] {
     opacity: 1;
@@ -261,7 +269,10 @@ body {
 .#{$prefix}__workspace--container {
   margin-block-start: calc(-1 * $spacing-08);
   min-block-size: $spacing-08;
-  transition: opacity 500ms linear;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 500ms linear;
+  }
 
   &[data-expanded='true'] {
     opacity: 1;
@@ -344,7 +355,10 @@ body {
   position: absolute;
   z-index: 0;
   display: flex;
-  transition: transform 500ms motion.motion(standard, expressive);
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform 500ms motion.motion(standard, expressive);
+  }
 
   &[data-expanded='true'] {
     transform: translateY(0);
@@ -578,7 +592,7 @@ body {
 /*
     If the user has expressed their preference for
     reduced motion, then don't use animations
-  */
+   */
 @media (prefers-reduced-motion: reduce) {
   .#{$prefix},
   .#{$prefix}__static,

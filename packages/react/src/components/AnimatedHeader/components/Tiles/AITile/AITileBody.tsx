@@ -32,7 +32,6 @@ export const AITileBody = ({
 }: AITileBodyProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__ai-tile`;
-  const collapsed = `${blockClass}--collapsed`;
 
   if (isLoading) {
     return (
@@ -41,7 +40,7 @@ export const AITileBody = ({
   }
 
   return (
-    <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
+    <div className={`${blockClass}--body`} data-expanded={open}>
       <div className={`${blockClass}--body-background`} />
       <div className={`${blockClass}--body-gradient`} />
       {customContent ? (

@@ -50,8 +50,20 @@ $prefix: 'clabs--animated-header__ai-tile' !default;
   padding: $spacing-05;
   background-color: transparent;
   color: $text-primary;
-  opacity: 1;
-  transition: opacity 500ms linear;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 500ms linear;
+  }
+
+  &[data-expanded='true'] {
+    opacity: 1;
+    transition-delay: 110ms;
+  }
+
+  &[data-expanded='false'] {
+    opacity: 0;
+    transition-delay: 0ms;
+  }
 }
 
 /* Semi-transparent background layer */
@@ -74,10 +86,6 @@ $prefix: 'clabs--animated-header__ai-tile' !default;
 [data-carbon-theme='g90'] .#{$prefix}--body-background,
 [data-carbon-theme='g100'] .#{$prefix}--body-background {
   background-color: $layer-hover-01;
-}
-
-.#{$prefix}--collapsed {
-  opacity: 0;
 }
 
 /* Animated gradient layer */

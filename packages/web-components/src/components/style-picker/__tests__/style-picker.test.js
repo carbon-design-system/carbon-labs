@@ -10,11 +10,12 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js';
 import { POPOVER_ALIGNMENT } from '@carbon/web-components/es/components/popover/defs.js';
-import ColorPalette16 from '@carbon/web-components/es/icons/color-palette/16.js';
+import ColorPalette16 from '@carbon/icons/es/color-palette/16.js';
 import * as carbonColors from '@carbon/colors';
-import Apple16 from '@carbon/web-components/es/icons/apple/16.js';
-import Corn16 from '@carbon/web-components/es/icons/corn/16.js';
-import Fish16 from '@carbon/web-components/es/icons/fish/16.js';
+import Apple16 from '@carbon/icons/es/apple/16.js';
+import Corn16 from '@carbon/icons/es/corn/16.js';
+import Fish16 from '@carbon/icons/es/fish/16.js';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 // import AmsterdamWindmill from '@carbon/pictograms/es/amsterdam--windmill/index.js';
 // import Barcelona from '@carbon/pictograms/es/barcelona/index.js';
 // import BerlinBrandenburgGate from '@carbon/pictograms/es/berlin--brandenburg-gate/index.js';
@@ -106,7 +107,7 @@ const colorTemplate = (props = defaultProps) => html`
     ?open=${props.open}
     heading=${props.heading}>
     <cds-icon-button slot="trigger" kind=${BUTTON_KIND.GHOST}>
-      ${ColorPalette16({ slot: 'icon' })}
+      ${iconLoader(ColorPalette16, { slot: 'icon' })}
       <span slot="tooltip-content">Color palette</span>
     </cds-icon-button>
     <clabs-style-picker-section heading="Colors">
@@ -142,7 +143,7 @@ const iconTemplate = (props = defaultProps) => html`
     ?open=${props.open}
     heading=${props.heading}>
     <cds-icon-button slot="trigger" kind=${BUTTON_KIND.GHOST}>
-      ${ColorPalette16({ slot: 'icon' })}
+      ${iconLoader(ColorPalette16, { slot: 'icon' })}
       <span slot="tooltip-content">Icon picker</span>
     </cds-icon-button>
     <clabs-style-picker-section heading="Icons">
@@ -154,7 +155,7 @@ const iconTemplate = (props = defaultProps) => html`
               label=${item.label}
               ?selected=${item.value === 'apple'}>
               <clabs-style-picker-icon>
-                ${item.renderIcon()}
+                ${item.renderIcon}
               </clabs-style-picker-icon>
             </clabs-style-picker-option>
           `

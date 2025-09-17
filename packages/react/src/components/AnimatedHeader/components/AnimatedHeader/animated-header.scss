@@ -176,10 +176,12 @@ body {
 
   &[data-expanded='true'] {
     opacity: 1;
+    transition-delay: 110ms;
   }
 
   &[data-expanded='false'] {
     opacity: 0;
+    transition-delay: 0ms;
   }
 }
 
@@ -262,8 +264,6 @@ body {
   flex-direction: column;
   margin: 0;
   margin-block-start: $spacing-08;
-  opacity: 1;
-  transition: opacity 500ms linear;
 }
 
 .#{$prefix}__workspace--container {
@@ -276,10 +276,12 @@ body {
 
   &[data-expanded='true'] {
     opacity: 1;
+    transition-delay: 110ms;
   }
 
   &[data-expanded='false'] {
     opacity: 0;
+    transition-delay: 0ms;
   }
 }
 

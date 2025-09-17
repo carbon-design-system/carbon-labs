@@ -48,7 +48,6 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
 }: AIPromptTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__ai-prompt-tile`;
-  const collapsed = `${blockClass}--collapsed`;
   const disabled = `${blockClass}--disabled`;
 
   const [textInput, setTextInput] = useState('');
@@ -83,7 +82,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
       {isLoading ? (
         <SkeletonPlaceholder className={`${blockClass}--loading-skeleton`} />
       ) : (
-        <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
+        <div className={`${blockClass}--body`} data-expanded={open}>
           <div className={`${blockClass}--body-background`} />
           <div className={`${blockClass}--body-gradient`} />
           <div className={`${blockClass}--icons`}>

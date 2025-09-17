@@ -234,6 +234,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <div
               class="clabs--animated-header__ai-prompt-tile--body"
+              data-expanded="true"
             >
               <div
                 class="clabs--animated-header__ai-prompt-tile--body-background"
@@ -412,6 +413,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <div
               class="clabs--animated-header__glass-tile--body"
+              data-expanded="true"
             >
               <div
                 class="clabs--animated-header__glass-tile--body-background"
@@ -460,6 +462,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <div
               class="clabs--animated-header__glass-tile--body"
+              data-expanded="true"
             >
               <div
                 class="clabs--animated-header__glass-tile--body-background"

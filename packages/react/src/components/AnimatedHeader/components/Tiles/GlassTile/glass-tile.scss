@@ -50,8 +50,20 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
   padding: $spacing-05;
   background-color: transparent;
   color: $text-primary;
-  opacity: 1;
-  transition: opacity 500ms linear;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 500ms linear;
+  }
+
+  &[data-expanded='true'] {
+    opacity: 1;
+    transition-delay: 110ms;
+  }
+
+  &[data-expanded='false'] {
+    opacity: 0;
+    transition-delay: 0ms;
+  }
 }
 
 /* Semi-transparent background layer */

@@ -11,8 +11,8 @@
 import dataFabricStaticLight from './static/header_static_data_fabric_light_06.svg';
 import dataFabricStaticDark from './static/header_static_data_fabric_dark_06.svg';
 
-import db2StaticLight from './static/header_static_db2_light_02.svg';
-import db2StaticDark from './static/header_static_db2_dark_02.svg';
+import db2StaticLight from './static/header_static_db2_light_01.svg';
+import db2StaticDark from './static/header_static_db2_dark_01.svg';
 
 import watsonXStaticLight from './static/header_static_watsonx_data_light_06.svg';
 import watsonXStaticDark from './static/header_static_watsonx_data_dark_05.svg';
@@ -27,6 +27,9 @@ import wxbiaStaticDark from './static/header_static_wxbia_dark_01.svg';
 import dataFabricAnimatedLight from './animated/header_animated_data_fabric_light_03.json';
 import dataFabricAnimatedDark from './animated/header_animated_data_fabric_dark_06.json';
 
+import db2AnimatedLight from './animated/header_animated_db2_light_02.json';
+import db2AnimatedDark from './animated/header_animated_db2_dark_01.json';
+
 import watsonXAnimatedLight from './animated/header_animated_watsonx_data_light_04.json';
 import watsonXAnimatedDark from './animated/header_animated_watsonx_data_dark_03.json';
 
@@ -40,6 +43,8 @@ export {
   // Animated
   dataFabricAnimatedLight,
   dataFabricAnimatedDark,
+  db2AnimatedLight,
+  db2AnimatedDark,
   watsonXAnimatedLight,
   watsonXAnimatedDark,
   watsonXAAnimatedLight,

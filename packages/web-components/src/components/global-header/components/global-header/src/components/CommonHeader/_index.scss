@@ -1,0 +1,39 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '../../globals/styles/vars' as automation;
+
+.#{automation.$namespace-prefix}__header {
+  z-index: 8050;
+}
+
+.#{automation.$namespace-prefix}__header-name {
+  margin: 0 0 0 -0.5rem;
+}
+
+.#{automation.$namespace-prefix}__capability-name {
+  overflow: hidden;
+  color: var(--cds-custom-text-primary);
+  font-weight: 400;
+
+  margin-inline-end: 1.5rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.#{automation.$namespace-prefix}__product-type {
+  white-space: nowrap;
+}
+
+.#{automation.$namespace-prefix}__global {
+  display: flex;
+  flex: 1 1 0%;
+  justify-content: flex-end;
+  block-size: 100%;
+}

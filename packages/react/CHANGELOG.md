@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.128.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.127.0...@carbon-labs/react@0.128.0) (2025-09-18)
+
+
+### Features
+
+* **animated-header:** header animation cleanup ([#807](https://github.com/carbon-design-system/carbon-labs/issues/807)) ([b378d8e](https://github.com/carbon-design-system/carbon-labs/commit/b378d8ebd4433d1f147af91e437547109837d114))
+
+
+
+
+
 # [0.127.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.126.0...@carbon-labs/react@0.127.0) (2025-09-18)
 
 

@@ -6,19 +6,12 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import React, {
-  ElementType,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import lottie, { AnimationItem } from 'lottie-web';
 import { Grid, Column, Button } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
-import lottie, { AnimationItem } from 'lottie-web';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-
 import { BaseTile } from '../Tiles/index';
 import TasksController, {
   TasksControllerProps,
@@ -27,42 +20,15 @@ import WorkspaceSelector, {
   WorkspaceSelectorProps,
 } from '../WorkspaceSelector/WorkspaceSelector';
 import HeaderTitle from '../HeaderTitle/HeaderTitle';
+import { Tile, TileGroup, AriaLabels } from './types';
 
 /** Animated Header */
-
-export interface AriaLabels {
-  welcome?: string;
-  description?: string;
-  collapseButton?: string;
-  expandButton?: string;
-  tilesContainer?: string;
-}
-
-export interface Tile {
-  href?: string | null;
-  id: string;
-  mainIcon?: ElementType | null;
-  secondaryIcon?: ElementType | null;
-  subtitle?: string | null;
-  title?: string | null;
-  customContent?: ReactNode | null;
-  isLoading?: boolean;
-  isDisabled?: boolean;
-  onClick?: () => void;
-  ariaLabel?: string;
-}
-
-export interface TileGroup {
-  id: number;
-  label: string;
-  tiles: Tile[];
-}
 
 export type AnimatedHeaderProps = {
   allTileGroups?: TileGroup[];
   ariaLabels?: AriaLabels;
   selectedTileGroup?: TileGroup;
-  setSelectedTileGroup: (e) => void;
+  setSelectedTileGroup?: (e) => void;
   description?: string;
   headerAnimation?: object;
   headerStatic?: React.JSX.Element | string;
@@ -247,31 +213,32 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               className={`${blockClass}__tiles-container`}
               aria-label={ariaLabels?.tilesContainer ?? `Feature tiles`}
               role="list">
-              {selectedTileGroup.tiles.map((tile) => {
+              {selectedTileGroup.tiles.map((tile, index) => {
+                const { tileId, ...rest } = tile as any;
+                const legacyId = (tile as any).id; // old configs
+                const resolvedTileId = tileId ?? legacyId;
+                const key = resolvedTileId ?? `tile-${index}`;
+                const hasAction = tile.href || tile.onClick === 'function';
+
                 return (
                   <BaseTile
+                    key={key}
+                    tileId={resolvedTileId}
+                    {...rest}
+                    open={open}
+                    productName={productName}
+                    isLoading={isLoading || tile.isLoading}
+                    disabledTaskLabel={disabledTaskLabel}
                     onClick={
-                      tile.href || tile.onClick
+                      hasAction
                         ? () => {
                             tileClickHandler?.(tile);
-                            tile.onClick?.();
+                            if (typeof (tile as any).onClick === 'function') {
+                              (tile as any).onClick();
+                            }
                           }
-                        : null
+                        : undefined
                     }
-                    key={tile.id}
-                    id={tile.id}
-                    open={open}
-                    href={tile.href}
-                    mainIcon={tile.mainIcon}
-                    secondaryIcon={tile.secondaryIcon}
-                    title={tile.title}
-                    subtitle={tile.subtitle}
-                    productName={productName}
-                    customContent={tile.customContent}
-                    isLoading={isLoading || tile.isLoading}
-                    isDisabled={tile.isDisabled}
-                    disabledTaskLabel={disabledTaskLabel}
-                    ariaLabel={tile.ariaLabel}
                   />
                 );
               })}

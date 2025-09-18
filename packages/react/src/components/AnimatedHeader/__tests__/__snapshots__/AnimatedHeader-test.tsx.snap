@@ -106,13 +106,13 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 id="downshift-:r4:-toggle-button"
                 role="combobox"
                 tabindex="0"
-                title="AI Chat Tile w/ two glass tiles"
+                title="AI Prompt Tile w/ two glass tiles"
                 type="button"
               >
                 <span
                   class="cds--list-box__label"
                 >
-                  AI Chat Tile w/ two glass tiles
+                  AI Prompt Tile w/ two glass tiles
                 </span>
                 <div
                   class="cds--list-box__menu-icon"
@@ -288,7 +288,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                       aria-controls="id-:r9:"
                       aria-expanded="false"
                       aria-label="AI Show information"
-                      class="cds--toggletip-button cds--ai-label__button cds--ai-label__button--mini cds--ai-label__button--default"
+                      class="cds--toggletip-button cds--ai-label__button cds--ai-label__button--xs cds--ai-label__button--default"
                       type="button"
                     >
                       <span

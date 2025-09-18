@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.31.0...@carbon-labs/react-animated-header@0.32.0) (2025-09-18)
+
+
+### Features
+
+* **animated-header:** Add AI Tile & Tile rework ([#799](https://github.com/carbon-design-system/carbon-labs/issues/799)) ([ba1b547](https://github.com/carbon-design-system/carbon-labs/commit/ba1b547272b5c2893e23ee574851d4a03dd9a8a9))
+
+
+
+
+
 # [0.31.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.30.0...@carbon-labs/react-animated-header@0.31.0) (2025-09-15)
 
 

@@ -32,7 +32,6 @@ export const GlassTileBody = ({
 }: GlassTileBodyProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__glass-tile`;
-  const collapsed = `${blockClass}--collapsed`;
 
   if (isLoading) {
     return (
@@ -41,7 +40,7 @@ export const GlassTileBody = ({
   }
 
   return (
-    <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
+    <div className={`${blockClass}--body`} data-expanded={open}>
       <div className={`${blockClass}--body-background`} />
       {customContent ? (
         <div className={`${blockClass}--custom-content`}>{customContent}</div>

@@ -81,15 +81,17 @@ function App() {
 
   return (
     <AnimatedHeader
-      ariaLabels={ariaLabelsConfig}
-      tasksControllerConfig={tasksControllerConfig}
-      workspaceSelectorConfig={workspaceSelectorConfig}
+      productName="[Product name]"
       description="Connect, monitor, and manage data."
+      welcomeText="Welcome"
+      userName="Drew"
+      ariaLabels={ariaLabelsConfig}
       headerAnimation={watsonXAnimatedLight}
       headerStatic={watsonXStaticLight}
-      productName="[Product name]"
-      userName="Drew"
-      welcomeText="Welcome"
+      allTileGroups={tiles}
+      selectedTileGroup={selectedTile}
+      workspaceSelectorConfig={workspaceSelectorConfig}
+      tasksControllerConfig={tasksControllerConfig}
       isLoading={false}
     />
   );

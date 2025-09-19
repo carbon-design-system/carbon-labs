@@ -6,19 +6,12 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import React, {
-  ElementType,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import lottie, { AnimationItem } from 'lottie-web';
 import { Grid, Column, Button } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
-import lottie, { AnimationItem } from 'lottie-web';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-
 import { BaseTile } from '../Tiles/index';
 import TasksController, {
   TasksControllerProps,
@@ -27,42 +20,15 @@ import WorkspaceSelector, {
   WorkspaceSelectorProps,
 } from '../WorkspaceSelector/WorkspaceSelector';
 import HeaderTitle from '../HeaderTitle/HeaderTitle';
+import { Tile, TileGroup, AriaLabels } from './types';
 
 /** Animated Header */
-
-export interface AriaLabels {
-  welcome?: string;
-  description?: string;
-  collapseButton?: string;
-  expandButton?: string;
-  tilesContainer?: string;
-}
-
-export interface Tile {
-  href?: string | null;
-  id: string;
-  mainIcon?: ElementType | null;
-  secondaryIcon?: ElementType | null;
-  subtitle?: string | null;
-  title?: string | null;
-  customContent?: ReactNode | null;
-  isLoading?: boolean;
-  isDisabled?: boolean;
-  onClick?: () => void;
-  ariaLabel?: string;
-}
-
-export interface TileGroup {
-  id: number;
-  label: string;
-  tiles: Tile[];
-}
 
 export type AnimatedHeaderProps = {
   allTileGroups?: TileGroup[];
   ariaLabels?: AriaLabels;
   selectedTileGroup?: TileGroup;
-  setSelectedTileGroup: (e) => void;
+  setSelectedTileGroup?: (e) => void;
   description?: string;
   headerAnimation?: object;
   headerStatic?: React.JSX.Element | string;
@@ -101,16 +67,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
   const animationContainer = useRef<HTMLDivElement>(null);
   const animRef = useRef<AnimationItem | null>(null);
-  const [open, setOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
   const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
 
-  const collapsed = `${blockClass}--collapsed`;
-  const contentCollapsed = `${blockClass}__content--collapsed`;
-  const descriptionCollapsed = `${blockClass}__left-area-container--collapsed`;
-  const lottieCollapsed = `${blockClass}__lottie-animation--collapsed`;
-
   const handleButtonCollapseClick = () => {
-    setOpen(!open);
+    setIsOpen(!isOpen);
   };
 
   useEffect(() => {
@@ -168,8 +129,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   }, [headerAnimation, isReduced]);
 
   return (
-    <header className={`${blockClass}${!open ? ` ${collapsed}` : ''}`}>
-      <Grid>
+    <header className={blockClass} data-expanded={isOpen}>
+      <Grid className={`${blockClass}__grid`}>
         <div className={`${blockClass}__gradient--overlay`} />
 
         <div className={`${blockClass}__container--gradient`} />
@@ -188,9 +149,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__lottie-animation--container`}>
           <div
             ref={animationContainer}
-            className={`${blockClass}__lottie-animation${
-              !open ? ` ${lottieCollapsed}` : ''
-            }`}
+            className={`${blockClass}__lottie-animation`}
+            data-expanded={isOpen}
             aria-hidden="true"></div>
         </div>
 
@@ -198,7 +158,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
           <HeaderTitle
             userName={userName}
             welcomeText={welcomeText}
-            headerExpanded={open}
+            headerExpanded={isOpen}
             ariaLabels={ariaLabels}
           />
         </Column>
@@ -209,9 +169,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             md={8}
             lg={4}
             id={`${blockClass}-content`}
-            className={`${blockClass}__left-area-container${
-              !open ? ` ${descriptionCollapsed}` : ''
-            }`}>
+            className={`${blockClass}__left-area-container`}
+            data-expanded={isOpen}>
             {description && (
               <h2
                 className={`${blockClass}__description`}
@@ -233,9 +192,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
           <Column sm={4} md={8} lg={12} className={`${blockClass}__content`}>
             {!!workspaceSelectorConfig?.allWorkspaces?.length && (
               <div
-                className={`${blockClass}__workspace--container${
-                  !open ? ` ${contentCollapsed}` : ''
-                }`}>
+                className={`${blockClass}__workspace--container`}
+                data-expanded={isOpen}>
                 <WorkspaceSelector
                   workspaceSelectorConfig={workspaceSelectorConfig}
                   userName={userName}
@@ -247,31 +205,32 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               className={`${blockClass}__tiles-container`}
               aria-label={ariaLabels?.tilesContainer ?? `Feature tiles`}
               role="list">
-              {selectedTileGroup.tiles.map((tile) => {
+              {selectedTileGroup.tiles.map((tile, index) => {
+                const { tileId, ...rest } = tile as any;
+                const legacyId = (tile as any).id; // old configs
+                const resolvedTileId = tileId ?? legacyId;
+                const key = resolvedTileId ?? `tile-${index}`;
+                const hasAction = tile.href || tile.onClick === 'function';
+
                 return (
                   <BaseTile
+                    key={key}
+                    tileId={resolvedTileId}
+                    {...rest}
+                    open={isOpen}
+                    productName={productName}
+                    isLoading={isLoading || tile.isLoading}
+                    disabledTaskLabel={disabledTaskLabel}
                     onClick={
-                      tile.href || tile.onClick
+                      hasAction
                         ? () => {
                             tileClickHandler?.(tile);
-                            tile.onClick?.();
+                            if (typeof (tile as any).onClick === 'function') {
+                              (tile as any).onClick();
+                            }
                           }
-                        : null
+                        : undefined
                     }
-                    key={tile.id}
-                    id={tile.id}
-                    open={open}
-                    href={tile.href}
-                    mainIcon={tile.mainIcon}
-                    secondaryIcon={tile.secondaryIcon}
-                    title={tile.title}
-                    subtitle={tile.subtitle}
-                    productName={productName}
-                    customContent={tile.customContent}
-                    isLoading={isLoading || tile.isLoading}
-                    isDisabled={tile.isDisabled}
-                    disabledTaskLabel={disabledTaskLabel}
-                    ariaLabel={tile.ariaLabel}
                   />
                 );
               })}
@@ -285,16 +244,16 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
           <Button
             id={`${blockClass}__button-collapse`}
             kind="ghost"
-            renderIcon={open ? ChevronUp : ChevronDown}
+            renderIcon={isOpen ? ChevronUp : ChevronDown}
             onClick={handleButtonCollapseClick}
-            aria-expanded={open}
+            aria-expanded={isOpen}
             aria-controls={`${blockClass}-content`}
             aria-label={
-              open
+              isOpen
                 ? ariaLabels?.collapseButton ?? 'Collapse header details'
                 : ariaLabels?.expandButton ?? 'Expand header details'
             }>
-            {open ? collapseButtonLabel : expandButtonLabel}
+            {isOpen ? collapseButtonLabel : expandButtonLabel}
           </Button>
         </div>
       </Grid>

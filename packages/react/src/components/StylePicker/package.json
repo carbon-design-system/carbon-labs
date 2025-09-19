@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-style-picker",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",

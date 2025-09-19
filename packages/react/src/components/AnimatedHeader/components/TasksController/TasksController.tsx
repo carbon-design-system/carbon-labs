@@ -15,7 +15,7 @@ import {
   SkeletonPlaceholder,
 } from '@carbon/react';
 import React, { useMemo } from 'react';
-import { TileGroup } from '../AnimatedHeader/AnimatedHeader';
+import { TileGroup } from '../AnimatedHeader/types';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 
 export interface TasksControllerConfig {

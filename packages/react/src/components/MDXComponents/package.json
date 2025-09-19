@@ -13,8 +13,9 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "src/components/MDXComponents"
   },
-  "main": "./src/index.js",
-  "module": "./src/index.js",
+  "main": "./es/index.js",
+  "module": "./es/index.js",
+  "types": "./es/index.d.ts",
   "files": [
     "es",
     "lib",

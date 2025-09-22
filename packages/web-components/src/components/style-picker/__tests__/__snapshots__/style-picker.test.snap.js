@@ -2262,7 +2262,9 @@ snapshots["clabs-style-picker should render single variant with icon picker opti
     </span>
   </cds-icon-button>
   <clabs-style-picker-section
-    heading=""
+    aria-label="Icons"
+    heading="Icons"
+    role="listbox"
     size="sm"
   >
     <clabs-style-picker-option
@@ -2278,6 +2280,7 @@ snapshots["clabs-style-picker should render single variant with icon picker opti
       value="apple"
     >
       <clabs-style-picker-icon>
+        [object Object]
       </clabs-style-picker-icon>
     </clabs-style-picker-option>
     <clabs-style-picker-option
@@ -2292,6 +2295,7 @@ snapshots["clabs-style-picker should render single variant with icon picker opti
       value="corn"
     >
       <clabs-style-picker-icon>
+        [object Object]
       </clabs-style-picker-icon>
     </clabs-style-picker-option>
     <clabs-style-picker-option
@@ -2306,6 +2310,7 @@ snapshots["clabs-style-picker should render single variant with icon picker opti
       value="fish"
     >
       <clabs-style-picker-icon>
+        [object Object]
       </clabs-style-picker-icon>
     </clabs-style-picker-option>
   </clabs-style-picker-section>

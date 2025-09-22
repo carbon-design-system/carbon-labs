@@ -57,7 +57,7 @@ import TelAviv from '@carbon/pictograms/lib/tel-aviv';
 import TokyoGates from '@carbon/pictograms/lib/tokyo--gates';
 import CairoGizaPlateau from '@carbon/pictograms/lib/cairo--giza-plateau';
 import Melbourne from '@carbon/pictograms/lib/melbourne';
-import { Group, Item } from '../defs/style-picker-group.types';
+import { Group, Item } from '../defs';
 import { SVGTemplateResult } from 'lit';
 import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 

@@ -199,10 +199,10 @@ const hybridIPaasHeaderProps = {
   isHybridIpaas: true,
   brand: {
     company: 'IBM',
-    product: 'webMethods Hybrid Integration',
+    product: 'Mock Product',
   },
   capabilityName: {
-    label: 'App Connect',
+    label: 'Capability',
   },
   profile: {
     imageUrl: null,
@@ -245,7 +245,6 @@ const hybridIPaasHeaderProps = {
           carbonIcon: 'Checkmark',
           isLastInList: true,
         },
-        // { label: 'Manage environments', href: '#', carbonIcon: 'Settings', isLinkItem: true }
       ],
     },
   ],
@@ -258,13 +257,13 @@ const hybridIPaasHeaderProps = {
       {
         links: [
           {
-            href: 'https://ibm.com',
+            href: '#',
             label: 'Home',
             iconName: 'Home',
             isActive: false,
           },
           {
-            href: 'http://google.com',
+            href: '#',
             label: 'Access management',
             iconName: 'User',
             isActive: false,
@@ -275,36 +274,36 @@ const hybridIPaasHeaderProps = {
         links: [
           {
             label: 'APIs',
-            iconName: 'Api',
+            iconName: 'Document',
             isSideNavMenuItems: true,
             isActive: true,
             sideNavMenuItems: [
               {
                 href: '#',
-                label: 'API Connect',
+                label: 'Connect',
               },
             ],
           },
           {
             label: 'App Integration',
-            iconName: 'FlowConnection',
+            iconName: 'Email',
             isSideNavMenuItems: true,
             isActive: true,
             sideNavMenuItems: [
               {
                 href: '#',
-                label: 'webMethods Integration',
+                label: 'Integration',
               },
               {
-                href: 'https://ibm.com',
-                label: 'App Connect',
+                href: '#',
+                label: 'Apps',
               },
             ],
           },
           {
             href: '#',
-            label: 'Event endpoint management',
-            iconName: 'IbmEventAutomation',
+            label: 'Events',
+            iconName: 'RequestQuote',
           },
         ],
       },
@@ -313,12 +312,12 @@ const hybridIPaasHeaderProps = {
           {
             href: '#',
             label: 'Metering',
-            iconName: 'Meter',
+            iconName: 'Checkmark',
           },
           {
             href: '#',
-            label: 'End-to-end monitoring',
-            iconName: 'Analytics',
+            label: 'Monitoring',
+            iconName: 'Share',
           },
         ],
       },
@@ -417,8 +416,8 @@ export const UnauthenticatedContext: Story = {
 	`,
 };
 
-export const WebMethodsHybridIntegration: Story = {
-  name: 'webMethods Hybrid Integration',
+export const IbmMockProduct: Story = {
+  name: 'IBM Mock Product',
   render: () => html`
 		<div role="main">
 			<apaas-common-header .headerProps="${hybridIPaasHeaderProps}"></common-header>

@@ -17,6 +17,8 @@ import {
   headerTiles,
   tasksControllerConfigButton,
   tasksControllerConfigDropdown,
+  tasksControllerConfigContentSwitcher2,
+  tasksControllerConfigContentSwitcher3,
   tasksControllerConfigLoading,
   workspaceSelectorConfig,
   workspaceSelectorConfigLoading,
@@ -188,15 +190,19 @@ const sharedArgTypes = {
         0: 'None',
         1: 'Button',
         2: 'Dropdown',
-        3: 'Loading',
+        3: 'Content Switcher (two visible)',
+        4: 'Content Switcher (three visible)',
+        5: 'Loading',
       },
     },
-    options: [0, 1, 2, 3],
+    options: [0, 1, 2, 3, 4, 5],
     mapping: {
       0: null,
       1: tasksControllerConfigButton,
       2: tasksControllerConfigDropdown,
-      3: tasksControllerConfigLoading,
+      3: tasksControllerConfigContentSwitcher2,
+      4: tasksControllerConfigContentSwitcher3,
+      5: tasksControllerConfigLoading,
     },
   },
   workspaceSelectorConfig: {
@@ -273,9 +279,44 @@ export const ThemeG10 = (args) => {
     });
   };
 
-  const handleTileGroupSelect = (e) => {
-    updateArgs({ ...args, selectedTileGroup: e.selectedItem });
+  // One handler that accepts either Dropdown event or a TileGroup directly
+  const handleTileGroupSelect = (eOrGroup) => {
+    const next = (eOrGroup as any)?.selectedItem ?? eOrGroup;
+    updateArgs({ ...args, selectedTileGroup: next });
   };
+
+  const tasksControllerConfigInjected = React.useMemo(() => {
+    const tc = args.tasksControllerConfig;
+    if (!tc) return tc;
+
+    if (tc.type === 'dropdown') {
+      return {
+        ...tc,
+        dropdown: {
+          ...tc.dropdown,
+          allTileGroups: headerTiles,
+          selectedTileGroup: args.selectedTileGroup,
+          setSelectedTileGroup: handleTileGroupSelect,
+        },
+      };
+    }
+
+    if (tc.type === 'switcher') {
+      return {
+        ...tc,
+        switcher: {
+          ...tc.switcher,
+          allTileGroups: headerTiles,
+          selectedTileGroup: args.selectedTileGroup,
+          setSelectedTileGroup: (group) =>
+            updateArgs({ ...args, selectedTileGroup: group }),
+        },
+      };
+    }
+
+    return tc;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [args, updateArgs]);
 
   const argsWithSelectors = {
     ...args,
@@ -284,6 +325,7 @@ export const ThemeG10 = (args) => {
       setSelectedWorkspace: handleWorkspaceSelect,
     },
     setSelectedTileGroup: handleTileGroupSelect,
+    tasksControllerConfig: tasksControllerConfigInjected,
   };
 
   return <AnimatedHeader {...argsWithSelectors} />;
@@ -305,9 +347,43 @@ export const ThemeG100 = (args) => {
     });
   };
 
-  const handleTileGroupSelect = (e) => {
-    updateArgs({ ...args, selectedTileGroup: e.selectedItem });
+  const handleTileGroupSelect = (eOrGroup) => {
+    const next = (eOrGroup as any)?.selectedItem ?? eOrGroup;
+    updateArgs({ ...args, selectedTileGroup: next });
   };
+
+  const tasksControllerConfigInjected = React.useMemo(() => {
+    const tc = args.tasksControllerConfig;
+    if (!tc) return tc;
+
+    if (tc.type === 'dropdown') {
+      return {
+        ...tc,
+        dropdown: {
+          ...tc.dropdown,
+          allTileGroups: headerTiles,
+          selectedTileGroup: args.selectedTileGroup,
+          setSelectedTileGroup: handleTileGroupSelect, // can accept event or TileGroup
+        },
+      };
+    }
+
+    if (tc.type === 'switcher') {
+      return {
+        ...tc,
+        switcher: {
+          ...tc.switcher,
+          allTileGroups: headerTiles,
+          selectedTileGroup: args.selectedTileGroup,
+          setSelectedTileGroup: (group) =>
+            updateArgs({ ...args, selectedTileGroup: group }),
+        },
+      };
+    }
+
+    return tc;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [args, updateArgs]);
 
   const argsWithSelectors = {
     ...args,
@@ -316,6 +392,7 @@ export const ThemeG100 = (args) => {
       setSelectedWorkspace: handleWorkspaceSelect,
     },
     setSelectedTileGroup: handleTileGroupSelect,
+    tasksControllerConfig: tasksControllerConfigInjected,
   };
 
   return <AnimatedHeader {...argsWithSelectors} />;

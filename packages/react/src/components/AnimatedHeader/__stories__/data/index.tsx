@@ -289,6 +289,28 @@ export const tasksControllerConfigDropdown = {
   },
 };
 
+export const tasksControllerConfigContentSwitcher2 = {
+  type: 'switcher',
+  switcher: {
+    allTileGroups: headerTiles,
+    selectedTileGroup: headerTiles[0],
+    setSelectedTileGroup: () => {},
+    visibleCount: 2,
+    ariaLabel: 'Header actions',
+  },
+};
+
+export const tasksControllerConfigContentSwitcher3 = {
+  type: 'switcher',
+  switcher: {
+    allTileGroups: headerTiles,
+    selectedTileGroup: headerTiles[0],
+    setSelectedTileGroup: () => {},
+    visibleCount: 3,
+    ariaLabel: 'Header actions',
+  },
+};
+
 export const tasksControllerConfigLoading = {
   type: 'none',
   isLoading: true,

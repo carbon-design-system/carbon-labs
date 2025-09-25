@@ -69,6 +69,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const animRef = useRef<AnimationItem | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
+  const isSwitcher =
+    tasksControllerConfig?.type === 'switcher' &&
+    tasksControllerConfig?.switcher;
 
   const handleButtonCollapseClick = () => {
     setIsOpen(!isOpen);
@@ -154,13 +157,28 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             aria-hidden="true"></div>
         </div>
 
-        <Column sm={4} md={8} lg={16}>
-          <HeaderTitle
-            userName={userName}
-            welcomeText={welcomeText}
-            headerExpanded={isOpen}
-            ariaLabels={ariaLabels}
-          />
+        <Column sm={4} md={8} lg={16} className={`${blockClass}__title-row`}>
+          <div className={`${blockClass}__title-and-actions`}>
+            <HeaderTitle
+              userName={userName}
+              welcomeText={welcomeText}
+              headerExpanded={isOpen}
+              ariaLabels={ariaLabels}
+            />
+
+            {/* When using the ContentSwitcher, render it here (top row) */}
+            {isSwitcher && (
+              <div className={`${blockClass}__actions`}>
+                <TasksController
+                  tasksControllerConfig={tasksControllerConfig}
+                  isLoading={isLoading}
+                  allTileGroups={allTileGroups}
+                  selectedTileGroup={selectedTileGroup}
+                  setSelectedTileGroup={setSelectedTileGroup}
+                />
+              </div>
+            )}
+          </div>
         </Column>
 
         {(description || tasksControllerConfig) && (
@@ -178,13 +196,17 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                 {description}
               </h2>
             )}
-            <TasksController
-              tasksControllerConfig={tasksControllerConfig}
-              isLoading={isLoading}
-              allTileGroups={allTileGroups}
-              selectedTileGroup={selectedTileGroup}
-              setSelectedTileGroup={setSelectedTileGroup}
-            />
+
+            {/* Keep button/dropdown down here; hide when switcher mode */}
+            {!isSwitcher && (
+              <TasksController
+                tasksControllerConfig={tasksControllerConfig}
+                isLoading={isLoading}
+                allTileGroups={allTileGroups}
+                selectedTileGroup={selectedTileGroup}
+                setSelectedTileGroup={setSelectedTileGroup}
+              />
+            )}
           </Column>
         )}
 
@@ -327,24 +349,31 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   setSelectedTileGroup: PropTypes.func,
 
   /**
-   * Configuration for Carbon button or dropdown menu in header. Customized
-   * tasks are used to allow users that have multiple roles and permissions
-   * to experience better tailored content based on their need.
-   * It also allows to override Carbon Button props by specifying them in tasksConfig.button.propsOverrides
-   * or to override Carbon Dropdown props by specifying them in tasksConfig.dropdown.propsOverrides.
+   * Configuration for Carbon button / dropdown / content switcher in header.
+   * Customized tasks are used to allow users that have multiple roles and
+   * permissions to experience better tailored content based on their need.
    */
   tasksControllerConfig: PropTypes.shape({
-    type: PropTypes.oneOf(['button', 'dropdown']).isRequired,
+    type: PropTypes.oneOf(['button', 'dropdown', 'switcher']).isRequired,
+    isLoading: PropTypes.bool,
+
     button: PropTypes.shape({
       text: PropTypes.string.isRequired,
       // Override Carbon Button props
       propsOverrides: PropTypes.object,
     }),
+
     dropdown: PropTypes.shape({
-      allTileGroups: PropTypes.arrayOf(PropTypes.object),
-      selectedTileGroup: PropTypes.object,
-      setSelectedTileGroup: PropTypes.func.isRequired,
+      label: PropTypes.string,
+      ariaLabel: PropTypes.string,
       // Override Carbon Dropdown props
+      propsOverrides: PropTypes.object,
+    }),
+
+    switcher: PropTypes.shape({
+      visibleCount: PropTypes.oneOf([2, 3]),
+      ariaLabel: PropTypes.string,
+      // Override Carbon ContentSwitcher props
       propsOverrides: PropTypes.object,
     }),
   }),

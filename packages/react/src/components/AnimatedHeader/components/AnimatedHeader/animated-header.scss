@@ -258,6 +258,21 @@ body {
   inline-size: 100%;
 }
 
+.#{$prefix}__title-and-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-07;
+  min-block-size: $spacing-09;
+}
+
+.#{$prefix}__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin: $spacing-08 0 $spacing-05 0;
+}
+
 .#{$prefix}__content {
   z-index: 2;
   display: flex;
@@ -438,6 +453,10 @@ body {
     display: none;
   }
 
+  .#{$prefix}__header-switcher {
+    display: none;
+  }
+
   .#{$prefix}__content {
     display: none;
   }
@@ -455,6 +474,10 @@ body {
 
   .#{$prefix}__header-dropdown {
     display: block;
+  }
+
+  .#{$prefix}__header-switcher {
+    display: inline-flex;
   }
 
   .#{$prefix}__static {

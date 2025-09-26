@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react'
-import { PageDescription } from './page-description'
+import React from 'react';
+import { PageDescription } from './page-description';
 
 const stories = {
-  title: 'MDX Components/PageDescription',
-  component: PageDescription
-}
+  title: 'Components/MDX Components/PageDescription',
+  component: PageDescription,
+};
 
-export default stories
+export default stories;
 
 const Template = (args) => (
   <PageDescription {...args}>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean feugiat ex massa, in tincidunt
-    ipsum tempor in. Maecenas ultrices sem nec blandit dictum. Fermentum ullamcorper pretium. Duis
-    turpis elit.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean feugiat ex
+    massa, in tincidunt ipsum tempor in. Maecenas ultrices sem nec blandit
+    dictum. Fermentum ullamcorper pretium. Duis turpis elit.
   </PageDescription>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

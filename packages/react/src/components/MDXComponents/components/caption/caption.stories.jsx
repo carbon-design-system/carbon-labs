@@ -9,14 +9,16 @@ import React from 'react';
 import { Caption } from './caption';
 
 export default {
-  title: 'MDX Components/Caption',
+  title: 'Components/MDX Components/Caption',
   component: Caption,
-  argTypes: {}
-}
+  argTypes: {},
+};
 
 const Template = (args) => (
-  <Caption {...args}>Lorem ipsum dolor sit amet Lorem Lorem Lorem Lorem Lorem Lorem ipsum.</Caption>
-)
+  <Caption {...args}>
+    Lorem ipsum dolor sit amet Lorem Lorem Lorem Lorem Lorem Lorem ipsum.
+  </Caption>
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

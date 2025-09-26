@@ -4,40 +4,40 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React from 'react'
-import { CardGroup } from '../card-group/card-group'
-import { MiniCard } from './mini-card'
+import React from 'react';
+import { CardGroup } from '../card-group/card-group';
+import { MiniCard } from './mini-card';
 
 // TODO: add MdxIcon when migrated
 // import MdxIcon from '@/components/mdx-icon'
 
 const stories = {
-  title: 'MDX Components/Cards/MiniCard',
+  title: 'Components/MDX Components/Cards/MiniCard',
   component: MiniCard,
   parameters: {},
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
     href: {
-      control: false
+      control: false,
     },
     actionIcon: {
-      control: false
+      control: false,
     },
     className: {
-      control: false
+      control: false,
     },
     linkProps: {
-      control: false
+      control: false,
     },
     title: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
-export default stories
+export default stories;
 
 const Template = (args) => (
   <CardGroup {...args}>
@@ -58,6 +58,6 @@ const Template = (args) => (
       {/* <MdxIcon name="react" /> */}
     </MiniCard>
   </CardGroup>
-)
+);
 
-export const Default = Template.bind({})
+export const Default = Template.bind({});

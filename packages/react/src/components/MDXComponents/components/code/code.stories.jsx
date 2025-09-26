@@ -6,18 +6,18 @@
  */
 
 import React from 'react';
-import { Code } from './code'
+import { Code } from './code';
 
 export default {
-  title: 'MDX Components/Markdown/Code',
-  component: Code
-}
+  title: 'Components/MDX Components/Markdown/Code',
+  component: Code,
+};
 
 const Template = (args) => (
   <Code {...args}>
     <code>const a = 16</code>
   </Code>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

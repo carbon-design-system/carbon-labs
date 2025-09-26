@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react'
-import { Column } from './column'
-import { Grid } from './grid'
-import { Row } from './row'
+import React from 'react';
+import { Column } from './column';
+import { Grid } from './grid';
+import { Row } from './row';
 
 export default {
-  title: 'MDX Components/Grid',
+  title: 'Components/MDX Components/Grid',
   component: Grid,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
     className: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
 const Template = () => (
   <Grid>
@@ -38,7 +38,7 @@ const Template = () => (
       Span 4
     </Column>
   </Grid>
-)
+);
 
 const GatsbyTemplate = () => (
   <Row>
@@ -55,9 +55,9 @@ const GatsbyTemplate = () => (
       Span 4
     </Column>
   </Row>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};
 
 export const Gatsby = GatsbyTemplate.bind({});

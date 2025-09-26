@@ -10,7 +10,7 @@ import { Accordion } from './accordion';
 import { AccordionItem } from '@carbon/react';
 
 export default {
-  title: 'MDX Components/Accordion',
+  title: 'Components/MDX Components/Accordion',
   component: Accordion,
   subcomponents: { AccordionItem },
 };

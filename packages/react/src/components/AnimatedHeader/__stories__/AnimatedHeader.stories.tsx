@@ -12,14 +12,20 @@ import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
 import { useArgs } from 'storybook/preview-api';
 import type { Meta } from '@storybook/react-webpack5';
 import '../components/animated-header.scss';
+import type { HeaderActionConfig } from '../components/HeaderAction/header-action.types';
 
 import {
   headerTiles,
   tasksControllerConfigButton,
   tasksControllerConfigDropdown,
+  tasksControllerConfigContentSwitcher2,
+  tasksControllerConfigContentSwitcher3,
   tasksControllerConfigLoading,
   workspaceSelectorConfig,
   workspaceSelectorConfigLoading,
+  headerActionIcon,
+  headerActionGhost,
+  //makeHeaderActionCarousel,
 } from './data';
 import {
   dataFabricAnimatedLight,
@@ -188,15 +194,19 @@ const sharedArgTypes = {
         0: 'None',
         1: 'Button',
         2: 'Dropdown',
-        3: 'Loading',
+        3: 'Content Switcher (two visible)',
+        4: 'Content Switcher (three visible)',
+        5: 'Loading',
       },
     },
-    options: [0, 1, 2, 3],
+    options: [0, 1, 2, 3, 4, 5],
     mapping: {
       0: null,
       1: tasksControllerConfigButton,
       2: tasksControllerConfigDropdown,
-      3: tasksControllerConfigLoading,
+      3: tasksControllerConfigContentSwitcher2,
+      4: tasksControllerConfigContentSwitcher3,
+      5: tasksControllerConfigLoading,
     },
   },
   workspaceSelectorConfig: {
@@ -235,6 +245,25 @@ const sharedArgTypes = {
     description: 'Specify custom collapse button label',
     type: 'string',
   },
+  headerActionType: {
+    description:
+      'Header action rendered to the left of “Collapse”. Choose an icon button, ghost button, or a future carousel that pages tiles.',
+    control: {
+      type: 'select',
+      labels: {
+        0: 'None',
+        1: 'Icon Button',
+        2: 'Ghost Button',
+      },
+    },
+    options: [0, 1, 2],
+  },
+  // // (Optional) Expose pager size if you want to tweak it from controls:
+  // headerActionTotalPages: {
+  //   description: 'Total pages for carousel pager',
+  //   control: { type: 'number', min: 1, step: 1 },
+  //   table: { category: 'Header action' },
+  // },
 };
 
 const sharedArgs = {
@@ -258,11 +287,15 @@ const sharedArgs = {
     expandButton: 'Expand header details',
     tilesContainer: 'Feature tiles list',
   },
+  headerActionType: 0,
+  //headerActionTotalPages: 3,
 };
 
 export const ThemeG10 = (args) => {
   const [_, updateArgs] = useArgs();
+  //const [pagerPage, setPagerPage] = React.useState(0);
 
+  // ----- Workspace select
   const handleWorkspaceSelect = (e) => {
     updateArgs({
       ...args,
@@ -273,9 +306,54 @@ export const ThemeG10 = (args) => {
     });
   };
 
-  const handleTileGroupSelect = (e) => {
-    updateArgs({ ...args, selectedTileGroup: e.selectedItem });
+  // ----- Tile group select (dropdown OR switcher)
+  const handleTileGroupSelect = (eOrGroup) => {
+    const next = (eOrGroup as any)?.selectedItem ?? eOrGroup;
+    updateArgs({ ...args, selectedTileGroup: next });
   };
+
+  const tasksControllerConfigInjected = React.useMemo(() => {
+    const tc = args.tasksControllerConfig;
+    if (!tc) return tc;
+
+    if (tc.type === 'dropdown') {
+      return {
+        ...tc,
+        dropdown: {
+          ...tc.dropdown,
+          allTileGroups: headerTiles,
+          selectedTileGroup: args.selectedTileGroup,
+          setSelectedTileGroup: handleTileGroupSelect,
+        },
+      };
+    }
+    if (tc.type === 'switcher') {
+      return {
+        ...tc,
+        switcher: {
+          ...tc.switcher,
+          allTileGroups: headerTiles,
+          selectedTileGroup: args.selectedTileGroup,
+          setSelectedTileGroup: (group) =>
+            updateArgs({ ...args, selectedTileGroup: group }),
+        },
+      };
+    }
+    return tc;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [args, updateArgs]);
+
+  // ----- Build headerActionConfig from control selection
+  const headerActionConfig: HeaderActionConfig | null = React.useMemo(() => {
+    const t = args.headerActionType;
+    if (t === 1) return headerActionIcon;
+    if (t === 2) return headerActionGhost;
+    // if (t === 3) {
+    //   const total = Number(args.headerActionTotalPages) || 1;
+    //   return makeHeaderActionCarousel(pagerPage, total, (p) => setPagerPage(p));
+    // }
+    return null;
+  }, [args.headerActionType]); //, args.headerActionTotalPages, pagerPage]);
 
   const argsWithSelectors = {
     ...args,
@@ -284,6 +362,12 @@ export const ThemeG10 = (args) => {
       setSelectedWorkspace: handleWorkspaceSelect,
     },
     setSelectedTileGroup: handleTileGroupSelect,
+    tasksControllerConfig: tasksControllerConfigInjected,
+    headerActionConfig: headerActionConfig ?? undefined,
+    // // If your tiles area will listen to page changes, pass these (optional):
+    // tilePage: pagerPage,
+    // tileTotalPages: args.headerActionTotalPages,
+    // onTilePageChange: setPagerPage,
   };
 
   return <AnimatedHeader {...argsWithSelectors} />;
@@ -294,7 +378,9 @@ ThemeG10.args = { headerAnimation: 3, ...sharedArgs };
 
 export const ThemeG100 = (args) => {
   const [_, updateArgs] = useArgs();
+  //const [pagerPage, setPagerPage] = React.useState(0);
 
+  // ----- Workspace select
   const handleWorkspaceSelect = (e) => {
     updateArgs({
       ...args,
@@ -305,9 +391,56 @@ export const ThemeG100 = (args) => {
     });
   };
 
-  const handleTileGroupSelect = (e) => {
-    updateArgs({ ...args, selectedTileGroup: e.selectedItem });
+  // ----- Tile group select (dropdown OR switcher)
+  const handleTileGroupSelect = (eOrGroup) => {
+    const next = (eOrGroup as any)?.selectedItem ?? eOrGroup;
+    updateArgs({ ...args, selectedTileGroup: next });
   };
+
+  const tasksControllerConfigInjected = React.useMemo(() => {
+    const tc = args.tasksControllerConfig;
+    if (!tc) return tc;
+
+    if (tc.type === 'dropdown') {
+      return {
+        ...tc,
+        dropdown: {
+          ...tc.dropdown,
+          allTileGroups: headerTiles,
+          selectedTileGroup: args.selectedTileGroup,
+          setSelectedTileGroup: handleTileGroupSelect, // can accept event or TileGroup
+        },
+      };
+    }
+
+    if (tc.type === 'switcher') {
+      return {
+        ...tc,
+        switcher: {
+          ...tc.switcher,
+          allTileGroups: headerTiles,
+          selectedTileGroup: args.selectedTileGroup,
+          setSelectedTileGroup: (group) =>
+            updateArgs({ ...args, selectedTileGroup: group }),
+        },
+      };
+    }
+
+    return tc;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [args, updateArgs]);
+
+  // ----- Build headerActionConfig from control selection
+  const headerActionConfig: HeaderActionConfig | null = React.useMemo(() => {
+    const t = args.headerActionType;
+    if (t === 1) return headerActionIcon;
+    if (t === 2) return headerActionGhost;
+    // if (t === 3) {
+    //   const total = Number(args.headerActionTotalPages) || 1;
+    //   return makeHeaderActionCarousel(pagerPage, total, (p) => setPagerPage(p));
+    // }
+    return null;
+  }, [args.headerActionType]); //, args.headerActionTotalPages, pagerPage]);
 
   const argsWithSelectors = {
     ...args,
@@ -316,6 +449,12 @@ export const ThemeG100 = (args) => {
       setSelectedWorkspace: handleWorkspaceSelect,
     },
     setSelectedTileGroup: handleTileGroupSelect,
+    tasksControllerConfig: tasksControllerConfigInjected,
+    headerActionConfig: headerActionConfig ?? undefined,
+    // // If your tiles area will listen to page changes, pass these (optional):
+    // tilePage: pagerPage,
+    // tileTotalPages: args.headerActionTotalPages,
+    // onTilePageChange: setPagerPage,
   };
 
   return <AnimatedHeader {...argsWithSelectors} />;

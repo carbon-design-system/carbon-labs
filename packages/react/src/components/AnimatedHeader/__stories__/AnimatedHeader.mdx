@@ -39,11 +39,16 @@ import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
     - [Button](#button)
     - [Dropdown](#dropdown)
     - [Content Switcher](#content-switcher-new)
+  - [Header Action](#header-action)
+    - [Icon Button](#icon-button)
+    - [Ghost Button](#ghost-button)
+    - [Carousel (coming soon)](#carousel-coming-soon)
   - [Accessibility](#accessibility)
     - [Tile ARIA Labels](#tile-aria-labels)
     - [Tasks Dropdown ARIA Label](#tasks-dropdown-aria-label)
     - [Tasks Content Switcher ARIA Label](#tasks-content-switcher-aria-label)
     - [Workspace Selector ARIA Label](#workspace-selector-aria-label)
+    - [Header Action ARIA Label](#header-action-aria-label)
     - [Additional ARIA Labels](#additional-aria-labels)
 - [Getting started](#getting-started)
   - [JS (via import)](#js-via-import)
@@ -95,6 +100,13 @@ highest contrast to the background.
 - **Content Switcher** renders **inline in the title row**, aligned to the right
   of “Welcome, {`user`}” on medium+ viewports (default styles). You can override
   placement with custom styles if needed.
+
+**Header Action placement:**
+
+- Renders **inline in the bottom-right action row**, immediately to the **left**
+  of the **Collapse** button.
+- Always shows a subtle vertical divider between it and preceding actions.
+- Supports multiple presentations (see below).
 
 ---
 
@@ -338,6 +350,66 @@ export const tasksControllerConfigContentSwitcher = {
 
 ---
 
+### Header Action
+
+The Header Action is a small control that appears to the **left of the Collapse
+button** in the bottom action row. It’s meant for quick access patterns like a
+**settings icon** or a **“View all” ghost button**. A **Carousel pager** is
+planned to page through multiple tile views (see “coming soon”).
+
+> **Divider:** A subtle vertical divider is always shown to the left of the
+> header action to separate it from other actions.
+
+#### Icon Button
+
+Use any Carbon icon component (from `@carbon/icons-react`) and an accessible
+label.
+
+```tsx
+import { Settings } from '@carbon/icons-react';
+
+export const headerActionIconConfig = {
+  type: 'icon-button',
+  icon: Settings, // component type (ElementType)
+  iconLabel: 'Open controls',
+  onClick: () => openControlsModal(),
+};
+```
+
+#### Ghost Button
+
+Provide a label and (optionally) a trailing icon component. This is ideal for
+“View all” patterns that open a modal listing all tiles.
+
+```tsx
+import { ArrowRight } from '@carbon/icons-react';
+
+export const headerActionGhostConfig = {
+  type: 'ghost-button',
+  label: 'View all',
+  icon: ArrowRight, // optional
+  onClick: () => openAllTilesModal(),
+};
+```
+
+#### Carousel (coming soon)
+
+A compact pager that switches between **pages of tiles**. This feature will ship
+in a future release.
+
+```tsx
+// COMING SOON
+export const headerActionCarouselConfig = {
+  type: 'carousel',
+  page: 0,
+  total: 3,
+  onSelectPage: (p) => setPage(p),
+  onStep: (direction, next) => analytics('pager-step', { direction, next }),
+};
+```
+
+---
+
 ### Accessibility
 
 To ensure a fully accessible experience, provide `aria-label`s directly in your
@@ -418,6 +490,21 @@ export const workspaceSelectorConfig = {
 };
 ```
 
+#### Header Action ARIA Label
+
+Each header action variant also accepts an optional `ariaLabel`. Use it if the
+visual label isn’t descriptive enough (e.g., when using only an icon).
+
+```tsx
+export const headerActionIconConfig = {
+  type: 'icon-button',
+  icon: Settings,
+  iconLabel: 'Open header controls',
+  ariaLabel: 'Open header controls', // ✅ aria-label defined here
+  onClick: () => openControlsModal(),
+};
+```
+
 > ✅ Both the **tasks dropdown** and **workspace selector** must define their
 > `aria-label` values in the config to support accessibility. No other methods
 > of passing `aria-label`s are supported.
@@ -492,6 +579,7 @@ Example of Animated Header with all prop types enabled.
   selectedTileGroup={selectedTile}
   workspaceSelectorConfig={workspaceSelectorConfig}
   tasksControllerConfig={tasksControllerConfigDropdown as TasksControllerConfig}
+  headerActionConfig={headerActionGhostConfig}
   isLoading={false}
   tileClickHandler={handleTileClicks}
 />

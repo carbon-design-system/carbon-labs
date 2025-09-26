@@ -21,6 +21,8 @@ import WorkspaceSelector, {
 } from '../WorkspaceSelector/WorkspaceSelector';
 import HeaderTitle from '../HeaderTitle/HeaderTitle';
 import { Tile, TileGroup, AriaLabels } from './types';
+import HeaderAction from '../HeaderAction/HeaderAction';
+import type { HeaderActionProps } from '../HeaderAction/header-action.types';
 
 /** Animated Header */
 
@@ -40,8 +42,12 @@ export type AnimatedHeaderProps = {
   expandButtonLabel?: string;
   collapseButtonLabel?: string;
   tileClickHandler?: (tile: Tile) => void;
+  // tilePage?: number;
+  // tileTotalPages?: number;
+  // onTilePageChange?: (page: number) => void;
 } & TasksControllerProps &
-  WorkspaceSelectorProps;
+  WorkspaceSelectorProps &
+  HeaderActionProps;
 
 const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   allTileGroups,
@@ -54,6 +60,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   productName = '[Product name]',
   userName,
   welcomeText,
+  headerActionConfig,
   tasksControllerConfig,
   workspaceSelectorConfig,
   isLoading,
@@ -263,6 +270,10 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__button-collapse--gradient`} />
 
         <div className={`${blockClass}__button-collapse--container`}>
+          {headerActionConfig ? (
+            <HeaderAction config={headerActionConfig} />
+          ) : null}
+
           <Button
             id={`${blockClass}__button-collapse`}
             kind="ghost"
@@ -314,6 +325,50 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Custom expand button label
    */
   expandButtonLabel: PropTypes.string,
+
+  /**
+   * Configuration for the header action control (icon button / ghost button / carousel - *coming soon*).
+   * This sits to the left of the Collapse button and can trigger generic actions
+   * (open modal/panel) or page through tiles.
+   */
+  headerActionConfig: PropTypes.shape({
+    type: PropTypes.oneOf(['icon-button', 'ghost-button']).isRequired, //, 'carousel'])
+
+    // Carbon IconButton variant
+    iconButton: PropTypes.shape({
+      icon: PropTypes.elementType.isRequired,
+      iconLabel: PropTypes.string.isRequired,
+      onClick: PropTypes.func.isRequired,
+      disabled: PropTypes.bool,
+      ariaLabel: PropTypes.string,
+      // Override Carbon IconButton props if needed
+      propsOverrides: PropTypes.object,
+    }),
+
+    // Carbon Ghost Button variant
+    ghostButton: PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      icon: PropTypes.elementType,
+      onClick: PropTypes.func.isRequired,
+      disabled: PropTypes.bool,
+      ariaLabel: PropTypes.string,
+      // Override Carbon Button props if needed
+      propsOverrides: PropTypes.object,
+    }),
+
+    // // Carousel pager variant (custom)
+    // carousel: PropTypes.shape({
+    //   page: PropTypes.number.isRequired,
+    //   total: PropTypes.number.isRequired,
+    //   onSelectPage: PropTypes.func.isRequired,
+    //   onStep: PropTypes.func,
+    //   renderLeading: PropTypes.node,
+    //   ariaLabel: PropTypes.string,
+    //   smartDisableArrows: PropTypes.bool,
+    //   // Optional style/prop overrides for the custom carousel wrapper
+    //   propsOverrides: PropTypes.object,
+    // }),
+  }),
 
   /**
    * In-product imagery / lottie animation (.json) dim. 1312 x 738

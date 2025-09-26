@@ -18,8 +18,10 @@ import {
   Sql,
   Term,
   Watsonx,
+  Settings,
 } from '@carbon/react/icons';
 import { TileGroup } from '../../components/AnimatedHeader/types';
+import type { HeaderActionConfig } from '../../components/HeaderAction/header-action.types';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
 
 export const workspaceData = [
@@ -331,3 +333,28 @@ export const workspaceSelectorConfigLoading = {
   setSelectedWorkspace: () => {},
   isLoading: true,
 };
+
+export const headerActionIcon: HeaderActionConfig = {
+  type: 'icon-button',
+  icon: Settings,
+  iconLabel: 'Open controls',
+  onClick: () => alert('Open any modal/panel'),
+};
+
+export const headerActionGhost: HeaderActionConfig = {
+  type: 'ghost-button',
+  icon: ArrowRight,
+  label: 'View all',
+  onClick: () => alert('Open “All tiles” modal/tearsheet'),
+};
+
+// export const makeHeaderActionCarousel = (
+//   page: number,
+//   total: number,
+//   onSelectPage: (p: number) => void
+// ): HeaderActionConfig => ({
+//   type: 'carousel',
+//   page,
+//   total,
+//   onSelectPage,
+// });

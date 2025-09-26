@@ -8,6 +8,7 @@
  */
 import AnimatedHeader from './components/AnimatedHeader/AnimatedHeader';
 import { AriaLabels, TileGroup } from './components/AnimatedHeader/types';
+import HeaderAction from './components/HeaderAction/HeaderAction';
 import HeaderTitle from './components/HeaderTitle/HeaderTitle';
 import { BaseTile } from './components/Tiles/index';
 export * from './assets';
@@ -20,6 +21,7 @@ export type { TasksControllerConfig } from './components/TasksController/TasksCo
 export {
   AnimatedHeader,
   BaseTile,
+  HeaderAction,
   HeaderTitle,
   type AriaLabels,
   type TileGroup,

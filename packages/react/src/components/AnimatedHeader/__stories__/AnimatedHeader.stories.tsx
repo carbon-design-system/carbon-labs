@@ -12,6 +12,7 @@ import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
 import { useArgs } from 'storybook/preview-api';
 import type { Meta } from '@storybook/react-webpack5';
 import '../components/animated-header.scss';
+import type { HeaderActionConfig } from '../components/HeaderAction/header-action.types';
 
 import {
   headerTiles,
@@ -22,6 +23,9 @@ import {
   tasksControllerConfigLoading,
   workspaceSelectorConfig,
   workspaceSelectorConfigLoading,
+  headerActionIcon,
+  headerActionGhost,
+  //makeHeaderActionCarousel,
 } from './data';
 import {
   dataFabricAnimatedLight,
@@ -241,6 +245,25 @@ const sharedArgTypes = {
     description: 'Specify custom collapse button label',
     type: 'string',
   },
+  headerActionType: {
+    description:
+      'Header action rendered to the left of “Collapse”. Choose an icon button, ghost button, or a future carousel that pages tiles.',
+    control: {
+      type: 'select',
+      labels: {
+        0: 'None',
+        1: 'Icon Button',
+        2: 'Ghost Button',
+      },
+    },
+    options: [0, 1, 2],
+  },
+  // // (Optional) Expose pager size if you want to tweak it from controls:
+  // headerActionTotalPages: {
+  //   description: 'Total pages for carousel pager',
+  //   control: { type: 'number', min: 1, step: 1 },
+  //   table: { category: 'Header action' },
+  // },
 };
 
 const sharedArgs = {
@@ -264,11 +287,15 @@ const sharedArgs = {
     expandButton: 'Expand header details',
     tilesContainer: 'Feature tiles list',
   },
+  headerActionType: 0,
+  //headerActionTotalPages: 3,
 };
 
 export const ThemeG10 = (args) => {
   const [_, updateArgs] = useArgs();
+  //const [pagerPage, setPagerPage] = React.useState(0);
 
+  // ----- Workspace select
   const handleWorkspaceSelect = (e) => {
     updateArgs({
       ...args,
@@ -279,7 +306,7 @@ export const ThemeG10 = (args) => {
     });
   };
 
-  // One handler that accepts either Dropdown event or a TileGroup directly
+  // ----- Tile group select (dropdown OR switcher)
   const handleTileGroupSelect = (eOrGroup) => {
     const next = (eOrGroup as any)?.selectedItem ?? eOrGroup;
     updateArgs({ ...args, selectedTileGroup: next });
@@ -300,7 +327,6 @@ export const ThemeG10 = (args) => {
         },
       };
     }
-
     if (tc.type === 'switcher') {
       return {
         ...tc,
@@ -313,10 +339,21 @@ export const ThemeG10 = (args) => {
         },
       };
     }
-
     return tc;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [args, updateArgs]);
+
+  // ----- Build headerActionConfig from control selection
+  const headerActionConfig: HeaderActionConfig | null = React.useMemo(() => {
+    const t = args.headerActionType;
+    if (t === 1) return headerActionIcon;
+    if (t === 2) return headerActionGhost;
+    // if (t === 3) {
+    //   const total = Number(args.headerActionTotalPages) || 1;
+    //   return makeHeaderActionCarousel(pagerPage, total, (p) => setPagerPage(p));
+    // }
+    return null;
+  }, [args.headerActionType]); //, args.headerActionTotalPages, pagerPage]);
 
   const argsWithSelectors = {
     ...args,
@@ -326,6 +363,11 @@ export const ThemeG10 = (args) => {
     },
     setSelectedTileGroup: handleTileGroupSelect,
     tasksControllerConfig: tasksControllerConfigInjected,
+    headerActionConfig: headerActionConfig ?? undefined,
+    // // If your tiles area will listen to page changes, pass these (optional):
+    // tilePage: pagerPage,
+    // tileTotalPages: args.headerActionTotalPages,
+    // onTilePageChange: setPagerPage,
   };
 
   return <AnimatedHeader {...argsWithSelectors} />;
@@ -336,7 +378,9 @@ ThemeG10.args = { headerAnimation: 3, ...sharedArgs };
 
 export const ThemeG100 = (args) => {
   const [_, updateArgs] = useArgs();
+  //const [pagerPage, setPagerPage] = React.useState(0);
 
+  // ----- Workspace select
   const handleWorkspaceSelect = (e) => {
     updateArgs({
       ...args,
@@ -347,6 +391,7 @@ export const ThemeG100 = (args) => {
     });
   };
 
+  // ----- Tile group select (dropdown OR switcher)
   const handleTileGroupSelect = (eOrGroup) => {
     const next = (eOrGroup as any)?.selectedItem ?? eOrGroup;
     updateArgs({ ...args, selectedTileGroup: next });
@@ -385,6 +430,18 @@ export const ThemeG100 = (args) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [args, updateArgs]);
 
+  // ----- Build headerActionConfig from control selection
+  const headerActionConfig: HeaderActionConfig | null = React.useMemo(() => {
+    const t = args.headerActionType;
+    if (t === 1) return headerActionIcon;
+    if (t === 2) return headerActionGhost;
+    // if (t === 3) {
+    //   const total = Number(args.headerActionTotalPages) || 1;
+    //   return makeHeaderActionCarousel(pagerPage, total, (p) => setPagerPage(p));
+    // }
+    return null;
+  }, [args.headerActionType]); //, args.headerActionTotalPages, pagerPage]);
+
   const argsWithSelectors = {
     ...args,
     workspaceSelectorConfig: {
@@ -393,6 +450,11 @@ export const ThemeG100 = (args) => {
     },
     setSelectedTileGroup: handleTileGroupSelect,
     tasksControllerConfig: tasksControllerConfigInjected,
+    headerActionConfig: headerActionConfig ?? undefined,
+    // // If your tiles area will listen to page changes, pass these (optional):
+    // tilePage: pagerPage,
+    // tileTotalPages: args.headerActionTotalPages,
+    // onTilePageChange: setPagerPage,
   };
 
   return <AnimatedHeader {...argsWithSelectors} />;

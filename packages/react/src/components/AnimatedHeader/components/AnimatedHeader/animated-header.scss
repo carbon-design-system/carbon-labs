@@ -273,6 +273,30 @@ body {
   margin: $spacing-08 0 $spacing-05 0;
 }
 
+.#{$prefix}__header-switcher--container {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  inline-size: max-content;
+  isolation: isolate;
+}
+
+.#{$prefix}__header-switcher--container::before {
+  position: absolute;
+  border-radius: inherit;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  content: '';
+  inset: 0;
+  pointer-events: none;
+}
+
+.#{$prefix}__header-switcher {
+  position: relative;
+  z-index: 1;
+}
+
 .#{$prefix}__content {
   z-index: 2;
   display: flex;

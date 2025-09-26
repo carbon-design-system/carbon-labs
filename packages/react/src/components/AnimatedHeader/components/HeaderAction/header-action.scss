@@ -1,0 +1,76 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/react/scss/theme' as *;
+
+$prefix: 'clabs--animated-header__header-action' !default;
+
+.#{$prefix} {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-05;
+  min-block-size: 2.5rem;
+
+  &::after {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    background-color: $border-subtle;
+    block-size: $spacing-06;
+    content: '';
+    inline-size: 0.0625rem;
+    inset-inline-end: 0;
+  }
+}
+
+// .#{$prefix}__carousel {
+//   &-leading {
+//     margin-inline-end: $spacing-05;
+//     @include type-style('body-compact-02');
+//   }
+
+//   &-pager {
+//     display: inline-flex;
+//     align-items: center;
+//     gap: $spacing-04;
+//   }
+
+//   &-dots {
+//     display: inline-flex;
+//     padding: 0;
+//     margin: 0 $spacing-02;
+//     gap: $spacing-03;
+//     list-style: none;
+//   }
+
+//   &-dot {
+//     border: 0;
+//     border-radius: 999px;
+//     background: $icon-on-color-disabled;
+//     block-size: 8px;
+//     cursor: pointer;
+//     inline-size: 8px;
+
+//     &:focus-visible {
+//       outline: 2px solid $focus;
+//       outline-offset: 2px;
+//     }
+
+//     &[data-expanded='true'] {
+//       background: $icon-primary;
+//     }
+
+//     &[data-expanded='false'] {
+//       background: $icon-on-color-disabled;
+//     }
+//   }
+// }

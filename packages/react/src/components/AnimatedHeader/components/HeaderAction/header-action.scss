@@ -30,47 +30,8 @@ $prefix: 'clabs--animated-header__header-action' !default;
     inline-size: 0.0625rem;
     inset-inline-end: 0;
   }
+
+  button.cds--btn {
+    z-index: 3;
+  }
 }
-
-// .#{$prefix}__carousel {
-//   &-leading {
-//     margin-inline-end: $spacing-05;
-//     @include type-style('body-compact-02');
-//   }
-
-//   &-pager {
-//     display: inline-flex;
-//     align-items: center;
-//     gap: $spacing-04;
-//   }
-
-//   &-dots {
-//     display: inline-flex;
-//     padding: 0;
-//     margin: 0 $spacing-02;
-//     gap: $spacing-03;
-//     list-style: none;
-//   }
-
-//   &-dot {
-//     border: 0;
-//     border-radius: 999px;
-//     background: $icon-on-color-disabled;
-//     block-size: 8px;
-//     cursor: pointer;
-//     inline-size: 8px;
-
-//     &:focus-visible {
-//       outline: 2px solid $focus;
-//       outline-offset: 2px;
-//     }
-
-//     &[data-expanded='true'] {
-//       background: $icon-primary;
-//     }
-
-//     &[data-expanded='false'] {
-//       background: $icon-on-color-disabled;
-//     }
-//   }
-// }

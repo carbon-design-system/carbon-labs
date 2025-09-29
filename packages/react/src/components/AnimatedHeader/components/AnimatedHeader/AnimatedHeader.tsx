@@ -332,7 +332,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * (open modal/panel) or page through tiles.
    */
   headerActionConfig: PropTypes.shape({
-    type: PropTypes.oneOf(['icon-button', 'ghost-button']).isRequired, //, 'carousel'])
+    type: PropTypes.oneOf(['icon-button', 'ghost-button']).isRequired,
 
     // Carbon IconButton variant
     iconButton: PropTypes.shape({
@@ -355,19 +355,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
       // Override Carbon Button props if needed
       propsOverrides: PropTypes.object,
     }),
-
-    // // Carousel pager variant (custom)
-    // carousel: PropTypes.shape({
-    //   page: PropTypes.number.isRequired,
-    //   total: PropTypes.number.isRequired,
-    //   onSelectPage: PropTypes.func.isRequired,
-    //   onStep: PropTypes.func,
-    //   renderLeading: PropTypes.node,
-    //   ariaLabel: PropTypes.string,
-    //   smartDisableArrows: PropTypes.bool,
-    //   // Optional style/prop overrides for the custom carousel wrapper
-    //   propsOverrides: PropTypes.object,
-    // }),
   }),
 
   /**

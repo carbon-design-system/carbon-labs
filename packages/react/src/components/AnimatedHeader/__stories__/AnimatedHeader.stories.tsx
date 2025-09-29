@@ -245,7 +245,7 @@ const sharedArgTypes = {
     description: 'Specify custom collapse button label',
     type: 'string',
   },
-  headerActionType: {
+  headerActionConfig: {
     description:
       'Header action rendered to the left of “Collapse”. Choose an icon button, ghost button, or a future carousel that pages tiles.',
     control: {
@@ -258,12 +258,6 @@ const sharedArgTypes = {
     },
     options: [0, 1, 2],
   },
-  // // (Optional) Expose pager size if you want to tweak it from controls:
-  // headerActionTotalPages: {
-  //   description: 'Total pages for carousel pager',
-  //   control: { type: 'number', min: 1, step: 1 },
-  //   table: { category: 'Header action' },
-  // },
 };
 
 const sharedArgs = {
@@ -287,13 +281,11 @@ const sharedArgs = {
     expandButton: 'Expand header details',
     tilesContainer: 'Feature tiles list',
   },
-  headerActionType: 0,
-  //headerActionTotalPages: 3,
+  headerActionConfig: 1,
 };
 
 export const ThemeG10 = (args) => {
   const [_, updateArgs] = useArgs();
-  //const [pagerPage, setPagerPage] = React.useState(0);
 
   // ----- Workspace select
   const handleWorkspaceSelect = (e) => {
@@ -344,16 +336,14 @@ export const ThemeG10 = (args) => {
   }, [args, updateArgs]);
 
   // ----- Build headerActionConfig from control selection
-  const headerActionConfig: HeaderActionConfig | null = React.useMemo(() => {
-    const t = args.headerActionType;
-    if (t === 1) return headerActionIcon;
-    if (t === 2) return headerActionGhost;
-    // if (t === 3) {
-    //   const total = Number(args.headerActionTotalPages) || 1;
-    //   return makeHeaderActionCarousel(pagerPage, total, (p) => setPagerPage(p));
-    // }
-    return null;
-  }, [args.headerActionType]); //, args.headerActionTotalPages, pagerPage]);
+  const handleHeaderActionConfig: HeaderActionConfig | null =
+    React.useMemo(() => {
+      const t = args.headerActionConfig;
+      if (t === 1) return headerActionIcon;
+      if (t === 2) return headerActionGhost;
+
+      return null;
+    }, [args.headerActionConfig]);
 
   const argsWithSelectors = {
     ...args,
@@ -363,11 +353,7 @@ export const ThemeG10 = (args) => {
     },
     setSelectedTileGroup: handleTileGroupSelect,
     tasksControllerConfig: tasksControllerConfigInjected,
-    headerActionConfig: headerActionConfig ?? undefined,
-    // // If your tiles area will listen to page changes, pass these (optional):
-    // tilePage: pagerPage,
-    // tileTotalPages: args.headerActionTotalPages,
-    // onTilePageChange: setPagerPage,
+    headerActionConfig: handleHeaderActionConfig ?? undefined,
   };
 
   return <AnimatedHeader {...argsWithSelectors} />;
@@ -378,7 +364,6 @@ ThemeG10.args = { headerAnimation: 3, ...sharedArgs };
 
 export const ThemeG100 = (args) => {
   const [_, updateArgs] = useArgs();
-  //const [pagerPage, setPagerPage] = React.useState(0);
 
   // ----- Workspace select
   const handleWorkspaceSelect = (e) => {
@@ -431,16 +416,13 @@ export const ThemeG100 = (args) => {
   }, [args, updateArgs]);
 
   // ----- Build headerActionConfig from control selection
-  const headerActionConfig: HeaderActionConfig | null = React.useMemo(() => {
-    const t = args.headerActionType;
-    if (t === 1) return headerActionIcon;
-    if (t === 2) return headerActionGhost;
-    // if (t === 3) {
-    //   const total = Number(args.headerActionTotalPages) || 1;
-    //   return makeHeaderActionCarousel(pagerPage, total, (p) => setPagerPage(p));
-    // }
-    return null;
-  }, [args.headerActionType]); //, args.headerActionTotalPages, pagerPage]);
+  const handleHeaderActionConfig: HeaderActionConfig | null =
+    React.useMemo(() => {
+      const t = args.headerActionConfig;
+      if (t === 1) return headerActionIcon;
+      if (t === 2) return headerActionGhost;
+      return null;
+    }, [args.headerActionConfig]);
 
   const argsWithSelectors = {
     ...args,
@@ -450,11 +432,7 @@ export const ThemeG100 = (args) => {
     },
     setSelectedTileGroup: handleTileGroupSelect,
     tasksControllerConfig: tasksControllerConfigInjected,
-    headerActionConfig: headerActionConfig ?? undefined,
-    // // If your tiles area will listen to page changes, pass these (optional):
-    // tilePage: pagerPage,
-    // tileTotalPages: args.headerActionTotalPages,
-    // onTilePageChange: setPagerPage,
+    headerActionConfig: handleHeaderActionConfig ?? undefined,
   };
 
   return <AnimatedHeader {...argsWithSelectors} />;

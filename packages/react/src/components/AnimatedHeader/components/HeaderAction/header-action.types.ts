@@ -28,24 +28,7 @@ export type HeaderActionGhost = Base & {
   disabled?: boolean;
 };
 
-// export type HeaderActionCarouselItem = {
-//   id: string;
-//   label: string;
-// };
-
-// export type HeaderActionCarousel = Base & {
-//   type: 'carousel';
-//   page: number;
-//   total: number;
-//   onSelectPage: (page: number) => void;
-//   onStep?: (direction: -1 | 1, nextPage: number) => void;
-//   renderLeading?: ReactNode;
-//   /** Hide arrows if total ≤ 1 (default true) */
-//   smartDisableArrows?: boolean;
-// };
-
 export type HeaderActionConfig = HeaderActionIcon | HeaderActionGhost;
-//| HeaderActionCarousel;
 
 export type HeaderActionProps = {
   headerActionConfig?: HeaderActionConfig | null;

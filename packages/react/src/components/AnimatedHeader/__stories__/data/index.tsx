@@ -25,18 +25,9 @@ import type { HeaderActionConfig } from '../../components/HeaderAction/header-ac
 import SampleCustomTaskContent from './SampleCustomTaskContent';
 
 export const workspaceData = [
-  {
-    id: 'workspace-1',
-    label: 'Workspace 1',
-  },
-  {
-    id: 'workspace-2',
-    label: 'Workspace 2',
-  },
-  {
-    id: 'workspace-3',
-    label: 'Workspace 3',
-  },
+  { id: 'workspace-1', label: 'Workspace 1' },
+  { id: 'workspace-2', label: 'Workspace 2' },
+  { id: 'workspace-3', label: 'Workspace 3' },
 ];
 
 export const headerTiles: TileGroup[] = [
@@ -47,7 +38,6 @@ export const headerTiles: TileGroup[] = [
       {
         tileId: 'tile-1',
         variant: 'aiPrompt',
-        //id: 'ai-tile', // Back-compat
         href: '#',
         title: 'Short description of the type of prompt',
         primaryIcon: Term,
@@ -291,31 +281,35 @@ export const tasksControllerConfigDropdown = {
   },
 };
 
-export const tasksControllerConfigContentSwitcher2 = {
-  type: 'switcher',
-  switcher: {
-    allTileGroups: headerTiles,
-    selectedTileGroup: headerTiles[0],
-    setSelectedTileGroup: () => {},
-    visibleCount: 2,
-    ariaLabel: 'Header actions',
-  },
-};
-
-export const tasksControllerConfigContentSwitcher3 = {
-  type: 'switcher',
-  switcher: {
-    allTileGroups: headerTiles,
-    selectedTileGroup: headerTiles[0],
-    setSelectedTileGroup: () => {},
-    visibleCount: 3,
-    ariaLabel: 'Header actions',
-  },
-};
-
 export const tasksControllerConfigLoading = {
   type: 'none',
   isLoading: true,
+};
+
+export const contentSwitcherConfigTwo = {
+  ariaLabel: 'Content switcher actions',
+  visibleCount: 2,
+  items: [
+    { id: 'opt-0', text: headerTiles[0].label },
+    { id: 'opt-1', text: headerTiles[1].label },
+  ],
+};
+
+export const contentSwitcherConfigThree = {
+  ariaLabel: 'Content switcher actions',
+  visibleCount: 3,
+  items: [
+    { id: 'opt-0', text: headerTiles[0].label },
+    { id: 'opt-1', text: headerTiles[1].label },
+    { id: 'opt-2', text: headerTiles[2].label },
+  ],
+};
+
+export const contentSwitcherConfigLoading = {
+  ariaLabel: 'Header actions',
+  isLoading: true,
+  visibleCount: 2,
+  items: [],
 };
 
 export const workspaceSelectorConfig = {
@@ -347,14 +341,3 @@ export const headerActionGhost: HeaderActionConfig = {
   label: 'View all',
   onClick: () => alert('Open “All tiles” modal/tearsheet'),
 };
-
-// export const makeHeaderActionCarousel = (
-//   page: number,
-//   total: number,
-//   onSelectPage: (p: number) => void
-// ): HeaderActionConfig => ({
-//   type: 'carousel',
-//   page,
-//   total,
-//   onSelectPage,
-// });

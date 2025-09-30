@@ -273,7 +273,7 @@ body {
   margin: $spacing-08 0 $spacing-05 0;
 }
 
-.#{$prefix}__header-switcher--container {
+.#{$prefix}__content-switcher--container {
   position: relative;
   z-index: 2;
   display: inline-flex;
@@ -282,7 +282,7 @@ body {
   isolation: isolate;
 }
 
-.#{$prefix}__header-switcher--container::before {
+.#{$prefix}__content-switcher--container::before {
   position: absolute;
   border-radius: inherit;
   -webkit-backdrop-filter: blur(3px);
@@ -292,9 +292,22 @@ body {
   pointer-events: none;
 }
 
-.#{$prefix}__header-switcher {
+.#{$prefix}__content-switcher {
   position: relative;
   z-index: 1;
+}
+
+.#{$prefix}__content-switcher-skeleton {
+  background: $layer-01;
+  block-size: $spacing-08;
+  inline-size: 27rem;
+  max-inline-size: 18rem;
+
+  opacity: 0.7;
+}
+
+.#{$prefix}__content-switcher-skeleton::before {
+  background: $layer-02;
 }
 
 .#{$prefix}__content {

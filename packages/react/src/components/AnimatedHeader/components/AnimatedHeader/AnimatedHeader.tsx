@@ -21,6 +21,9 @@ import WorkspaceSelector, {
 } from '../WorkspaceSelector/WorkspaceSelector';
 import HeaderTitle from '../HeaderTitle/HeaderTitle';
 import { Tile, TileGroup, AriaLabels } from './types';
+import ContentSwitcherSelector, {
+  type ContentSwitcherConfig,
+} from '../ContentSwitcherSelector/ContentSwitcherSelector';
 import HeaderAction from '../HeaderAction/HeaderAction';
 import type { HeaderActionProps } from '../HeaderAction/header-action.types';
 
@@ -31,6 +34,7 @@ export type AnimatedHeaderProps = {
   ariaLabels?: AriaLabels;
   selectedTileGroup?: TileGroup;
   setSelectedTileGroup?: (e) => void;
+  contentSwitcherConfig?: ContentSwitcherConfig;
   description?: string;
   headerAnimation?: object;
   headerStatic?: React.JSX.Element | string;
@@ -42,9 +46,6 @@ export type AnimatedHeaderProps = {
   expandButtonLabel?: string;
   collapseButtonLabel?: string;
   tileClickHandler?: (tile: Tile) => void;
-  // tilePage?: number;
-  // tileTotalPages?: number;
-  // onTilePageChange?: (page: number) => void;
 } & TasksControllerProps &
   WorkspaceSelectorProps &
   HeaderActionProps;
@@ -60,6 +61,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   productName = '[Product name]',
   userName,
   welcomeText,
+  contentSwitcherConfig,
   headerActionConfig,
   tasksControllerConfig,
   workspaceSelectorConfig,
@@ -76,9 +78,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const animRef = useRef<AnimationItem | null>(null);
   const [isOpen, setIsOpen] = useState(true);
   const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
-  const isSwitcher =
-    tasksControllerConfig?.type === 'switcher' &&
-    tasksControllerConfig?.switcher;
 
   const handleButtonCollapseClick = () => {
     setIsOpen(!isOpen);
@@ -174,17 +173,14 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             />
 
             {/* When using the ContentSwitcher, render it here (top row) */}
-            {isSwitcher && (
+            {contentSwitcherConfig ? (
               <div className={`${blockClass}__actions`}>
-                <TasksController
-                  tasksControllerConfig={tasksControllerConfig}
-                  isLoading={isLoading}
-                  allTileGroups={allTileGroups}
-                  selectedTileGroup={selectedTileGroup}
-                  setSelectedTileGroup={setSelectedTileGroup}
+                <ContentSwitcherSelector
+                  contentSwitcherConfig={contentSwitcherConfig}
+                  isLoading={isLoading || contentSwitcherConfig.isLoading}
                 />
               </div>
-            )}
+            ) : null}
           </div>
         </Column>
 
@@ -203,9 +199,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                 {description}
               </h2>
             )}
-
-            {/* Keep button/dropdown down here; hide when switcher mode */}
-            {!isSwitcher && (
+            {tasksControllerConfig && (
               <TasksController
                 tasksControllerConfig={tasksControllerConfig}
                 isLoading={isLoading}
@@ -317,6 +311,25 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   collapseButtonLabel: PropTypes.string,
 
   /**
+   *  Configuration for Carbon Content Switcher in header.
+   * Customized tasks are used to allow users that have multiple roles and
+   * permissions to experience better tailored content based on their need.
+   */
+  contentSwitcherConfig: PropTypes.shape({
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        text: PropTypes.string.isRequired,
+        onSelect: PropTypes.func,
+      }).isRequired
+    ).isRequired,
+    ariaLabel: PropTypes.string,
+    isLoading: PropTypes.bool,
+    visibleCount: PropTypes.oneOf([2, 3]),
+    onChange: PropTypes.func,
+  }),
+
+  /**
    * Provide short sentence in max. 3 lines related to product context
    */
   description: PropTypes.string,
@@ -391,12 +404,12 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   setSelectedTileGroup: PropTypes.func,
 
   /**
-   * Configuration for Carbon button / dropdown / content switcher in header.
+   * Configuration for Carbon button / dropdown in header.
    * Customized tasks are used to allow users that have multiple roles and
    * permissions to experience better tailored content based on their need.
    */
   tasksControllerConfig: PropTypes.shape({
-    type: PropTypes.oneOf(['button', 'dropdown', 'switcher']).isRequired,
+    type: PropTypes.oneOf(['button', 'dropdown']).isRequired,
     isLoading: PropTypes.bool,
 
     button: PropTypes.shape({
@@ -409,13 +422,6 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
       label: PropTypes.string,
       ariaLabel: PropTypes.string,
       // Override Carbon Dropdown props
-      propsOverrides: PropTypes.object,
-    }),
-
-    switcher: PropTypes.shape({
-      visibleCount: PropTypes.oneOf([2, 3]),
-      ariaLabel: PropTypes.string,
-      // Override Carbon ContentSwitcher props
       propsOverrides: PropTypes.object,
     }),
   }),

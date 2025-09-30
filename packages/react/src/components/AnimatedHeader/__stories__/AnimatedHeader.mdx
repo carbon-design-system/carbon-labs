@@ -38,7 +38,7 @@ import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
   - [Tasks Controller](#tasks-controller)
     - [Button](#button)
     - [Dropdown](#dropdown)
-    - [Content Switcher](#content-switcher-new)
+  - [Content Switcher](#content-switcher)
   - [Header Action](#header-action)
     - [Icon Button](#icon-button)
     - [Ghost Button](#ghost-button)
@@ -46,7 +46,7 @@ import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
   - [Accessibility](#accessibility)
     - [Tile ARIA Labels](#tile-aria-labels)
     - [Tasks Dropdown ARIA Label](#tasks-dropdown-aria-label)
-    - [Tasks Content Switcher ARIA Label](#tasks-content-switcher-aria-label)
+    - [Content Switcher ARIA Label](#content-switcher-aria-label)
     - [Workspace Selector ARIA Label](#workspace-selector-aria-label)
     - [Header Action ARIA Label](#header-action-aria-label)
     - [Additional ARIA Labels](#additional-aria-labels)
@@ -97,9 +97,12 @@ highest contrast to the background.
 **Tasks Controller placement:**
 
 - **Dropdown / Button** render in the **left column** under the description.
-- **Content Switcher** renders **inline in the title row**, aligned to the right
-  of “Welcome, {`user`}” on medium+ viewports (default styles). You can override
-  placement with custom styles if needed.
+
+**Content Switcher placement:**
+
+- Renders **inline in the title row**, aligned to the right of “Welcome,
+  {`user`} on medium+ viewports (default styles). You can override placement
+  with custom styles if needed.
 
 **Header Action placement:**
 
@@ -285,13 +288,11 @@ Example migration:
 ### Tasks Controller
 
 The Tasks Controller appears in the header to help users quickly switch
-contexts. You can render it as a **Button**, a **Dropdown**, or a **Content
-Switcher**.
+contexts. You can render it as a **Button** or a **Dropdown**.
 
 > **Placement**
 >
 > - **Dropdown / Button**: left column under the description.
-> - **Content Switcher**: top row, aligned with the welcome title (right side).
 
 #### Button
 
@@ -324,27 +325,35 @@ export const tasksControllerConfigDropdown = {
 };
 ```
 
-#### Content Switcher
+---
 
-The Content Switcher renders 2 or 3 segments that switch the active tile group.
-It mirrors the dropdown API and updates `selectedTileGroup`.
+### Content Switcher
+
+The **Content Switcher** renders **2 or 3** segments and is placed in the top
+title row on medium+ viewports.
 
 - `visibleCount`: **2 or 3** (defaults to 2).
-- If fewer than 2 items are available, the switcher will not render.
-- By default we take the **first `visibleCount` groups** from `allTileGroups`.
+- Provide exactly **2 or 3** `items`. If fewer than 2 are available, it won’t
+  render.
+- Use `onSelect` per item to update the active `selectedTileGroup` in your app.
 
 ```tsx
-export const tasksControllerConfigContentSwitcher = {
-  type: 'switcher',
-  switcher: {
-    allTileGroups: headerTiles,
-    selectedTileGroup: headerTiles[0],
-    setSelectedTileGroup: (group) => {
-      // Updates which tiles render in the header
+const contentSwitcherConfig = {
+  ariaLabel: 'Content switcher actions',
+  visibleCount: 2,
+  selectedIndex: 0, // optional; defaults to 0 (safe-bounded)
+  items: [
+    {
+      id: 'opt-0',
+      text: headerTiles[0].label,
+      onSelect: () => setSelectedTileGroup(headerTiles[0]),
     },
-    visibleCount: 2,
-    ariaLabel: 'Header actions',
-  },
+    {
+      id: 'opt-1',
+      text: headerTiles[1].label,
+      onSelect: () => setSelectedTileGroup(headerTiles[1]),
+    },
+  ],
 };
 ```
 
@@ -458,18 +467,24 @@ export const tasksControllerConfigDropdown = {
 };
 ```
 
-#### Tasks Content Switcher ARIA Label
+#### Content Switcher ARIA Label
 
 ```jsx
-export const tasksControllerConfigContentSwitcher = {
-  type: 'switcher',
-  switcher: {
-    allTileGroups: headerTiles,
-    selectedTileGroup: headerTiles[0],
-    setSelectedTileGroup: () => {},
-    visibleCount: 2,
-    ariaLabel: 'Header actions', // ✅ aria-label defined here
-  },
+export const contentSwitcherConfig = {
+  ariaLabel: 'Content switcher actions', // ✅ aria-label defined here
+  visibleCount: 2,
+  items: [
+    {
+      id: 'opt-0',
+      text: headerTiles[0].label,
+      onSelect: () => setSelectedTileGroup(headerTiles[0]),
+    },
+    {
+      id: 'opt-1',
+      text: headerTiles[1].label,
+      onSelect: () => setSelectedTileGroup(headerTiles[1]),
+    },
+  ],
 };
 ```
 
@@ -572,13 +587,14 @@ Example of Animated Header with all prop types enabled.
   description="Connect, monitor, and manage data."
   welcomeText="Welcome"
   userName="Drew"
-  ariaLabels={ariaLabelsConfig as AriaLabels}
+  ariaLabels={ariaLabels as AriaLabels}
   headerAnimation={watsonXAnimatedLight}
   headerStatic={watsonXStaticLight}
   allTileGroups={tiles}
   selectedTileGroup={selectedTile}
   workspaceSelectorConfig={workspaceSelectorConfig}
   tasksControllerConfig={tasksControllerConfigDropdown as TasksControllerConfig}
+  contentSwitcherConfig={contentSwitcherConfig}
   headerActionConfig={headerActionGhostConfig}
   isLoading={false}
   tileClickHandler={handleTileClicks}

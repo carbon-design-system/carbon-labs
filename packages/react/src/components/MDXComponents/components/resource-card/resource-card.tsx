@@ -13,7 +13,7 @@ import {
   Email,
   Error,
   Launch,
-} from '@carbon/react/icons';
+} from '@carbon/react/icons/index.js';
 import { clsx } from 'clsx';
 import PropTypes from 'prop-types';
 import React, { ReactNode } from 'react';

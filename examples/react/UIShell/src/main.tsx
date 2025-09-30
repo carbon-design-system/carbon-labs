@@ -14,7 +14,6 @@ import { routes } from './config/routes';
 
 import './index.scss';
 import { HeaderExample } from './components/HeaderExample';
-import { Content, Theme } from '@carbon/react';
 
 // Relying on React to render - non outlet version
 // ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -33,14 +32,9 @@ import { Content, Theme } from '@carbon/react';
 
 // With outlet
 const Layout = () => (
-  <Theme theme="g100">
-    <HeaderExample>
-      {/* Theme can go here for an outlet, must be just after header */}
-      <Theme as={Content} theme="white">
-        <Outlet />
-      </Theme>
-    </HeaderExample>
-  </Theme>
+  <HeaderExample>
+    <Outlet />
+  </HeaderExample>
 );
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

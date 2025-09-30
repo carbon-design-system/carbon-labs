@@ -3,6 +3,131 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.65.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.64.0...@carbon-labs/web-components@0.65.0) (2025-09-26)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.64.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.63.0...@carbon-labs/web-components@0.64.0) (2025-09-24)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.63.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.62.0...@carbon-labs/web-components@0.63.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **mdx-components:** update package entrypoint ([#811](https://github.com/carbon-design-system/carbon-labs/issues/811)) ([763d680](https://github.com/carbon-design-system/carbon-labs/commit/763d6803e47446cbd336dec9a5be75afde23f6e7))
+
+
+
+
+
+# [0.62.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.61.0...@carbon-labs/web-components@0.62.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **style-picker:** update types import ([#808](https://github.com/carbon-design-system/carbon-labs/issues/808)) ([4ae43bf](https://github.com/carbon-design-system/carbon-labs/commit/4ae43bf93eba1c66f08b1836e7f640a61593e77c))
+
+
+
+
+
+# [0.61.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.60.0...@carbon-labs/web-components@0.61.0) (2025-09-17)
+
+
+### Features
+
+* **wc-global-header:** Contribute new Global Header component ([#774](https://github.com/carbon-design-system/carbon-labs/issues/774)) ([e8b4677](https://github.com/carbon-design-system/carbon-labs/commit/e8b4677780d68f8ccf02860e327fcaa1d7a3c833))
+
+
+
+
+
+# [0.60.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.59.0...@carbon-labs/web-components@0.60.0) (2025-09-16)
+
+
+### Bug Fixes
+
+* stylepicker replace icons ([#806](https://github.com/carbon-design-system/carbon-labs/issues/806)) ([b8583ad](https://github.com/carbon-design-system/carbon-labs/commit/b8583ad57d6721642a3a9b9a99782953cc62cd3b))
+
+
+
+
+
+# [0.59.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.58.0...@carbon-labs/web-components@0.59.0) (2025-09-16)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.58.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.57.0...@carbon-labs/web-components@0.58.0) (2025-09-12)
+
+
+### Features
+
+* react StylePicker ([#770](https://github.com/carbon-design-system/carbon-labs/issues/770)) ([9115d5b](https://github.com/carbon-design-system/carbon-labs/commit/9115d5b27818171f85bab12983a7d771437e6485))
+
+
+
+
+
+# [0.57.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.56.0...@carbon-labs/web-components@0.57.0) (2025-09-12)
+
+
+### Bug Fixes
+
+* firstTimeOrientation restore changes to check build issue ([#797](https://github.com/carbon-design-system/carbon-labs/issues/797)) ([bf854be](https://github.com/carbon-design-system/carbon-labs/commit/bf854be6a5e28288cd96b8e05de3ba582435d2e6))
+
+
+
+
+
+# [0.56.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.55.0...@carbon-labs/web-components@0.56.0) (2025-09-11)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.55.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.54.0...@carbon-labs/web-components@0.55.0) (2025-09-10)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.54.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.53.0...@carbon-labs/web-components@0.54.0) (2025-09-10)
+
+
+### Bug Fixes
+
+* **style-picker:** improve accessibility ([#746](https://github.com/carbon-design-system/carbon-labs/issues/746)) ([a1d84c0](https://github.com/carbon-design-system/carbon-labs/commit/a1d84c0fe28c7b2caeebd99957eb256d48665a9f))
+
+
+
+
+
+# [0.53.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.52.0...@carbon-labs/web-components@0.53.0) (2025-09-10)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
 # [0.52.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.51.0...@carbon-labs/web-components@0.52.0) (2025-09-08)
 
 **Note:** Version bump only for package @carbon-labs/web-components

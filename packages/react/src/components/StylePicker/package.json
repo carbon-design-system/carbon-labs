@@ -1,0 +1,44 @@
+{
+  "name": "@carbon-labs/react-style-picker",
+  "version": "0.4.0",
+  "author": "Your Name <your@email.com>",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "description": "Carbon Labs - Style Picker",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "src/components/StylePicker"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rimraf es lib scss"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "canary",
+    "@lit/react": "^1.0.1"
+  },
+  "dependencies": {
+    "@carbon-labs/wc-style-picker": "workspace:^"
+  }
+}

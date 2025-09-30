@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: 0a1bd1db2-dbe9-49bc-9ba9-8a7debf5b76a
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  wc:
+    elements:
+      allowedAttributeNames:
+        # clabs-empty-state
+        - illustrationTheme
+        - kind
+        - size
+        - subtitle
+        - title
+      allowedAttributeStringValues:
+        # General - boolean attributes
+        - "true"
+        - "false"
+        # clabs-empty-state - illustrationTheme
+        - dark
+        - light
+        # clabs-empty-state - kind
+        - error
+        - noData
+        - noTags
+        - notFound
+        - notifications
+        - unauthorized
+        # clabs-empty-state - size
+        - lg
+        - sm
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/web-components",
-  "version": "0.52.0",
+  "version": "0.65.0",
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",
@@ -33,13 +33,15 @@
   },
   "devDependencies": {
     "@carbon/grid": "^11.41.0",
-    "@carbon/icon-helpers": "10.64.0",
-    "@carbon/icons": "11.66.0",
+    "@carbon/ibm-products-web-components": "^0.23.0",
+    "@carbon/icon-helpers": "10.65.0",
+    "@carbon/icons": "11.67.0",
     "@carbon/layout": "11.39.0",
-    "@carbon/motion": "11.33.0",
+    "@carbon/motion": "11.35.0",
     "@carbon/pictograms": "^12.58.0",
     "@carbon/themes": "11.58.0",
     "@carbon/type": "11.45.0",
+    "@carbon/web-components": "2.36.0",
     "@custom-elements-manifest/analyzer": "^0.10.0",
     "@lit/react": "^1.0.1",
     "@open-wc/testing": "^4.0.0",
@@ -62,6 +64,8 @@
     "cssnano": "^7.0.0",
     "gitignore-to-glob": "^0.3.0",
     "lerna": "^8.2.3",
+    "msw": "^2.10.5",
+    "msw-storybook-addon": "^2.0.5",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -73,5 +77,10 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
     "vite-plugin-lit-css": "^2.1.0"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

@@ -24,14 +24,24 @@ import {
 import {
   dataFabricAnimatedLight,
   dataFabricAnimatedDark,
-  dataFabricStaticLight,
-  dataFabricStaticDark,
+  db2AnimatedLight,
+  db2AnimatedDark,
   watsonXAnimatedLight,
   watsonXAnimatedDark,
-  watsonXStaticLight,
-  watsonXStaticDark,
+  watsonXAAnimatedLight,
+  watsonXAAnimatedDark,
   wxbiaAnimatedLight,
   wxbiaAnimatedDark,
+  dataFabricStaticLight,
+  dataFabricStaticDark,
+  db2StaticLight,
+  db2StaticDark,
+  watsonXStaticLight,
+  watsonXStaticDark,
+  watsonXAStaticLight,
+  watsonXAStaticDark,
+  wxbiaStaticLight,
+  wxbiaStaticDark,
 } from '../assets';
 
 const meta: Meta<typeof AnimatedHeader> = {
@@ -72,21 +82,29 @@ const sharedArgTypes = {
         0: 'None',
         1: 'data fabric (light theme)',
         2: 'data fabric (dark theme)',
-        3: 'watsonx (light theme)',
-        4: 'watsonx (dark theme)',
-        5: 'wxbia (light theme)',
-        6: 'wxbia (dark theme)',
+        3: 'db2 (light theme)',
+        4: 'db2 (dark theme)',
+        5: 'watsonx.data (light theme)',
+        6: 'watsonx.data (dark theme)',
+        7: 'watsonx (light theme)',
+        8: 'watsonx (dark theme)',
+        9: 'wxbia (light theme)',
+        10: 'wxbia (dark theme)',
       },
     },
-    options: [0, 1, 2, 3, 4, 5, 6],
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     mapping: {
       0: null,
       1: dataFabricAnimatedLight,
       2: dataFabricAnimatedDark,
-      3: watsonXAnimatedLight,
-      4: watsonXAnimatedDark,
-      5: wxbiaAnimatedLight,
-      6: wxbiaAnimatedDark,
+      3: db2AnimatedLight,
+      4: db2AnimatedDark,
+      5: watsonXAnimatedLight,
+      6: watsonXAnimatedDark,
+      7: watsonXAAnimatedLight,
+      8: watsonXAAnimatedDark,
+      9: wxbiaAnimatedLight,
+      10: wxbiaAnimatedDark,
     },
   },
   headerStatic: {
@@ -97,19 +115,31 @@ const sharedArgTypes = {
       type: 'select',
       labels: {
         0: 'None',
-        1: 'watsonx (light theme)',
-        2: 'watsonx (dark theme)',
-        3: 'data fabric (light theme)',
-        4: 'data fabric (dark theme)',
+        1: 'data fabric (light theme)',
+        2: 'data fabric (dark theme)',
+        3: 'db2 (light theme)',
+        4: 'db2 (dark theme)',
+        5: 'watsonx.data (light theme)',
+        6: 'watsonx.data (dark theme)',
+        7: 'watsonx (light theme)',
+        8: 'watsonx (dark theme)',
+        9: 'wxbia (light theme)',
+        10: 'wxbia (dark theme)',
       },
     },
-    options: [0, 1, 2, 3, 4],
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     mapping: {
       0: null,
-      1: watsonXStaticLight,
-      2: watsonXStaticDark,
-      3: dataFabricStaticLight,
-      4: dataFabricStaticDark,
+      1: dataFabricStaticLight,
+      2: dataFabricStaticDark,
+      3: db2StaticLight,
+      4: db2StaticDark,
+      5: watsonXStaticLight,
+      6: watsonXStaticDark,
+      7: watsonXAStaticLight,
+      8: watsonXAStaticDark,
+      9: wxbiaStaticLight,
+      10: wxbiaStaticDark,
     },
   },
   productName: {
@@ -133,9 +163,10 @@ const sharedArgTypes = {
         5: headerTiles[4].label,
         6: headerTiles[5].label,
         7: headerTiles[6].label,
+        8: headerTiles[7].label,
       },
     },
-    options: [0, 1, 2, 3, 4, 5, 6, 7],
+    options: [0, 1, 2, 3, 4, 5, 6, 7, 8],
     mapping: {
       0: null,
       1: headerTiles[0],
@@ -145,6 +176,7 @@ const sharedArgTypes = {
       5: headerTiles[4],
       6: headerTiles[5],
       7: headerTiles[6],
+      8: headerTiles[7],
     },
   },
   tasksControllerConfig: {
@@ -242,7 +274,7 @@ export const ThemeG10 = (args) => {
   };
 
   const handleTileGroupSelect = (e) => {
-    updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
+    updateArgs({ ...args, selectedTileGroup: e.selectedItem });
   };
 
   const argsWithSelectors = {
@@ -257,14 +289,8 @@ export const ThemeG10 = (args) => {
   return <AnimatedHeader {...argsWithSelectors} />;
 };
 
-ThemeG10.argTypes = {
-  ...sharedArgTypes,
-};
-
-ThemeG10.args = {
-  headerAnimation: 3,
-  ...sharedArgs,
-};
+ThemeG10.argTypes = { ...sharedArgTypes };
+ThemeG10.args = { headerAnimation: 3, ...sharedArgs };
 
 export const ThemeG100 = (args) => {
   const [_, updateArgs] = useArgs();
@@ -280,7 +306,7 @@ export const ThemeG100 = (args) => {
   };
 
   const handleTileGroupSelect = (e) => {
-    updateArgs({ ...args, selectedTileGroup: e.selectedItem.id });
+    updateArgs({ ...args, selectedTileGroup: e.selectedItem });
   };
 
   const argsWithSelectors = {
@@ -295,14 +321,8 @@ export const ThemeG100 = (args) => {
   return <AnimatedHeader {...argsWithSelectors} />;
 };
 
-ThemeG100.argTypes = {
-  ...sharedArgTypes,
-};
-
-ThemeG100.args = {
-  headerAnimation: 4,
-  ...sharedArgs,
-};
+ThemeG100.argTypes = { ...sharedArgTypes };
+ThemeG100.args = { headerAnimation: 4, ...sharedArgs };
 
 ThemeG100.globals = {
   // 👇 Override background value for this story

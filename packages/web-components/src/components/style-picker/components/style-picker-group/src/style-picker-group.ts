@@ -34,6 +34,19 @@ class StylePickerGroup extends LitElement {
   heading = '';
 
   /**
+   * Update attributes.
+   */
+  _updateAttribute() {
+    if (!this.hasAttribute('role')) {
+      this.setAttribute('role', 'group');
+    }
+
+    if (!this.hasAttribute('aria-label') && this.heading?.trim()?.length) {
+      this.setAttribute('aria-label', this.heading);
+    }
+  }
+
+  /**
    * Handle search based on change in the searchTerm from style-picker-context.
    */
   _handleSearch() {
@@ -43,6 +56,13 @@ class StylePickerGroup extends LitElement {
     );
 
     this.hidden = !anyVisible;
+  }
+
+  /**
+   * Lifecycle method called when the element is added to a document.
+   */
+  protected firstUpdated() {
+    this._updateAttribute();
   }
 
   /**

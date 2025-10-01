@@ -266,7 +266,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
         <div className={`${blockClass}__button-collapse--container`}>
           {headerActionConfig ? (
-            <HeaderAction config={headerActionConfig} />
+            <HeaderAction config={headerActionConfig} headerExpanded={isOpen} />
           ) : null}
 
           <Button
@@ -326,6 +326,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
     ).isRequired,
     ariaLabel: PropTypes.string,
     isLoading: PropTypes.bool,
+    lowContrast: PropTypes.bool,
     headerExpanded: PropTypes.bool,
     visibleCount: PropTypes.oneOf([2, 3]),
     onChange: PropTypes.func,

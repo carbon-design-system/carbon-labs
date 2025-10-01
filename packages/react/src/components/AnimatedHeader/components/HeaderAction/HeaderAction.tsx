@@ -12,7 +12,10 @@ import { Button, IconButton } from '@carbon/react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import type { HeaderActionConfig } from './header-action.types';
 
-const HeaderAction: React.FC<{ config: HeaderActionConfig }> = ({ config }) => {
+const HeaderAction: React.FC<{
+  config: HeaderActionConfig;
+  headerExpanded: boolean;
+}> = ({ config, headerExpanded }) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__header-action`;
 
@@ -20,7 +23,11 @@ const HeaderAction: React.FC<{ config: HeaderActionConfig }> = ({ config }) => {
   if (config.type === 'icon-button') {
     const { icon: Icon, iconLabel, onClick, disabled, ariaLabel } = config;
     return (
-      <div className={blockClass} aria-label={ariaLabel}>
+      <div
+        className={blockClass}
+        aria-label={ariaLabel}
+        aria-hidden={!headerExpanded}
+        data-expanded={headerExpanded}>
         <IconButton
           kind="ghost"
           size="lg"
@@ -37,7 +44,11 @@ const HeaderAction: React.FC<{ config: HeaderActionConfig }> = ({ config }) => {
   if (config.type === 'ghost-button') {
     const { label, icon, onClick, disabled, ariaLabel } = config;
     return (
-      <div className={blockClass} aria-label={ariaLabel}>
+      <div
+        className={blockClass}
+        aria-label={ariaLabel}
+        aria-hidden={!headerExpanded}
+        data-expanded={headerExpanded}>
         <Button
           kind="ghost"
           size="lg"

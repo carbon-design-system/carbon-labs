@@ -333,6 +333,8 @@ The **Content Switcher** renders **2 or 3** segments and is placed in the top
 title row on medium+ viewports.
 
 - `visibleCount`: **2 or 3** (defaults to 2).
+- `lowContrast`: **boolean** — toggles Carbon’s low-contrast visual style for
+  the switcher.
 - Provide exactly **2 or 3** `items`. If fewer than 2 are available, it won’t
   render.
 - Use `onSelect` per item to update the active `selectedTileGroup` in your app.
@@ -341,6 +343,7 @@ title row on medium+ viewports.
 const contentSwitcherConfig = {
   ariaLabel: 'Content switcher actions',
   visibleCount: 2,
+  lowContrast: true,
   selectedIndex: 0, // optional; defaults to 0 (safe-bounded)
   items: [
     {
@@ -356,6 +359,10 @@ const contentSwitcherConfig = {
   ],
 };
 ```
+
+> In Storybook, use the **“Content Switcher Low Contrast”** toggle to set this
+> at runtime. This toggles the `lowContrast` property inside your
+> `contentSwitcherConfig` selection.
 
 ---
 
@@ -473,6 +480,7 @@ export const tasksControllerConfigDropdown = {
 export const contentSwitcherConfig = {
   ariaLabel: 'Content switcher actions', // ✅ aria-label defined here
   visibleCount: 2,
+  lowContrast: true,
   items: [
     {
       id: 'opt-0',

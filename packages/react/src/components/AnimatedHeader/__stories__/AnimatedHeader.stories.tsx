@@ -248,6 +248,12 @@ const sharedArgTypes = {
       3: contentSwitcherConfigLoading,
     },
   },
+  contentSwitcherLowContrast: {
+    description:
+      'Force the Content Switcher to use lowContrast styling (Carbon prop). Applies when a contentSwitcherConfig is selected.',
+    control: { type: 'boolean' },
+    table: { category: 'Content Switcher' },
+  },
 };
 
 /* ------------------------------ Shared Args ------------------------------ */
@@ -275,6 +281,7 @@ const sharedArgs = {
   },
   headerActionConfig: 1,
   contentSwitcherConfig: 0,
+  contentSwitcherLowContrast: false,
 };
 
 /* ------------------------------ Stories ------------------------------ */
@@ -352,6 +359,10 @@ export const ThemeG10 = (args) => {
 
     return {
       ...base,
+      lowContrast:
+        typeof args.contentSwitcherLowContrast === 'boolean'
+          ? args.contentSwitcherLowContrast
+          : base.lowContrast,
       items,
       selectedIndex:
         typeof base.selectedIndex === 'number'
@@ -360,7 +371,13 @@ export const ThemeG10 = (args) => {
       ariaLabel: base.ariaLabel ?? 'Header actions',
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [args, updateArgs, args.contentSwitcherConfig, args.selectedTileGroup]);
+  }, [
+    args,
+    updateArgs,
+    args.contentSwitcherConfig,
+    args.selectedTileGroup,
+    args.contentSwitcherLowContrast,
+  ]);
 
   const argsWithSelectors = {
     ...args,
@@ -449,6 +466,10 @@ export const ThemeG100 = (args) => {
 
     return {
       ...base,
+      lowContrast:
+        typeof args.contentSwitcherLowContrast === 'boolean'
+          ? args.contentSwitcherLowContrast
+          : base.lowContrast,
       items,
       selectedIndex:
         typeof base.selectedIndex === 'number'
@@ -457,7 +478,13 @@ export const ThemeG100 = (args) => {
       ariaLabel: base.ariaLabel ?? 'Header actions',
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [args, updateArgs, args.contentSwitcherConfig, args.selectedTileGroup]);
+  }, [
+    args,
+    updateArgs,
+    args.contentSwitcherConfig,
+    args.selectedTileGroup,
+    args.contentSwitcherLowContrast,
+  ]);
 
   const argsWithSelectors = {
     ...args,

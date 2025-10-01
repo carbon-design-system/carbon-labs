@@ -10,6 +10,7 @@
 import { ElementType } from 'react';
 type Base = {
   ariaLabel?: string;
+  headerExpanded?: boolean;
 };
 
 export type HeaderActionIcon = Base & {

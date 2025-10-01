@@ -34,4 +34,21 @@ $prefix: 'clabs--animated-header__header-action' !default;
   button.cds--btn {
     z-index: 3;
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 500ms linear, visibility 500ms linear;
+  }
+
+  &[data-expanded='true'] {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  &[data-expanded='false'] {
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+    visibility: hidden;
+  }
 }

@@ -29,6 +29,7 @@ export type ContentSwitcherConfig = Omit<
   items: ContentSwitcherItem[];
   ariaLabel?: string;
   isLoading?: boolean;
+  lowContrast?: boolean;
   visibleCount?: 2 | 3;
   onChange?: ContentSwitcherProps['onChange'];
 };
@@ -56,6 +57,7 @@ const ContentSwitcherSelector: React.FC<ContentSwitcherSelectorProps> = ({
   const {
     items = [],
     visibleCount,
+    lowContrast,
     ariaLabel,
     onChange,
     selectedIndex,
@@ -84,7 +86,7 @@ const ContentSwitcherSelector: React.FC<ContentSwitcherSelectorProps> = ({
       <ContentSwitcher
         className={`${blockClass}`}
         aria-label={ariaLabel ?? 'Select a task group'}
-        lowContrast
+        lowContrast={lowContrast}
         selectedIndex={selectedIndexSafe}
         size="md"
         onChange={(ev) => {

@@ -5,24 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react'
-import { DoDont } from './do-dont'
-import { DoDontRow } from './do-dont-row'
-import lightTheme from './light-theme.jpg'
+import React from 'react';
+import { DoDont } from './do-dont';
+import { DoDontRow } from './do-dont-row';
+import lightTheme from './light-theme.jpg';
 
 export default {
-  title: 'MDX Components/DoDont',
+  title: 'Components/MDX Components/DoDont',
   component: DoDontRow,
   subcomponents: { DoDont },
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
     className: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
 const Template = (args) => (
   <DoDontRow>
@@ -32,13 +32,12 @@ const Template = (args) => (
       captionTitle="Caption title"
       caption="This is a caption."
       type="do"
-      {...args}
-    ></DoDont>
+      {...args}></DoDont>
     <DoDont aspectRatio="1:1" type="dont" {...args}>
       <img alt="Use markdown in mdx files. ![](dodont.png)" src={lightTheme} />
     </DoDont>
   </DoDontRow>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

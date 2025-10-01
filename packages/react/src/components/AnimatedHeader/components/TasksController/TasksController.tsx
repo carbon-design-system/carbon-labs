@@ -14,15 +14,12 @@ import {
   Dropdown,
   DropdownProps,
   SkeletonPlaceholder,
-  ContentSwitcher,
-  Switch,
-  type ContentSwitcherProps,
 } from '@carbon/react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import { TileGroup } from '../AnimatedHeader/types';
 
 export interface TasksControllerConfig {
-  type: 'button' | 'dropdown' | 'switcher' | null;
+  type: 'button' | 'dropdown' | null;
   isLoading?: boolean;
 
   button?: {
@@ -35,14 +32,6 @@ export interface TasksControllerConfig {
       Omit<DropdownProps<TileGroup>, 'id' | 'items' | 'selectedItem'>
     >;
     label?: string;
-    ariaLabel?: string;
-  };
-
-  switcher?: {
-    visibleCount?: 2 | 3; // default 2
-    propsOverrides?: Partial<
-      Omit<ContentSwitcherProps, 'onChange' | 'selectedIndex'>
-    >;
     ariaLabel?: string;
   };
 }
@@ -77,10 +66,6 @@ const TasksController = ({
     onChange: dropdownCustomOnChange,
     ...dropdownOverrideProps
   } = tasksControllerConfig?.dropdown?.propsOverrides || {};
-
-  /** Switcher overrides */
-  const { className: switcherCustomClass, ...switcherOverrideProps } =
-    tasksControllerConfig?.switcher?.propsOverrides || {};
 
   /** Early outs */
   if (!tasksControllerConfig?.type) return null;
@@ -147,55 +132,6 @@ const TasksController = ({
     tasksControllerConfig?.dropdown?.label,
     tasksControllerConfig?.dropdown?.ariaLabel,
   ]);
-
-  /** Content Switcher mode (explicit 2 or 3; default 2) */
-  if (tasksControllerConfig?.type === 'switcher') {
-    if (!allTileGroups?.length) return null;
-
-    const count = tasksControllerConfig?.switcher?.visibleCount === 3 ? 3 : 2;
-    const visible = allTileGroups.slice(0, count);
-    if (visible.length < 2) return null;
-
-    const selectedIndex = Math.max(
-      0,
-      visible.findIndex(
-        (g) =>
-          g === selectedTileGroup ||
-          (g as any).id === (selectedTileGroup as any)?.id ||
-          (g as any).tileId === (selectedTileGroup as any)?.tileId
-      )
-    );
-
-    return (
-      <div className={`${blockClass}__header-switcher--container`}>
-        <ContentSwitcher
-          aria-label={
-            tasksControllerConfig?.switcher?.ariaLabel ?? 'Select a task group'
-          }
-          className={`${blockClass}__header-switcher${
-            switcherCustomClass ? ` ${switcherCustomClass}` : ''
-          }`}
-          size="md"
-          selectedIndex={Number.isFinite(selectedIndex) ? selectedIndex : 0}
-          onChange={({ index = 0 }: { index?: number }) => {
-            const next = visible[index] ?? visible[0];
-            setSelectedTileGroup?.({ selectedItem: next });
-          }}
-          lowContrast
-          {...switcherOverrideProps}>
-          {visible.map((group) => {
-            const id =
-              (group as any).id ?? (group as any).tileId ?? group.label;
-            return (
-              <Switch key={id} name={id}>
-                {group.label}
-              </Switch>
-            );
-          })}
-        </ContentSwitcher>
-      </div>
-    );
-  }
 
   /** Dropdown mode */
   if (tasksControllerConfig?.type === 'dropdown' && dropdownProps) {

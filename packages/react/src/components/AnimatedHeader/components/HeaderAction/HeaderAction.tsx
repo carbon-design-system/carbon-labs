@@ -9,7 +9,6 @@
 
 import React from 'react';
 import { Button, IconButton } from '@carbon/react';
-//import { ChevronLeft, ChevronRight } from '@carbon/icons-react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import type { HeaderActionConfig } from './header-action.types';
 

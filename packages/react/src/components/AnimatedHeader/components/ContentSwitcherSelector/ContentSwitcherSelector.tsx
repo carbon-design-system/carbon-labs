@@ -87,7 +87,6 @@ const ContentSwitcherSelector: React.FC<ContentSwitcherSelectorProps> = ({
         size="md"
         onChange={(ev) => {
           onChange?.(ev);
-          // 2) Then invoke the matching item's onSelect
           const idx = (ev as any).index ?? (ev as any).selectedIndex ?? 0;
           visibleItems[idx]?.onSelect?.();
         }}

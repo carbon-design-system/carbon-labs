@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react'
-import { StorybookDemo } from './storybook-demo'
+import React from 'react';
+import { StorybookDemo } from './storybook-demo';
 
 export default {
-  title: 'MDX Components/StorybookDemo',
-  component: StorybookDemo
-}
+  title: 'Components/MDX Components/StorybookDemo',
+  component: StorybookDemo,
+};
 
 const Template = (args) => (
   <StorybookDemo
@@ -23,39 +23,39 @@ const Template = (args) => (
     variants={[
       {
         label: 'Button',
-        variant: 'components-button--default'
+        variant: 'components-button--default',
       },
       {
         label: 'Secondary',
-        variant: 'components-button--secondary'
+        variant: 'components-button--secondary',
       },
       {
         label: 'Tertiary',
-        variant: 'components-button--tertiary'
+        variant: 'components-button--tertiary',
       },
       {
         label: 'Ghost',
-        variant: 'components-button--ghost'
+        variant: 'components-button--ghost',
       },
       {
         label: 'Danger',
-        variant: 'components-button--danger'
+        variant: 'components-button--danger',
       },
       {
         label: 'Icon button',
-        variant: 'components-button--icon-button'
+        variant: 'components-button--icon-button',
       },
       {
         label: 'Set of buttons',
-        variant: 'components-button--set-of-buttons'
+        variant: 'components-button--set-of-buttons',
       },
       {
         label: 'Skeleton',
-        variant: 'components-button--skeleton'
-      }
+        variant: 'components-button--skeleton',
+      },
     ]}
   />
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

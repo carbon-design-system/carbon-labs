@@ -10,29 +10,29 @@ import { LI } from './li';
 import { OL } from './ol';
 
 const stories = {
-  title: 'MDX Components/Markdown/OL',
+  title: 'Components/MDX Components/Markdown/OL',
   component: OL,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
     className: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
-export default stories
+export default stories;
 
 const Template = (args) => (
-  <div style={{paddingLeft: "1rem"}}>
+  <div style={{ paddingLeft: '1rem' }}>
     <OL {...args}>
       <LI>list item 1</LI>
       <LI>list item 2</LI>
       <LI>list item 3</LI>
     </OL>
-  </div>  
-)
+  </div>
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

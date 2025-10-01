@@ -36,11 +36,13 @@ export type ContentSwitcherConfig = Omit<
 export type ContentSwitcherSelectorProps = {
   contentSwitcherConfig?: ContentSwitcherConfig | null;
   isLoading?: boolean;
+  headerExpanded?: boolean;
 };
 
 const ContentSwitcherSelector: React.FC<ContentSwitcherSelectorProps> = ({
   contentSwitcherConfig,
   isLoading,
+  headerExpanded,
 }) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__content-switcher`;
@@ -78,7 +80,7 @@ const ContentSwitcherSelector: React.FC<ContentSwitcherSelectorProps> = ({
   }, [selectedIndex, visibleItems.length]);
 
   return (
-    <div className={`${blockClass}--container`}>
+    <div className={`${blockClass}--container`} data-expanded={headerExpanded}>
       <ContentSwitcher
         className={`${blockClass}`}
         aria-label={ariaLabel ?? 'Select a task group'}

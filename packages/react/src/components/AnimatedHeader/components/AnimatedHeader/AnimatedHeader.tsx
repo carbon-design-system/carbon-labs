@@ -178,6 +178,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                 <ContentSwitcherSelector
                   contentSwitcherConfig={contentSwitcherConfig}
                   isLoading={isLoading || contentSwitcherConfig.isLoading}
+                  headerExpanded={isOpen}
                 />
               </div>
             ) : null}
@@ -325,6 +326,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
     ).isRequired,
     ariaLabel: PropTypes.string,
     isLoading: PropTypes.bool,
+    headerExpanded: PropTypes.bool,
     visibleCount: PropTypes.oneOf([2, 3]),
     onChange: PropTypes.func,
   }),

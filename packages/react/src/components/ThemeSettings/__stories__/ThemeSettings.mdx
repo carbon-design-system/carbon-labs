@@ -41,7 +41,7 @@ expect there current system settings to dictate the current theming.
 
 ```bash
 yarn add @carbon/react
-yarn add @carbon-labs/react-theme-switcher
+yarn add @carbon-labs/react-theme-settings
 ```
 
 ### Components
@@ -71,7 +71,7 @@ import {
   ThemeSetDropdown,
   ThemeSwitcher,
   useThemeSetting,
-} from '@carbon-labs/react-theme-switcher/es/index';
+} from '@carbon-labs/react-theme-settings/es/index';
 
 function App() {
   const [themeSetting, setThemeSetting] = useState(`system`);
@@ -124,5 +124,5 @@ In your styles file import
 
 ```
 @use '@carbon/react';
-@use '@carbon-labs/react-theme-switcher/scss/theme-switcher';
+@use '@carbon-labs/react-theme-settings/scss/theme-settings';
 ```

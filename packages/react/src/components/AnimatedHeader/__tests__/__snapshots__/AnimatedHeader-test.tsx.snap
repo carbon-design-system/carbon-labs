@@ -25,48 +25,53 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         />
       </div>
       <div
-        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+        class="clabs--animated-header__title-row cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
       >
-        <span
-          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip"
+        <div
+          class="clabs--animated-header__title-and-actions"
         >
-          <div
-            class="cds--tooltip-trigger__wrapper"
-          >
-            <h1
-              aria-label="Welcome, Drew"
-              aria-labelledby="tooltip-:r0:"
-              class="clabs--animated-header__title clabs--animated-header__title-expanded"
-            >
-              <span
-                class="clabs--animated-header__title-first"
-              >
-                Welcome
-                , 
-              </span>
-              <span
-                class="clabs--animated-header__title-second"
-              >
-                Drew
-              </span>
-            </h1>
-          </div>
           <span
-            aria-hidden="true"
-            class="cds--popover"
-            id="tooltip-:r0:"
-            role="tooltip"
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip"
           >
-            <span
-              class="cds--popover-content cds--tooltip-content"
+            <div
+              class="cds--tooltip-trigger__wrapper"
             >
-              Welcome, Drew
-            </span>
+              <h1
+                aria-label="Welcome, Drew"
+                aria-labelledby="tooltip-:r0:"
+                class="clabs--animated-header__title"
+                data-expanded="true"
+              >
+                <span
+                  class="clabs--animated-header__title-first"
+                >
+                  Welcome
+                  , 
+                </span>
+                <span
+                  class="clabs--animated-header__title-second"
+                >
+                  Drew
+                </span>
+              </h1>
+            </div>
             <span
-              class="cds--popover-caret"
-            />
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-:r0:"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Welcome, Drew
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
           </span>
-        </span>
+        </div>
       </div>
       <div
         class="clabs--animated-header__left-area-container cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-4 cds--css-grid-column"

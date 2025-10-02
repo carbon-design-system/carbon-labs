@@ -35,10 +35,20 @@ import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
       - [AITile (`variant: 'ai'`)](#aitile-variant-ai)
       - [AIPromptTile (`variant: 'aiPrompt'`)](#aiprompttile-variant-aiprompt)
     - [Migration Guide](#migration-guide)
+  - [Tasks Controller](#tasks-controller)
+    - [Button](#button)
+    - [Dropdown](#dropdown)
+  - [Content Switcher](#content-switcher)
+  - [Header Action](#header-action)
+    - [Icon Button](#icon-button)
+    - [Ghost Button](#ghost-button)
+    - [Carousel (coming soon)](#carousel-coming-soon)
   - [Accessibility](#accessibility)
     - [Tile ARIA Labels](#tile-aria-labels)
     - [Tasks Dropdown ARIA Label](#tasks-dropdown-aria-label)
+    - [Content Switcher ARIA Label](#content-switcher-aria-label)
     - [Workspace Selector ARIA Label](#workspace-selector-aria-label)
+    - [Header Action ARIA Label](#header-action-aria-label)
     - [Additional ARIA Labels](#additional-aria-labels)
 - [Getting started](#getting-started)
   - [JS (via import)](#js-via-import)
@@ -57,10 +67,10 @@ consistency while flexible page elements allow teams to tailor the leadspace to
 their individual user and product needs.
 
 Lead spaces include a welcome text, a short description communicating the
-products value proposition and feature most relevant content for the user.
+product’s value proposition and feature most relevant content for the user.
 Whether these are links to specific tasks, workspaces or other information is
-defined by each product and their user’s needs. In product-imagery has to be
-very settled and subtil to not distract users in performing their tasks.
+defined by each product and their user’s needs. In-product imagery has to be
+very subtle to not distract users from performing their tasks.
 
 <Canvas
   of={AnimatedHeaderStories.ThemeG10}
@@ -77,14 +87,29 @@ very settled and subtil to not distract users in performing their tasks.
 **Title:** Welcomes the user (Welcome, username)
 
 **Content:** Short sentence in max. 3 lines related to product context; Action
-button (optional), Expose content that need highest attention from the user or
-content that trigger an action and allow users to directly start working and
-gain value (within one click). It is recommended to display content on cards to
-achieve highest contrast to the background.
+button (optional). It is recommended to display content on cards to achieve
+highest contrast to the background.
 
-**Visual / brand image:** Line-style illustration
+**Visual / brand image:** Line-style illustration (Lottie or static)
 
 **Collapse / Expand:** Icon to collapse or expand the header
+
+**Tasks Controller placement:**
+
+- **Dropdown / Button** render in the **left column** under the description.
+
+**Content Switcher placement:**
+
+- Renders **inline in the title row**, aligned to the right of “Welcome,
+  {`user`} on medium+ viewports (default styles). You can override placement
+  with custom styles if needed.
+
+**Header Action placement:**
+
+- Renders **inline in the bottom-right action row**, immediately to the **left**
+  of the **Collapse** button.
+- Always shows a subtle vertical divider between it and preceding actions.
+- Supports multiple presentations (see below).
 
 ---
 
@@ -94,9 +119,10 @@ The default theme for Animated Header is _g10_ (Light theme).
 
 Animated header supports both _g10_ (Light theme) and _g100_ (Dark Theme).
 
-To use dark theme in your product/app wrap the componenet in the Carbon
+To use dark theme in your product/app wrap the component in the Carbon
 [GlobalTheme](https://react.carbondesignsystem.com/?path=/docs/components-theme--overview#setting-the-global-theme)
-component. Following the example from the Carbon website it would like this:
+component. Following the example from the Carbon website it would look like
+this:
 
 ```jsx
 import { useEffect } from 'react';
@@ -112,7 +138,7 @@ function App() {
   return (
     <GlobalTheme theme={theme}>
       <AnimatedHeader />
-    </GlobalTheme>;
+    </GlobalTheme>
   );
 }
 ```
@@ -257,6 +283,149 @@ Example migration:
 + }
 ```
 
+---
+
+### Tasks Controller
+
+The Tasks Controller appears in the header to help users quickly switch
+contexts. You can render it as a **Button** or a **Dropdown**.
+
+> **Placement**
+>
+> - **Dropdown / Button**: left column under the description.
+
+#### Button
+
+```tsx
+export const tasksControllerConfigButton = {
+  type: 'button',
+  button: {
+    text: 'Get started',
+    href: 'https://www.ibm.com',
+    icon: Add,
+  },
+};
+```
+
+#### Dropdown
+
+```tsx
+export const tasksControllerConfigDropdown = {
+  type: 'dropdown',
+  dropdown: {
+    label: 'Customize your journey',
+    allTileGroups: headerTiles,
+    selectedTileGroup: headerTiles[0],
+    setSelectedTileGroup: (group) => {
+      // Updates which tiles render in the header
+      // (Your app likely stores this in state)
+    },
+    ariaLabel: 'Select a task group',
+  },
+};
+```
+
+---
+
+### Content Switcher
+
+The **Content Switcher** renders **2 or 3** segments and is placed in the top
+title row on medium+ viewports.
+
+- `visibleCount`: **2 or 3** (defaults to 2).
+- `lowContrast`: **boolean** — toggles Carbon’s low-contrast visual style for
+  the switcher.
+- Provide exactly **2 or 3** `items`. If fewer than 2 are available, it won’t
+  render.
+- Use `onSelect` per item to update the active `selectedTileGroup` in your app.
+
+```tsx
+const contentSwitcherConfig = {
+  ariaLabel: 'Content switcher actions',
+  visibleCount: 2,
+  lowContrast: true,
+  selectedIndex: 0, // optional; defaults to 0 (safe-bounded)
+  items: [
+    {
+      id: 'opt-0',
+      text: headerTiles[0].label,
+      onSelect: () => setSelectedTileGroup(headerTiles[0]),
+    },
+    {
+      id: 'opt-1',
+      text: headerTiles[1].label,
+      onSelect: () => setSelectedTileGroup(headerTiles[1]),
+    },
+  ],
+};
+```
+
+> In Storybook, use the **“Content Switcher Low Contrast”** toggle to set this
+> at runtime. This toggles the `lowContrast` property inside your
+> `contentSwitcherConfig` selection.
+
+---
+
+### Header Action
+
+The Header Action is a small control that appears to the **left of the Collapse
+button** in the bottom action row. It’s meant for quick access patterns like a
+**settings icon** or a **“View all” ghost button**. A **Carousel pager** is
+planned to page through multiple tile views (see “coming soon”).
+
+> **Divider:** A subtle vertical divider is always shown to the left of the
+> header action to separate it from other actions.
+
+#### Icon Button
+
+Use any Carbon icon component (from `@carbon/icons-react`) and an accessible
+label.
+
+```tsx
+import { Settings } from '@carbon/icons-react';
+
+export const headerActionIconConfig = {
+  type: 'icon-button',
+  icon: Settings, // component type (ElementType)
+  iconLabel: 'Open controls',
+  onClick: () => openControlsModal(),
+};
+```
+
+#### Ghost Button
+
+Provide a label and (optionally) a trailing icon component. This is ideal for
+“View all” patterns that open a modal listing all tiles.
+
+```tsx
+import { ArrowRight } from '@carbon/icons-react';
+
+export const headerActionGhostConfig = {
+  type: 'ghost-button',
+  label: 'View all',
+  icon: ArrowRight, // optional
+  onClick: () => openAllTilesModal(),
+};
+```
+
+#### Carousel (coming soon)
+
+A compact pager that switches between **pages of tiles**. This feature will ship
+in a future release.
+
+```tsx
+// COMING SOON
+export const headerActionCarouselConfig = {
+  type: 'carousel',
+  page: 0,
+  total: 3,
+  onSelectPage: (p) => setPage(p),
+  onStep: (direction, next) => analytics('pager-step', { direction, next }),
+};
+```
+
+---
+
 ### Accessibility
 
 To ensure a fully accessible experience, provide `aria-label`s directly in your
@@ -265,8 +434,6 @@ tile and configuration data.
 #### Tile ARIA Labels
 
 Each `Tile` must define an `ariaLabel` property directly within its data object.
-This ensures accessibility information is co-located with the tile configuration
-and is easier to maintain.
 
 ```jsx
 import { type TileGroup } from '@carbon-labs/react-animated-header';
@@ -307,6 +474,28 @@ export const tasksControllerConfigDropdown = {
 };
 ```
 
+#### Content Switcher ARIA Label
+
+```jsx
+export const contentSwitcherConfig = {
+  ariaLabel: 'Content switcher actions', // ✅ aria-label defined here
+  visibleCount: 2,
+  lowContrast: true,
+  items: [
+    {
+      id: 'opt-0',
+      text: headerTiles[0].label,
+      onSelect: () => setSelectedTileGroup(headerTiles[0]),
+    },
+    {
+      id: 'opt-1',
+      text: headerTiles[1].label,
+      onSelect: () => setSelectedTileGroup(headerTiles[1]),
+    },
+  ],
+};
+```
+
 #### Workspace Selector ARIA Label
 
 For the workspace selector, define the `ariaLabel` at the top level of the
@@ -321,6 +510,21 @@ export const workspaceSelectorConfig = {
     renderSelectedItem: (item) => `Open in: ${item.label}`,
   },
   ariaLabel: 'Select a workspace', // ✅ aria-label defined here
+};
+```
+
+#### Header Action ARIA Label
+
+Each header action variant also accepts an optional `ariaLabel`. Use it if the
+visual label isn’t descriptive enough (e.g., when using only an icon).
+
+```tsx
+export const headerActionIconConfig = {
+  type: 'icon-button',
+  icon: Settings,
+  iconLabel: 'Open header controls',
+  ariaLabel: 'Open header controls', // ✅ aria-label defined here
+  onClick: () => openControlsModal(),
 };
 ```
 
@@ -391,13 +595,15 @@ Example of Animated Header with all prop types enabled.
   description="Connect, monitor, and manage data."
   welcomeText="Welcome"
   userName="Drew"
-  ariaLabels={ariaLabelsConfig as AriaLabels}
+  ariaLabels={ariaLabels as AriaLabels}
   headerAnimation={watsonXAnimatedLight}
   headerStatic={watsonXStaticLight}
   allTileGroups={tiles}
   selectedTileGroup={selectedTile}
   workspaceSelectorConfig={workspaceSelectorConfig}
   tasksControllerConfig={tasksControllerConfigDropdown as TasksControllerConfig}
+  contentSwitcherConfig={contentSwitcherConfig}
+  headerActionConfig={headerActionGhostConfig}
   isLoading={false}
   tileClickHandler={handleTileClicks}
 />

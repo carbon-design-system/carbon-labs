@@ -17,6 +17,8 @@ export type {
   WorkspaceSelectorConfig,
 } from './components/WorkspaceSelector/WorkspaceSelector';
 export type { TasksControllerConfig } from './components/TasksController/TasksController';
+export type { HeaderActionConfig } from './components/HeaderAction/header-action.types';
+export type { ContentSwitcherConfig } from './components/ContentSwitcherSelector/ContentSwitcherSelector';
 
 export {
   AnimatedHeader,

@@ -23,8 +23,9 @@
     "storybook": "storybook dev -p 6007",
     "generate": "node tasks/generate",
     "storybook:build": "npx storybook build",
-    "test": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve",
-    "test:updateSnapshot": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve --update-snapshots"
+    "test": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve && yarn test:wc-global-header",
+    "test:updateSnapshot": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve --update-snapshots",
+    "test:wc-global-header": "lerna run test --scope '@carbon-labs/wc-global-header'"
   },
   "dependencies": {
     "@carbon/styles": "^1.88.0",

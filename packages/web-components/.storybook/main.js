@@ -28,7 +28,12 @@ const config = {
     '../src/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
 
-  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-docs")],
+  addons: [
+    getAbsolutePath('@storybook/addon-a11y'),
+    getAbsolutePath('storybook-addon-accessibility-checker'),
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-docs")
+  ],
 
   framework: {
     name: getAbsolutePath('@storybook/web-components-vite'),

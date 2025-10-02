@@ -22,6 +22,7 @@ import {
 } from '@carbon/react/icons';
 import { TileGroup } from '../../components/AnimatedHeader/types';
 import type { HeaderActionConfig } from '../../components/HeaderAction/header-action.types';
+import type { ContentSwitcherConfig } from '../../components/ContentSwitcherSelector/ContentSwitcherSelector';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
 
 export const workspaceData = [
@@ -286,18 +287,20 @@ export const tasksControllerConfigLoading = {
   isLoading: true,
 };
 
-export const contentSwitcherConfigTwo = {
+export const contentSwitcherConfigTwo: ContentSwitcherConfig = {
   ariaLabel: 'Content switcher actions',
   visibleCount: 2,
+  selectedIndex: 0,
   items: [
     { id: 'opt-0', text: headerTiles[0].label },
     { id: 'opt-1', text: headerTiles[1].label },
   ],
 };
 
-export const contentSwitcherConfigThree = {
+export const contentSwitcherConfigThree: ContentSwitcherConfig = {
   ariaLabel: 'Content switcher actions',
   visibleCount: 3,
+  selectedIndex: 0,
   items: [
     { id: 'opt-0', text: headerTiles[0].label },
     { id: 'opt-1', text: headerTiles[1].label },
@@ -305,10 +308,11 @@ export const contentSwitcherConfigThree = {
   ],
 };
 
-export const contentSwitcherConfigLoading = {
+export const contentSwitcherConfigLoading: ContentSwitcherConfig = {
   ariaLabel: 'Header actions',
   isLoading: true,
   visibleCount: 2,
+  selectedIndex: 0,
   items: [],
 };
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.34.0...@carbon-labs/react-animated-header@0.35.0) (2025-10-02)
+
+
+### Features
+
+* **animated-header:** add content switcher and new customizable button ([#820](https://github.com/carbon-design-system/carbon-labs/issues/820)) ([a0e2153](https://github.com/carbon-design-system/carbon-labs/commit/a0e2153e78e28ad61fdfaeacab378df810703f49))
+
+
+
+
+
 # [0.34.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.33.0...@carbon-labs/react-animated-header@0.34.0) (2025-09-22)
 
 

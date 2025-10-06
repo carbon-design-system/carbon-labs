@@ -1844,7 +1844,7 @@ __metadata:
     "@carbon/pictograms": "npm:^12.58.0"
     "@carbon/styles": "npm:^1.88.0"
     "@carbon/themes": "npm:11.58.0"
-    "@carbon/type": "npm:11.45.0"
+    "@carbon/type": "npm:11.48.0"
     "@carbon/web-components": "npm:2.36.0"
     "@custom-elements-manifest/analyzer": "npm:^0.10.0"
     "@lit/react": "npm:^1.0.1"
@@ -1929,6 +1929,16 @@ __metadata:
     "@carbon/layout": "npm:^11.41.0"
     "@ibm/telemetry-js": "npm:^1.5.0"
   checksum: 10c0/0ba6fc021e74f677d68651d50fa5f1d71ad1933110e68221533e9b5a6dcd55e6f3575fa4c702ef17b524726e988e78a2706dea61fad11a5b32256b2ac1ddbae0
+  languageName: node
+  linkType: hard
+
+"@carbon/grid@npm:^11.44.0":
+  version: 11.44.0
+  resolution: "@carbon/grid@npm:11.44.0"
+  dependencies:
+    "@carbon/layout": "npm:^11.42.0"
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  checksum: 10c0/8fde60fc861f23b13f059b0ff4194a2af36ee9869dfc62d0613a8347d58cba288d9cac58b2ba913ef4712e18d78186c5d21cd09ea85cc3a67b535658e6e69544
   languageName: node
   linkType: hard
 
@@ -2049,6 +2059,15 @@ __metadata:
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
   checksum: 10c0/95d88d602fc32e88be45e6137925abf34519559ab027c71bd64ea7b350c7a2d1320126c0453aaa8298a3e7b4d957c1927df7fc0a2a70f443031bebcecc054ffc
+  languageName: node
+  linkType: hard
+
+"@carbon/layout@npm:^11.42.0":
+  version: 11.42.0
+  resolution: "@carbon/layout@npm:11.42.0"
+  dependencies:
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  checksum: 10c0/1cfa3e803200ff6d57fe2cc529a56b830f1c3d086aa3aa67f8ed605d4f2a0acd94281f3d860db8a4a2d9822006de031c989867f154b9437a406298d96b6dbef2
   languageName: node
   linkType: hard
 
@@ -2196,14 +2215,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/type@npm:11.45.0":
-  version: 11.45.0
-  resolution: "@carbon/type@npm:11.45.0"
+"@carbon/type@npm:11.48.0":
+  version: 11.48.0
+  resolution: "@carbon/type@npm:11.48.0"
   dependencies:
-    "@carbon/grid": "npm:^11.41.0"
-    "@carbon/layout": "npm:^11.39.0"
+    "@carbon/grid": "npm:^11.44.0"
+    "@carbon/layout": "npm:^11.42.0"
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/27b7a604be60b3622576a23e15c6919cf35b7b1ae7c8360f549f6548718dd0d66cd3299ef64f481036074332ea08c5f9588c28896b8d97bacf4c9f269a6f35b8
+  checksum: 10c0/5d8e866438b0d0de0642d39bd0389aa289d1a2ab3cae0ebe72e10cae6b40a6090b57d4a4b7a8195e909da73fd420c4d109e9bf00b2be4d3c85ffc4de0dbb4953
   languageName: node
   linkType: hard
 

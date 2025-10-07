@@ -8,16 +8,16 @@ import React from 'react';
 import { PageTable } from './page-table';
 
 const stories = {
-  title: 'MDX Components/Markdown/PageTable',
+  title: 'Components/MDX Components/Markdown/PageTable',
   component: PageTable,
   argTypes: {
     children: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
-export default stories
+export default stories;
 
 const Template = (args) => (
   <PageTable {...args}>
@@ -41,7 +41,7 @@ const Template = (args) => (
       </tr>
     </tbody>
   </PageTable>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

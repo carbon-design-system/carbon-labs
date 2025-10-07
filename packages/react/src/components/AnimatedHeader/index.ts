@@ -8,6 +8,7 @@
  */
 import AnimatedHeader from './components/AnimatedHeader/AnimatedHeader';
 import { AriaLabels, TileGroup } from './components/AnimatedHeader/types';
+import HeaderAction from './components/HeaderAction/HeaderAction';
 import HeaderTitle from './components/HeaderTitle/HeaderTitle';
 import { BaseTile } from './components/Tiles/index';
 export * from './assets';
@@ -16,10 +17,13 @@ export type {
   WorkspaceSelectorConfig,
 } from './components/WorkspaceSelector/WorkspaceSelector';
 export type { TasksControllerConfig } from './components/TasksController/TasksController';
+export type { HeaderActionConfig } from './components/HeaderAction/header-action.types';
+export type { ContentSwitcherConfig } from './components/ContentSwitcherSelector/ContentSwitcherSelector';
 
 export {
   AnimatedHeader,
   BaseTile,
+  HeaderAction,
   HeaderTitle,
   type AriaLabels,
   type TileGroup,

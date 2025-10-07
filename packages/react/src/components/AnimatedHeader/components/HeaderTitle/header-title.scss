@@ -13,16 +13,29 @@
 $prefix: 'clabs--animated-header__title' !default;
 
 .#{$prefix} {
-  @include type-style('heading-05');
-
   position: relative;
   z-index: 2;
   overflow: hidden;
-  margin: $spacing-08 0 $spacing-05 0;
   text-overflow: ellipsis;
-  transition: font-size 500ms motion.motion(standard, expressive),
-    margin 500ms motion.motion(standard, expressive);
   white-space: nowrap;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: font-size 500ms motion.motion(standard, expressive),
+      margin 500ms motion.motion(standard, expressive);
+  }
+
+  &[data-expanded='true'] {
+    @include type-style('heading-05');
+
+    margin: $spacing-08 0 $spacing-05 0;
+  }
+
+  &[data-expanded='false'] {
+    @include type-style('heading-03');
+
+    margin: calc($spacing-04 - 0.5px) 0 calc($spacing-04 - 0.5px) 0;
+    line-height: 1.25;
+  }
 
   @supports (-webkit-line-clamp: 3) {
     display: -webkit-box;
@@ -39,13 +52,6 @@ $prefix: 'clabs--animated-header__title' !default;
   .#{$prefix} {
     transition: margin 500ms motion.motion(standard, expressive);
   }
-}
-
-.#{$prefix}-collapsed {
-  @include type-style('heading-03');
-
-  margin: $spacing-03 0 $spacing-04 0;
-  line-height: 1.25;
 }
 
 .#{$prefix}-first {

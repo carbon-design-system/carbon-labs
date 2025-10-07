@@ -18,23 +18,17 @@ import {
   Sql,
   Term,
   Watsonx,
+  Settings,
 } from '@carbon/react/icons';
 import { TileGroup } from '../../components/AnimatedHeader/types';
+import type { HeaderActionConfig } from '../../components/HeaderAction/header-action.types';
+import type { ContentSwitcherConfig } from '../../components/ContentSwitcherSelector/ContentSwitcherSelector';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
 
 export const workspaceData = [
-  {
-    id: 'workspace-1',
-    label: 'Workspace 1',
-  },
-  {
-    id: 'workspace-2',
-    label: 'Workspace 2',
-  },
-  {
-    id: 'workspace-3',
-    label: 'Workspace 3',
-  },
+  { id: 'workspace-1', label: 'Workspace 1' },
+  { id: 'workspace-2', label: 'Workspace 2' },
+  { id: 'workspace-3', label: 'Workspace 3' },
 ];
 
 export const headerTiles: TileGroup[] = [
@@ -45,7 +39,6 @@ export const headerTiles: TileGroup[] = [
       {
         tileId: 'tile-1',
         variant: 'aiPrompt',
-        //id: 'ai-tile', // Back-compat
         href: '#',
         title: 'Short description of the type of prompt',
         primaryIcon: Term,
@@ -294,6 +287,35 @@ export const tasksControllerConfigLoading = {
   isLoading: true,
 };
 
+export const contentSwitcherConfigTwo: ContentSwitcherConfig = {
+  ariaLabel: 'Content switcher actions',
+  visibleCount: 2,
+  selectedIndex: 0,
+  items: [
+    { id: 'opt-0', text: headerTiles[0].label },
+    { id: 'opt-1', text: headerTiles[1].label },
+  ],
+};
+
+export const contentSwitcherConfigThree: ContentSwitcherConfig = {
+  ariaLabel: 'Content switcher actions',
+  visibleCount: 3,
+  selectedIndex: 0,
+  items: [
+    { id: 'opt-0', text: headerTiles[0].label },
+    { id: 'opt-1', text: headerTiles[1].label },
+    { id: 'opt-2', text: headerTiles[2].label },
+  ],
+};
+
+export const contentSwitcherConfigLoading: ContentSwitcherConfig = {
+  ariaLabel: 'Header actions',
+  isLoading: true,
+  visibleCount: 2,
+  selectedIndex: 0,
+  items: [],
+};
+
 export const workspaceSelectorConfig = {
   allWorkspaces: workspaceData,
   setSelectedWorkspace: () => {},
@@ -308,4 +330,18 @@ export const workspaceSelectorConfigLoading = {
   allWorkspaces: workspaceData,
   setSelectedWorkspace: () => {},
   isLoading: true,
+};
+
+export const headerActionIcon: HeaderActionConfig = {
+  type: 'icon-button',
+  icon: Settings,
+  iconLabel: 'Open controls',
+  onClick: () => alert('Open any modal/panel'),
+};
+
+export const headerActionGhost: HeaderActionConfig = {
+  type: 'ghost-button',
+  icon: ArrowRight,
+  label: 'View all',
+  onClick: () => alert('Open “All tiles” modal/tearsheet'),
 };

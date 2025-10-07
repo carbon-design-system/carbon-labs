@@ -10,6 +10,7 @@
 import React, { ElementType } from 'react';
 
 export type GlassTileProps = {
+  variant?: 'glass',
   tileId: string;
   href?: string | null;
   title?: string | null;

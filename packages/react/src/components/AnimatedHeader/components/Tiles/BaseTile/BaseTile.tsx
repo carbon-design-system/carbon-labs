@@ -23,7 +23,7 @@ function inferVariant(props: BaseTileProps): TileVariant {
   if (props.variant) {
     return props.variant;
   }
-  if (props.id === 'ai-tile') {
+  if (props.tileId === 'ai-tile') {
     return 'aiPrompt';
   }
   return 'glass';

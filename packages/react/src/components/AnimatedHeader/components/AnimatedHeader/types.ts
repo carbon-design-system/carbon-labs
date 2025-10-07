@@ -9,7 +9,7 @@
 
 import type { BaseTileProps } from '../../components/Tiles/BaseTile/BaseTile';
 
-export type Tile = BaseTileProps;
+export type Tile = Omit<BaseTileProps, 'id'> & { tileId: string };
 
 export interface TileGroup {
   id: number;

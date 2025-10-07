@@ -259,7 +259,7 @@ export const headerTiles: TileGroup[] = [
       },
     ],
   },
-] satisfies TileGroup[];
+];
 
 export const tasksControllerConfigButton = {
   type: 'button',

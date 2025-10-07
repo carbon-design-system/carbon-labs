@@ -10,7 +10,7 @@
 import React from 'react';
 import { Tooltip } from '@carbon/react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import { AriaLabels } from '../AnimatedHeader/AnimatedHeader';
+import { AriaLabels } from '../AnimatedHeader/types';
 
 const NAME_FIRST_LANGS = [
   'ar', // Arabic
@@ -43,15 +43,11 @@ const HeaderTitle: React.FC<HeaderTitleProps> = ({
       : 'en';
   const isNameFirst = NAME_FIRST_LANGS.includes(currentLang.slice(0, 2));
 
-  const headingCollapsed = `${blockClass}-collapsed`;
-  const headingExpanded = `${blockClass}-expanded`;
-
   return (
     <Tooltip align="bottom" label={`${welcomeText}, ${userName}`}>
       <h1
-        className={`${blockClass} ${
-          headerExpanded ? headingExpanded : headingCollapsed
-        }`}
+        className={blockClass}
+        data-expanded={headerExpanded}
         aria-label={ariaLabels?.welcome ?? `${welcomeText}, ${userName}`}>
         {isNameFirst ? (
           <>

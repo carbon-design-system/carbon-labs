@@ -1,0 +1,32 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/spacing' as layout;
+@use '@carbon/styles/scss/colors' as colorToken;
+@use '../../globals/styles/vars' as automation;
+
+.#{automation.$namespace-prefix} {
+  .#{automation.$automation-header-navigation-action}__menu-item {
+    display: block;
+    cursor: pointer;
+
+    a {
+      color: colorToken.$gray-10;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+    }
+
+    svg {
+      margin-inline-start: layout.$spacing-02;
+    }
+  }
+}

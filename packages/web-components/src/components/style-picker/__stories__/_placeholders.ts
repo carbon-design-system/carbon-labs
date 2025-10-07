@@ -8,12 +8,12 @@
  */
 
 import * as carbonColors from '@carbon/colors';
-import Apple16 from '@carbon/web-components/es/icons/apple/16';
-import Corn16 from '@carbon/web-components/es/icons/corn/16';
-import Fish16 from '@carbon/web-components/es/icons/fish/16';
-import Wheat16 from '@carbon/web-components/es/icons/wheat/16';
-import FruitBowl16 from '@carbon/web-components/es/icons/fruit-bowl/16';
-import Strawberry16 from '@carbon/web-components/es/icons/strawberry/16';
+import Apple16 from '@carbon/icons/es/apple/16';
+import Corn16 from '@carbon/icons/es/corn/16';
+import Fish16 from '@carbon/icons/es/fish/16';
+import Wheat16 from '@carbon/icons/es/wheat/16';
+import FruitBowl16 from '@carbon/icons/es/fruit-bowl/16';
+import Strawberry16 from '@carbon/icons/es/strawberry/16';
 import AmsterdamWindmill from '@carbon/pictograms/lib/amsterdam--windmill';
 import Barcelona from '@carbon/pictograms/lib/barcelona';
 import BerlinBrandenburgGate from '@carbon/pictograms/lib/berlin--brandenburg-gate';
@@ -57,8 +57,9 @@ import TelAviv from '@carbon/pictograms/lib/tel-aviv';
 import TokyoGates from '@carbon/pictograms/lib/tokyo--gates';
 import CairoGizaPlateau from '@carbon/pictograms/lib/cairo--giza-plateau';
 import Melbourne from '@carbon/pictograms/lib/melbourne';
-import { Group, Item } from '../defs/style-picker-group.types';
+import { Group, Item } from '../defs';
 import { SVGTemplateResult } from 'lit';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 type ColorItem = {
   color: string;
@@ -113,7 +114,7 @@ export const icons: Item<IconItem>[] = [
 ].map(([label, icon]) => ({
   value: label?.toString().toLowerCase().split(' ').join('-'),
   label: label as string,
-  renderIcon: icon,
+  renderIcon: iconLoader(icon),
 }));
 
 export const pictograms: Group<Item<PictogramItem>>[] = [

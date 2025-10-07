@@ -6,19 +6,12 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import React, {
-  ElementType,
-  ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import lottie, { AnimationItem } from 'lottie-web';
 import { Grid, Column, Button } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
-import lottie from 'lottie-web';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-
 import { BaseTile } from '../Tiles/index';
 import TasksController, {
   TasksControllerProps,
@@ -27,42 +20,21 @@ import WorkspaceSelector, {
   WorkspaceSelectorProps,
 } from '../WorkspaceSelector/WorkspaceSelector';
 import HeaderTitle from '../HeaderTitle/HeaderTitle';
+import { Tile, TileGroup, AriaLabels } from './types';
+import ContentSwitcherSelector, {
+  type ContentSwitcherConfig,
+} from '../ContentSwitcherSelector/ContentSwitcherSelector';
+import HeaderAction from '../HeaderAction/HeaderAction';
+import type { HeaderActionProps } from '../HeaderAction/header-action.types';
 
 /** Animated Header */
-
-export interface AriaLabels {
-  welcome?: string;
-  description?: string;
-  collapseButton?: string;
-  expandButton?: string;
-  tilesContainer?: string;
-}
-
-export interface Tile {
-  href?: string | null;
-  id: string;
-  mainIcon?: ElementType | null;
-  secondaryIcon?: ElementType | null;
-  subtitle?: string | null;
-  title?: string | null;
-  customContent?: ReactNode | null;
-  isLoading?: boolean;
-  isDisabled?: boolean;
-  onClick?: () => void;
-  ariaLabel?: string;
-}
-
-export interface TileGroup {
-  id: number;
-  label: string;
-  tiles: Tile[];
-}
 
 export type AnimatedHeaderProps = {
   allTileGroups?: TileGroup[];
   ariaLabels?: AriaLabels;
   selectedTileGroup?: TileGroup;
-  setSelectedTileGroup: (e) => void;
+  setSelectedTileGroup?: (e) => void;
+  contentSwitcherConfig?: ContentSwitcherConfig;
   description?: string;
   headerAnimation?: object;
   headerStatic?: React.JSX.Element | string;
@@ -75,7 +47,8 @@ export type AnimatedHeaderProps = {
   collapseButtonLabel?: string;
   tileClickHandler?: (tile: Tile) => void;
 } & TasksControllerProps &
-  WorkspaceSelectorProps;
+  WorkspaceSelectorProps &
+  HeaderActionProps;
 
 const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   allTileGroups,
@@ -88,6 +61,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   productName = '[Product name]',
   userName,
   welcomeText,
+  contentSwitcherConfig,
+  headerActionConfig,
   tasksControllerConfig,
   workspaceSelectorConfig,
   isLoading,
@@ -100,65 +75,71 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const blockClass = `${prefix}--animated-header`;
 
   const animationContainer = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState(true);
+  const animRef = useRef<AnimationItem | null>(null);
+  const [isOpen, setIsOpen] = useState(true);
   const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
 
-  const collapsed = `${blockClass}--collapsed`;
-  const contentCollapsed = `${blockClass}__content--collapsed`;
-  const descriptionCollapsed = `${blockClass}__left-area-container--collapsed`;
-  const lottieCollapsed = `${blockClass}__lottie-animation--collapsed`;
-
   const handleButtonCollapseClick = () => {
-    setOpen(!open);
+    setIsOpen(!isOpen);
   };
 
   useEffect(() => {
-    if (!animationContainer.current) {
-      return;
+    // Make sure any prior instance is destroyed before creating a new one
+    if (animRef.current) {
+      animRef.current.destroy();
+      animRef.current = null;
     }
+    if (!animationContainer.current || !headerAnimation) return;
 
     const animation = lottie.loadAnimation({
       container: animationContainer.current as HTMLDivElement,
-      animationData: headerAnimation,
+      animationData: headerAnimation as any,
       renderer: 'svg',
       loop: false,
       autoplay: false,
+      rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
     });
+    animRef.current = animation;
 
-    const lottieLoadSpeed = 1;
-    const animationData = animation['animationData'];
+    const onDomLoaded = () => {
+      const data: any = (animation as any).animationData;
+      const markers = data?.markers ?? [];
+      const first = markers?.[0]?.tm ?? 0;
 
-    function reducedMotion() {
-      animation.goToAndStop(5000);
-    }
+      const totalFrames = animation.getDuration(true);
+      const second = markers?.[1]?.tm ?? totalFrames;
 
-    function load() {
-      animation.setSpeed(lottieLoadSpeed);
-      animation.playSegments(
-        [animationData.markers.at(0).tm, animationData.markers.at(1).tm],
-        true
-      );
-    }
+      if (isReduced) {
+        // Respect reduced motion
+        const restFrame =
+          (typeof second === 'number' ? second : totalFrames * 0.5) | 0;
+        animation.goToAndStop(restFrame, true);
+        return;
+      }
 
-    if (isReduced) {
-      // reduced motion on
-      animation.addEventListener('DOMLoaded', reducedMotion);
-    } else {
-      // reduced motion off
-
-      // Run Start Animation
-      animation.addEventListener('DOMLoaded', load);
-    }
-    return () => {
-      animation?.removeEventListener('DOMLoaded', reducedMotion);
-      animation?.removeEventListener('DOMLoaded', load);
+      animation.setSpeed(1);
+      requestAnimationFrame(() => {
+        if (typeof first === 'number' && typeof second === 'number') {
+          animation.playSegments([first, second], true);
+        } else {
+          animation.play();
+        }
+      });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isReduced]);
+
+    animation.addEventListener('DOMLoaded', onDomLoaded);
+
+    return () => {
+      animation.removeEventListener('DOMLoaded', onDomLoaded);
+      animation.destroy();
+      animRef.current = null;
+    };
+    // Re-init when the JSON or reduced-motion preference changes
+  }, [headerAnimation, isReduced]);
 
   return (
-    <header className={`${blockClass}${!open ? ` ${collapsed}` : ''}`}>
-      <Grid>
+    <header className={blockClass} data-expanded={isOpen}>
+      <Grid className={`${blockClass}__grid`}>
         <div className={`${blockClass}__gradient--overlay`} />
 
         <div className={`${blockClass}__container--gradient`} />
@@ -177,19 +158,31 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__lottie-animation--container`}>
           <div
             ref={animationContainer}
-            className={`${blockClass}__lottie-animation${
-              !open ? ` ${lottieCollapsed}` : ''
-            }`}
+            className={`${blockClass}__lottie-animation`}
+            data-expanded={isOpen}
             aria-hidden="true"></div>
         </div>
 
-        <Column sm={4} md={8} lg={16}>
-          <HeaderTitle
-            userName={userName}
-            welcomeText={welcomeText}
-            headerExpanded={open}
-            ariaLabels={ariaLabels}
-          />
+        <Column sm={4} md={8} lg={16} className={`${blockClass}__title-row`}>
+          <div className={`${blockClass}__title-and-actions`}>
+            <HeaderTitle
+              userName={userName}
+              welcomeText={welcomeText}
+              headerExpanded={isOpen}
+              ariaLabels={ariaLabels}
+            />
+
+            {/* When using the ContentSwitcher, render it here (top row) */}
+            {contentSwitcherConfig ? (
+              <div className={`${blockClass}__actions`}>
+                <ContentSwitcherSelector
+                  contentSwitcherConfig={contentSwitcherConfig}
+                  isLoading={isLoading || contentSwitcherConfig.isLoading}
+                  headerExpanded={isOpen}
+                />
+              </div>
+            ) : null}
+          </div>
         </Column>
 
         {(description || tasksControllerConfig) && (
@@ -198,9 +191,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             md={8}
             lg={4}
             id={`${blockClass}-content`}
-            className={`${blockClass}__left-area-container${
-              !open ? ` ${descriptionCollapsed}` : ''
-            }`}>
+            className={`${blockClass}__left-area-container`}
+            data-expanded={isOpen}>
             {description && (
               <h2
                 className={`${blockClass}__description`}
@@ -208,13 +200,15 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                 {description}
               </h2>
             )}
-            <TasksController
-              tasksControllerConfig={tasksControllerConfig}
-              isLoading={isLoading}
-              allTileGroups={allTileGroups}
-              selectedTileGroup={selectedTileGroup}
-              setSelectedTileGroup={setSelectedTileGroup}
-            />
+            {tasksControllerConfig && (
+              <TasksController
+                tasksControllerConfig={tasksControllerConfig}
+                isLoading={isLoading}
+                allTileGroups={allTileGroups}
+                selectedTileGroup={selectedTileGroup}
+                setSelectedTileGroup={setSelectedTileGroup}
+              />
+            )}
           </Column>
         )}
 
@@ -222,9 +216,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
           <Column sm={4} md={8} lg={12} className={`${blockClass}__content`}>
             {!!workspaceSelectorConfig?.allWorkspaces?.length && (
               <div
-                className={`${blockClass}__workspace--container${
-                  !open ? ` ${contentCollapsed}` : ''
-                }`}>
+                className={`${blockClass}__workspace--container`}
+                data-expanded={isOpen}>
                 <WorkspaceSelector
                   workspaceSelectorConfig={workspaceSelectorConfig}
                   userName={userName}
@@ -236,31 +229,32 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               className={`${blockClass}__tiles-container`}
               aria-label={ariaLabels?.tilesContainer ?? `Feature tiles`}
               role="list">
-              {selectedTileGroup.tiles.map((tile) => {
+              {selectedTileGroup.tiles.map((tile, index) => {
+                const { tileId, ...rest } = tile as any;
+                const legacyId = (tile as any).id; // old configs
+                const resolvedTileId = tileId ?? legacyId;
+                const key = resolvedTileId ?? `tile-${index}`;
+                const hasAction = tile.href || tile.onClick === 'function';
+
                 return (
                   <BaseTile
+                    key={key}
+                    tileId={resolvedTileId}
+                    {...rest}
+                    open={isOpen}
+                    productName={productName}
+                    isLoading={isLoading || tile.isLoading}
+                    disabledTaskLabel={disabledTaskLabel}
                     onClick={
-                      tile.href || tile.onClick
+                      hasAction
                         ? () => {
                             tileClickHandler?.(tile);
-                            tile.onClick?.();
+                            if (typeof (tile as any).onClick === 'function') {
+                              (tile as any).onClick();
+                            }
                           }
-                        : null
+                        : undefined
                     }
-                    key={tile.id}
-                    id={tile.id}
-                    open={open}
-                    href={tile.href}
-                    mainIcon={tile.mainIcon}
-                    secondaryIcon={tile.secondaryIcon}
-                    title={tile.title}
-                    subtitle={tile.subtitle}
-                    productName={productName}
-                    customContent={tile.customContent}
-                    isLoading={isLoading || tile.isLoading}
-                    isDisabled={tile.isDisabled}
-                    disabledTaskLabel={disabledTaskLabel}
-                    ariaLabel={tile.ariaLabel}
                   />
                 );
               })}
@@ -271,19 +265,23 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
         <div className={`${blockClass}__button-collapse--gradient`} />
 
         <div className={`${blockClass}__button-collapse--container`}>
+          {headerActionConfig ? (
+            <HeaderAction config={headerActionConfig} headerExpanded={isOpen} />
+          ) : null}
+
           <Button
             id={`${blockClass}__button-collapse`}
             kind="ghost"
-            renderIcon={open ? ChevronUp : ChevronDown}
+            renderIcon={isOpen ? ChevronUp : ChevronDown}
             onClick={handleButtonCollapseClick}
-            aria-expanded={open}
+            aria-expanded={isOpen}
             aria-controls={`${blockClass}-content`}
             aria-label={
-              open
+              isOpen
                 ? ariaLabels?.collapseButton ?? 'Collapse header details'
                 : ariaLabels?.expandButton ?? 'Expand header details'
             }>
-            {open ? collapseButtonLabel : expandButtonLabel}
+            {isOpen ? collapseButtonLabel : expandButtonLabel}
           </Button>
         </div>
       </Grid>
@@ -314,6 +312,27 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   collapseButtonLabel: PropTypes.string,
 
   /**
+   *  Configuration for Carbon Content Switcher in header.
+   * Customized tasks are used to allow users that have multiple roles and
+   * permissions to experience better tailored content based on their need.
+   */
+  contentSwitcherConfig: PropTypes.shape({
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        text: PropTypes.string.isRequired,
+        onSelect: PropTypes.func,
+      }).isRequired
+    ).isRequired,
+    ariaLabel: PropTypes.string,
+    isLoading: PropTypes.bool,
+    lowContrast: PropTypes.bool,
+    headerExpanded: PropTypes.bool,
+    visibleCount: PropTypes.oneOf([2, 3]),
+    onChange: PropTypes.func,
+  }),
+
+  /**
    * Provide short sentence in max. 3 lines related to product context
    */
   description: PropTypes.string,
@@ -322,6 +341,37 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Custom expand button label
    */
   expandButtonLabel: PropTypes.string,
+
+  /**
+   * Configuration for the header action control (icon button / ghost button / carousel - *coming soon*).
+   * This sits to the left of the Collapse button and can trigger generic actions
+   * (open modal/panel) or page through tiles.
+   */
+  headerActionConfig: PropTypes.shape({
+    type: PropTypes.oneOf(['icon-button', 'ghost-button']).isRequired,
+
+    // Carbon IconButton variant
+    iconButton: PropTypes.shape({
+      icon: PropTypes.elementType.isRequired,
+      iconLabel: PropTypes.string.isRequired,
+      onClick: PropTypes.func.isRequired,
+      disabled: PropTypes.bool,
+      ariaLabel: PropTypes.string,
+      // Override Carbon IconButton props if needed
+      propsOverrides: PropTypes.object,
+    }),
+
+    // Carbon Ghost Button variant
+    ghostButton: PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      icon: PropTypes.elementType,
+      onClick: PropTypes.func.isRequired,
+      disabled: PropTypes.bool,
+      ariaLabel: PropTypes.string,
+      // Override Carbon Button props if needed
+      propsOverrides: PropTypes.object,
+    }),
+  }),
 
   /**
    * In-product imagery / lottie animation (.json) dim. 1312 x 738
@@ -357,23 +407,23 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   setSelectedTileGroup: PropTypes.func,
 
   /**
-   * Configuration for Carbon button or dropdown menu in header. Customized
-   * tasks are used to allow users that have multiple roles and permissions
-   * to experience better tailored content based on their need.
-   * It also allows to override Carbon Button props by specifying them in tasksConfig.button.propsOverrides
-   * or to override Carbon Dropdown props by specifying them in tasksConfig.dropdown.propsOverrides.
+   * Configuration for Carbon button / dropdown in header.
+   * Customized tasks are used to allow users that have multiple roles and
+   * permissions to experience better tailored content based on their need.
    */
   tasksControllerConfig: PropTypes.shape({
     type: PropTypes.oneOf(['button', 'dropdown']).isRequired,
+    isLoading: PropTypes.bool,
+
     button: PropTypes.shape({
       text: PropTypes.string.isRequired,
       // Override Carbon Button props
       propsOverrides: PropTypes.object,
     }),
+
     dropdown: PropTypes.shape({
-      allTileGroups: PropTypes.arrayOf(PropTypes.object),
-      selectedTileGroup: PropTypes.object,
-      setSelectedTileGroup: PropTypes.func.isRequired,
+      label: PropTypes.string,
+      ariaLabel: PropTypes.string,
       // Override Carbon Dropdown props
       propsOverrides: PropTypes.object,
     }),

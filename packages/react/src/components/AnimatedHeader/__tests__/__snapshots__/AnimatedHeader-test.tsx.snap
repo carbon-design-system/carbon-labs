@@ -4,9 +4,10 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
 <div>
   <header
     class="clabs--animated-header"
+    data-expanded="true"
   >
     <div
-      class="cds--css-grid"
+      class="clabs--animated-header__grid cds--css-grid"
     >
       <div
         class="clabs--animated-header__gradient--overlay"
@@ -20,54 +21,61 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         <div
           aria-hidden="true"
           class="clabs--animated-header__lottie-animation"
+          data-expanded="true"
         />
       </div>
       <div
-        class="cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
+        class="clabs--animated-header__title-row cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
       >
-        <span
-          class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip"
+        <div
+          class="clabs--animated-header__title-and-actions"
         >
-          <div
-            class="cds--tooltip-trigger__wrapper"
-          >
-            <h1
-              aria-label="Welcome, Drew"
-              aria-labelledby="tooltip-:r0:"
-              class="clabs--animated-header__title clabs--animated-header__title-expanded"
-            >
-              <span
-                class="clabs--animated-header__title-first"
-              >
-                Welcome
-                , 
-              </span>
-              <span
-                class="clabs--animated-header__title-second"
-              >
-                Drew
-              </span>
-            </h1>
-          </div>
           <span
-            aria-hidden="true"
-            class="cds--popover"
-            id="tooltip-:r0:"
-            role="tooltip"
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip"
           >
-            <span
-              class="cds--popover-content cds--tooltip-content"
+            <div
+              class="cds--tooltip-trigger__wrapper"
             >
-              Welcome, Drew
-            </span>
+              <h1
+                aria-label="Welcome, Drew"
+                aria-labelledby="tooltip-:r0:"
+                class="clabs--animated-header__title"
+                data-expanded="true"
+              >
+                <span
+                  class="clabs--animated-header__title-first"
+                >
+                  Welcome
+                  , 
+                </span>
+                <span
+                  class="clabs--animated-header__title-second"
+                >
+                  Drew
+                </span>
+              </h1>
+            </div>
             <span
-              class="cds--popover-caret"
-            />
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-:r0:"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Welcome, Drew
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
           </span>
-        </span>
+        </div>
       </div>
       <div
         class="clabs--animated-header__left-area-container cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-4 cds--css-grid-column"
+        data-expanded="true"
         id="clabs--animated-header-content"
       >
         <h2
@@ -103,13 +111,13 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                 id="downshift-:r4:-toggle-button"
                 role="combobox"
                 tabindex="0"
-                title="AI Chat Tile w/ two glass tiles"
+                title="AI Prompt Tile w/ two glass tiles"
                 type="button"
               >
                 <span
                   class="cds--list-box__label"
                 >
-                  AI Chat Tile w/ two glass tiles
+                  AI Prompt Tile w/ two glass tiles
                 </span>
                 <div
                   class="cds--list-box__menu-icon"
@@ -150,6 +158,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
       >
         <div
           class="clabs--animated-header__workspace--container"
+          data-expanded="true"
         >
           <div
             class="cds--dropdown__wrapper cds--list-box__wrapper clabs--animated-header__workspace cds--dropdown__wrapper--inline cds--list-box__wrapper--inline"
@@ -230,6 +239,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <div
               class="clabs--animated-header__ai-prompt-tile--body"
+              data-expanded="true"
             >
               <div
                 class="clabs--animated-header__ai-prompt-tile--body-background"
@@ -283,7 +293,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
                       aria-controls="id-:r9:"
                       aria-expanded="false"
                       aria-label="AI Show information"
-                      class="cds--toggletip-button cds--ai-label__button cds--ai-label__button--mini cds--ai-label__button--default"
+                      class="cds--toggletip-button cds--ai-label__button cds--ai-label__button--xs cds--ai-label__button--default"
                       type="button"
                     >
                       <span
@@ -408,6 +418,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <div
               class="clabs--animated-header__glass-tile--body"
+              data-expanded="true"
             >
               <div
                 class="clabs--animated-header__glass-tile--body-background"
@@ -456,6 +467,7 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
           >
             <div
               class="clabs--animated-header__glass-tile--body"
+              data-expanded="true"
             >
               <div
                 class="clabs--animated-header__glass-tile--body-background"

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-split-panel",
-  "version": "0.7.0",
+  "version": "0.9.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -26,13 +26,19 @@
   "files": [
     "es",
     "lib",
-    "scss"
+    "scss",
+    "telemetry.yml"
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rimraf es lib scss"
+    "clean": "rimraf es lib scss",
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id c0e6b5ea-e44d-4fbc-a40a-b5f18bd8ed93 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
     "@carbon-labs/utilities": "canary"
+  },
+  "dependencies": {
+    "@ibm/telemetry-js": "^1.10.2"
   }
 }

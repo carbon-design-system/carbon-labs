@@ -13,20 +13,20 @@ import { H5 } from './h5';
 import { H6 } from './h6';
 
 export default {
-  title: 'MDX Components/Markdown/Headings',
+  title: 'Components/MDX Components/Markdown/Headings',
   component: H1,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
     className: {
-      control: false
+      control: false,
     },
     headingClassName: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
 const H1Template = (args) => (
   <>
@@ -37,7 +37,7 @@ const H1Template = (args) => (
     <H5 {...args}>This is a Heading 5</H5>
     <H6 {...args}>This is a Heading 6</H6>
   </>
-)
+);
 
-export const Default = H1Template.bind({})
-Default.args = {}
+export const Default = H1Template.bind({});
+Default.args = {};

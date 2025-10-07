@@ -12,27 +12,26 @@ import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import { SkeletonPlaceholder } from '@carbon/react';
 
 export type GlassTileBodyProps = {
-  mainIcon?: ElementType | null;
   open?: boolean;
-  secondaryIcon?: ElementType | null;
-  subtitle?: string | null;
   title?: string | null;
+  subtitle?: string | null;
   customContent?: ReactNode;
+  primaryIcon?: ElementType | null;
+  secondaryIcon?: ElementType | null;
   isLoading?: boolean;
 };
 
 export const GlassTileBody = ({
-  mainIcon: MainIcon,
   open,
-  secondaryIcon: SecondaryIcon,
-  subtitle,
   title,
+  subtitle,
   customContent,
+  primaryIcon: PrimaryIcon,
+  secondaryIcon: SecondaryIcon,
   isLoading,
 }: GlassTileBodyProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__glass-tile`;
-  const collapsed = `${blockClass}--collapsed`;
 
   if (isLoading) {
     return (
@@ -41,15 +40,15 @@ export const GlassTileBody = ({
   }
 
   return (
-    <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
+    <div className={`${blockClass}--body`} data-expanded={open}>
       <div className={`${blockClass}--body-background`} />
       {customContent ? (
         <div className={`${blockClass}--custom-content`}>{customContent}</div>
       ) : (
         <>
           <div className={`${blockClass}--icons`}>
-            {MainIcon && (
-              <MainIcon fill={`var(--cds-icon-secondary)`} size={24} />
+            {PrimaryIcon && (
+              <PrimaryIcon fill={`var(--cds-icon-secondary)`} size={24} />
             )}
           </div>
           <div className={`${blockClass}--title`}>{title}</div>

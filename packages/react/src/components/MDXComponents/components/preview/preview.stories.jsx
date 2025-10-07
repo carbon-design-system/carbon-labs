@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react'
-import { Preview } from './preview'
+import React from 'react';
+import { Preview } from './preview';
 
 export default {
-  title: 'MDX Components/Preview',
+  title: 'Components/MDX Components/Preview',
   component: Preview,
   parameters: {},
   argTypes: {
     title: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
 const Template = (args) => (
   <Preview
@@ -26,7 +26,7 @@ const Template = (args) => (
     title="Carbon Tutorial Step 5"
     src="https://react-step-6--carbon-tutorial.netlify.com"
   />
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

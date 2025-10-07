@@ -22,14 +22,14 @@ export type BaseTileProps =
   | ({ variant: 'aiPrompt' } & AIPromptTileProps)
   | (({ variant: 'ai' } & AITileProps) & {
       id?: string;
-      tileId?: string | null;
+      tileId: string;
     });
 
 function inferVariant(props: BaseTileProps): TileVariant {
   if (props.variant) {
     return props.variant;
   }
-  if (props.id === 'ai-tile') {
+  if (props.tileId === 'ai-tile') {
     return 'aiPrompt';
   }
   return 'glass';

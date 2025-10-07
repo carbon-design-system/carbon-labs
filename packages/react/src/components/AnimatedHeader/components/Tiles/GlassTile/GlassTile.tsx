@@ -10,7 +10,7 @@
 import React, { ElementType } from 'react';
 
 export type GlassTileProps = {
-  tileId: string | null;
+  tileId: string;
   href?: string | null;
   title?: string | null;
   subtitle?: string | null;
@@ -23,7 +23,7 @@ export type GlassTileProps = {
   open?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
-} & Record<string, unknown>;
+};
 
 import { Link } from '@carbon/react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';

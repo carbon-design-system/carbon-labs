@@ -12,7 +12,7 @@ import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import { AITileBody, AITileBodyProps } from '../AITile/AITileBody';
 
 export type AITileProps = {
-  variant: 'ai',
+  variant: 'ai';
   tileId: string;
   href?: string | null;
   title?: string | null;

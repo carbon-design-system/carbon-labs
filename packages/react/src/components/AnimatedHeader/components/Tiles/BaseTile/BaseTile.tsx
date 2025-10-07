@@ -17,10 +17,7 @@ import { GlassTile, type GlassTileProps } from '../GlassTile/GlassTile';
 /** Base Tile router */
 export type TileVariant = 'glass' | 'aiPrompt' | 'ai';
 
-export type BaseTileProps = GlassTileProps
-  | AIPromptTileProps
-  | AITileProps
-
+export type BaseTileProps = GlassTileProps | AIPromptTileProps | AITileProps;
 
 function inferVariant(props: BaseTileProps): TileVariant {
   if (props.variant) {

@@ -10,6 +10,7 @@
 
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { INITIAL_AUTOMATION_HEADER_PROPS } from '../../constant';
 import {
   GlobalActionConfig,
@@ -19,10 +20,12 @@ import {
 } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
 
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Wrapper component that obtains header options from a backend route
  */
-@customElement('hybrid-ipaas-header')
+@customElement(`${clabsPrefix}-global-header-hybrid-ipaas`)
 export class HybridIpaasHeader extends LitElement {
   @property({ type: String }) productName = null;
   @property({ type: String }) productKey = '';
@@ -219,9 +222,9 @@ export class HybridIpaasHeader extends LitElement {
 
   render() {
     return html`<div id="ipaas-header-container">
-      <apaas-common-header
+      <clabs-global-header-apaas
         ?hasNewNotifications="${this.hasNewNotifications}"
-        .headerProps="${this.headerOptions}"></apaas-common-header>
+        .headerProps="${this.headerOptions}"></clabs-global-header-apaas>
     </div>`;
   }
 }

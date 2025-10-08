@@ -10,10 +10,11 @@
 
 import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
 import styles from './_index.scss?inline' assert { type: 'css' };
 
+const { stablePrefix: clabsPrefix } = settings;
 const blockClass = `${AUTOMATION_HEADER_BASE_CLASS}__logout-header`;
 
 const eightBar = html`
@@ -32,7 +33,7 @@ const eightBar = html`
 /**
  * Component to show a company name or logo
  */
-@customElement('apaas-logout-header')
+@customElement(`${clabsPrefix}-global-header-logout-banner`)
 export class LogoutHeader extends LitElement {
   static styles = css`
     ${unsafeCSS([styles])}

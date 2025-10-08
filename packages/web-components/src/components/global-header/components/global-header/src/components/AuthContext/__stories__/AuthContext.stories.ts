@@ -23,7 +23,7 @@ const meta: Meta = {
 export default meta;
 
 const renderAuthContext = (args) =>
-  html` <apaas-common-header .headerProps="${args}"></common-header> `;
+  html` <clabs-global-header-apaas .headerProps="${args}"></common-header> `;
 
 export const Default = renderAuthContext.bind({});
 Default.args = {

@@ -222,9 +222,9 @@ export class HybridIpaasHeader extends LitElement {
 
   render() {
     return html`<div id="ipaas-header-container">
-      <apaas-common-header
+      <clabs-global-header-apaas
         ?hasNewNotifications="${this.hasNewNotifications}"
-        .headerProps="${this.headerOptions}"></apaas-common-header>
+        .headerProps="${this.headerOptions}"></clabs-global-header-apaas>
     </div>`;
   }
 }

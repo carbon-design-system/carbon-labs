@@ -16,7 +16,7 @@ import sinon from 'sinon';
 describe('CommonHeader tests', () => {
   it('renders with no props', async () => {
     const el = await fixture<CommonHeader>(
-      html`<apaas-common-header></apaas-common-header>`
+      html`<clabs-global-header-apaas></clabs-global-header-apaas>`
     );
     expect(el).not.to.be.null;
 
@@ -41,7 +41,7 @@ describe('CommonHeader tests', () => {
     };
 
     const el = await fixture(
-      html`<apaas-common-header .headerProps="${props}"></apaas-common-header>`
+      html`<clabs-global-header-apaas .headerProps="${props}"></clabs-global-header-apaas>`
     );
     expect(el).not.to.be.null;
 
@@ -72,8 +72,8 @@ describe('CommonHeader tests', () => {
     };
     it('adds the "assist-me-script-status" event listener when assistMe config is passed in', async () => {
       const el = await fixture<CommonHeader>(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
 
@@ -89,8 +89,8 @@ describe('CommonHeader tests', () => {
 
     it('sets assistMeScriptLoaded to true is event is fired with "load"', async () => {
       const el = await fixture<CommonHeader>(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
 
@@ -108,8 +108,8 @@ describe('CommonHeader tests', () => {
     it('throws console error if event is fired with "error"', async () => {
       const consoleErrorStub = sinon.stub(console, 'error');
       const el = await fixture<CommonHeader>(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
 
@@ -137,8 +137,8 @@ describe('CommonHeader tests', () => {
       };
 
       const el = await fixture<CommonHeader>(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
 
       expect(el).not.to.be.null;
@@ -188,8 +188,8 @@ describe('CommonHeader tests', () => {
       };
 
       const el = await fixture(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
 
@@ -222,8 +222,8 @@ describe('CommonHeader tests', () => {
       };
 
       const el = await fixture(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
 
@@ -284,8 +284,8 @@ describe('CommonHeader tests', () => {
         },
       };
       const el = await fixture(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
 
@@ -321,8 +321,8 @@ describe('CommonHeader tests', () => {
       };
 
       const el = await fixture<CommonHeader>(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
 
@@ -372,8 +372,8 @@ describe('CommonHeader tests', () => {
       };
 
       const el = await fixture(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
 
@@ -434,8 +434,8 @@ describe('CommonHeader tests', () => {
       };
 
       const el = await fixture(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
 
@@ -467,8 +467,8 @@ describe('CommonHeader tests', () => {
         },
       };
       const el = await fixture(
-        html`<apaas-common-header
-          .headerProps="${props}"></apaas-common-header>`
+        html`<clabs-global-header-apaas
+          .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
 

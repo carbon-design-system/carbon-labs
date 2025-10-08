@@ -18,7 +18,8 @@ import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import { Send } from '@carbon/react/icons';
 
 export type AIPromptTileProps = {
-  tileId: string | null;
+  variant: 'aiPrompt';
+  tileId: string;
   href?: string | null;
   title?: string | null;
   disabledTaskLabel?: string | null;
@@ -30,7 +31,7 @@ export type AIPromptTileProps = {
   open?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
-} & Record<string, unknown>;
+};
 
 export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   tileId,

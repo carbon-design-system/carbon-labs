@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { Column, Grid } from '@carbon/react';
-import { Pause, Play } from '@carbon/react/icons';
+import { Pause, Play } from '@carbon/react/icons/index.js';
 import { clsx } from 'clsx';
 import PropTypes from 'prop-types';
 import React, {

@@ -17,19 +17,13 @@ import { GlassTile, type GlassTileProps } from '../GlassTile/GlassTile';
 /** Base Tile router */
 export type TileVariant = 'glass' | 'aiPrompt' | 'ai';
 
-export type BaseTileProps =
-  | ({ variant?: 'glass' } & GlassTileProps)
-  | ({ variant: 'aiPrompt' } & AIPromptTileProps)
-  | (({ variant: 'ai' } & AITileProps) & {
-      id?: string;
-      tileId?: string | null;
-    });
+export type BaseTileProps = GlassTileProps | AIPromptTileProps | AITileProps;
 
 function inferVariant(props: BaseTileProps): TileVariant {
   if (props.variant) {
     return props.variant;
   }
-  if (props.id === 'ai-tile') {
+  if (props.tileId === 'ai-tile') {
     return 'aiPrompt';
   }
   return 'glass';

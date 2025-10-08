@@ -6,7 +6,7 @@
  */
 
 import { Column, Theme } from '@carbon/react';
-import { CheckmarkFilled, Misuse } from '@carbon/react/icons';
+import { CheckmarkFilled, Misuse } from '@carbon/react/icons/index.js';
 import { clsx } from 'clsx';
 import PropTypes from 'prop-types';
 import React, { ReactNode } from 'react';

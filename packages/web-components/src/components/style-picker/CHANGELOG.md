@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.14.0...@carbon-labs/wc-style-picker@0.15.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **mdx-components:** update package entrypoint ([#811](https://github.com/carbon-design-system/carbon-labs/issues/811)) ([763d680](https://github.com/carbon-design-system/carbon-labs/commit/763d6803e47446cbd336dec9a5be75afde23f6e7))
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.13.0...@carbon-labs/wc-style-picker@0.14.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **style-picker:** update types import ([#808](https://github.com/carbon-design-system/carbon-labs/issues/808)) ([4ae43bf](https://github.com/carbon-design-system/carbon-labs/commit/4ae43bf93eba1c66f08b1836e7f640a61593e77c))
+
+
+
+
+
 # [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.12.0...@carbon-labs/wc-style-picker@0.13.0) (2025-09-16)
 
 

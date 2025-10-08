@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.69.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.68.0...@carbon-labs/web-components@0.69.0) (2025-10-06)
+
+
+### Bug Fixes
+
+* **storybook:** add a11y checker back ([#828](https://github.com/carbon-design-system/carbon-labs/issues/828)) ([a4c7265](https://github.com/carbon-design-system/carbon-labs/commit/a4c72651faa3cd6082394c94660754c859d7ed4e))
+
+
+
+
+
+# [0.68.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.67.0...@carbon-labs/web-components@0.68.0) (2025-10-06)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.67.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.66.0...@carbon-labs/web-components@0.67.0) (2025-10-01)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.66.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.65.0...@carbon-labs/web-components@0.66.0) (2025-10-01)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.65.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.64.0...@carbon-labs/web-components@0.65.0) (2025-09-26)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.64.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.63.0...@carbon-labs/web-components@0.64.0) (2025-09-24)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.63.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.62.0...@carbon-labs/web-components@0.63.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **mdx-components:** update package entrypoint ([#811](https://github.com/carbon-design-system/carbon-labs/issues/811)) ([763d680](https://github.com/carbon-design-system/carbon-labs/commit/763d6803e47446cbd336dec9a5be75afde23f6e7))
+
+
+
+
+
+# [0.62.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.61.0...@carbon-labs/web-components@0.62.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **style-picker:** update types import ([#808](https://github.com/carbon-design-system/carbon-labs/issues/808)) ([4ae43bf](https://github.com/carbon-design-system/carbon-labs/commit/4ae43bf93eba1c66f08b1836e7f640a61593e77c))
+
+
+
+
+
 # [0.61.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.60.0...@carbon-labs/web-components@0.61.0) (2025-09-17)
 
 

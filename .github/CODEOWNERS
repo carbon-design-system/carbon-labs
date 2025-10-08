@@ -6,7 +6,7 @@
 * @carbon-design-system/carbon-for-ibm-products-reviewers
 
 # Carbon AI Chat
-/packages/web-components/src/components/chat/              @carbon-design-system/carbon-ai-chat-admins @carbon-design-system/developers-system-reviewers
+/packages/web-components/src/components/chat/              @carbon-design-system/carbon-ai-chat-admins @carbon-design-system/developers-system
 
 # Carbon UI Shell
 /packages/react/src/components/UIShell/                    @carbon-design-system/ui-shell-devs

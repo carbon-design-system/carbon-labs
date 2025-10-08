@@ -1635,6 +1635,7 @@ __metadata:
     "@mdx-js/react": "npm:^3.1.0"
     "@rollup/plugin-babel": "npm:^6.0.0"
     "@rollup/plugin-url": "npm:^8.0.2"
+    "@storybook/addon-a11y": "npm:^9.1.2"
     "@storybook/addon-docs": "npm:^9.1.2"
     "@storybook/addon-onboarding": "npm:^9.1.2"
     "@storybook/addon-webpack5-compiler-babel": "npm:^3.0.6"
@@ -1672,6 +1673,7 @@ __metadata:
     rollup-plugin-svg: "npm:^2.0.0"
     sass-loader: "npm:^16.0.4"
     storybook: "npm:^9.1.2"
+    storybook-addon-accessibility-checker: "npm:>=9.2.0-rc.0"
     style-loader: "npm:^4.0.0"
     ts-jest: "npm:^29.2.5"
     typescript: "npm:^5.2.2"
@@ -1789,6 +1791,8 @@ __metadata:
     "@carbon-labs/utilities": "npm:0.14.0"
     "@carbon/web-components": "npm:2.36.0"
     "@lit-labs/motion": "npm:^1.0.9"
+    "@remcovaes/web-test-runner-vite-plugin": "npm:^1.3.0"
+    "@web/test-runner": "npm:^0.20.2"
   languageName: unknown
   linkType: soft
 
@@ -1826,9 +1830,9 @@ __metadata:
     "@carbon/grid": "npm:^11.41.0"
     "@carbon/ibm-products-web-components": "npm:^0.24.0"
     "@carbon/icon-helpers": "npm:10.65.0"
-    "@carbon/icons": "npm:11.67.0"
+    "@carbon/icons": "npm:11.68.0"
     "@carbon/layout": "npm:11.39.0"
-    "@carbon/motion": "npm:11.33.0"
+    "@carbon/motion": "npm:11.36.0"
     "@carbon/pictograms": "npm:^12.58.0"
     "@carbon/styles": "npm:^1.88.0"
     "@carbon/themes": "npm:11.58.0"
@@ -1842,6 +1846,7 @@ __metadata:
     "@rollup/plugin-replace": "npm:^6.0.0"
     "@rollup/plugin-terser": "npm:^0.4.4"
     "@rollup/pluginutils": "npm:^5.0.5"
+    "@storybook/addon-a11y": "npm:^9.1.2"
     "@storybook/addon-docs": "npm:^9.1.2"
     "@storybook/addon-links": "npm:^9.1.2"
     "@storybook/addon-styling": "npm:^1.3.7"
@@ -1866,6 +1871,7 @@ __metadata:
     sass: "npm:~1.89.0"
     sinon: "npm:^19.0.0"
     storybook: "npm:^9.1.2"
+    storybook-addon-accessibility-checker: "npm:>=9.2.0-rc.0"
     through2: "npm:^4.0.2"
     tslib: "npm:^2.8.1"
     typescript: "npm:^5.2.2"
@@ -2019,12 +2025,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons@npm:11.67.0":
-  version: 11.67.0
-  resolution: "@carbon/icons@npm:11.67.0"
+"@carbon/icons@npm:11.68.0":
+  version: 11.68.0
+  resolution: "@carbon/icons@npm:11.68.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/c29d094fef7ff22474f735720785e8b32e431942049f7a80130c29e3b4814cd46a8a9fa8be59be4ad1b7e9867fee3579ee1dcd180a7155d63aa7f748b3142e05
+  checksum: 10c0/3226774976d2f75f85ab6f5ed68e5d2ae4b40d4454584e96cdf330e4c5f18afbb0b07712dfef675c8c40f392d41e71a3f62ffeb689ade623fa51e18706a1d252
   languageName: node
   linkType: hard
 
@@ -2046,12 +2052,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/motion@npm:11.33.0":
-  version: 11.33.0
-  resolution: "@carbon/motion@npm:11.33.0"
+"@carbon/motion@npm:11.36.0":
+  version: 11.36.0
+  resolution: "@carbon/motion@npm:11.36.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/52f8e8915396fcc07449dd04ee02bf27a83002cae6ece03c691c07c87bdffff77f1b7f29c6fed4548311a690c8d80243376c8a630a689260dac3353ac85fc24a
+  checksum: 10c0/c6bb4e13d48c1335abe6036dd1f87fc0cfde3d2fe3cb56eaf7870b308a2f94fb114ac42e028b86c77519ea7f19ef01080c04bda429b2251cb8394015ba1eb0ba
   languageName: node
   linkType: hard
 
@@ -5574,6 +5580,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@remcovaes/web-test-runner-vite-plugin@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@remcovaes/web-test-runner-vite-plugin@npm:1.3.0"
+  peerDependencies:
+    vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+  checksum: 10c0/679224092289682574bb60d320c303075e4db6af180284b59446bb7dfb5b1cf81e95f1fd3916ef2655086ecd28001e44c670f120a59a91b07dddc5705e4e5098
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-alias@npm:^5.1.1":
   version: 5.1.1
   resolution: "@rollup/plugin-alias@npm:5.1.1"
@@ -6040,6 +6055,18 @@ __metadata:
   version: 0.7.3
   resolution: "@sinonjs/text-encoding@npm:0.7.3"
   checksum: 10c0/b112d1e97af7f99fbdc63c7dbcd35d6a60764dfec85cfcfff532e55cce8ecd8453f9fa2139e70aea47142c940fd90cd201d19f370b9a0141700d8a6de3116815
+  languageName: node
+  linkType: hard
+
+"@storybook/addon-a11y@npm:^9.1.2":
+  version: 9.1.9
+  resolution: "@storybook/addon-a11y@npm:9.1.9"
+  dependencies:
+    "@storybook/global": "npm:^5.0.0"
+    axe-core: "npm:^4.2.0"
+  peerDependencies:
+    storybook: ^9.1.9
+  checksum: 10c0/a703d9ceeaa05dba7938ed68b884e1df6ed374369e10552d573a618db6651e1eb379cd686639e3749a692756ef265ea1bbedaea1d774c753ccb34613e076b2df
   languageName: node
   linkType: hard
 
@@ -8206,7 +8233,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner@npm:^0.20.0":
+"@web/test-runner@npm:^0.20.0, @web/test-runner@npm:^0.20.2":
   version: 0.20.2
   resolution: "@web/test-runner@npm:0.20.2"
   dependencies:
@@ -8466,6 +8493,13 @@ __metadata:
     mime-types: "npm:~2.1.34"
     negotiator: "npm:0.6.3"
   checksum: 10c0/3a35c5f5586cfb9a21163ca47a5f77ac34fa8ceb5d17d2fa2c0d81f41cbd7f8c6fa52c77e2c039acc0f4d09e71abdc51144246900f6bef5e3c4b333f77d89362
+  languageName: node
+  linkType: hard
+
+"accessibility-checker-engine@npm:^4.0.8":
+  version: 4.0.9
+  resolution: "accessibility-checker-engine@npm:4.0.9"
+  checksum: 10c0/8b7311899f43eb5ec03c6ad18136e375d77b7d20e3e65b0c67f6951759c59db8d882dedad5f8ed2cdd77fb1ecee7b62b70ec2f288a7275545ad1b89213a0b18c
   languageName: node
   linkType: hard
 
@@ -9147,7 +9181,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.10.0, axe-core@npm:^4.3.3":
+"axe-core@npm:^4.10.0, axe-core@npm:^4.2.0, axe-core@npm:^4.3.3":
   version: 4.10.3
   resolution: "axe-core@npm:4.10.3"
   checksum: 10c0/1b1c24f435b2ffe89d76eca0001cbfff42dbf012ad9bd37398b70b11f0d614281a38a28bc3069e8972e3c90ec929a8937994bd24b0ebcbaab87b8d1e241ab0c7
@@ -24569,6 +24603,19 @@ __metadata:
   version: 2.14.4
   resolution: "store2@npm:2.14.4"
   checksum: 10c0/3453c9c8c153c760e6290395a7bc23669df5dc8a6e8a49f9b3187dbb9f86d14b58705aa4f17fad6b536d4b04fe3e66ea5bde12c1352abd52c6b303bbf5757ab6
+  languageName: node
+  linkType: hard
+
+"storybook-addon-accessibility-checker@npm:>=9.2.0-rc.0":
+  version: 9.2.0-rc.0
+  resolution: "storybook-addon-accessibility-checker@npm:9.2.0-rc.0"
+  dependencies:
+    "@storybook/global": "npm:^5.0.0"
+    accessibility-checker-engine: "npm:^4.0.8"
+    axe-core: "npm:^4.2.0"
+  peerDependencies:
+    storybook: "workspace:^"
+  checksum: 10c0/f41a788d949b723f19283a40181f614b40e03c9c0e1ca8f57d9973f9b1b7a6f70640d80057f027db1a32dd538223c9a2cdc0d4030f5b0e27bad0bdb0318061bd
   languageName: node
   linkType: hard
 

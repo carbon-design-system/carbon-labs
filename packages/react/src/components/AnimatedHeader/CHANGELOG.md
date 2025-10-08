@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.36.0...@carbon-labs/react-animated-header@0.37.0) (2025-10-07)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.36.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.35.0...@carbon-labs/react-animated-header@0.36.0) (2025-10-06)
+
+
+### Features
+
+* **animated-header:** update stackblitz example ([#830](https://github.com/carbon-design-system/carbon-labs/issues/830)) ([e8c607e](https://github.com/carbon-design-system/carbon-labs/commit/e8c607ee29a47145e95e3711ca4e3a8d538ef52f))
+
+
+
+
+
+# [0.35.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.34.0...@carbon-labs/react-animated-header@0.35.0) (2025-10-02)
+
+
+### Features
+
+* **animated-header:** add content switcher and new customizable button ([#820](https://github.com/carbon-design-system/carbon-labs/issues/820)) ([a0e2153](https://github.com/carbon-design-system/carbon-labs/commit/a0e2153e78e28ad61fdfaeacab378df810703f49))
+
+
+
+
+
+# [0.34.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.33.0...@carbon-labs/react-animated-header@0.34.0) (2025-09-22)
+
+
+### Features
+
+* **animated-header:** Add Db2 Lottie animation ([#809](https://github.com/carbon-design-system/carbon-labs/issues/809)) ([07bf0ad](https://github.com/carbon-design-system/carbon-labs/commit/07bf0ad8b5a126f3cd8babea14e61837c9eddf77))
+
+
+
+
+
 # [0.33.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.32.0...@carbon-labs/react-animated-header@0.33.0) (2025-09-18)
 
 

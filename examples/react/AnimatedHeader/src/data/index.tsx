@@ -22,18 +22,9 @@ import { type TileGroup } from '@carbon-labs/react-animated-header';
 import SampleCustomTaskContent from './SampleCustomTaskContent';
 
 export const workspaceData = [
-  {
-    id: 'workspace-1',
-    label: 'Workspace 1',
-  },
-  {
-    id: 'workspace-2',
-    label: 'Workspace 2',
-  },
-  {
-    id: 'workspace-3',
-    label: 'Workspace 3',
-  },
+  { id: 'workspace-1', label: 'Workspace 1' },
+  { id: 'workspace-2', label: 'Workspace 2' },
+  { id: 'workspace-3', label: 'Workspace 3' },
 ];
 
 export const headerTiles: TileGroup[] = [
@@ -44,7 +35,6 @@ export const headerTiles: TileGroup[] = [
       {
         tileId: 'tile-1',
         variant: 'aiPrompt',
-        //id: 'ai-tile', // Back-compat
         href: '#',
         title: 'Short description of the type of prompt',
         primaryIcon: Term,

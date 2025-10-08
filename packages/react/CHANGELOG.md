@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.134.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.133.0...@carbon-labs/react@0.134.0) (2025-10-07)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.133.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.132.0...@carbon-labs/react@0.133.0) (2025-10-06)
+
+
+### Bug Fixes
+
+* **storybook:** add a11y checker back ([#828](https://github.com/carbon-design-system/carbon-labs/issues/828)) ([a4c7265](https://github.com/carbon-design-system/carbon-labs/commit/a4c72651faa3cd6082394c94660754c859d7ed4e))
+
+
+### Features
+
+* **animated-header:** update stackblitz example ([#830](https://github.com/carbon-design-system/carbon-labs/issues/830)) ([e8c607e](https://github.com/carbon-design-system/carbon-labs/commit/e8c607ee29a47145e95e3711ca4e3a8d538ef52f))
+
+
+
+
+
+# [0.132.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.131.0...@carbon-labs/react@0.132.0) (2025-10-02)
+
+
+### Features
+
+* **animated-header:** add content switcher and new customizable button ([#820](https://github.com/carbon-design-system/carbon-labs/issues/820)) ([a0e2153](https://github.com/carbon-design-system/carbon-labs/commit/a0e2153e78e28ad61fdfaeacab378df810703f49))
+
+
+
+
+
+# [0.131.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.130.0...@carbon-labs/react@0.131.0) (2025-10-01)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.130.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.129.0...@carbon-labs/react@0.130.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **mdx-components:** update package entrypoint ([#811](https://github.com/carbon-design-system/carbon-labs/issues/811)) ([763d680](https://github.com/carbon-design-system/carbon-labs/commit/763d6803e47446cbd336dec9a5be75afde23f6e7))
+
+
+
+
+
+# [0.129.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.128.0...@carbon-labs/react@0.129.0) (2025-09-22)
+
+
+### Features
+
+* **animated-header:** Add Db2 Lottie animation ([#809](https://github.com/carbon-design-system/carbon-labs/issues/809)) ([07bf0ad](https://github.com/carbon-design-system/carbon-labs/commit/07bf0ad8b5a126f3cd8babea14e61837c9eddf77))
+
+
+
+
+
 # [0.128.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.127.0...@carbon-labs/react@0.128.0) (2025-09-18)
 
 

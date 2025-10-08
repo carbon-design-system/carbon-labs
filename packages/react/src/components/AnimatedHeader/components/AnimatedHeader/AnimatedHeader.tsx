@@ -89,7 +89,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
       animRef.current.destroy();
       animRef.current = null;
     }
-    if (!animationContainer.current || !headerAnimation) return;
+    if (!animationContainer.current || !headerAnimation) {
+      return;
+    }
 
     const animation = lottie.loadAnimation({
       container: animationContainer.current as HTMLDivElement,
@@ -234,7 +236,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                 const legacyId = (tile as any).id; // old configs
                 const resolvedTileId = tileId ?? legacyId;
                 const key = resolvedTileId ?? `tile-${index}`;
-                const hasAction = tile.href || tile.onClick === 'function';
+                const hasAction =
+                  tile.href || typeof tile.onClick === 'function';
 
                 return (
                   <BaseTile

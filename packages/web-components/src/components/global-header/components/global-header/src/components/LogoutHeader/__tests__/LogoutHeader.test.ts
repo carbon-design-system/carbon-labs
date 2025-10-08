@@ -13,7 +13,7 @@ import '../LogoutHeader';
 describe('LogoutHeader Component', () => {
   it('renders component', async () => {
     const el = await fixture<HTMLElement>(
-      html` <apaas-logout-header></apaas-logout-header>`
+      html`<clabs-global-header-logout-banner></clabs-global-header-logout-banner>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -22,8 +22,8 @@ describe('LogoutHeader Component', () => {
 
   it('renders component with props', async () => {
     const el = await fixture<HTMLElement>(
-      html` <apaas-logout-header
-        brandCompany="mockCompany"></apaas-logout-header>`
+      html`<clabs-global-header-logout-banner
+        brandCompany="mockCompany"></clabs-global-header-logout-banner>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -33,7 +33,7 @@ describe('LogoutHeader Component', () => {
 
   it('renders component with IBM logo', async () => {
     const el = await fixture<HTMLElement>(
-      html` <apaas-logout-header brandCompany="IBM"></apaas-logout-header>`
+      html`<clabs-global-header-logout-banner brandCompany="IBM"></clabs-global-header-logout-banner>`
     );
     expect(el.shadowRoot).not.to.be.null;
 

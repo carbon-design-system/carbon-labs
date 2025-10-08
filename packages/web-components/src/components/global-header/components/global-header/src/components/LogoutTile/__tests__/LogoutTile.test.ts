@@ -13,7 +13,7 @@ import '../LogoutTile';
 describe('LogoutTile Component', () => {
   it('renders component', async () => {
     const el = await fixture<HTMLElement>(
-      html` <apaas-logout-tile></apaas-logout-tile>`
+      html`<clabs-global-header-logout-tile></clabs-global-header-logout-tile>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -22,10 +22,10 @@ describe('LogoutTile Component', () => {
 
   it('renders component with props', async () => {
     const el = await fixture<HTMLElement>(
-      html` <apaas-logout-tile
+      html`<clabs-global-header-logout-tile
         brandCompany="mockCompany"
         brandProduct="mockProduct"
-        logoutText="mockLogoutText"></apaas-logout-tile>`
+        logoutText="mockLogoutText"></clabs-global-header-logout-tile>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -36,9 +36,9 @@ describe('LogoutTile Component', () => {
 
   it('renders component with button', async () => {
     const el = await fixture<HTMLElement>(
-      html` <apaas-logout-tile
+      html`<clabs-global-header-logout-tile
         buttonLabel="mockButton"
-        loginHref="/"></apaas-logout-tile>`
+        loginHref="/"></clabs-global-header-logout-tile>`
     );
     expect(el.shadowRoot).not.to.be.null;
 

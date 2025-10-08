@@ -17,6 +17,6 @@
 @use '@carbon/styles/scss/theme';
 
 apaas-common-header,
-hybrid-ipaas-header {
+clabs-global-header-hybrid-ipaas {
   @include theme.theme(themes.$g100);
 }

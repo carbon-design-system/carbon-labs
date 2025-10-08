@@ -32,7 +32,7 @@ const brand = {
 export const Basic: Story = {
   render: () => html`
     <div role="main">
-        <apaas-logout-tile brandCompany="${brand.company}" brandProduct="${brand.product}" loginHref="http://www.ibm.com" logoutText="You are being logged out" buttonLabel="Log in"></apaas-logout-tile>
+        <clabs-global-header-logout-tile brandCompany="${brand.company}" brandProduct="${brand.product}" loginHref="http://www.ibm.com" logoutText="You are being logged out" buttonLabel="Log in"></clabs-global-header-logout-tile>
       </cds-custom-header>
     </div>
   `,

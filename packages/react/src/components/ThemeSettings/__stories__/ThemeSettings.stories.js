@@ -194,7 +194,7 @@ Complete.parameters = {
   layout: 'centered',
 };
 
-const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+const mediaQueryList = window?.matchMedia?.('(prefers-color-scheme: dark)');
 
 /**
  * InContext story for ThemeSettings

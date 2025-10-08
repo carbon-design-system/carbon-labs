@@ -41,7 +41,8 @@ describe('CommonHeader tests', () => {
     };
 
     const el = await fixture(
-      html`<clabs-global-header-apaas .headerProps="${props}"></clabs-global-header-apaas>`
+      html`<clabs-global-header-apaas
+        .headerProps="${props}"></clabs-global-header-apaas>`
     );
     expect(el).not.to.be.null;
 

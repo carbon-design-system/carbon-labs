@@ -27,7 +27,8 @@ type Story = StoryObj<typeof LogoutHeader>;
 export const Basic: Story = {
   render: () => html`
     <div role="main">
-      <clabs-global-header-logout-banner brandCompany="Company name"></clabs-global-header-logout-banner>
+      <clabs-global-header-logout-banner
+        brandCompany="Company name"></clabs-global-header-logout-banner>
     </div>
   `,
 };
@@ -35,7 +36,8 @@ export const Basic: Story = {
 export const Corporate: Story = {
   render: () => html`
     <div role="main">
-      <clabs-global-header-logout-banner brandCompany="IBM"></clabs-global-header-logout-banner>
+      <clabs-global-header-logout-banner
+        brandCompany="IBM"></clabs-global-header-logout-banner>
     </div>
   `,
 };

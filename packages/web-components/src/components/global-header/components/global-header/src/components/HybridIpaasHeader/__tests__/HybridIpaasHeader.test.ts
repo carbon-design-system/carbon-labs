@@ -164,7 +164,8 @@ describe('HybridIpaasHeader Component', () => {
     );
 
     await fixture<HybridIpaasHeader>(
-      html`<clabs-global-header-hybrid-ipaas productKey="valid-key"></clabs-global-header-hybrid-ipaas>`
+      html`<clabs-global-header-hybrid-ipaas
+        productKey="valid-key"></clabs-global-header-hybrid-ipaas>`
     );
 
     expect(consoleErrorStub.calledOnce).to.be.true;

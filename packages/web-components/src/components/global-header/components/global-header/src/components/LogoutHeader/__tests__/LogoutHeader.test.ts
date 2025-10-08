@@ -33,7 +33,8 @@ describe('LogoutHeader Component', () => {
 
   it('renders component with IBM logo', async () => {
     const el = await fixture<HTMLElement>(
-      html`<clabs-global-header-logout-banner brandCompany="IBM"></clabs-global-header-logout-banner>`
+      html`<clabs-global-header-logout-banner
+        brandCompany="IBM"></clabs-global-header-logout-banner>`
     );
     expect(el.shadowRoot).not.to.be.null;
 

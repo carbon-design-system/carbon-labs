@@ -190,7 +190,9 @@ export const LogoutCallback: Story = {
         productKey="appconnect"
         .capabilityProfileFooterLinks="${capabilityProfileFooterLinks}"
         .logoutCallback="${() =>
-          console.log('Logout callback triggered!')}"></clabs-global-header-hybrid-ipaas>
+          console.log(
+            'Logout callback triggered!'
+          )}"></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };

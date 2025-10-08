@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-theme-settings",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -14,6 +14,8 @@
     "directory": "src/components/ThemeSettings"
   },
   "types": "./es/index.d.ts",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
   "exports": {
     ".": {
       "import": "./es/index.js",

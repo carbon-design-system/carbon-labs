@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.69.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.68.0...@carbon-labs/web-components@0.69.0) (2025-10-06)
+
+
+### Bug Fixes
+
+* **storybook:** add a11y checker back ([#828](https://github.com/carbon-design-system/carbon-labs/issues/828)) ([a4c7265](https://github.com/carbon-design-system/carbon-labs/commit/a4c72651faa3cd6082394c94660754c859d7ed4e))
+
+
+
+
+
+# [0.68.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.67.0...@carbon-labs/web-components@0.68.0) (2025-10-06)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
 # [0.67.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.66.0...@carbon-labs/web-components@0.67.0) (2025-10-01)
 
 **Note:** Version bump only for package @carbon-labs/web-components

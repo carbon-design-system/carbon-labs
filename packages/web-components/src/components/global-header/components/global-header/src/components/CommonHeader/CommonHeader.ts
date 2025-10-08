@@ -10,6 +10,7 @@
 
 import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import '@carbon/web-components/es-custom/components/ui-shell/index.js';
 import '@carbon/web-components/es-custom/components/popover/index.js';
 import { HeaderProps } from '../../types/Header.types';
@@ -25,10 +26,12 @@ import '../SideNavItem/SideNavItem';
 import '../HeaderContext/HeaderContext';
 import useScript from '../../globals/useScript';
 
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Main global header component
  */
-@customElement('apaas-common-header')
+@customElement(`${clabsPrefix}-global-header-apaas`)
 export class CommonHeader extends LitElement {
   createRenderRoot() {
     return super.createRenderRoot(); // Default Shadow DOM behavior

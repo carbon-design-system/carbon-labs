@@ -116,7 +116,7 @@ describe('HybridIpaasHeader Component', () => {
   };
   it('renders the component', async () => {
     const element = await fixture(
-      html`<hybrid-ipaas-header></hybrid-ipaas-header>`
+      html`<clabs-global-header-hybrid-ipaas></clabs-global-header-hybrid-ipaas>`
     );
 
     expect(element).to.exist;
@@ -125,7 +125,7 @@ describe('HybridIpaasHeader Component', () => {
   it('should log an error if productKey is missing', async () => {
     const consoleErrorStub = sinon.stub(console, 'error');
     await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header></hybrid-ipaas-header>`
+      html`<clabs-global-header-hybrid-ipaas></clabs-global-header-hybrid-ipaas>`
     );
 
     expect(consoleErrorStub.calledOnce).to.be.true;
@@ -141,7 +141,7 @@ describe('HybridIpaasHeader Component', () => {
   it('should log an error if productKey is missing', async () => {
     const consoleErrorStub = sinon.stub(console, 'error');
     await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header></hybrid-ipaas-header>`
+      html`<clabs-global-header-hybrid-ipaas></clabs-global-header-hybrid-ipaas>`
     );
 
     expect(consoleErrorStub.calledOnce).to.be.true;
@@ -164,7 +164,8 @@ describe('HybridIpaasHeader Component', () => {
     );
 
     await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header productKey="valid-key"></hybrid-ipaas-header>`
+      html`<clabs-global-header-hybrid-ipaas
+        productKey="valid-key"></clabs-global-header-hybrid-ipaas>`
     );
 
     expect(consoleErrorStub.calledOnce).to.be.true;
@@ -177,10 +178,10 @@ describe('HybridIpaasHeader Component', () => {
       .stub(window, 'fetch')
       .resolves(new Response('{}', { status: 200 }));
     await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header
+      html`<clabs-global-header-hybrid-ipaas
         .fetchHeaders=${{ 'Content-Type': 'application/json' }}
         basePath="/api"
-        productKey="test-productKey"></hybrid-ipaas-header>`
+        productKey="test-productKey"></clabs-global-header-hybrid-ipaas>`
     );
 
     expect(fetchStub.calledOnce).to.be.true;
@@ -202,14 +203,14 @@ describe('HybridIpaasHeader Component', () => {
     );
 
     const el = await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header
+      html`<clabs-global-header-hybrid-ipaas
         productName="Test Product"
         productKey="test-productKey"
         basePath="/base"
         displayName="Test User"
         userEmail="test@example.com"
         productVersion="2.0.0"
-        assistMeKey="assist-key"></hybrid-ipaas-header>`
+        assistMeKey="assist-key"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.profile?.email === 'test@example.com',
@@ -242,12 +243,12 @@ describe('HybridIpaasHeader Component', () => {
     const logoutCallbackSpy = sinon.spy();
 
     const el = await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header
+      html`<clabs-global-header-hybrid-ipaas
         productName="Test Product"
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
-        .logoutCallback="${logoutCallbackSpy}"></hybrid-ipaas-header>`
+        .logoutCallback="${logoutCallbackSpy}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',
@@ -278,13 +279,13 @@ describe('HybridIpaasHeader Component', () => {
     const notificationCallbackSpy = sinon.spy();
 
     const el = await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header
+      html`<clabs-global-header-hybrid-ipaas
         productName="Test Product"
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
         .notificationOpenCallback="${notificationCallbackSpy}"
-        .hasNewNotifications="${false}"></hybrid-ipaas-header>`
+        .hasNewNotifications="${false}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',
@@ -311,12 +312,12 @@ describe('HybridIpaasHeader Component', () => {
     const aiCallbackSpy = sinon.spy();
 
     const el = await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header
+      html`<clabs-global-header-hybrid-ipaas
         productName="Test Product"
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
-        .aiCallback="${aiCallbackSpy}"></hybrid-ipaas-header>`
+        .aiCallback="${aiCallbackSpy}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',
@@ -357,12 +358,12 @@ describe('HybridIpaasHeader Component', () => {
 
     it('should handle aiCallbackEvent', async () => {
       const el = await fixture<HybridIpaasHeader>(
-        html`<hybrid-ipaas-header
+        html`<clabs-global-header-hybrid-ipaas
           productName="Test Product"
           productKey="test-productKey"
           basePath="/base"
           assistMeKey="assist-key"
-          aiCallbackEvent="ai-callback-event"></hybrid-ipaas-header>`
+          aiCallbackEvent="ai-callback-event"></clabs-global-header-hybrid-ipaas>`
       );
       await waitUntil(
         () => el.headerOptions.capabilityName?.label === 'Test Product',
@@ -394,12 +395,12 @@ describe('HybridIpaasHeader Component', () => {
       placeholder: 'Test Placeholder',
     };
     const el = await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header
+      html`<clabs-global-header-hybrid-ipaas
         productName="Test Product"
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
-        .searchConfigs="${searchConfigs}"></hybrid-ipaas-header>`
+        .searchConfigs="${searchConfigs}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',
@@ -441,12 +442,12 @@ describe('HybridIpaasHeader Component', () => {
       },
     ];
     const el = await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header
+      html`<clabs-global-header-hybrid-ipaas
         productName="Test Product"
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
-        .capabilityProfileFooterLinks="${capabilityProfileFooterLinks}"></hybrid-ipaas-header>`
+        .capabilityProfileFooterLinks="${capabilityProfileFooterLinks}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',
@@ -496,12 +497,12 @@ describe('HybridIpaasHeader Component', () => {
     ];
 
     const el = await fixture<HybridIpaasHeader>(
-      html`<hybrid-ipaas-header
+      html`<clabs-global-header-hybrid-ipaas
         productName="Test Product"
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
-        .capabilityGlobalActions="${globalActionConfigs}"></hybrid-ipaas-header>`
+        .capabilityGlobalActions="${globalActionConfigs}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',

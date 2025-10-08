@@ -12,17 +12,19 @@ import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '@carbon/web-components/es-custom/components/tile/index.js';
 import '@carbon/web-components/es-custom/components/button/index.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { renderCarbonIcon } from '../../globals/utils';
 
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
 import styles from './_index.scss?inline' assert { type: 'css' };
 
+const { stablePrefix: clabsPrefix } = settings;
 const blockClass = `${AUTOMATION_HEADER_BASE_CLASS}__logout-tile`;
 
 /**
  * Logged out dialog
  */
-@customElement('apaas-logout-tile')
+@customElement(`${clabsPrefix}-global-header-logout-tile`)
 export class LogoutTile extends LitElement {
   static styles = css`
     ${unsafeCSS([styles])}

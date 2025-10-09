@@ -266,7 +266,7 @@ type Story = StoryObj<typeof CommonHeader>;
 export const SideNavBasic: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header
+			<clabs-global-header-apaas
 				.headerProps="${{
           ...headerProps,
           sideNav: sideNavBasic,
@@ -278,7 +278,7 @@ export const SideNavBasic: Story = {
 export const SideNavWithGroups: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header
+			<clabs-global-header-apaas
 				.headerProps="${{
           ...headerProps,
           sideNav: sideNavGroups,
@@ -290,7 +290,7 @@ export const SideNavWithGroups: Story = {
 export const SideNavWithPropsV2: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header
+			<clabs-global-header-apaas
 				.headerProps="${{
           ...headerProps,
           sideNavPropsV2: sideNavWithV2,

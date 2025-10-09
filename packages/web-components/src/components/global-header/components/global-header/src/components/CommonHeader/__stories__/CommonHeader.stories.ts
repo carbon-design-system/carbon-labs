@@ -403,7 +403,7 @@ type Story = StoryObj<typeof CommonHeader>;
 export const Basic: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header .headerProps="${headerProps}"></common-header>
+			<clabs-global-header-apaas .headerProps="${headerProps}"></common-header>
 		</div>
 	`,
 };
@@ -411,7 +411,7 @@ export const Basic: Story = {
 export const UnauthenticatedContext: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header .headerProps="${headerPropsUnauthenticated}"></common-header>
+			<clabs-global-header-apaas .headerProps="${headerPropsUnauthenticated}"></common-header>
 		</div>
 	`,
 };
@@ -420,7 +420,7 @@ export const IbmMockProduct: Story = {
   name: 'IBM Mock Product',
   render: () => html`
 		<div role="main">
-			<apaas-common-header .headerProps="${hybridIPaasHeaderProps}"></common-header>
+			<clabs-global-header-apaas .headerProps="${hybridIPaasHeaderProps}"></common-header>
 		</div>
 	`,
 };
@@ -428,7 +428,7 @@ export const IbmMockProduct: Story = {
 export const HelpLinks: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header .headerProps="${headerPropsWithHelpLinks}"></common-header>
+			<clabs-global-header-apaas .headerProps="${headerPropsWithHelpLinks}"></common-header>
 		</div>
 	`,
 };
@@ -436,7 +436,7 @@ export const HelpLinks: Story = {
 export const ChatBot: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header .headerProps="${{
+			<clabs-global-header-apaas .headerProps="${{
         ...headerProps,
         chatBotConfigs,
       }}"></common-header>
@@ -447,7 +447,7 @@ export const ChatBot: Story = {
 export const Notifications: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header .headerProps="${{
+			<clabs-global-header-apaas .headerProps="${{
         ...headerProps,
         notificationConfigs,
       }}"></common-header>
@@ -458,7 +458,7 @@ export const Notifications: Story = {
 export const Search: Story = {
   render: () => html`
 		<div role="main">
-			<apaas-common-header .headerProps="${{
+			<clabs-global-header-apaas .headerProps="${{
         ...headerProps,
         searchConfigs,
       }}"></common-header>

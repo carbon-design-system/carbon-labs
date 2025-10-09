@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   ContentSwitcher,
   Switch,
@@ -48,10 +48,8 @@ const ContentSwitcherSelector: React.FC<ContentSwitcherSelectorProps> = ({
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__content-switcher`;
 
-  if (!contentSwitcherConfig) return null;
-
-  if (isLoading || contentSwitcherConfig.isLoading) {
-    return <SkeletonPlaceholder className={`${blockClass}-skeleton`} />;
+  if (!contentSwitcherConfig) {
+    return null;
   }
 
   const {
@@ -67,6 +65,15 @@ const ContentSwitcherSelector: React.FC<ContentSwitcherSelectorProps> = ({
   const count: 2 | 3 = visibleCount === 3 ? 3 : 2;
   const visibleItems = items.slice(0, count);
 
+  const selectedIndexSafe = Math.min(
+    Math.max(selectedIndex, 0),
+    visibleItems.length - 1
+  );
+
+  if (isLoading || contentSwitcherConfig.isLoading) {
+    return <SkeletonPlaceholder className={`${blockClass}-skeleton`} />;
+  }
+
   if (visibleItems.length < 2 || visibleItems.length > 3) {
     if (process.env.NODE_ENV !== 'production') {
       console.warn(
@@ -75,11 +82,6 @@ const ContentSwitcherSelector: React.FC<ContentSwitcherSelectorProps> = ({
     }
     return null;
   }
-
-  const selectedIndexSafe = useMemo(() => {
-    const idx = typeof selectedIndex === 'number' ? selectedIndex : 0;
-    return Math.min(Math.max(idx, 0), visibleItems.length - 1);
-  }, [selectedIndex, visibleItems.length]);
 
   return (
     <div className={`${blockClass}--container`} data-expanded={headerExpanded}>

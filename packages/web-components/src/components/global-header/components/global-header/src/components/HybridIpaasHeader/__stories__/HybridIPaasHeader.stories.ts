@@ -80,10 +80,10 @@ export const Basic: Story = {
   },
   render: () => html`
     <div role="main">
-      <hybrid-ipaas-header
+      <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
-        .notificationOpenCallback="${callback}"></hybrid-ipaas-header>
+        .notificationOpenCallback="${callback}"></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };
@@ -100,10 +100,10 @@ export const BasicWithTrial: Story = {
   },
   render: () => html`
     <div role="main">
-      <hybrid-ipaas-header
+      <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
-        .notificationOpenCallback="${callback}"></hybrid-ipaas-header>
+        .notificationOpenCallback="${callback}"></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };
@@ -120,10 +120,10 @@ export const WithAIChat: Story = {
   },
   render: () => html`
     <div role="main">
-      <hybrid-ipaas-header
+      <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
-        aiCallbackEvent="ai-callback-event"></hybrid-ipaas-header>
+        aiCallbackEvent="ai-callback-event"></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };
@@ -165,10 +165,10 @@ export const CustomFooter: Story = {
   },
   render: () => html`
     <div role="main">
-      <hybrid-ipaas-header
+      <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
-        .capabilityProfileFooterLinks="${capabilityProfileFooterLinks}"></hybrid-ipaas-header>
+        .capabilityProfileFooterLinks="${capabilityProfileFooterLinks}"></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };
@@ -185,12 +185,14 @@ export const LogoutCallback: Story = {
   },
   render: () => html`
     <div role="main">
-      <hybrid-ipaas-header
+      <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
         .capabilityProfileFooterLinks="${capabilityProfileFooterLinks}"
         .logoutCallback="${() =>
-          console.log('Logout callback triggered!')}"></hybrid-ipaas-header>
+          console.log(
+            'Logout callback triggered!'
+          )}"></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };
@@ -207,10 +209,10 @@ export const CustomActions: Story = {
   },
   render: () => html`
     <div role="main">
-      <hybrid-ipaas-header
+      <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
-        .capabilityGlobalActions="${capabilityGlobalActions}"></hybrid-ipaas-header>
+        .capabilityGlobalActions="${capabilityGlobalActions}"></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };
@@ -237,10 +239,10 @@ export const SearchCallback: Story = {
   },
   render: () => html`
     <div role="main">
-      <hybrid-ipaas-header
+      <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
-        .searchConfigs="${searchConfigs}"></hybrid-ipaas-header>
+        .searchConfigs="${searchConfigs}"></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };

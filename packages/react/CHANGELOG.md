@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.135.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.134.0...@carbon-labs/react@0.135.0) (2025-10-08)
+
+
+### Bug Fixes
+
+* name window check and package compatibility ([#826](https://github.com/carbon-design-system/carbon-labs/issues/826)) ([9f1ef54](https://github.com/carbon-design-system/carbon-labs/commit/9f1ef540287504bcb19e45aa7e2cd7a72e2db3f4))
+
+
+
+
+
+# [0.134.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.133.0...@carbon-labs/react@0.134.0) (2025-10-07)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.133.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.132.0...@carbon-labs/react@0.133.0) (2025-10-06)
 
 

@@ -12,7 +12,8 @@ import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import { AITileBody, AITileBodyProps } from '../AITile/AITileBody';
 
 export type AITileProps = {
-  tileId: string | null;
+  variant: 'ai';
+  tileId: string;
   href?: string | null;
   title?: string | null;
   subtitle?: string | null;
@@ -25,7 +26,7 @@ export type AITileProps = {
   open?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
-} & Record<string, unknown>;
+};
 
 export const AITile: React.FC<AITileProps> = ({
   tileId,

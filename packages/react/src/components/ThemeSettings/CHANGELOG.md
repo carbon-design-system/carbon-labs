@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.15.0...@carbon-labs/react-theme-settings@0.16.0) (2025-10-08)
+
+
+### Bug Fixes
+
+* name window check and package compatibility ([#826](https://github.com/carbon-design-system/carbon-labs/issues/826)) ([9f1ef54](https://github.com/carbon-design-system/carbon-labs/commit/9f1ef540287504bcb19e45aa7e2cd7a72e2db3f4))
+
+
+
+
+
 # [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.14.0...@carbon-labs/react-theme-settings@0.15.0) (2025-09-11)
 
 **Note:** Version bump only for package @carbon-labs/react-theme-settings

@@ -29,7 +29,7 @@ const meta: Meta = {
 export default meta;
 
 const renderTrialTooltip = (args) =>
-  html` <apaas-common-header .headerProps="${args}"></common-header> `;
+  html` <clabs-global-header-apaas .headerProps="${args}"></common-header> `;
 
 export const Default = renderTrialTooltip.bind({});
 Default.args = {

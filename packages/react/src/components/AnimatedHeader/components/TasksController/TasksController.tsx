@@ -40,10 +40,8 @@ export type TasksControllerProps = {
   tasksControllerConfig?: TasksControllerConfig | null;
   isLoading?: boolean;
   allTileGroups?: TileGroup[];
-  selectedTileGroup?: TileGroup | null;
-  setSelectedTileGroup?: (
-    group: TileGroup | { selectedItem: TileGroup }
-  ) => void;
+  selectedTileGroup?: TileGroup;
+  setSelectedTileGroup?: (e) => void;
 };
 
 const TasksController = ({
@@ -67,36 +65,11 @@ const TasksController = ({
     ...dropdownOverrideProps
   } = tasksControllerConfig?.dropdown?.propsOverrides || {};
 
-  /** Early outs */
-  if (!tasksControllerConfig?.type) return null;
-
-  if (isLoading || tasksControllerConfig?.isLoading) {
-    return (
-      <SkeletonPlaceholder
-        className={`${blockClass}__task-controller-skeleton`}
-      />
-    );
-  }
-
-  /** Button mode */
-  if (
-    tasksControllerConfig?.type === 'button' &&
-    tasksControllerConfig?.button?.text
-  ) {
-    return (
-      <Button
-        className={`${blockClass}__button${
-          buttonCustomClass ? ` ${buttonCustomClass}` : ''
-        }`}
-        {...buttonOverrideProps}>
-        {tasksControllerConfig.button.text}
-      </Button>
-    );
-  }
-
   /** Build Dropdown props (uses top-level list/selection/setter) */
   const dropdownProps: DropdownProps<TileGroup> | null = useMemo(() => {
-    if (!allTileGroups?.length) return null;
+    if (!allTileGroups?.length) {
+      return null;
+    }
 
     return {
       id: `${blockClass}__header-dropdown`,
@@ -132,6 +105,35 @@ const TasksController = ({
     tasksControllerConfig?.dropdown?.label,
     tasksControllerConfig?.dropdown?.ariaLabel,
   ]);
+
+  /** Early outs */
+  if (!tasksControllerConfig?.type) {
+    return null;
+  }
+
+  if (isLoading || tasksControllerConfig?.isLoading) {
+    return (
+      <SkeletonPlaceholder
+        className={`${blockClass}__task-controller-skeleton`}
+      />
+    );
+  }
+
+  /** Button mode */
+  if (
+    tasksControllerConfig?.type === 'button' &&
+    tasksControllerConfig?.button?.text
+  ) {
+    return (
+      <Button
+        className={`${blockClass}__button${
+          buttonCustomClass ? ` ${buttonCustomClass}` : ''
+        }`}
+        {...buttonOverrideProps}>
+        {tasksControllerConfig.button.text}
+      </Button>
+    );
+  }
 
   /** Dropdown mode */
   if (tasksControllerConfig?.type === 'dropdown' && dropdownProps) {

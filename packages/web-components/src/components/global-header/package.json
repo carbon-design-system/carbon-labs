@@ -15,7 +15,7 @@
   },
   "exports": {
     ".": {
-      "default": "./src/index.js"
+      "default": "./es/index.js"
     },
     "./es/*": "./es/*",
     "./lib/*": "./lib/*"

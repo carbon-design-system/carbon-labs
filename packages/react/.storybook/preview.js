@@ -3,7 +3,7 @@ import { white, g10, g90, g100 } from '@carbon/themes';
 import { breakpoints } from '@carbon/layout';
 import { GlobalTheme, Theme } from '@carbon/react/es/components/Theme';
 import { Layout } from '@carbon/react/es/components/Layout';
-import { TextDirection } from '@carbon/react/es/components/Text';
+// import { TextDirection } from '@carbon/react/es/components/Text';
 import { DocsContainer, Meta, Unstyled } from '@storybook/addon-docs/blocks';
 import {
   Accordion,
@@ -327,12 +327,13 @@ const decorators = [
     return (
       <GlobalTheme theme={theme}>
         <Layout size={layoutSize || null} density={layoutDensity || null}>
-          <TextDirection
+          {/* <TextDirection
             getTextDirection={(text) => {
               return dir;
             }}>
             <Story key={randomKey} {...context} />
-          </TextDirection>
+          </TextDirection> */}
+           <Story key={randomKey} {...context} />
         </Layout>
       </GlobalTheme>
     );

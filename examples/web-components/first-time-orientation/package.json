@@ -12,14 +12,14 @@
     "clean": "rimraf node_modules dist .cache"
   },
   "dependencies": {
-    "@carbon/ibm-products-styles": "^2.62.0-rc.0",
-    "@carbon/ibm-products-web-components": "^0.23.0",
-    "@carbon/styles": "^1.79.0",
-    "@carbon/web-components": "^2.36.0",
+    "@carbon/ibm-products-styles": "^2.72.0",
+    "@carbon/ibm-products-web-components": "^0.25.0",
+    "@carbon/styles": "^1.92.0",
+    "@carbon/web-components": "^2.40.1",
     "lit": "^3.2.1",
     "sass": "^1.64.1",
-    "@carbon/icon-helpers": "^10.65.0",
-    "@carbon/icons": "^11.66.0"
+    "@carbon/icon-helpers": "^10.68.0",
+    "@carbon/icons": "^11.69.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",

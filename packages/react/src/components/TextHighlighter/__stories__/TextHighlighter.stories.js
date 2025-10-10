@@ -231,7 +231,7 @@ export const VersionComparison = {
   ),
 };
 
-export const ReferenceAnotation = {
+export const ReferenceAnnotation = {
   /**
    * Renders the template for Playground Storybook
    */
@@ -247,11 +247,11 @@ export const ReferenceAnotation = {
 
             <div className="th-ref-body">
               <p>
-                The airship `&quot;`
+                The airship &quot;
                 <TextHighlighter type="magenta" reference="OR">
                   The Leviathan
                 </TextHighlighter>
-                ,`&quot;` a magnificent vessel of gleaming chrome and polished
+                ,&quot; a magnificent vessel of gleaming chrome and polished
                 mahogany, glided silently above the bustling metropolis of{' '}
                 <TextHighlighter type="purple" reference="LO">
                   Neo-Atheria
@@ -268,11 +268,11 @@ export const ReferenceAnotation = {
                 <TextHighlighter type="blue" reference="PE">
                   Lord Sterlingworth
                 </TextHighlighter>
-                , the eccentric inventor of the `&quot;`
+                , the eccentric inventor of the &quot;
                 <TextHighlighter type="cyan" reference="TE">
                   Gravitation Nullifier
                 </TextHighlighter>
-                `&quot;`, a device that defied the very laws of physics, and{' '}
+                &quot;, a device that defied the very laws of physics, and{' '}
                 <TextHighlighter type="blue" reference="PE">
                   Baroness Von Schatten
                 </TextHighlighter>

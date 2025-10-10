@@ -6,4 +6,13 @@
  */
 
 @use '@carbon/react';
-@use '@carbon-labs/react-style-picker/scss/style-picker';
+
+.trigger-slot {
+  display: contents;
+}
+
+.style-picker-example-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

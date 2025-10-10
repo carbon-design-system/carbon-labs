@@ -18,7 +18,7 @@ import '../../tableElement/tableElement.js';
 import '../../cardElement/cardElement.js';
 import '../../textElement/textElement.js';
 import '../../imageElement/imageElement.js';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for code
@@ -68,7 +68,7 @@ export function carouselElementTemplate(customElementClass) {
                       role="button"
                       @click="${handlePreviousSlide}"
                       ?disabled="${slideCounter === 0}">
-                      ${iconLoader(ChevronLeft16, ({ slot: 'icon' }))}
+                      ${iconLoader(ChevronLeft16, { slot: 'icon' })}
                     </cds-button>
                   </div>
                   <div class="${clabsPrefix}--chat-carousel-control-item">
@@ -82,7 +82,7 @@ export function carouselElementTemplate(customElementClass) {
                       size="sm"
                       @click="${handleNextSlide}"
                       ?disabled="${renderedSlideCounter === maxSlideCounter}">
-                      ${iconLoader(ChevronRight16, ({ slot: 'icon' }))}
+                      ${iconLoader(ChevronRight16, { slot: 'icon' })}
                     </cds-button>
                   </div>
                 `

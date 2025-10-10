@@ -24,7 +24,7 @@ import {
   FeedbackDescription,
   ModalData,
 } from '../defs';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for Feedback Flag
@@ -93,7 +93,7 @@ function openModal(customElementClass) {
             <p class="selected-text">
               ${formData.selectedText}
               <cds-icon-button @click=${toggleEdit} size="xs">
-                ${iconLoader(Edit16, ({ slot: 'icon' }))}
+                ${iconLoader(Edit16, { slot: 'icon' })}
                 <span slot="tooltip-content">Improved text</span>
               </cds-icon-button>
             </p>

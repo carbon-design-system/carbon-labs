@@ -23,7 +23,7 @@ import Undo16 from '@carbon/icons/es/undo/16.js';
 import ChevronDown from '@carbon/icons/es/chevron--down/16.js';
 import ChevronLeft from '@carbon/icons/es/chevron--left/16.js';
 import Compare16 from '@carbon/icons/es/compare/16.js';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for code
@@ -107,7 +107,7 @@ export function codeElementTemplate(customElementClass) {
                 ?isSelected="${comparisonEnabled}"
                 @click="${handleComparisonEnabled}"
                 role="button">
-                ${iconLoader(Compare16, ({ slot: 'icon' }))}
+                ${iconLoader(Compare16, { slot: 'icon' })}
                 <span slot="tooltip-content"
                   >${comparisonEnabled
                     ? 'Exit comparison'
@@ -126,7 +126,7 @@ export function codeElementTemplate(customElementClass) {
                 ?isSelected="${editingEnabled}"
                 @click="${handleEditingEnabled}"
                 role="button">
-                ${iconLoader(Edit16, ({ slot: 'icon' }))}
+                ${iconLoader(Edit16, { slot: 'icon' })}
                 <span slot="tooltip-content"
                   >${!editingEnabled
                     ? renderLabel('code-enable-editing')
@@ -248,7 +248,7 @@ export function codeElementTemplate(customElementClass) {
               role="button"
               kind="danger-tertiary"
               @click="${handleEditCancellation}">
-              ${iconLoader(Undo16, ({ slot: 'icon' }))}
+              ${iconLoader(Undo16, { slot: 'icon' })}
               <span slot="tooltip-content"
                 >${renderLabel('code-editing-cancelled')}</span
               >
@@ -261,7 +261,7 @@ export function codeElementTemplate(customElementClass) {
               align="left"
               kind="ghost"
               @click="${handleEditValidation}">
-              ${iconLoader(Checkmark16, ({ slot: 'icon' }))}
+              ${iconLoader(Checkmark16, { slot: 'icon' })}
               <span slot="tooltip-content"
                 >${renderLabel('code-editing-validation')}</span
               >

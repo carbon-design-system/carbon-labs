@@ -15,7 +15,7 @@ import '@carbon/web-components/es/components/chat-button/index.js';
 import Add16 from '@carbon/icons/es/add/16.js';
 import Upload16 from '@carbon/icons/es/upload/16.js';
 import SendAlt16 from '@carbon/icons/es/send--alt/16.js';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for code
@@ -76,11 +76,11 @@ export function tagListElementTemplate(customElementClass) {
                         @click="${handleTagClick}">
                         ${monoLabel ? monoLabel : value}
                         ${actionIcon === 'add'
-                          ? iconLoader(Add16, ({ slot: 'icon' }))
+                          ? iconLoader(Add16, { slot: 'icon' })
                           : actionIcon === 'upload'
-                          ? iconLoader(Upload16, ({ slot: 'icon' }))
+                          ? iconLoader(Upload16, { slot: 'icon' })
                           : actionIcon === 'send'
-                          ? iconLoader(SendAlt16, ({ slot: 'icon' }))
+                          ? iconLoader(SendAlt16, { slot: 'icon' })
                           : ''}
                       </cds-chat-button>
                     `}

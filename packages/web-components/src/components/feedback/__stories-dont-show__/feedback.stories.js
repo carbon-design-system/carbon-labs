@@ -9,7 +9,7 @@
 import '../components/feedback/feedback';
 import Flag24 from '@carbon/icons/es/flag/24.js';
 import { html } from 'lit';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 export default {
   title: 'Components/Feedback/Feedback',
@@ -166,7 +166,7 @@ export const Default = {
         generation-id=${args['generation-id']}
         .feedbackList=${args['feedback-list']}
         icon=${args.icon}>
-        ${iconLoader(Flag24, ({ slot: 'icon' }))} ${args.output}
+        ${iconLoader(Flag24, { slot: 'icon' })} ${args.output}
       </clabs-feedback>
     `,
 };
@@ -208,7 +208,7 @@ export const Playground = {
         generation-id=${args['generation-id']}
         .feedbackList=${args['feedback-list']}
         icon=${args.icon}>
-        ${iconLoader(Flag24, ({ slot: 'icon' }))} ${args.output}
+        ${iconLoader(Flag24, { slot: 'icon' })} ${args.output}
       </clabs-feedback>
     `,
 };

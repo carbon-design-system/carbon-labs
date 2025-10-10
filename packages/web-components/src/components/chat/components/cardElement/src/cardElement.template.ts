@@ -34,8 +34,7 @@ import csv24 from '@carbon/icons/es/CSV/24.js';
 import videoPlayer24 from '@carbon/icons/es/video-player/24.js';
 import documentBlank24 from '@carbon/icons/es/document--blank/24.js';
 import music24 from '@carbon/icons/es/music/24.js';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
-
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for card
@@ -176,7 +175,7 @@ export function cardElementTemplate(customElementClass) {
                                 kind="ghost"
                                 size="sm"
                                 @click="${toggleAudio}">
-                                ${iconLoader(PauseFilled16, ({ slot: 'icon' }))}
+                                ${iconLoader(PauseFilled16, { slot: 'icon' })}
                               </cds-button>`
                             : html` <cds-button
                                 kind="ghost"
@@ -184,12 +183,12 @@ export function cardElementTemplate(customElementClass) {
                                 role="button"
                                 size="sm"
                                 @click="${toggleAudio}">
-                                ${iconLoader(PlayFilledAlt16, ({ slot: 'icon' }))}
+                                ${iconLoader(PlayFilledAlt16, { slot: 'icon' })}
                               </cds-button>`}
                         </div>
                         <!-- <div class="${clabsPrefix}--chat-card-detail-audio-item">
                 <cds-button aria-label="Mute Audio" role="button" kind="ghost" size="sm" disabled>
-                  ${iconLoader(VolumeMute16, ({ slot: 'icon' }))}
+                  ${iconLoader(VolumeMute16, { slot: 'icon' })}
                 </cds-button>
                 </div>-->
                         <div
@@ -273,7 +272,7 @@ export function cardElementTemplate(customElementClass) {
                                 kind="ghost"
                                 disabled
                                 size="sm">
-                                ${iconLoader(PauseFilled16, ({ slot: 'icon' }))}
+                                ${iconLoader(PauseFilled16, { slot: 'icon' })}
                               </cds-button>`
                             : html` <cds-button
                                 aria-label="Start Audio"
@@ -281,7 +280,7 @@ export function cardElementTemplate(customElementClass) {
                                 kind="ghost"
                                 disabled
                                 size="sm">
-                                ${iconLoader(PlayFilledAlt16, ({ slot: 'icon' }))}
+                                ${iconLoader(PlayFilledAlt16, { slot: 'icon' })}
                               </cds-button>`}
                         </div>
                         <div

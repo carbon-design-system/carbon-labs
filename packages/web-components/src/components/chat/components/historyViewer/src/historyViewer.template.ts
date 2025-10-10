@@ -13,7 +13,7 @@ const { stablePrefix: clabsPrefix } = settings;
 
 import Renew16 from '@carbon/icons/es/renew/16.js';
 import Edit16 from '@carbon/icons/es/edit/16.js';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for formula
@@ -47,8 +47,12 @@ export function historyViewerTemplate(customElementClass) {
                     ${message.action
                       ? html` <div
                           class="${clabsPrefix}--chat-history-viewer-action-label">
-                          ${message.action === 'regenerate' ? iconLoader(Renew16()) : ''}
-                          ${message.action === 'edit' ? iconLoader(Edit16()) : ''}
+                          ${message.action === 'regenerate'
+                            ? iconLoader(Renew16())
+                            : ''}
+                          ${message.action === 'edit'
+                            ? iconLoader(Edit16())
+                            : ''}
                         </div>`
                       : ''}
                     <div

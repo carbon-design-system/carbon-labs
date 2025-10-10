@@ -16,7 +16,7 @@ import '@carbon/web-components/es/components/link/index.js';
 
 import ChevronDown16 from '@carbon/icons/es/chevron--down/16.js';
 import ChevronUp16 from '@carbon/icons/es/chevron--up/16.js';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for code
@@ -57,12 +57,12 @@ export function linkListElementTemplate(customElementClass) {
                         class="${clabsPrefix}--chat-link-list-item-text-sublink"
                         href="${linkObject.url}"
                         >${linkObject.title}
-                        ${iconLoader(ArrowRight16, ({ slot: 'icon' }))}</cds-link
+                        ${iconLoader(ArrowRight16, { slot: 'icon' })}</cds-link
                       >
                     `
                   : html`<cds-link data-index="${index}"
                       >${linkObject.title}
-                      ${iconLoader(ArrowRight16, ({ slot: 'icon' }))}</cds-link
+                      ${iconLoader(ArrowRight16, { slot: 'icon' })}</cds-link
                     >`}
               </div>
               ${hideArrows
@@ -77,11 +77,15 @@ export function linkListElementTemplate(customElementClass) {
                               class="${clabsPrefix}--chat-link-list-item-text-sublink"
                               tabindex="-1"
                               href="${linkObject.url}"
-                              >${iconLoader(ArrowRight16, ({ slot: 'icon' }))}</cds-link
+                              >${iconLoader(ArrowRight16, {
+                                slot: 'icon',
+                              })}</cds-link
                             >
                           `
                         : html`<cds-link data-index="${index}" tabindex="-1"
-                            >${iconLoader(ArrowRight16, ({ slot: 'icon' }))}</cds-link
+                            >${iconLoader(ArrowRight16, {
+                              slot: 'icon',
+                            })}</cds-link
                           >`}
                     </div>
                   `}
@@ -103,8 +107,8 @@ export function linkListElementTemplate(customElementClass) {
                   ? renderLabel('link-list-collapse-button')
                   : renderLabel('link-list-view-all-button')}
                 ${expanded
-                  ? iconLoader(ChevronUp16, ({ slot: 'icon' }))
-                  : iconLoader(ChevronDown16, ({ slot: 'icon' }))}</cds-button
+                  ? iconLoader(ChevronUp16, { slot: 'icon' })
+                  : iconLoader(ChevronDown16, { slot: 'icon' })}</cds-button
               >
             </div>
           </div>`

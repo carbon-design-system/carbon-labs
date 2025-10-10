@@ -20,7 +20,7 @@ import InformationFilled16 from '@carbon/icons/es/information--filled/16.js';
 import Send16 from '@carbon/icons/es/send/16.js';
 import Close16 from '@carbon/icons/es/close/24.js';
 import Stop16 from '@carbon/icons/es/stop--filled/16.js';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
@@ -119,7 +119,7 @@ export function footerTemplate(customElementClass) {
                           kind="ghost"
                           size="sm"
                           @click="${handleContextMessageClose}">
-                          ${iconLoader(Close16, ({ slot: 'icon' }))}
+                          ${iconLoader(Close16, { slot: 'icon' })}
                           <span slot="tooltip-content">
                             ${renderLabel('prompt-close-warning')}
                             ${contextMessageType}
@@ -193,7 +193,7 @@ export function footerTemplate(customElementClass) {
                   @keydown="${checkKeyboardEscapeB}"
                   size="sm"
                   align="top-right">
-                  ${iconLoader(MicrophoneOff16, ({ slot: 'icon' }))}
+                  ${iconLoader(MicrophoneOff16, { slot: 'icon' })}
                   <span slot="tooltip-content"
                     >${renderLabel('prompt-microphone-unavailable')}</span
                   >
@@ -212,8 +212,8 @@ export function footerTemplate(customElementClass) {
                 size="sm"
                 @click="${isListening ? endRecording : startRecording}">
                 ${isListening
-                  ? iconLoader(MicrophoneFilled16, ({ slot: 'icon' }))
-                  : iconLoader(Microphone16, ({ slot: 'icon' }))}
+                  ? iconLoader(MicrophoneFilled16, { slot: 'icon' })
+                  : iconLoader(Microphone16, { slot: 'icon' })}
                 <span slot="tooltip-content"
                   >${renderLabel(
                     isListening
@@ -236,14 +236,14 @@ export function footerTemplate(customElementClass) {
                   ?disabled="${messageText === '' || forceDisableInput}"
                   @click="${sendInputToParent}">
                   ${messageText === '' || forceDisableInput
-                    ? iconLoader(Send16, ({
+                    ? iconLoader(Send16, {
                         slot: 'icon',
                         class: clabsPrefix + '--chat-footer-send-inactive',
-                      }))
-                    : iconLoader(SendFilled16, ({
+                      })
+                    : iconLoader(SendFilled16, {
                         slot: 'icon',
                         class: clabsPrefix + '--chat-footer-send-active',
-                      }))}
+                      })}
                   <span slot="tooltip-content">
                     ${messageText === '' || forceDisableInput
                       ? renderLabel('prompt-send-blocked-button')
@@ -260,9 +260,9 @@ export function footerTemplate(customElementClass) {
                   class="${clabsPrefix + '--chat-footer-button-danger'}"
                   @keydown="${checkKeyboardEscape}"
                   @click="${endStreaming}">
-                  ${iconLoader(Stop16, ({
+                  ${iconLoader(Stop16, {
                     slot: 'icon',
-                  }))}
+                  })}
                   <span slot="tooltip-content"
                     >${renderLabel('prompt-cancel-button')}</span
                   >

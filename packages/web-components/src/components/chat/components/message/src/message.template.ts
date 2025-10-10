@@ -19,7 +19,7 @@ import ThumbsDownFilled16 from '@carbon/icons/es/thumbs-down--filled/16.js';
 import CheckMark16 from '@carbon/icons/es/checkmark/16.js';
 import Undo16 from '@carbon/icons/es/undo/16.js';
 import WatsonxData24 from '@carbon/icons/es/watsonx-data/24.js';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 import '@carbon/web-components/es/components/slug/index.js';
 import '../../chartElement/chartElement.js';
 import '../../tableElement/tableElement.js';
@@ -161,7 +161,7 @@ export function messageTemplate(customElementClass) {
                             align="left"
                             label="Undo edit"
                             @click="${cancelEdit}">
-                            ${iconLoader(Undo16, ({ slot: 'icon' }))}
+                            ${iconLoader(Undo16, { slot: 'icon' })}
                             <span slot="tooltip-content"
                               >${renderLabel('message-undo-edit')}</span
                             >
@@ -172,7 +172,7 @@ export function messageTemplate(customElementClass) {
                             align="left"
                             label="Send edit"
                             @click="${validateEdit}">
-                            ${iconLoader(CheckMark16, ({ slot: 'icon' }))}
+                            ${iconLoader(CheckMark16, { slot: 'icon' })}
                             <span slot="tooltip-content"
                               >${renderLabel('message-validate-edit')}</span
                             >
@@ -183,7 +183,7 @@ export function messageTemplate(customElementClass) {
                           align="left"
                           label="Edit Code"
                           @click="${handleEdit}">
-                          ${iconLoader(Edit16, ({ slot: 'icon' }))}
+                          ${iconLoader(Edit16, { slot: 'icon' })}
                           <span slot="tooltip-content"
                             >${renderLabel('message-enable-editing')}</span
                           >
@@ -878,7 +878,7 @@ export function messageTemplate(customElementClass) {
                                   align="left"
                                   label="Undo Edit"
                                   @click="${cancelEdit}">
-                                  ${iconLoader(Undo16, ({ slot: 'icon' }))}
+                                  ${iconLoader(Undo16, { slot: 'icon' })}
                                   <span slot="tooltip-content"
                                     >${renderLabel('message-undo-edit')}</span
                                   >
@@ -889,7 +889,7 @@ export function messageTemplate(customElementClass) {
                                   align="left"
                                   label="Send edit"
                                   @click="${validateEdit}">
-                                  ${iconLoader(CheckMark16, ({ slot: 'icon' }))}
+                                  ${iconLoader(CheckMark16, { slot: 'icon' })}
                                   <span slot="tooltip-content"
                                     >${renderLabel(
                                       'message-validate-edit'
@@ -902,7 +902,7 @@ export function messageTemplate(customElementClass) {
                                 align="left"
                                 label="Edit message"
                                 @click="${handleEdit}">
-                                ${iconLoader(Edit16, ({ slot: 'icon' }))}
+                                ${iconLoader(Edit16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${renderLabel(
                                     'message-enable-editing'
@@ -927,8 +927,10 @@ export function messageTemplate(customElementClass) {
                                 @keydown="${handlePositiveKeyboardInput}"
                                 @click="${handlePositiveFeedback}">
                                 ${positiveFeedbackSelected
-                                  ? iconLoader(ThumbsUpFilled16, ({ slot: 'icon' }))
-                                  : iconLoader(ThumbsUp16, ({ slot: 'icon' }))}
+                                  ? iconLoader(ThumbsUpFilled16, {
+                                      slot: 'icon',
+                                    })
+                                  : iconLoader(ThumbsUp16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${disableFeedbackButtons
                                     ? renderLabel('message-feedback-disabled')
@@ -958,8 +960,10 @@ export function messageTemplate(customElementClass) {
                                 @keydown="${handleNegativeKeyboardInput}"
                                 @click="${handleNegativeFeedback}">
                                 ${negativeFeedbackSelected
-                                  ? iconLoader(ThumbsDownFilled16, ({ slot: 'icon' }))
-                                  : iconLoader(ThumbsDown16, ({ slot: 'icon' }))}
+                                  ? iconLoader(ThumbsDownFilled16, {
+                                      slot: 'icon',
+                                    })
+                                  : iconLoader(ThumbsDown16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${disableFeedbackButtons
                                     ? renderLabel('message-feedback-disabled')
@@ -976,7 +980,7 @@ export function messageTemplate(customElementClass) {
                                 align="right"
                                 label="Regenerate"
                                 @click="${handleRegenerate}">
-                                ${iconLoader(Renew16, ({ slot: 'icon' }))}
+                                ${iconLoader(Renew16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${renderLabel(
                                     'message-regenerate-button'

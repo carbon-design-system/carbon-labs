@@ -20,7 +20,7 @@ import Add16 from '@carbon/icons/es/add/16.js';
 import RequestQuote16 from '@carbon/icons/es/request-quote/16.js';
 import Close16 from '@carbon/icons/es/close/16.js';
 import Checkmark16 from '@carbon/icons/es/checkmark/16.js';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 import '@carbon/web-components/es/components/tag/index.js';
 

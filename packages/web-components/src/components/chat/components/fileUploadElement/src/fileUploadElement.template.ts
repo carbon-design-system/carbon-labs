@@ -15,7 +15,7 @@ import Close16 from '@carbon/icons/es/close/16.js';
 import PDF16 from '@carbon/icons/es/PDF/24.js';
 import CheckMarkOutline16 from '@carbon/icons/es/checkmark--outline/16.js';
 import '@carbon/web-components/es/components/loading/index.js';
-import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for code

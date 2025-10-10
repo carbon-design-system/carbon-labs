@@ -12,8 +12,9 @@ import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import '@carbon/web-components/es/components/link/index.js';
 import '@carbon/web-components/es/components/button/index.js';
-import Add20 from '@carbon/web-components/es/icons/add/20';
+import Add20 from '@carbon/icons/es/add/20';
 import CustomIllustration from './__assets__/empty-state-bright-magnifying-glass.svg';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
@@ -170,7 +171,7 @@ export const WithActionIconButton = {
     action: {
       text: 'Create new',
       kind: 'tertiary',
-      icon: Add20({ slot: 'icon' }),
+      icon: iconLoader(Add20, { slot: 'icon' }),
     },
   },
   argTypes,
@@ -195,7 +196,7 @@ export const WithActionAndLink = {
     action: {
       text: 'Create new',
       kind: 'tertiary',
-      icon: Add20({ slot: 'icon' }),
+      icon: iconLoader(Add20, { slot: 'icon' }),
     },
   },
   argTypes,

@@ -10,15 +10,16 @@
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
-import Renew16 from '@carbon/web-components/es/icons/renew/16.js';
-import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
-import ThumbsUp16 from '@carbon/web-components/es/icons/thumbs-up/16.js';
-import ThumbsDown16 from '@carbon/web-components/es/icons/thumbs-down/16.js';
-import ThumbsUpFilled16 from '@carbon/web-components/es/icons/thumbs-up--filled/16.js';
-import ThumbsDownFilled16 from '@carbon/web-components/es/icons/thumbs-down--filled/16.js';
-import CheckMark16 from '@carbon/web-components/es/icons/checkmark/16.js';
-import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
-import WatsonxData24 from '@carbon/web-components/es/icons/watsonx-data/24.js';
+import Renew16 from '@carbon/icons/es/renew/16.js';
+import Edit16 from '@carbon/icons/es/edit/16.js';
+import ThumbsUp16 from '@carbon/icons/es/thumbs-up/16.js';
+import ThumbsDown16 from '@carbon/icons/es/thumbs-down/16.js';
+import ThumbsUpFilled16 from '@carbon/icons/es/thumbs-up--filled/16.js';
+import ThumbsDownFilled16 from '@carbon/icons/es/thumbs-down--filled/16.js';
+import CheckMark16 from '@carbon/icons/es/checkmark/16.js';
+import Undo16 from '@carbon/icons/es/undo/16.js';
+import WatsonxData24 from '@carbon/icons/es/watsonx-data/24.js';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 import '@carbon/web-components/es/components/slug/index.js';
 import '../../chartElement/chartElement.js';
 import '../../tableElement/tableElement.js';
@@ -160,7 +161,7 @@ export function messageTemplate(customElementClass) {
                             align="left"
                             label="Undo edit"
                             @click="${cancelEdit}">
-                            ${Undo16({ slot: 'icon' })}
+                            ${iconLoader(Undo16, { slot: 'icon' })}
                             <span slot="tooltip-content"
                               >${renderLabel('message-undo-edit')}</span
                             >
@@ -171,7 +172,7 @@ export function messageTemplate(customElementClass) {
                             align="left"
                             label="Send edit"
                             @click="${validateEdit}">
-                            ${CheckMark16({ slot: 'icon' })}
+                            ${iconLoader(CheckMark16, { slot: 'icon' })}
                             <span slot="tooltip-content"
                               >${renderLabel('message-validate-edit')}</span
                             >
@@ -182,7 +183,7 @@ export function messageTemplate(customElementClass) {
                           align="left"
                           label="Edit Code"
                           @click="${handleEdit}">
-                          ${Edit16({ slot: 'icon' })}
+                          ${iconLoader(Edit16, { slot: 'icon' })}
                           <span slot="tooltip-content"
                             >${renderLabel('message-enable-editing')}</span
                           >
@@ -196,7 +197,7 @@ export function messageTemplate(customElementClass) {
                     ${displayColor
                       ? html` <div
                           class="${clabsPrefix}--chat-message-agent-icon">
-                          ${WatsonxData24()}
+                          ${iconLoader(WatsonxData24())}
                         </div>`
                       : html`
                           <div class="${clabsPrefix}--chat-message-bot-icon">
@@ -789,7 +790,7 @@ export function messageTemplate(customElementClass) {
                             `
                           : html`
                             <p class="${clabsPrefix}--chat-message-warning">
-                              [Warning] No valid block-type specified, rendering as type 'text': 
+                              [Warning] No valid block-type specified, rendering as type 'text':
                             </p>
                             <clabs-chat-text
                               capitalize
@@ -877,7 +878,7 @@ export function messageTemplate(customElementClass) {
                                   align="left"
                                   label="Undo Edit"
                                   @click="${cancelEdit}">
-                                  ${Undo16({ slot: 'icon' })}
+                                  ${iconLoader(Undo16, { slot: 'icon' })}
                                   <span slot="tooltip-content"
                                     >${renderLabel('message-undo-edit')}</span
                                   >
@@ -888,7 +889,7 @@ export function messageTemplate(customElementClass) {
                                   align="left"
                                   label="Send edit"
                                   @click="${validateEdit}">
-                                  ${CheckMark16({ slot: 'icon' })}
+                                  ${iconLoader(CheckMark16, { slot: 'icon' })}
                                   <span slot="tooltip-content"
                                     >${renderLabel(
                                       'message-validate-edit'
@@ -901,7 +902,7 @@ export function messageTemplate(customElementClass) {
                                 align="left"
                                 label="Edit message"
                                 @click="${handleEdit}">
-                                ${Edit16({ slot: 'icon' })}
+                                ${iconLoader(Edit16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${renderLabel(
                                     'message-enable-editing'
@@ -926,8 +927,10 @@ export function messageTemplate(customElementClass) {
                                 @keydown="${handlePositiveKeyboardInput}"
                                 @click="${handlePositiveFeedback}">
                                 ${positiveFeedbackSelected
-                                  ? ThumbsUpFilled16({ slot: 'icon' })
-                                  : ThumbsUp16({ slot: 'icon' })}
+                                  ? iconLoader(ThumbsUpFilled16, {
+                                      slot: 'icon',
+                                    })
+                                  : iconLoader(ThumbsUp16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${disableFeedbackButtons
                                     ? renderLabel('message-feedback-disabled')
@@ -957,8 +960,10 @@ export function messageTemplate(customElementClass) {
                                 @keydown="${handleNegativeKeyboardInput}"
                                 @click="${handleNegativeFeedback}">
                                 ${negativeFeedbackSelected
-                                  ? ThumbsDownFilled16({ slot: 'icon' })
-                                  : ThumbsDown16({ slot: 'icon' })}
+                                  ? iconLoader(ThumbsDownFilled16, {
+                                      slot: 'icon',
+                                    })
+                                  : iconLoader(ThumbsDown16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${disableFeedbackButtons
                                     ? renderLabel('message-feedback-disabled')
@@ -975,7 +980,7 @@ export function messageTemplate(customElementClass) {
                                 align="right"
                                 label="Regenerate"
                                 @click="${handleRegenerate}">
-                                ${Renew16({ slot: 'icon' })}
+                                ${iconLoader(Renew16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${renderLabel(
                                     'message-regenerate-button'

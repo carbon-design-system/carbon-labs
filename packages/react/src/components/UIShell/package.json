@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@carbon-labs/utilities": "canary",
-    "@carbon/ibm-products": "^2.72.1"
+    "@carbon/ibm-products": "^2.76.0"
   },
   "dependencies": {
     "@ibm/telemetry-js": "^1.10.2"

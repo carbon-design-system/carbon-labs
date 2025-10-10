@@ -11,13 +11,14 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 
-import ChevronRight16 from '@carbon/web-components/es/icons/chevron--right/16.js';
-import ChevronLeft16 from '@carbon/web-components/es/icons/chevron--left/16.js';
+import ChevronRight16 from '@carbon/icons/es/chevron--right/16.js';
+import ChevronLeft16 from '@carbon/icons/es/chevron--left/16.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '../../tableElement/tableElement.js';
 import '../../cardElement/cardElement.js';
 import '../../textElement/textElement.js';
 import '../../imageElement/imageElement.js';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for code
@@ -67,7 +68,7 @@ export function carouselElementTemplate(customElementClass) {
                       role="button"
                       @click="${handlePreviousSlide}"
                       ?disabled="${slideCounter === 0}">
-                      ${ChevronLeft16({ slot: 'icon' })}
+                      ${iconLoader(ChevronLeft16, { slot: 'icon' })}
                     </cds-button>
                   </div>
                   <div class="${clabsPrefix}--chat-carousel-control-item">
@@ -81,7 +82,7 @@ export function carouselElementTemplate(customElementClass) {
                       size="sm"
                       @click="${handleNextSlide}"
                       ?disabled="${renderedSlideCounter === maxSlideCounter}">
-                      ${ChevronRight16({ slot: 'icon' })}
+                      ${iconLoader(ChevronRight16, { slot: 'icon' })}
                     </cds-button>
                   </div>
                 `

@@ -14,12 +14,13 @@ import '@carbon/web-components/es/components/modal/index.js';
 import '@carbon/web-components/es/components/data-table/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/form-group/index.js';
-import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
-import TrashCan16 from '@carbon/web-components/es/icons/trash-can/16.js';
-import Add16 from '@carbon/web-components/es/icons/add/16.js';
-import RequestQuote16 from '@carbon/web-components/es/icons/request-quote/16.js';
-import Close16 from '@carbon/web-components/es/icons/close/16.js';
-import Checkmark16 from '@carbon/web-components/es/icons/checkmark/16.js';
+import Edit16 from '@carbon/icons/es/edit/16.js';
+import TrashCan16 from '@carbon/icons/es/trash-can/16.js';
+import Add16 from '@carbon/icons/es/add/16.js';
+import RequestQuote16 from '@carbon/icons/es/request-quote/16.js';
+import Close16 from '@carbon/icons/es/close/16.js';
+import Checkmark16 from '@carbon/icons/es/checkmark/16.js';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 import '@carbon/web-components/es/components/tag/index.js';
 
@@ -104,7 +105,7 @@ function getHTMLRows(customElementClass) {
                 item.output.parameters
               )}
               kind="ghost">
-              ${Edit16()} </cds-button
+              ${iconLoader(Edit16())} </cds-button
             ><cds-button
               @click=${onDeleteButtonClick.bind(
                 customElementClass,
@@ -115,7 +116,7 @@ function getHTMLRows(customElementClass) {
                 item.output.parameters
               )}
               kind="danger--ghost">
-              ${TrashCan16()}
+              ${iconLoader(TrashCan16())}
             </cds-button></cds-table-cell
           >
         </cds-table-row>`
@@ -344,7 +345,7 @@ export function uxControlTemplate(customElementClass) {
                   <cds-tooltip align="bottom">
                     <div class="sb-tooltip-trigger" aria-labelledby="content">
                       <cds-button @click=${toggleRename} kind="ghost">
-                        ${RequestQuote16()}
+                        ${iconLoader(RequestQuote16())}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -366,7 +367,7 @@ export function uxControlTemplate(customElementClass) {
                   <cds-tooltip align="bottom">
                     <div class="sb-tooltip-trigger" aria-labelledby="content">
                       <cds-button @click=${toggleRename} kind="danger--ghost">
-                        ${Close16()}
+                        ${iconLoader(Close16())}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -376,7 +377,7 @@ export function uxControlTemplate(customElementClass) {
                   <cds-tooltip align="bottom">
                     <div class="sb-tooltip-trigger" aria-labelledby="content">
                       <cds-button @click=${onSaveRename} kind="ghost">
-                        ${Checkmark16()}
+                        ${iconLoader(Checkmark16())}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -428,7 +429,7 @@ export function uxControlTemplate(customElementClass) {
                           <cds-button
                             @click=${toggleAddContextVariable}
                             kind="danger--ghost">
-                            ${Close16()}
+                            ${iconLoader(Close16())}
                           </cds-button>
                         </div>
                         <cds-tooltip-content id="content">
@@ -440,7 +441,7 @@ export function uxControlTemplate(customElementClass) {
                           class="sb-tooltip-trigger"
                           aria-labelledby="content">
                           <cds-button @click=${addContextVariable} kind="ghost">
-                            ${Checkmark16()}
+                            ${iconLoader(Checkmark16())}
                           </cds-button>
                         </div>
                         <cds-tooltip-content id="content">
@@ -473,7 +474,7 @@ export function uxControlTemplate(customElementClass) {
                     class="${clabsPrefix}--add-parameter-tag"
                     @click=${toggleAddParameter}
                     type="gray"
-                    >${Add16()} Add parameter
+                    >${iconLoader(Add16())} Add parameter
                   </cds-tag>`
                 : html`<div class="${clabsPrefix}--enter-new">
                     <cds-form-item>
@@ -489,7 +490,7 @@ export function uxControlTemplate(customElementClass) {
                         <cds-button
                           @click=${toggleAddParameter}
                           kind="danger--ghost">
-                          ${Close16()}
+                          ${iconLoader(Close16())}
                         </cds-button>
                       </div>
                       <cds-tooltip-content id="content">
@@ -499,7 +500,7 @@ export function uxControlTemplate(customElementClass) {
                     <cds-tooltip align="bottom">
                       <div class="sb-tooltip-trigger" aria-labelledby="content">
                         <cds-button @click=${addParameter} kind="ghost">
-                          ${Checkmark16()}
+                          ${iconLoader(Checkmark16())}
                         </cds-button>
                       </div>
                       <cds-tooltip-content id="content">

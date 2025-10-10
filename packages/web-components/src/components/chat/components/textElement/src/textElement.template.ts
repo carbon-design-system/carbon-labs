@@ -11,11 +11,12 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import ChevronDown16 from '@carbon/web-components/es/icons/chevron--down/16.js';
-import ChevronUp16 from '@carbon/web-components/es/icons/chevron--up/16.js';
+import ChevronDown16 from '@carbon/icons/es/chevron--down/16.js';
+import ChevronUp16 from '@carbon/icons/es/chevron--up/16.js';
 import '@carbon/web-components/es/components/tag/index.js';
 import '../../cardElement/cardElement.js';
 import '../../carouselElement/carouselElement.js';
+import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
 
 /**
  * Lit template for code
@@ -84,8 +85,8 @@ export function textElementTemplate(customElementClass) {
                             data-source="${textPiece.content}"
                             @click="${_handleAnnotationClick}">
                             ${!textPiece.active
-                              ? html` ${ChevronDown16({ slot: 'icon' })} `
-                              : html` ${ChevronUp16({ slot: 'icon' })} `}
+                              ? html` ${iconLoader(ChevronDown16, ({ slot: 'icon' }))} `
+                              : html` ${iconLoader(ChevronUp16, ({ slot: 'icon' }))} `}
                           </span>
                         </span>
                       `
@@ -155,8 +156,8 @@ export function textElementTemplate(customElementClass) {
                   role="button"
                   aria-label="show all links as a carousel below">
                   ${!showSummarization
-                    ? html` ${ChevronDown16({ slot: 'icon' })} `
-                    : html` ${ChevronUp16({ slot: 'icon' })} `}
+                    ? html` ${iconLoader(ChevronDown16, ({ slot: 'icon' }))} `
+                    : html` ${iconLoader(ChevronUp16, ({ slot: 'icon' }))} `}
                 </span>
               </span>
               <div

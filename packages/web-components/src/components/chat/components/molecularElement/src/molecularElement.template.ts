@@ -11,10 +11,11 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import '@carbon/web-components/es/components/loading/index.js';
-import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
-import Download16 from '@carbon/web-components/es/icons/download/16.js';
-import Launch16 from '@carbon/web-components/es/icons/launch/16.js';
-import Close16 from '@carbon/web-components/es/icons/close/16.js';
+import Maximize16 from '@carbon/icons/es/maximize/16.js';
+import Download16 from '@carbon/icons/es/download/16.js';
+import Launch16 from '@carbon/icons/es/launch/16.js';
+import Close16 from '@carbon/icons/es/close/16.js';
+import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
 
 /**
  * Lit template for card
@@ -100,7 +101,7 @@ export function molecularElementTemplate(customElementClass) {
                       role="button"
                       align="bottom-right"
                       @click="${exportToImage}">
-                      ${Download16({ slot: 'icon' })}
+                      ${iconLoader(Download16, ({ slot: 'icon' }))}
                       <span slot="tooltip-content">Export to PNG</span>
                     </cds-icon-button>
                   `
@@ -115,7 +116,7 @@ export function molecularElementTemplate(customElementClass) {
                       align="bottom-right"
                       disabled="${!pubChemUrl}"
                       @click="${openEditorView}">
-                      ${Launch16({ slot: 'icon' })}
+                      ${iconLoader(Launch16, ({ slot: 'icon' }))}
                       <span slot="tooltip-content">Open in PubChem</span>
                     </cds-icon-button>
                   `
@@ -129,7 +130,7 @@ export function molecularElementTemplate(customElementClass) {
                       size="sm"
                       align="bottom-right"
                       @click="${openFullscreenView}">
-                      ${Maximize16({ slot: 'icon' })}
+                      ${iconLoader(Maximize16, ({ slot: 'icon' }))}
                       <span slot="tooltip-content">Fullscreen</span>
                     </cds-icon-button>
                   `
@@ -152,7 +153,7 @@ export function molecularElementTemplate(customElementClass) {
             role="button"
             align="bottom-right"
             @click="${openFullscreenView}">
-            ${Close16({ slot: 'icon' })}
+            ${iconLoader(Close16, ({ slot: 'icon' }))}
             <span slot="tooltip-content">Fullscreen</span>
           </cds-icon-button>
         </div>`

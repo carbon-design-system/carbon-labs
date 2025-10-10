@@ -12,9 +12,10 @@ import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import '@carbon/web-components/es/components/tag/index.js';
 import '@carbon/web-components/es/components/chat-button/index.js';
-import Add16 from '@carbon/web-components/es/icons/add/16.js';
-import Upload16 from '@carbon/web-components/es/icons/upload/16.js';
-import SendAlt16 from '@carbon/web-components/es/icons/send--alt/16.js';
+import Add16 from '@carbon/icons/es/add/16.js';
+import Upload16 from '@carbon/icons/es/upload/16.js';
+import SendAlt16 from '@carbon/icons/es/send--alt/16.js';
+import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
 
 /**
  * Lit template for code
@@ -75,11 +76,11 @@ export function tagListElementTemplate(customElementClass) {
                         @click="${handleTagClick}">
                         ${monoLabel ? monoLabel : value}
                         ${actionIcon === 'add'
-                          ? Add16({ slot: 'icon' })
+                          ? iconLoader(Add16, ({ slot: 'icon' }))
                           : actionIcon === 'upload'
-                          ? Upload16({ slot: 'icon' })
+                          ? iconLoader(Upload16, ({ slot: 'icon' }))
                           : actionIcon === 'send'
-                          ? SendAlt16({ slot: 'icon' })
+                          ? iconLoader(SendAlt16, ({ slot: 'icon' }))
                           : ''}
                       </cds-chat-button>
                     `}

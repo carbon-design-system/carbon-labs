@@ -10,16 +10,17 @@
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
-import MicrophoneOff16 from '@carbon/web-components/es/icons/microphone--off/16.js';
-import MicrophoneFilled16 from '@carbon/web-components/es/icons/microphone--filled/16.js';
-import Microphone16 from '@carbon/web-components/es/icons/microphone/16.js';
-import SendFilled16 from '@carbon/web-components/es/icons/send--filled/16.js';
-import WarningFilled16 from '@carbon/web-components/es/icons/warning--filled/16.js';
-import InformationFilled16 from '@carbon/web-components/es/icons/information--filled/16.js';
+import MicrophoneOff16 from '@carbon/icons/es/microphone--off/16.js';
+import MicrophoneFilled16 from '@carbon/icons/es/microphone--filled/16.js';
+import Microphone16 from '@carbon/icons/es/microphone/16.js';
+import SendFilled16 from '@carbon/icons/es/send--filled/16.js';
+import WarningFilled16 from '@carbon/icons/es/warning--filled/16.js';
+import InformationFilled16 from '@carbon/icons/es/information--filled/16.js';
 
-import Send16 from '@carbon/web-components/es/icons/send/16.js';
-import Close16 from '@carbon/web-components/es/icons/close/24.js';
-import Stop16 from '@carbon/web-components/es/icons/stop--filled/16.js';
+import Send16 from '@carbon/icons/es/send/16.js';
+import Close16 from '@carbon/icons/es/close/24.js';
+import Stop16 from '@carbon/icons/es/stop--filled/16.js';
+import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
 
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
@@ -82,17 +83,17 @@ export function footerTemplate(customElementClass) {
                   ${contextMessageType === 'error'
                     ? html`<div
                         class="${clabsPrefix}--chat-footer-menu-container-item-icon-error">
-                        ${WarningFilled16()}
+                        ${iconLoader(WarningFilled16())}
                       </div>`
                     : contextMessageType === 'info'
                     ? html`<div
                         class="${clabsPrefix}--chat-footer-menu-container-item-icon-info">
-                        ${InformationFilled16()}
+                        ${iconLoader(InformationFilled16())}
                       </div>`
                     : contextMessageType === 'warning'
                     ? html`<div
                         class="${clabsPrefix}--chat-footer-menu-container-item-icon-warning">
-                        ${WarningFilled16()}
+                        ${iconLoader(WarningFilled16())}
                       </div>`
                     : html``}
                 </div>
@@ -118,7 +119,7 @@ export function footerTemplate(customElementClass) {
                           kind="ghost"
                           size="sm"
                           @click="${handleContextMessageClose}">
-                          ${Close16({ slot: 'icon' })}
+                          ${iconLoader(Close16, ({ slot: 'icon' }))}
                           <span slot="tooltip-content">
                             ${renderLabel('prompt-close-warning')}
                             ${contextMessageType}
@@ -192,7 +193,7 @@ export function footerTemplate(customElementClass) {
                   @keydown="${checkKeyboardEscapeB}"
                   size="sm"
                   align="top-right">
-                  ${MicrophoneOff16({ slot: 'icon' })}
+                  ${iconLoader(MicrophoneOff16, ({ slot: 'icon' }))}
                   <span slot="tooltip-content"
                     >${renderLabel('prompt-microphone-unavailable')}</span
                   >
@@ -211,8 +212,8 @@ export function footerTemplate(customElementClass) {
                 size="sm"
                 @click="${isListening ? endRecording : startRecording}">
                 ${isListening
-                  ? MicrophoneFilled16({ slot: 'icon' })
-                  : Microphone16({ slot: 'icon' })}
+                  ? iconLoader(MicrophoneFilled16, ({ slot: 'icon' }))
+                  : iconLoader(Microphone16, ({ slot: 'icon' }))}
                 <span slot="tooltip-content"
                   >${renderLabel(
                     isListening
@@ -235,14 +236,14 @@ export function footerTemplate(customElementClass) {
                   ?disabled="${messageText === '' || forceDisableInput}"
                   @click="${sendInputToParent}">
                   ${messageText === '' || forceDisableInput
-                    ? Send16({
+                    ? iconLoader(Send16, ({
                         slot: 'icon',
                         class: clabsPrefix + '--chat-footer-send-inactive',
-                      })
-                    : SendFilled16({
+                      }))
+                    : iconLoader(SendFilled16, ({
                         slot: 'icon',
                         class: clabsPrefix + '--chat-footer-send-active',
-                      })}
+                      }))}
                   <span slot="tooltip-content">
                     ${messageText === '' || forceDisableInput
                       ? renderLabel('prompt-send-blocked-button')
@@ -259,9 +260,9 @@ export function footerTemplate(customElementClass) {
                   class="${clabsPrefix + '--chat-footer-button-danger'}"
                   @keydown="${checkKeyboardEscape}"
                   @click="${endStreaming}">
-                  ${Stop16({
+                  ${iconLoader(Stop16, ({
                     slot: 'icon',
-                  })}
+                  }))}
                   <span slot="tooltip-content"
                     >${renderLabel('prompt-cancel-button')}</span
                   >

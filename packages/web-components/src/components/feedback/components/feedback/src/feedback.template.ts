@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
+import Edit16 from '@carbon/icons/es/edit/16.js';
 import '@carbon/web-components/es/components/modal/index.js';
 import '@carbon/web-components/es/components/textarea/index.js';
 import '@carbon/web-components/es/components/button/index.js';
@@ -24,6 +24,7 @@ import {
   FeedbackDescription,
   ModalData,
 } from '../defs';
+import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
 
 /**
  * Lit template for Feedback Flag
@@ -92,7 +93,7 @@ function openModal(customElementClass) {
             <p class="selected-text">
               ${formData.selectedText}
               <cds-icon-button @click=${toggleEdit} size="xs">
-                ${Edit16({ slot: 'icon' })}
+                ${iconLoader(Edit16, ({ slot: 'icon' }))}
                 <span slot="tooltip-content">Improved text</span>
               </cds-icon-button>
             </p>

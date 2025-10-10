@@ -11,7 +11,8 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import Close16 from '@carbon/web-components/es/icons/close/16.js';
+import Close16 from '@carbon/icons/es/close/16.js';
+import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/textarea/index.js';
 import '@carbon/web-components/es/components/link/index.js';
@@ -105,7 +106,7 @@ export function popupElementTemplate(customElementClass) {
                 role="button"
                 align="bottom-right"
                 @click="${handleClose}">
-                ${Close16({ slot: 'icon' })}
+                ${iconLoader(Close16, ({ slot: 'icon' }))}
                 <span slot="tooltip-content"
                   >${renderLabel('feedback-close')}</span
                 >
@@ -226,7 +227,7 @@ export function popupElementTemplate(customElementClass) {
                 align="bottom-right"
                 @keydown="${handleEscapeB}"
                 @click="${handleClose}">
-                ${Close16({ slot: 'icon' })}
+                ${iconLoader(Close16, ({ slot: 'icon' }))}
                 <span slot="tooltip-content"
                   >${renderLabel('feedback-close')}</span
                 >

@@ -10,30 +10,32 @@
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
-import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16.js';
-import PlayFilledAlt16 from '@carbon/web-components/es/icons/play--filled/16.js';
-import PauseFilled16 from '@carbon/web-components/es/icons/pause--filled/16.js';
-import VolumeMute16 from '@carbon/web-components/es/icons/volume--mute/16.js';
+import ArrowRight16 from '@carbon/icons/es/arrow--right/16.js';
+import PlayFilledAlt16 from '@carbon/icons/es/play--filled/16.js';
+import PauseFilled16 from '@carbon/icons/es/pause--filled/16.js';
+import VolumeMute16 from '@carbon/icons/es/volume--mute/16.js';
 import '@carbon/web-components/es/components/button/index.js';
 
-import mp324 from '@carbon/web-components/es/icons/MP3/24.js';
-import mp424 from '@carbon/web-components/es/icons/MP4/24.js';
-import png24 from '@carbon/web-components/es/icons/PNG/24.js';
-import pdf24 from '@carbon/web-components/es/icons/PDF/24.js';
-import ppt24 from '@carbon/web-components/es/icons/PPT/24.js';
-import svg24 from '@carbon/web-components/es/icons/SVG/24.js';
-import xls24 from '@carbon/web-components/es/icons/XLS/24.js';
-import zip24 from '@carbon/web-components/es/icons/ZIP/24.js';
-import wmv24 from '@carbon/web-components/es/icons/WMV/24.js';
-import txt24 from '@carbon/web-components/es/icons/TXT/24.js';
-import tsv24 from '@carbon/web-components/es/icons/TSV/24.js';
-import mov24 from '@carbon/web-components/es/icons/MOV/24.js';
-import jpg24 from '@carbon/web-components/es/icons/JPG/24.js';
-import gif24 from '@carbon/web-components/es/icons/GIF/24.js';
-import csv24 from '@carbon/web-components/es/icons/CSV/24.js';
-import videoPlayer24 from '@carbon/web-components/es/icons/video-player/24.js';
-import documentBlank24 from '@carbon/web-components/es/icons/document--blank/24.js';
-import music24 from '@carbon/web-components/es/icons/music/24.js';
+import mp324 from '@carbon/icons/es/MP3/24.js';
+import mp424 from '@carbon/icons/es/MP4/24.js';
+import png24 from '@carbon/icons/es/PNG/24.js';
+import pdf24 from '@carbon/icons/es/PDF/24.js';
+import ppt24 from '@carbon/icons/es/PPT/24.js';
+import svg24 from '@carbon/icons/es/SVG/24.js';
+import xls24 from '@carbon/icons/es/XLS/24.js';
+import zip24 from '@carbon/icons/es/ZIP/24.js';
+import wmv24 from '@carbon/icons/es/WMV/24.js';
+import txt24 from '@carbon/icons/es/TXT/24.js';
+import tsv24 from '@carbon/icons/es/TSV/24.js';
+import mov24 from '@carbon/icons/es/MOV/24.js';
+import jpg24 from '@carbon/icons/es/JPG/24.js';
+import gif24 from '@carbon/icons/es/GIF/24.js';
+import csv24 from '@carbon/icons/es/CSV/24.js';
+import videoPlayer24 from '@carbon/icons/es/video-player/24.js';
+import documentBlank24 from '@carbon/icons/es/document--blank/24.js';
+import music24 from '@carbon/icons/es/music/24.js';
+import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+
 
 /**
  * Lit template for card
@@ -80,41 +82,41 @@ export function cardElementTemplate(customElementClass) {
               ${fileType && type === 'file'
                 ? html` <div class="${clabsPrefix}--chat-card-detail-side-icon">
                     ${fileType === 'mp3'
-                      ? html`${mp324()}`
+                      ? html`${iconLoader(mp324())}`
                       : fileType === 'mp4'
-                      ? html`${mp424()}`
+                      ? html`${iconLoader(mp424())}`
                       : fileType === 'png'
-                      ? html`${png24()}`
+                      ? html`${iconLoader(png24())}`
                       : fileType === 'pdf'
-                      ? html`${pdf24()}`
+                      ? html`${iconLoader(pdf24())}`
                       : fileType === 'ppt'
-                      ? html`${ppt24()}`
+                      ? html`${iconLoader(ppt24())}`
                       : fileType === 'svg'
-                      ? html`${svg24()}`
+                      ? html`${iconLoader(svg24())}`
                       : fileType === 'xls'
-                      ? html`${xls24()}`
+                      ? html`${iconLoader(xls24())}`
                       : fileType === 'zip'
-                      ? html`${zip24()}`
+                      ? html`${iconLoader(zip24())}`
                       : fileType === 'wmv'
-                      ? html`${wmv24()}`
+                      ? html`${iconLoader(wmv24())}`
                       : fileType === 'txt'
-                      ? html`${txt24()}`
+                      ? html`${iconLoader(txt24())}`
                       : fileType === 'tsv'
-                      ? html`${tsv24()}`
+                      ? html`${iconLoader(tsv24())}`
                       : fileType === 'mov'
-                      ? html`${mov24()}`
+                      ? html`${iconLoader(mov24())}`
                       : fileType === 'jpg'
-                      ? html`${jpg24()}`
+                      ? html`${iconLoader(jpg24())}`
                       : fileType === 'gif'
-                      ? html`${gif24()}`
+                      ? html`${iconLoader(gif24())}`
                       : fileType === 'csv'
-                      ? html`${csv24()}`
-                      : html`${documentBlank24()}`}
+                      ? html`${iconLoader(csv24())}`
+                      : html`${iconLoader(documentBlank24())}`}
                   </div>`
                 : html``}
               ${type === 'video'
                 ? html` <div class="${clabsPrefix}--chat-card-detail-side-icon">
-                    ${videoPlayer24()}
+                    ${iconLoader(videoPlayer24())}
                   </div>`
                 : html``}
               ${fileType && type === 'audio'
@@ -123,10 +125,10 @@ export function cardElementTemplate(customElementClass) {
                       ? html` <div
                           class="${clabsPrefix}--chat-card-detail-side-icon">
                           ${fileType === 'mp3'
-                            ? html`${mp324()}`
+                            ? html`${iconLoader(mp324())}`
                             : fileType === 'wmv'
-                            ? html`${wmv24()}`
-                            : html`${music24()}`}
+                            ? html`${iconLoader(wmv24())}`
+                            : html`${iconLoader(music24())}`}
                         </div>`
                       : html``}
                   `
@@ -157,7 +159,7 @@ export function cardElementTemplate(customElementClass) {
 
                         <div class="${clabsPrefix}--chat-card-detail-link-icon">
                           <a href="${cardData.link}" target="_blank">
-                            ${ArrowRight16()}
+                            ${iconLoader(ArrowRight16())}
                           </a>
                         </div>
                       </div>
@@ -174,7 +176,7 @@ export function cardElementTemplate(customElementClass) {
                                 kind="ghost"
                                 size="sm"
                                 @click="${toggleAudio}">
-                                ${PauseFilled16({ slot: 'icon' })}
+                                ${iconLoader(PauseFilled16, ({ slot: 'icon' }))}
                               </cds-button>`
                             : html` <cds-button
                                 kind="ghost"
@@ -182,12 +184,12 @@ export function cardElementTemplate(customElementClass) {
                                 role="button"
                                 size="sm"
                                 @click="${toggleAudio}">
-                                ${PlayFilledAlt16({ slot: 'icon' })}
+                                ${iconLoader(PlayFilledAlt16, ({ slot: 'icon' }))}
                               </cds-button>`}
                         </div>
                         <!-- <div class="${clabsPrefix}--chat-card-detail-audio-item">
                 <cds-button aria-label="Mute Audio" role="button" kind="ghost" size="sm" disabled>
-                  ${VolumeMute16({ slot: 'icon' })}
+                  ${iconLoader(VolumeMute16, ({ slot: 'icon' }))}
                 </cds-button>
                 </div>-->
                         <div
@@ -227,17 +229,17 @@ export function cardElementTemplate(customElementClass) {
                 : ''}">
               ${type === 'file'
                 ? html` <div class="${clabsPrefix}--chat-card-detail-side-icon">
-                    ${documentBlank24()}
+                    ${iconLoader(documentBlank24())}
                   </div>`
                 : html``}
               ${type === 'video'
                 ? html` <div class="${clabsPrefix}--chat-card-detail-side-icon">
-                    ${videoPlayer24()}
+                    ${iconLoader(videoPlayer24())}
                   </div>`
                 : html``}
               ${type === 'audio'
                 ? html` <div class="${clabsPrefix}--chat-card-detail-side-icon">
-                    ${music24()}
+                    ${iconLoader(music24())}
                   </div>`
                 : html``}
 
@@ -271,7 +273,7 @@ export function cardElementTemplate(customElementClass) {
                                 kind="ghost"
                                 disabled
                                 size="sm">
-                                ${PauseFilled16({ slot: 'icon' })}
+                                ${iconLoader(PauseFilled16, ({ slot: 'icon' }))}
                               </cds-button>`
                             : html` <cds-button
                                 aria-label="Start Audio"
@@ -279,7 +281,7 @@ export function cardElementTemplate(customElementClass) {
                                 kind="ghost"
                                 disabled
                                 size="sm">
-                                ${PlayFilledAlt16({ slot: 'icon' })}
+                                ${iconLoader(PlayFilledAlt16, ({ slot: 'icon' }))}
                               </cds-button>`}
                         </div>
                         <div

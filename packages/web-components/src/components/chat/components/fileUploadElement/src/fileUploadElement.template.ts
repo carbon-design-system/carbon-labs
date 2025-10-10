@@ -10,11 +10,13 @@
 import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
-import Close16 from '@carbon/web-components/es/icons/close/16.js';
+import Close16 from '@carbon/icons/es/close/16.js';
 
-import PDF16 from '@carbon/web-components/es/icons/PDF/24.js';
-import CheckMarkOutline16 from '@carbon/web-components/es/icons/checkmark--outline/16.js';
+import PDF16 from '@carbon/icons/es/PDF/24.js';
+import CheckMarkOutline16 from '@carbon/icons/es/checkmark--outline/16.js';
 import '@carbon/web-components/es/components/loading/index.js';
+import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
+
 /**
  * Lit template for code
  *
@@ -34,7 +36,7 @@ export function fileUploadElementTemplate(customElementClass) {
       : ''}">
     <div class="${clabsPrefix}--chat-file-upload-top-container">
       <div class="${clabsPrefix}--chat-file-upload-container-file-type">
-        ${PDF16()}
+        ${iconLoader(PDF16())}
       </div>
       <div class="${clabsPrefix}--chat-file-upload-container-file-name">
         ${content}
@@ -47,8 +49,8 @@ export function fileUploadElementTemplate(customElementClass) {
         ${status === 'loading'
           ? html` <cds-loading type="small"></cds-loading> `
           : status === 'success'
-          ? html` ${CheckMarkOutline16()} `
-          : html` ${Close16()}`}
+          ? html` ${iconLoader(CheckMarkOutline16())} `
+          : html` ${iconLoader(Close16())}`}
       </div>
     </div>
     ${status === 'error'

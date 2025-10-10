@@ -21,13 +21,15 @@ import '@carbon/web-components/es/components/content-switcher/index.js';
 
 import '../../codeElement/codeElement.js';
 
-import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
-import Download16 from '@carbon/web-components/es/icons/download/16.js';
-import Launch16 from '@carbon/web-components/es/icons/launch/16.js';
-import Code16 from '@carbon/web-components/es/icons/code/16.js';
-import Close16 from '@carbon/web-components/es/icons/close/16.js';
-import ViewNext16 from '@carbon/web-components/es/icons/view-next/16.js';
-import Redo16 from '@carbon/web-components/es/icons/redo/16.js';
+import Maximize16 from '@carbon/icons/es/maximize/16.js';
+import Download16 from '@carbon/icons/es/download/16.js';
+import Launch16 from '@carbon/icons/es/launch/16.js';
+import Code16 from '@carbon/icons/es/code/16.js';
+import Close16 from '@carbon/icons/es/close/16.js';
+import ViewNext16 from '@carbon/icons/es/view-next/16.js';
+import Redo16 from '@carbon/icons/es/redo/16.js';
+
+import { iconLoader } from "@carbon/web-components/es/globals/internal/icon-loader.js";
 
 /**
  * Lit template for card
@@ -89,7 +91,7 @@ export function chartElementTemplate(customElementClass) {
               role="button"
               align="bottom-right"
               @click="${closeModal}">
-              ${Close16({ slot: 'icon' })}
+              ${iconLoader(Close16, ({ slot: 'icon' }))}
               <span slot="tooltip-content">${'Close ' + modalMode}</span>
             </cds-icon-button>
           </div>
@@ -245,7 +247,7 @@ export function chartElementTemplate(customElementClass) {
                                 tooltip-position="left"
                                 tooltip-text="Investigate in editor"
                                 @click="${openCodeView}">
-                                ${Launch16({ slot: 'icon' })} View in charts
+                                ${iconLoader(Launch16, ({ slot: 'icon' }))} View in charts
                                 editor
                               </cds-button>`
                             : html``}
@@ -261,7 +263,7 @@ export function chartElementTemplate(customElementClass) {
                                 tooltip-position="left"
                                 tooltip-text="Investigate in editor"
                                 @click="${openEditorView}">
-                                ${Launch16({ slot: 'icon' })} View in Vega
+                                ${iconLoader(Launch16, ({ slot: 'icon' }))} View in Vega
                                 editor
                               </cds-button>`
                             : html``}
@@ -295,7 +297,7 @@ export function chartElementTemplate(customElementClass) {
                     role="button"
                     align="bottom-right"
                     @click="${exportToImage}">
-                    ${Redo16({ slot: 'icon' })}
+                    ${iconLoader(Redo16, ({ slot: 'icon' }))}
                     <span slot="tooltip-content">Return to this chart</span>
                   </cds-icon-button>
                 `
@@ -309,7 +311,7 @@ export function chartElementTemplate(customElementClass) {
                     role="button"
                     align="bottom-right"
                     @click="${exportToImage}">
-                    ${Download16({ slot: 'icon' })}
+                    ${iconLoader(Download16, ({ slot: 'icon' }))}
                     <span slot="tooltip-content">Export to PNG</span>
                   </cds-icon-button>
                 `
@@ -323,7 +325,7 @@ export function chartElementTemplate(customElementClass) {
                     role="button"
                     align="bottom-right"
                     @click="${appendToContext}">
-                    ${ViewNext16({ slot: 'icon' })}
+                    ${iconLoader(ViewNext16, ({ slot: 'icon' }))}
                     <span slot="tooltip-content">Make latest chart</span>
                   </cds-icon-button>
                 `
@@ -337,7 +339,7 @@ export function chartElementTemplate(customElementClass) {
                     role="button"
                     align="bottom-right"
                     @click="${appendToContext}">
-                    ${ViewNext16({ slot: 'icon' })}
+                    ${iconLoader(ViewNext16, ({ slot: 'icon' }))}
                     <span slot="tooltip-content">Make latest chart</span>
                   </cds-icon-button>
                 `
@@ -351,7 +353,7 @@ export function chartElementTemplate(customElementClass) {
                     size="sm"
                     align="bottom-right"
                     @click="${openEditorView}">
-                    ${Launch16({ slot: 'icon' })}
+                    ${iconLoader(Launch16, ({ slot: 'icon' }))}
                     <span slot="tooltip-content">Open in Vega editor</span>
                   </cds-icon-button>
                 `
@@ -365,7 +367,7 @@ export function chartElementTemplate(customElementClass) {
                     role="button"
                     align="bottom-right"
                     @click="${openCodeView}">
-                    ${Code16({ slot: 'icon' })}
+                    ${iconLoader(Code16, ({ slot: 'icon' }))}
                     <span slot="tooltip-content">Show specification</span>
                   </cds-icon-button>
                 `
@@ -379,7 +381,7 @@ export function chartElementTemplate(customElementClass) {
                     size="sm"
                     align="bottom-right"
                     @click="${openFullscreenView}">
-                    ${Maximize16({ slot: 'icon' })}
+                    ${iconLoader(Maximize16, ({ slot: 'icon' }))}
                     <span slot="tooltip-content">Fullscreen</span>
                   </cds-icon-button>
                 `

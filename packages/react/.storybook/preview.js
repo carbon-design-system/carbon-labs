@@ -319,10 +319,10 @@ const decorators = [
 
     React.useLayoutEffect(() => {
       document.documentElement.lang = locale;
-      document.documentElement.dir = dir;
+      // document.documentElement.dir = dir;
       // Need to set random key to recalculate Popover coordinates
       setRandomKey(Math.floor(Math.random() * 10));
-    }, [locale, dir]);
+    }, [locale]);
 
     return (
       <GlobalTheme theme={theme}>

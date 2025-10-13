@@ -25,8 +25,10 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Read the current package's package.json, not the root monorepo's
 const packageJSON = JSON.parse(
-  readFileSync(path.resolve(__dirname, '../package.json'))
+  readFileSync(path.resolve(process.cwd(), 'package.json'))
 );
 
 /**
@@ -131,15 +133,22 @@ function getTsCompilerOptions() {
  * @returns
  */
 function getRollupConfig(input, rootDir, outDir) {
+  // Safely handle cases where dependencies might not exist
+  const allDependencies = [
+    ...(packageJSON.peerDependencies
+      ? Object.keys(packageJSON.peerDependencies)
+      : []),
+    ...(packageJSON.dependencies ? Object.keys(packageJSON.dependencies) : []),
+    ...(packageJSON.devDependencies
+      ? Object.keys(packageJSON.devDependencies)
+      : []),
+  ];
+
   return {
     input,
     // Mark dependencies listed in `package.json` as external so that they are
     // not included in the output bundle.
-    external: [
-      ...Object.keys(packageJSON.peerDependencies),
-      ...Object.keys(packageJSON.dependencies),
-      ...Object.keys(packageJSON.devDependencies),
-    ].map((name) => {
+    external: allDependencies.map((name) => {
       // Transform the name of each dependency into a regex so that imports from
       // nested paths are correctly marked as external.
       //
@@ -151,6 +160,10 @@ function getRollupConfig(input, rootDir, outDir) {
     plugins: [
       nodeResolve({
         extensions: ['.mjs', '.js', '.json', '.node', '.ts', '.tsx'],
+        // Add explicit export conditions to prevent ambiguity
+        // between main and exports fields
+        exportConditions: ['node', 'import'],
+        mainFields: ['module', 'main'],
       }),
       commonjs({
         include: /node_modules/,

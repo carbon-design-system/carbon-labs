@@ -5,7 +5,6 @@
     "access": "public",
     "provenance": true
   },
-  "type": "module",
   "description": "Carbon Labs - Theme Switcher",
   "license": "Apache-2.0",
   "repository": {
@@ -14,6 +13,8 @@
     "directory": "src/components/ThemeSettings"
   },
   "types": "./es/index.d.ts",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
   "exports": {
     ".": {
       "import": "./es/index.js",

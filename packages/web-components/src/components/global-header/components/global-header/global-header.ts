@@ -11,6 +11,11 @@ import { customElement } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import globalHeader from './src/global-header.template.js';
 
+export { CommonHeader } from './src/components/CommonHeader/CommonHeader.js';
+export { HybridIpaasHeader } from './src/components/HybridIpaasHeader/HybridIpaasHeader.js';
+export { LogoutHeader } from './src/components/LogoutHeader/LogoutHeader.js';
+export { LogoutTile } from './src/components/LogoutTile/LogoutTile.js';
+
 const { stablePrefix: clabsPrefix } = settings;
 
 /**

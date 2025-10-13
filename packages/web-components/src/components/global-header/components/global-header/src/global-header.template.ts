@@ -9,7 +9,7 @@
 
 import { CommonHeader } from './components/CommonHeader/CommonHeader';
 // @ts-ignore
-import styles from './global-header.scss?inline';
+import styles from './index.scss?inline';
 
 /**
  * Component extending the @carbon/web-components' button

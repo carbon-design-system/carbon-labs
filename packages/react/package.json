@@ -20,9 +20,9 @@
     "react-dom": "^16.8.6 || ^17.0.1 || ^18.2.0"
   },
   "dependencies": {
-    "@carbon/icons-react": "^11.65.0",
-    "@carbon/react": "^1.89.0",
-    "@carbon/styles": "^1.88.0",
+    "@carbon/icons-react": "^11.69.0",
+    "@carbon/react": "^1.93.0",
+    "@carbon/styles": "^1.92.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

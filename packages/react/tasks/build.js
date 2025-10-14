@@ -151,6 +151,21 @@ function getRollupConfig(input, rootDir, outDir) {
     plugins: [
       nodeResolve({
         extensions: ['.mjs', '.js', '.json', '.node', '.ts', '.tsx'],
+        exportConditions: ['import', 'default'],
+        // Check if the package has a rollup.useExportsOnly setting
+        mainFields: (() => {
+          try {
+            // Try to read the package.json in the current directory
+            const currentDir = process.cwd();
+            const pkgPath = path.join(currentDir, 'package.json');
+            const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
+            // Always include at least one mainField to avoid errors
+            return pkg.rollup?.useExportsOnly ? ['module'] : ['module', 'main'];
+          } catch (e) {
+            // If there's an error reading the file, use default behavior
+            return ['module', 'main'];
+          }
+        })(),
       }),
       commonjs({
         include: /node_modules/,

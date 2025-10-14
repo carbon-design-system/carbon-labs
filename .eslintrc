@@ -1,13 +1,16 @@
 {
-  "extends": [
-    "./node_modules/eslint-config-carbon"
-  ],
+  "extends": ["./node_modules/eslint-config-carbon"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "conditionNames": ["import", "require", "default"]
+      }
+    }
+  },
   "overrides": [
     {
-      "files": [
-        "**/*.js",
-        "**/*.ts"
-      ],
+      "files": ["**/*.js", "**/*.ts"],
       "rules": {
         "jsdoc/require-jsdoc": [
           2,

@@ -25,6 +25,9 @@
     "./lib/*": "./lib/*",
     "./scss/*": "./scss/*"
   },
+  "rollup": {
+    "useExportsOnly": true
+  },
   "files": [
     "es",
     "lib",

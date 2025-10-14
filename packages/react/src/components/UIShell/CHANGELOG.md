@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.81.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.80.0...@carbon-labs/react-ui-shell@0.81.0) (2025-10-10)
+
+
+### Bug Fixes
+
+* **search:** full expand in md/sm breakpoints ([#825](https://github.com/carbon-design-system/carbon-labs/issues/825)) ([16aeafb](https://github.com/carbon-design-system/carbon-labs/commit/16aeafb4a7e52b3a2bd5988c5bb589cb90956d65))
+
+
+
+
+
 # [0.80.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.79.0...@carbon-labs/react-ui-shell@0.80.0) (2025-09-11)
 
 **Note:** Version bump only for package @carbon-labs/react-ui-shell

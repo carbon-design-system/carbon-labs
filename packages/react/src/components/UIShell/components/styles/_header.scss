@@ -10,6 +10,7 @@
 @use '@carbon/styles/scss/motion' as *;
 @use '@carbon/react/scss/utilities/convert' as convert;
 @use '@carbon/styles/scss/utilities/custom-property' as custom-property;
+@use '@carbon/styles/scss/breakpoint' as *;
 
 $prefix: 'cds' !default;
 
@@ -78,4 +79,15 @@ $prefix: 'cds' !default;
     [disabled]
   ):hover {
   color: $text-primary;
+}
+
+//----------------------------------------------------------------------------
+// Search expanded inside Header
+//----------------------------------------------------------------------------
+@include breakpoint-down(lg) {
+  .#{$prefix}--header .#{$prefix}--search--expanded {
+    position: absolute;
+    z-index: 1;
+    inset-inline-start: 0;
+  }
 }

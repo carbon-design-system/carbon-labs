@@ -1,0 +1,21 @@
+import{_ as u,e as k}from"./class-map-Ckwl0vY7.js";import{i as D,x as l}from"./iframe-Dege_oTj.js";import{n as y}from"./property-BUSn0k2I.js";import{b,B as S,C as _}from"./button-DtFI3WAD.js";import{c as $,p as t}from"./carbon-element-D4BpjLHq.js";import{o as s}from"./if-defined-DgczBsGL.js";let r=class extends D{render(){return l`<slot></slot>`}connectedCallback(){super.connectedCallback(),this.setAttribute("role","list")}};r.styles=b;r=u([$(`${t}-button-set-base`)],r);var I=r;let c=class extends I{constructor(){super(...arguments),this.stacked=!1}_handleSlotChange(e){e.target.assignedNodes().filter(o=>o.matches!==void 0?o.matches(this.constructor.selectorItem):!1).forEach((o,i)=>{o.setAttribute("kind",i===0?S.SECONDARY:S.PRIMARY)});const n=new CustomEvent(`${t}-btn-set-update`,{bubbles:!0,cancelable:!0,composed:!0});this.dispatchEvent(n)}render(){const{stacked:e}=this,a={[`${t}--btn-set--stacked`]:e},n=k(a);return l`<slot class="${n} @slotchange="${this._handleSlotChange}"></slot>`}static get selectorItem(){return`${t}-button`}};c.styles=b;u([y({type:Boolean,reflect:!0})],c.prototype,"stacked",void 0);c=u([$(`${t}-button-set`)],c);let d=class extends _{_handleClickLinkSkeleton(e){this.disabled&&(e.preventDefault(),e.stopPropagation())}render(){const{autofocus:e,disabled:a,download:n,href:o,hreflang:i,ping:C,rel:g,size:p,target:B,type:f}=this,m=k({[`${t}--btn`]:!0,[`${t}--skeleton`]:!0,[`${t}--btn--${p}`]:p});return o?l`
+          <a
+            id="button"
+            role="button"
+            class="${m}"
+            download="${s(n)}"
+            href="${s(o)}"
+            hreflang="${s(i)}"
+            ping="${s(C)}"
+            rel="${s(g)}"
+            target="${s(B)}"
+            type="${s(f)}"
+            @click="${this._handleClickLinkSkeleton}"></a>
+        `:l`
+          <button
+            id="button"
+            class="${m}"
+            ?autofocus="${e}"
+            ?disabled="${a}"
+            type="${s(f)}"></button>
+        `}};d.styles=b;d=u([$(`${t}-button-skeleton`)],d);

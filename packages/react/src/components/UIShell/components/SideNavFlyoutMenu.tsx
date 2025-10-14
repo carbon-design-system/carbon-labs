@@ -359,6 +359,7 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
     <Popover
       ref={popoverRef}
       {...rest}
+      as="li"
       align={isButtonFocused ? 'right' : align}
       className={cx(customClassName, {
         [`${prefix}--flyout-menu`]: true,

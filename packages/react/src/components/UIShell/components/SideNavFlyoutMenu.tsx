@@ -389,7 +389,11 @@ function SideNavFlyoutMenu<T extends React.ElementType>({
         onMouseEnter={onMouseEnter}
         role="tooltip">
         {!isButtonFocused ? <FormLabel>{title}</FormLabel> : title}
-        <div style={{ display: isButtonFocused ? 'none' : 'block' }}>
+        <div
+          className={cx({
+            [`${prefix}--flyout-menu-items`]: true,
+            [`${prefix}--flyout-menu-items--focused-trigger`]: isButtonFocused,
+          })}>
           {flyoutMenuItems}
         </div>
       </PopoverContent>

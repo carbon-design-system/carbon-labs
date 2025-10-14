@@ -507,6 +507,14 @@ div:has(.#{$prefix}--header)
     @include custom-property.declaration('popover-caret-height', 0.25rem);
   }
 
+  .#{$prefix}--flyout-menu-items {
+    display: block;
+  }
+
+  .#{$prefix}--flyout-menu-items.#{$prefix}--flyout-menu-items--focused-trigger {
+    display: none;
+  }
+
   // Flyout menu content styles
   .#{$prefix}--side-nav-menu--popover-content {
     padding: 4px 0;

@@ -13,7 +13,7 @@ import '@carbon/web-components/es/components/code-snippet/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 
 export default {
-  title: 'Components/Chat',
+  title: 'Deprecated/Components/Chat',
   component: 'clabs-chat',
 };
 

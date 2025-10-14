@@ -3,6 +3,7 @@ import { white, g10, g90, g100 } from '@carbon/themes';
 import { breakpoints } from '@carbon/layout';
 import { GlobalTheme, Theme } from '@carbon/react/es/components/Theme';
 import { Layout } from '@carbon/react/es/components/Layout';
+import { TextDirection } from '@carbon/react/es/components/Text';
 import { DocsContainer, Meta, Unstyled } from '@storybook/addon-docs/blocks';
 import {
   Accordion,
@@ -245,7 +246,7 @@ export const parameters = {
   docs: {
     container: Container,
     theme: theme,
-    codePanel: true,
+    codePanel: true
   },
   options: {
     storySort: {
@@ -314,20 +315,24 @@ const decorators = [
 
     React.useEffect(() => {
       document.documentElement.setAttribute('data-carbon-theme', theme);
-      document.documentElement.dir = dir;
-    }, [theme, dir]);
+    }, [theme]);
 
     React.useLayoutEffect(() => {
       document.documentElement.lang = locale;
-      // document.documentElement.dir = dir;
+      document.documentElement.dir = dir;
       // Need to set random key to recalculate Popover coordinates
       setRandomKey(Math.floor(Math.random() * 10));
-    }, [locale]);
+    }, [locale, dir]);
 
     return (
       <GlobalTheme theme={theme}>
         <Layout size={layoutSize || null} density={layoutDensity || null}>
-          <Story key={randomKey} {...context} />
+          <TextDirection
+            getTextDirection={(text) => {
+              return dir;
+            }}>
+            <Story key={randomKey} {...context} />
+          </TextDirection>
         </Layout>
       </GlobalTheme>
     );
@@ -338,7 +343,7 @@ const preview = {
   parameters,
   decorators,
   globalTypes,
-  tags: ['autodocs'],
+  tags: ['autodocs']
 };
 
 export default preview;

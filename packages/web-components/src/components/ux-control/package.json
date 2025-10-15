@@ -40,8 +40,8 @@
     "@babel/core": "^7.26.0",
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.8.0",
-    "@carbon/grid": "^11.21.0",
-    "@carbon/web-components": "2.36.0",
+    "@carbon/grid": "^11.45.0",
+    "@carbon/web-components": "^2.40.0",
     "@ibm/telemetry-js": "^1.10.2"
   }
 }

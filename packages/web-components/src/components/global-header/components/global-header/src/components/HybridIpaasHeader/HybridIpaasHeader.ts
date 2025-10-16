@@ -100,7 +100,7 @@ export class HybridIpaasHeader extends LitElement {
 
   private initLogoutLink() {
     const footerLink: ProfileFooterLinks = {
-      text: 'Logout',
+      text: 'Log out',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
     };

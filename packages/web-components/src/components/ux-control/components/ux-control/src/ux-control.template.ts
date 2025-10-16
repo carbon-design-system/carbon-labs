@@ -410,7 +410,7 @@ export function uxControlTemplate(customElementClass) {
                     class="${clabsPrefix}--add-context-variable-tag"
                     @click=${toggleAddContextVariable}
                     type="gray">
-                    ${Add16({ slot: 'icon' })} Add context variable
+                    ${iconLoader(Add16, { slot: 'icon' })} Add context variable
                   </cds-tag>`
                 : html`
                     <div class="${clabsPrefix}--enter-new">

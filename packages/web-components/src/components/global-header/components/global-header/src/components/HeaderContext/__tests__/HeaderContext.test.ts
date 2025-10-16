@@ -62,7 +62,7 @@ describe('HeaderContext Component', () => {
     ],
     profileFooterLinks: [
       {
-        text: 'Logout',
+        text: 'Log out',
         href: '/logout',
         carbonIcon: 'Logout',
         arialLabel: 'Logout',

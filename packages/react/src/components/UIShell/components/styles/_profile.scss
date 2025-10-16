@@ -8,7 +8,6 @@
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/styles/scss/theme' as *;
-@use '@carbon/styles/scss/breakpoint' as *;
 @use '@carbon/react/scss/utilities/convert' as convert;
 @use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 @use '@carbon/ibm-products/scss/components/UserAvatar';
@@ -16,11 +15,6 @@
 $prefix: 'cds' !default;
 
 // profile
-@include breakpoint-down(md) {
-  .#{$prefix}--profile {
-    display: none;
-  }
-}
 
 .#{$prefix}--profile.#{$prefix}--popover--open {
   background-color: $background;

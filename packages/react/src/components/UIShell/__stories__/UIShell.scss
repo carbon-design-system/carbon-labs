@@ -1,0 +1,9 @@
+@use '@carbon/styles/scss/breakpoint' as *;
+
+$prefix: 'cds' !default;
+
+@include breakpoint-down(md) {
+  .#{$prefix}--profile {
+    display: none;
+  }
+}

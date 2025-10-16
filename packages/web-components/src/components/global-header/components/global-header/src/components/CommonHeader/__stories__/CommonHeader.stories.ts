@@ -59,7 +59,7 @@ const headerProps: HeaderProps = {
   ],
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
@@ -217,7 +217,7 @@ const hybridIPaasHeaderProps = {
   ],
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
@@ -349,7 +349,7 @@ const headerPropsWithHelpLinks: HeaderProps = {
   enableLogs: true,
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',

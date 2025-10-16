@@ -26,6 +26,7 @@ import {
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderDivider } from '../components/HeaderDivider';
 import { TrialCountdown } from '../components/TrialCountdown';
+import { HeaderOverflowPanel } from '../components/HeaderOverflowPanel';
 import { ThemeSettings, ThemeSwitcher } from '../../ThemeSettings';
 import {
   SkipToContent,
@@ -75,6 +76,8 @@ import {
   Group,
   Money,
   Logout,
+  Launch,
+  ChartCustom,
 } from '@carbon/icons-react';
 
 import {
@@ -85,6 +88,9 @@ import {
 } from './AppIcons';
 
 import '../components/ui-shell.scss';
+import { useMatchMedia } from '../internal/useMatchMedia';
+import { breakpoints } from '@carbon/layout';
+const smMediaQuery = `(max-width: ${breakpoints.md.width})`;
 
 export default {
   title: 'Components/UIShell',
@@ -627,6 +633,212 @@ export const Demo = () => {
 };
 
 Demo.parameters = {
+  controls: { disable: true },
+  actions: { disable: true },
+};
+
+/**
+ * Story for UIShell
+ * @returns {React.ReactElement} The JSX for the story
+ */
+export const Test = () => {
+  const { themeSetting, setThemeSetting, themeHeader } = useThemeSettings();
+
+  const isSm = useMatchMedia(smMediaQuery);
+
+  return (
+    <Theme theme={themeHeader}>
+      <HeaderContainer
+        themeSetting={themeSetting}
+        render={({
+          isSideNavExpanded,
+          onClickSideNavExpand,
+          isProfileExpanded,
+          onClickProfileExpand,
+        }) => (
+          <Header aria-label="IBM Platform Name">
+            <SkipToContent />
+            <HeaderMenuButton
+              aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
+              onClick={onClickSideNavExpand}
+              isActive={isSideNavExpanded}
+              aria-expanded={isSideNavExpanded}
+              isCollapsible //shows menu at desktop
+              isFixedNav
+              renderMenuIcon={<SwitcherIcon size={20} />}
+            />
+            <HeaderName href="#" prefix="IBM">
+              [Platform]
+            </HeaderName>
+
+            <HeaderGlobalBar>
+              <ExpandableSearch
+                size="lg"
+                labelText="Search"
+                closeButtonLabelText="Clear search input"
+                id="search-expandable-1"
+              />
+              <HeaderOverflowPanel>
+                <SideNav
+                  isTreeview
+                  isFixedNav
+                  expanded
+                  isChildOfHeader={false}
+                  aria-label="Side navigation"
+                  headerOverflowPanel>
+                  <SideNavItems>
+                    {isSm && (
+                      <SideNavMenu
+                        renderIcon={UserAvatar}
+                        title="Profile"
+                        primary
+                        backButtonTitle="Back">
+                        <Profile.UserInfo
+                          name="Ruth Leach"
+                          email="ruth.leach@ibm.com"
+                        />
+                        <ThemeSettings legendText="Theme">
+                          <ThemeSwitcher
+                            lowContrast
+                            size="sm"
+                            value={themeSetting}
+                            onChange={setThemeSetting}
+                          />
+                        </ThemeSettings>
+                        <Profile.ReadOnly items={readOnlyItems} />
+                        <ContainedList label="Profile links">
+                          <ContainedListItem
+                            renderIcon={User}
+                            onClick={() =>
+                              (window.location.href = 'https://example.com')
+                            }>
+                            User profile
+                          </ContainedListItem>
+                          <ContainedListItem
+                            renderIcon={IbmCloudKeyProtect}
+                            onClick={() =>
+                              (window.location.href = 'https://example.com')
+                            }>
+                            Access keys
+                          </ContainedListItem>
+                          <ContainedListItem
+                            renderIcon={Group}
+                            onClick={() =>
+                              (window.location.href = 'https://example.com')
+                            }>
+                            User management
+                          </ContainedListItem>
+                          <ContainedListItem
+                            renderIcon={Money}
+                            onClick={() =>
+                              (window.location.href = 'https://example.com')
+                            }>
+                            Plan and billing
+                          </ContainedListItem>
+                          <ContainedListItem
+                            renderIcon={Logout}
+                            onClick={() =>
+                              (window.location.href = 'https://example.com')
+                            }>
+                            Log out
+                          </ContainedListItem>
+                        </ContainedList>
+                      </SideNavMenu>
+                    )}
+                    <SideNavMenu
+                      renderIcon={Settings}
+                      primary
+                      title="Settings"
+                      backButtonTitle="Back">
+                      <SideNavLink renderIcon={ChartCustom} href="#">
+                        Customize
+                        <Launch />
+                      </SideNavLink>
+                    </SideNavMenu>
+                    <SideNavLink renderIcon={Notification} href="#">
+                      Notifications
+                      <Launch />
+                    </SideNavLink>
+                    <SideNavLink renderIcon={Help} href="#">
+                      Help
+                      <Launch />
+                    </SideNavLink>
+                    <SideNavLink renderIcon={Help} href="#">
+                      Custom action
+                      <Launch />
+                    </SideNavLink>
+                    <SideNavDivider />
+                    <SideNavLink renderIcon={Logout} href="#">
+                      Logout
+                    </SideNavLink>
+                  </SideNavItems>
+                </SideNav>
+              </HeaderOverflowPanel>
+              <Profile.Root
+                open={isProfileExpanded}
+                onClick={onClickProfileExpand}
+                label="Profile"
+                renderIcon={<UserAvatar size={20} />}>
+                <Profile.UserInfo
+                  name="Ruth Leach"
+                  email="ruth.leach@ibm.com"
+                />
+                <ThemeSettings legendText="Theme">
+                  <ThemeSwitcher
+                    lowContrast
+                    size="sm"
+                    value={themeSetting}
+                    onChange={setThemeSetting}
+                  />
+                </ThemeSettings>
+                <Profile.ReadOnly items={readOnlyItems} />
+                <ContainedList label="Profile links">
+                  <ContainedListItem
+                    renderIcon={User}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    User profile
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={IbmCloudKeyProtect}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Access keys
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Group}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    User management
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Money}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Plan and billing
+                  </ContainedListItem>
+                  <ContainedListItem
+                    renderIcon={Logout}
+                    onClick={() =>
+                      (window.location.href = 'https://example.com')
+                    }>
+                    Log out
+                  </ContainedListItem>
+                </ContainedList>
+              </Profile.Root>
+            </HeaderGlobalBar>
+          </Header>
+        )}
+      />
+    </Theme>
+  );
+};
+
+Test.parameters = {
   controls: { disable: true },
   actions: { disable: true },
 };

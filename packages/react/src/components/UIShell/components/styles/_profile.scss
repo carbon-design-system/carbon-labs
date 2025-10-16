@@ -8,6 +8,7 @@
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/breakpoint' as *;
 @use '@carbon/react/scss/utilities/convert' as convert;
 @use '@carbon/styles/scss/utilities/custom-property' as custom-property;
 @use '@carbon/ibm-products/scss/components/UserAvatar';
@@ -15,10 +16,17 @@
 $prefix: 'cds' !default;
 
 // profile
+@include breakpoint-down(md) {
+  .#{$prefix}--profile {
+    display: none;
+  }
+}
+
 .#{$prefix}--profile.#{$prefix}--popover--open {
   background-color: $background;
 }
 
+.#{$prefix}--header-overflow-panel .#{$prefix}--toggletip-content,
 .#{$prefix}--profile .#{$prefix}--toggletip-content {
   padding: 0;
   background-color: $background;
@@ -28,15 +36,20 @@ $prefix: 'cds' !default;
   inline-size: convert.to-rem(256px);
   max-block-size: 100vh;
   overflow-y: auto;
+}
 
-  > * {
+.#{$prefix}--header-overflow-panel,
+.#{$prefix}--profile {
+  .#{$prefix}--profile-user-info,
+  .#{$prefix}--profile-read-only,
+  .clabs--theme-settings {
     padding: $spacing-05;
     outline: convert.to-rem(0.5px) solid $border-subtle;
   }
 }
 
 // user-info
-.#{$prefix}--profile .#{$prefix}--profile-user-info {
+.#{$prefix}--profile-user-info {
   display: flex;
 }
 

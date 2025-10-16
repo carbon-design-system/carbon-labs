@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.10.0...@carbon-labs/wc-global-header@0.11.0) (2025-10-16)
+
+
+### Bug Fixes
+
+* **global-header:** Change header profile footer logout text to 'Log out' ([#852](https://github.com/carbon-design-system/carbon-labs/issues/852)) ([230f8b5](https://github.com/carbon-design-system/carbon-labs/commit/230f8b53a858ec5cc438c5aa5598f41cd036d0be))
+
+
+
+
+
 # [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.9.0...@carbon-labs/wc-global-header@0.10.0) (2025-10-15)
 
 **Note:** Version bump only for package @carbon-labs/wc-global-header

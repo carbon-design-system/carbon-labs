@@ -88,7 +88,7 @@ import {
 } from './AppIcons';
 
 import '../components/ui-shell.scss';
-import './UIShell.scss'
+import './UIShell.scss';
 import { useMatchMedia } from '../internal/useMatchMedia';
 import { breakpoints } from '@carbon/layout';
 const smMediaQuery = `(max-width: ${breakpoints.md.width})`;

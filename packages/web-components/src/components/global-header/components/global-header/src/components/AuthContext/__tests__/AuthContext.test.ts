@@ -52,7 +52,7 @@ const footerSectionItems = [
 
 const profileFooterLinks = [
   {
-    text: 'Logout',
+    text: 'Log out',
     href: '/logout',
     carbonIcon: 'Logout',
     arialLabel: 'Logout',
@@ -244,7 +244,7 @@ describe('AuthContext Component', () => {
       expect(profileFooterLinksSection?.querySelectorAll('a').length).to.equal(
         1
       );
-      expect(profileFooterLinksSection).to.contains.text('Logout');
+      expect(profileFooterLinksSection).to.contains.text('Log out');
     });
 
     it('renders callback in profile link', async () => {
@@ -252,7 +252,7 @@ describe('AuthContext Component', () => {
 
       const profileFooterLinks: ProfileFooterLinks[] = [
         {
-          text: 'Logout',
+          text: 'Log out',
           arialLabel: 'Logout',
           carbonIcon: 'Logout',
           onClickHandler: logoutCallbackSpy,
@@ -275,7 +275,7 @@ describe('AuthContext Component', () => {
 
       const link = profileFooterLinksSection?.querySelector('cds-button');
       expect(link).to.exist;
-      expect(profileFooterLinksSection).to.contains.text('Logout');
+      expect(profileFooterLinksSection).to.contains.text('Log out');
 
       link?.dispatchEvent(
         new MouseEvent('click', { bubbles: true, composed: true })

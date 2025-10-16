@@ -261,7 +261,7 @@ describe('HybridIpaasHeader Component', () => {
         arialLabel: 'Logout',
         carbonIcon: 'Logout',
         onClickHandler: logoutCallbackSpy,
-        text: 'Logout',
+        text: 'Log out',
       },
     ]);
 
@@ -469,7 +469,7 @@ describe('HybridIpaasHeader Component', () => {
     });
 
     expect(el.headerOptions.profileFooterLinks).to.deep.include({
-      text: 'Logout',
+      text: 'Log out',
       href: '/base/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',

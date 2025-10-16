@@ -50,7 +50,7 @@ Default.args = {
   ],
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
@@ -93,7 +93,7 @@ Warning.args = {
   ],
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
@@ -136,7 +136,7 @@ Expired.args = {
   ],
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',

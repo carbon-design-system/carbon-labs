@@ -8,7 +8,7 @@
  */
 /* eslint jsdoc/require-jsdoc: 0 */
 
-import { LitElement, html } from 'lit';
+import { css, LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { INITIAL_AUTOMATION_HEADER_PROPS } from '../../constant';
@@ -20,6 +20,8 @@ import {
 } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
 
+import styles from '../../index.scss?inline';
+
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
@@ -27,6 +29,10 @@ const { stablePrefix: clabsPrefix } = settings;
  */
 @customElement(`${clabsPrefix}-global-header-hybrid-ipaas`)
 export class HybridIpaasHeader extends LitElement {
+  static styles = css`
+    ${unsafeCSS(styles)}
+  `;
+
   @property({ type: String }) productName = null;
   @property({ type: String }) productKey = '';
   @property({ type: Object }) fetchHeaders = {};

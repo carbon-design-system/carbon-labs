@@ -150,6 +150,8 @@ export const parameters = {
         ],
         'Components',
         'Layout',
+        'Patterns',
+        'Deprecated',
       ],
     },
   },

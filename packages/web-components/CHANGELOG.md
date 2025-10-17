@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.78.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.77.0...@carbon-labs/web-components@0.78.0) (2025-10-17)
+
+
+### Bug Fixes
+
+* **global-header:** custom build and pin carbon-wc ([#856](https://github.com/carbon-design-system/carbon-labs/issues/856)) ([647edd8](https://github.com/carbon-design-system/carbon-labs/commit/647edd87e8fde6305c65a417aaa1f917f8fcccb6))
+
+
+
+
+
 # [0.77.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.76.0...@carbon-labs/web-components@0.77.0) (2025-10-16)
 
 

@@ -23,5 +23,6 @@ export { SharkFinIcon } from './components/SharkFinIcon';
 export { HeaderDivider } from './components/HeaderDivider';
 export { TrialCountdown } from './components/TrialCountdown';
 export * as Profile from './components/Profile';
+export { HeaderOverflowPanel } from './components/HeaderOverflowPanel';
 export { SideNavSlot } from './components/SideNavSlot';
 export { SideNavTitle } from './components/SideNavTitle';

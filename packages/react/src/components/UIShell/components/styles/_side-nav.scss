@@ -133,7 +133,7 @@ div:has(.#{$prefix}--header)
       block-size: $spacing-08;
     }
 
-    .#{$prefix}--side-nav__icon {
+    .#{$prefix}--side-nav__menu-secondary-wrapper .#{$prefix}--side-nav__icon {
       margin-inline-end: convert.to-rem(14px);
     }
 

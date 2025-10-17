@@ -8,7 +8,7 @@
  */
 
 import { html, fixture, expect } from '@open-wc/testing';
-import '@carbon-labs/wc-global-header/es/index.js';
+import '@carbon-labs/wc-global-header/es/wc-global-header.mjs';
 
 describe('clabs-global-header', function () {
   it('should render with cds-button minimum attributes', async () => {

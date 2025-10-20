@@ -26,7 +26,7 @@ export type AIPromptTileProps = {
   productName?: string;
   promptPlaceholder?: string;
   primaryIcon?: ElementType | null;
-  onClick?: (() => void) | null;
+  onClick?: ((event: React.MouseEvent<HTMLElement>) => void) | null;
   ariaLabel?: string;
   open?: boolean;
   isLoading?: boolean;
@@ -120,8 +120,8 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
               size="sm"
               disabled={!textInput}
               align="top-end"
-              onClick={() => {
-                onClick?.();
+              onClick={(event) => {
+                onClick?.(event);
                 openInNewTab(`${href}&primed_chat=${textInput}`);
               }}
               onKeyDown={handleTextInputKeyDown}>

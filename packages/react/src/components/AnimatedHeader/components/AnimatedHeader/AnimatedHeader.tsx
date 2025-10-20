@@ -250,11 +250,9 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
                     disabledTaskLabel={disabledTaskLabel}
                     onClick={
                       hasAction
-                        ? () => {
+                        ? (event: React.MouseEvent<HTMLElement>) => {
                             tileClickHandler?.(tile);
-                            if (typeof (tile as any).onClick === 'function') {
-                              (tile as any).onClick();
-                            }
+                            tile.onClick?.(event);
                           }
                         : undefined
                     }

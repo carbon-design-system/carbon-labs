@@ -19,7 +19,7 @@ export type GlassTileProps = {
   customContent?: React.ReactNode | null;
   primaryIcon?: ElementType | null;
   secondaryIcon?: ElementType | null;
-  onClick?: (() => void) | null;
+  onClick?: ((event: React.MouseEvent<HTMLElement>) => void) | null;
   ariaLabel?: string;
   open?: boolean;
   isLoading?: boolean;
@@ -76,8 +76,8 @@ export const GlassTile: React.FC<GlassTileProps> = ({
 
   return (
     <Link
-      onClick={() => {
-        glassTileClickHandler?.();
+      onClick={(event) => {
+        glassTileClickHandler?.(event);
       }}
       className={`${prefix}--animated-header__tile ${blockClass}`}
       aria-label={ariaLabel ?? title ?? 'Glass Tile'}

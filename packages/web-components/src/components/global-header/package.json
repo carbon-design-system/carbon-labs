@@ -22,9 +22,10 @@
   },
   "files": [
     "es/",
-    "lib/"
+    "lib/",
+    "declarations.d.ts"
   ],
-  "types": "./src/index.d.ts",
+  "types": "./declarations.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
     "build": "vite build",

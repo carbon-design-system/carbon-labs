@@ -57,6 +57,10 @@ div:has(.#{$prefix}--header)
 // Treeview
 //----------------------------------------------------------------------------
 
+.#{$prefix}--side-nav__item {
+  display: flex;
+}
+
 .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
   margin-inline-end: $spacing-05;
 }

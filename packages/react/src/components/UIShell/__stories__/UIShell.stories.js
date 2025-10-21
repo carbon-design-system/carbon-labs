@@ -262,7 +262,7 @@ const StoryContent = () => (
  * @returns {JSX.Element} The rendered HeaderOverflowPanel component.
  */
 const headerOverflowPanel = (isSm, themeSetting, setThemeSetting) => (
-  <HeaderOverflowPanel>
+  <HeaderOverflowPanel label="Options">
     <SideNav
       isTreeview
       isFixedNav
@@ -321,6 +321,7 @@ const headerOverflowPanel = (isSm, themeSetting, setThemeSetting) => (
           primary
           title="Settings"
           backButtonTitle="Back">
+          <SideNavDivider />
           <SideNavLink renderIcon={ChartCustom} href="#">
             Customize
             <Launch />
@@ -334,14 +335,18 @@ const headerOverflowPanel = (isSm, themeSetting, setThemeSetting) => (
           Help
           <Launch />
         </SideNavLink>
-        <SideNavLink renderIcon={Help} href="#">
+        <SideNavLink renderIcon={ChartCustom} href="#">
           Custom action
           <Launch />
         </SideNavLink>
-        <SideNavDivider />
-        <SideNavLink renderIcon={Logout} href="#">
-          Logout
-        </SideNavLink>
+        {isSm && (
+          <>
+            <SideNavDivider />
+            <SideNavLink renderIcon={Logout} href="#">
+              Logout
+            </SideNavLink>
+          </>
+        )}
       </SideNavItems>
     </SideNav>
   </HeaderOverflowPanel>

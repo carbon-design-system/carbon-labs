@@ -38,7 +38,8 @@ $prefix: 'cds' !default;
   .#{$prefix}--profile-read-only,
   .clabs--theme-settings {
     padding: $spacing-05;
-    outline: convert.to-rem(0.5px) solid $border-subtle;
+    border-block-end: convert.to-rem(0.5px) solid $border-subtle;
+    border-block-start: convert.to-rem(0.5px) solid $border-subtle;
   }
 }
 

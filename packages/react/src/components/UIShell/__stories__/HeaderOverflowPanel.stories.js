@@ -162,7 +162,7 @@ export const Default = () => {
                 closeButtonLabelText="Clear search input"
                 id="search-expandable-1"
               />
-              <HeaderOverflowPanel>
+              <HeaderOverflowPanel label="Options">
                 <SideNav
                   isTreeview
                   isFixedNav
@@ -234,6 +234,7 @@ export const Default = () => {
                       primary
                       title="Settings"
                       backButtonTitle="Back">
+                      <SideNavDivider />
                       <SideNavLink renderIcon={ChartCustom} href="#">
                         Customize
                         <Launch />
@@ -247,14 +248,18 @@ export const Default = () => {
                       Help
                       <Launch />
                     </SideNavLink>
-                    <SideNavLink renderIcon={Help} href="#">
+                    <SideNavLink renderIcon={ChartCustom} href="#">
                       Custom action
                       <Launch />
                     </SideNavLink>
-                    <SideNavDivider />
-                    <SideNavLink renderIcon={Logout} href="#">
-                      Logout
-                    </SideNavLink>
+                    {isSm && (
+                      <>
+                        <SideNavDivider />
+                        <SideNavLink renderIcon={Logout} href="#">
+                          Logout
+                        </SideNavLink>
+                      </>
+                    )}
                   </SideNavItems>
                 </SideNav>
               </HeaderOverflowPanel>

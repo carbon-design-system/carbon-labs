@@ -21,7 +21,7 @@ export type AITileProps = {
   customContent?: React.ReactNode | null;
   primaryIcon?: ElementType | null;
   secondaryIcon?: ElementType | null;
-  onClick?: (() => void) | null;
+  onClick?: ((event: React.MouseEvent<HTMLElement>) => void) | null;
   ariaLabel?: string;
   open?: boolean;
   isLoading?: boolean;
@@ -74,8 +74,8 @@ export const AITile: React.FC<AITileProps> = ({
 
   return (
     <Link
-      onClick={() => {
-        aiTileClickHandler?.();
+      onClick={(event) => {
+        aiTileClickHandler?.(event);
       }}
       className={`${prefix}--animated-header__tile ${blockClass}`}
       aria-label={ariaLabel ?? title ?? 'AI Tile'}

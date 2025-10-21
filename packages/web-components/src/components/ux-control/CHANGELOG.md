@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.12.0...@carbon-labs/wc-ai-ux-control@0.13.0) (2025-10-16)
+
+
+### Bug Fixes
+
+* **ux-control:** missing iconLoader ([#853](https://github.com/carbon-design-system/carbon-labs/issues/853)) ([714886d](https://github.com/carbon-design-system/carbon-labs/commit/714886db5a8f2cbadcd018c8a54aa7c2efef09ab))
+
+
+
+
+
 # [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.11.0...@carbon-labs/wc-ai-ux-control@0.12.0) (2025-10-15)
 
 **Note:** Version bump only for package @carbon-labs/wc-ai-ux-control

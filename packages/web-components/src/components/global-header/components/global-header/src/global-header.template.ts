@@ -8,14 +8,10 @@
  */
 
 import { CommonHeader } from './components/CommonHeader/CommonHeader';
-// @ts-ignore
-import styles from './index.scss?inline';
 
 /**
- * Component extending the @carbon/web-components' button
+ * Top-level component extending the CommonHeader sub-component
  */
-class globalHeader extends CommonHeader {
-  static styles = styles;
-}
+class globalHeader extends CommonHeader {}
 
 export default globalHeader;

@@ -67,9 +67,10 @@ $prefix: 'cds' !default;
 }
 
 @include breakpoint(md) {
-  .#{$prefix}--header-overflow-panel
-    .#{$prefix}--header-action__content.#{$prefix}--popover-content {
-    inset-inline-end: -$spacing-09 !important; /* stylelint-disable-line declaration-no-important */
+  .#{$prefix}--header-overflow-panel.#{$prefix}--popover--tab-tip.#{$prefix}--popover--bottom-end
+    .#{$prefix}--popover
+    > .#{$prefix}--header-action__content.#{$prefix}--popover-content {
+    inset-inline-end: -$spacing-09;
   }
 }
 

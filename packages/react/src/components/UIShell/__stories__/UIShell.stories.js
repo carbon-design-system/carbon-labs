@@ -268,7 +268,7 @@ const headerOverflowPanel = (isSm, themeSetting, setThemeSetting) => (
       isFixedNav
       expanded
       isChildOfHeader={false}
-      aria-label="Side navigation"
+      aria-label="Header navigation"
       headerOverflowPanel>
       <SideNavItems>
         {isSm && (

@@ -755,6 +755,11 @@ SideNav.propTypes = {
   expanded: PropTypes.bool,
 
   /**
+   * If `true`, it means the SideNav is being used inside the HeaderOverflowPanel component for sm/md breakpoints.
+   */
+  headerOverflowPanel: PropTypes.bool,
+
+  /**
    * If `true`, the overlay will be hidden. Defaults to `false`.
    */
   hideOverlay: PropTypes.bool,

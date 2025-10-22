@@ -13,7 +13,7 @@ import { WideSideNav } from '../WideSideNav';
 describe('WideSideNav tests', () => {
   it('renders with no props', async () => {
     const el = await fixture<WideSideNav>(
-      html`<apaas-wide-side-nav></apaas-wide-side-nav>`
+      html`<clabs-global-header-wide-side-nav></clabs-global-header-wide-side-nav>`
     );
     expect(el).not.to.be.null;
   });

@@ -18,7 +18,7 @@ import { Search } from '../Search';
 describe('Search Component', () => {
   it('renders component', async () => {
     const el = await fixture<HTMLElement>(
-      html` <apaas-header-search></apaas-header-search>`
+      html` <clabs-global-header-search></clabs-global-header-search>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -34,7 +34,7 @@ describe('Search Component', () => {
 
     const consoleLogStub = sinon.stub(console, 'log');
     const el = await fixture<Search>(
-      html` <apaas-header-search .props=""></apaas-header-search>`
+      html` <clabs-global-header-search .props=""></clabs-global-header-search>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -55,7 +55,8 @@ describe('Search Component', () => {
     };
 
     const el = await fixture<Search>(
-      html` <apaas-header-search .props="${props}"></apaas-header-search>`
+      html` <clabs-global-header-search
+        .props="${props}"></clabs-global-header-search>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -74,7 +75,8 @@ describe('Search Component', () => {
     };
 
     const el = await fixture<Search>(
-      html` <apaas-header-search .props="${props}"></apaas-header-search>`
+      html` <clabs-global-header-search
+        .props="${props}"></clabs-global-header-search>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -96,7 +98,8 @@ describe('Search Component', () => {
       };
 
       const el = await fixture<Search>(
-        html` <apaas-header-search .props="${props}"></apaas-header-search>`
+        html` <clabs-global-header-search
+          .props="${props}"></clabs-global-header-search>`
       );
       expect(el.shadowRoot).not.to.be.null;
 
@@ -118,7 +121,8 @@ describe('Search Component', () => {
       };
 
       const el = await fixture<Search>(
-        html` <apaas-header-search .props="${props}"></apaas-header-search>`
+        html` <clabs-global-header-search
+          .props="${props}"></clabs-global-header-search>`
       );
       expect(el.shadowRoot).not.to.be.null;
 

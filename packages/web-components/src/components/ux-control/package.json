@@ -41,7 +41,7 @@
     "@babel/runtime": "^7.23.2",
     "@carbon-labs/utilities": "0.8.0",
     "@carbon/grid": "^11.45.0",
-    "@carbon/web-components": "^2.40.0",
+    "@carbon/web-components": "^2.41.0",
     "@ibm/telemetry-js": "^1.10.2"
   }
 }

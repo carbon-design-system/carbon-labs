@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@carbon/ibm-products-styles": "^2.72.0",
-    "@carbon/styles": "^1.92.0",
-    "@carbon/web-components": "^2.40.1",
+    "@carbon/styles": "^1.93.0",
+    "@carbon/web-components": "^2.41.0",
     "lit": "^3.2.1",
     "sass": "^1.64.1"
   },

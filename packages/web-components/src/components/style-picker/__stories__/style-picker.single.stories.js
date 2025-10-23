@@ -195,6 +195,7 @@ export const Color = {
             align=${args.align}
             ?open=${args.open}
             heading=${args.heading}
+            ?loading=${args.isLoading}
             ?enable-search=${args.enableSearch}
             search-close-button-label=${args.searchCloseButtonLabel}
             empty-state-title=${args.emptyStateTitle}
@@ -272,7 +273,8 @@ export const Icon = {
           <clabs-style-picker
             align=${args.align}
             ?open=${args.open}
-            heading=${args.heading}>
+            heading=${args.heading}
+            ?loading=${args.isLoading}>
             <cds-icon-button
               slot="trigger"
               kind=${BUTTON_KIND.GHOST}
@@ -351,6 +353,7 @@ export const Pictogram = {
             ?open=${args.open}
             heading=${args.heading}
             ?enable-search=${args.enableSearch}
+            ?loading=${args.isLoading}
             search-close-button-label=${args.searchCloseButtonLabel}
             empty-state-title=${args.emptyStateTitle}
             empty-state-subtitle=${args.emptyStateSubtitle}>

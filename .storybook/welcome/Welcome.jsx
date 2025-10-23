@@ -27,7 +27,7 @@ export const Welcome = () => {
             Carbon Design System
           </Link>
           <Link
-            href="https://w3.ibm.com/design/carbon-for-ibm-products/labs"
+            href="https://pages.github.ibm.com/carbon/ibm-products/contributing/carbon-labs/"
             className="welcome__link"
             renderIcon={ArrowRight}>
             Carbon Labs (IBM internal)

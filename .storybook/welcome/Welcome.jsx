@@ -27,6 +27,12 @@ export const Welcome = () => {
             Carbon Design System
           </Link>
           <Link
+            href="https://w3.ibm.com/design/carbon-for-ibm-products/labs"
+            className="welcome__link"
+            renderIcon={ArrowRight}>
+            Carbon Labs (IBM internal)
+          </Link>
+          <Link
             href="https://github.com/carbon-design-system/carbon/blob/main/SECURITY.md"
             className="welcome__link"
             renderIcon={ArrowRight}>

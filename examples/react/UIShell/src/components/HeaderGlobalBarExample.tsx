@@ -152,7 +152,7 @@ export const HeaderGlobalBarExample = ({
           />
         </ThemeSettings>
         <Profile.ReadOnly items={readOnlyItems} />
-        <ContainedList label="Profile links">
+        <ContainedList>
           <ContainedListItem
             renderIcon={User}
             onClick={() => (window.location.href = 'https://example.com')}>

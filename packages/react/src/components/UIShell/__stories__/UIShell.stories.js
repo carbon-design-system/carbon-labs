@@ -398,7 +398,7 @@ export const Demo = () => {
                     />
                   </ThemeSettings>
                   <Profile.ReadOnly items={readOnlyItems} />
-                  <ContainedList label="Profile links">
+                  <ContainedList>
                     <ContainedListItem
                       renderIcon={User}
                       onClick={() =>

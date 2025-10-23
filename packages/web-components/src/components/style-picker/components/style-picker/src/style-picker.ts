@@ -123,7 +123,7 @@ class StylePicker extends LitElement {
   enableSearch = false;
 
   /**
-   * Enable search in the style picker
+   * Show a loading state
    */
   @property({ type: Boolean, reflect: true, attribute: 'loading' })
   isLoading = false;

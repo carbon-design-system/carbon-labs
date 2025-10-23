@@ -123,6 +123,12 @@ class StylePicker extends LitElement {
   enableSearch = false;
 
   /**
+   * Enable search in the style picker
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'loading' })
+  isLoading = false;
+
+  /**
    * Search close close button label
    */
   @property({

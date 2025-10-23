@@ -18,6 +18,9 @@ import {
   HeaderPopoverContent,
 } from '../components/HeaderPopover';
 import { OverflowMenuVertical } from '@carbon/icons-react';
+import { useMatchMedia } from '../internal/useMatchMedia';
+import { breakpoints } from '@carbon/layout';
+const mdMediaQuery = `(max-width: ${breakpoints.md.width})`;
 
 export interface HeaderOverflowPanelProps {
   /**
@@ -53,9 +56,10 @@ export const HeaderOverflowPanel = React.forwardRef<
     [`${prefix}--header-overflow-panel`]: true,
     [customClassName as string]: !!customClassName,
   });
+  const isMd = useMatchMedia(mdMediaQuery);
   return (
     <HeaderPopover ref={ref} align="bottom-end" className={className} {...rest}>
-      <HeaderPopoverButton align="bottom-end" label={label}>
+      <HeaderPopoverButton align={isMd ? 'bottom-end' : 'bottom'} label={label}>
         <OverflowMenuVertical />
       </HeaderPopoverButton>
       <HeaderPopoverContent>

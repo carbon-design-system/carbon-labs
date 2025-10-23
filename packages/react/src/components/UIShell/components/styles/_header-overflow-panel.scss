@@ -64,6 +64,13 @@ $prefix: 'cds' !default;
       fill: $link-primary-hover;
     }
   }
+
+  .#{$prefix}--header-overflow-panel .#{$prefix}--side-nav__item {
+    .#{$prefix}--side-nav__link,
+    .#{$prefix}--side-nav__submenu {
+      block-size: $spacing-08;
+    }
+  }
 }
 
 @include breakpoint(md) {

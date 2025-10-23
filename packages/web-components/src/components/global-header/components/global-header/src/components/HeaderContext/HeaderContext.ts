@@ -10,6 +10,7 @@
 
 import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import {
   AUTOMATION_HEADER_BASE_CLASS,
   AUTOMATION_NAMESPACE_PREFIX,
@@ -39,10 +40,12 @@ import { isValidObject, renderCarbonIcon } from '../../globals/utils';
 
 import styles from './_index.scss?inline' assert { type: 'css' };
 
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Header entries depending on context
  */
-@customElement('apaas-header-context')
+@customElement(`${clabsPrefix}-global-header-context`)
 export class HeaderContext extends LitElement {
   static styles = css`
     ${unsafeCSS([styles])}
@@ -127,7 +130,7 @@ export class HeaderContext extends LitElement {
     if (isValidObject(trialConfig)) {
       return html`
         <div class="${AUTOMATION_HEADER_BASE_CLASS}--popover-content-container">
-          <apaas-trial-popover
+          <clabs-global-header-trial-popover
             id="${TRIAL_POPOVER_BUTTON_ID}"
             .open="${this.isTrialOpen}"
             .trialConfig="${trialConfig}"
@@ -143,7 +146,7 @@ export class HeaderContext extends LitElement {
               >
               <p class="trial-label">${trialConfig.trialLabel}</p>
             </cds-custom-header-global-action>
-          </apaas-trial-popover>
+          </clabs-global-header-trial-popover>
         </div>
       `;
     } else {
@@ -239,7 +242,7 @@ export class HeaderContext extends LitElement {
   renderProfile() {
     return html`
       <div class="${AUTOMATION_HEADER_BASE_CLASS}--popover-content-container">
-        <apaas-profile-popover
+        <clabs-global-header-profile-popover
           ?profileOpen="${this.isProfileOpen}"
           .props="${this.props}"
           @profile-toggle="${this._toggleProfilePopup}">
@@ -251,14 +254,14 @@ export class HeaderContext extends LitElement {
             aria-label="Profile"
             tooltip-text=""
             tabindex="${this.isTrialOpen ? -1 : 0}">
-            <apaas-user-profile-image
+            <clabs-global-header-user-profile-image
               .size="lg"
               .image="${this.props.profile?.imageUrl}"
               .backgroundColor="light-cyan"
               .initials="${this.props.profile
-                ?.displayName}"></apaas-user-profile-image>
+                ?.displayName}"></clabs-global-header-user-profile-image>
           </cds-custom-header-global-action>
-        </apaas-profile-popover>
+        </clabs-global-header-profile-popover>
       </div>
     `;
   }
@@ -266,9 +269,9 @@ export class HeaderContext extends LitElement {
   renderSearch() {
     const { searchConfigs } = this.props;
     if (searchConfigs) {
-      return html`<apaas-header-search
+      return html`<clabs-global-header-search
         id="${SEARCH_BUTTON_ID}"
-        .props="${searchConfigs}"></apaas-header-search>`;
+        .props="${searchConfigs}"></clabs-global-header-search>`;
     }
   }
 
@@ -306,14 +309,14 @@ export class HeaderContext extends LitElement {
       return html`
         ${this.renderTrial()}
         ${switcherProps && switcherProps.items?.length
-          ? html` <apaas-switcher-component
+          ? html` <clabs-global-header-switcher-component
               id="${ENV_SWITCHER_BUTTON_ID}"
               .items=${switcherProps.items}
               .iconsLeft=${switcherProps.iconsLeft}
               .disabled=${switcherProps.disabled}
               .initialSelectedIndex=${switcherProps.initialSelectedIndex}
               ?isTrialOpen="${this.isTrialOpen}"
-              .onClick=${switcherProps.onClick}></apaas-switcher-component>`
+              .onClick=${switcherProps.onClick}></clabs-global-header-switcher-component>`
           : nothing}
         ${this.renderGlobalActions()}
         ${this.props.isHybridIpaas
@@ -326,8 +329,8 @@ export class HeaderContext extends LitElement {
         ${this.renderProfile()}
       `;
     } else {
-      return html`<apaas-unauthenticated-context
-        .noAuthHeaderLinks="${noAuthHeaderLinks}"></apaas-unauthenticated-context>`;
+      return html`<clabs-global-header-unauthenticated-context
+        .noAuthHeaderLinks="${noAuthHeaderLinks}"></clabs-global-header-unauthenticated-context>`;
     }
   }
 }

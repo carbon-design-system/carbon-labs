@@ -10,6 +10,7 @@
 
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 
 /* c8 ignore next */
 import cx from 'classnames';
@@ -20,10 +21,12 @@ import { unsafeCSS } from 'lit';
 import styles from './_index.scss?inline';
 import { renderCarbonIcon, trackEvent } from '../../globals/utils';
 
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Environment switcher
  */
-@customElement('apaas-switcher-component')
+@customElement(`${clabsPrefix}-global-header-switcher-component`)
 export class Switcher extends LitElement {
   static styles = css`
     ${unsafeCSS(styles)}

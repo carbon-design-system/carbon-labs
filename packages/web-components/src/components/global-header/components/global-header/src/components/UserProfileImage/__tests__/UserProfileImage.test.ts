@@ -13,8 +13,8 @@ import '../UserProfileImage';
 describe('UserProfileImage Component', () => {
   it('renders the basic component with initial', async () => {
     const el = await fixture(
-      html`<apaas-user-profile-image
-        initials="test user"></apaas-user-profile-image>`
+      html`<clabs-global-header-user-profile-image
+        initials="test user"></clabs-global-header-user-profile-image>`
     );
     const profileImageContainer = el.shadowRoot?.querySelector(
       '.automation-global-header__user-profile-image'
@@ -26,7 +26,8 @@ describe('UserProfileImage Component', () => {
 
   it('renders the basic component with lower case initials', async () => {
     const el = await fixture(
-      html`<apaas-user-profile-image initials="ab"></apaas-user-profile-image>`
+      html`<clabs-global-header-user-profile-image
+        initials="ab"></clabs-global-header-user-profile-image>`
     );
     const profileImageContainer = el.shadowRoot?.querySelector(
       '.automation-global-header__user-profile-image'
@@ -38,9 +39,9 @@ describe('UserProfileImage Component', () => {
 
   it('renders the basic component with lower case initials', async () => {
     const el = await fixture(
-      html`<apaas-user-profile-image
+      html`<clabs-global-header-user-profile-image
         initials="test user"
-        image="test_value"></apaas-user-profile-image>`
+        image="test_value"></clabs-global-header-user-profile-image>`
     );
     const profileImageContainer = el.shadowRoot?.querySelector(
       '.automation-global-header__user-profile-image'
@@ -51,9 +52,9 @@ describe('UserProfileImage Component', () => {
 
   it('renders the basic component with carbon icon', async () => {
     const el = await fixture(
-      html`<apaas-user-profile-image
+      html`<clabs-global-header-user-profile-image
         kind="User"
-        size="20"></apaas-user-profile-image>`
+        size="20"></clabs-global-header-user-profile-image>`
     );
     const profileImageContainer = el.shadowRoot?.querySelector(
       '.automation-global-header__user-profile-image'
@@ -64,7 +65,7 @@ describe('UserProfileImage Component', () => {
 
   it('renders the profile icon if initial prop is not passed in', async () => {
     const el = await fixture(
-      html`<apaas-user-profile-image></apaas-user-profile-image>`
+      html`<clabs-global-header-user-profile-image></clabs-global-header-user-profile-image>`
     );
     const profileImageContainer = el.shadowRoot?.querySelector(
       '.automation-global-header__user-profile-image'

@@ -199,7 +199,9 @@ describe('CommonHeader tests', () => {
       expect(sideNav).to.have.attribute('collapse-mode', 'responsive');
       expect(sideNav).to.have.attribute('aria-label', 'Open menu');
 
-      const navItems = el.shadowRoot?.querySelectorAll('apaas-side-nav-item');
+      const navItems = el.shadowRoot?.querySelectorAll(
+        'clabs-global-header-side-nav-item'
+      );
       expect(navItems?.length).to.equal(2);
     });
 
@@ -293,7 +295,9 @@ describe('CommonHeader tests', () => {
       const sideNav = el.shadowRoot?.querySelector(`[role='navigation']`);
       expect(sideNav).to.exist;
 
-      const navItems = el.shadowRoot?.querySelectorAll('apaas-side-nav-item');
+      const navItems = el.shadowRoot?.querySelectorAll(
+        'clabs-global-header-side-nav-item'
+      );
       expect(navItems?.length).to.equal(3);
     });
 
@@ -330,7 +334,7 @@ describe('CommonHeader tests', () => {
       const sideNav = el.shadowRoot?.querySelector(`[role='navigation']`);
       expect(sideNav).to.exist;
 
-      const item = sideNav?.querySelector('apaas-side-nav-item');
+      const item = sideNav?.querySelector('clabs-global-header-side-nav-item');
       expect(item).to.exist;
 
       const link = item?.shadowRoot?.querySelector(`[role='link']`);
@@ -378,7 +382,9 @@ describe('CommonHeader tests', () => {
       );
       expect(el).not.to.be.null;
 
-      const sideNavItem = el.shadowRoot?.querySelector('apaas-side-nav-item');
+      const sideNavItem = el.shadowRoot?.querySelector(
+        'clabs-global-header-side-nav-item'
+      );
 
       const link = sideNavItem?.shadowRoot?.querySelector(`[role="link"]`);
       expect(link).not.to.have.class(
@@ -445,7 +451,9 @@ describe('CommonHeader tests', () => {
       expect(sideNav).to.have.attribute('collapse-mode', 'rail');
       expect(sideNav).to.have.attribute('aria-label', 'Side navigation');
 
-      const navItems = el.shadowRoot?.querySelectorAll('apaas-side-nav-item');
+      const navItems = el.shadowRoot?.querySelectorAll(
+        'clabs-global-header-side-nav-item'
+      );
       expect(navItems?.length).to.equal(2);
     });
 

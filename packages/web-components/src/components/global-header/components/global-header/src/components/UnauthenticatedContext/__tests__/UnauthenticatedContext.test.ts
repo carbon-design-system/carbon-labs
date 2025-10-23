@@ -13,7 +13,7 @@ import '../UnauthenticatedContext';
 describe('Unauthenticated Component', () => {
   it('renders default unauthenticated buttons', async () => {
     const el = await fixture(html`
-      <apaas-unauthenticated-context></apaas-unauthenticated-context>
+      <clabs-global-header-unauthenticated-context></clabs-global-header-unauthenticated-context>
     `);
     const buttons = el.shadowRoot?.querySelectorAll('[role="listitem"]');
 
@@ -25,7 +25,7 @@ describe('Unauthenticated Component', () => {
 
   it('renders prop unauthenticated buttons', async () => {
     const el = await fixture(html`
-      <apaas-unauthenticated-context
+      <clabs-global-header-unauthenticated-context
         .noAuthHeaderLinks="${[
           {
             text: 'Test Link',
@@ -33,7 +33,7 @@ describe('Unauthenticated Component', () => {
             carbonIcon: 'Document',
             arialLabel: 'Test Link',
           },
-        ]}"></apaas-unauthenticated-context>
+        ]}"></clabs-global-header-unauthenticated-context>
     `);
     const buttons = el.shadowRoot?.querySelectorAll('[role="listitem"]');
 

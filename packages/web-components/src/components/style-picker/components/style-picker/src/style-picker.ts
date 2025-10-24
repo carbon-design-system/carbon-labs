@@ -188,6 +188,12 @@ class StylePicker extends LitElement {
   enableSearch = false;
 
   /**
+   * Show a loading state
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'loading' })
+  isLoading = false;
+
+  /**
    * Search close close button label
    */
   @property({

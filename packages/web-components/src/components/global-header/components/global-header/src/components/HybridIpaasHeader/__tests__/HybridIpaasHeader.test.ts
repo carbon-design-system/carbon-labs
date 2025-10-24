@@ -232,6 +232,35 @@ describe('HybridIpaasHeader Component', () => {
     fetchStub.restore();
   });
 
+  it('should use the brand product name if the product (capability) name is blank', async () => {
+    const fetchStub = sinon.stub(window, 'fetch').resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName=""
+        productKey="test-productKey"
+        displayName="Test User"
+        userEmail="test@example.com"
+        productVersion="2.0.0"></clabs-global-header-hybrid-ipaas>`
+    );
+    await waitUntil(
+      () => el.headerOptions.profile?.email === 'test@example.com',
+      'headerOptions were not updated as expected'
+    );
+
+    expect(el.headerOptions.mainSectionItems).to.deep.equal([
+      { label: 'Product', text: 'productName' },
+      { label: 'Version', text: '2.0.0' },
+    ]);
+
+    fetchStub.restore();
+  });
+
   it('should handle logoutCallback passed in', async () => {
     const fetchStub = sinon.stub(window, 'fetch').resolves(
       new Response(JSON.stringify(fetchResp), {

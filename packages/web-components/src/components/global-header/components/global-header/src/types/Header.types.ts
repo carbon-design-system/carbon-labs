@@ -37,10 +37,10 @@ export type HelperLinks = {
   onclick?: (e: Event) => void;
 };
 
-export interface MainSectionItem {
+export type MainSectionItem = {
   label: string;
-  text: string;
-}
+  text?: string;
+};
 
 export interface AssistMeConfigs {
   productId?: string;

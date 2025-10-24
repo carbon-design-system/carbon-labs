@@ -59,7 +59,7 @@ const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(function Profile(
   });
   return (
     <HeaderPopover ref={ref} align="bottom-end" className={className} {...rest}>
-      <HeaderPopoverButton align="bottom" label={label}>
+      <HeaderPopoverButton align="bottom-end" label={label}>
         {IconElement}
       </HeaderPopoverButton>
       <HeaderPopoverContent>{children}</HeaderPopoverContent>

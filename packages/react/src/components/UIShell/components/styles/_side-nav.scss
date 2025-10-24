@@ -57,6 +57,10 @@ div:has(.#{$prefix}--header)
 // Treeview
 //----------------------------------------------------------------------------
 
+.#{$prefix}--side-nav__item {
+  display: flex;
+}
+
 .#{$prefix}--side-nav__icon:not(.#{$prefix}--side-nav__submenu-chevron) {
   margin-inline-end: $spacing-05;
 }
@@ -505,6 +509,14 @@ div:has(.#{$prefix}--header)
   .#{$prefix}--flyout-menu-focused .#{$prefix}--popover-caret {
     @include custom-property.declaration('popover-caret-width', 0.5rem);
     @include custom-property.declaration('popover-caret-height', 0.25rem);
+  }
+
+  .#{$prefix}--flyout-menu-items {
+    display: block;
+  }
+
+  .#{$prefix}--flyout-menu-items.#{$prefix}--flyout-menu-items--focused-trigger {
+    display: none;
   }
 
   // Flyout menu content styles

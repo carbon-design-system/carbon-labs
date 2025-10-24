@@ -51,6 +51,12 @@ $prefix: 'cds' !default;
   background-color: $layer;
 }
 
+.#{$prefix}--popover--border.#{$prefix}--header-action
+  .#{$prefix}--tooltip
+  .#{$prefix}--tooltip-content {
+  outline: none;
+}
+
 .#{$prefix}--header-action .#{$prefix}--toggletip-content {
   @include custom-property.declaration('button-focus-color', $focus);
   @include custom-property.declaration('link-text-color', $link-primary);

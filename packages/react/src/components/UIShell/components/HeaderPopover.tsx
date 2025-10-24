@@ -134,9 +134,11 @@ export function HeaderPopover({
         align={align}
         autoAlign={autoAlign}
         as={as}
+        backgroundToken="background"
+        border
         isTabTip
         className={className}
-        dropShadow={false}
+        dropShadow={true}
         highContrast={false}
         open={open}
         onKeyDown={onKeyDown}

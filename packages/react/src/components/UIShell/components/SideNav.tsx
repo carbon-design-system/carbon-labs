@@ -88,6 +88,7 @@ export interface SideNavProps
   hideOverlay?: boolean;
   navType?: SIDE_NAV_TYPE;
   isTreeview?: boolean;
+  headerOverflowPanel?: boolean;
 }
 
 interface SideNavContextData {
@@ -99,6 +100,7 @@ interface SideNavContextData {
   setIsTreeview?: (value: boolean) => void;
   currentPrimaryMenu?: string;
   setCurrentPrimaryMenu?: (value: string) => void;
+  headerOverflowPanel?: boolean;
 }
 
 export const SideNavContext = createContext<SideNavContextData>(
@@ -130,6 +132,7 @@ function SideNavRenderFunction(
     isCollapsible = false,
     hideOverlay = false,
     translateWithId: t = defaultTranslateWithId,
+    headerOverflowPanel,
     ...other
   }: SideNavProps,
   ref: ForwardedRef<HTMLElement>
@@ -242,7 +245,10 @@ function SideNavRenderFunction(
         item.closest(`.${prefix}--side-nav__slot-item`) ||
         (item.classList.contains(`${prefix}--side-nav__link`) &&
           (item as HTMLElement).closest('ul')?.getAttribute('aria-label') ===
-            ariaLabel)
+            ariaLabel) ||
+        (item as HTMLElement).closest(
+          `.${prefix}--header-overflow-panel-secondary-container`
+        )
       ) {
         return;
       }
@@ -282,7 +288,9 @@ function SideNavRenderFunction(
   }, [prefix, internalIsTreeview, resetNodeTabIndices]);
 
   const smMediaQuery = `(min-width: ${breakpoints.sm.width})`;
-  const isSm = useMatchMedia(smMediaQuery);
+  const lgMediaQuery = `(min-width: ${breakpoints.lg.width})`;
+  const query = !headerOverflowPanel ? smMediaQuery : lgMediaQuery;
+  const isSm = useMatchMedia(query);
 
   useEffect(() => {
     if (sideNavRef.current) {
@@ -618,7 +626,6 @@ function SideNavRenderFunction(
     }
   });
 
-  const lgMediaQuery = `(min-width: ${breakpoints.lg.width})`;
   const isLg = useMatchMedia(lgMediaQuery);
 
   hideOverlay;
@@ -663,6 +670,7 @@ function SideNavRenderFunction(
         setIsTreeview,
         currentPrimaryMenu,
         setCurrentPrimaryMenu,
+        headerOverflowPanel,
       }}>
       {isFixedNav ||
       hideOverlay ||
@@ -745,6 +753,11 @@ SideNav.propTypes = {
    * Using this prop causes SideNav to become a controled component.
    */
   expanded: PropTypes.bool,
+
+  /**
+   * If `true`, it means the SideNav is being used inside the HeaderOverflowPanel component for sm/md breakpoints.
+   */
+  headerOverflowPanel: PropTypes.bool,
 
   /**
    * If `true`, the overlay will be hidden. Defaults to `false`.

@@ -34,6 +34,7 @@ import { SideNavItems } from './SideNavItems';
 
 import { useMatchMedia } from '../internal/useMatchMedia';
 const smMediaQuery = `(max-width: ${breakpoints.md.width})`;
+const mdMediaQuery = `(max-width: ${breakpoints.lg.width})`;
 
 export interface SideNavMenuProps {
   /**
@@ -144,8 +145,14 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
   ) {
     const depth = (propDepth || 0) as number;
     const isSideNavCollapsed = isSideNavExpanded === false;
-    const { isTreeview, expanded, navType, isRail, setIsTreeview } =
-      useContext(SideNavContext);
+    const {
+      isTreeview,
+      expanded,
+      navType,
+      isRail,
+      setIsTreeview,
+      headerOverflowPanel,
+    } = useContext(SideNavContext);
     const sideNavExpanded = expanded;
     const prefix = usePrefix();
     const [isExpanded, setIsExpanded] = useState<boolean>(defaultExpanded);
@@ -207,8 +214,6 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
           };
 
           if (props.isActive === true || props['aria-current']) {
-            // setActive(true);
-
             return true;
           }
         }
@@ -264,7 +269,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
         active || (hasActiveDescendant && isExpanded),
     });
 
-    const primaryClassNames = cx({
+    const secondaryClassNames = cx({
       [`${prefix}--side-nav__menu-secondary-wrapper`]: true,
       [`${prefix}--side-nav__menu-secondary-wrapper-expanded`]:
         isSideNavExpanded && isSecondaryOpen && currentPrimaryMenu === uniqueId,
@@ -464,7 +469,8 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
     const [openPopover, setOpenPopover] = React.useState(false);
 
-    const isSm = useMatchMedia(smMediaQuery);
+    const query = !headerOverflowPanel ? smMediaQuery : mdMediaQuery;
+    const isSm = useMatchMedia(query);
 
     // keeps the secondary open when moving from small to large breakpoints
     useEffect(() => {
@@ -533,10 +539,26 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
         {primary ? (
           <Layer>
-            <div className={primaryClassNames}>
-              <SideNavItems
-                accessibilityLabel={{ 'aria-label': `${title} submenu` }}>
-                {isSm && (
+            <div className={secondaryClassNames}>
+              {!headerOverflowPanel ? (
+                <SideNavItems
+                  accessibilityLabel={{ 'aria-label': `${title} submenu` }}>
+                  {isSm && (
+                    <Button
+                      ref={backButtonRef}
+                      kind="ghost"
+                      size="md"
+                      onClick={handleOnBackButtonClick}
+                      className={`${prefix}--side-nav__back-button`}
+                      renderIcon={backButtonRenderIcon}>
+                      {backButtonTitle}
+                    </Button>
+                  )}
+                  {childrenToRender}
+                </SideNavItems>
+              ) : (
+                <div
+                  className={`${prefix}--header-overflow-panel-secondary-container`}>
                   <Button
                     ref={backButtonRef}
                     kind="ghost"
@@ -546,9 +568,9 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
                     renderIcon={backButtonRenderIcon}>
                     {backButtonTitle}
                   </Button>
-                )}
-                {childrenToRender}
-              </SideNavItems>
+                  {childrenToRender}
+                </div>
+              )}
             </div>
           </Layer>
         ) : (

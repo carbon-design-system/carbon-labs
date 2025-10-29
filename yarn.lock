@@ -1623,8 +1623,8 @@ __metadata:
     "@babel/preset-react": "npm:^7.26.3"
     "@babel/preset-typescript": "npm:^7.26.0"
     "@carbon/icons-react": "npm:^11.65.0"
-    "@carbon/react": "npm:^1.94.0"
-    "@carbon/styles": "npm:^1.93.0"
+    "@carbon/react": "npm:^1.94.2"
+    "@carbon/styles": "npm:^1.93.1"
     "@mdx-js/react": "npm:^3.1.0"
     "@rollup/plugin-babel": "npm:^6.0.0"
     "@rollup/plugin-url": "npm:^8.0.2"
@@ -1896,21 +1896,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carbon/feature-flags@npm:0.32.0":
+  version: 0.32.0
+  resolution: "@carbon/feature-flags@npm:0.32.0"
+  dependencies:
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  checksum: 10c0/c236e35c5d3ec658406980c5904670a2bc183986062f3fef6ec9b76941f01c8632efc5827e2dc3d7cf693ce77615e4c3c7f0c40cf29f75b0b1e4963081761b04
+  languageName: node
+  linkType: hard
+
 "@carbon/feature-flags@npm:^0.30.0":
   version: 0.30.0
   resolution: "@carbon/feature-flags@npm:0.30.0"
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
   checksum: 10c0/904ce159f7e29f4649753c4e5263f2ccbcd816d72916a2866e7ceb39c48cbd0935f31bf8170d045ff16dd7d92acbb8e8cb621df98730c705c6e9e49e81980414
-  languageName: node
-  linkType: hard
-
-"@carbon/feature-flags@npm:^0.32.0":
-  version: 0.32.0
-  resolution: "@carbon/feature-flags@npm:0.32.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/c236e35c5d3ec658406980c5904670a2bc183986062f3fef6ec9b76941f01c8632efc5827e2dc3d7cf693ce77615e4c3c7f0c40cf29f75b0b1e4963081761b04
   languageName: node
   linkType: hard
 
@@ -2053,15 +2053,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/react@npm:^1.94.0":
-  version: 1.94.0
-  resolution: "@carbon/react@npm:1.94.0"
+"@carbon/react@npm:^1.94.2":
+  version: 1.94.2
+  resolution: "@carbon/react@npm:1.94.2"
   dependencies:
     "@babel/runtime": "npm:^7.27.3"
-    "@carbon/feature-flags": "npm:^0.32.0"
+    "@carbon/feature-flags": "npm:0.32.0"
     "@carbon/icons-react": "npm:^11.70.0"
     "@carbon/layout": "npm:^11.43.0"
-    "@carbon/styles": "npm:^1.93.0"
+    "@carbon/styles": "npm:^1.93.1"
     "@carbon/utilities": "npm:^0.12.0"
     "@floating-ui/react": "npm:^0.27.4"
     "@ibm/telemetry-js": "npm:^1.5.0"
@@ -2080,7 +2080,7 @@ __metadata:
     react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
     react-is: ^16.13.1 || ^17.0.2 || ^18.3.1 || ^19.0.0
     sass: ^1.33.0
-  checksum: 10c0/fa8b3d83da420f0e30988437d1621686318fe369931486db85b692f09b737e089918ccb17f890f28de8f41c445aa861833c4301fe0ce7d22c91b7ee5c0c5dcda
+  checksum: 10c0/79f130f814c77afa35c5d5610d07345b0f2ba4269b1a06615135ea51bb65acecde528c19cfd6765161717953e5bb6a9d6e83491ee5bcb5b1c96cc59cc374347b
   languageName: node
   linkType: hard
 
@@ -2114,12 +2114,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/styles@npm:^1.85.0, @carbon/styles@npm:^1.88.0, @carbon/styles@npm:^1.89.0, @carbon/styles@npm:^1.93.0":
-  version: 1.93.0
-  resolution: "@carbon/styles@npm:1.93.0"
+"@carbon/styles@npm:^1.85.0, @carbon/styles@npm:^1.88.0, @carbon/styles@npm:^1.89.0, @carbon/styles@npm:^1.93.0, @carbon/styles@npm:^1.93.1":
+  version: 1.93.1
+  resolution: "@carbon/styles@npm:1.93.1"
   dependencies:
     "@carbon/colors": "npm:^11.42.0"
-    "@carbon/feature-flags": "npm:^0.32.0"
+    "@carbon/feature-flags": "npm:0.32.0"
     "@carbon/grid": "npm:^11.45.0"
     "@carbon/layout": "npm:^11.43.0"
     "@carbon/motion": "npm:^11.37.0"
@@ -2140,7 +2140,7 @@ __metadata:
   peerDependenciesMeta:
     sass:
       optional: true
-  checksum: 10c0/a505a05eb4b500c316650bd35c51673b57712a9332c86dfd4259f2566ce34a44f9c7cc2fa4ec3a6ac8e94d523729a74015a73da67015e184ecdca6870e45f053
+  checksum: 10c0/a198089bbd7ac32019b4b031842f67fa3d24cf748303502952f3d1a4e5aa03ef204c26199dd1a997efc9d9a5204592ff8da1b6c375bbfaac7bc7ea49f8694447
   languageName: node
   linkType: hard
 
@@ -26164,17 +26164,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:>=3 < 6, typescript@npm:^5.2.2":
-  version: 5.9.2
-  resolution: "typescript@npm:5.9.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/cd635d50f02d6cf98ed42de2f76289701c1ec587a363369255f01ed15aaf22be0813226bff3c53e99d971f9b540e0b3cc7583dbe05faded49b1b0bed2f638a18
-  languageName: node
-  linkType: hard
-
-"typescript@npm:^5.7.3":
+"typescript@npm:>=3 < 6, typescript@npm:^5.2.2, typescript@npm:^5.7.3":
   version: 5.9.3
   resolution: "typescript@npm:5.9.3"
   bin:
@@ -26194,17 +26184,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>":
-  version: 5.9.2
-  resolution: "typescript@patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/34d2a8e23eb8e0d1875072064d5e1d9c102e0bdce56a10a25c0b917b8aa9001a9cf5c225df12497e99da107dc379360bc138163c66b55b95f5b105b50578067e
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>":
   version: 5.9.3
   resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:
@@ -27262,50 +27242,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.0":
-  version: 5.4.20
-  resolution: "vite@npm:5.4.20"
-  dependencies:
-    esbuild: "npm:^0.21.3"
-    fsevents: "npm:~2.3.3"
-    postcss: "npm:^8.4.43"
-    rollup: "npm:^4.20.0"
-  peerDependencies:
-    "@types/node": ^18.0.0 || >=20.0.0
-    less: "*"
-    lightningcss: ^1.21.0
-    sass: "*"
-    sass-embedded: "*"
-    stylus: "*"
-    sugarss: "*"
-    terser: ^5.4.0
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    less:
-      optional: true
-    lightningcss:
-      optional: true
-    sass:
-      optional: true
-    sass-embedded:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    terser:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: 10c0/391a1fdd7e05445d60aa3b15d6c1cffcdd92c5d154da375bf06b9cd5633c2387ebee0e8f2fceed3226a63dff36c8ef18fb497662dde8c135133c46670996c7a1
-  languageName: node
-  linkType: hard
-
-"vite@npm:^5.4.21":
+"vite@npm:^5.0.0, vite@npm:^5.4.21":
   version: 5.4.21
   resolution: "vite@npm:5.4.21"
   dependencies:

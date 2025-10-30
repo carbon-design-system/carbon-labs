@@ -11,7 +11,11 @@
 import { css, LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { INITIAL_AUTOMATION_HEADER_PROPS } from '../../constant';
+import {
+  CUSTOM_EVENT_NAME,
+  CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
+  INITIAL_AUTOMATION_HEADER_PROPS,
+} from '../../constant';
 import {
   GlobalActionConfig,
   HeaderProps,
@@ -55,6 +59,31 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
   @state()
   headerOptions: HeaderProps = { ...INITIAL_AUTOMATION_HEADER_PROPS };
+
+  constructor() {
+    super();
+    this._customEventListener = this._customEventListener.bind(this);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    document.addEventListener(CUSTOM_EVENT_NAME, this._customEventListener);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    document.removeEventListener(CUSTOM_EVENT_NAME, this._customEventListener);
+  }
+
+  // reload the header options whenever the custom event is received
+  private _customEventListener(evt: Event): void {
+    if (
+      evt instanceof CustomEvent &&
+      (evt as CustomEvent).detail === CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS
+    ) {
+      this.initializeHeaderOptions();
+    }
+  }
 
   firstUpdated(): void {
     if (!this.productKey) {

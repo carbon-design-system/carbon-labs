@@ -734,101 +734,87 @@ SideNav.propTypes = {
   addMouseListeners: PropTypes.bool,
 
   /**
-   * Optionally provide a custom class to apply to the underlying `<li>` node
+   * Optionally provide a custom class to apply to the `<nav>` element
    */
   className: PropTypes.string,
 
   /**
-   * If `true`, the SideNav will be open on initial render.
+   * Specify whether the `SideNav` starts expanded when initially rendered. Only applies when using the `SideNav` as an uncontrolled component.
    */
   defaultExpanded: PropTypes.bool,
 
   /**
-   * Specify the duration in milliseconds to delay before displaying the sidenavigation
+   * Specify the duration in milliseconds to delay before displaying the `SideNav`.
    */
   enterDelayMs: PropTypes.number,
 
   /**
-   * If `true`, the SideNav will be expanded, otherwise it will be collapsed.
-   * Using this prop causes SideNav to become a controled component.
+   * Control the expanded state of the `SideNav` externally. When provided, the `SideNav` becomes a controlled component and you must handle toggle events.
    */
   expanded: PropTypes.bool,
 
   /**
-   * If `true`, it means the SideNav is being used inside the HeaderOverflowPanel component for sm/md breakpoints.
+   * Specify whether the `SideNav` is rendered inside a `HeaderOverflowPanel`. When `true`, adjusts the responsive behavior to work correctly within the overflow menu at mobile/tablet breakpoints.
    */
   headerOverflowPanel: PropTypes.bool,
 
   /**
-   * If `true`, the overlay will be hidden. Defaults to `false`.
+   * If `true`, the backdrop overlay will be hidden at all breakpoints. By default, the overlay appears behind the `SideNav` on mobile and tablet (below `lg` breakpoint).
    */
   hideOverlay: PropTypes.bool,
 
   /**
-   * Specify the breakpoint at which the SideNav will be hidden.
-   * Can be one of `sm`, `md`, `lg`, `xlg`, or `max`.
-   * Only applies when `isRail` is `true`.
+   * Specify the breakpoint at which the `SideNav` will be hidden. Can be one of `sm`, `md`, `lg`, `xlg`, or `max`. Only applies when `isRail` is `true` or `navType` is `RAIL_PANEL`.
    */
   hideRailBreakpointDown: PropTypes.oneOf(['sm', 'md', 'lg', 'xlg', 'max']),
 
   /**
-   * Provide the `href` to the id of the element on your package that is the
-   * main content.
+   * Provide an `href` (typically an anchor like `#main-content`) to move focus to when closing the `SideNav` with the Escape key.
    */
   href: PropTypes.string,
 
   /**
-   * Optionally provide a custom class to apply to the underlying `<li>` node
+   * Specify whether the `SideNav` is the primary navigation controlled by the header. When `true`, the `SideNav` is part of the UI Shell header layout (full-width on desktop, collapses on mobile). Set to `false` for secondary navigation / rails, overflow panels, or standalone navigation that is independent of the header.
    */
   isChildOfHeader: PropTypes.bool,
 
   /**
-   * Specify whether the SideNav is collapsible at desktop
+   * Specify whether the `SideNav` can be toggled open/closed on desktop. When `true`, the `SideNav` starts collapsed and users can expand it. Requires `isChildOfHeader` to be `true` (default).
    */
   isCollapsible: PropTypes.bool,
 
   /**
-   * Specify if sideNav is standalone
+   * Specify if `SideNav` is standalone.
    */
   isFixedNav: PropTypes.bool,
 
   /**
-   * Specify if the sideNav will be persistent above the lg breakpoint
+   * Specify whether the `SideNav` is visible by default. When `false`, applies the hidden class which sets width to 0.
    */
   isPersistent: PropTypes.bool,
 
   /**
-   * Optional prop to display the side nav rail.
+   * Specify whether to display the `SideNav` rail variant. When `true`, the `SideNav` displays as a narrow rail (48px) that expands to full-width on hover.
    */
   isRail: PropTypes.bool,
 
   /**
-   * An optional listener that is called when the SideNav overlay is clicked
+   * An optional listener that is called when the `SideNav` overlay is clicked.
    *
    * @param {object} event
    */
   onOverlayClick: PropTypes.func,
 
   /**
-   * An optional listener that is called a callback to collapse the SideNav
+   * An optional listener that is called as a callback to collapse the `SideNav`.
    */
-
   onSideNavBlur: PropTypes.func,
 
   /**
-   * An optional listener that is called when an event that would cause
-   * toggling the SideNav occurs.
+   * An optional listener that is called when an event that would cause toggling the `SideNav` occurs.
    *
    * @param {object} event
    * @param {boolean} value
    */
   onToggle: PropTypes.func,
-
-  /**
-   * Provide a custom function for translating all message ids within this
-   * component. This function will take in two arguments: the mesasge Id and the
-   * state of the component. From this, you should return a string representing
-   * the label you want displayed or read by screen readers.
-   */
-  // translateById: PropTypes.func,
 };

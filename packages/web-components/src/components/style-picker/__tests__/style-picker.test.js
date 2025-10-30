@@ -216,6 +216,71 @@ const flatIconColorTemplate = (props = defaultProps) => html`
   </clabs-style-picker>
 `;
 
+/**
+ *
+ * @param {object} props - Default props for test component
+ * @returns {TemplateResult} The Lit template result.
+ */
+const disclosedColorAndIconTemplate = (props = defaultProps) => html`
+  <clabs-style-picker
+    id="style-picker"
+    align=${props.align}
+    ?open=${props.open}
+    heading=${props.heading}
+    kind=${props.kind}
+    ?enable-search=${props.enableSearch}
+    search-close-button-label=${props.searchCloseButtonLabel}
+    empty-state-title=${props.emptyStateTitle}
+    empty-state-subtitle=${props.emptyStateSubtitle}
+    search-label=${props.searchLabel}>
+    <cds-icon-button
+      id="trigger"
+      slot="trigger"
+      kind=${BUTTON_KIND.GHOST}
+      aria-expanded="${props.open}"
+      aria-controls="style-picker">
+      ${iconLoader(ColorPalette16, { slot: 'icon' })}
+      <span slot="tooltip-content">Color palette</span>
+    </cds-icon-button>
+    <clabs-style-picker-sections>
+      <clabs-style-picker-section heading="Icons">
+        ${icons.map(
+          (item) =>
+            html`
+              <clabs-style-picker-option
+                value=${item.value}
+                label=${item.label}
+                ?selected=${item.value === 'apple'}>
+                <clabs-style-picker-icon>
+                  ${item.renderIcon}
+                </clabs-style-picker-icon>
+              </clabs-style-picker-option>
+            `
+        )}
+      </clabs-style-picker-section>
+      <clabs-style-picker-section heading="Colors">
+        ${colors.map(
+          (group) =>
+            html`<clabs-style-picker-group heading=${group.label}>
+              ${group.items.map(
+                (item) => html`
+                  <clabs-style-picker-option
+                    value=${item.color}
+                    label=${item.label}
+                    ?selected=${item.label === 'Blue 60'}>
+                    <clabs-style-picker-color
+                      color=${item.color}
+                      label=${item.label}></clabs-style-picker-color>
+                  </clabs-style-picker-option>
+                `
+              )}
+            </clabs-style-picker-group> `
+        )}
+      </clabs-style-picker-section>
+    </clabs-style-picker-sections>
+  </clabs-style-picker>
+`;
+
 describe('clabs-style-picker single variant color picker', function () {
   it('should render single variant with color options', async () => {
     const el = await fixture(
@@ -593,6 +658,156 @@ describe('clabs-style-picker flat variant color and icon picker', function () {
     await expect(allIcons).to.have.length(2);
     await expect(allIcons[0]).to.have.attribute('label', 'Fish');
     await expect(allIcons[1]).to.have.attribute('label', 'Fruit bowl');
+
+    await expect(el).dom.to.equalSnapshot();
+    await expect(el).shadowDom.to.be.accessible();
+  });
+});
+
+describe('clabs-style-picker disclosed variant color and icon picker', function () {
+  it('should render disclosed variant with color and icon options', async () => {
+    const el = await fixture(
+      disclosedColorAndIconTemplate({
+        ...defaultProps,
+        heading: 'Choose color and icon',
+      })
+    );
+
+    const sectionsEl = el.querySelector('clabs-style-picker-sections');
+    await expect(sectionsEl).to.exist;
+
+    const spSections = sectionsEl.querySelectorAll(
+      'clabs-style-picker-section'
+    );
+
+    await expect(spSections).to.have.length(2);
+    await expect(spSections[0]).to.have.attribute('heading', 'Icons');
+    await expect(spSections[1]).to.have.attribute('heading', 'Colors');
+
+    const selectedIcon = spSections[0].querySelector('[selected]');
+    await expect(selectedIcon).to.have.attribute('label', 'Apple');
+    await expect(selectedIcon).to.have.attribute('value', 'apple');
+
+    const selectedColor = spSections[1].querySelector('[selected]');
+    await expect(selectedColor).to.have.attribute('label', 'Blue 60');
+    await expect(selectedColor).to.have.attribute('value', '#0f62fe');
+
+    await expect(el).dom.to.equalSnapshot();
+    await expect(el).shadowDom.to.be.accessible();
+  });
+
+  it('should select a different color and icon options', async () => {
+    const el = await fixture(
+      disclosedColorAndIconTemplate({
+        ...defaultProps,
+        heading: 'Choose color and icon',
+      })
+    );
+
+    const spSections = el.querySelectorAll('clabs-style-picker-section');
+    const allColors = spSections[1].querySelectorAll(
+      'clabs-style-picker-option'
+    );
+    await expect(allColors).to.have.length(122);
+
+    const newColor = allColors[20];
+    const eventPromise = oneEvent(el, 'clabs-style-picker-option-select');
+
+    await newColor.click();
+
+    const event = await eventPromise;
+
+    await expect(event).to.exist;
+    await expect(event.detail?.label).to.equal('Red 10');
+    await expect(event.detail?.value).to.equal('#fff1f1');
+    await expect(event.detail?.selected).to.equal(true);
+    await expect(newColor).to.have.attribute('selected');
+
+    const iconEventPromise = oneEvent(el, 'clabs-style-picker-option-select');
+    const allIcons = spSections[0].querySelectorAll(
+      'clabs-style-picker-option'
+    );
+    const newIcon = allIcons[3];
+
+    await newIcon.click();
+
+    const iconEvent = await iconEventPromise;
+
+    await expect(iconEvent).to.exist;
+    await expect(iconEvent.detail?.label).to.equal('Fruit bowl');
+    await expect(iconEvent.detail?.value).to.equal('fruit-bowl');
+    await expect(iconEvent.detail?.selected).to.equal(true);
+    await expect(allIcons[0]).to.not.have.attribute('selected');
+
+    await expect(el).dom.to.equalSnapshot();
+    await expect(el).shadowDom.to.be.accessible();
+  });
+
+  it('should enable search in disclosed variant', async () => {
+    const el = await fixture(
+      disclosedColorAndIconTemplate({
+        ...defaultProps,
+        heading: 'Choose color and icon',
+        enableSearch: true,
+        searchCloseButtonLabel: 'Clear search input',
+        emptyStateTitle: 'No results found',
+        emptyStateSubtitle: 'Try a different search',
+        searchLabel: 'Search',
+      })
+    );
+
+    const searchBox = el.shadowRoot.querySelector(`cds-search`);
+
+    await expect(searchBox).to.exist;
+    await expect(searchBox).to.have.attribute('label-text', 'Search');
+    await expect(searchBox).to.have.attribute(
+      'close-button-label-text',
+      'Clear search input'
+    );
+
+    await expect(el).dom.to.equalSnapshot();
+    await expect(el).shadowDom.to.be.accessible();
+  });
+
+  it('should search color and icon', async () => {
+    const el = await fixture(
+      disclosedColorAndIconTemplate({
+        ...defaultProps,
+        heading: 'Choose color and icon',
+        enableSearch: true,
+        searchCloseButtonLabel: 'Clear search input',
+        emptyStateTitle: 'No results found',
+        emptyStateSubtitle: 'Try a different search',
+        searchLabel: 'Search',
+      })
+    );
+
+    const searchBox = el.shadowRoot.querySelector(`cds-search`);
+    await expect(searchBox).to.exist;
+
+    const searchInput = searchBox.shadowRoot.querySelector('input');
+    const eventPromise = oneEvent(searchBox, 'cds-search-input');
+
+    searchInput.value = 'r';
+    searchBox.dispatchEvent(
+      new CustomEvent('cds-search-input', {
+        detail: { value: 'r' },
+        bubbles: true,
+        composed: true,
+      })
+    );
+    await eventPromise;
+
+    const spSections = el.querySelectorAll('clabs-style-picker-section');
+    const allColors = spSections[1].querySelectorAll(
+      'clabs-style-picker-option:not([hidden])'
+    );
+    const allIcons = spSections[0].querySelectorAll(
+      'clabs-style-picker-option:not([hidden])'
+    );
+
+    await expect(allColors).to.have.length(72);
+    await expect(allIcons).to.have.length(3);
 
     await expect(el).dom.to.equalSnapshot();
     await expect(el).shadowDom.to.be.accessible();

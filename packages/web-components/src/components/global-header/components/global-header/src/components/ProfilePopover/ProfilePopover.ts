@@ -84,7 +84,7 @@ export class AuthContext extends LitElement {
         <cds-custom-popover-content>
           ${this.profileOpen
             ? html` <div
-                class="automation-header__tooltip"
+                class="automation-header__popover"
                 ${animate({ in: fadeIn, out: fadeOut })}>
                 <clabs-global-header-auth-context
                   .props="${{

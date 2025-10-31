@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/web-components",
-  "version": "0.84.0",
+  "version": "0.86.0",
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",
@@ -28,7 +28,6 @@
     "test:wc-global-header": "lerna run test --scope '@carbon-labs/wc-global-header'"
   },
   "dependencies": {
-    "@carbon/styles": "^1.88.0",
     "lit": "^3.2.1",
     "tslib": "^2.8.1"
   },
@@ -40,6 +39,7 @@
     "@carbon/layout": "^11.43.0",
     "@carbon/motion": "^11.37.0",
     "@carbon/pictograms": "^12.63.0",
+    "@carbon/styles": "^1.94.0-rc.0",
     "@carbon/themes": "^11.62.0",
     "@carbon/type": "^11.49.0",
     "@carbon/web-components": "^2.41.0",

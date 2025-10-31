@@ -472,7 +472,6 @@ describe('clabs-style-picker single variant color picker', function () {
     const progressBar = el.shadowRoot.querySelector(`cds-progress-bar`);
     
     expect(progressBar).to.exist;
-    console.log(progressBar)
   });
 });
 

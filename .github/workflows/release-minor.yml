@@ -19,17 +19,17 @@ jobs:
       contents: write
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           fetch-depth: '0'
           token: ${{ secrets.MERGE_ACTION }}
       - run: |
           git config user.name carbon-bot
           git config user.email carbon@us.ibm.com
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+      - name: Use Node.js version from .nvmrc
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: '18.x'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install

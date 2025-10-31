@@ -83,6 +83,7 @@ export const Basic: Story = {
       <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
+        productVersion="2.3.4.5"
         .notificationOpenCallback="${callback}"></clabs-global-header-hybrid-ipaas>
     </div>
   `,
@@ -104,6 +105,25 @@ export const BasicWithTrial: Story = {
         productName="App Connect"
         productKey="appconnect"
         .notificationOpenCallback="${callback}"></clabs-global-header-hybrid-ipaas>
+    </div>
+  `,
+};
+
+export const Platform: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+          return HttpResponse.json(mockHeaderOptions);
+        }),
+      ],
+    },
+  },
+  render: () => html`
+    <div role="main">
+      <clabs-global-header-hybrid-ipaas
+        productKey="mycloud"
+        productVersion="2.3.4.5"</clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };

@@ -15,6 +15,7 @@ import { INITIAL_AUTOMATION_HEADER_PROPS } from '../../constant';
 import {
   GlobalActionConfig,
   HeaderProps,
+  MainSectionItem,
   ProfileFooterLinks,
   SearchConfigs,
 } from '../../types/Header.types';
@@ -120,9 +121,14 @@ export class HybridIpaasHeader extends LitElement {
       displayName: this.displayName,
     };
 
-    const mainSectionItems = [];
+    const mainSectionItems: Array<MainSectionItem> = [];
     if (this.productName) {
       mainSectionItems.push({ label: 'Product', text: this.productName });
+    } else {
+      mainSectionItems.push({
+        label: 'Product',
+        text: baseOptions?.brand?.product,
+      });
     }
     if (this.productVersion) {
       mainSectionItems.push({ label: 'Version', text: this.productVersion });
@@ -142,7 +148,7 @@ export class HybridIpaasHeader extends LitElement {
     };
 
     const logoutIndex = baseOptions.profileFooterLinks?.findIndex(
-      (link) => link.text.toLowerCase() === 'logout'
+      (link) => link.text.toLowerCase() === 'log out'
     );
     if (logoutIndex !== undefined && logoutIndex > -1) {
       baseOptions.profileFooterLinks?.splice(

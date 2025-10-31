@@ -83,6 +83,7 @@ const singleColorTemplate = (
     kind=${props.kind}
     ?open=${props.open}
     heading=${props.heading}
+    ?loading=${props.isLoading}
     ?enable-search=${props.enableSearch}
     search-close-button-label=${props.searchCloseButtonLabel}
     empty-state-title=${props.emptyStateTitle}
@@ -457,6 +458,21 @@ describe('clabs-style-picker single variant color picker', function () {
     await expect(emptyStateSubtitle.textContent).to.equal(
       'Try a different search'
     );
+  });
+
+  it('should render loading state', async () => {
+    const el = await fixture(
+      singleColorTemplate({
+        ...defaultProps,
+        isLoading: true,
+        heading: 'Choose color',
+      })
+    );
+
+    const progressBar = el.shadowRoot.querySelector(`cds-progress-bar`);
+    
+    expect(progressBar).to.exist;
+    console.log(progressBar)
   });
 });
 

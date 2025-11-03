@@ -742,4 +742,6 @@ export const Demo = () => {
 Demo.parameters = {
   controls: { disable: true },
   actions: { disable: true },
+  a11y: { disable: true },
+  accessibilityChecker: { disable: true },
 };

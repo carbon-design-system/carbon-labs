@@ -57,10 +57,14 @@ export class AuthContext extends LitElement {
           aria-labelledby="${POPOVER_LABEL_ID}"
           class="${AUTOMATION_HEADER_BASE_CLASS}__popover__section">
           ${this.props.mainSectionItems?.map((item: MainSectionItem) => {
-            return html`<div class="${AUTOMATION_HEADER_BASE_CLASS}__title_bar">
-              <p class="title-bar__label">${item.label}</p>
-              <p class="title-bar__text">${item.text}</p>
-            </div>`;
+            return html`
+              <div class="${AUTOMATION_HEADER_BASE_CLASS}__title-bar__label">
+                ${item.label}
+              </div>
+              <div class="${AUTOMATION_HEADER_BASE_CLASS}__title-bar__text">
+                ${item.text}
+              </div>
+            `;
           })}
         </section>
       `;
@@ -243,9 +247,8 @@ export class AuthContext extends LitElement {
         <div
           class="${NAMESPACE}__popover__header ${AUTOMATION_HEADER_BASE_CLASS}__popover__section">
           <clabs-global-header-user-profile-image
-            .size="xlg"
+            size="xlg"
             .image="${profile?.imageUrl}"
-            .backgroundColor="light-cyan"
             .initials="${profile?.displayName}">
             .className="${NAMESPACE}__popover__profile-icon"
           </clabs-global-header-user-profile-image>

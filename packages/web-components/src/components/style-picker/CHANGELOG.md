@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.17.0...@carbon-labs/wc-style-picker@0.18.0) (2025-10-31)
+
+
+### Features
+
+* **style-picker:** implement loading state ([#888](https://github.com/carbon-design-system/carbon-labs/issues/888)) ([bc536a2](https://github.com/carbon-design-system/carbon-labs/commit/bc536a270893b96fa94d034a70bd69b1a6ec6df2))
+
+
+
+
+
 # [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.16.0...@carbon-labs/wc-style-picker@0.17.0) (2025-10-22)
 
 **Note:** Version bump only for package @carbon-labs/wc-style-picker

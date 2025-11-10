@@ -43,7 +43,7 @@
     "@carbon/themes": "^11.62.0",
     "@carbon/type": "^11.49.0",
     "@carbon/web-components": "^2.41.0",
-    "@custom-elements-manifest/analyzer": "^0.10.0",
+    "@custom-elements-manifest/analyzer": "^0.11.0",
     "@lit/react": "^1.0.1",
     "@open-wc/testing": "^4.0.0",
     "@playwright/test": "^1.39.0",

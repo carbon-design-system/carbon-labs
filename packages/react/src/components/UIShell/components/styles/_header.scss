@@ -10,6 +10,7 @@
 @use '@carbon/react/scss/motion' as *;
 @use '@carbon/react/scss/utilities/convert' as convert;
 @use '@carbon/react/scss/utilities/custom-property' as custom-property;
+@use '@carbon/react/scss/utilities/z-index' as *;
 @use '@carbon/react/scss/breakpoint' as *;
 
 $prefix: 'cds' !default;
@@ -48,7 +49,18 @@ $prefix: 'cds' !default;
 
 .#{$prefix}--header-action.#{$prefix}--popover--open
   .#{$prefix}--header-action__button {
-  background-color: $layer;
+  background-color: $background;
+  border-left: 1px solid $border-subtle;
+  border-right: 1px solid $border-subtle;
+  z-index: z('header') + 2;
+}
+
+.#{$prefix}--header-action.#{$prefix}--popover--border
+  > .#{$prefix}--popover
+  > .#{$prefix}--popover-content {
+  outline: none;
+  border: 1px solid $border-subtle;
+  border-top: none;
 }
 
 .#{$prefix}--popover--border.#{$prefix}--header-action

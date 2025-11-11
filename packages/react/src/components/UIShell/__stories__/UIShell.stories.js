@@ -466,6 +466,8 @@ export const Demo = () => {
                   className="hide-at-md"
                   menuTarget={headerRef.current}
                   kind="ghost"
+                  menuBackgroundToken="background"
+                  menuBorder
                   label={selectedCategory || 'Select Category'}>
                   <MenuItemRadioGroup
                     label="Category"
@@ -481,6 +483,8 @@ export const Demo = () => {
                   className="hide-at-md"
                   menuTarget={headerRef.current}
                   kind="ghost"
+                  menuBackgroundToken="background"
+                  menuBorder
                   label={selectedItem || 'Select Item'}
                   disabled={!selectedCategory}>
                   <MenuItemRadioGroup

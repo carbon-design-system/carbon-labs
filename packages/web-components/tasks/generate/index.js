@@ -8,7 +8,8 @@
 import fs from 'fs';
 import chalk from 'chalk';
 import { outputFileSync } from 'fs-extra/esm';
-import { sync } from 'glob';
+import pkg from 'glob';
+const { sync } = pkg;
 import { pascalCase, kebabCase, camelCase, capitalCase } from 'change-case';
 import path, { join, relative, resolve } from 'path';
 import yargs from 'yargs';

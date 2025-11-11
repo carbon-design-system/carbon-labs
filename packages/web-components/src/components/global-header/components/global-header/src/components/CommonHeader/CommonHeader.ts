@@ -92,6 +92,18 @@ export class CommonHeader extends LitElement {
 
   render() {
     return html`
+      ${this.headerProps?.solisConfig?.isEnabled
+          ? html`
+              <script type="module" src="https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js"></script>
+              <script>
+                window._solis = {
+                  is_prod: false,
+                  cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+                  deployment_environment: 'local',
+                };
+              </script>
+            `
+          : nothing }
       <cds-custom-header
         class="${AUTOMATION_NAMESPACE_PREFIX}__header"
         aria-label="IBM webMethods Hybrid Integration">
@@ -187,7 +199,7 @@ export class CommonHeader extends LitElement {
                         ${this.headerProps.sideNav?.links?.map((link) => {
                           // Loop through the links array to render the menu items
                           return html`
-												<clabs-global-header-side-nav-item 
+												<clabs-global-header-side-nav-item
 												.link="${{ ...link }}"
 												.isCollapsible="${this.headerProps.sideNav?.isCollapsible}"
 												.handleNavItemClick="${this.handleNavItemClick}"
@@ -197,7 +209,7 @@ export class CommonHeader extends LitElement {
 												.isOnClickAvailable="${
                           typeof this.headerProps?.sideNav?.onClick ===
                           'function'
-                        }">	
+                        }">
 												</clabs-global-header-side-nav-item>
                                 </cds-custom-side-nav-menu>
                               `;
@@ -233,7 +245,7 @@ export class CommonHeader extends LitElement {
               ${this.headerProps.sideNavPropsV2?.links?.map((link) => {
                 // Loop through the links array to render the menu items
                 return html`
-									<clabs-global-header-side-nav-item 
+									<clabs-global-header-side-nav-item
 									.link="${{ ...link }}"
 									.isCollapsible="${this.headerProps.sideNavPropsV2?.isCollapsible}"
 									.handleNavItemClick="${this.handleNavItemClick}"

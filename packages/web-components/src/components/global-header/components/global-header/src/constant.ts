@@ -18,6 +18,7 @@ export const APP_SWITCHER_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-app-switch
 export const ENV_SWITCHER_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-env-switcher-button`;
 export const HELP_MENU_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-help-menu-button`;
 export const INTEGRATION_AGENT_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-chatbot-menu-button`;
+export const SOLIS_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-solis-menu-button`;
 export const NOTIFICATIONS_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-notifications-button`;
 export const PROFILE_MENU_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-profile-menu-button`;
 export const SEARCH_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-search-button`;

@@ -21,6 +21,7 @@ import {
   PROFILE_MENU_BUTTON_ID,
   SEARCH_BUTTON_ID,
   TRIAL_POPOVER_BUTTON_ID,
+  SOLIS_BUTTON_ID
 } from '../../constant';
 
 /* c8 ignore next */
@@ -239,6 +240,23 @@ export class HeaderContext extends LitElement {
     }
   }
 
+renderSolis() {
+  const { solisConfig } = this.props;
+  if (solisConfig?.isEnabled) {
+    return html`
+        <cds-custom-header-global-action
+          id="${SOLIS_BUTTON_ID}"
+          role="button"
+          aria-label="Launch Chat"
+          tooltipAlignment="center"
+          tabindex="${this.isTrialOpen ? -1 : 0}"
+          @click="">
+          ${renderCarbonIcon('Sun', 20, 'icon')}
+        </cds-custom-header-global-action>
+      `;
+  }
+}
+
   renderProfile() {
     return html`
       <div class="${AUTOMATION_HEADER_BASE_CLASS}--popover-content-container">
@@ -324,6 +342,7 @@ export class HeaderContext extends LitElement {
           : nothing}
         ${this.renderSearch()} ${this.renderNotifications()}
         ${this.renderChatBot()}
+        ${this.renderSolis()}
         ${!assistMeConfigs ? this.renderHelpMenu() : nothing}
         ${assistMeConfigs?.productId ? this.renderAssistMe() : nothing}
         ${this.renderProfile()}

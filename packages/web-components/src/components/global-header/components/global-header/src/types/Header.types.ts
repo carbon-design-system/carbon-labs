@@ -280,6 +280,10 @@ export interface HeaderProps {
   chatBotConfigs?: ChatBotConfigs;
   searchConfigs?: SearchConfigs;
   globalActionConfigs?: GlobalActionConfig[];
+  solisConfig?: SolisConfig;
+}
+export interface SolisConfig {
+  isEnabled: boolean;
 }
 
 export interface NavigationItem {

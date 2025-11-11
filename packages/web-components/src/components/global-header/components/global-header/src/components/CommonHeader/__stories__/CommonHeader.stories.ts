@@ -444,6 +444,17 @@ export const ChatBot: Story = {
 	`,
 };
 
+export const SolisEnabled: Story = {
+  render: () => html`
+		<div role="main">
+			<clabs-global-header-apaas .headerProps="${{
+        ...headerProps,
+        solisConfig: { isEnabled: true },
+      }}"></common-header>
+		</div>
+	`,
+};
+
 export const Notifications: Story = {
   render: () => html`
 		<div role="main">

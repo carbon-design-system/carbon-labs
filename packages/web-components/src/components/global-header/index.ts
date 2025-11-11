@@ -7,4 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export * from './components/global-header/global-header.js';
+import './components/global-header/global-header.js';

@@ -50,8 +50,8 @@ $prefix: 'cds' !default;
 .#{$prefix}--header-action.#{$prefix}--popover--open
   .#{$prefix}--header-action__button {
   z-index: z('header') + 2;
-  border-left: 1px solid $border-subtle;
-  border-right: 1px solid $border-subtle;
+  border-inline-end: 1px solid $border-subtle;
+  border-inline-start: 1px solid $border-subtle;
   background-color: $background;
 }
 

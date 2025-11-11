@@ -86,6 +86,11 @@ export class CommonHeader extends LitElement {
       ) => {
         if (e.detail?.message && e.detail?.message === 'load') {
           this.solisScriptLoaded = true;
+          window._solis = {
+                is_prod: false,
+                cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+                deployment_environment: 'local'
+          };
         } else if (e.detail?.message && e.detail?.message === 'error') {
           console.error(
             'An error occurred trying to load the solis script.'
@@ -118,16 +123,6 @@ export class CommonHeader extends LitElement {
 
   render() {
     return html`
-      ${this.headerProps?.solisConfig?.isEnabled && this.solisScriptLoaded
-        ? html`
-        <script>
-          window._solis = {
-                is_prod: false,
-                cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
-                deployment_environment: 'local',
-            };
-        </script>`
-        : nothing }
       <cds-custom-header
         class="${AUTOMATION_NAMESPACE_PREFIX}__header"
         aria-label="IBM webMethods Hybrid Integration">

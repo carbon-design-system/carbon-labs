@@ -299,3 +299,15 @@ export interface EventProps {
   elementId: string;
   platformTitle?: string;
 }
+
+interface solisWindowConfig {
+  is_prod?: boolean,
+  cdn_hostname: string,
+  deployment_environment: 'local' | 'dev' | 'stage' | 'prod',
+}
+
+declare global {
+  interface Window {
+    _solis: solisWindowConfig;
+  }
+}

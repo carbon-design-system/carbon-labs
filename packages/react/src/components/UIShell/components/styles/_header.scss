@@ -49,18 +49,18 @@ $prefix: 'cds' !default;
 
 .#{$prefix}--header-action.#{$prefix}--popover--open
   .#{$prefix}--header-action__button {
-  background-color: $background;
+  z-index: z('header') + 2;
   border-left: 1px solid $border-subtle;
   border-right: 1px solid $border-subtle;
-  z-index: z('header') + 2;
+  background-color: $background;
 }
 
 .#{$prefix}--header-action.#{$prefix}--popover--border
   > .#{$prefix}--popover
   > .#{$prefix}--popover-content {
-  outline: none;
   border: 1px solid $border-subtle;
-  border-top: none;
+  border-block-start: none;
+  outline: none;
 }
 
 .#{$prefix}--popover--border.#{$prefix}--header-action

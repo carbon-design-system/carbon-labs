@@ -282,9 +282,18 @@ export interface HeaderProps {
   globalActionConfigs?: GlobalActionConfig[];
   solisConfig?: SolisConfig;
 }
+export enum solisDeploymentEnvironment {
+  'local',
+  'dev',
+  'stage',
+  'prod'
+}
 export interface SolisConfig {
   isEnabled: boolean;
   scriptUrl: string;
+  is_prod?: boolean,
+  cdn_hostname: string,
+  deployment_environment: solisDeploymentEnvironment,
 }
 
 export interface NavigationItem {

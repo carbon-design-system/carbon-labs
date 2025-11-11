@@ -84,12 +84,12 @@ export class CommonHeader extends LitElement {
       document.addEventListener('solis-script-status', ((
         e: CustomEvent
       ) => {
-        if (e.detail?.message && e.detail?.message === 'load') {
+        if (e.detail?.message && e.detail?.message === 'load' && this.headerProps.solisConfig) {
           this.solisScriptLoaded = true;
           window._solis = {
-                is_prod: false,
-                cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
-                deployment_environment: 'local'
+                is_prod: this.headerProps.solisConfig.is_prod,
+                cdn_hostname: this.headerProps.solisConfig.cdn_hostname,
+                deployment_environment: this.headerProps.solisConfig.deployment_environment
           };
         } else if (e.detail?.message && e.detail?.message === 'error') {
           console.error(

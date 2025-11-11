@@ -15,6 +15,7 @@ import {
   HeaderProps,
   SearchConfigs,
   TrialLinkType,
+  solisDeploymentEnvironment
 } from '../../../types/Header.types';
 
 const trialDate = new Date();
@@ -444,12 +445,20 @@ export const ChatBot: Story = {
 	`,
 };
 
+const solisConfig = {
+  isEnabled: true,
+  scriptUrl: 'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+  is_prod: false,
+  cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+  deployment_environment: solisDeploymentEnvironment['local'],
+};
+
 export const SolisEnabled: Story = {
   render: () => html`
 		<div role="main">
 			<clabs-global-header-apaas .headerProps="${{
         ...headerProps,
-        solisConfig: { isEnabled: true, scriptUrl: 'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js' },
+        solisConfig: solisConfig
       }}"></common-header>
 		</div>
 	`,

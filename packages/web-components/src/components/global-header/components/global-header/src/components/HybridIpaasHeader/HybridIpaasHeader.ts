@@ -22,6 +22,7 @@ import {
   MainSectionItem,
   ProfileFooterLinks,
   SearchConfigs,
+  solisDeploymentEnvironment
 } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
 
@@ -41,6 +42,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: String }) productName = null;
   @property({ type: String }) productKey = '';
   @property({ type: Object }) fetchHeaders = {};
+  @property({ type: Boolean }) SolisEnabled = false;
   @property({ type: String }) basePath = '';
   @property({ type: String }) displayName = '';
   @property({ type: String }) userEmail = '';
@@ -144,6 +146,16 @@ export class HybridIpaasHeader extends LitElement {
     return footerLink;
   }
 
+  private initSolisOptions(){
+    return{
+        isEnabled: this.SolisEnabled,
+        scriptUrl: 'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+        is_prod: false,
+        cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+        deployment_environment: solisDeploymentEnvironment['local'],
+      };
+  }
+
   private buildHeaderOptions(baseOptions: HeaderProps): HeaderProps {
     const overrideProfile = {
       email: this.userEmail,
@@ -239,6 +251,10 @@ export class HybridIpaasHeader extends LitElement {
           this.dispatchEvent(event);
         },
       };
+    }
+
+    if (this.SolisEnabled) {
+      updatedOptions.solisConfig = this.initSolisOptions();
     }
 
     if (

@@ -284,6 +284,7 @@ export interface HeaderProps {
 }
 export interface SolisConfig {
   isEnabled: boolean;
+  scriptUrl: string;
 }
 
 export interface NavigationItem {

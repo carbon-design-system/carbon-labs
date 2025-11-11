@@ -449,7 +449,7 @@ export const SolisEnabled: Story = {
 		<div role="main">
 			<clabs-global-header-apaas .headerProps="${{
         ...headerProps,
-        solisConfig: { isEnabled: true },
+        solisConfig: { isEnabled: true, scriptUrl: 'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js' },
       }}"></common-header>
 		</div>
 	`,

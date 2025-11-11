@@ -244,7 +244,8 @@ renderSolis() {
   const { solisConfig } = this.props;
   if (solisConfig?.isEnabled) {
     return html`
-        <cds-custom-header-global-action
+      <solis-switcher />
+      <!-- <cds-custom-header-global-action
           id="${SOLIS_BUTTON_ID}"
           role="button"
           aria-label="Launch Chat"
@@ -252,7 +253,7 @@ renderSolis() {
           tabindex="${this.isTrialOpen ? -1 : 0}"
           @click="">
           ${renderCarbonIcon('Sun', 20, 'icon')}
-        </cds-custom-header-global-action>
+        </cds-custom-header-global-action> -->
       `;
   }
 }

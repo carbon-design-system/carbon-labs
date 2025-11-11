@@ -26,7 +26,7 @@ import {
   UserManagement,
   ManagementConsole,
   SolisConfig
-} from '../../types/Header.types';
+} from '../../types/Header.types';,
 
 export type BooleanCallback = () => boolean;
 export type VoidCallback = (callback?: {

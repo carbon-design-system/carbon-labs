@@ -25,6 +25,7 @@ import './WideSideNav';
 import '../SideNavItem/SideNavItem';
 import '../HeaderContext/HeaderContext';
 import useScript from '../../globals/useScript';
+import loadSolisScript from '../../globals/loadSolisScript';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -51,6 +52,9 @@ export class CommonHeader extends LitElement {
   @state()
   assistMeScriptLoaded = false;
 
+  @state()
+  solisScriptLoaded = false;
+
   handleNavItemClick = (e: Event) => {
     if (this.headerProps?.sideNav?.onClick) {
       this.headerProps?.sideNav?.onClick?.(e);
@@ -74,10 +78,26 @@ export class CommonHeader extends LitElement {
         }
       }) as EventListener);
     }
+        if (this.headerProps.solisConfig?.isEnabled) {
+      loadSolisScript(this.headerProps);
+
+      document.addEventListener('solis-script-status', ((
+        e: CustomEvent
+      ) => {
+        if (e.detail?.message && e.detail?.message === 'load') {
+          this.solisScriptLoaded = true;
+        } else if (e.detail?.message && e.detail?.message === 'error') {
+          console.error(
+            'An error occurred trying to load the solis script.'
+          );
+        }
+      }) as EventListener);
+    }
   }
 
   disconnectedCallback() {
     this.removeEventListener('assist-me-script-status', () => {});
+    this.removeEventListener('solis-script-status', () => {});
     super.disconnectedCallback();
   }
 
@@ -88,22 +108,26 @@ export class CommonHeader extends LitElement {
     ) {
       useScript(this.headerProps);
     }
+    if (
+      this.headerProps.solisConfig?.isEnabled &&
+      changedProperties.has('headerProps')
+    ) {
+      loadSolisScript(this.headerProps);
+    }
   }
 
   render() {
     return html`
-      ${this.headerProps?.solisConfig?.isEnabled
-          ? html`
-              <script type="module" src="https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js"></script>
-              <script>
-                window._solis = {
-                  is_prod: false,
-                  cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
-                  deployment_environment: 'local',
-                };
-              </script>
-            `
-          : nothing }
+      ${this.headerProps?.solisConfig?.isEnabled && this.solisScriptLoaded
+        ? html`
+        <script>
+          window._solis = {
+                is_prod: false,
+                cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+                deployment_environment: 'local',
+            };
+        </script>`
+        : nothing }
       <cds-custom-header
         class="${AUTOMATION_NAMESPACE_PREFIX}__header"
         aria-label="IBM webMethods Hybrid Integration">

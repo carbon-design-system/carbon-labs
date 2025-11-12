@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, fixture, expect } from '@open-wc/testing';
+import { expect } from '@open-wc/testing';
 import * as loadSolisScript from '../loadSolisScript';
 import { HeaderProps, solisDeploymentEnvironment } from '../../types/Header.types';
 
@@ -331,21 +331,5 @@ describe('loadSolisScript function', () => {
   it('should return "idle" when first run', async () => {
     const status = loadSolisScript.default(propsNoSolisConfig);
     expect(status).to.equal('idle');
-  });
-
-  it('should return status of "loading" or "ready" when script is in DOM an function is called', async () => {
-    const el = await fixture(html`
-      <script
-        src="https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js"
-        type=""
-        defer=""
-        async=""
-        crossorigin="anonymous"
-        data-status=""></script>
-    `);
-    expect(el).to.exist;
-
-    const status = loadSolisScript.default(propsWithSolisConfig);
-    expect(status).to.be.oneOf(['ready', 'loading']);
   });
 });

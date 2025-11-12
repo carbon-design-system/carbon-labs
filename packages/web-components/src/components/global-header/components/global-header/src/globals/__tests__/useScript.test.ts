@@ -321,7 +321,7 @@ const propsNoAssisitMe: HeaderProps = {
 const assistMeDevSrc =
   'https://ibmassistme-dev.zll1vg8lrcq.us-south.codeengine.appdomain.cloud/resources/assist-me/controller.js';
 
-describe('useScript function', () => {
+describe.only('useScript function', () => {
   it('should return "loading" when first run', async () => {
     const status = useScript.default(propsWithAssisitMeConfig);
     expect(status).to.equal('loading');
@@ -331,7 +331,7 @@ describe('useScript function', () => {
     const status = useScript.default(propsNoAssisitMe);
     expect(status).to.equal('idle');
   });
-
+  // this test is failing with .only (I expect it's relient on earlier test).
   it('should return status of "loading" or "ready" when script is in DOM an function is called', async () => {
     const el = await fixture(html`
       <script

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '@carbon/styles/scss/theme' as *;
-@use '@carbon/styles/scss/type' as *;
-@use '@carbon/styles/scss/colors' as *;
-@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/spacing' as *;
 
 $prefix: 'cds' !default;
 
 :root {
-  // these should be set up as component tokens if/when moved to @carbon/styles
+  // these should be set up as component tokens if/when moved to @carbon/react
   --trial-countdown-start: #{$blue-60};
   --trial-countdown-end: #{$purple-50};
 }

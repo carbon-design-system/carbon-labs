@@ -1777,11 +1777,7 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.14.0"
-    "@carbon/web-components": "npm:2.33.0"
-    "@lit-labs/motion": "npm:^1.0.9"
-    "@remcovaes/web-test-runner-vite-plugin": "npm:^1.3.0"
-    "@web/test-runner": "npm:^0.20.2"
-    vite: "npm:^5.4.21"
+    "@carbon/web-components": "npm:^2.40.0"
   languageName: unknown
   linkType: soft
 
@@ -2161,22 +2157,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/web-components@npm:2.33.0":
-  version: 2.33.0
-  resolution: "@carbon/web-components@npm:2.33.0"
-  dependencies:
-    "@carbon/styles": "npm:^1.85.0"
-    "@floating-ui/dom": "npm:^1.6.3"
-    "@ibm/telemetry-js": "npm:^1.5.0"
-    "@lit/context": "npm:^1.1.3"
-    flatpickr: "npm:4.6.13"
-    lit: "npm:^3.1.0"
-    lodash-es: "npm:^4.17.21"
-    tslib: "npm:^2.6.3"
-  checksum: 10c0/7341a8d9317b532a1943a97191eef501c920f86ce30b8ea1ba2b41fc1083649dcbfef1e6f5ed34c8c23f29ce92e09a3cd1357f4bb3d6a4f40395e687b6bd1952
-  languageName: node
-  linkType: hard
-
 "@carbon/web-components@npm:2.36.0":
   version: 2.36.0
   resolution: "@carbon/web-components@npm:2.36.0"
@@ -2209,7 +2189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/web-components@npm:^2.41.0":
+"@carbon/web-components@npm:^2.40.0, @carbon/web-components@npm:^2.41.0":
   version: 2.42.0
   resolution: "@carbon/web-components@npm:2.42.0"
   dependencies:
@@ -3913,15 +3893,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lit-labs/motion@npm:^1.0.9":
-  version: 1.0.9
-  resolution: "@lit-labs/motion@npm:1.0.9"
-  dependencies:
-    lit: "npm:^3.1.2"
-  checksum: 10c0/7678bcfa0606e2949d4815f5780c6b1b7fa2b3723e88a9068ce8957017396d81b07d7bf844911d50c3244363c7938d8bf8ba179abe74138e0d37ad6fae3ca934
-  languageName: node
-  linkType: hard
-
 "@lit-labs/signals@npm:^0.1.2":
   version: 0.1.3
   resolution: "@lit-labs/signals@npm:0.1.3"
@@ -5490,15 +5461,6 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.13.10"
   checksum: 10c0/4c5159661340acc31b11e1f2ebd87a1521d39bfa287544dd2cd75b399539a4b625d38a1501c90ceae21fcca18ed164b0c3735817ff140ae334098192c110e571
-  languageName: node
-  linkType: hard
-
-"@remcovaes/web-test-runner-vite-plugin@npm:^1.3.0":
-  version: 1.4.0
-  resolution: "@remcovaes/web-test-runner-vite-plugin@npm:1.4.0"
-  peerDependencies:
-    vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
-  checksum: 10c0/4c521c255ea607f19c590eb77b767de85bc1e808620187fd68031a37f8dfd02b636f93b2590cac195fc710ed8da719c70e51dd290b97f9ee39da847cafbcfccc
   languageName: node
   linkType: hard
 
@@ -8156,7 +8118,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web/test-runner@npm:^0.20.0, @web/test-runner@npm:^0.20.2":
+"@web/test-runner@npm:^0.20.0":
   version: 0.20.2
   resolution: "@web/test-runner@npm:0.20.2"
   dependencies:
@@ -18129,7 +18091,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:^2.0.0 || ^3.0.0, lit@npm:^3.0.0, lit@npm:^3.1.0, lit@npm:^3.1.2, lit@npm:^3.2.1":
+"lit@npm:^2.0.0 || ^3.0.0, lit@npm:^3.0.0, lit@npm:^3.1.0, lit@npm:^3.2.1":
   version: 3.3.1
   resolution: "lit@npm:3.3.1"
   dependencies:
@@ -27266,7 +27228,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.0.0, vite@npm:^5.4.21":
+"vite@npm:^5.0.0":
   version: 5.4.21
   resolution: "vite@npm:5.4.21"
   dependencies:

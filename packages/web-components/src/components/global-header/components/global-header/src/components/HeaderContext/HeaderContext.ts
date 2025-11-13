@@ -21,7 +21,7 @@ import {
   PROFILE_MENU_BUTTON_ID,
   SEARCH_BUTTON_ID,
   TRIAL_POPOVER_BUTTON_ID,
-  SOLIS_BUTTON_ID
+  SOLIS_BUTTON_ID,
 } from '../../constant';
 
 /* c8 ignore next */
@@ -240,12 +240,12 @@ export class HeaderContext extends LitElement {
     }
   }
 
-renderSolis() {
-  const { solisConfig } = this.props;
-  if (solisConfig?.isEnabled) {
-    return html`
-      <solis-switcher />
-      <!-- <cds-custom-header-global-action
+  renderSolis() {
+    const { solisConfig } = this.props;
+    if (solisConfig?.isEnabled) {
+      return html`
+        <solis-switcher />
+        <!-- <cds-custom-header-global-action
           id="${SOLIS_BUTTON_ID}"
           role="button"
           aria-label="Launch Chat"
@@ -255,8 +255,8 @@ renderSolis() {
           ${renderCarbonIcon('Sun', 20, 'icon')}
         </cds-custom-header-global-action> -->
       `;
+    }
   }
-}
 
   renderProfile() {
     return html`
@@ -342,8 +342,7 @@ renderSolis() {
           ? html`<div class="${AUTOMATION_HEADER_BASE_CLASS}__divider"></div>`
           : nothing}
         ${this.renderSearch()} ${this.renderNotifications()}
-        ${this.renderChatBot()}
-        ${this.renderSolis()}
+        ${this.renderChatBot()} ${this.renderSolis()}
         ${!assistMeConfigs ? this.renderHelpMenu() : nothing}
         ${assistMeConfigs?.productId ? this.renderAssistMe() : nothing}
         ${this.renderProfile()}

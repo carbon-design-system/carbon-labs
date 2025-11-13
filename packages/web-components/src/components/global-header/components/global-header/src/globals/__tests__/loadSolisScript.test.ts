@@ -9,7 +9,10 @@
 
 import { expect } from '@open-wc/testing';
 import * as loadSolisScript from '../loadSolisScript';
-import { HeaderProps, solisDeploymentEnvironment } from '../../types/Header.types';
+import {
+  HeaderProps,
+  solisDeploymentEnvironment,
+} from '../../types/Header.types';
 
 const propsWithSolisConfig: HeaderProps = {
   brand: {
@@ -39,10 +42,11 @@ const propsWithSolisConfig: HeaderProps = {
   ],
   solisConfig: {
     isEnabled: true,
-    scriptUrl: 'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+    scriptUrl:
+      'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
     is_prod: false,
     cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
-    deployment_environment: solisDeploymentEnvironment['local']
+    deployment_environment: solisDeploymentEnvironment['local'],
   },
   switcherConfigs: [
     {

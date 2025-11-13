@@ -22,7 +22,7 @@ import {
   MainSectionItem,
   ProfileFooterLinks,
   SearchConfigs,
-  solisDeploymentEnvironment
+  solisDeploymentEnvironment,
 } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
 
@@ -146,14 +146,15 @@ export class HybridIpaasHeader extends LitElement {
     return footerLink;
   }
 
-  private initSolisOptions(){
-    return{
-        isEnabled: this.SolisEnabled,
-        scriptUrl: 'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
-        is_prod: false,
-        cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
-        deployment_environment: solisDeploymentEnvironment['local'],
-      };
+  private initSolisOptions() {
+    return {
+      isEnabled: this.SolisEnabled,
+      scriptUrl:
+        'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+      is_prod: false,
+      cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+      deployment_environment: solisDeploymentEnvironment['local'],
+    };
   }
 
   private buildHeaderOptions(baseOptions: HeaderProps): HeaderProps {

@@ -25,7 +25,7 @@ import {
   GlobalActionConfig,
   UserManagement,
   ManagementConsole,
-  SolisConfig
+  SolisConfig,
 } from '../../types/Header.types';
 
 export type BooleanCallback = () => boolean;

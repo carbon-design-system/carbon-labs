@@ -32,7 +32,6 @@ export default function loadSolisScript(props: HeaderProps) {
     script.crossOrigin = 'anonymous';
     script.setAttribute('data-status', 'loading');
 
-
     document?.head?.appendChild(script);
 
     const setAttributeFromEvent = (event: { type: string }) => {

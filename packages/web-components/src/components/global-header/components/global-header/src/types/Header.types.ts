@@ -286,14 +286,14 @@ export enum solisDeploymentEnvironment {
   'local',
   'dev',
   'stage',
-  'prod'
+  'prod',
 }
 export interface SolisConfig {
   isEnabled: boolean;
   scriptUrl: string;
-  is_prod?: boolean,
-  cdn_hostname: string,
-  deployment_environment: solisDeploymentEnvironment,
+  is_prod?: boolean;
+  cdn_hostname: string;
+  deployment_environment: solisDeploymentEnvironment;
 }
 
 export interface NavigationItem {
@@ -310,9 +310,9 @@ export interface EventProps {
 }
 
 interface solisWindowConfig {
-  is_prod?: boolean,
-  cdn_hostname: string,
-  deployment_environment: 'local' | 'dev' | 'stage' | 'prod',
+  is_prod?: boolean;
+  cdn_hostname: string;
+  deployment_environment: 'local' | 'dev' | 'stage' | 'prod';
 }
 
 declare global {

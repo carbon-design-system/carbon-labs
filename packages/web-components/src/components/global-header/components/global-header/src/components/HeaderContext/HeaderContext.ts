@@ -21,7 +21,6 @@ import {
   PROFILE_MENU_BUTTON_ID,
   SEARCH_BUTTON_ID,
   TRIAL_POPOVER_BUTTON_ID,
-  SOLIS_BUTTON_ID,
 } from '../../constant';
 
 /* c8 ignore next */

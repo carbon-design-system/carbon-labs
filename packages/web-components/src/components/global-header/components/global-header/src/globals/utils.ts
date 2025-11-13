@@ -77,7 +77,7 @@ export const renderCarbonIcon = (
     User20,
     User24,
     User32,
-    UserFollow16
+    UserFollow16,
   };
 
   const iconsRecord = CarbonIcons as Record<

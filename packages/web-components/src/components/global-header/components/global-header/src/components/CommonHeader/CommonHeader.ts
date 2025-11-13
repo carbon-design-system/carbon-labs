@@ -25,6 +25,7 @@ import './WideSideNav';
 import '../SideNavItem/SideNavItem';
 import '../HeaderContext/HeaderContext';
 import useScript from '../../globals/useScript';
+import loadSolisScript from '../../globals/loadSolisScript';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -51,6 +52,9 @@ export class CommonHeader extends LitElement {
   @state()
   assistMeScriptLoaded = false;
 
+  @state()
+  solisScriptLoaded = false;
+
   handleNavItemClick = (e: Event) => {
     if (this.headerProps?.sideNav?.onClick) {
       this.headerProps?.sideNav?.onClick?.(e);
@@ -74,10 +78,33 @@ export class CommonHeader extends LitElement {
         }
       }) as EventListener);
     }
+    if (this.headerProps.solisConfig?.isEnabled) {
+      loadSolisScript(this.headerProps);
+
+      document.addEventListener('solis-script-status', ((e: CustomEvent) => {
+        if (
+          e.detail?.message &&
+          e.detail?.message === 'load' &&
+          this.headerProps.solisConfig
+        ) {
+          this.solisScriptLoaded = true;
+          // @ts-ignore - _solis is a global property added by the Solis script
+          window._solis = {
+            is_prod: this.headerProps.solisConfig.is_prod,
+            cdn_hostname: this.headerProps.solisConfig.cdn_hostname,
+            deployment_environment:
+              this.headerProps.solisConfig.deployment_environment,
+          };
+        } else if (e.detail?.message && e.detail?.message === 'error') {
+          console.error('An error occurred trying to load the solis script.');
+        }
+      }) as EventListener);
+    }
   }
 
   disconnectedCallback() {
     this.removeEventListener('assist-me-script-status', () => {});
+    this.removeEventListener('solis-script-status', () => {});
     super.disconnectedCallback();
   }
 
@@ -87,6 +114,12 @@ export class CommonHeader extends LitElement {
       changedProperties.has('headerProps')
     ) {
       useScript(this.headerProps);
+    }
+    if (
+      this.headerProps.solisConfig?.isEnabled &&
+      changedProperties.has('headerProps')
+    ) {
+      loadSolisScript(this.headerProps);
     }
   }
 
@@ -187,7 +220,7 @@ export class CommonHeader extends LitElement {
                         ${this.headerProps.sideNav?.links?.map((link) => {
                           // Loop through the links array to render the menu items
                           return html`
-												<clabs-global-header-side-nav-item 
+												<clabs-global-header-side-nav-item
 												.link="${{ ...link }}"
 												.isCollapsible="${this.headerProps.sideNav?.isCollapsible}"
 												.handleNavItemClick="${this.handleNavItemClick}"
@@ -197,7 +230,7 @@ export class CommonHeader extends LitElement {
 												.isOnClickAvailable="${
                           typeof this.headerProps?.sideNav?.onClick ===
                           'function'
-                        }">	
+                        }">
 												</clabs-global-header-side-nav-item>
                                 </cds-custom-side-nav-menu>
                               `;
@@ -233,7 +266,7 @@ export class CommonHeader extends LitElement {
               ${this.headerProps.sideNavPropsV2?.links?.map((link) => {
                 // Loop through the links array to render the menu items
                 return html`
-									<clabs-global-header-side-nav-item 
+									<clabs-global-header-side-nav-item
 									.link="${{ ...link }}"
 									.isCollapsible="${this.headerProps.sideNavPropsV2?.isCollapsible}"
 									.handleNavItemClick="${this.handleNavItemClick}"

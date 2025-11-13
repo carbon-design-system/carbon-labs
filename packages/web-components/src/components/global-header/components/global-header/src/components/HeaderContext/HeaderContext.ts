@@ -239,6 +239,13 @@ export class HeaderContext extends LitElement {
     }
   }
 
+  renderSolis() {
+    const { solisConfig } = this.props;
+    if (solisConfig?.isEnabled) {
+      return html` <solis-switcher /> `;
+    }
+  }
+
   renderProfile() {
     return html`
       <div class="${AUTOMATION_HEADER_BASE_CLASS}--popover-content-container">
@@ -323,7 +330,7 @@ export class HeaderContext extends LitElement {
           ? html`<div class="${AUTOMATION_HEADER_BASE_CLASS}__divider"></div>`
           : nothing}
         ${this.renderSearch()} ${this.renderNotifications()}
-        ${this.renderChatBot()}
+        ${this.renderChatBot()} ${this.renderSolis()}
         ${!assistMeConfigs ? this.renderHelpMenu() : nothing}
         ${assistMeConfigs?.productId ? this.renderAssistMe() : nothing}
         ${this.renderProfile()}

@@ -243,9 +243,7 @@ export class HeaderContext extends LitElement {
   renderSolis() {
     const { solisConfig } = this.props;
     if (solisConfig?.isEnabled) {
-      return html`
-        <solis-switcher />
-      `;
+      return html` <solis-switcher /> `;
     }
   }
 

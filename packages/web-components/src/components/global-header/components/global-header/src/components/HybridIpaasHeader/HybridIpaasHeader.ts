@@ -41,6 +41,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: String }) productName = null;
   @property({ type: String }) productKey = '';
   @property({ type: Object }) fetchHeaders = {};
+  @property({ type: Boolean }) sidekickEnabled = false;
   @property({ type: String }) basePath = '';
   @property({ type: String }) displayName = '';
   @property({ type: String }) userEmail = '';
@@ -144,6 +145,17 @@ export class HybridIpaasHeader extends LitElement {
     return footerLink;
   }
 
+  private initSidekickOptions() {
+    return {
+      isEnabled: this.sidekickEnabled,
+      scriptUrl:
+        'https://cdn.dev.saas.ibm.com/solis_ui/v1/sidekick/solis-sidekick.es.js',
+      correlationId: 'someid', // TODO
+      title: 'sometitle', // TODO
+      product: 'someproduct', // TODO
+    };
+  }
+
   private buildHeaderOptions(baseOptions: HeaderProps): HeaderProps {
     const overrideProfile = {
       email: this.userEmail,
@@ -239,6 +251,10 @@ export class HybridIpaasHeader extends LitElement {
           this.dispatchEvent(event);
         },
       };
+    }
+
+    if (this.sidekickEnabled) {
+      updatedOptions.sidekickConfig = this.initSidekickOptions();
     }
 
     if (

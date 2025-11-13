@@ -25,6 +25,7 @@ import {
   GlobalActionConfig,
   UserManagement,
   ManagementConsole,
+  SidekickConfig
 } from '../../types/Header.types';
 
 export type BooleanCallback = () => boolean;
@@ -53,6 +54,7 @@ export interface HeaderContextProps {
   isHybridIpaas?: HeaderProps['isHybridIpaas'];
   searchConfigs?: SearchConfigs;
   globalActionConfigs?: GlobalActionConfig[];
+  sidekickConfig?: SidekickConfig;
 }
 
 export interface HeaderContextState {

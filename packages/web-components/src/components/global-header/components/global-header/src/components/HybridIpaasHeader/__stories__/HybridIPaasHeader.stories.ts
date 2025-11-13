@@ -152,6 +152,26 @@ export const WithAIChat: Story = {
   `,
 };
 
+export const WithSidekick: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+          return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
+        }),
+      ],
+    },
+  },
+  render: () => html`
+    <div role="main">
+      <clabs-global-header-hybrid-ipaas
+        productName="App Connect"
+        productKey="appconnect"
+        sidekickEnabled="true"></clabs-global-header-hybrid-ipaas>
+    </div>
+  `,
+};
+
 const capabilityProfileFooterLinks = [
   {
     text: 'About us',

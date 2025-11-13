@@ -239,6 +239,19 @@ export class HeaderContext extends LitElement {
     }
   }
 
+  renderSidekick() {
+    const { sidekickConfig } = this.props;
+    if (sidekickConfig?.isEnabled) {
+      return html`
+        <solis-sidekick
+          correlation_id="${sidekickConfig.correlationId}"
+          title="${sidekickConfig.title}"
+          product="${sidekickConfig.product}" 
+        />
+      `;
+    }
+  }
+
   renderProfile() {
     return html`
       <div class="${AUTOMATION_HEADER_BASE_CLASS}--popover-content-container">
@@ -324,6 +337,7 @@ export class HeaderContext extends LitElement {
           : nothing}
         ${this.renderSearch()} ${this.renderNotifications()}
         ${this.renderChatBot()}
+        ${this.renderSidekick()}
         ${!assistMeConfigs ? this.renderHelpMenu() : nothing}
         ${assistMeConfigs?.productId ? this.renderAssistMe() : nothing}
         ${this.renderProfile()}

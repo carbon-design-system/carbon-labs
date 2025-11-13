@@ -255,6 +255,14 @@ export type AnalyticsConfig = {
   commonProperties?: CommonAnalyticsProperties;
 };
 
+export type SidekickConfig = {
+  scriptUrl?: string;
+  isEnabled: boolean;
+  correlationId: string;
+  title: string;
+  product: string;
+}
+
 export interface HeaderProps {
   brand?: Brand;
   capabilityName?: { label: string };
@@ -280,6 +288,7 @@ export interface HeaderProps {
   chatBotConfigs?: ChatBotConfigs;
   searchConfigs?: SearchConfigs;
   globalActionConfigs?: GlobalActionConfig[];
+  sidekickConfig?: SidekickConfig;
 }
 
 export interface NavigationItem {

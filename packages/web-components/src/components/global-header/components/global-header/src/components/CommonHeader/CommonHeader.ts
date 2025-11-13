@@ -25,6 +25,7 @@ import './WideSideNav';
 import '../SideNavItem/SideNavItem';
 import '../HeaderContext/HeaderContext';
 import useScript from '../../globals/useScript';
+import loadSidekickScript from '../../globals/loadSidekickScript';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -51,6 +52,9 @@ export class CommonHeader extends LitElement {
   @state()
   assistMeScriptLoaded = false;
 
+  @state()
+  sidekickScriptLoaded = false;
+
   handleNavItemClick = (e: Event) => {
     if (this.headerProps?.sideNav?.onClick) {
       this.headerProps?.sideNav?.onClick?.(e);
@@ -74,10 +78,26 @@ export class CommonHeader extends LitElement {
         }
       }) as EventListener);
     }
+    if (this.headerProps.sidekickConfig) {
+      loadSidekickScript(this.headerProps);
+
+      document.addEventListener('sidekick-script-status', ((
+        e: CustomEvent
+      ) => {
+        if (e.detail?.message && e.detail?.message === 'load' && this.headerProps.sidekickConfig) {
+          this.sidekickScriptLoaded = true;
+        } else if (e.detail?.message && e.detail?.message === 'error') {
+          console.error(
+            'An error occurred trying to load the sidekick script.'
+          );
+        }
+      }) as EventListener);
+    }
   }
 
   disconnectedCallback() {
     this.removeEventListener('assist-me-script-status', () => {});
+    this.removeEventListener('sidekick-script-status', () => {});
     super.disconnectedCallback();
   }
 
@@ -87,6 +107,12 @@ export class CommonHeader extends LitElement {
       changedProperties.has('headerProps')
     ) {
       useScript(this.headerProps);
+    }
+    if (
+      this.headerProps.sidekickConfig &&
+      changedProperties.has('headerProps')
+    ) {
+      loadSidekickScript(this.headerProps);
     }
   }
 

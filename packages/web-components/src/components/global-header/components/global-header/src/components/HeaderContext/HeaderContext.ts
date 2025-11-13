@@ -245,15 +245,6 @@ export class HeaderContext extends LitElement {
     if (solisConfig?.isEnabled) {
       return html`
         <solis-switcher />
-        <!-- <cds-custom-header-global-action
-          id="${SOLIS_BUTTON_ID}"
-          role="button"
-          aria-label="Launch Chat"
-          tooltipAlignment="center"
-          tabindex="${this.isTrialOpen ? -1 : 0}"
-          @click="">
-          ${renderCarbonIcon('Sun', 20, 'icon')}
-        </cds-custom-header-global-action> -->
       `;
     }
   }

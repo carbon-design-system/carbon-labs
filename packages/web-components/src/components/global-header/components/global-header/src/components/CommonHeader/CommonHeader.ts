@@ -88,6 +88,7 @@ export class CommonHeader extends LitElement {
           this.headerProps.solisConfig
         ) {
           this.solisScriptLoaded = true;
+          // @ts-ignore - _solis is a global property added by the Solis script
           window._solis = {
             is_prod: this.headerProps.solisConfig.is_prod,
             cdn_hostname: this.headerProps.solisConfig.cdn_hostname,

@@ -321,7 +321,7 @@ const propsNoAssisitMe: HeaderProps = {
 const assistMeDevSrc =
   'https://ibmassistme-dev.zll1vg8lrcq.us-south.codeengine.appdomain.cloud/resources/assist-me/controller.js';
 
-describe.only('useScript function', () => {
+describe('useScript function', () => {
   it('should return "loading" when first run', async () => {
     const status = useScript.default(propsWithAssisitMeConfig);
     expect(status).to.equal('loading');

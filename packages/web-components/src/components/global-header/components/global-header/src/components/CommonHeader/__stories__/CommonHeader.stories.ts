@@ -444,6 +444,26 @@ export const ChatBot: Story = {
 	`,
 };
 
+const sidekickConfig = {
+  isEnabled: true,
+  scriptUrl:
+    'https://cdn.dev.saas.ibm.com/solis_ui/v1/sidekick/solis-sidekick.es.js',
+  correlationId: 'someid',
+  title: 'sometitle',
+  product: 'someproduct'
+};
+
+export const SidekickEnabled: Story = {
+  render: () => html`
+		<div role="main">
+			<clabs-global-header-apaas .headerProps="${{
+        ...headerProps,
+        sidekickConfig: sidekickConfig,
+      }}"></common-header>
+		</div>
+	`,
+};
+
 export const Notifications: Story = {
   render: () => html`
 		<div role="main">

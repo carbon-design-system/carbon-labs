@@ -246,7 +246,7 @@ export class HeaderContext extends LitElement {
         <solis-sidekick
           correlation_id="${sidekickConfig.correlationId}"
           title="${sidekickConfig.title}"
-          product="${sidekickConfig.product}" 
+          product="${sidekickConfig.product}"
         />
       `;
     }

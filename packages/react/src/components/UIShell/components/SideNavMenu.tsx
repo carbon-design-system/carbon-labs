@@ -568,7 +568,10 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
                     renderIcon={backButtonRenderIcon}>
                     {backButtonTitle}
                   </Button>
-                  {childrenToRender}
+                  <SideNavItems
+                    accessibilityLabel={{ 'aria-label': `${title} submenu` }}>
+                    {childrenToRender}
+                  </SideNavItems>
                 </div>
               )}
             </div>

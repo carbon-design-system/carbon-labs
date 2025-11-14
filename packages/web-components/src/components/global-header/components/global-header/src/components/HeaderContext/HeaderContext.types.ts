@@ -25,7 +25,7 @@ import {
   GlobalActionConfig,
   UserManagement,
   ManagementConsole,
-  SidekickConfig
+  SidekickConfig,
   SolisConfig,
 } from '../../types/Header.types';
 

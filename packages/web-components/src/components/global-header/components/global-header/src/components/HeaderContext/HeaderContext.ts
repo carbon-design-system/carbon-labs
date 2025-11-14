@@ -343,7 +343,8 @@ export class HeaderContext extends LitElement {
           ? html`<div class="${AUTOMATION_HEADER_BASE_CLASS}__divider"></div>`
           : nothing}
         ${this.renderSearch()} ${this.renderNotifications()}
-        ${this.renderChatBot()} ${this.renderSolis()} ${this.renderSidekick}
+        ${this.renderChatBot()} ${this.renderSolis()}
+        ${this.renderSidekick()}
         ${!assistMeConfigs ? this.renderHelpMenu() : nothing}
         ${assistMeConfigs?.productId ? this.renderAssistMe() : nothing}
         ${this.renderProfile()}

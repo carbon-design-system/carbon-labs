@@ -289,6 +289,20 @@ export interface HeaderProps {
   searchConfigs?: SearchConfigs;
   globalActionConfigs?: GlobalActionConfig[];
   sidekickConfig?: SidekickConfig;
+  solisConfig?: SolisConfig;
+}
+export enum solisDeploymentEnvironment {
+  'local',
+  'dev',
+  'stage',
+  'prod',
+}
+export interface SolisConfig {
+  isEnabled: boolean;
+  scriptUrl: string;
+  is_prod?: boolean;
+  cdn_hostname: string;
+  deployment_environment: solisDeploymentEnvironment;
 }
 
 export interface NavigationItem {
@@ -302,4 +316,16 @@ export interface EventProps {
   CTA: string;
   elementId: string;
   platformTitle?: string;
+}
+
+interface solisWindowConfig {
+  is_prod?: boolean;
+  cdn_hostname: string;
+  deployment_environment: 'local' | 'dev' | 'stage' | 'prod';
+}
+
+declare global {
+  interface Window {
+    _solis: solisWindowConfig;
+  }
 }

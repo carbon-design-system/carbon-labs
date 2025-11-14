@@ -22,6 +22,7 @@ import {
   MainSectionItem,
   ProfileFooterLinks,
   SearchConfigs,
+  solisDeploymentEnvironment,
 } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
 
@@ -42,6 +43,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: String }) productKey = '';
   @property({ type: Object }) fetchHeaders = {};
   @property({ type: Boolean }) sidekickEnabled = false;
+  @property({ type: Boolean }) SolisEnabled = false;
   @property({ type: String }) basePath = '';
   @property({ type: String }) displayName = '';
   @property({ type: String }) userEmail = '';
@@ -153,6 +155,16 @@ export class HybridIpaasHeader extends LitElement {
       correlationId: 'someid', // TODO
       title: 'sometitle', // TODO
       product: 'someproduct', // TODO
+    }
+  }
+  private initSolisOptions() {
+    return {
+      isEnabled: this.SolisEnabled,
+      scriptUrl:
+        'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+      is_prod: false,
+      cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+      deployment_environment: solisDeploymentEnvironment['local'],
     };
   }
 
@@ -255,6 +267,9 @@ export class HybridIpaasHeader extends LitElement {
 
     if (this.sidekickEnabled) {
       updatedOptions.sidekickConfig = this.initSidekickOptions();
+    }
+    if (this.SolisEnabled) {
+      updatedOptions.solisConfig = this.initSolisOptions();
     }
 
     if (

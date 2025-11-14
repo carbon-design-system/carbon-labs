@@ -26,6 +26,7 @@ import {
   UserManagement,
   ManagementConsole,
   SidekickConfig
+  SolisConfig,
 } from '../../types/Header.types';
 
 export type BooleanCallback = () => boolean;
@@ -55,6 +56,7 @@ export interface HeaderContextProps {
   searchConfigs?: SearchConfigs;
   globalActionConfigs?: GlobalActionConfig[];
   sidekickConfig?: SidekickConfig;
+  solisConfig?: SolisConfig;
 }
 
 export interface HeaderContextState {

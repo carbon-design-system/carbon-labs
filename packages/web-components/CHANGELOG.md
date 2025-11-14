@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.89.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.88.0...@carbon-labs/web-components@0.89.0) (2025-11-13)
+
+
+### Features
+
+* global header Solis component ([#917](https://github.com/carbon-design-system/carbon-labs/issues/917)) ([b8d7160](https://github.com/carbon-design-system/carbon-labs/commit/b8d71600102510421008df2279cf87d185fb0ffb))
+
+
+
+
+
 # [0.88.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.87.0...@carbon-labs/web-components@0.88.0) (2025-11-10)
 
 

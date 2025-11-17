@@ -37,8 +37,7 @@ export default function loadSolisScript(props: HeaderProps) {
     window._solis = {
       is_prod: props.solisConfig.is_prod,
       cdn_hostname: props.solisConfig.cdn_hostname,
-      deployment_environment:
-        props.solisConfig.deployment_environment,
+      deployment_environment: props.solisConfig.deployment_environment,
     };
 
     const setAttributeFromEvent = (event: { type: string }) => {

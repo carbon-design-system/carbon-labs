@@ -79,7 +79,10 @@ export class CommonHeader extends LitElement {
       }) as EventListener);
     }
 
-    if (this.headerProps.solisConfig && this.headerProps.solisConfig.isEnabled) {
+    if (
+      this.headerProps.solisConfig &&
+      this.headerProps.solisConfig.isEnabled
+    ) {
       loadSolisScript(this.headerProps);
 
       document.addEventListener('solis-script-status', ((e: CustomEvent) => {

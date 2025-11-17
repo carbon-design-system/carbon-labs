@@ -23,7 +23,7 @@ export default function loadSolisScript(props: HeaderProps) {
     `script[src="${solisUrl}"]`
   ) as HTMLScriptElement;
 
-  if (!script && solisUrl) {
+  if (!script && solisUrl && props.solisConfig) {
     script = document.createElement('script');
     script.src = solisUrl;
     script.type = 'module';
@@ -33,6 +33,13 @@ export default function loadSolisScript(props: HeaderProps) {
     script.setAttribute('data-status', 'loading');
 
     document?.head?.appendChild(script);
+
+    window._solis = {
+      is_prod: props.solisConfig.is_prod,
+      cdn_hostname: props.solisConfig.cdn_hostname,
+      deployment_environment:
+        props.solisConfig.deployment_environment,
+    };
 
     const setAttributeFromEvent = (event: { type: string }) => {
       script?.setAttribute(

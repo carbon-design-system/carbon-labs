@@ -42,7 +42,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: String }) productName = null;
   @property({ type: String }) productKey = '';
   @property({ type: Object }) fetchHeaders = {};
-  @property({ type: Boolean }) SolisEnabled = false;
+  @property({ type: Boolean }) solisEnabled = false;
   @property({ type: String }) basePath = '';
   @property({ type: String }) displayName = '';
   @property({ type: String }) userEmail = '';
@@ -148,7 +148,7 @@ export class HybridIpaasHeader extends LitElement {
 
   private initSolisOptions() {
     return {
-      isEnabled: this.SolisEnabled,
+      isEnabled: true,
       scriptUrl:
         'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
       is_prod: false,
@@ -254,7 +254,7 @@ export class HybridIpaasHeader extends LitElement {
       };
     }
 
-    if (this.SolisEnabled) {
+    if (this.solisEnabled) {
       updatedOptions.solisConfig = this.initSolisOptions();
     }
 
@@ -274,7 +274,6 @@ export class HybridIpaasHeader extends LitElement {
     ) {
       updatedOptions.globalActionConfigs = [...this.capabilityGlobalActions];
     }
-
     return updatedOptions;
   }
 

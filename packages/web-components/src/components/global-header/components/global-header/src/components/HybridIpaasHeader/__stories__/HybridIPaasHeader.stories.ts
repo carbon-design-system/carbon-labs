@@ -167,7 +167,7 @@ export const WithSolis: Story = {
       <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
-        solisEnabled="true">
+        solisEnabled>
       </clabs-global-header-hybrid-ipaas>
     </div>
   `,

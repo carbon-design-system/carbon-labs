@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.19.0...@carbon-labs/wc-global-header@0.20.0) (2025-11-18)
+
+
+### Bug Fixes
+
+* Solis fix ([#919](https://github.com/carbon-design-system/carbon-labs/issues/919)) ([c5a8ca2](https://github.com/carbon-design-system/carbon-labs/commit/c5a8ca23252433ac5acb608beae12e6459c3da9a))
+
+
+
+
+
 # [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.18.0...@carbon-labs/wc-global-header@0.19.0) (2025-11-13)
 
 

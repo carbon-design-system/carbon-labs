@@ -362,6 +362,31 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions.chatBotConfigs?.onClick).to.equal(aiCallbackSpy);
   });
 
+  it('should handle solis rendering', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName="Test Product"
+        productKey="test-productKey"
+        basePath="/base"
+        assistMeKey="assist-key"
+        solisEnabled="true"></clabs-global-header-hybrid-ipaas>`
+    );
+    await waitUntil(
+      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      'headerOptions were not updated as expected'
+    );
+
+    expect(el.headerOptions?.solisConfig).to.exist;
+    expect(el.headerOptions.solisConfig?.isEnabled).to.be.true;
+  });
+
   describe('aiCallbackEvent', () => {
     let eventReceived: boolean;
 

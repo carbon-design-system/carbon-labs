@@ -7,11 +7,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { html, fixture, expect } from '@open-wc/testing';
-import * as useScript from '../useScript';
-import { HeaderProps } from '../../types/Header.types';
+import { expect } from '@open-wc/testing';
+import * as loadSolisScript from '../loadSolisScript';
+import {
+  HeaderProps,
+  solisDeploymentEnvironment,
+} from '../../types/Header.types';
 
-const propsWithAssisitMeConfig: HeaderProps = {
+const propsWithSolisConfig: HeaderProps = {
   brand: {
     company: 'IBM',
     product: 'webMethods Hybrid Integration',
@@ -37,8 +40,13 @@ const propsWithAssisitMeConfig: HeaderProps = {
       arialLabel: 'Logout',
     },
   ],
-  assistMeConfigs: {
-    productId: 'a22453643cdb9e22397c6eab9e9da97d',
+  solisConfig: {
+    isEnabled: true,
+    scriptUrl:
+      'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+    is_prod: false,
+    cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+    deployment_environment: solisDeploymentEnvironment['local'],
   },
   switcherConfigs: [
     {
@@ -166,7 +174,7 @@ const propsWithAssisitMeConfig: HeaderProps = {
   },
 };
 
-const propsNoAssisitMe: HeaderProps = {
+const propsNoSolisConfig: HeaderProps = {
   brand: {
     company: 'IBM',
     product: 'webMethods Hybrid Integration',
@@ -318,32 +326,67 @@ const propsNoAssisitMe: HeaderProps = {
   },
 };
 
-const assistMeDevSrc =
-  'https://ibmassistme-dev.zll1vg8lrcq.us-south.codeengine.appdomain.cloud/resources/assist-me/controller.js';
+describe('loadSolisScript function', () => {
+  beforeEach(() => {
+    // Clean up any existing solis script and window._solis before each test
+    const existingScript = document.querySelector(
+      'script[src*="solis-switcher"]'
+    );
+    if (existingScript) {
+      existingScript.remove();
+    }
+    delete (window as any)._solis;
+  });
 
-describe('useScript function', () => {
   it('should return "loading" when first run', async () => {
-    const status = useScript.default(propsWithAssisitMeConfig);
+    const status = loadSolisScript.default(propsWithSolisConfig);
     expect(status).to.equal('loading');
   });
 
   it('should return "idle" when first run', async () => {
-    const status = useScript.default(propsNoAssisitMe);
+    const status = loadSolisScript.default(propsNoSolisConfig);
     expect(status).to.equal('idle');
   });
-  // this test is failing with .only (I expect it's relient on earlier test).
-  it('should return status of "loading" or "ready" when script is in DOM an function is called', async () => {
-    const el = await fixture(html`
-      <script
-        src="${assistMeDevSrc}"
-        defer=""
-        async=""
-        crossorigin="anonymous"
-        data-status=""></script>
-    `);
-    expect(el).to.exist;
 
-    const status = useScript.default(propsWithAssisitMeConfig);
-    expect(status).to.be.oneOf(['ready', 'loading']);
+  it('should create window._solis with correct configuration', async () => {
+    // Run the function to load the script
+    loadSolisScript.default(propsWithSolisConfig);
+
+    // Check that window._solis exists
+    expect((window as any)._solis).to.exist;
+
+    // Check that window._solis has the correct properties
+    expect((window as any)._solis.is_prod).to.equal(
+      propsWithSolisConfig.solisConfig?.is_prod
+    );
+    expect((window as any)._solis.cdn_hostname).to.equal(
+      propsWithSolisConfig.solisConfig?.cdn_hostname
+    );
+    expect((window as any)._solis.deployment_environment).to.equal(
+      propsWithSolisConfig.solisConfig?.deployment_environment
+    );
+  });
+
+  it('should not create window._solis when solis is disabled', async () => {
+    // Run the function with solis disabled
+    loadSolisScript.default(propsNoSolisConfig);
+
+    // Check that window._solis does not exist
+    expect((window as any)._solis).to.be.undefined;
+  });
+
+  it('should create script element with correct attributes', async () => {
+    loadSolisScript.default(propsWithSolisConfig);
+
+    const script = document.querySelector(
+      `script[src="${propsWithSolisConfig.solisConfig?.scriptUrl}"]`
+    ) as HTMLScriptElement;
+
+    expect(script).to.exist;
+    expect(script.type).to.equal('module');
+    expect(script.defer).to.be.true;
+    expect(script.async).to.be.true;
+    expect(script.crossOrigin).to.equal('anonymous');
+    expect(script.getAttribute('data-status')).to.equal('loading');
   });
 });

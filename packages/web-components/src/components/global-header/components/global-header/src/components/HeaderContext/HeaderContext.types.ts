@@ -25,6 +25,7 @@ import {
   GlobalActionConfig,
   UserManagement,
   ManagementConsole,
+  SidekickConfig,
   SolisConfig,
 } from '../../types/Header.types';
 
@@ -54,6 +55,7 @@ export interface HeaderContextProps {
   isHybridIpaas?: HeaderProps['isHybridIpaas'];
   searchConfigs?: SearchConfigs;
   globalActionConfigs?: GlobalActionConfig[];
+  sidekickConfig?: SidekickConfig;
   solisConfig?: SolisConfig;
 }
 

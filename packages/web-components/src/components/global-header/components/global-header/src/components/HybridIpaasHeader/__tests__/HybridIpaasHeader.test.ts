@@ -376,7 +376,7 @@ describe('HybridIpaasHeader Component', () => {
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
-        solisEnabled="true"></clabs-global-header-hybrid-ipaas>`
+        solisSwitcherEnabled="true"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',
@@ -385,6 +385,31 @@ describe('HybridIpaasHeader Component', () => {
 
     expect(el.headerOptions?.solisConfig).to.exist;
     expect(el.headerOptions.solisConfig?.isEnabled).to.be.true;
+  });
+
+  it('should handle sidekick rendering', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName="Test Product"
+        productKey="test-productKey"
+        basePath="/base"
+        assistMeKey="assist-key"
+        solisSidekickEnabled></clabs-global-header-hybrid-ipaas>`
+    );
+    await waitUntil(
+      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      'headerOptions were not updated as expected'
+    );
+
+    expect(el.headerOptions?.sidekickConfig).to.exist;
+    expect(el.headerOptions.sidekickConfig?.isEnabled).to.be.true;
   });
 
   describe('aiCallbackEvent', () => {

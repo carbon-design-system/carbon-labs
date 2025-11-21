@@ -25,6 +25,7 @@ import './WideSideNav';
 import '../SideNavItem/SideNavItem';
 import '../HeaderContext/HeaderContext';
 import useScript from '../../globals/useScript';
+import loadSidekickScript from '../../globals/loadSidekickScript';
 import loadSolisScript from '../../globals/loadSolisScript';
 
 const { stablePrefix: clabsPrefix } = settings;
@@ -53,6 +54,9 @@ export class CommonHeader extends LitElement {
   assistMeScriptLoaded = false;
 
   @state()
+  sidekickScriptLoaded = false;
+
+  @state()
   solisScriptLoaded = false;
 
   handleNavItemClick = (e: Event) => {
@@ -78,7 +82,26 @@ export class CommonHeader extends LitElement {
         }
       }) as EventListener);
     }
+    if (
+      this.headerProps.sidekickConfig &&
+      this.headerProps.sidekickConfig.isEnabled
+    ) {
+      loadSidekickScript(this.headerProps);
 
+      document.addEventListener('sidekick-script-status', ((e: CustomEvent) => {
+        if (
+          e.detail?.message &&
+          e.detail?.message === 'load' &&
+          this.headerProps.sidekickConfig
+        ) {
+          this.sidekickScriptLoaded = true;
+        } else if (e.detail?.message && e.detail?.message === 'error') {
+          console.error(
+            'An error occurred trying to load the sidekick script.'
+          );
+        }
+      }) as EventListener);
+    }
     if (
       this.headerProps.solisConfig &&
       this.headerProps.solisConfig.isEnabled
@@ -101,6 +124,7 @@ export class CommonHeader extends LitElement {
 
   disconnectedCallback() {
     this.removeEventListener('assist-me-script-status', () => {});
+    this.removeEventListener('sidekick-script-status', () => {});
     this.removeEventListener('solis-script-status', () => {});
     super.disconnectedCallback();
   }
@@ -111,6 +135,12 @@ export class CommonHeader extends LitElement {
       changedProperties.has('headerProps')
     ) {
       useScript(this.headerProps);
+    }
+    if (
+      this.headerProps.sidekickConfig?.isEnabled &&
+      changedProperties.has('headerProps')
+    ) {
+      loadSidekickScript(this.headerProps);
     }
     if (
       this.headerProps.solisConfig?.isEnabled &&

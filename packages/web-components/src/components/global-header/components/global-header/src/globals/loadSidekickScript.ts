@@ -10,22 +10,22 @@
 
 import { HeaderProps } from '../types/Header.types';
 
-export default function loadSolisScript(props: HeaderProps) {
-  const solisUrl = props?.solisConfig?.scriptUrl;
-  const isSolisSwitcherEnabled = props?.solisConfig?.isEnabled;
+export default function loadSidekickScript(props: HeaderProps) {
+  const sidekickUrl = props?.sidekickConfig?.scriptUrl;
+  const isSolisSidekickEnabled = props?.sidekickConfig?.isEnabled;
 
-  let status = isSolisSwitcherEnabled ? 'loading' : 'idle';
-  if (!isSolisSwitcherEnabled) {
+  let status = isSolisSidekickEnabled ? 'loading' : 'idle';
+  if (!isSolisSidekickEnabled) {
     return 'idle';
   }
 
   let script = document?.querySelector(
-    `script[src="${solisUrl}"]`
+    `script[src="${sidekickUrl}"]`
   ) as HTMLScriptElement;
 
-  if (!script && solisUrl && props.solisConfig) {
+  if (!script && sidekickUrl && props.solisConfig && props.sidekickConfig) {
     script = document.createElement('script');
-    script.src = solisUrl;
+    script.src = sidekickUrl;
     script.type = 'module';
     script.defer = true;
     script.async = true;
@@ -39,6 +39,15 @@ export default function loadSolisScript(props: HeaderProps) {
       cdn_hostname: props.solisConfig.cdn_hostname,
       deployment_environment: props.solisConfig.deployment_environment,
     };
+    window._solis.sidekick = {
+      correlation_id: props.sidekickConfig.correlationId,
+      title: props.sidekickConfig.title,
+      context: props.sidekickConfig.context,
+      insights_enabled: props.sidekickConfig.insights_enabled,
+      chat_enabled: props.sidekickConfig.chat_enabled,
+      reports_enabled: props.sidekickConfig.reports_enabled,
+      tell_me_more_enabled: props.sidekickConfig.tell_me_more_enabled,
+    };
 
     const setAttributeFromEvent = (event: { type: string }) => {
       script?.setAttribute(
@@ -47,7 +56,7 @@ export default function loadSolisScript(props: HeaderProps) {
       );
 
       document.dispatchEvent(
-        new CustomEvent('solis-script-status', {
+        new CustomEvent('sidekick-script-status', {
           detail: { message: event.type },
           bubbles: true,
           composed: true,

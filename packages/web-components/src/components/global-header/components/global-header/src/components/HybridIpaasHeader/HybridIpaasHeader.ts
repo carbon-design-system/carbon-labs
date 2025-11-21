@@ -42,7 +42,8 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: String }) productName = null;
   @property({ type: String }) productKey = '';
   @property({ type: Object }) fetchHeaders = {};
-  @property({ type: Boolean }) solisEnabled = false;
+  @property({ type: Boolean }) solisSidekickEnabled = false;
+  @property({ type: Boolean }) solisSwitcherEnabled = false;
   @property({ type: String }) basePath = '';
   @property({ type: String }) displayName = '';
   @property({ type: String }) userEmail = '';
@@ -146,15 +147,35 @@ export class HybridIpaasHeader extends LitElement {
     return footerLink;
   }
 
-  private initSolisOptions() {
+  private initSidekickOptions() {
     return {
-      isEnabled: true,
+      isEnabled: this.solisSidekickEnabled,
       scriptUrl:
-        'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
-      is_prod: false,
-      cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
-      deployment_environment: solisDeploymentEnvironment['local'],
+        'https://cdn.dev.saas.ibm.com/solis_ui/v1/sidekick/solis-sidekick.es.js',
+      insights_enabled: true,
+      reports_enabled: true,
+      chat_enabled: false,
+      tell_me_more_enabled: false,
     };
+  }
+  private initSolisOptions(forSidekick = false) {
+    if (forSidekick) {
+      return {
+        isEnabled: false,
+        is_prod: false,
+        cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+        deployment_environment: solisDeploymentEnvironment['local'],
+      };
+    } else {
+      return {
+        isEnabled: true,
+        scriptUrl:
+          'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+        is_prod: false,
+        cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+        deployment_environment: solisDeploymentEnvironment['local'],
+      };
+    }
   }
 
   private buildHeaderOptions(baseOptions: HeaderProps): HeaderProps {
@@ -254,7 +275,11 @@ export class HybridIpaasHeader extends LitElement {
       };
     }
 
-    if (this.solisEnabled) {
+    if (this.solisSidekickEnabled) {
+      updatedOptions.solisConfig = this.initSolisOptions(true);
+      updatedOptions.sidekickConfig = this.initSidekickOptions();
+    }
+    if (this.solisSwitcherEnabled) {
       updatedOptions.solisConfig = this.initSolisOptions();
     }
 

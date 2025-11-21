@@ -445,6 +445,20 @@ export const ChatBot: Story = {
 	`,
 };
 
+const sidekickConfig = {
+  isEnabled: true,
+  scriptUrl:
+    'https://cdn.dev.saas.ibm.com/solis_ui/v1/sidekick/solis-sidekick.es.js',
+  correlationId: 'someid',
+  title: 'sometitle',
+  product: 'someproduct',
+  context: 'application',
+  insights_enabled: true,
+  chat_enabled: true,
+  reports_enabled: true,
+  tell_me_more_enabled: true,
+};
+
 const solisConfig = {
   isEnabled: true,
   scriptUrl:
@@ -454,11 +468,12 @@ const solisConfig = {
   deployment_environment: solisDeploymentEnvironment['local'],
 };
 
-export const SolisEnabled: Story = {
+export const WithSolis: Story = {
   render: () => html`
 		<div role="main">
 			<clabs-global-header-apaas .headerProps="${{
         ...headerProps,
+        sidekickConfig: sidekickConfig,
         solisConfig: solisConfig,
       }}"></common-header>
 		</div>

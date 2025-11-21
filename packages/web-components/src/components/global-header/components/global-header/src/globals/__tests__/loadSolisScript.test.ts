@@ -327,6 +327,17 @@ const propsNoSolisConfig: HeaderProps = {
 };
 
 describe('loadSolisScript function', () => {
+  beforeEach(() => {
+    // Clean up any existing solis script and window._solis before each test
+    const existingScript = document.querySelector(
+      'script[src*="solis-switcher"]'
+    );
+    if (existingScript) {
+      existingScript.remove();
+    }
+    delete (window as any)._solis;
+  });
+
   it('should return "loading" when first run', async () => {
     const status = loadSolisScript.default(propsWithSolisConfig);
     expect(status).to.equal('loading');
@@ -335,5 +346,47 @@ describe('loadSolisScript function', () => {
   it('should return "idle" when first run', async () => {
     const status = loadSolisScript.default(propsNoSolisConfig);
     expect(status).to.equal('idle');
+  });
+
+  it('should create window._solis with correct configuration', async () => {
+    // Run the function to load the script
+    loadSolisScript.default(propsWithSolisConfig);
+
+    // Check that window._solis exists
+    expect((window as any)._solis).to.exist;
+
+    // Check that window._solis has the correct properties
+    expect((window as any)._solis.is_prod).to.equal(
+      propsWithSolisConfig.solisConfig?.is_prod
+    );
+    expect((window as any)._solis.cdn_hostname).to.equal(
+      propsWithSolisConfig.solisConfig?.cdn_hostname
+    );
+    expect((window as any)._solis.deployment_environment).to.equal(
+      propsWithSolisConfig.solisConfig?.deployment_environment
+    );
+  });
+
+  it('should not create window._solis when solis is disabled', async () => {
+    // Run the function with solis disabled
+    loadSolisScript.default(propsNoSolisConfig);
+
+    // Check that window._solis does not exist
+    expect((window as any)._solis).to.be.undefined;
+  });
+
+  it('should create script element with correct attributes', async () => {
+    loadSolisScript.default(propsWithSolisConfig);
+
+    const script = document.querySelector(
+      `script[src="${propsWithSolisConfig.solisConfig?.scriptUrl}"]`
+    ) as HTMLScriptElement;
+
+    expect(script).to.exist;
+    expect(script.type).to.equal('module');
+    expect(script.defer).to.be.true;
+    expect(script.async).to.be.true;
+    expect(script.crossOrigin).to.equal('anonymous');
+    expect(script.getAttribute('data-status')).to.equal('loading');
   });
 });

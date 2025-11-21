@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.92.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.91.0...@carbon-labs/web-components@0.92.0) (2025-11-20)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.91.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.90.0...@carbon-labs/web-components@0.91.0) (2025-11-18)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.90.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.89.0...@carbon-labs/web-components@0.90.0) (2025-11-18)
+
+
+### Bug Fixes
+
+* Solis fix ([#919](https://github.com/carbon-design-system/carbon-labs/issues/919)) ([c5a8ca2](https://github.com/carbon-design-system/carbon-labs/commit/c5a8ca23252433ac5acb608beae12e6459c3da9a))
+
+
+
+
+
 # [0.89.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.88.0...@carbon-labs/web-components@0.89.0) (2025-11-13)
 
 

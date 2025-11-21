@@ -13,15 +13,12 @@ import packageJson from '../package.json';
 - **Target library maintainer(s) / PR Reviewer(s):** Matt Chapman, Sarah Hewitt, Allan Hurworth, Rory Mullan
 - **Support channel:** `#carbon-labs`
 
-> 💡 Check our
-> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/global-header)
-> example implementation.
-
-[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/global-header)
-
 ## Overview
 
-Add description of component here.
+This component is an implementation of the Carbon [Global header](https://carbondesignsystem.com/patterns/global-header/) pattern.
+
+It uses the Carbon [UI Shell](https://carbondesignsystem.com/components/UI-shell-header/usage/) component.
+
 
 ## Getting started
 
@@ -30,24 +27,45 @@ Here's a quick example to get you started.
 ### JS (via import)
 
 ```javascript
-import '@carbon-labs/wc-global-header/es/index.js';
+import '@carbon-labs/wc-global-header';
 ```
-
-### Styles
-
-You'll also need to import the theming tokens from `@carbon/styles` either from
-npm or from our CDN helpers. Checkout our Stackblitz example above to see how
-that is implemented.
-
-<Markdown>{`${cdnJs({ components: ['global-header'] }, packageJson)}`}</Markdown>
-<Markdown>{`${cdnCss()}`}</Markdown>
 
 ### HTML
 
-```html
-<clabs-global-header> Global Header </clabs-global-header>
+For the base global header component `clabs-global-header-apaas` you first define your header properties in an object, for example:
+```js
+const headerProps = {
+    brand: {
+    company: 'IBM',
+    product: 'Platform'
+  },
+  noAuthHeaderLinks: [
+    {
+      href: '/login',
+      text: 'Log in',
+      carbonIcon: 'Login',
+      arialLabel: 'Log in'
+    }
+  ]
+}
 ```
 
-### &lt;clabs-global-header&gt; attributes and properties
+This is then passed to the custom element, like this if using the Lit framework:
+```html
+html`<clabs-global-header-apaas .headerProps="${headerProps}"></clabs-global-header-apaas>`
+```
 
-<ArgTypes of="clabs-global-header" />
+Or like this from an Angular app:
+```html
+<clabs-global-header-apaas [headerProps]="headerProps"></clabs-global-header-apaas>
+```
+
+There is also a higher level component called `clabs-global-header-hybrid-ipaas` which wraps the base component. It makes a
+backend call to a route called `/hybrid-ipaas/v1/header/options` and uses the response from that as the `headerProps` into the
+base component. For example:
+```html
+<clabs-global-header-hybrid-ipaas productName="My Product" productKey="productkey"></clabs-global-header-hybrid-ipaas>
+```
+
+As above the wrapper component supports some properties like `productName` so that a basic form of the header can be rendered until the
+backend options call returns.

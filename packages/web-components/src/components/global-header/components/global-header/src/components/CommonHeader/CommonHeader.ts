@@ -95,7 +95,10 @@ export class CommonHeader extends LitElement {
                   }
       }) as EventListener);
     }
-    if (this.headerProps.solisConfig?.isEnabled) {
+    if (
+      this.headerProps.solisConfig &&
+      this.headerProps.solisConfig.isEnabled
+    ) {
       loadSolisScript(this.headerProps);
 
       document.addEventListener('solis-script-status', ((e: CustomEvent) => {
@@ -105,13 +108,6 @@ export class CommonHeader extends LitElement {
           this.headerProps.solisConfig
         ) {
           this.solisScriptLoaded = true;
-          // @ts-ignore - _solis is a global property added by the Solis script
-          window._solis = {
-            is_prod: this.headerProps.solisConfig.is_prod,
-            cdn_hostname: this.headerProps.solisConfig.cdn_hostname,
-            deployment_environment:
-              this.headerProps.solisConfig.deployment_environment,
-          };
         } else if (e.detail?.message && e.detail?.message === 'error') {
           console.error('An error occurred trying to load the solis script.');
         }

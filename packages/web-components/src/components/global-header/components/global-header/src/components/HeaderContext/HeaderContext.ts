@@ -36,7 +36,11 @@ import '../ProfilePopover/ProfilePopover';
 import '../UserProfileImage/UserProfileImage';
 
 import { HeaderContextProps, HeaderContextState } from './HeaderContext.types';
-import { isValidObject, renderCarbonIcon } from '../../globals/utils';
+import {
+  isValidObject,
+  renderCarbonIcon,
+  trackEvent,
+} from '../../globals/utils';
 
 import styles from './_index.scss?inline' assert { type: 'css' };
 
@@ -80,12 +84,27 @@ export class HeaderContext extends LitElement {
   @property({ type: Boolean }) assistMeScriptLoaded = false;
   @property({ type: Boolean }) hasNewNotifications = false;
 
+  // emit an event (does nothing if analytics has not been configured)
+  private _clickEventAnalytics = (label: string) => {
+    trackEvent('UI Interaction', {
+      action: 'clicked',
+      CTA: label,
+      elementId: `common header - ${label}`,
+    });
+  };
+
   _toggleTrialPopup() {
     this.isTrialOpen = !this.isTrialOpen;
+    this._clickEventAnalytics('Trial days left');
   }
 
   _toggleProfilePopup() {
     this.isProfileOpen = !this.isProfileOpen;
+  }
+
+  _toggleAIChat(callback) {
+    callback();
+    this._clickEventAnalytics('Launch Chat');
   }
 
   handleAssistmeToggleClick(e: { preventDefault: () => void }) {
@@ -118,6 +137,8 @@ export class HeaderContext extends LitElement {
     } else {
       assistMeController?.open({ callback });
     }
+
+    this._clickEventAnalytics('Assistance');
   }
 
   renderTrial() {
@@ -224,7 +245,7 @@ export class HeaderContext extends LitElement {
 
   renderChatBot() {
     const { chatBotConfigs } = this.props;
-    if (chatBotConfigs) {
+    if (chatBotConfigs && chatBotConfigs.onClick) {
       return html`
         <cds-custom-header-global-action
           id="${INTEGRATION_AGENT_BUTTON_ID}"
@@ -232,7 +253,7 @@ export class HeaderContext extends LitElement {
           aria-label="Launch Chat"
           tooltipAlignment="center"
           tabindex="${this.isTrialOpen ? -1 : 0}"
-          @click="${chatBotConfigs.onClick}">
+          @click="${() => this._toggleAIChat(chatBotConfigs.onClick)}">
           ${renderCarbonIcon('AiLaunch', 20, 'icon')}
         </cds-custom-header-global-action>
       `;

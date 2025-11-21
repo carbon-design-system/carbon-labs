@@ -340,7 +340,7 @@ describe('loadSidekickScript function', () => {
     beforeEach(() => {
         // Clean up any existing solis script and window._solis before each test
         const existingScript = document.querySelector(
-        'script[src*="solis-switcher"]'
+        'script[src*="solis-sidekick"]'
         );
         if (existingScript) {
             existingScript.remove();
@@ -357,4 +357,58 @@ describe('loadSidekickScript function', () => {
         const status = loadSidekickScript.default(propsNoSidekickConfig);
         expect(status).to.equal('idle');
     });
+
+    it('should create window._solis with correct configuration', async () => {
+        // Run the function to load the script
+        loadSidekickScript.default(propsWithSidekickConfig);
+    
+        // Check that window._solis exists
+        expect((window as any)._solis).to.exist;
+    
+        // Check that window._solis has the correct properties
+        expect((window as any)._solis.is_prod).to.equal(
+          propsWithSidekickConfig.solisConfig?.is_prod
+        );
+        expect((window as any)._solis.cdn_hostname).to.equal(
+          propsWithSidekickConfig.solisConfig?.cdn_hostname
+        );
+        expect((window as any)._solis.deployment_environment).to.equal(
+          propsWithSidekickConfig.solisConfig?.deployment_environment
+        );
+
+        expect((window as any)._solis.sidekick.correlation_id).to.equal(
+          propsWithSidekickConfig.sidekickConfig?.correlationId
+        );
+
+        expect((window as any)._solis.sidekick.title).to.equal(
+          propsWithSidekickConfig.sidekickConfig?.title
+        );
+
+        expect((window as any)._solis.sidekick.insights_enabled).to.equal(
+          propsWithSidekickConfig.sidekickConfig?.insights_enabled
+        );
+      });
+    
+      it('should not create window._solis when sidekick is disabled', async () => {
+        // Run the function with solis disabled
+        loadSidekickScript.default(propsNoSidekickConfig);
+    
+        // Check that window._solis does not exist
+        expect((window as any)._solis).to.be.undefined;
+      });
+    
+      it('should create script element with correct attributes', async () => {
+        loadSidekickScript.default(propsWithSidekickConfig);
+    
+        const script = document.querySelector(
+          `script[src="${propsWithSidekickConfig.sidekickConfig?.scriptUrl}"]`
+        ) as HTMLScriptElement;
+    
+        expect(script).to.exist;
+        expect(script.type).to.equal('module');
+        expect(script.defer).to.be.true;
+        expect(script.async).to.be.true;
+        expect(script.crossOrigin).to.equal('anonymous');
+        expect(script.getAttribute('data-status')).to.equal('loading');
+      });
 });

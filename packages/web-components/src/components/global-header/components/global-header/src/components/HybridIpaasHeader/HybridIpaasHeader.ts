@@ -155,8 +155,8 @@ export class HybridIpaasHeader extends LitElement {
       insights_enabled: true,
       reports_enabled: true,
       chat_enabled: false,
-      tell_me_more_enabled: false
-    }
+      tell_me_more_enabled: false,
+    };
   }
   private initSolisOptions(forSidekick = false) {
     if (forSidekick) {
@@ -276,7 +276,7 @@ export class HybridIpaasHeader extends LitElement {
     }
 
     if (this.sidekickEnabled) {
-      updatedOptions.solisConfig = this.initSolisOptions(true)
+      updatedOptions.solisConfig = this.initSolisOptions(true);
       updatedOptions.sidekickConfig = this.initSidekickOptions();
     }
     if (this.solisEnabled) {

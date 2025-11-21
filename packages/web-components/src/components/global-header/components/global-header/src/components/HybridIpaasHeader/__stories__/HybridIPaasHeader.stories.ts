@@ -174,7 +174,7 @@ export const WithSolis: Story = {
 };
 
 export const WithSidekick: Story = {
-    parameters: {
+  parameters: {
     msw: {
       handlers: [
         http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {

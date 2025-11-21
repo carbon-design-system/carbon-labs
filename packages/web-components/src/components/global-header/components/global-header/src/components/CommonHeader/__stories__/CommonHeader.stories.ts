@@ -456,7 +456,7 @@ const sidekickConfig = {
   insights_enabled: true,
   chat_enabled: true,
   reports_enabled: true,
-  tell_me_more_enabled: true
+  tell_me_more_enabled: true,
 };
 
 const solisConfig = {
@@ -485,7 +485,7 @@ export const SidekickEnabled: Story = {
 			<clabs-global-header-apaas .headerProps="${{
         ...headerProps,
         sidekickConfig: sidekickConfig,
-        solisConfig: solisConfig
+        solisConfig: solisConfig,
       }}"></common-header>
 		</div>
 	`,

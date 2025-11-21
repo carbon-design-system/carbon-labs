@@ -32,23 +32,22 @@ export default function loadSidekickScript(props: HeaderProps) {
     script.crossOrigin = 'anonymous';
     script.setAttribute('data-status', 'loading');
 
-
     document?.head?.appendChild(script);
 
     window._solis = {
-        is_prod: props.solisConfig.is_prod,
-        cdn_hostname: props.solisConfig.cdn_hostname,
-        deployment_environment: props.solisConfig.deployment_environment
-    }
+      is_prod: props.solisConfig.is_prod,
+      cdn_hostname: props.solisConfig.cdn_hostname,
+      deployment_environment: props.solisConfig.deployment_environment,
+    };
     window._solis.sidekick = {
-        correlation_id: props.sidekickConfig.correlationId,
-        title: props.sidekickConfig.title,
-        context: props.sidekickConfig.context,
-        insights_enabled: props.sidekickConfig.insights_enabled,
-        chat_enabled: props.sidekickConfig.chat_enabled,
-        reports_enabled: props.sidekickConfig.reports_enabled,
-        tell_me_more_enabled: props.sidekickConfig.tell_me_more_enabled
-    }
+      correlation_id: props.sidekickConfig.correlationId,
+      title: props.sidekickConfig.title,
+      context: props.sidekickConfig.context,
+      insights_enabled: props.sidekickConfig.insights_enabled,
+      chat_enabled: props.sidekickConfig.chat_enabled,
+      reports_enabled: props.sidekickConfig.reports_enabled,
+      tell_me_more_enabled: props.sidekickConfig.tell_me_more_enabled,
+    };
 
     const setAttributeFromEvent = (event: { type: string }) => {
       script?.setAttribute(

@@ -82,19 +82,24 @@ export class CommonHeader extends LitElement {
         }
       }) as EventListener);
     }
-    if (this.headerProps.sidekickConfig && this.headerProps.sidekickConfig.isEnabled) {
+    if (
+      this.headerProps.sidekickConfig &&
+      this.headerProps.sidekickConfig.isEnabled
+    ) {
       loadSidekickScript(this.headerProps);
 
-      document.addEventListener('sidekick-script-status', ((
-        e: CustomEvent
-      ) => {
-        if (e.detail?.message && e.detail?.message === 'load' && this.headerProps.sidekickConfig) {
+      document.addEventListener('sidekick-script-status', ((e: CustomEvent) => {
+        if (
+          e.detail?.message &&
+          e.detail?.message === 'load' &&
+          this.headerProps.sidekickConfig
+        ) {
           this.sidekickScriptLoaded = true;
         } else if (e.detail?.message && e.detail?.message === 'error') {
           console.error(
             'An error occurred trying to load the sidekick script.'
           );
-                  }
+        }
       }) as EventListener);
     }
     if (

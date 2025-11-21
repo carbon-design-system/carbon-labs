@@ -266,7 +266,7 @@ export type SidekickConfig = {
   chat_enabled?: boolean;
   reports_enabled?: boolean;
   tell_me_more_enabled?: boolean;
-}
+};
 
 export interface HeaderProps {
   brand?: Brand;
@@ -331,7 +331,7 @@ export type SidekickInfo = {
   chat_enabled?: boolean;
   reports_enabled?: boolean;
   tell_me_more_enabled?: boolean;
-}
+};
 
 interface solisWindowConfig {
   is_prod?: boolean;

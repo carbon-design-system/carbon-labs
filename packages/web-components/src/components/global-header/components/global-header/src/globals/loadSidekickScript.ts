@@ -12,10 +12,10 @@ import { HeaderProps } from '../types/Header.types';
 
 export default function loadSidekickScript(props: HeaderProps) {
   const sidekickUrl = props?.sidekickConfig?.scriptUrl;
-  const isSidekickEnabled = props?.sidekickConfig?.isEnabled;
+  const isSolisSidekickEnabled = props?.sidekickConfig?.isEnabled;
 
-  let status = isSidekickEnabled ? 'loading' : 'idle';
-  if (!isSidekickEnabled) {
+  let status = isSolisSidekickEnabled ? 'loading' : 'idle';
+  if (!isSolisSidekickEnabled) {
     return 'idle';
   }
 

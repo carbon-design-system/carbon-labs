@@ -12,10 +12,10 @@ import { HeaderProps } from '../types/Header.types';
 
 export default function loadSolisScript(props: HeaderProps) {
   const solisUrl = props?.solisConfig?.scriptUrl;
-  const isSolisEnabled = props?.solisConfig?.isEnabled;
+  const isSolisSwitcherEnabled = props?.solisConfig?.isEnabled;
 
-  let status = isSolisEnabled ? 'loading' : 'idle';
-  if (!isSolisEnabled) {
+  let status = isSolisSwitcherEnabled ? 'loading' : 'idle';
+  if (!isSolisSwitcherEnabled) {
     return 'idle';
   }
 

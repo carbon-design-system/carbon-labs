@@ -376,7 +376,7 @@ describe('HybridIpaasHeader Component', () => {
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
-        solisEnabled="true"></clabs-global-header-hybrid-ipaas>`
+        solisSwitcherEnabled="true"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',
@@ -401,7 +401,7 @@ describe('HybridIpaasHeader Component', () => {
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
-        sidekickEnabled="true"></clabs-global-header-hybrid-ipaas>`
+        solisSidekickEnabled="true"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',

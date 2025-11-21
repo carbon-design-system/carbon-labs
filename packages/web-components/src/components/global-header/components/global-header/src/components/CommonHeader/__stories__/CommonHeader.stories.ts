@@ -468,18 +468,7 @@ const solisConfig = {
   deployment_environment: solisDeploymentEnvironment['local'],
 };
 
-export const SolisEnabled: Story = {
-  render: () => html`
-		<div role="main">
-			<clabs-global-header-apaas .headerProps="${{
-        ...headerProps,
-        solisConfig: solisConfig,
-      }}"></common-header>
-		</div>
-	`,
-};
-
-export const SidekickEnabled: Story = {
+export const WithSolis: Story = {
   render: () => html`
 		<div role="main">
 			<clabs-global-header-apaas .headerProps="${{

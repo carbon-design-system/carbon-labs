@@ -167,28 +167,9 @@ export const WithSolis: Story = {
       <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
-        solisSwitcherEnabled>
+        solisSwitcherEnabled
+        solisSidekickEnabled>
       </clabs-global-header-hybrid-ipaas>
-    </div>
-  `,
-};
-
-export const WithSidekick: Story = {
-  parameters: {
-    msw: {
-      handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
-          return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
-        }),
-      ],
-    },
-  },
-  render: () => html`
-    <div role="main">
-      <clabs-global-header-hybrid-ipaas
-        productName="App Connect"
-        productKey="appconnect"
-        solisSidekickEnabled></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };

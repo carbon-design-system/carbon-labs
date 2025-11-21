@@ -358,10 +358,10 @@ export class HeaderContext extends LitElement {
           ? html`<div class="${AUTOMATION_HEADER_BASE_CLASS}__divider"></div>`
           : nothing}
         ${this.renderSearch()} ${this.renderNotifications()}
-        ${this.renderChatBot()} ${this.renderSolis()} ${this.renderSidekick()}
+        ${this.renderChatBot()}
         ${!assistMeConfigs ? this.renderHelpMenu() : nothing}
         ${assistMeConfigs?.productId ? this.renderAssistMe() : nothing}
-        ${this.renderProfile()}
+        ${this.renderSidekick()} ${this.renderProfile()} ${this.renderSolis()}
       `;
     } else {
       return html`<clabs-global-header-unauthenticated-context

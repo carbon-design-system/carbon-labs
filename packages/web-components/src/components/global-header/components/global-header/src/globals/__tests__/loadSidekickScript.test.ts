@@ -8,9 +8,10 @@
  */
 
 import { expect } from '@open-wc/testing';
-import * as loadSidekickScript from '../loadSolisScript';
+import * as loadSidekickScript from '../loadSidekickScript';
 import {
-  HeaderProps
+  HeaderProps,
+  solisDeploymentEnvironment
 } from '../../types/Header.types';
 
 const propsWithSidekickConfig: HeaderProps = {
@@ -45,7 +46,17 @@ const propsWithSidekickConfig: HeaderProps = {
       'https://cdn.dev.saas.ibm.com/solis_ui/v1/sidekick/solis-sidekick.es.js',
     correlationId: 'someid',
     title: 'sometitle',
-    product: 'someproduct'
+    product: 'someproduct',
+    insights_enabled: true,
+    chat_enabled: true,
+    reports_enabled: true,
+    tell_me_more_enabled: true
+  },
+  solisConfig: {
+    isEnabled: false,
+    is_prod: false,
+    cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+    deployment_environment: solisDeploymentEnvironment['local']
   },
   switcherConfigs: [
     {
@@ -325,14 +336,25 @@ const propsNoSidekickConfig: HeaderProps = {
   },
 };
 
-describe('loadSolisScript function', () => {
-  it('should return "loading" when first run', async () => {
-    const status = loadSidekickScript.default(propsWithSidekickConfig);
-    expect(status).to.equal('loading');
-  });
+describe('loadSidekickScript function', () => {
+    beforeEach(() => {
+        // Clean up any existing solis script and window._solis before each test
+        const existingScript = document.querySelector(
+        'script[src*="solis-switcher"]'
+        );
+        if (existingScript) {
+            existingScript.remove();
+        }
+        delete (window as any)._solis;
+    });
 
-  it('should return "idle" when first run', async () => {
-    const status = loadSidekickScript.default(propsNoSidekickConfig);
-    expect(status).to.equal('idle');
-  });
+    it('should return "loading" when first run', async () => {
+        const status = loadSidekickScript.default(propsWithSidekickConfig);
+        expect(status).to.equal('loading');
+    });
+
+    it('should return "idle" when first run', async () => {
+        const status = loadSidekickScript.default(propsNoSidekickConfig);
+        expect(status).to.equal('idle');
+    });
 });

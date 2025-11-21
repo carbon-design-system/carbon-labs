@@ -167,7 +167,7 @@ export const WithSolis: Story = {
       <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
-        solisSidekickEnabled>
+        solisSwitcherEnabled>
       </clabs-global-header-hybrid-ipaas>
     </div>
   `,
@@ -188,7 +188,7 @@ export const WithSidekick: Story = {
       <clabs-global-header-hybrid-ipaas
         productName="App Connect"
         productKey="appconnect"
-        solisSidekickEnabled="true"></clabs-global-header-hybrid-ipaas>
+        solisSidekickEnabled></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };

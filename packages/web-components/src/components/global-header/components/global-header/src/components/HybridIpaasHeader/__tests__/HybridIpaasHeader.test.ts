@@ -401,7 +401,7 @@ describe('HybridIpaasHeader Component', () => {
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
-        solisSidekickEnabled="true"></clabs-global-header-hybrid-ipaas>`
+        solisSidekickEnabled></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',

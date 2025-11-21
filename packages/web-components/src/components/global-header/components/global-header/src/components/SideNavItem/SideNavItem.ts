@@ -15,13 +15,16 @@ import { SideNavLink, SideNavMenuItems } from '../../types/Header.types';
 import cx from 'classnames';
 import { AUTOMATION_NAMESPACE_PREFIX } from '../../constant';
 import { customElement, property, state } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import { renderCarbonIcon, trackEvent } from '../../globals/utils';
 import styles from './SideNavItem.scss?inline';
+
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Entries for the left-hand Apps menu
  */
-@customElement('apaas-side-nav-item')
+@customElement(`${clabsPrefix}-global-header-side-nav-item`)
 export class SideNavItem extends LitElement {
   static styles = css`
     ${unsafeCSS(styles)}

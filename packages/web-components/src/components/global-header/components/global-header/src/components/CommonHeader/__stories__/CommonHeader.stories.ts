@@ -15,6 +15,7 @@ import {
   HeaderProps,
   SearchConfigs,
   TrialLinkType,
+  solisDeploymentEnvironment,
 } from '../../../types/Header.types';
 
 const trialDate = new Date();
@@ -59,7 +60,7 @@ const headerProps: HeaderProps = {
   ],
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
@@ -217,7 +218,7 @@ const hybridIPaasHeaderProps = {
   ],
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
@@ -349,7 +350,7 @@ const headerPropsWithHelpLinks: HeaderProps = {
   enableLogs: true,
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
@@ -439,6 +440,26 @@ export const ChatBot: Story = {
 			<clabs-global-header-apaas .headerProps="${{
         ...headerProps,
         chatBotConfigs,
+      }}"></common-header>
+		</div>
+	`,
+};
+
+const solisConfig = {
+  isEnabled: true,
+  scriptUrl:
+    'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+  is_prod: false,
+  cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+  deployment_environment: solisDeploymentEnvironment['local'],
+};
+
+export const SolisEnabled: Story = {
+  render: () => html`
+		<div role="main">
+			<clabs-global-header-apaas .headerProps="${{
+        ...headerProps,
+        solisConfig: solisConfig,
       }}"></common-header>
 		</div>
 	`,

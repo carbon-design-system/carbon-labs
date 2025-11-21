@@ -11,13 +11,14 @@ import { html } from 'lit';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import Popup16 from '@carbon/web-components/es/icons/popup/16.js';
-import Menu24 from '@carbon/web-components/es/icons/menu/16.js';
-import Subtract16 from '@carbon/web-components/es/icons/subtract/16.js';
-import Maximize16 from '@carbon/web-components/es/icons/maximize/16.js';
-import Minimize16 from '@carbon/web-components/es/icons/minimize/16.js';
-import Close16 from '@carbon/web-components/es/icons/close/16.js';
-import Move16 from '@carbon/web-components/es/icons/move/16.js';
+import Popup16 from '@carbon/icons/es/popup/16.js';
+import Menu24 from '@carbon/icons/es/menu/16.js';
+import Subtract16 from '@carbon/icons/es/subtract/16.js';
+import Maximize16 from '@carbon/icons/es/maximize/16.js';
+import Minimize16 from '@carbon/icons/es/minimize/16.js';
+import Close16 from '@carbon/icons/es/close/16.js';
+import Move16 from '@carbon/icons/es/move/16.js';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 import '@carbon/web-components/es/components/overflow-menu/index.js';
 
 import '../../popupElement/popupElement.js';
@@ -134,7 +135,7 @@ export function headerTemplate(customElementClass) {
                               align="right"
                               @keydown="${checkKeyboardEscape}"
                               close-on-activation="${true}">
-                              ${Menu24({
+                              ${iconLoader(Menu24, {
                                 slot: 'icon',
                                 id:
                                   clabsPrefix +
@@ -184,8 +185,8 @@ export function headerTemplate(customElementClass) {
                         @click="${handleMenuToggle}">
                         ${
                           !menuOpened
-                            ? Menu24({ slot: 'icon' })
-                            : Close16({ slot: 'icon' })
+                            ? iconLoader(Menu24, { slot: 'icon' })
+                            : iconLoader(Close16, { slot: 'icon' })
                         }
                         <span slot="tooltip-content">
                           ${
@@ -216,7 +217,7 @@ export function headerTemplate(customElementClass) {
                 @mousedown="${handleHeaderMouseDown}"
                 @keydown="${handleDragAreaKeydown}"
                 @keyup="${handleDragAreaKeyup}">
-                ${Move16({ slot: 'icon' })}
+                ${iconLoader(Move16, { slot: 'icon' })}
                 <span slot="tooltip-content"
                   >${!isDragging
                     ? renderLabel('header-move-start-button')
@@ -295,7 +296,7 @@ export function headerTemplate(customElementClass) {
                                 aria-label="Fullscreen Chat"
                                 align="bottom-right"
                                 @click="${handleMaximize}">
-                                ${Maximize16({ slot: 'icon' })}
+                                ${iconLoader(Maximize16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${renderLabel(
                                     'header-enable-fullscreen'
@@ -313,7 +314,7 @@ export function headerTemplate(customElementClass) {
                                 aria-label="Minimize Chat"
                                 align="bottom-right"
                                 @click="${handleMinimize}">
-                                ${Minimize16({ slot: 'icon' })}
+                                ${iconLoader(Minimize16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${renderLabel(
                                     'header-disable-fullscreen'
@@ -336,7 +337,7 @@ export function headerTemplate(customElementClass) {
                                 size="sm"
                                 aria-label="Dock chat"
                                 @click="${handlePopup}">
-                                ${Subtract16({ slot: 'icon' })}
+                                ${iconLoader(Subtract16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${renderLabel('header-popout-chat')}</span
                                 >
@@ -352,7 +353,7 @@ export function headerTemplate(customElementClass) {
                                 aria-label="Undock Chat"
                                 align="bottom-right"
                                 @click="${handleSubtract}">
-                                ${Popup16({ slot: 'icon' })}
+                                ${iconLoader(Popup16, { slot: 'icon' })}
                                 <span slot="tooltip-content"
                                   >${renderLabel('header-expand-chat')}</span
                                 >
@@ -371,7 +372,7 @@ export function headerTemplate(customElementClass) {
                           label="Close Chat"
                           align="bottom-right"
                           @click="${handleClosed}">
-                          ${Close16({ slot: 'icon' })}
+                          ${iconLoader(Close16, { slot: 'icon' })}
                           <span
                             id="${clabsPrefix}--chat-header-close-label"
                             slot="tooltip-content"

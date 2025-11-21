@@ -14,7 +14,7 @@ import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 interface TextHighlighterProps {
   children?: React.ReactNode;
   kind: string;
-  type: string;
+  type?: string;
   reference?: string;
 }
 

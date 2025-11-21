@@ -37,10 +37,10 @@ export type HelperLinks = {
   onclick?: (e: Event) => void;
 };
 
-export interface MainSectionItem {
+export type MainSectionItem = {
   label: string;
-  text: string;
-}
+  text?: string;
+};
 
 export interface AssistMeConfigs {
   productId?: string;
@@ -280,6 +280,20 @@ export interface HeaderProps {
   chatBotConfigs?: ChatBotConfigs;
   searchConfigs?: SearchConfigs;
   globalActionConfigs?: GlobalActionConfig[];
+  solisConfig?: SolisConfig;
+}
+export enum solisDeploymentEnvironment {
+  'local',
+  'dev',
+  'stage',
+  'prod',
+}
+export interface SolisConfig {
+  isEnabled: boolean;
+  scriptUrl: string;
+  is_prod?: boolean;
+  cdn_hostname: string;
+  deployment_environment: solisDeploymentEnvironment;
 }
 
 export interface NavigationItem {
@@ -293,4 +307,16 @@ export interface EventProps {
   CTA: string;
   elementId: string;
   platformTitle?: string;
+}
+
+interface solisWindowConfig {
+  is_prod?: boolean;
+  cdn_hostname: string;
+  deployment_environment: 'local' | 'dev' | 'stage' | 'prod';
+}
+
+declare global {
+  interface Window {
+    _solis: solisWindowConfig;
+  }
 }

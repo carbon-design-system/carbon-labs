@@ -10,15 +10,18 @@
 
 import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities/es/settings/index.js';
 import '@carbon/web-components/es-custom/components/search/index.js';
 
 import styles from './_index.scss?inline' assert { type: 'css' };
 import { SearchConfigs } from '../../types/Header.types';
 
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Optional search box for the header
  */
-@customElement('apaas-header-search')
+@customElement(`${clabsPrefix}-global-header-search`)
 export class Search extends LitElement {
   static styles = css`
     ${unsafeCSS([styles])}

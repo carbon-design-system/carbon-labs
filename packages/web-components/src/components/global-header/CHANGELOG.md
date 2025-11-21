@@ -3,6 +3,130 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.21.0...@carbon-labs/wc-global-header@0.22.0) (2025-11-20)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.20.0...@carbon-labs/wc-global-header@0.21.0) (2025-11-18)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.19.0...@carbon-labs/wc-global-header@0.20.0) (2025-11-18)
+
+
+### Bug Fixes
+
+* Solis fix ([#919](https://github.com/carbon-design-system/carbon-labs/issues/919)) ([c5a8ca2](https://github.com/carbon-design-system/carbon-labs/commit/c5a8ca23252433ac5acb608beae12e6459c3da9a))
+
+
+
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.18.0...@carbon-labs/wc-global-header@0.19.0) (2025-11-13)
+
+
+### Features
+
+* global header Solis component ([#917](https://github.com/carbon-design-system/carbon-labs/issues/917)) ([b8d7160](https://github.com/carbon-design-system/carbon-labs/commit/b8d71600102510421008df2279cf87d185fb0ffb))
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.17.0...@carbon-labs/wc-global-header@0.18.0) (2025-11-04)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.16.0...@carbon-labs/wc-global-header@0.17.0) (2025-10-30)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.15.0...@carbon-labs/wc-global-header@0.16.0) (2025-10-24)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.14.0...@carbon-labs/wc-global-header@0.15.0) (2025-10-23)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.13.0...@carbon-labs/wc-global-header@0.14.0) (2025-10-22)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.12.0...@carbon-labs/wc-global-header@0.13.0) (2025-10-21)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.11.0...@carbon-labs/wc-global-header@0.12.0) (2025-10-17)
+
+
+### Bug Fixes
+
+* **global-header:** custom build and pin carbon-wc ([#856](https://github.com/carbon-design-system/carbon-labs/issues/856)) ([647edd8](https://github.com/carbon-design-system/carbon-labs/commit/647edd87e8fde6305c65a417aaa1f917f8fcccb6))
+
+
+
+
+
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.10.0...@carbon-labs/wc-global-header@0.11.0) (2025-10-16)
+
+
+### Bug Fixes
+
+* **global-header:** Change header profile footer logout text to 'Log out' ([#852](https://github.com/carbon-design-system/carbon-labs/issues/852)) ([230f8b5](https://github.com/carbon-design-system/carbon-labs/commit/230f8b53a858ec5cc438c5aa5598f41cd036d0be))
+
+
+
+
+
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.9.0...@carbon-labs/wc-global-header@0.10.0) (2025-10-15)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.8.0...@carbon-labs/wc-global-header@0.9.0) (2025-10-15)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
 # [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.7.0...@carbon-labs/wc-global-header@0.8.0) (2025-10-13)
 
 **Note:** Version bump only for package @carbon-labs/wc-global-header

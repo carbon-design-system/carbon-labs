@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@carbon/ibm-products": "latest",
-    "@carbon/react": "^1.89.0",
+    "@carbon/react": "^1.95.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^7.6.1"
@@ -19,7 +19,7 @@
   "devDependencies": {
     "@carbon-labs/react-ui-shell": "latest",
     "@carbon-labs/react-theme-settings": "latest",
-    "@carbon/ibm-products": "^2.68.0",
+    "@carbon/ibm-products": "^2.76.0",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",

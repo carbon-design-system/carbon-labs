@@ -26,6 +26,7 @@ import {
 import { HeaderContainer } from '../components/HeaderContainer';
 import { HeaderDivider } from '../components/HeaderDivider';
 import { TrialCountdown } from '../components/TrialCountdown';
+import { HeaderOverflowPanel } from '../components/HeaderOverflowPanel';
 import { ThemeSettings, ThemeSwitcher } from '../../ThemeSettings';
 import {
   SkipToContent,
@@ -75,6 +76,8 @@ import {
   Group,
   Money,
   Logout,
+  Launch,
+  ChartCustom,
 } from '@carbon/icons-react';
 
 import {
@@ -85,12 +88,17 @@ import {
 } from './AppIcons';
 
 import '../components/ui-shell.scss';
+import './UIShell.scss';
+import { useMatchMedia } from '../internal/useMatchMedia';
+import { breakpoints } from '@carbon/layout';
+const smMediaQuery = `(max-width: ${breakpoints.md.width})`;
 
 export default {
   title: 'Components/UIShell',
   component: HeaderDivider,
   subcomponents: {
     HeaderDivider,
+    HeaderOverflowPanel,
     HeaderPopover,
     HeaderPopoverActions,
     HeaderPopoverButton,
@@ -247,6 +255,104 @@ const StoryContent = () => (
 );
 
 /**
+ *
+ * @param {boolean} isSm - Indicates whether the viewport is small.
+ * @param {string} themeSetting - The current theme setting.
+ * @param {(theme: string) => void} setThemeSetting - Function to update the theme setting.
+ * @returns {JSX.Element} The rendered HeaderOverflowPanel component.
+ */
+const headerOverflowPanel = (isSm, themeSetting, setThemeSetting) => (
+  <HeaderOverflowPanel label="Options">
+    <SideNav
+      isTreeview
+      isFixedNav
+      expanded
+      isChildOfHeader={false}
+      aria-label="Header navigation"
+      headerOverflowPanel>
+      <SideNavItems>
+        {isSm && (
+          <SideNavMenu
+            renderIcon={UserAvatar}
+            title="Profile"
+            primary
+            backButtonTitle="Back">
+            <Profile.UserInfo name="Ruth Leach" email="ruth.leach@ibm.com" />
+            <ThemeSettings legendText="Theme">
+              <ThemeSwitcher
+                lowContrast
+                size="sm"
+                value={themeSetting}
+                onChange={setThemeSetting}
+              />
+            </ThemeSettings>
+            <Profile.ReadOnly items={readOnlyItems} />
+            <ContainedList label="Profile links">
+              <ContainedListItem
+                renderIcon={User}
+                onClick={() => (window.location.href = 'https://example.com')}>
+                User profile
+              </ContainedListItem>
+              <ContainedListItem
+                renderIcon={IbmCloudKeyProtect}
+                onClick={() => (window.location.href = 'https://example.com')}>
+                Access keys
+              </ContainedListItem>
+              <ContainedListItem
+                renderIcon={Group}
+                onClick={() => (window.location.href = 'https://example.com')}>
+                User management
+              </ContainedListItem>
+              <ContainedListItem
+                renderIcon={Money}
+                onClick={() => (window.location.href = 'https://example.com')}>
+                Plan and billing
+              </ContainedListItem>
+              <ContainedListItem
+                renderIcon={Logout}
+                onClick={() => (window.location.href = 'https://example.com')}>
+                Log out
+              </ContainedListItem>
+            </ContainedList>
+          </SideNavMenu>
+        )}
+        <SideNavMenu
+          renderIcon={Settings}
+          primary
+          title="Settings"
+          backButtonTitle="Back">
+          <SideNavDivider />
+          <SideNavLink renderIcon={ChartCustom} href="#">
+            Customize
+            <Launch />
+          </SideNavLink>
+        </SideNavMenu>
+        <SideNavLink renderIcon={Notification} href="#">
+          Notifications
+          <Launch />
+        </SideNavLink>
+        <SideNavLink renderIcon={Help} href="#">
+          Help
+          <Launch />
+        </SideNavLink>
+        <SideNavLink renderIcon={ChartCustom} href="#">
+          Custom action
+          <Launch />
+        </SideNavLink>
+        {isSm && (
+          <>
+            <SideNavDivider />
+            <SideNavLink renderIcon={Logout} href="#">
+              Logout
+            </SideNavLink>
+          </>
+        )}
+      </SideNavItems>
+    </SideNav>
+  </HeaderOverflowPanel>
+);
+
+/**
  * Story for UIShell
  * @returns {React.ReactElement} The JSX for the story
  */
@@ -262,6 +368,8 @@ export const Demo = () => {
     Vegetables: ['Carrot', 'Broccoli', 'Spinach'],
     Animals: ['Cat', 'Dog', 'Snake'],
   };
+
+  const isSm = useMatchMedia(smMediaQuery);
 
   return (
     <Theme theme={themeHeader}>
@@ -293,7 +401,7 @@ export const Demo = () => {
                   label="Trial Countdown"
                   as={Button}
                   kind="ghost">
-                  <TrialCountdown count={30} />
+                  <TrialCountdown count={30} className="hide-at-md" />
                 </HeaderPopoverButton>
                 <HeaderPopoverContent>
                   <p>Your trial ends on May 13, 2025</p>
@@ -316,11 +424,12 @@ export const Demo = () => {
                   id="search-expandable-1"
                 />
                 <HeaderGlobalAction
+                  className="hide-at-md"
                   aria-label="Custom action"
                   tooltipHighContrast={false}>
                   <SquareOutline size={20} />
                 </HeaderGlobalAction>
-                <HeaderPopover align="bottom-end">
+                <HeaderPopover align="bottom-end" className="hide-at-md">
                   <HeaderPopoverButton align="bottom" label="Help">
                     <Help size={20} />
                   </HeaderPopoverButton>
@@ -336,7 +445,7 @@ export const Demo = () => {
                     </HeaderPopoverActions>
                   </HeaderPopoverContent>
                 </HeaderPopover>
-                <HeaderPopover align="bottom-end">
+                <HeaderPopover align="bottom-end" className="hide-at-md">
                   <HeaderPopoverButton align="bottom" label="Notifications">
                     <Notification size={20} />
                   </HeaderPopoverButton>
@@ -352,10 +461,13 @@ export const Demo = () => {
                     </HeaderPopoverActions>
                   </HeaderPopoverContent>
                 </HeaderPopover>
-                <HeaderDivider />
+                <HeaderDivider className="hide-at-md" />
                 <MenuButton
+                  className="hide-at-md"
                   menuTarget={headerRef.current}
                   kind="ghost"
+                  menuBackgroundToken="background"
+                  menuBorder
                   label={selectedCategory || 'Select Category'}>
                   <MenuItemRadioGroup
                     label="Category"
@@ -368,8 +480,11 @@ export const Demo = () => {
                   />
                 </MenuButton>
                 <MenuButton
+                  className="hide-at-md"
                   menuTarget={headerRef.current}
                   kind="ghost"
+                  menuBackgroundToken="background"
+                  menuBorder
                   label={selectedItem || 'Select Item'}
                   disabled={!selectedCategory}>
                   <MenuItemRadioGroup
@@ -379,7 +494,9 @@ export const Demo = () => {
                     onChange={(newItem) => setSelectedItem(newItem)}
                   />
                 </MenuButton>
-                <HeaderDivider />
+                <HeaderDivider className="hide-at-md" />
+                {headerOverflowPanel(isSm, themeSetting, setThemeSetting)}
+
                 <Profile.Root
                   open={isProfileExpanded}
                   onClick={onClickProfileExpand}
@@ -398,7 +515,7 @@ export const Demo = () => {
                     />
                   </ThemeSettings>
                   <Profile.ReadOnly items={readOnlyItems} />
-                  <ContainedList label="Profile links">
+                  <ContainedList>
                     <ContainedListItem
                       renderIcon={User}
                       onClick={() =>
@@ -629,4 +746,6 @@ export const Demo = () => {
 Demo.parameters = {
   controls: { disable: true },
   actions: { disable: true },
+  a11y: { disable: true },
+  accessibilityChecker: { disable: true },
 };

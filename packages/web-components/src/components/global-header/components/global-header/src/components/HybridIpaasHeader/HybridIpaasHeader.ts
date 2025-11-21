@@ -152,24 +152,30 @@ export class HybridIpaasHeader extends LitElement {
       isEnabled: this.sidekickEnabled,
       scriptUrl:
         'https://cdn.dev.saas.ibm.com/solis_ui/v1/sidekick/solis-sidekick.es.js',
-      is_prod: false,
-      cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
-      deployment_environment: solisDeploymentEnvironment['local'],
       insights_enabled: true,
       reports_enabled: true,
       chat_enabled: false,
       tell_me_more_enabled: false
     }
   }
-  private initSolisOptions() {
-    return {
-      isEnabled: true,
-      scriptUrl:
-        'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
-      is_prod: false,
-      cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
-      deployment_environment: solisDeploymentEnvironment['local'],
-    };
+  private initSolisOptions(forSidekick = false) {
+    if (forSidekick) {
+      return {
+        isEnabled: false,
+        is_prod: false,
+        cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+        deployment_environment: solisDeploymentEnvironment['local'],
+      };
+    } else {
+      return {
+        isEnabled: true,
+        scriptUrl:
+          'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+        is_prod: false,
+        cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+        deployment_environment: solisDeploymentEnvironment['local'],
+      };
+    }
   }
 
   private buildHeaderOptions(baseOptions: HeaderProps): HeaderProps {
@@ -270,6 +276,7 @@ export class HybridIpaasHeader extends LitElement {
     }
 
     if (this.sidekickEnabled) {
+      updatedOptions.solisConfig = this.initSolisOptions(true)
       updatedOptions.sidekickConfig = this.initSidekickOptions();
     }
     if (this.solisEnabled) {

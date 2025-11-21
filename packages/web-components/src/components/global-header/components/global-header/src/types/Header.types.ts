@@ -304,7 +304,7 @@ export enum solisDeploymentEnvironment {
 }
 export interface SolisConfig {
   isEnabled: boolean;
-  scriptUrl: string;
+  scriptUrl?: string;
   is_prod?: boolean;
   cdn_hostname: string;
   deployment_environment: solisDeploymentEnvironment;

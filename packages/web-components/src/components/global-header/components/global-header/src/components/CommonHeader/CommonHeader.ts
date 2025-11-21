@@ -55,6 +55,8 @@ export class CommonHeader extends LitElement {
 
   @state()
   sidekickScriptLoaded = false;
+
+  @state()
   solisScriptLoaded = false;
 
   handleNavItemClick = (e: Event) => {
@@ -80,7 +82,7 @@ export class CommonHeader extends LitElement {
         }
       }) as EventListener);
     }
-    if (this.headerProps.sidekickConfig) {
+    if (this.headerProps.sidekickConfig && this.headerProps.sidekickConfig.isEnabled) {
       loadSidekickScript(this.headerProps);
 
       document.addEventListener('sidekick-script-status', ((
@@ -130,7 +132,7 @@ export class CommonHeader extends LitElement {
       useScript(this.headerProps);
     }
     if (
-      this.headerProps.sidekickConfig &&
+      this.headerProps.sidekickConfig?.isEnabled &&
       changedProperties.has('headerProps')
     ) {
       loadSidekickScript(this.headerProps);

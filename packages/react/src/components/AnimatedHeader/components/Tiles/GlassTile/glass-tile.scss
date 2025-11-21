@@ -100,8 +100,13 @@ $prefix: 'clabs--animated-header__glass-tile' !default;
   position: relative;
   z-index: 2;
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
   margin-block-end: $spacing-05;
+}
+
+.#{$prefix}--tag {
+  z-index: 2;
 }
 
 .#{$prefix}--title {

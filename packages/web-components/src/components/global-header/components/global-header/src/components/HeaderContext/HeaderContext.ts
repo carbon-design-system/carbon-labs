@@ -242,13 +242,7 @@ export class HeaderContext extends LitElement {
   renderSidekick() {
     const { sidekickConfig } = this.props;
     if (sidekickConfig?.isEnabled) {
-      return html`
-        <solis-sidekick
-          correlation_id="${sidekickConfig.correlationId}"
-          title="${sidekickConfig.title}"
-          product="${sidekickConfig.product}"
-        />
-      `;
+      return html` <solis-sidekick />`;
     }
   }
   

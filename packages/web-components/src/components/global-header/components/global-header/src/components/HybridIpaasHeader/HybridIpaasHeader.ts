@@ -147,14 +147,18 @@ export class HybridIpaasHeader extends LitElement {
     return footerLink;
   }
 
-  private initSidekickOptions(title, product) {
+  private initSidekickOptions() {
     return {
       isEnabled: this.sidekickEnabled,
       scriptUrl:
         'https://cdn.dev.saas.ibm.com/solis_ui/v1/sidekick/solis-sidekick.es.js',
-      correlationId: 'someId', // TODO
-      title: title,
-      product: product,
+      is_prod: false,
+      cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+      deployment_environment: solisDeploymentEnvironment['local'],
+      insights_enabled: true,
+      reports_enabled: true,
+      chat_enabled: false,
+      tell_me_more_enabled: false
     }
   }
   private initSolisOptions() {
@@ -266,9 +270,7 @@ export class HybridIpaasHeader extends LitElement {
     }
 
     if (this.sidekickEnabled) {
-      const product = baseOptions.brand?.product;
-      const title = updatedOptions.capabilityName?.label;
-      updatedOptions.sidekickConfig = this.initSidekickOptions(product, title);
+      updatedOptions.sidekickConfig = this.initSidekickOptions();
     }
     if (this.SolisEnabled) {
       updatedOptions.solisConfig = this.initSolisOptions();

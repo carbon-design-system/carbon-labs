@@ -258,9 +258,14 @@ export type AnalyticsConfig = {
 export type SidekickConfig = {
   scriptUrl?: string;
   isEnabled: boolean;
-  correlationId: string;
-  title: string;
-  product: string;
+  correlationId?: string;
+  title?: string;
+  product?: string;
+  context?: string;
+  insights_enabled?: boolean;
+  chat_enabled?: boolean;
+  reports_enabled?: boolean;
+  tell_me_more_enabled?: boolean;
 }
 
 export interface HeaderProps {
@@ -318,10 +323,21 @@ export interface EventProps {
   platformTitle?: string;
 }
 
+export type SidekickInfo = {
+  correlation_id?: string;
+  title?: string;
+  context?: string;
+  insights_enabled?: boolean;
+  chat_enabled?: boolean;
+  reports_enabled?: boolean;
+  tell_me_more_enabled?: boolean;
+}
+
 interface solisWindowConfig {
   is_prod?: boolean;
   cdn_hostname: string;
   deployment_environment: 'local' | 'dev' | 'stage' | 'prod';
+  sidekick: SidekickInfo;
 }
 
 declare global {

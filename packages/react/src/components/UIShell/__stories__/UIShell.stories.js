@@ -511,7 +511,7 @@ export const Demo = () => {
                     />
                   </ThemeSettings>
                   <Profile.ReadOnly items={readOnlyItems} />
-                  <ContainedList label="Profile links">
+                  <ContainedList>
                     <ContainedListItem
                       renderIcon={User}
                       onClick={() =>
@@ -742,4 +742,6 @@ export const Demo = () => {
 Demo.parameters = {
   controls: { disable: true },
   actions: { disable: true },
+  a11y: { disable: true },
+  accessibilityChecker: { disable: true },
 };

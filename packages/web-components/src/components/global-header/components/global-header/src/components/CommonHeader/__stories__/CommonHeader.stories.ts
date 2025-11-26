@@ -330,7 +330,6 @@ const hybridIPaasHeaderProps = {
     onClick: () => {
       console.log('notification onclick triggered.');
     },
-    hasNewNotifications: true,
   },
   chatBotConfigs: {
     onClick: () => {},
@@ -484,6 +483,17 @@ export const Notifications: Story = {
   render: () => html`
 		<div role="main">
 			<clabs-global-header-apaas .headerProps="${{
+        ...headerProps,
+        notificationConfigs,
+      }}"></common-header>
+		</div>
+	`,
+};
+
+export const NotificationsNew: Story = {
+  render: () => html`
+		<div role="main">
+			<clabs-global-header-apaas hasNewNotifications .headerProps="${{
         ...headerProps,
         notificationConfigs,
       }}"></common-header>

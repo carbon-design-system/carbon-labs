@@ -1461,7 +1461,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.17.0"
+    "@carbon-labs/utilities": "npm:0.18.0"
     "@carbon/web-components": "npm:^2.41.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
     "@types/highlightjs": "npm:^9"
@@ -1667,7 +1667,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon-labs/utilities@npm:0.17.0, @carbon-labs/utilities@workspace:packages/utilities":
+"@carbon-labs/utilities@npm:0.18.0, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/utilities@workspace:packages/utilities"
   dependencies:
@@ -1702,7 +1702,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.17.0"
+    "@carbon-labs/utilities": "npm:0.18.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:^2.41.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
@@ -1766,7 +1766,7 @@ __metadata:
   resolution: "@carbon-labs/wc-example-button@workspace:packages/web-components/src/components/example-button"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.17.0"
+    "@carbon-labs/utilities": "npm:0.18.0"
     "@carbon/web-components": "npm:^2.41.0"
   languageName: unknown
   linkType: soft
@@ -1791,7 +1791,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.17.0"
+    "@carbon-labs/utilities": "npm:0.18.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:^2.41.0"
     "@ibm/telemetry-js": "npm:^1.10.2"

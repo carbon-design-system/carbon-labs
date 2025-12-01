@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.26.0...@carbon-labs/ai-chat@0.27.0) (2025-12-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency vega to v6 [security] ([#918](https://github.com/carbon-design-system/carbon-labs/issues/918)) ([e1acc5b](https://github.com/carbon-design-system/carbon-labs/commit/e1acc5bf5b7d41c69f4e0cdb3cadcd8797471251))
+
+
+
+
+
 # [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.25.0...@carbon-labs/ai-chat@0.26.0) (2025-10-22)
 
 **Note:** Version bump only for package @carbon-labs/ai-chat

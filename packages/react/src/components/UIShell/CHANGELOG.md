@@ -3,8 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-<<<<<<< HEAD
-=======
 # [0.87.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.86.0...@carbon-labs/react-ui-shell@0.87.0) (2025-11-14)
 
 
@@ -43,7 +41,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
->>>>>>> upstream/main
 # [0.83.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.82.0...@carbon-labs/react-ui-shell@0.83.0) (2025-10-24)
 
 

@@ -15,13 +15,6 @@
 $prefix: 'cds' !default;
 
 // profile
-<<<<<<< HEAD
-
-.#{$prefix}--profile.#{$prefix}--popover--open {
-  background-color: $background;
-}
-=======
->>>>>>> upstream/main
 
 .#{$prefix}--header-overflow-panel .#{$prefix}--toggletip-content,
 .#{$prefix}--profile .#{$prefix}--toggletip-content {

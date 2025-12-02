@@ -1,10 +1,6 @@
 {
   "name": "@carbon-labs/web-components",
-<<<<<<< HEAD
-  "version": "0.83.0",
-=======
   "version": "0.97.0",
->>>>>>> upstream/main
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",

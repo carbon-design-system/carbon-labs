@@ -754,20 +754,12 @@ SideNav.propTypes = {
   expanded: PropTypes.bool,
 
   /**
-<<<<<<< HEAD
-   * If `true`, it means the SideNav is being used inside the HeaderOverflowPanel component for sm/md breakpoints.
-=======
    * Specify whether the `SideNav` is rendered inside a `HeaderOverflowPanel`. When `true`, adjusts the responsive behavior to work correctly within the overflow menu at mobile/tablet breakpoints.
->>>>>>> upstream/main
    */
   headerOverflowPanel: PropTypes.bool,
 
   /**
-<<<<<<< HEAD
-   * If `true`, the overlay will be hidden. Defaults to `false`.
-=======
    * If `true`, the backdrop overlay will be hidden at all breakpoints. By default, the overlay appears behind the `SideNav` on mobile and tablet (below `lg` breakpoint).
->>>>>>> upstream/main
    */
   hideOverlay: PropTypes.bool,
 

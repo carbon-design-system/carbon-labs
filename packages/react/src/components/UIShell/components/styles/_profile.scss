@@ -32,14 +32,10 @@ $prefix: 'cds' !default;
   .clabs--theme-settings {
     padding: $spacing-05;
     border-block-end: convert.to-rem(0.5px) solid $border-subtle;
-<<<<<<< HEAD
-    border-block-start: convert.to-rem(0.5px) solid $border-subtle;
-=======
 
     &:not(:first-child) {
       border-block-start: convert.to-rem(0.5px) solid $border-subtle;
     }
->>>>>>> upstream/main
   }
 }
 

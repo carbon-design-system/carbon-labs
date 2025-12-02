@@ -3,6 +3,139 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<<<<<<< HEAD
+=======
+# [0.97.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.96.0...@carbon-labs/web-components@0.97.0) (2025-12-01)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.96.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.95.0...@carbon-labs/web-components@0.96.0) (2025-12-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency vega to v6 [security] ([#918](https://github.com/carbon-design-system/carbon-labs/issues/918)) ([e1acc5b](https://github.com/carbon-design-system/carbon-labs/commit/e1acc5bf5b7d41c69f4e0cdb3cadcd8797471251))
+
+
+
+
+
+# [0.95.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.94.0...@carbon-labs/web-components@0.95.0) (2025-11-26)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.94.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.93.0...@carbon-labs/web-components@0.94.0) (2025-11-21)
+
+
+### Features
+
+* **global-header:** Add Solis sidekick component to the global header ([#925](https://github.com/carbon-design-system/carbon-labs/issues/925)) ([c26ba03](https://github.com/carbon-design-system/carbon-labs/commit/c26ba037367627e97b03f4450ada14966850a66a))
+
+
+
+
+
+# [0.93.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.92.0...@carbon-labs/web-components@0.93.0) (2025-11-21)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.92.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.91.0...@carbon-labs/web-components@0.92.0) (2025-11-20)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.91.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.90.0...@carbon-labs/web-components@0.91.0) (2025-11-18)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.90.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.89.0...@carbon-labs/web-components@0.90.0) (2025-11-18)
+
+
+### Bug Fixes
+
+* Solis fix ([#919](https://github.com/carbon-design-system/carbon-labs/issues/919)) ([c5a8ca2](https://github.com/carbon-design-system/carbon-labs/commit/c5a8ca23252433ac5acb608beae12e6459c3da9a))
+
+
+
+
+
+# [0.89.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.88.0...@carbon-labs/web-components@0.89.0) (2025-11-13)
+
+
+### Features
+
+* global header Solis component ([#917](https://github.com/carbon-design-system/carbon-labs/issues/917)) ([b8d7160](https://github.com/carbon-design-system/carbon-labs/commit/b8d71600102510421008df2279cf87d185fb0ffb))
+
+
+
+
+
+# [0.88.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.87.0...@carbon-labs/web-components@0.88.0) (2025-11-10)
+
+
+### Features
+
+* **uishell:** update HeaderPopover styles ([#890](https://github.com/carbon-design-system/carbon-labs/issues/890)) ([2543742](https://github.com/carbon-design-system/carbon-labs/commit/254374236689fb8e338b493bd5c4ff1927c7e23d))
+
+
+
+
+
+# [0.87.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.86.0...@carbon-labs/web-components@0.87.0) (2025-11-04)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.86.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.85.0...@carbon-labs/web-components@0.86.0) (2025-10-31)
+
+
+### Features
+
+* **style-picker:** implement loading state ([#888](https://github.com/carbon-design-system/carbon-labs/issues/888)) ([bc536a2](https://github.com/carbon-design-system/carbon-labs/commit/bc536a270893b96fa94d034a70bd69b1a6ec6df2))
+
+
+
+
+
+# [0.85.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.84.0...@carbon-labs/web-components@0.85.0) (2025-10-30)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.84.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.83.0...@carbon-labs/web-components@0.84.0) (2025-10-30)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+>>>>>>> upstream/main
 # [0.83.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.82.0...@carbon-labs/web-components@0.83.0) (2025-10-24)
 
 **Note:** Version bump only for package @carbon-labs/web-components

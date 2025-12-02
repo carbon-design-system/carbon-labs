@@ -19,6 +19,10 @@ import {
   TrialConfigs,
   TrialLinkType,
 } from '../../../types/Header.types';
+import {
+  CUSTOM_EVENT_NAME,
+  CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
+} from '../../../constant';
 import mockHeaderOptions from './headeroptions.json';
 
 /*
@@ -148,6 +152,28 @@ export const WithAIChat: Story = {
   `,
 };
 
+export const WithSolis: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+          return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
+        }),
+      ],
+    },
+  },
+  render: () => html`
+    <div role="main">
+      <clabs-global-header-hybrid-ipaas
+        productName="App Connect"
+        productKey="appconnect"
+        solisSwitcherEnabled
+        solisSidekickEnabled>
+      </clabs-global-header-hybrid-ipaas>
+    </div>
+  `,
+};
+
 const capabilityProfileFooterLinks = [
   {
     text: 'About us',
@@ -263,6 +289,38 @@ export const SearchCallback: Story = {
         productName="App Connect"
         productKey="appconnect"
         .searchConfigs="${searchConfigs}"></clabs-global-header-hybrid-ipaas>
+    </div>
+  `,
+};
+
+const sendRefresh = () => {
+  mockHeaderOptions.brand.product = 'Mock Product';
+  document.dispatchEvent(
+    new CustomEvent(CUSTOM_EVENT_NAME, {
+      detail: CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
+    })
+  );
+};
+
+export const RefreshOptions: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+          return HttpResponse.json(mockHeaderOptions);
+        }),
+      ],
+    },
+  },
+  render: () => html`
+    <div role="main">
+      <clabs-global-header-hybrid-ipaas
+        productKey="mycloud"
+        productVersion="2.3.4.5"></clabs-global-header-hybrid-ipaas>
+      <br />
+      <br />
+      <br />
+      <button @click="${sendRefresh}">Refresh header options</button>
     </div>
   `,
 };

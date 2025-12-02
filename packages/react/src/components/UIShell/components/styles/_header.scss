@@ -5,12 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '@carbon/styles/scss/spacing' as *;
-@use '@carbon/styles/scss/theme' as *;
-@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/motion' as *;
 @use '@carbon/react/scss/utilities/convert' as convert;
-@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
-@use '@carbon/styles/scss/breakpoint' as *;
+@use '@carbon/react/scss/utilities/custom-property' as custom-property;
+@use '@carbon/react/scss/utilities/z-index' as *;
+@use '@carbon/react/scss/breakpoint' as *;
 
 $prefix: 'cds' !default;
 
@@ -48,7 +49,24 @@ $prefix: 'cds' !default;
 
 .#{$prefix}--header-action.#{$prefix}--popover--open
   .#{$prefix}--header-action__button {
-  background-color: $layer;
+  z-index: z('header') + 2;
+  background-color: $background;
+  border-inline-end: 1px solid $border-subtle;
+  border-inline-start: 1px solid $border-subtle;
+}
+
+.#{$prefix}--header-action.#{$prefix}--popover--border
+  > .#{$prefix}--popover
+  > .#{$prefix}--popover-content {
+  border: 1px solid $border-subtle;
+  border-block-start: none;
+  outline: none;
+}
+
+.#{$prefix}--popover--border.#{$prefix}--header-action
+  .#{$prefix}--tooltip
+  .#{$prefix}--tooltip-content {
+  outline: none;
 }
 
 .#{$prefix}--header-action .#{$prefix}--toggletip-content {

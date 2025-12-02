@@ -255,6 +255,19 @@ export type AnalyticsConfig = {
   commonProperties?: CommonAnalyticsProperties;
 };
 
+export type SidekickConfig = {
+  scriptUrl?: string;
+  isEnabled: boolean;
+  correlationId?: string;
+  title?: string;
+  product?: string;
+  context?: string;
+  insights_enabled?: boolean;
+  chat_enabled?: boolean;
+  reports_enabled?: boolean;
+  tell_me_more_enabled?: boolean;
+};
+
 export interface HeaderProps {
   brand?: Brand;
   capabilityName?: { label: string };
@@ -280,6 +293,21 @@ export interface HeaderProps {
   chatBotConfigs?: ChatBotConfigs;
   searchConfigs?: SearchConfigs;
   globalActionConfigs?: GlobalActionConfig[];
+  sidekickConfig?: SidekickConfig;
+  solisConfig?: SolisConfig;
+}
+export enum solisDeploymentEnvironment {
+  'local',
+  'dev',
+  'stage',
+  'prod',
+}
+export interface SolisConfig {
+  isEnabled: boolean;
+  scriptUrl?: string;
+  is_prod?: boolean;
+  cdn_hostname: string;
+  deployment_environment: solisDeploymentEnvironment;
 }
 
 export interface NavigationItem {
@@ -293,4 +321,27 @@ export interface EventProps {
   CTA: string;
   elementId: string;
   platformTitle?: string;
+}
+
+export type SidekickInfo = {
+  correlation_id?: string;
+  title?: string;
+  context?: string;
+  insights_enabled?: boolean;
+  chat_enabled?: boolean;
+  reports_enabled?: boolean;
+  tell_me_more_enabled?: boolean;
+};
+
+interface solisWindowConfig {
+  is_prod?: boolean;
+  cdn_hostname: string;
+  deployment_environment: 'local' | 'dev' | 'stage' | 'prod';
+  sidekick: SidekickInfo;
+}
+
+declare global {
+  interface Window {
+    _solis: solisWindowConfig;
+  }
 }

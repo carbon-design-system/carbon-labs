@@ -13,14 +13,14 @@ jobs:
     if: github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           fetch-depth: '0'
       - uses: fkirc/skip-duplicate-actions@v5.3.1
         with:
           github_token: ${{ github.token }}
       - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '18.x'
           cache: 'yarn'

@@ -1,6 +1,10 @@
 {
   "name": "@carbon-labs/react-ui-shell",
+<<<<<<< HEAD
   "version": "0.83.0",
+=======
+  "version": "0.87.0",
+>>>>>>> upstream/main
   "publishConfig": {
     "access": "public",
     "provenance": true

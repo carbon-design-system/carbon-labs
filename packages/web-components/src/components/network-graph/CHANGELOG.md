@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-network-graph@0.21.0...@carbon-labs/wc-network-graph@0.22.0) (2025-12-01)
+
+**Note:** Version bump only for package @carbon-labs/wc-network-graph
+
+
+
+
+
 # [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-network-graph@0.20.0...@carbon-labs/wc-network-graph@0.21.0) (2025-10-22)
 
 **Note:** Version bump only for package @carbon-labs/wc-network-graph

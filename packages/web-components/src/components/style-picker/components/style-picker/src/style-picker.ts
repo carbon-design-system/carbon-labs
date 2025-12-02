@@ -47,6 +47,27 @@ class StylePicker extends LitElement {
   }
 
   /**
+   * Handle clicks on slotted trigger elements.
+   * @param {Event} event Event.
+   */
+  private _handleTriggerClick(event: Event) {
+    const slot = this.shadowRoot?.querySelector(
+      'slot[name="trigger"]'
+    ) as HTMLSlotElement;
+    const slottedElements = slot?.assignedElements() || [];
+    
+    // Check if the click target is within the slotted trigger elements
+    const clickedTrigger = slottedElements.some((el) =>
+      el.contains(event.target as Node)
+    );
+
+    if (clickedTrigger) {
+      event.stopPropagation();
+      this.open = !this.open;
+    }
+  }
+
+  /**
    * Close the popover if the click is outside of the style picker.
    * @param {Event} event Event.
    */
@@ -64,6 +85,7 @@ class StylePicker extends LitElement {
   constructor() {
     super();
 
+    this._handleTriggerClick = this._handleTriggerClick.bind(this);
     this._handleOutsideClick = this._handleOutsideClick.bind(this);
   }
 
@@ -72,6 +94,7 @@ class StylePicker extends LitElement {
    */
   connectedCallback() {
     super.connectedCallback();
+    document.addEventListener('click', this._handleTriggerClick, true);
     document.addEventListener('click', this._handleOutsideClick);
   }
 
@@ -79,6 +102,7 @@ class StylePicker extends LitElement {
    * Disconnected callback lifecycle method.
    */
   disconnectedCallback() {
+    document.removeEventListener('click', this._handleTriggerClick, true);
     document.removeEventListener('click', this._handleOutsideClick);
   }
 

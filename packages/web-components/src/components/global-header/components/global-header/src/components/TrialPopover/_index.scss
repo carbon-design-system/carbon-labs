@@ -40,39 +40,6 @@
 
 .automation-global-header__tooltip-links {
   margin-block-end: 1rem;
-
-  .automation-global-header__tooltip-link {
-    display: block;
-    padding: 6px 15px;
-    color: $blue-40;
-    margin-block-end: $spacing-02;
-    margin-inline-start: calc(-1 * $spacing-05);
-
-    svg {
-      fill: $blue-40;
-    }
-  }
-
-  .automation-global-header__tooltip-link:hover {
-    background-color: #00000000;
-    text-decoration: underline;
-  }
-}
-
-.automation-global-header__trial-button {
-  display: inline-block;
-
-  .buttons {
-    display: flex;
-    padding: 6px 15px;
-    background: $blue-60;
-    color: #ffffff;
-  }
-
-  .button-icon {
-    display: flex;
-    margin-inline-start: 20px;
-  }
 }
 
 .automation-global-header__trial-button:hover {

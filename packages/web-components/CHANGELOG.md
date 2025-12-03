@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.98.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.97.0...@carbon-labs/web-components@0.98.0) (2025-12-03)
+
+
+### Features
+
+* **global-header:** trial analytics ([#934](https://github.com/carbon-design-system/carbon-labs/issues/934)) ([12cc5b3](https://github.com/carbon-design-system/carbon-labs/commit/12cc5b36d1f0354d11e035b476784f6d8087890f))
+
+
+
+
+
 # [0.97.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.96.0...@carbon-labs/web-components@0.97.0) (2025-12-01)
 
 **Note:** Version bump only for package @carbon-labs/web-components

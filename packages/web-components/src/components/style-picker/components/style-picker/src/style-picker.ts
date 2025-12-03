@@ -9,7 +9,7 @@
 
 import { LitElement, PropertyValues } from 'lit';
 import { provide } from '@lit/context';
-import { property, state } from 'lit/decorators.js';
+import { property, query, state } from 'lit/decorators.js';
 // @ts-ignore
 import styles from './style-picker.scss?inline';
 import {
@@ -24,6 +24,8 @@ import CLABSStylePicker from '../style-picker';
  */
 class StylePicker extends LitElement {
   static styles = styles;
+
+  @query('slot[name="trigger"]') triggerSlot;
 
   /**
    * Dispatch an event when closing the style-picker.
@@ -51,19 +53,15 @@ class StylePicker extends LitElement {
    * @param {Event} event Event.
    */
   private _handleTriggerClick(event: Event) {
-    const slot = this.shadowRoot?.querySelector(
-      'slot[name="trigger"]'
-    ) as HTMLSlotElement;
-    const slottedElements = slot?.assignedElements() || [];
-    
-    // Check if the click target is within the slotted trigger elements
-    const clickedTrigger = slottedElements.some((el) =>
-      el.contains(event.target as Node)
-    );
+    const slottedElements = this.triggerSlot?.assignedElements() || [];
 
-    if (clickedTrigger) {
-      event.stopPropagation();
-      this.open = !this.open;
+    // Check if the click target is within the slotted trigger elements
+    for (const element of slottedElements) {
+      if (element.contains(event.target as Node)) {
+        event.stopPropagation();
+        this.open = !this.open;
+        return;
+      }
     }
   }
 

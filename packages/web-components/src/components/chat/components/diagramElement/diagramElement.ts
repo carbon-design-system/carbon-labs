@@ -8,7 +8,7 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import diagramElement from './src/diagramElement.js';
 import { diagramElementTemplate } from './src/diagramElement.template.js';
 

@@ -15,6 +15,7 @@ import {
   CUSTOM_EVENT_NAME,
   CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
   INITIAL_AUTOMATION_HEADER_PROPS,
+  SOLIS_CDN_HOSTNAMES
 } from '../../constant';
 import {
   GlobalActionConfig,
@@ -44,6 +45,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Object }) fetchHeaders = {};
   @property({ type: Boolean }) solisSidekickEnabled = false;
   @property({ type: Boolean }) solisSwitcherEnabled = false;
+  @property({ type: String }) solisEnvironment = 'local';
   @property({ type: String }) basePath = '';
   @property({ type: String }) displayName = '';
   @property({ type: String }) userEmail = '';
@@ -147,33 +149,35 @@ export class HybridIpaasHeader extends LitElement {
     return footerLink;
   }
 
-  private initSidekickOptions() {
+  private initSidekickOptions(env = 'local') {
     return {
       isEnabled: this.solisSidekickEnabled,
       scriptUrl:
-        'https://cdn.dev.saas.ibm.com/solis_ui/v1/sidekick/solis-sidekick.es.js',
+        SOLIS_CDN_HOSTNAMES[env] + '/sidekick/solis-sidekick.es.js',
       insights_enabled: true,
       reports_enabled: true,
       chat_enabled: false,
       tell_me_more_enabled: false,
     };
   }
-  private initSolisOptions(forSidekick = false) {
+  private initSolisOptions(env = 'local', forSidekick = false) {
     if (forSidekick) {
       return {
         isEnabled: false,
-        is_prod: false,
-        cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
-        deployment_environment: solisDeploymentEnvironment['local'],
+        is_prod: env === 'prod',
+        cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
+        deployment_environment: solisDeploymentEnvironment[env] || 'local',
+        product_id: 'ipaas'
       };
     } else {
       return {
         isEnabled: true,
         scriptUrl:
-          'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
-        is_prod: false,
-        cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
-        deployment_environment: solisDeploymentEnvironment['local'],
+          SOLIS_CDN_HOSTNAMES[env] + '/switcher/solis-switcher.es.js',
+        is_prod: env === 'prod',
+        cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
+        deployment_environment: solisDeploymentEnvironment[env] || 'local',
+        product_id: 'ipaas'
       };
     }
   }
@@ -276,11 +280,11 @@ export class HybridIpaasHeader extends LitElement {
     }
 
     if (this.solisSidekickEnabled) {
-      updatedOptions.solisConfig = this.initSolisOptions(true);
-      updatedOptions.sidekickConfig = this.initSidekickOptions();
+      updatedOptions.solisConfig = this.initSolisOptions(this.solisEnvironment, true);
+      updatedOptions.sidekickConfig = this.initSidekickOptions(this.solisEnvironment);
     }
     if (this.solisSwitcherEnabled) {
-      updatedOptions.solisConfig = this.initSolisOptions();
+      updatedOptions.solisConfig = this.initSolisOptions(this.solisEnvironment);
     }
 
     if (

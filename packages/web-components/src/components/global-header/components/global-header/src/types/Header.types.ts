@@ -297,17 +297,19 @@ export interface HeaderProps {
   solisConfig?: SolisConfig;
 }
 export enum solisDeploymentEnvironment {
-  'local',
-  'dev',
-  'stage',
-  'prod',
+  local = 'local',
+  dev = 'dev',
+  stage = 'stage',
+  prod = 'prod'
 }
+
 export interface SolisConfig {
   isEnabled: boolean;
   scriptUrl?: string;
   is_prod?: boolean;
   cdn_hostname: string;
   deployment_environment: solisDeploymentEnvironment;
+  product_id: string;
 }
 
 export interface NavigationItem {
@@ -336,8 +338,9 @@ export type SidekickInfo = {
 interface solisWindowConfig {
   is_prod?: boolean;
   cdn_hostname: string;
-  deployment_environment: 'local' | 'dev' | 'stage' | 'prod';
-  sidekick: SidekickInfo;
+  deployment_environment: solisDeploymentEnvironment;
+  sidekick?: SidekickInfo;
+  product_id: string;
 }
 
 declare global {

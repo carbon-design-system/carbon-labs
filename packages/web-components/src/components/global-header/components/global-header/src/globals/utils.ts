@@ -24,6 +24,7 @@ import {
   Login16,
   Logout16,
   Notification20,
+  NotificationNew20,
   RequestQuote16,
   Settings16,
   Share16,
@@ -70,6 +71,7 @@ export const renderCarbonIcon = (
     Login16,
     Logout16,
     Notification20,
+    NotificationNew20,
     RequestQuote16,
     Settings16,
     Share16,
@@ -122,6 +124,7 @@ export function getAssistMeUrl(environment: string) {
 }
 
 export const trackEvent = (eventName: string, props: EventProps) => {
+  // console.log('trackEvent', eventName, props) // For testing purposes
   const analytics =
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (window as any)?.bluemixAnalytics;

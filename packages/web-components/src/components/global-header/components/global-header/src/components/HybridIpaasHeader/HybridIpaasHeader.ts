@@ -8,17 +8,25 @@
  */
 /* eslint jsdoc/require-jsdoc: 0 */
 
-import { LitElement, html } from 'lit';
+import { css, LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities/es/settings/index.js';
-import { INITIAL_AUTOMATION_HEADER_PROPS } from '../../constant';
+import {
+  CUSTOM_EVENT_NAME,
+  CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
+  INITIAL_AUTOMATION_HEADER_PROPS,
+} from '../../constant';
 import {
   GlobalActionConfig,
   HeaderProps,
+  MainSectionItem,
   ProfileFooterLinks,
   SearchConfigs,
+  solisDeploymentEnvironment,
 } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
+
+import styles from '../../index.scss?inline';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -27,9 +35,15 @@ const { stablePrefix: clabsPrefix } = settings;
  */
 @customElement(`${clabsPrefix}-global-header-hybrid-ipaas`)
 export class HybridIpaasHeader extends LitElement {
+  static styles = css`
+    ${unsafeCSS(styles)}
+  `;
+
   @property({ type: String }) productName = null;
   @property({ type: String }) productKey = '';
   @property({ type: Object }) fetchHeaders = {};
+  @property({ type: Boolean }) solisSidekickEnabled = false;
+  @property({ type: Boolean }) solisSwitcherEnabled = false;
   @property({ type: String }) basePath = '';
   @property({ type: String }) displayName = '';
   @property({ type: String }) userEmail = '';
@@ -48,6 +62,31 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
   @state()
   headerOptions: HeaderProps = { ...INITIAL_AUTOMATION_HEADER_PROPS };
+
+  constructor() {
+    super();
+    this._customEventListener = this._customEventListener.bind(this);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    document.addEventListener(CUSTOM_EVENT_NAME, this._customEventListener);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    document.removeEventListener(CUSTOM_EVENT_NAME, this._customEventListener);
+  }
+
+  // reload the header options whenever the custom event is received
+  private _customEventListener(evt: Event): void {
+    if (
+      evt instanceof CustomEvent &&
+      (evt as CustomEvent).detail === CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS
+    ) {
+      this.initializeHeaderOptions();
+    }
+  }
 
   firstUpdated(): void {
     if (!this.productKey) {
@@ -94,7 +133,7 @@ export class HybridIpaasHeader extends LitElement {
 
   private initLogoutLink() {
     const footerLink: ProfileFooterLinks = {
-      text: 'Logout',
+      text: 'Log out',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
     };
@@ -108,15 +147,51 @@ export class HybridIpaasHeader extends LitElement {
     return footerLink;
   }
 
+  private initSidekickOptions() {
+    return {
+      isEnabled: this.solisSidekickEnabled,
+      scriptUrl:
+        'https://cdn.dev.saas.ibm.com/solis_ui/v1/sidekick/solis-sidekick.es.js',
+      insights_enabled: true,
+      reports_enabled: true,
+      chat_enabled: false,
+      tell_me_more_enabled: false,
+    };
+  }
+  private initSolisOptions(forSidekick = false) {
+    if (forSidekick) {
+      return {
+        isEnabled: false,
+        is_prod: false,
+        cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+        deployment_environment: solisDeploymentEnvironment['local'],
+      };
+    } else {
+      return {
+        isEnabled: true,
+        scriptUrl:
+          'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+        is_prod: false,
+        cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+        deployment_environment: solisDeploymentEnvironment['local'],
+      };
+    }
+  }
+
   private buildHeaderOptions(baseOptions: HeaderProps): HeaderProps {
     const overrideProfile = {
       email: this.userEmail,
       displayName: this.displayName,
     };
 
-    const mainSectionItems = [];
+    const mainSectionItems: Array<MainSectionItem> = [];
     if (this.productName) {
       mainSectionItems.push({ label: 'Product', text: this.productName });
+    } else {
+      mainSectionItems.push({
+        label: 'Product',
+        text: baseOptions?.brand?.product,
+      });
     }
     if (this.productVersion) {
       mainSectionItems.push({ label: 'Version', text: this.productVersion });
@@ -136,7 +211,7 @@ export class HybridIpaasHeader extends LitElement {
     };
 
     const logoutIndex = baseOptions.profileFooterLinks?.findIndex(
-      (link) => link.text.toLowerCase() === 'logout'
+      (link) => link.text.toLowerCase() === 'log out'
     );
     if (logoutIndex !== undefined && logoutIndex > -1) {
       baseOptions.profileFooterLinks?.splice(
@@ -200,6 +275,14 @@ export class HybridIpaasHeader extends LitElement {
       };
     }
 
+    if (this.solisSidekickEnabled) {
+      updatedOptions.solisConfig = this.initSolisOptions(true);
+      updatedOptions.sidekickConfig = this.initSidekickOptions();
+    }
+    if (this.solisSwitcherEnabled) {
+      updatedOptions.solisConfig = this.initSolisOptions();
+    }
+
     if (
       this.capabilityProfileFooterLinks &&
       this.capabilityProfileFooterLinks.length > 0
@@ -216,7 +299,6 @@ export class HybridIpaasHeader extends LitElement {
     ) {
       updatedOptions.globalActionConfigs = [...this.capabilityGlobalActions];
     }
-
     return updatedOptions;
   }
 

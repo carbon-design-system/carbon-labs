@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '@carbon/styles/scss/utilities/convert' as convert;
-@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
-@use '@carbon/styles/scss/utilities/button-reset' as button-reset;
-@use '@carbon/styles/scss/utilities/focus-outline' as *;
-@use '@carbon/styles/scss/breakpoint' as *;
-@use '@carbon/styles/scss/theme' as *;
-@use '@carbon/styles/scss/motion' as *;
-@use '@carbon/styles/scss/type' as *;
-@use '@carbon/styles/scss/utilities/z-index' as *;
+@use '@carbon/react/scss/utilities/convert' as convert;
+@use '@carbon/react/scss/utilities/custom-property' as custom-property;
+@use '@carbon/react/scss/utilities/button-reset' as button-reset;
+@use '@carbon/react/scss/utilities/focus-outline' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/motion' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/utilities/z-index' as *;
 @use '@carbon/styles/scss/components/ui-shell/mixins' as *;
 @use '@carbon/styles/scss/components/ui-shell/functions' as *;
-@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/react/scss/spacing' as *;
 
 $prefix: 'cds' !default;
 
@@ -133,7 +133,7 @@ div:has(.#{$prefix}--header)
       block-size: $spacing-08;
     }
 
-    .#{$prefix}--side-nav__icon {
+    .#{$prefix}--side-nav__menu-secondary-wrapper .#{$prefix}--side-nav__icon {
       margin-inline-end: convert.to-rem(14px);
     }
 

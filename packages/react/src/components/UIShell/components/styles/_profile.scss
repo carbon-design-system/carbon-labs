@@ -5,38 +5,42 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '@carbon/styles/scss/spacing' as *;
-@use '@carbon/styles/scss/type' as *;
-@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/theme' as *;
 @use '@carbon/react/scss/utilities/convert' as convert;
-@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
+@use '@carbon/react/scss/utilities/custom-property' as custom-property;
 @use '@carbon/ibm-products/scss/components/UserAvatar';
 
 $prefix: 'cds' !default;
 
 // profile
-.#{$prefix}--profile.#{$prefix}--popover--open {
-  background-color: $background;
-}
 
+.#{$prefix}--header-overflow-panel .#{$prefix}--toggletip-content,
 .#{$prefix}--profile .#{$prefix}--toggletip-content {
   padding: 0;
-  background-color: $background;
-  border-block-end: 1px solid $border-subtle;
-  border-inline-start: 1px solid $border-subtle;
   gap: 0;
   inline-size: convert.to-rem(256px);
   max-block-size: 100vh;
   overflow-y: auto;
+}
 
-  > * {
+.#{$prefix}--header-overflow-panel,
+.#{$prefix}--profile {
+  .#{$prefix}--profile-user-info,
+  .#{$prefix}--profile-read-only,
+  .clabs--theme-settings {
     padding: $spacing-05;
-    outline: convert.to-rem(0.5px) solid $border-subtle;
+    border-block-end: convert.to-rem(0.5px) solid $border-subtle;
+
+    &:not(:first-child) {
+      border-block-start: convert.to-rem(0.5px) solid $border-subtle;
+    }
   }
 }
 
 // user-info
-.#{$prefix}--profile .#{$prefix}--profile-user-info {
+.#{$prefix}--profile-user-info {
   display: flex;
 }
 
@@ -73,9 +77,4 @@ $prefix: 'cds' !default;
 // contained-list links
 .#{$prefix}--header-action__content .#{$prefix}--contained-list--on-page {
   padding: 0;
-}
-
-// TODO: remove when https://github.com/carbon-design-system/carbon/pull/19813 is released
-.#{$prefix}--header-action__content .#{$prefix}--contained-list__header {
-  display: none;
 }

@@ -1,0 +1,79 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as HeaderOverflowPanelStories from './HeaderOverflowPanel.stories';
+
+<Meta isTemplate />
+
+# HeaderOverflowPanel
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Component API](#component-api)
+
+## Overview
+
+The `HeaderOverflowPanel` component uses the overflow icon in the header to
+display a panel with navigation options. It can be used to provide quick access
+to a set of related actions or links, or to display additional information or
+settings for sm and md breakpoints.
+
+```jsx
+import {
+  HeaderOverflowPanel,
+  SideNav,
+  SideNavItems,
+  SideNavMenu,
+  SideNavLink,
+} from '@carbon-labs/react-ui-shell';
+import {
+  Settings,
+  ChartCustom,
+  Notification,
+  Help,
+  Logout,
+  Launch
+} from '@carbon/icons-react';
+
+<HeaderOverflowPanel>
+  <SideNav
+    isTreeview
+    isFixedNav
+    expanded
+    isChildOfHeader={false}
+    aria-label="Header navigation"
+    headerOverflowPanel>
+    <SideNavItems>
+      <SideNavMenu
+        renderIcon={Settings}
+        primary
+        title="Settings"
+        backButtonTitle="Back">
+        <SideNavLink renderIcon={ChartCustom} href="#">
+          Customize
+          <Launch />
+        </SideNavLink>
+      </SideNavMenu>
+      <SideNavLink renderIcon={Notification} href="#">
+        Notifications
+        <Launch />
+      </SideNavLink>
+      <SideNavLink renderIcon={Help} href="#">
+        Help
+        <Launch />
+      </SideNavLink>
+      <SideNavLink renderIcon={Help} href="#">
+        Custom action
+        <Launch />
+      </SideNavLink>
+      <SideNavDivider />
+      <SideNavLink renderIcon={Logout} href="#">
+        Logout
+      </SideNavLink>
+    </SideNavItems>
+  </SideNav>
+</HeaderOverflowPanel>;
+```
+
+## Component API
+
+<ArgTypes />

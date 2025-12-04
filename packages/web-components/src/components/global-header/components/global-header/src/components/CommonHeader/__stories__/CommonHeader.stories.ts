@@ -15,6 +15,7 @@ import {
   HeaderProps,
   SearchConfigs,
   TrialLinkType,
+  solisDeploymentEnvironment,
 } from '../../../types/Header.types';
 
 const trialDate = new Date();
@@ -59,7 +60,7 @@ const headerProps: HeaderProps = {
   ],
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
@@ -217,7 +218,7 @@ const hybridIPaasHeaderProps = {
   ],
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
@@ -329,7 +330,6 @@ const hybridIPaasHeaderProps = {
     onClick: () => {
       console.log('notification onclick triggered.');
     },
-    hasNewNotifications: true,
   },
   chatBotConfigs: {
     onClick: () => {},
@@ -349,7 +349,7 @@ const headerPropsWithHelpLinks: HeaderProps = {
   enableLogs: true,
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
@@ -444,10 +444,56 @@ export const ChatBot: Story = {
 	`,
 };
 
+const sidekickConfig = {
+  isEnabled: true,
+  scriptUrl:
+    'https://cdn.dev.saas.ibm.com/solis_ui/v1/sidekick/solis-sidekick.es.js',
+  correlationId: 'someid',
+  title: 'sometitle',
+  product: 'someproduct',
+  context: 'application',
+  insights_enabled: true,
+  chat_enabled: true,
+  reports_enabled: true,
+  tell_me_more_enabled: true,
+};
+
+const solisConfig = {
+  isEnabled: true,
+  scriptUrl:
+    'https://cdn.dev.saas.ibm.com/solis_ui/v1/switcher/solis-switcher.es.js',
+  is_prod: false,
+  cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
+  deployment_environment: solisDeploymentEnvironment['local'],
+};
+
+export const WithSolis: Story = {
+  render: () => html`
+		<div role="main">
+			<clabs-global-header-apaas .headerProps="${{
+        ...headerProps,
+        sidekickConfig: sidekickConfig,
+        solisConfig: solisConfig,
+      }}"></common-header>
+		</div>
+	`,
+};
+
 export const Notifications: Story = {
   render: () => html`
 		<div role="main">
 			<clabs-global-header-apaas .headerProps="${{
+        ...headerProps,
+        notificationConfigs,
+      }}"></common-header>
+		</div>
+	`,
+};
+
+export const NotificationsNew: Story = {
+  render: () => html`
+		<div role="main">
+			<clabs-global-header-apaas hasNewNotifications .headerProps="${{
         ...headerProps,
         notificationConfigs,
       }}"></common-header>

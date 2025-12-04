@@ -13,9 +13,14 @@ import {
   IconButton,
   SkeletonPlaceholder,
   TextInput,
+  Tag,
 } from '@carbon/react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import { Send } from '@carbon/react/icons';
+import {
+  type AITileBodyProps,
+  type AITileLabelVariant,
+} from '../AITile/AITileBody';
 
 export type AIPromptTileProps = {
   variant: 'aiPrompt';
@@ -26,7 +31,10 @@ export type AIPromptTileProps = {
   productName?: string;
   promptPlaceholder?: string;
   primaryIcon?: ElementType | null;
-  onClick?: (() => void) | null;
+  aiLabelVariant?: AITileLabelVariant;
+  aiLabelText?: string;
+  aiLabelTagType?: AITileBodyProps['aiLabelTagType'];
+  onClick?: ((event: React.MouseEvent<HTMLElement>) => void) | null;
   ariaLabel?: string;
   open?: boolean;
   isLoading?: boolean;
@@ -41,6 +49,9 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   productName,
   promptPlaceholder = 'Start chatting...',
   primaryIcon: PrimaryIcon,
+  aiLabelVariant = 'aiLabel',
+  aiLabelText = 'AI',
+  aiLabelTagType = 'gray',
   onClick,
   ariaLabel,
   open,
@@ -90,7 +101,17 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
             {PrimaryIcon && (
               <PrimaryIcon fill={`var(--cds-icon-secondary)`} size={24} />
             )}
-            <AILabel autoAlign aiText="AI" size="xs" />
+            {aiLabelVariant === 'tag' ? (
+              <Tag
+                size="sm"
+                type={aiLabelTagType}
+                className={`${blockClass}--tag`}
+                decorator={<AILabel aiText="AI" size="xs" kind="inline" />}>
+                {aiLabelText}
+              </Tag>
+            ) : (
+              <AILabel autoAlign aiText={aiLabelText} size="xs" />
+            )}
           </div>
           <div className={`${blockClass}--title`}>{title}</div>
 
@@ -120,8 +141,8 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
               size="sm"
               disabled={!textInput}
               align="top-end"
-              onClick={() => {
-                onClick?.();
+              onClick={(event) => {
+                onClick?.(event);
                 openInNewTab(`${href}&primed_chat=${textInput}`);
               }}
               onKeyDown={handleTextInputKeyDown}>

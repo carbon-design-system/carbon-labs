@@ -9,14 +9,14 @@
 /* eslint jsdoc/require-jsdoc: 0 */
 
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { CommonHeader } from '../CommonHeader.ts';
+import { CommonHeader } from '../CommonHeader';
 import { html } from 'lit';
 import {
   HeaderProps,
   SideNav,
   SideNavPropsV2,
   TrialLinkType,
-} from '../../../types/Header.types.ts';
+} from '../../../types/Header.types';
 
 const headerProps: HeaderProps = {
   brand: {
@@ -42,7 +42,7 @@ const headerProps: HeaderProps = {
   ],
   profileFooterLinks: [
     {
-      text: 'Logout',
+      text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',
       arialLabel: 'Logout',

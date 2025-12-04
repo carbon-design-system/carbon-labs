@@ -52,7 +52,7 @@ const footerSectionItems = [
 
 const profileFooterLinks = [
   {
-    text: 'Logout',
+    text: 'Log out',
     href: '/logout',
     carbonIcon: 'Logout',
     arialLabel: 'Logout',
@@ -61,7 +61,9 @@ const profileFooterLinks = [
 
 describe('AuthContext Component', () => {
   it('renders default with no props', async () => {
-    const el = await fixture(html`<apaas-auth-context></apaas-auth-context>`);
+    const el = await fixture(
+      html`<clabs-global-header-auth-context></clabs-global-header-auth-context>`
+    );
     expect(el).not.to.be.undefined;
 
     const tabpanel = el.shadowRoot?.querySelectorAll('[role="tabpanel"');
@@ -91,7 +93,8 @@ describe('AuthContext Component', () => {
     };
 
     const el = await fixture(
-      html`<apaas-auth-context .props="${{ ...props }}"></apaas-auth-context>`
+      html`<clabs-global-header-auth-context
+        .props="${{ ...props }}"></clabs-global-header-auth-context>`
     );
     expect(el).not.to.be.undefined;
 
@@ -107,8 +110,11 @@ describe('AuthContext Component', () => {
 
   it('renders the profile section', async () => {
     const el = await fixture(
-      html`<apaas-auth-context
-        .props="${{ enableLogs: true, profile }}"></apaas-auth-context>`
+      html`<clabs-global-header-auth-context
+        .props="${{
+          enableLogs: true,
+          profile,
+        }}"></clabs-global-header-auth-context>`
     );
     expect(el).not.to.be.undefined;
 
@@ -123,11 +129,11 @@ describe('AuthContext Component', () => {
 
   it('renders the main section', async () => {
     const el = await fixture(
-      html`<apaas-auth-context
+      html`<clabs-global-header-auth-context
         .props="${{
           enableLogs: true,
           mainSectionItems,
-        }}"></apaas-auth-context>`
+        }}"></clabs-global-header-auth-context>`
     );
     expect(el).not.to.be.undefined;
 
@@ -148,11 +154,11 @@ describe('AuthContext Component', () => {
   describe('renders the footer section', () => {
     it('basic render', async () => {
       const el = await fixture(
-        html`<apaas-auth-context
+        html`<clabs-global-header-auth-context
           .props="${{
             enableLogs: true,
             footerSectionItems,
-          }}"></apaas-auth-context>`
+          }}"></clabs-global-header-auth-context>`
       );
       expect(el).not.to.be.undefined;
 
@@ -183,11 +189,11 @@ describe('AuthContext Component', () => {
       ];
 
       const el = await fixture(
-        html`<apaas-auth-context
+        html`<clabs-global-header-auth-context
           .props="${{
             enableLogs: true,
             footerSectionItems,
-          }}"></apaas-auth-context>`
+          }}"></clabs-global-header-auth-context>`
       );
       expect(el).not.to.be.undefined;
 
@@ -208,11 +214,11 @@ describe('AuthContext Component', () => {
 
   it('renders the management console section', async () => {
     const el = await fixture(
-      html`<apaas-auth-context
+      html`<clabs-global-header-auth-context
         .props="${{
           enableLogs: true,
           managementConsole,
-        }}"></apaas-auth-context>`
+        }}"></clabs-global-header-auth-context>`
     );
     expect(el).not.to.be.undefined;
 
@@ -228,11 +234,11 @@ describe('AuthContext Component', () => {
   describe('renders the profile footer link section', () => {
     it('renders with href in profile link', async () => {
       const el = await fixture(
-        html`<apaas-auth-context
+        html`<clabs-global-header-auth-context
           .props="${{
             enableLogs: true,
             profileFooterLinks,
-          }}"></apaas-auth-context>`
+          }}"></clabs-global-header-auth-context>`
       );
       expect(el).not.to.be.undefined;
 
@@ -244,7 +250,7 @@ describe('AuthContext Component', () => {
       expect(profileFooterLinksSection?.querySelectorAll('a').length).to.equal(
         1
       );
-      expect(profileFooterLinksSection).to.contains.text('Logout');
+      expect(profileFooterLinksSection).to.contains.text('Log out');
     });
 
     it('renders callback in profile link', async () => {
@@ -252,7 +258,7 @@ describe('AuthContext Component', () => {
 
       const profileFooterLinks: ProfileFooterLinks[] = [
         {
-          text: 'Logout',
+          text: 'Log out',
           arialLabel: 'Logout',
           carbonIcon: 'Logout',
           onClickHandler: logoutCallbackSpy,
@@ -260,11 +266,11 @@ describe('AuthContext Component', () => {
       ];
 
       const el = await fixture<AuthContext>(
-        html`<apaas-auth-context
+        html`<clabs-global-header-auth-context
           .props="${{
             enableLogs: true,
             profileFooterLinks,
-          }}"></apaas-auth-context>`
+          }}"></clabs-global-header-auth-context>`
       );
       expect(el).not.to.be.undefined;
 
@@ -275,7 +281,7 @@ describe('AuthContext Component', () => {
 
       const link = profileFooterLinksSection?.querySelector('cds-button');
       expect(link).to.exist;
-      expect(profileFooterLinksSection).to.contains.text('Logout');
+      expect(profileFooterLinksSection).to.contains.text('Log out');
 
       link?.dispatchEvent(
         new MouseEvent('click', { bubbles: true, composed: true })
@@ -297,11 +303,11 @@ describe('AuthContext Component', () => {
       ];
 
       const el = await fixture(
-        html`<apaas-auth-context
+        html`<clabs-global-header-auth-context
           .props="${{
             enableLogs: true,
             profileFooterLinks,
-          }}"></apaas-auth-context>`
+          }}"></clabs-global-header-auth-context>`
       );
       expect(el).not.to.be.undefined;
 
@@ -322,8 +328,11 @@ describe('AuthContext Component', () => {
 
   it('renders the user management console section', async () => {
     const el = await fixture(
-      html`<apaas-auth-context
-        .props="${{ enableLogs: true, userManagement }}"></apaas-auth-context>`
+      html`<clabs-global-header-auth-context
+        .props="${{
+          enableLogs: true,
+          userManagement,
+        }}"></clabs-global-header-auth-context>`
     );
     expect(el).not.to.be.undefined;
 

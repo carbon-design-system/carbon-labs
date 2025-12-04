@@ -47,6 +47,7 @@ const propsWithSolisConfig: HeaderProps = {
     is_prod: false,
     cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
     deployment_environment: solisDeploymentEnvironment['local'],
+    product_id: 'my_product'
   },
   switcherConfigs: [
     {
@@ -364,6 +365,10 @@ describe('loadSolisScript function', () => {
     );
     expect((window as any)._solis.deployment_environment).to.equal(
       propsWithSolisConfig.solisConfig?.deployment_environment
+    );
+
+    expect((window as any)._solis.product_id).to.equal(
+      propsWithSolisConfig.solisConfig?.product_id
     );
   });
 

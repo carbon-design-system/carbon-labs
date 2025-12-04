@@ -362,7 +362,7 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions.chatBotConfigs?.onClick).to.equal(aiCallbackSpy);
   });
 
-  it('should handle solis rendering', async () => {
+  it('should handle solis switcher rendering', async () => {
     fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
@@ -387,7 +387,7 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions.solisConfig?.isEnabled).to.be.true;
   });
 
-  it('should handle sidekick rendering', async () => {
+  it('should handle solis sidekick rendering', async () => {
     fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
@@ -410,6 +410,38 @@ describe('HybridIpaasHeader Component', () => {
 
     expect(el.headerOptions?.sidekickConfig).to.exist;
     expect(el.headerOptions.sidekickConfig?.isEnabled).to.be.true;
+  });
+
+  it('should handle solis rendering in an environment other than local', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName="Test Product"
+        productKey="test-productKey"
+        basePath="/base"
+        assistMeKey="assist-key"
+        solisEnvironment="prod"
+        solisSwitcherEnabled
+        solisSidekickEnabled></clabs-global-header-hybrid-ipaas>`
+    );
+    await waitUntil(
+      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      'headerOptions were not updated as expected'
+    );
+
+    expect(el.headerOptions?.sidekickConfig).to.exist;
+    expect(el.headerOptions.sidekickConfig?.isEnabled).to.be.true;
+    expect(el.headerOptions?.solisConfig).to.exist;
+    expect(el.headerOptions.solisConfig?.isEnabled).to.be.true;
+    expect(el.headerOptions.solisConfig?.is_prod).to.be.true;
+    expect(el.headerOptions.solisConfig?.cdn_hostname).to.equal('https://cdn.saas.ibm.com')
+    expect(el.headerOptions.solisConfig?.deployment_environment).to.equal('prod')
   });
 
   describe('aiCallbackEvent', () => {

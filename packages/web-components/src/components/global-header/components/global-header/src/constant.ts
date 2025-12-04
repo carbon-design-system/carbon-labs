@@ -73,5 +73,5 @@ export const SOLIS_CDN_HOSTNAMES = {
   local: 'https://cdn.dev.saas.ibm.com',
   dev: 'https://cdn.dev.saas.ibm.com',
   stage: 'https://cdn.test.saas.ibm.com',
-  prod: 'https://cdn.saas.ibm.com'
-}
+  prod: 'https://cdn.saas.ibm.com',
+};

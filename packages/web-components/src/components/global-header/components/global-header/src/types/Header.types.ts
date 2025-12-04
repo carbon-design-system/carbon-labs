@@ -300,7 +300,7 @@ export enum solisDeploymentEnvironment {
   local = 'local',
   dev = 'dev',
   stage = 'stage',
-  prod = 'prod'
+  prod = 'prod',
 }
 
 export interface SolisConfig {

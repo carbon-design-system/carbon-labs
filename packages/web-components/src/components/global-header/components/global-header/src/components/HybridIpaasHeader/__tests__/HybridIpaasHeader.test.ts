@@ -440,8 +440,12 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions?.solisConfig).to.exist;
     expect(el.headerOptions.solisConfig?.isEnabled).to.be.true;
     expect(el.headerOptions.solisConfig?.is_prod).to.be.true;
-    expect(el.headerOptions.solisConfig?.cdn_hostname).to.equal('https://cdn.saas.ibm.com')
-    expect(el.headerOptions.solisConfig?.deployment_environment).to.equal('prod')
+    expect(el.headerOptions.solisConfig?.cdn_hostname).to.equal(
+      'https://cdn.saas.ibm.com'
+    );
+    expect(el.headerOptions.solisConfig?.deployment_environment).to.equal(
+      'prod'
+    );
   });
 
   describe('aiCallbackEvent', () => {

@@ -15,7 +15,7 @@ import {
   CUSTOM_EVENT_NAME,
   CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
   INITIAL_AUTOMATION_HEADER_PROPS,
-  SOLIS_CDN_HOSTNAMES
+  SOLIS_CDN_HOSTNAMES,
 } from '../../constant';
 import {
   GlobalActionConfig,
@@ -152,8 +152,7 @@ export class HybridIpaasHeader extends LitElement {
   private initSidekickOptions(env = 'local') {
     return {
       isEnabled: this.solisSidekickEnabled,
-      scriptUrl:
-        SOLIS_CDN_HOSTNAMES[env] + '/sidekick/solis-sidekick.es.js',
+      scriptUrl: SOLIS_CDN_HOSTNAMES[env] + '/sidekick/solis-sidekick.es.js',
       insights_enabled: true,
       reports_enabled: true,
       chat_enabled: false,
@@ -167,17 +166,16 @@ export class HybridIpaasHeader extends LitElement {
         is_prod: env === 'prod',
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
-        product_id: 'ipaas'
+        product_id: 'ipaas',
       };
     } else {
       return {
         isEnabled: true,
-        scriptUrl:
-          SOLIS_CDN_HOSTNAMES[env] + '/switcher/solis-switcher.es.js',
+        scriptUrl: SOLIS_CDN_HOSTNAMES[env] + '/switcher/solis-switcher.es.js',
         is_prod: env === 'prod',
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
-        product_id: 'ipaas'
+        product_id: 'ipaas',
       };
     }
   }
@@ -280,8 +278,13 @@ export class HybridIpaasHeader extends LitElement {
     }
 
     if (this.solisSidekickEnabled) {
-      updatedOptions.solisConfig = this.initSolisOptions(this.solisEnvironment, true);
-      updatedOptions.sidekickConfig = this.initSidekickOptions(this.solisEnvironment);
+      updatedOptions.solisConfig = this.initSolisOptions(
+        this.solisEnvironment,
+        true
+      );
+      updatedOptions.sidekickConfig = this.initSidekickOptions(
+        this.solisEnvironment
+      );
     }
     if (this.solisSwitcherEnabled) {
       updatedOptions.solisConfig = this.initSolisOptions(this.solisEnvironment);

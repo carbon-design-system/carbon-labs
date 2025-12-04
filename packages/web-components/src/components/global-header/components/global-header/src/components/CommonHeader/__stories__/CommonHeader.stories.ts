@@ -465,7 +465,7 @@ const solisConfig = {
   is_prod: false,
   cdn_hostname: 'https://cdn.dev.saas.ibm.com/solis_ui/v1',
   deployment_environment: solisDeploymentEnvironment['local'],
-  product_id: 'my_product'
+  product_id: 'my_product',
 };
 
 export const WithSolis: Story = {

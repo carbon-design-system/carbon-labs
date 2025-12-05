@@ -15,7 +15,7 @@ import {
   TextInput,
   Tag,
 } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities';
 import { Send } from '@carbon/react/icons';
 import {
   type AITileBodyProps,

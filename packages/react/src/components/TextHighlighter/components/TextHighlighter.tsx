@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import React from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities';
 
 /** Primary UI component for user interaction */
 

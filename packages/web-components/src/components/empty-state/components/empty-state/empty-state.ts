@@ -8,7 +8,7 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import emptyState from './src/empty-state.js';
 import { emptyStateTemplate } from './src/empty-state.template.js';
 

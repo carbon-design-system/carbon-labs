@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { settings } from '@carbon-labs/utilities/es/index.js';
+import { settings } from '@carbon-labs/utilities';
 import { Column, FlexGrid, Row } from '@carbon/react';
 import welcomeInterstitialImage from './assets/welcomeInterstitial.png';
 import './styles/_firstTimeOrientation.scss';

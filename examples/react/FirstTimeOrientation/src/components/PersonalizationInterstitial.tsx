@@ -8,7 +8,7 @@
  */
 
 import React, { useState } from 'react';
-import { settings } from '@carbon-labs/utilities/es/index.js';
+import { settings } from '@carbon-labs/utilities';
 import { Column, FlexGrid, Row, SelectableTag } from '@carbon/react';
 import './styles/_firstTimeOrientation.scss';
 

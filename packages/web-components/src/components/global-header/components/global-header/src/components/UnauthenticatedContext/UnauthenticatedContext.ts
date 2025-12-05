@@ -10,7 +10,7 @@
 
 import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import { NoAuthHeaderLinks } from '../../types/Header.types';
 import { renderCarbonIcon } from '../../globals/utils';
 import '@carbon/web-components/es-custom/components/ui-shell/index.js';

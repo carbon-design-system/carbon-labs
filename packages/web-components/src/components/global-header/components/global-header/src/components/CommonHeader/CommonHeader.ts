@@ -10,7 +10,7 @@
 
 import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es-custom/components/ui-shell/index.js';
 import '@carbon/web-components/es-custom/components/popover/index.js';
 import { HeaderProps } from '../../types/Header.types';

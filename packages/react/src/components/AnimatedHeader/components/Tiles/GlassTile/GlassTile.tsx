@@ -9,7 +9,7 @@
 
 import React, { ElementType } from 'react';
 import { Link } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities';
 import { GlassTileBody, GlassTileBodyProps } from './GlassTileBody';
 
 export type GlassTileProps = {

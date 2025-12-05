@@ -9,7 +9,7 @@
 
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 
 // @ts-ignore

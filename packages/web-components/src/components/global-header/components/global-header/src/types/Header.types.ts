@@ -296,6 +296,13 @@ export interface HeaderProps {
   sidekickConfig?: SidekickConfig;
   solisConfig?: SolisConfig;
 }
+
+export interface ReactWrapperProps {
+  aiCallback: () => void | undefined;
+  notificationOpenCallback: () => void | undefined;
+  logoutCallback: () => void | undefined;
+}
+
 export enum solisDeploymentEnvironment {
   local = 'local',
   dev = 'dev',

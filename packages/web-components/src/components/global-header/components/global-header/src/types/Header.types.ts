@@ -56,7 +56,7 @@ export interface ChatBotConfigs {
 
 export interface SearchConfigs {
   placeholder?: string;
-  callback: (value: string) => void;
+  callback?: (value: string) => void;
   submitCallback?: (value: string) => void;
 }
 
@@ -301,6 +301,8 @@ export interface ReactWrapperProps {
   aiCallback: () => void | undefined;
   notificationOpenCallback: () => void | undefined;
   logoutCallback: () => void | undefined;
+  searchCallback: () => void | undefined; // Should this have a `value: string` argument?
+  searchSubmitCallback: () => void | undefined; // Should this have a `value: string` argument?
 }
 
 export enum solisDeploymentEnvironment {

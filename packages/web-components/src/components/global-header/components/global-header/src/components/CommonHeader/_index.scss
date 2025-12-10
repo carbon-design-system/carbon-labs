@@ -18,11 +18,11 @@
 }
 
 .#{automation.$namespace-prefix}__capability-name {
-  overflow: hidden;
   color: var(--cds-custom-text-primary);
   font-weight: 400;
-
+  line-height: normal;
   margin-inline-end: 1.5rem;
+  overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

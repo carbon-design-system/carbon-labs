@@ -288,7 +288,7 @@ export class HybridIpaasHeader extends LitElement {
     if (this.searchCallbackEvent) {
       updatedOptions.searchConfigs = {
         callback: () => {
-          const event =new CustomEvent(this.searchCallbackEvent, {
+          const event = new CustomEvent(this.searchCallbackEvent, {
             bubbles: true,
             cancelable: true,
           });
@@ -300,7 +300,7 @@ export class HybridIpaasHeader extends LitElement {
     if (this.searchSubmitCallbackEvent) {
       updatedOptions.searchConfigs = {
         submitCallback: () => {
-          const event =new CustomEvent(this.searchSubmitCallbackEvent, {
+          const event = new CustomEvent(this.searchSubmitCallbackEvent, {
             bubbles: true,
             cancelable: true,
           });

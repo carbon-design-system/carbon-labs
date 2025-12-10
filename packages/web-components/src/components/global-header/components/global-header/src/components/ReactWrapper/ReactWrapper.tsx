@@ -36,20 +36,29 @@ const WrappedHybridIpaasHeader = createComponent({
 });
 
 export const ReactWrapper = (options: ReactWrapperProps) => {
+  const {
+    aiCallback,
+    notificationOpenCallback,
+    logoutCallback,
+    searchCallback,
+    searchSubmitCallback,
+    ...headerOptions
+  } = options;
+
   return (
     <WrappedHybridIpaasHeader
       role='banner'
-      onaiCallback={() => {options.aiCallback()}}
+      onaiCallback={options.aiCallback ? () => {options.aiCallback()} : undefined}
       aiCallbackEvent={AI_CALLBACK_EVENT}
-      onNotificationOpenCallback={() => {options.notificationOpenCallback()}}
+      onNotificationOpenCallback={options.notificationOpenCallback ? () => {options.notificationOpenCallback()} : undefined}
       notificationOpenCallbackEvent={NOTIFICATION_OPEN_CALLBACK_EVENT}
-      onLogoutCallback={() => {options.logoutCallback()}}
+      onLogoutCallback={options.logoutCallback ? () => {options.logoutCallback()} : undefined}
       logoutCallbackEvent={LOGOUT_CALLBACK_EVENT}
-      onSearchCallback={() => {options.searchCallback()}}
+      onSearchCallback={options.searchCallback ? (event) => {options.searchCallback((event as CustomEvent).detail?.value || '')} : undefined}
       searchCallbackEvent={SEARCH_CALLBACK_EVENT}
-      onSearchSubmitCallback={() => {options.searchSubmitCallback()}}
+      onSearchSubmitCallback={options.searchSubmitCallback ? (event: Event) => {options.searchSubmitCallback((event as CustomEvent).detail?.value || '')} : undefined}
       searchSubmitCallbackEvent={SEARCH_SUBMIT_CALLBACK_EVENT}
-      {...options} // where is this type defined?
+      {...headerOptions}
     />
   )
 }

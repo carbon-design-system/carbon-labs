@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 import '@carbon/web-components/es/components/loading/index.js';
 import Maximize16 from '@carbon/icons/es/maximize/16.js';

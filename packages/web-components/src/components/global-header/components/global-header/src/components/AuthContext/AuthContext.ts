@@ -23,7 +23,7 @@ import {
 import { AuthContextProps } from './AuthContext.types';
 import '../UserProfileImage/UserProfileImage';
 import { customElement, property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 
 import styles from './_index.scss?inline';
 

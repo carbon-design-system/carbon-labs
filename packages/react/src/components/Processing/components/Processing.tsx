@@ -8,7 +8,7 @@
  */
 import PropTypes from 'prop-types';
 import React from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities';
 
 /** Primary UI component for user interaction */
 

@@ -2,10 +2,11 @@ import {
   vitePlugin,
   removeViteLogging,
 } from '@remcovaes/web-test-runner-vite-plugin';
+import { importMapsPlugin } from "@web/dev-server-import-maps";
 
 export default {
   concurrency: 1,
-  files: ['components/global-header/src/**/*.test.ts'],
+  files: ['components/global-header/src/**/*.test.ts', 'components/global-header/src/**/*.test.tsx'],
   filterBrowserLogs: removeViteLogging,
   testRunnerHtml: (testFramework) =>
     `<!doctype html>
@@ -34,7 +35,17 @@ export default {
           </body>
         </html>
         `,
-  plugins: [vitePlugin()],
+  plugins: [vitePlugin(),
+    importMapsPlugin({
+      inject: {
+        importMap: {
+          imports: {
+            '@lit/react': '/__mocks__/@lit/react.tsx' 
+          }
+        }
+      }
+    })
+  ],
   coverageConfig: {
     report: true,
     reportDir: 'test-coverage',
@@ -44,7 +55,7 @@ export default {
       functions: 97,
       lines: 98,
     },
-    include: ['src/**/*.ts'],
+    include: ['src/**/*.ts', 'src/**/*.tsx'],
     exclude: ['**/node_modules/**'],
   },
 };

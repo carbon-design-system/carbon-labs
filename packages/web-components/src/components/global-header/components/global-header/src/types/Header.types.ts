@@ -313,11 +313,11 @@ export interface ReactWrapperProps extends Omit<HeaderProps, 'chatBotConfigs' | 
   capabilityProfileFooterLinks?: ProfileFooterLinks[];
   capabilityGlobalActions?: GlobalActionConfig[];
   searchConfigs?: Omit<SearchConfigs, 'callback' | 'submitCallback'>;
-  aiCallback: () => void | undefined;
-  notificationOpenCallback: () => void | undefined;
-  logoutCallback: () => void | undefined;
-  searchCallback: (value: string) => void | undefined;
-  searchSubmitCallback: (value: string) => void | undefined;
+  aiCallback?: () => void | undefined;
+  notificationOpenCallback?: () => void | undefined;
+  logoutCallback?: () => void | undefined;
+  searchCallback?: (value: string) => void | undefined;
+  searchSubmitCallback?: (value: string) => void | undefined;
 }
 
 export enum solisDeploymentEnvironment {

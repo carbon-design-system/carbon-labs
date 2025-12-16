@@ -44,7 +44,7 @@ export default {
       functions: 97,
       lines: 98,
     },
-    include: ['src/**/*.ts', 'src/**/*.tsx'],
+    include: ['components/**/*.ts', 'components/**/*.tsx'],
     exclude: ['**/node_modules/**'],
   },
 };

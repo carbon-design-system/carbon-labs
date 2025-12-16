@@ -14,7 +14,7 @@ import sinon from 'sinon';
 import { HybridIpaasHeaderReactWrapper } from '../HybridIpaasHeaderReactWrapper';
 
 describe('ReactWrapper', () => {
-  it('calls ai callback', async () => {
+  it('calls ai callback', () => {
     const mockAiCallback = sinon.spy();
     const options = {
       productKey: 'my product',
@@ -25,47 +25,61 @@ describe('ReactWrapper', () => {
     expect(mockAiCallback).to.be.calledOnce;
   });
 
-  it('calls notification callback', async () => {
+  it('calls notification callback', () => {
     const mockNotificationOpenCallback = sinon.spy();
     const options = {
       productKey: 'my product',
-      onNotificationOpenCallback: mockNotificationOpenCallback,
+      notificationOpenCallback: mockNotificationOpenCallback,
     };
     const wrapper = HybridIpaasHeaderReactWrapper(options);
     wrapper.props.onNotificationOpenCallback();
     expect(mockNotificationOpenCallback).to.be.calledOnce;
   });
 
-  it('calls logout callback', async () => {
+  it('calls logout callback', () => {
     const mockLogoutCallback = sinon.spy();
     const options = {
       productKey: 'my product',
-      onLogoutCallback: mockLogoutCallback,
+      logoutCallback: mockLogoutCallback,
     };
     const wrapper = HybridIpaasHeaderReactWrapper(options);
     wrapper.props.onLogoutCallback();
     expect(mockLogoutCallback).to.be.calledOnce;
   });
 
-  it('calls search callback', async () => {
+  it('calls search callback', () => {
     const mockSearchCallback = sinon.spy();
+    const mockValue = 'x';
+    const mockEvent = {
+      detail: {
+        value: mockValue,
+      },
+    };
     const options = {
       productKey: 'my product',
-      onSearchCallback: mockSearchCallback,
+      searchCallback: mockSearchCallback,
     };
     const wrapper = HybridIpaasHeaderReactWrapper(options);
-    wrapper.props.onSearchCallback();
+    wrapper.props.onSearchCallback(mockEvent);
     expect(mockSearchCallback).to.be.calledOnce;
+    expect(mockSearchCallback.calledWith(mockValue)).to.be.true;
   });
 
-  it('calls search submit callback', async () => {
+  it('calls search submit callback', () => {
     const mockOnSearchSubmitCallback = sinon.spy();
+    const mockValue = 'xy';
+    const mockEvent = {
+      detail: {
+        value: mockValue,
+      },
+    };
     const options = {
       productKey: 'my product',
-      onSearchSubmitCallback: mockOnSearchSubmitCallback,
+      searchSubmitCallback: mockOnSearchSubmitCallback,
     };
     const wrapper = HybridIpaasHeaderReactWrapper(options);
-    wrapper.props.onSearchSubmitCallback();
+    wrapper.props.onSearchSubmitCallback(mockEvent);
     expect(mockOnSearchSubmitCallback).to.be.calledOnce;
+    expect(mockOnSearchSubmitCallback.calledWith(mockValue)).to.be.true;
   });
 });

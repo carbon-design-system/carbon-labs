@@ -56,7 +56,7 @@ export interface ChatBotConfigs {
 
 export interface SearchConfigs {
   placeholder?: string;
-  callback: (value: string) => void;
+  callback?: (value: string) => void;
   submitCallback?: (value: string) => void;
 }
 
@@ -296,6 +296,31 @@ export interface HeaderProps {
   sidekickConfig?: SidekickConfig;
   solisConfig?: SolisConfig;
 }
+
+export interface ReactWrapperProps
+  extends Omit<HeaderProps, 'chatBotConfigs' | 'notificationConfigs'> {
+  productKey: string;
+  productName?: null;
+  fetchHeaders?: Record<string, string>;
+  solisSidekickEnabled?: boolean;
+  solisSwitcherEnabled?: boolean;
+  solisEnvironment?: string;
+  basePath?: string;
+  displayName?: string;
+  userEmail?: string;
+  productVersion?: null;
+  assistMeKey?: string;
+  hasNewNotifications?: boolean;
+  capabilityProfileFooterLinks?: ProfileFooterLinks[];
+  capabilityGlobalActions?: GlobalActionConfig[];
+  searchConfigs?: Omit<SearchConfigs, 'callback' | 'submitCallback'>;
+  aiCallback?: () => void | undefined;
+  notificationOpenCallback?: () => void | undefined;
+  logoutCallback?: () => void | undefined;
+  searchCallback?: (value: string) => void | undefined;
+  searchSubmitCallback?: (value: string) => void | undefined;
+}
+
 export enum solisDeploymentEnvironment {
   local = 'local',
   dev = 'dev',

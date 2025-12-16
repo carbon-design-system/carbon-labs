@@ -5,7 +5,7 @@ import {
 
 export default {
   concurrency: 1,
-  files: ['components/global-header/src/**/*.test.ts'],
+  files: ['components/global-header/src/**/*.test.ts', 'components/global-header/src/**/*.test.tsx'],
   filterBrowserLogs: removeViteLogging,
   testRunnerHtml: (testFramework) =>
     `<!doctype html>
@@ -44,7 +44,7 @@ export default {
       functions: 97,
       lines: 98,
     },
-    include: ['src/**/*.ts'],
+    include: ['components/**/*.ts', 'components/**/*.tsx'],
     exclude: ['**/node_modules/**'],
   },
 };

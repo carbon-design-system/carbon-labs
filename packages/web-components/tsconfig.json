@@ -22,6 +22,6 @@
     "resolveJsonModule": true,
     "types": ["mocha", "sinon"]
   },
-  "include": ["**/*.ts", "declarations.d.ts", "src/components/global-header/__mocks__/@lit/react.tsx"],
+  "include": ["**/*.ts", "declarations.d.ts"],
   "exclude": ["packages/**/__tests__"]
 }

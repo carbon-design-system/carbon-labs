@@ -2,7 +2,6 @@ import {
   vitePlugin,
   removeViteLogging,
 } from '@remcovaes/web-test-runner-vite-plugin';
-import { importMapsPlugin } from "@web/dev-server-import-maps";
 
 export default {
   concurrency: 1,
@@ -35,17 +34,7 @@ export default {
           </body>
         </html>
         `,
-  plugins: [vitePlugin(),
-    importMapsPlugin({
-      inject: {
-        importMap: {
-          imports: {
-            '@lit/react': '/__mocks__/@lit/react.tsx' 
-          }
-        }
-      }
-    })
-  ],
+  plugins: [vitePlugin()],
   coverageConfig: {
     report: true,
     reportDir: 'test-coverage',

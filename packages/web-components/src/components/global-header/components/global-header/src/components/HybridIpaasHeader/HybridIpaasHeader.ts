@@ -150,7 +150,7 @@ export class HybridIpaasHeader extends LitElement {
       footerLink.onClickHandler = this.logoutCallback;
     } else if (this.logoutCallbackEvent) {
       footerLink.onClickHandler = () => {
-        const event = new CustomEvent(this.notificationOpenCallbackEvent, {
+        const event = new CustomEvent(this.logoutCallbackEvent, {
           bubbles: true,
           cancelable: true,
         });

@@ -11,21 +11,21 @@
 import React from 'react';
 import { createComponent } from '@lit/react';
 
-import { HybridIpaasHeader as WCHybridIpaasHeader } from '../HybridIpaasHeader/HybridIpaasHeader';
+import { HybridIpaasHeader } from '../HybridIpaasHeader/HybridIpaasHeader';
 import { ReactWrapperProps } from '../../types/Header.types';
 
-const AI_CALLBACK_EVENT = 'hybrid-ipaas-header-ai-callback';
+const AI_CALLBACK_EVENT = 'clabs-hybrid-ipaas-header-ai-callback';
 const NOTIFICATION_OPEN_CALLBACK_EVENT =
-  'hybrid-ipaas-header-notification-open-callback';
-const LOGOUT_CALLBACK_EVENT = 'hybrid-ipaas-logout-callback';
-const SEARCH_CALLBACK_EVENT = 'hybrid-ipaas-search-callback';
-const SEARCH_SUBMIT_CALLBACK_EVENT = 'hybrid-ipaas-search-submit-callback';
+  'clabs-hybrid-ipaas-header-notification-open-callback';
+const LOGOUT_CALLBACK_EVENT = 'clabs-hybrid-ipaas-logout-callback';
+const SEARCH_CALLBACK_EVENT = 'clabs-hybrid-ipaas-search-callback';
+const SEARCH_SUBMIT_CALLBACK_EVENT = 'clabs-hybrid-ipaas-search-submit-callback';
 
 // Create a React wrapper component for the Web Component header. This handles passing objects into the header and also
 // creates callbacks for the custom events issued by the header. For more info see https://lit.dev/docs/frameworks/react/
 const WrappedHybridIpaasHeader = createComponent({
   tagName: 'clabs-global-header-hybrid-ipaas',
-  elementClass: WCHybridIpaasHeader,
+  elementClass: HybridIpaasHeader,
   react: React,
   events: {
     onaiCallback: AI_CALLBACK_EVENT,

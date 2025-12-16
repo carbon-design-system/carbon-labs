@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 
 import ChevronRight16 from '@carbon/icons/es/chevron--right/16.js';

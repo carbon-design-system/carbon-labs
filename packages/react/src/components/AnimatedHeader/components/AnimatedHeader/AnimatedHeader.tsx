@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import lottie, { AnimationItem } from 'lottie-web';
 import { Grid, Column, Button } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { BaseTile } from '../Tiles/index';
 import TasksController, {
   TasksControllerProps,

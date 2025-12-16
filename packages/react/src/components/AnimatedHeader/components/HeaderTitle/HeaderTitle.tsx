@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { Tooltip } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { AriaLabels } from '../AnimatedHeader/types';
 
 const NAME_FIRST_LANGS = [

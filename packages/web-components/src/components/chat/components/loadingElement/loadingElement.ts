@@ -8,7 +8,7 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import loadingElement from './src/loadingElement.js';
 import { loadingElementTemplate } from './src/loadingElement.template.js';
 

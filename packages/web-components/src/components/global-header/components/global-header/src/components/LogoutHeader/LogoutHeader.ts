@@ -10,7 +10,7 @@
 
 import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
 import styles from './_index.scss?inline' assert { type: 'css' };
 

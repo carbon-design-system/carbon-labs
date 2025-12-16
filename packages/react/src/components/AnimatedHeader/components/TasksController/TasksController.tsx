@@ -15,7 +15,7 @@ import {
   DropdownProps,
   SkeletonPlaceholder,
 } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { TileGroup } from '../AnimatedHeader/types';
 
 export interface TasksControllerConfig {

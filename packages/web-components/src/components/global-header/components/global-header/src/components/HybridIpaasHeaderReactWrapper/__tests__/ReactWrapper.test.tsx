@@ -11,7 +11,7 @@
 import { expect } from '@open-wc/testing';
 import sinon from 'sinon'
 
-import { ReactWrapper } from '../ReactWrapper';
+import { HybridIpaasHeaderReactWrapper } from '../HybridIpaasHeaderReactWrapper';
 
 describe('ReactWrapper', () => {
 
@@ -21,7 +21,7 @@ describe('ReactWrapper', () => {
       productKey: 'my product',
       aiCallback: mockAiCallback
     };
-    const wrapper = ReactWrapper(options)
+    const wrapper = HybridIpaasHeaderReactWrapper(options)
     wrapper.props.onaiCallback()
     expect(mockAiCallback).to.be.calledOnce
   })
@@ -32,7 +32,7 @@ describe('ReactWrapper', () => {
       productKey: 'my product',
       onNotificationOpenCallback: mockNotificationOpenCallback
     };
-    const wrapper = ReactWrapper(options)
+    const wrapper = HybridIpaasHeaderReactWrapper(options)
     wrapper.props.onNotificationOpenCallback()
     expect(mockNotificationOpenCallback).to.be.calledOnce
   })
@@ -43,7 +43,7 @@ describe('ReactWrapper', () => {
       productKey: 'my product',
       onLogoutCallback: mockLogoutCallback
     };
-    const wrapper = ReactWrapper(options)
+    const wrapper = HybridIpaasHeaderReactWrapper(options)
     wrapper.props.onLogoutCallback()
     expect(mockLogoutCallback).to.be.calledOnce
   })
@@ -54,7 +54,7 @@ describe('ReactWrapper', () => {
       productKey: 'my product',
       onSearchCallback: mockSearchCallback
     };
-    const wrapper = ReactWrapper(options)
+    const wrapper = HybridIpaasHeaderReactWrapper(options)
     wrapper.props.onSearchCallback()
     expect(mockSearchCallback).to.be.calledOnce
   })
@@ -65,7 +65,7 @@ describe('ReactWrapper', () => {
       productKey: 'my product',
       onSearchSubmitCallback: mockOnSearchSubmitCallback
     };
-    const wrapper = ReactWrapper(options)
+    const wrapper = HybridIpaasHeaderReactWrapper(options)
     wrapper.props.onSearchSubmitCallback()
     expect(mockOnSearchSubmitCallback).to.be.calledOnce
   })

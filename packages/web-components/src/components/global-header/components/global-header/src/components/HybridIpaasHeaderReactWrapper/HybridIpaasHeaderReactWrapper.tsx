@@ -35,7 +35,7 @@ const WrappedHybridIpaasHeader = createComponent({
   }
 });
 
-export const ReactWrapper = (props: ReactWrapperProps) => {
+export const HybridIpaasHeaderReactWrapper = (props: ReactWrapperProps) => {
   const {
     aiCallback,
     notificationOpenCallback,

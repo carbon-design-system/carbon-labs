@@ -8,7 +8,7 @@
  */
 import React from 'react';
 import { Button, ButtonProps } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 
 /** Primary UI component for user interaction */
 

@@ -10,7 +10,7 @@
 
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 
 /* c8 ignore next */
 import cx from 'classnames';

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react",
-  "version": "0.150.0",
+  "version": "0.151.0",
   "private": true,
   "type": "module",
   "description": "React components for Carbon Labs",

@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 import MicrophoneOff16 from '@carbon/icons/es/microphone--off/16.js';
 import MicrophoneFilled16 from '@carbon/icons/es/microphone--filled/16.js';

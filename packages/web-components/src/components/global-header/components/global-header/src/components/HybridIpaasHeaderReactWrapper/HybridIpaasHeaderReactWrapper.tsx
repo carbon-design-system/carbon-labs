@@ -19,7 +19,8 @@ const NOTIFICATION_OPEN_CALLBACK_EVENT =
   'clabs-hybrid-ipaas-header-notification-open-callback';
 const LOGOUT_CALLBACK_EVENT = 'clabs-hybrid-ipaas-logout-callback';
 const SEARCH_CALLBACK_EVENT = 'clabs-hybrid-ipaas-search-callback';
-const SEARCH_SUBMIT_CALLBACK_EVENT = 'clabs-hybrid-ipaas-search-submit-callback';
+const SEARCH_SUBMIT_CALLBACK_EVENT =
+  'clabs-hybrid-ipaas-search-submit-callback';
 
 // Create a React wrapper component for the Web Component header. This handles passing objects into the header and also
 // creates callbacks for the custom events issued by the header. For more info see https://lit.dev/docs/frameworks/react/

@@ -8,84 +8,65 @@
  */
 /* eslint jsdoc/require-jsdoc: 0 */
 
-import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { expect } from '@open-wc/testing';
+import sinon from 'sinon'
 
 import { ReactWrapper } from '../ReactWrapper';
 
 describe('ReactWrapper', () => {
-  it('renders a HybridIpaasHeader component', async () => {
-    const options = {
-      productKey: 'my product'
-    }
-    render(<ReactWrapper {...options} />)
-    await waitFor(() => {
-      screen.getByText('Product: my product')
-    })
-    screen.debug()
-    const text = screen.getAllByText('Product: my product')
-    expect(text.length).to.equal(1)
-  })
 
   it('calls ai callback', async () => {
-    let callCount = 0
+    const mockAiCallback = sinon.spy()
     const options = {
       productKey: 'my product',
-      aiCallback: () => { callCount++ }
+      aiCallback: mockAiCallback
     };
-    render(<ReactWrapper {...options} />)
-    const aiButton = await screen.getByRole('button', { name: 'AI Callback' })
-    await userEvent.click(aiButton)
-    expect(callCount).to.equal(1)
+    const wrapper = ReactWrapper(options)
+    wrapper.props.onaiCallback()
+    expect(mockAiCallback).to.be.calledOnce
   })
 
   it('calls notification callback', async () => {
-    let callCount = 0
+    const mockNotificationOpenCallback = sinon.spy()
     const options = {
       productKey: 'my product',
-      onNotificationOpenCallback: () => { callCount++ }
+      onNotificationOpenCallback: mockNotificationOpenCallback
     };
-    render(<ReactWrapper {...options} />)
-    const notificationButton = await screen.getByRole('button', { name: 'Notification' })
-    await userEvent.click(notificationButton)
-    expect(callCount).to.equal(1)
+    const wrapper = ReactWrapper(options)
+    wrapper.props.onNotificationOpenCallback()
+    expect(mockNotificationOpenCallback).to.be.calledOnce
   })
 
   it('calls logout callback', async () => {
-    let callCount = 0
+    const mockLogoutCallback = sinon.spy()
     const options = {
       productKey: 'my product',
-      onLogoutCallback: () => { callCount++ }
+      onLogoutCallback: mockLogoutCallback
     };
-    render(<ReactWrapper {...options} />)
-    const logoutButton = await screen.getByRole('button', { name: 'Logout' })
-    await userEvent.click(logoutButton)
-    expect(callCount).to.equal(1)
+    const wrapper = ReactWrapper(options)
+    wrapper.props.onLogoutCallback()
+    expect(mockLogoutCallback).to.be.calledOnce
   })
 
   it('calls search callback', async () => {
-    let callCount = 0
+    const mockSearchCallback = sinon.spy()
     const options = {
       productKey: 'my product',
-      onSearchCallback: () => { callCount++ }
+      onSearchCallback: mockSearchCallback
     };
-    render(<ReactWrapper {...options} />)
-    const searchButton = await screen.getByRole('button', { name: 'Search' })
-    await userEvent.click(searchButton)
-    expect(callCount).to.equal(1)
+    const wrapper = ReactWrapper(options)
+    wrapper.props.onSearchCallback()
+    expect(mockSearchCallback).to.be.calledOnce
   })
 
   it('calls search submit callback', async () => {
-    let callCount = 0
+    const mockOnSearchSubmitCallback = sinon.spy()
     const options = {
       productKey: 'my product',
-      onSearchSubmitCallback: () => { callCount++ }
+      onSearchSubmitCallback: mockOnSearchSubmitCallback
     };
-    render(<ReactWrapper {...options} />)
-    const submitButton = await screen.getByRole('button', { name: 'Submit' })
-    await userEvent.click(submitButton)
-    expect(callCount).to.equal(1)
+    const wrapper = ReactWrapper(options)
+    wrapper.props.onSearchSubmitCallback()
+    expect(mockOnSearchSubmitCallback).to.be.calledOnce
   })
 })

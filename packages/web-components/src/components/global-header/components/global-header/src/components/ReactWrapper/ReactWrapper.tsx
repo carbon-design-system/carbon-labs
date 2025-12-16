@@ -23,7 +23,7 @@ const SEARCH_SUBMIT_CALLBACK_EVENT='hybrid-ipaas-search-submit-callback'
 // Create a React wrapper component for the Web Component header. This handles passing objects into the header and also
 // creates callbacks for the custom events issued by the header. For more info see https://lit.dev/docs/frameworks/react/
 const WrappedHybridIpaasHeader = createComponent({
-  tagName: 'hybrid-ipaas-header',
+  tagName: 'clabs-global-header-hybrid-ipaas',
   elementClass: WCHybridIpaasHeader,
   react: React,
   events: {

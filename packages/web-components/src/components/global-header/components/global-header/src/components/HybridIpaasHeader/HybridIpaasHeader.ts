@@ -293,7 +293,7 @@ export class HybridIpaasHeader extends LitElement {
             cancelable: true,
           });
           this.dispatchEvent(event);
-        }
+        },
       };
     }
 
@@ -305,7 +305,7 @@ export class HybridIpaasHeader extends LitElement {
             cancelable: true,
           });
           this.dispatchEvent(event);
-        }
+        },
       };
     }
 

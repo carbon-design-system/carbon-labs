@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.103.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.102.0...@carbon-labs/web-components@0.103.0) (2025-12-16)
+
+
+### Features
+
+* **global-header:** Introduce React wrapper for Hybrid iPaaS Header ([#946](https://github.com/carbon-design-system/carbon-labs/issues/946)) ([a3eea61](https://github.com/carbon-design-system/carbon-labs/commit/a3eea6153109c63450ceb8445ffbcc2fbcc507ba))
+
+
+
+
+
 # [0.102.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.101.0...@carbon-labs/web-components@0.102.0) (2025-12-16)
 
 

@@ -11,7 +11,7 @@ import classNames from 'classnames';
 
 // import './theme-settings.scss';
 import { FormGroup } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 
 const blockClass = `theme-settings`;
 

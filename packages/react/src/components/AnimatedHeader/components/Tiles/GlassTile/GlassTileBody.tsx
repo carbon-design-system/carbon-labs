@@ -8,7 +8,7 @@
  */
 
 import React, { ElementType, ReactNode } from 'react';
-import { usePrefix } from '@carbon-labs/utilities';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { SkeletonPlaceholder, Tag, type TagProps } from '@carbon/react';
 
 type TagTypeName = TagProps<'div'>['type'];

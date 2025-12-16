@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/utilities",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -17,11 +17,23 @@
   "module": "./es/index.js",
   "types": "./es/index.d.ts",
   "sideEffects": false,
+  "typesVersions": {
+    "*": {
+      "usePrefix": [
+        "./es/usePrefix.d.ts"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "types": "./es/index.d.ts",
       "import": "./es/index.js",
       "default": "./es/index.js"
+    },
+    "./usePrefix": {
+      "types": "./es/usePrefix.d.ts",
+      "import": "./es/usePrefix.js",
+      "default": "./es/usePrefix.js"
     },
     "./es/*": {
       "types": "./es/*.d.ts",
@@ -39,13 +51,15 @@
     "es/index.js",
     "es/index.d.ts"
   ],
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.4",
     "babel-cli": "^6.26.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rimraf": "^6.0.1"
   }
 }

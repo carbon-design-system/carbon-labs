@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import cx from 'classnames';
-import { usePrefix } from '@carbon-labs/utilities';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import React, {
   HTMLProps,
   ReactElement,

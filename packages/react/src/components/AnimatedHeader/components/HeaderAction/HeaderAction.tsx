@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { Button, IconButton } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import type { HeaderActionConfig } from './header-action.types';
 
 const HeaderAction: React.FC<{

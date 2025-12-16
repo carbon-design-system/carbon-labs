@@ -14,7 +14,7 @@ import {
   usePrefix as useCarbonPrefix,
 } from '@carbon/react';
 import React, { HTMLProps, useLayoutEffect, useRef } from 'react';
-import { usePrefix } from '@carbon-labs/utilities';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 
 import {
   autoUpdate,

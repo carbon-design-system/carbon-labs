@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es/components/data-table/index.js';
 const { stablePrefix: clabsPrefix } = settings;
 

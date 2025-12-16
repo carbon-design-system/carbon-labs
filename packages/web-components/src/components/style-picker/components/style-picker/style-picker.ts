@@ -8,7 +8,7 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import { stylePickerTemplate } from './src/style-picker.template.js';
 import StylePicker from './src/style-picker.js';
 

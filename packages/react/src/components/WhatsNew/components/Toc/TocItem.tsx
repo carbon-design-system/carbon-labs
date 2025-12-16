@@ -9,7 +9,7 @@
  */
 
 import { useToc } from './Toc';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import cx from 'classnames';
 import React, { HTMLProps, useEffect, useRef } from 'react';
 import { useTocListContext } from './TocList';

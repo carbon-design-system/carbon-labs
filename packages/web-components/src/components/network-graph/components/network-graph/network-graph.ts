@@ -11,7 +11,7 @@ import { TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { NetworkGraph } from './src/network-graph';
 import { networkGraphTemplate } from './src/network-graph.template';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 
 const { stablePrefix: clabsPrefix } = settings;
 

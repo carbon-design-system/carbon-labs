@@ -29,4 +29,7 @@ export default defineConfig({
       scss: {},
     },
   },
+  define: {
+    'process.env.NODE_ENV': '"production"',
+  },
 });

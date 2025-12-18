@@ -89,5 +89,3 @@ export const install = () => {
 
   copySnippets(src, dest);
 };
-
-// Made with Bob

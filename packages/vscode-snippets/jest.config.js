@@ -13,5 +13,3 @@ export default {
   },
   testMatch: ['<rootDir>/__tests__/**/*.test.js'],
 };
-
-// Made with Bob

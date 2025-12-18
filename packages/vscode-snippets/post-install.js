@@ -8,5 +8,3 @@
 import { install } from './install/index.js';
 
 install();
-
-// Made with Bob

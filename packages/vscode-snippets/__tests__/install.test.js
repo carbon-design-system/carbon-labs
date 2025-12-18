@@ -266,5 +266,3 @@ describe('install script', () => {
     });
   });
 });
-
-// Made with Bob

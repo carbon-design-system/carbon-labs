@@ -22,6 +22,10 @@ export default defineConfig({
         'wc-global-header': 'index.ts',
         styles: 'components/global-header/src/index.scss',
       },
+      external: [
+        'react',
+        'react-dom'
+      ]
     },
   },
   css: {

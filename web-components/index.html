@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>storybook - Storybook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    
+    <style>
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-regular.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: italic;
+        font-weight: 400;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-italic.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-bold.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: italic;
+        font-weight: 700;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-bold-italic.woff2') format('woff2');
+      }
+    </style>
+
+    <link href="./sb-manager/runtime.js" rel="modulepreload" />
+
+    
+    <link href="./sb-addons/storybook-core-server-presets-0/common-manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/a11y-1/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/links-2/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/docs-3/manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/storybook-4/manager-bundle.js" rel="modulepreload" />
+      <!--
+@license
+
+Copyright IBM Corp. 2023
+
+This source code is licensed under the Apache-2.0 license found in the
+LICENSE file in the root directory of this source tree.
+-->
+
+<meta
+  name="keywords"
+  content="ibm.com, design, system, design system, styleguide, style, guide, components, library, pattern, kit, component, cloud, Web Components, Custom Elements" />
+<meta
+  name="description"
+  content="A collection of components and patterns implemented using Carbon Web Components for the IBM AI experience." />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Carbon Labs" />
+<meta property="og:site_name" content="Carbon Labs" />
+<meta
+  property="og:description"
+  content="A collection of components and patterns implemented using Carbon Web Components for the IBM AI experience." />
+<meta
+  property="og:image"
+  content="https://1.www.s81c.com/common/carbon-for-ibm-dotcom/i/carbon-for-ibmcom-wc.png" />
+<!-- Storybook override -->
+<script>
+  document.title = 'Carbon Labs';
+</script>
+
+<!-- Minimum setting to use IBM Plex font -->
+<style type="text/css">
+  @font-face {
+    font-weight: 400;
+    font-family: 'IBM Plex Sans';
+    font-style: normal;
+    src: local('IBM Plex Sans'), local('IBMPlexSans'),
+      url(https://1www.s81c.com/common/carbon/plex/fonts/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Regular.woff)
+        format('woff');
+    font-display: auto;
+  }
+
+  @font-face {
+    font-weight: 600;
+    font-family: 'IBM Plex Sans';
+    font-style: normal;
+    src: local('IBM Plex Sans SemiBold'), local('IBMPlexSans-SemiBold'),
+      url(https://1www.s81c.com/common/carbon/plex/fonts/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBold.woff)
+        format('woff');
+    font-display: auto;
+  }
+</style>
+ 
+
+    <style>
+      #storybook-root[hidden] {
+        display: none !important;
+      }
+    </style>
+
+    
+  </head>
+  <body>
+    <div id="root"></div>
+
+    
+    <script>
+      
+        
+          window['FEATURES'] = {
+  "argTypeTargetsV7": true,
+  "legacyDecoratorFileOrder": false,
+  "disallowImplicitActionsInRenderV8": true,
+  "viewport": true,
+  "highlight": true,
+  "controls": true,
+  "interactions": true,
+  "actions": true,
+  "backgrounds": true,
+  "outline": true,
+  "measure": true,
+  "storyStoreV7": true
+};
+        
+      
+        
+          window['REFS'] = {};
+        
+      
+        
+          window['LOGLEVEL'] = "info";
+        
+      
+        
+          window['DOCS_OPTIONS'] = {
+  "defaultName": "Docs"
+};
+        
+      
+        
+          window['CONFIG_TYPE'] = "PRODUCTION";
+        
+      
+        
+      
+        
+      
+        
+          window['TAGS_OPTIONS'] = {
+  "dev-only": {
+    "excludeFromDocsStories": true
+  },
+  "docs-only": {
+    "excludeFromSidebar": true
+  },
+  "test-only": {
+    "excludeFromSidebar": true,
+    "excludeFromDocsStories": true
+  }
+};
+        
+      
+        
+          window['STORYBOOK_RENDERER'] = "web-components";
+        
+      
+        
+          window['STORYBOOK_BUILDER'] = "@storybook/builder-vite";
+        
+      
+        
+          window['STORYBOOK_FRAMEWORK'] = "/home/runner/work/carbon-labs/carbon-labs/node_modules/@storybook/web-components-vite";
+        
+      
+    </script>
+    
+
+    <script type="module">
+      import './sb-manager/globals-runtime.js';
+
+      
+        import './sb-addons/storybook-core-server-presets-0/common-manager-bundle.js';
+      
+        import './sb-addons/a11y-1/manager-bundle.js';
+      
+        import './sb-addons/links-2/manager-bundle.js';
+      
+        import './sb-addons/docs-3/manager-bundle.js';
+      
+        import './sb-addons/storybook-4/manager-bundle.js';
+      
+
+      import './sb-manager/runtime.js';
+    </script>
+  </body>
+</html>

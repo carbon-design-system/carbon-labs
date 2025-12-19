@@ -5,13 +5,6 @@ on:
   pull_request:
     types: [closed]
     branches: [main]
-  workflow_dispatch:
-    inputs:
-      dry_run:
-        type: boolean
-        description:
-          'Run as dry run'
-        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -25,6 +18,8 @@ jobs:
       id-token: write
       contents: write
     timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ secrets.MERGE_ACTION }}
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
@@ -33,10 +28,10 @@ jobs:
       - run: |
           git config --global user.email ${{ secrets.CARBON_BOT_EMAIL }}
           git config --global user.name ${{ secrets.CARBON_BOT_NAME }}
-      - name: Use Node.js 18.x
+      - name: Use Node.js 20.x
         uses: actions/setup-node@v6
         with:
-          node-version: '18.x'
+          node-version: '20.x'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
@@ -45,13 +40,6 @@ jobs:
       - name: Set NPM token
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
-      - name: Set dry run env variable
-        run: |
-          if [ "${{ github.event.inputs.dry-run }}" == "false"  ]; then
-            echo "PUBLISH=--yes" >> $GITHUB_ENV
-          fi
       - name: Publish minor release of packages
         run: |
-          yarn lerna publish minor --dist-tag latest ${{ env.PUBLISH }} --message 'chore: release'
-        env:
-          GH_TOKEN: ${{ secrets.MERGE_ACTION }}
+          yarn lerna publish minor --dist-tag latest --yes --message 'chore: release'

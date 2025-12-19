@@ -32,7 +32,7 @@
     "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
     "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary",
     "clean": "rimraf es lib",
-    "test": "web-test-runner"
+    "test": "web-test-runner --coverage"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",

@@ -38,3 +38,4 @@ agentic.stories.js
 /.history
 
 *storybook.log
+test-coverage/

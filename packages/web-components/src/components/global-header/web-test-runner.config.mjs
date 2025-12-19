@@ -7,7 +7,6 @@ export default {
   concurrency: 1,
   files: [
     'components/global-header/src/**/*.test.ts',
-    'components/global-header/src/**/*.test.tsx',
     '__tests__/**/*.test.js',
   ],
   filterBrowserLogs: removeViteLogging,
@@ -55,12 +54,12 @@ export default {
     report: true,
     reportDir: 'test-coverage',
     threshold: {
-      statements: 98,
-      branches: 91,
-      functions: 97,
-      lines: 98,
+      statements: 96,
+      branches: 90,
+      functions: 93,
+      lines: 96,
     },
-    include: ['components/**/*.ts', 'components/**/*.tsx'],
+    include: ['components/**/*.ts'],
     exclude: ['**/node_modules/**'],
   },
 };

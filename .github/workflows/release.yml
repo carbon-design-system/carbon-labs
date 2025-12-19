@@ -5,6 +5,13 @@ on:
   pull_request:
     types: [closed]
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        type: boolean
+        description:
+          'Run as dry run'
+        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -40,6 +47,11 @@ jobs:
       - name: Set NPM token
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+      - name: Set dry run env variable
+        run: |
+          if [ "${{ github.event.inputs.dry-run }}" == "false"  ]; then
+            echo "PUBLISH=--yes" >> $GITHUB_ENV
+          fi
       - name: Publish minor release of packages
         run: |
           yarn lerna publish minor --dist-tag latest --yes --message 'chore: release'

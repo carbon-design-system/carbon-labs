@@ -137,10 +137,16 @@ snapshots["clabs-style-picker should render single variant with color picker opt
     </span>
   </cds-icon-button>
   <clabs-style-picker-section
-    heading=""
+    aria-label="Colors"
+    heading="Colors"
+    role="listbox"
     size="sm"
   >
-    <clabs-style-picker-group heading="Yellow">
+    <clabs-style-picker-group
+      aria-label="Yellow"
+      heading="Yellow"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Yellow 10"
         aria-selected="false"
@@ -312,7 +318,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Orange">
+    <clabs-style-picker-group
+      aria-label="Orange"
+      heading="Orange"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Orange 10"
         aria-selected="false"
@@ -484,7 +494,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Red">
+    <clabs-style-picker-group
+      aria-label="Red"
+      heading="Red"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Red 10"
         aria-selected="false"
@@ -656,7 +670,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Magenta">
+    <clabs-style-picker-group
+      aria-label="Magenta"
+      heading="Magenta"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Magenta 10"
         aria-selected="false"
@@ -828,7 +846,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Purple">
+    <clabs-style-picker-group
+      aria-label="Purple"
+      heading="Purple"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Purple 10"
         aria-selected="false"
@@ -1000,7 +1022,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Blue">
+    <clabs-style-picker-group
+      aria-label="Blue"
+      heading="Blue"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Blue 10"
         aria-selected="false"
@@ -1173,7 +1199,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Cyan">
+    <clabs-style-picker-group
+      aria-label="Cyan"
+      heading="Cyan"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Cyan 10"
         aria-selected="false"
@@ -1345,7 +1375,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Teal">
+    <clabs-style-picker-group
+      aria-label="Teal"
+      heading="Teal"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Teal 10"
         aria-selected="false"
@@ -1517,7 +1551,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Green">
+    <clabs-style-picker-group
+      aria-label="Green"
+      heading="Green"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Green 10"
         aria-selected="false"
@@ -1689,7 +1727,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Cool gray">
+    <clabs-style-picker-group
+      aria-label="Cool gray"
+      heading="Cool gray"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Cool gray 10"
         aria-selected="false"
@@ -1861,7 +1903,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Gray">
+    <clabs-style-picker-group
+      aria-label="Gray"
+      heading="Gray"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Gray 10"
         aria-selected="false"
@@ -2033,7 +2079,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Warm gray">
+    <clabs-style-picker-group
+      aria-label="Warm gray"
+      heading="Warm gray"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Warm gray 10"
         aria-selected="false"
@@ -2205,7 +2255,11 @@ snapshots["clabs-style-picker should render single variant with color picker opt
         </clabs-style-picker-color>
       </clabs-style-picker-option>
     </clabs-style-picker-group>
-    <clabs-style-picker-group heading="Others">
+    <clabs-style-picker-group
+      aria-label="Others"
+      heading="Others"
+      role="group"
+    >
       <clabs-style-picker-option
         aria-label="Others white"
         aria-selected="false"

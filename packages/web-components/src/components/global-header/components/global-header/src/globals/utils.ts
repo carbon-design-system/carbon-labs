@@ -124,6 +124,7 @@ export function getAssistMeUrl(environment: string) {
 }
 
 export const trackEvent = (eventName: string, props: EventProps) => {
+  // console.log('trackEvent', eventName, props) // For testing purposes
   const analytics =
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (window as any)?.bluemixAnalytics;

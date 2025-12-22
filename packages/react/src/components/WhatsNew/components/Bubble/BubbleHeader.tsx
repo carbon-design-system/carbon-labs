@@ -9,7 +9,7 @@
 
 import React, { HTMLProps } from 'react';
 import cx from 'classnames';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 
 interface BubbleHeaderProps extends HTMLProps<HTMLElement> {
   children: React.ReactNode;

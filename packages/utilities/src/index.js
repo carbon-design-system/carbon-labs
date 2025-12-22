@@ -8,4 +8,5 @@
  */
 
 export * from './settings/index.js';
-export * from './usePrefix.js';
+// Note: usePrefix is not exported from main index to avoid pulling React into web components
+// React components should import directly: import { usePrefix } from '@carbon-labs/utilities/es/usePrefix.js'

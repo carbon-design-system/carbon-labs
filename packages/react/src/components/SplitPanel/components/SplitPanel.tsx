@@ -8,7 +8,7 @@
  */
 
 import React, { useRef, useState } from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import cx from 'classnames';
 import { DragHorizontal, DragVertical } from '@carbon/react/icons';
 

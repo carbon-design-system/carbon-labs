@@ -8,7 +8,7 @@
  */
 
 import React, { ElementType, ReactNode } from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import {
   AILabel,
   SkeletonPlaceholder,

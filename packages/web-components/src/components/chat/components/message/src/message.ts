@@ -12,7 +12,7 @@ import { property, state } from 'lit/decorators.js';
 // @ts-ignore
 import styles from './message.scss?inline';
 
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**

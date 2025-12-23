@@ -1,0 +1,322 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * WARNING: installed by @carbon-labs/vscode-snippets - local updates will be lost on package install
+ */
+{
+  "type-style('code-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$code-01"],
+    "body": "@include type-style('code-01')",
+    "description": "Carbon typography token - inline code snippets"
+  },
+  "type-style('code-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$code-02"],
+    "body": "@include type-style('code-02')",
+    "description": "Carbon typography token - large code snippets"
+  },
+  "type-style('label-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$label-01"],
+    "body": "@include type-style('label-01')",
+    "description": "Carbon typography token - field labels, captions"
+  },
+  "type-style('label-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$label-02"],
+    "body": "@include type-style('label-02')",
+    "description": "Carbon typography token - field labels, captions"
+  },
+  "type-style('helper-text-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$helper-text-01"],
+    "body": "@include type-style('helper-text-01')",
+    "description": "Carbon typography token - helper text"
+  },
+  "type-style('helper-text-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$helper-text-02"],
+    "body": "@include type-style('helper-text-02')",
+    "description": "Carbon typography token - helper text"
+  },
+  "type-style('legal-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$legal-01"],
+    "body": "@include type-style('legal-01')",
+    "description": "Carbon typography token - legal copy (product)"
+  },
+  "type-style('legal-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$legal-02"],
+    "body": "@include type-style('legal-02')",
+    "description": "Carbon typography token - legal copy (web)"
+  },
+  "type-style('body-compact-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$body-compact-01"],
+    "body": "@include type-style('body-compact-01')",
+    "description": "Carbon typography token - compact body text"
+  },
+  "type-style('body-compact-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$body-compact-02"],
+    "body": "@include type-style('body-compact-02')",
+    "description": "Carbon typography token - compact body text"
+  },
+  "type-style('body-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$body-01"],
+    "body": "@include type-style('body-01')",
+    "description": "Carbon typography token - body text"
+  },
+  "type-style('body-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$body-02"],
+    "body": "@include type-style('body-02')",
+    "description": "Carbon typography token - body text"
+  },
+  "type-style('heading-compact-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$heading-compact-01"],
+    "body": "@include type-style('heading-compact-01')",
+    "description": "Carbon typography token - compact heading"
+  },
+  "type-style('heading-compact-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$heading-compact-02"],
+    "body": "@include type-style('heading-compact-02')",
+    "description": "Carbon typography token - compact heading"
+  },
+  "type-style('heading-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$heading-01"],
+    "body": "@include type-style('heading-01')",
+    "description": "Carbon typography token - component heading"
+  },
+  "type-style('heading-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$heading-02"],
+    "body": "@include type-style('heading-02')",
+    "description": "Carbon typography token - layout heading"
+  },
+  "type-style('heading-03')": {
+    "scope": "scss",
+    "prefix": ["type", "$heading-03"],
+    "body": "@include type-style('heading-03')",
+    "description": "Carbon typography token - layout heading"
+  },
+  "type-style('heading-04')": {
+    "scope": "scss",
+    "prefix": ["type", "$heading-04"],
+    "body": "@include type-style('heading-04')",
+    "description": "Carbon typography token - layout heading"
+  },
+  "type-style('heading-05')": {
+    "scope": "scss",
+    "prefix": ["type", "$heading-05"],
+    "body": "@include type-style('heading-05')",
+    "description": "Carbon typography token - layout heading"
+  },
+  "type-style('heading-06')": {
+    "scope": "scss",
+    "prefix": ["type", "$heading-06"],
+    "body": "@include type-style('heading-06')",
+    "description": "Carbon typography token - layout heading"
+  },
+  "type-style('heading-07')": {
+    "scope": "scss",
+    "prefix": ["type", "$heading-07"],
+    "body": "@include type-style('heading-07')",
+    "description": "Carbon typography token - layout heading"
+  },
+  "type-style('productive-heading-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$productive-heading-01"],
+    "body": "@include type-style('productive-heading-01')",
+    "description": "Carbon typography token - productive heading"
+  },
+  "type-style('productive-heading-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$productive-heading-02"],
+    "body": "@include type-style('productive-heading-02')",
+    "description": "Carbon typography token - productive heading"
+  },
+  "type-style('productive-heading-03')": {
+    "scope": "scss",
+    "prefix": ["type", "$productive-heading-03"],
+    "body": "@include type-style('productive-heading-03')",
+    "description": "Carbon typography token - productive heading"
+  },
+  "type-style('productive-heading-04')": {
+    "scope": "scss",
+    "prefix": ["type", "$productive-heading-04"],
+    "body": "@include type-style('productive-heading-04')",
+    "description": "Carbon typography token - productive heading"
+  },
+  "type-style('productive-heading-05')": {
+    "scope": "scss",
+    "prefix": ["type", "$productive-heading-05"],
+    "body": "@include type-style('productive-heading-05')",
+    "description": "Carbon typography token - productive heading"
+  },
+  "type-style('productive-heading-06')": {
+    "scope": "scss",
+    "prefix": ["type", "$productive-heading-06"],
+    "body": "@include type-style('productive-heading-06')",
+    "description": "Carbon typography token - productive heading"
+  },
+  "type-style('productive-heading-07')": {
+    "scope": "scss",
+    "prefix": ["type", "$productive-heading-07"],
+    "body": "@include type-style('productive-heading-07')",
+    "description": "Carbon typography token - productive heading"
+  },
+  "type-style('expressive-heading-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$expressive-heading-01"],
+    "body": "@include type-style('expressive-heading-01')",
+    "description": "Carbon typography token - expressive heading"
+  },
+  "type-style('expressive-heading-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$expressive-heading-02"],
+    "body": "@include type-style('expressive-heading-02')",
+    "description": "Carbon typography token - expressive heading"
+  },
+  "type-style('expressive-heading-03')": {
+    "scope": "scss",
+    "prefix": ["type", "$expressive-heading-03"],
+    "body": "@include type-style('expressive-heading-03')",
+    "description": "Carbon typography token - expressive heading"
+  },
+  "type-style('expressive-heading-04')": {
+    "scope": "scss",
+    "prefix": ["type", "$expressive-heading-04"],
+    "body": "@include type-style('expressive-heading-04')",
+    "description": "Carbon typography token - expressive heading"
+  },
+  "type-style('expressive-heading-05')": {
+    "scope": "scss",
+    "prefix": ["type", "$expressive-heading-05"],
+    "body": "@include type-style('expressive-heading-05')",
+    "description": "Carbon typography token - expressive heading"
+  },
+  "type-style('expressive-heading-06')": {
+    "scope": "scss",
+    "prefix": ["type", "$expressive-heading-06"],
+    "body": "@include type-style('expressive-heading-06')",
+    "description": "Carbon typography token - expressive heading"
+  },
+  "type-style('expressive-paragraph-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$expressive-paragraph-01"],
+    "body": "@include type-style('expressive-paragraph-01')",
+    "description": "Carbon typography token - expressive paragraph"
+  },
+  "type-style('quotation-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$quotation-01"],
+    "body": "@include type-style('quotation-01')",
+    "description": "Carbon typography token - quotation"
+  },
+  "type-style('quotation-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$quotation-02"],
+    "body": "@include type-style('quotation-02')",
+    "description": "Carbon typography token - quotation"
+  },
+  "type-style('display-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$display-01"],
+    "body": "@include type-style('display-01')",
+    "description": "Carbon typography token - display"
+  },
+  "type-style('display-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$display-02"],
+    "body": "@include type-style('display-02')",
+    "description": "Carbon typography token - display"
+  },
+  "type-style('display-03')": {
+    "scope": "scss",
+    "prefix": ["type", "$display-03"],
+    "body": "@include type-style('display-03')",
+    "description": "Carbon typography token - display"
+  },
+  "type-style('display-04')": {
+    "scope": "scss",
+    "prefix": ["type", "$display-04"],
+    "body": "@include type-style('display-04')",
+    "description": "Carbon typography token - display"
+  },
+  "type-style('fluid-heading-03')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-heading-03"],
+    "body": "@include type-style('fluid-heading-03')",
+    "description": "Carbon typography token - fluid heading (responsive)"
+  },
+  "type-style('fluid-heading-04')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-heading-04"],
+    "body": "@include type-style('fluid-heading-04')",
+    "description": "Carbon typography token - fluid heading (responsive)"
+  },
+  "type-style('fluid-heading-05')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-heading-05"],
+    "body": "@include type-style('fluid-heading-05')",
+    "description": "Carbon typography token - fluid heading (responsive)"
+  },
+  "type-style('fluid-heading-06')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-heading-06"],
+    "body": "@include type-style('fluid-heading-06')",
+    "description": "Carbon typography token - fluid heading (responsive)"
+  },
+  "type-style('fluid-paragraph-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-paragraph-01"],
+    "body": "@include type-style('fluid-paragraph-01')",
+    "description": "Carbon typography token - fluid paragraph (responsive)"
+  },
+  "type-style('fluid-quotation-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-quotation-01"],
+    "body": "@include type-style('fluid-quotation-01')",
+    "description": "Carbon typography token - fluid quotation (responsive)"
+  },
+  "type-style('fluid-quotation-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-quotation-02"],
+    "body": "@include type-style('fluid-quotation-02')",
+    "description": "Carbon typography token - fluid quotation (responsive)"
+  },
+  "type-style('fluid-display-01')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-display-01"],
+    "body": "@include type-style('fluid-display-01')",
+    "description": "Carbon typography token - fluid display (responsive)"
+  },
+  "type-style('fluid-display-02')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-display-02"],
+    "body": "@include type-style('fluid-display-02')",
+    "description": "Carbon typography token - fluid display (responsive)"
+  },
+  "type-style('fluid-display-03')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-display-03"],
+    "body": "@include type-style('fluid-display-03')",
+    "description": "Carbon typography token - fluid display (responsive)"
+  },
+  "type-style('fluid-display-04')": {
+    "scope": "scss",
+    "prefix": ["type", "$fluid-display-04"],
+    "body": "@include type-style('fluid-display-04')",
+    "description": "Carbon typography token - fluid display (responsive)"
+  }
+}

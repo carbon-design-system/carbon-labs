@@ -1,0 +1,112 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * WARNING: installed by @carbon-labs/vscode-snippets - local updates will be lost on package install
+ */
+{
+  "$spacing-01 (0.125rem 2px)": {
+    "scope": "scss",
+    "prefix": "$spacing-01",
+    "body": "$$spacing-01",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-02 (0.25rem 4px)": {
+    "scope": "scss",
+    "prefix": "$spacing-02",
+    "body": "$$spacing-02",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-03 (0.5rem 8px)": {
+    "scope": "scss",
+    "prefix": "$spacing-03",
+    "body": "$$spacing-03",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-04 (0.75rem 12px)": {
+    "scope": "scss",
+    "prefix": "$spacing-04",
+    "body": "$$spacing-04",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-05 (1rem 16px)": {
+    "scope": "scss",
+    "prefix": "$spacing-05",
+    "body": "$$spacing-05",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-06 (1.5rem 24px)": {
+    "scope": "scss",
+    "prefix": "$spacing-06",
+    "body": "$$spacing-06",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-07 (2rem 32px)": {
+    "scope": "scss",
+    "prefix": "$spacing-07",
+    "body": "$$spacing-07",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-08 (2.5rem 40px)": {
+    "scope": "scss",
+    "prefix": "$spacing-08",
+    "body": "$$spacing-08",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-09 (3rem 48px)": {
+    "scope": "scss",
+    "prefix": "$spacing-09",
+    "body": "$$spacing-09",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-10 (4rem 64px)": {
+    "scope": "scss",
+    "prefix": "$spacing-10",
+    "body": "$$spacing-10",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-11 (5rem 80px)": {
+    "scope": "scss",
+    "prefix": "$spacing-11",
+    "body": "$$spacing-11",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-12 (6rem 96px)": {
+    "scope": "scss",
+    "prefix": "$spacing-12",
+    "body": "$$spacing-12",
+    "description": "Carbon spacing token"
+  },
+  "$spacing-13 (10rem 160px)": {
+    "scope": "scss",
+    "prefix": "$spacing-13",
+    "body": "$$spacing-13",
+    "description": "Carbon spacing token"
+  },
+  "$fluid-spacing-01": {
+    "scope": "scss",
+    "prefix": "$fluid-spacing-01",
+    "body": "$$fluid-spacing-01",
+    "description": "Carbon fluid spacing token (responsive)"
+  },
+  "$fluid-spacing-02": {
+    "scope": "scss",
+    "prefix": "$fluid-spacing-02",
+    "body": "$$fluid-spacing-02",
+    "description": "Carbon fluid spacing token (responsive)"
+  },
+  "$fluid-spacing-03": {
+    "scope": "scss",
+    "prefix": "$fluid-spacing-03",
+    "body": "$$fluid-spacing-03",
+    "description": "Carbon fluid spacing token (responsive)"
+  },
+  "$fluid-spacing-04": {
+    "scope": "scss",
+    "prefix": "$fluid-spacing-04",
+    "body": "$$fluid-spacing-04",
+    "description": "Carbon fluid spacing token (responsive)"
+  }
+}

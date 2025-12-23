@@ -1692,6 +1692,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/vscode-snippets@workspace:packages/vscode-snippets":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/vscode-snippets@workspace:packages/vscode-snippets"
+  dependencies:
+    "@jest/globals": "npm:^29.7.0"
+    jest: "npm:^29.7.0"
+    rimraf: "npm:^6.0.1"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/wc-ai-feedback@workspace:packages/web-components/src/components/feedback":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/wc-ai-feedback@workspace:packages/web-components/src/components/feedback"

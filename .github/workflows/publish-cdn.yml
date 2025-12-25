@@ -19,10 +19,10 @@ jobs:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
         with:
           fetch-depth: '0'
-      - name: Use Node.js 18.x
+      - name: Use Node.js version from .nvmrc
         uses: actions/setup-node@v6
         with:
-          node-version: '18.x'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install

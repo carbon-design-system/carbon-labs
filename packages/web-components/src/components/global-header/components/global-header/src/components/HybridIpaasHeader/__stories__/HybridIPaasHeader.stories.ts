@@ -180,7 +180,7 @@ const capabilityProfileFooterLinks = [
     text: 'About us',
     href: '#',
     arialLabel: 'About us',
-    carbonIcon: 'InformationSquareFilled',
+    carbonIcon: 'UserProfile',
   },
   {
     text: 'Helpful link',

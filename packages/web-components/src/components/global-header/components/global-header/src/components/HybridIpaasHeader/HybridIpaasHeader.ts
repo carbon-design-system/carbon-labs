@@ -54,9 +54,15 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Function }) aiCallback: (() => void) | undefined;
   @property({ type: String }) aiCallbackEvent = '';
   @property({ type: Function }) logoutCallback: (() => void) | undefined;
+  @property({ type: String }) logoutCallbackEvent = '';
   @property({ type: Function }) notificationOpenCallback:
     | (() => void)
     | undefined;
+  @property({ type: String }) notificationOpenCallbackEvent = '';
+  @property({ type: Function }) searchCallback: (() => void) | undefined;
+  @property({ type: String }) searchCallbackEvent = '';
+  @property({ type: Function }) searchSubmitCallback: (() => void) | undefined;
+  @property({ type: String }) searchSubmitCallbackEvent = '';
   @property({ type: Boolean }) hasNewNotifications = false;
   @property({ type: Object }) searchConfigs: SearchConfigs | null = null;
   @property({ type: Array })
@@ -142,6 +148,14 @@ export class HybridIpaasHeader extends LitElement {
 
     if (this.logoutCallback) {
       footerLink.onClickHandler = this.logoutCallback;
+    } else if (this.logoutCallbackEvent) {
+      footerLink.onClickHandler = () => {
+        const event = new CustomEvent(this.logoutCallbackEvent, {
+          bubbles: true,
+          cancelable: true,
+        });
+        this.dispatchEvent(event);
+      };
     } else {
       footerLink.href = `${this.basePath}/logout`;
     }
@@ -251,12 +265,47 @@ export class HybridIpaasHeader extends LitElement {
         onClick: this.notificationOpenCallback,
       };
     }
+    if (this.notificationOpenCallbackEvent) {
+      updatedOptions.notificationConfigs = {
+        onClick: () => {
+          const event = new CustomEvent(this.notificationOpenCallbackEvent, {
+            bubbles: true,
+            cancelable: true,
+          });
+          this.dispatchEvent(event);
+        },
+      };
+    }
 
     if (this.searchConfigs) {
       updatedOptions.searchConfigs = {
         placeholder: this.searchConfigs?.placeholder ?? 'Search',
         callback: this.searchConfigs?.callback,
         submitCallback: this.searchConfigs?.submitCallback,
+      };
+    }
+
+    if (this.searchCallbackEvent) {
+      updatedOptions.searchConfigs = {
+        callback: () => {
+          const event = new CustomEvent(this.searchCallbackEvent, {
+            bubbles: true,
+            cancelable: true,
+          });
+          this.dispatchEvent(event);
+        },
+      };
+    }
+
+    if (this.searchSubmitCallbackEvent) {
+      updatedOptions.searchConfigs = {
+        submitCallback: () => {
+          const event = new CustomEvent(this.searchSubmitCallbackEvent, {
+            bubbles: true,
+            cancelable: true,
+          });
+          this.dispatchEvent(event);
+        },
       };
     }
 

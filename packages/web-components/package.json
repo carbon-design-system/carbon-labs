@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/web-components",
-  "version": "0.103.0",
+  "version": "0.107.0",
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",
@@ -23,8 +23,8 @@
     "storybook": "storybook dev -p 6007",
     "generate": "node tasks/generate",
     "storybook:build": "npx storybook build",
-    "test": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve && yarn test:wc-global-header",
-    "test:updateSnapshot": "yarn build && web-test-runner \"src/components/**/*.test.js\" --node-resolve --update-snapshots",
+    "test": "yarn build && web-test-runner \"src/components/**/!(global-header)/__tests__/*.test.js\" --node-resolve && yarn test:wc-global-header",
+    "test:updateSnapshot": "yarn build && web-test-runner \"src/components/**/!(global-header)/__tests__/*.test.js\" --node-resolve --update-snapshots && lerna run test --scope '@carbon-labs/wc-global-header' -- --update-snapshots",
     "test:wc-global-header": "lerna run test --scope '@carbon-labs/wc-global-header'"
   },
   "dependencies": {

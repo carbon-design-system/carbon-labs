@@ -29,8 +29,18 @@
         {
           "label": "eyebeemdev",
           "href": "#",
-          "carbonIcon": "Checkmark",
+          "carbonIcon": "Checkmark"
+        },
+        {
+          "label": "eyebeem-public-dev-08",
+          "href": "#",
           "isLastInList": true
+        },
+        {
+          "label": "Manage environments",
+          "href": "https://ibm.com",
+          "carbonIcon": "Settings",
+          "isLinkItem": true
         }
       ]
     }

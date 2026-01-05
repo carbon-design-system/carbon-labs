@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.107.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.106.0...@carbon-labs/web-components@0.107.0) (2026-01-05)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.106.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.105.0...@carbon-labs/web-components@0.106.0) (2026-01-05)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.105.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.104.0...@carbon-labs/web-components@0.105.0) (2025-12-23)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.104.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.102.0...@carbon-labs/web-components@0.104.0) (2025-12-19)
+
+
+### Bug Fixes
+
+* **global-header:** Exclude react and react-dom from vite build ([#950](https://github.com/carbon-design-system/carbon-labs/issues/950)) ([bdd3c45](https://github.com/carbon-design-system/carbon-labs/commit/bdd3c45b3fa74fe6f69d5975431f1208ae126ab5))
+* **global-header:** Export HybridIpaasHeaderReactWrapper correctly ([#949](https://github.com/carbon-design-system/carbon-labs/issues/949)) ([1ebedee](https://github.com/carbon-design-system/carbon-labs/commit/1ebedeef8c47bbd6bf2e5147e714e4ef215598f9))
+
+
+### Features
+
+* **global-header:** Introduce React wrapper for Hybrid iPaaS Header ([#946](https://github.com/carbon-design-system/carbon-labs/issues/946)) ([a3eea61](https://github.com/carbon-design-system/carbon-labs/commit/a3eea6153109c63450ceb8445ffbcc2fbcc507ba))
+
+
+
+
+
 # [0.103.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.102.0...@carbon-labs/web-components@0.103.0) (2025-12-16)
 
 

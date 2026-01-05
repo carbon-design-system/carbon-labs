@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.14.0...@carbon-labs/wc-example-button@0.15.0) (2025-12-19)
+
+
+### Bug Fixes
+
+* **global-header:** Exclude react and react-dom from vite build ([#950](https://github.com/carbon-design-system/carbon-labs/issues/950)) ([bdd3c45](https://github.com/carbon-design-system/carbon-labs/commit/bdd3c45b3fa74fe6f69d5975431f1208ae126ab5))
+
+
+
+
+
 # [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.13.0...@carbon-labs/wc-example-button@0.14.0) (2025-12-16)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/web-components",
-  "version": "0.108.0",
+  "version": "0.109.0",
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",

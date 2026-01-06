@@ -37,3 +37,7 @@
   justify-content: flex-end;
   block-size: 100%;
 }
+
+.#{automation.$namespace-prefix}__side-nav-items {
+  overflow: auto;
+}

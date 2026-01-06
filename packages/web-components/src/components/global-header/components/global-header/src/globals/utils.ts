@@ -33,6 +33,7 @@ import {
   User24,
   User32,
   UserFollow16,
+  UserProfile16,
 } from '@carbon/icons/es';
 import { toSVG, getAttributes } from '@carbon/icon-helpers';
 import { EventProps } from '../types/Header.types';
@@ -80,6 +81,7 @@ export const renderCarbonIcon = (
     User24,
     User32,
     UserFollow16,
+    UserProfile16,
   };
 
   const iconsRecord = CarbonIcons as Record<

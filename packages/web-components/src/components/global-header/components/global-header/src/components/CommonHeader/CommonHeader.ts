@@ -195,7 +195,8 @@ export class CommonHeader extends LitElement {
                     typeof this.headerProps.sideNav.isCollapsible !==
                       'undefined' && !this.headerProps.sideNav.isCollapsible,
                 })}">
-                <cds-custom-side-nav-items>
+                <cds-custom-side-nav-items
+                  class="${AUTOMATION_NAMESPACE_PREFIX}__side-nav-items">
                   <!-- sideNav group array render  -->
                   ${this.headerProps?.sideNav?.groups
                     ? html`

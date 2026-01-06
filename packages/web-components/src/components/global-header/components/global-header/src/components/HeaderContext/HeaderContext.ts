@@ -252,6 +252,7 @@ export class HeaderContext extends LitElement {
           role="button"
           aria-label="Launch Chat"
           tooltipAlignment="center"
+          class="${AUTOMATION_NAMESPACE_PREFIX}__globalaction"
           tabindex="${this.isTrialOpen ? -1 : 0}"
           @click="${() => this._toggleAIChat(chatBotConfigs.onClick)}">
           ${renderCarbonIcon('AiLaunch', 20, 'icon')}

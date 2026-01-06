@@ -8,10 +8,107 @@
 @use '@carbon/styles/scss/reset';
 @use '@carbon/styles/scss/theme';
 @use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
 
 :root {
   @include theme.theme(themes.$white);
 
   background-color: var(--cds-background);
   color: var(--cds-text-primary);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.container {
+  max-width: 1584px;
+  margin: 0 auto;
+  padding: spacing.$spacing-07;
+}
+
+.page-header {
+  margin-block-end: spacing.$spacing-09;
+  padding-block-end: spacing.$spacing-05;
+  border-block-end: 1px solid var(--cds-border-subtle);
+
+  h1 {
+    @include type.type-style('heading-05');
+    margin-block-end: spacing.$spacing-03;
+  }
+
+  p {
+    @include type.type-style('body-01');
+    color: var(--cds-text-secondary);
+    max-width: 42rem;
+  }
+}
+
+.variant-section {
+  margin-block-end: spacing.$spacing-10;
+
+  h2 {
+    @include type.type-style('heading-04');
+    margin-block-end: spacing.$spacing-03;
+  }
+
+  > p {
+    @include type.type-style('body-01');
+    color: var(--cds-text-secondary);
+    margin-block-end: spacing.$spacing-07;
+    max-width: 42rem;
+  }
+}
+
+.example-container {
+  margin-block-end: spacing.$spacing-07;
+}
+
+.example-section {
+  h3 {
+    @include type.type-style('heading-03');
+    margin-block-end: spacing.$spacing-05;
+  }
+
+  // Style picker story container
+  margin-inline-start: 20rem;
+}
+
+.toolbar-layer {
+  display: inline-block;
+  background-color: var(--cds-layer);
+  color: var(--cds-text-primary);
+  padding: spacing.$spacing-02;
+  border-radius: 4px;
+}
+
+.inline-tile-holder {
+  margin-block-start: spacing.$spacing-03;
+}
+
+.inline-tile {
+  display: inline-block;
+  border-inline-start-width: 0.25rem;
+  border-inline-start-style: solid;
+  max-width: 20rem;
+}
+
+.inline-tile-header {
+  display: flex;
+  align-items: start;
+  gap: spacing.$spacing-02;
+
+  h6 {
+    @include type.type-style('heading-compact-01');
+    margin: 0;
+  }
+}
+
+.inline-pictogram-secondary-text {
+  margin-block-start: spacing.$spacing-03;
+  @include type.type-style('body-01');
+  color: var(--cds-text-secondary);
 }

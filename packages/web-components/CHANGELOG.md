@@ -234,7 +234,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
->>>>>>> upstream/main
 # [0.83.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.82.0...@carbon-labs/web-components@0.83.0) (2025-10-24)
 
 **Note:** Version bump only for package @carbon-labs/web-components

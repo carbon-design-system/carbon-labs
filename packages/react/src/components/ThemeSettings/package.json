@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-theme-settings",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -41,6 +41,6 @@
     "@ibm/telemetry-js": "^1.10.2"
   },
   "peerDependencies": {
-    "@carbon-labs/utilities": "^0.19.0"
+    "@carbon-labs/utilities": "^0.20.0"
   }
 }

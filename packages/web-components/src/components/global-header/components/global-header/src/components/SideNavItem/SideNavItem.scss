@@ -11,6 +11,7 @@
 @use '@carbon/styles/scss/colors' as *;
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/utilities/convert' as *;
+@use '@carbon/styles/scss/theme' as *;
 @use '../../globals/styles/vars' as *;
 
 .ibm-automation-cds--rail-sidePanel {
@@ -18,8 +19,17 @@
 
   a.ibm-automation-cds--side-nav__link[aria-current='page']::before,
   a.ibm-automation-cds--side-nav__link--current::before {
-    background-color: #0f62fe !important;
+    background-color: $background-brand !important;
   }
+}
+
+.ibm-automation-cds--side-nav__link--current::before {
+  position: absolute;
+  background-color: $background-brand;
+  content: '';
+  inline-size: 3px;
+  inset-block: 0;
+  inset-inline-start: 0;
 }
 
 .ibm-automation-cds--side-nav__items {
@@ -51,6 +61,8 @@
 }
 
 .ibm-automation-cds--side-nav__link {
+  position: relative;
+
   img {
     margin-inline-end: 1.5rem;
     padding-block-end: 2px;

@@ -210,21 +210,21 @@ export class CommonHeader extends LitElement {
                                 return html`
                                   <clabs-global-header-side-nav-item
                                     .link="${{ ...link }}"
-                                    .isCollapsible="${this.headerProps.sideNav
+                                    ?isCollapsible="${this.headerProps.sideNav
                                       ?.isCollapsible}"
                                     .handleNavItemClick="${this
                                       .handleNavItemClick}"
                                     .isSideNavMenuItems="${link.isSideNavMenuItems}"
-                                    .isActive="${this.headerProps
+                                    ?isActive="${this.headerProps
                                       .isHybridIpaas && !link.isSideNavMenuItems
                                       ? window.location.href.includes(link.href)
                                       : link.isActive}"
-                                    .menuOpen="${this.isMenuOpen}"
-                                    .isOnClickAvailable="${typeof this
+                                    ?menuOpen="${this.isMenuOpen}"
+                                    ?isOnClickAvailable="${typeof this
                                       .headerProps?.sideNav?.onClick ===
-                                    'function'}">
-                                    .isHybridIpaas="${this.headerProps
-                                      .isHybridIpaas}"
+                                    'function'}"
+                                    ?isHybridIpaas="${this.headerProps
+                                      .isHybridIpaas}">
                                   </clabs-global-header-side-nav-item>
                                   ${
                                     // do not add a divider after the final group

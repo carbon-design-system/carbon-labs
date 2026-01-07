@@ -52,7 +52,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
->>>>>>> upstream/main
 # [0.83.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.82.0...@carbon-labs/react-ui-shell@0.83.0) (2025-10-24)
 
 

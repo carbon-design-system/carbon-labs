@@ -14,6 +14,8 @@
 
 $prefix: 'cds' !default;
 
+// profile
+
 .#{$prefix}--header-overflow-panel .#{$prefix}--toggletip-content,
 .#{$prefix}--profile .#{$prefix}--toggletip-content {
   padding: 0;
@@ -30,6 +32,10 @@ $prefix: 'cds' !default;
   .clabs--theme-settings {
     padding: $spacing-05;
     border-block-end: convert.to-rem(0.5px) solid $border-subtle;
+
+    &:not(:first-child) {
+      border-block-start: convert.to-rem(0.5px) solid $border-subtle;
+    }
   }
 }
 

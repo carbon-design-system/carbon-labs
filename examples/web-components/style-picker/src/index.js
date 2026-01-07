@@ -552,7 +552,6 @@ document.addEventListener('DOMContentLoaded', () => {
             id="tile-disclosed"
             class="inline-tile"
             style="border-inline-start: 0.25rem solid #0f62fe">
-            
             <br />
             <div class="inline-tile-header">
               <span id="inline-tile-icon-disclosed"

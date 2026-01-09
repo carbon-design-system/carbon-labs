@@ -42,6 +42,11 @@ export default {
 };
 
 // remove before merging
+
+/**
+ * Story for SideNav Bug Issue #633
+ * @returns {React.ReactElement} The JSX for the story
+ */
 export const Test = () => (
   <SideNav
     hideOverlay

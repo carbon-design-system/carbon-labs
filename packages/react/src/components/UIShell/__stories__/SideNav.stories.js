@@ -41,6 +41,63 @@ export default {
   },
 };
 
+// remove before merging
+export const Test = () => (
+  <SideNav
+    hideOverlay
+    aria-label="Side navigation"
+    navType="panel"
+    isRail
+    isChildOfHeader={false}>
+    <SideNavItems>
+      <SideNavSlot renderIcon={VirtualColumnKey}>
+        <Dropdown
+          id="default"
+          size="sm"
+          itemToString={(item) => (item ? item.text : '')}
+          items={[
+            { text: 'Option 1' },
+            { text: 'Option 2' },
+            { text: 'Option 3' },
+          ]}
+          label="Choose an option"
+          titleText="Choose an option"
+          hideLabel
+        />
+      </SideNavSlot>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+      <SideNavDivider />
+      <SideNavLink renderIcon={Fade} href="#">
+        Link
+      </SideNavLink>
+      <SideNavLink renderIcon={Fade} isActive href="#">
+        Link
+      </SideNavLink>
+      <SideNavMenu renderIcon={Fade} title="Sub-menu level 1">
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+        <SideNavMenuItem href="#">Link</SideNavMenuItem>
+      </SideNavMenu>
+    </SideNavItems>
+  </SideNav>
+);
+
 /**
  * Story for SideNav
  * @returns {React.ReactElement} The JSX for the story

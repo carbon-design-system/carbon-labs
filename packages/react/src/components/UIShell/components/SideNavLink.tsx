@@ -110,7 +110,6 @@ export const SideNavLink: SideNavLinkComponent = forwardRef(
         <SideNavLinkPopover
           align="right"
           label={children}
-          isSelected={isActive}
           className={className}
           {...rest}>
           {SideNavLinkIcon}

@@ -483,32 +483,48 @@ export function Calendar({
   const handleCreateDaySelection = useCallback(
     (dObj: Date, dStr: string, fp: any, dayElements: any) => {
 
-      if (!dObj || !dayElements || !dayElements.classList) return;
-
-      const date = dObj instanceof Date ? dObj : new Date(dObj);
+      if (!dayElements || !dayElements.classList) return;
+      const date = dayElements.dateObj ? new Date(dayElements.dateObj) : (dObj instanceof Date ? dObj : new Date(dObj));
       if (isNaN(date.getTime())) return;
 
       const weekNumber = getWeekNumber(date);
+      console.log(`Date: ${date.toDateString()}, Week: ${weekNumber}`);
+
+      const classList = Array.from(dayElements.classList) as string[];
+      classList.forEach((className) => {
+        if (className.startsWith('week-')) {
+          dayElements.classList.remove(className);
+        }
+      });
 
       if (view === 'week' || view === 'workWeek') {
         dayElements.classList.add(`week-${weekNumber}`);
+        console.log(`Added week-${weekNumber} to ${date.toDateString()}`);
       }
 
       if (view === 'week') {
         const handleMouseOver = () => {
-          fp.daysContainer.querySelectorAll(`.week-${weekNumber}`).forEach((day: any) => {
-            if (!day.classList.contains('selected') && !day.classList.contains('highlight-day')) {
-              day.classList.add('days-hovered');
-            }
+          const weekDays = fp.daysContainer.querySelectorAll(`.week-${weekNumber}`);
+          console.log(`Hovering week ${weekNumber}, found ${weekDays.length} days`);
+          weekDays.forEach((day: any) => {
+            day.classList.add('days-hovered');
           });
         };
         const handleMouseOut = () => {
           fp.daysContainer.querySelectorAll(`.week-${weekNumber}`).forEach((day: any) => {
-            if (!day.classList.contains('selected') && !day.classList.contains('highlight-day')) {
-              day.classList.remove('days-hovered');
-            }
+            day.classList.remove('days-hovered');
           });
         };
+        
+        if (dayElements._weekMouseOver) {
+          dayElements.removeEventListener('mouseover', dayElements._weekMouseOver);
+        }
+        if (dayElements._weekMouseOut) {
+          dayElements.removeEventListener('mouseout', dayElements._weekMouseOut);
+        }
+        
+        dayElements._weekMouseOver = handleMouseOver;
+        dayElements._weekMouseOut = handleMouseOut;
         dayElements.addEventListener('mouseover', handleMouseOver);
         dayElements.addEventListener('mouseout', handleMouseOut);
       }
@@ -520,7 +536,9 @@ export function Calendar({
           if (index !== -1) {
             for (let i = 0; i < 3; i++) {
               const target = allDays[index + i] as HTMLElement;
-              if (target && !target.classList.contains('selected') && !target.classList.contains('highlight-day')) {
+              if (target) {
+                (allDays[index] as HTMLElement).classList.add('three-day');
+                target.classList.add('three-day');
                 target.classList.add('days-hovered');
               }
             }
@@ -536,6 +554,16 @@ export function Calendar({
             }
           }
         };
+        
+        if (dayElements._threeDaysMouseOver) {
+          dayElements.removeEventListener('mouseover', dayElements._threeDaysMouseOver);
+        }
+        if (dayElements._threeDaysMouseOut) {
+          dayElements.removeEventListener('mouseout', dayElements._threeDaysMouseOut);
+        }
+        
+        dayElements._threeDaysMouseOver = handleMouseOver;
+        dayElements._threeDaysMouseOut = handleMouseOut;
         dayElements.addEventListener('mouseover', handleMouseOver);
         dayElements.addEventListener('mouseout', handleMouseOut);
       }
@@ -548,22 +576,46 @@ export function Calendar({
 
         const handleMouseOver = () => {
           fp.daysContainer.querySelectorAll(`.week-${weekNumber}`).forEach((day: any) => {
-            const currentDayOfWeek = day.dateObj.getDay();
+            const dayObj = day.dateObj;
+            const currentDayOfWeek = new Date(dayObj).getDay();
+            if (currentDayOfWeek === 0 || currentDayOfWeek === 6) {
+              day.classList.add('weekend-day');
+            }
             if (currentDayOfWeek >= 1 && currentDayOfWeek <= 5) {
-              if (!day.classList.contains('selected') && !day.classList.contains('highlight-day')) {
-                day.classList.add('days-hovered');
-              }
+              dayElements.classList.add('work-week');
+            }
+            if (
+              currentDayOfWeek >= 1 &&
+              currentDayOfWeek <= 5 &&
+              !day.classList.contains('selected') &&
+              !day.classList.contains('highlight-day')
+            ) {
+              day.classList.add('days-hovered');
             }
           });
         };
         const handleMouseOut = () => {
           fp.daysContainer.querySelectorAll(`.week-${weekNumber}`).forEach((day: any) => {
-            const currentDayOfWeek = day.dateObj.getDay();
-            if (currentDayOfWeek >= 1 && currentDayOfWeek <= 5) {
+            const dayObj = day.dateObj;
+            const currentDayOfWeek = new Date(dayObj).getDay();
+            if (
+              !day.classList.contains('selected') &&
+              !day.classList.contains('highlight-day')
+            ) {
               day.classList.remove('days-hovered');
             }
           });
         };
+        
+        if (dayElements._workWeekMouseOver) {
+          dayElements.removeEventListener('mouseover', dayElements._workWeekMouseOver);
+        }
+        if (dayElements._workWeekMouseOut) {
+          dayElements.removeEventListener('mouseout', dayElements._workWeekMouseOut);
+        }
+        
+        dayElements._workWeekMouseOver = handleMouseOver;
+        dayElements._workWeekMouseOut = handleMouseOut;
         dayElements.addEventListener('mouseover', handleMouseOver);
         dayElements.addEventListener('mouseout', handleMouseOut);
       }
@@ -1025,7 +1077,12 @@ export function Calendar({
                           focusedHeadRef.current[i] = el;
                         }}
                       >
-                        <div className={cls(`${blockClass}__table-head-date`)}>
+                        <div
+                          className={cls(
+                            `${blockClass}__table-head-date`,
+                            (device === 'sm' || device === 'xsm') && `${blockClass}__table-head-sm-date`
+                          )}
+                        >
                           {dayOfWeek}&nbsp;{dateContent}
                         </div>
                       </th>
@@ -1097,12 +1154,28 @@ export function Calendar({
                 hours.map((hour) => {
                   const hourNum = hourStringToHourNumber(hour);
                   const isHalfRow = hourNum === -1 || hourNum === 24;
+                  const hour24 = parseInt(hour);
+                  const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+                  const amPm = hour24 < 12 || hour24 === 24 ? 'AM' : 'PM';
+
+                  const currentHour = today.getHours();
+                  const currentMinutes = today.getMinutes();
+                  const isCurrentHour = hour24 === currentHour;
+        
+                  const isNearestHour =
+                    (hour24 === currentHour + 1 && currentMinutes >= 45) ||
+                    (hour24 === currentHour % 24 && currentMinutes < 15);
 
                   const showTimeline =
                     !isHalfRow &&
                     hour !== '-1' &&
                     hour !== '24' &&
                     currentDay.toDateString() === today.toDateString();
+
+                  const isToday = currentDay.toDateString() === today.toDateString();
+                  const shouldHideLabel =
+                    isToday &&
+                    (isNearestHour || (isCurrentHour && (currentMinutes >= 45 || currentMinutes < 15)));
 
                   return (
                     <tr key={`hour-${hour}`} className={cls(isHalfRow && `${blockClass}__half-row`)}>
@@ -1128,7 +1201,11 @@ export function Calendar({
                             (device === 'xsm' || device === 'sm') && `${blockClass}__hour-label-sm`
                           )}
                         >
-                          {!isHalfRow ? <span>{hour}</span> : null}
+                          {hourNum !== -1 && !shouldHideLabel ? (
+                            <span>
+                              <span>{hour12}</span> <span>{amPm}</span>
+                            </span>
+                          ) : null}
                         </div>
                       </th>
 
@@ -1147,6 +1224,9 @@ export function Calendar({
 
                         const isFocused = focusedDate ? merged.getTime() === focusedDate.getTime() : false;
                         const focusable = !isHalfRow;
+
+                        const tillCurrentDay = d <= today;
+                        const showTimelineInCell = tillCurrentDay && currentDay.toDateString() === today.toDateString() && !isHalfRow;
 
                         return (
                           <td
@@ -1168,6 +1248,14 @@ export function Calendar({
                               focusedCellRef.current[merged.getTime()] = el;
                             }}
                           >
+                            {showTimelineInCell && (
+                              <Timeline
+                                blockClass={blockClass}
+                                hour={hour}
+                                onPositionChange={setCurrentTimePercent}
+                                locale={locale}
+                              />
+                            )}
                             {renderSlot({
                               view,
                               date: d,

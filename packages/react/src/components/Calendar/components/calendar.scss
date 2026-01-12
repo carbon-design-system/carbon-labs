@@ -1,0 +1,730 @@
+/**
+ * Copyright IBM Corp. 2024
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use "@carbon/react/scss/theme" as *;
+@use "@carbon/react/scss/spacing" as *;
+@use "@carbon/react/scss/colors" as *;
+@use "@carbon/react/scss/motion" as *;
+@use "@carbon/react/scss/type" as *;
+@use "@carbon/styles/scss/utilities/button-reset";
+
+$prefix: 'clabs' !default;
+$block: '#{$prefix}--calendar' !default;
+
+
+.#{$block} {
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: $background;
+  padding: 0 $spacing-05 $spacing-05;
+}
+
+// Toolbar styles
+
+.#{$block}__toolbar {
+  width: 100%;
+  margin: auto;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  flex: 0 0 auto;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.#{$block}__toolbar-left {
+  display: flex;
+  align-items: center;
+  padding: $spacing-05 0;
+}
+
+.#{$block}__toolbar-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+
+  padding: $spacing-05 0 0 0;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  >* {
+    flex: 0 1 auto;
+  }
+}
+
+.#{$block}__toolbar-right-start {
+  display: flex;
+  align-items: center;
+  padding: 0 0 $spacing-05 0;
+  flex: 1;
+  margin-inline-start: auto;
+}
+
+.#{$block}__toolbar-right-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex: 1;
+  margin: 0 0 0 $spacing-04;
+  padding: 0 0 $spacing-05 0;
+}
+
+.#{$block}__toolbar-sm {
+  justify-content: flex-start;
+
+  .#{$block}__toolbar-left {
+    flex: 0;
+  }
+
+  .#{$block}__toolbar-right {
+    justify-content: flex-start;
+  }
+
+  .#{$block}__toolbar-right-end {
+    justify-content: flex-start;
+  }
+}
+
+.#{$block}__toolbar-small {
+  .#{$block}__toolbar-right-end {
+    justify-content: flex-start;
+  }
+}
+
+.#{$block}__switcher {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex: 1;
+  height: 100%;
+}
+
+.#{$block}__toolbar-title {
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+  font-size: $spacing-05;
+  padding: 0 $spacing-05;
+
+  span {
+    display: flex;
+
+    >span {
+      margin-inline-start: $spacing-03;
+    }
+  }
+}
+
+.#{$block}__link {
+  cursor: pointer;
+}
+
+.#{$block}__arrows {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.#{$block}__date-picker {
+  display: flex;
+  align-items: center;
+}
+
+.#{$block}__create-event {
+  margin-inline-start: $spacing-05;
+}
+
+.#{$block}__dropdown-view {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex: 1;
+  height: 100%;
+  margin-inline-start: $spacing-03;
+  max-width: calc($spacing-13 * 4);
+
+  >div {
+    min-width: calc($spacing-08 + $spacing-12);
+    flex: 1;
+  }
+
+  +button {
+    margin-inline-start: $spacing-05;
+  }
+}
+
+/* Calendar body */
+
+.#{$block}__body {
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  align-items: flex-start;
+  max-height: calc(100% - ($spacing-03 + $spacing-10));
+
+  position: relative;
+  overflow: hidden;
+}
+
+.#{$block}__calendar {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  position: relative;
+  overflow: auto;
+}
+
+.#{$block}__calendar.#{$block}__date-picker-open {
+  width: calc(100% - ($spacing-07 + $spacing-12 + $spacing-13));
+}
+
+.#{$block}__date-picker-overlay {
+  position: fixed;
+  inset: 0;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition-property: opacity, visibility;
+  transition-duration: $duration-moderate-01;
+  @include motion(exit, expressive);
+
+  &.#{$block}__date-picker-overlay-show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+
+    z-index: 999;
+    transition-property: opacity, visibility;
+    transition-duration: $duration-moderate-01;
+    @include motion(entrance, expressive);
+  }
+}
+
+/* Datepicker panel */
+.#{$block}__date-picker-panel {
+  flex: 0 0 auto;
+  height: 100%;
+  max-width: 100%;
+  width: 0;
+
+  overflow: hidden;
+  z-index: 3;
+
+  transition-property: width;
+  transition-duration: $duration-moderate-01;
+  transition-behavior: allow-discrete;
+  @include motion(exit, expressive);
+
+  .cds--date-picker {
+    display: none;
+    opacity: 0;
+
+    transition-property: opacity, display;
+    transition-duration: $duration-moderate-01;
+    transition-behavior: allow-discrete;
+    @include motion(exit, expressive);
+  }
+
+  &.#{$block}__date-picker-border {
+    border-inline-end: 1px solid $border-subtle-02;
+  }
+
+  &.#{$block}__date-picker-slide {
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0;
+  }
+
+  &.#{$block}__date-picker-open {
+    width: calc($spacing-07 + $spacing-12 + $spacing-13);
+
+    transition-property: width;
+    transition-duration: $duration-moderate-01;
+    transition-behavior: allow-discrete;
+    @include motion(entrance, expressive);
+
+    .cds--date-picker {
+      display: flex;
+      opacity: 1;
+
+      transition-property: opacity, display;
+      transition-duration: $duration-moderate-01;
+      transition-behavior: allow-discrete;
+      @include motion(entrance, expressive);
+    }
+  }
+
+  .cds--label {
+    display: none;
+  }
+
+  &.#{$block}__date-picker-panel-modal {
+    position: absolute;
+    inset: 0;
+
+    background-color: $background;
+    z-index: 1000;
+
+    border-inline-end: none;
+  }
+}
+
+.#{$block}__date-picker-close-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: $spacing-05;
+  margin-bottom: $spacing-05;
+}
+
+.#{$block}__date-picker-icon,
+.#{$block}__date-picker-close {
+  flex: 0 0 auto;
+}
+
+/* datepicker styles modified */
+
+.flatpickr-calendar {
+  padding: 0.25rem 0.25rem 0.5rem 0.25rem;
+  block-size: 21rem;
+  inline-size: 18rem;
+  margin-block-start: -0.125rem;
+}
+
+.flatpickr-calendar,
+.flatpickr-calendar.inline {
+  overflow: visible;
+  max-block-size: 40rem;
+}
+
+/* Day cells */
+
+.#{$block}__day {
+  position: relative;
+  min-height: calc(100% / 5);
+  padding: $spacing-03 $spacing-05;
+
+  .#{$block}__day-number {
+    color: $text-secondary;
+  }
+
+  p {
+    color: #a6a6a6;
+  }
+
+  &.selected {
+    .#{$block}__day-number {
+      color: $text-primary;
+    }
+
+    p {
+      color: #000;
+    }
+  }
+
+  &.current {
+    p {
+      color: $text-on-color;
+    }
+
+    .#{$block}__current-timeline {
+      height: $spacing-01;
+      border-style: solid;
+      background: $border-interactive;
+
+      &:before {
+        content: "";
+        border: 1.5px solid $border-interactive;
+        border-radius: calc($spacing-04 / 2);
+        height: calc($spacing-04 / 2);
+        width: calc($spacing-04 / 2);
+        display: block;
+        z-index: 2;
+        position: absolute;
+        background: $background;
+        inset-inline-start: 0;
+      }
+    }
+
+    .#{$block}__day-number {
+      position: relative;
+      font-weight: bold;
+      color: $interactive;
+
+      &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 1.2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: $spacing-02;
+        height: $spacing-02;
+        background-color: $interactive;
+      }
+    }
+  }
+
+  &.highlight-up {
+    background-color: $field-hover-01;
+  }
+}
+
+.#{$block}__day-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.#{$block}__day-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  .#{$block}__more-button {
+    @include button-reset.reset;
+    font-size: $spacing-04;
+    color: $link-primary;
+
+    &:hover {
+      color: $link-primary-hover;
+    }
+  }
+}
+
+.#{$block}__current-timeline {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  position: absolute;
+  z-index: 3;
+  inset-inline-start: 0;
+
+  width: 100%;
+  height: 1.5px;
+  padding: 0 $spacing-03;
+
+
+  &.active {
+    border-color: $border-interactive;
+    background-image: linear-gradient(to right, $border-interactive 30%, $background 10%);
+    background-position: bottom;
+    background-size: 8px;
+    background-repeat: repeat-x;
+  }
+
+  .#{$block}__current-timeline-label {
+    z-index: 3;
+    top: 0px;
+    font-size: 12px;
+    color: $link-primary;
+    text-align: right;
+    position: relative;
+  }
+}
+
+.#{$block}__table td:not(:first-child) {
+  .#{$block}__current-timeline-label {
+    display: none;
+  }
+}
+
+.#{$block}__day-events {
+  width: 100%;
+}
+
+.#{$block}__month-cell {
+  .#{$block}__day-events {
+    max-width: 100%;
+    padding-top: $spacing-06;
+  }
+}
+
+.#{$block}__day-cell {
+  .#{$block}__day-events {
+    display: flex;
+    padding-top: 0;
+  }
+
+  .#{$block}__event+.#{$block}__event {
+    margin-inline-start: $spacing-05;
+  }
+}
+
+.#{$block}__week-cell {
+  .#{$block}__day-events {
+    padding-top: 0;
+  }
+}
+
+/* table styles */
+
+.#{$block} th.current-day {
+  background-color: $layer-selected-hover-01;
+}
+
+.#{$block} tbody .#{$block}__hour-col {
+  border: none;
+}
+
+.#{$block} tbody .#{$block}__half-row {
+  height: 22px;
+
+  td,
+  th[scope="row"] {
+    min-height: 1rem;
+    padding: 0;
+  }
+
+  &:last-child {
+    .#{$block}__hour-col {
+      border-bottom: 1px solid $border-subtle-02;
+    }
+  }
+
+  &:last-of-type {
+    td:first-of-type {
+      border-block-end: 1px solid $border-subtle-02;
+    }
+  }
+}
+
+.#{$block}__table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: fixed;
+
+  width: 100%;
+  height: 100%;
+
+  thead {
+    @include type-style("heading-compact-01");
+    background-color: $layer-accent;
+  }
+
+  tbody {
+    flex-direction: column;
+    background-color: $layer;
+    inline-size: 100%;
+    will-change: transform;
+    @include type-style("body-compact-01");
+
+    tr:hover {
+      background-color: $background;
+    }
+  }
+
+  th {
+    border-block-end: 1px solid $layer-active;
+    background-color: $layer-accent;
+    color: $text-primary;
+
+    padding-inline-end: 1rem;
+    padding-inline-start: 1rem;
+
+    &.#{$block}__th-sm {
+      padding-inline-end: 0.5rem;
+      padding-inline-start: 0.5rem;
+    }
+
+    &:not([scope="row"])>div {
+      display: flex;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-block: 1rem;
+      width: 100%;
+    }
+  }
+
+  td {
+    position: relative;
+    background: $background;
+
+    border-block-end: 1px solid $border-subtle-02;
+    border-inline-end: 1px solid $border-subtle-02;
+
+    min-height: $spacing-09;
+    padding-block-start: 0.875rem;
+
+    &:first-of-type {
+      border-inline-start: 1px solid $border-subtle-02;
+      border-inline-end: 1px solid $border-subtle-02;
+    }
+  }
+
+  th,
+  td {
+    text-align: start;
+    vertical-align: middle;
+    min-inline-size: 0;
+  }
+
+  tr {
+    border: none;
+    block-size: 3rem;
+    inline-size: 100%;
+  }
+
+  &.#{$block}__table-sticky {
+    max-height: 100%;
+
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      will-change: transform;
+    }
+
+    tbody {
+      height: calc(100% - $spacing-09);
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+
+      .#{$block}__date-picker-open &:first-child {
+        border-left: 1px solid $border-subtle-02;
+      }
+    }
+
+    th[scope="row"] {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      background-color: $background;
+    }
+  }
+
+  &.#{$block}__table-scroll {
+    th:not([scope="row"]):first-child {
+      left: 0;
+      z-index: 3;
+    }
+  }
+
+  &.#{$block}__table-sm,
+  &.#{$block}__table-xsm {
+    min-width: 320px;
+
+    td,
+    th {
+      padding-inline-end: 0.5rem;
+      padding-inline-start: 0.5rem;
+      min-width: 2.5rem;
+    }
+  }
+}
+
+.cds--date-picker__icon,
+.cds--date-picker__input {
+  display: none;
+}
+
+.cds--date-picker {
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.cds--date-picker-container {
+  width: 100%;
+}
+
+.cds--date-picker--range .cds--date-picker-container,
+.cds--date-picker--range .cds--date-picker__input {
+  inline-size: auto;
+}
+
+
+.flatpickr-day {
+  &:not(.selected).days-hovered {
+    background-color: $layer-hover-01;
+  }
+
+  &.three-day:not(.selected).days-hovered {
+    background-color: $layer-hover-01;
+  }
+
+  &.weekend-day.cds--date-picker__day:not(.selected):not(.highlight-day):hover {
+    background-color: transparent;
+  }
+
+  &.work-week:not(.selected).days-hovered {
+    background-color: $layer-hover-01;
+  }
+
+  &.highlight-day {
+    background-color: $highlight;
+
+    &:not(.three-day):not(.days-hovered):hover {
+      background-color: $highlight;
+    }
+
+    &:not(.work-week):not(.days-hovered):hover {
+      background-color: $highlight;
+    }
+  }
+
+  &.selected {
+    background-color: $highlight;
+    color: $text-primary;
+
+    &.week-day:not(.highlight-day) {
+      background-color: transparent;
+      outline: none;
+    }
+  }
+}
+
+.flatpickr-calendar {
+  &:focus-visible {
+    outline: 1px solid $border-interactive;
+  }
+}
+
+@mixin generate-week-hover() {
+  @for $i from 1 through 52 {
+
+    .flatpickr-day.week-#{$i}:not(.selected):not(.highlight-day):hover,
+    .flatpickr-day.week-#{$i}:not(.selected):not(.highlight-day).days-hovered {
+      background-color: $layer-hover-01;
+    }
+  }
+}
+
+@include generate-week-hover();

@@ -1,0 +1,65 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CalendarStories from './Calendar.stories';
+import Calendar from '../components/Calendar';
+
+<Meta isTemplate />
+
+# Calendar
+
+- **Initiative owner(s):** Jagath Jayakumar
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Calendar)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/Calendar)
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Getting started](#getting-started)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+The calendar is a full-page component that provides the users with a view of a selected month, week or day. The calendar can be used to display events in a summarized month view, or as a granular breakdown of days by hourly increments. The specified month, week or day that is displayed can be controlled through the mini calendar view or by using the arrows to jump to the previous or next date or date range. The user can also jump to the current date to see today’s information. 
+
+<Canvas of={CalendarStories.Default} />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-calendar
+```
+
+### JS (via import)
+
+```javascript
+import { Calendar } from '@carbon-labs/react-calendar/es/index';
+
+function App() {
+  return <Calendar />;
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```
+@use '@carbon/react';
+@use '@carbon-labs/react-calendar/scss/calendar';
+```

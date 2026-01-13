@@ -181,7 +181,7 @@ export class HybridIpaasHeader extends LitElement {
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
-        backendProxy: '/hybrid-ipaas/v1/proxies/solis/backend'
+        backendProxy: '/hybrid-ipaas/v1/proxies/solis/backend',
       };
     } else {
       return {
@@ -191,7 +191,7 @@ export class HybridIpaasHeader extends LitElement {
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
-        backendProxy: '/hybrid-ipaas/v1/proxies/solis/backend'
+        backendProxy: '/hybrid-ipaas/v1/proxies/solis/backend',
       };
     }
   }

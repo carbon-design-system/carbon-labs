@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.110.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.109.0...@carbon-labs/web-components@0.110.0) (2026-01-13)
+
+
+### Features
+
+* adding a backend prop to talk to the solis backend directly ([#971](https://github.com/carbon-design-system/carbon-labs/issues/971)) ([53f6947](https://github.com/carbon-design-system/carbon-labs/commit/53f69476c48cc27e083ce7986f74c7ed20899073))
+
+
+
+
+
 # [0.109.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.108.0...@carbon-labs/web-components@0.109.0) (2026-01-06)
 
 **Note:** Version bump only for package @carbon-labs/web-components

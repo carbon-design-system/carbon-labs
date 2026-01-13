@@ -168,7 +168,7 @@ export class HybridIpaasHeader extends LitElement {
       isEnabled: this.solisSidekickEnabled,
       scriptUrl: SOLIS_CDN_HOSTNAMES[env] + '/sidekick/solis-sidekick.es.js',
       insights_enabled: true,
-      reports_enabled: true,
+      overview_enabled: true,
       chat_enabled: false,
       tell_me_more_enabled: false,
     };

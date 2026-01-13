@@ -1,7 +1,7 @@
 /**
  * @license
  *
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,6 +11,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 
 import { DatePicker, DatePickerInput, IconButton } from '@carbon/react';
+import { SidePanelClose } from '@carbon/icons-react';
 
 import { CalendarHeader } from './CalendarHeader';
 import { Timeline } from './CalendarTimeline';
@@ -226,12 +227,48 @@ export function Calendar({
     return observeSize(el, () => {
       const w = el.offsetWidth;
       if (w <= 320) setDevice('xsm');
-      else if (w <= 672) setDevice('sm');
-      else if (w <= 1056) setDevice('md');
-      else if (w <= 1312) setDevice('lg');
+      else if (w <= 576) setDevice('sm');
+      else if (w <= 768) setDevice('md');
+      else if (w <= 1056) setDevice('lg');
       else setDevice('xlg');
     });
   }, []);
+
+  useEffect(() => {
+    if (!datePickerRef?.current?.calendar) return;
+
+    setTimeout(() => {
+      const calendarContainer = datePickerRef?.current?.calendar?.calendarContainer;
+
+      if (calendarContainer) {
+        // Set tabindex to -1 so it can receive focus but not be in tab order
+        calendarContainer.setAttribute('tabindex', '-1');
+
+        datePickerRef?.current.calendar.set('onReady', () => {
+          // Set tabindex to -1
+          calendarContainer.setAttribute('tabindex', '-1');
+
+          // Make all inner elements non-focusable
+          const focusableElements = calendarContainer.querySelectorAll(
+            'input, button, select, textarea, a[href], [tabindex]:not([tabindex="-1"])'
+          );
+          focusableElements.forEach((el: Element) => {
+            el.setAttribute('tabindex', '-1');
+          });
+        });
+
+        // Make all inner elements non-focusable immediately
+        const focusableElements = calendarContainer.querySelectorAll(
+          'input, button, select, textarea, a[href], [tabindex]:not([tabindex="-1"])'
+        );
+        focusableElements.forEach((el: Element) => {
+          el.setAttribute('tabindex', '-1');
+        });
+      }
+    }, 0);
+  }, [datePickerRef, view]);
+
+
 
   useEffect(() => {
     const el = toolbarRef.current;
@@ -515,14 +552,14 @@ export function Calendar({
             day.classList.remove('days-hovered');
           });
         };
-        
+
         if (dayElements._weekMouseOver) {
           dayElements.removeEventListener('mouseover', dayElements._weekMouseOver);
         }
         if (dayElements._weekMouseOut) {
           dayElements.removeEventListener('mouseout', dayElements._weekMouseOut);
         }
-        
+
         dayElements._weekMouseOver = handleMouseOver;
         dayElements._weekMouseOut = handleMouseOut;
         dayElements.addEventListener('mouseover', handleMouseOver);
@@ -554,14 +591,14 @@ export function Calendar({
             }
           }
         };
-        
+
         if (dayElements._threeDaysMouseOver) {
           dayElements.removeEventListener('mouseover', dayElements._threeDaysMouseOver);
         }
         if (dayElements._threeDaysMouseOut) {
           dayElements.removeEventListener('mouseout', dayElements._threeDaysMouseOut);
         }
-        
+
         dayElements._threeDaysMouseOver = handleMouseOver;
         dayElements._threeDaysMouseOut = handleMouseOut;
         dayElements.addEventListener('mouseover', handleMouseOver);
@@ -606,14 +643,14 @@ export function Calendar({
             }
           });
         };
-        
+
         if (dayElements._workWeekMouseOver) {
           dayElements.removeEventListener('mouseover', dayElements._workWeekMouseOver);
         }
         if (dayElements._workWeekMouseOut) {
           dayElements.removeEventListener('mouseout', dayElements._workWeekMouseOut);
         }
-        
+
         dayElements._workWeekMouseOver = handleMouseOver;
         dayElements._workWeekMouseOut = handleMouseOut;
         dayElements.addEventListener('mouseover', handleMouseOver);
@@ -716,48 +753,12 @@ export function Calendar({
   ]);
 
 
-  const handleHeaderKeyDown = useCallback(
-    (event: React.KeyboardEvent, dayIndex: number) => {
-      event.preventDefault();
-
-      if (event.key === 'Tab' && event.shiftKey) {
-        setTableFocused(false);
-        setFocusedDay(null);
-        setTimeout(() => calendarTableRef.current?.focus(), 0);
-        return;
-      }
-
-      switch (event.key) {
-        case 'ArrowDown': {
-          if (view === 'month') {
-            const initial = monthDays.find((w) => w[`day${dayIndex}`])?.[`day${dayIndex}`]?.date;
-            if (initial) setFocusedDate(new Date(initial));
-          } else {
-            const d = new Date(visibleDatesForView[dayIndex] ?? currentDay);
-            d.setHours(0, 0, 0, 0);
-            setFocusedDate(d);
-          }
-          break;
-        }
-        case 'ArrowLeft':
-          setFocusedDay((dayIndex - 1 + 7) % 7);
-          break;
-        case 'ArrowRight':
-          setFocusedDay((dayIndex + 1) % 7);
-          break;
-        default:
-          break;
-      }
-    },
-    [currentDay, monthDays, view, visibleDatesForView]
-  );
-
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       if (!focusedDate) return;
-      event.preventDefault();
 
       const newDate = new Date(focusedDate);
+      let shouldUpdate = false;
 
       if (view === 'month') {
         const firstRowDates = monthDays[0]
@@ -791,82 +792,234 @@ export function Calendar({
         switch (event.key) {
           case 'ArrowUp':
             if (firstRowDates.includes(getDateTime(newDate))) {
+              event.preventDefault();
               const colIndex = getDayColumnIndex(newDate, effectiveWeekStartsOn);
               setFocusedDay(colIndex);
               setFocusedDate(null);
               setTimeout(() => focusedHeadRef.current[colIndex]?.focus(), 0);
               return;
             }
+            event.preventDefault();
             newDate.setDate(newDate.getDate() - 7);
+            shouldUpdate = true;
             break;
 
           case 'ArrowDown':
             if (lastRowDates.includes(getDateTime(newDate))) {
+              event.preventDefault();
               const colIndex = getDayColumnIndex(newDate, effectiveWeekStartsOn);
               setFocusedDay(colIndex);
               setFocusedDate(null);
               return;
             }
+            event.preventDefault();
             newDate.setDate(newDate.getDate() + 7);
+            shouldUpdate = true;
             break;
 
           case 'ArrowLeft':
             if (firstColumnDates.includes(getDateTime(newDate))) {
-              if (previousWeek) newDate.setTime(previousWeek.day6.date.getTime());
-              else newDate.setDate(newDate.getDate() - 1);
-            } else newDate.setDate(newDate.getDate() - 1);
+              if (previousWeek) {
+                event.preventDefault();
+                newDate.setTime(previousWeek.day6.date.getTime());
+                shouldUpdate = true;
+              }
+              // Don't prevent default if at edge - allows normal behavior
+            } else {
+              event.preventDefault();
+              newDate.setDate(newDate.getDate() - 1);
+              shouldUpdate = true;
+            }
             break;
 
           case 'ArrowRight':
             if (lastColumnDates.includes(getDateTime(newDate))) {
-              if (nextWeek) newDate.setTime(nextWeek.day0.date.getTime());
-              else newDate.setDate(newDate.getDate() + 1);
-            } else newDate.setDate(newDate.getDate() + 1);
+              if (nextWeek) {
+                event.preventDefault();
+                newDate.setTime(nextWeek.day0.date.getTime());
+                shouldUpdate = true;
+              }
+              // Don't prevent default if at edge - allows normal behavior
+            } else {
+              event.preventDefault();
+              newDate.setDate(newDate.getDate() + 1);
+              shouldUpdate = true;
+            }
             break;
 
           case 'Tab':
-            if (event.shiftKey) calendarTableRef.current?.focus();
+            if (event.shiftKey && toggleDatePicker) {
+              event.preventDefault();
+              setTableFocused(false);
+              setFocusedDate(null);
+
+              setTimeout(() => {
+                if (calendarTableRef?.current) {
+                  calendarTableRef.current.tabIndex = -1;
+                  setTableFocused(false);
+                }
+                calendarTableRef?.current?.focus();
+              }, 0);
+            }
             return;
 
           default:
             return;
         }
 
-        setFocusedDate(new Date(newDate));
+        if (shouldUpdate) {
+          setFocusedDate(new Date(newDate));
+        }
         return;
       }
 
+      // For week, day, threeDays, workWeek views (timeline views)
+      const currentHour = newDate.getHours();
+
+      // Get the visible dates for the current view
+      let visibleDates: Date[] = [];
+      switch (view) {
+        case 'week':
+          visibleDates = weekDates;
+          break;
+        case 'threeDays':
+          visibleDates = threeDayDates;
+          break;
+        case 'workWeek':
+          visibleDates = workWeekDates;
+          break;
+        case 'day':
+          visibleDates = [currentDay];
+          break;
+        default:
+          visibleDates = visibleDatesForView;
+      }
+
+      const currentDateIndex = visibleDates.findIndex(d => sameDay(d, newDate));
+      const isFirstColumn = currentDateIndex === 0;
+      const isLastColumn = currentDateIndex === visibleDates.length - 1;
+
       switch (event.key) {
         case 'ArrowUp':
-          newDate.setHours(newDate.getHours() - 1);
+          // Move up one hour
+          if (currentHour > 0) {
+            event.preventDefault();
+            newDate.setHours(currentHour - 1);
+            shouldUpdate = true;
+          }
+          // At hour 0, don't prevent default and don't try to focus header - just stay at current cell
           break;
+
         case 'ArrowDown':
-          newDate.setHours(newDate.getHours() + 1);
+          // Move down one hour - stay within 0-23 hours
+          if (currentHour < 23) {
+            event.preventDefault();
+            newDate.setHours(currentHour + 1);
+            shouldUpdate = true;
+          }
+          // At bottom (hour 23), don't prevent default - allows normal behavior
           break;
+
         case 'ArrowLeft':
-          newDate.setHours(newDate.getHours() - 1);
+          // Move to previous day at same hour - stay within visible dates
+          if (!isFirstColumn) {
+            event.preventDefault();
+            newDate.setDate(newDate.getDate() - 1);
+            shouldUpdate = true;
+          }
+          // At first column, don't prevent default - allows normal behavior
           break;
+
         case 'ArrowRight':
-          newDate.setHours(newDate.getHours() + 1);
+          // Move to next day at same hour - stay within visible dates
+          if (!isLastColumn) {
+            event.preventDefault();
+            newDate.setDate(newDate.getDate() + 1);
+            shouldUpdate = true;
+          }
+          // At last column, don't prevent default - allows normal behavior
           break;
+
+        case 'Home':
+          event.preventDefault();
+          // Jump to first hour of the day
+          newDate.setHours(0);
+          shouldUpdate = true;
+          break;
+
+        case 'End':
+          event.preventDefault();
+          // Jump to last hour of the day
+          newDate.setHours(23);
+          shouldUpdate = true;
+          break;
+
+        case 'PageUp':
+          event.preventDefault();
+          // Jump up 6 hours
+          newDate.setHours(Math.max(0, currentHour - 6));
+          shouldUpdate = true;
+          break;
+
+        case 'PageDown':
+          event.preventDefault();
+          // Jump down 6 hours
+          newDate.setHours(Math.min(23, currentHour + 6));
+          shouldUpdate = true;
+          break;
+
         case 'Tab':
-          if (event.shiftKey) calendarTableRef.current?.focus();
+          if (event.shiftKey && toggleDatePicker) {
+            event.preventDefault();
+            setTableFocused(false);
+            setFocusedDate(null);
+
+            setTimeout(() => {
+              if (calendarTableRef?.current) {
+                calendarTableRef.current.tabIndex = -1;
+                setTableFocused(false);
+              }
+              calendarTableRef?.current?.focus();
+            }, 0);
+          } else if (event.shiftKey) {
+            calendarTableRef.current?.focus();
+          }
           return;
+
         default:
           return;
       }
 
-      setFocusedDate(new Date(newDate));
+      if (shouldUpdate) {
+        setFocusedDate(new Date(newDate));
+      }
     },
-    [focusedDate, monthDays, view, effectiveWeekStartsOn]
+    [focusedDate, monthDays, view, effectiveWeekStartsOn, weekDates, threeDayDates, workWeekDates, visibleDatesForView, toggleDatePicker, currentDay]
   );
 
   useEffect(() => {
     if (!tableFocused) return;
-    if (focusedDay != null) return;
-    if (view === 'day') setFocusedDay(0);
-    else setFocusedDay(0);
-  }, [tableFocused, focusedDay, view, currentDay]);
+    if (focusedDate != null) return; // Already have a focused date, don't override
+
+    if (view === 'month') {
+      // For month view, set initial focus on first cell
+      const initial = monthDays.find((w) => w.day0)?.day0?.date;
+      if (initial) {
+        setFocusedDate(new Date(initial));
+      }
+    } else {
+      // For timeline views, set focus to first visible date at a real hour (not -1 or 24)
+      const firstDate = visibleDatesForView[0];
+      if (firstDate) {
+        const initialDate = new Date(firstDate);
+        const currentHour = now.getHours();
+        // Use current hour if between 0-23, otherwise default to 8 AM
+        const targetHour = (currentHour >= 0 && currentHour <= 23) ? currentHour : 8;
+        initialDate.setHours(targetHour, 0, 0, 0);
+        setFocusedDate(initialDate);
+      }
+    }
+  }, [tableFocused, focusedDate, view, visibleDatesForView, now, monthDays]);
 
   useEffect(() => {
     if (focusedDay == null) return;
@@ -875,17 +1028,31 @@ export function Calendar({
   }, [focusedDay]);
 
   useEffect(() => {
-    if (!tableFocused) return;
-    if (focusedDate) return;
-    const initial = monthDays.find((w) => w.day0)?.day0?.date;
-    if (initial) setFocusedDate(new Date(initial));
-  }, [tableFocused, focusedDate, monthDays]);
-
-  useEffect(() => {
     if (!focusedDate) return;
-    const el = focusedCellRef.current[focusedDate.getTime()] ?? focusedCellRef.current[getDateTime(focusedDate)];
-    if (el) setTimeout(() => el.focus(), 0);
-  }, [focusedDate]);
+
+    const attemptFocus = () => {
+      const el = focusedCellRef.current[focusedDate.getTime()] ?? focusedCellRef.current[getDateTime(focusedDate)];
+      if (el) {
+        el.focus();
+        // Scroll the focused cell into view for timeline views
+        if (view !== 'month') {
+          el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+        return true;
+      }
+      return false;
+    };
+
+    // Try immediately
+    setTimeout(() => {
+      if (!attemptFocus()) {
+        // If not found, try again after a brief delay (cell might not be rendered yet)
+        setTimeout(() => {
+          attemptFocus();
+        }, 50);
+      }
+    }, 0);
+  }, [focusedDate, view]);
 
   useEffect(() => {
     if (!scrollToCurrentTime) return;
@@ -893,10 +1060,12 @@ export function Calendar({
     const scroller = calendarTableRef.current;
     if (!scroller) return;
 
+    // Only scroll to current time on initial mount
     const approxRowHeight = 48;
     const top = Math.max(0, now.getHours() * approxRowHeight - scroller.clientHeight / 2);
     scroller.scrollTop = top;
-  }, [scrollToCurrentTime, view, now]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);  // Run only once on mount
 
   const renderSlot = (args: Parameters<NonNullable<CalendarProps['renderCell']>>[0]) =>
     renderCell ? renderCell(args) : null;
@@ -950,7 +1119,60 @@ export function Calendar({
             overlayOpen && `${blockClass}__date-picker-panel-modal`
           )}
           aria-label="date picker"
+          tabIndex={toggleDatePicker ? 0 : -1}
+          onFocus={(e) => {
+            // When aside receives focus, immediately focus the flatpickr container
+            if (e.target === e.currentTarget) {
+              const calendarContainer = datePickerRef?.current?.calendar?.calendarContainer;
+              if (calendarContainer) {
+                calendarContainer.focus();
+              }
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Tab') {
+              e.preventDefault();
+              e.stopPropagation();
+
+              if (e.shiftKey) {
+                // Backward tab - find previous focusable element
+                const asideElement = e.currentTarget as HTMLElement;
+                const allFocusable = Array.from(
+                  document.querySelectorAll<HTMLElement>(
+                    'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                  )
+                );
+                const asideIndex = allFocusable.indexOf(asideElement);
+
+                if (asideIndex > 0) {
+                  allFocusable[asideIndex - 1]?.focus();
+                }
+              } else {
+                // Forward tab - move to calendar table
+                setTimeout(() => {
+                  if (calendarTableRef?.current) {
+                    calendarTableRef.current.tabIndex = 0;
+                    calendarTableRef.current.focus();
+                  }
+                }, 0);
+              }
+            }
+          }}
         >
+          {smallDeviceSize && toggleDatePicker && (
+            <div className={`${blockClass}__date-picker-close-wrapper`}>
+              <IconButton
+                align="bottom"
+                kind="ghost"
+                label="Close date picker"
+                size="md"
+                onClick={handleDatePickerPanel}
+                className={`${blockClass}__date-picker-close`}
+              >
+                <SidePanelClose />
+              </IconButton>
+            </div>
+          )}
           <DatePicker
             value={currentDay}
             datePickerType="single"
@@ -1002,10 +1224,15 @@ export function Calendar({
                 <tr>
                   {weekdays.map((header, i) => {
                     const isFocused = focusedDay === i;
-                    const label =
-                      device === 'xsm' || device === 'sm'
-                        ? header.header.charAt(0)
-                        : header.header.slice(0, 3);
+                    let label = header.header;
+
+                    if (device === 'xsm') {
+                      label = header.header.charAt(0);
+                    } else if (device === 'sm') {
+                      label = header.header.slice(0, 3);
+                    } else {
+                      label = header.header;
+                    }
 
                     return (
                       <th
@@ -1015,14 +1242,7 @@ export function Calendar({
                           `${blockClass}__th`,
                           (device === 'xsm' || device === 'sm') && `${blockClass}__th-sm`
                         )}
-                        onKeyDown={(e) => handleHeaderKeyDown(e, i)}
-                        onFocus={() => setFocusedDay(i)}
-                        tabIndex={isFocused ? 0 : -1}
-                        aria-selected={isFocused}
                         aria-label={header.header}
-                        ref={(el) => {
-                          focusedHeadRef.current[i] = el;
-                        }}
                       >
                         <div>{label}</div>
                       </th>
@@ -1047,17 +1267,26 @@ export function Calendar({
                     const isCurrentDay = d.toDateString() === today.toDateString();
                     const isFocused = focusedDay === i;
 
-                    const dayOfWeek =
-                      device === 'xsm' || device === 'sm'
-                        ? d.toString().split(' ')[0].slice(0, 1)
-                        : d.toLocaleDateString('en-US', { weekday: 'long' });
+                    let dayOfWeek = '';
+                    let dateContent = d.toLocaleDateString('en-US', { day: 'numeric' });
 
-                    const dateContent =
-                      device === 'xsm' || device === 'sm' ? (
-                        <div>{d.toLocaleDateString('en-US', { day: 'numeric' })}</div>
-                      ) : (
-                        <div>{d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
-                      );
+                    if (view === 'day') {
+                      if (device === 'xsm') {
+                        dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'short' });
+                      } else {
+                        dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'long' });
+                      }
+                    } else {
+                      if (device === 'xsm') {
+                        dayOfWeek = d.toString().split(' ')[0].slice(0, 1);
+                      } else if (device === 'sm') {
+                        dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'short' });
+                      } else if (device === 'md') {
+                        dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'short' });
+                      } else {
+                        dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'long' });
+                      }
+                    }
 
                     return (
                       <th
@@ -1069,21 +1298,15 @@ export function Calendar({
                           (device === 'xsm' || device === 'sm') && `${blockClass}__th-sm`,
                           isCurrentDay && 'current-day'
                         )}
-                        onKeyDown={(e) => handleHeaderKeyDown(e, i)}
-                        onFocus={() => setFocusedDay(i)}
-                        tabIndex={isFocused ? 0 : -1}
-                        aria-selected={isFocused}
-                        ref={(el) => {
-                          focusedHeadRef.current[i] = el;
-                        }}
                       >
                         <div
                           className={cls(
                             `${blockClass}__table-head-date`,
-                            (device === 'sm' || device === 'xsm') && `${blockClass}__table-head-sm-date`
+                            (device === 'xsm' || device === 'sm' || device === 'md') && `${blockClass}__table-head-sm-date`
                           )}
                         >
-                          {dayOfWeek}&nbsp;{dateContent}
+                          <div>{dayOfWeek}</div>
+                          <div>{dateContent}</div>
                         </div>
                       </th>
                     );
@@ -1155,13 +1378,13 @@ export function Calendar({
                   const hourNum = hourStringToHourNumber(hour);
                   const isHalfRow = hourNum === -1 || hourNum === 24;
                   const hour24 = parseInt(hour);
-                  const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
-                  const amPm = hour24 < 12 || hour24 === 24 ? 'AM' : 'PM';
+                  const hour12 = hourNum === -1 || hour24 === 0 || hour24 === 24 || hour24 % 12 === 0 ? 12 : hour24 % 12;
+                  const amPm = hourNum === -1 || hour24 < 12 || hour24 === 24 ? 'AM' : 'PM';
 
                   const currentHour = today.getHours();
                   const currentMinutes = today.getMinutes();
                   const isCurrentHour = hour24 === currentHour;
-        
+
                   const isNearestHour =
                     (hour24 === currentHour + 1 && currentMinutes >= 45) ||
                     (hour24 === currentHour % 24 && currentMinutes < 15);
@@ -1185,6 +1408,7 @@ export function Calendar({
                           `${blockClass}__hour-col`,
                           (device === 'xsm' || device === 'sm') && `${blockClass}__hour-col-sm`
                         )}
+                        tabIndex={-1}
                       >
                         {showTimeline && (
                           <Timeline
@@ -1201,7 +1425,11 @@ export function Calendar({
                             (device === 'xsm' || device === 'sm') && `${blockClass}__hour-label-sm`
                           )}
                         >
-                          {hourNum !== -1 && !shouldHideLabel ? (
+                          {!shouldHideLabel && hourNum !== -1 && hourNum !== 24 && hourNum !== 0 ? (
+                            <span>
+                              <span>{hour12}</span> <span>{amPm}</span>
+                            </span>
+                          ) : (hourNum === 24 || hourNum === 0) ? (
                             <span>
                               <span>{hour12}</span> <span>{amPm}</span>
                             </span>
@@ -1256,14 +1484,16 @@ export function Calendar({
                                 locale={locale}
                               />
                             )}
-                            {renderSlot({
-                              view,
-                              date: d,
-                              start,
-                              end,
-                              isToday: sameDay(d, today),
-                              isCurrentTimeSlot: sameDay(d, today) && !isHalfRow && hourNum === now.getHours(),
-                            })}
+                            <div className={`${blockClass}__day-events-wrapper`}>
+                              {renderSlot({
+                                view,
+                                date: d,
+                                start,
+                                end,
+                                isToday: sameDay(d, today),
+                                isCurrentTimeSlot: sameDay(d, today) && !isHalfRow && hourNum === now.getHours(),
+                              })}
+                            </div>
                           </td>
                         );
                       })}
@@ -1283,5 +1513,8 @@ export function Calendar({
 }
 
 export default Calendar;
+
+
+
 
 

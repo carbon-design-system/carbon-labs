@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corp. 2024
+ * Copyright IBM Corp. 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -17,8 +17,8 @@ $block: '#{$prefix}--calendar' !default;
 
 
 .#{$block} {
-  height: 100%;
-  width: 100%;
+  block-size: 100%;
+  inline-size: 100%;
   position: relative;
 
   display: flex;
@@ -31,7 +31,7 @@ $block: '#{$prefix}--calendar' !default;
 // Toolbar styles
 
 .#{$block}__toolbar {
-  width: 100%;
+  inline-size: 100%;
   margin: auto;
 
   display: flex;
@@ -59,9 +59,38 @@ $block: '#{$prefix}--calendar' !default;
   padding: $spacing-05 0 0 0;
   flex-wrap: wrap;
   justify-content: space-between;
+  container-type: inline-size;
 
   >* {
-    flex: 0 1 auto;
+    flex: 1;
+  }
+}
+
+@container (max-width: 576px) {
+  .#{$block}__toolbar-right-end {
+    flex: 1 1 100%;
+
+    .#{$block}__dropdown-view {
+      margin-inline-end: auto;
+    }
+  }
+}
+
+@container (max-width: 320px) {
+  .#{$block}__toolbar-right-start {
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    row-gap: $spacing-05;
+  }
+
+  .#{$block}__toolbar-title {
+    flex: 1 1 100%;
+    order: 2;
+  }
+
+  .#{$block}__toolbar-right-end {
+    flex: 1 1 100%;
+    order: 3;
   }
 }
 
@@ -70,16 +99,12 @@ $block: '#{$prefix}--calendar' !default;
   align-items: center;
   padding: 0 0 $spacing-05 0;
   flex: 1;
-  margin-inline-start: auto;
 }
 
 .#{$block}__toolbar-right-end {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-
-  flex: 1;
-  margin: 0 0 0 $spacing-04;
   padding: 0 0 $spacing-05 0;
 }
 
@@ -94,14 +119,37 @@ $block: '#{$prefix}--calendar' !default;
     justify-content: flex-start;
   }
 
+  .#{$block}__toolbar-right-start {
+    flex: 0 0 auto;
+  }
+
+  .#{$block}__toolbar-title {
+    flex: 1 0 100%;
+    order: 2;
+  }
+
   .#{$block}__toolbar-right-end {
-    justify-content: flex-start;
+    flex: 1 0 100%;
+    justify-content: space-between;
+    order: 3;
   }
 }
 
 .#{$block}__toolbar-small {
+  .#{$block}__toolbar-right-start {
+    flex: 0 0 auto;
+    row-gap: $spacing-05;
+  }
+
+  .#{$block}__toolbar-title {
+    flex: 1 0 100%;
+    order: 2;
+  }
+
   .#{$block}__toolbar-right-end {
-    justify-content: flex-start;
+    flex: 1 0 100%;
+    justify-content: space-between;
+    order: 3;
   }
 }
 
@@ -110,23 +158,43 @@ $block: '#{$prefix}--calendar' !default;
   align-items: center;
   justify-content: flex-end;
 
-  flex: 1;
-  height: 100%;
+  flex: 0 0 auto;
+  block-size: 100%;
+  margin-inline-end: $spacing-05;
+  margin-inline-start: $spacing-05;
+}
+
+.#{$block}__switcher .cds--content-switcher {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  inline-size: auto;
+}
+
+.#{$block}__switcher .cds--content-switcher-btn {
+  inline-size: 100%;
+  min-inline-size: 0;
+  padding-inline: $spacing-05;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+.#{$block}__switcher .cds--content-switcher--sm .cds--content-switcher-btn {
+  padding-inline: $spacing-05;
 }
 
 .#{$block}__toolbar-title {
   display: flex;
   align-items: center;
 
-  height: 100%;
+  block-size: 100%;
   font-size: $spacing-05;
-  padding: 0 $spacing-05;
 
   span {
     display: flex;
 
     >span {
-      margin-inline-start: $spacing-03;
+      margin-inline-start: $spacing-05;
     }
   }
 }
@@ -138,7 +206,7 @@ $block: '#{$prefix}--calendar' !default;
 .#{$block}__arrows {
   display: flex;
   align-items: center;
-  height: 100%;
+  block-size: 100%;
 }
 
 .#{$block}__date-picker {
@@ -146,28 +214,13 @@ $block: '#{$prefix}--calendar' !default;
   align-items: center;
 }
 
-.#{$block}__create-event {
-  margin-inline-start: $spacing-05;
-}
-
 .#{$block}__dropdown-view {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 
-  flex: 1;
-  height: 100%;
-  margin-inline-start: $spacing-03;
-  max-width: calc($spacing-13 * 4);
-
-  >div {
-    min-width: calc($spacing-08 + $spacing-12);
-    flex: 1;
-  }
-
-  +button {
-    margin-inline-start: $spacing-05;
-  }
+  block-size: 100%;
+  max-inline-size: calc($spacing-13 * 4);
 }
 
 /* Calendar body */
@@ -175,18 +228,15 @@ $block: '#{$prefix}--calendar' !default;
 .#{$block}__body {
   display: flex;
   flex: 1 1 auto;
-  width: 100%;
+  inline-size: 100%;
   align-items: flex-start;
-  max-height: calc(100% - ($spacing-03 + $spacing-10));
-
-  position: relative;
-  overflow: hidden;
+  max-block-size: calc(100% - ($spacing-03 + $spacing-10));
 }
 
 .#{$block}__calendar {
   flex: 1 1 auto;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
 
   display: flex;
   position: relative;
@@ -194,15 +244,15 @@ $block: '#{$prefix}--calendar' !default;
 }
 
 .#{$block}__calendar.#{$block}__date-picker-open {
-  width: calc(100% - ($spacing-07 + $spacing-12 + $spacing-13));
+  inline-size: calc(100% - ($spacing-07 + $spacing-12 + $spacing-13));
 }
 
 .#{$block}__date-picker-overlay {
   position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset-inline-start: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
 
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
@@ -228,14 +278,12 @@ $block: '#{$prefix}--calendar' !default;
 /* Datepicker panel */
 .#{$block}__date-picker-panel {
   flex: 0 0 auto;
-  height: 100%;
-  max-width: 100%;
-  width: 0;
-
-  overflow: hidden;
+  block-size: 100%;
+  max-inline-size: 100%;
+  inline-size: 0;
   z-index: 1;
 
-  transition-property: width;
+  transition-property: inline-size, flex, max-inline-size;
   transition-duration: $duration-moderate-01;
   transition-behavior: allow-discrete;
   @include motion(exit, expressive);
@@ -250,10 +298,6 @@ $block: '#{$prefix}--calendar' !default;
     @include motion(exit, expressive);
   }
 
-  &.#{$block}__date-picker-border {
-    border-inline-end: 1px solid $border-subtle-02;
-  }
-
   &.#{$block}__date-picker-slide {
     position: absolute;
     inset-inline-start: 0;
@@ -261,9 +305,10 @@ $block: '#{$prefix}--calendar' !default;
   }
 
   &.#{$block}__date-picker-open {
-    width: calc($spacing-07 + $spacing-12 + $spacing-13);
+    inline-size: calc($spacing-07 + $spacing-12 + $spacing-13);
+    border-block-start: 1px solid $border-subtle-02;
 
-    transition-property: width;
+    transition-property: inline-size;
     transition-duration: $duration-moderate-01;
     transition-behavior: allow-discrete;
     @include motion(entrance, expressive);
@@ -285,14 +330,15 @@ $block: '#{$prefix}--calendar' !default;
 
   &.#{$block}__date-picker-panel-modal {
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    inset-block-start: 0;
+    inset-block-end: 0;
+    inset-inline-start: 0;
 
     background-color: $background;
     z-index: 3;
 
     border-inline-end: none;
+    border-block-start: none;
   }
 }
 
@@ -308,16 +354,12 @@ $block: '#{$prefix}--calendar' !default;
 
 .#{$block}__toolbar-datepicker {
   .#{$block}__toolbar-left {
-    width: 18rem;
-    flex: 0 0 18rem;
+    inline-size: calc($spacing-12 * 3);
+    flex: 0 0 calc($spacing-12 * 3);
   }
 
   .#{$block}__toolbar-right {
     border-inline-start: 1px solid $border-subtle-02;
-  }
-
-  .#{$block}__toolbar-title {
-    margin-inline-end: auto;
   }
 }
 
@@ -326,26 +368,23 @@ $block: '#{$prefix}--calendar' !default;
   flex: 0 0 auto;
 }
 
-/* datepicker styles modified */
-
 .flatpickr-calendar {
-  padding: 0.25rem 0.25rem 0.5rem 0.25rem;
-  block-size: 21rem;
-  inline-size: 18rem;
-  margin-block-start: -0.125rem;
+  padding: $spacing-02 $spacing-02 $spacing-03 $spacing-02;
+  block-size: calc($spacing-09 * 7);
+  inline-size: calc($spacing-12 * 3);
 }
 
 .flatpickr-calendar,
 .flatpickr-calendar.inline {
   overflow: visible;
-  max-block-size: 40rem;
+  max-block-size: calc($spacing-13 * 4);
 }
 
 /* Day cells */
 
 .#{$block}__day {
   position: relative;
-  min-height: calc(100% / 5);
+  min-block-size: calc(100% / 5);
   padding: $spacing-03 $spacing-05;
 
   .#{$block}__day-number {
@@ -372,7 +411,7 @@ $block: '#{$prefix}--calendar' !default;
     }
 
     .#{$block}__current-timeline.active {
-      height: $spacing-01;
+      block-size: $spacing-01;
       border-style: solid;
       background: $border-interactive;
       background-image: none;
@@ -381,8 +420,8 @@ $block: '#{$prefix}--calendar' !default;
         content: "";
         border: 1.5px solid $border-interactive;
         border-radius: calc($spacing-04 / 2);
-        height: calc($spacing-04 / 2);
-        width: calc($spacing-04 / 2);
+        block-size: calc($spacing-04 / 2);
+        inline-size: calc($spacing-04 / 2);
         display: block;
         z-index: 2;
         position: absolute;
@@ -400,11 +439,11 @@ $block: '#{$prefix}--calendar' !default;
         content: "";
         display: block;
         position: absolute;
-        top: 1.2rem;
-        left: 50%;
+        inset-block-start: calc($spacing-12 / 5);
+        inset-inline-start: 50%;
         transform: translateX(-50%);
-        width: $spacing-02;
-        height: $spacing-02;
+        inline-size: $spacing-02;
+        block-size: $spacing-02;
         background-color: $interactive;
       }
     }
@@ -420,8 +459,8 @@ $block: '#{$prefix}--calendar' !default;
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .#{$block}__day-label {
@@ -430,9 +469,9 @@ $block: '#{$prefix}--calendar' !default;
   align-items: flex-start;
 
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
 
   .#{$block}__more-button {
     @include button-reset.reset;
@@ -454,8 +493,8 @@ $block: '#{$prefix}--calendar' !default;
   z-index: 3;
   inset-inline-start: 0;
 
-  width: 100%;
-  height: 1.5px;
+  inline-size: 100%;
+  block-size: 1.5px;
   padding: 0 $spacing-03;
 
 
@@ -463,13 +502,13 @@ $block: '#{$prefix}--calendar' !default;
     border-color: $border-interactive;
     background-image: linear-gradient(to right, $border-interactive 30%, $background 10%);
     background-position: bottom;
-    background-size: 8px;
+    background-size: $spacing-03;
     background-repeat: repeat-x;
   }
 
   .#{$block}__current-timeline-label {
     z-index: 3;
-    top: 0px;
+    inset-block-start: 0px;
     font-size: 12px;
     color: $link-primary;
     text-align: right;
@@ -486,68 +525,66 @@ $block: '#{$prefix}--calendar' !default;
 .#{$block}__hour-col {
   position: relative;
   overflow: visible;
-  width: 80px;
+  inline-size: $spacing-11;
 
   .#{$block}__current-timeline {
-    background-image: linear-gradient(
-      to right,
-      $border-interactive 30%,
-      $layer-01 10%
-    );
+    background-image: linear-gradient(to right,
+        $border-interactive 30%,
+        $layer-01 10%);
 
     &:before {
       content: "";
       position: absolute;
-      left: 0;
-      width: 100%;
-      height: 4px;
+      inset-inline-start: 0;
+      inline-size: 100%;
+      block-size: 4px;
       background-color: $background;
     }
   }
 
   &.#{$block}__hour-col-sm {
-    width: 48px;
+    inline-size: 48px;
 
     .#{$block}__current-timeline-label {
       font-size: 12px;
       text-align: right;
       position: absolute;
-      top: -8px;
+      inset-block-start: -8px;
     }
   }
 }
 
 .#{$block}__hour-label {
   position: absolute;
-  top: -10px;
-  right: 0;
-  width: 100%;
+  inset-block-start: -10px;
+  inset-inline-end: 0;
+  inline-size: 100%;
   text-align: center;
-  left: 0;
+  inset-inline-start: 0;
   display: flex;
   justify-content: flex-end;
   padding: 0 $spacing-03;
 
-  & > span {
+  &>span {
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
     position: relative;
     z-index: 4;
-    width: 100%;
+    inline-size: 100%;
     margin: auto;
     font-weight: normal;
     font-size: 14px;
     color: $text-primary;
-    height: 1rem;
+    block-size: $spacing-05;
 
     span:nth-child(2) {
-      margin-left: 0.2rem;
+      margin-left: calc($spacing-05 / 5);
     }
   }
 
   &.#{$block}__hour-label-sm {
-    & > span {
+    &>span {
       font-size: 12px;
       line-height: 14px;
       flex-direction: column;
@@ -559,22 +596,39 @@ $block: '#{$prefix}--calendar' !default;
   &:after {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    inline-size: 100%;
+    block-size: 100%;
     display: flex;
   }
 }
 
+.#{$block}__day-events-wrapper {
+  position: absolute;
+  inset-block-start: $spacing-02;
+  inset-inline-start: $spacing-02;
+  inset-inline-end: $spacing-02;
+  inset-block-end: $spacing-02;
+  z-index: 1;
+  overflow: auto;
+}
+
 .#{$block}__day-events {
-  width: 100%;
+  inline-size: 100%;
 }
 
 .#{$block}__month-cell {
   .#{$block}__day-events {
-    max-width: 100%;
-    padding-top: $spacing-06;
+    max-inline-size: 100%;
+    padding-top: $spacing-07;
+    position: absolute;
+    inset-block-start: $spacing-02;
+    inset-inline-start: $spacing-02;
+    inset-inline-end: $spacing-02;
+    inset-block-end: $spacing-02;
+    z-index: 1;
+    overflow: auto;
   }
 }
 
@@ -606,11 +660,11 @@ $block: '#{$prefix}--calendar' !default;
 }
 
 .#{$block} tbody .#{$block}__half-row {
-  height: 22px;
+  block-size: 22px;
 
   td,
   th[scope="row"] {
-    min-height: 1rem;
+    min-block-size: $spacing-05;
     padding: 0;
   }
 
@@ -632,8 +686,8 @@ $block: '#{$prefix}--calendar' !default;
   border-spacing: 0;
   table-layout: fixed;
 
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
 
   thead {
     @include type-style("heading-compact-01");
@@ -657,12 +711,12 @@ $block: '#{$prefix}--calendar' !default;
     background-color: $layer-accent;
     color: $text-primary;
 
-    padding-inline-end: 1rem;
-    padding-inline-start: 1rem;
+    padding-inline-end: $spacing-05;
+    padding-inline-start: $spacing-05;
 
     &.#{$block}__th-sm {
-      padding-inline-end: 0.5rem;
-      padding-inline-start: 0.5rem;
+      padding-inline-end: $spacing-03;
+      padding-inline-start: $spacing-03;
     }
 
     &:not([scope="row"])>div {
@@ -670,8 +724,9 @@ $block: '#{$prefix}--calendar' !default;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      padding-block: 1rem;
-      width: 100%;
+      padding-block: $spacing-05;
+      inline-size: 100%;
+      gap: $spacing-02;
     }
   }
 
@@ -682,8 +737,8 @@ $block: '#{$prefix}--calendar' !default;
     border-block-end: 1px solid $border-subtle-02;
     border-inline-end: 1px solid $border-subtle-02;
 
-    min-height: $spacing-09;
-    padding-block-start: 0.875rem;
+    min-block-size: $spacing-09;
+    padding-block-start: calc($spacing-01 * 7);
 
     &:first-of-type {
       border-inline-start: 1px solid $border-subtle-02;
@@ -700,27 +755,27 @@ $block: '#{$prefix}--calendar' !default;
 
   tr {
     border: none;
-    block-size: 3rem;
+    block-size: $spacing-09;
     inline-size: 100%;
   }
 
   &.#{$block}__table-sticky {
-    max-height: 100%;
+    max-block-size: 100%;
 
     thead {
       position: sticky;
-      top: 0;
+      inset-block-start: 0;
       z-index: 1;
       will-change: transform;
     }
 
     tbody {
-      height: calc(100% - $spacing-09);
+      block-size: calc(100% - $spacing-09);
     }
 
     th {
       position: sticky;
-      top: 0;
+      inset-block-start: 0;
       z-index: 2;
 
       .#{$block}__date-picker-open &:first-child {
@@ -730,7 +785,7 @@ $block: '#{$prefix}--calendar' !default;
 
     th[scope="row"] {
       position: sticky;
-      left: 0;
+      inset-inline-start: 0;
       z-index: 3;
       background-color: $background;
     }
@@ -738,20 +793,20 @@ $block: '#{$prefix}--calendar' !default;
 
   &.#{$block}__table-scroll {
     th:not([scope="row"]):first-child {
-      left: 0;
+      inset-inline-start: 0;
       z-index: 3;
     }
   }
 
   &.#{$block}__table-sm,
   &.#{$block}__table-xsm {
-    min-width: 320px;
+    min-inline-size: calc($spacing-13 * 2);
 
     td,
     th {
-      padding-inline-end: 0.5rem;
-      padding-inline-start: 0.5rem;
-      min-width: 2.5rem;
+      padding-inline-end: $spacing-03;
+      padding-inline-start: $spacing-03;
+      min-inline-size: $spacing-08;
     }
   }
 }
@@ -765,8 +820,8 @@ $block: '#{$prefix}--calendar' !default;
     justify-content: center;
     align-items: flex-start;
 
-    > div {
-      width: 100%;
+    >div {
+      inline-size: 100%;
     }
   }
 }
@@ -776,22 +831,26 @@ $block: '#{$prefix}--calendar' !default;
   flex: 1;
 }
 
-.cds--date-picker__icon,
-.cds--date-picker__input {
+.#{$block}__date-picker-panel .cds--date-picker__icon,
+.#{$block}__date-picker-panel .cds--date-picker__input {
   display: none;
 }
 
-.cds--date-picker {
+.#{$block}__date-picker-panel .flatpickr-current-month input {
+  background-color: $layer-background-01;
+}
+
+.#{$block}__date-picker-panel .cds--date-picker {
   justify-content: flex-end;
-  width: 100%;
+  inline-size: 100%;
 }
 
-.cds--date-picker-container {
-  width: 100%;
+.#{$block}__date-picker-panel .cds--date-picker-container {
+  inline-size: 100%;
 }
 
-.cds--date-picker--range .cds--date-picker-container,
-.cds--date-picker--range .cds--date-picker__input {
+.#{$block}__date-picker-panel .cds--date-picker--range .cds--date-picker-container,
+.#{$block}__date-picker-panel .cds--date-picker--range .cds--date-picker__input {
   inline-size: auto;
 }
 

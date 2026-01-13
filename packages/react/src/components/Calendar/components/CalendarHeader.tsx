@@ -1,11 +1,12 @@
 /**
  * @license
  *
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
 import React, { forwardRef, useMemo } from 'react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
 import type { CalendarView, ToolbarSize } from '../components/Calendar.types';
@@ -119,11 +120,12 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
     );
 
     const isSmallToolbar = toolbarSize === 'xsm' || toolbarSize === 'sm';
+    const isSmallSwitcher = toolbarSize === 'xsm' || toolbarSize === 'sm' || toolbarSize === 'md';
 
     const showContentSwitcher =
       calendarViews.length >= 2 &&
       calendarViews.length <= 3 &&
-      !isSmallToolbar;
+      !isSmallSwitcher;
 
     const showDropdown =
       calendarViews.length > 3 || (calendarViews.length >= 2 && !showContentSwitcher);
@@ -238,7 +240,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
                   isSmallToolbar && `${blockClass}__dropdown-view-sm`
                 )}
               >
-                <Dropdown<ViewItem>
+                <Dropdown
                   id="calendar-view-dropdown"
                   size="md"
                   titleText=""
@@ -250,6 +252,9 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
                   onChange={({ selectedItem }) => {
                     if (selectedItem) onViewChange(selectedItem.value);
                   }}
+                  type="inline"
+                  autoAlign={true}
+                  aria-label={selectedItem?.text ?? ''}
                 />
               </div>
             ) : null}

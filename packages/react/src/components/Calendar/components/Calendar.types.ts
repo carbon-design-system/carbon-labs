@@ -1,7 +1,7 @@
 /**
  * @license
  *
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -31,6 +31,13 @@ export type MonthDay = {
   currentMonth: boolean;
   selected: boolean;
 };
+
+export interface TimelineProps {
+  blockClass?: string;
+  hour: string; // "09:00" etc.
+  onPositionChange?: (percentage: number) => void;
+  locale?: string;
+}
 
 export interface CalendarProps {
   /** Initial value (defaults to today). */

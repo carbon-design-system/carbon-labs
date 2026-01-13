@@ -1,7 +1,7 @@
 /**
  * @license
  *
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,6 +11,7 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import mdx from './Calendar.mdx';
 import { Calendar } from '../components/Calendar';
+import { Tag } from '@carbon/react';
 import type { CalendarView } from '../components/Calendar.types';
 import '../components/calendar.scss';
 
@@ -63,14 +64,14 @@ export default meta;
 
 type Story = StoryObj<typeof Calendar>;
 
-const renderCalendar: Story['render'] = (args) => {
-
-const currentViews = args.views && args.views.length > 0 
-    ? (args.views as CalendarView[]) 
+// Basic calendar without events
+const renderBasicCalendar: Story['render'] = (args) => {
+  const currentViews = args.views && args.views.length > 0
+    ? (args.views as CalendarView[])
     : (['month'] as CalendarView[]);
 
-  const dateValue = args.initialDate 
-    ? new Date(args.initialDate as any) 
+  const dateValue = args.initialDate
+    ? new Date(args.initialDate as any)
     : new Date();
 
   return (
@@ -85,8 +86,69 @@ const currentViews = args.views && args.views.length > 0
   );
 };
 
+// Calendar with events
+const renderCalendarWithEvents: Story['render'] = (args) => {
+  const currentViews = args.views && args.views.length > 0
+    ? (args.views as CalendarView[])
+    : (['month'] as CalendarView[]);
+
+  const dateValue = args.initialDate
+    ? new Date(args.initialDate as any)
+    : new Date();
+
+  const handleEventClick = (date: Date, event: React.MouseEvent | React.KeyboardEvent) => {
+    event.stopPropagation();
+    alert(`Event clicked on: ${date.toDateString()} at ${date.toLocaleTimeString()}`);
+  };
+
+  const renderCell = ({ date, view, start, end, isToday, isCurrentTimeSlot }: any) => {
+    const eventStartTime = 10;
+
+    if (view === 'month') {
+      if (!isToday) {
+        return null;
+      }
+    } else {
+      if (!isToday || start.getHours() !== eventStartTime) {
+        return null;
+      }
+    }
+
+    return (
+      <Tag
+        className="calendar-event-tag"
+        type="blue"
+        title="10:00 AM - Team Meeting"
+        size="sm"
+        onClick={(e: React.MouseEvent) => handleEventClick(start, e)}
+        onKeyDown={(e: React.KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleEventClick(start, e);
+          }
+        }}
+        style={{ cursor: 'pointer' }}
+      >
+        10:00 AM - Team Meeting
+      </Tag>
+    );
+  };
+
+  return (
+    <div style={{ height: '100vh' }}>
+      <Calendar
+        {...args}
+        views={currentViews}
+        initialDate={dateValue}
+        renderCell={renderCell}
+        key={`${args.defaultView}-${args.weekStartsOn}`}
+      />
+    </div>
+  );
+};
+
 export const Default: Story = {
-  render: renderCalendar,
+  render: renderBasicCalendar,
   args: {
     views: ['month', 'week', 'day'],
     defaultView: 'month',
@@ -98,7 +160,7 @@ export const Default: Story = {
 };
 
 export const WeekStartsMonday: Story = {
-  render: renderCalendar,
+  render: renderBasicCalendar,
   args: {
     ...Default.args,
     views: ['month', 'week'],
@@ -107,9 +169,23 @@ export const WeekStartsMonday: Story = {
 };
 
 export const AllViews: Story = {
-  render: renderCalendar,
+  render: renderBasicCalendar,
   args: {
     ...Default.args,
     views: defaultViews,
   },
 };
+
+export const WithEvents: Story = {
+  render: renderCalendarWithEvents,
+  args: {
+    views: defaultViews,
+    defaultView: 'week',
+    toolbar: true,
+    stickyHeader: true,
+    region: 'en-US',
+    weekStartsOn: 0,
+  },
+};
+
+

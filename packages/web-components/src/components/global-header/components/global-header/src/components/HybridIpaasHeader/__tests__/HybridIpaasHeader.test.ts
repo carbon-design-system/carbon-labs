@@ -376,15 +376,16 @@ describe('HybridIpaasHeader Component', () => {
         productKey="test-productKey"
         basePath="/base"
         assistMeKey="assist-key"
-        solisSwitcherEnabled="true"></clabs-global-header-hybrid-ipaas>`
+        solisDevMode
+        solisSwitcherEnabled></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
       () => el.headerOptions.capabilityName?.label === 'Test Product',
       'headerOptions were not updated as expected'
     );
-
     expect(el.headerOptions?.solisConfig).to.exist;
     expect(el.headerOptions.solisConfig?.isEnabled).to.be.true;
+    expect(el.headerOptions.solisConfig?.is_prod).to.be.false;
   });
 
   it('should handle solis sidekick rendering', async () => {
@@ -434,7 +435,6 @@ describe('HybridIpaasHeader Component', () => {
       () => el.headerOptions.capabilityName?.label === 'Test Product',
       'headerOptions were not updated as expected'
     );
-
     expect(el.headerOptions?.sidekickConfig).to.exist;
     expect(el.headerOptions.sidekickConfig?.isEnabled).to.be.true;
     expect(el.headerOptions?.solisConfig).to.exist;

@@ -25214,8 +25214,8 @@ __metadata:
   linkType: hard
 
 "storybook@npm:^9.1.2":
-  version: 9.1.16
-  resolution: "storybook@npm:9.1.16"
+  version: 9.1.17
+  resolution: "storybook@npm:9.1.17"
   dependencies:
     "@storybook/global": "npm:^5.0.0"
     "@testing-library/jest-dom": "npm:^6.6.3"
@@ -25236,7 +25236,7 @@ __metadata:
       optional: true
   bin:
     storybook: ./bin/index.cjs
-  checksum: 10c0/4265c5b764effbda608aaf14ce930cce69f5aca9433e54d785387e8c7ad8f3139fbd91264494e535927b21b065e921ab4a81539df38f222fb8878cb249cf2c26
+  checksum: 10c0/8590eaff08714565f19658b16676005960cada649fd0809171d8e8917f38592c52a795a68662c92abb90aae9d5794f0e60f08a2523d9d2524f7f826af0ddd66e
   languageName: node
   linkType: hard
 
@@ -27435,8 +27435,8 @@ __metadata:
   linkType: hard
 
 "vega-functions@npm:^6.1.0, vega-functions@npm:~6.1.0":
-  version: 6.1.0
-  resolution: "vega-functions@npm:6.1.0"
+  version: 6.1.1
+  resolution: "vega-functions@npm:6.1.1"
   dependencies:
     d3-array: "npm:^3.2.4"
     d3-color: "npm:^3.1.0"
@@ -27449,7 +27449,7 @@ __metadata:
     vega-statistics: "npm:^2.0.0"
     vega-time: "npm:^3.1.0"
     vega-util: "npm:^2.1.0"
-  checksum: 10c0/1b89be853ffd986c679e9dbe1198625989524e90916088a06ed17b8b3de132f17574abcc03a9f6d65717cc8129e52d485eeaf6c15fc4efb5843ed1f15155e15e
+  checksum: 10c0/9bdf0aa7ddfed7cc38ea23a61c4cdeb8a21511559bc94d5a58c5c224b0220eef09bfde82c4ef3b10673774cf1cf110e797e89b736b05ca0661b11e171dfa765e
   languageName: node
   linkType: hard
 
@@ -27616,13 +27616,13 @@ __metadata:
   linkType: hard
 
 "vega-selections@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "vega-selections@npm:6.1.0"
+  version: 6.1.2
+  resolution: "vega-selections@npm:6.1.2"
   dependencies:
     d3-array: "npm:3.2.4"
     vega-expression: "npm:^6.1.0"
     vega-util: "npm:^2.1.0"
-  checksum: 10c0/72ef4a3dfb1718b744d657ec3a15a5544db6b95a49990012433e10293125e5217fbe023efc7c91eb65a52e64a3c2c8ccc407aa610d69cd42216f7c562f049ee7
+  checksum: 10c0/9eb432e123b036eb9406fca99cdb7515e590eb19a1dc3142a377627b160c9279fc6ed4a21ad19ab5302423b533cb328ec0b1ca8ecc6e1542071209fbfbb1da13
   languageName: node
   linkType: hard
 

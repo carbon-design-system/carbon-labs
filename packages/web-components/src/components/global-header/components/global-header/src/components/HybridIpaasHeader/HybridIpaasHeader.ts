@@ -168,7 +168,7 @@ export class HybridIpaasHeader extends LitElement {
       isEnabled: this.solisSidekickEnabled,
       scriptUrl: SOLIS_CDN_HOSTNAMES[env] + '/sidekick/solis-sidekick.es.js',
       insights_enabled: true,
-      reports_enabled: true,
+      overview_enabled: true,
       chat_enabled: false,
       tell_me_more_enabled: false,
     };
@@ -181,6 +181,7 @@ export class HybridIpaasHeader extends LitElement {
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
+        backendProxy: '/hybrid-ipaas/v1/proxies/solis/backend',
       };
     } else {
       return {
@@ -190,6 +191,7 @@ export class HybridIpaasHeader extends LitElement {
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
+        backendProxy: '/hybrid-ipaas/v1/proxies/solis/backend',
       };
     }
   }

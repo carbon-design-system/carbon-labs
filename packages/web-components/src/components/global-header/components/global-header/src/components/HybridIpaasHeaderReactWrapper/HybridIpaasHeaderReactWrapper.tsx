@@ -51,45 +51,44 @@ export const HybridIpaasHeaderReactWrapper = (props: ReactWrapperProps) => {
     <WrappedHybridIpaasHeader
       role="banner"
       onaiCallback={
-        aiCallback
-          ? () => {
-              aiCallback();
-            }
-          : undefined
+        aiCallback &&
+        (() => {
+          aiCallback();
+        })
       }
-      aiCallbackEvent={AI_CALLBACK_EVENT}
+      aiCallbackEvent={aiCallback && AI_CALLBACK_EVENT}
       onNotificationOpenCallback={
-        notificationOpenCallback
-          ? () => {
-              notificationOpenCallback();
-            }
-          : undefined
+        notificationOpenCallback &&
+        (() => {
+          notificationOpenCallback();
+        })
       }
-      notificationOpenCallbackEvent={NOTIFICATION_OPEN_CALLBACK_EVENT}
+      notificationOpenCallbackEvent={
+        notificationOpenCallback && NOTIFICATION_OPEN_CALLBACK_EVENT
+      }
       onLogoutCallback={
-        logoutCallback
-          ? () => {
-              logoutCallback();
-            }
-          : undefined
+        logoutCallback &&
+        (() => {
+          logoutCallback();
+        })
       }
-      logoutCallbackEvent={LOGOUT_CALLBACK_EVENT}
+      logoutCallbackEvent={logoutCallback && LOGOUT_CALLBACK_EVENT}
       onSearchCallback={
-        searchCallback
-          ? (event) => {
-              searchCallback((event as CustomEvent).detail?.value || '');
-            }
-          : undefined
+        searchCallback &&
+        ((event) => {
+          searchCallback((event as CustomEvent).detail?.value || '');
+        })
       }
-      searchCallbackEvent={SEARCH_CALLBACK_EVENT}
+      searchCallbackEvent={searchCallback && SEARCH_CALLBACK_EVENT}
       onSearchSubmitCallback={
-        searchSubmitCallback
-          ? (event: Event) => {
-              searchSubmitCallback((event as CustomEvent).detail?.value || '');
-            }
-          : undefined
+        searchSubmitCallback &&
+        ((event) => {
+          searchSubmitCallback((event as CustomEvent).detail?.value || '');
+        })
       }
-      searchSubmitCallbackEvent={SEARCH_SUBMIT_CALLBACK_EVENT}
+      searchSubmitCallbackEvent={
+        searchSubmitCallback && SEARCH_SUBMIT_CALLBACK_EVENT
+      }
       {...headerOptions}
     />
   );

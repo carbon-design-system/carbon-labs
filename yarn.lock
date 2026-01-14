@@ -1574,8 +1574,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-theme-settings@workspace:packages/react/src/components/ThemeSettings"
   dependencies:
-    "@carbon-labs/utilities": "npm:^0.20.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
+  peerDependencies:
+    "@carbon-labs/utilities": ^0.20.0
   languageName: unknown
   linkType: soft
 
@@ -1676,7 +1677,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon-labs/utilities@npm:0.20.0, @carbon-labs/utilities@npm:^0.20.0, @carbon-labs/utilities@workspace:packages/utilities":
+"@carbon-labs/utilities@npm:0.20.0, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/utilities@workspace:packages/utilities"
   dependencies:

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.28.0...@carbon-labs/ai-chat@0.29.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/ai-chat
+
+
+
+
+
 # [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.27.0...@carbon-labs/ai-chat@0.28.0) (2025-12-16)
 
 

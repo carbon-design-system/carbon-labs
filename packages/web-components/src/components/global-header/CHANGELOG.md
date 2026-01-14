@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.40.0...@carbon-labs/wc-global-header@0.41.0) (2026-01-14)
+
+
+### Bug Fixes
+
+* toggling on production mode by default ([#978](https://github.com/carbon-design-system/carbon-labs/issues/978)) ([2758b0a](https://github.com/carbon-design-system/carbon-labs/commit/2758b0a3729ebe8c0cb1a8e37f07f465d063fd7a))
+
+
+
+
+
 # [0.40.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.39.0...@carbon-labs/wc-global-header@0.40.0) (2026-01-14)
 
 

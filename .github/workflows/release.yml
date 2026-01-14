@@ -1,10 +1,12 @@
 name: Release
 
-## on every merge to the main branch, lerna will publish a minor version for packages that have been modified
+## on every PR merge into main, lerna will publish a minor version for packages that have been modified
 on:
-  push:
+  pull_request:
     branches:
       - main
+    types:
+      - closed
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -12,6 +14,8 @@ concurrency:
 
 jobs:
   release:
+    # Only run if the PR was merged (not just closed)
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -27,10 +31,10 @@ jobs:
       - run: |
           git config --global user.email ${{ secrets.CARBON_BOT_EMAIL }}
           git config --global user.name ${{ secrets.CARBON_BOT_NAME }}
-      - name: Use Node.js 18.x
+      - name: Use Node.js version from .nvmrc
         uses: actions/setup-node@v6
         with:
-          node-version: '18.x'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install

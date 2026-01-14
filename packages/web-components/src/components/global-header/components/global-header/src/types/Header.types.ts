@@ -335,6 +335,7 @@ export interface SolisConfig {
   cdn_hostname: string;
   deployment_environment: solisDeploymentEnvironment;
   product_id: string;
+  backendProxy?: string;
 }
 
 export interface NavigationItem {
@@ -366,6 +367,7 @@ interface solisWindowConfig {
   deployment_environment: solisDeploymentEnvironment;
   sidekick?: SidekickInfo;
   product_id: string;
+  backend_proxy?: string;
 }
 
 declare global {

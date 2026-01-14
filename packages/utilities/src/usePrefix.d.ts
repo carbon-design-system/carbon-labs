@@ -14,5 +14,3 @@ export const PrefixContext: React.Context<string>;
  * @returns context value
  */
 export function usePrefix(): string;
-
-// Made with Bob

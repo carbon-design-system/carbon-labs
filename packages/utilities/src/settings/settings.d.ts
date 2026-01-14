@@ -24,5 +24,3 @@ interface Settings {
 declare const settings: Settings;
 
 export default settings;
-
-// Made with Bob

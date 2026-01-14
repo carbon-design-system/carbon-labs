@@ -525,7 +525,6 @@ export function Calendar({
       if (isNaN(date.getTime())) return;
 
       const weekNumber = getWeekNumber(date);
-      console.log(`Date: ${date.toDateString()}, Week: ${weekNumber}`);
 
       const classList = Array.from(dayElements.classList) as string[];
       classList.forEach((className) => {
@@ -536,13 +535,11 @@ export function Calendar({
 
       if (view === 'week' || view === 'workWeek') {
         dayElements.classList.add(`week-${weekNumber}`);
-        console.log(`Added week-${weekNumber} to ${date.toDateString()}`);
       }
 
       if (view === 'week') {
         const handleMouseOver = () => {
           const weekDays = fp.daysContainer.querySelectorAll(`.week-${weekNumber}`);
-          console.log(`Hovering week ${weekNumber}, found ${weekDays.length} days`);
           weekDays.forEach((day: any) => {
             day.classList.add('days-hovered');
           });

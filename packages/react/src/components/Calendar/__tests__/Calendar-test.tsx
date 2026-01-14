@@ -81,7 +81,7 @@ describe('Calendar', () => {
 
       const todayButton = screen.getByText('Today');
       await user.click(todayButton);
-      
+
       expect(onNavigate).toHaveBeenCalledTimes(1);
       expect(onNavigate).toHaveBeenCalledWith(expect.any(Date));
     });
@@ -93,7 +93,7 @@ describe('Calendar', () => {
 
       const nextButton = screen.getByLabelText('Next');
       await user.click(nextButton);
-      
+
       expect(onNavigate).toHaveBeenCalledTimes(1);
     });
 
@@ -104,7 +104,7 @@ describe('Calendar', () => {
 
       const prevButton = screen.getByLabelText('Previous');
       await user.click(prevButton);
-      
+
       expect(onNavigate).toHaveBeenCalledTimes(1);
     });
   });

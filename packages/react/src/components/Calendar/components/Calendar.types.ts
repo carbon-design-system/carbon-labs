@@ -17,7 +17,7 @@ export interface CalendarFormats {
   weekdayFormat?: Intl.DateTimeFormatOptions;
   monthHeaderFormat?: Intl.DateTimeFormatOptions;
   weekHeaderFormat?: Intl.DateTimeFormatOptions;
-  dayHeaderFormat?: Intl.DateTimeFormatOptions; 
+  dayHeaderFormat?: Intl.DateTimeFormatOptions;
 }
 
 export type Device = 'xsm' | 'sm' | 'md' | 'lg' | 'xlg';
@@ -37,6 +37,34 @@ export interface TimelineProps {
   hour: string; // "09:00" etc.
   onPositionChange?: (percentage: number) => void;
   locale?: string;
+}
+
+export interface CalendarHeaderProps {
+  blockClass?: string;
+
+  view: CalendarView;
+  calendarViews: CalendarView[];
+
+  formatDate: () => string;
+  viewDateRange: (view: CalendarView) => string;
+
+  onToday: () => void;
+  onNext: () => void;
+  onPrevious: () => void;
+  onViewChange: (view: CalendarView) => void;
+
+  toggleDatePicker: boolean;
+  onToggleDatePickerPanel: () => void;
+
+  toolbarSize: ToolbarSize;
+  smallDeviceSize: boolean;
+
+  calendarTableRef?: React.RefObject<HTMLElement>;
+  calendarHeaderRightRef?: React.RefObject<HTMLDivElement>;
+  onCalendarScroll?: (
+    e: React.UIEvent<HTMLDivElement>,
+    targetRef?: React.RefObject<HTMLElement>
+  ) => void;
 }
 
 export interface CalendarProps {
@@ -95,6 +123,6 @@ export interface CalendarProps {
   /** Optional className passthrough. */
   className?: string;
 
-   /** makes the header sticky */
-  stickyHeader?: boolean 
+  /** makes the header sticky */
+  stickyHeader?: boolean
 }

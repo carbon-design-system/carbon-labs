@@ -9,7 +9,7 @@
 
 import React, { forwardRef, useMemo } from 'react';
 import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import type { CalendarView, ToolbarSize } from '../components/Calendar.types';
+import type { CalendarView, CalendarHeaderProps } from '../components/Calendar.types';
 
 import {
   ContentSwitcher,
@@ -30,34 +30,6 @@ import {
 
 
 type ViewItem = { text: string; value: CalendarView };
-
-export interface CalendarHeaderProps {
-  blockClass?: string;
-
-  view: CalendarView;
-  calendarViews: CalendarView[];
-
-  formatDate: () => string;
-  viewDateRange: (view: CalendarView) => string;
-
-  onToday: () => void;
-  onNext: () => void;
-  onPrevious: () => void;
-  onViewChange: (view: CalendarView) => void;
-
-  toggleDatePicker: boolean;
-  onToggleDatePickerPanel: () => void;
-
-  toolbarSize: ToolbarSize;
-  smallDeviceSize: boolean;
-
-  calendarTableRef?: React.RefObject<HTMLElement>;
-  calendarHeaderRightRef?: React.RefObject<HTMLDivElement>;
-  onCalendarScroll?: (
-    e: React.UIEvent<HTMLDivElement>,
-    targetRef?: React.RefObject<HTMLElement>
-  ) => void;
-}
 
 const formatViewText = (view: CalendarView): string => {
   switch (view) {
@@ -222,7 +194,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
             {showContentSwitcher ? (
               <div className={`${blockClass}__switcher`}>
                 <ContentSwitcher
-                size='sm'
+                  size='sm'
                   selectionMode="automatic"
                   selectedIndex={selectedIndex}
                   onChange={(value) => onViewChange(value.name as CalendarView)}
@@ -265,7 +237,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
                 iconDescription="New event"
                 kind="primary"
                 size="md"
-                onClick={() => {}}
+                onClick={() => { }}
                 className={`${blockClass}__create-event`}
               >
                 New event
@@ -275,7 +247,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
                 label="New event"
                 kind="primary"
                 size="md"
-                onClick={() => {}}
+                onClick={() => { }}
                 className={`${blockClass}__create-event`}
               >
                 <Add />

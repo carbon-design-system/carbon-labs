@@ -124,5 +124,5 @@ export interface CalendarProps {
   className?: string;
 
   /** makes the header sticky */
-  stickyHeader?: boolean
+  stickyHeader?: boolean;
 }

@@ -1497,6 +1497,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-calendar@workspace:packages/react/src/components/Calendar":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-calendar@workspace:packages/react/src/components/Calendar"
+  dependencies:
+    "@carbon-labs/utilities": "npm:canary"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton"
@@ -1691,6 +1699,16 @@ __metadata:
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   languageName: unknown
   linkType: soft
+
+"@carbon-labs/utilities@npm:canary":
+  version: 0.14.1-canary.387
+  resolution: "@carbon-labs/utilities@npm:0.14.1-canary.387"
+  dependencies:
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+  checksum: 10c0/17f791a40f4f55689924b355fdecbfb254abd99325e1aee86ef96b7adb95e57d5be0b0eb928083137a6bad8a667d1bdfe33af2946502fa48434a133fb43756a3
+  languageName: node
+  linkType: hard
 
 "@carbon-labs/wc-ai-feedback@workspace:packages/web-components/src/components/feedback":
   version: 0.0.0-use.local

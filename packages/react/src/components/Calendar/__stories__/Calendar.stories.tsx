@@ -15,8 +15,13 @@ import { Tag } from '@carbon/react';
 import type { CalendarView } from '../components/Calendar.types';
 import '../components/calendar.scss';
 
-const defaultViews: CalendarView[] = ['month', 'week', 'workWeek', 'day', 'threeDays'];
-
+const defaultViews: CalendarView[] = [
+  'month',
+  'week',
+  'workWeek',
+  'day',
+  'threeDays',
+];
 
 const meta: Meta<typeof Calendar> = {
   title: 'Components/Calendar',
@@ -66,9 +71,10 @@ type Story = StoryObj<typeof Calendar>;
 
 // Basic calendar without events
 const renderBasicCalendar: Story['render'] = (args) => {
-  const currentViews = args.views && args.views.length > 0
-    ? (args.views as CalendarView[])
-    : (['month'] as CalendarView[]);
+  const currentViews =
+    args.views && args.views.length > 0
+      ? (args.views as CalendarView[])
+      : (['month'] as CalendarView[]);
 
   const dateValue = args.initialDate
     ? new Date(args.initialDate as any)
@@ -88,20 +94,33 @@ const renderBasicCalendar: Story['render'] = (args) => {
 
 // Calendar with events
 const renderCalendarWithEvents: Story['render'] = (args) => {
-  const currentViews = args.views && args.views.length > 0
-    ? (args.views as CalendarView[])
-    : (['month'] as CalendarView[]);
+  const currentViews =
+    args.views && args.views.length > 0
+      ? (args.views as CalendarView[])
+      : (['month'] as CalendarView[]);
 
   const dateValue = args.initialDate
     ? new Date(args.initialDate as any)
     : new Date();
 
-  const handleEventClick = (date: Date, event: React.MouseEvent | React.KeyboardEvent) => {
+  const handleEventClick = (
+    date: Date,
+    event: React.MouseEvent | React.KeyboardEvent
+  ) => {
     event.stopPropagation();
-    alert(`Event clicked on: ${date.toDateString()} at ${date.toLocaleTimeString()}`);
+    alert(
+      `Event clicked on: ${date.toDateString()} at ${date.toLocaleTimeString()}`
+    );
   };
 
-  const renderCell = ({ date, view, start, end, isToday, isCurrentTimeSlot }: any) => {
+  const renderCell = ({
+    date,
+    view,
+    start,
+    end,
+    isToday,
+    isCurrentTimeSlot,
+  }: any) => {
     const eventStartTime = 10;
 
     if (view === 'month') {
@@ -127,8 +146,7 @@ const renderCalendarWithEvents: Story['render'] = (args) => {
             handleEventClick(start, e);
           }
         }}
-        style={{ cursor: 'pointer' }}
-      >
+        style={{ cursor: 'pointer' }}>
         10:00 AM - Team Meeting
       </Tag>
     );
@@ -187,5 +205,3 @@ export const WithEvents: Story = {
     weekStartsOn: 0,
   },
 };
-
-

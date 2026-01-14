@@ -29,7 +29,9 @@ describe('Calendar', () => {
 
     it('renders a calendar region', () => {
       const { container } = render(<Calendar {...defaultProps} />);
-      const region = container.querySelector('[role="region"][aria-label="Calendar"]');
+      const region = container.querySelector(
+        '[role="region"][aria-label="Calendar"]'
+      );
       expect(region).toBeInTheDocument();
       expect(region).toHaveAttribute('aria-label', 'Calendar');
     });
@@ -50,7 +52,9 @@ describe('Calendar', () => {
     });
 
     it('supports a custom class name', () => {
-      const { container } = render(<Calendar {...defaultProps} className="test-calendar" />);
+      const { container } = render(
+        <Calendar {...defaultProps} className="test-calendar" />
+      );
       expect(container.firstChild).toHaveClass('test-calendar');
     });
   });
@@ -109,7 +113,6 @@ describe('Calendar', () => {
     });
   });
 
-
   describe('initialDate prop', () => {
     it('renders with provided initial date', () => {
       const initialDate = new Date(2026, 0, 15);
@@ -146,7 +149,9 @@ describe('Calendar', () => {
 
   describe('renderCell prop', () => {
     it('renders custom cell content when renderCell is provided', () => {
-      const renderCell = jest.fn(() => <div data-testid="custom-cell">Event</div>);
+      const renderCell = jest.fn(() => (
+        <div data-testid="custom-cell">Event</div>
+      ));
       render(<Calendar {...defaultProps} renderCell={renderCell} />);
 
       expect(renderCell).toHaveBeenCalled();
@@ -206,7 +211,12 @@ describe('Calendar', () => {
 
     it('handles invalid defaultView by falling back to first view', () => {
       expect(() => {
-        render(<Calendar views={['month', 'week'] as CalendarView[]} defaultView={'invalid' as CalendarView} />);
+        render(
+          <Calendar
+            views={['month', 'week'] as CalendarView[]}
+            defaultView={'invalid' as CalendarView}
+          />
+        );
       }).not.toThrow();
     });
 

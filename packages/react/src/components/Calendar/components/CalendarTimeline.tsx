@@ -8,7 +8,7 @@
  */
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import type { TimelineProps } from './Calendar.types';
 
 const getHourNumber = (hour: string) => {
@@ -42,10 +42,14 @@ export const Timeline = ({
   }, [now, onPositionChange]);
 
   const label = useMemo(
-    () => now.toLocaleString(locale, { hour: 'numeric', minute: '2-digit', hour12: true }),
+    () =>
+      now.toLocaleString(locale, {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true,
+      }),
     [now, locale]
   );
-
 
   const shouldShowLabel = percentage < 85 && percentage > 15;
 
@@ -55,12 +59,10 @@ export const Timeline = ({
     <div
       className={`${blockClass}__current-timeline active`}
       style={{ top: `${percentage}%` }}
-      title={label}
-    >
+      title={label}>
       {shouldShowLabel && (
         <div className={`${blockClass}__current-timeline-label`}>{label}</div>
       )}
     </div>
   );
 };
-

@@ -5,40 +5,38 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use "@carbon/react/scss/theme" as *;
-@use "@carbon/react/scss/spacing" as *;
-@use "@carbon/react/scss/colors" as *;
-@use "@carbon/react/scss/motion" as *;
-@use "@carbon/react/scss/type" as *;
-@use "@carbon/styles/scss/utilities/button-reset";
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/motion' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/styles/scss/utilities/button-reset';
 
 $prefix: 'clabs' !default;
 $block: '#{$prefix}--calendar' !default;
 
-
 .#{$block} {
-  block-size: 100%;
-  inline-size: 100%;
   position: relative;
 
   display: flex;
   flex-direction: column;
+  padding: 0 $spacing-05 $spacing-05;
 
   background-color: $background;
-  padding: 0 $spacing-05 $spacing-05;
+  block-size: 100%;
+  inline-size: 100%;
 }
 
 // Toolbar styles
 
 .#{$block}__toolbar {
-  inline-size: 100%;
-  margin: auto;
-
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
 
   flex: 0 0 auto;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: auto;
+  inline-size: 100%;
 
   &:focus {
     outline: none;
@@ -52,16 +50,16 @@ $block: '#{$prefix}--calendar' !default;
 }
 
 .#{$block}__toolbar-right {
-  flex: 1;
   display: flex;
+  flex: 1;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
 
   padding: $spacing-05 0 0 0;
-  flex-wrap: wrap;
-  justify-content: space-between;
   container-type: inline-size;
 
-  >* {
+  > * {
     flex: 1;
   }
 }
@@ -96,9 +94,9 @@ $block: '#{$prefix}--calendar' !default;
 
 .#{$block}__toolbar-right-start {
   display: flex;
+  flex: 1;
   align-items: center;
   padding: 0 0 $spacing-05 0;
-  flex: 1;
 }
 
 .#{$block}__toolbar-right-end {
@@ -155,28 +153,27 @@ $block: '#{$prefix}--calendar' !default;
 
 .#{$block}__switcher {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
 
   flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
   block-size: 100%;
-  margin-inline-end: $spacing-05;
-  margin-inline-start: $spacing-05;
+  margin-inline: $spacing-05 $spacing-05;
 }
 
 .#{$block}__switcher .cds--content-switcher {
   display: grid;
-  grid-auto-flow: column;
   grid-auto-columns: 1fr;
+  grid-auto-flow: column;
   inline-size: auto;
 }
 
 .#{$block}__switcher .cds--content-switcher-btn {
+  justify-content: center;
   inline-size: 100%;
   min-inline-size: 0;
   padding-inline: $spacing-05;
   white-space: nowrap;
-  justify-content: center;
 }
 
 .#{$block}__switcher .cds--content-switcher--sm .cds--content-switcher-btn {
@@ -193,7 +190,7 @@ $block: '#{$prefix}--calendar' !default;
   span {
     display: flex;
 
-    >span {
+    > span {
       margin-inline-start: $spacing-05;
     }
   }
@@ -228,19 +225,19 @@ $block: '#{$prefix}--calendar' !default;
 .#{$block}__body {
   display: flex;
   flex: 1 1 auto;
-  inline-size: 100%;
   align-items: flex-start;
+  inline-size: 100%;
   max-block-size: calc(100% - ($spacing-03 + $spacing-10));
 }
 
 .#{$block}__calendar {
-  flex: 1 1 auto;
-  inline-size: 100%;
-  block-size: 100%;
+  position: relative;
 
   display: flex;
-  position: relative;
   overflow: auto;
+  flex: 1 1 auto;
+  block-size: 100%;
+  inline-size: 100%;
 }
 
 .#{$block}__calendar.#{$block}__date-picker-open {
@@ -249,77 +246,78 @@ $block: '#{$prefix}--calendar' !default;
 
 .#{$block}__date-picker-overlay {
   position: fixed;
-  inset-inline-start: 0;
-  inset-block-start: 0;
-  inline-size: 100%;
-  block-size: 100%;
 
   background-color: rgba(0, 0, 0, 0.5);
+  block-size: 100%;
+  inline-size: 100%;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   opacity: 0;
-  visibility: hidden;
   pointer-events: none;
+  transition-duration: $duration-moderate-01;
 
   transition-property: opacity, visibility;
-  transition-duration: $duration-moderate-01;
+  visibility: hidden;
   @include motion(exit, expressive);
 
   &.#{$block}__date-picker-overlay-show {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-
     z-index: 2;
-    transition-property: opacity, visibility;
+    opacity: 1;
+    pointer-events: auto;
     transition-duration: $duration-moderate-01;
+    transition-property: opacity, visibility;
+    visibility: visible;
     @include motion(entrance, expressive);
   }
 }
 
 /* Datepicker panel */
 .#{$block}__date-picker-panel {
+  z-index: 1;
   flex: 0 0 auto;
   block-size: 100%;
-  max-inline-size: 100%;
   inline-size: 0;
-  z-index: 1;
+  max-inline-size: 100%;
+  transition-behavior: allow-discrete;
+  transition-duration: $duration-moderate-01;
 
   transition-property: inline-size, flex, max-inline-size;
-  transition-duration: $duration-moderate-01;
-  transition-behavior: allow-discrete;
   @include motion(exit, expressive);
 
   .cds--date-picker {
     display: none;
+    justify-content: flex-end;
+    inline-size: 100%;
     opacity: 0;
+    transition-behavior: allow-discrete;
+    transition-duration: $duration-moderate-01;
 
     transition-property: opacity, display;
-    transition-duration: $duration-moderate-01;
-    transition-behavior: allow-discrete;
     @include motion(exit, expressive);
   }
 
   &.#{$block}__date-picker-slide {
     position: absolute;
-    inset-inline-start: 0;
     inset-block-start: 0;
+    inset-inline-start: 0;
   }
 
   &.#{$block}__date-picker-open {
-    inline-size: calc($spacing-07 + $spacing-12 + $spacing-13);
     border-block-start: 1px solid $border-subtle-02;
+    inline-size: calc($spacing-07 + $spacing-12 + $spacing-13);
+    transition-behavior: allow-discrete;
+    transition-duration: $duration-moderate-01;
 
     transition-property: inline-size;
-    transition-duration: $duration-moderate-01;
-    transition-behavior: allow-discrete;
     @include motion(entrance, expressive);
 
     .cds--date-picker {
       display: flex;
       opacity: 1;
+      transition-behavior: allow-discrete;
+      transition-duration: $duration-moderate-01;
 
       transition-property: opacity, display;
-      transition-duration: $duration-moderate-01;
-      transition-behavior: allow-discrete;
       @include motion(entrance, expressive);
     }
   }
@@ -330,15 +328,14 @@ $block: '#{$prefix}--calendar' !default;
 
   &.#{$block}__date-picker-panel-modal {
     position: absolute;
-    inset-block-start: 0;
-    inset-block-end: 0;
-    inset-inline-start: 0;
-
-    background-color: $background;
     z-index: 3;
 
-    border-inline-end: none;
+    background-color: $background;
     border-block-start: none;
+
+    border-inline-end: none;
+    inset-block: 0 0;
+    inset-inline-start: 0;
   }
 }
 
@@ -349,13 +346,13 @@ $block: '#{$prefix}--calendar' !default;
   justify-content: space-between;
 
   padding: $spacing-05;
-  margin-bottom: $spacing-05;
+  margin-block-end: $spacing-05;
 }
 
 .#{$block}__toolbar-datepicker {
   .#{$block}__toolbar-left {
-    inline-size: calc($spacing-12 * 3);
     flex: 0 0 calc($spacing-12 * 3);
+    inline-size: calc($spacing-12 * 3);
   }
 
   .#{$block}__toolbar-right {
@@ -368,24 +365,28 @@ $block: '#{$prefix}--calendar' !default;
   flex: 0 0 auto;
 }
 
-.flatpickr-calendar {
-  padding: $spacing-02 $spacing-02 $spacing-03 $spacing-02;
-  block-size: calc($spacing-09 * 7);
-  inline-size: calc($spacing-12 * 3);
-}
-
 .flatpickr-calendar,
 .flatpickr-calendar.inline {
   overflow: visible;
   max-block-size: calc($spacing-13 * 4);
 }
 
+.flatpickr-calendar {
+  padding: $spacing-02 $spacing-02 $spacing-03 $spacing-02;
+  block-size: calc($spacing-09 * 7);
+  inline-size: calc($spacing-12 * 3);
+
+  &:focus-visible {
+    outline: 1px solid $border-interactive;
+  }
+}
+
 /* Day cells */
 
 .#{$block}__day {
   position: relative;
-  min-block-size: calc(100% / 5);
   padding: $spacing-03 $spacing-05;
+  min-block-size: calc(100% / 5);
 
   .#{$block}__day-number {
     color: $text-secondary;
@@ -401,7 +402,7 @@ $block: '#{$prefix}--calendar' !default;
     }
 
     p {
-      color: #000;
+      color: #000000;
     }
   }
 
@@ -410,42 +411,22 @@ $block: '#{$prefix}--calendar' !default;
       color: $text-on-color;
     }
 
-    .#{$block}__current-timeline.active {
-      block-size: $spacing-01;
-      border-style: solid;
-      background: $border-interactive;
-      background-image: none;
-
-      &:before {
-        content: "";
-        border: 1.5px solid $border-interactive;
-        border-radius: calc($spacing-04 / 2);
-        block-size: calc($spacing-04 / 2);
-        inline-size: calc($spacing-04 / 2);
-        display: block;
-        z-index: 2;
-        position: absolute;
-        background: $background;
-        inset-inline-start: 0;
-      }
-    }
-
     .#{$block}__day-number {
       position: relative;
-      font-weight: bold;
       color: $interactive;
+      font-weight: bold;
+    }
 
-      &:before {
-        content: "";
-        display: block;
-        position: absolute;
-        inset-block-start: calc($spacing-12 / 5);
-        inset-inline-start: 50%;
-        transform: translateX(-50%);
-        inline-size: $spacing-02;
-        block-size: $spacing-02;
-        background-color: $interactive;
-      }
+    .#{$block}__day-number::before {
+      position: absolute;
+      display: block;
+      background-color: $interactive;
+      block-size: $spacing-02;
+      content: '';
+      inline-size: $spacing-02;
+      inset-block-start: calc($spacing-12 / 5);
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
     }
   }
 
@@ -454,29 +435,49 @@ $block: '#{$prefix}--calendar' !default;
   }
 }
 
+.#{$block}__day .#{$block}__current-timeline.active {
+  border-style: solid;
+  background: $border-interactive;
+  background-image: none;
+  block-size: $spacing-01;
+
+  &::before {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    border: 1.5px solid $border-interactive;
+    border-radius: calc($spacing-04 / 2);
+    background: $background;
+    block-size: calc($spacing-04 / 2);
+    content: '';
+    inline-size: calc($spacing-04 / 2);
+    inset-inline-start: 0;
+  }
+}
+
 .#{$block}__day-content {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
   position: relative;
-  inline-size: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
   block-size: 100%;
+  inline-size: 100%;
 }
 
 .#{$block}__day-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-
   position: absolute;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  inline-size: 100%;
   inset-block-start: 0;
   inset-inline-start: 0;
-  inline-size: 100%;
 
   .#{$block}__more-button {
     @include button-reset.reset;
-    font-size: $spacing-04;
+
     color: $link-primary;
+    font-size: $spacing-04;
 
     &:hover {
       color: $link-primary-hover;
@@ -485,34 +486,36 @@ $block: '#{$prefix}--calendar' !default;
 }
 
 .#{$block}__current-timeline {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
   position: absolute;
   z-index: 3;
-  inset-inline-start: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 $spacing-03;
+  block-size: 1.5px;
 
   inline-size: 100%;
-  block-size: 1.5px;
-  padding: 0 $spacing-03;
-
+  inset-inline-start: 0;
 
   &.active {
     border-color: $border-interactive;
-    background-image: linear-gradient(to right, $border-interactive 30%, $background 10%);
+    background-image: linear-gradient(
+      to right,
+      $border-interactive 30%,
+      $background 10%
+    );
     background-position: bottom;
-    background-size: $spacing-03;
     background-repeat: repeat-x;
+    background-size: $spacing-03;
   }
 
   .#{$block}__current-timeline-label {
-    z-index: 3;
-    inset-block-start: 0px;
-    font-size: 12px;
-    color: $link-primary;
-    text-align: right;
     position: relative;
+    z-index: 3;
+    color: $link-primary;
+    font-size: 12px;
+    inset-block-start: 0;
+    text-align: end;
   }
 }
 
@@ -528,17 +531,19 @@ $block: '#{$prefix}--calendar' !default;
   inline-size: $spacing-11;
 
   .#{$block}__current-timeline {
-    background-image: linear-gradient(to right,
-        $border-interactive 30%,
-        $layer-01 10%);
+    background-image: linear-gradient(
+      to right,
+      $border-interactive 30%,
+      $layer-01 10%
+    );
 
-    &:before {
-      content: "";
+    &::before {
       position: absolute;
-      inset-inline-start: 0;
-      inline-size: 100%;
-      block-size: 4px;
       background-color: $background;
+      block-size: 4px;
+      content: '';
+      inline-size: 100%;
+      inset-inline-start: 0;
     }
   }
 
@@ -546,72 +551,67 @@ $block: '#{$prefix}--calendar' !default;
     inline-size: 48px;
 
     .#{$block}__current-timeline-label {
-      font-size: 12px;
-      text-align: right;
       position: absolute;
+      font-size: 12px;
       inset-block-start: -8px;
+      text-align: end;
     }
   }
 }
 
 .#{$block}__hour-label {
   position: absolute;
-  inset-block-start: -10px;
-  inset-inline-end: 0;
-  inline-size: 100%;
-  text-align: center;
-  inset-inline-start: 0;
   display: flex;
   justify-content: flex-end;
   padding: 0 $spacing-03;
+  inline-size: 100%;
+  inset-block-start: -10px;
+  inset-inline: 0 0;
+  text-align: center;
 
-  &>span {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    position: relative;
-    z-index: 4;
-    inline-size: 100%;
-    margin: auto;
-    font-weight: normal;
-    font-size: 14px;
-    color: $text-primary;
-    block-size: $spacing-05;
-
-    span:nth-child(2) {
-      margin-left: calc($spacing-05 / 5);
-    }
-  }
-
-  &.#{$block}__hour-label-sm {
-    &>span {
-      font-size: 12px;
-      line-height: 14px;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-end;
-    }
-  }
-
-  &:after {
-    content: "";
+  &::after {
     position: absolute;
+    display: flex;
+    block-size: 100%;
+    content: '';
+    inline-size: 100%;
     inset-block-start: 0;
     inset-inline-start: 0;
-    inline-size: 100%;
-    block-size: 100%;
-    display: flex;
   }
+}
+
+.#{$block}__hour-label > span {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin: auto;
+  block-size: $spacing-05;
+  color: $text-primary;
+  font-size: 14px;
+  font-weight: normal;
+  inline-size: 100%;
+}
+
+.#{$block}__hour-label > span span:nth-child(2) {
+  margin-inline-start: calc($spacing-05 / 5);
+}
+
+.#{$block}__hour-label-sm > span {
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  font-size: 12px;
+  line-height: 14px;
 }
 
 .#{$block}__day-events-wrapper {
   position: absolute;
-  inset-block-start: $spacing-02;
-  inset-inline-start: $spacing-02;
-  inset-inline-end: $spacing-02;
-  inset-block-end: $spacing-02;
   z-index: 1;
   overflow: auto;
+  inset-block: $spacing-02 $spacing-02;
+  inset-inline: $spacing-02 $spacing-02;
 }
 
 .#{$block}__day-events {
@@ -620,32 +620,30 @@ $block: '#{$prefix}--calendar' !default;
 
 .#{$block}__month-cell {
   .#{$block}__day-events {
-    max-inline-size: 100%;
-    padding-top: $spacing-07;
     position: absolute;
-    inset-block-start: $spacing-02;
-    inset-inline-start: $spacing-02;
-    inset-inline-end: $spacing-02;
-    inset-block-end: $spacing-02;
     z-index: 1;
     overflow: auto;
+    inset-block: $spacing-02 $spacing-02;
+    inset-inline: $spacing-02 $spacing-02;
+    max-inline-size: 100%;
+    padding-block-start: $spacing-07;
   }
 }
 
 .#{$block}__day-cell {
   .#{$block}__day-events {
     display: flex;
-    padding-top: 0;
+    padding-block-start: 0;
   }
 
-  .#{$block}__event+.#{$block}__event {
+  .#{$block}__event + .#{$block}__event {
     margin-inline-start: $spacing-05;
   }
 }
 
 .#{$block}__week-cell {
   .#{$block}__day-events {
-    padding-top: 0;
+    padding-block-start: 0;
   }
 }
 
@@ -663,14 +661,14 @@ $block: '#{$prefix}--calendar' !default;
   block-size: 22px;
 
   td,
-  th[scope="row"] {
-    min-block-size: $spacing-05;
+  th[scope='row'] {
     padding: 0;
+    min-block-size: $spacing-05;
   }
 
   &:last-child {
     .#{$block}__hour-col {
-      border-bottom: 1px solid $border-subtle-02;
+      border-block-end: 1px solid $border-subtle-02;
     }
   }
 
@@ -682,15 +680,16 @@ $block: '#{$prefix}--calendar' !default;
 }
 
 .#{$block}__table {
+  block-size: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  table-layout: fixed;
 
   inline-size: 100%;
-  block-size: 100%;
+  table-layout: fixed;
 
   thead {
-    @include type-style("heading-compact-01");
+    @include type-style('heading-compact-01');
+
     background-color: $layer-accent;
   }
 
@@ -699,7 +698,7 @@ $block: '#{$prefix}--calendar' !default;
     background-color: $layer;
     inline-size: 100%;
     will-change: transform;
-    @include type-style("body-compact-01");
+    @include type-style('body-compact-01');
 
     tr:hover {
       background-color: $background;
@@ -707,26 +706,24 @@ $block: '#{$prefix}--calendar' !default;
   }
 
   th {
-    border-block-end: 1px solid $layer-active;
     background-color: $layer-accent;
+    border-block-end: 1px solid $layer-active;
     color: $text-primary;
 
-    padding-inline-end: $spacing-05;
-    padding-inline-start: $spacing-05;
+    padding-inline: $spacing-05 $spacing-05;
 
     &.#{$block}__th-sm {
-      padding-inline-end: $spacing-03;
-      padding-inline-start: $spacing-03;
+      padding-inline: $spacing-03 $spacing-03;
     }
 
-    &:not([scope="row"])>div {
+    &:not([scope='row']) > div {
       display: flex;
       overflow: hidden;
+      gap: $spacing-02;
+      inline-size: 100%;
+      padding-block: $spacing-05;
       text-overflow: ellipsis;
       white-space: nowrap;
-      padding-block: $spacing-05;
-      inline-size: 100%;
-      gap: $spacing-02;
     }
   }
 
@@ -741,16 +738,16 @@ $block: '#{$prefix}--calendar' !default;
     padding-block-start: calc($spacing-01 * 7);
 
     &:first-of-type {
-      border-inline-start: 1px solid $border-subtle-02;
       border-inline-end: 1px solid $border-subtle-02;
+      border-inline-start: 1px solid $border-subtle-02;
     }
   }
 
   th,
   td {
+    min-inline-size: 0;
     text-align: start;
     vertical-align: middle;
-    min-inline-size: 0;
   }
 
   tr {
@@ -764,8 +761,8 @@ $block: '#{$prefix}--calendar' !default;
 
     thead {
       position: sticky;
-      inset-block-start: 0;
       z-index: 1;
+      inset-block-start: 0;
       will-change: transform;
     }
 
@@ -775,26 +772,26 @@ $block: '#{$prefix}--calendar' !default;
 
     th {
       position: sticky;
-      inset-block-start: 0;
       z-index: 2;
+      inset-block-start: 0;
 
       .#{$block}__date-picker-open &:first-child {
-        border-left: 1px solid $border-subtle-02;
+        border-inline-start: 1px solid $border-subtle-02;
       }
     }
 
-    th[scope="row"] {
+    th[scope='row'] {
       position: sticky;
-      inset-inline-start: 0;
       z-index: 3;
       background-color: $background;
+      inset-inline-start: 0;
     }
   }
 
   &.#{$block}__table-scroll {
-    th:not([scope="row"]):first-child {
-      inset-inline-start: 0;
+    th:not([scope='row']):first-child {
       z-index: 3;
+      inset-inline-start: 0;
     }
   }
 
@@ -804,9 +801,8 @@ $block: '#{$prefix}--calendar' !default;
 
     td,
     th {
-      padding-inline-end: $spacing-03;
-      padding-inline-start: $spacing-03;
       min-inline-size: $spacing-08;
+      padding-inline: $spacing-03 $spacing-03;
     }
   }
 }
@@ -817,10 +813,10 @@ $block: '#{$prefix}--calendar' !default;
 
   &.#{$block}__table-head-sm-date {
     flex-direction: column;
-    justify-content: center;
     align-items: flex-start;
+    justify-content: center;
 
-    >div {
+    > div {
       inline-size: 100%;
     }
   }
@@ -840,20 +836,18 @@ $block: '#{$prefix}--calendar' !default;
   background-color: $layer-background-01;
 }
 
-.#{$block}__date-picker-panel .cds--date-picker {
-  justify-content: flex-end;
-  inline-size: 100%;
-}
-
 .#{$block}__date-picker-panel .cds--date-picker-container {
   inline-size: 100%;
 }
 
-.#{$block}__date-picker-panel .cds--date-picker--range .cds--date-picker-container,
-.#{$block}__date-picker-panel .cds--date-picker--range .cds--date-picker__input {
+.#{$block}__date-picker-panel
+  .cds--date-picker--range
+  .cds--date-picker-container,
+.#{$block}__date-picker-panel
+  .cds--date-picker--range
+  .cds--date-picker__input {
   inline-size: auto;
 }
-
 
 .flatpickr-day {
   &:not(.selected).days-hovered {
@@ -864,7 +858,7 @@ $block: '#{$prefix}--calendar' !default;
     background-color: $layer-hover-01;
   }
 
-  &.weekend-day.cds--date-picker__day:not(.selected):not(.highlight-day):hover {
+  &.weekend-day.cds--date-picker__day:not(.selected, .highlight-day):hover {
     background-color: transparent;
   }
 
@@ -875,11 +869,11 @@ $block: '#{$prefix}--calendar' !default;
   &.highlight-day {
     background-color: $highlight;
 
-    &:not(.three-day):not(.days-hovered):hover {
+    &:not(.three-day, .days-hovered):hover {
       background-color: $highlight;
     }
 
-    &:not(.work-week):not(.days-hovered):hover {
+    &:not(.work-week, .days-hovered):hover {
       background-color: $highlight;
     }
   }
@@ -895,15 +889,8 @@ $block: '#{$prefix}--calendar' !default;
   }
 }
 
-.flatpickr-calendar {
-  &:focus-visible {
-    outline: 1px solid $border-interactive;
-  }
-}
-
 @mixin generate-week-hover() {
   @for $i from 1 through 52 {
-
     .flatpickr-day.week-#{$i}:not(.selected):not(.highlight-day):hover,
     .flatpickr-day.week-#{$i}:not(.selected):not(.highlight-day).days-hovered {
       background-color: $layer-hover-01;

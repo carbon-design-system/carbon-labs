@@ -7,8 +7,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 
 import { DatePicker, DatePickerInput, IconButton } from '@carbon/react';
 import { SidePanelClose } from '@carbon/icons-react';
@@ -16,7 +22,15 @@ import { SidePanelClose } from '@carbon/icons-react';
 import { CalendarHeader } from './CalendarHeader';
 import { Timeline } from './CalendarTimeline';
 
-import type { CalendarFormats, CalendarProps, CalendarView, DateInput, Device, ToolbarSize, MonthDay } from './Calendar.types';
+import type {
+  CalendarFormats,
+  CalendarProps,
+  CalendarView,
+  DateInput,
+  Device,
+  ToolbarSize,
+  MonthDay,
+} from './Calendar.types';
 
 type WeekdayHeader = { key: `day${number}`; header: string };
 
@@ -39,7 +53,13 @@ const BASE_WEEKDAYS: WeekdayHeader[] = [
 const cls = (...tokens: Array<string | boolean | null | undefined>) =>
   tokens.filter(Boolean).join(' ');
 
-const defaultViews: CalendarView[] = ['month', 'week', 'day', 'threeDays', 'workWeek'];
+const defaultViews: CalendarView[] = [
+  'month',
+  'week',
+  'day',
+  'threeDays',
+  'workWeek',
+];
 
 const toDate = (value: DateInput | undefined, fallback: Date): Date => {
   if (value == null) return fallback;
@@ -70,8 +90,11 @@ const getDateTime = (date: Date) => startOfDay(date).getTime();
 const sameDay = (dateA: Date, dateB: Date) =>
   getDateTime(dateA) === getDateTime(dateB);
 
-const formatIntl = (date: Date, locale: string, options: Intl.DateTimeFormatOptions) =>
-  new Intl.DateTimeFormat(locale, options).format(date);
+const formatIntl = (
+  date: Date,
+  locale: string,
+  options: Intl.DateTimeFormatOptions
+) => new Intl.DateTimeFormat(locale, options).format(date);
 
 const getWeekStart = (date: Date, weekStartsOn: number) => {
   const normalizedDate = startOfDay(date);
@@ -100,7 +123,9 @@ const getWeekNumber = (date: Date) => {
 };
 
 const hours: string[] = (() => {
-  const hrs = Array.from({ length: 24 }, (_, i) => (i < 10 ? `0${i}:00` : `${i}:00`));
+  const hrs = Array.from({ length: 24 }, (_, i) =>
+    i < 10 ? `0${i}:00` : `${i}:00`
+  );
   hrs.unshift('-1');
   hrs.push('24');
   return hrs;
@@ -112,7 +137,12 @@ const defaultFormats: Required<CalendarFormats> = {
   weekdayFormat: { weekday: 'short' },
   monthHeaderFormat: { month: 'long', year: 'numeric' },
   weekHeaderFormat: { month: 'short', day: '2-digit' },
-  dayHeaderFormat: { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' },
+  dayHeaderFormat: {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  },
 };
 
 const chunk = <Day,>(arr: Day[], num: number): Day[][] => {
@@ -131,7 +161,7 @@ const hourStringToHourNumber = (hour: string) => {
 
 const observeSize = (el: HTMLElement, onChange: () => void) => {
   if (typeof window === 'undefined') {
-    return () => { };
+    return () => {};
   }
 
   onChange();
@@ -170,17 +200,23 @@ export function Calendar({
   const prefix = usePrefix();
   const blockClass = `${prefix}--calendar`;
 
-  const locale = region ?? (typeof navigator !== 'undefined' ? navigator.language : 'en-US');
-  const format: Required<CalendarFormats> = { ...defaultFormats, ...(formats ?? {}) };
+  const locale =
+    region ?? (typeof navigator !== 'undefined' ? navigator.language : 'en-US');
+  const format: Required<CalendarFormats> = {
+    ...defaultFormats,
+    ...(formats ?? {}),
+  };
 
   const now = getCurrentDate?.() ?? new Date();
   const today = startOfDay(now);
 
   const [view, setView] = useState<CalendarView>(() =>
-    views.includes(defaultView) ? defaultView : (views[0] ?? 'month')
+    views.includes(defaultView) ? defaultView : views[0] ?? 'month'
   );
 
-  const [currentDay, setCurrentDay] = useState<Date>(() => startOfDay(toDate(initialDate, new Date())));
+  const [currentDay, setCurrentDay] = useState<Date>(() =>
+    startOfDay(toDate(initialDate, new Date()))
+  );
   const [toggleDatePicker, setToggleDatePicker] = useState(false);
   const [daySelected, setDaySelected] = useState(false);
 
@@ -201,8 +237,12 @@ export function Calendar({
   const datePickerRef = useRef<any>(null);
   const currentWeekDayRefs = useRef<HTMLElement[]>([]);
 
-  const focusedHeadRef = useRef<Record<number, HTMLTableCellElement | null>>({});
-  const focusedCellRef = useRef<Record<number, HTMLTableCellElement | null>>({});
+  const focusedHeadRef = useRef<Record<number, HTMLTableCellElement | null>>(
+    {}
+  );
+  const focusedCellRef = useRef<Record<number, HTMLTableCellElement | null>>(
+    {}
+  );
 
   useEffect(() => {
     if (initialDate == null) return;
@@ -238,7 +278,8 @@ export function Calendar({
     if (!datePickerRef?.current?.calendar) return;
 
     setTimeout(() => {
-      const calendarContainer = datePickerRef?.current?.calendar?.calendarContainer;
+      const calendarContainer =
+        datePickerRef?.current?.calendar?.calendarContainer;
 
       if (calendarContainer) {
         // Set tabindex to -1 so it can receive focus but not be in tab order
@@ -267,8 +308,6 @@ export function Calendar({
       }
     }, 0);
   }, [datePickerRef, view]);
-
-
 
   useEffect(() => {
     const el = toolbarRef.current;
@@ -374,7 +413,10 @@ export function Calendar({
   }, []);
 
   const handleCalendarScroll = useCallback(
-    (e: React.UIEvent<HTMLDivElement>, targetRef?: React.RefObject<HTMLElement>) => {
+    (
+      e: React.UIEvent<HTMLDivElement>,
+      targetRef?: React.RefObject<HTMLElement>
+    ) => {
       if (targetRef?.current) {
         targetRef.current.scrollLeft = (e.target as HTMLDivElement).scrollLeft;
       }
@@ -397,7 +439,9 @@ export function Calendar({
   }, [currentDay, effectiveWeekStartsOn]);
 
   const threeDayDates = useMemo(() => {
-    const currentDayIndex = weekDates.findIndex((d) => d.toDateString() === currentDay.toDateString());
+    const currentDayIndex = weekDates.findIndex(
+      (d) => d.toDateString() === currentDay.toDateString()
+    );
     const start = getWeekStart(currentDay, effectiveWeekStartsOn);
     const fullWeek = getDates(start, 7);
     const sliceStart = Math.max(0, currentDayIndex);
@@ -411,10 +455,15 @@ export function Calendar({
 
   const viewDateRange = useCallback(
     (v: CalendarView) => {
-      if (v === 'month') return formatIntl(currentDay, locale, format.monthHeaderFormat);
-      if (v === 'day') return formatIntl(currentDay, locale, format.dayHeaderFormat);
+      if (v === 'month')
+        return formatIntl(currentDay, locale, format.monthHeaderFormat);
+      if (v === 'day')
+        return formatIntl(currentDay, locale, format.dayHeaderFormat);
 
-      const start = getWeekStart(currentDay, v === 'workWeek' ? 1 : effectiveWeekStartsOn);
+      const start = getWeekStart(
+        currentDay,
+        v === 'workWeek' ? 1 : effectiveWeekStartsOn
+      );
       const daysCount = v === 'threeDays' ? 3 : v === 'workWeek' ? 5 : 7;
       const end = addDays(start, daysCount - 1);
 
@@ -422,7 +471,14 @@ export function Calendar({
       const endPart = formatIntl(end, locale, format.weekHeaderFormat);
       return `${startPart} - ${endPart} ${end.getFullYear()}`;
     },
-    [currentDay, format.dayHeaderFormat, format.monthHeaderFormat, format.weekHeaderFormat, locale, effectiveWeekStartsOn]
+    [
+      currentDay,
+      format.dayHeaderFormat,
+      format.monthHeaderFormat,
+      format.weekHeaderFormat,
+      locale,
+      effectiveWeekStartsOn,
+    ]
   );
 
   const visibleDatesForView: Date[] = useMemo(() => {
@@ -452,7 +508,8 @@ export function Calendar({
     const lastWeekEnd = addDays(lastWeekStart, 6);
 
     const msPerDay = 1000 * 60 * 60 * 24;
-    const daysNeeded = Math.round((lastWeekEnd.getTime() - gridStart.getTime()) / msPerDay) + 1;
+    const daysNeeded =
+      Math.round((lastWeekEnd.getTime() - gridStart.getTime()) / msPerDay) + 1;
 
     const totalDays = Math.max(daysNeeded, 35);
 
@@ -469,15 +526,15 @@ export function Calendar({
     });
 
     return chunk(days, 7).map((week, wi) => {
-      const row: MonthWeek = { id: `week-${wi}-${week[0].date.toISOString()}` } as MonthWeek;
+      const row: MonthWeek = {
+        id: `week-${wi}-${week[0].date.toISOString()}`,
+      } as MonthWeek;
       week.forEach((day, di) => {
         row[`day${di}`] = day;
       });
       return row;
     });
   }, [currentDay, effectiveWeekStartsOn]);
-
-
 
   const getWeekView = useCallback(
     (date: Date) => {
@@ -496,7 +553,9 @@ export function Calendar({
     (date: Date) => {
       const weekStart = getWeekStart(date, effectiveWeekStartsOn);
       const fullWeek = getDates(weekStart, 7);
-      const idx = fullWeek.findIndex((d) => d.toDateString() === date.toDateString());
+      const idx = fullWeek.findIndex(
+        (d) => d.toDateString() === date.toDateString()
+      );
       const safeIdx = Math.max(0, idx);
       return fullWeek.slice(safeIdx, safeIdx + 3);
     },
@@ -505,7 +564,8 @@ export function Calendar({
 
   const highlightView = useCallback((instance: any, days: Date[]) => {
     if (!instance || !days || days.length === 0) return;
-    const dayElements = instance.calendarContainer.querySelectorAll('.flatpickr-day');
+    const dayElements =
+      instance.calendarContainer.querySelectorAll('.flatpickr-day');
     dayElements.forEach((dayElement: any) => {
       dayElement.classList.remove('highlight-day');
       const dateObj = dayElement.dateObj;
@@ -519,9 +579,12 @@ export function Calendar({
 
   const handleCreateDaySelection = useCallback(
     (dObj: Date, dStr: string, fp: any, dayElements: any) => {
-
       if (!dayElements || !dayElements.classList) return;
-      const date = dayElements.dateObj ? new Date(dayElements.dateObj) : (dObj instanceof Date ? dObj : new Date(dObj));
+      const date = dayElements.dateObj
+        ? new Date(dayElements.dateObj)
+        : dObj instanceof Date
+        ? dObj
+        : new Date(dObj);
       if (isNaN(date.getTime())) return;
 
       const weekNumber = getWeekNumber(date);
@@ -539,22 +602,32 @@ export function Calendar({
 
       if (view === 'week') {
         const handleMouseOver = () => {
-          const weekDays = fp.daysContainer.querySelectorAll(`.week-${weekNumber}`);
+          const weekDays = fp.daysContainer.querySelectorAll(
+            `.week-${weekNumber}`
+          );
           weekDays.forEach((day: any) => {
             day.classList.add('days-hovered');
           });
         };
         const handleMouseOut = () => {
-          fp.daysContainer.querySelectorAll(`.week-${weekNumber}`).forEach((day: any) => {
-            day.classList.remove('days-hovered');
-          });
+          fp.daysContainer
+            .querySelectorAll(`.week-${weekNumber}`)
+            .forEach((day: any) => {
+              day.classList.remove('days-hovered');
+            });
         };
 
         if (dayElements._weekMouseOver) {
-          dayElements.removeEventListener('mouseover', dayElements._weekMouseOver);
+          dayElements.removeEventListener(
+            'mouseover',
+            dayElements._weekMouseOver
+          );
         }
         if (dayElements._weekMouseOut) {
-          dayElements.removeEventListener('mouseout', dayElements._weekMouseOut);
+          dayElements.removeEventListener(
+            'mouseout',
+            dayElements._weekMouseOut
+          );
         }
 
         dayElements._weekMouseOver = handleMouseOver;
@@ -565,7 +638,9 @@ export function Calendar({
 
       if (view === 'threeDays') {
         const handleMouseOver = () => {
-          const allDays = Array.from(fp.daysContainer.querySelectorAll('.flatpickr-day'));
+          const allDays = Array.from(
+            fp.daysContainer.querySelectorAll('.flatpickr-day')
+          );
           const index = allDays.indexOf(dayElements);
           if (index !== -1) {
             for (let i = 0; i < 3; i++) {
@@ -579,7 +654,9 @@ export function Calendar({
           }
         };
         const handleMouseOut = () => {
-          const allDays = Array.from(fp.daysContainer.querySelectorAll('.flatpickr-day'));
+          const allDays = Array.from(
+            fp.daysContainer.querySelectorAll('.flatpickr-day')
+          );
           const index = allDays.indexOf(dayElements);
           if (index !== -1) {
             for (let i = 0; i < 3; i++) {
@@ -590,10 +667,16 @@ export function Calendar({
         };
 
         if (dayElements._threeDaysMouseOver) {
-          dayElements.removeEventListener('mouseover', dayElements._threeDaysMouseOver);
+          dayElements.removeEventListener(
+            'mouseover',
+            dayElements._threeDaysMouseOver
+          );
         }
         if (dayElements._threeDaysMouseOut) {
-          dayElements.removeEventListener('mouseout', dayElements._threeDaysMouseOut);
+          dayElements.removeEventListener(
+            'mouseout',
+            dayElements._threeDaysMouseOut
+          );
         }
 
         dayElements._threeDaysMouseOver = handleMouseOver;
@@ -605,47 +688,59 @@ export function Calendar({
       if (view === 'workWeek') {
         dayElements.classList.add('week-day');
         const dayOfWeek = date.getDay();
-        if (dayOfWeek === 0 || dayOfWeek === 6) dayElements.classList.add('weekend-day');
-        if (dayOfWeek >= 1 && dayOfWeek <= 5) dayElements.classList.add('work-week');
+        if (dayOfWeek === 0 || dayOfWeek === 6)
+          dayElements.classList.add('weekend-day');
+        if (dayOfWeek >= 1 && dayOfWeek <= 5)
+          dayElements.classList.add('work-week');
 
         const handleMouseOver = () => {
-          fp.daysContainer.querySelectorAll(`.week-${weekNumber}`).forEach((day: any) => {
-            const dayObj = day.dateObj;
-            const currentDayOfWeek = new Date(dayObj).getDay();
-            if (currentDayOfWeek === 0 || currentDayOfWeek === 6) {
-              day.classList.add('weekend-day');
-            }
-            if (currentDayOfWeek >= 1 && currentDayOfWeek <= 5) {
-              dayElements.classList.add('work-week');
-            }
-            if (
-              currentDayOfWeek >= 1 &&
-              currentDayOfWeek <= 5 &&
-              !day.classList.contains('selected') &&
-              !day.classList.contains('highlight-day')
-            ) {
-              day.classList.add('days-hovered');
-            }
-          });
+          fp.daysContainer
+            .querySelectorAll(`.week-${weekNumber}`)
+            .forEach((day: any) => {
+              const dayObj = day.dateObj;
+              const currentDayOfWeek = new Date(dayObj).getDay();
+              if (currentDayOfWeek === 0 || currentDayOfWeek === 6) {
+                day.classList.add('weekend-day');
+              }
+              if (currentDayOfWeek >= 1 && currentDayOfWeek <= 5) {
+                dayElements.classList.add('work-week');
+              }
+              if (
+                currentDayOfWeek >= 1 &&
+                currentDayOfWeek <= 5 &&
+                !day.classList.contains('selected') &&
+                !day.classList.contains('highlight-day')
+              ) {
+                day.classList.add('days-hovered');
+              }
+            });
         };
         const handleMouseOut = () => {
-          fp.daysContainer.querySelectorAll(`.week-${weekNumber}`).forEach((day: any) => {
-            const dayObj = day.dateObj;
-            const currentDayOfWeek = new Date(dayObj).getDay();
-            if (
-              !day.classList.contains('selected') &&
-              !day.classList.contains('highlight-day')
-            ) {
-              day.classList.remove('days-hovered');
-            }
-          });
+          fp.daysContainer
+            .querySelectorAll(`.week-${weekNumber}`)
+            .forEach((day: any) => {
+              const dayObj = day.dateObj;
+              const currentDayOfWeek = new Date(dayObj).getDay();
+              if (
+                !day.classList.contains('selected') &&
+                !day.classList.contains('highlight-day')
+              ) {
+                day.classList.remove('days-hovered');
+              }
+            });
         };
 
         if (dayElements._workWeekMouseOver) {
-          dayElements.removeEventListener('mouseover', dayElements._workWeekMouseOver);
+          dayElements.removeEventListener(
+            'mouseover',
+            dayElements._workWeekMouseOver
+          );
         }
         if (dayElements._workWeekMouseOut) {
-          dayElements.removeEventListener('mouseout', dayElements._workWeekMouseOut);
+          dayElements.removeEventListener(
+            'mouseout',
+            dayElements._workWeekMouseOut
+          );
         }
 
         dayElements._workWeekMouseOver = handleMouseOver;
@@ -660,24 +755,28 @@ export function Calendar({
   useEffect(() => {
     if (!datePickerRef.current) return;
 
-    const fp = datePickerRef.current.calendar || datePickerRef.current.flatpickr;
+    const fp =
+      datePickerRef.current.calendar || datePickerRef.current.flatpickr;
 
     if (!fp) return;
 
-    if (!fp.config.onDayCreate.some((fn: any) => fn === handleCreateDaySelection)) {
+    if (
+      !fp.config.onDayCreate.some((fn: any) => fn === handleCreateDaySelection)
+    ) {
       fp.config.onDayCreate.push(handleCreateDaySelection);
     }
 
     fp.redraw();
 
     if (view === 'week') highlightView(fp, getWeekView(currentDay));
-    else if (view === 'threeDays') highlightView(fp, getThreeDaysView(currentDay));
-    else if (view === 'workWeek') highlightView(fp, getWorkWeekView(currentDay));
+    else if (view === 'threeDays')
+      highlightView(fp, getThreeDaysView(currentDay));
+    else if (view === 'workWeek')
+      highlightView(fp, getWorkWeekView(currentDay));
 
     if (fp.calendarContainer) {
       fp.calendarContainer.setAttribute('tabindex', '0');
     }
-
   }, [
     datePickerRef,
     view,
@@ -686,7 +785,7 @@ export function Calendar({
     currentDay,
     getWeekView,
     getThreeDaysView,
-    getWorkWeekView
+    getWorkWeekView,
   ]);
 
   const handleDateChange = useCallback(
@@ -732,9 +831,10 @@ export function Calendar({
       });
 
       if (view === 'week') highlightView(fp, getWeekView(currentDay));
-      else if (view === 'threeDays') highlightView(fp, getThreeDaysView(currentDay));
-      else if (view === 'workWeek') highlightView(fp, getWorkWeekView(currentDay));
-
+      else if (view === 'threeDays')
+        highlightView(fp, getThreeDaysView(currentDay));
+      else if (view === 'workWeek')
+        highlightView(fp, getWorkWeekView(currentDay));
     }, 0);
 
     return () => clearTimeout(timeout);
@@ -746,9 +846,8 @@ export function Calendar({
     currentDay,
     getWeekView,
     getThreeDaysView,
-    getWorkWeekView
+    getWorkWeekView,
   ]);
-
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
@@ -760,21 +859,31 @@ export function Calendar({
       if (view === 'month') {
         const firstRowDates = monthDays[0]
           ? Object.values(monthDays[0])
-            .filter((v): v is MonthDay => typeof v === 'object' && v !== null && 'date' in v)
-            .map((v) => getDateTime(v.date))
+              .filter(
+                (v): v is MonthDay =>
+                  typeof v === 'object' && v !== null && 'date' in v
+              )
+              .map((v) => getDateTime(v.date))
           : [];
 
         const lastRowDates = monthDays[monthDays.length - 1]
           ? Object.values(monthDays[monthDays.length - 1])
-            .filter((v): v is MonthDay => typeof v === 'object' && v !== null && 'date' in v)
-            .map((v) => getDateTime(v.date))
+              .filter(
+                (v): v is MonthDay =>
+                  typeof v === 'object' && v !== null && 'date' in v
+              )
+              .map((v) => getDateTime(v.date))
           : [];
 
         const firstColumnDates = monthDays.map((w) => getDateTime(w.day0.date));
         const lastColumnDates = monthDays.map((w) => getDateTime(w.day6.date));
 
         const currentWeekIndexFromCol = (col: 0 | 6) =>
-          monthDays.findIndex((w) => getDateTime((col === 0 ? w.day0 : w.day6).date) === getDateTime(newDate));
+          monthDays.findIndex(
+            (w) =>
+              getDateTime((col === 0 ? w.day0 : w.day6).date) ===
+              getDateTime(newDate)
+          );
 
         const previousWeek = (() => {
           const idx = currentWeekIndexFromCol(0);
@@ -783,14 +892,19 @@ export function Calendar({
 
         const nextWeek = (() => {
           const idx = currentWeekIndexFromCol(6);
-          return idx >= 0 && idx < monthDays.length - 1 ? monthDays[idx + 1] : null;
+          return idx >= 0 && idx < monthDays.length - 1
+            ? monthDays[idx + 1]
+            : null;
         })();
 
         switch (event.key) {
           case 'ArrowUp':
             if (firstRowDates.includes(getDateTime(newDate))) {
               event.preventDefault();
-              const colIndex = getDayColumnIndex(newDate, effectiveWeekStartsOn);
+              const colIndex = getDayColumnIndex(
+                newDate,
+                effectiveWeekStartsOn
+              );
               setFocusedDay(colIndex);
               setFocusedDate(null);
               setTimeout(() => focusedHeadRef.current[colIndex]?.focus(), 0);
@@ -804,7 +918,10 @@ export function Calendar({
           case 'ArrowDown':
             if (lastRowDates.includes(getDateTime(newDate))) {
               event.preventDefault();
-              const colIndex = getDayColumnIndex(newDate, effectiveWeekStartsOn);
+              const colIndex = getDayColumnIndex(
+                newDate,
+                effectiveWeekStartsOn
+              );
               setFocusedDay(colIndex);
               setFocusedDate(null);
               return;
@@ -892,7 +1009,9 @@ export function Calendar({
           visibleDates = visibleDatesForView;
       }
 
-      const currentDateIndex = visibleDates.findIndex(d => sameDay(d, newDate));
+      const currentDateIndex = visibleDates.findIndex((d) =>
+        sameDay(d, newDate)
+      );
       const isFirstColumn = currentDateIndex === 0;
       const isLastColumn = currentDateIndex === visibleDates.length - 1;
 
@@ -991,7 +1110,18 @@ export function Calendar({
         setFocusedDate(new Date(newDate));
       }
     },
-    [focusedDate, monthDays, view, effectiveWeekStartsOn, weekDates, threeDayDates, workWeekDates, visibleDatesForView, toggleDatePicker, currentDay]
+    [
+      focusedDate,
+      monthDays,
+      view,
+      effectiveWeekStartsOn,
+      weekDates,
+      threeDayDates,
+      workWeekDates,
+      visibleDatesForView,
+      toggleDatePicker,
+      currentDay,
+    ]
   );
 
   useEffect(() => {
@@ -1011,7 +1141,8 @@ export function Calendar({
         const initialDate = new Date(firstDate);
         const currentHour = now.getHours();
         // Use current hour if between 0-23, otherwise default to 8 AM
-        const targetHour = (currentHour >= 0 && currentHour <= 23) ? currentHour : 8;
+        const targetHour =
+          currentHour >= 0 && currentHour <= 23 ? currentHour : 8;
         initialDate.setHours(targetHour, 0, 0, 0);
         setFocusedDate(initialDate);
       }
@@ -1028,7 +1159,9 @@ export function Calendar({
     if (!focusedDate) return;
 
     const attemptFocus = () => {
-      const el = focusedCellRef.current[focusedDate.getTime()] ?? focusedCellRef.current[getDateTime(focusedDate)];
+      const el =
+        focusedCellRef.current[focusedDate.getTime()] ??
+        focusedCellRef.current[getDateTime(focusedDate)];
       if (el) {
         el.focus();
         // Scroll the focused cell into view for timeline views
@@ -1059,13 +1192,17 @@ export function Calendar({
 
     // Only scroll to current time on initial mount
     const approxRowHeight = 48;
-    const top = Math.max(0, now.getHours() * approxRowHeight - scroller.clientHeight / 2);
+    const top = Math.max(
+      0,
+      now.getHours() * approxRowHeight - scroller.clientHeight / 2
+    );
     scroller.scrollTop = top;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);  // Run only once on mount
+  }, []); // Run only once on mount
 
-  const renderSlot = (args: Parameters<NonNullable<CalendarProps['renderCell']>>[0]) =>
-    renderCell ? renderCell(args) : null;
+  const renderSlot = (
+    args: Parameters<NonNullable<CalendarProps['renderCell']>>[0]
+  ) => (renderCell ? renderCell(args) : null);
 
   const overlayOpen = smallDeviceSize && toggleDatePicker;
 
@@ -1075,8 +1212,7 @@ export function Calendar({
       dir={rtl ? 'rtl' : 'ltr'}
       aria-label="Calendar"
       role="region"
-      ref={calendarRef}
-    >
+      ref={calendarRef}>
       {toolbar && (
         <CalendarHeader
           ref={toolbarRef}
@@ -1120,7 +1256,8 @@ export function Calendar({
           onFocus={(e) => {
             // When aside receives focus, immediately focus the flatpickr container
             if (e.target === e.currentTarget) {
-              const calendarContainer = datePickerRef?.current?.calendar?.calendarContainer;
+              const calendarContainer =
+                datePickerRef?.current?.calendar?.calendarContainer;
               if (calendarContainer) {
                 calendarContainer.focus();
               }
@@ -1154,8 +1291,7 @@ export function Calendar({
                 }, 0);
               }
             }
-          }}
-        >
+          }}>
           {smallDeviceSize && toggleDatePicker && (
             <div className={`${blockClass}__date-picker-close-wrapper`}>
               <IconButton
@@ -1164,8 +1300,7 @@ export function Calendar({
                 label="Close date picker"
                 size="md"
                 onClick={handleDatePickerPanel}
-                className={`${blockClass}__date-picker-close`}
-              >
+                className={`${blockClass}__date-picker-close`}>
                 <SidePanelClose />
               </IconButton>
             </div>
@@ -1183,8 +1318,7 @@ export function Calendar({
               view === 'week' && `${blockClass}__date-picker-week`,
               view === 'threeDays' && `${blockClass}__date-picker-three-day`,
               view === 'workWeek' && `${blockClass}__date-picker-workWeek`
-            )}
-          >
+            )}>
             <DatePickerInput
               id="date-picker-input-id-start"
               placeholder="mm/dd/yyyy"
@@ -1195,13 +1329,18 @@ export function Calendar({
         </aside>
 
         <section
-          className={cls(`${blockClass}__calendar`, toggleDatePicker && `${blockClass}__date-picker-open`)}
+          className={cls(
+            `${blockClass}__calendar`,
+            toggleDatePicker && `${blockClass}__date-picker-open`
+          )}
           aria-label="Calendar grid"
           ref={calendarTableRef}
           onScroll={(e) =>
-            handleCalendarScroll(e as unknown as React.UIEvent<HTMLDivElement>, calendarHeaderRightRef)
-          }
-        >
+            handleCalendarScroll(
+              e as unknown as React.UIEvent<HTMLDivElement>,
+              calendarHeaderRightRef
+            )
+          }>
           <table
             role="grid"
             className={cls(
@@ -1214,8 +1353,7 @@ export function Calendar({
             tabIndex={0}
             onFocus={() => setTableFocused(true)}
             onBlur={() => setTableFocused(false)}
-            onKeyDown={handleKeyDown}
-          >
+            onKeyDown={handleKeyDown}>
             <thead>
               {view === 'month' ? (
                 <tr>
@@ -1237,10 +1375,10 @@ export function Calendar({
                         scope="col"
                         className={cls(
                           `${blockClass}__th`,
-                          (device === 'xsm' || device === 'sm') && `${blockClass}__th-sm`
+                          (device === 'xsm' || device === 'sm') &&
+                            `${blockClass}__th-sm`
                         )}
-                        aria-label={header.header}
-                      >
+                        aria-label={header.header}>
                         <div>{label}</div>
                       </th>
                     );
@@ -1252,36 +1390,50 @@ export function Calendar({
                     className={cls(
                       `${blockClass}__th`,
                       `${blockClass}__hour-col`,
-                      (device === 'xsm' || device === 'sm') && `${blockClass}__th-sm`,
-                      (device === 'xsm' || device === 'sm') && `${blockClass}__hour-col-sm`
+                      (device === 'xsm' || device === 'sm') &&
+                        `${blockClass}__th-sm`,
+                      (device === 'xsm' || device === 'sm') &&
+                        `${blockClass}__hour-col-sm`
                     )}
-                    scope="col"
-                  >
+                    scope="col">
                     <div>&nbsp;</div>
                   </th>
 
                   {visibleDatesForView.map((d, i) => {
-                    const isCurrentDay = d.toDateString() === today.toDateString();
+                    const isCurrentDay =
+                      d.toDateString() === today.toDateString();
                     const isFocused = focusedDay === i;
 
                     let dayOfWeek = '';
-                    let dateContent = d.toLocaleDateString('en-US', { day: 'numeric' });
+                    let dateContent = d.toLocaleDateString('en-US', {
+                      day: 'numeric',
+                    });
 
                     if (view === 'day') {
                       if (device === 'xsm') {
-                        dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'short' });
+                        dayOfWeek = d.toLocaleDateString('en-US', {
+                          weekday: 'short',
+                        });
                       } else {
-                        dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'long' });
+                        dayOfWeek = d.toLocaleDateString('en-US', {
+                          weekday: 'long',
+                        });
                       }
                     } else {
                       if (device === 'xsm') {
                         dayOfWeek = d.toString().split(' ')[0].slice(0, 1);
                       } else if (device === 'sm') {
-                        dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'short' });
+                        dayOfWeek = d.toLocaleDateString('en-US', {
+                          weekday: 'short',
+                        });
                       } else if (device === 'md') {
-                        dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'short' });
+                        dayOfWeek = d.toLocaleDateString('en-US', {
+                          weekday: 'short',
+                        });
                       } else {
-                        dayOfWeek = d.toLocaleDateString('en-US', { weekday: 'long' });
+                        dayOfWeek = d.toLocaleDateString('en-US', {
+                          weekday: 'long',
+                        });
                       }
                     }
 
@@ -1292,16 +1444,18 @@ export function Calendar({
                         aria-current={isCurrentDay ? 'date' : undefined}
                         className={cls(
                           `${blockClass}__th`,
-                          (device === 'xsm' || device === 'sm') && `${blockClass}__th-sm`,
+                          (device === 'xsm' || device === 'sm') &&
+                            `${blockClass}__th-sm`,
                           isCurrentDay && 'current-day'
-                        )}
-                      >
+                        )}>
                         <div
                           className={cls(
                             `${blockClass}__table-head-date`,
-                            (device === 'xsm' || device === 'sm' || device === 'md') && `${blockClass}__table-head-sm-date`
-                          )}
-                        >
+                            (device === 'xsm' ||
+                              device === 'sm' ||
+                              device === 'md') &&
+                              `${blockClass}__table-head-sm-date`
+                          )}>
                           <div>{dayOfWeek}</div>
                           <div>{dateContent}</div>
                         </div>
@@ -1319,7 +1473,9 @@ export function Calendar({
                     {weekdays.map((_, i) => {
                       const dayObj = week[`day${i}`];
                       const cellDate = dayObj.date;
-                      const isFocused = focusedDate ? getDateTime(cellDate) === getDateTime(focusedDate) : false;
+                      const isFocused = focusedDate
+                        ? getDateTime(cellDate) === getDateTime(focusedDate)
+                        : false;
 
                       const start = startOfDay(cellDate);
                       const end = addDays(start, 1);
@@ -1333,11 +1489,10 @@ export function Calendar({
                             dayObj.currentMonth && 'selected',
                             sameDay(cellDate, today) && 'current',
                             daySelected &&
-                            dayObj.selected &&
-                            cellDate.getMonth() === today.getMonth() &&
-                            'highlight-up'
+                              dayObj.selected &&
+                              cellDate.getMonth() === today.getMonth() &&
+                              'highlight-up'
                           )}
-
                           onKeyDown={handleKeyDown}
                           onFocus={() => setFocusedDate(cellDate)}
                           tabIndex={isFocused ? 0 : -1}
@@ -1346,11 +1501,12 @@ export function Calendar({
                           ref={(el) => {
                             if (!el) return;
                             focusedCellRef.current[getDateTime(cellDate)] = el;
-                          }}
-                        >
+                          }}>
                           <div className={`${blockClass}__day-content`}>
                             <div className={`${blockClass}__day-label`}>
-                              <div className={`${blockClass}__day-number`}>{dayObj.number}</div>
+                              <div className={`${blockClass}__day-number`}>
+                                {dayObj.number}
+                              </div>
                             </div>
 
                             <div className={`${blockClass}__day-events`}>
@@ -1375,8 +1531,17 @@ export function Calendar({
                   const hourNum = hourStringToHourNumber(hour);
                   const isHalfRow = hourNum === -1 || hourNum === 24;
                   const hour24 = parseInt(hour);
-                  const hour12 = hourNum === -1 || hour24 === 0 || hour24 === 24 || hour24 % 12 === 0 ? 12 : hour24 % 12;
-                  const amPm = hourNum === -1 || hour24 < 12 || hour24 === 24 ? 'AM' : 'PM';
+                  const hour12 =
+                    hourNum === -1 ||
+                    hour24 === 0 ||
+                    hour24 === 24 ||
+                    hour24 % 12 === 0
+                      ? 12
+                      : hour24 % 12;
+                  const amPm =
+                    hourNum === -1 || hour24 < 12 || hour24 === 24
+                      ? 'AM'
+                      : 'PM';
 
                   const currentHour = today.getHours();
                   const currentMinutes = today.getMinutes();
@@ -1392,21 +1557,26 @@ export function Calendar({
                     hour !== '24' &&
                     currentDay.toDateString() === today.toDateString();
 
-                  const isToday = currentDay.toDateString() === today.toDateString();
+                  const isToday =
+                    currentDay.toDateString() === today.toDateString();
                   const shouldHideLabel =
                     isToday &&
-                    (isNearestHour || (isCurrentHour && (currentMinutes >= 45 || currentMinutes < 15)));
+                    (isNearestHour ||
+                      (isCurrentHour &&
+                        (currentMinutes >= 45 || currentMinutes < 15)));
 
                   return (
-                    <tr key={`hour-${hour}`} className={cls(isHalfRow && `${blockClass}__half-row`)}>
+                    <tr
+                      key={`hour-${hour}`}
+                      className={cls(isHalfRow && `${blockClass}__half-row`)}>
                       <th
                         scope="row"
                         className={cls(
                           `${blockClass}__hour-col`,
-                          (device === 'xsm' || device === 'sm') && `${blockClass}__hour-col-sm`
+                          (device === 'xsm' || device === 'sm') &&
+                            `${blockClass}__hour-col-sm`
                         )}
-                        tabIndex={-1}
-                      >
+                        tabIndex={-1}>
                         {showTimeline && (
                           <Timeline
                             blockClass={blockClass}
@@ -1419,14 +1589,17 @@ export function Calendar({
                         <div
                           className={cls(
                             `${blockClass}__hour-label`,
-                            (device === 'xsm' || device === 'sm') && `${blockClass}__hour-label-sm`
-                          )}
-                        >
-                          {!shouldHideLabel && hourNum !== -1 && hourNum !== 24 && hourNum !== 0 ? (
+                            (device === 'xsm' || device === 'sm') &&
+                              `${blockClass}__hour-label-sm`
+                          )}>
+                          {!shouldHideLabel &&
+                          hourNum !== -1 &&
+                          hourNum !== 24 &&
+                          hourNum !== 0 ? (
                             <span>
                               <span>{hour12}</span> <span>{amPm}</span>
                             </span>
-                          ) : (hourNum === 24 || hourNum === 0) ? (
+                          ) : hourNum === 24 || hourNum === 0 ? (
                             <span>
                               <span>{hour12}</span> <span>{amPm}</span>
                             </span>
@@ -1441,24 +1614,32 @@ export function Calendar({
                         else if (hourNum === -1) merged.setHours(0, 0, 0, 0);
                         else merged.setHours(hourNum, 0, 0, 0);
 
-                        const isCurrentDay = d.toDateString() === today.toDateString();
+                        const isCurrentDay =
+                          d.toDateString() === today.toDateString();
 
                         const start = new Date(merged);
                         const end = new Date(merged);
                         end.setMinutes(59, 59, 999);
 
-                        const isFocused = focusedDate ? merged.getTime() === focusedDate.getTime() : false;
+                        const isFocused = focusedDate
+                          ? merged.getTime() === focusedDate.getTime()
+                          : false;
                         const focusable = !isHalfRow;
 
                         const tillCurrentDay = d <= today;
-                        const showTimelineInCell = tillCurrentDay && currentDay.toDateString() === today.toDateString() && !isHalfRow;
+                        const showTimelineInCell =
+                          tillCurrentDay &&
+                          currentDay.toDateString() === today.toDateString() &&
+                          !isHalfRow;
 
                         return (
                           <td
                             key={`${d.toISOString()}-${hour}`}
                             className={cls(
                               `${blockClass}__day`,
-                              view === 'day' ? `${blockClass}__day-cell` : `${blockClass}__week-cell`,
+                              view === 'day'
+                                ? `${blockClass}__day-cell`
+                                : `${blockClass}__week-cell`,
                               isCurrentDay && 'current',
                               isCurrentDay && 'selected'
                             )}
@@ -1471,8 +1652,7 @@ export function Calendar({
                             ref={(el) => {
                               if (!el || !focusable) return;
                               focusedCellRef.current[merged.getTime()] = el;
-                            }}
-                          >
+                            }}>
                             {showTimelineInCell && (
                               <Timeline
                                 blockClass={blockClass}
@@ -1481,14 +1661,18 @@ export function Calendar({
                                 locale={locale}
                               />
                             )}
-                            <div className={`${blockClass}__day-events-wrapper`}>
+                            <div
+                              className={`${blockClass}__day-events-wrapper`}>
                               {renderSlot({
                                 view,
                                 date: d,
                                 start,
                                 end,
                                 isToday: sameDay(d, today),
-                                isCurrentTimeSlot: sameDay(d, today) && !isHalfRow && hourNum === now.getHours(),
+                                isCurrentTimeSlot:
+                                  sameDay(d, today) &&
+                                  !isHalfRow &&
+                                  hourNum === now.getHours(),
                               })}
                             </div>
                           </td>
@@ -1510,8 +1694,3 @@ export function Calendar({
 }
 
 export default Calendar;
-
-
-
-
-

@@ -8,8 +8,11 @@
  */
 
 import React, { forwardRef, useMemo } from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import type { CalendarView, CalendarHeaderProps } from '../components/Calendar.types';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
+import type {
+  CalendarView,
+  CalendarHeaderProps,
+} from '../components/Calendar.types';
 
 import {
   ContentSwitcher,
@@ -27,7 +30,6 @@ import {
   SidePanelClose,
   SidePanelCloseFilled,
 } from '@carbon/icons-react';
-
 
 type ViewItem = { text: string; value: CalendarView };
 
@@ -77,7 +79,11 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
     const blockClass = blockClassProp ?? `${prefix}--calendar`;
 
     const viewItems: ViewItem[] = useMemo(
-      () => (calendarViews ?? []).map((v) => ({ text: formatViewText(v), value: v })),
+      () =>
+        (calendarViews ?? []).map((v) => ({
+          text: formatViewText(v),
+          value: v,
+        })),
       [calendarViews]
     );
 
@@ -92,7 +98,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
     );
 
     const isSmallToolbar = toolbarSize === 'xsm' || toolbarSize === 'sm';
-    const isSmallSwitcher = toolbarSize === 'xsm' || toolbarSize === 'sm' || toolbarSize === 'md';
+    const isSmallSwitcher =
+      toolbarSize === 'xsm' || toolbarSize === 'sm' || toolbarSize === 'md';
 
     const showContentSwitcher =
       calendarViews.length >= 2 &&
@@ -100,7 +107,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
       !isSmallSwitcher;
 
     const showDropdown =
-      calendarViews.length > 3 || (calendarViews.length >= 2 && !showContentSwitcher);
+      calendarViews.length > 3 ||
+      (calendarViews.length >= 2 && !showContentSwitcher);
 
     return (
       <div
@@ -109,17 +117,17 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
         aria-label="Calendar Controls"
         className={cls(
           `${blockClass}__toolbar`,
-          toggleDatePicker && !smallDeviceSize && `${blockClass}__toolbar-datepicker`,
+          toggleDatePicker &&
+            !smallDeviceSize &&
+            `${blockClass}__toolbar-datepicker`,
           toolbarSize === 'xsm' && `${blockClass}__toolbar-sm`,
           toolbarSize === 'sm' && `${blockClass}__toolbar-small`
-        )}
-      >
+        )}>
         <div
           className={cls(
             `${blockClass}__toolbar-left`,
             toolbarSize === 'xsm' && `${blockClass}__toolbar-left-sm`
-          )}
-        >
+          )}>
           <div className={`${blockClass}__date-picker`}>
             <IconButton
               kind="ghost"
@@ -128,8 +136,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
               align="bottom"
               closeOnActivation={false}
               onClick={onToggleDatePickerPanel}
-              className={`${blockClass}__date-picker-icon`}
-            >
+              className={`${blockClass}__date-picker-icon`}>
               {toggleDatePicker ? <SidePanelCloseFilled /> : <SidePanelClose />}
             </IconButton>
           </div>
@@ -141,22 +148,22 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
             toolbarSize === 'xsm' && `${blockClass}__toolbar-right-sm`
           )}
           ref={calendarHeaderRightRef}
-          onScroll={(e) => onCalendarScroll?.(e, calendarTableRef)}
-        >
+          onScroll={(e) => onCalendarScroll?.(e, calendarTableRef)}>
           <div className={`${blockClass}__toolbar-right-start`}>
             <div
               className={cls(
                 `${blockClass}__today-btn`,
                 isSmallToolbar && `${blockClass}__today-btn-sm`
-              )}
-            >
-              <Tooltip label={formatDate()} closeOnActivation align="bottom-left">
+              )}>
+              <Tooltip
+                label={formatDate()}
+                closeOnActivation
+                align="bottom-left">
                 <Button
                   kind="ghost"
                   onClick={onToday}
                   className={`${blockClass}__link ${blockClass}__today sb-tooltip-trigger`}
-                  size="md"
-                >
+                  size="md">
                   Today
                 </Button>
               </Tooltip>
@@ -166,12 +173,21 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
               className={cls(
                 `${blockClass}__arrows`,
                 isSmallToolbar && `${blockClass}__arrows-sm`
-              )}
-            >
-              <IconButton kind="ghost" label="Previous" size="md" align="bottom" onClick={onPrevious}>
+              )}>
+              <IconButton
+                kind="ghost"
+                label="Previous"
+                size="md"
+                align="bottom"
+                onClick={onPrevious}>
                 <ChevronLeft />
               </IconButton>
-              <IconButton kind="ghost" label="Next" size="md" align="bottom" onClick={onNext}>
+              <IconButton
+                kind="ghost"
+                label="Next"
+                size="md"
+                align="bottom"
+                onClick={onNext}>
                 <ChevronRight />
               </IconButton>
             </div>
@@ -182,8 +198,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
                 `${blockClass}__toolbar-title`,
                 isSmallToolbar && `${blockClass}__toolbar-title-sm`
               )}
-              aria-label={viewDateRange(view)}
-            >
+              aria-label={viewDateRange(view)}>
               <span>
                 <span>{viewDateRange(view)}</span>
               </span>
@@ -194,12 +209,11 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
             {showContentSwitcher ? (
               <div className={`${blockClass}__switcher`}>
                 <ContentSwitcher
-                  size='sm'
+                  size="sm"
                   selectionMode="automatic"
                   selectedIndex={selectedIndex}
                   onChange={(value) => onViewChange(value.name as CalendarView)}
-                  lowContrast={true}
-                >
+                  lowContrast={true}>
                   {calendarViews.map((v) => (
                     <Switch key={v} name={v} text={formatViewText(v)} />
                   ))}
@@ -210,8 +224,7 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
                 className={cls(
                   `${blockClass}__dropdown-view`,
                   isSmallToolbar && `${blockClass}__dropdown-view-sm`
-                )}
-              >
+                )}>
                 <Dropdown
                   id="calendar-view-dropdown"
                   size="md"
@@ -237,9 +250,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
                 iconDescription="New event"
                 kind="primary"
                 size="md"
-                onClick={() => { }}
-                className={`${blockClass}__create-event`}
-              >
+                onClick={() => {}}
+                className={`${blockClass}__create-event`}>
                 New event
               </Button>
             ) : (
@@ -247,9 +259,8 @@ export const CalendarHeader = forwardRef<HTMLDivElement, CalendarHeaderProps>(
                 label="New event"
                 kind="primary"
                 size="md"
-                onClick={() => { }}
-                className={`${blockClass}__create-event`}
-              >
+                onClick={() => {}}
+                className={`${blockClass}__create-event`}>
                 <Add />
               </IconButton>
             )}

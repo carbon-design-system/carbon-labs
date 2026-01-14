@@ -106,3 +106,6 @@ jobs:
       - name: run Web Component tests
         working-directory: 'packages/web-components'
         run: yarn test
+      - name: run VSCode Snippets tests
+        working-directory: 'packages/vscode-snippets'
+        run: yarn test

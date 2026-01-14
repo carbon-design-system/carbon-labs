@@ -26,7 +26,7 @@ import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js
 import Bangalore from '@carbon/pictograms/lib/bangalore';
 
 // Carbon labs
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 
 // StylePicker
 import '../index';

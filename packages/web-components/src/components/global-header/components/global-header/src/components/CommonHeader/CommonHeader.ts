@@ -10,7 +10,7 @@
 
 import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es-custom/components/ui-shell/index.js';
 import '@carbon/web-components/es-custom/components/popover/index.js';
 import { HeaderProps } from '../../types/Header.types';
@@ -195,7 +195,8 @@ export class CommonHeader extends LitElement {
                     typeof this.headerProps.sideNav.isCollapsible !==
                       'undefined' && !this.headerProps.sideNav.isCollapsible,
                 })}">
-                <cds-custom-side-nav-items>
+                <cds-custom-side-nav-items
+                  class="${AUTOMATION_NAMESPACE_PREFIX}__side-nav-items">
                   <!-- sideNav group array render  -->
                   ${this.headerProps?.sideNav?.groups
                     ? html`
@@ -209,21 +210,21 @@ export class CommonHeader extends LitElement {
                                 return html`
                                   <clabs-global-header-side-nav-item
                                     .link="${{ ...link }}"
-                                    .isCollapsible="${this.headerProps.sideNav
+                                    ?isCollapsible="${this.headerProps.sideNav
                                       ?.isCollapsible}"
                                     .handleNavItemClick="${this
                                       .handleNavItemClick}"
                                     .isSideNavMenuItems="${link.isSideNavMenuItems}"
-                                    .isActive="${this.headerProps
+                                    ?isActive="${this.headerProps
                                       .isHybridIpaas && !link.isSideNavMenuItems
                                       ? window.location.href.includes(link.href)
                                       : link.isActive}"
-                                    .menuOpen="${this.isMenuOpen}"
-                                    .isOnClickAvailable="${typeof this
+                                    ?menuOpen="${this.isMenuOpen}"
+                                    ?isOnClickAvailable="${typeof this
                                       .headerProps?.sideNav?.onClick ===
-                                    'function'}">
-                                    .isHybridIpaas="${this.headerProps
-                                      .isHybridIpaas}"
+                                    'function'}"
+                                    ?isHybridIpaas="${this.headerProps
+                                      .isHybridIpaas}">
                                   </clabs-global-header-side-nav-item>
                                   ${
                                     // do not add a divider after the final group

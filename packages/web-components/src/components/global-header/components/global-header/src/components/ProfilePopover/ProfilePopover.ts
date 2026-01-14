@@ -10,7 +10,7 @@
 
 import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import styles from './_index.scss?inline';
 import { animate, fadeIn, fadeOut } from '@lit-labs/motion';
 import { HeaderContextProps } from '../HeaderContext/HeaderContext.types';

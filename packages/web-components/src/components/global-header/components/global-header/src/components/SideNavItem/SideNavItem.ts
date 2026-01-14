@@ -15,7 +15,7 @@ import { SideNavLink, SideNavMenuItems } from '../../types/Header.types';
 import cx from 'classnames';
 import { AUTOMATION_NAMESPACE_PREFIX } from '../../constant';
 import { customElement, property, state } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import { renderCarbonIcon, trackEvent } from '../../globals/utils';
 import styles from './SideNavItem.scss?inline';
 
@@ -143,7 +143,10 @@ export class SideNavItem extends LitElement {
           `
         : this.isOnClickAvailable || this.link?.onClick
         ? html` <cds-custom-side-nav-link
-            class="${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link"
+            class="${cx(`${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link`, {
+              [`${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link--current`]:
+                this.isActive,
+            })}"
             role="link"
             href="${this.link?.href}"
             @click="${(e: Event) =>
@@ -155,7 +158,10 @@ export class SideNavItem extends LitElement {
           </cds-custom-side-nav-link>`
         : html`
             <cds-custom-side-nav-link
-              class="${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link"
+              class="${cx(`${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link`, {
+                [`${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link--current`]:
+                  this.isActive,
+              })}"
               role="link"
               href="${this.link?.href}"
               @click="${(e: Event) =>

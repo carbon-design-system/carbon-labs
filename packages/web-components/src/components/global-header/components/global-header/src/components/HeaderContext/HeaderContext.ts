@@ -10,7 +10,7 @@
 
 import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import {
   AUTOMATION_HEADER_BASE_CLASS,
   AUTOMATION_NAMESPACE_PREFIX,
@@ -252,6 +252,7 @@ export class HeaderContext extends LitElement {
           role="button"
           aria-label="Launch Chat"
           tooltipAlignment="center"
+          class="${AUTOMATION_NAMESPACE_PREFIX}__globalaction"
           tabindex="${this.isTrialOpen ? -1 : 0}"
           @click="${() => this._toggleAIChat(chatBotConfigs.onClick)}">
           ${renderCarbonIcon('AiLaunch', 20, 'icon')}

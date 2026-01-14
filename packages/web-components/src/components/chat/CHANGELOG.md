@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.27.0...@carbon-labs/ai-chat@0.28.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
 # [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.26.0...@carbon-labs/ai-chat@0.27.0) (2025-12-01)
 
 

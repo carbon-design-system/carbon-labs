@@ -49,7 +49,7 @@ const propsWithSidekickConfig: HeaderProps = {
     product: 'someproduct',
     insights_enabled: true,
     chat_enabled: true,
-    reports_enabled: true,
+    overview_enabled: true,
     tell_me_more_enabled: true,
   },
   solisConfig: {

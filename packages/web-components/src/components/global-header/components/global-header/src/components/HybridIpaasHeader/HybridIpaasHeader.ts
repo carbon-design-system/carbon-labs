@@ -337,15 +337,14 @@ export class HybridIpaasHeader extends LitElement {
       );
       updatedOptions.sidekickConfig = this.initSidekickOptions(
         this.solisEnvironment
-
       );
     }
     if (this.solisSwitcherEnabled) {
-
       updatedOptions.solisConfig = this.initSolisOptions(
         this.solisEnvironment,
         false,
-        !this.solisDevMode);
+        !this.solisDevMode
+      );
     }
 
     if (

@@ -25,7 +25,6 @@ function App() {
 
   return (
     <div style={{ height: '100vh' }}>
-
       <Calendar
         initialDate={currentDate}
         onNavigate={handleNavigate}

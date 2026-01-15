@@ -15,7 +15,7 @@ jobs:
     if: github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Use Node.js version from .nvmrc
         uses: actions/setup-node@v6
         with:

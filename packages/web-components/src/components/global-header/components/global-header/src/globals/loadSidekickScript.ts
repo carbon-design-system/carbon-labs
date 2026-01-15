@@ -47,7 +47,7 @@ export default function loadSidekickScript(props: HeaderProps) {
       context: props.sidekickConfig.context,
       insights_enabled: props.sidekickConfig.insights_enabled,
       chat_enabled: props.sidekickConfig.chat_enabled,
-      reports_enabled: props.sidekickConfig.reports_enabled,
+      overview_enabled: props.sidekickConfig.overview_enabled,
       tell_me_more_enabled: props.sidekickConfig.tell_me_more_enabled,
     };
 

@@ -16,20 +16,6 @@
 
 .ibm-automation-cds--rail-sidePanel {
   inline-size: $spacing-09 !important;
-
-  a.ibm-automation-cds--side-nav__link[aria-current='page']::before,
-  a.ibm-automation-cds--side-nav__link--current::before {
-    background-color: $background-brand !important;
-  }
-}
-
-.ibm-automation-cds--side-nav__link--current::before {
-  position: absolute;
-  background-color: $background-brand;
-  content: '';
-  inline-size: 3px;
-  inset-block: 0;
-  inset-inline-start: 0;
 }
 
 .ibm-automation-cds--side-nav__items {

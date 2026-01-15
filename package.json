@@ -14,7 +14,7 @@
     "packages/*/**"
   ],
   "scripts": {
-    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' --concurrency=1 && lerna run build --scope '@carbon-labs/react' --concurrency=1 && lerna run build --scope '@carbon-labs/web-components' --concurrency=1",
+    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' --concurrency=1 && lerna run build --scope '@carbon-labs/vscode-snippets' --concurrency=1 && lerna run build --scope '@carbon-labs/react' --concurrency=1 && lerna run build --scope '@carbon-labs/web-components' --concurrency=1",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "ci-check": "yarn run format:diff && yarn lint:license && yarn lint && yarn lint:styles",

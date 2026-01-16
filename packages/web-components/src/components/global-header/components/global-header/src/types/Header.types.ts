@@ -264,7 +264,7 @@ export type SidekickConfig = {
   context?: string;
   insights_enabled?: boolean;
   chat_enabled?: boolean;
-  reports_enabled?: boolean;
+  overview_enabled?: boolean;
   tell_me_more_enabled?: boolean;
 };
 
@@ -357,7 +357,7 @@ export type SidekickInfo = {
   context?: string;
   insights_enabled?: boolean;
   chat_enabled?: boolean;
-  reports_enabled?: boolean;
+  overview_enabled?: boolean;
   tell_me_more_enabled?: boolean;
 };
 

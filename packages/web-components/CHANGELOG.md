@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.117.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.116.0...@carbon-labs/web-components@0.117.0) (2026-01-16)
+
+
+### Bug Fixes
+
+* Basepath for solis ([#981](https://github.com/carbon-design-system/carbon-labs/issues/981)) ([c82d713](https://github.com/carbon-design-system/carbon-labs/commit/c82d713410f2ba0580b395d15e9c0289f01e951a))
+
+
+
+
+
 # [0.116.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.115.0...@carbon-labs/web-components@0.116.0) (2026-01-15)
 
 **Note:** Version bump only for package @carbon-labs/web-components

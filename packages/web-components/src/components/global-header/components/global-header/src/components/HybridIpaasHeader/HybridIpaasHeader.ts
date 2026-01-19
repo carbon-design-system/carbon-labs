@@ -46,6 +46,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Boolean }) solisSidekickEnabled = false;
   @property({ type: Boolean }) solisSwitcherEnabled = false;
   @property({ type: String }) solisEnvironment = 'local';
+  @property({ type: Boolean }) solisDevMode = false; // override for storybook and local to use mock data
   @property({ type: String }) basePath = '';
   @property({ type: String }) displayName = '';
   @property({ type: String }) userEmail = '';
@@ -173,25 +174,25 @@ export class HybridIpaasHeader extends LitElement {
       tell_me_more_enabled: false,
     };
   }
-  private initSolisOptions(env = 'local', forSidekick = false) {
+  private initSolisOptions(env = 'local', forSidekick = false, isProd = true) {
     if (forSidekick) {
       return {
         isEnabled: false,
-        is_prod: env === 'prod',
+        is_prod: isProd,
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
-        backendProxy: '/hybrid-ipaas/v1/proxies/solis/backend',
+        backendProxy: `${this.basePath}/hybrid-ipaas/v1/proxies/solis/backend`,
       };
     } else {
       return {
         isEnabled: true,
         scriptUrl: SOLIS_CDN_HOSTNAMES[env] + '/switcher/solis-switcher.es.js',
-        is_prod: env === 'prod',
+        is_prod: isProd,
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
-        backendProxy: '/hybrid-ipaas/v1/proxies/solis/backend',
+        backendProxy: `${this.basePath}/hybrid-ipaas/v1/proxies/solis/backend`,
       };
     }
   }
@@ -331,14 +332,19 @@ export class HybridIpaasHeader extends LitElement {
     if (this.solisSidekickEnabled) {
       updatedOptions.solisConfig = this.initSolisOptions(
         this.solisEnvironment,
-        true
+        true,
+        !this.solisDevMode
       );
       updatedOptions.sidekickConfig = this.initSidekickOptions(
         this.solisEnvironment
       );
     }
     if (this.solisSwitcherEnabled) {
-      updatedOptions.solisConfig = this.initSolisOptions(this.solisEnvironment);
+      updatedOptions.solisConfig = this.initSolisOptions(
+        this.solisEnvironment,
+        false,
+        !this.solisDevMode
+      );
     }
 
     if (

@@ -96,7 +96,7 @@ exports[`Calendar renders as expected - Component API should match snapshot 1`] 
                 <span
                   class="cds--popover-content cds--tooltip-content"
                 >
-                  Thursday, January 15, 2026
+                  Monday, January 19, 2026
                 </span>
                 <span
                   class="cds--popover-caret"
@@ -653,9 +653,8 @@ exports[`Calendar renders as expected - Component API should match snapshot 1`] 
                               14
                             </span>
                             <span
-                              aria-current="date"
                               aria-label="January 15, 2026"
-                              class="flatpickr-day today selected cds--date-picker__day no-border"
+                              class="flatpickr-day cds--date-picker__day"
                               role="button"
                               tabindex="-1"
                             >
@@ -686,8 +685,9 @@ exports[`Calendar renders as expected - Component API should match snapshot 1`] 
                               18
                             </span>
                             <span
+                              aria-current="date"
                               aria-label="January 19, 2026"
-                              class="flatpickr-day cds--date-picker__day"
+                              class="flatpickr-day today selected cds--date-picker__day no-border"
                               role="button"
                               tabindex="-1"
                             >
@@ -1372,7 +1372,7 @@ exports[`Calendar renders as expected - Component API should match snapshot 1`] 
               <td
                 aria-label="Thu Jan 15 2026"
                 aria-selected="false"
-                class="clabs--calendar__day clabs--calendar__month-cell selected current"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
                 tabindex="-1"
               >
                 <div
@@ -1466,7 +1466,7 @@ exports[`Calendar renders as expected - Component API should match snapshot 1`] 
               <td
                 aria-label="Mon Jan 19 2026"
                 aria-selected="false"
-                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                class="clabs--calendar__day clabs--calendar__month-cell selected current"
                 tabindex="-1"
               >
                 <div

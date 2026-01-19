@@ -168,6 +168,7 @@ export const WithSolis: Story = {
         productName="App Connect"
         productKey="appconnect"
         solisEnvironment="local"
+        solisDevMode
         solisSwitcherEnabled
         solisSidekickEnabled>
       </clabs-global-header-hybrid-ipaas>

@@ -12,5 +12,3 @@ find src -name "*.d.ts" -type f | while read file; do
   mkdir -p "$(dirname "$dest")"
   cp "$file" "$dest"
 done
-
-# Made with Bob

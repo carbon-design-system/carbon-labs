@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-style-picker@0.10.0...@carbon-labs/react-style-picker@0.11.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/react-style-picker
+
+
+
+
+
 # [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-style-picker@0.9.0...@carbon-labs/react-style-picker@0.10.0) (2026-01-06)
 
 **Note:** Version bump only for package @carbon-labs/react-style-picker

@@ -148,6 +148,7 @@ export class SideNavItem extends LitElement {
                 this.isActive,
             })}"
             role="link"
+            ?active="${this.isActive}"
             href="${this.link?.href}"
             @click="${(e: Event) =>
               this.handleSideNavLinkClick(e, this.link?.label)}"
@@ -163,6 +164,7 @@ export class SideNavItem extends LitElement {
                   this.isActive,
               })}"
               role="link"
+              ?active="${this.isActive}"
               href="${this.link?.href}"
               @click="${(e: Event) =>
                 this.handleSideNavLinkClick(e, this.link?.label)}"

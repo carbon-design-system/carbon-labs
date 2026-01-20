@@ -8,5 +8,3 @@
  */
 
 export { default as settings } from './settings.js';
-
-// Made with Bob

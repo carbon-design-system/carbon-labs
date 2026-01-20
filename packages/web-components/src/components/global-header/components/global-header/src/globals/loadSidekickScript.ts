@@ -39,6 +39,7 @@ export default function loadSidekickScript(props: HeaderProps) {
       is_prod: props.solisConfig.is_prod,
       cdn_hostname: props.solisConfig.cdn_hostname,
       deployment_environment: props.solisConfig.deployment_environment,
+      backend_proxy: props.solisConfig.backendProxy,
     };
     window._solis.sidekick = {
       correlation_id: props.sidekickConfig.correlationId,
@@ -46,7 +47,7 @@ export default function loadSidekickScript(props: HeaderProps) {
       context: props.sidekickConfig.context,
       insights_enabled: props.sidekickConfig.insights_enabled,
       chat_enabled: props.sidekickConfig.chat_enabled,
-      reports_enabled: props.sidekickConfig.reports_enabled,
+      overview_enabled: props.sidekickConfig.overview_enabled,
       tell_me_more_enabled: props.sidekickConfig.tell_me_more_enabled,
     };
 

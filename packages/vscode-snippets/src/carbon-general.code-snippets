@@ -1,0 +1,63 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * WARNING: installed by @carbon-labs/vscode-snippets - local updates will be lost on package install
+ */
+{
+  "Block class BEM": {
+    "scope": "scss",
+    "prefix": "block-class",
+    "body": [
+      "$$block-class: \"${TM_FILENAME_BASE}\";",
+      "",
+      ".#{$$block-class} {",
+      "  // styles for $$block-class",
+      "  $1",
+      "}",
+      ""
+    ]
+  },
+  "Use Carbon breakpoint": {
+    "scope": "scss",
+    "prefix": "@use breakpoint",
+    "body": "@use '@carbon/react/scss/breakpoint' as *;"
+  },
+  "Use Carbon config": {
+    "scope": "scss",
+    "prefix": "@use config",
+    "body": "@use '@carbon/react/scss/config' as *;"
+  },
+  "Use Carbon grid": {
+    "scope": "scss",
+    "prefix": "@use grid",
+    "body": "@use '@carbon/react/scss/grid' as *;"
+  },
+  "Use Carbon motion": {
+    "scope": "scss",
+    "prefix": "@use motion",
+    "body": "@use '@carbon/react/scss/motion' as *;"
+  },
+  "Use Carbon spacing": {
+    "scope": "scss",
+    "prefix": "@use spacing",
+    "body": "@use '@carbon/react/scss/spacing' as *;"
+  },
+  "Use Carbon theme": {
+    "scope": "scss",
+    "prefix": "@use theme",
+    "body": "@use '@carbon/react/scss/theme' as *;"
+  },
+  "Use Carbon themes": {
+    "scope": "scss",
+    "prefix": "@use themes",
+    "body": "@use '@carbon/react/scss/themes' as *;"
+  },
+  "Use Carbon type": {
+    "scope": "scss",
+    "prefix": "@use type",
+    "body": "@use '@carbon/react/scss/type' as *;"
+  }
+}

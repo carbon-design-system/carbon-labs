@@ -9,5 +9,3 @@
 
 export * from './settings/index.js';
 export * from './usePrefix.js';
-
-// Made with Bob

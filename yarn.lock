@@ -1783,7 +1783,7 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.21.0"
-    "@carbon/web-components": "npm:2.33.0"
+    "@carbon/web-components": "npm:^2.46.0"
     "@lit-labs/motion": "npm:^1.0.9"
     "@remcovaes/web-test-runner-vite-plugin": "npm:^1.3.0"
     "@web/test-runner": "npm:^0.20.2"
@@ -2014,6 +2014,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carbon/icons@npm:^11.73.0":
+  version: 11.73.0
+  resolution: "@carbon/icons@npm:11.73.0"
+  dependencies:
+    "@ibm/telemetry-js": "npm:^1.5.0"
+  checksum: 10c0/eed614b1054a6497ee7875501198252846dd8f7e299ad965990c798ecf564b3364936b2daf9ba7d024c3ce4c448b501acc47c2f6e4cf52166b9120e67ba3ba1e
+  languageName: node
+  linkType: hard
+
 "@carbon/layout@npm:^11.43.0":
   version: 11.43.0
   resolution: "@carbon/layout@npm:11.43.0"
@@ -2167,22 +2176,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/web-components@npm:2.33.0":
-  version: 2.33.0
-  resolution: "@carbon/web-components@npm:2.33.0"
-  dependencies:
-    "@carbon/styles": "npm:^1.85.0"
-    "@floating-ui/dom": "npm:^1.6.3"
-    "@ibm/telemetry-js": "npm:^1.5.0"
-    "@lit/context": "npm:^1.1.3"
-    flatpickr: "npm:4.6.13"
-    lit: "npm:^3.1.0"
-    lodash-es: "npm:^4.17.21"
-    tslib: "npm:^2.6.3"
-  checksum: 10c0/7341a8d9317b532a1943a97191eef501c920f86ce30b8ea1ba2b41fc1083649dcbfef1e6f5ed34c8c23f29ce92e09a3cd1357f4bb3d6a4f40395e687b6bd1952
-  languageName: node
-  linkType: hard
-
 "@carbon/web-components@npm:2.36.0":
   version: 2.36.0
   resolution: "@carbon/web-components@npm:2.36.0"
@@ -2229,6 +2222,24 @@ __metadata:
     lodash-es: "npm:^4.17.21"
     tslib: "npm:^2.6.3"
   checksum: 10c0/59efd38d6a118672d80b91e27347a0312086ca1ac963a761bef057bcdd37aacf19fadbbf46f98d404790270f249c271ebdbfe25337953c16fef96612d00ce58f
+  languageName: node
+  linkType: hard
+
+"@carbon/web-components@npm:^2.46.0":
+  version: 2.46.0
+  resolution: "@carbon/web-components@npm:2.46.0"
+  dependencies:
+    "@carbon/icon-helpers": "npm:10.47.0"
+    "@carbon/icons": "npm:^11.73.0"
+    "@carbon/styles": "npm:^1.98.0"
+    "@floating-ui/dom": "npm:^1.6.3"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    "@lit/context": "npm:^1.1.3"
+    flatpickr: "npm:4.6.13"
+    lit: "npm:^3.1.0"
+    lodash-es: "npm:^4.17.21"
+    tslib: "npm:^2.6.3"
+  checksum: 10c0/b6a42b04f6a85e6e8c421bf274276936930dd359c70b7638c33ad92ef900439638b33d1220029e02fabb75f46d8c6f83d58d58e7743dbe61cdafea9553ccb8b0
   languageName: node
   linkType: hard
 

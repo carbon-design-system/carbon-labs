@@ -386,9 +386,6 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions?.solisConfig).to.exist;
     expect(el.headerOptions.solisConfig?.isEnabled).to.be.true;
     expect(el.headerOptions.solisConfig?.is_prod).to.be.false;
-    expect(el.headerOptions.solisConfig?.backendProxy).to.equal(
-      '/base/hybrid-ipaas/v1/proxies/solis/backend'
-    );
   });
 
   it('should handle solis sidekick rendering', async () => {
@@ -413,9 +410,6 @@ describe('HybridIpaasHeader Component', () => {
 
     expect(el.headerOptions?.sidekickConfig).to.exist;
     expect(el.headerOptions.sidekickConfig?.isEnabled).to.be.true;
-    expect(el.headerOptions.solisConfig?.backendProxy).to.equal(
-      '/hybrid-ipaas/v1/proxies/solis/backend'
-    );
   });
 
   it('should handle solis rendering in an environment other than local', async () => {

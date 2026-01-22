@@ -181,7 +181,7 @@ export class HybridIpaasHeader extends LitElement {
         is_prod: isProd,
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
-        product_id: 'ipaas'
+        product_id: 'ipaas',
       };
     } else {
       return {
@@ -190,7 +190,7 @@ export class HybridIpaasHeader extends LitElement {
         is_prod: isProd,
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
-        product_id: 'ipaas'
+        product_id: 'ipaas',
       };
     }
   }

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/vscode-snippets@0.2.0...@carbon-labs/vscode-snippets@0.3.0) (2026-01-22)
+
+
+### Features
+
+* Snippets theme prefix ([#984](https://github.com/carbon-design-system/carbon-labs/issues/984)) ([86b11c7](https://github.com/carbon-design-system/carbon-labs/commit/86b11c7605f18194a42b13cbf512348db087a1d1))
+
+
+
+
+
 # 0.2.0 (2026-01-14)
 
 

@@ -1574,7 +1574,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-theme-settings@workspace:packages/react/src/components/ThemeSettings"
   dependencies:
-    "@carbon-labs/utilities": "npm:^0.20.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
     "@carbon-labs/utilities": ^0.20.0
@@ -1692,16 +1691,6 @@ __metadata:
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   languageName: unknown
   linkType: soft
-
-"@carbon-labs/utilities@npm:^0.20.0":
-  version: 0.20.0
-  resolution: "@carbon-labs/utilities@npm:0.20.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/e647f964a2b426802a0245840ef653bffab41f5b0c48de0d72c08b7fd1923112b9d66a16009369de5f50cd0a4d3c164877cdbf4f6d980eb502a360189398c542
-  languageName: node
-  linkType: hard
 
 "@carbon-labs/vscode-snippets@workspace:packages/vscode-snippets":
   version: 0.0.0-use.local

@@ -40,9 +40,6 @@
   "dependencies": {
     "@ibm/telemetry-js": "^1.10.2"
   },
-  "devDependencies": {
-    "@carbon-labs/utilities": "^0.20.0"
-  },
   "peerDependencies": {
     "@carbon-labs/utilities": "^0.20.0"
   }

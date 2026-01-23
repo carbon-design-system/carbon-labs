@@ -9,6 +9,7 @@
 
 /* global Feature */
 /* global Scenario */
+/* global locate */
 
 Feature('HybridIpaasHeader');
 const localhost =

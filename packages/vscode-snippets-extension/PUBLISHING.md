@@ -49,7 +49,7 @@ This guide covers **Option 1 (Manual Publishing)**.
 3. **Publisher Account** You need a publisher account on the
    [Visual Studio Marketplace](https://marketplace.visualstudio.com/).
    - Create an account at https://marketplace.visualstudio.com/manage
-   - Create a publisher ID (e.g., `carbon-design-system`)
+   - Publisher ID: `Lee Chase`
    - Generate a Personal Access Token (PAT) from Azure DevOps
 
 ## Building the Extension
@@ -162,7 +162,7 @@ Follow [Semantic Versioning](https://semver.org/):
 After publishing, your extension will be available at:
 
 ```
-https://marketplace.visualstudio.com/items?itemName=carbon-design-system.carbon-token-snippets
+https://marketplace.visualstudio.com/items?itemName=Lee-Chase.carbon-token-snippets
 ```
 
 ## Updating the Extension

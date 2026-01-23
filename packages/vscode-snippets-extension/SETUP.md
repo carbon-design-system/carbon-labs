@@ -28,7 +28,7 @@ packages/vscode-snippets-extension/
 
 - **Extension ID**: `carbon-token-snippets`
 - **Display Name**: Carbon Token Snippets
-- **Publisher**: carbon-design-system (needs to be configured)
+- **Publisher**: Lee Chase
 - **Private Package**: Not published to npm (only to VSCode Marketplace)
 - **Snippet Source**: Copies from `../vscode-snippets/src/`
 
@@ -105,7 +105,7 @@ methods.
 4. **Publish**
    - Follow instructions in [PUBLISHING.md](./PUBLISHING.md)
    - Extension will be available at:
-     `marketplace.visualstudio.com/items?itemName=carbon-design-system.carbon-token-snippets`
+     `marketplace.visualstudio.com/items?itemName=Lee-Chase.carbon-token-snippets`
 
 ## Maintenance
 

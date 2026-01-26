@@ -255,7 +255,7 @@ export const MigrationVerticallySplitWithResizer = () => (
         <li>Three</li>
       </ul>
       <p style={{ fontSize: '0.875rem', color: 'var(--cds-text-secondary)' }}>
-        SplitPanel orientation="horizontal" → Resizer orientation="horizontal"
+        {`SplitPanel orientation="horizontal" → Resizer orientation="horizontal"`}
       </p>
     </div>
     <Resizer orientation="horizontal" />
@@ -315,7 +315,7 @@ export const MigrationHorizontallySplitWithResizer = () => (
         <li>Three</li>
       </ul>
       <p style={{ fontSize: '0.875rem', color: 'var(--cds-text-secondary)' }}>
-        SplitPanel orientation="vertical" → Resizer orientation="vertical"
+        {`SplitPanel orientation="vertical" → Resizer orientation="vertical"`}
       </p>
     </div>
     <Resizer orientation="vertical" />
@@ -480,9 +480,9 @@ export const MigrationWithOnChange = () => {
           <strong>Resize Events:</strong> {resizeCount}
         </p>
         <p style={{ fontSize: '0.875rem', color: 'var(--cds-text-secondary)' }}>
-          Note: With Resizer, you control how to calculate and report values.
+          {`Note: With Resizer, you control how to calculate and report values.
           This example shows percentage calculation similar to SplitPanel's
-          onChange using onResizeEnd and ResizeObserver.
+          onChange using onResizeEnd and ResizeObserver.`}
         </p>
       </div>
       <div

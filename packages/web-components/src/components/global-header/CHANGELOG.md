@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.46.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.45.0...@carbon-labs/wc-global-header@0.46.0) (2026-01-26)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
 # [0.45.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.44.0...@carbon-labs/wc-global-header@0.45.0) (2026-01-22)
 
 

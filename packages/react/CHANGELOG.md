@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.155.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.154.0...@carbon-labs/react@0.155.0) (2026-01-26)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.154.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.153.0...@carbon-labs/react@0.154.0) (2026-01-22)
+
+
+### Bug Fixes
+
+* **sidenav:** add isActive styles for `navType="panel"` ([#970](https://github.com/carbon-design-system/carbon-labs/issues/970)) ([7100734](https://github.com/carbon-design-system/carbon-labs/commit/710073464e53bfc749870201f486a56939b0fa88))
+
+
+
+
+
+# [0.153.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.152.0...@carbon-labs/react@0.153.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.152.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.151.0...@carbon-labs/react@0.152.0) (2026-01-06)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/web-components",
-  "version": "0.109.0",
+  "version": "0.119.0",
   "private": true,
   "type": "module",
   "description": "Web Components for Carbon Labs",
@@ -65,7 +65,7 @@
     "commander": "^13.0.0",
     "cssnano": "^7.0.0",
     "gitignore-to-glob": "^0.3.0",
-    "lerna": "^8.2.3",
+    "lerna": "^9.0.0",
     "msw": "^2.10.5",
     "msw-storybook-addon": "^2.0.5",
     "postcss": "^8.4.49",

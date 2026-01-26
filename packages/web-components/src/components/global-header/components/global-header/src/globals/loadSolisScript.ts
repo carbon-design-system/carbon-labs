@@ -34,12 +34,15 @@ export default function loadSolisScript(props: HeaderProps) {
 
     document?.head?.appendChild(script);
 
-    window._solis = {
-      product_id: props.solisConfig.product_id,
-      is_prod: props.solisConfig.is_prod,
-      cdn_hostname: props.solisConfig.cdn_hostname,
-      deployment_environment: props.solisConfig.deployment_environment,
-    };
+    if (!window._solis) {
+      window._solis = {
+        product_id: props.solisConfig.product_id,
+        is_prod: props.solisConfig.is_prod,
+        cdn_hostname: props.solisConfig.cdn_hostname,
+        deployment_environment: props.solisConfig.deployment_environment,
+        backend_proxy: props.solisConfig.backendProxy,
+      };
+    }
 
     const setAttributeFromEvent = (event: { type: string }) => {
       script?.setAttribute(

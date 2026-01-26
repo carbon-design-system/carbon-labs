@@ -20,6 +20,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   * Component will remain available but will not receive new features
   * See [migration guide](https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/SplitPanel/DEPRECATION-plan.md) for details
 
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.10.0...@carbon-labs/react-split-panel@0.11.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/react-split-panel
+
 
 
 

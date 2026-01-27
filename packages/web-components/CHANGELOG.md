@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.119.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.118.0...@carbon-labs/web-components@0.119.0) (2026-01-26)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.118.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.117.0...@carbon-labs/web-components@0.118.0) (2026-01-22)
+
+
+### Bug Fixes
+
+* removing proxy from window object for now ([#987](https://github.com/carbon-design-system/carbon-labs/issues/987)) ([0a2c4cb](https://github.com/carbon-design-system/carbon-labs/commit/0a2c4cbd6b24bf42cbdd5b97d96d2b685595b0b6))
+
+
+
+
+
 # [0.117.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.116.0...@carbon-labs/web-components@0.117.0) (2026-01-16)
 
 

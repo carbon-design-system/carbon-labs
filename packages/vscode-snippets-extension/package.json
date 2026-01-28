@@ -1,0 +1,70 @@
+{
+  "name": "carbon-token-snippets",
+  "displayName": "Carbon Token Snippets",
+  "description": "SCSS snippets for Carbon Design System tokens, mixins, and functions",
+  "version": "0.1.2",
+  "publisher": "lee-chase",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/vscode-snippets-extension"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Snippets"
+  ],
+  "keywords": [
+    "carbon",
+    "carbon-design-system",
+    "scss",
+    "sass",
+    "snippets",
+    "tokens",
+    "design-tokens",
+    "ibm"
+  ],
+  "icon": "icon.png",
+  "contributes": {
+    "snippets": [
+      {
+        "language": "scss",
+        "path": "./snippets/carbon-general.code-snippets"
+      },
+      {
+        "language": "scss",
+        "path": "./snippets/carbon-linter-disables.code-snippets"
+      },
+      {
+        "language": "scss",
+        "path": "./snippets/carbon-motion.code-snippets"
+      },
+      {
+        "language": "scss",
+        "path": "./snippets/carbon-spacing.code-snippets"
+      },
+      {
+        "language": "scss",
+        "path": "./snippets/carbon-theme.code-snippets"
+      },
+      {
+        "language": "scss",
+        "path": "./snippets/carbon-typography.code-snippets"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node scripts/copy-snippets.js",
+    "clean": "rimraf snippets",
+    "package": "yarn build && vsce package --no-dependencies",
+    "publish": "yarn build && vsce publish --no-dependencies"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.2.1",
+    "rimraf": "^6.0.1"
+  }
+}

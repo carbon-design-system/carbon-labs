@@ -5,15 +5,22 @@ extension.
 
 ## Publishing Overview
 
+### Extension Marketplaces
+
+This extension can be published to multiple marketplaces:
+
+1. **VSCode Marketplace** (Microsoft) - For VSCode, IBM Bob, and most forks
+2. **Open VSX Registry** - For VSCodium, Gitpod, and other open-source editors
+
 ### VSCode Marketplace vs npm
 
-This extension publishes to the **VSCode Marketplace**, which is separate from
-the monorepo's automated npm publishing:
+This extension publishes to extension marketplaces, which are separate from the
+monorepo's automated npm publishing:
 
 - ✅ **Monorepo npm packages**: Automatically published via GitHub Actions
   (`.github/workflows/release.yml`) using Lerna
-- ✅ **This VSCode extension**: Manually published to VSCode Marketplace
-  (different platform, different credentials)
+- ✅ **This VSCode extension**: Manually published to extension marketplaces
+  (different platforms, different credentials)
 - ✅ **No conflict**: Package is marked `"private": true` so Lerna ignores it
 
 ### Publishing Options
@@ -94,7 +101,7 @@ To test the extension locally before publishing:
    - Type snippet prefixes like `$spacing-05` or `type`
    - Verify snippets appear and work correctly
 
-## Publishing to Marketplace
+## Publishing to VSCode Marketplace
 
 ### First-Time Setup
 
@@ -111,14 +118,14 @@ To test the extension locally before publishing:
 
 3. **Login to vsce**
    ```bash
-   npx vsce login <publisher-name>
+   npx vsce login Lee-Chase
    ```
    Enter your Personal Access Token when prompted.
 
-### Publishing
+### Publishing to VSCode Marketplace
 
 ```bash
-# Publish to Marketplace
+# Publish to VSCode Marketplace
 yarn publish
 ```
 
@@ -141,6 +148,74 @@ yarn package
 npx vsce publish
 ```
 
+## Publishing to Open VSX Registry
+
+Open VSX is used by VSCodium, Gitpod, Eclipse Theia, and other open-source
+editors.
+
+### First-Time Setup
+
+1. **Create an Open VSX account**
+
+   - Go to https://open-vsx.org/
+   - Sign in with GitHub
+   - Create a namespace (e.g., "lee-chase")
+
+2. **Generate an Access Token**
+
+   - Go to https://open-vsx.org/user-settings/tokens
+   - Create a new access token
+   - Save it securely
+
+3. **Install ovsx CLI**
+   ```bash
+   npm install -g ovsx
+   ```
+
+### Publishing to Open VSX
+
+```bash
+# Build the extension first
+yarn build
+yarn package
+
+# Publish to Open VSX
+npx ovsx publish carbon-token-snippets-0.1.0.vsix -p YOUR_ACCESS_TOKEN
+```
+
+Or create a namespace and publish:
+
+```bash
+# Create namespace (first time only)
+npx ovsx create-namespace lee-chase -p YOUR_ACCESS_TOKEN
+
+# Publish
+npx ovsx publish -p YOUR_ACCESS_TOKEN
+```
+
+### Publishing to Both Marketplaces
+
+To publish to both VSCode Marketplace and Open VSX:
+
+```bash
+# Build once
+yarn build
+yarn package
+
+# Publish to VSCode Marketplace
+npx vsce publish
+
+# Publish to Open VSX
+npx ovsx publish -p YOUR_OPENVSX_TOKEN
+```
+
+**Tip:** Store your Open VSX token as an environment variable:
+
+```bash
+export OVSX_PAT=your_token_here
+npx ovsx publish -p $OVSX_PAT
+```
+
 ## Version Management
 
 Update the version in `package.json` before publishing:
@@ -157,12 +232,20 @@ Follow [Semantic Versioning](https://semver.org/):
 - **MINOR**: New features (backward compatible)
 - **PATCH**: Bug fixes
 
-## Marketplace Listing
+## Marketplace Listings
 
 After publishing, your extension will be available at:
 
+**VSCode Marketplace:**
+
 ```
 https://marketplace.visualstudio.com/items?itemName=Lee-Chase.carbon-token-snippets
+```
+
+**Open VSX Registry:**
+
+```
+https://open-vsx.org/extension/lee-chase/carbon-token-snippets
 ```
 
 ## Updating the Extension
@@ -170,10 +253,17 @@ https://marketplace.visualstudio.com/items?itemName=Lee-Chase.carbon-token-snipp
 1. Make changes to snippet files in `../vscode-snippets/src/`
 2. Update version in `package.json`
 3. Update `CHANGELOG.md`
-4. Build and publish:
+4. Build and publish to both marketplaces:
+
    ```bash
    yarn build
-   yarn publish
+   yarn package
+
+   # Publish to VSCode Marketplace
+   npx vsce publish
+
+   # Publish to Open VSX
+   npx ovsx publish -p $OVSX_PAT
    ```
 
 ## Troubleshooting

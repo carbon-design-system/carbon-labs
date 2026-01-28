@@ -22,7 +22,8 @@ const localhostWithTrial =
   'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--basic-with-trial&viewMode=story';
 const localhostWithCustomFooter =
   'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--custom-footer&viewMode=story';
-  const localhostWithSolis = 'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--with-solis&viewMode=story';
+const localhostWithSolis =
+  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--with-solis&viewMode=story';
 
 Scenario('It checks the header content', async ({ I }) => {
   I.amOnPage(localhost);
@@ -175,4 +176,4 @@ Scenario('Solis components render', async ({ I }) => {
   I.see('Community');
   I.click(locate('solis-switcher')); // Close the Solis switcher
   I.dontSee('Observability'); // Solis switcher is closed
-})
+});

@@ -8,6 +8,7 @@
  */
 
 @use '../../globals/styles/vars' as automation;
+@use '@carbon/styles/scss/theme' as *;
 
 .#{automation.$namespace-prefix}__header {
   z-index: 8050;
@@ -18,7 +19,7 @@
 }
 
 .#{automation.$namespace-prefix}__capability-name {
-  color: var(--cds-custom-text-primary);
+  color: $text-primary;
   font-weight: 400;
   line-height: normal;
   margin-inline-end: 1.5rem;

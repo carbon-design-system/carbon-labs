@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.121.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.120.0...@carbon-labs/web-components@0.121.0) (2026-01-28)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.120.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.119.0...@carbon-labs/web-components@0.120.0) (2026-01-27)
+
+
+### Features
+
+* **global-header:** Add codecept tests for HybridIpaasHeader web component ([#991](https://github.com/carbon-design-system/carbon-labs/issues/991)) ([62c5f92](https://github.com/carbon-design-system/carbon-labs/commit/62c5f929788f3993c1d7e6c6c050533349251ed8))
+
+
+
+
+
 # [0.119.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.118.0...@carbon-labs/web-components@0.119.0) (2026-01-26)
 
 **Note:** Version bump only for package @carbon-labs/web-components

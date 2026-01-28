@@ -22,6 +22,8 @@ const localhostWithTrial =
   'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--basic-with-trial&viewMode=story';
 const localhostWithCustomFooter =
   'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--custom-footer&viewMode=story';
+const localhostWithSolis =
+  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--with-solis&viewMode=story';
 
 Scenario('It checks the header content', async ({ I }) => {
   I.amOnPage(localhost);
@@ -155,4 +157,23 @@ Scenario('Trial information renders', async ({ I }) => {
   I.see('Your trial ends on');
   I.see('Request trial extension');
   I.see('Contact sales');
+});
+
+Scenario('Solis components render', async ({ I }) => {
+  I.amOnPage(localhostWithSolis);
+  I.waitForElement('clabs-global-header-apaas', 30);
+
+  I.seeElement(locate('solis-sidekick'));
+  I.click(locate('solis-sidekick'));
+  I.seeElement('.sidekick-body');
+  I.see('Overview');
+  I.see('Analyze this page');
+  I.see('Insights');
+
+  I.seeElement(locate('solis-switcher'));
+  I.click(locate('solis-switcher'));
+  I.see('Observability');
+  I.see('Community');
+  I.click(locate('solis-switcher')); // Close the Solis switcher
+  I.dontSee('Observability'); // Solis switcher is closed
 });

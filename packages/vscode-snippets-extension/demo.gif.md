@@ -117,22 +117,73 @@ optional but recommended.**
 
 Only if you're comfortable with command line:
 
-### Using ffmpeg (Cross-platform)
-
-```bash
-# Convert video to GIF (optimize for web)
-ffmpeg -i recording.mov -vf "fps=10,scale=800:-1:flags=lanczos" -loop 0 demo.gif
-```
-
-### Using Gifski (Best Quality - Requires Installation)
+### Method 1: Gifski (Best Quality & Size - Recommended)
 
 ```bash
 # Install gifski first
 # Mac: brew install gifski
 # Windows: Download from https://gif.ski/
+# Linux: cargo install gifski
 
-# Convert video to GIF
-gifski -o demo.gif recording.mov --fps 10 --width 800
+# Convert video to optimized GIF (produces smallest files)
+gifski -o demo-optimized.gif demo.mov --fps 10 --width 800 --quality 80
+```
+
+**Why Gifski?** It produces the smallest, highest-quality GIFs (typically
+200-400KB).
+
+### Method 2: ffmpeg with Two-Pass Palette (Better Compression)
+
+```bash
+# Step 1: Generate optimized color palette
+ffmpeg -i demo.mov -vf "fps=10,scale=800:-1:flags=lanczos,palettegen=stats_mode=diff" -y palette.png
+
+# Step 2: Use palette to create optimized GIF
+ffmpeg -i demo.mov -i palette.png -lavfi "fps=10,scale=800:-1:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle" -loop 0 demo-optimized.gif
+
+# Clean up
+rm palette.png
+```
+
+**Why two-pass?** Creates a custom color palette for your video, resulting in
+50-70% smaller files than single-pass.
+
+### Method 3: ffmpeg Simple (Larger Files)
+
+```bash
+# Single-pass conversion (produces larger files ~1-2MB)
+ffmpeg -i demo.mov -vf "fps=10,scale=800:-1:flags=lanczos" -loop 0 demo.gif
+```
+
+**Note:** This method produces larger files. Use Gifski or two-pass method
+instead.
+
+### Comparison of Methods
+
+| Method              | File Size | Quality   | Speed  |
+| ------------------- | --------- | --------- | ------ |
+| **Gifski**          | 200-400KB | Excellent | Fast   |
+| **ffmpeg two-pass** | 300-500KB | Very Good | Medium |
+| **ffmpeg simple**   | 1-2MB     | Good      | Fast   |
+| **Online tools**    | 400-600KB | Good      | N/A    |
+
+### Additional Optimization Tips
+
+If your GIF is still too large, try:
+
+```bash
+# Reduce frame rate to 8 fps
+gifski -o demo-optimized.gif demo.mov --fps 8 --width 800 --quality 80
+
+# Reduce width to 600px
+gifski -o demo-optimized.gif demo.mov --fps 10 --width 600 --quality 80
+
+# Lower quality (60-70 still looks good)
+gifski -o demo-optimized.gif demo.mov --fps 10 --width 800 --quality 70
+
+# Trim video first (keep only 10-15 seconds)
+ffmpeg -i demo.mov -ss 00:00:00 -t 00:00:15 -c copy demo-trimmed.mov
+gifski -o demo-optimized.gif demo-trimmed.mov --fps 10 --width 800 --quality 80
 ```
 
 ## Adding to Extension

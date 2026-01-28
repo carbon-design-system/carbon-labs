@@ -8,7 +8,7 @@ stylesheets.
 
 ## Demo
 
-![Demo](demo-optimized.gif)
+![Demo](./demo-optimized.gif)
 
 > Type `theme`, `type`, or `$spacing` to see snippets in action
 

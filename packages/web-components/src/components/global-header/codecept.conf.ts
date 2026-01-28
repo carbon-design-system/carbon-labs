@@ -14,7 +14,7 @@ exports.config = {
   helpers: {
     WebDriver: {
       url: 'http://localhost:6007',
-      show: true,
+      show: false,
       browser: 'chrome',
       desiredCapabilities: {
         chromeOptions: {

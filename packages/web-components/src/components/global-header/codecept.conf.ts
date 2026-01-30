@@ -14,11 +14,16 @@ exports.config = {
   helpers: {
     WebDriver: {
       url: 'http://localhost:6007',
-      show: true,
+      show: false,
       browser: 'chrome',
       desiredCapabilities: {
         chromeOptions: {
-          args: ['--headless', '--disable-gpu', '--no-sandbox'],
+          args: [
+            '--headless',
+            '--disable-gpu',
+            '--no-sandbox',
+            '--window-size=1440,700',
+          ],
         },
       },
     },

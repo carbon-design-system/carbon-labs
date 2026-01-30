@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.42.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.41.0...@carbon-labs/react-animated-header@0.42.0) (2026-01-30)
+
+
+### Bug Fixes
+
+* **global-header:** upgrade to latest web-components ([#997](https://github.com/carbon-design-system/carbon-labs/issues/997)) ([5717728](https://github.com/carbon-design-system/carbon-labs/commit/57177282f0afa64ff7ad129667405091f9cea1c5))
+
+
+
+
+
 # [0.41.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.40.0...@carbon-labs/react-animated-header@0.41.0) (2026-01-14)
 
 **Note:** Version bump only for package @carbon-labs/react-animated-header

@@ -193,9 +193,6 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
 
     const handleMouseDown = useCallback(
       (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
         const element = getRefElement(ref);
         if (!element || event.button !== 0) {
           return;

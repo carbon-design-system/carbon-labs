@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.50.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.49.0...@carbon-labs/wc-global-header@0.50.0) (2026-01-30)
+
+
+### Bug Fixes
+
+* **global-header:** upgrade to latest web-components ([#997](https://github.com/carbon-design-system/carbon-labs/issues/997)) ([5717728](https://github.com/carbon-design-system/carbon-labs/commit/57177282f0afa64ff7ad129667405091f9cea1c5))
+
+
+
+
+
 # [0.49.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.48.0...@carbon-labs/wc-global-header@0.49.0) (2026-01-29)
 
 **Note:** Version bump only for package @carbon-labs/wc-global-header

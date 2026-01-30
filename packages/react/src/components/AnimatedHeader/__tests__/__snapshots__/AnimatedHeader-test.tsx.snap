@@ -16,15 +16,6 @@ exports[`AnimatedHeader renders as expected - Component API should match snapsho
         class="clabs--animated-header__container--gradient"
       />
       <div
-        class="clabs--animated-header__lottie-animation--container"
-      >
-        <div
-          aria-hidden="true"
-          class="clabs--animated-header__lottie-animation"
-          data-expanded="true"
-        />
-      </div>
-      <div
         class="clabs--animated-header__title-row cds--sm:col-span-4 cds--md:col-span-8 cds--lg:col-span-16 cds--css-grid-column"
       >
         <div

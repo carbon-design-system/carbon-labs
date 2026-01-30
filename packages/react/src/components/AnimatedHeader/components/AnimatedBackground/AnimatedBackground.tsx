@@ -6,9 +6,9 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import lottie, { AnimationItem } from 'lottie-web';
-import { usePrefix } from '@carbon/react';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 
 export interface AnimatedBackgroundProps {
   headerAnimation?: object;
@@ -45,31 +45,16 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
       rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
     });
     animRef.current = animation;
+    animation.setSpeed(1);
 
     const onDomLoaded = () => {
-      const data: any = (animation as any).animationData;
-      const markers = data?.markers ?? [];
-      const first = markers?.[0]?.tm ?? 0;
-
       const totalFrames = animation.getDuration(true);
-      const second = markers?.[1]?.tm ?? totalFrames;
 
       if (isReduced) {
-        // Respect reduced motion
-        const restFrame =
-          (typeof second === 'number' ? second : totalFrames * 0.5) | 0;
-        animation.goToAndStop(restFrame, true);
-        return;
+        animation.goToAndStop(totalFrames, true);
+      } else {
+        animation.play();
       }
-
-      animation.setSpeed(1);
-      requestAnimationFrame(() => {
-        if (typeof first === 'number' && typeof second === 'number') {
-          animation.playSegments([first, second], true);
-        } else {
-          animation.play();
-        }
-      });
     };
 
     animation.addEventListener('DOMLoaded', onDomLoaded);

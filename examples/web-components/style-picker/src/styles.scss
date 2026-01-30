@@ -19,31 +19,33 @@
 }
 
 body {
-  margin: 0;
   padding: 0;
+  margin: 0;
   font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
 .container {
-  max-width: 1584px;
-  margin: 0 auto;
   padding: spacing.$spacing-07;
+  margin: 0 auto;
+  max-inline-size: 1584px;
 }
 
 .page-header {
+  border-block-end: 1px solid var(--cds-border-subtle);
   margin-block-end: spacing.$spacing-09;
   padding-block-end: spacing.$spacing-05;
-  border-block-end: 1px solid var(--cds-border-subtle);
 
   h1 {
     @include type.type-style('heading-05');
+
     margin-block-end: spacing.$spacing-03;
   }
 
   p {
     @include type.type-style('body-01');
+
     color: var(--cds-text-secondary);
-    max-width: 42rem;
+    max-inline-size: 42rem;
   }
 }
 
@@ -52,14 +54,16 @@ body {
 
   h2 {
     @include type.type-style('heading-04');
+
     margin-block-end: spacing.$spacing-03;
   }
 
   > p {
     @include type.type-style('body-01');
+
     color: var(--cds-text-secondary);
     margin-block-end: spacing.$spacing-07;
-    max-width: 42rem;
+    max-inline-size: 42rem;
   }
 }
 
@@ -70,6 +74,7 @@ body {
 .example-section {
   h3 {
     @include type.type-style('heading-03');
+
     margin-block-end: spacing.$spacing-05;
   }
 
@@ -79,10 +84,10 @@ body {
 
 .toolbar-layer {
   display: inline-block;
-  background-color: var(--cds-layer);
-  color: var(--cds-text-primary);
   padding: spacing.$spacing-02;
   border-radius: 4px;
+  background-color: var(--cds-layer);
+  color: var(--cds-text-primary);
 }
 
 .inline-tile-holder {
@@ -91,9 +96,9 @@ body {
 
 .inline-tile {
   display: inline-block;
-  border-inline-start-width: 0.25rem;
   border-inline-start-style: solid;
-  max-width: 20rem;
+  border-inline-start-width: 0.25rem;
+  max-inline-size: 20rem;
 }
 
 .inline-tile-header {
@@ -103,12 +108,14 @@ body {
 
   h6 {
     @include type.type-style('heading-compact-01');
+
     margin: 0;
   }
 }
 
 .inline-pictogram-secondary-text {
-  margin-block-start: spacing.$spacing-03;
   @include type.type-style('body-01');
+
   color: var(--cds-text-secondary);
+  margin-block-start: spacing.$spacing-03;
 }

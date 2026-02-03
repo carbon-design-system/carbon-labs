@@ -8,12 +8,9 @@ stylesheets.
 
 ## Demo
 
-![Demo](./demo-optimized.gif)
+![Demo](./packages/vscode-snippets-extension/demo.gif)
 
 > Type `theme`, `type`, or `$spacing` to see snippets in action
-
-**Note**: If the demo doesn't display above, it will be visible once the
-extension is published to the Marketplace.
 
 ## Features
 

@@ -2,7 +2,7 @@
   "name": "carbon-token-snippets",
   "displayName": "Carbon Token Snippets",
   "description": "SCSS snippets for Carbon Design System tokens, mixins, and functions",
-  "version": "0.2.0",
+  "version": "0.16.0",
   "publisher": "lee-chase",
   "private": true,
   "type": "module",

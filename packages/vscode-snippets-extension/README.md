@@ -8,7 +8,7 @@ stylesheets.
 
 ## Demo
 
-![Demo](./packages/vscode-snippets-extension/demo-.gif)
+![Demo](./packages/vscode-snippets-extension/demo.gif)
 
 > Type `theme`, `type`, or `$spacing` to see snippets in action
 

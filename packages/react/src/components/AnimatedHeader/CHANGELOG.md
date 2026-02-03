@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.42.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.41.0...@carbon-labs/react-animated-header@0.42.0) (2026-01-30)
+
+
+### Bug Fixes
+
+* **global-header:** upgrade to latest web-components ([#997](https://github.com/carbon-design-system/carbon-labs/issues/997)) ([5717728](https://github.com/carbon-design-system/carbon-labs/commit/57177282f0afa64ff7ad129667405091f9cea1c5))
+
+
+
+
+
+# [0.41.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.40.0...@carbon-labs/react-animated-header@0.41.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.40.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.39.0...@carbon-labs/react-animated-header@0.40.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
+# [0.39.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.38.0...@carbon-labs/react-animated-header@0.39.0) (2025-11-24)
+
+
+### Features
+
+* **animated-header:** add Carbon Tag to Tiles ([#928](https://github.com/carbon-design-system/carbon-labs/issues/928)) ([b76ab0c](https://github.com/carbon-design-system/carbon-labs/commit/b76ab0c1d4fef2390509c8f0a8b17f49f6b43739))
+
+
+
+
+
 # [0.38.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.37.0...@carbon-labs/react-animated-header@0.38.0) (2025-10-20)
 
 **Note:** Version bump only for package @carbon-labs/react-animated-header

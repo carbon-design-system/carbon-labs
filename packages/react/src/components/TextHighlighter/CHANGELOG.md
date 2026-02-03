@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-text-highlighter@0.11.0...@carbon-labs/react-text-highlighter@0.12.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/react-text-highlighter
+
+
+
+
+
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-text-highlighter@0.10.0...@carbon-labs/react-text-highlighter@0.11.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-text-highlighter@0.9.0...@carbon-labs/react-text-highlighter@0.10.0) (2025-11-07)
+
+
+### Bug Fixes
+
+* **Text-Highlighter:** Overview page error fix, story and example tweak ([#905](https://github.com/carbon-design-system/carbon-labs/issues/905)) ([ddd0716](https://github.com/carbon-design-system/carbon-labs/commit/ddd0716d99650eca3ef5d27d4828f8ab0d5ca59b))
+
+
+
+
+
 # [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-text-highlighter@0.8.0...@carbon-labs/react-text-highlighter@0.9.0) (2025-10-16)
 
 **Note:** Version bump only for package @carbon-labs/react-text-highlighter

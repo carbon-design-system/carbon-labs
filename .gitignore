@@ -6,7 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .yarn/install-state.gz
-
+launch.json
+tasks.json
+settings.json
 node_modules
 dist
 es
@@ -21,6 +23,7 @@ custom-elements.json
 package.tgz
 
 # Editor directories and files
+.vscode
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -35,3 +38,5 @@ agentic.stories.js
 /.history
 
 *storybook.log
+test-coverage/
+**/codecept/screenshots

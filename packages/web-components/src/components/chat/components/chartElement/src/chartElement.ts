@@ -9,7 +9,7 @@
 
 import { LitElement } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import * as VegaEmbed from 'vega-embed';
 const { stablePrefix: clabsPrefix } = settings;
 

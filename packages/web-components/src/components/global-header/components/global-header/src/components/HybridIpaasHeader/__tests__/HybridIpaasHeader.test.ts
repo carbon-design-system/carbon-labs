@@ -20,8 +20,26 @@ import {
   ProfileFooterLinks,
   SearchConfigs,
 } from '../../../types/Header.types';
+import {
+  CUSTOM_EVENT_NAME,
+  CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
+} from '../../../constant';
 
 describe('HybridIpaasHeader Component', () => {
+  let fetchStub: sinon.SinonStub<
+    [input: RequestInfo | URL, init?: RequestInit | undefined],
+    Promise<Response>
+  >;
+
+  beforeEach(() => {
+    fetchStub = sinon
+      .stub(window, 'fetch')
+      .resolves(new Response('{}', { status: 200 }));
+  });
+  afterEach(() => {
+    fetchStub.restore();
+  });
+
   const fetchResp = {
     brand: {
       company: 'companyName',
@@ -92,7 +110,7 @@ describe('HybridIpaasHeader Component', () => {
                   label: 'APIt',
                 },
               ],
-              iconName: 'ScisControlTower',
+              iconName: 'Settings',
             },
             {
               label: 'Applications',
@@ -154,9 +172,9 @@ describe('HybridIpaasHeader Component', () => {
     consoleErrorStub.restore();
   });
 
-  it('should log an error if resonse is not OK', async () => {
+  it('should log an error if response is not OK', async () => {
     const consoleErrorStub = sinon.stub(console, 'error');
-    const fetchStub = sinon.stub(window, 'fetch').resolves(
+    fetchStub.resolves(
       new Response(null, {
         status: 401,
         statusText: 'unauthorized',
@@ -170,13 +188,10 @@ describe('HybridIpaasHeader Component', () => {
 
     expect(consoleErrorStub.calledOnce).to.be.true;
 
-    fetchStub.restore();
     consoleErrorStub.restore();
   });
   it('should call fetch with correct headers and URL', async () => {
-    const fetchStub = sinon
-      .stub(window, 'fetch')
-      .resolves(new Response('{}', { status: 200 }));
+    fetchStub.resolves(new Response('{}', { status: 200 }));
     await fixture<HybridIpaasHeader>(
       html`<clabs-global-header-hybrid-ipaas
         .fetchHeaders=${{ 'Content-Type': 'application/json' }}
@@ -190,12 +205,10 @@ describe('HybridIpaasHeader Component', () => {
     expect(fetchArgs[1]?.headers).to.include({
       'x-hybrid-ipaas-product-key': 'test-productKey',
     });
-
-    fetchStub.restore();
   });
 
   it('should update headerOptions correctly', async () => {
-    const fetchStub = sinon.stub(window, 'fetch').resolves(
+    fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -228,12 +241,37 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions.assistMeConfigs).to.deep.equal({
       productId: 'assist-key',
     });
+  });
 
-    fetchStub.restore();
+  it('should use the brand product name if the product (capability) name is blank', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName=""
+        productKey="test-productKey"
+        displayName="Test User"
+        userEmail="test@example.com"
+        productVersion="2.0.0"></clabs-global-header-hybrid-ipaas>`
+    );
+    await waitUntil(
+      () => el.headerOptions.profile?.email === 'test@example.com',
+      'headerOptions were not updated as expected'
+    );
+
+    expect(el.headerOptions.mainSectionItems).to.deep.equal([
+      { label: 'Product', text: 'productName' },
+      { label: 'Version', text: '2.0.0' },
+    ]);
   });
 
   it('should handle logoutCallback passed in', async () => {
-    const fetchStub = sinon.stub(window, 'fetch').resolves(
+    fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -264,12 +302,10 @@ describe('HybridIpaasHeader Component', () => {
         text: 'Log out',
       },
     ]);
-
-    fetchStub.restore();
   });
 
   it('should handle notificationOpenCallback', async () => {
-    const fetchStub = sinon.stub(window, 'fetch').resolves(
+    fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -297,12 +333,10 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions.notificationConfigs?.onClick).to.equal(
       notificationCallbackSpy
     );
-
-    fetchStub.restore();
   });
 
   it('should handle aiCallback', async () => {
-    const fetchStub = sinon.stub(window, 'fetch').resolves(
+    fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -326,15 +360,94 @@ describe('HybridIpaasHeader Component', () => {
 
     expect(el.headerOptions?.chatBotConfigs).to.exist;
     expect(el.headerOptions.chatBotConfigs?.onClick).to.equal(aiCallbackSpy);
+  });
 
-    fetchStub.restore();
+  it('should handle solis switcher rendering', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName="Test Product"
+        productKey="test-productKey"
+        basePath="/base"
+        assistMeKey="assist-key"
+        solisDevMode
+        solisSwitcherEnabled></clabs-global-header-hybrid-ipaas>`
+    );
+    await waitUntil(
+      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      'headerOptions were not updated as expected'
+    );
+    expect(el.headerOptions?.solisConfig).to.exist;
+    expect(el.headerOptions.solisConfig?.isEnabled).to.be.true;
+    expect(el.headerOptions.solisConfig?.is_prod).to.be.false;
+  });
+
+  it('should handle solis sidekick rendering', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName="Test Product"
+        productKey="test-productKey"
+        assistMeKey="assist-key"
+        solisSidekickEnabled></clabs-global-header-hybrid-ipaas>`
+    );
+    await waitUntil(
+      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      'headerOptions were not updated as expected'
+    );
+
+    expect(el.headerOptions?.sidekickConfig).to.exist;
+    expect(el.headerOptions.sidekickConfig?.isEnabled).to.be.true;
+  });
+
+  it('should handle solis rendering in an environment other than local', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName="Test Product"
+        productKey="test-productKey"
+        basePath="/base"
+        assistMeKey="assist-key"
+        solisEnvironment="prod"
+        solisSwitcherEnabled
+        solisSidekickEnabled></clabs-global-header-hybrid-ipaas>`
+    );
+    await waitUntil(
+      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      'headerOptions were not updated as expected'
+    );
+    expect(el.headerOptions?.sidekickConfig).to.exist;
+    expect(el.headerOptions.sidekickConfig?.isEnabled).to.be.true;
+    expect(el.headerOptions?.solisConfig).to.exist;
+    expect(el.headerOptions.solisConfig?.isEnabled).to.be.true;
+    expect(el.headerOptions.solisConfig?.is_prod).to.be.true;
+    expect(el.headerOptions.solisConfig?.cdn_hostname).to.equal(
+      'https://cdn.saas.ibm.com'
+    );
+    expect(el.headerOptions.solisConfig?.deployment_environment).to.equal(
+      'prod'
+    );
   });
 
   describe('aiCallbackEvent', () => {
-    let fetchStub: sinon.SinonStub<
-      [input: RequestInfo | URL, init?: RequestInit | undefined],
-      Promise<Response>
-    >;
     let eventReceived: boolean;
 
     const eventListener = () => {
@@ -342,18 +455,12 @@ describe('HybridIpaasHeader Component', () => {
     };
 
     beforeEach(() => {
-      fetchStub = sinon.stub(window, 'fetch').resolves(
-        new Response(JSON.stringify(fetchResp), {
-          status: 200,
-          headers: { 'Content-Type': 'application/json' },
-        })
-      );
       eventReceived = false;
       document.addEventListener('ai-callback-event', eventListener);
     });
 
     afterEach(() => {
-      fetchStub.restore();
+      document.removeEventListener('ai-callback-event', eventListener);
     });
 
     it('should handle aiCallbackEvent', async () => {
@@ -379,7 +486,7 @@ describe('HybridIpaasHeader Component', () => {
   });
 
   it('should handle searchConfigs', async () => {
-    const fetchStub = sinon.stub(window, 'fetch').resolves(
+    fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -417,12 +524,10 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions.searchConfigs?.placeholder).to.equal(
       'Test Placeholder'
     );
-
-    fetchStub.restore();
   });
 
   it('should handle custom capabilityProfileFooterLinks', async () => {
-    const fetchStub = sinon.stub(window, 'fetch').resolves(
+    fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -474,12 +579,10 @@ describe('HybridIpaasHeader Component', () => {
       carbonIcon: 'Logout',
       arialLabel: 'Logout',
     });
-
-    fetchStub.restore();
   });
 
   it('should handle searchConfigs', async () => {
-    const fetchStub = sinon.stub(window, 'fetch').resolves(
+    fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
@@ -516,7 +619,72 @@ describe('HybridIpaasHeader Component', () => {
       carbonIcon: 'Test',
       onClick: globalActionCallbackSpy,
     });
+  });
 
-    fetchStub.restore();
+  describe('when a CustomEvent is received', () => {
+    it('should reload the header options', async () => {
+      fetchStub.resolves(
+        new Response(JSON.stringify(fetchResp), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        })
+      );
+
+      const el = await fixture<HybridIpaasHeader>(
+        html`<clabs-global-header-hybrid-ipaas
+          productKey="valid-key"></clabs-global-header-hybrid-ipaas>`
+      );
+
+      expect(fetchStub.calledOnce).to.be.true;
+
+      await waitUntil(
+        () => el.headerOptions.brand?.company === 'companyName',
+        'headerOptions were not updated as expected'
+      );
+
+      const fetchResp2 = { ...fetchResp };
+      fetchResp2.brand.company = 'newCompany';
+      fetchStub.resolves(
+        new Response(JSON.stringify(fetchResp2), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        })
+      );
+
+      document.dispatchEvent(
+        new CustomEvent(CUSTOM_EVENT_NAME, {
+          detail: CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
+        })
+      );
+
+      await waitUntil(
+        () => el.headerOptions.brand?.company === 'newCompany',
+        'headerOptions were not updated after a refresh custom event'
+      );
+
+      expect(fetchStub.calledTwice).to.be.true;
+    });
+
+    it('should not reload the header options if the event detail does not match', async () => {
+      fetchStub.resolves(
+        new Response(JSON.stringify(fetchResp), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        })
+      );
+
+      await fixture<HybridIpaasHeader>(
+        html`<clabs-global-header-hybrid-ipaas
+          productKey="valid-key"></clabs-global-header-hybrid-ipaas>`
+      );
+
+      expect(fetchStub.calledOnce).to.be.true;
+
+      document.dispatchEvent(
+        new CustomEvent(CUSTOM_EVENT_NAME, { detail: 'DO NOT REFRESH!' })
+      );
+
+      expect(fetchStub.calledOnce).to.be.true;
+    });
   });
 });

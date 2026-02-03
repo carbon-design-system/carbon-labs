@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-empty-state",
-  "version": "0.10.0",
+  "version": "0.13.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.14.0",
-    "@carbon/web-components": "^2.40.0",
+    "@carbon-labs/utilities": "0.21.0",
+    "@carbon/web-components": "^2.41.0",
     "@ibm/telemetry-js": "^1.10.2",
     "uuid": "^9.0.1"
   }

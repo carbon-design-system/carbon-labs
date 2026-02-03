@@ -8,8 +8,17 @@
  */
 
 import React, { ElementType, ReactNode } from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import { AILabel, SkeletonPlaceholder } from '@carbon/react';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
+import {
+  AILabel,
+  SkeletonPlaceholder,
+  Tag,
+  type TagProps,
+} from '@carbon/react';
+
+type TagTypeName = TagProps<'div'>['type'];
+
+export type AITileLabelVariant = 'aiLabel' | 'tag';
 
 export type AITileBodyProps = {
   open?: boolean;
@@ -18,6 +27,9 @@ export type AITileBodyProps = {
   customContent?: ReactNode;
   primaryIcon?: ElementType | null;
   secondaryIcon?: ElementType | null;
+  aiLabelVariant?: AITileLabelVariant;
+  aiLabelText?: string;
+  aiLabelTagType?: TagTypeName;
   isLoading?: boolean;
 };
 
@@ -28,6 +40,9 @@ export const AITileBody = ({
   customContent,
   primaryIcon: PrimaryIcon,
   secondaryIcon: SecondaryIcon,
+  aiLabelVariant = 'aiLabel',
+  aiLabelText = 'AI',
+  aiLabelTagType = 'gray',
   isLoading,
 }: AITileBodyProps) => {
   const prefix = usePrefix();
@@ -51,7 +66,17 @@ export const AITileBody = ({
             {PrimaryIcon && (
               <PrimaryIcon fill={`var(--cds-icon-secondary)`} size={24} />
             )}
-            <AILabel autoAlign aiText="AI" size="xs" />
+            {aiLabelVariant === 'tag' ? (
+              <Tag
+                size="sm"
+                type={aiLabelTagType}
+                className={`${blockClass}--tag`}
+                decorator={<AILabel aiText="AI" size="xs" kind="inline" />}>
+                {aiLabelText}
+              </Tag>
+            ) : (
+              <AILabel autoAlign aiText={aiLabelText} size="xs" />
+            )}
           </div>
           <div className={`${blockClass}--title`}>{title}</div>
           <div className={`${blockClass}--footer`}>

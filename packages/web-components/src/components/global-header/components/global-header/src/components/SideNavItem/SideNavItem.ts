@@ -15,13 +15,16 @@ import { SideNavLink, SideNavMenuItems } from '../../types/Header.types';
 import cx from 'classnames';
 import { AUTOMATION_NAMESPACE_PREFIX } from '../../constant';
 import { customElement, property, state } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities';
 import { renderCarbonIcon, trackEvent } from '../../globals/utils';
 import styles from './SideNavItem.scss?inline';
+
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Entries for the left-hand Apps menu
  */
-@customElement('apaas-side-nav-item')
+@customElement(`${clabsPrefix}-global-header-side-nav-item`)
 export class SideNavItem extends LitElement {
   static styles = css`
     ${unsafeCSS(styles)}
@@ -111,7 +114,7 @@ export class SideNavItem extends LitElement {
                         @click="${(e: Event) =>
                           this.handleSideNavMenuItemClick(e, link)}"
                         tabIndex="${0}"
-                        isActive="${link?.isActive}">
+                        ?active="${link?.isActive}">
                         ${link.label}
                       </cds-custom-side-nav-menu-item>
                     `
@@ -123,9 +126,9 @@ export class SideNavItem extends LitElement {
                       @click="${(e: Event) =>
                         this.handleSideNavMenuItemClick(e, link)}"
                       role="link"
-                      isActive="${this.isHybridIpaas
+                      ?active="${this.isHybridIpaas
                         ? window.location.href.includes(link?.href)
-                        : link?.isActive}}">
+                        : link?.isActive}">
                       <span
                         class="${AUTOMATION_NAMESPACE_PREFIX}--side-panel-nav-item__link">
                         ${link.label}
@@ -140,8 +143,12 @@ export class SideNavItem extends LitElement {
           `
         : this.isOnClickAvailable || this.link?.onClick
         ? html` <cds-custom-side-nav-link
-            class="${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link"
+            class="${cx(`${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link`, {
+              [`${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link--current`]:
+                this.isActive,
+            })}"
             role="link"
+            ?active="${this.isActive}"
             href="${this.link?.href}"
             @click="${(e: Event) =>
               this.handleSideNavLinkClick(e, this.link?.label)}"
@@ -152,8 +159,12 @@ export class SideNavItem extends LitElement {
           </cds-custom-side-nav-link>`
         : html`
             <cds-custom-side-nav-link
-              class="${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link"
+              class="${cx(`${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link`, {
+                [`${AUTOMATION_NAMESPACE_PREFIX}--side-nav__link--current`]:
+                  this.isActive,
+              })}"
               role="link"
+              ?active="${this.isActive}"
               href="${this.link?.href}"
               @click="${(e: Event) =>
                 this.handleSideNavLinkClick(e, this.link?.label)}"

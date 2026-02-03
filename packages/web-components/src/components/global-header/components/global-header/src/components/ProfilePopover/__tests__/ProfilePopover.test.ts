@@ -18,17 +18,19 @@ describe('ProfilePopover Component', () => {
       managementConsole: undefined,
     };
     const el = await fixture(
-      html`<apaas-profile-popover
+      html`<clabs-global-header-profile-popover
         ?profileOpen="${true}"
         .props="${props}"
-        ?activeProfileMenu="${false}"></apaas-profile-popover>`
+        ?activeProfileMenu="${false}"></clabs-global-header-profile-popover>`
     );
     const popoverContainer = el.shadowRoot?.querySelector(
       'cds-custom-popover-content'
     );
 
     expect(popoverContainer).to.exist;
-    const authContext = popoverContainer?.querySelector('apaas-auth-context');
+    const authContext = popoverContainer?.querySelector(
+      'clabs-global-header-auth-context'
+    );
     expect(authContext).to.exist;
   });
 });

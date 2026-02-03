@@ -20,13 +20,18 @@ export default defineConfig({
     rollupOptions: {
       input: {
         'wc-global-header': 'index.ts',
+        'wc-global-header-react': 'index-react.ts',
         styles: 'components/global-header/src/index.scss',
       },
+      external: ['react', 'react-dom'],
     },
   },
   css: {
     preprocessorOptions: {
       scss: {},
     },
+  },
+  define: {
+    'process.env.NODE_ENV': '"production"',
   },
 });

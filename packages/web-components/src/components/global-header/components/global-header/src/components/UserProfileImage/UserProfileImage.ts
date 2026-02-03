@@ -10,6 +10,7 @@
 
 import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities';
 import { renderCarbonIcon } from '../../globals/utils';
 
 /* c8 ignore next */
@@ -19,10 +20,12 @@ import styles from './UserProfileImage.scss?inline' assert { type: 'css' };
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
 const blockClass = `${AUTOMATION_HEADER_BASE_CLASS}__user-profile-image`;
 
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * User image for the profile menu
  */
-@customElement('apaas-user-profile-image')
+@customElement(`${clabsPrefix}-global-header-user-profile-image`)
 export class SideNavItem extends LitElement {
   static styles = css`
     ${unsafeCSS(styles)}

@@ -425,121 +425,124 @@ export const DocumentVersioning = {
   ),
 };
 
+/**
+ *
+ */
+const DocumentHighlightingWithSourceComponent = () => {
+  const [sourceOpen, setSourceOpen] = useState(false);
+  return (
+    <Grid fullWidth narrow className="th-doc">
+      <Column lg={16} md={8} sm={4}>
+        <Tile className="th-doc-wrapper">
+          <h1>Text highlighters and annotations</h1>
+          <p>
+            Text highlighters and annotations serve several various purposes in
+            website or web applications:
+          </p>
+          <ol>
+            <li>
+              <p>
+                <strong>Enhanced readability:</strong> By allowing users to
+                highlight or annotate text, websites and applications can
+                improve readability and comprehension, especially for longer
+                passages or complex content. Users can mark important points,
+                make notes, or highlight key phrases, which can aid in
+                understanding.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Facilitating collaboration:</strong> In collaborative
+                environments such as educational platforms, research tools, or
+                document sharing platforms, text highlighters and annotations
+                enable users to collaborate more effectively. Users can
+                highlight areas of interest, leave comments, or provide feedback
+                for others to see.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Personalization:</strong> Text highlighters and
+                annotations allow users to personalize their experience by
+                marking sections that are relevant or interesting to them. This
+                customization can enhance user engagement and satisfaction.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Studying and research:</strong> In educational or
+                research contexts, text highlighters and annotations are
+                invaluable tools for studying, analyzing, and synthesizing
+                information. Users can mark important passages, jot down
+                thoughts or questions, and organize their notes for future
+                reference.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Accessibility:</strong> Text highlighters and
+                annotations can improve accessibility for users with
+                disabilities, such as visual impairments or cognitive
+                disabilities.{' '}
+                <TextHighlighter kind="mark" type="purple">
+                  Annotations can provide additional context or explanations for
+                  content, while text highlighters can draw attention to
+                  important information.
+                </TextHighlighter>
+                <Popover
+                  open={sourceOpen}
+                  onRequestClose={() => setSourceOpen(false)}>
+                  <OperationalTag
+                    size="sm"
+                    text={
+                      <>Source {sourceOpen ? <ChevronUp /> : <ChevronDown />}</>
+                    }
+                    renderIcon={ChevronUp}
+                    onClick={() => {
+                      setSourceOpen(!sourceOpen);
+                    }}
+                  />
+                  <PopoverContent>
+                    <span className="th-doc-source">
+                      <Link href="#" target="_blank">
+                        Source 1
+                      </Link>
+                      <Link href="#" target="_blank">
+                        Source 2
+                      </Link>
+                      <Link href="#" target="_blank">
+                        Source 3
+                      </Link>
+                    </span>
+                  </PopoverContent>
+                </Popover>
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Content curation:</strong> In content-heavy websites or
+                applications, text highlighters and annotations can help users
+                curate and save relevant information for later reference. Users
+                can highlight text or annotate it with tags, comments, or
+                categorizations to organize their findings effectively.
+              </p>
+            </li>
+          </ol>
+          <p>
+            Overall, text highlighters and annotations contribute to a richer
+            and more interactive user experience, empowering users to engage
+            with content in significant meaningful ways and extract maximum
+            value from it.
+          </p>
+        </Tile>
+      </Column>
+    </Grid>
+  );
+};
+
 export const DocumentHighlightingWithSource = {
   /**
-   * Renders the template for Playground Storybook
+   *
    */
-  render: function DocumentDemo() {
-    const [sourceOpen, setSourceOpen] = useState(false);
-    return (
-      <Grid fullWidth narrow className="th-doc">
-        <Column lg={16} md={8} sm={4}>
-          <Tile className="th-doc-wrapper">
-            <h1>Text highlighters and annotations</h1>
-            <p>
-              Text highlighters and annotations serve several various purposes
-              in website or web applications:
-            </p>
-            <ol>
-              <li>
-                <p>
-                  <strong>Enhanced readability:</strong> By allowing users to
-                  highlight or annotate text, websites and applications can
-                  improve readability and comprehension, especially for longer
-                  passages or complex content. Users can mark important points,
-                  make notes, or highlight key phrases, which can aid in
-                  understanding.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>Facilitating collaboration:</strong> In collaborative
-                  environments such as educational platforms, research tools, or
-                  document sharing platforms, text highlighters and annotations
-                  enable users to collaborate more effectively. Users can
-                  highlight areas of interest, leave comments, or provide
-                  feedback for others to see.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>Personalization:</strong> Text highlighters and
-                  annotations allow users to personalize their experience by
-                  marking sections that are relevant or interesting to them.
-                  This customization can enhance user engagement and
-                  satisfaction.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>Studying and research:</strong> In educational or
-                  research contexts, text highlighters and annotations are
-                  invaluable tools for studying, analyzing, and synthesizing
-                  information. Users can mark important passages, jot down
-                  thoughts or questions, and organize their notes for future
-                  reference.
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>Accessibility:</strong> Text highlighters and
-                  annotations can improve accessibility for users with
-                  disabilities, such as visual impairments or cognitive
-                  disabilities.{' '}
-                  <TextHighlighter kind="mark" type="purple">
-                    Annotations can provide additional context or explanations
-                    for content, while text highlighters can draw attention to
-                    important information.
-                  </TextHighlighter>
-                  <Popover
-                    open={sourceOpen}
-                    onRequestClose={() => setSourceOpen(false)}>
-                    <OperationalTag
-                      size="sm"
-                      text={
-                        <>
-                          Source {sourceOpen ? <ChevronUp /> : <ChevronDown />}
-                        </>
-                      }
-                      onClick={() => {
-                        setSourceOpen(!sourceOpen);
-                      }}></OperationalTag>
-                    <PopoverContent>
-                      <span className="th-doc-source">
-                        <Link href="#" target="_blank">
-                          Source 1
-                        </Link>
-                        <Link href="#" target="_blank">
-                          Source 2
-                        </Link>
-                        <Link href="#" target="_blank">
-                          Source 3
-                        </Link>
-                      </span>
-                    </PopoverContent>
-                  </Popover>
-                </p>
-              </li>
-              <li>
-                <p>
-                  <strong>Content curation:</strong> In content-heavy websites
-                  or applications, text highlighters and annotations can help
-                  users curate and save relevant information for later
-                  reference. Users can highlight text or annotate it with tags,
-                  comments, or categorizations to organize their findings
-                  effectively.
-                </p>
-              </li>
-            </ol>
-            <p>
-              Overall, text highlighters and annotations contribute to a richer
-              and more interactive user experience, empowering users to engage
-              with content in significant meaningful ways and extract maximum
-              value from it.
-            </p>
-          </Tile>
-        </Column>
-      </Grid>
-    );
-  },
+  render: () => <DocumentHighlightingWithSourceComponent />,
 };

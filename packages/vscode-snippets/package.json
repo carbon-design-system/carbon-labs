@@ -1,0 +1,49 @@
+{
+  "name": "@carbon-labs/vscode-snippets",
+  "version": "0.4.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - VSCode snippets for Carbon Design System SCSS",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/vscode-snippets"
+  },
+  "keywords": [
+    "carbon",
+    "vscode",
+    "snippets",
+    "scss",
+    "carbon-design-system"
+  ],
+  "author": "IBM",
+  "main": "./post-install.js",
+  "module": "./post-install.js",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./post-install.js",
+      "default": "./post-install.js"
+    }
+  },
+  "scripts": {
+    "build": "echo 'No build needed - static files only'",
+    "clean": "echo 'No clean needed - static files only'",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "postinstall": "node post-install.js"
+  },
+  "files": [
+    "src/**/*",
+    "install/**/*",
+    "post-install.js"
+  ],
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "jest": "^29.7.0",
+    "rimraf": "^6.0.1"
+  }
+}

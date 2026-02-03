@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/ai-chat",
-  "version": "0.25.0",
+  "version": "0.29.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -38,14 +38,14 @@
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.17.0",
-    "@carbon/web-components": "^2.40.0",
+    "@carbon-labs/utilities": "0.21.0",
+    "@carbon/web-components": "^2.41.0",
     "@ibm/telemetry-js": "^1.10.2",
     "highlightjs": "^9.16.2",
     "mathjax": "^3.2.2",
     "mermaid": "^11.2.1",
     "smiles-drawer": "^2.1.7",
-    "vega": "^5.28.0",
+    "vega": "^6.0.0",
     "vega-embed": "^6.24.0",
     "vega-lite": "^5.17.0"
   },

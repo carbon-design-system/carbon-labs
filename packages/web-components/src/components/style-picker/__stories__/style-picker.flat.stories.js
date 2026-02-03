@@ -26,7 +26,7 @@ import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js
 import AmsterdamWindmill from '@carbon/pictograms/lib/amsterdam--windmill';
 
 // Carbon labs
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 
 // StylePicker
 import '../index';
@@ -213,6 +213,7 @@ export const ColorAndIcon = {
             ?open=${args.open}
             heading=${args.heading}
             kind=${args.kind}
+            ?loading=${args.isLoading}
             ?enable-search=${args.enableSearch}
             search-close-button-label=${args.searchCloseButtonLabel}
             empty-state-title=${args.emptyStateTitle}
@@ -319,6 +320,7 @@ export const ColorAndPictogram = {
             ?open=${args.open}
             heading=${args.heading}
             kind=${args.kind}
+            ?loading=${args.isLoading}
             ?enable-search=${args.enableSearch}
             search-close-button-label=${args.searchCloseButtonLabel}
             empty-state-title=${args.emptyStateTitle}

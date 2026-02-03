@@ -8,6 +8,9 @@
  */
 
 import React, { ElementType } from 'react';
+import { Link } from '@carbon/react';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
+import { GlassTileBody, GlassTileBodyProps } from './GlassTileBody';
 
 export type GlassTileProps = {
   variant?: 'glass';
@@ -19,16 +22,14 @@ export type GlassTileProps = {
   customContent?: React.ReactNode | null;
   primaryIcon?: ElementType | null;
   secondaryIcon?: ElementType | null;
+  tagLabel?: string | null;
+  tagType?: GlassTileBodyProps['tagType'];
   onClick?: ((event: React.MouseEvent<HTMLElement>) => void) | null;
   ariaLabel?: string;
   open?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
 };
-
-import { Link } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import { GlassTileBody, GlassTileBodyProps } from './GlassTileBody';
 
 export const GlassTile: React.FC<GlassTileProps> = ({
   tileId,
@@ -39,6 +40,8 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   customContent,
   primaryIcon: PrimaryIcon,
   secondaryIcon: SecondaryIcon,
+  tagLabel,
+  tagType,
   onClick: glassTileClickHandler,
   ariaLabel,
   open,
@@ -56,6 +59,8 @@ export const GlassTile: React.FC<GlassTileProps> = ({
       title={title}
       subtitle={subtitle}
       customContent={customContent}
+      tagLabel={tagLabel}
+      tagType={tagType}
       isLoading={isLoading}
     />
   );

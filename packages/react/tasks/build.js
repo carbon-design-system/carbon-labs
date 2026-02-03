@@ -29,6 +29,16 @@ const packageJSON = JSON.parse(
   readFileSync(path.resolve(__dirname, '../package.json'))
 );
 
+// Read component-level package.json if it exists
+let componentPackageJSON = {};
+try {
+  componentPackageJSON = JSON.parse(
+    readFileSync(path.resolve(process.cwd(), 'package.json'))
+  );
+} catch (e) {
+  // No component package.json, use empty object
+}
+
 /**
  * build function
  */
@@ -131,15 +141,21 @@ function getTsCompilerOptions() {
  * @returns
  */
 function getRollupConfig(input, rootDir, outDir) {
+  // Merge dependencies from both main package.json and component package.json
+  const allDependencies = {
+    ...packageJSON.peerDependencies,
+    ...packageJSON.dependencies,
+    ...packageJSON.devDependencies,
+    ...componentPackageJSON.peerDependencies,
+    ...componentPackageJSON.dependencies,
+    ...componentPackageJSON.devDependencies,
+  };
+
   return {
     input,
     // Mark dependencies listed in `package.json` as external so that they are
     // not included in the output bundle.
-    external: [
-      ...Object.keys(packageJSON.peerDependencies),
-      ...Object.keys(packageJSON.dependencies),
-      ...Object.keys(packageJSON.devDependencies),
-    ].map((name) => {
+    external: Object.keys(allDependencies).map((name) => {
       // Transform the name of each dependency into a regex so that imports from
       // nested paths are correctly marked as external.
       //

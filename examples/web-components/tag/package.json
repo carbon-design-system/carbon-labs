@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "@carbon-labs/wc-ai-tag": "latest",
-    "@carbon/styles": "^1.92.0"
+    "@carbon/styles": "^1.93.0"
   }
 }

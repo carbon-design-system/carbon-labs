@@ -13,15 +13,15 @@
   },
   "dependencies": {
     "@carbon/ibm-products-styles": "^2.72.0",
-    "@carbon/styles": "^1.92.0",
-    "@carbon/web-components": "^2.40.1",
+    "@carbon/styles": "^1.93.0",
+    "@carbon/web-components": "^2.41.0",
     "lit": "^3.2.1",
     "sass": "^1.64.1"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",
     "typescript": "^5.5.3",
-    "vite": "5.4.20",
+    "vite": "5.4.21",
     "vite-plugin-lit-css": "^2.1.0"
   }
 }

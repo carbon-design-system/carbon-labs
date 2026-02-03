@@ -28,7 +28,7 @@ describe('Switcher Component', () => {
         carbonIcon: 'Checkmark',
       },
       {
-        label: 'Manage environments',
+        label: 'Manage custom environments',
         isHeading: false,
         href: '#',
         id: '',
@@ -82,11 +82,11 @@ describe('Switcher Component', () => {
   };
   it('should render items passed as a property', async () => {
     const el = await fixture<HTMLElement>(
-      html` <apaas-switcher-component
+      html` <clabs-global-header-switcher-component
         .items=${switcherConfigs.items}
         .iconsLeft=${switcherConfigs.iconsLeft}
         .disabled=${switcherConfigs.disabled}
-        .initialSelectedIndex=${switcherConfigs.initialSelectedIndex}></apaas-switcher-component>`
+        .initialSelectedIndex=${switcherConfigs.initialSelectedIndex}></clabs-global-header-switcher-component>`
     );
     const renderedItems = el.shadowRoot?.querySelectorAll(
       'cds-custom-header-menu-item'
@@ -100,8 +100,8 @@ describe('Switcher Component', () => {
       { label: 'Item 2', id: 'item2' },
     ];
     const el = await fixture<Switcher>(
-      html`<apaas-switcher-component
-        .items=${items}></apaas-switcher-component>`
+      html`<clabs-global-header-switcher-component
+        .items=${items}></clabs-global-header-switcher-component>`
     );
     const firstItem = el.shadowRoot?.querySelector(
       'cds-custom-header-menu-item'
@@ -119,8 +119,8 @@ describe('Switcher Component', () => {
       { label: 'Item 3', id: 'item3' },
     ];
     const el = await fixture<Switcher>(
-      html`<apaas-switcher-component
-        .items=${items}></apaas-switcher-component>`
+      html`<clabs-global-header-switcher-component
+        .items=${items}></clabs-global-header-switcher-component>`
     );
     await el.updateComplete;
     const secondMenuItem = el.shadowRoot?.querySelectorAll(
@@ -149,9 +149,9 @@ describe('Switcher Component', () => {
       { label: 'Item 2', id: 'item2' },
     ];
     const el = await fixture<Switcher>(
-      html`<apaas-switcher-component
+      html`<clabs-global-header-switcher-component
         .items=${items}
-        .initialSelectedIndex=${1}></apaas-switcher-component>`
+        .initialSelectedIndex=${1}></clabs-global-header-switcher-component>`
     );
     await el.updateComplete;
     const secondItem = el.shadowRoot?.querySelectorAll(
@@ -170,9 +170,9 @@ describe('Switcher Component', () => {
       { label: 'Item 2', id: 'item2' },
     ];
     const el = await fixture<Switcher>(
-      html`<apaas-switcher-component
+      html`<clabs-global-header-switcher-component
         .items=${items}
-        .disabled=${true}></apaas-switcher-component>`
+        .disabled=${true}></clabs-global-header-switcher-component>`
     );
     const headerMenu = el.shadowRoot?.querySelector('cds-custom-header-menu');
     expect(headerMenu).to.exist;
@@ -191,10 +191,10 @@ describe('Switcher Component', () => {
     ];
     const handleClick = sinon.spy();
     const el = await fixture<Switcher>(
-      html`<apaas-switcher-component
+      html`<clabs-global-header-switcher-component
         .items=${items}
         .disabled=${false}
-        .onClick=${handleClick}></apaas-switcher-component>`
+        .onClick=${handleClick}></clabs-global-header-switcher-component>`
     );
     await el.updateComplete;
     const secondItem = el.shadowRoot?.querySelectorAll(

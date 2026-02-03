@@ -128,7 +128,7 @@ describe('HeaderContext Component', () => {
 
   it('renders the header component without props', async () => {
     const el = await fixture(
-      html`<apaas-header-context></apaas-header-context>`
+      html`<clabs-global-header-context></clabs-global-header-context>`
     );
     expect(el?.shadowRoot).not.to.be.null;
   });
@@ -136,13 +136,13 @@ describe('HeaderContext Component', () => {
   describe('test isAuthenticated', () => {
     it('renders unauthenticated context when no profile is in header props', async () => {
       const el = await fixture(
-        html`<apaas-header-context
-          .props="${unauthenticatedProps}"></apaas-header-context>`
+        html`<clabs-global-header-context
+          .props="${unauthenticatedProps}"></clabs-global-header-context>`
       );
 
       // make sure that the 'unauthenticated-context' is rendered in this case.
       const unauthenticated = el.shadowRoot?.querySelector(
-        'apaas-unauthenticated-context'
+        'clabs-global-header-unauthenticated-context'
       );
       expect(unauthenticated).not.to.be.null;
 
@@ -152,29 +152,33 @@ describe('HeaderContext Component', () => {
 
     it('renders the header nav when a profile is in the header props', async () => {
       const el = await fixture(
-        html`<apaas-header-context
-          .props="${headerProps}"></apaas-header-context>`
+        html`<clabs-global-header-context
+          .props="${headerProps}"></clabs-global-header-context>`
       );
 
       // make sure that the 'unauthenticated-context' is not rendered in this case.
       const unauthenticated = el.shadowRoot?.querySelector(
-        'apaas-unauthenticated-context'
+        'clabs-global-header-unauthenticated-context'
       );
       expect(unauthenticated).to.be.null;
 
       // expect that the environment switcher has been rendered as switcherConfigs is present
-      const switcher = el.shadowRoot?.querySelector('apaas-switcher-component');
+      const switcher = el.shadowRoot?.querySelector(
+        'clabs-global-header-switcher-component'
+      );
       expect(switcher).not.to.be.null;
 
       // expect the profile popover is present as a profile object is present
-      const popover = el.shadowRoot?.querySelector('apaas-profile-popover');
+      const popover = el.shadowRoot?.querySelector(
+        'clabs-global-header-profile-popover'
+      );
       expect(popover).not.to.be.null;
     });
 
     it('profile menu can toggle', async () => {
       const el = await fixture<HeaderContext>(
-        html`<apaas-header-context
-          .props="${{ ...headerProps }}"></apaas-header-context>`
+        html`<clabs-global-header-context
+          .props="${{ ...headerProps }}"></clabs-global-header-context>`
       );
 
       const toggleProfilePopupSpy = sinon.spy(el, '_toggleProfilePopup');
@@ -219,8 +223,11 @@ describe('HeaderContext Component', () => {
 
     it('renders help links when prop is passed in', async () => {
       const el = await fixture(
-        html`<apaas-header-context
-          .props="${{ ...headerProps, helperLinks }}"></apaas-header-context>`
+        html`<clabs-global-header-context
+          .props="${{
+            ...headerProps,
+            helperLinks,
+          }}"></clabs-global-header-context>`
       );
 
       const helpMenu = el.shadowRoot?.querySelector('[menu-label="Help"]');
@@ -237,11 +244,11 @@ describe('HeaderContext Component', () => {
         'initAssistMeController'
       );
       const el = await fixture(
-        html`<apaas-header-context
+        html`<clabs-global-header-context
           .props="${{
             ...headerProps,
             assistMeConfigs,
-          }}"></apaas-header-context>`
+          }}"></clabs-global-header-context>`
       );
 
       const helpMenu = el.shadowRoot?.querySelector(
@@ -278,8 +285,11 @@ describe('HeaderContext Component', () => {
 
     it('renders the trial menu action', async () => {
       const el = await fixture(
-        html`<apaas-header-context
-          .props="${{ ...headerProps, trialConfigs }}"></apaas-header-context>`
+        html`<clabs-global-header-context
+          .props="${{
+            ...headerProps,
+            trialConfigs,
+          }}"></clabs-global-header-context>`
       );
       const trialMenuAction = el?.shadowRoot?.querySelector(
         '[type="button"], [aria-label="Trial Menu"]'
@@ -289,8 +299,11 @@ describe('HeaderContext Component', () => {
 
     it('trial menu action can toggle', async () => {
       const el = await fixture<HeaderContext>(
-        html`<apaas-header-context
-          .props="${{ ...headerProps, trialConfigs }}"></apaas-header-context>`
+        html`<clabs-global-header-context
+          .props="${{
+            ...headerProps,
+            trialConfigs,
+          }}"></clabs-global-header-context>`
       );
       expect(el.isTrialOpen).to.equal(false);
 
@@ -317,11 +330,11 @@ describe('HeaderContext Component', () => {
 
     it('check the chatbot action renders', async () => {
       const el = await fixture(
-        html`<apaas-header-context
+        html`<clabs-global-header-context
           .props="${{
             ...headerProps,
             chatBotConfigs,
-          }}"></apaas-header-context>`
+          }}"></clabs-global-header-context>`
       );
       expect(el).not.to.be.null;
 
@@ -344,11 +357,11 @@ describe('HeaderContext Component', () => {
 
     it('renders the notification menu', async () => {
       const el = await fixture(
-        html`<apaas-header-context
+        html`<clabs-global-header-context
           .props="${{
             ...headerProps,
             notificationConfigs,
-          }}"></apaas-header-context>`
+          }}"></clabs-global-header-context>`
       );
       expect(el).not.to.be.null;
 
@@ -370,11 +383,11 @@ describe('HeaderContext Component', () => {
 
     it('renders the notification menu', async () => {
       const el = await fixture(
-        html`<apaas-header-context
+        html`<clabs-global-header-context
           .props="${{
             ...headerProps,
             notificationConfigs: notificationConfigsNew,
-          }}"></apaas-header-context>`
+          }}"></clabs-global-header-context>`
       );
       expect(el).not.to.be.null;
 
@@ -392,11 +405,11 @@ describe('HeaderContext Component', () => {
 
   describe('webMethods Hybrid Integration divider', async () => {
     const el = await fixture(
-      html`<apaas-header-context
+      html`<clabs-global-header-context
         .props="${{
           ...headerProps,
           isHybridIpaas: true,
-        }}"></apaas-header-context>`
+        }}"></clabs-global-header-context>`
     );
     expect(el).not.to.be.null;
 
@@ -414,12 +427,17 @@ describe('HeaderContext Component', () => {
 
     it('renders', async () => {
       const el = await fixture(
-        html`<apaas-header-context
-          .props="${{ ...headerProps, searchConfigs }}"></apaas-header-context>`
+        html`<clabs-global-header-context
+          .props="${{
+            ...headerProps,
+            searchConfigs,
+          }}"></clabs-global-header-context>`
       );
       expect(el).not.to.be.null;
 
-      const search = el?.shadowRoot?.querySelector('apaas-header-search');
+      const search = el?.shadowRoot?.querySelector(
+        'clabs-global-header-search'
+      );
       expect(search).to.exist;
     });
   });
@@ -436,11 +454,11 @@ describe('HeaderContext Component', () => {
 
     it('renders the notification menu', async () => {
       const el = await fixture(
-        html`<apaas-header-context
+        html`<clabs-global-header-context
           .props="${{
             ...headerProps,
             globalActionConfigs,
-          }}"></apaas-header-context>`
+          }}"></clabs-global-header-context>`
       );
       expect(el).not.to.be.null;
       const globalAction = el?.shadowRoot?.querySelector(

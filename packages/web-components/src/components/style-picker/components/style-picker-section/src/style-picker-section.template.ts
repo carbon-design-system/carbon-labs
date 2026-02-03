@@ -8,7 +8,7 @@
  */
 
 import { html, nothing, TemplateResult } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es/components/accordion/accordion-item.js';
 import '@carbon/web-components/es/components/tag/index.js';
 

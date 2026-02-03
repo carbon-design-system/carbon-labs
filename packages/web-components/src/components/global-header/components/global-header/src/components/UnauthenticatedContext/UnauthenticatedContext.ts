@@ -10,6 +10,7 @@
 
 import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities';
 import { NoAuthHeaderLinks } from '../../types/Header.types';
 import { renderCarbonIcon } from '../../globals/utils';
 import '@carbon/web-components/es-custom/components/ui-shell/index.js';
@@ -23,10 +24,12 @@ import {
 } from '../../constant';
 import styles from '../_index.scss?inline';
 
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Content to show when not logged in
  */
-@customElement('apaas-unauthenticated-context')
+@customElement(`${clabsPrefix}-global-header-unauthenticated-context`)
 export class UnauthenticatedContext extends LitElement {
   static styles = css`
     ${unsafeCSS(styles)}

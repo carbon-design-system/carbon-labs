@@ -6,7 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import React, { useCallback, useEffect, useRef } from 'react';
 import cx from 'classnames';
 import { useViewStackContext } from './ViewStackContext';

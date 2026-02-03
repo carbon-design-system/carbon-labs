@@ -10,7 +10,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Close, Gift, Launch, Notification } from '@carbon/react/icons';
 import mdx from './WhatsNew.mdx';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities';
 import {
   Toc,
   TocList,

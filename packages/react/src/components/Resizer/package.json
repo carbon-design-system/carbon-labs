@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-resizer",
-  "version": "0.10.0",
+  "version": "0.12.0",
   "author": "Your Name <your@email.com>",
   "publishConfig": {
     "access": "public",
@@ -38,7 +38,7 @@
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id c3e81c63-8688-4d9d-9f8f-2c0c369a780a --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "canary"
+    "@carbon-labs/utilities": "0.21.0"
   },
   "dependencies": {
     "@ibm/telemetry-js": "^1.10.2"

@@ -29,8 +29,18 @@
         {
           "label": "eyebeemdev",
           "href": "#",
-          "carbonIcon": "Checkmark",
+          "carbonIcon": "Checkmark"
+        },
+        {
+          "label": "eyebeem-public-dev-08",
+          "href": "#",
           "isLastInList": true
+        },
+        {
+          "label": "Manage environments",
+          "href": "https://ibm.com",
+          "carbonIcon": "Settings",
+          "isLinkItem": true
         }
       ]
     }
@@ -103,7 +113,7 @@
             "id": "apiconnect"
           },
           {
-            "href": "#",
+            "href": "webmethods-hybrid-integration",
             "label": "App Connect",
             "productIcon": "<svg id=\"Layer_2\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 32 32\">  <defs>    <style>      .cls-1 {        mask: url(#mask);      }      .cls-2 {        fill: url(#linear-gradient-3);      }      .cls-3 {        fill: url(#linear-gradient-2);      }      .cls-4 {        fill: #f4f4f4;      }      .cls-5 {        fill: url(#linear-gradient);      }      .cls-6 {        fill: #fff;      }    </style>    <linearGradient id=\"linear-gradient\" x1=\"16\" y1=\"25\" x2=\"16\" y2=\"16\" gradientUnits=\"userSpaceOnUse\">      <stop offset=\"0\" stop-color=\"#000\" stop-opacity=\"0\"/>      <stop offset=\".66\" stop-color=\"#000\"/>    </linearGradient>    <linearGradient id=\"linear-gradient-2\" x1=\"6\" y1=\"18.5\" x2=\"13\" y2=\"18.5\" gradientUnits=\"userSpaceOnUse\">      <stop offset=\"0\" stop-color=\"#000\" stop-opacity=\"0\"/>      <stop offset=\".77\" stop-color=\"#000\"/>    </linearGradient>    <mask id=\"mask\" x=\"0\" y=\"0\" width=\"32\" height=\"32\" maskUnits=\"userSpaceOnUse\">      <g>        <path class=\"cls-6\" d=\"M16,3c-7.72,0-14,6.28-14,14,0,3.76,1.62,7.7,4.25,9.68.03.03.07.05.1.07.23.17.47.32.71.46.07.04.14.1.21.13.06.03.12.05.18.08.03.01.06.02.08.04.22.1.44.18.67.26.05.02.1.03.15.04.22.06.45.11.67.15.05,0,.09.02.14.02.28.04.55.07.83.07.62,0,1.25-.1,1.86-.3,1.52-.5,2.76-1.55,3.49-2.98.73-1.43.86-3.05.36-4.58-.5-1.52-1.55-2.76-2.98-3.49-1.43-.73-3.05-.86-4.58-.36-1.52.5-2.76,1.55-3.49,2.98-.11.22-.2.45-.29.67-.23-.93-.37-1.93-.37-2.95,0-6.62,5.38-12,12-12s12,5.38,12,12c0,1.05-.14,2.1-.41,3.11l1.93.52c.31-1.18.47-2.4.47-3.62,0-7.72-6.28-14-14-14ZM6.44,20.18c.48-.95,1.31-1.66,2.33-1.99.41-.13.82-.2,1.24-.2.62,0,1.24.15,1.81.44h0c.95.49,1.66,1.31,1.99,2.33.33,1.02.24,2.1-.24,3.05-.48.95-1.31,1.66-2.33,1.99-.46.15-.93.2-1.39.18-.11,0-.21-.01-.32-.03-.1-.01-.2-.03-.29-.05-.5-.11-.99-.31-1.45-.6-.03-.02-.07-.04-.1-.07-.08-.05-.16-.12-.23-.18-.57-.48-1.01-1.1-1.24-1.83-.33-1.02-.24-2.1.24-3.05Z\"/>        <rect class=\"cls-5\" x=\"12\" y=\"16\" width=\"8\" height=\"9\"/>        <polygon class=\"cls-3\" points=\"12 22 6 22 6 15 13 15 12 22\"/>      </g>    </mask>    <linearGradient id=\"linear-gradient-3\" x1=\"0\" y1=\"32\" x2=\"32\" y2=\"0\" gradientUnits=\"userSpaceOnUse\">      <stop offset=\".1\" stop-color=\"#3ddbd9\"/>      <stop offset=\".9\" stop-color=\"#4589ff\"/>    </linearGradient>  </defs>  <g id=\"Dark_theme_icons\">    <g>      <g class=\"cls-1\">        <rect class=\"cls-2\" width=\"32\" height=\"32\"/>      </g>      <path class=\"cls-4\" d=\"M22,19c-.2,0-.4.02-.6.06l-2.56-4.26c.71-.72,1.15-1.71,1.15-2.8,0-2.21-1.79-4-4-4s-4,1.79-4,4c0,1.09.44,2.08,1.16,2.81l-3.11,5.2s-.03,0-.04,0c-1.12,0-2,.88-2,2s.88,2,2,2,2-.88,2-2c0-.35-.09-.67-.25-.96l3.13-5.22c.36.11.73.18,1.12.18s.77-.07,1.13-.18l2.57,4.28c-.43.52-.7,1.17-.7,1.9,0,1.65,1.35,3,3,3s3-1.35,3-3-1.35-3-3-3ZM14,12c0-1.1.9-2,2-2s2,.9,2,2-.9,2-2,2-2-.9-2-2ZM22,23c-.55,0-1-.45-1-1s.45-1,1-1,1,.45,1,1-.45,1-1,1Z\"/>    </g>  </g></svg>",
             "appOrder": 7,

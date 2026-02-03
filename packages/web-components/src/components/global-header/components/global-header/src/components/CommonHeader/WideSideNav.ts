@@ -9,12 +9,15 @@
 
 import { css } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities';
 import CDSSideNav from '@carbon/web-components/es-custom/components/ui-shell/side-nav.js';
+
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Extended width version of SideNav
  */
-@customElement('apaas-wide-side-nav')
+@customElement(`${clabsPrefix}-global-header-wide-side-nav`)
 export class WideSideNav extends CDSSideNav {
   // Make wider than regular cds-side-nav to match React version
   static styles = css`

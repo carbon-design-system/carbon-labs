@@ -1,0 +1,105 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/utilities/convert' as convert;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/type' as *;
+
+$prefix: 'cds' !default;
+
+@include breakpoint-up(lg) {
+  .#{$prefix}--header-overflow-panel {
+    display: none;
+  }
+}
+
+// COPIED FROM SIDE NAV BUT NOW AT LG BREAKPOINT
+@include breakpoint-down(lg) {
+  .#{$prefix}--header-overflow-panel
+    .#{$prefix}--side-nav--collapsible.#{$prefix}--side-nav--expanded {
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
+  .#{$prefix}--header-overflow-panel
+    .#{$prefix}--header-overflow-panel-secondary-container {
+    padding-block-start: $spacing-05;
+  }
+
+  .#{$prefix}--header-overflow-panel
+    .#{$prefix}--side-nav__menu-secondary-wrapper-expanded {
+    z-index: 1;
+    background-color: $background;
+    inline-size: 100%;
+    inset-inline-start: 0;
+  }
+
+  .#{$prefix}--header-overflow-panel
+    .#{$prefix}--side-nav__back-button.#{$prefix}--btn--ghost {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 1rem;
+    inline-size: 100%;
+    max-inline-size: 100%;
+
+    &:focus {
+      box-shadow: inset 0 0 0 1px $focus;
+    }
+  }
+
+  .#{$prefix}--header-overflow-panel
+    .#{$prefix}--side-nav__back-button.#{$prefix}--btn--ghost:not([disabled]) {
+    svg {
+      align-self: center;
+      fill: $icon-interactive;
+    }
+
+    &:hover svg {
+      fill: $link-primary-hover;
+    }
+  }
+
+  .#{$prefix}--header-overflow-panel .#{$prefix}--side-nav__item {
+    .#{$prefix}--side-nav__link,
+    .#{$prefix}--side-nav__submenu {
+      block-size: $spacing-08;
+    }
+  }
+}
+
+@include breakpoint(md) {
+  .#{$prefix}--header-overflow-panel.#{$prefix}--popover--tab-tip.#{$prefix}--popover--bottom-end
+    .#{$prefix}--popover
+    > .#{$prefix}--header-action__content.#{$prefix}--popover-content {
+    inset-inline-end: -$spacing-09;
+  }
+}
+
+.#{$prefix}--header-overflow-panel .#{$prefix}--toggletip-content {
+  padding: 0;
+  background-color: $background;
+  block-size: 100vh;
+  border-block-end: 1px solid $border-subtle;
+  border-inline-start: 1px solid $border-subtle;
+  gap: 0;
+  inline-size: convert.to-rem(256px);
+  overflow-y: auto;
+
+  > * {
+    padding: $spacing-05;
+    outline: convert.to-rem(0.5px) solid $border-subtle;
+  }
+}
+
+.#{$prefix}--header-overflow-panel .#{$prefix}--side-nav__link-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  inline-size: 100%;
+}

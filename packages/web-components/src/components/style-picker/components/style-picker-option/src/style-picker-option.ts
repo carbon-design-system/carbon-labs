@@ -18,7 +18,7 @@ import {
   StylePickerContextType,
 } from '../../../context/style-picker-context';
 import { prefix } from '../../../defs';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import HostListener from '@carbon/web-components/es/globals/decorators/host-listener.js';
 import HostListenerMixin from '@carbon/web-components/es/globals/mixins/host-listener.js';
 

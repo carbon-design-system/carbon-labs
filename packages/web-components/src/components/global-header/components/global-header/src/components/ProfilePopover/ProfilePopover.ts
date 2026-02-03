@@ -10,14 +10,17 @@
 
 import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities';
 import styles from './_index.scss?inline';
 import { animate, fadeIn, fadeOut } from '@lit-labs/motion';
 import { HeaderContextProps } from '../HeaderContext/HeaderContext.types';
 
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Contents of the profile menu
  */
-@customElement('apaas-profile-popover')
+@customElement(`${clabsPrefix}-global-header-profile-popover`)
 export class AuthContext extends LitElement {
   static styles = css`
     ${unsafeCSS([styles])}
@@ -81,9 +84,9 @@ export class AuthContext extends LitElement {
         <cds-custom-popover-content>
           ${this.profileOpen
             ? html` <div
-                class="automation-header__tooltip"
+                class="automation-header__popover"
                 ${animate({ in: fadeIn, out: fadeOut })}>
-                <apaas-auth-context
+                <clabs-global-header-auth-context
                   .props="${{
                     profile,
                     mainSectionItems,
@@ -91,7 +94,7 @@ export class AuthContext extends LitElement {
                     userManagement,
                     managementConsole,
                     profileFooterLinks,
-                  }}"></apaas-auth-context>
+                  }}"></clabs-global-header-auth-context>
               </div>`
             : nothing}
         </cds-custom-popover-content>

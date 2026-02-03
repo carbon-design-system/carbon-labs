@@ -10,6 +10,7 @@
 
 import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities';
 import {
   AUTOMATION_HEADER_BASE_CLASS,
   AUTOMATION_NAMESPACE_PREFIX,
@@ -35,14 +36,20 @@ import '../ProfilePopover/ProfilePopover';
 import '../UserProfileImage/UserProfileImage';
 
 import { HeaderContextProps, HeaderContextState } from './HeaderContext.types';
-import { isValidObject, renderCarbonIcon } from '../../globals/utils';
+import {
+  isValidObject,
+  renderCarbonIcon,
+  trackEvent,
+} from '../../globals/utils';
 
 import styles from './_index.scss?inline' assert { type: 'css' };
+
+const { stablePrefix: clabsPrefix } = settings;
 
 /**
  * Header entries depending on context
  */
-@customElement('apaas-header-context')
+@customElement(`${clabsPrefix}-global-header-context`)
 export class HeaderContext extends LitElement {
   static styles = css`
     ${unsafeCSS([styles])}
@@ -77,12 +84,27 @@ export class HeaderContext extends LitElement {
   @property({ type: Boolean }) assistMeScriptLoaded = false;
   @property({ type: Boolean }) hasNewNotifications = false;
 
+  // emit an event (does nothing if analytics has not been configured)
+  private _clickEventAnalytics = (label: string) => {
+    trackEvent('UI Interaction', {
+      action: 'clicked',
+      CTA: label,
+      elementId: `common header - ${label}`,
+    });
+  };
+
   _toggleTrialPopup() {
     this.isTrialOpen = !this.isTrialOpen;
+    this._clickEventAnalytics('Trial days left');
   }
 
   _toggleProfilePopup() {
     this.isProfileOpen = !this.isProfileOpen;
+  }
+
+  _toggleAIChat(callback) {
+    callback();
+    this._clickEventAnalytics('Launch Chat');
   }
 
   handleAssistmeToggleClick(e: { preventDefault: () => void }) {
@@ -115,6 +137,8 @@ export class HeaderContext extends LitElement {
     } else {
       assistMeController?.open({ callback });
     }
+
+    this._clickEventAnalytics('Assistance');
   }
 
   renderTrial() {
@@ -127,7 +151,7 @@ export class HeaderContext extends LitElement {
     if (isValidObject(trialConfig)) {
       return html`
         <div class="${AUTOMATION_HEADER_BASE_CLASS}--popover-content-container">
-          <apaas-trial-popover
+          <clabs-global-header-trial-popover
             id="${TRIAL_POPOVER_BUTTON_ID}"
             .open="${this.isTrialOpen}"
             .trialConfig="${trialConfig}"
@@ -143,7 +167,7 @@ export class HeaderContext extends LitElement {
               >
               <p class="trial-label">${trialConfig.trialLabel}</p>
             </cds-custom-header-global-action>
-          </apaas-trial-popover>
+          </clabs-global-header-trial-popover>
         </div>
       `;
     } else {
@@ -221,25 +245,40 @@ export class HeaderContext extends LitElement {
 
   renderChatBot() {
     const { chatBotConfigs } = this.props;
-    if (chatBotConfigs) {
+    if (chatBotConfigs && chatBotConfigs.onClick) {
       return html`
         <cds-custom-header-global-action
           id="${INTEGRATION_AGENT_BUTTON_ID}"
           role="button"
           aria-label="Launch Chat"
           tooltipAlignment="center"
+          class="${AUTOMATION_NAMESPACE_PREFIX}__globalaction"
           tabindex="${this.isTrialOpen ? -1 : 0}"
-          @click="${chatBotConfigs.onClick}">
+          @click="${() => this._toggleAIChat(chatBotConfigs.onClick)}">
           ${renderCarbonIcon('AiLaunch', 20, 'icon')}
         </cds-custom-header-global-action>
       `;
     }
   }
 
+  renderSidekick() {
+    const { sidekickConfig } = this.props;
+    if (sidekickConfig?.isEnabled) {
+      return html` <solis-sidekick />`;
+    }
+  }
+
+  renderSolis() {
+    const { solisConfig } = this.props;
+    if (solisConfig?.isEnabled) {
+      return html` <solis-switcher /> `;
+    }
+  }
+
   renderProfile() {
     return html`
       <div class="${AUTOMATION_HEADER_BASE_CLASS}--popover-content-container">
-        <apaas-profile-popover
+        <clabs-global-header-profile-popover
           ?profileOpen="${this.isProfileOpen}"
           .props="${this.props}"
           @profile-toggle="${this._toggleProfilePopup}">
@@ -251,14 +290,14 @@ export class HeaderContext extends LitElement {
             aria-label="Profile"
             tooltip-text=""
             tabindex="${this.isTrialOpen ? -1 : 0}">
-            <apaas-user-profile-image
+            <clabs-global-header-user-profile-image
               .size="lg"
               .image="${this.props.profile?.imageUrl}"
               .backgroundColor="light-cyan"
               .initials="${this.props.profile
-                ?.displayName}"></apaas-user-profile-image>
+                ?.displayName}"></clabs-global-header-user-profile-image>
           </cds-custom-header-global-action>
-        </apaas-profile-popover>
+        </clabs-global-header-profile-popover>
       </div>
     `;
   }
@@ -266,9 +305,9 @@ export class HeaderContext extends LitElement {
   renderSearch() {
     const { searchConfigs } = this.props;
     if (searchConfigs) {
-      return html`<apaas-header-search
+      return html`<clabs-global-header-search
         id="${SEARCH_BUTTON_ID}"
-        .props="${searchConfigs}"></apaas-header-search>`;
+        .props="${searchConfigs}"></clabs-global-header-search>`;
     }
   }
 
@@ -306,14 +345,14 @@ export class HeaderContext extends LitElement {
       return html`
         ${this.renderTrial()}
         ${switcherProps && switcherProps.items?.length
-          ? html` <apaas-switcher-component
+          ? html` <clabs-global-header-switcher-component
               id="${ENV_SWITCHER_BUTTON_ID}"
               .items=${switcherProps.items}
               .iconsLeft=${switcherProps.iconsLeft}
               .disabled=${switcherProps.disabled}
               .initialSelectedIndex=${switcherProps.initialSelectedIndex}
               ?isTrialOpen="${this.isTrialOpen}"
-              .onClick=${switcherProps.onClick}></apaas-switcher-component>`
+              .onClick=${switcherProps.onClick}></clabs-global-header-switcher-component>`
           : nothing}
         ${this.renderGlobalActions()}
         ${this.props.isHybridIpaas
@@ -323,11 +362,11 @@ export class HeaderContext extends LitElement {
         ${this.renderChatBot()}
         ${!assistMeConfigs ? this.renderHelpMenu() : nothing}
         ${assistMeConfigs?.productId ? this.renderAssistMe() : nothing}
-        ${this.renderProfile()}
+        ${this.renderSidekick()} ${this.renderProfile()} ${this.renderSolis()}
       `;
     } else {
-      return html`<apaas-unauthenticated-context
-        .noAuthHeaderLinks="${noAuthHeaderLinks}"></apaas-unauthenticated-context>`;
+      return html`<clabs-global-header-unauthenticated-context
+        .noAuthHeaderLinks="${noAuthHeaderLinks}"></clabs-global-header-unauthenticated-context>`;
     }
   }
 }

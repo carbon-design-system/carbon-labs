@@ -37,10 +37,10 @@ export type HelperLinks = {
   onclick?: (e: Event) => void;
 };
 
-export interface MainSectionItem {
+export type MainSectionItem = {
   label: string;
-  text: string;
-}
+  text?: string;
+};
 
 export interface AssistMeConfigs {
   productId?: string;
@@ -56,7 +56,7 @@ export interface ChatBotConfigs {
 
 export interface SearchConfigs {
   placeholder?: string;
-  callback: (value: string) => void;
+  callback?: (value: string) => void;
   submitCallback?: (value: string) => void;
 }
 
@@ -255,6 +255,19 @@ export type AnalyticsConfig = {
   commonProperties?: CommonAnalyticsProperties;
 };
 
+export type SidekickConfig = {
+  scriptUrl?: string;
+  isEnabled: boolean;
+  correlationId?: string;
+  title?: string;
+  product?: string;
+  context?: string;
+  insights_enabled?: boolean;
+  chat_enabled?: boolean;
+  overview_enabled?: boolean;
+  tell_me_more_enabled?: boolean;
+};
+
 export interface HeaderProps {
   brand?: Brand;
   capabilityName?: { label: string };
@@ -280,6 +293,49 @@ export interface HeaderProps {
   chatBotConfigs?: ChatBotConfigs;
   searchConfigs?: SearchConfigs;
   globalActionConfigs?: GlobalActionConfig[];
+  sidekickConfig?: SidekickConfig;
+  solisConfig?: SolisConfig;
+}
+
+export interface ReactWrapperProps
+  extends Omit<HeaderProps, 'chatBotConfigs' | 'notificationConfigs'> {
+  productKey: string;
+  productName?: null;
+  fetchHeaders?: Record<string, string>;
+  solisSidekickEnabled?: boolean;
+  solisSwitcherEnabled?: boolean;
+  solisEnvironment?: string;
+  basePath?: string;
+  displayName?: string;
+  userEmail?: string;
+  productVersion?: null;
+  assistMeKey?: string;
+  hasNewNotifications?: boolean;
+  capabilityProfileFooterLinks?: ProfileFooterLinks[];
+  capabilityGlobalActions?: GlobalActionConfig[];
+  searchConfigs?: Omit<SearchConfigs, 'callback' | 'submitCallback'>;
+  aiCallback?: () => void | undefined;
+  notificationOpenCallback?: () => void | undefined;
+  logoutCallback?: () => void | undefined;
+  searchCallback?: (value: string) => void | undefined;
+  searchSubmitCallback?: (value: string) => void | undefined;
+}
+
+export enum solisDeploymentEnvironment {
+  local = 'local',
+  dev = 'dev',
+  stage = 'stage',
+  prod = 'prod',
+}
+
+export interface SolisConfig {
+  isEnabled: boolean;
+  scriptUrl?: string;
+  is_prod?: boolean;
+  cdn_hostname: string;
+  deployment_environment: solisDeploymentEnvironment;
+  product_id: string;
+  backendProxy?: string;
 }
 
 export interface NavigationItem {
@@ -293,4 +349,29 @@ export interface EventProps {
   CTA: string;
   elementId: string;
   platformTitle?: string;
+}
+
+export type SidekickInfo = {
+  correlation_id?: string;
+  title?: string;
+  context?: string;
+  insights_enabled?: boolean;
+  chat_enabled?: boolean;
+  overview_enabled?: boolean;
+  tell_me_more_enabled?: boolean;
+};
+
+interface solisWindowConfig {
+  is_prod?: boolean;
+  cdn_hostname: string;
+  deployment_environment: solisDeploymentEnvironment;
+  sidekick?: SidekickInfo;
+  product_id: string;
+  backend_proxy?: string;
+}
+
+declare global {
+  interface Window {
+    _solis: solisWindowConfig;
+  }
 }

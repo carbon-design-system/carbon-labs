@@ -26,7 +26,7 @@ import { BUTTON_KIND } from '@carbon/web-components/es/components/button/defs.js
 import Bangalore from '@carbon/pictograms/lib/bangalore';
 
 // Carbon labs
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 
 // StylePicker
 import '../index';
@@ -215,6 +215,7 @@ export const Color = {
             align=${args.align}
             ?open=${args.open}
             heading=${args.heading}
+            ?loading=${args.isLoading}
             ?enable-search=${args.enableSearch}
             search-close-button-label=${args.searchCloseButtonLabel}
             empty-state-title=${args.emptyStateTitle}
@@ -299,6 +300,7 @@ export const Icon = {
             align=${args.align}
             ?open=${args.open}
             heading=${args.heading}
+            ?loading=${args.isLoading}
             @clabs-style-picker-close=${closed}>
             <cds-icon-button
               id="trigger"
@@ -383,6 +385,7 @@ export const Pictogram = {
             ?open=${args.open}
             heading=${args.heading}
             ?enable-search=${args.enableSearch}
+            ?loading=${args.isLoading}
             search-close-button-label=${args.searchCloseButtonLabel}
             empty-state-title=${args.emptyStateTitle}
             empty-state-subtitle=${args.emptyStateSubtitle}

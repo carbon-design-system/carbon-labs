@@ -18,7 +18,7 @@ import { Search } from '../Search';
 describe('Search Component', () => {
   it('renders component', async () => {
     const el = await fixture<HTMLElement>(
-      html` <apaas-header-search></apaas-header-search>`
+      html` <clabs-global-header-search></clabs-global-header-search>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -34,7 +34,7 @@ describe('Search Component', () => {
 
     const consoleLogStub = sinon.stub(console, 'log');
     const el = await fixture<Search>(
-      html` <apaas-header-search .props=""></apaas-header-search>`
+      html` <clabs-global-header-search .props=""></clabs-global-header-search>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -55,7 +55,8 @@ describe('Search Component', () => {
     };
 
     const el = await fixture<Search>(
-      html` <apaas-header-search .props="${props}"></apaas-header-search>`
+      html` <clabs-global-header-search
+        .props="${props}"></clabs-global-header-search>`
     );
     expect(el.shadowRoot).not.to.be.null;
 
@@ -65,28 +66,48 @@ describe('Search Component', () => {
     expect(el.searchValue).to.equal('test');
   });
 
-  it('handles keydown for pressing ENTER key', async () => {
-    const submitCallbackSpy = sinon.spy();
-
-    const props: SearchConfigs = {
-      callback: () => {},
-      submitCallback: submitCallbackSpy,
-    };
-
-    const el = await fixture<Search>(
-      html` <apaas-header-search .props="${props}"></apaas-header-search>`
-    );
-    expect(el.shadowRoot).not.to.be.null;
-
-    const event = new KeyboardEvent('keydown', {
-      bubbles: true,
-      composed: true,
-      key: 'Enter',
-    });
-    el._handleKeydown(event);
-    expect(submitCallbackSpy).to.have.been.calledOnce;
-  });
   describe('handles keydown for pressing ENTER', () => {
+    it('ENTER key submits entered value', async () => {
+      const callbackSpy = sinon.spy();
+      const submitCallbackSpy = sinon.spy();
+
+      const props: SearchConfigs = {
+        callback: callbackSpy,
+        submitCallback: submitCallbackSpy,
+      };
+
+      const el = await fixture<Search>(
+        html` <clabs-global-header-search
+          .props="${props}"></clabs-global-header-search>`
+      );
+      expect(el.shadowRoot).not.to.be.null;
+
+      // Find the input field within the cds-search component
+      const cdsSearch = el.shadowRoot.querySelector('cds-custom-search');
+      expect(cdsSearch).not.to.be.null;
+      const inputNode = cdsSearch.shadowRoot.querySelector('input');
+      expect(inputNode).not.to.be.null;
+
+      // Set the input value
+      inputNode.value = 'mockSearch';
+      inputNode.dispatchEvent(
+        new CustomEvent('input', {
+          bubbles: true,
+        })
+      );
+
+      // Submit the search
+      const event = new KeyboardEvent('keypress', {
+        bubbles: true,
+        key: 'Enter',
+      });
+      el._handleKeydown(event);
+
+      // Check for both typing and submission callbacks
+      expect(callbackSpy).to.have.been.calledWith('mockSearch');
+      expect(submitCallbackSpy).to.have.been.calledWith('mockSearch');
+    });
+
     it('ENTER key', async () => {
       const submitCallbackSpy = sinon.spy();
 
@@ -96,7 +117,8 @@ describe('Search Component', () => {
       };
 
       const el = await fixture<Search>(
-        html` <apaas-header-search .props="${props}"></apaas-header-search>`
+        html` <clabs-global-header-search
+          .props="${props}"></clabs-global-header-search>`
       );
       expect(el.shadowRoot).not.to.be.null;
 
@@ -118,7 +140,8 @@ describe('Search Component', () => {
       };
 
       const el = await fixture<Search>(
-        html` <apaas-header-search .props="${props}"></apaas-header-search>`
+        html` <clabs-global-header-search
+          .props="${props}"></clabs-global-header-search>`
       );
       expect(el.shadowRoot).not.to.be.null;
 

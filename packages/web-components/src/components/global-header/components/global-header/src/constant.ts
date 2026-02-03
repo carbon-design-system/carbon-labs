@@ -23,6 +23,9 @@ export const PROFILE_MENU_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-profile-me
 export const SEARCH_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-search-button`;
 export const TRIAL_POPOVER_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-trial-popover-button`;
 
+export const CUSTOM_EVENT_NAME = 'global-header';
+export const CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS = 'refresh-header-options';
+
 export const INITIAL_AUTOMATION_HEADER_PROPS = {
   brand: {
     company: '',
@@ -65,3 +68,10 @@ export const DEFAULT_NO_AUTH_HEADER_LINKS = [
     arialLabel: 'Log in',
   },
 ];
+
+export const SOLIS_CDN_HOSTNAMES = {
+  local: 'https://cdn.dev.saas.ibm.com',
+  dev: 'https://cdn.dev.saas.ibm.com',
+  stage: 'https://cdn.test.saas.ibm.com',
+  prod: 'https://cdn.saas.ibm.com',
+};

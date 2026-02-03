@@ -8,8 +8,12 @@
  */
 import React, { ElementType } from 'react';
 import { Link } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import { AITileBody, AITileBodyProps } from '../AITile/AITileBody';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
+import {
+  AITileBody,
+  AITileBodyProps,
+  AITileLabelVariant,
+} from '../AITile/AITileBody';
 
 export type AITileProps = {
   variant: 'ai';
@@ -21,6 +25,9 @@ export type AITileProps = {
   customContent?: React.ReactNode | null;
   primaryIcon?: ElementType | null;
   secondaryIcon?: ElementType | null;
+  aiLabelVariant?: AITileLabelVariant;
+  aiLabelText?: string;
+  aiLabelTagType?: AITileBodyProps['aiLabelTagType'];
   onClick?: ((event: React.MouseEvent<HTMLElement>) => void) | null;
   ariaLabel?: string;
   open?: boolean;
@@ -37,6 +44,9 @@ export const AITile: React.FC<AITileProps> = ({
   customContent,
   primaryIcon: PrimaryIcon,
   secondaryIcon: SecondaryIcon,
+  aiLabelVariant,
+  aiLabelText,
+  aiLabelTagType,
   onClick: aiTileClickHandler,
   ariaLabel,
   open,
@@ -54,6 +64,9 @@ export const AITile: React.FC<AITileProps> = ({
       title={title}
       subtitle={subtitle}
       customContent={customContent}
+      aiLabelVariant={aiLabelVariant}
+      aiLabelText={aiLabelText}
+      aiLabelTagType={aiLabelTagType}
       isLoading={isLoading}
     />
   );

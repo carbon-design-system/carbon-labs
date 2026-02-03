@@ -11,9 +11,18 @@
 import { html, nothing } from 'lit';
 import { TrialTooltipProps } from './TrialContent.types';
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
-import { renderCarbonIcon } from '../../globals/utils';
-import '@carbon/web-components/es-custom/components/link/index.js';
+import { renderCarbonIcon, trackEvent } from '../../globals/utils';
+import '@carbon/web-components/es-custom/components/button/index.js';
 import { TrialLinkType } from '../../types/Header.types';
+
+// emit an event (does nothing if analytics has not been configured)
+const _clickEventAnalytics = (label: string, cta: string) => {
+  trackEvent('UI Interaction', {
+    action: 'clicked',
+    CTA: cta,
+    elementId: `common header - ${label}`,
+  });
+};
 
 export const TrialContent = ({
   description,
@@ -37,29 +46,31 @@ export const TrialContent = ({
         <div class="${AUTOMATION_HEADER_BASE_CLASS}__tooltip-links">
           ${links?.map(
             (link) => html`
-              <cds-custom-link
+              <cds-custom-button
+                size="sm"
+                kind="ghost"
                 href="${link.href}"
+                @click="${() => _clickEventAnalytics('trial link', link.label)}"
                 class="${AUTOMATION_HEADER_BASE_CLASS}__tooltip-link">
-                <span
-                  >${link.label}
-                  ${getIconFromType(link.type as unknown as string)}</span
+                ${link.label}
+                <span slot="icon"
+                  >${getIconFromType(link.type as unknown as string)}</span
                 >
-              </cds-custom-link>
+              </cds-custom-button>
             `
           )}
         </div>
         ${actionText && actionLink
           ? html`
-              <cds-custom-link
+              <cds-custom-button
+                size="sm"
                 href=${actionLink}
+                @click="${() =>
+                  _clickEventAnalytics('trial button', actionText)}"
                 class="${AUTOMATION_HEADER_BASE_CLASS}__trial-button">
-                <div class="buttons">
-                  ${actionText}
-                  <span class="button-icon"
-                    >${renderCarbonIcon('Email', 16)}</span
-                  >
-                </div>
-              </cds-custom-link>
+                ${actionText}
+                <span slot="icon">${renderCarbonIcon('Email', 16)}</span>
+              </cds-custom-button>
             `
           : nothing}
       </div>

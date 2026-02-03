@@ -296,8 +296,5 @@ file (within `<component-name>/__stories__/<component-name>.mdx`)
 ## Publishing to NPM
 
 The
-[canary publish to NPM](https://github.com/carbon-design-system/carbon-labs/actions/workflows/release-canary.yml)
-occurs every time a PR is merged into `main`. This canary version of your
-package can be used in your applications.
 [Full minor releases](https://github.com/carbon-design-system/carbon-labs/actions/workflows/release.yml)
-occur when needed and are triggered manually.
+occurs automatically every time a PR is merged into `main`.

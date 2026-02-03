@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-network-graph",
-  "version": "0.20.0",
+  "version": "0.24.0",
   "private": true,
   "publishConfig": {
     "access": "public",
@@ -38,9 +38,9 @@
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.17.0",
+    "@carbon-labs/utilities": "0.21.0",
     "@carbon/grid": "^11.21.0",
-    "@carbon/web-components": "^2.40.0",
+    "@carbon/web-components": "^2.41.0",
     "@ibm/telemetry-js": "^1.10.2",
     "force-graph": "^1.43.5"
   }

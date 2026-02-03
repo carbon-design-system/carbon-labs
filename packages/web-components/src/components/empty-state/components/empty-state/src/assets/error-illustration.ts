@@ -8,7 +8,7 @@
 import { html } from 'lit';
 import { v4 as uuidv4 } from 'uuid';
 import { classMap } from 'lit/directives/class-map.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 
 /**

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-example-button",
-  "version": "0.8.0",
+  "version": "0.10.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -33,6 +33,6 @@
     "clean": "rimraf es lib scss"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "canary"
+    "@carbon-labs/utilities": "0.21.0"
   }
 }

@@ -65,7 +65,9 @@ const sideItemWithMenuItems: SideNavLink = {
 
 describe('SideNavItem Component', () => {
   it('renders side nav item with no props', async () => {
-    const el = await fixture(html`<apaas-side-nav-item></apaas-side-nav-item>`);
+    const el = await fixture(
+      html`<clabs-global-header-side-nav-item></clabs-global-header-side-nav-item>`
+    );
     expect(el).to.exist;
 
     const popover = el.shadowRoot?.querySelector(
@@ -77,7 +79,8 @@ describe('SideNavItem Component', () => {
   describe('default behaviour', () => {
     it('renders side nav item no menu items when not collapsable', async () => {
       const el = await fixture(
-        html`<apaas-side-nav-item .link="${sideItem}"></apaas-side-nav-item>`
+        html`<clabs-global-header-side-nav-item
+          .link="${sideItem}"></clabs-global-header-side-nav-item>`
       );
       expect(el).to.exist;
 
@@ -94,8 +97,8 @@ describe('SideNavItem Component', () => {
 
     it('renders side nav item with no icon', async () => {
       const el = await fixture(
-        html`<apaas-side-nav-item
-          .link="${sideItemNoIcon}"></apaas-side-nav-item>`
+        html`<clabs-global-header-side-nav-item
+          .link="${sideItemNoIcon}"></clabs-global-header-side-nav-item>`
       );
       expect(el).to.exist;
 
@@ -109,10 +112,10 @@ describe('SideNavItem Component', () => {
   describe('renders when isCollapsible is passed in', () => {
     it('renders side nav item when isCollapsible is true and has handleSideNavLinkClick prop', async () => {
       const el = await fixture(
-        html`<apaas-side-nav-item
+        html`<clabs-global-header-side-nav-item
           .link="${sideItemWithClickHandler}"
           .isOnClickAvailable="${true}"
-          .isCollapsible="${true}"></apaas-side-nav-item>`
+          .isCollapsible="${true}"></clabs-global-header-side-nav-item>`
       );
       expect(el).to.exist;
 
@@ -123,9 +126,9 @@ describe('SideNavItem Component', () => {
 
     it('renders side nav item when isCollapsible is true and has not handleSideNavLinkClick prop', async () => {
       const el = await fixture(
-        html`<apaas-side-nav-item
+        html`<clabs-global-header-side-nav-item
           .link="${sideItem}"
-          .isCollapsible="${true}"></apaas-side-nav-item>`
+          .isCollapsible="${true}"></clabs-global-header-side-nav-item>`
       );
       expect(el).to.exist;
 
@@ -137,12 +140,12 @@ describe('SideNavItem Component', () => {
 
   it('renders side nav item with sub menus', async () => {
     const el = await fixture(
-      html`<apaas-side-nav-item
+      html`<clabs-global-header-side-nav-item
         .menuOpen="${true}"
         .link="${sideItemWithMenuItems}"
         .isCollapsible="${true}"
         .isSideNavMenuItems="${true}"
-        .isActive="${false}"></apaas-side-nav-item>`
+        .isActive="${false}"></clabs-global-header-side-nav-item>`
     );
     expect(el).to.exist;
 
@@ -172,12 +175,12 @@ describe('SideNavItem Component', () => {
     it('handleSideNavLinkClick can be called', async () => {
       const onClickSpy = sinon.spy();
       const el = await fixture(
-        html`<apaas-side-nav-item
+        html`<clabs-global-header-side-nav-item
           .link="${sideItem}"
           .isCollapsible="${true}"
           .isSideNavMenuItems="${false}"
           .isOnClickAvailable="${true}"
-          .handleNavItemClick="${onClickSpy}"></apaas-side-nav-item>`
+          .handleNavItemClick="${onClickSpy}"></clabs-global-header-side-nav-item>`
       );
       expect(el).to.exist;
 
@@ -196,7 +199,7 @@ describe('SideNavItem Component', () => {
       const onClickSpy = sinon.spy();
 
       const el = await fixture(
-        html`<apaas-side-nav-item
+        html`<clabs-global-header-side-nav-item
           .link="${{
             ...sideItem,
             sideNavMenuItems: [
@@ -209,7 +212,7 @@ describe('SideNavItem Component', () => {
             ],
           }}"
           .isCollapsible="${true}"
-          .isSideNavMenuItems="${true}"></apaas-side-nav-item>`
+          .isSideNavMenuItems="${true}"></clabs-global-header-side-nav-item>`
       );
       expect(el).to.exist;
 

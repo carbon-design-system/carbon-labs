@@ -331,7 +331,7 @@ describe('useScript function', () => {
     const status = useScript.default(propsNoAssisitMe);
     expect(status).to.equal('idle');
   });
-
+  // this test is failing with .only (I expect it's relient on earlier test).
   it('should return status of "loading" or "ready" when script is in DOM an function is called', async () => {
     const el = await fixture(html`
       <script

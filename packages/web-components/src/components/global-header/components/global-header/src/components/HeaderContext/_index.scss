@@ -10,6 +10,7 @@
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/styles/scss/colors' as *;
 @use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
 
 cds-custom-header-global-action.mcsp-header-user-profile {
   display: flex;
@@ -17,7 +18,7 @@ cds-custom-header-global-action.mcsp-header-user-profile {
   inline-size: 48px;
 }
 
-cds-custom-header-global-action apaas-user-profile-image {
+cds-custom-header-global-action clabs-global-header-user-profile-image {
   inline-size: 100%;
 }
 
@@ -25,7 +26,7 @@ cds-custom-header-global-action apaas-user-profile-image {
   list-style: none;
 
   svg {
-    fill: #ffffff;
+    fill: $icon-on-color;
   }
 
   ul {
@@ -46,11 +47,17 @@ cds-custom-header-global-action apaas-user-profile-image {
 
 .automation-global-header__notification {
   svg {
-    fill: #ffffff;
+    fill: $icon-on-color;
 
     circle {
       fill: #d61f28;
     }
+  }
+}
+
+.ibm-automation-cds__globalaction {
+  svg {
+    fill: $icon-on-color;
   }
 }
 
@@ -68,7 +75,7 @@ cds-custom-header-global-action.mcsp-header-user-profile > div {
 
 .automation-global-header__divider::before {
   display: block;
-  background-color: var(--cds-custom-border-subtle);
+  background-color: $border-subtle;
   block-size: 2.5rem;
   content: '';
   inline-size: 0.0625rem;
@@ -182,7 +189,7 @@ cds-custom-header-global-action.mcsp-header-user-profile > div {
 
 .ibm-automation-cds--btn.ibm-automation-cds--btn--icon-only.ibm-automation-cds--header__action
   svg {
-  fill: #ffffff;
+  fill: $icon-on-color;
 }
 
 // for windows high contrast mode

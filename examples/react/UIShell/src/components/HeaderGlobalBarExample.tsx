@@ -8,11 +8,16 @@
  */
 
 import {
+  SideNav,
+  SideNavItems,
+  SideNavMenu,
+  SideNavLink,
   HeaderDivider,
   HeaderPopover,
   HeaderPopoverActions,
   HeaderPopoverButton,
   HeaderPopoverContent,
+  HeaderOverflowPanel,
   Profile,
 } from '@carbon-labs/react-ui-shell';
 import {
@@ -26,9 +31,9 @@ import {
   HeaderGlobalBar,
   MenuButton,
   MenuItemRadioGroup,
-  Theme,
   ContainedList,
   ContainedListItem,
+  SideNavDivider,
 } from '@carbon/react';
 import {
   Help,
@@ -40,9 +45,14 @@ import {
   Group,
   Money,
   Logout,
+  Launch,
+  ChartCustom,
+  Settings,
 } from '@carbon/react/icons';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router';
+import { breakpoints } from '@carbon/layout';
+const smMediaQuery = `(max-width: ${breakpoints.md.width})`;
 
 const options = {
   Fruits: ['Apple', 'Banana', 'Orange'],
@@ -56,6 +66,97 @@ const readOnlyItems = [
   { label: 'Region', title: 'us-east-1 (N Virginia)' },
 ];
 
+const headerOverflowPanel = (isSm, themeSetting, setThemeSetting) => (
+  <HeaderOverflowPanel label="Options">
+    <SideNav
+      isTreeview
+      isFixedNav
+      expanded
+      isChildOfHeader={false}
+      aria-label="Header navigation"
+      headerOverflowPanel>
+      <SideNavItems>
+        {isSm && (
+          <SideNavMenu
+            renderIcon={UserAvatar}
+            title="Profile"
+            primary
+            backButtonTitle="Back">
+            <Profile.UserInfo name="Ruth Leach" email="ruth.leach@ibm.com" />
+            <ThemeSettings legendText="Theme">
+              <ThemeSwitcher
+                lowContrast
+                size="sm"
+                value={themeSetting}
+                onChange={setThemeSetting}
+              />
+            </ThemeSettings>
+            <Profile.ReadOnly items={readOnlyItems} />
+            <ContainedList label="Profile links">
+              <ContainedListItem
+                renderIcon={User}
+                onClick={() => (window.location.href = 'https://example.com')}>
+                User profile
+              </ContainedListItem>
+              <ContainedListItem
+                renderIcon={IbmCloudKeyProtect}
+                onClick={() => (window.location.href = 'https://example.com')}>
+                Access keys
+              </ContainedListItem>
+              <ContainedListItem
+                renderIcon={Group}
+                onClick={() => (window.location.href = 'https://example.com')}>
+                User management
+              </ContainedListItem>
+              <ContainedListItem
+                renderIcon={Money}
+                onClick={() => (window.location.href = 'https://example.com')}>
+                Plan and billing
+              </ContainedListItem>
+              <ContainedListItem
+                renderIcon={Logout}
+                onClick={() => (window.location.href = 'https://example.com')}>
+                Log out
+              </ContainedListItem>
+            </ContainedList>
+          </SideNavMenu>
+        )}
+        <SideNavMenu
+          renderIcon={Settings}
+          primary
+          title="Settings"
+          backButtonTitle="Back">
+          <SideNavDivider />
+          <SideNavLink renderIcon={ChartCustom} href="#">
+            Customize
+            <Launch />
+          </SideNavLink>
+        </SideNavMenu>
+        <SideNavLink renderIcon={Notification} href="#">
+          Notifications
+          <Launch />
+        </SideNavLink>
+        <SideNavLink renderIcon={Help} href="#">
+          Help
+          <Launch />
+        </SideNavLink>
+        <SideNavLink renderIcon={ChartCustom} href="#">
+          Custom action
+          <Launch />
+        </SideNavLink>
+        {isSm && (
+          <>
+            <SideNavDivider />
+            <SideNavLink renderIcon={Logout} href="#">
+              Logout
+            </SideNavLink>
+          </>
+        )}
+      </SideNavItems>
+    </SideNav>
+  </HeaderOverflowPanel>
+);
+
 export const HeaderGlobalBarExample = ({
   isProfileExpanded,
   onClickProfileExpand,
@@ -66,6 +167,8 @@ export const HeaderGlobalBarExample = ({
   const [selectedItem, setSelectedItem] = useState('');
   const headerRef = useRef(null);
 
+  const isSm = window.matchMedia(smMediaQuery);
+
   return (
     <HeaderGlobalBar>
       <ExpandableSearch
@@ -75,11 +178,12 @@ export const HeaderGlobalBarExample = ({
         id="search-expandable-1"
       />
       <HeaderGlobalAction
+        className="hide-at-md"
         aria-label="Custom action"
         tooltipHighContrast={false}>
         <SquareOutline size={20} />
       </HeaderGlobalAction>
-      <HeaderPopover align="bottom-end">
+      <HeaderPopover align="bottom-end" className="hide-at-md">
         <HeaderPopoverButton align="bottom" label="Help">
           <Help size={20} />
         </HeaderPopoverButton>
@@ -94,7 +198,7 @@ export const HeaderGlobalBarExample = ({
           </HeaderPopoverActions>
         </HeaderPopoverContent>
       </HeaderPopover>
-      <HeaderPopover align="bottom-end">
+      <HeaderPopover align="bottom-end" className="hide-at-md">
         <HeaderPopoverButton align="bottom" label="Notifications">
           <Notification size={20} />
         </HeaderPopoverButton>
@@ -109,8 +213,9 @@ export const HeaderGlobalBarExample = ({
           </HeaderPopoverActions>
         </HeaderPopoverContent>
       </HeaderPopover>
-      <HeaderDivider />
+      <HeaderDivider className="hide-at-md" />
       <MenuButton
+        className="hide-at-md"
         menuTarget={headerRef.current}
         kind="ghost"
         label={selectedCategory || 'Select Category'}>
@@ -125,6 +230,7 @@ export const HeaderGlobalBarExample = ({
         />
       </MenuButton>
       <MenuButton
+        className="hide-at-md"
         menuTarget={headerRef.current}
         kind="ghost"
         label={selectedItem || 'Select Item'}
@@ -136,7 +242,8 @@ export const HeaderGlobalBarExample = ({
           onChange={(newItem) => setSelectedItem(newItem)}
         />
       </MenuButton>
-      <HeaderDivider />
+      <HeaderDivider className="hide-at-md" />
+      {headerOverflowPanel(isSm, themeSetting, setThemeSetting)}
       <Profile.Root
         open={isProfileExpanded}
         onClick={onClickProfileExpand}
@@ -152,7 +259,7 @@ export const HeaderGlobalBarExample = ({
           />
         </ThemeSettings>
         <Profile.ReadOnly items={readOnlyItems} />
-        <ContainedList label="Profile links">
+        <ContainedList>
           <ContainedListItem
             renderIcon={User}
             onClick={() => (window.location.href = 'https://example.com')}>

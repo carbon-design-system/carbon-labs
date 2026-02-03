@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@carbon/ibm-products": "^2.76.0",
-    "@carbon/react": "^1.93.0",
+    "@carbon/react": "^1.95.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@carbon-labs/react-text-highlighter": "latest",
-    "@carbon-labs/utilities": "canary",
+    "@carbon-labs/utilities": "0.20.0",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",

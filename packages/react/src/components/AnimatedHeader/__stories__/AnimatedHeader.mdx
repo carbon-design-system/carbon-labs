@@ -215,6 +215,8 @@ fallback but should be replaced.
 | `customContent`     | `ReactNode \| null`           | Custom body content instead of default.            |
 | `primaryIcon`       | `ElementType \| null`         | Leading icon component.                            |
 | `secondaryIcon`     | `ElementType \| null`         | Optional trailing icon component.                  |
+| `tagLabel`          | `string \| null`              | Optional read-only tag text in the upper-right.    |
+| `tagType`           | `TagProps<'div'>['type']`     | Carbon `Tag` color token (for example, `blue`).    |
 | `onClick`           | `(() => void) \| null`        | Click handler for interactive tiles.               |
 | `ariaLabel`         | `string`                      | Accessibility label (required for a11y).           |
 | `isLoading`         | `boolean`                     | Shows skeleton state.                              |
@@ -232,6 +234,9 @@ fallback but should be replaced.
 | `customContent`     | `ReactNode \| null`           | Custom body content instead of default.            |
 | `primaryIcon`       | `ElementType \| null`         | Leading icon component.                            |
 | `secondaryIcon`     | `ElementType \| null`         | Optional trailing icon component.                  |
+| `aiLabelVariant`    | `'aiLabel' \| 'tag'`          | Choose Carbon `AILabel` (default) or `Tag`.        |
+| `aiLabelText`       | `string`                      | Text for the AI label or tag (defaults to `AI`).   |
+| `aiLabelTagType`    | `TagProps<'div'>['type']`     | Tag color when `aiLabelVariant` is `tag`.          |
 | `onClick`           | `(() => void) \| null`        | Click handler for interactive tiles.               |
 | `ariaLabel`         | `string`                      | Accessibility label (required for a11y).           |
 | `isLoading`         | `boolean`                     | Shows skeleton state.                              |
@@ -248,6 +253,9 @@ fallback but should be replaced.
 | `productName`       | `string`                      | Used in labels (e.g., “Open [product]”, button text). |
 | `promptPlaceholder` | `string`                      | Placeholder for the chat input.                       |
 | `primaryIcon`       | `ElementType \| null`         | Leading icon component.                               |
+| `aiLabelVariant`    | `'aiLabel' \| 'tag'`          | Choose Carbon `AILabel` (default) or `Tag`.           |
+| `aiLabelText`       | `string`                      | Text for the AI label or tag (defaults to `AI`).      |
+| `aiLabelTagType`    | `TagProps<'div'>['type']`     | Tag color when `aiLabelVariant` is `tag`.             |
 | `onClick`           | `(() => void) \| null`        | Click handler for interactive tiles.                  |
 | `ariaLabel`         | `string`                      | Accessibility label (required for a11y).              |
 | `isLoading`         | `boolean`                     | Shows skeleton state.                                 |
@@ -450,6 +458,8 @@ export const headerTiles: TileGroup[] = [
         title: 'Short description of the type of prompt',
         primaryIcon: Term,
         ariaLabel: 'Start a conversation with the AI assistant', // ✅ aria-label defined here
+        aiLabelVariant: 'tag',
+        aiLabelTagType: 'gray',
       },
     ],
   },

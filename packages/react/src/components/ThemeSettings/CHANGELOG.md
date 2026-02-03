@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.19.0...@carbon-labs/react-theme-settings@0.20.0) (2026-01-30)
+
+
+### Bug Fixes
+
+* **global-header:** upgrade to latest web-components ([#997](https://github.com/carbon-design-system/carbon-labs/issues/997)) ([5717728](https://github.com/carbon-design-system/carbon-labs/commit/57177282f0afa64ff7ad129667405091f9cea1c5))
+
+
+
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.18.0...@carbon-labs/react-theme-settings@0.19.0) (2026-01-26)
+
+**Note:** Version bump only for package @carbon-labs/react-theme-settings
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.17.0...@carbon-labs/react-theme-settings@0.18.0) (2026-01-06)
+
+
+### Bug Fixes
+
+* correct utilities version in two packages ([#963](https://github.com/carbon-design-system/carbon-labs/issues/963)) ([683b13e](https://github.com/carbon-design-system/carbon-labs/commit/683b13e25a7886940b82e2f416b303d168460505))
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.16.0...@carbon-labs/react-theme-settings@0.17.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
 # [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.15.0...@carbon-labs/react-theme-settings@0.16.0) (2025-10-08)
 
 

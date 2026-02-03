@@ -8,8 +8,10 @@
  */
 
 import React, { ElementType, ReactNode } from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
-import { SkeletonPlaceholder } from '@carbon/react';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
+import { SkeletonPlaceholder, Tag, type TagProps } from '@carbon/react';
+
+type TagTypeName = TagProps<'div'>['type'];
 
 export type GlassTileBodyProps = {
   open?: boolean;
@@ -18,6 +20,8 @@ export type GlassTileBodyProps = {
   customContent?: ReactNode;
   primaryIcon?: ElementType | null;
   secondaryIcon?: ElementType | null;
+  tagLabel?: string | null;
+  tagType?: TagTypeName;
   isLoading?: boolean;
 };
 
@@ -28,6 +32,8 @@ export const GlassTileBody = ({
   customContent,
   primaryIcon: PrimaryIcon,
   secondaryIcon: SecondaryIcon,
+  tagLabel,
+  tagType = 'gray',
   isLoading,
 }: GlassTileBodyProps) => {
   const prefix = usePrefix();
@@ -49,6 +55,11 @@ export const GlassTileBody = ({
           <div className={`${blockClass}--icons`}>
             {PrimaryIcon && (
               <PrimaryIcon fill={`var(--cds-icon-secondary)`} size={24} />
+            )}
+            {tagLabel && (
+              <Tag size="sm" type={tagType} className={`${blockClass}--tag`}>
+                {tagLabel}
+              </Tag>
             )}
           </div>
           <div className={`${blockClass}--title`}>{title}</div>

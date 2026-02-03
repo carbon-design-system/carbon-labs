@@ -9,7 +9,7 @@
 /packages/web-components/src/components/chat/              @carbon-design-system/carbon-ai-chat-admins @carbon-design-system/developers-system
 
 # Carbon UI Shell
-/packages/react/src/components/UIShell/                    @carbon-design-system/ui-shell-devs
+/packages/react/src/components/UIShell/                    @carbon-design-system/monorepo-reviewers
 
 # Other packages
 /packages/react/src/components/AnimatedHeader/             @carbon-design-system/animated-header-devs

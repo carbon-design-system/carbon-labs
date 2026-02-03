@@ -14,7 +14,7 @@
     "packages/*/**"
   ],
   "scripts": {
-    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' --concurrency=1 && lerna run build --scope '@carbon-labs/react' --concurrency=1 && lerna run build --scope '@carbon-labs/web-components' --concurrency=1",
+    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' --concurrency=1 && lerna run build --scope '@carbon-labs/vscode-snippets' --concurrency=1 && lerna run build --scope '@carbon-labs/react' --concurrency=1 && lerna run build --scope '@carbon-labs/web-components' --concurrency=1",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "ci-check": "yarn run format:diff && yarn lint:license && yarn lint && yarn lint:styles",
@@ -32,7 +32,15 @@
     "storybook": "storybook dev -p 6006",
     "storybook:build": "storybook build"
   },
+  "resolutions": {
+    "@carbon/react": "^1.95.0",
+    "@carbon/styles": "^1.94.0",
+    "@carbon/icons-react": "^11.65.0"
+  },
   "devDependencies": {
+    "@carbon/icons-react": "^11.65.0",
+    "@carbon/react": "^1.95.0",
+    "@carbon/styles": "^1.94.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
     "@rollup/plugin-commonjs": "^28.0.6",
@@ -54,7 +62,7 @@
     "fs-extra": "^11.2.0",
     "globby": "^14.0.0",
     "husky": "^9.0.0",
-    "lerna": "^8.0.0",
+    "lerna": "^9.0.0",
     "lint-staged": "^15.0.2",
     "lit": "^3.2.1",
     "prettier": "^2.8.8",
@@ -70,5 +78,5 @@
     "stylelint-config-carbon": "1.17.0",
     "yargs": "^17.7.2"
   },
-  "packageManager": "yarn@4.6.0"
+  "packageManager": "yarn@4.12.0"
 }

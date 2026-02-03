@@ -186,7 +186,7 @@ export const withLinks = () => {
       <HeaderGlobalBar>
         <Profile.Root label="Profile" renderIcon={<UserAvatar size={20} />}>
           <Profile.UserInfo name="Ruth Leach" email="ruth.leach@ibm.com" />
-          <ContainedList label="Profile links">
+          <ContainedList>
             <ContainedListItem
               renderIcon={User}
               onClick={() => (window.location.href = 'https://example.com')}>

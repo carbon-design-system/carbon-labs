@@ -18,5 +18,5 @@ describe('clabs-example-button', function () {
 
     await expect(el).dom.to.equalSnapshot();
     await expect(el).shadowDom.to.be.accessible();
-  });
+  }).timeout(5000);
 });

@@ -41,8 +41,8 @@ export const Basic: Story = {
         <cds-custom-header-name>IBM</cds-custom-header-name>
         <cds-custom-header-nav menu-bar-label="IBM [Platform]">
         </cds-custom-header-nav>
-        <apaas-unauthenticated-context
-          .noAuthHeaderLinks="${defaultNoAuthHeaderLinks}"></apaas-unauthenticated-context>
+        <clabs-global-header-unauthenticated-context
+          .noAuthHeaderLinks="${defaultNoAuthHeaderLinks}"></clabs-global-header-unauthenticated-context>
       </cds-custom-header>
     </div>
   `,

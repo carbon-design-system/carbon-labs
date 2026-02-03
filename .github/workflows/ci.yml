@@ -7,21 +7,32 @@ on:
     branches:
       - main
   merge_group:
-    types: [ checks_requested ]
+    types: [checks_requested]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  dedupe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Use Node.js version from .nvmrc
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6.2.0
+        with:
+          node-version-file: '.nvmrc'
+      - name: Run yarn dedupe
+        run: yarn dedupe --check
+
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - name: Use Node.js version from .nvmrc
+        uses: actions/setup-node@v6
         with:
-          node-version: '18.x'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
@@ -33,11 +44,11 @@ jobs:
   format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - name: Use Node.js version from .nvmrc
+        uses: actions/setup-node@v6
         with:
-          node-version: '18.x'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
@@ -51,11 +62,11 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - name: Use Node.js version from .nvmrc
+        uses: actions/setup-node@v6
         with:
-          node-version: '18.x'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
@@ -65,11 +76,11 @@ jobs:
   license:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - name: Use Node.js version from .nvmrc
+        uses: actions/setup-node@v6
         with:
-          node-version: '18.x'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
@@ -79,11 +90,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - name: Use Node.js version from .nvmrc
+        uses: actions/setup-node@v6
         with:
-          node-version: '18.x'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
@@ -94,4 +105,10 @@ jobs:
         run: yarn test
       - name: run Web Component tests
         working-directory: 'packages/web-components'
+        run: yarn test
+      - name: run Web Component codecept tests
+        working-directory: 'packages/web-components'
+        run: yarn test-e2e
+      - name: run VSCode Snippets tests
+        working-directory: 'packages/vscode-snippets'
         run: yarn test

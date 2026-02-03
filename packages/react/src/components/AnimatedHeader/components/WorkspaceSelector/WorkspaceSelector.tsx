@@ -8,7 +8,7 @@
  */
 
 import { Dropdown, DropdownProps, SkeletonPlaceholder } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import React, { useMemo } from 'react';
 
 export interface Workspace {

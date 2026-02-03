@@ -10,6 +10,7 @@
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es-custom/components/popover/index.js';
 import { TrialContent } from '../TrialContent/TrialContent';
 import { unsafeCSS } from 'lit';
@@ -18,10 +19,12 @@ import { animate, fadeIn, fadeOut } from '@lit-labs/motion';
 import styles from './_index.scss?inline';
 import { TrialConfigs } from '../../types/Header.types';
 
+const { stablePrefix: clabsPrefix } = settings;
+
 /**
  * Content to show when clicking the Trial entry in the header
  */
-@customElement('apaas-trial-popover')
+@customElement(`${clabsPrefix}-global-header-trial-popover`)
 export class TrialPopover extends LitElement {
   @property({ type: Boolean }) open = false;
   @property({ type: Object }) trialConfig: TrialConfigs = {};

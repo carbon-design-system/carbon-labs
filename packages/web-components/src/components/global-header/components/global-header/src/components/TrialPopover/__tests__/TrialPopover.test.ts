@@ -15,9 +15,9 @@ describe('TrialPopover Component', () => {
   it('renders cds-popover with cds-popover-content', async () => {
     const props = { description: 'Test Description' };
     const el = await fixture(
-      html`<apaas-trial-popover
+      html`<clabs-global-header-trial-popover
         .open="true"
-        .trialConfig="${props}"></apaas-trial-popover>`
+        .trialConfig="${props}"></clabs-global-header-trial-popover>`
     );
     const popover = el.shadowRoot?.querySelector('cds-custom-popover');
 
@@ -29,9 +29,9 @@ describe('TrialPopover Component', () => {
   it('does not render the description when not provided', async () => {
     const props = {};
     const el = await fixture(
-      html` <apaas-trial-popover
+      html` <clabs-global-header-trial-popover
         .open="true"
-        .trialConfig="${props}"></apaas-trial-popover>`
+        .trialConfig="${props}"></clabs-global-header-trial-popover>`
     );
     const description = el.shadowRoot?.querySelector(
       `.${AUTOMATION_HEADER_BASE_CLASS}__tooltip-description`
@@ -49,9 +49,9 @@ describe('TrialPopover Component', () => {
       ],
     };
     const el = await fixture(html`
-      <apaas-trial-popover
+      <clabs-global-header-trial-popover
         ?open="${true}"
-        .trialConfig="${props}"></apaas-trial-popover>
+        .trialConfig="${props}"></clabs-global-header-trial-popover>
     `);
     const links = el.shadowRoot?.querySelectorAll(
       `.${AUTOMATION_HEADER_BASE_CLASS}__tooltip-link`
@@ -63,9 +63,9 @@ describe('TrialPopover Component', () => {
   it('renders the description when provided', async () => {
     const props = { description: 'Test Description' };
     const el = await fixture(
-      html`<apaas-trial-popover
+      html`<clabs-global-header-trial-popover
         ?open="${true}"
-        .trialConfig="${props}"></apaas-trial-popover>`
+        .trialConfig="${props}"></clabs-global-header-trial-popover>`
     );
     const description = el.shadowRoot?.querySelector(
       `.${AUTOMATION_HEADER_BASE_CLASS}__tooltip-description`
@@ -78,9 +78,9 @@ describe('TrialPopover Component', () => {
   it('renders the action link when actionText and actionLink are provided', async () => {
     const props = { actionText: 'Action', actionLink: '#' };
     const el = await fixture(
-      html`<apaas-trial-popover
+      html`<clabs-global-header-trial-popover
         ?open="${true}"
-        .trialConfig="${props}"></apaas-trial-popover>`
+        .trialConfig="${props}"></clabs-global-header-trial-popover>`
     );
     const actionLink = el.shadowRoot?.querySelector(
       `.${AUTOMATION_HEADER_BASE_CLASS}__trial-button`

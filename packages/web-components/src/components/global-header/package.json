@@ -14,9 +14,8 @@
     "directory": "packages/global-header"
   },
   "exports": {
-    ".": {
-      "default": "./es/wc-global-header.mjs"
-    },
+    ".": "./es/wc-global-header.mjs",
+    "./react": "./es/wc-global-header-react.mjs",
     "./es/*": "./es/*",
     "./lib/*": "./lib/*"
   },

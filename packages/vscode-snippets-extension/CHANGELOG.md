@@ -3,7 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 0.2.0 (2026-01-29)
+0.14.0 (2026-02-03)
+
+Updated README and changed publisher in VSCode Marketplace. VSCode users, prior to 0.13.0 will need to manually uninstall, possibly close VSCode, and reinstall.
+
+# 0.13.0 (2026-01-29)
 
 
 ### Features

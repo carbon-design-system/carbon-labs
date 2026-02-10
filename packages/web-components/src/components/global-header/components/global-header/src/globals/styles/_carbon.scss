@@ -7,10 +7,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// Config @carbon/styles to use the custom prefix, and then only load the styles that we need
-@use '@carbon/styles/scss/config' with (
-  $prefix: 'cds-custom'
-);
 @use '@carbon/styles/scss/components/ui-shell';
 
 @use '@carbon/styles/scss/themes';

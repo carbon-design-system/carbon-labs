@@ -291,10 +291,13 @@ exports[`Calendar renders as expected - Component API should match snapshot 1`] 
     >
       <div
         class="clabs--calendar__date-picker-overlay clabs--calendar__date-picker-overlay-show"
+        role="button"
+        tabindex="0"
       />
-      <aside
+      <div
         aria-label="date picker"
         class="clabs--calendar__date-picker-panel clabs--calendar__date-picker-open clabs--calendar__date-picker-slide clabs--calendar__date-picker-panel-modal"
+        role="group"
         tabindex="0"
       >
         <div
@@ -870,7 +873,7 @@ exports[`Calendar renders as expected - Component API should match snapshot 1`] 
             </div>
           </div>
         </div>
-      </aside>
+      </div>
       <section
         aria-label="Calendar grid"
         class="clabs--calendar__calendar clabs--calendar__date-picker-open"
@@ -1770,7 +1773,7 @@ exports[`Calendar renders as expected - Component API should match snapshot 1`] 
     </div>
     <div
       aria-hidden="true"
-      style="display: none;"
+      class="clabs--calendar__hidden"
     >
       0
     </div>

@@ -62,7 +62,9 @@ const defaultViews: CalendarView[] = [
 ];
 
 const toDate = (value: DateInput | undefined, fallback: Date): Date => {
-  if (value == null) return fallback;
+  if (value == null) {
+    return fallback;
+  }
   const parsedDate = value instanceof Date ? new Date(value) : new Date(value);
   return Number.isNaN(parsedDate.getTime()) ? fallback : parsedDate;
 };
@@ -112,7 +114,9 @@ const getDates = (start: Date, count: number) =>
   Array.from({ length: count }, (_, i) => addDays(start, i));
 
 const getLocaleWeekStartsOn = (locale: string) => {
-  if (locale.startsWith('en-US') || locale.startsWith('en-CA')) return 0;
+  if (locale.startsWith('en-US') || locale.startsWith('en-CA')) {
+    return 0;
+  }
   return 1;
 };
 
@@ -154,8 +158,12 @@ const chunk = <Day,>(arr: Day[], num: number): Day[][] => {
 };
 
 const hourStringToHourNumber = (hour: string) => {
-  if (hour === '-1') return -1;
-  if (hour === '24') return 24;
+  if (hour === '-1') {
+    return -1;
+  }
+  if (hour === '24') {
+    return 24;
+  }
   return Number.parseInt(hour.slice(0, 2), 10);
 };
 
@@ -207,7 +215,7 @@ export function Calendar({
     ...(formats ?? {}),
   };
 
-  const now = getCurrentDate?.() ?? new Date();
+  const now = useMemo(() => getCurrentDate?.() ?? new Date(), [getCurrentDate]);
   const today = startOfDay(now);
 
   const [view, setView] = useState<CalendarView>(() =>
@@ -229,13 +237,21 @@ export function Calendar({
   const [smallDeviceSize, setSmallDeviceSize] = useState(false);
 
   const [currentTimePercent, setCurrentTimePercent] = useState(0);
+  const [shouldShowTimelineLabel, setShouldShowTimelineLabel] = useState(false);
+
+  const handleTimelinePositionChange = useCallback(
+    (percentage: number, shouldShowLabel: boolean) => {
+      setCurrentTimePercent(percentage);
+      setShouldShowTimelineLabel(shouldShowLabel);
+    },
+    []
+  );
 
   const calendarRef = useRef<HTMLDivElement | null>(null);
   const calendarTableRef = useRef<HTMLElement | null>(null);
   const calendarHeaderRightRef = useRef<HTMLDivElement | null>(null);
   const toolbarRef = useRef<HTMLDivElement | null>(null);
   const datePickerRef = useRef<any>(null);
-  const currentWeekDayRefs = useRef<HTMLElement[]>([]);
 
   const focusedHeadRef = useRef<Record<number, HTMLTableCellElement | null>>(
     {}
@@ -245,14 +261,20 @@ export function Calendar({
   );
 
   useEffect(() => {
-    if (initialDate == null) return;
+    if (initialDate == null) {
+      return;
+    }
     const next = startOfDay(toDate(initialDate, currentDay));
-    if (next.getTime() !== currentDay.getTime()) setCurrentDay(next);
+    if (next.getTime() !== currentDay.getTime()) {
+      setCurrentDay(next);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialDate]);
 
   const effectiveWeekStartsOn = useMemo(() => {
-    if (weekStartsOn !== undefined) return weekStartsOn;
+    if (weekStartsOn !== undefined) {
+      return weekStartsOn;
+    }
     return getLocaleWeekStartsOn(locale);
   }, [weekStartsOn, locale]);
 
@@ -263,33 +285,40 @@ export function Calendar({
 
   useEffect(() => {
     const el = calendarTableRef.current;
-    if (!el) return;
+    if (!el) {
+      return;
+    }
     return observeSize(el, () => {
       const w = el.offsetWidth;
-      if (w <= 320) setDevice('xsm');
-      else if (w <= 576) setDevice('sm');
-      else if (w <= 768) setDevice('md');
-      else if (w <= 1056) setDevice('lg');
-      else setDevice('xlg');
+      if (w <= 320) {
+        setDevice('xsm');
+      } else if (w <= 576) {
+        setDevice('sm');
+      } else if (w <= 768) {
+        setDevice('md');
+      } else if (w <= 1056) {
+        setDevice('lg');
+      } else {
+        setDevice('xlg');
+      }
     });
   }, []);
 
   useEffect(() => {
-    if (!datePickerRef?.current?.calendar) return;
+    if (!datePickerRef?.current?.calendar) {
+      return;
+    }
 
     setTimeout(() => {
       const calendarContainer =
         datePickerRef?.current?.calendar?.calendarContainer;
 
       if (calendarContainer) {
-        // Set tabindex to -1 so it can receive focus but not be in tab order
         calendarContainer.setAttribute('tabindex', '-1');
 
         datePickerRef?.current.calendar.set('onReady', () => {
-          // Set tabindex to -1
           calendarContainer.setAttribute('tabindex', '-1');
 
-          // Make all inner elements non-focusable
           const focusableElements = calendarContainer.querySelectorAll(
             'input, button, select, textarea, a[href], [tabindex]:not([tabindex="-1"])'
           );
@@ -298,7 +327,6 @@ export function Calendar({
           });
         });
 
-        // Make all inner elements non-focusable immediately
         const focusableElements = calendarContainer.querySelectorAll(
           'input, button, select, textarea, a[href], [tabindex]:not([tabindex="-1"])'
         );
@@ -311,7 +339,9 @@ export function Calendar({
 
   useEffect(() => {
     const el = toolbarRef.current;
-    if (!el) return;
+    if (!el) {
+      return;
+    }
     return observeSize(el, () => {
       const w = el.offsetWidth;
       if (w <= 350) {
@@ -338,9 +368,13 @@ export function Calendar({
   }, []);
 
   useEffect(() => {
-    if (typeof document === 'undefined') return;
+    if (typeof document === 'undefined') {
+      return;
+    }
     const modalOpen = smallDeviceSize && toggleDatePicker;
-    if (!modalOpen) return;
+    if (!modalOpen) {
+      return;
+    }
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
@@ -359,7 +393,9 @@ export function Calendar({
 
   const updateView = useCallback(
     (next: CalendarView) => {
-      if (!views.includes(next)) return;
+      if (!views.includes(next)) {
+        return;
+      }
       setView(next);
       onViewChange?.(next);
     },
@@ -455,10 +491,12 @@ export function Calendar({
 
   const viewDateRange = useCallback(
     (v: CalendarView) => {
-      if (v === 'month')
+      if (v === 'month') {
         return formatIntl(currentDay, locale, format.monthHeaderFormat);
-      if (v === 'day')
+      }
+      if (v === 'day') {
         return formatIntl(currentDay, locale, format.dayHeaderFormat);
+      }
 
       const start = getWeekStart(
         currentDay,
@@ -563,7 +601,9 @@ export function Calendar({
   );
 
   const highlightView = useCallback((instance: any, days: Date[]) => {
-    if (!instance || !days || days.length === 0) return;
+    if (!instance || !days || days.length === 0) {
+      return;
+    }
     const dayElements =
       instance.calendarContainer.querySelectorAll('.flatpickr-day');
     dayElements.forEach((dayElement: any) => {
@@ -579,13 +619,17 @@ export function Calendar({
 
   const handleCreateDaySelection = useCallback(
     (dObj: Date, dStr: string, fp: any, dayElements: any) => {
-      if (!dayElements || !dayElements.classList) return;
+      if (!dayElements || !dayElements.classList) {
+        return;
+      }
       const date = dayElements.dateObj
         ? new Date(dayElements.dateObj)
         : dObj instanceof Date
         ? dObj
         : new Date(dObj);
-      if (isNaN(date.getTime())) return;
+      if (isNaN(date.getTime())) {
+        return;
+      }
 
       const weekNumber = getWeekNumber(date);
 
@@ -661,7 +705,9 @@ export function Calendar({
           if (index !== -1) {
             for (let i = 0; i < 3; i++) {
               const target = allDays[index + i] as HTMLElement;
-              if (target) target.classList.remove('days-hovered');
+              if (target) {
+                target.classList.remove('days-hovered');
+              }
             }
           }
         };
@@ -688,10 +734,12 @@ export function Calendar({
       if (view === 'workWeek') {
         dayElements.classList.add('week-day');
         const dayOfWeek = date.getDay();
-        if (dayOfWeek === 0 || dayOfWeek === 6)
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
           dayElements.classList.add('weekend-day');
-        if (dayOfWeek >= 1 && dayOfWeek <= 5)
+        }
+        if (dayOfWeek >= 1 && dayOfWeek <= 5) {
           dayElements.classList.add('work-week');
+        }
 
         const handleMouseOver = () => {
           fp.daysContainer
@@ -719,8 +767,6 @@ export function Calendar({
           fp.daysContainer
             .querySelectorAll(`.week-${weekNumber}`)
             .forEach((day: any) => {
-              const dayObj = day.dateObj;
-              const currentDayOfWeek = new Date(dayObj).getDay();
               if (
                 !day.classList.contains('selected') &&
                 !day.classList.contains('highlight-day')
@@ -753,12 +799,16 @@ export function Calendar({
   );
 
   useEffect(() => {
-    if (!datePickerRef.current) return;
+    if (!datePickerRef.current) {
+      return;
+    }
 
     const fp =
       datePickerRef.current.calendar || datePickerRef.current.flatpickr;
 
-    if (!fp) return;
+    if (!fp) {
+      return;
+    }
 
     if (
       !fp.config.onDayCreate.some((fn: any) => fn === handleCreateDaySelection)
@@ -768,11 +818,13 @@ export function Calendar({
 
     fp.redraw();
 
-    if (view === 'week') highlightView(fp, getWeekView(currentDay));
-    else if (view === 'threeDays')
+    if (view === 'week') {
+      highlightView(fp, getWeekView(currentDay));
+    } else if (view === 'threeDays') {
       highlightView(fp, getThreeDaysView(currentDay));
-    else if (view === 'workWeek')
+    } else if (view === 'workWeek') {
       highlightView(fp, getWorkWeekView(currentDay));
+    }
 
     if (fp.calendarContainer) {
       fp.calendarContainer.setAttribute('tabindex', '0');
@@ -805,7 +857,9 @@ export function Calendar({
           highlightView(instance, getWorkWeekView(next));
         }
       }
-      if (toolbarSize === 'xsm') handleDatePickerPanel();
+      if (toolbarSize === 'xsm') {
+        handleDatePickerPanel();
+      }
     },
     [
       handleDatePickerPanel,
@@ -820,7 +874,9 @@ export function Calendar({
   );
 
   useEffect(() => {
-    if (!datePickerRef?.current?.calendar) return;
+    if (!datePickerRef?.current?.calendar) {
+      return;
+    }
 
     const timeout = setTimeout(() => {
       const fp = datePickerRef.current.calendar;
@@ -830,11 +886,13 @@ export function Calendar({
         fp.calendarContainer.setAttribute('tabindex', '0');
       });
 
-      if (view === 'week') highlightView(fp, getWeekView(currentDay));
-      else if (view === 'threeDays')
+      if (view === 'week') {
+        highlightView(fp, getWeekView(currentDay));
+      } else if (view === 'threeDays') {
         highlightView(fp, getThreeDaysView(currentDay));
-      else if (view === 'workWeek')
+      } else if (view === 'workWeek') {
         highlightView(fp, getWorkWeekView(currentDay));
+      }
     }, 0);
 
     return () => clearTimeout(timeout);
@@ -851,7 +909,9 @@ export function Calendar({
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
-      if (!focusedDate) return;
+      if (!focusedDate) {
+        return;
+      }
 
       const newDate = new Date(focusedDate);
       let shouldUpdate = false;
@@ -938,7 +998,6 @@ export function Calendar({
                 newDate.setTime(previousWeek.day6.date.getTime());
                 shouldUpdate = true;
               }
-              // Don't prevent default if at edge - allows normal behavior
             } else {
               event.preventDefault();
               newDate.setDate(newDate.getDate() - 1);
@@ -953,7 +1012,6 @@ export function Calendar({
                 newDate.setTime(nextWeek.day0.date.getTime());
                 shouldUpdate = true;
               }
-              // Don't prevent default if at edge - allows normal behavior
             } else {
               event.preventDefault();
               newDate.setDate(newDate.getDate() + 1);
@@ -987,10 +1045,8 @@ export function Calendar({
         return;
       }
 
-      // For week, day, threeDays, workWeek views (timeline views)
       const currentHour = newDate.getHours();
 
-      // Get the visible dates for the current view
       let visibleDates: Date[] = [];
       switch (view) {
         case 'week':
@@ -1017,69 +1073,57 @@ export function Calendar({
 
       switch (event.key) {
         case 'ArrowUp':
-          // Move up one hour
           if (currentHour > 0) {
             event.preventDefault();
             newDate.setHours(currentHour - 1);
             shouldUpdate = true;
           }
-          // At hour 0, don't prevent default and don't try to focus header - just stay at current cell
           break;
 
         case 'ArrowDown':
-          // Move down one hour - stay within 0-23 hours
           if (currentHour < 23) {
             event.preventDefault();
             newDate.setHours(currentHour + 1);
             shouldUpdate = true;
           }
-          // At bottom (hour 23), don't prevent default - allows normal behavior
           break;
 
         case 'ArrowLeft':
-          // Move to previous day at same hour - stay within visible dates
           if (!isFirstColumn) {
             event.preventDefault();
             newDate.setDate(newDate.getDate() - 1);
             shouldUpdate = true;
           }
-          // At first column, don't prevent default - allows normal behavior
           break;
 
         case 'ArrowRight':
-          // Move to next day at same hour - stay within visible dates
           if (!isLastColumn) {
             event.preventDefault();
             newDate.setDate(newDate.getDate() + 1);
             shouldUpdate = true;
           }
-          // At last column, don't prevent default - allows normal behavior
           break;
 
         case 'Home':
           event.preventDefault();
-          // Jump to first hour of the day
           newDate.setHours(0);
           shouldUpdate = true;
           break;
 
         case 'End':
           event.preventDefault();
-          // Jump to last hour of the day
           newDate.setHours(23);
           shouldUpdate = true;
           break;
 
         case 'PageUp':
           event.preventDefault();
-          // Jump up 6 hours
           newDate.setHours(Math.max(0, currentHour - 6));
           shouldUpdate = true;
           break;
 
         case 'PageDown':
           event.preventDefault();
-          // Jump down 6 hours
           newDate.setHours(Math.min(23, currentHour + 6));
           shouldUpdate = true;
           break;
@@ -1125,22 +1169,23 @@ export function Calendar({
   );
 
   useEffect(() => {
-    if (!tableFocused) return;
-    if (focusedDate != null) return; // Already have a focused date, don't override
+    if (!tableFocused) {
+      return;
+    }
+    if (focusedDate != null) {
+      return;
+    }
 
     if (view === 'month') {
-      // For month view, set initial focus on first cell
       const initial = monthDays.find((w) => w.day0)?.day0?.date;
       if (initial) {
         setFocusedDate(new Date(initial));
       }
     } else {
-      // For timeline views, set focus to first visible date at a real hour (not -1 or 24)
       const firstDate = visibleDatesForView[0];
       if (firstDate) {
         const initialDate = new Date(firstDate);
         const currentHour = now.getHours();
-        // Use current hour if between 0-23, otherwise default to 8 AM
         const targetHour =
           currentHour >= 0 && currentHour <= 23 ? currentHour : 8;
         initialDate.setHours(targetHour, 0, 0, 0);
@@ -1150,13 +1195,19 @@ export function Calendar({
   }, [tableFocused, focusedDate, view, visibleDatesForView, now, monthDays]);
 
   useEffect(() => {
-    if (focusedDay == null) return;
+    if (focusedDay == null) {
+      return;
+    }
     const el = focusedHeadRef.current[focusedDay];
-    if (el) setTimeout(() => el.focus(), 0);
+    if (el) {
+      setTimeout(() => el.focus(), 0);
+    }
   }, [focusedDay]);
 
   useEffect(() => {
-    if (!focusedDate) return;
+    if (!focusedDate) {
+      return;
+    }
 
     const attemptFocus = () => {
       const el =
@@ -1164,7 +1215,6 @@ export function Calendar({
         focusedCellRef.current[getDateTime(focusedDate)];
       if (el) {
         el.focus();
-        // Scroll the focused cell into view for timeline views
         if (view !== 'month') {
           el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         }
@@ -1173,10 +1223,8 @@ export function Calendar({
       return false;
     };
 
-    // Try immediately
     setTimeout(() => {
       if (!attemptFocus()) {
-        // If not found, try again after a brief delay (cell might not be rendered yet)
         setTimeout(() => {
           attemptFocus();
         }, 50);
@@ -1185,12 +1233,17 @@ export function Calendar({
   }, [focusedDate, view]);
 
   useEffect(() => {
-    if (!scrollToCurrentTime) return;
-    if (view === 'month') return;
+    if (!scrollToCurrentTime) {
+      return;
+    }
+    if (view === 'month') {
+      return;
+    }
     const scroller = calendarTableRef.current;
-    if (!scroller) return;
+    if (!scroller) {
+      return;
+    }
 
-    // Only scroll to current time on initial mount
     const approxRowHeight = 48;
     const top = Math.max(
       0,
@@ -1198,7 +1251,7 @@ export function Calendar({
     );
     scroller.scrollTop = top;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Run only once on mount
+  }, []);
 
   const renderSlot = (
     args: Parameters<NonNullable<CalendarProps['renderCell']>>[0]
@@ -1241,9 +1294,18 @@ export function Calendar({
             `${blockClass}__date-picker-overlay`,
             overlayOpen && `${blockClass}__date-picker-overlay-show`
           )}
+          role="button"
+          tabIndex={0}
           onClick={handleDatePickerPanel}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleDatePickerPanel();
+            }
+          }}
         />
-        <aside
+        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */}
+        <div
           className={cls(
             `${blockClass}__date-picker-panel`,
             toggleDatePicker && `${blockClass}__date-picker-open`,
@@ -1251,10 +1313,10 @@ export function Calendar({
             overlayOpen && `${blockClass}__date-picker-slide`,
             overlayOpen && `${blockClass}__date-picker-panel-modal`
           )}
+          role="group"
           aria-label="date picker"
-          tabIndex={toggleDatePicker ? 0 : -1}
+          tabIndex={toggleDatePicker ? 0 : -1} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
           onFocus={(e) => {
-            // When aside receives focus, immediately focus the flatpickr container
             if (e.target === e.currentTarget) {
               const calendarContainer =
                 datePickerRef?.current?.calendar?.calendarContainer;
@@ -1269,7 +1331,7 @@ export function Calendar({
               e.stopPropagation();
 
               if (e.shiftKey) {
-                // Backward tab - find previous focusable element
+                // Backward tab
                 const asideElement = e.currentTarget as HTMLElement;
                 const allFocusable = Array.from(
                   document.querySelectorAll<HTMLElement>(
@@ -1282,7 +1344,7 @@ export function Calendar({
                   allFocusable[asideIndex - 1]?.focus();
                 }
               } else {
-                // Forward tab - move to calendar table
+                // Forward tab
                 setTimeout(() => {
                   if (calendarTableRef?.current) {
                     calendarTableRef.current.tabIndex = 0;
@@ -1313,6 +1375,7 @@ export function Calendar({
             allowInput={false}
             onChange={handleDateChange}
             ref={datePickerRef}
+            locale={locale ? locale.split('-')[0] : undefined}
             className={cls(
               `${blockClass}__date-picker`,
               view === 'week' && `${blockClass}__date-picker-week`,
@@ -1326,7 +1389,7 @@ export function Calendar({
               hideLabel
             />
           </DatePicker>
-        </aside>
+        </div>
 
         <section
           className={cls(
@@ -1358,7 +1421,7 @@ export function Calendar({
               {view === 'month' ? (
                 <tr>
                   {weekdays.map((header, i) => {
-                    const isFocused = focusedDay === i;
+                    const _isFocused = focusedDay === i;
                     let label = header.header;
 
                     if (device === 'xsm') {
@@ -1402,10 +1465,10 @@ export function Calendar({
                   {visibleDatesForView.map((d, i) => {
                     const isCurrentDay =
                       d.toDateString() === today.toDateString();
-                    const isFocused = focusedDay === i;
+                    const _isFocused = focusedDay === i;
 
                     let dayOfWeek = '';
-                    let dateContent = d.toLocaleDateString('en-US', {
+                    const dateContent = d.toLocaleDateString('en-US', {
                       day: 'numeric',
                     });
 
@@ -1499,7 +1562,9 @@ export function Calendar({
                           aria-selected={isFocused}
                           aria-label={cellDate.toDateString()}
                           ref={(el) => {
-                            if (!el) return;
+                            if (!el) {
+                              return;
+                            }
                             focusedCellRef.current[getDateTime(cellDate)] = el;
                           }}>
                           <div className={`${blockClass}__day-content`}>
@@ -1560,10 +1625,11 @@ export function Calendar({
                   const isToday =
                     currentDay.toDateString() === today.toDateString();
                   const shouldHideLabel =
-                    isToday &&
-                    (isNearestHour ||
-                      (isCurrentHour &&
-                        (currentMinutes >= 45 || currentMinutes < 15)));
+                    (isToday &&
+                      (isNearestHour ||
+                        (isCurrentHour &&
+                          (currentMinutes >= 45 || currentMinutes < 15)))) ||
+                    (isToday && isCurrentHour && shouldShowTimelineLabel);
 
                   return (
                     <tr
@@ -1581,7 +1647,7 @@ export function Calendar({
                           <Timeline
                             blockClass={blockClass}
                             hour={hour}
-                            onPositionChange={setCurrentTimePercent}
+                            onPositionChange={handleTimelinePositionChange}
                             locale={locale}
                           />
                         )}
@@ -1610,9 +1676,13 @@ export function Calendar({
                       {visibleDatesForView.map((d) => {
                         const merged = new Date(d);
 
-                        if (hourNum === 24) merged.setHours(23, 59, 59, 999);
-                        else if (hourNum === -1) merged.setHours(0, 0, 0, 0);
-                        else merged.setHours(hourNum, 0, 0, 0);
+                        if (hourNum === 24) {
+                          merged.setHours(23, 59, 59, 999);
+                        } else if (hourNum === -1) {
+                          merged.setHours(0, 0, 0, 0);
+                        } else {
+                          merged.setHours(hourNum, 0, 0, 0);
+                        }
 
                         const isCurrentDay =
                           d.toDateString() === today.toDateString();
@@ -1650,14 +1720,16 @@ export function Calendar({
                             tabIndex={focusable && isFocused ? 0 : -1}
                             aria-selected={focusable ? isFocused : undefined}
                             ref={(el) => {
-                              if (!el || !focusable) return;
+                              if (!el || !focusable) {
+                                return;
+                              }
                               focusedCellRef.current[merged.getTime()] = el;
                             }}>
                             {showTimelineInCell && (
                               <Timeline
                                 blockClass={blockClass}
                                 hour={hour}
-                                onPositionChange={setCurrentTimePercent}
+                                onPositionChange={handleTimelinePositionChange}
                                 locale={locale}
                               />
                             )}
@@ -1686,7 +1758,7 @@ export function Calendar({
         </section>
       </div>
 
-      <div style={{ display: 'none' }} aria-hidden="true">
+      <div className={`${blockClass}__hidden`} aria-hidden="true">
         {currentTimePercent}
       </div>
     </div>

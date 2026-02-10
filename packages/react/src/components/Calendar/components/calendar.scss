@@ -27,6 +27,10 @@ $block: '#{$prefix}--calendar' !default;
   inline-size: 100%;
 }
 
+.#{$block}__hidden {
+  display: none;
+}
+
 // Toolbar styles
 
 .#{$block}__toolbar {
@@ -435,7 +439,7 @@ $block: '#{$prefix}--calendar' !default;
   }
 }
 
-.#{$block}__day .#{$block}__current-timeline.active {
+.#{$block}__day.current .#{$block}__current-timeline.active {
   border-style: solid;
   background: $border-interactive;
   background-image: none;

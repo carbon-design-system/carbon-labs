@@ -37,7 +37,8 @@ export const Timeline = ({
 
   const percentage = useMemo(() => {
     const p = (now.getMinutes() / 60) * 100;
-    onPositionChange?.(p);
+    const shouldShowLabel = p < 85 && p > 15;
+    onPositionChange?.(p, shouldShowLabel);
     return p;
   }, [now, onPositionChange]);
 
@@ -53,11 +54,14 @@ export const Timeline = ({
 
   const shouldShowLabel = percentage < 85 && percentage > 15;
 
-  if (!isCurrentHour) return null;
+  if (!isCurrentHour) {
+    return null;
+  }
 
   return (
     <div
       className={`${blockClass}__current-timeline active`}
+      // eslint-disable-next-line react/forbid-dom-props
       style={{ top: `${percentage}%` }}
       title={label}>
       {shouldShowLabel && (

@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import '@testing-library/jest-dom';
@@ -19,6 +19,7 @@ describe('Calendar', () => {
   const defaultProps = {
     views: ['month', 'week', 'day'] as CalendarView[],
     defaultView: 'month' as CalendarView,
+    locale: 'en-US',
   };
 
   describe('renders as expected - Component API', () => {

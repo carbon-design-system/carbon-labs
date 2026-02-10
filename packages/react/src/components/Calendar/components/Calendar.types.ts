@@ -35,7 +35,7 @@ export type MonthDay = {
 export interface TimelineProps {
   blockClass?: string;
   hour: string; // "09:00" etc.
-  onPositionChange?: (percentage: number) => void;
+  onPositionChange?: (percentage: number, shouldShowLabel: boolean) => void;
   locale?: string;
 }
 

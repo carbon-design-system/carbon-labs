@@ -7,11 +7,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 import AnimatedHeader from './components/AnimatedHeader/AnimatedHeader';
-import { AriaLabels, TileGroup } from './components/AnimatedHeader/types';
 import HeaderAction from './components/HeaderAction/HeaderAction';
 import HeaderTitle from './components/HeaderTitle/HeaderTitle';
-import { BaseTile } from './components/Tiles/index';
+import { BaseTile, AITile, AIPromptTile, GlassTile } from './components/Tiles/index';
+
+// Export all assets
 export * from './assets';
+
+// Export all types
+export type { AnimatedHeaderProps } from './components/AnimatedHeader/AnimatedHeader';
+export type { AriaLabels, TileGroup, Tile } from './components/AnimatedHeader/types';
+export type { AITileProps } from './components/Tiles/AITile/AITile';
+export type { AIPromptTileProps } from './components/Tiles/AIPromptTile/AIPromptTile';
+export type { GlassTileProps } from './components/Tiles/GlassTile/GlassTile';
+export type { BaseTileProps, TileVariant } from './components/Tiles/BaseTile/BaseTile';
 export type {
   Workspace,
   WorkspaceSelectorConfig,
@@ -20,11 +29,16 @@ export type { TasksControllerConfig } from './components/TasksController/TasksCo
 export type { HeaderActionConfig } from './components/HeaderAction/header-action.types';
 export type { ContentSwitcherConfig } from './components/ContentSwitcherSelector/ContentSwitcherSelector';
 
+// Export components
 export {
   AnimatedHeader,
   BaseTile,
+  AITile,
+  AIPromptTile,
+  GlassTile,
   HeaderAction,
   HeaderTitle,
-  type AriaLabels,
-  type TileGroup,
 };
+
+// Default export
+export default AnimatedHeader;

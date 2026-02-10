@@ -6,9 +6,8 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import PropTypes from 'prop-types';
-import lottie, { AnimationItem } from 'lottie-web';
 import { Grid, Column, Button } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
@@ -20,12 +19,17 @@ import WorkspaceSelector, {
   WorkspaceSelectorProps,
 } from '../WorkspaceSelector/WorkspaceSelector';
 import HeaderTitle from '../HeaderTitle/HeaderTitle';
+import StaticBackground from '../StaticBackground/StaticBackground';
 import { Tile, TileGroup, AriaLabels } from './types';
 import ContentSwitcherSelector, {
   type ContentSwitcherConfig,
 } from '../ContentSwitcherSelector/ContentSwitcherSelector';
 import HeaderAction from '../HeaderAction/HeaderAction';
 import type { HeaderActionProps } from '../HeaderAction/header-action.types';
+
+const AnimatedBackground = lazy(
+  () => import('../AnimatedBackground/AnimatedBackground')
+);
 
 /** Animated Header */
 
@@ -74,70 +78,11 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
 
-  const animationContainer = useRef<HTMLDivElement>(null);
-  const animRef = useRef<AnimationItem | null>(null);
   const [isOpen, setIsOpen] = useState(true);
-  const isReduced = window.matchMedia('(prefers-reduced-motion)').matches;
 
   const handleButtonCollapseClick = () => {
     setIsOpen(!isOpen);
   };
-
-  useEffect(() => {
-    // Make sure any prior instance is destroyed before creating a new one
-    if (animRef.current) {
-      animRef.current.destroy();
-      animRef.current = null;
-    }
-    if (!animationContainer.current || !headerAnimation) {
-      return;
-    }
-
-    const animation = lottie.loadAnimation({
-      container: animationContainer.current as HTMLDivElement,
-      animationData: headerAnimation as any,
-      renderer: 'svg',
-      loop: false,
-      autoplay: false,
-      rendererSettings: { preserveAspectRatio: 'xMidYMid slice' },
-    });
-    animRef.current = animation;
-
-    const onDomLoaded = () => {
-      const data: any = (animation as any).animationData;
-      const markers = data?.markers ?? [];
-      const first = markers?.[0]?.tm ?? 0;
-
-      const totalFrames = animation.getDuration(true);
-      const second = markers?.[1]?.tm ?? totalFrames;
-
-      if (isReduced) {
-        // Respect reduced motion
-        const restFrame =
-          (typeof second === 'number' ? second : totalFrames * 0.5) | 0;
-        animation.goToAndStop(restFrame, true);
-        return;
-      }
-
-      animation.setSpeed(1);
-      requestAnimationFrame(() => {
-        if (typeof first === 'number' && typeof second === 'number') {
-          animation.playSegments([first, second], true);
-        } else {
-          animation.play();
-        }
-      });
-    };
-
-    animation.addEventListener('DOMLoaded', onDomLoaded);
-
-    return () => {
-      animation.removeEventListener('DOMLoaded', onDomLoaded);
-      animation.destroy();
-      animRef.current = null;
-    };
-    // Re-init when the JSON or reduced-motion preference changes
-  }, [headerAnimation, isReduced]);
 
   return (
     <header className={blockClass} data-expanded={isOpen}>
@@ -146,24 +91,18 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
 
         <div className={`${blockClass}__container--gradient`} />
 
-        {!headerAnimation && headerStatic && (
-          <div className={`${blockClass}__static--container`}>
-            <div
-              className={`${blockClass}__static`}
-              // eslint-disable-next-line react/forbid-dom-props
-              style={{ backgroundImage: `url(${headerStatic})` }}
-              aria-hidden="true"
-            />
-          </div>
+        {headerAnimation ? (
+          typeof window !== 'undefined' && (
+            <Suspense fallback={null}>
+              <AnimatedBackground
+                headerAnimation={headerAnimation}
+                isOpen={isOpen}
+              />
+            </Suspense>
+          )
+        ) : (
+          <StaticBackground headerStatic={headerStatic} />
         )}
-
-        <div className={`${blockClass}__lottie-animation--container`}>
-          <div
-            ref={animationContainer}
-            className={`${blockClass}__lottie-animation`}
-            data-expanded={isOpen}
-            aria-hidden="true"></div>
-        </div>
 
         <Column sm={4} md={8} lg={16} className={`${blockClass}__title-row`}>
           <div className={`${blockClass}__title-and-actions`}>

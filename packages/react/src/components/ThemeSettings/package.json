@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-theme-settings",
-  "version": "0.18.0",
+  "version": "0.20.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -37,10 +37,10 @@
     "postinstall": "ibmtelemetry --config=telemetry.yml",
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 34d6803f-45c0-46e0-be02-b4499b40336e --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
+  "devDependencies": {
+    "@carbon-labs/utilities": "^0.21.0"
+  },
   "dependencies": {
     "@ibm/telemetry-js": "^1.10.2"
-  },
-  "peerDependencies": {
-    "@carbon-labs/utilities": "^0.20.0"
   }
 }

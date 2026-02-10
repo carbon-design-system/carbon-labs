@@ -23,7 +23,9 @@ describe('Calendar', () => {
 
   describe('renders as expected - Component API', () => {
     it('should match snapshot', () => {
-      const { container } = render(<Calendar {...defaultProps} />);
+      const { container } = render(
+        <Calendar {...defaultProps} initialDate={new Date(2026, 0, 19)} />
+      );
       expect(container).toMatchSnapshot();
     });
 

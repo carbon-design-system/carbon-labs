@@ -64,7 +64,7 @@
     "async-done": "^2.0.0",
     "autoprefixer": "^10.4.20",
     "browserslist-config-carbon": "^11.2.0",
-    "commander": "^13.0.0",
+    "commander": "^14.0.0",
     "cssnano": "^7.0.0",
     "gitignore-to-glob": "^0.3.0",
     "lerna": "^9.0.0",

@@ -8,7 +8,7 @@
  */
 import React, { lazy, Suspense, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Column, Button } from '@carbon/react';
+import { Grid, Column, Button, Tooltip } from '@carbon/react';
 import { ChevronUp, ChevronDown } from '@carbon/icons-react';
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { BaseTile } from '../Tiles/index';
@@ -50,6 +50,8 @@ export type AnimatedHeaderProps = {
   expandButtonLabel?: string;
   collapseButtonLabel?: string;
   tileClickHandler?: (tile: Tile) => void;
+  showTitleTooltip?: boolean;
+  showDescriptionTooltip?: boolean;
 } & TasksControllerProps &
   WorkspaceSelectorProps &
   HeaderActionProps;
@@ -74,6 +76,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
   expandButtonLabel = 'Expand',
   collapseButtonLabel = 'Collapse',
   tileClickHandler,
+  showTitleTooltip = false,
+  showDescriptionTooltip = false,
 }: AnimatedHeaderProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header`;
@@ -111,6 +115,7 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
               welcomeText={welcomeText}
               headerExpanded={isOpen}
               ariaLabels={ariaLabels}
+              showTooltip={showTitleTooltip}
             />
 
             {/* When using the ContentSwitcher, render it here (top row) */}
@@ -134,13 +139,24 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             id={`${blockClass}-content`}
             className={`${blockClass}__left-area-container`}
             data-expanded={isOpen}>
-            {description && (
-              <h2
-                className={`${blockClass}__description`}
-                aria-label={ariaLabels?.description ?? `Header description`}>
-                {description}
-              </h2>
-            )}
+            {description &&
+              (showDescriptionTooltip ? (
+                <Tooltip align="bottom" label={description}>
+                  <h2
+                    className={`${blockClass}__description`}
+                    aria-label={
+                      ariaLabels?.description ?? `Header description`
+                    }>
+                    {description}
+                  </h2>
+                </Tooltip>
+              ) : (
+                <h2
+                  className={`${blockClass}__description`}
+                  aria-label={ariaLabels?.description ?? `Header description`}>
+                  {description}
+                </h2>
+              ))}
             {tasksControllerConfig && (
               <TasksController
                 tasksControllerConfig={tasksControllerConfig}
@@ -345,6 +361,16 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
    * Provide function to be called when switching selected tile group
    */
   setSelectedTileGroup: PropTypes.func,
+
+  /**
+   * Show tooltip on description text
+   */
+  showDescriptionTooltip: PropTypes.bool,
+
+  /**
+   * Show tooltip on header title (userName and welcomeText)
+   */
+  showTitleTooltip: PropTypes.bool,
 
   /**
    * Configuration for Carbon button / dropdown in header.

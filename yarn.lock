@@ -1799,7 +1799,7 @@ __metadata:
     style-loader: "npm:^4.0.0"
     ts-jest: "npm:^29.2.5"
     typescript: "npm:^5.2.2"
-    typescript-config-carbon: "npm:^0.8.0"
+    typescript-config-carbon: "npm:^0.9.0"
     webpack: "npm:^5.97.0"
   peerDependencies:
     react: ^16.8.6 || ^17.0.1 || ^18.2.0
@@ -30951,12 +30951,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-config-carbon@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "typescript-config-carbon@npm:0.8.0"
+"typescript-config-carbon@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "typescript-config-carbon@npm:0.9.0"
   dependencies:
     typescript: "npm:^5.7.3"
-  checksum: 10c0/0b85ada1633ea1242edd376d2055badccd27cdc3a7a8ff12f93f744ec69bda584a9c4fa979c2d30d389afb0c414f07f1297e1a4819f878245160971d0c4b9b6e
+  checksum: 10c0/98a97b0949ec0661ce1db1db0ac5a0489d53df25ebc9c5b73e408af11365c78fb2d8cacdc91ef24934f429cc3c57d486a50459453b026b985e85591526d5d29f
   languageName: node
   linkType: hard
 

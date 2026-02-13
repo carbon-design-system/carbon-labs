@@ -1,0 +1,25 @@
+.vscode/**
+.vscode-test/**
+node_modules/**
+scripts/**
+.gitignore
+.yarnrc.yml
+*.vsix
+yarn.lock
+package-lock.json
+**/node_modules/**
+**/.git/**
+**/.yarn/**
+**/packages/**
+!snippets/**
+# Exclude all markdown except essential ones
+*.md
+!README.md
+!CHANGELOG.md
+!LICENSE.txt
+# Exclude demo source files (keep only optimized demo)
+demo.scss
+demo.mp4
+demo.gif
+demo.gif.md
+icon.png.md

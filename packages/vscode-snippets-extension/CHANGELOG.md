@@ -3,7 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# 0.2.0 (2026-01-29)
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/carbon-token-snippets@0.2.0...carbon-token-snippets@0.17.0) (2026-02-06)
+
+
+### Bug Fixes
+
+* Update publisher to match open vsx ([#1007](https://github.com/carbon-design-system/carbon-labs/issues/1007)) ([7ad4078](https://github.com/carbon-design-system/carbon-labs/commit/7ad4078efaa795e4875eae256f84fcaea63a45d9))
+
+
+
+
+
+0.14.0 (2026-02-03)
+
+Updated README and changed publisher in VSCode Marketplace. VSCode users, prior to 0.13.0 will need to manually uninstall, possibly close VSCode, and reinstall.
+
+# 0.13.0 (2026-01-29)
 
 
 ### Features

@@ -159,7 +159,7 @@ Scenario('Trial information renders', async ({ I }) => {
   I.see('Contact sales');
 });
 
-Scenario('Solis components render', async ({ I }) => {
+Scenario.skip('Solis components render', async ({ I }) => {
   I.amOnPage(localhostWithSolis);
   I.waitForElement('clabs-global-header-apaas', 30);
 

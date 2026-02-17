@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.125.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.124.0...@carbon-labs/web-components@0.125.0) (2026-02-17)
+
+
+### Bug Fixes
+
+* (global-header) support tooltip plus other fixes ([#1022](https://github.com/carbon-design-system/carbon-labs/issues/1022)) ([b0e4feb](https://github.com/carbon-design-system/carbon-labs/commit/b0e4feb0e73128083b6dd5966dd774a256a1c688))
+
+
+
+
+
 # [0.124.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.123.0...@carbon-labs/web-components@0.124.0) (2026-02-03)
 
 **Note:** Version bump only for package @carbon-labs/web-components

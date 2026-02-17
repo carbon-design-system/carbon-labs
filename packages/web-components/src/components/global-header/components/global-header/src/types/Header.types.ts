@@ -138,6 +138,7 @@ export type GlobalActionConfig = {
   label: string;
   carbonIcon: string;
   onClick?: () => void;
+  tooltip?: string;
 };
 
 export interface ManagementConsole {

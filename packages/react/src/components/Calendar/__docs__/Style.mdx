@@ -1,0 +1,259 @@
+import CalendarStyleDayValue from './images/calendar-style-day-value.png';
+import CalendarStyleHeader from './images/calendar-style-header.png';
+import CalendarStyleHeaderSpec from './images/calendar-style-header-spec.png';
+import CalendarStyleLayer from './images/calendar-style-layer.png';
+import CalendarStyleMonth from './images/calendar-style-month.png';
+import CalendarStyleWeek from './images/calendar-style-week.png';
+
+<Meta title="Components/Calendar/Docs/Style" />
+
+<PageDescription>
+
+The following page documents visual specifications such as color, typography,
+structure, and size
+
+</PageDescription>
+
+<AnchorLinks>
+
+<AnchorLink>Color</AnchorLink>
+<AnchorLink>Typography</AnchorLink>
+<AnchorLink>Structure</AnchorLink>
+
+</AnchorLinks>
+
+## Color
+
+### Toolbar
+
+<Row>
+<Column lg={8}>
+
+| Element | Property | Color token |
+| ------- | -------- | ----------- |
+| Toolbar | background-color | `$layer-02` |
+| Mini calendar toggle | See [ghost button – icon only](https://carbondesignsystem.com/components/button/usage#ghost-button) |  |
+| Today button | See [ghost button](https://carbondesignsystem.com/components/button/usage#ghost-button) |  |
+| Pagination arrows | See [ghost button – icon only](https://carbondesignsystem.com/components/button/usage#ghost-button) |  |
+| Title | text-color | `$text-primary` |
+| Calendar view switcher: content switcher | See [content switcher](https://carbondesignsystem.com/components/content-switcher/usage) * |  |
+| Calendar view switcher: inline dropdown | See [inline dropdown](https://carbondesignsystem.com/components/dropdown/usage#inline-dropdown) |  |
+| Create event button | See [primary button](https://carbondesignsystem.com/components/button/usage#primary-button) |  |
+
+
+
+<Caption>
+  \* We recommend using the subtle content switcher.
+</Caption>
+<ImageWrapper type="fixed">
+  <img
+  alt="Calendar toolbar color specifications"
+  src={CalendarStyleHeader}
+/>
+</ImageWrapper>
+</Column>
+</Row>
+
+
+
+
+
+
+### Calendar column headers
+
+<Row>
+<Column lg={8}>
+
+| State | Property | Color token |
+| ----- | -------- | ----------- |
+| Past or future day | background-color | `$layer-accent` * |
+| | text-color | `$text-primary` |
+| Today | background-color | `$layer-accent-hover` * |
+| | text-color | `$text-primary` |
+
+<Caption>
+  \* Denotes a contextual color token that will change values based on the layer it is placed on.
+</Caption>
+<ImageWrapper type="fixed">
+  <img
+  alt="Calendar layer styles"
+  src={CalendarStyleLayer}
+/>
+</ImageWrapper>
+</Column>
+</Row>
+
+
+### Calendar rows
+
+<Row>
+<Column lg={8}>
+
+| State | Property | Color token |
+| ----- | -------- | ----------- |
+| Past day (previous month) | background-color | `$layer` * |
+| | text-color | `$text-secondary` |
+| | border-bottom, border-left | `$border-subtle` * |
+| Past or future day (current and future months) | text-color | `$text-primary` |
+| Today | text-color | `$link-01` |
+| | svg | `$interactive` |
+| Selected | background-color | `$field` * |
+| | text-color | `$text-primary` |
+
+<Caption>
+  \* Denotes a contextual color token that will change values based on the layer it is placed on.
+</Caption>
+
+</Column>
+</Row>
+
+
+<Row>
+<Column lg={8}>
+
+<ImageWrapper>
+
+<img
+  alt="Calendar day styles in month"
+  src={CalendarStyleDayValue}
+/>
+</ImageWrapper>
+
+</Column>
+</Row>
+
+## Typography
+
+<Row>
+<Column lg={8}>
+
+| Breakpoint (px) | Element | Font-size (px/rem) | Font-weight | Type token |
+| --------------- | ------- | ------------------ | ----------- | ---------- |
+| 576 | Title | 16 / 1 | Regular / 400 | `$body-02` |
+| | Column header | 14 / 0.875 | SemiBold / 600 | `$heading-compact-01` |
+| | Row text | 14 / 0.875 | Regular / 400 | `$body-compact-01` |
+| | Time column * | 14 / 0.875 | Regular / 400 | `$body-compact-01` |
+| 320 | Time column * | 12 / 0.75 | Regular / 400 | `$label-01` |
+
+<Caption>
+  \* Time column is not visible in the month view.
+</Caption>
+
+</Column>
+</Row>
+
+## Structure
+
+The calendar is a responsive, customizable component.
+
+### Base structure
+
+<Row>
+<Column lg={8}>
+
+| Breakpoint (px) | Element | Property | px / rem | Spacing token |
+| --------------- | ------- | -------- | -------- | ------------- |
+| 576 | Columns | padding | 16 / 1 | `$spacing-05` |
+| | Rows | padding-left | 16 / 1 | `$spacing-05` |
+| | | padding-right | 0 / 0 | - |
+| | | padding-top, padding-bottom | 8 / 0.5 | `$spacing-03` |
+| | Date number | height, width | 32 / 2 | `$spacing-07` |
+| | Time column * | width | 80 / 5 | `$spacing-11` |
+| | | padding-right | 8 / 0.5 | `$spacing-03` |
+| 320 | Columns | padding | 8 / 0.5 | `$spacing-03` |
+| | Rows | padding-left | 8 / 0.5 | `$spacing-03` |
+| | | padding-right | 0 / 0 | - |
+| | | padding-top, padding-bottom | 8 / 0.5 | `$spacing-03` |
+| | Date number | height, width | 32 / 2 | `$spacing-07` |
+| | Time column * | width | 48 / 3 | `$spacing-09` |
+
+<Caption>
+  \* Time column is not visible in the month view.
+</Caption>
+
+</Column>
+</Row>
+
+<Row>
+<Column lg={8}>
+
+
+<img
+  alt="Calendar month spacing spec"
+  src={CalendarStyleMonth}
+/>
+
+<Caption>
+  Structure and spacing measurements for base calendar at a desktop and mobile breakpoint without time column (month view)
+</Caption>
+
+</Column>
+</Row>
+
+
+<Row>
+<Column lg={8}>
+
+
+<img
+  alt="Calendar week spacing spec"
+  src={CalendarStyleWeek}
+/>
+
+<Caption>
+  Structure and spacing measurements for base calendar at a desktop and mobile breakpoint with time column 
+</Caption>
+</Column>
+</Row>
+
+
+
+### Header
+
+<Row>
+<Column lg={8}>
+
+| Breakpoint (px) | Element | Property | px / rem | Spacing token |
+| --------------- | ------- | -------- | -------- | ------------- |
+| 850 | Header | margin | 16 / 1 | `$spacing-05` |
+| | Mini calendar toggle button | padding-right | 16 / 1 | `$spacing-05` |
+| | | height, width | 40 / 2.5 | `$spacing-08` |
+| | Pagination arrows button group | padding-right | 16 / 1 | `$spacing-05` |
+| | Pagination arrow buttons | height, width | 40 / 2.5 | `$spacing-08` |
+| | "Today" link | padding-right | 16 / 1 | `$spacing-05` |
+| | "New event" button | padding-left | 16 / 1 | `$spacing-05` |
+| | | height | 40 / 2.5 | `$spacing-08` |
+| | | width | 148 / 9.25 | - |
+| 672 | Mini calendar toggle button | padding-right | 8 / 0.5 | `$spacing-03` |
+| | "Today" link | padding-right | 8 / 0.5 | `$spacing-03` |
+| | Pagination arrows button group | padding-right | 8 / 0.5 | `$spacing-03` |
+| 576 | "New event" button | height, width | 40 / 2.5 | `$spacing-08` |
+| 320 | Header | margin-top | 8 / 0.5 | `$spacing-03` |
+| | | margin-bottom, margin-right | 16 / 1 | `$spacing-05` |
+| | | margin-left | 0 / 0 | - |
+| | Mini calendar toggle button | padding-left | 8 / 0.5 | `$spacing-03` |
+| | | height, width | 32 / 2 | `$spacing-07` |
+| | Title | padding-top | 4 / 0.25 | `$spacing-02` |
+| | Calendar view switcher | padding-top | 4 / 0.25 | `$spacing-02` |
+| | Pagination arrow buttons | height, width | 32 / 2 | `$spacing-07` |
+| | "New event" button | height, width | 32 / 2 | `$spacing-07` |
+
+
+</Column>
+</Row>
+
+<Row>
+<Column lg={8}>
+
+
+<img
+  alt="Calendar header spacing spec"
+  src={CalendarStyleHeaderSpec}
+/>
+
+<Caption>
+Structure and spacing measurements for headers at each breakpoint
+</Caption>
+
+</Column>
+</Row>

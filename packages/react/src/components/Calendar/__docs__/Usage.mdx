@@ -1,0 +1,329 @@
+import CalendarFullScreen from './images/calendar-full-screen.png';
+import CalendarAnatomy from './images/calendar-anatomy.png';
+import CalendarPlacement from './images/calendar-placement.png';
+import CalendarSwitcher from './images/calendar-switcher.png';
+import CalendarMiniCalendar from './images/calendar-mini-calendar.png';
+import CalendarMiniCalendarCropped from './images/calendar-mini-calendar-cropped.png';
+import CalendarDayHighlight from './images/calendar-day-highlight.png';
+import CalendarWeekHighlight from './images/calendar-week-highlight.png';
+import CalendarTimeline from './images/calendar-timeline.png';
+import CalendarLineStyles from './images/calendar-line-styles.png';
+import CalendarScrolling from './images/calendar-scrolling.png';
+import CalendarResponsive from './images/calendar-responsive.png';
+import CalendarMonthCropped from './images/calendar-month-cropped.png';
+import CalendarWeekCropped from './images/calendar-week-cropped.png';
+import CalendarDayCropped from './images/calendar-day-cropped.png';
+
+<Meta title="Components/Calendar/Docs/Usage" />
+
+<PageDescription>
+
+The calendar displays a view of a selected month, week or day.
+
+</PageDescription>
+
+<AnchorLinks>
+
+<AnchorLink>Live demo</AnchorLink>
+<AnchorLink>Overview</AnchorLink>
+<AnchorLink>Formatting</AnchorLink>
+<AnchorLink>Content</AnchorLink>
+<AnchorLink>Behaviors</AnchorLink>
+<AnchorLink>Related</AnchorLink>
+<AnchorLink>Feedback</AnchorLink>
+
+</AnchorLinks>
+
+## Live demo
+
+<StorybookDemo
+  themeSelector
+  url="https://labs.carbondesignsystem.com/react"
+  variants={[
+    {
+      label: 'Month',
+      variant: 'components-calendar--month-view',
+    },
+    {
+      label: 'Week',
+      variant: 'components-calendar--week-view',
+    },
+    {
+      label: 'Day',
+      variant: 'components-calendar--day-view',
+    },
+  ]}
+/>
+
+## Overview
+
+The calendar is a full-page component that provides the users with a view of a selected month, week or day. The calendar can be used to display events in a summarized month view, or as a granular breakdown of days by hourly increments. The specified month, week or day that is displayed can be controlled through the mini calendar view or by using the arrows to jump to the previous or next date or date range. The user can also jump to the current date to see today's information.
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar fullscreen" src={CalendarFullScreen} />
+
+</Column>
+</Row>
+
+### When to use
+
+— When users needs to create and manage meeting schedules or events  
+— When users need to view scheduled past and future events  
+— When users need to view the details of events that are occurring in a given day
+
+## Formatting
+
+### Anatomy
+
+<Row>
+<Column lg={8}>
+<ImageWrapper>
+<img alt="calendar anatomy" src={CalendarAnatomy} />
+</ImageWrapper>
+</Column>
+</Row>
+
+1. **Mini calendar toggle**: trigger to expand and collapse the mini calendar view.
+2. **Mini calendar**: view of the selected month and current date range. User can use the mini calendar to view and select other date ranges.
+3. **Today**: a quick way to jump to today's date in the selected calendar view.
+4. **Pagination arrows**: a way to move between previous and next date ranges on the calendar.
+5. **Title**: indicates current date range displayed on the calendar.
+6. **Calendar view switcher (optional)**: a way to toggle between different calendar views such as month, week and day view.
+7. **Create event (optional)**: a way to create a new event to be displayed on the calendar.
+8. **Calendar**: A visual overview of the day, week, or month view that is being shown.
+
+### Placement
+
+Calendars should be placed in a page’s main content area and given plenty of space to display event data without truncation. Avoid placing calendars inside small containers where the information can feel cramped or needs truncation.
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar placement" src={CalendarPlacement} />
+
+</Column>
+</Row>
+
+## Content
+
+### Main elements
+
+#### Title
+
+— In the month view, format the month and year in full to describe what is displayed in the calendar.  
+— In the week view, format the month, date range using an en–dash and year in full to describe what is displayed in the calendar. If there is limited space to display the full date range, abbreviate the month to the first three letters.  
+— In the day view, format the month, day and year in full to describe what is displayed in the calendar. If there is limited space to display the full date range, abbreviate the month to the first three letters.
+
+#### Days of the week
+
+— In the month view, format the days of the week in full when enough space is available. At smaller breakpoints, format the days of the week to the first three letters.  
+— In the week view, format the days of the week in full when enough space is available. At smaller breakpoints, format the days of the week to the first three letters and the day, and wrap the date to up to two lines.  
+— In the day view, format the day of the week in full and the day. At smaller breakpoints, format the day of the week to the first three letters.
+
+### Scrolling content
+
+The calendar is responsive to the page and will always display the full month or date range selected so the user can view the calendar days at a glance. Only when the calendar reaches the smallest breakpoints does the calendar begin to horizontally scroll. 
+
+When viewing granular information in time increments for the week and day view, a vertical scroll is available for the user to scroll through the full day or days in more detail. Upon scroll, the days of the week become a sticky header to keep the context of the day while the user can browse through the different times of the day.
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar scrolling" src={CalendarScrolling} />
+
+</Column>
+</Row>
+
+### Further guidance
+
+For further content guidance, see Carbon's [content guidelines](https://www.carbondesignsystem.com/guidelines/content/general).
+
+## Behaviors
+
+### Calendar view switcher
+
+The calendar view switcher allows a user to switch between a month, week and day view of the date or date range selected. When switching between views, the main calendar instantly changes and displays the day or date range in the selected view. The month view displays the full calendar view of the month. The week and day view displays the days of the week at the top and an hourly breakdown of the days of the week below.
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar view switcher" src={CalendarSwitcher} />
+
+</Column>
+</Row>
+
+### Mini calendar
+
+The mini calendar can be collapsed or expanded next to the main calendar area. The side panel icon in the calendar header indicates the state in which the panel is in. Depending on your use case, the mini calendar can be open or closed by default.
+
+<Row>
+<Column lg={8}>
+
+<img alt="mini calendar" src={CalendarMiniCalendar} />
+
+</Column>
+</Row>
+
+### Selected date range or day
+
+In the month view, the user can select a specific day in the mini calendar to highlight on the calendar to help orient the user.
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar day highlight" src={CalendarDayHighlight} />
+
+</Column>
+</Row>
+
+In the week and day view, the user can select the specific date range or day they want to focus on in the calendar. If today's date is within the date range, the day of the week is highlighted to indicate today.
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar week highlight" src={CalendarWeekHighlight} />
+
+</Column>
+</Row>
+
+### Current time
+
+In the week and day view, there is a dynamic line that highlights the current time of the day in relation to the full day. This helps orient the user to understand where they are in their day, and which events are upcoming. If the current time is close to the hour increment displayed on the calendar, replace the hour increment with the current time state.
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar timeline" src={CalendarTimeline} />
+
+</Column>
+</Row>
+
+— If the week or day view displays past days, a dashed line is used to indicate the current time of day amongst previous events.  
+— If the week or day view displays today's date, a solid line with a node is used to indicate the current time of the day amongst events for today.  
+— If the week or day view displays future days, no line is used to indicate the current time of day.
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar line styles" src={CalendarLineStyles} />
+
+</Column>
+</Row>
+
+### Responsive
+
+#### Calendar view switcher
+
+In larger breakpoint views, a subtle content switcher is used to display up to three calendar views. When going down to smaller breakpoints or when there is limited space, the content switcher dynamically switches to an inline dropdown to select the different calendar views. If there are more than three calendar views available, only use the inline dropdown.
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar responsive" src={CalendarResponsive} />
+
+</Column>
+</Row>
+
+### Month view
+
+<Row>
+<Column lg={8}>
+
+| Breakpoint (px) | Column heading |
+| --------------- | -------------- |
+| 1056 | Day spelled out (Wednesday) |
+| 576 | Three letter abbreviation (Wed) |
+| 320 | One letter abbreviation (W) |
+
+</Column>
+
+</Row>
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar month view" src={CalendarMonthCropped} />
+
+</Column>
+</Row>
+
+### Week view
+
+<Row>
+<Column lg={8}>
+
+| Breakpoint (px) | Column heading |
+| --------------- | -------------- |
+| 1056 | Day spelled out and date number (Wednesday 13) |
+| 768 | Three letter abbreviation and date number (Wed 13) |
+| 576 | Three letter abbreviation, wrap to new line, and date number (Wed 13) |
+| 320 | One letter abbreviation, wrap to new line, and date number (W 13) |
+
+</Column>
+
+</Row>
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar week view" src={CalendarWeekCropped} />
+
+</Column>
+</Row>
+
+### Day view
+
+<Row>
+<Column lg={8}>
+
+| Breakpoint (px) | Column heading |
+| --------------- | -------------- |
+| 576 | Day spelled out and date number (Wednesday 13) |
+| 320 | Three letter abbreviation and date number (Wed 13) |
+
+</Column>
+
+</Row>
+
+<Row>
+<Column lg={8}>
+
+<img alt="calendar day view" src={CalendarDayCropped} />
+
+</Column>
+</Row>
+
+### Mini calendar open
+
+<Row>
+<Column lg={8}>
+
+| Breakpoint (px) | Column heading |
+| --------------- | -------------- |
+| 672 | Mini calendar slides in next to content |
+| 320 | Mini calendar slides over content with overlay |
+| 288 | Mini calendar takes up entire screen |
+
+</Column>
+</Row>
+
+<Row>
+<Column lg={8}>
+
+<img alt="mini calendar open" src={CalendarMiniCalendarCropped} />
+
+</Column>
+</Row>
+
+## Related
+
+The following components are additional ways to organize and display calendar-related content:
+
+- [Content switchers](/components/content-switcher/usage)
+- [Inline dropdown](/components/dropdown/usage)
+
+## Feedback
+
+Help us improve this component by providing feedback, asking questions, and leaving any other comments on [GitHub](https://github.com/carbon-design-system/carbon-website/issues/new?assignees=&labels=feedback&template=feedback.md).

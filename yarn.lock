@@ -2003,7 +2003,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     replace-ext: "npm:^2.0.0"
-    sass: "npm:~1.93.0"
+    sass: "npm:~1.97.0"
     sinon: "npm:^19.0.0"
     start-server-and-test: "npm:^2.1.3"
     storybook: "npm:^9.1.2"
@@ -28292,9 +28292,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:~1.93.0":
-  version: 1.93.3
-  resolution: "sass@npm:1.93.3"
+"sass@npm:~1.97.0":
+  version: 1.97.2
+  resolution: "sass@npm:1.97.2"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^4.0.0"
@@ -28305,7 +28305,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10c0/b9facc64de10c9d1514272c1dcbb48ca99d5f591a1cd43fd27d641275d9d95948f1299107ab5b309e2abb552667cca84a38a1a3df5116eb72eba4144bf850b6a
+  checksum: 10c0/5622a4f9d0acf5cdfb72c73c448366b3ec7bfe2b6e1ecb62c6e9f8eaff9c02a6afd86a31ded246fc818fe660cedea6bd27335e82fc9bd7cce46c29f95774bece
   languageName: node
   linkType: hard
 

@@ -1,0 +1,225 @@
+/*
+ * Copyright IBM Corp. 2022, 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+@use '@carbon/react/scss/breakpoint' as breakpoint;
+@use '@carbon/react/scss/spacing' as spacing;
+@use '@carbon/react/scss/theme' as theme;
+@use '@carbon/react/scss/type' as type;
+@use '@carbon/react/scss/motion' as motion;
+
+@use '../utils' as *;
+
+// Square Card Group wrapper
+:global(.square-card-group) > * {
+  margin-block-end: 0;
+}
+
+.#{with-prefix('square-card')} {
+  // Overrides global vertical spacing
+  --space: 0;
+  border-block-start: 1px solid theme.$border-subtle;
+  border-inline-start: 1px solid transparent;
+
+  @include breakpoint.breakpoint('md') {
+    border-inline-start: 1px solid theme.$border-subtle;
+  }
+
+  // Override Carbon tile styles
+  .cds--tile {
+    position: relative;
+    padding: spacing.$spacing-05 15% spacing.$spacing-05 spacing.$spacing-05;
+    block-size: 100%;
+    text-decoration: none;
+    transition: background motion.$duration-fast-01;
+
+    @media screen and (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    &::after {
+      position: absolute;
+      content: '';
+      inline-size: calc(100% - 1px);
+      block-size: calc(100% - 1px);
+      inset-block-start: 0;
+      inset-inline-start: 0;
+      outline: 3px solid transparent;
+      outline-offset: -3px;
+      transition: outline motion.$duration-fast-01;
+
+      @media screen and (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    }
+  }
+
+  .cds--tile:focus {
+    outline: none;
+
+    &::after {
+      outline: 3px solid theme.$focus;
+    }
+  }
+}
+
+// First child removes top border
+:global(.square-card-group) .#{with-prefix('square-card')}:first-child {
+  border-block-start: 0 solid transparent;
+}
+
+// Second child removes top border at md breakpoint
+:global(.square-card-group) .#{with-prefix('square-card')}:nth-child(2) {
+  @include breakpoint.breakpoint('md') {
+    border-block-start: 0 solid transparent;
+  }
+}
+
+// Third child removes top border at lg breakpoint
+:global(.square-card-group) .#{with-prefix('square-card')}:nth-child(3) {
+  @include breakpoint.breakpoint('lg') {
+    border-block-start: 0 solid transparent;
+  }
+}
+
+// Odd children remove left border at md, restore at lg
+:global(.square-card-group) .#{with-prefix('square-card')}:nth-child(2n + 1) {
+  @include breakpoint.breakpoint('md') {
+    border-inline-start: 1px solid transparent;
+  }
+
+  @include breakpoint.breakpoint('lg') {
+    border-inline-start: 1px solid theme.$border-subtle;
+  }
+}
+
+// Every third child removes left border at lg
+:global(.square-card-group) .#{with-prefix('square-card')}:nth-child(3n + 1) {
+  @include breakpoint.breakpoint('lg') {
+    border-inline-start: 1px solid transparent;
+  }
+}
+
+// Title styles
+.#{with-prefix('square-card-title')} {
+  @include type.type-style('productive-heading-04');
+
+  position: relative;
+  z-index: 1;
+  text-decoration: none;
+  color: theme.$text-primary;
+
+  @include breakpoint.breakpoint-between('lg', 'xlg') {
+    @include type.type-style('productive-heading-03');
+  }
+}
+
+.#{with-prefix('square-card-title-small')} {
+  @include type.type-style('productive-heading-03');
+
+  @include breakpoint.breakpoint-between('lg', 'xlg') {
+    @include type.type-style('productive-heading-02');
+  }
+}
+
+// Body text
+.#{with-prefix('square-card-body')} {
+  @include type.type-style('body-short-02');
+
+  padding-block-start: spacing.$spacing-05;
+  color: theme.$text-primary;
+}
+
+.#{with-prefix('square-card-title-small')}
+  + .#{with-prefix('square-card-body')} {
+  @include breakpoint.breakpoint-between('lg', 'xlg') {
+    padding-block-start: 0;
+  }
+}
+
+// Helper text
+.#{with-prefix('square-card-helper-text')} {
+  @include type.type-style('body-short-01');
+
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  padding-inline-end: spacing.$spacing-07;
+  margin-inline-end: spacing.$spacing-06;
+  color: theme.$text-primary;
+  inset-block-end: spacing.$spacing-05;
+  inset-inline-start: spacing.$spacing-05;
+}
+
+// Helper icon (pictogram/icon)
+.#{with-prefix('square-card-helper-icon')} {
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  min-inline-size: 32px;
+  min-block-size: 32px;
+  inset-block-end: spacing.$spacing-05;
+  inset-inline-start: spacing.$spacing-05;
+
+  svg {
+    fill: theme.$icon-primary;
+  }
+}
+
+// Action icon
+.#{with-prefix('square-card-action-icon')} {
+  position: absolute;
+  inline-size: 20px;
+  block-size: 20px;
+  inset-block-end: spacing.$spacing-05;
+  inset-inline-end: spacing.$spacing-05;
+
+  svg {
+    fill: theme.$icon-primary;
+  }
+}
+
+// Dark mode styles
+.#{with-prefix('dark-mode')} {
+  .cds--tile {
+    background: theme.$layer-01;
+  }
+
+  .cds--tile:hover {
+    background: theme.$layer-hover-01;
+  }
+
+  .#{with-prefix('square-card-title')},
+  .#{with-prefix('square-card-body')},
+  .#{with-prefix('square-card-helper-text')} {
+    color: theme.$text-primary;
+  }
+
+  .#{with-prefix('square-card-action-icon')} svg,
+  .#{with-prefix('square-card-helper-icon')} svg {
+    fill: theme.$icon-primary;
+  }
+}
+
+// Disabled state
+.#{with-prefix('disabled')} {
+  cursor: not-allowed;
+
+  .cds--tile:hover {
+    background: theme.$layer-01;
+    cursor: not-allowed;
+  }
+
+  .#{with-prefix('square-card-title')},
+  .#{with-prefix('square-card-body')},
+  .#{with-prefix('square-card-helper-text')} {
+    color: theme.$text-on-color-disabled;
+  }
+
+  .#{with-prefix('square-card-action-icon')} svg,
+  .#{with-prefix('square-card-helper-icon')} svg {
+    fill: theme.$icon-disabled;
+  }
+}

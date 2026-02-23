@@ -32,13 +32,15 @@
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rimraf es lib scss"
+    "clean": "rimraf es lib scss",
+    "postinstall": "ibmtelemetry --config=telemetry.yml"
   },
   "devDependencies": {
     "@carbon-labs/utilities": "0.21.0",
     "@lit/react": "^1.0.1"
   },
   "dependencies": {
-    "@carbon-labs/wc-style-picker": "workspace:^"
+    "@carbon-labs/wc-style-picker": "workspace:^",
+    "@ibm/telemetry-js": "^1.11.0"
   }
 }

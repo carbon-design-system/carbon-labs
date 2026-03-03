@@ -1,0 +1,38 @@
+{
+  "name": "@carbon-labs/react-calendar",
+  "version": "0.8.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - Calendar",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "src/components/Calendar"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rimraf es lib scss"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "0.21.0"
+  }
+}

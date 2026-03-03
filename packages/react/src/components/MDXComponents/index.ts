@@ -40,6 +40,7 @@ export { PageDescription } from './components/page-description/page-description'
 export { PageTable } from './components/page-table/page-table';
 export { Preview } from './components/preview/preview';
 export { ResourceCard } from './components/resource-card/resource-card';
+export { SquareCard } from './components/square-card/square-card';
 export { StorybookDemo } from './components/storybook-demo/storybook-demo';
 export { Tab } from './components/tabs/tab';
 export { Tabs } from './components/tabs/tabs';

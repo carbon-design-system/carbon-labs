@@ -33,16 +33,14 @@
   ],
   "scripts": {
     "build": "node ../../../tasks/build.js",
-    "clean": "rimraf es lib scss",
+    "clean": "node -e \"['es','lib','scss'].forEach(d=>require('fs').rmSync(d,{recursive:true,force:true}))\"",
     "postinstall": "ibmtelemetry --config=telemetry.yml",
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 40597fb8-d0ed-45fb-a95a-5b1751e22c36 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "dependencies": {
+    "@carbon-labs/utilities": "0.21.0",
     "@ibm/telemetry-js": "^1.10.2",
     "jest-canvas-mock": "^2.5.2",
     "lottie-web": "^5.12.2"
-  },
-  "devDependencies": {
-    "@carbon-labs/utilities": "0.21.0"
   }
 }

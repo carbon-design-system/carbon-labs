@@ -39,3 +39,4 @@ agentic.stories.js
 
 *storybook.log
 test-coverage/
+**/codecept/screenshots

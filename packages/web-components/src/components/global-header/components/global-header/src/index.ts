@@ -8,7 +8,6 @@
  */
 
 export { CommonHeader } from './components/CommonHeader/CommonHeader';
-export { HybridIpaasHeaderReactWrapper } from './components/HybridIpaasHeaderReactWrapper/HybridIpaasHeaderReactWrapper';
 export { HybridIpaasHeader } from './components/HybridIpaasHeader/HybridIpaasHeader';
 export { LogoutHeader } from './components/LogoutHeader/LogoutHeader';
 export { LogoutTile } from './components/LogoutTile/LogoutTile';

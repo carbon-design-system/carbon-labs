@@ -75,7 +75,7 @@ cds-custom-header-global-action.mcsp-header-user-profile > div {
 
 .automation-global-header__divider::before {
   display: block;
-  background-color: var(--cds-custom-border-subtle);
+  background-color: $border-subtle;
   block-size: 2.5rem;
   content: '';
   inline-size: 0.0625rem;

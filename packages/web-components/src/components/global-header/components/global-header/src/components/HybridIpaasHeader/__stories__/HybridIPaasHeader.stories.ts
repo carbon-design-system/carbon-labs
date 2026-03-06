@@ -168,6 +168,7 @@ export const WithSolis: Story = {
         productName="App Connect"
         productKey="appconnect"
         solisEnvironment="local"
+        solisDevMode
         solisSwitcherEnabled
         solisSidekickEnabled>
       </clabs-global-header-hybrid-ipaas>
@@ -192,10 +193,11 @@ const capabilityProfileFooterLinks = [
 
 const capabilityGlobalActions: GlobalActionConfig[] = [
   {
-    label: 'App Connect global action',
-    carbonIcon: 'AppConnectivity',
+    label: 'Cloud Services global action',
+    carbonIcon: 'CloudServices',
+    tooltip: 'This is a tooltip',
     onClick: () => {
-      console.log('App Connect global action clicked!');
+      console.log('Cloud Services global action clicked!');
     },
   },
 ];

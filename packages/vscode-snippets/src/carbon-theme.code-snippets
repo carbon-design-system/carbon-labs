@@ -1,0 +1,613 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * WARNING: installed by @carbon-labs/vscode-snippets - local updates will be lost on package install
+ */
+{
+  // ============================================
+  // Background Tokens
+  // ============================================
+  "Carbon background": {
+    "prefix": ["theme", "$background"],
+    "body": "$$background",
+    "description": "Default page background; UI Shell base color"
+  },
+  "Carbon background hover": {
+    "prefix": ["theme", "$background-hover"],
+    "body": "$$background-hover",
+    "description": "Hover color for $background; Hover color for transparent backgrounds"
+  },
+  "Carbon background active": {
+    "prefix": ["theme", "$background-active"],
+    "body": "$$background-active",
+    "description": "Active color for $background"
+  },
+  "Carbon background selected": {
+    "prefix": ["theme", "$background-selected"],
+    "body": "$$background-selected",
+    "description": "Selected color for $background"
+  },
+  "Carbon background selected hover": {
+    "prefix": ["theme", "$background-selected-hover"],
+    "body": "$$background-selected-hover",
+    "description": "Hover color for $background-selected"
+  },
+  "Carbon background inverse": {
+    "prefix": ["theme", "$background-inverse"],
+    "body": "$$background-inverse",
+    "description": "High contrast backgrounds; High contrast elements"
+  },
+  "Carbon background inverse hover": {
+    "prefix": ["theme", "$background-inverse-hover"],
+    "body": "$$background-inverse-hover",
+    "description": "Hover color for $background-inverse"
+  },
+  "Carbon background brand": {
+    "prefix": ["theme", "$background-brand"],
+    "body": "$$background-brand",
+    "description": "Feature background color"
+  },
+  // ============================================
+  // Layer Tokens
+  // ============================================
+  "Carbon layer 01": {
+    "prefix": ["theme", "$layer-01"],
+    "body": "$$layer-01",
+    "description": "Container color on $background; Secondary page background"
+  },
+  "Carbon layer 02": {
+    "prefix": ["theme", "$layer-02"],
+    "body": "$$layer-02",
+    "description": "Container color on $layer-01"
+  },
+  "Carbon layer 03": {
+    "prefix": ["theme", "$layer-03"],
+    "body": "$$layer-03",
+    "description": "Container color on $layer-02"
+  },
+  "Carbon layer": {
+    "prefix": ["theme", "$layer"],
+    "body": "$$layer",
+    "description": "Contextual layer token; Automatically matches layer context"
+  },
+  "Carbon layer hover 01": {
+    "prefix": ["theme", "$layer-hover-01"],
+    "body": "$$layer-hover-01",
+    "description": "Hover color for $layer-01"
+  },
+  "Carbon layer hover 02": {
+    "prefix": ["theme", "$layer-hover-02"],
+    "body": "$$layer-hover-02",
+    "description": "Hover color for $layer-02"
+  },
+  "Carbon layer hover 03": {
+    "prefix": ["theme", "$layer-hover-03"],
+    "body": "$$layer-hover-03",
+    "description": "Hover color for $layer-03"
+  },
+  "Carbon layer hover": {
+    "prefix": ["theme", "$layer-hover"],
+    "body": "$$layer-hover",
+    "description": "Contextual layer hover token; Automatically matches layer context"
+  },
+  "Carbon layer active 01": {
+    "prefix": ["theme", "$layer-active-01"],
+    "body": "$$layer-active-01",
+    "description": "Active color for $layer-01"
+  },
+  "Carbon layer active 02": {
+    "prefix": ["theme", "$layer-active-02"],
+    "body": "$$layer-active-02",
+    "description": "Active color for $layer-02"
+  },
+  "Carbon layer active 03": {
+    "prefix": ["theme", "$layer-active-03"],
+    "body": "$$layer-active-03",
+    "description": "Active color for $layer-03"
+  },
+  "Carbon layer active": {
+    "prefix": ["theme", "$layer-active"],
+    "body": "$$layer-active",
+    "description": "Contextual layer active token; Automatically matches layer context"
+  },
+  "Carbon layer selected 01": {
+    "prefix": ["theme", "$layer-selected-01"],
+    "body": "$$layer-selected-01",
+    "description": "Selected color for $layer-01"
+  },
+  "Carbon layer selected 02": {
+    "prefix": ["theme", "$layer-selected-02"],
+    "body": "$$layer-selected-02",
+    "description": "Selected color for $layer-02"
+  },
+  "Carbon layer selected 03": {
+    "prefix": ["theme", "$layer-selected-03"],
+    "body": "$$layer-selected-03",
+    "description": "Selected color for $layer-03"
+  },
+  "Carbon layer selected": {
+    "prefix": ["theme", "$layer-selected"],
+    "body": "$$layer-selected",
+    "description": "Contextual layer selected token; Automatically matches layer context"
+  },
+  "Carbon layer selected hover 01": {
+    "prefix": ["theme", "$layer-selected-hover-01"],
+    "body": "$$layer-selected-hover-01",
+    "description": "Hover color for $layer-selected-01"
+  },
+  "Carbon layer selected hover 02": {
+    "prefix": ["theme", "$layer-selected-hover-02"],
+    "body": "$$layer-selected-hover-02",
+    "description": "Hover color for $layer-selected-02"
+  },
+  "Carbon layer selected hover 03": {
+    "prefix": ["theme", "$layer-selected-hover-03"],
+    "body": "$$layer-selected-hover-03",
+    "description": "Hover color for $layer-selected-03"
+  },
+  "Carbon layer selected hover": {
+    "prefix": ["theme", "$layer-selected-hover"],
+    "body": "$$layer-selected-hover",
+    "description": "Contextual layer selected hover token; Automatically matches layer context"
+  },
+  "Carbon layer selected inverse": {
+    "prefix": ["theme", "$layer-selected-inverse"],
+    "body": "$$layer-selected-inverse",
+    "description": "High contrast elements; 4.5:1 AA element contrast"
+  },
+  "Carbon layer selected disabled": {
+    "prefix": ["theme", "$layer-selected-disabled"],
+    "body": "$$layer-selected-disabled",
+    "description": "Disabled color for selected layers"
+  },
+  // ============================================
+  // Layer Accent Tokens
+  // ============================================
+  "Carbon layer accent 01": {
+    "prefix": ["theme", "$layer-accent-01"],
+    "body": "$$layer-accent-01",
+    "description": "Tertiary background paired with $layer-01"
+  },
+  "Carbon layer accent 02": {
+    "prefix": ["theme", "$layer-accent-02"],
+    "body": "$$layer-accent-02",
+    "description": "Tertiary background paired with $layer-02"
+  },
+  "Carbon layer accent 03": {
+    "prefix": ["theme", "$layer-accent-03"],
+    "body": "$$layer-accent-03",
+    "description": "Tertiary background paired with $layer-03"
+  },
+  "Carbon layer accent": {
+    "prefix": ["theme", "$layer-accent"],
+    "body": "$$layer-accent",
+    "description": "Contextual layer accent token; Automatically matches layer context"
+  },
+  "Carbon layer accent hover 01": {
+    "prefix": ["theme", "$layer-accent-hover-01"],
+    "body": "$$layer-accent-hover-01",
+    "description": "Hover color for $layer-accent-01"
+  },
+  "Carbon layer accent hover 02": {
+    "prefix": ["theme", "$layer-accent-hover-02"],
+    "body": "$$layer-accent-hover-02",
+    "description": "Hover color for $layer-accent-02"
+  },
+  "Carbon layer accent hover 03": {
+    "prefix": ["theme", "$layer-accent-hover-03"],
+    "body": "$$layer-accent-hover-03",
+    "description": "Hover color for $layer-accent-03"
+  },
+  "Carbon layer accent hover": {
+    "prefix": ["theme", "$layer-accent-hover"],
+    "body": "$$layer-accent-hover",
+    "description": "Contextual layer accent hover token; Automatically matches layer context"
+  },
+  "Carbon layer accent active 01": {
+    "prefix": ["theme", "$layer-accent-active-01"],
+    "body": "$$layer-accent-active-01",
+    "description": "Active color for $layer-accent-01"
+  },
+  "Carbon layer accent active 02": {
+    "prefix": ["theme", "$layer-accent-active-02"],
+    "body": "$$layer-accent-active-02",
+    "description": "Active color for $layer-accent-02"
+  },
+  "Carbon layer accent active 03": {
+    "prefix": ["theme", "$layer-accent-active-03"],
+    "body": "$$layer-accent-active-03",
+    "description": "Active color for $layer-accent-03"
+  },
+  "Carbon layer accent active": {
+    "prefix": ["theme", "$layer-accent-active"],
+    "body": "$$layer-accent-active",
+    "description": "Contextual layer accent active token; Automatically matches layer context"
+  },
+  // ============================================
+  // Field Tokens
+  // ============================================
+  "Carbon field 01": {
+    "prefix": ["theme", "$field-01"],
+    "body": "$$field-01",
+    "description": "Default input fields; Fields on $background"
+  },
+  "Carbon field 02": {
+    "prefix": ["theme", "$field-02"],
+    "body": "$$field-02",
+    "description": "Secondary input fields; Fields on $layer-01"
+  },
+  "Carbon field 03": {
+    "prefix": ["theme", "$field-03"],
+    "body": "$$field-03",
+    "description": "Tertiary input fields; Fields on $layer-02"
+  },
+  "Carbon field": {
+    "prefix": ["theme", "$field"],
+    "body": "$$field",
+    "description": "Contextual field token; Automatically matches layer context"
+  },
+  "Carbon field hover 01": {
+    "prefix": ["theme", "$field-hover-01"],
+    "body": "$$field-hover-01",
+    "description": "Hover color for $field-01"
+  },
+  "Carbon field hover 02": {
+    "prefix": ["theme", "$field-hover-02"],
+    "body": "$$field-hover-02",
+    "description": "Hover color for $field-02"
+  },
+  "Carbon field hover 03": {
+    "prefix": ["theme", "$field-hover-03"],
+    "body": "$$field-hover-03",
+    "description": "Hover color for $field-03"
+  },
+  "Carbon field hover": {
+    "prefix": ["theme", "$field-hover"],
+    "body": "$$field-hover",
+    "description": "Contextual field hover token; Automatically matches layer context"
+  },
+  // ============================================
+  // Border Tokens
+  // ============================================
+  "Carbon border interactive": {
+    "prefix": ["theme", "$border-interactive"],
+    "body": "$$border-interactive",
+    "description": "3:1 AA contrast; Selected borders; Active borders"
+  },
+  "Carbon border subtle 00": {
+    "prefix": ["theme", "$border-subtle-00"],
+    "body": "$$border-subtle-00",
+    "description": "Subtle borders paired with $background"
+  },
+  "Carbon border subtle 01": {
+    "prefix": ["theme", "$border-subtle-01"],
+    "body": "$$border-subtle-01",
+    "description": "Subtle borders paired with $layer-01"
+  },
+  "Carbon border subtle 02": {
+    "prefix": ["theme", "$border-subtle-02"],
+    "body": "$$border-subtle-02",
+    "description": "Subtle borders paired with $layer-02"
+  },
+  "Carbon border subtle 03": {
+    "prefix": ["theme", "$border-subtle-03"],
+    "body": "$$border-subtle-03",
+    "description": "Subtle borders paired with $layer-03"
+  },
+  "Carbon border subtle": {
+    "prefix": ["theme", "$border-subtle"],
+    "body": "$$border-subtle",
+    "description": "Contextual subtle border token; Automatically matches layer context"
+  },
+  "Carbon border subtle selected 01": {
+    "prefix": ["theme", "$border-subtle-selected-01"],
+    "body": "$$border-subtle-selected-01",
+    "description": "Selected color for $border-subtle-01"
+  },
+  "Carbon border subtle selected 02": {
+    "prefix": ["theme", "$border-subtle-selected-02"],
+    "body": "$$border-subtle-selected-02",
+    "description": "Selected color for $border-subtle-02"
+  },
+  "Carbon border subtle selected 03": {
+    "prefix": ["theme", "$border-subtle-selected-03"],
+    "body": "$$border-subtle-selected-03",
+    "description": "Selected color for $border-subtle-03"
+  },
+  "Carbon border subtle selected": {
+    "prefix": ["theme", "$border-subtle-selected"],
+    "body": "$$border-subtle-selected",
+    "description": "Contextual subtle selected border token; Automatically matches layer context"
+  },
+  "Carbon border strong 01": {
+    "prefix": ["theme", "$border-strong-01"],
+    "body": "$$border-strong-01",
+    "description": "Medium contrast border; Border-bottom paired with $field-01; 3:1 AA non-text contrast"
+  },
+  "Carbon border strong 02": {
+    "prefix": ["theme", "$border-strong-02"],
+    "body": "$$border-strong-02",
+    "description": "Medium contrast border; Border-bottom paired with $field-02; 3:1 AA non-text contrast"
+  },
+  "Carbon border strong 03": {
+    "prefix": ["theme", "$border-strong-03"],
+    "body": "$$border-strong-03",
+    "description": "Medium contrast border; Border-bottom paired with $field-03; 3:1 AA non-text contrast"
+  },
+  "Carbon border strong": {
+    "prefix": ["theme", "$border-strong"],
+    "body": "$$border-strong",
+    "description": "Contextual strong border token; Automatically matches layer context"
+  },
+  "Carbon border tile 01": {
+    "prefix": ["theme", "$border-tile-01"],
+    "body": "$$border-tile-01",
+    "description": "Operable tile indicator paired with $layer-01"
+  },
+  "Carbon border tile 02": {
+    "prefix": ["theme", "$border-tile-02"],
+    "body": "$$border-tile-02",
+    "description": "Operable tile indicator paired with $layer-02"
+  },
+  "Carbon border tile 03": {
+    "prefix": ["theme", "$border-tile-03"],
+    "body": "$$border-tile-03",
+    "description": "Operable tile indicator paired with $layer-03"
+  },
+  "Carbon border tile": {
+    "prefix": ["theme", "$border-tile"],
+    "body": "$$border-tile",
+    "description": "Contextual tile border token; Automatically matches layer context"
+  },
+  "Carbon border inverse": {
+    "prefix": ["theme", "$border-inverse"],
+    "body": "$$border-inverse",
+    "description": "High contrast border; 4.5:1 AA non-text contrast"
+  },
+  "Carbon border disabled": {
+    "prefix": ["theme", "$border-disabled"],
+    "body": "$$border-disabled",
+    "description": "Disabled border color (excluding border-subtles)"
+  },
+  // ============================================
+  // Text Tokens
+  // ============================================
+  "Carbon text primary": {
+    "prefix": ["theme", "$text-primary"],
+    "body": "$$text-primary",
+    "description": "Primary text; Body copy; Headers; Hover text color for $text-secondary"
+  },
+  "Carbon text secondary": {
+    "prefix": ["theme", "$text-secondary"],
+    "body": "$$text-secondary",
+    "description": "Secondary text; Input labels"
+  },
+  "Carbon text placeholder": {
+    "prefix": ["theme", "$text-placeholder"],
+    "body": "$$text-placeholder",
+    "description": "Placeholder text"
+  },
+  "Carbon text on color": {
+    "prefix": ["theme", "$text-on-color"],
+    "body": "$$text-on-color",
+    "description": "Text on interactive colors; Text on button colors"
+  },
+  "Carbon text on color disabled": {
+    "prefix": ["theme", "$text-on-color-disabled"],
+    "body": "$$text-on-color-disabled",
+    "description": "Disabled color for $text-on-color"
+  },
+  "Carbon text helper": {
+    "prefix": ["theme", "$text-helper"],
+    "body": "$$text-helper",
+    "description": "Tertiary text; Help text"
+  },
+  "Carbon text error": {
+    "prefix": ["theme", "$text-error"],
+    "body": "$$text-error",
+    "description": "Error message text"
+  },
+  "Carbon text inverse": {
+    "prefix": ["theme", "$text-inverse"],
+    "body": "$$text-inverse",
+    "description": "Inverse text color"
+  },
+  "Carbon text disabled": {
+    "prefix": ["theme", "$text-disabled"],
+    "body": "$$text-disabled",
+    "description": "Disabled text color"
+  },
+  // ============================================
+  // Link Tokens
+  // ============================================
+  "Carbon link primary": {
+    "prefix": ["theme", "$link-primary"],
+    "body": "$$link-primary",
+    "description": "Primary links"
+  },
+  "Carbon link primary hover": {
+    "prefix": ["theme", "$link-primary-hover"],
+    "body": "$$link-primary-hover",
+    "description": "Hover color for $link-primary"
+  },
+  "Carbon link secondary": {
+    "prefix": ["theme", "$link-secondary"],
+    "body": "$$link-secondary",
+    "description": "Secondary link color for lower contrast backgrounds"
+  },
+  "Carbon link inverse": {
+    "prefix": ["theme", "$link-inverse"],
+    "body": "$$link-inverse",
+    "description": "Links on $background-inverse backgrounds"
+  },
+  "Carbon link inverse hover": {
+    "prefix": ["theme", "$link-inverse-hover"],
+    "body": "$$link-inverse-hover",
+    "description": "Hover color for links on $background-inverse backgrounds"
+  },
+  "Carbon link inverse active": {
+    "prefix": ["theme", "$link-inverse-active"],
+    "body": "$$link-inverse-active",
+    "description": "Active color for links on $background-inverse backgrounds"
+  },
+  "Carbon link inverse visited": {
+    "prefix": ["theme", "$link-inverse-visited"],
+    "body": "$$link-inverse-visited",
+    "description": "Color for visited links on $background-inverse backgrounds"
+  },
+  "Carbon link visited": {
+    "prefix": ["theme", "$link-visited"],
+    "body": "$$link-visited",
+    "description": "Color for visited links"
+  },
+  // ============================================
+  // Icon Tokens
+  // ============================================
+  "Carbon icon primary": {
+    "prefix": ["theme", "$icon-primary"],
+    "body": "$$icon-primary",
+    "description": "Primary icons"
+  },
+  "Carbon icon secondary": {
+    "prefix": ["theme", "$icon-secondary"],
+    "body": "$$icon-secondary",
+    "description": "Secondary icons"
+  },
+  "Carbon icon on color": {
+    "prefix": ["theme", "$icon-on-color"],
+    "body": "$$icon-on-color",
+    "description": "Icons on interactive colors; Icons on non-layer colors"
+  },
+  "Carbon icon on color disabled": {
+    "prefix": ["theme", "$icon-on-color-disabled"],
+    "body": "$$icon-on-color-disabled",
+    "description": "Disabled color for $icon-on-color"
+  },
+  "Carbon icon interactive": {
+    "prefix": ["theme", "$icon-interactive"],
+    "body": "$$icon-interactive",
+    "description": "Icons that indicate operability"
+  },
+  "Carbon icon inverse": {
+    "prefix": ["theme", "$icon-inverse"],
+    "body": "$$icon-inverse",
+    "description": "Inverse icon color"
+  },
+  "Carbon icon disabled": {
+    "prefix": ["theme", "$icon-disabled"],
+    "body": "$$icon-disabled",
+    "description": "Disabled icon color"
+  },
+  // ============================================
+  // Support Tokens
+  // ============================================
+  "Carbon support error": {
+    "prefix": ["theme", "$support-error"],
+    "body": "$$support-error",
+    "description": "Error; Invalid state"
+  },
+  "Carbon support success": {
+    "prefix": ["theme", "$support-success"],
+    "body": "$$support-success",
+    "description": "Success; On"
+  },
+  "Carbon support warning": {
+    "prefix": ["theme", "$support-warning"],
+    "body": "$$support-warning",
+    "description": "Warning"
+  },
+  "Carbon support info": {
+    "prefix": ["theme", "$support-info"],
+    "body": "$$support-info",
+    "description": "Information"
+  },
+  "Carbon support error inverse": {
+    "prefix": ["theme", "$support-error-inverse"],
+    "body": "$support-error-inverse",
+    "description": "Error in high contrast moments"
+  },
+  "Carbon support success inverse": {
+    "prefix": ["theme", "$support-success-inverse"],
+    "body": "$support-success-inverse",
+    "description": "Success in high contrast moments"
+  },
+  "Carbon support warning inverse": {
+    "prefix": ["theme", "$support-warning-inverse"],
+    "body": "$support-warning-inverse",
+    "description": "Warning in high contrast moments"
+  },
+  "Carbon support info inverse": {
+    "prefix": ["theme", "$support-info-inverse"],
+    "body": "$support-info-inverse",
+    "description": "Information in high contrast moments"
+  },
+  "Carbon support caution minor": {
+    "prefix": ["theme", "$support-caution-minor"],
+    "body": "$support-caution-minor",
+    "description": "Minor caution status"
+  },
+  "Carbon support caution major": {
+    "prefix": ["theme", "$support-caution-major"],
+    "body": "$support-caution-major",
+    "description": "Major caution status"
+  },
+  "Carbon support caution undefined": {
+    "prefix": ["theme", "$support-caution-undefined"],
+    "body": "$support-caution-undefined",
+    "description": "Undefined status"
+  },
+  // ============================================
+  // Focus Tokens
+  // ============================================
+  "Carbon focus": {
+    "prefix": ["theme", "$focus"],
+    "body": "$$focus",
+    "description": "Focus border; Focus underline"
+  },
+  "Carbon focus inset": {
+    "prefix": ["theme", "$focus-inset"],
+    "body": "$$focus-inset",
+    "description": "Contrast border paired with $focus"
+  },
+  "Carbon focus inverse": {
+    "prefix": ["theme", "$focus-inverse"],
+    "body": "$$focus-inverse",
+    "description": "Focus on high contrast moments"
+  },
+  // ============================================
+  // Miscellaneous Tokens
+  // ============================================
+  "Carbon interactive": {
+    "prefix": ["theme", "$interactive"],
+    "body": "$$interactive",
+    "description": "3:1 AA contrast; Selected elements; Active elements; Accent icons"
+  },
+  "Carbon highlight": {
+    "prefix": ["theme", "$highlight"],
+    "body": "$$highlight",
+    "description": "Highlight color"
+  },
+  "Carbon toggle off": {
+    "prefix": ["theme", "$toggle-off"],
+    "body": "$$toggle-off",
+    "description": "Off background; 3:1 AA contrast"
+  },
+  "Carbon overlay": {
+    "prefix": ["theme", "$overlay"],
+    "body": "$$overlay",
+    "description": "Background overlay"
+  },
+  "Carbon skeleton element": {
+    "prefix": ["theme", "$skeleton-element"],
+    "body": "$$skeleton-element",
+    "description": "Skeleton color for text and UI elements"
+  },
+  "Carbon skeleton background": {
+    "prefix": ["theme", "$skeleton-background"],
+    "body": "$$skeleton-background",
+    "description": "Skeleton color for containers"
+  }
+}

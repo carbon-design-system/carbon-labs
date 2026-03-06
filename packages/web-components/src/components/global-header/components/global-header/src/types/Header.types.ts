@@ -138,6 +138,7 @@ export type GlobalActionConfig = {
   label: string;
   carbonIcon: string;
   onClick?: () => void;
+  tooltip?: string;
 };
 
 export interface ManagementConsole {
@@ -264,7 +265,7 @@ export type SidekickConfig = {
   context?: string;
   insights_enabled?: boolean;
   chat_enabled?: boolean;
-  reports_enabled?: boolean;
+  overview_enabled?: boolean;
   tell_me_more_enabled?: boolean;
 };
 
@@ -335,6 +336,7 @@ export interface SolisConfig {
   cdn_hostname: string;
   deployment_environment: solisDeploymentEnvironment;
   product_id: string;
+  backendProxy?: string;
 }
 
 export interface NavigationItem {
@@ -356,7 +358,7 @@ export type SidekickInfo = {
   context?: string;
   insights_enabled?: boolean;
   chat_enabled?: boolean;
-  reports_enabled?: boolean;
+  overview_enabled?: boolean;
   tell_me_more_enabled?: boolean;
 };
 
@@ -366,6 +368,7 @@ interface solisWindowConfig {
   deployment_environment: solisDeploymentEnvironment;
   sidekick?: SidekickInfo;
   product_id: string;
+  backend_proxy?: string;
 }
 
 declare global {

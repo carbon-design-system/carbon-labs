@@ -26,7 +26,7 @@ jobs:
         run: yarn dedupe --check
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-large
     steps:
       - uses: actions/checkout@v5
       - name: Use Node.js 18.x
@@ -88,7 +88,7 @@ jobs:
         run: yarn lint:license
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-large
     steps:
       - uses: actions/checkout@v5
       - name: Use Node.js 18.x

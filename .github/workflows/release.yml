@@ -14,13 +14,9 @@ concurrency:
 
 jobs:
   release:
-<<<<<<< large-runner
-    runs-on: ubuntu-latest-large
-=======
     # Only run if the PR was merged (not just closed)
     if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
->>>>>>> main
+    runs-on: ubuntu-latest-large
     permissions:
       id-token: write
       contents: write

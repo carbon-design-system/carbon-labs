@@ -10,6 +10,7 @@
 
 import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { settings } from '@carbon-labs/utilities';
 import {
   AUTOMATION_HEADER_BASE_CLASS,
@@ -319,7 +320,8 @@ export class HeaderContext extends LitElement {
           <cds-custom-header-global-action
             role="button"
             aria-label="${action.label}"
-            tooltipAlignment="center"
+            tooltip-text="${ifDefined(action.tooltip)}"
+            tooltip-position="bottom"
             class="${AUTOMATION_NAMESPACE_PREFIX}__globalaction"
             @click="${action.onClick}">
             ${renderCarbonIcon(action.carbonIcon, 20, 'icon')}

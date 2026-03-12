@@ -116,7 +116,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
               titleText="Variant selector"
               label="variant"
               items={variants}
-              initialSelectedItem={{ variant: variants[0]?.label }}
+              initialSelectedItem={variants[0]}
               onChange={onVariantChange}
             />
           </Column>

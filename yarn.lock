@@ -1632,6 +1632,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-calendar@workspace:packages/react/src/components/Calendar":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-calendar@workspace:packages/react/src/components/Calendar"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.21.0"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton"

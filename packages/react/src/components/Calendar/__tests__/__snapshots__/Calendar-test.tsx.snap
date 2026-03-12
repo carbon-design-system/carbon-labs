@@ -1,0 +1,1782 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Calendar renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <div
+    aria-label="Calendar"
+    class="clabs--calendar"
+    dir="ltr"
+    role="region"
+  >
+    <div
+      aria-label="Calendar Controls"
+      class="clabs--calendar__toolbar"
+      role="toolbar"
+    >
+      <div
+        class="clabs--calendar__toolbar-left"
+      >
+        <div
+          class="clabs--calendar__date-picker"
+        >
+          <span
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip cds--icon-tooltip"
+          >
+            <div
+              class="cds--tooltip-trigger__wrapper"
+            >
+              <button
+                aria-labelledby="tooltip-:r1:"
+                class="clabs--calendar__date-picker-icon cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M28,4H4C2.9,4,2,4.9,2,6v20c0,1.1,0.9,2,2,2h24c1.1,0,2-0.9,2-2V6C30,4.9,29.1,4,28,4z M28,15H17.8l3.6-3.6L20,10l-6,6l6,6 l1.4-1.4L17.8,17H28v9H12V6h16V15z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-:r1:"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Date picker
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
+          </span>
+        </div>
+      </div>
+      <div
+        class="clabs--calendar__toolbar-right"
+      >
+        <div
+          class="clabs--calendar__toolbar-right-start"
+        >
+          <div
+            class="clabs--calendar__today-btn"
+          >
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom-start cds--tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:r4:"
+                  class="clabs--calendar__link clabs--calendar__today sb-tooltip-trigger cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost"
+                  type="button"
+                >
+                  Today
+                </button>
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:r4:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Monday, January 19, 2026
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+          </div>
+          <div
+            class="clabs--calendar__arrows"
+          >
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip cds--icon-tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:r8:"
+                  class="cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5 8L10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:r8:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Previous
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+            <span
+              class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip cds--icon-tooltip"
+            >
+              <div
+                class="cds--tooltip-trigger__wrapper"
+              >
+                <button
+                  aria-labelledby="tooltip-:rc:"
+                  class="cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <span
+                aria-hidden="true"
+                class="cds--popover"
+                id="tooltip-:rc:"
+                role="tooltip"
+              >
+                <span
+                  class="cds--popover-content cds--tooltip-content"
+                >
+                  Next
+                </span>
+                <span
+                  class="cds--popover-caret"
+                />
+              </span>
+            </span>
+          </div>
+          <div
+            aria-label="January 2026"
+            class="clabs--calendar__toolbar-title"
+            id="calendar-caption"
+          >
+            <span>
+              <span>
+                January 2026
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="clabs--calendar__toolbar-right-end"
+        >
+          <div
+            class="clabs--calendar__switcher"
+          >
+            <div
+              class="cds--content-switcher cds--content-switcher--sm cds--layout--size-sm cds--content-switcher--low-contrast cds--layout-constraint--size__default-md cds--layout-constraint--size__min-sm cds--layout-constraint--size__max-lg"
+              role="tablist"
+            >
+              <button
+                aria-selected="true"
+                class="cds--content-switcher-btn cds--content-switcher--selected"
+                role="tab"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="cds--content-switcher__label"
+                  title="Month"
+                >
+                  Month
+                </span>
+              </button>
+              <button
+                aria-selected="false"
+                class="cds--content-switcher-btn"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                <span
+                  class="cds--content-switcher__label"
+                  title="Week"
+                >
+                  Week
+                </span>
+              </button>
+              <button
+                aria-selected="false"
+                class="cds--content-switcher-btn"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                <span
+                  class="cds--content-switcher__label"
+                  title="Day"
+                >
+                  Day
+                </span>
+              </button>
+            </div>
+          </div>
+          <button
+            class="clabs--calendar__create-event cds--btn cds--btn--md cds--layout--size-md cds--btn--primary"
+            type="button"
+          >
+            New event
+            <svg
+              aria-hidden="true"
+              aria-label="New event"
+              class="cds--btn__icon"
+              fill="currentColor"
+              focusable="false"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              viewBox="0 0 32 32"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="clabs--calendar__body"
+    >
+      <div
+        class="clabs--calendar__date-picker-overlay clabs--calendar__date-picker-overlay-show"
+        role="button"
+        tabindex="0"
+      />
+      <div
+        aria-label="date picker"
+        class="clabs--calendar__date-picker-panel clabs--calendar__date-picker-open clabs--calendar__date-picker-slide clabs--calendar__date-picker-panel-modal"
+        role="group"
+        tabindex="0"
+      >
+        <div
+          class="clabs--calendar__date-picker-close-wrapper"
+        >
+          <span
+            class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--bottom cds--tooltip cds--icon-tooltip"
+          >
+            <div
+              class="cds--tooltip-trigger__wrapper"
+            >
+              <button
+                aria-labelledby="tooltip-:ri:"
+                class="clabs--calendar__date-picker-close cds--btn cds--btn--md cds--layout--size-md cds--btn--ghost cds--btn--icon-only"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  fill="currentColor"
+                  focusable="false"
+                  height="16"
+                  preserveAspectRatio="xMidYMid meet"
+                  viewBox="0 0 32 32"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M28,4H4C2.9,4,2,4.9,2,6v20c0,1.1,0.9,2,2,2h24c1.1,0,2-0.9,2-2V6C30,4.9,29.1,4,28,4z M10,26H4V6h6V26z M28,15H17.8 l3.6-3.6L20,10l-6,6l6,6l1.4-1.4L17.8,17H28v9H12V6h16V15z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <span
+              aria-hidden="true"
+              class="cds--popover"
+              id="tooltip-:ri:"
+              role="tooltip"
+            >
+              <span
+                class="cds--popover-content cds--tooltip-content"
+              >
+                Close date picker
+              </span>
+              <span
+                class="cds--popover-caret"
+              />
+            </span>
+          </span>
+        </div>
+        <div
+          class="cds--form-item clabs--calendar__date-picker"
+        >
+          <div
+            class="cds--date-picker cds--date-picker--single"
+          >
+            <div
+              class="cds--date-picker-container"
+            >
+              <label
+                class="cds--label cds--visually-hidden"
+                dir="auto"
+                for="date-picker-input-id-start"
+              >
+                Date picker
+              </label>
+              <div
+                class="cds--date-picker-input__wrapper"
+              >
+                <span>
+                  <input
+                    class="cds--date-picker__input cds--date-picker__input--md flatpickr-input"
+                    id="date-picker-input-id-start"
+                    pattern="\\d{1,2}\\/\\d{1,2}\\/\\d{4}"
+                    placeholder="mm/dd/yyyy"
+                    type="text"
+                  />
+                  <div
+                    aria-label="calendar-container"
+                    class="flatpickr-calendar animate inline cds--date-picker__calendar"
+                    role="application"
+                    tabindex="-1"
+                  >
+                    <div
+                      class="flatpickr-months"
+                    >
+                      <span
+                        class="flatpickr-prev-month"
+                      >
+                        <svg
+                          aria-label="Previous month"
+                          height="16px"
+                          role="img"
+                          viewBox="0 0 16 16"
+                          width="16px"
+                        >
+                          
+      
+                          <polygon
+                            points="5,8 10,3 10.7,3.7 6.4,8 10.7,12.3 10,13 "
+                          />
+                          
+    
+                        </svg>
+                      </span>
+                      <div
+                        class="flatpickr-month cds--date-picker__month"
+                      >
+                        <div
+                          class="flatpickr-current-month"
+                        >
+                          <span
+                            class="cur-month"
+                          >
+                            January
+                          </span>
+                          <div
+                            class="numInputWrapper"
+                          >
+                            <input
+                              aria-label="Year"
+                              class="numInput cur-year"
+                              tabindex="-1"
+                              type="number"
+                            />
+                            <span
+                              class="arrowUp"
+                            />
+                            <span
+                              class="arrowDown"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <span
+                        class="flatpickr-next-month"
+                      >
+                        <svg
+                          aria-label="Next month"
+                          height="16px"
+                          role="img"
+                          viewBox="0 0 16 16"
+                          width="16px"
+                        >
+                          
+      
+                          <polygon
+                            points="11,8 6,13 5.3,12.3 9.6,8 5.3,3.7 6,3 "
+                          />
+                          
+    
+                        </svg>
+                      </span>
+                    </div>
+                    <div
+                      class="flatpickr-innerContainer"
+                    >
+                      <div
+                        class="flatpickr-rContainer"
+                      >
+                        <div
+                          class="flatpickr-weekdays cds--date-picker__weekdays"
+                        >
+                          <div
+                            class="flatpickr-weekdaycontainer"
+                          >
+                            
+      
+                            <span
+                              class="flatpickr-weekday cds--date-picker__weekday"
+                            >
+                              Sun
+                            </span>
+                            <span
+                              class="flatpickr-weekday cds--date-picker__weekday"
+                            >
+                              Mon
+                            </span>
+                            <span
+                              class="flatpickr-weekday cds--date-picker__weekday"
+                            >
+                              Tue
+                            </span>
+                            <span
+                              class="flatpickr-weekday cds--date-picker__weekday"
+                            >
+                              Wed
+                            </span>
+                            <span
+                              class="flatpickr-weekday cds--date-picker__weekday"
+                            >
+                              Thu
+                            </span>
+                            <span
+                              class="flatpickr-weekday cds--date-picker__weekday"
+                            >
+                              Fri
+                            </span>
+                            <span
+                              class="flatpickr-weekday cds--date-picker__weekday"
+                            >
+                              Sat
+                            </span>
+                            
+      
+                          </div>
+                        </div>
+                        <div
+                          class="flatpickr-days cds--date-picker__days"
+                          tabindex="-1"
+                        >
+                          <div
+                            class="dayContainer"
+                          >
+                            <span
+                              aria-label="December 28, 2025"
+                              class="flatpickr-day prevMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              28
+                            </span>
+                            <span
+                              aria-label="December 29, 2025"
+                              class="flatpickr-day prevMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              29
+                            </span>
+                            <span
+                              aria-label="December 30, 2025"
+                              class="flatpickr-day prevMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              30
+                            </span>
+                            <span
+                              aria-label="December 31, 2025"
+                              class="flatpickr-day prevMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              31
+                            </span>
+                            <span
+                              aria-label="January 1, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              1
+                            </span>
+                            <span
+                              aria-label="January 2, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              2
+                            </span>
+                            <span
+                              aria-label="January 3, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              3
+                            </span>
+                            <span
+                              aria-label="January 4, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              4
+                            </span>
+                            <span
+                              aria-label="January 5, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              5
+                            </span>
+                            <span
+                              aria-label="January 6, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              6
+                            </span>
+                            <span
+                              aria-label="January 7, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              7
+                            </span>
+                            <span
+                              aria-label="January 8, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              8
+                            </span>
+                            <span
+                              aria-label="January 9, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              9
+                            </span>
+                            <span
+                              aria-label="January 10, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              10
+                            </span>
+                            <span
+                              aria-label="January 11, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              11
+                            </span>
+                            <span
+                              aria-label="January 12, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              12
+                            </span>
+                            <span
+                              aria-label="January 13, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              13
+                            </span>
+                            <span
+                              aria-label="January 14, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              14
+                            </span>
+                            <span
+                              aria-label="January 15, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              15
+                            </span>
+                            <span
+                              aria-label="January 16, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              16
+                            </span>
+                            <span
+                              aria-label="January 17, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              17
+                            </span>
+                            <span
+                              aria-label="January 18, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              18
+                            </span>
+                            <span
+                              aria-label="January 19, 2026"
+                              class="flatpickr-day selected cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              19
+                            </span>
+                            <span
+                              aria-label="January 20, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              20
+                            </span>
+                            <span
+                              aria-label="January 21, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              21
+                            </span>
+                            <span
+                              aria-label="January 22, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              22
+                            </span>
+                            <span
+                              aria-label="January 23, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              23
+                            </span>
+                            <span
+                              aria-label="January 24, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              24
+                            </span>
+                            <span
+                              aria-label="January 25, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              25
+                            </span>
+                            <span
+                              aria-label="January 26, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              26
+                            </span>
+                            <span
+                              aria-label="January 27, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              27
+                            </span>
+                            <span
+                              aria-label="January 28, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              28
+                            </span>
+                            <span
+                              aria-label="January 29, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              29
+                            </span>
+                            <span
+                              aria-label="January 30, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              30
+                            </span>
+                            <span
+                              aria-label="January 31, 2026"
+                              class="flatpickr-day cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              31
+                            </span>
+                            <span
+                              aria-label="February 1, 2026"
+                              class="flatpickr-day nextMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              1
+                            </span>
+                            <span
+                              aria-label="February 2, 2026"
+                              class="flatpickr-day nextMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              2
+                            </span>
+                            <span
+                              aria-label="February 3, 2026"
+                              class="flatpickr-day nextMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              3
+                            </span>
+                            <span
+                              aria-label="February 4, 2026"
+                              class="flatpickr-day nextMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              4
+                            </span>
+                            <span
+                              aria-label="February 5, 2026"
+                              class="flatpickr-day nextMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              5
+                            </span>
+                            <span
+                              aria-label="February 6, 2026"
+                              class="flatpickr-day nextMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              6
+                            </span>
+                            <span
+                              aria-label="February 7, 2026"
+                              class="flatpickr-day nextMonthDay cds--date-picker__day"
+                              role="button"
+                              tabindex="-1"
+                            >
+                              7
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <svg
+                    aria-hidden="true"
+                    class="cds--date-picker__icon"
+                    fill="currentColor"
+                    focusable="false"
+                    height="16"
+                    preserveAspectRatio="xMidYMid meet"
+                    role="img"
+                    viewBox="0 0 32 32"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M26,4h-4V2h-2v2h-8V2h-2v2H6C4.9,4,4,4.9,4,6v20c0,1.1,0.9,2,2,2h20c1.1,0,2-0.9,2-2V6C28,4.9,27.1,4,26,4z M26,26H6V12h20 V26z M26,10H6V6h4v2h2V6h8v2h2V6h4V10z"
+                    />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section
+        aria-label="Calendar grid"
+        class="clabs--calendar__calendar clabs--calendar__date-picker-open"
+      >
+        <table
+          aria-labelledby="calendar-caption"
+          class="clabs--calendar__table clabs--calendar__table-xsm clabs--calendar__table-sticky"
+          role="grid"
+          tabindex="0"
+        >
+          <thead>
+            <tr>
+              <th
+                aria-label="Sunday"
+                class="clabs--calendar__th clabs--calendar__th-sm"
+                scope="col"
+              >
+                <div>
+                  S
+                </div>
+              </th>
+              <th
+                aria-label="Monday"
+                class="clabs--calendar__th clabs--calendar__th-sm"
+                scope="col"
+              >
+                <div>
+                  M
+                </div>
+              </th>
+              <th
+                aria-label="Tuesday"
+                class="clabs--calendar__th clabs--calendar__th-sm"
+                scope="col"
+              >
+                <div>
+                  T
+                </div>
+              </th>
+              <th
+                aria-label="Wednesday"
+                class="clabs--calendar__th clabs--calendar__th-sm"
+                scope="col"
+              >
+                <div>
+                  W
+                </div>
+              </th>
+              <th
+                aria-label="Thursday"
+                class="clabs--calendar__th clabs--calendar__th-sm"
+                scope="col"
+              >
+                <div>
+                  T
+                </div>
+              </th>
+              <th
+                aria-label="Friday"
+                class="clabs--calendar__th clabs--calendar__th-sm"
+                scope="col"
+              >
+                <div>
+                  F
+                </div>
+              </th>
+              <th
+                aria-label="Saturday"
+                class="clabs--calendar__th clabs--calendar__th-sm"
+                scope="col"
+              >
+                <div>
+                  S
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                aria-label="Sun Dec 28 2025"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      28
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Mon Dec 29 2025"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      29
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Tue Dec 30 2025"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      30
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Wed Dec 31 2025"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      31
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Thu Jan 01 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      1
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Fri Jan 02 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      2
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Sat Jan 03 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      3
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td
+                aria-label="Sun Jan 04 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      4
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Mon Jan 05 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      5
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Tue Jan 06 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      6
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Wed Jan 07 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      7
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Thu Jan 08 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      8
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Fri Jan 09 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      9
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Sat Jan 10 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      10
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td
+                aria-label="Sun Jan 11 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      11
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Mon Jan 12 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      12
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Tue Jan 13 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      13
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Wed Jan 14 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      14
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Thu Jan 15 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      15
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Fri Jan 16 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      16
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Sat Jan 17 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      17
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td
+                aria-label="Sun Jan 18 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      18
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Mon Jan 19 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      19
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Tue Jan 20 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      20
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Wed Jan 21 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      21
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Thu Jan 22 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      22
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Fri Jan 23 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      23
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Sat Jan 24 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      24
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td
+                aria-label="Sun Jan 25 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      25
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Mon Jan 26 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      26
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Tue Jan 27 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      27
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Wed Jan 28 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      28
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Thu Jan 29 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      29
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Fri Jan 30 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      30
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+              <td
+                aria-label="Sat Jan 31 2026"
+                aria-selected="false"
+                class="clabs--calendar__day clabs--calendar__month-cell selected"
+                tabindex="-1"
+              >
+                <div
+                  class="clabs--calendar__day-content"
+                >
+                  <div
+                    class="clabs--calendar__day-label"
+                  >
+                    <div
+                      class="clabs--calendar__day-number"
+                    >
+                      31
+                    </div>
+                  </div>
+                  <div
+                    class="clabs--calendar__day-events"
+                  />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+    <div
+      aria-hidden="true"
+      class="clabs--calendar__hidden"
+    >
+      0
+    </div>
+  </div>
+</div>
+`;

@@ -13,39 +13,57 @@
 
 // VSCode UI Example Styles
 .vscode-ui {
-  display: flex;
-  inline-size: 100%;
-  block-size: 100vh;
-  background-color: $background;
-  overflow: hidden;
   position: relative;
+  display: flex;
+  overflow: hidden;
+  background-color: $background;
+  block-size: 100vh;
+  inline-size: 100%;
 
   // Override Carbon tooltip focus styles
   .cds--tooltip-trigger__wrapper .cds--btn--ghost:focus {
-    outline: none;
     box-shadow: inset 0 0 0 1px $focus, inset 0 0 0 2px $background;
+    outline: none;
   }
 }
 
 // Vertical toolbar container
 .vscode-ui__toolbar {
   display: flex;
-  block-size: 100%;
   flex-direction: column;
   justify-content: space-between;
   background-color: $layer;
+  block-size: 100%;
   border-inline-end: 1px solid $border-subtle-01;
 }
 
 // Left panel (Explorer/Search)
+@media screen and (prefers-reduced-motion: reduce) {
+  .vscode-ui__left-panel {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    background-color: $layer-01;
+    block-size: 100%;
+    inline-size: 14rem;
+    max-inline-size: calc(100vw - 20rem);
+    transition: none;
+
+    &--collapsed {
+      inline-size: 0;
+      min-inline-size: 0;
+    }
+  }
+}
+
 .vscode-ui__left-panel {
   display: flex;
+  overflow: hidden;
   flex-direction: column;
-  block-size: 100%;
   background-color: $layer-01;
+  block-size: 100%;
   inline-size: 14rem;
   max-inline-size: calc(100vw - 20rem);
-  overflow: hidden;
   transition: inline-size $duration-fast-02 motion(standard, productive);
 
   &--collapsed {
@@ -55,17 +73,33 @@
 }
 
 // Left panel sections (Explorer, Outline, Search)
+@media screen and (prefers-reduced-motion: reduce) {
+  .vscode-ui__section {
+    display: flex;
+    overflow: auto;
+    flex-direction: column;
+    min-block-size: $spacing-07;
+    transition: none;
+
+    &--collapsed {
+      overflow: hidden;
+      block-size: $spacing-07;
+      min-block-size: $spacing-07;
+    }
+  }
+}
+
 .vscode-ui__section {
   display: flex;
-  flex-direction: column;
   overflow: auto;
+  flex-direction: column;
   min-block-size: $spacing-07;
   transition: all $duration-fast-02 motion(standard, productive);
 
   &--collapsed {
+    overflow: hidden;
     block-size: $spacing-07;
     min-block-size: $spacing-07;
-    overflow: hidden;
   }
 }
 
@@ -74,15 +108,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: $spacing-05;
   padding: $spacing-03 $spacing-04;
-  border-bottom: 1px solid $border-subtle;
+  border-block-end: 1px solid $border-subtle;
   background-color: $layer-02;
-  font-weight: 600;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
   cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  gap: $spacing-05;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   -webkit-user-select: none;
   user-select: none;
 
@@ -101,27 +135,27 @@
   }
 
   svg {
-    inline-size: 1rem;
-    block-size: 1rem;
     flex: none;
+    block-size: 1rem;
     color: $icon-primary;
+    inline-size: 1rem;
   }
 }
 
 // Section content area
 .vscode-ui__section-content {
+  block-size: -webkit-fill-available;
   font-size: 13px;
   line-height: 1.5;
-  height: -webkit-fill-available;
 }
 
 // Right container (Editor + Terminal)
 .vscode-ui__right-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
   position: relative;
+  display: flex;
   overflow: hidden;
+  flex: 1;
+  flex-direction: column;
 }
 
 // Code editor area
@@ -132,14 +166,33 @@
 }
 
 // Terminal panel (overlay at bottom)
+@media screen and (prefers-reduced-motion: reduce) {
+  .vscode-ui__terminal-panel {
+    position: absolute;
+    z-index: 1;
+    inset-block-end: 0;
+    background-color: $layer-01;
+    block-size: auto;
+    inline-size: 100%;
+    inset-inline-start: 0;
+    max-block-size: 100vh;
+    min-block-size: $spacing-08;
+    transition: none;
+
+    &--collapsed {
+      block-size: $spacing-08;
+    }
+  }
+}
+
 .vscode-ui__terminal-panel {
   position: absolute;
-  bottom: 0;
-  inset-inline-start: 0;
-  inline-size: 100%;
-  background-color: $layer-01;
   z-index: 1;
+  inset-block-end: 0;
+  background-color: $layer-01;
   block-size: auto;
+  inline-size: 100%;
+  inset-inline-start: 0;
   max-block-size: 100vh;
   min-block-size: $spacing-08;
   transition: block-size $duration-fast-02 motion(standard, productive);
@@ -159,27 +212,39 @@
   align-items: center;
   justify-content: space-between;
   background-color: $layer-02;
-  box-shadow: inset 0px -2px 0px var(--cds-border-subtle);
+  box-shadow: inset 0 -2px 0 var(--cds-border-subtle);
 }
 
 // Terminal tabs container
+@media screen and (prefers-reduced-motion: reduce) {
+  .vscode-ui__terminal-tabs {
+    display: flex;
+    overflow: hidden;
+    flex: 1;
+    flex-direction: column;
+    block-size: min(30vh, 8 * $spacing-08);
+    min-block-size: $spacing-08;
+    transition: none;
+  }
+}
+
 .vscode-ui__terminal-tabs {
-  flex: 1;
-  overflow: hidden;
-  min-block-size: $spacing-08;
-  block-size: min(30vh, 8 * $spacing-08);
   display: flex;
+  overflow: hidden;
+  flex: 1;
   flex-direction: column;
+  block-size: min(30vh, 8 * $spacing-08);
+  min-block-size: $spacing-08;
   transition: block-size $duration-fast-02 motion(standard, productive);
 }
 
 // Terminal content area
 .vscode-ui__terminal-content {
   padding: $spacing-04;
+  color: $text-secondary;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
   line-height: 1.4;
-  color: $text-secondary;
 
   &:focus {
     outline: 2px solid $focus;
@@ -196,26 +261,26 @@
   }
 
   &--vertical::before {
-    content: '';
-    block-size: 100%;
-    inset-inline-start: calc(-1 * $spacing-03);
-    inline-size: calc(100% + $spacing-05);
     position: absolute;
+    block-size: 100%;
+    content: '';
+    inline-size: calc(100% + $spacing-05);
+    inset-inline-start: calc(-1 * $spacing-03);
   }
 
   &--horizontal::before {
-    content: '';
-    block-size: calc(100% + $spacing-05);
-    inset-block-start: calc(-1 * $spacing-03);
-    inline-size: 100%;
     position: absolute;
+    block-size: calc(100% + $spacing-05);
+    content: '';
+    inline-size: 100%;
+    inset-block-start: calc(-1 * $spacing-03);
   }
 }
 
 // Editor content
 .vscode-ui__editor-content {
-  margin: 0;
   padding: $spacing-05;
+  margin: 0;
   font-size: 14px;
   line-height: 1.5;
   outline: none;
@@ -231,10 +296,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  block-size: 100%;
   padding: $spacing-05;
-  font-size: 14px;
+  block-size: 100%;
   color: $text-secondary;
+  font-size: 14px;
 }
 
 // Terminal text variants
@@ -263,6 +328,5 @@
 
 // Storybook docs preview adjustment
 .sbdocs-preview .vscode-ui {
-  aspect-ratio: 16/9;
-  block-size: unset;
+  block-size: max(70vh, 36rem);
 }

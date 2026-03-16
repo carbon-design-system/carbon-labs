@@ -26,7 +26,7 @@ jobs:
         run: yarn dedupe --check
 
   build:
-    runs-on: ubuntu-latest-large
+    runs-on: ubuntu-latest-larger-disk
     steps:
       - uses: actions/checkout@v6
       - name: Use Node.js version from .nvmrc
@@ -88,7 +88,7 @@ jobs:
         run: yarn lint:license
 
   test:
-    runs-on: ubuntu-latest-large
+    runs-on: ubuntu-latest-larger-disk
     steps:
       - uses: actions/checkout@v6
       - name: Use Node.js version from .nvmrc

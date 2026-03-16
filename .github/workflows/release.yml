@@ -16,7 +16,7 @@ jobs:
   release:
     # Only run if the PR was merged (not just closed)
     if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest-large
+    runs-on: ubuntu-latest-larger-disk
     permissions:
       id-token: write
       contents: write

@@ -1,0 +1,281 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { DatePickerState } from './states';
+import {
+  plainDateToISOString,
+  comparePlainDates,
+} from './temporal-utils';
+import type {
+  DatePickerContext,
+  DatePickerEvent,
+  StateAction,
+  DateSelectPayload,
+  InputFocusPayload,
+  ValidationErrorPayload,
+} from './types';
+
+/**
+ * Action map - updates context during transitions
+ */
+type ActionMap = Record<
+  DatePickerState,
+  Partial<Record<string, StateAction>>
+>;
+
+
+/**
+ * Actions for state transitions
+ */
+export const actions: ActionMap = {
+  [DatePickerState.IDLE]: {
+    /** Action for INPUT_BLUR event */
+    INPUT_BLUR: () => ({
+      isFocused: false,
+    }),
+    /** Action for OUTSIDE_CLICK event */
+    OUTSIDE_CLICK: () => ({
+      isOpen: false,
+      isFocused: false,
+    }),
+    /** Action for CALENDAR_CLOSE event */
+    CALENDAR_CLOSE: () => ({
+      isOpen: false,
+    }),
+  },
+
+  [DatePickerState.FOCUSED]: {
+    /**
+     * Action for INPUT_FOCUS event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @param {DatePickerEvent} event - The event
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    INPUT_FOCUS: (context, event) => {
+      const payload = event.payload as InputFocusPayload;
+      return {
+        isFocused: true,
+        lastFocusedInput: payload?.inputType || 'from',
+      };
+    },
+  },
+
+  [DatePickerState.CALENDAR_OPEN]: {
+    /** Action for CALENDAR_OPEN event */
+    CALENDAR_OPEN: () => ({
+      isOpen: true,
+    }),
+    /** Action for CALENDAR_ICON_CLICK event */
+    CALENDAR_ICON_CLICK: () => ({
+      isOpen: true,
+    }),
+    /** Action for TAB_KEY event */
+    TAB_KEY: () => ({
+      isOpen: true,
+      isFocused: true,
+    }),
+  },
+
+  [DatePickerState.SELECTING_START]: {
+    /**
+     * Action for CALENDAR_OPEN event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    CALENDAR_OPEN: (context) => {
+      if (context.mode === 'range') {
+        return {
+          isOpen: true,
+          startDate: null,
+          endDate: null,
+        };
+      }
+      return { isOpen: true };
+    },
+  },
+
+  [DatePickerState.SELECTING_END]: {
+    /**
+     * Action for RANGE_START_SELECT event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @param {DatePickerEvent} event - The event
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    RANGE_START_SELECT: (context, event) => {
+      const payload = event.payload as DateSelectPayload;
+      const startDate = payload?.date;
+
+      if (!startDate) {
+        return {};
+      }
+
+      return {
+        startDate,
+        endDate: null, // Reset end date when selecting new start
+        value: plainDateToISOString(startDate),
+      };
+    },
+  },
+
+  [DatePickerState.DATE_SELECTED]: {
+    /**
+     * Action for DATE_SELECT event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @param {DatePickerEvent} event - The event
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    DATE_SELECT: (context, event) => {
+      const payload = event.payload as DateSelectPayload;
+      const date = payload?.date;
+
+      if (!date) {
+        return {};
+      }
+
+      if (context.mode === 'single') {
+        return {
+          startDate: date,
+          value: plainDateToISOString(date),
+          isOpen: context.closeOnSelect ? false : context.isOpen,
+        };
+      }
+
+      return {};
+    },
+
+    /**
+     * Action for RANGE_END_SELECT event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @param {DatePickerEvent} event - The event
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    RANGE_END_SELECT: (context, event) => {
+      const payload = event.payload as DateSelectPayload;
+      const endDate = payload?.date;
+      const { startDate } = context;
+
+      if (!endDate || !startDate) {
+        return {};
+      }
+
+      // Ensure end date is after start date, swap if needed
+      let finalStartDate = startDate;
+      let finalEndDate = endDate;
+
+      if (comparePlainDates(endDate, startDate) < 0) {
+        finalStartDate = endDate;
+        finalEndDate = startDate;
+      }
+
+      return {
+        startDate: finalStartDate,
+        endDate: finalEndDate,
+        value: `${plainDateToISOString(finalStartDate)}/${plainDateToISOString(finalEndDate)}`,
+        isOpen: context.closeOnSelect ? false : context.isOpen,
+      };
+    },
+
+    /** Action for CALENDAR_CLOSE event */
+    CALENDAR_CLOSE: () => ({
+      isOpen: false,
+    }),
+  },
+
+  [DatePickerState.DISABLED]: {
+    /** Action for DISABLE event */
+    DISABLE: () => ({
+      isDisabled: true,
+      isOpen: false,
+    }),
+    /** Action for ENABLE event */
+    ENABLE: () => ({
+      isDisabled: false,
+    }),
+  },
+
+  [DatePickerState.READONLY]: {
+    /** Action for SET_READONLY event */
+    SET_READONLY: () => ({
+      isReadonly: true,
+      isOpen: false,
+    }),
+    /** Action for UNSET_READONLY event */
+    UNSET_READONLY: () => ({
+      isReadonly: false,
+    }),
+  },
+
+  [DatePickerState.ERROR]: {
+    /**
+     * Action for VALIDATION_ERROR event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @param {DatePickerEvent} event - The event
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    VALIDATION_ERROR: (context, event) => {
+      const payload = event.payload as ValidationErrorPayload;
+      return {
+        isInvalid: true,
+        errorMessage: payload?.message || 'Invalid date',
+      };
+    },
+    /** Action for CLEAR_ERROR event */
+    CLEAR_ERROR: () => ({
+      isInvalid: false,
+      errorMessage: undefined,
+    }),
+    /** Action for VALUE_CHANGE event */
+    VALUE_CHANGE: () => ({
+      isInvalid: false,
+      errorMessage: undefined,
+    }),
+  },
+};
+
+/**
+ * Get action for a specific state and event
+ *
+ * @param {DatePickerState} state - The current state
+ * @param {string} eventType - The event type
+ * @returns {StateAction | undefined} The action function or undefined
+ */
+export function getAction(
+  state: DatePickerState,
+  eventType: string
+): StateAction | undefined {
+  return actions[state]?.[eventType];
+}
+
+/**
+ * Execute an action and return context updates
+ *
+ * @param {DatePickerState} state - The current state
+ * @param {string} eventType - The event type
+ * @param {DatePickerContext} context - The current context
+ * @param {DatePickerEvent} event - The event
+ * @returns {Partial<DatePickerContext>} Partial context updates
+ */
+export function executeAction(
+  state: DatePickerState,
+  eventType: string,
+  context: DatePickerContext,
+  event: DatePickerEvent
+): Partial<DatePickerContext> {
+  const action = getAction(state, eventType);
+  if (!action) {
+    return {};
+  }
+  return action(context, event);
+}
+
+// Made with Bob

@@ -21,14 +21,81 @@ $css--plex: true !default;
 
 :host(#{$prefix}-date-picker) {
   @extend .#{$prefix}--date-picker;
+  
+  // Make host the positioning context for the calendar
+  position: relative;
 
-  #floating-menu-container {
+  // Set anchor name on the input wrapper for CSS anchor positioning
+  #{$prefix}-date-picker-input {
+    .#{$prefix}--date-picker-input__wrapper {
+      anchor-name: --date-picker-input;
+    }
+  }
+
+  // Popover API styling with CSS anchor positioning
+  .#{$prefix}--date-picker__calendar-popover {
+    // Reset popover defaults
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    
+    // Position using CSS anchor positioning
     position: absolute;
-    inline-size: 100%;
+    position-anchor: --date-picker-input;
+    inset-area: block-end span-inline-start;
+    margin-block-start: $spacing-02;
+    
+    // Fallback positioning for browsers without anchor positioning
+    @supports not (inset-area: block-end) {
+      position: absolute;
+      inset-block-start: anchor(bottom);
+      inset-inline-start: anchor(left);
+      margin-block-start: $spacing-02;
+    }
+    
+    // Ensure calendar is above other content
+    z-index: 9000;
+    
+    // Handle viewport overflow
+    position-try-options: --bottom-left, --top-left, --bottom-right, --top-right;
+    
+    @position-try --bottom-left {
+      inset-area: block-end span-inline-start;
+      margin-block-start: $spacing-02;
+    }
+    
+    @position-try --top-left {
+      inset-area: block-start span-inline-start;
+      margin-block-end: $spacing-02;
+    }
+    
+    @position-try --bottom-right {
+      inset-area: block-end span-inline-end;
+      margin-block-start: $spacing-02;
+    }
+    
+    @position-try --top-right {
+      inset-area: block-start span-inline-end;
+      margin-block-end: $spacing-02;
+    }
   }
 
   .#{$prefix}--date-picker__calendar.open {
     margin-block-start: 0;
+  }
+
+  // Calendar container styling
+  .#{$prefix}--date-picker__calendar-container {
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 100%;
+    z-index: 9000;
+    
+    cds-date-picker-calendar {
+      display: block;
+      margin-block-start: $spacing-02;
+    }
   }
 
   .flatpickr-next-month,
@@ -182,4 +249,130 @@ $css--plex: true !default;
 :host(#{$prefix}-date-picker-input[ai-label])
   .#{$prefix}--date-picker__input--decorator {
   @include ai-gradient;
+}
+
+// Calendar component styles (applied in Shadow DOM)
+:host(#{$prefix}-date-picker-calendar) {
+  display: block;
+  
+  .#{$prefix}--date-picker__calendar {
+    display: block;
+    background-color: $layer;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+    padding: $spacing-03;
+    min-inline-size: rem(288px);
+  }
+  
+  // Month header styling
+  .#{$prefix}--date-picker__month {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-block-end: $spacing-03;
+  }
+  
+  .#{$prefix}--date-picker__month-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: rem(40px);
+    inline-size: rem(40px);
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: $layer-hover;
+    }
+    
+    &:focus {
+      outline: 2px solid $focus;
+      outline-offset: -2px;
+    }
+    
+    svg {
+      fill: $icon-primary;
+    }
+  }
+  
+  .#{$prefix}--date-picker__current-month {
+    flex: 1;
+    text-align: center;
+    font-size: rem(14px);
+    font-weight: 600;
+    color: $text-primary;
+  }
+  
+  // Weekdays grid - 7 columns
+  .#{$prefix}--date-picker__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    margin-block-end: $spacing-02;
+  }
+  
+  .#{$prefix}--date-picker__weekday {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: rem(40px);
+    inline-size: rem(40px);
+    font-size: rem(12px);
+    font-weight: 600;
+    color: $text-primary;
+  }
+  
+  // Days grid - 7 columns, 6 rows
+  .#{$prefix}--date-picker__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+  }
+  
+  .#{$prefix}--date-picker__day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    block-size: rem(40px);
+    inline-size: rem(40px);
+    border: none;
+    background-color: transparent;
+    color: $text-primary;
+    cursor: pointer;
+    font-size: rem(14px);
+    
+    &:hover:not(:disabled) {
+      background-color: $layer-hover;
+    }
+    
+    &:focus {
+      outline: 2px solid $focus;
+      outline-offset: -2px;
+    }
+    
+    &:disabled {
+      color: $text-disabled;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+    
+    &.selected {
+      background-color: $background-brand;
+      color: $text-on-color;
+    }
+    
+    &.today:not(.selected) {
+      color: $link-primary;
+      font-weight: 600;
+    }
+    
+    &.inRange {
+      background-color: $highlight;
+    }
+    
+    &.prevMonthDay,
+    &.nextMonthDay {
+      color: $text-secondary;
+    }
+  }
 }

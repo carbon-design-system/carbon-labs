@@ -40,6 +40,11 @@ const stateTransitions: TransitionMap = {
     [DatePickerEventEnum.OUTSIDE_CLICK]: DatePickerState.IDLE,
     [DatePickerEventEnum.ESCAPE_KEY]: DatePickerState.FOCUSED,
     [DatePickerEventEnum.CALENDAR_CLOSE]: DatePickerState.FOCUSED,
+    [DatePickerEventEnum.PREV_MONTH]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.NEXT_MONTH]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.PREV_YEAR]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.NEXT_YEAR]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.GO_TO_TODAY]: DatePickerState.CALENDAR_OPEN,
   },
   [DatePickerState.SELECTING_START]: {
     [DatePickerEventEnum.RANGE_START_SELECT]: DatePickerState.SELECTING_END,
@@ -111,6 +116,7 @@ export class DatePickerStateMachine {
       dateFormat: 'm/d/Y',
       allowInput: true,
       closeOnSelect: true,
+      viewDate: null,
       ...partial,
     };
   }

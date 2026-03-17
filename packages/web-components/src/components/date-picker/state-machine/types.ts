@@ -100,6 +100,9 @@ export interface DatePickerContext {
   
   /** Error message if any */
   errorMessage?: string;
+  
+  /** The currently viewed month in the calendar (using Temporal API) */
+  viewDate: Temporal.PlainDate | null;
 }
 
 /**

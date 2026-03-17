@@ -33,6 +33,20 @@ type ActionMap = Record<
  */
 export const actions: ActionMap = {
   [DatePickerState.IDLE]: {
+    /**
+     * Action for CALENDAR_ICON_CLICK event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    CALENDAR_ICON_CLICK: (context) => {
+      // Initialize viewDate to today if not set
+      const viewDate = context.viewDate || context.startDate || Temporal.Now.plainDateISO();
+      return {
+        isOpen: true,
+        viewDate,
+      };
+    },
     /** Action for INPUT_BLUR event */
     INPUT_BLUR: () => ({
       isFocused: false,
@@ -63,21 +77,115 @@ export const actions: ActionMap = {
         lastFocusedInput: payload?.inputType || 'from',
       };
     },
+    /**
+     * Action for CALENDAR_OPEN event from FOCUSED state
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    CALENDAR_OPEN: (context) => {
+      // Initialize viewDate to today if not set
+      const viewDate = context.viewDate || context.startDate || Temporal.Now.plainDateISO();
+      return {
+        isOpen: true,
+        viewDate,
+      };
+    },
   },
 
   [DatePickerState.CALENDAR_OPEN]: {
-    /** Action for CALENDAR_OPEN event */
-    CALENDAR_OPEN: () => ({
-      isOpen: true,
-    }),
-    /** Action for CALENDAR_ICON_CLICK event */
-    CALENDAR_ICON_CLICK: () => ({
-      isOpen: true,
-    }),
+    /**
+     * Action for CALENDAR_OPEN event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    CALENDAR_OPEN: (context) => {
+      // Initialize viewDate to today if not set
+      const viewDate = context.viewDate || context.startDate || Temporal.Now.plainDateISO();
+      return {
+        isOpen: true,
+        viewDate,
+      };
+    },
+    /**
+     * Action for CALENDAR_ICON_CLICK event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    CALENDAR_ICON_CLICK: (context) => {
+      // Initialize viewDate to today if not set
+      const viewDate = context.viewDate || context.startDate || Temporal.Now.plainDateISO();
+      return {
+        isOpen: true,
+        viewDate,
+      };
+    },
     /** Action for TAB_KEY event */
     TAB_KEY: () => ({
       isOpen: true,
       isFocused: true,
+    }),
+    /**
+     * Action for PREV_MONTH event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    PREV_MONTH: (context) => {
+      if (!context.viewDate) {
+        return {};
+      }
+      return {
+        viewDate: context.viewDate.add({ months: -1 }),
+      };
+    },
+    /**
+     * Action for NEXT_MONTH event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    NEXT_MONTH: (context) => {
+      if (!context.viewDate) {
+        return {};
+      }
+      return {
+        viewDate: context.viewDate.add({ months: 1 }),
+      };
+    },
+    /**
+     * Action for PREV_YEAR event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    PREV_YEAR: (context) => {
+      if (!context.viewDate) {
+        return {};
+      }
+      return {
+        viewDate: context.viewDate.add({ years: -1 }),
+      };
+    },
+    /**
+     * Action for NEXT_YEAR event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    NEXT_YEAR: (context) => {
+      if (!context.viewDate) {
+        return {};
+      }
+      return {
+        viewDate: context.viewDate.add({ years: 1 }),
+      };
+    },
+    /** Action for GO_TO_TODAY event */
+    GO_TO_TODAY: () => ({
+      viewDate: Temporal.Now.plainDateISO(),
     }),
   },
 

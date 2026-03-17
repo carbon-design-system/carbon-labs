@@ -1,6 +1,6 @@
 # Date Picker State Machine
 
-A lightweight, framework-agnostic state machine for managing date picker logic including focus management, range selection, and calendar toggling.
+A lightweight, framework-agnostic state machine for managing date picker logic including focus management, range selection, calendar toggling, and date navigation.
 
 ## Architecture
 
@@ -16,13 +16,14 @@ The state machine is designed with the following principles:
 
 ```
 state-machine/
-├── types.ts           # Type definitions
-├── states.ts          # State and event enums
-├── guards.ts          # Transition guards (validation)
-├── actions.ts         # State update actions
-├── effects.ts         # Side effects
-├── machine.ts         # Core state machine
-├── index.ts           # Public API
+├── types.ts                      # Type definitions
+├── states.ts                     # State and event enums
+├── guards.ts                     # Transition guards (validation)
+├── actions.ts                    # State update actions
+├── effects.ts                    # Side effects
+├── machine.ts                    # Core state machine
+├── temporal-utils.ts             # Temporal API utilities for date operations
+├── index.ts                      # Public API
 └── adapters/
     └── web-component-adapter.ts  # Web Component integration
 ```
@@ -47,9 +48,11 @@ Key events that trigger state transitions:
 
 - `INPUT_FOCUS` / `INPUT_BLUR` - Input focus changes
 - `CALENDAR_OPEN` / `CALENDAR_CLOSE` - Calendar visibility changes
+- `CALENDAR_ICON_CLICK` - Calendar icon clicked
 - `DATE_SELECT` - Single date selected
 - `RANGE_START_SELECT` / `RANGE_END_SELECT` - Range dates selected
-- `OUTSIDE_CLICK` - Click outside component
+- `NEXT_MONTH` / `PREV_MONTH` - Navigate between months
+- `OUTSIDE_CLICK` - Click outside component (closes calendar)
 - `ESCAPE_KEY` / `TAB_KEY` / `ENTER_KEY` - Keyboard events
 - `DISABLE` / `ENABLE` - Disabled state changes
 - `SET_READONLY` / `UNSET_READONLY` - Readonly state changes
@@ -269,10 +272,173 @@ describe('DatePickerStateMachine', () => {
 });
 ```
 
-## Future Enhancements
+## Calendar Integration
 
-- Add more sophisticated date validation
-- Support for custom date formats
-- Support for disabled dates
-- Support for multiple date selection
+The state machine now includes full calendar integration with the following features:
+
+### Calendar Rendering
+
+The calendar is rendered using the `calendar-renderer.ts` component, which provides:
+
+- Month/year navigation with previous/next buttons
+- Weekday headers (localized)
+- 7-column grid layout for days
+- Visual indicators for:
+  - Selected dates (highlighted in brand color)
+  - Today's date (bold with link color)
+  - Disabled dates (grayed out, not clickable)
+  - Previous/next month days (secondary text color)
+
+### Date Selection Flow
+
+1. User clicks calendar icon or focuses input → `CALENDAR_ICON_CLICK` or `INPUT_FOCUS` event
+2. Calendar opens → `CALENDAR_OPEN` state
+3. User clicks a date → `DATE_SELECT` event
+4. Date is validated against min/max constraints
+5. Input field is populated with formatted date (MM/DD/YYYY)
+6. Calendar closes (if `closeOnSelect` is true)
+
+### Month Navigation
+
+```typescript
+// Navigate to next month
+machine.send(DatePickerEvent.NEXT_MONTH);
+// Context updated: { currentMonth: Temporal.PlainDate }
+
+// Navigate to previous month
+machine.send(DatePickerEvent.PREV_MONTH);
+// Context updated: { currentMonth: Temporal.PlainDate }
+```
+
+### Outside Click Handling
+
+The date picker automatically closes the calendar when clicking outside:
+
+```typescript
+// Implemented in date-picker.ts
+private _handleOutsideClick = (event: MouseEvent) => {
+  if (!this.open) return;
+  
+  const target = event.target as Node;
+  if (!this.contains(target) && !this.shadowRoot?.contains(target)) {
+    this.open = false;
+    this._machine?.send(DatePickerEvent.OUTSIDE_CLICK);
+  }
+};
+```
+
+### Temporal API Integration
+
+The state machine uses the Temporal API for robust date handling:
+
+```typescript
+// temporal-utils.ts provides utilities for:
+- dateToPlainDate(date: Date): Temporal.PlainDate
+- plainDateToDate(date: Temporal.PlainDate): Date
+- parseDateToPlainDate(input: string | Date | Temporal.PlainDate): Temporal.PlainDate
+- formatDate(date: Temporal.PlainDate, format: string): string
+- isDateInRange(date: Temporal.PlainDate, min?: Date, max?: Date): boolean
+```
+
+### Min/Max Date Constraints
+
+Dates outside the min/max range are automatically disabled:
+
+```typescript
+const machine = new DatePickerStateMachine({
+  mode: 'single',
+  minDate: new Date('2024-01-01'),
+  maxDate: new Date('2024-12-31')
+});
+
+// Dates before 2024-01-01 or after 2024-12-31 will be:
+// - Visually disabled (grayed out)
+// - Not clickable
+// - Prevented from selection by guards
+```
+
+## Recent Fixes and Improvements
+
+### Date Selection Input Population
+- Fixed issue where selecting a date in the calendar didn't populate the input field
+- Input now correctly displays selected date in MM/DD/YYYY format
+- Implemented in `_handleStateChange` method of date-picker.ts
+
+### Min/Max Date Parsing
+- Fixed off-by-one month error in date conversions
+- Corrected Temporal.PlainDate to JavaScript Date conversions (month offset handling)
+- Added `parseDateToPlainDate` utility for robust date parsing from multiple formats
+
+### AI Label Positioning
+- Adjusted AI label spacing from `$spacing-10` (48px) to `$spacing-08` (32px)
+- Improved visual alignment with calendar icon
+- Proper vertical centering using `transform: translateY(-50%)`
+
+### Outside Click Detection
+- Added document-level click listener to detect clicks outside the date picker
+- Calendar automatically closes when clicking outside
+- Proper cleanup of event listeners in `disconnectedCallback`
+
+## Current Implementation Status
+
+### ✅ Completed Features
+- Calendar rendering with Carbon Design System styling
+- Month navigation (previous/next)
+- Date selection (single mode)
+- Input field population on date selection
+- Min/max date constraints (visual and functional)
+- Outside click detection and calendar closing
+- Proper Temporal API integration
+- AI label positioning
+
+### 🚧 Pending Features
+- Keyboard navigation (arrow keys, Enter, Escape, Tab)
+- Range selection mode
+- Localization support (date formats, RTL languages)
+- Accessibility enhancements (ARIA labels, screen reader support)
 - Performance optimizations for large date ranges
+
+## Testing
+
+The state machine is designed to be easily testable:
+
+```typescript
+import { DatePickerStateMachine, DatePickerState, DatePickerEvent } from './state-machine';
+
+describe('DatePickerStateMachine', () => {
+  it('should transition from IDLE to FOCUSED on INPUT_FOCUS', () => {
+    const machine = new DatePickerStateMachine();
+    
+    expect(machine.getState()).toBe(DatePickerState.IDLE);
+    
+    machine.send(DatePickerEvent.INPUT_FOCUS);
+    
+    expect(machine.getState()).toBe(DatePickerState.FOCUSED);
+    expect(machine.getContext().isFocused).toBe(true);
+  });
+
+  it('should handle calendar opening and date selection', () => {
+    const machine = new DatePickerStateMachine({ mode: 'single' });
+    
+    machine.send(DatePickerEvent.CALENDAR_OPEN);
+    expect(machine.getState()).toBe(DatePickerState.CALENDAR_OPEN);
+    
+    machine.send(DatePickerEvent.DATE_SELECT, {
+      date: new Date('2024-01-15')
+    });
+    
+    expect(machine.getState()).toBe(DatePickerState.DATE_SELECTED);
+    expect(machine.getContext().selectedDate).toBeDefined();
+  });
+
+  it('should close calendar on outside click', () => {
+    const machine = new DatePickerStateMachine({ mode: 'single' });
+    
+    machine.send(DatePickerEvent.CALENDAR_OPEN);
+    expect(machine.getState()).toBe(DatePickerState.CALENDAR_OPEN);
+    
+    machine.send(DatePickerEvent.OUTSIDE_CLICK);
+    expect(machine.getState()).toBe(DatePickerState.IDLE);
+  });
+});
+```

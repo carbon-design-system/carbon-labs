@@ -61,6 +61,52 @@ export function parseISOToPlainDate(
 }
 
 /**
+ * Parse a date string in various formats to Temporal.PlainDate
+ * Supports: ISO (YYYY-MM-DD), US (MM/DD/YYYY), and JavaScript Date objects
+ *
+ * @param {string | Date} dateInput - Date string or Date object
+ * @returns Temporal.PlainDate or null if invalid
+ */
+export function parseDateToPlainDate(
+  dateInput: string | Date | null | undefined
+): Temporal.PlainDate | null {
+  if (!dateInput) {
+    return null;
+  }
+
+  // Handle Date objects
+  if (dateInput instanceof Date) {
+    return dateToPlainDate(dateInput);
+  }
+
+  // Try ISO format first (YYYY-MM-DD)
+  try {
+    return Temporal.PlainDate.from(dateInput);
+  } catch {
+    // Not ISO format, try parsing MM/DD/YYYY or M/D/YYYY
+    const parts = dateInput.split('/');
+    if (parts.length === 3) {
+      const month = parseInt(parts[0], 10);
+      const day = parseInt(parts[1], 10);
+      const year = parseInt(parts[2], 10);
+      
+      if (!isNaN(month) && !isNaN(day) && !isNaN(year)) {
+        try {
+          return Temporal.PlainDate.from({
+            year,
+            month,
+            day,
+          });
+        } catch {
+          return null;
+        }
+      }
+    }
+    return null;
+  }
+}
+
+/**
  * Compare two Temporal.PlainDate objects
  *
  * @param {Temporal.PlainDate} date1 - First date

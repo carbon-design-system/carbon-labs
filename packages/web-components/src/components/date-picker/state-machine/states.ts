@@ -69,6 +69,13 @@ export enum DatePickerEvent {
   CALENDAR_OPEN = 'CALENDAR_OPEN',
   CALENDAR_CLOSE = 'CALENDAR_CLOSE',
 
+  // Calendar navigation events
+  PREV_MONTH = 'PREV_MONTH',
+  NEXT_MONTH = 'NEXT_MONTH',
+  PREV_YEAR = 'PREV_YEAR',
+  NEXT_YEAR = 'NEXT_YEAR',
+  GO_TO_TODAY = 'GO_TO_TODAY',
+
   // Date selection events
   DATE_SELECT = 'DATE_SELECT',
   RANGE_START_SELECT = 'RANGE_START_SELECT',

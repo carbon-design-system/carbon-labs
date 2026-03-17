@@ -16,6 +16,7 @@ import { carbonElement as customElement } from './temp-imports/globals/decorator
 import ChevronLeft16 from '@carbon/icons/es/chevron--left/16.js';
 import ChevronRight16 from '@carbon/icons/es/chevron--right/16.js';
 import { iconLoader } from './temp-imports/globals/internal/icon-loader';
+import { plainDateToDate } from './state-machine/temporal-utils';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
 
@@ -40,6 +41,12 @@ class CDSDatePickerCalendar extends LitElement {
    */
   @property({ type: Array })
   selectedDates: Temporal.PlainDate[] = [];
+
+  /**
+   * The view date from the state machine (used to sync calendar month)
+   */
+  @property({ type: Object })
+  viewDate?: Temporal.PlainDate;
 
   /**
    * The minimum selectable date
@@ -201,7 +208,8 @@ class CDSDatePickerCalendar extends LitElement {
     for (let i = 0; i < 7; i++) {
       const date = baseDate.add({ days: i });
       const formatter = new Intl.DateTimeFormat(this.locale, { weekday: 'short' });
-      let name = formatter.format(new Date(date.toString()));
+      // Use plainDateToDate to properly convert Temporal.PlainDate to Date
+      let name = formatter.format(plainDateToDate(date));
       
       // Special handling for Thursday to match Carbon's "Th" format
       if (name === 'Thu') {
@@ -220,10 +228,12 @@ class CDSDatePickerCalendar extends LitElement {
    * Render the calendar header with month/year and navigation
    */
   private _renderHeader() {
+    // Convert Temporal.PlainYearMonth to Date properly to avoid month offset issues
+    const firstDayOfMonth = this._currentMonth.toPlainDate({ day: 1 });
     const monthName = new Intl.DateTimeFormat(this.locale, {
       month: 'long',
       year: 'numeric',
-    }).format(new Date(this._currentMonth.toString()));
+    }).format(plainDateToDate(firstDayOfMonth));
 
     return html`
       <div class="${prefix}--date-picker__month">
@@ -305,6 +315,21 @@ class CDSDatePickerCalendar extends LitElement {
         })}
       </div>
     `;
+  }
+
+  /**
+   * Lifecycle method called when properties change
+   * @param {Map<string, any>} changedProperties - Changed properties
+   */
+  updated(changedProperties: Map<string, any>) {
+    // Sync calendar month with viewDate from state machine
+    if (changedProperties.has('viewDate') && this.viewDate) {
+      // Create PlainYearMonth from PlainDate
+      this._currentMonth = Temporal.PlainYearMonth.from({
+        year: this.viewDate.year,
+        month: this.viewDate.month,
+      });
+    }
   }
 
   /**

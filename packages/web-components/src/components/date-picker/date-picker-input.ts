@@ -73,6 +73,13 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
    */
   private _handleClickWrapper(event: MouseEvent) {
     if (event.target === this._iconNode) {
+      // Dispatch custom event for calendar icon click
+      this.dispatchEvent(
+        new CustomEvent(`${prefix}-date-picker-icon-click`, {
+          bubbles: true,
+          composed: true,
+        })
+      );
       this.input.focus();
     }
   }
@@ -87,6 +94,42 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
     const { value } = target as HTMLInputElement;
     this.value = value;
   }
+
+  /**
+   * Handles `focus` event on `<input>` in the shadow DOM.
+   *
+   * @param {FocusEvent} _event - The focus event.
+   */
+  private _handleFocus = (_event: FocusEvent) => {
+    // Dispatch custom event for input focus
+    this.dispatchEvent(
+      new CustomEvent(`${prefix}-date-picker-input-focus`, {
+        bubbles: true,
+        composed: true,
+        detail: {
+          inputType: this.kind || 'from',
+        },
+      })
+    );
+  };
+
+  /**
+   * Handles `blur` event on `<input>` in the shadow DOM.
+   *
+   * @param {FocusEvent} _event - The blur event.
+   */
+  private _handleBlur = (_event: FocusEvent) => {
+    // Dispatch custom event for input blur
+    this.dispatchEvent(
+      new CustomEvent(`${prefix}-date-picker-input-blur`, {
+        bubbles: true,
+        composed: true,
+        detail: {
+          inputType: this.kind || 'from',
+        },
+      })
+    );
+  };
 
   /**
    * @returns The template for the the calendar icon.
@@ -256,6 +299,8 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
       warnText,
       _handleClickWrapper: handleClickWrapper,
       _handleInput: handleInput,
+      _handleFocus: handleFocus,
+      _handleBlur: handleBlur,
       _hasAILabel: hasAILabel,
     } = this;
 
@@ -334,6 +379,8 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
             .value="${ifDefined(value)}"
             ?data-invalid="${normalizedProps.invalid}"
             @input="${handleInput}"
+            @focus="${handleFocus}"
+            @blur="${handleBlur}"
             ?readonly="${readonly}" />
           ${normalizedProps.icon || this._renderIcon()}
           <slot

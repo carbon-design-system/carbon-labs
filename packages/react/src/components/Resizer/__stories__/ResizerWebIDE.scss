@@ -118,6 +118,14 @@
     block-size: $spacing-07;
     min-block-size: calc($spacing-07 + 1px);
   }
+
+  &--explorer:not(&--collapsed) {
+    block-size: 100%;
+  }
+
+  &--outline:not(&--collapsed) {
+    block-size: 150px;
+  }
 }
 
 // Section Headers

@@ -327,13 +327,11 @@ const CollapsibleSection = ({
   onToggle,
   children,
   className,
-  style,
 }) => (
   <div
     className={cx('web-ide__section', className, {
       'web-ide__section--collapsed': collapsed,
-    })}
-    style={style}>
+    })}>
     <SectionHeader title={title} collapsed={collapsed} onToggle={onToggle} />
     {!collapsed && <div className="web-ide__section-content">{children}</div>}
   </div>
@@ -356,7 +354,7 @@ const ExplorerView = ({
       title="Explorer"
       collapsed={explorerCollapsed}
       onToggle={onToggleExplorer}
-      style={{ height: explorerCollapsed ? undefined : '100%' }}>
+      className="web-ide__section--explorer">
       <FileExplorer onFileSelect={onFileSelect} />
     </CollapsibleSection>
 
@@ -377,7 +375,7 @@ const ExplorerView = ({
       title="Outline"
       collapsed={outlineCollapsed}
       onToggle={onToggleOutline}
-      style={{ height: outlineCollapsed ? undefined : '150px' }}>
+      className="web-ide__section--outline">
       <OutlineView />
     </CollapsibleSection>
   </>

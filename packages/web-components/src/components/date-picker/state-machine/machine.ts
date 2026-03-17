@@ -30,7 +30,6 @@ const stateTransitions: TransitionMap = {
   },
   [DatePickerState.FOCUSED]: {
     [DatePickerEventEnum.INPUT_BLUR]: DatePickerState.IDLE,
-    [DatePickerEventEnum.TAB_KEY]: DatePickerState.CALENDAR_OPEN,
     [DatePickerEventEnum.CALENDAR_OPEN]: DatePickerState.CALENDAR_OPEN,
     [DatePickerEventEnum.DISABLE]: DatePickerState.DISABLED,
   },
@@ -39,12 +38,23 @@ const stateTransitions: TransitionMap = {
     [DatePickerEventEnum.RANGE_START_SELECT]: DatePickerState.SELECTING_END,
     [DatePickerEventEnum.OUTSIDE_CLICK]: DatePickerState.IDLE,
     [DatePickerEventEnum.ESCAPE_KEY]: DatePickerState.FOCUSED,
+    [DatePickerEventEnum.TAB_KEY]: DatePickerState.IDLE,
     [DatePickerEventEnum.CALENDAR_CLOSE]: DatePickerState.FOCUSED,
     [DatePickerEventEnum.PREV_MONTH]: DatePickerState.CALENDAR_OPEN,
     [DatePickerEventEnum.NEXT_MONTH]: DatePickerState.CALENDAR_OPEN,
     [DatePickerEventEnum.PREV_YEAR]: DatePickerState.CALENDAR_OPEN,
     [DatePickerEventEnum.NEXT_YEAR]: DatePickerState.CALENDAR_OPEN,
     [DatePickerEventEnum.GO_TO_TODAY]: DatePickerState.CALENDAR_OPEN,
+    // Keyboard navigation
+    [DatePickerEventEnum.ARROW_UP]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.ARROW_DOWN]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.ARROW_LEFT]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.ARROW_RIGHT]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.PAGE_UP]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.PAGE_DOWN]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.HOME_KEY]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.END_KEY]: DatePickerState.CALENDAR_OPEN,
+    [DatePickerEventEnum.ENTER_KEY]: DatePickerState.FOCUSED,
   },
   [DatePickerState.SELECTING_START]: {
     [DatePickerEventEnum.RANGE_START_SELECT]: DatePickerState.SELECTING_END,
@@ -117,6 +127,7 @@ export class DatePickerStateMachine {
       allowInput: true,
       closeOnSelect: true,
       viewDate: null,
+      focusedDate: null,
       ...partial,
     };
   }
@@ -149,8 +160,9 @@ export class DatePickerStateMachine {
     }
 
     // Execute actions to update context
+    // Actions are defined for the current state, not the next state
     const contextUpdates = executeAction(
-      nextState,
+      this.currentState,
       event.type,
       this.context,
       event

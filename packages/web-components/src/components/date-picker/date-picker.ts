@@ -66,6 +66,11 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   private _adapter: WebComponentAdapter | null = null;
 
   /**
+   * Timestamp of when calendar was last closed via Tab key
+   */
+  private _lastTabCloseTime = 0;
+
+  /**
    * @returns The effective date picker mode, determined by the child `<cds-date-picker-input>`.
    */
   private get _mode() {
@@ -94,6 +99,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     const {selectedDates} = detail;
     if (selectedDates && Array.isArray(selectedDates)) {
       this._value = selectedDates
+        .filter((date) => date != null) // Filter out null/undefined values
         .map((date) => {
           if (typeof date === 'string') {
             return date;
@@ -131,8 +137,17 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     if (this._adapter && !this.disabled && !this.readonly) {
       const {inputType} = event.detail || {};
       this._adapter.send(DatePickerEvent.INPUT_FOCUS, {inputType});
-      // Open calendar when input is focused (matching current Carbon behavior)
-      this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
+      
+      // Don't auto-open calendar if we JUST closed it via Tab key (within 100ms)
+      // This prevents the immediate reopen when Tab moves focus to input,
+      // but allows normal opening after that brief window
+      const timeSinceTabClose = Date.now() - this._lastTabCloseTime;
+      const shouldSkipOpen = timeSinceTabClose < 100;
+      
+      if (!shouldSkipOpen) {
+        // Open calendar when input is focused (matching current Carbon behavior)
+        this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
+      }
     }
   };
 
@@ -197,26 +212,47 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * @param {DatePickerContext} transition.context - Current context
    */
   private _handleStateChange = (transition: StateTransition) => {
-    const {to, context} = transition;
+    const {to, from, context} = transition;
     const newState = to as DatePickerState;
 
     // Update open property based on state
     if (newState === DatePickerState.CALENDAR_OPEN) {
       this.open = true;
-    } else if (
-      newState === DatePickerState.IDLE ||
-      newState === DatePickerState.FOCUSED
-    ) {
+      
+      // If we're staying in CALENDAR_OPEN state (keyboard navigation),
+      // trigger a re-render to update the calendar with new focusedDate/viewDate
+      if (from === DatePickerState.CALENDAR_OPEN) {
+        this.requestUpdate();
+      }
+    } else if (newState === DatePickerState.IDLE) {
       this.open = false;
+    } else if (newState === DatePickerState.FOCUSED) {
+      // Only close calendar if not coming from CALENDAR_OPEN (Enter key)
+      // When coming from CALENDAR_OPEN, the action sets context.isOpen
+      if (from !== DatePickerState.CALENDAR_OPEN) {
+        this.open = false;
+      } else {
+        // Use the isOpen value from context (set by ENTER_KEY action)
+        this.open = context.isOpen ?? false;
+      }
+    } else if (newState === DatePickerState.DATE_SELECTED) {
+      // Update open property based on context
+      this.open = context.isOpen ?? false;
+      // Trigger re-render to update the calendar visibility
+      this.requestUpdate();
     }
 
-    // Dispatch change event when dates are selected
-    if (
-      newState === DatePickerState.DATE_SELECTED
-    ) {
+    // Dispatch change event and update input when dates are selected
+    // This handles both DATE_SELECTED state and FOCUSED state (from ENTER_KEY)
+    const shouldUpdateInput =
+      newState === DatePickerState.DATE_SELECTED ||
+      (newState === DatePickerState.FOCUSED && from === DatePickerState.CALENDAR_OPEN && context.startDate);
+    
+    if (shouldUpdateInput) {
+      // Only include non-null dates in selectedDates array
       const selectedDates = context.endDate
-        ? [context.startDate, context.endDate]
-        : [context.startDate];
+        ? [context.startDate, context.endDate].filter((date) => date != null)
+        : context.startDate ? [context.startDate] : [];
 
       // Update input field value with formatted date
       if (this._dateInteractNode && context.startDate) {
@@ -490,6 +526,177 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   };
 
   /**
+   * Handle keyboard events for calendar navigation
+   *
+   * @param {KeyboardEvent} event - The keyboard event
+   */
+  private _handleKeyDown = (event: KeyboardEvent) => {
+    if (!this._adapter) {
+      return;
+    }
+
+    const { key } = event;
+
+    // Handle Tab key
+    if (key === 'Tab') {
+      const composedPath = event.composedPath();
+      const target = composedPath[0] as HTMLElement;
+      
+      // Check if the target has the calendar class or is within an element with that class
+      const isFocusInCalendar = target.classList?.contains('cds--date-picker__calendar') ||
+        target.closest?.('.cds--date-picker__calendar') !== null;
+      
+      // If calendar is open and focus is in calendar, close it and move focus to next element
+      if (this.open && isFocusInCalendar) {
+        event.preventDefault(); // Prevent default Tab behavior
+        
+        // Record the time when calendar was closed via Tab
+        // This is used to prevent immediate auto-reopen
+        this._lastTabCloseTime = Date.now();
+        
+        this._adapter.send(DatePickerEvent.TAB_KEY);
+        
+        // Find and focus the next tabbable element after this date picker
+        this._focusNextElement(event.shiftKey);
+        return;
+      }
+    }
+
+    // Only handle other keyboard events when calendar is open AND focus is in calendar
+    if (!this.open) {
+      return;
+    }
+    
+    // Get the actual target from the composed path (handles shadow DOM)
+    const composedPath = event.composedPath();
+    const target = composedPath[0] as HTMLElement;
+    const input = this.shadowRoot?.querySelector('input');
+    
+    // Only handle arrow keys, Page Up/Down, Home/End when focus is in calendar, not on input
+    if (target === input) {
+      return;
+    }
+    
+    // Check if the target has the calendar class or is within an element with that class
+    // The calendar div is inside the calendar renderer's shadow DOM
+    const isFocusInCalendar = target.classList?.contains('cds--date-picker__calendar') ||
+      target.closest?.('.cds--date-picker__calendar') !== null;
+    
+    if (!isFocusInCalendar) {
+      return;
+    }
+
+    // Handle Escape key - close calendar
+    if (key === 'Escape') {
+      event.preventDefault();
+      this.open = false;
+      this._adapter.send(DatePickerEvent.ESCAPE_KEY);
+      return;
+    }
+
+    // Handle Enter key - select focused date
+    if (key === 'Enter') {
+      event.preventDefault();
+      this._adapter.send(DatePickerEvent.ENTER_KEY);
+      return;
+    }
+
+    // Handle arrow keys - navigate dates
+    if (key === 'ArrowUp') {
+      event.preventDefault();
+      this._adapter.send(DatePickerEvent.ARROW_UP);
+      return;
+    }
+
+    if (key === 'ArrowDown') {
+      event.preventDefault();
+      this._adapter.send(DatePickerEvent.ARROW_DOWN);
+      return;
+    }
+
+    if (key === 'ArrowLeft') {
+      event.preventDefault();
+      this._adapter.send(DatePickerEvent.ARROW_LEFT);
+      return;
+    }
+
+    if (key === 'ArrowRight') {
+      event.preventDefault();
+      this._adapter.send(DatePickerEvent.ARROW_RIGHT);
+      return;
+    }
+
+    // Handle Page Up/Down - navigate months
+    if (key === 'PageUp') {
+      event.preventDefault();
+      this._adapter.send(DatePickerEvent.PAGE_UP);
+      return;
+    }
+
+    if (key === 'PageDown') {
+      event.preventDefault();
+      this._adapter.send(DatePickerEvent.PAGE_DOWN);
+      return;
+    }
+
+    // Handle Home/End - navigate to start/end of week
+    if (key === 'Home') {
+      event.preventDefault();
+      this._adapter.send(DatePickerEvent.HOME_KEY);
+      return;
+    }
+
+    if (key === 'End') {
+      event.preventDefault();
+      this._adapter.send(DatePickerEvent.END_KEY);
+      return;
+    }
+  };
+
+  /**
+   * Find and focus the next tabbable element after the date picker
+   * @param {boolean} backwards - Whether to tab backwards (Shift+Tab)
+   */
+  private _focusNextElement(backwards = false) {
+    // Get all tabbable elements in the document
+    const tabbableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const allTabbable = Array.from(document.querySelectorAll(tabbableSelector)) as HTMLElement[];
+    
+    // Find the index of this date picker component
+    const currentIndex = allTabbable.findIndex(el => this.contains(el) || el === this);
+    
+    if (currentIndex === -1) {
+      return; // Couldn't find current element
+    }
+    
+    // Find the next element after all elements within this date picker
+    let nextIndex = currentIndex;
+    
+    if (backwards) {
+      // Tab backwards - find previous element before this date picker
+      for (let i = currentIndex - 1; i >= 0; i--) {
+        if (!this.contains(allTabbable[i])) {
+          nextIndex = i;
+          break;
+        }
+      }
+    } else {
+      // Tab forwards - find next element after this date picker
+      for (let i = currentIndex + 1; i < allTabbable.length; i++) {
+        if (!this.contains(allTabbable[i])) {
+          nextIndex = i;
+          break;
+        }
+      }
+    }
+    
+    // Focus the next element
+    if (nextIndex !== currentIndex && allTabbable[nextIndex]) {
+      allTabbable[nextIndex].focus();
+    }
+  }
+
+  /**
    * Lifecycle callback when element is connected
    */
   connectedCallback() {
@@ -497,6 +704,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     this._initializeDatePicker();
     // Add outside click listener
     document.addEventListener('click', this._handleOutsideClick, true);
+    // Add keyboard event listener
+    document.addEventListener('keydown', this._handleKeyDown, true);
   }
 
   /**
@@ -505,6 +714,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   disconnectedCallback() {
     // Remove outside click listener
     document.removeEventListener('click', this._handleOutsideClick, true);
+    // Remove keyboard event listener
+    document.removeEventListener('keydown', this._handleKeyDown, true);
     this._releaseDatePicker();
     super.disconnectedCallback();
   }
@@ -604,6 +815,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
               .maxDate="${this.maxDate ? Temporal.PlainDate.from(this.maxDate) : undefined}"
               .selectedDates="${selectedDates}"
               .viewDate="${context?.viewDate || null}"
+              .focusedDate="${context?.focusedDate || null}"
               @cds-date-picker-calendar-date-select="${this._handleCalendarDateSelect}"
               @cds-date-picker-calendar-month-change="${this._handleCalendarMonthChange}">
             </cds-date-picker-calendar>

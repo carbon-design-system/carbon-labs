@@ -87,7 +87,20 @@ export enum DatePickerEvent {
   TAB_KEY = 'TAB_KEY',
   SHIFT_TAB_KEY = 'SHIFT_TAB_KEY',
   ENTER_KEY = 'ENTER_KEY',
-  ARROW_KEY = 'ARROW_KEY',
+  
+  // Arrow key navigation
+  ARROW_UP = 'ARROW_UP',
+  ARROW_DOWN = 'ARROW_DOWN',
+  ARROW_LEFT = 'ARROW_LEFT',
+  ARROW_RIGHT = 'ARROW_RIGHT',
+  
+  // Page navigation
+  PAGE_UP = 'PAGE_UP',
+  PAGE_DOWN = 'PAGE_DOWN',
+  
+  // Week navigation
+  HOME_KEY = 'HOME_KEY',
+  END_KEY = 'END_KEY',
 
   // State change events
   DISABLE = 'DISABLE',

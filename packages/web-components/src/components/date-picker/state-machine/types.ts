@@ -103,6 +103,9 @@ export interface DatePickerContext {
   
   /** The currently viewed month in the calendar (using Temporal API) */
   viewDate: Temporal.PlainDate | null;
+  
+  /** The date that currently has keyboard focus in the calendar */
+  focusedDate: Temporal.PlainDate | null;
 }
 
 /**

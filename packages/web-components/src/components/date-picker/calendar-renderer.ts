@@ -49,6 +49,12 @@ class CDSDatePickerCalendar extends LitElement {
   viewDate?: Temporal.PlainDate;
 
   /**
+   * The focused date for keyboard navigation
+   */
+  @property({ type: Object })
+  focusedDate?: Temporal.PlainDate | null;
+
+  /**
    * The minimum selectable date
    */
   @property({ type: Object })
@@ -140,6 +146,32 @@ class CDSDatePickerCalendar extends LitElement {
   }
 
   /**
+   * Check if previous month navigation should be disabled
+   */
+  private _isPrevMonthDisabled(): boolean {
+    if (!this.minDate) {
+      return false;
+    }
+    // Disable if going to previous month would be before minDate's month
+    const prevMonth = this._currentMonth.subtract({ months: 1 });
+    const prevMonthLastDay = prevMonth.toPlainDate({ day: prevMonth.daysInMonth });
+    return Temporal.PlainDate.compare(prevMonthLastDay, this.minDate) < 0;
+  }
+
+  /**
+   * Check if next month navigation should be disabled
+   */
+  private _isNextMonthDisabled(): boolean {
+    if (!this.maxDate) {
+      return false;
+    }
+    // Disable if going to next month would be after maxDate's month
+    const nextMonth = this._currentMonth.add({ months: 1 });
+    const nextMonthFirstDay = nextMonth.toPlainDate({ day: 1 });
+    return Temporal.PlainDate.compare(nextMonthFirstDay, this.maxDate) > 0;
+  }
+
+  /**
    * Check if a date is selected
    * @param {Temporal.PlainDate} date - The date to check
    */
@@ -175,6 +207,17 @@ class CDSDatePickerCalendar extends LitElement {
   private _isToday(date: Temporal.PlainDate): boolean {
     const today = Temporal.Now.plainDateISO();
     return Temporal.PlainDate.compare(date, today) === 0;
+  }
+
+  /**
+   * Check if a date is focused (for keyboard navigation)
+   * @param {Temporal.PlainDate} date - The date to check
+   */
+  private _isDateFocused(date: Temporal.PlainDate): boolean {
+    if (!this.focusedDate) {
+      return false;
+    }
+    return Temporal.PlainDate.compare(date, this.focusedDate) === 0;
   }
 
   /**
@@ -235,11 +278,16 @@ class CDSDatePickerCalendar extends LitElement {
       year: 'numeric',
     }).format(plainDateToDate(firstDayOfMonth));
 
+    const isPrevDisabled = this._isPrevMonthDisabled();
+    const isNextDisabled = this._isNextMonthDisabled();
+
     return html`
       <div class="${prefix}--date-picker__month">
         <button
           type="button"
           class="${prefix}--date-picker__month-nav ${prefix}--date-picker__month-nav--prev"
+          tabindex="-1"
+          ?disabled="${isPrevDisabled}"
           @click="${this._handlePrevMonth}"
           aria-label="Previous month">
           ${iconLoader(ChevronLeft16)}
@@ -250,6 +298,8 @@ class CDSDatePickerCalendar extends LitElement {
         <button
           type="button"
           class="${prefix}--date-picker__month-nav ${prefix}--date-picker__month-nav--next"
+          tabindex="-1"
+          ?disabled="${isNextDisabled}"
           @click="${this._handleNextMonth}"
           aria-label="Next month">
           ${iconLoader(ChevronRight16)}
@@ -283,13 +333,14 @@ class CDSDatePickerCalendar extends LitElement {
     const currentMonthValue = this._currentMonth.month;
 
     return html`
-      <div class="${prefix}--date-picker__days">
+      <div class="${prefix}--date-picker__days" role="grid">
         ${days.map((date) => {
           const isCurrentMonth = date.month === currentMonthValue;
           const isDisabled = this._isDateDisabled(date);
           const isSelected = this._isDateSelected(date);
           const isInRange = this._isDateInRange(date);
           const isToday = this._isToday(date);
+          const isFocused = this._isDateFocused(date);
 
           const dayClasses = classMap({
             [`${prefix}--date-picker__day`]: true,
@@ -300,12 +351,14 @@ class CDSDatePickerCalendar extends LitElement {
             'inRange': isInRange,
             'today': isToday && !isSelected,
             'no-border': isToday && isSelected,
+            'focused': isFocused,
           });
 
           return html`
             <button
               type="button"
               class="${dayClasses}"
+              tabindex="-1"
               ?disabled="${isDisabled}"
               @click="${() => this._handleDateSelect(date)}"
               aria-label="${date.toString()}">
@@ -337,7 +390,7 @@ class CDSDatePickerCalendar extends LitElement {
    */
   render() {
     return html`
-      <div class="${prefix}--date-picker__calendar">
+      <div class="${prefix}--date-picker__calendar" tabindex="0">
         ${this._renderHeader()} ${this._renderWeekdays()} ${this._renderDays()}
       </div>
     `;

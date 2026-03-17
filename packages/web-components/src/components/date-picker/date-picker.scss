@@ -40,6 +40,11 @@ $css--plex: true !default;
     border: none;
     background: transparent;
     
+    // Remove focus outline from popover
+    &:focus {
+      outline: none;
+    }
+    
     // Position using CSS anchor positioning
     position: absolute;
     position-anchor: --date-picker-input;
@@ -83,6 +88,13 @@ $css--plex: true !default;
 
   .#{$prefix}--date-picker__calendar.open {
     margin-block-start: 0;
+  }
+  
+  // Remove focus outline from calendar container
+  .#{$prefix}--date-picker__calendar {
+    &:focus {
+      outline: none;
+    }
   }
 
   // Calendar container styling
@@ -254,6 +266,7 @@ $css--plex: true !default;
 // Calendar component styles (applied in Shadow DOM)
 :host(#{$prefix}-date-picker-calendar) {
   display: block;
+  outline: none;
   
   .#{$prefix}--date-picker__calendar {
     display: block;
@@ -261,6 +274,10 @@ $css--plex: true !default;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
     padding: $spacing-03;
     min-inline-size: rem(288px);
+    
+    &:focus {
+      outline: none;
+    }
   }
   
   // Month header styling
@@ -373,6 +390,13 @@ $css--plex: true !default;
     &.prevMonthDay,
     &.nextMonthDay {
       color: $text-secondary;
+    }
+    
+    // Keyboard focus state (different from browser :focus)
+    &.focused:not(.selected) {
+      outline: 2px solid $focus;
+      outline-offset: -2px;
+      background-color: $layer-hover;
     }
   }
 }

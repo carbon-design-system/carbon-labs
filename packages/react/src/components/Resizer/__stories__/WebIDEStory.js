@@ -1,0 +1,804 @@
+// cspell:ignore resizer
+/* eslint-disable react/prop-types */
+/* eslint-disable jsdoc/require-param */
+/* eslint-disable react/forbid-component-props */
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { Resizer } from '../components/Resizer';
+import {
+  ChevronDown,
+  ChevronUp,
+  Folders,
+  Search,
+  SettingsAdjust,
+  OpenPanelBottom,
+  OpenPanelFilledBottom,
+  OpenPanelFilledLeft,
+  OpenPanelLeft,
+  OpenPanelFilledRight,
+  OpenPanelRight,
+  Close,
+} from '@carbon/react/icons';
+import {
+  Search as SearchComponent,
+  Layer,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  IconButton,
+  TreeView,
+  TreeNode,
+  Button,
+  OverflowMenu,
+  OverflowMenuItem,
+} from '@carbon/react';
+
+const VIEWS = {
+  EXPLORER: 'explorer',
+  SEARCH: 'search',
+};
+
+const FILE_CONTENTS = {
+  'App.tsx': `import React from 'react';
+import { Resizer } from '@carbon/ibm-products';
+
+const App = () => {
+  return (
+    <div className="app">
+      <h1>Hello World</h1>
+      <p>This is a resizable layout demo</p>
+    </div>
+  );
+};
+
+export default App;`,
+  'index.tsx': `import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);`,
+  'Header.tsx': `import React from 'react';
+
+export const Header = () => {
+  return (
+    <header>
+      <h1>My Application</h1>
+    </header>
+  );
+};`,
+  'Footer.tsx': `import React from 'react';
+
+export const Footer = () => {
+  return (
+    <footer>
+      <p>&copy; Copyright IBM Corp. 2026</p>
+    </footer>
+  );
+};`,
+};
+
+/**
+ * Top toolbar component with collapse buttons
+ */
+const TopToolbar = ({
+  collapsed,
+  onTogglePrimarySidebar,
+  onToggleSecondarySidebar,
+  onTogglePanel,
+}) => (
+  <div className="web-ide__top-toolbar">
+    <div className="web-ide__top-toolbar-left">
+      <span className="web-ide__top-toolbar-title">Web IDE Demo</span>
+    </div>
+    <div className="web-ide__top-toolbar-right">
+      <IconButton
+        label={
+          collapsed.primarySidebar
+            ? 'Show Primary Sidebar'
+            : 'Hide Primary Sidebar'
+        }
+        align="left"
+        kind="ghost"
+        isSelected={!collapsed.primarySidebar}
+        size="md"
+        onClick={onTogglePrimarySidebar}>
+        {collapsed.primarySidebar ? (
+          <OpenPanelLeft size={16} />
+        ) : (
+          <OpenPanelFilledLeft size={16} />
+        )}
+      </IconButton>
+      <IconButton
+        label={collapsed.panel ? 'Show Panel' : 'Hide Panel'}
+        align="left"
+        kind="ghost"
+        isSelected={!collapsed.panel}
+        size="md"
+        onClick={onTogglePanel}>
+        {collapsed.panel ? (
+          <OpenPanelBottom size={16} />
+        ) : (
+          <OpenPanelFilledBottom size={16} />
+        )}
+      </IconButton>
+      <IconButton
+        label={
+          collapsed.secondarySidebar
+            ? 'Show Secondary Sidebar'
+            : 'Hide Secondary Sidebar'
+        }
+        align="left"
+        kind="ghost"
+        isSelected={!collapsed.secondarySidebar}
+        size="md"
+        onClick={onToggleSecondarySidebar}>
+        {collapsed.secondarySidebar ? (
+          <OpenPanelRight size={16} />
+        ) : (
+          <OpenPanelFilledRight size={16} />
+        )}
+      </IconButton>
+    </div>
+  </div>
+);
+
+/**
+ * Vertical toolbar (Activity Bar)
+ */
+const VerticalToolbar = ({
+  activeView,
+  onViewChange,
+  primarySidebarCollapsed,
+}) => (
+  <div className="web-ide__activity-bar">
+    <div className="web-ide__activity-bar-top">
+      <Button
+        hasIconOnly
+        renderIcon={Folders}
+        iconDescription="Explorer"
+        kind="ghost"
+        tooltipPosition="right"
+        size="md"
+        isSelected={activeView === VIEWS.EXPLORER && !primarySidebarCollapsed}
+        onClick={() => onViewChange(VIEWS.EXPLORER)}
+      />
+      <Button
+        hasIconOnly
+        renderIcon={Search}
+        iconDescription="Search"
+        kind="ghost"
+        tooltipPosition="right"
+        size="md"
+        isSelected={activeView === VIEWS.SEARCH && !primarySidebarCollapsed}
+        onClick={() => onViewChange(VIEWS.SEARCH)}
+      />
+    </div>
+    <div className="web-ide__activity-bar-bottom">
+      <OverflowMenu
+        renderIcon={SettingsAdjust}
+        iconDescription="Settings"
+        aria-label="Settings"
+        align="right"
+        direction="top"
+        size="md">
+        <OverflowMenuItem itemText="Preferences" />
+        <OverflowMenuItem itemText="Extensions" />
+        <OverflowMenuItem itemText="Keyboard Shortcuts" />
+        <OverflowMenuItem hasDivider itemText="About" />
+      </OverflowMenu>
+    </div>
+  </div>
+);
+
+/**
+ * Collapsible section header
+ */
+const SectionHeader = ({ title, collapsed, onToggle }) => (
+  <Layer>
+    <div
+      className="web-ide__section-header"
+      onClick={onToggle}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onToggle();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-expanded={!collapsed}
+      aria-label={`${collapsed ? 'Expand' : 'Collapse'} ${title}`}>
+      <span>{title}</span>
+      {collapsed ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
+    </div>
+  </Layer>
+);
+
+/**
+ * File explorer tree
+ */
+const FileExplorer = ({ onFileSelect }) => (
+  <TreeView label="File Explorer" hideLabel size="xs" onSelect={onFileSelect}>
+    <TreeNode id="src" label="src" value="src" isExpanded>
+      <TreeNode id="app" label="App.tsx" value="App.tsx" />
+      <TreeNode id="index" label="index.tsx" value="index.tsx" />
+      <TreeNode
+        id="components"
+        label="components"
+        value="components"
+        isExpanded>
+        <TreeNode id="header" label="Header.tsx" value="Header.tsx" />
+        <TreeNode id="footer" label="Footer.tsx" value="Footer.tsx" />
+      </TreeNode>
+    </TreeNode>
+  </TreeView>
+);
+
+/**
+ * Code outline tree
+ */
+const OutlineView = () => (
+  <TreeView label="Outline" hideLabel size="xs">
+    <TreeNode id="functions" label="Functions" value="Functions" isExpanded>
+      <TreeNode id="handleClick" label="handleClick()" value="handleClick()" />
+      <TreeNode id="render" label="render()" value="render()" />
+    </TreeNode>
+    <TreeNode
+      id="components-outline"
+      label="Components"
+      value="Components"
+      isExpanded>
+      <TreeNode id="header-component" label="Header" value="Header" />
+    </TreeNode>
+  </TreeView>
+);
+
+/**
+ * Primary sidebar with explorer and search views
+ */
+const PrimarySideBar = ({
+  activeView,
+  collapsed,
+  explorerCollapsed,
+  outlineCollapsed,
+  onToggleExplorer,
+  onToggleOutline,
+  onFileSelect,
+  resizerProps,
+  explorerResizerRef,
+  primarySidebarResizerRef,
+  updateAllResizerAriaValues,
+}) => {
+  useEffect(() => {
+    updateAllResizerAriaValues();
+  }, [
+    activeView,
+    explorerCollapsed,
+    outlineCollapsed,
+    collapsed,
+    updateAllResizerAriaValues,
+  ]);
+
+  return (
+    <>
+      <div
+        className={`web-ide__primary-sidebar ${
+          collapsed ? 'web-ide__primary-sidebar--collapsed' : ''
+        }`}>
+        {activeView === VIEWS.EXPLORER && (
+          <>
+            <div
+              className={`web-ide__section ${
+                explorerCollapsed ? 'web-ide__section--collapsed' : ''
+              }`}
+              style={{ height: explorerCollapsed ? undefined : '100%' }}>
+              <SectionHeader
+                title="Explorer"
+                collapsed={explorerCollapsed}
+                onToggle={onToggleExplorer}
+              />
+              {!explorerCollapsed && (
+                <div className="web-ide__section-content">
+                  <FileExplorer onFileSelect={onFileSelect} />
+                </div>
+              )}
+            </div>
+
+            <Resizer
+              {...resizerProps}
+              ref={explorerResizerRef}
+              orientation="horizontal"
+              thickness={1}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              onResizeEnd={(event, ref) => {
+                const prevSibling = ref.current?.previousElementSibling;
+                const nextSibling = ref.current?.nextElementSibling;
+                if (prevSibling && nextSibling) {
+                  const prevHeight = parseFloat(
+                    prevSibling.style.height || prevSibling.offsetHeight
+                  );
+                  const nextHeight = parseFloat(
+                    nextSibling.style.height || nextSibling.offsetHeight
+                  );
+                  const total = prevHeight + nextHeight;
+                  if (total > 0) {
+                    const percentage = Math.round((prevHeight / total) * 100);
+                    ref.current.setAttribute(
+                      'aria-valuenow',
+                      String(percentage)
+                    );
+                    ref.current.setAttribute(
+                      'aria-expanded',
+                      String(percentage > 0)
+                    );
+                  }
+                }
+                resizerProps.onResizeEnd?.(event, ref);
+              }}
+            />
+
+            <div
+              className={`web-ide__section ${
+                outlineCollapsed ? 'web-ide__section--collapsed' : ''
+              }`}
+              style={{ height: outlineCollapsed ? undefined : '150px' }}>
+              <SectionHeader
+                title="Outline"
+                collapsed={outlineCollapsed}
+                onToggle={onToggleOutline}
+              />
+              {!outlineCollapsed && (
+                <div className="web-ide__section-content">
+                  <OutlineView />
+                </div>
+              )}
+            </div>
+          </>
+        )}
+
+        {activeView === VIEWS.SEARCH && (
+          <div className="web-ide__section">
+            <div className="web-ide__section-content">
+              <Layer>
+                <SearchComponent
+                  labelText="Search"
+                  placeholder="Search in files"
+                  size="sm"
+                />
+              </Layer>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <Resizer
+        {...resizerProps}
+        ref={primarySidebarResizerRef}
+        orientation="vertical"
+        thickness={1}
+        style={{ display: collapsed ? 'none' : 'block' }}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        onResizeEnd={(_event, _ref) => {
+          updateAllResizerAriaValues();
+          resizerProps.onResizeEnd?.(_event, _ref);
+        }}
+      />
+    </>
+  );
+};
+
+/**
+ * Main content area with editor
+ */
+const MainContent = ({ tabs, selectedIndex, onTabChange, onTabClose }) => (
+  <div className="web-ide__editor">
+    {tabs.length > 0 ? (
+      <Tabs
+        selectedIndex={selectedIndex}
+        onChange={onTabChange}
+        size="sm"
+        dismissable
+        onTabCloseRequest={onTabClose}>
+        <TabList contained>
+          {tabs.map((tab, index) => (
+            <Tab key={index}>{tab.label}</Tab>
+          ))}
+        </TabList>
+        <TabPanels>
+          {tabs.map((tab, index) => (
+            <TabPanel key={index}>
+              <pre className="web-ide__editor-content">{tab.content}</pre>
+            </TabPanel>
+          ))}
+        </TabPanels>
+      </Tabs>
+    ) : (
+      <div className="web-ide__empty-state">No files open</div>
+    )}
+  </div>
+);
+
+/**
+ * Secondary sidebar
+ */
+const SecondarySideBar = ({
+  collapsed,
+  secondarySidebarResizerRef,
+  updateAllResizerAriaValues,
+}) => {
+  useEffect(() => {
+    updateAllResizerAriaValues();
+  }, [collapsed, updateAllResizerAriaValues]);
+
+  return (
+    <>
+      <Resizer
+        ref={secondarySidebarResizerRef}
+        orientation="vertical"
+        thickness={1}
+        style={{ display: collapsed ? 'none' : 'block' }}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        onResizeEnd={() => {
+          updateAllResizerAriaValues();
+        }}
+      />
+      <div
+        className={`web-ide__secondary-sidebar ${
+          collapsed ? 'web-ide__secondary-sidebar--collapsed' : ''
+        }`}>
+        <div className="web-ide__empty-state">Secondary Sidebar</div>
+      </div>
+    </>
+  );
+};
+
+/**
+ * Panel component (bottom panel)
+ */
+const Panel = ({
+  collapsed,
+  onToggle,
+  panelResizerRef,
+  updateAllResizerAriaValues,
+}) => {
+  const [panelTabIndex, setPanelTabIndex] = useState(3);
+
+  useEffect(() => {
+    updateAllResizerAriaValues();
+  }, [collapsed, updateAllResizerAriaValues]);
+
+  return (
+    <>
+      <Resizer
+        ref={panelResizerRef}
+        orientation="horizontal"
+        thickness={1}
+        style={{ display: collapsed ? 'none' : 'block' }}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        onResizeEnd={() => {
+          updateAllResizerAriaValues();
+        }}
+      />
+      <div
+        className={`web-ide__panel ${
+          collapsed ? 'web-ide__panel--collapsed' : ''
+        }`}>
+        <div className="web-ide__panel-tabs">
+          <Tabs
+            selectedIndex={panelTabIndex}
+            onChange={({ selectedIndex: newIndex }) =>
+              setPanelTabIndex(newIndex)
+            }>
+            <div className="web-ide__panel-tabs-wrapper">
+              <TabList aria-label="Panel tabs">
+                <Tab>Problems</Tab>
+                <Tab>Output</Tab>
+                <Tab>Debug Console</Tab>
+                <Tab>Terminal</Tab>
+              </TabList>
+              <IconButton
+                label="Close Panel"
+                align="left"
+                kind="ghost"
+                size="md"
+                onClick={onToggle}>
+                <Close size={16} />
+              </IconButton>
+            </div>
+            <TabPanels>
+              <TabPanel>
+                <div className="web-ide__panel-content">
+                  <div>⚠️ No problems detected</div>
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className="web-ide__panel-content">
+                  <div>$ npm run build</div>
+                  <div className="web-ide__panel-text--secondary">
+                    {'>'} my-app@1.0.0 build
+                  </div>
+                  <div className="web-ide__panel-text--secondary">
+                    {'>'} tsc && vite build
+                  </div>
+                  <div className="web-ide__panel-line--spaced">
+                    vite v5.0.0 building for production...
+                  </div>
+                  <div className="web-ide__panel-text--success">
+                    ✓ 127 modules transformed.
+                  </div>
+                  <div className="web-ide__panel-line">
+                    dist/index.html 0.45 kB │ gzip: 0.30 kB
+                  </div>
+                  <div>
+                    dist/assets/index-a1b2c3d4.css 2.15 kB │ gzip: 0.89 kB
+                  </div>
+                  <div>
+                    dist/assets/index-e5f6g7h8.js 143.21 kB │ gzip: 46.33 kB
+                  </div>
+                  <div className="web-ide__panel-text--success web-ide__panel-line--spaced">
+                    ✓ built in 2.34s
+                  </div>
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className="web-ide__panel-content">
+                  <div className="web-ide__panel-text--secondary">
+                    Debug console output will appear here...
+                  </div>
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className="web-ide__panel-content">
+                  <div>$ npm start</div>
+                  <div className="web-ide__panel-text--secondary">
+                    {'>'} my-app@1.0.0 start
+                  </div>
+                  <div className="web-ide__panel-text--secondary">
+                    {'>'} vite
+                  </div>
+                  <div className="web-ide__panel-line--spaced">
+                    VITE v5.0.0 ready in 423 ms
+                  </div>
+                  <div className="web-ide__panel-line">
+                    ➜ Local:{' '}
+                    <span className="web-ide__panel-text--link">
+                      http://localhost:5173/
+                    </span>
+                  </div>
+                  <div>➜ Network: use --host to expose</div>
+                  <div className="web-ide__panel-line--spaced">
+                    ➜ press h + enter to show help
+                  </div>
+                </div>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </div>
+      </div>
+    </>
+  );
+};
+
+/**
+ * Web IDE Story Component
+ */
+export const WebIDEStory = (args) => {
+  // State management
+  const [collapsed, setCollapsed] = useState({
+    primarySidebar: false,
+    secondarySidebar: false,
+    panel: false,
+    explorer: false,
+    outline: false,
+  });
+  const [activeView, setActiveView] = useState(VIEWS.EXPLORER);
+  const [tabs, setTabs] = useState([
+    { label: 'App.tsx', content: FILE_CONTENTS['App.tsx'] },
+    { label: 'index.tsx', content: FILE_CONTENTS['index.tsx'] },
+    { label: 'Header.tsx', content: FILE_CONTENTS['Header.tsx'] },
+  ]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const explorerResizerRef = useRef(null);
+  const primarySidebarResizerRef = useRef(null);
+  const secondarySidebarResizerRef = useRef(null);
+  const panelResizerRef = useRef(null);
+
+  const updateAllResizerAriaValues = useCallback(() => {
+    requestAnimationFrame(() => {
+      // eslint-disable-next-line jsdoc/require-jsdoc
+      const updateResizer = (ref, orientation) => {
+        if (!ref?.current) {
+          return;
+        }
+
+        const prevSibling = ref.current.previousElementSibling;
+        const nextSibling = ref.current.nextElementSibling;
+
+        if (prevSibling && nextSibling) {
+          const dimension = orientation === 'horizontal' ? 'height' : 'width';
+          const offsetDimension =
+            orientation === 'horizontal' ? 'offsetHeight' : 'offsetWidth';
+
+          const prevSize = parseFloat(
+            prevSibling.style[dimension] || prevSibling[offsetDimension]
+          );
+          const nextSize = parseFloat(
+            nextSibling.style[dimension] || nextSibling[offsetDimension]
+          );
+          const total = prevSize + nextSize;
+
+          if (total > 0 && !isNaN(prevSize) && !isNaN(nextSize)) {
+            const percentage = Math.round((prevSize / total) * 100);
+            ref.current.setAttribute('aria-valuenow', String(percentage));
+          }
+        }
+      };
+
+      updateResizer(explorerResizerRef, 'horizontal');
+      updateResizer(primarySidebarResizerRef, 'vertical');
+      updateResizer(secondarySidebarResizerRef, 'vertical');
+      updateResizer(panelResizerRef, 'horizontal');
+    });
+  }, [
+    explorerResizerRef,
+    primarySidebarResizerRef,
+    secondarySidebarResizerRef,
+    panelResizerRef,
+  ]);
+
+  const togglePanel = useCallback((panelName) => {
+    setCollapsed((prev) => ({
+      ...prev,
+      [panelName]: !prev[panelName],
+    }));
+  }, []);
+
+  const handleViewToggle = useCallback(
+    (view) => {
+      if (activeView === view && !collapsed.primarySidebar) {
+        togglePanel('primarySidebar');
+      } else {
+        setActiveView(view);
+        if (collapsed.primarySidebar) {
+          togglePanel('primarySidebar');
+        }
+      }
+    },
+    [activeView, collapsed.primarySidebar, togglePanel]
+  );
+
+  const openTab = useCallback((fileName, content) => {
+    setTabs((prevTabs) => {
+      const existingIndex = prevTabs.findIndex((tab) => tab.label === fileName);
+
+      if (existingIndex !== -1) {
+        setSelectedIndex(existingIndex);
+        return prevTabs;
+      }
+
+      const newTabs = [...prevTabs, { label: fileName, content }];
+      setSelectedIndex(newTabs.length - 1);
+      return newTabs;
+    });
+  }, []);
+
+  const closeTab = useCallback(
+    (index) => {
+      setTabs((prevTabs) => {
+        const newTabs = prevTabs.filter((_, i) => i !== index);
+
+        if (newTabs.length === 0) {
+          setSelectedIndex(0);
+        } else if (selectedIndex >= newTabs.length) {
+          setSelectedIndex(newTabs.length - 1);
+        } else if (index < selectedIndex) {
+          setSelectedIndex(selectedIndex - 1);
+        }
+
+        return newTabs;
+      });
+    },
+    [selectedIndex]
+  );
+
+  const selectTab = useCallback(({ selectedIndex: newIndex }) => {
+    setSelectedIndex(newIndex);
+  }, []);
+
+  const handleFileSelect = useCallback(
+    (event, node) => {
+      const fileName = node.value;
+      if (!fileName.endsWith('.tsx')) {
+        return;
+      }
+
+      const content =
+        FILE_CONTENTS[fileName] ||
+        `import React from 'react';\n\nexport const ${fileName.replace(
+          '.tsx',
+          ''
+        )} = () => {\n  return (\n    <div>\n      <h2>${fileName.replace(
+          '.tsx',
+          ''
+        )} Component</h2>\n    </div>\n  );\n};`;
+
+      openTab(fileName, content);
+    },
+    [openTab]
+  );
+
+  return (
+    <div className="web-ide">
+      <TopToolbar
+        collapsed={collapsed}
+        onTogglePrimarySidebar={() => togglePanel('primarySidebar')}
+        onToggleSecondarySidebar={() => togglePanel('secondarySidebar')}
+        onTogglePanel={() => togglePanel('panel')}
+      />
+
+      <div className="web-ide__body">
+        <VerticalToolbar
+          activeView={activeView}
+          onViewChange={handleViewToggle}
+          primarySidebarCollapsed={collapsed.primarySidebar}
+        />
+
+        <PrimarySideBar
+          activeView={activeView}
+          collapsed={collapsed.primarySidebar}
+          explorerCollapsed={collapsed.explorer}
+          outlineCollapsed={collapsed.outline}
+          onToggleExplorer={() => togglePanel('explorer')}
+          onToggleOutline={() => togglePanel('outline')}
+          onFileSelect={handleFileSelect}
+          resizerProps={args}
+          explorerResizerRef={explorerResizerRef}
+          primarySidebarResizerRef={primarySidebarResizerRef}
+          updateAllResizerAriaValues={updateAllResizerAriaValues}
+        />
+
+        <div className="web-ide__main-content">
+          <MainContent
+            tabs={tabs}
+            selectedIndex={selectedIndex}
+            onTabChange={selectTab}
+            onTabClose={closeTab}
+          />
+
+          <Panel
+            collapsed={collapsed.panel}
+            onToggle={() => togglePanel('panel')}
+            panelResizerRef={panelResizerRef}
+            updateAllResizerAriaValues={updateAllResizerAriaValues}
+          />
+        </div>
+
+        <SecondarySideBar
+          collapsed={collapsed.secondarySidebar}
+          secondarySidebarResizerRef={secondarySidebarResizerRef}
+          updateAllResizerAriaValues={updateAllResizerAriaValues}
+        />
+      </div>
+    </div>
+  );
+};

@@ -1,0 +1,335 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/react/scss/motion' as *;
+
+// Web IDE Main Container
+.web-ide {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  background-color: $background;
+  block-size: 100vh;
+  inline-size: 100%;
+
+  // Override Carbon tooltip focus styles
+  .cds--tooltip-trigger__wrapper .cds--btn--ghost:focus {
+    box-shadow: inset 0 0 0 1px $focus, inset 0 0 0 2px $background;
+    outline: none;
+  }
+}
+
+// Top Toolbar
+.web-ide__top-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $layer;
+  block-size: $spacing-08;
+  border-block-end: 1px solid $border-subtle-01;
+}
+
+.web-ide__top-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+}
+
+.web-ide__top-toolbar-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-inline-start: $spacing-05;
+}
+
+.web-ide__top-toolbar-right {
+  display: flex;
+  align-items: center;
+}
+
+// Body Container (everything below top toolbar)
+.web-ide__body {
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+  min-block-size: 0;
+}
+
+// Activity Bar (Vertical Toolbar)
+.web-ide__activity-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: $layer;
+  block-size: 100%;
+  border-inline-end: 1px solid $border-subtle-01;
+}
+
+.web-ide__activity-bar-top,
+.web-ide__activity-bar-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// Primary Sidebar
+.web-ide__primary-sidebar {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  background-color: $layer-01;
+  block-size: 100%;
+  inline-size: 16rem;
+  max-inline-size: calc(100vw - 20rem);
+  transition: inline-size $duration-fast-02 motion(standard, productive);
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &--collapsed {
+    inline-size: 0 !important;
+    min-inline-size: 0;
+    visibility: hidden;
+  }
+}
+
+// Sidebar Sections (Explorer, Outline, Search, Properties)
+.web-ide__section {
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+  min-block-size: $spacing-07;
+  transition: all $duration-fast-02 motion(standard, productive);
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &--collapsed {
+    overflow: hidden;
+    block-size: $spacing-07;
+    min-block-size: calc($spacing-07 + 1px);
+  }
+}
+
+// Section Headers
+.web-ide__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-03 $spacing-04;
+  border-block-end: 1px solid $border-subtle;
+  background-color: $layer-02;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  gap: $spacing-05;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  -webkit-user-select: none;
+  user-select: none;
+
+  &:hover {
+    background-color: $layer-hover-02;
+  }
+
+  &:active {
+    background-color: $background-active;
+  }
+
+  &:focus {
+    background-color: $layer-selected;
+    outline: 2px solid $focus;
+    outline-offset: -2px;
+  }
+
+  svg {
+    flex: none;
+    block-size: 1rem;
+    color: $icon-primary;
+    inline-size: 1rem;
+  }
+}
+
+// Section Content
+.web-ide__section-content {
+  block-size: -webkit-fill-available;
+  background-color: $layer;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+// Main Content Area (Editor + Panel)
+.web-ide__main-content {
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+// Code Editor
+.web-ide__editor {
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+  flex-direction: column;
+  background-color: $layer;
+  font-family: 'IBM Plex Mono', monospace;
+  min-block-size: 0;
+}
+
+.web-ide__editor-content {
+  padding: $spacing-05;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  outline: none;
+}
+
+.web-ide__empty-state {
+  font-family: 'IBM Plex Mono', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-05;
+  block-size: 100%;
+  color: $text-secondary;
+  font-size: 14px;
+}
+
+// Panel (Bottom Panel)
+.web-ide__panel {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  background-color: $layer-01;
+  block-size: calc(6 * $spacing-08);
+  inline-size: 100%;
+  min-block-size: 40px;
+  transition: block-size $duration-fast-02 motion(standard, productive);
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &--collapsed {
+    block-size: 0 !important;
+    min-block-size: 0;
+    visibility: hidden;
+  }
+}
+
+.web-ide__panel-tabs-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $layer-02;
+  box-shadow: inset 0 -2px 0 var(--cds-border-subtle);
+}
+
+.web-ide__panel-tabs {
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+  flex-direction: column;
+  block-size: 100%;
+  min-block-size: 0;
+  transition: block-size $duration-fast-02 motion(standard, productive);
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.web-ide__panel-content {
+  padding: $spacing-04;
+  color: $text-secondary;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.web-ide__panel-text {
+  &--secondary {
+    color: $text-secondary;
+  }
+
+  &--success {
+    color: $support-success;
+  }
+
+  &--link {
+    color: $link-primary;
+  }
+}
+
+.web-ide__panel-line {
+  margin-block-start: $spacing-02;
+
+  &--spaced {
+    margin-block-start: $spacing-03;
+  }
+}
+
+.web-ide__secondary-sidebar {
+  overflow: hidden;
+  background-color: $layer;
+  block-size: 100%;
+  inline-size: 16rem;
+  max-inline-size: calc(100vw - 20rem);
+  transition: inline-size $duration-fast-02 motion(standard, productive);
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &--collapsed {
+    inline-size: 0 !important;
+    min-inline-size: 0;
+    visibility: hidden;
+  }
+}
+
+// Resizer Custom Styles
+.clabs__resizer {
+  background-color: $border-subtle-01;
+
+  &::before {
+    z-index: 2;
+  }
+
+  &--vertical::before {
+    position: absolute;
+    block-size: 100%;
+    content: '';
+    inline-size: calc(100% + $spacing-05);
+    inset-inline-start: calc(-1 * $spacing-03);
+  }
+
+  &--horizontal::before {
+    position: absolute;
+    block-size: calc(100% + $spacing-05);
+    content: '';
+    inline-size: 100%;
+    inset-block-start: calc(-1 * $spacing-03);
+  }
+}
+
+// Tab Content Override
+.cds--tab-content {
+  overflow: auto;
+}
+
+// Storybook Docs Preview Adjustment
+.sbdocs-preview .web-ide {
+  block-size: max(70vh, 36rem);
+}

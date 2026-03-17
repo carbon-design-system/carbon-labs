@@ -376,6 +376,12 @@ $css--plex: true !default;
     &.selected {
       background-color: $background-brand;
       color: $text-on-color;
+      
+      // Ensure proper contrast even when in range
+      &.inRange {
+        background-color: $background-brand;
+        color: $text-on-color;
+      }
     }
     
     &.today:not(.selected) {
@@ -383,7 +389,7 @@ $css--plex: true !default;
       font-weight: 600;
     }
     
-    &.inRange {
+    &.inRange:not(.selected) {
       background-color: $highlight;
     }
     

@@ -54,7 +54,7 @@ const stateTransitions: TransitionMap = {
     [DatePickerEventEnum.PAGE_DOWN]: DatePickerState.CALENDAR_OPEN,
     [DatePickerEventEnum.HOME_KEY]: DatePickerState.CALENDAR_OPEN,
     [DatePickerEventEnum.END_KEY]: DatePickerState.CALENDAR_OPEN,
-    [DatePickerEventEnum.ENTER_KEY]: DatePickerState.FOCUSED,
+    // ENTER_KEY is handled by guards - will dispatch DATE_SELECT or RANGE_START_SELECT
   },
   [DatePickerState.SELECTING_START]: {
     [DatePickerEventEnum.RANGE_START_SELECT]: DatePickerState.SELECTING_END,
@@ -63,8 +63,22 @@ const stateTransitions: TransitionMap = {
   },
   [DatePickerState.SELECTING_END]: {
     [DatePickerEventEnum.RANGE_END_SELECT]: DatePickerState.DATE_SELECTED,
+    [DatePickerEventEnum.RANGE_START_SELECT]: DatePickerState.SELECTING_END,
     [DatePickerEventEnum.OUTSIDE_CLICK]: DatePickerState.IDLE,
     [DatePickerEventEnum.ESCAPE_KEY]: DatePickerState.FOCUSED,
+    [DatePickerEventEnum.TAB_KEY]: DatePickerState.IDLE,
+    // Keyboard navigation
+    [DatePickerEventEnum.ARROW_UP]: DatePickerState.SELECTING_END,
+    [DatePickerEventEnum.ARROW_DOWN]: DatePickerState.SELECTING_END,
+    [DatePickerEventEnum.ARROW_LEFT]: DatePickerState.SELECTING_END,
+    [DatePickerEventEnum.ARROW_RIGHT]: DatePickerState.SELECTING_END,
+    [DatePickerEventEnum.PAGE_UP]: DatePickerState.SELECTING_END,
+    [DatePickerEventEnum.PAGE_DOWN]: DatePickerState.SELECTING_END,
+    [DatePickerEventEnum.HOME_KEY]: DatePickerState.SELECTING_END,
+    [DatePickerEventEnum.END_KEY]: DatePickerState.SELECTING_END,
+    [DatePickerEventEnum.ENTER_KEY]: DatePickerState.DATE_SELECTED,
+    [DatePickerEventEnum.PREV_MONTH]: DatePickerState.SELECTING_END,
+    [DatePickerEventEnum.NEXT_MONTH]: DatePickerState.SELECTING_END,
   },
   [DatePickerState.DATE_SELECTED]: {
     [DatePickerEventEnum.CALENDAR_CLOSE]: DatePickerState.IDLE,

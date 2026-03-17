@@ -55,6 +55,12 @@ class CDSDatePickerCalendar extends LitElement {
   focusedDate?: Temporal.PlainDate | null;
 
   /**
+   * The currently hovered date (for range preview)
+   */
+  @state()
+  private _hoveredDate?: Temporal.PlainDate;
+
+  /**
    * The minimum selectable date
    */
   @property({ type: Object })
@@ -176,9 +182,12 @@ class CDSDatePickerCalendar extends LitElement {
    * @param {Temporal.PlainDate} date - The date to check
    */
   private _isDateSelected(date: Temporal.PlainDate): boolean {
-    return this.selectedDates.some((selected) =>
-      Temporal.PlainDate.compare(selected, date) === 0
-    );
+    return this.selectedDates.some((selected) => {
+      if (!selected || typeof selected !== 'object' || !('year' in selected)) {
+        return false;
+      }
+      return Temporal.PlainDate.compare(selected, date) === 0;
+    });
   }
 
   /**
@@ -186,18 +195,40 @@ class CDSDatePickerCalendar extends LitElement {
    * @param {Temporal.PlainDate} date - The date to check
    */
   private _isDateInRange(date: Temporal.PlainDate): boolean {
-    if (!this.rangeMode || this.selectedDates.length !== 2) {
+    if (!this.rangeMode) {
       return false;
     }
 
-    const [start, end] = this.selectedDates.sort((a, b) =>
-      Temporal.PlainDate.compare(a, b)
-    );
+    // Case 1: Both dates are selected (final range)
+    if (this.selectedDates.length === 2) {
+      const [start, end] = this.selectedDates.sort((a, b) =>
+        Temporal.PlainDate.compare(a, b)
+      );
 
-    return (
-      Temporal.PlainDate.compare(date, start) >= 0 &&
-      Temporal.PlainDate.compare(date, end) <= 0
-    );
+      return (
+        Temporal.PlainDate.compare(date, start) >= 0 &&
+        Temporal.PlainDate.compare(date, end) <= 0
+      );
+    }
+
+    // Case 2: One date selected, show preview range with hovered or focused date
+    const previewDate = this._hoveredDate || this.focusedDate;
+    if (this.selectedDates.length === 1 && previewDate) {
+      const start = this.selectedDates[0];
+      const end = previewDate;
+      
+      // Sort to handle both forward and backward selection
+      const [rangeStart, rangeEnd] = [start, end].sort((a, b) =>
+        Temporal.PlainDate.compare(a, b)
+      );
+
+      return (
+        Temporal.PlainDate.compare(date, rangeStart) >= 0 &&
+        Temporal.PlainDate.compare(date, rangeEnd) <= 0
+      );
+    }
+
+    return false;
   }
 
   /**
@@ -218,6 +249,25 @@ class CDSDatePickerCalendar extends LitElement {
       return false;
     }
     return Temporal.PlainDate.compare(date, this.focusedDate) === 0;
+  }
+
+  /**
+   * Handle mouse enter on a date
+   * @param {Temporal.PlainDate} date - The date being hovered
+   */
+  private _handleDateMouseEnter(date: Temporal.PlainDate) {
+    // Only track hover in range mode when selecting end date
+    if (this.rangeMode && this.selectedDates.length === 1) {
+      this._hoveredDate = date;
+    }
+  }
+
+  /**
+   * Handle mouse leave on a date
+   */
+  private _handleDateMouseLeave() {
+    // Clear hovered date
+    this._hoveredDate = undefined;
   }
 
   /**
@@ -361,6 +411,8 @@ class CDSDatePickerCalendar extends LitElement {
               tabindex="-1"
               ?disabled="${isDisabled}"
               @click="${() => this._handleDateSelect(date)}"
+              @mouseenter="${() => this._handleDateMouseEnter(date)}"
+              @mouseleave="${() => this._handleDateMouseLeave()}"
               aria-label="${date.toString()}">
               ${date.day}
             </button>

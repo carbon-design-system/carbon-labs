@@ -15,7 +15,7 @@ import CDSDatePickerInput from './date-picker-input';
 import { WebComponentAdapter } from './state-machine/adapters/web-component-adapter';
 import type { StateTransition } from './state-machine';
 import { DatePickerState, DatePickerEvent } from './state-machine';
-import { parseDateToPlainDate } from './state-machine/temporal-utils';
+import { parseDateToPlainDate, parseISOToPlainDate } from './state-machine/temporal-utils';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
 import { carbonElement as customElement } from './temp-imports/globals/decorators/carbon-element';
@@ -224,12 +224,21 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       if (from === DatePickerState.CALENDAR_OPEN) {
         this.requestUpdate();
       }
+    } else if (newState === DatePickerState.SELECTING_END) {
+      // Keep calendar open while selecting end date in range mode
+      this.open = true;
+      
+      // If we're staying in SELECTING_END state (keyboard navigation),
+      // trigger a re-render to update the calendar with new focusedDate/viewDate
+      if (from === DatePickerState.SELECTING_END) {
+        this.requestUpdate();
+      }
     } else if (newState === DatePickerState.IDLE) {
       this.open = false;
     } else if (newState === DatePickerState.FOCUSED) {
       // Only close calendar if not coming from CALENDAR_OPEN (Enter key)
       // When coming from CALENDAR_OPEN, the action sets context.isOpen
-      if (from !== DatePickerState.CALENDAR_OPEN) {
+      if (from !== DatePickerState.CALENDAR_OPEN && from !== DatePickerState.SELECTING_END) {
         this.open = false;
       } else {
         // Use the isOpen value from context (set by ENTER_KEY action)
@@ -243,9 +252,10 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     }
 
     // Dispatch change event and update input when dates are selected
-    // This handles both DATE_SELECTED state and FOCUSED state (from ENTER_KEY)
+    // This handles DATE_SELECTED state, FOCUSED state (from ENTER_KEY), and SELECTING_END state (after start date selected)
     const shouldUpdateInput =
       newState === DatePickerState.DATE_SELECTED ||
+      newState === DatePickerState.SELECTING_END ||
       (newState === DatePickerState.FOCUSED && from === DatePickerState.CALENDAR_OPEN && context.startDate);
     
     if (shouldUpdateInput) {
@@ -255,21 +265,51 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         : context.startDate ? [context.startDate] : [];
 
       // Update input field value with formatted date
-      if (this._dateInteractNode && context.startDate) {
-        /**
-         * Format date as MM/DD/YYYY (matching Carbon's default format)
-         *
-         * @param {Temporal.PlainDate} date - The date to format
-         * @returns {string} Formatted date string
-         */
-        const formatDate = (date: Temporal.PlainDate) => {
-          const month = String(date.month).padStart(2, '0');
-          const day = String(date.day).padStart(2, '0');
-          const year = date.year;
-          return `${month}/${day}/${year}`;
-        };
+      /**
+       * Format date as MM/DD/YYYY (matching Carbon's default format)
+       *
+       * @param {Temporal.PlainDate} date - The date to format
+       * @returns {string} Formatted date string
+       */
+      const formatDate = (date: Temporal.PlainDate) => {
+        // Safety check - ensure date is a valid Temporal.PlainDate
+        if (!date || typeof date !== 'object' || !('month' in date) || !('day' in date) || !('year' in date)) {
+          console.error('formatDate received invalid date:', date);
+          return '';
+        }
+        const month = String(date.month).padStart(2, '0');
+        const day = String(date.day).padStart(2, '0');
+        const year = date.year;
+        return `${month}/${day}/${year}`;
+      };
 
-        this._dateInteractNode.value = formatDate(context.startDate);
+      // For range mode, update the correct input based on state
+      if (this._mode === DATE_PICKER_MODE.RANGE) {
+        const {selectorInputFrom, selectorInputTo} = this.constructor as typeof CDSDatePicker;
+        // @ts-expect-error - querySelector is available from HTMLElement
+        const inputFrom = this.querySelector(selectorInputFrom) as CDSDatePickerInput;
+        // @ts-expect-error - querySelector is available from HTMLElement
+        const inputTo = this.querySelector(selectorInputTo) as CDSDatePickerInput;
+
+        // If we're in DATE_SELECTED state with both dates, update both inputs
+        if (newState === DatePickerState.DATE_SELECTED && context.startDate && context.endDate) {
+          if (inputFrom) {
+            inputFrom.value = formatDate(context.startDate);
+          }
+          if (inputTo) {
+            inputTo.value = formatDate(context.endDate);
+          }
+        } else if (context.lastFocusedInput === 'to' && inputTo && context.endDate) {
+          // Otherwise, update based on lastFocusedInput
+          inputTo.value = formatDate(context.endDate);
+        } else if (inputFrom && context.startDate) {
+          inputFrom.value = formatDate(context.startDate);
+        }
+      } else {
+        // For single mode, update the single input
+        if (this._dateInteractNode && context.startDate) {
+          this._dateInteractNode.value = formatDate(context.startDate);
+        }
       }
 
       (this as unknown as HTMLElement).dispatchEvent(
@@ -537,7 +577,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
 
     const { key } = event;
 
-    // Handle Tab key
+    // Handle Tab key - only when focus is IN the calendar
     if (key === 'Tab') {
       const composedPath = event.composedPath();
       const target = composedPath[0] as HTMLElement;
@@ -546,20 +586,66 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       const isFocusInCalendar = target.classList?.contains('cds--date-picker__calendar') ||
         target.closest?.('.cds--date-picker__calendar') !== null;
       
-      // If calendar is open and focus is in calendar, close it and move focus to next element
-      if (this.open && isFocusInCalendar) {
-        event.preventDefault(); // Prevent default Tab behavior
-        
-        // Record the time when calendar was closed via Tab
-        // This is used to prevent immediate auto-reopen
-        this._lastTabCloseTime = Date.now();
-        
-        this._adapter.send(DatePickerEvent.TAB_KEY);
-        
-        // Find and focus the next tabbable element after this date picker
-        this._focusNextElement(event.shiftKey);
+      // Only handle Tab when focus is already IN the calendar
+      if (!this.open || !isFocusInCalendar) {
+        // Let normal Tab behavior happen for inputs
         return;
       }
+      
+      // Get input elements
+      const {selectorInputFrom, selectorInputTo} = this.constructor as typeof CDSDatePicker;
+      const inputFrom = this.querySelector(selectorInputFrom) as CDSDatePickerInput;
+      const inputTo = this.querySelector(selectorInputTo) as CDSDatePickerInput;
+      
+      // Shift+Tab FROM calendar -> Move to appropriate input
+      if (event.shiftKey) {
+        event.preventDefault();
+        
+        // In range mode, check which input was last focused
+        if (this._mode === DATE_PICKER_MODE.RANGE) {
+          const context = this._adapter?.getContext();
+          const lastFocused = context?.lastFocusedInput;
+          
+          // If we were on the second input, go back to it
+          if (lastFocused === 'to' && inputTo) {
+            (inputTo as any).input?.focus();
+          } else if (inputFrom) {
+            // Otherwise go to first input
+            (inputFrom as any).input?.focus();
+          }
+        } else {
+          // Single mode: go to first input
+          if (inputFrom) {
+            (inputFrom as any).input?.focus();
+          }
+        }
+        return;
+      }
+      
+      // Tab FROM calendar -> Move to second input (range) or close (single)
+      event.preventDefault();
+      
+      // In range mode, check which input was last focused
+      if (this._mode === DATE_PICKER_MODE.RANGE) {
+        const context = this._adapter?.getContext();
+        const lastFocused = context?.lastFocusedInput;
+        
+        // If we were on the first input, move to second input
+        if (lastFocused === 'from' && inputTo) {
+          (inputTo as any).input?.focus();
+          return;
+        }
+      }
+      
+      // Otherwise (single mode or after second input in range mode), close and move to next element
+      // Record the time when calendar was closed via Tab
+      this._lastTabCloseTime = Date.now();
+      
+      this._adapter.send(DatePickerEvent.TAB_KEY);
+      
+      // Find and focus the next tabbable element after this date picker
+      this._focusNextElement(false);
+      return;
     }
 
     // Only handle other keyboard events when calendar is open AND focus is in calendar
@@ -597,7 +683,37 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     // Handle Enter key - select focused date
     if (key === 'Enter') {
       event.preventDefault();
-      this._adapter.send(DatePickerEvent.ENTER_KEY);
+      
+      // Get the focused date from context
+      const context = this._adapter.getContext();
+      const focusedDate = context.focusedDate;
+      
+      if (!focusedDate) {
+        return;
+      }
+      
+      // Dispatch the appropriate event based on mode and current state
+      const currentState = this._adapter.getState();
+      
+      if (this._mode === DATE_PICKER_MODE.RANGE) {
+        // In range mode, check if we're selecting start or end date
+        if (currentState === 'selecting_end') {
+          // Selecting end date
+          this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {
+            date: focusedDate,
+          });
+        } else {
+          // Selecting start date
+          this._adapter.send(DatePickerEvent.RANGE_START_SELECT, {
+            date: focusedDate,
+          });
+        }
+      } else {
+        // Single mode - just select the date
+        this._adapter.send(DatePickerEvent.DATE_SELECT, {
+          date: focusedDate,
+        });
+      }
       return;
     }
 
@@ -750,11 +866,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       if (changedProperties.has('disabled') || changedProperties.has('readonly')) {
         const {selectorInputFrom, selectorInputTo} = this
           .constructor as typeof CDSDatePicker;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error - querySelector is available from HTMLElement
         const inputFrom = this.querySelector(selectorInputFrom) as CDSDatePickerInput;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error - querySelector is available from HTMLElement
         const inputTo = this.querySelector(selectorInputTo) as CDSDatePickerInput;
 
         [inputFrom, inputTo].forEach((input) => {
@@ -773,13 +885,20 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       if (changedProperties.has('value') && this.value) {
         const dates = this.value.split('/').filter(Boolean);
         if (dates.length > 0) {
-          this._adapter.send(
-            this._mode === DATE_PICKER_MODE.RANGE ? DatePickerEvent.RANGE_START_SELECT : DatePickerEvent.DATE_SELECT,
-            {date: dates[0]}
-          );
+          // Convert ISO string to Temporal.PlainDate
+          const startDate = parseISOToPlainDate(dates[0]);
+          if (startDate) {
+            this._adapter.send(
+              this._mode === DATE_PICKER_MODE.RANGE ? DatePickerEvent.RANGE_START_SELECT : DatePickerEvent.DATE_SELECT,
+              {date: startDate}
+            );
 
-          if (this._mode === DATE_PICKER_MODE.RANGE && dates.length > 1) {
-            this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {date: dates[1]});
+            if (this._mode === DATE_PICKER_MODE.RANGE && dates.length > 1) {
+              const endDate = parseISOToPlainDate(dates[1]);
+              if (endDate) {
+                this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {date: endDate});
+              }
+            }
           }
         }
       }

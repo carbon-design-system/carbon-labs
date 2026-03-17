@@ -322,6 +322,10 @@
     inline-size: 100%;
     inset-block-start: calc(-1 * $spacing-03);
   }
+
+  &--hidden {
+    display: none;
+  }
 }
 
 // Tab Content Override

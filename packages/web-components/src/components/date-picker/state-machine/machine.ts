@@ -19,7 +19,7 @@ import type {
 
 /**
  * State transition configuration
- * Maps current state + event type to next state
+ * Maps the current state + event type to the next state
  */
 const stateTransitions: TransitionMap = {
   [DatePickerState.IDLE]: {
@@ -79,7 +79,7 @@ export class DatePickerStateMachine {
   /**
    * Create a new date picker state machine
    *
-   * @param initialContext - Initial context values
+   * @param {Partial<DatePickerContext>} initialContext - Initial context values
    */
   constructor(initialContext: Partial<DatePickerContext> = {}) {
     this.currentState = DatePickerState.IDLE;
@@ -89,7 +89,7 @@ export class DatePickerStateMachine {
   /**
    * Create initial context with defaults
    *
-   * @param partial - Partial context to merge with defaults
+   * @param {Partial<DatePickerContext>} partial - Partial context to merge with defaults
    * @returns Complete context object
    */
   private createInitialContext(
@@ -119,8 +119,8 @@ export class DatePickerStateMachine {
    * Send an event to the state machine
    * This is the primary method for triggering state transitions
    *
-   * @param eventType - The type of event to send
-   * @param payload - Optional event payload
+   * @param {string} eventType - The type of event to send
+   * @param {any} payload - Optional event payload
    * @returns The updated context
    */
   public send(eventType: string, payload?: any): DatePickerContext {
@@ -155,7 +155,7 @@ export class DatePickerStateMachine {
       ...contextUpdates,
     };
 
-    // Create transition object
+    // Create a transition object
     const stateTransition: StateTransition = {
       from: this.currentState,
       to: nextState,
@@ -164,7 +164,7 @@ export class DatePickerStateMachine {
     };
 
     // Update state
-    const previousState = this.currentState;
+    const _previousState = this.currentState;
     this.currentState = nextState;
     this.context = newContext;
 
@@ -198,7 +198,7 @@ export class DatePickerStateMachine {
   /**
    * Update context directly (use sparingly)
    *
-   * @param updates - Partial context updates
+   * @param {Partial<DatePickerContext>} updates - Partial context updates
    * @returns The updated context
    */
   public updateContext(
@@ -214,7 +214,7 @@ export class DatePickerStateMachine {
   /**
    * Subscribe to state transitions
    *
-   * @param listener - Function to call on each transition
+   * @param {TransitionListener} listener - Function to call on each transition
    * @returns Unsubscribe function
    */
   public subscribe(listener: TransitionListener): () => void {
@@ -225,7 +225,7 @@ export class DatePickerStateMachine {
   /**
    * Check if a transition is valid from the current state
    *
-   * @param eventType - The event type to check
+   * @param {string} eventType - The event type to check
    * @returns True if the transition is valid
    */
   public canTransition(eventType: string): boolean {
@@ -240,8 +240,8 @@ export class DatePickerStateMachine {
   /**
    * Get the next state for a given event
    *
-   * @param from - Current state
-   * @param event - The event
+   * @param {DatePickerState} from - Current state
+   * @param {DatePickerEvent} event - The event
    * @returns Next state or null if no transition exists
    */
   private getNextState(
@@ -258,13 +258,13 @@ export class DatePickerStateMachine {
       return null;
     }
 
-    return nextState;
+    return nextState as DatePickerState | null;
   }
 
   /**
    * Notify all listeners of a state transition
    *
-   * @param transition - The state transition
+   * @param {StateTransition} transition - The state transition
    */
   private notifyListeners(transition: StateTransition): void {
     this.listeners.forEach((listener) => listener(transition));
@@ -273,7 +273,7 @@ export class DatePickerStateMachine {
   /**
    * Reset the state machine to initial state
    *
-   * @param initialContext - Optional new initial context
+   * @param {Partial<DatePickerContext>} initialContext - Optional new initial context
    */
   public reset(initialContext?: Partial<DatePickerContext>): void {
     this.currentState = DatePickerState.IDLE;

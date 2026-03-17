@@ -10,8 +10,8 @@ import { customElement, property } from 'lit/decorators.js';
 import { iconLoader } from '../../globals/internal/icon-loader';
 import Layers from '@carbon/icons/es/layers/16.js';
 import { prefix } from '../../globals/settings';
-import '@carbon/web-components/es/components/layer';
-import styles from './with-layer.scss?lit';
+import '@carbon/web-components/es/components/layer/index.js';
+import styles from './with-layer.scss?inline';
 
 /**
  * Storybook template layer component, strictly for presentation purposes

@@ -7,6 +7,7 @@
 
 import on from './on';
 import Handle from '../internal/handle';
+import type { Constructor } from '../decorators/carbon-element';
 
 /**
  * @param Base The base class.

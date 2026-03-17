@@ -11,9 +11,9 @@ import { property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { prefix } from './temp-imports/globals/settings';
 import FocusMixin from './temp-imports/globals/mixins/focus';
-import { INPUT_SIZE } from '@carbon/web-components/es/components/text-input/defs';
-import { DATE_PICKER_INPUT_COLOR_SCHEME, DATE_PICKER_INPUT_KIND } from './defs';
-import styles from './date-picker.scss?lit';
+import { INPUT_SIZE, DATE_PICKER_INPUT_COLOR_SCHEME, DATE_PICKER_INPUT_KIND } from './defs';
+// @ts-ignore
+import styles from './date-picker.scss?inline';
 import Calendar16 from '@carbon/icons/es/calendar/16.js';
 import WarningFilled16 from '@carbon/icons/es/warning--filled/16.js';
 import WarningAltFilled16 from '@carbon/icons/es/warning--alt--filled/16.js';
@@ -36,6 +36,9 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
 
   /**
    * Handles `slotchange` event.
+   *
+   * @param {object} root0 - Event object
+   * @param {EventTarget} root0.target - The event target
    */
   protected _handleAILabelSlotChange({ target }: Event) {
     const hasContent = (target as HTMLSlotElement)
@@ -66,7 +69,7 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
   /**
    * Handles `click` event on the calendar icon.
    *
-   * @param event The event.
+   * @param {MouseEvent} event - The event.
    */
   private _handleClickWrapper(event: MouseEvent) {
     if (event.target === this._iconNode) {
@@ -77,8 +80,8 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
   /**
    * Handles `input` event on `<input>` in the shadow DOM.
    *
-   * @param event The event.
-   * @param event.target The event target.
+   * @param {Event} event - The event.
+   * @param {HTMLInputElement} event.target - The event target.
    */
   private _handleInput({ target }: Event) {
     const { value } = target as HTMLInputElement;
@@ -106,6 +109,9 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
 
   /**
    * Handles `slotchange` event on the default `<slot>`.
+   *
+   * @param {object} root0 - Event object
+   * @param {EventTarget} root0.target - The event target
    */
   protected _handleSlotChange({ target }: Event) {
     if (!(target as HTMLSlotElement).name) {
@@ -226,6 +232,11 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
   @property({ attribute: 'warn-text' })
   warnText = '';
 
+  /**
+   * Renders the component template.
+   *
+   * @returns {TemplateResult} The template result
+   */
   render() {
     const constructor = this.constructor as typeof CDSDatePickerInput;
     const {
@@ -340,12 +351,15 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
           ${normalizedProps['slot-text']}
         </slot>
       </div>
-      <div ?hidden="${hasHelperText}" class="${helperTextClasses}">
+      <div ?hidden="${!hasHelperText}" class="${helperTextClasses}">
         <slot name="helper-text" @slotchange="${this._handleSlotChange}"></slot>
       </div>
     `;
   }
 
+  /**
+   * Lifecycle method called after component updates.
+   */
   updated() {
     this.toggleAttribute('ai-label', this._hasAILabel);
     const label = this.shadowRoot?.querySelector("slot[name='ai-label']");

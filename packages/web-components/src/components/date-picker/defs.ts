@@ -8,6 +8,26 @@
 export { FORM_ELEMENT_COLOR_SCHEME as DATE_PICKER_INPUT_COLOR_SCHEME } from './temp-imports/globals/shared-enums';
 
 /**
+ * Input sizes.
+ */
+export enum INPUT_SIZE {
+  /**
+   * Small size.
+   */
+  SMALL = 'sm',
+
+  /**
+   * Medium size (default).
+   */
+  MEDIUM = 'md',
+
+  /**
+   * Large size.
+   */
+  LARGE = 'lg',
+}
+
+/**
  * Date picker input kinds.
  */
 export enum DATE_PICKER_INPUT_KIND {

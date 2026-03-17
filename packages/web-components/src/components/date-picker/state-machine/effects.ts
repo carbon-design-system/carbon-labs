@@ -27,14 +27,14 @@ export const effects: EffectMap = {
 
   [DatePickerState.CALENDAR_OPEN]: {
     /**
-     * Focus the calendar when it opens
+     * Focus on the calendar when it opens
      */
     CALENDAR_OPEN: () => {
       // This will be implemented by the adapter
-      // The adapter can hook into this to focus the calendar element
+      //  can hook into this to focus the calendar element
     },
     /**
-     * Focus the calendar when opened via Tab key
+     * Focus the calendar when opened via a Tab key
      */
     TAB_KEY: () => {
       // This will be implemented by the adapter
@@ -47,14 +47,14 @@ export const effects: EffectMap = {
 
   [DatePickerState.DATE_SELECTED]: {
     /**
-     * Dispatch custom event when date is selected
+     * Dispatch custom event when a date is selected
      */
     DATE_SELECT: () => {
       // This will be implemented by the adapter
-      // The adapter can dispatch a custom event here
+      //  can dispatch a custom event here
     },
     /**
-     * Dispatch custom event when range end is selected
+     * Dispatch custom event when the range end is selected
      */
     RANGE_END_SELECT: () => {
       // This will be implemented by the adapter
@@ -68,8 +68,10 @@ export const effects: EffectMap = {
   [DatePickerState.ERROR]: {
     /**
      * Log validation errors
+     * @param {DatePickerContext} _context - Current context
+     * @param {DatePickerEvent} event - The event
      */
-    VALIDATION_ERROR: (context, event) => {
+    VALIDATION_ERROR: (_context, event) => {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.warn('DatePicker validation error:', event.payload);
@@ -81,8 +83,8 @@ export const effects: EffectMap = {
 /**
  * Get effect for a specific state and event
  *
- * @param state - The current state
- * @param eventType - The event type
+ * @param {DatePickerState} state - The current state
+ * @param {string} eventType - The event type
  * @returns The effect function or undefined
  */
 export function getEffect(
@@ -95,10 +97,10 @@ export function getEffect(
 /**
  * Execute an effect
  *
- * @param state - The current state
- * @param eventType - The event type
- * @param context - The current context
- * @param event - The event
+ * @param {DatePickerState} state - The current state
+ * @param {string} eventType - The event type
+ * @param {DatePickerContext} context - The current context
+ * @param {DatePickerEvent} event - The event
  */
 export function executeEffect(
   state: DatePickerState,

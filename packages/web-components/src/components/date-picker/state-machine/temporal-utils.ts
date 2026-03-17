@@ -13,7 +13,7 @@
 /**
  * Convert a Date object to Temporal.PlainDate
  *
- * @param date - JavaScript Date object
+ * @param {Date} date - JavaScript Date object
  * @returns Temporal.PlainDate
  */
 export function dateToPlainDate(date: Date): Temporal.PlainDate {
@@ -27,7 +27,7 @@ export function dateToPlainDate(date: Date): Temporal.PlainDate {
 /**
  * Convert Temporal.PlainDate to Date object
  *
- * @param plainDate - Temporal.PlainDate
+ * @param {Temporal.PlainDate} plainDate - Temporal.PlainDate
  * @returns JavaScript Date object
  */
 export function plainDateToDate(plainDate: Temporal.PlainDate): Date {
@@ -37,7 +37,7 @@ export function plainDateToDate(plainDate: Temporal.PlainDate): Date {
 /**
  * Convert Temporal.PlainDate to ISO date string (YYYY-MM-DD)
  *
- * @param plainDate - Temporal.PlainDate
+ * @param {Temporal.PlainDate} plainDate - Temporal.PlainDate
  * @returns ISO date string
  */
 export function plainDateToISOString(plainDate: Temporal.PlainDate): string {
@@ -47,7 +47,7 @@ export function plainDateToISOString(plainDate: Temporal.PlainDate): string {
 /**
  * Parse ISO date string to Temporal.PlainDate
  *
- * @param isoString - ISO date string (YYYY-MM-DD)
+ * @param {string} isoString - ISO date string (YYYY-MM-DD)
  * @returns Temporal.PlainDate or null if invalid
  */
 export function parseISOToPlainDate(
@@ -63,8 +63,8 @@ export function parseISOToPlainDate(
 /**
  * Compare two Temporal.PlainDate objects
  *
- * @param date1 - First date
- * @param date2 - Second date
+ * @param {Temporal.PlainDate} date1 - First date
+ * @param {Temporal.PlainDate} date2 - Second date
  * @returns -1 if date1 < date2, 0 if equal, 1 if date1 > date2
  */
 export function comparePlainDates(
@@ -77,9 +77,9 @@ export function comparePlainDates(
 /**
  * Check if a date is within a range
  *
- * @param date - Date to check
- * @param minDate - Minimum date (inclusive)
- * @param maxDate - Maximum date (inclusive)
+ * @param {Temporal.PlainDate} date - Date to check
+ * @param {Temporal.PlainDate | null} minDate - Minimum date (inclusive)
+ * @param {Temporal.PlainDate | null} maxDate - Maximum date (inclusive)
  * @returns True if date is within range
  */
 export function isDateInRange(
@@ -100,8 +100,8 @@ export function isDateInRange(
  * Format a Temporal.PlainDate according to a format string
  * Supports common format tokens: Y, m, d
  *
- * @param date - Date to format
- * @param format - Format string (e.g., 'm/d/Y', 'Y-m-d')
+ * @param {Temporal.PlainDate} date - Date to format
+ * @param {string} format - Format string (e.g., 'm/d/Y', 'Y-m-d')
  * @returns Formatted date string
  */
 export function formatPlainDate(
@@ -130,8 +130,8 @@ export function getToday(): Temporal.PlainDate {
 /**
  * Add days to a date
  *
- * @param date - Starting date
- * @param days - Number of days to add (can be negative)
+ * @param {Temporal.PlainDate} date - Starting date
+ * @param {number} days - Number of days to add (can be negative)
  * @returns New date
  */
 export function addDays(
@@ -144,8 +144,8 @@ export function addDays(
 /**
  * Add months to a date
  *
- * @param date - Starting date
- * @param months - Number of months to add (can be negative)
+ * @param {Temporal.PlainDate} date - Starting date
+ * @param {number} months - Number of months to add (can be negative)
  * @returns New date
  */
 export function addMonths(
@@ -158,8 +158,8 @@ export function addMonths(
 /**
  * Get the number of days between two dates
  *
- * @param date1 - First date
- * @param date2 - Second date
+ * @param {Temporal.PlainDate} date1 - First date
+ * @param {Temporal.PlainDate} date2 - Second date
  * @returns Number of days (positive if date2 is after date1)
  */
 export function daysBetween(
@@ -172,8 +172,8 @@ export function daysBetween(
 /**
  * Check if two dates are equal
  *
- * @param date1 - First date
- * @param date2 - Second date
+ * @param {Temporal.PlainDate} date1 - First date
+ * @param {Temporal.PlainDate} date2 - Second date
  * @returns True if dates are equal
  */
 export function areDatesEqual(
@@ -192,7 +192,7 @@ export function areDatesEqual(
 /**
  * Get the start of the month for a given date
  *
- * @param date - Input date
+ * @param {Temporal.PlainDate} date - Input date
  * @returns First day of the month
  */
 export function getMonthStart(date: Temporal.PlainDate): Temporal.PlainDate {
@@ -202,7 +202,7 @@ export function getMonthStart(date: Temporal.PlainDate): Temporal.PlainDate {
 /**
  * Get the end of the month for a given date
  *
- * @param date - Input date
+ * @param {Temporal.PlainDate} date - Input date
  * @returns Last day of the month
  */
 export function getMonthEnd(date: Temporal.PlainDate): Temporal.PlainDate {
@@ -212,7 +212,7 @@ export function getMonthEnd(date: Temporal.PlainDate): Temporal.PlainDate {
 /**
  * Check if a date is today
  *
- * @param date - Date to check
+ * @param {Temporal.PlainDate} date - Date to check
  * @returns True if date is today
  */
 export function isToday(date: Temporal.PlainDate): boolean {
@@ -222,7 +222,7 @@ export function isToday(date: Temporal.PlainDate): boolean {
 /**
  * Check if a date is in the past
  *
- * @param date - Date to check
+ * @param {Temporal.PlainDate} date - Date to check
  * @returns True if date is before today
  */
 export function isPast(date: Temporal.PlainDate): boolean {
@@ -232,7 +232,7 @@ export function isPast(date: Temporal.PlainDate): boolean {
 /**
  * Check if a date is in the future
  *
- * @param date - Date to check
+ * @param {Temporal.PlainDate} date - Date to check
  * @returns True if date is after today
  */
 export function isFuture(date: Temporal.PlainDate): boolean {
@@ -243,8 +243,8 @@ export function isFuture(date: Temporal.PlainDate): boolean {
  * Parse a date string with a specific format
  * Supports common format tokens: Y, m, d
  *
- * @param dateString - Date string to parse
- * @param format - Format string (e.g., 'm/d/Y', 'Y-m-d')
+ * @param {string} dateString - Date string to parse
+ * @param {string} format - Format string (e.g., 'm/d/Y', 'Y-m-d')
  * @returns Temporal.PlainDate or null if invalid
  */
 export function parseDateString(
@@ -310,18 +310,42 @@ export function getDateHandler() {
   // Fallback to Date objects
   return {
     type: 'date' as const,
+    /**
+     *
+     * @param {Temporal.PlainDate} date - The date to convert
+     */
     toISOString: (date: Date) => date.toISOString().split('T')[0],
+    /**
+     *
+     * @param {string} str - The ISO string to parse
+     */
     fromISOString: (str: string) => {
       const date = new Date(str);
       return isNaN(date.getTime()) ? null : date;
     },
+    /**
+     *
+     * @param {Temporal.PlainDate} d1 - First date
+     * @param {Temporal.PlainDate} d2 - Second date
+     */
     compare: (d1: Date, d2: Date) => d1.getTime() - d2.getTime(),
+    /**
+     *
+     * @param {Temporal.PlainDate} date - The date to format
+     * @param {string} format - The format string
+     */
     format: (date: Date, format: string) => {
       const year = date.getFullYear().toString();
       const month = (date.getMonth() + 1).toString().padStart(2, '0');
       const day = date.getDate().toString().padStart(2, '0');
       return format.replace('Y', year).replace('m', month).replace('d', day);
     },
+    /**
+     *
+     * @param {Temporal.PlainDate} date - The date to check
+     * @param {Temporal.PlainDate | null} min - Minimum date
+     * @param {Temporal.PlainDate | null} max - Maximum date
+     */
     isInRange: (date: Date, min: Date | null, max: Date | null) => {
       if (min && date < min) {
         return false;

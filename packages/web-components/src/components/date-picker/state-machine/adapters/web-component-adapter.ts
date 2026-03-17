@@ -25,11 +25,11 @@ export interface AdapterConfig {
   initialContext?: Partial<DatePickerContext>;
   /** Callback when state changes */
   onStateChange?: (transition: StateTransition) => void;
-  /** Callback when calendar should open */
+  /** Callback when the calendar should open */
   onCalendarOpen?: () => void;
-  /** Callback when calendar should close */
+  /** Callback when the calendar should close */
   onCalendarClose?: () => void;
-  /** Callback when date is selected */
+  /** Callback when the date is selected */
   onDateSelect?: (context: DatePickerContext) => void;
 }
 
@@ -46,7 +46,7 @@ export class WebComponentAdapter {
   /**
    * Create a new adapter
    *
-   * @param config - Adapter configuration
+   * @param {AdapterConfig} config - Adapter configuration
    */
   constructor(config: AdapterConfig) {
     this.config = config;
@@ -62,8 +62,8 @@ export class WebComponentAdapter {
   /**
    * Send an event to the state machine
    *
-   * @param event - Event type
-   * @param payload - Event payload
+   * @param {string} event - Event type
+   * @param {any} payload - Event payload
    * @returns Updated context
    */
   public send(event: string, payload?: any): DatePickerContext {
@@ -91,7 +91,7 @@ export class WebComponentAdapter {
   /**
    * Update context directly
    *
-   * @param updates - Context updates
+   * @param {Partial<DatePickerContext>} updates - Context updates
    * @returns Updated context
    */
   public updateContext(
@@ -103,7 +103,7 @@ export class WebComponentAdapter {
   /**
    * Check if a transition is valid
    *
-   * @param event - Event type
+   * @param {string} event - Event type
    * @returns True if transition is valid
    */
   public canTransition(event: string): boolean {
@@ -113,7 +113,7 @@ export class WebComponentAdapter {
   /**
    * Handle state changes
    *
-   * @param transition - State transition
+   * @param {StateTransition} transition - State transition
    */
   private handleStateChange(transition: StateTransition): void {
     const { from, to, context } = transition;
@@ -130,7 +130,7 @@ export class WebComponentAdapter {
     }
 
     // Dispatch custom event
-    this.component.dispatchEvent(
+    (this.component as unknown as HTMLElement).dispatchEvent(
       new CustomEvent('cds-date-picker-state-change', {
         detail: { transition },
         bubbles: true,
@@ -142,7 +142,7 @@ export class WebComponentAdapter {
   /**
    * Sync component properties with context
    *
-   * @param context - Current context
+   * @param {DatePickerContext} context - Current context
    */
   private syncComponentProperties(context: DatePickerContext): void {
     // Sync open state
@@ -169,9 +169,9 @@ export class WebComponentAdapter {
   /**
    * Handle transition-specific effects
    *
-   * @param from - Previous state
-   * @param to - New state
-   * @param context - Current context
+   * @param {string} from - Previous state
+   * @param {string} to - New state
+   * @param {DatePickerContext} context - Current context
    */
   private handleTransitionEffects(
     from: string,
@@ -183,9 +183,10 @@ export class WebComponentAdapter {
       if (this.config.onCalendarOpen) {
         this.config.onCalendarOpen();
       }
-      // Open calendar if available
-      if (this.component.calendar && !this.component.calendar.isOpen) {
-        this.component.calendar.open();
+      // Open the calendar if available
+      const calendar = (this.component as any).calendar;
+      if (calendar && !calendar.isOpen) {
+        calendar.open();
       }
     }
 
@@ -195,8 +196,9 @@ export class WebComponentAdapter {
         this.config.onCalendarClose();
       }
       // Close calendar if available
-      if (this.component.calendar && this.component.calendar.isOpen) {
-        this.component.calendar.close();
+      const calendar = (this.component as any).calendar;
+      if (calendar && calendar.isOpen) {
+        calendar.close();
       }
     }
 

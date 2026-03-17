@@ -52,11 +52,11 @@ export const actions: ActionMap = {
     /**
      * Action for INPUT_FOCUS event
      *
-     * @param {DatePickerContext} context - Current context
+     * @param _context
      * @param {DatePickerEvent} event - The event
      * @returns {Partial<DatePickerContext>} Updated context
      */
-    INPUT_FOCUS: (context, event) => {
+    INPUT_FOCUS: (_context, event: DatePickerEvent): Partial<DatePickerContext> => {
       const payload = event.payload as InputFocusPayload;
       return {
         isFocused: true,
@@ -104,11 +104,11 @@ export const actions: ActionMap = {
     /**
      * Action for RANGE_START_SELECT event
      *
-     * @param {DatePickerContext} context - Current context
+     * @param {DatePickerContext} _context - Current context
      * @param {DatePickerEvent} event - The event
      * @returns {Partial<DatePickerContext>} Updated context
      */
-    RANGE_START_SELECT: (context, event) => {
+    RANGE_START_SELECT: (_context: DatePickerContext, event: DatePickerEvent): Partial<DatePickerContext> => {
       const payload = event.payload as DateSelectPayload;
       const startDate = payload?.date;
 
@@ -118,7 +118,7 @@ export const actions: ActionMap = {
 
       return {
         startDate,
-        endDate: null, // Reset end date when selecting new start
+        endDate: null, // Reset end date when selecting a new start
         value: plainDateToISOString(startDate),
       };
     },
@@ -191,7 +191,7 @@ export const actions: ActionMap = {
   },
 
   [DatePickerState.DISABLED]: {
-    /** Action for DISABLE event */
+    /** Action for a DISABLE event */
     DISABLE: () => ({
       isDisabled: true,
       isOpen: false,
@@ -218,11 +218,11 @@ export const actions: ActionMap = {
     /**
      * Action for VALIDATION_ERROR event
      *
-     * @param {DatePickerContext} context - Current context
+     * @param {DatePickerContext} _context - Current context (unused)
      * @param {DatePickerEvent} event - The event
      * @returns {Partial<DatePickerContext>} Updated context
      */
-    VALIDATION_ERROR: (context, event) => {
+    VALIDATION_ERROR: (_context, event) => {
       const payload = event.payload as ValidationErrorPayload;
       return {
         isInvalid: true,

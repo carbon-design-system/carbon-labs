@@ -6,17 +6,19 @@
  */
 
 import { html } from 'lit';
-import { prefix } from './temp-imports/globals/settings';
-import { iconLoader } from './temp-imports/globals/internal/icon-loader';
-import { INPUT_SIZE } from '@carbon/web-components/es/components/text-input/defs';
+import { prefix } from '../temp-imports/globals/settings';
+import { iconLoader } from '../temp-imports/globals/internal/icon-loader';
+import { INPUT_SIZE } from '../defs.js';
 import View16 from '@carbon/icons/es/view/16.js';
 import FolderOpen16 from '@carbon/icons/es/folder--open/16.js';
 import Folders16 from '@carbon/icons/es/folders/16.js';
-import './date-picker';
-import './date-picker-input-skeleton';
-import '@carbon/web-components/es/components/layer/index';
-import '@carbon/web-components/es/components/ai-label';
-import './temp-imports/.storybook/templates/with-layer';
+import '../date-picker';
+import '../date-picker-input';
+import '../date-picker-input-skeleton';
+import '../calendar-renderer';
+import '@carbon/web-components/es/components/layer/index.js';
+import '@carbon/web-components/es/components/ai-label/index.js';
+import '../temp-imports/.storybook/templates/with-layer';
 
 const sizes = {
   [`Small (${INPUT_SIZE.SMALL})`]: INPUT_SIZE.SMALL,
@@ -27,8 +29,6 @@ const sizes = {
 const defaultArgs = {
   dateFormat: 'm/d/Y',
   disabled: false,
-  allowInput: true,
-  closeOnSelect: true,
   minDate: '',
   maxDate: '',
   readonly: false,
@@ -43,22 +43,18 @@ const defaultArgs = {
 };
 
 const controls = {
-  allowInput: {
-    control: 'boolean',
-    description:
-      'Flatpickr prop passthrough enables direct date input, and when set to false, we must clear dates manually by resetting the value prop to empty string making it a controlled input.',
-  },
-  closeOnSelect: {
-    control: 'boolean',
-    description:
-      'Flatpickr prop passthrough. Controls whether the calendar dropdown closes upon selection.',
-  },
   dateFormat: {
     control: 'text',
-    description: 'The date format.',
+    description: 'The date format (e.g., m/d/Y, Y-m-d).',
   },
-  disabled: { control: 'boolean' },
-  helperText: { control: 'text' },
+  disabled: {
+    control: 'boolean',
+    description: 'Specify whether the date picker should be disabled.',
+  },
+  helperText: {
+    control: 'text',
+    description: 'Helper text to display below the input.',
+  },
   invalid: {
     control: 'boolean',
     description: 'Specify if the currently value is invalid.',
@@ -69,23 +65,30 @@ const controls = {
   },
   maxDate: {
     control: 'text',
-    description: 'The maximum date that a user can pick to.',
+    description: 'The maximum date that a user can pick to (ISO format: YYYY-MM-DD).',
   },
   minDate: {
     control: 'text',
-    description: 'The minimum date that a user can start picking from.',
+    description: 'The minimum date that a user can start picking from (ISO format: YYYY-MM-DD).',
   },
-  placeholder: { control: 'text' },
+  placeholder: {
+    control: 'text',
+    description: 'Placeholder text for the input field.',
+  },
   readonly: {
     control: 'boolean',
     description:
-      'Whether the DatePicker is to be readOnly if boolean applies to all inputs if array applies to each input in order.',
+      'Whether the DatePicker is to be readOnly. If boolean, applies to all inputs; if array, applies to each input in order.',
   },
   short: {
     control: 'boolean',
     description: '<code>true</code> to use the short version.',
   },
-  size: { control: 'select', options: sizes },
+  size: {
+    control: 'select',
+    options: sizes,
+    description: 'Specify the size of the input.',
+  },
   warn: {
     control: 'boolean',
     description: 'Specify whether the control is currently in warning state.',
@@ -125,8 +128,6 @@ export const Default = {
     },
   },
   render: ({
-    allowInput,
-    closeOnSelect,
     dateFormat,
     disabled,
     invalid,
@@ -142,8 +143,6 @@ export const Default = {
   }) => {
     return html`
       <cds-date-picker
-        allow-input="${allowInput}"
-        close-on-select="${closeOnSelect}"
         date-format="${dateFormat}"
         ?disabled="${disabled}"
         max-date="${maxDate}"
@@ -182,8 +181,6 @@ export const RangeWithCalendar = {
   args: defaultArgs,
   argTypes: controls,
   render: ({
-    allowInput,
-    closeOnSelect,
     dateFormat,
     disabled,
     invalid,
@@ -198,8 +195,6 @@ export const RangeWithCalendar = {
   }) => {
     return html`
       <cds-date-picker
-        allow-input="${allowInput}"
-        close-on-select="${closeOnSelect}"
         date-format="${dateFormat}"
         ?disabled="${disabled}"
         max-date="${maxDate}"
@@ -234,8 +229,6 @@ export const RangeWithCalendarWithLayer = {
   args: defaultArgs,
   argTypes: controls,
   render: ({
-    allowInput,
-    closeOnSelect,
     dateFormat,
     disabled,
     invalid,
@@ -251,8 +244,6 @@ export const RangeWithCalendarWithLayer = {
     return html`
       <sb-template-layers>
         <cds-date-picker
-          allow-input="${allowInput}"
-          close-on-select="${closeOnSelect}"
           date-format="${dateFormat}"
           ?disabled="${disabled}"
           max-date="${maxDate}"
@@ -288,8 +279,6 @@ export const Simple = {
   args: defaultArgs,
   argTypes: controls,
   render: ({
-    allowInput,
-    closeOnSelect,
     dateFormat,
     disabled,
     invalid,
@@ -304,8 +293,6 @@ export const Simple = {
   }) => {
     return html`
       <cds-date-picker
-        allow-input="${allowInput}"
-        close-on-select="${closeOnSelect}"
         date-format="${dateFormat}"
         max-date="${maxDate}"
         min-date="${minDate}">
@@ -329,8 +316,6 @@ export const SimpleWithLayer = {
   args: defaultArgs,
   argTypes: controls,
   render: ({
-    allowInput,
-    closeOnSelect,
     dateFormat,
     disabled,
     invalid,
@@ -346,8 +331,6 @@ export const SimpleWithLayer = {
     return html`
       <sb-template-layers>
         <cds-date-picker
-          allow-input="${allowInput}"
-          close-on-select="${closeOnSelect}"
           date-format="${dateFormat}"
           max-date="${maxDate}"
           min-date="${minDate}">
@@ -371,8 +354,6 @@ export const SingleWithCalendar = {
   args: defaultArgs,
   argTypes: controls,
   render: ({
-    allowInput,
-    closeOnSelect,
     dateFormat,
     disabled,
     invalid,
@@ -387,8 +368,6 @@ export const SingleWithCalendar = {
   }) => {
     return html`
       <cds-date-picker
-        allow-input="${allowInput}"
-        close-on-select="${closeOnSelect}"
         date-format="${dateFormat}"
         ?disabled="${disabled}"
         max-date="${maxDate}"
@@ -413,8 +392,6 @@ export const SingleWithCalendarWithLayer = {
   args: defaultArgs,
   argTypes: controls,
   render: ({
-    allowInput,
-    closeOnSelect,
     disabled,
     dateFormat,
     invalid,
@@ -430,8 +407,6 @@ export const SingleWithCalendarWithLayer = {
     return html`
       <sb-template-layers>
         <cds-date-picker
-          allow-input="${allowInput}"
-          close-on-select="${closeOnSelect}"
           date-format="${dateFormat}"
           ?disabled="${disabled}"
           max-date="${maxDate}"
@@ -516,8 +491,6 @@ export const WithAILabel = {
   args: defaultArgs,
   argTypes: controls,
   render: ({
-    allowInput,
-    closeOnSelect,
     dateFormat,
     disabled,
     invalid,
@@ -532,8 +505,6 @@ export const WithAILabel = {
   }) => {
     return html`
       <cds-date-picker
-        allow-input="${allowInput}"
-        close-on-select="${closeOnSelect}"
         date-format="${dateFormat}"
         ?disabled="${disabled}"
         max-date="${maxDate}"

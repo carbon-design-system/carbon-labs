@@ -8,3 +8,4 @@
 import './date-picker';
 import './date-picker-input';
 import './date-picker-input-skeleton';
+import './calendar-renderer';

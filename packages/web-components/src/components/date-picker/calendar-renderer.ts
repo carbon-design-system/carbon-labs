@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { LitElement, html, css } from 'lit';
+import { LitElement, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 // Temporal API is available globally via polyfill
@@ -16,6 +16,8 @@ import { carbonElement as customElement } from './temp-imports/globals/decorator
 import ChevronLeft16 from '@carbon/icons/es/chevron--left/16.js';
 import ChevronRight16 from '@carbon/icons/es/chevron--right/16.js';
 import { iconLoader } from './temp-imports/globals/internal/icon-loader';
+// @ts-ignore
+import styles from './date-picker.scss?inline';
 
 /**
  * Calendar renderer for date picker.
@@ -31,7 +33,7 @@ class CDSDatePickerCalendar extends LitElement {
    * The currently displayed month (Temporal.PlainYearMonth)
    */
   @state()
-  private _currentMonth: Temporal.PlainYearMonth = Temporal.Now.plainDateISO().toPlainYearMonth();
+  private _currentMonth: any = Temporal.Now.plainDateISO().toPlainYearMonth();
 
   /**
    * The selected date(s)
@@ -87,7 +89,7 @@ class CDSDatePickerCalendar extends LitElement {
 
   /**
    * Handle date selection
-   * @param date - The date to select
+   * @param {Temporal.PlainDate} date - The date to select
    */
   private _handleDateSelect(date: Temporal.PlainDate) {
     if (this._isDateDisabled(date)) {
@@ -118,7 +120,7 @@ class CDSDatePickerCalendar extends LitElement {
 
   /**
    * Check if a date is disabled
-   * @param date - The date to check
+   * @param {Temporal.PlainDate} date - The date to check
    */
   private _isDateDisabled(date: Temporal.PlainDate): boolean {
     if (this.minDate && Temporal.PlainDate.compare(date, this.minDate) < 0) {
@@ -132,17 +134,17 @@ class CDSDatePickerCalendar extends LitElement {
 
   /**
    * Check if a date is selected
-   * @param date - The date to check
+   * @param {Temporal.PlainDate} date - The date to check
    */
   private _isDateSelected(date: Temporal.PlainDate): boolean {
     return this.selectedDates.some((selected) =>
-      selected.equals(date)
+      Temporal.PlainDate.compare(selected, date) === 0
     );
   }
 
   /**
    * Check if a date is in range (for range mode)
-   * @param date - The date to check
+   * @param {Temporal.PlainDate} date - The date to check
    */
   private _isDateInRange(date: Temporal.PlainDate): boolean {
     if (!this.rangeMode || this.selectedDates.length !== 2) {
@@ -161,11 +163,11 @@ class CDSDatePickerCalendar extends LitElement {
 
   /**
    * Check if a date is today
-   * @param date - The date to check
+   * @param {Temporal.PlainDate} date - The date to check
    */
   private _isToday(date: Temporal.PlainDate): boolean {
     const today = Temporal.Now.plainDateISO();
-    return date.equals(today);
+    return Temporal.PlainDate.compare(date, today) === 0;
   }
 
   /**
@@ -316,11 +318,7 @@ class CDSDatePickerCalendar extends LitElement {
     `;
   }
 
-  static styles = css`
-    :host {
-      display: block;
-    }
-  `;
+  static styles = styles;
 }
 
 export default CDSDatePickerCalendar;

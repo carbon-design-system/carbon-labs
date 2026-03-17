@@ -6,17 +6,17 @@
  */
 
 import { LitElement, html } from 'lit';
-import { property, query } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 import { prefix } from './temp-imports/globals/settings';
 import FormMixin from './temp-imports/globals/mixins/form';
 import HostListenerMixin from './temp-imports/globals/mixins/host-listener';
 import HostListener from './temp-imports/globals/decorators/host-listener';
 import CDSDatePickerInput from './date-picker-input';
-import CDSDatePickerCalendar from './calendar-renderer';
-import { DatePickerMachine } from './state-machine/machine';
 import { WebComponentAdapter } from './state-machine/adapters/web-component-adapter';
-import type { DatePickerState, DatePickerEvent } from './state-machine/types';
-import styles from './date-picker.scss?lit';
+import type { StateTransition } from './state-machine';
+import { DatePickerState, DatePickerEvent } from './state-machine';
+// @ts-ignore
+import styles from './date-picker.scss?inline';
 import { carbonElement as customElement } from './temp-imports/globals/decorators/carbon-element';
 
 /**
@@ -46,6 +46,7 @@ enum DATE_PICKER_MODE {
  * @fires cds-date-picker-changed - The custom event fired when the date selection changes.
  * @fires cds-date-picker-error - The custom event fired when an error occurs.
  */
+// @ts-expect-error - Mixin inheritance not fully recognized by TypeScript
 @customElement(`${prefix}-date-picker`)
 class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   /**
@@ -54,26 +55,9 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   private _dateInteractNode: CDSDatePickerInput | null = null;
 
   /**
-   * The element to put calendar dropdown in.
-   */
-  @query('#floating-menu-container')
-  private _floatingMenuContainerNode!: HTMLDivElement;
-
-  /**
-   * The calendar component reference.
-   */
-  @query(`${prefix}-date-picker-calendar`)
-  private _calendarNode?: CDSDatePickerCalendar;
-
-  /**
    * The internal placeholder for the `value` property.
    */
   private _value!: string;
-
-  /**
-   * The state machine instance.
-   */
-  private _machine: DatePickerMachine | null = null;
 
   /**
    * The adapter for Web Component integration.
@@ -84,10 +68,12 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * @returns The effective date picker mode, determined by the child `<cds-date-picker-input>`.
    */
   private get _mode() {
-    const { selectorInputTo } = this.constructor as typeof CDSDatePicker;
+    const {selectorInputTo} = this.constructor as typeof CDSDatePicker;
+    // @ts-expect-error - querySelector from mixin
     if (this.querySelector(selectorInputTo)) {
       return DATE_PICKER_MODE.RANGE;
     }
+    // @ts-expect-error - querySelector from mixin
     if (this.querySelector(`${prefix}-date-picker-input[kind="single"]`)) {
       return DATE_PICKER_MODE.SINGLE;
     }
@@ -96,12 +82,15 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
 
   /**
    * Handles `${prefix}-date-picker-changed` event on this element.
+   *
+   * @param {CustomEvent} root0 - The event object
+   * @param {object} root0.detail - The event detail
    */
   @HostListener('eventChange')
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore: The decorator refers to this method but TS thinks this method is not referred to
-  private _handleChange = ({ detail }: CustomEvent) => {
-    const { selectedDates } = detail;
+  // @ts-ignore: The decorator refers to this method, but TS thinks this method is not referred to
+  private _handleChange = ({detail}: CustomEvent) => {
+    const {selectedDates} = detail;
     if (selectedDates && Array.isArray(selectedDates)) {
       this._value = selectedDates
         .map((date) => {
@@ -117,11 +106,12 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
 
   /**
    * Handles form data event
-   * @param event The form data event
+   *
+   * @param {FormDataEvent} event - The form data event
    */
   _handleFormdata(event: FormDataEvent) {
-    const { formData } = event;
-    const { disabled, name, value } = this;
+    const {formData} = event;
+    const {disabled, name, value} = this;
     if (!disabled) {
       formData.append(name, value);
     }
@@ -129,10 +119,12 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
 
   /**
    * Handles `slotchange` event in the `<slot>`.
-   * @param target The event target
+   *
+   * @param {Event} root0 - The event object
+   * @param {EventTarget} root0.target - The event target
    */
-  private _handleSlotChange({ target }: Event) {
-    const { _dateInteractNode: oldDateInteractNode } = this;
+  private _handleSlotChange({target}: Event) {
+    const {_dateInteractNode: oldDateInteractNode} = this;
     const dateInteractNode = (target as HTMLSlotElement)
       .assignedNodes()
       .find(
@@ -142,125 +134,105 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
             (this.constructor as typeof CDSDatePicker).selectorInputFrom
           )
       );
+    // @ts-expect-error - Type comparison between mixin types
     if (oldDateInteractNode !== dateInteractNode) {
-      this._dateInteractNode = dateInteractNode as CDSDatePickerInput;
+      this._dateInteractNode = dateInteractNode as unknown as CDSDatePickerInput;
       this._initializeDatePicker();
     }
   }
 
   /**
-   * Fires a custom event to notify an error.
-   * @param error The error object
-   */
-  private _handleError = (error: Error) => {
-    this.dispatchEvent(
-      new CustomEvent(
-        (this.constructor as typeof CDSDatePicker).eventError,
-        {
-          bubbles: true,
-          cancelable: false,
-          composed: true,
-          detail: {
-            error,
-          },
-        }
-      )
-    );
-  };
-
-  /**
    * Handles state machine state changes
-   * @param state The new state
+   *
+   * @param {StateTransition} transition - The state transition
+   * @param {DatePickerState} transition.from - Previous state
+   * @param {DatePickerState} transition.to - New state
+   * @param {DatePickerContext} transition.context - Current context
    */
-  private _handleStateChange = (state: DatePickerState) => {
+  private _handleStateChange = (transition: StateTransition) => {
+    const {to, context} = transition;
+    const newState = to as DatePickerState;
+
     // Update open property based on state
-    if (state.currentState === 'calendar_open') {
+    if (newState === DatePickerState.CALENDAR_OPEN) {
       this.open = true;
     } else if (
-      state.currentState === 'idle' ||
-      state.currentState === 'focused'
+      newState === DatePickerState.IDLE ||
+      newState === DatePickerState.FOCUSED
     ) {
       this.open = false;
     }
 
     // Dispatch change event when dates are selected
     if (
-      state.currentState === 'date_selected' ||
-      state.currentState === 'range_selected'
+      newState === DatePickerState.DATE_SELECTED
     ) {
-      this.dispatchEvent(
+      const selectedDates = context.endDate
+        ? [context.startDate, context.endDate]
+        : [context.startDate];
+
+      (this as unknown as HTMLElement).dispatchEvent(
         new CustomEvent(
           (this.constructor as typeof CDSDatePicker).eventChange,
           {
             bubbles: true,
             composed: true,
             detail: {
-              selectedDates: state.selectedDates,
+              selectedDates,
               value: this._value,
             },
           }
         )
       );
     }
-
-    // Handle errors
-    if (state.currentState === 'error' && state.error) {
-      this._handleError(state.error);
-    }
   };
 
   /**
-   * Initializes the date picker with state machine.
+   * Initializes the date picker with a state machine.
    */
   private _initializeDatePicker() {
     this._releaseDatePicker();
-    const { _dateInteractNode: dateInteractNode, _mode: mode } = this;
+    const {_dateInteractNode: dateInteractNode, _mode: mode} = this;
 
     // Don't instantiate in simple mode
     if (!dateInteractNode || !dateInteractNode.input || mode === 'simple') {
       return;
     }
 
-    const { selectorInputFrom, selectorInputTo } = this
-      .constructor as typeof CDSDatePicker;
-    const inputFrom = this.querySelector(selectorInputFrom) as CDSDatePickerInput;
-    const inputTo = this.querySelector(selectorInputTo) as CDSDatePickerInput;
-
-    // Create state machine
-    this._machine = new DatePickerMachine({
-      mode: mode === DATE_PICKER_MODE.RANGE ? 'range' : 'single',
-      dateFormat: this.dateFormat || 'm/d/Y',
-      minDate: this.minDate,
-      maxDate: this.maxDate,
-      allowInput: this.allowInput,
-      closeOnSelect: this.closeOnSelect,
+    // Create adapter with configuration
+    this._adapter = new WebComponentAdapter({
+      component: this,
+      initialContext: {
+        mode: mode === DATE_PICKER_MODE.RANGE ? 'range' : 'single',
+        dateFormat: this.dateFormat || 'm/d/Y',
+        allowInput: this.allowInput,
+        closeOnSelect: this.closeOnSelect,
+        value: this.value || '',
+        startDate: null,
+        endDate: null,
+        isOpen: false,
+        isFocused: false,
+        isDisabled: this.disabled,
+        isReadonly: this.readonly,
+        isInvalid: false,
+        lastFocusedInput: null,
+        minDate: this.minDate ? Temporal.PlainDate.from(this.minDate) : null,
+        maxDate: this.maxDate ? Temporal.PlainDate.from(this.maxDate) : null,
+      },
+      onStateChange: this._handleStateChange,
     });
-
-    // Create adapter
-    this._adapter = new WebComponentAdapter(
-      this._machine,
-      this,
-      inputFrom,
-      inputTo || undefined
-    );
-
-    // Subscribe to state changes
-    this._machine.subscribe(this._handleStateChange);
 
     // Set initial value if provided
     if (this.value) {
       const dates = this.value.split('/').filter(Boolean);
       if (dates.length > 0) {
-        this._machine.send({
-          type: mode === DATE_PICKER_MODE.RANGE ? 'RANGE_START_SELECT' : 'DATE_SELECT',
-          date: dates[0],
-        } as DatePickerEvent);
+        this._adapter.send(
+          mode === DATE_PICKER_MODE.RANGE ? DatePickerEvent.RANGE_START_SELECT : DatePickerEvent.DATE_SELECT,
+          {date: dates[0]}
+        );
 
         if (mode === DATE_PICKER_MODE.RANGE && dates.length > 1) {
-          this._machine.send({
-            type: 'RANGE_END_SELECT',
-            date: dates[1],
-          } as DatePickerEvent);
+          this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {date: dates[1]});
         }
       }
     }
@@ -274,51 +246,48 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       this._adapter.destroy();
       this._adapter = null;
     }
-    if (this._machine) {
-      this._machine = null;
-    }
   }
 
   /**
    * Allows the user to enter a date directly into the input field
    */
-  @property({ type: Boolean, reflect: true, attribute: 'allow-input' })
+  @property({type: Boolean, reflect: true, attribute: 'allow-input'})
   allowInput = true;
 
   /**
    * Controls whether the calendar dropdown closes upon selection.
    */
-  @property({ type: Boolean, reflect: true, attribute: 'close-on-select' })
+  @property({type: Boolean, reflect: true, attribute: 'close-on-select'})
   closeOnSelect = true;
 
   /**
    * The date format.
    */
-  @property({ attribute: 'date-format' })
+  @property({attribute: 'date-format'})
   dateFormat!: string;
 
   /**
    * Controls the disabled state of the input
    */
-  @property({ type: Boolean, reflect: true })
+  @property({type: Boolean, reflect: true})
   disabled = false;
 
   /**
    * The date range that a user can pick in calendar dropdown.
    */
-  @property({ attribute: 'enabled-range' })
+  @property({attribute: 'enabled-range'})
   enabledRange!: string;
 
   /**
    * The maximum date that a user can start picking from.
    */
-  @property({ attribute: 'max-date' })
+  @property({attribute: 'max-date'})
   maxDate!: string;
 
   /**
    * The minimum date that a user can start picking from.
    */
-  @property({ attribute: 'min-date' })
+  @property({attribute: 'min-date'})
   minDate!: string;
 
   /**
@@ -330,13 +299,13 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   /**
    * `true` if the date picker should be open.
    */
-  @property({ type: Boolean, reflect: true })
+  @property({type: Boolean, reflect: true})
   open = false;
 
   /**
    * Specify if the component should be read-only
    */
-  @property({ type: Boolean, reflect: true })
+  @property({type: Boolean, reflect: true})
   readonly = false;
 
   /**
@@ -347,47 +316,66 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     return this._value;
   }
 
+  /**
+   * Sets the value
+   *
+   * @param {string} value - The new value
+   */
   set value(value: string) {
-    const { _value: oldValue } = this;
+    const {_value: oldValue} = this;
     this._value = value;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error - requestUpdate is available from LitElement
     this.requestUpdate('value', oldValue);
   }
 
+  /**
+   * Lifecycle callback when element is connected
+   */
   connectedCallback() {
     super.connectedCallback();
     this._initializeDatePicker();
   }
 
+  /**
+   * Lifecycle callback when element is disconnected
+   */
   disconnectedCallback() {
     this._releaseDatePicker();
     super.disconnectedCallback();
   }
 
-  updated(changedProperties) {
-    if (this._machine) {
+  /**
+   * Lifecycle callback when properties change
+   *
+   * @param {Map<string, any>} changedProperties - Map of changed properties
+   */
+  updated(changedProperties: Map<string, any>) {
+    if (this._adapter) {
       if (changedProperties.has('minDate') || changedProperties.has('maxDate')) {
-        // Update machine config
-        this._machine.send({
-          type: 'UPDATE_CONFIG',
-          config: {
-            minDate: this.minDate,
-            maxDate: this.maxDate,
-          },
-        } as DatePickerEvent);
+        // Update context
+        this._adapter.updateContext({
+          minDate: this.minDate ? Temporal.PlainDate.from(this.minDate) : null,
+          maxDate: this.maxDate ? Temporal.PlainDate.from(this.maxDate) : null,
+        });
       }
 
       if (changedProperties.has('open')) {
         if (this.open && !this.readonly) {
-          this._machine.send({ type: 'CALENDAR_TOGGLE' } as DatePickerEvent);
+          this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
         } else if (!this.open) {
-          this._machine.send({ type: 'CALENDAR_CLOSE' } as DatePickerEvent);
+          this._adapter.send(DatePickerEvent.CALENDAR_CLOSE);
         }
       }
 
       if (changedProperties.has('disabled') || changedProperties.has('readonly')) {
-        const { selectorInputFrom, selectorInputTo } = this
+        const {selectorInputFrom, selectorInputTo} = this
           .constructor as typeof CDSDatePicker;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error - querySelector is available from HTMLElement
         const inputFrom = this.querySelector(selectorInputFrom) as CDSDatePickerInput;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error - querySelector is available from HTMLElement
         const inputTo = this.querySelector(selectorInputTo) as CDSDatePickerInput;
 
         [inputFrom, inputTo].forEach((input) => {
@@ -396,21 +384,23 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
             input.readonly = this.readonly;
           }
         });
+
+        this._adapter.updateContext({
+          isDisabled: this.disabled,
+          isReadonly: this.readonly,
+        });
       }
 
       if (changedProperties.has('value') && this.value) {
         const dates = this.value.split('/').filter(Boolean);
         if (dates.length > 0) {
-          this._machine.send({
-            type: this._mode === DATE_PICKER_MODE.RANGE ? 'RANGE_START_SELECT' : 'DATE_SELECT',
-            date: dates[0],
-          } as DatePickerEvent);
+          this._adapter.send(
+            this._mode === DATE_PICKER_MODE.RANGE ? DatePickerEvent.RANGE_START_SELECT : DatePickerEvent.DATE_SELECT,
+            {date: dates[0]}
+          );
 
           if (this._mode === DATE_PICKER_MODE.RANGE && dates.length > 1) {
-            this._machine.send({
-              type: 'RANGE_END_SELECT',
-              date: dates[1],
-            } as DatePickerEvent);
+            this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {date: dates[1]});
           }
         }
       }
@@ -421,7 +411,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * Renders the component
    */
   render() {
-    const { _handleSlotChange: handleSlotChange, _mode: mode, open } = this;
+    const {_handleSlotChange: handleSlotChange, _mode: mode, open} = this;
 
     return html`
       <a
@@ -433,13 +423,13 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       <div id="floating-menu-container">
         ${mode !== DATE_PICKER_MODE.SIMPLE && open
           ? html`
-              <cds-date-picker-calendar
-                .rangeMode="${mode === DATE_PICKER_MODE.RANGE}"
-                .dateFormat="${this.dateFormat || 'm/d/Y'}"
-                .minDate="${this.minDate}"
-                .maxDate="${this.maxDate}">
-              </cds-date-picker-calendar>
-            `
+            <cds-date-picker-calendar
+              .rangeMode="${mode === DATE_PICKER_MODE.RANGE}"
+              .dateFormat="${this.dateFormat || 'm/d/Y'}"
+              .minDate="${this.minDate}"
+              .maxDate="${this.maxDate}">
+            </cds-date-picker-calendar>
+          `
           : ''}
       </div>
       <a

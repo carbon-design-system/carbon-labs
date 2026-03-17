@@ -7,6 +7,7 @@
 
 import on from './on';
 import Handle from '../internal/handle';
+import type { Constructor } from '../decorators/carbon-element';
 
 /**
  * The format for the event name used by `@HostListener` decorator.

@@ -6,6 +6,7 @@
  */
 
 import { selectorTabbable } from '../settings';
+import type { Constructor } from '../decorators/carbon-element';
 
 /**
  * @param Base The base class.

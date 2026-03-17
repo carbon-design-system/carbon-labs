@@ -577,28 +577,57 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
 
     const { key } = event;
 
-    // Handle Tab key - only when focus is IN the calendar
+    // Handle Tab key
     if (key === 'Tab') {
       const composedPath = event.composedPath();
       const target = composedPath[0] as HTMLElement;
-      
-      // Check if the target has the calendar class or is within an element with that class
-      const isFocusInCalendar = target.classList?.contains('cds--date-picker__calendar') ||
-        target.closest?.('.cds--date-picker__calendar') !== null;
-      
-      // Only handle Tab when focus is already IN the calendar
-      if (!this.open || !isFocusInCalendar) {
-        // Let normal Tab behavior happen for inputs
-        return;
-      }
       
       // Get input elements
       const {selectorInputFrom, selectorInputTo} = this.constructor as typeof CDSDatePicker;
       const inputFrom = this.querySelector(selectorInputFrom) as CDSDatePickerInput;
       const inputTo = this.querySelector(selectorInputTo) as CDSDatePickerInput;
       
-      // Shift+Tab FROM calendar -> Move to appropriate input
-      if (event.shiftKey) {
+      // Check if focus is on input fields
+      const isOnFirstInput = inputFrom && composedPath.includes(inputFrom);
+      const isOnSecondInput = inputTo && composedPath.includes(inputTo);
+      
+      // Check if the target is the calendar element or within it
+      const calendar = this.shadowRoot?.querySelector('cds-date-picker-calendar') as HTMLElement;
+      const isFocusInCalendar = target === calendar ||
+        target.closest?.('cds-date-picker-calendar') !== null ||
+        composedPath.includes(calendar);
+      
+      // Case 1: Tab FROM first input -> Focus calendar (if open)
+      if (this.open && isOnFirstInput && !event.shiftKey) {
+        event.preventDefault();
+        event.stopPropagation();
+        const calendarElement = this.shadowRoot?.querySelector('cds-date-picker-calendar') as any;
+        const calendarDiv = calendarElement?.shadowRoot?.querySelector('.cds--date-picker__calendar') as HTMLElement;
+        if (calendarDiv) {
+          setTimeout(() => {
+            calendarDiv.focus();
+          }, 0);
+        }
+        return;
+      }
+      
+      // Case 2: Tab FROM second input (range mode) -> Focus calendar (if open)
+      if (this.open && isOnSecondInput && !event.shiftKey && this._mode === DATE_PICKER_MODE.RANGE) {
+        event.preventDefault();
+        event.stopPropagation(); // Prevent input from handling the event
+        const calendarElement = this.shadowRoot?.querySelector('cds-date-picker-calendar') as any;
+        const calendarDiv = calendarElement?.shadowRoot?.querySelector('.cds--date-picker__calendar') as HTMLElement;
+        if (calendarDiv) {
+          // Use setTimeout to ensure focus happens after event processing
+          setTimeout(() => {
+            calendarDiv.focus();
+          }, 0);
+        }
+        return;
+      }
+      
+      // Case 3: Shift+Tab FROM calendar -> Move to appropriate input
+      if (this.open && isFocusInCalendar && event.shiftKey) {
         event.preventDefault();
         
         // In range mode, check which input was last focused
@@ -622,30 +651,32 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         return;
       }
       
-      // Tab FROM calendar -> Move to second input (range) or close (single)
-      event.preventDefault();
-      
-      // In range mode, check which input was last focused
-      if (this._mode === DATE_PICKER_MODE.RANGE) {
-        const context = this._adapter?.getContext();
-        const lastFocused = context?.lastFocusedInput;
+      // Case 4: Tab FROM calendar -> Move to second input (range) or close (single)
+      if (this.open && isFocusInCalendar && !event.shiftKey) {
+        event.preventDefault();
         
-        // If we were on the first input, move to second input
-        if (lastFocused === 'from' && inputTo) {
-          (inputTo as any).input?.focus();
-          return;
+        // In range mode, check which input was last focused
+        if (this._mode === DATE_PICKER_MODE.RANGE) {
+          const context = this._adapter?.getContext();
+          const lastFocused = context?.lastFocusedInput;
+          
+          // If we were on the first input, move to second input
+          if (lastFocused === 'from' && inputTo) {
+            (inputTo as any).input?.focus();
+            return;
+          }
         }
+        
+        // Otherwise (single mode or after second input in range mode), close and move to next element
+        // Record the time when calendar was closed via Tab
+        this._lastTabCloseTime = Date.now();
+        
+        this._adapter.send(DatePickerEvent.TAB_KEY);
+        
+        // Find and focus the next tabbable element after this date picker
+        this._focusNextElement(false);
+        return;
       }
-      
-      // Otherwise (single mode or after second input in range mode), close and move to next element
-      // Record the time when calendar was closed via Tab
-      this._lastTabCloseTime = Date.now();
-      
-      this._adapter.send(DatePickerEvent.TAB_KEY);
-      
-      // Find and focus the next tabbable element after this date picker
-      this._focusNextElement(false);
-      return;
     }
 
     // Only handle other keyboard events when calendar is open AND focus is in calendar

@@ -300,9 +300,28 @@ The calendar supports comprehensive keyboard navigation:
 - **Arrow keys** - Navigate between dates
 - **Enter** - Select the focused date
 - **Escape** - Close the calendar
-- **Tab** - Move focus out of the calendar
+- **Tab** - Navigate through the date picker interface
+  - **Single mode**: Input field → Calendar (when open) → Outside the component
+  - **Range mode**: First input → Calendar (when open) → Second input → Calendar (when open) → Outside the component
+  - **Shift+Tab** - Reverse navigation through the same flow
 - **Page Up/Down** - Navigate between months
 - **Home/End** - Jump to start/end of week
+
+**Tab Navigation Flow:**
+
+In **single date mode**, pressing Tab follows this pattern:
+1. Focus on input field
+2. If calendar is open, Tab moves focus to the calendar
+3. Tab again moves focus outside the date picker
+
+In **range date mode**, pressing Tab follows this pattern:
+1. Focus on first input field (start date)
+2. If calendar is open, Tab moves focus to the calendar
+3. Tab again moves focus to second input field (end date)
+4. If calendar is open, Tab moves focus to the calendar again
+5. Tab again moves focus outside the date picker
+
+Shift+Tab reverses this flow, allowing you to navigate backward through the same sequence.
 
 When the calendar opens without a selected date, focus automatically moves to today's date
 for easy keyboard navigation.

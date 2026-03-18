@@ -34,10 +34,14 @@ $css--plex: true !default;
 
   // Popover API styling with CSS anchor positioning
   .#{$prefix}--date-picker__calendar-popover {
+    // Position using CSS anchor positioning
+    position: absolute;
+    z-index: 9000;
+
     // Reset popover defaults
-    margin: 0;
     padding: 0;
     border: none;
+    margin: 0;
     background: transparent;
 
     // Remove focus outline from popover
@@ -45,11 +49,11 @@ $css--plex: true !default;
       outline: none;
     }
 
-    // Position using CSS anchor positioning
-    position: absolute;
-    position-anchor: --date-picker-input;
+    /* stylelint-disable-next-line property-no-unknown */
     inset-area: block-end span-inline-start;
     margin-block-start: $spacing-02;
+    /* stylelint-disable-next-line property-no-unknown */
+    position-anchor: --date-picker-input;
 
     // Fallback positioning for browsers without anchor positioning
     @supports not (inset-area: block-end) {
@@ -59,28 +63,34 @@ $css--plex: true !default;
       margin-block-start: $spacing-02;
     }
 
-    // Ensure calendar is above other content
-    z-index: 9000;
-
     // Handle viewport overflow
+    /* stylelint-disable-next-line property-no-unknown */
     position-try-options: --bottom-left, --top-left, --bottom-right, --top-right;
 
+    /* stylelint-disable-next-line scss/at-rule-no-unknown */
     @position-try --bottom-left {
+      /* stylelint-disable-next-line property-no-unknown */
       inset-area: block-end span-inline-start;
       margin-block-start: $spacing-02;
     }
 
+    /* stylelint-disable-next-line scss/at-rule-no-unknown */
     @position-try --top-left {
+      /* stylelint-disable-next-line property-no-unknown */
       inset-area: block-start span-inline-start;
       margin-block-end: $spacing-02;
     }
 
+    /* stylelint-disable-next-line scss/at-rule-no-unknown */
     @position-try --bottom-right {
+      /* stylelint-disable-next-line property-no-unknown */
       inset-area: block-end span-inline-end;
       margin-block-start: $spacing-02;
     }
 
+    /* stylelint-disable-next-line scss/at-rule-no-unknown */
     @position-try --top-right {
+      /* stylelint-disable-next-line property-no-unknown */
       inset-area: block-start span-inline-end;
       margin-block-end: $spacing-02;
     }
@@ -100,10 +110,11 @@ $css--plex: true !default;
   // Calendar container styling
   .#{$prefix}--date-picker__calendar-container {
     position: absolute;
-    inset-inline-start: 0;
-    inset-block-start: 100%;
     z-index: 9000;
+    inset-block-start: 100%;
+    inset-inline-start: 0;
 
+    /* stylelint-disable-next-line selector-type-no-unknown */
     cds-date-picker-calendar {
       display: block;
       margin-block-start: $spacing-02;
@@ -139,6 +150,7 @@ $css--plex: true !default;
     }
 
     &:hover {
+      /* stylelint-disable-next-line max-nesting-depth */
       svg {
         fill: $layer-selected-inverse;
       }
@@ -270,9 +282,9 @@ $css--plex: true !default;
 
   .#{$prefix}--date-picker__calendar {
     display: block;
+    padding: $spacing-03;
     background-color: $layer;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
-    padding: $spacing-03;
     min-inline-size: rem(288px);
 
     &:focus {
@@ -292,11 +304,11 @@ $css--plex: true !default;
     display: flex;
     align-items: center;
     justify-content: center;
-    block-size: rem(40px);
-    inline-size: rem(40px);
     border: none;
     background-color: transparent;
+    block-size: rem(40px);
     cursor: pointer;
+    inline-size: rem(40px);
 
     &:hover {
       background-color: $layer-hover;
@@ -314,17 +326,17 @@ $css--plex: true !default;
 
   .#{$prefix}--date-picker__current-month {
     flex: 1;
-    text-align: center;
+    color: $text-primary;
     font-size: rem(14px);
     font-weight: 600;
-    color: $text-primary;
+    text-align: center;
   }
 
   // Weekdays grid - 7 columns
   .#{$prefix}--date-picker__weekdays {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
     gap: 0;
+    grid-template-columns: repeat(7, 1fr);
     margin-block-end: $spacing-02;
   }
 
@@ -333,30 +345,30 @@ $css--plex: true !default;
     align-items: center;
     justify-content: center;
     block-size: rem(40px);
-    inline-size: rem(40px);
+    color: $text-primary;
     font-size: rem(12px);
     font-weight: 600;
-    color: $text-primary;
+    inline-size: rem(40px);
   }
 
   // Days grid - 7 columns, 6 rows
   .#{$prefix}--date-picker__days {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
     gap: 0;
+    grid-template-columns: repeat(7, 1fr);
   }
 
   .#{$prefix}--date-picker__day {
     display: flex;
     align-items: center;
     justify-content: center;
-    block-size: rem(40px);
-    inline-size: rem(40px);
     border: none;
     background-color: transparent;
+    block-size: rem(40px);
     color: $text-primary;
     cursor: pointer;
     font-size: rem(14px);
+    inline-size: rem(40px);
 
     &:hover:not(:disabled) {
       background-color: $layer-hover;
@@ -378,6 +390,7 @@ $css--plex: true !default;
       color: $text-on-color;
 
       // Ensure proper contrast even when in range
+      /* stylelint-disable-next-line max-nesting-depth */
       &.inRange {
         background-color: $background-brand;
         color: $text-on-color;
@@ -400,9 +413,9 @@ $css--plex: true !default;
 
     // Keyboard focus state (different from browser :focus)
     &.focused:not(.selected) {
+      background-color: $layer-hover;
       outline: 2px solid $focus;
       outline-offset: -2px;
-      background-color: $layer-hover;
     }
   }
 }

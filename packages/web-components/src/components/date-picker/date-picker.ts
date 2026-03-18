@@ -15,7 +15,10 @@ import CDSDatePickerInput from './date-picker-input';
 import { WebComponentAdapter } from './state-machine/adapters/web-component-adapter';
 import type { StateTransition } from './state-machine';
 import { DatePickerState, DatePickerEvent } from './state-machine';
-import { parseDateToPlainDate, parseISOToPlainDate } from './state-machine/temporal-utils';
+import {
+  parseDateToPlainDate,
+  parseISOToPlainDate,
+} from './state-machine/temporal-utils';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
 import { carbonElement as customElement } from './temp-imports/globals/decorators/carbon-element';
@@ -74,7 +77,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * @returns The effective date picker mode, determined by the child `<cds-date-picker-input>`.
    */
   private get _mode() {
-    const {selectorInputTo} = this.constructor as typeof CDSDatePicker;
+    const { selectorInputTo } = this.constructor as typeof CDSDatePicker;
     // @ts-expect-error - querySelector from mixin
     if (this.querySelector(selectorInputTo)) {
       return DATE_PICKER_MODE.RANGE;
@@ -95,8 +98,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   @HostListener('eventChange')
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore: The decorator refers to this method, but TS thinks this method is not referred to
-  private _handleChange = ({detail}: CustomEvent) => {
-    const {selectedDates} = detail;
+  private _handleChange = ({ detail }: CustomEvent) => {
+    const { selectedDates } = detail;
     if (selectedDates && Array.isArray(selectedDates)) {
       this._value = selectedDates
         .filter((date) => date != null) // Filter out null/undefined values
@@ -135,15 +138,15 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   // @ts-ignore: The decorator refers to this method, but TS thinks this method is not referred to
   private _handleInputFocus = (event: CustomEvent) => {
     if (this._adapter && !this.disabled && !this.readonly) {
-      const {inputType} = event.detail || {};
-      this._adapter.send(DatePickerEvent.INPUT_FOCUS, {inputType});
-      
+      const { inputType } = event.detail || {};
+      this._adapter.send(DatePickerEvent.INPUT_FOCUS, { inputType });
+
       // Don't auto-open calendar if we JUST closed it via Tab key (within 100ms)
       // This prevents the immediate reopen when Tab moves focus to input,
       // but allows normal opening after that brief window
       const timeSinceTabClose = Date.now() - this._lastTabCloseTime;
       const shouldSkipOpen = timeSinceTabClose < 100;
-      
+
       if (!shouldSkipOpen) {
         // Open calendar when input is focused (matching current Carbon behavior)
         this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
@@ -161,8 +164,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   // @ts-ignore: The decorator refers to this method, but TS thinks this method is not referred to
   private _handleInputBlur = (event: CustomEvent) => {
     if (this._adapter) {
-      const {inputType} = event.detail || {};
-      this._adapter.send(DatePickerEvent.INPUT_BLUR, {inputType});
+      const { inputType } = event.detail || {};
+      this._adapter.send(DatePickerEvent.INPUT_BLUR, { inputType });
     }
   };
 
@@ -172,8 +175,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * @param {FormDataEvent} event - The form data event
    */
   _handleFormdata(event: FormDataEvent) {
-    const {formData} = event;
-    const {disabled, name, value} = this;
+    const { formData } = event;
+    const { disabled, name, value } = this;
     if (!disabled) {
       formData.append(name, value);
     }
@@ -185,8 +188,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * @param {Event} root0 - The event object
    * @param {EventTarget} root0.target - The event target
    */
-  private _handleSlotChange({target}: Event) {
-    const {_dateInteractNode: oldDateInteractNode} = this;
+  private _handleSlotChange({ target }: Event) {
+    const { _dateInteractNode: oldDateInteractNode } = this;
     const dateInteractNode = (target as HTMLSlotElement)
       .assignedNodes()
       .find(
@@ -198,7 +201,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       );
     // @ts-expect-error - Type comparison between mixin types
     if (oldDateInteractNode !== dateInteractNode) {
-      this._dateInteractNode = dateInteractNode as unknown as CDSDatePickerInput;
+      this._dateInteractNode =
+        dateInteractNode as unknown as CDSDatePickerInput;
       this._initializeDatePicker();
     }
   }
@@ -212,13 +216,13 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * @param {DatePickerContext} transition.context - Current context
    */
   private _handleStateChange = (transition: StateTransition) => {
-    const {to, from, context} = transition;
+    const { to, from, context } = transition;
     const newState = to as DatePickerState;
 
     // Update open property based on state
     if (newState === DatePickerState.CALENDAR_OPEN) {
       this.open = true;
-      
+
       // If we're staying in CALENDAR_OPEN state (keyboard navigation),
       // trigger a re-render to update the calendar with new focusedDate/viewDate
       if (from === DatePickerState.CALENDAR_OPEN) {
@@ -227,7 +231,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     } else if (newState === DatePickerState.SELECTING_END) {
       // Keep calendar open while selecting end date in range mode
       this.open = true;
-      
+
       // If we're staying in SELECTING_END state (keyboard navigation),
       // trigger a re-render to update the calendar with new focusedDate/viewDate
       if (from === DatePickerState.SELECTING_END) {
@@ -238,7 +242,10 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     } else if (newState === DatePickerState.FOCUSED) {
       // Only close calendar if not coming from CALENDAR_OPEN (Enter key)
       // When coming from CALENDAR_OPEN, the action sets context.isOpen
-      if (from !== DatePickerState.CALENDAR_OPEN && from !== DatePickerState.SELECTING_END) {
+      if (
+        from !== DatePickerState.CALENDAR_OPEN &&
+        from !== DatePickerState.SELECTING_END
+      ) {
         this.open = false;
       } else {
         // Use the isOpen value from context (set by ENTER_KEY action)
@@ -256,13 +263,17 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     const shouldUpdateInput =
       newState === DatePickerState.DATE_SELECTED ||
       newState === DatePickerState.SELECTING_END ||
-      (newState === DatePickerState.FOCUSED && from === DatePickerState.CALENDAR_OPEN && context.startDate);
-    
+      (newState === DatePickerState.FOCUSED &&
+        from === DatePickerState.CALENDAR_OPEN &&
+        context.startDate);
+
     if (shouldUpdateInput) {
       // Only include non-null dates in selectedDates array
       const selectedDates = context.endDate
         ? [context.startDate, context.endDate].filter((date) => date != null)
-        : context.startDate ? [context.startDate] : [];
+        : context.startDate
+        ? [context.startDate]
+        : [];
 
       // Update input field value with formatted date
       /**
@@ -273,7 +284,13 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
        */
       const formatDate = (date: Temporal.PlainDate) => {
         // Safety check - ensure date is a valid Temporal.PlainDate
-        if (!date || typeof date !== 'object' || !('month' in date) || !('day' in date) || !('year' in date)) {
+        if (
+          !date ||
+          typeof date !== 'object' ||
+          !('month' in date) ||
+          !('day' in date) ||
+          !('year' in date)
+        ) {
           console.error('formatDate received invalid date:', date);
           return '';
         }
@@ -285,21 +302,34 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
 
       // For range mode, update the correct input based on state
       if (this._mode === DATE_PICKER_MODE.RANGE) {
-        const {selectorInputFrom, selectorInputTo} = this.constructor as typeof CDSDatePicker;
+        const { selectorInputFrom, selectorInputTo } = this
+          .constructor as typeof CDSDatePicker;
         // @ts-expect-error - querySelector is available from HTMLElement
-        const inputFrom = this.querySelector(selectorInputFrom) as CDSDatePickerInput;
+        const inputFrom = this.querySelector(
+          selectorInputFrom
+        ) as CDSDatePickerInput;
         // @ts-expect-error - querySelector is available from HTMLElement
-        const inputTo = this.querySelector(selectorInputTo) as CDSDatePickerInput;
+        const inputTo = this.querySelector(
+          selectorInputTo
+        ) as CDSDatePickerInput;
 
         // If we're in DATE_SELECTED state with both dates, update both inputs
-        if (newState === DatePickerState.DATE_SELECTED && context.startDate && context.endDate) {
+        if (
+          newState === DatePickerState.DATE_SELECTED &&
+          context.startDate &&
+          context.endDate
+        ) {
           if (inputFrom) {
             inputFrom.value = formatDate(context.startDate);
           }
           if (inputTo) {
             inputTo.value = formatDate(context.endDate);
           }
-        } else if (context.lastFocusedInput === 'to' && inputTo && context.endDate) {
+        } else if (
+          context.lastFocusedInput === 'to' &&
+          inputTo &&
+          context.endDate
+        ) {
           // Otherwise, update based on lastFocusedInput
           inputTo.value = formatDate(context.endDate);
         } else if (inputFrom && context.startDate) {
@@ -334,26 +364,26 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * @param {CustomEvent} event - The date select event
    */
   private _handleCalendarDateSelect = (event: CustomEvent) => {
-    const {date} = event.detail;
+    const { date } = event.detail;
     if (!this._adapter || !date) {
       return;
     }
 
-    const {_mode: mode} = this;
+    const { _mode: mode } = this;
     const context = this._adapter.getContext();
 
     if (mode === DATE_PICKER_MODE.RANGE) {
       // Range mode: select start or end date
       if (!context.startDate || context.endDate) {
         // Select start date (or restart selection)
-        this._adapter.send(DatePickerEvent.RANGE_START_SELECT, {date});
+        this._adapter.send(DatePickerEvent.RANGE_START_SELECT, { date });
       } else {
         // Select end date
-        this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {date});
+        this._adapter.send(DatePickerEvent.RANGE_END_SELECT, { date });
       }
     } else {
       // Single mode: select date
-      this._adapter.send(DatePickerEvent.DATE_SELECT, {date});
+      this._adapter.send(DatePickerEvent.DATE_SELECT, { date });
     }
   };
 
@@ -363,21 +393,23 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * @param {CustomEvent} event - The month change event
    */
   private _handleCalendarMonthChange = (event: CustomEvent) => {
-    const {month} = event.detail;
+    const { month } = event.detail;
     if (!this._adapter || !month) {
       return;
     }
 
     // Update viewDate in context
-    const firstDayOfMonth = month.toPlainDate({day: 1});
-    this._adapter.updateContext({viewDate: firstDayOfMonth});
+    const firstDayOfMonth = month.toPlainDate({ day: 1 });
+    this._adapter.updateContext({ viewDate: firstDayOfMonth });
   };
 
   /**
    * Show the calendar popover using Popover API
    */
   private _showCalendarPopover() {
-    const popover = this.shadowRoot?.querySelector(`#${prefix}-date-picker-calendar-popover`) as HTMLElement & { showPopover?: () => void };
+    const popover = this.shadowRoot?.querySelector(
+      `#${prefix}-date-picker-calendar-popover`
+    ) as HTMLElement & { showPopover?: () => void };
     if (popover && typeof popover.showPopover === 'function') {
       try {
         popover.showPopover();
@@ -392,7 +424,9 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * Hide the calendar popover using Popover API
    */
   private _hideCalendarPopover() {
-    const popover = this.shadowRoot?.querySelector(`#${prefix}-date-picker-calendar-popover`) as HTMLElement & { hidePopover?: () => void };
+    const popover = this.shadowRoot?.querySelector(
+      `#${prefix}-date-picker-calendar-popover`
+    ) as HTMLElement & { hidePopover?: () => void };
     if (popover && typeof popover.hidePopover === 'function') {
       try {
         popover.hidePopover();
@@ -408,7 +442,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    */
   private _initializeDatePicker() {
     this._releaseDatePicker();
-    const {_dateInteractNode: dateInteractNode, _mode: mode} = this;
+    const { _dateInteractNode: dateInteractNode, _mode: mode } = this;
 
     // Don't instantiate in simple mode
     if (!dateInteractNode || !dateInteractNode.input || mode === 'simple') {
@@ -443,12 +477,16 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       const dates = this.value.split('/').filter(Boolean);
       if (dates.length > 0) {
         this._adapter.send(
-          mode === DATE_PICKER_MODE.RANGE ? DatePickerEvent.RANGE_START_SELECT : DatePickerEvent.DATE_SELECT,
-          {date: dates[0]}
+          mode === DATE_PICKER_MODE.RANGE
+            ? DatePickerEvent.RANGE_START_SELECT
+            : DatePickerEvent.DATE_SELECT,
+          { date: dates[0] }
         );
 
         if (mode === DATE_PICKER_MODE.RANGE && dates.length > 1) {
-          this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {date: dates[1]});
+          this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {
+            date: dates[1],
+          });
         }
       }
     }
@@ -467,43 +505,43 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   /**
    * Allows the user to enter a date directly into the input field
    */
-  @property({type: Boolean, reflect: true, attribute: 'allow-input'})
+  @property({ type: Boolean, reflect: true, attribute: 'allow-input' })
   allowInput = true;
 
   /**
    * Controls whether the calendar dropdown closes upon selection.
    */
-  @property({type: Boolean, reflect: true, attribute: 'close-on-select'})
+  @property({ type: Boolean, reflect: true, attribute: 'close-on-select' })
   closeOnSelect = true;
 
   /**
    * The date format.
    */
-  @property({attribute: 'date-format'})
+  @property({ attribute: 'date-format' })
   dateFormat!: string;
 
   /**
    * Controls the disabled state of the input
    */
-  @property({type: Boolean, reflect: true})
+  @property({ type: Boolean, reflect: true })
   disabled = false;
 
   /**
    * The date range that a user can pick in calendar dropdown.
    */
-  @property({attribute: 'enabled-range'})
+  @property({ attribute: 'enabled-range' })
   enabledRange!: string;
 
   /**
    * The maximum date that a user can start picking from.
    */
-  @property({attribute: 'max-date'})
+  @property({ attribute: 'max-date' })
   maxDate!: string;
 
   /**
    * The minimum date that a user can start picking from.
    */
-  @property({attribute: 'min-date'})
+  @property({ attribute: 'min-date' })
   minDate!: string;
 
   /**
@@ -515,13 +553,13 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   /**
    * `true` if the date picker should be open.
    */
-  @property({type: Boolean, reflect: true})
+  @property({ type: Boolean, reflect: true })
   open = false;
 
   /**
    * Specify if the component should be read-only
    */
-  @property({type: Boolean, reflect: true})
+  @property({ type: Boolean, reflect: true })
   readonly = false;
 
   /**
@@ -538,7 +576,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * @param {string} value - The new value
    */
   set value(value: string) {
-    const {_value: oldValue} = this;
+    const { _value: oldValue } = this;
     this._value = value;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error - requestUpdate is available from LitElement
@@ -581,28 +619,38 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     if (key === 'Tab') {
       const composedPath = event.composedPath();
       const target = composedPath[0] as HTMLElement;
-      
+
       // Get input elements
-      const {selectorInputFrom, selectorInputTo} = this.constructor as typeof CDSDatePicker;
-      const inputFrom = this.querySelector(selectorInputFrom) as CDSDatePickerInput;
+      const { selectorInputFrom, selectorInputTo } = this
+        .constructor as typeof CDSDatePicker;
+      const inputFrom = this.querySelector(
+        selectorInputFrom
+      ) as CDSDatePickerInput;
       const inputTo = this.querySelector(selectorInputTo) as CDSDatePickerInput;
-      
+
       // Check if focus is on input fields
       const isOnFirstInput = inputFrom && composedPath.includes(inputFrom);
       const isOnSecondInput = inputTo && composedPath.includes(inputTo);
-      
+
       // Check if the target is the calendar element or within it
-      const calendar = this.shadowRoot?.querySelector('cds-date-picker-calendar') as HTMLElement;
-      const isFocusInCalendar = target === calendar ||
+      const calendar = this.shadowRoot?.querySelector(
+        'cds-date-picker-calendar'
+      ) as HTMLElement;
+      const isFocusInCalendar =
+        target === calendar ||
         target.closest?.('cds-date-picker-calendar') !== null ||
         composedPath.includes(calendar);
-      
+
       // Case 1: Tab FROM first input -> Focus calendar (if open)
       if (this.open && isOnFirstInput && !event.shiftKey) {
         event.preventDefault();
         event.stopPropagation();
-        const calendarElement = this.shadowRoot?.querySelector('cds-date-picker-calendar') as any;
-        const calendarDiv = calendarElement?.shadowRoot?.querySelector('.cds--date-picker__calendar') as HTMLElement;
+        const calendarElement = this.shadowRoot?.querySelector(
+          'cds-date-picker-calendar'
+        ) as any;
+        const calendarDiv = calendarElement?.shadowRoot?.querySelector(
+          '.cds--date-picker__calendar'
+        ) as HTMLElement;
         if (calendarDiv) {
           setTimeout(() => {
             calendarDiv.focus();
@@ -610,13 +658,22 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         }
         return;
       }
-      
+
       // Case 2: Tab FROM second input (range mode) -> Focus calendar (if open)
-      if (this.open && isOnSecondInput && !event.shiftKey && this._mode === DATE_PICKER_MODE.RANGE) {
+      if (
+        this.open &&
+        isOnSecondInput &&
+        !event.shiftKey &&
+        this._mode === DATE_PICKER_MODE.RANGE
+      ) {
         event.preventDefault();
         event.stopPropagation(); // Prevent input from handling the event
-        const calendarElement = this.shadowRoot?.querySelector('cds-date-picker-calendar') as any;
-        const calendarDiv = calendarElement?.shadowRoot?.querySelector('.cds--date-picker__calendar') as HTMLElement;
+        const calendarElement = this.shadowRoot?.querySelector(
+          'cds-date-picker-calendar'
+        ) as any;
+        const calendarDiv = calendarElement?.shadowRoot?.querySelector(
+          '.cds--date-picker__calendar'
+        ) as HTMLElement;
         if (calendarDiv) {
           // Use setTimeout to ensure focus happens after event processing
           setTimeout(() => {
@@ -625,16 +682,16 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         }
         return;
       }
-      
+
       // Case 3: Shift+Tab FROM calendar -> Move to appropriate input
       if (this.open && isFocusInCalendar && event.shiftKey) {
         event.preventDefault();
-        
+
         // In range mode, check which input was last focused
         if (this._mode === DATE_PICKER_MODE.RANGE) {
           const context = this._adapter?.getContext();
           const lastFocused = context?.lastFocusedInput;
-          
+
           // If we were on the second input, go back to it
           if (lastFocused === 'to' && inputTo) {
             (inputTo as any).input?.focus();
@@ -650,29 +707,29 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         }
         return;
       }
-      
+
       // Case 4: Tab FROM calendar -> Move to second input (range) or close (single)
       if (this.open && isFocusInCalendar && !event.shiftKey) {
         event.preventDefault();
-        
+
         // In range mode, check which input was last focused
         if (this._mode === DATE_PICKER_MODE.RANGE) {
           const context = this._adapter?.getContext();
           const lastFocused = context?.lastFocusedInput;
-          
+
           // If we were on the first input, move to second input
           if (lastFocused === 'from' && inputTo) {
             (inputTo as any).input?.focus();
             return;
           }
         }
-        
+
         // Otherwise (single mode or after second input in range mode), close and move to next element
         // Record the time when calendar was closed via Tab
         this._lastTabCloseTime = Date.now();
-        
+
         this._adapter.send(DatePickerEvent.TAB_KEY);
-        
+
         // Find and focus the next tabbable element after this date picker
         this._focusNextElement(false);
         return;
@@ -683,22 +740,23 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     if (!this.open) {
       return;
     }
-    
+
     // Get the actual target from the composed path (handles shadow DOM)
     const composedPath = event.composedPath();
     const target = composedPath[0] as HTMLElement;
     const input = this.shadowRoot?.querySelector('input');
-    
+
     // Only handle arrow keys, Page Up/Down, Home/End when focus is in calendar, not on input
     if (target === input) {
       return;
     }
-    
+
     // Check if the target has the calendar class or is within an element with that class
     // The calendar div is inside the calendar renderer's shadow DOM
-    const isFocusInCalendar = target.classList?.contains('cds--date-picker__calendar') ||
+    const isFocusInCalendar =
+      target.classList?.contains('cds--date-picker__calendar') ||
       target.closest?.('.cds--date-picker__calendar') !== null;
-    
+
     if (!isFocusInCalendar) {
       return;
     }
@@ -714,18 +772,18 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     // Handle Enter key - select focused date
     if (key === 'Enter') {
       event.preventDefault();
-      
+
       // Get the focused date from context
       const context = this._adapter.getContext();
       const focusedDate = context.focusedDate;
-      
+
       if (!focusedDate) {
         return;
       }
-      
+
       // Dispatch the appropriate event based on mode and current state
       const currentState = this._adapter.getState();
-      
+
       if (this._mode === DATE_PICKER_MODE.RANGE) {
         // In range mode, check if we're selecting start or end date
         if (currentState === 'selecting_end') {
@@ -806,19 +864,24 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    */
   private _focusNextElement(backwards = false) {
     // Get all tabbable elements in the document
-    const tabbableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-    const allTabbable = Array.from(document.querySelectorAll(tabbableSelector)) as HTMLElement[];
-    
+    const tabbableSelector =
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const allTabbable = Array.from(
+      document.querySelectorAll(tabbableSelector)
+    ) as HTMLElement[];
+
     // Find the index of this date picker component
-    const currentIndex = allTabbable.findIndex(el => this.contains(el) || el === this);
-    
+    const currentIndex = allTabbable.findIndex(
+      (el) => this.contains(el) || el === this
+    );
+
     if (currentIndex === -1) {
       return; // Couldn't find current element
     }
-    
+
     // Find the next element after all elements within this date picker
     let nextIndex = currentIndex;
-    
+
     if (backwards) {
       // Tab backwards - find previous element before this date picker
       for (let i = currentIndex - 1; i >= 0; i--) {
@@ -836,7 +899,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         }
       }
     }
-    
+
     // Focus the next element
     if (nextIndex !== currentIndex && allTabbable[nextIndex]) {
       allTabbable[nextIndex].focus();
@@ -874,7 +937,10 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    */
   updated(changedProperties: Map<string, any>) {
     if (this._adapter) {
-      if (changedProperties.has('minDate') || changedProperties.has('maxDate')) {
+      if (
+        changedProperties.has('minDate') ||
+        changedProperties.has('maxDate')
+      ) {
         // Update context
         this._adapter.updateContext({
           minDate: this.minDate ? Temporal.PlainDate.from(this.minDate) : null,
@@ -894,11 +960,18 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         }
       }
 
-      if (changedProperties.has('disabled') || changedProperties.has('readonly')) {
-        const {selectorInputFrom, selectorInputTo} = this
+      if (
+        changedProperties.has('disabled') ||
+        changedProperties.has('readonly')
+      ) {
+        const { selectorInputFrom, selectorInputTo } = this
           .constructor as typeof CDSDatePicker;
-        const inputFrom = this.querySelector(selectorInputFrom) as CDSDatePickerInput;
-        const inputTo = this.querySelector(selectorInputTo) as CDSDatePickerInput;
+        const inputFrom = this.querySelector(
+          selectorInputFrom
+        ) as CDSDatePickerInput;
+        const inputTo = this.querySelector(
+          selectorInputTo
+        ) as CDSDatePickerInput;
 
         [inputFrom, inputTo].forEach((input) => {
           if (input) {
@@ -920,14 +993,18 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           const startDate = parseISOToPlainDate(dates[0]);
           if (startDate) {
             this._adapter.send(
-              this._mode === DATE_PICKER_MODE.RANGE ? DatePickerEvent.RANGE_START_SELECT : DatePickerEvent.DATE_SELECT,
-              {date: startDate}
+              this._mode === DATE_PICKER_MODE.RANGE
+                ? DatePickerEvent.RANGE_START_SELECT
+                : DatePickerEvent.DATE_SELECT,
+              { date: startDate }
             );
 
             if (this._mode === DATE_PICKER_MODE.RANGE && dates.length > 1) {
               const endDate = parseISOToPlainDate(dates[1]);
               if (endDate) {
-                this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {date: endDate});
+                this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {
+                  date: endDate,
+                });
               }
             }
           }
@@ -940,7 +1017,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * Renders the component
    */
   render() {
-    const {_handleSlotChange: handleSlotChange, _mode: mode, open} = this;
+    const { _handleSlotChange: handleSlotChange, _mode: mode, open } = this;
     const context = this._adapter?.getContext();
     const selectedDates = context?.endDate
       ? [context.startDate, context.endDate].filter(Boolean)
@@ -955,21 +1032,29 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         role="navigation"
         tabindex="-1"></a>
       <slot @slotchange="${handleSlotChange}"></slot>
-      <div id="floating-menu-container" class="${prefix}--date-picker__calendar-container">
+      <div
+        id="floating-menu-container"
+        class="${prefix}--date-picker__calendar-container">
         ${mode !== DATE_PICKER_MODE.SIMPLE && open
           ? html`
-            <cds-date-picker-calendar
-              .rangeMode="${mode === DATE_PICKER_MODE.RANGE}"
-              .dateFormat="${this.dateFormat || 'm/d/Y'}"
-              .minDate="${this.minDate ? Temporal.PlainDate.from(this.minDate) : undefined}"
-              .maxDate="${this.maxDate ? Temporal.PlainDate.from(this.maxDate) : undefined}"
-              .selectedDates="${selectedDates}"
-              .viewDate="${context?.viewDate || null}"
-              .focusedDate="${context?.focusedDate || null}"
-              @cds-date-picker-calendar-date-select="${this._handleCalendarDateSelect}"
-              @cds-date-picker-calendar-month-change="${this._handleCalendarMonthChange}">
-            </cds-date-picker-calendar>
-          `
+              <cds-date-picker-calendar
+                .rangeMode="${mode === DATE_PICKER_MODE.RANGE}"
+                .dateFormat="${this.dateFormat || 'm/d/Y'}"
+                .minDate="${this.minDate
+                  ? Temporal.PlainDate.from(this.minDate)
+                  : undefined}"
+                .maxDate="${this.maxDate
+                  ? Temporal.PlainDate.from(this.maxDate)
+                  : undefined}"
+                .selectedDates="${selectedDates}"
+                .viewDate="${context?.viewDate || null}"
+                .focusedDate="${context?.focusedDate || null}"
+                @cds-date-picker-calendar-date-select="${this
+                  ._handleCalendarDateSelect}"
+                @cds-date-picker-calendar-month-change="${this
+                  ._handleCalendarMonthChange}">
+              </cds-date-picker-calendar>
+            `
           : ''}
       </div>
       <a

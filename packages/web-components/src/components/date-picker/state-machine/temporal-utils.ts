@@ -89,7 +89,7 @@ export function parseDateToPlainDate(
       const month = parseInt(parts[0], 10);
       const day = parseInt(parts[1], 10);
       const year = parseInt(parts[2], 10);
-      
+
       if (!isNaN(month) && !isNaN(day) && !isNaN(year)) {
         try {
           return Temporal.PlainDate.from({
@@ -158,10 +158,7 @@ export function formatPlainDate(
   const month = date.month.toString().padStart(2, '0');
   const day = date.day.toString().padStart(2, '0');
 
-  return format
-    .replace('Y', year)
-    .replace('m', month)
-    .replace('d', day);
+  return format.replace('Y', year).replace('m', month).replace('d', day);
 }
 
 /**
@@ -334,7 +331,9 @@ export function parseDateString(
  * @returns True if Temporal API is available
  */
 export function isTemporalAvailable(): boolean {
-  return typeof Temporal !== 'undefined' && typeof Temporal.PlainDate !== 'undefined';
+  return (
+    typeof Temporal !== 'undefined' && typeof Temporal.PlainDate !== 'undefined'
+  );
 }
 
 /**

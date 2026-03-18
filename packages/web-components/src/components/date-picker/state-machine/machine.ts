@@ -5,7 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { DatePickerState, DatePickerEvent as DatePickerEventEnum } from './states';
+import {
+  DatePickerState,
+  DatePickerEvent as DatePickerEventEnum,
+} from './states';
 import { checkGuard } from './guards';
 import { executeAction } from './actions';
 import { executeEffect } from './effects';
@@ -233,9 +236,7 @@ export class DatePickerStateMachine {
    * @param {Partial<DatePickerContext>} updates - Partial context updates
    * @returns The updated context
    */
-  public updateContext(
-    updates: Partial<DatePickerContext>
-  ): DatePickerContext {
+  public updateContext(updates: Partial<DatePickerContext>): DatePickerContext {
     this.context = {
       ...this.context,
       ...updates,

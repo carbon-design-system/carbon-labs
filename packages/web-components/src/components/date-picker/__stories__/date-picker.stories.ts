@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param-description, jsdoc/require-param-type, jsdoc/valid-types */
+
 import { html } from 'lit';
 import { prefix } from '../temp-imports/globals/settings';
 import { iconLoader } from '../temp-imports/globals/internal/icon-loader';
@@ -65,11 +67,13 @@ const controls = {
   },
   maxDate: {
     control: 'text',
-    description: 'The maximum date that a user can pick to (ISO format: YYYY-MM-DD).',
+    description:
+      'The maximum date that a user can pick to (ISO format: YYYY-MM-DD).',
   },
   minDate: {
     control: 'text',
-    description: 'The minimum date that a user can start picking from (ISO format: YYYY-MM-DD).',
+    description:
+      'The minimum date that a user can start picking from (ISO format: YYYY-MM-DD).',
   },
   placeholder: {
     control: 'text',
@@ -127,6 +131,22 @@ export const Default = {
     </ul>`,
     },
   },
+  /**
+   * Renders the default date picker story
+   * @param root0
+   * @param root0.dateFormat
+   * @param root0.disabled
+   * @param root0.invalid
+   * @param root0.invalidText
+   * @param root0.kind
+   * @param root0.maxDate
+   * @param root0.minDate
+   * @param root0.placeholder
+   * @param root0.readonly
+   * @param root0.size
+   * @param root0.warn
+   * @param root0.warnText
+   */
   render: ({
     dateFormat,
     disabled,
@@ -180,6 +200,21 @@ export const Default = {
 export const RangeWithCalendar = {
   args: defaultArgs,
   argTypes: controls,
+  /**
+   * Renders the range with calendar date picker story
+   * @param root0
+   * @param root0.dateFormat
+   * @param root0.disabled
+   * @param root0.invalid
+   * @param root0.invalidText
+   * @param root0.maxDate
+   * @param root0.minDate
+   * @param root0.placeholder
+   * @param root0.readonly
+   * @param root0.size
+   * @param root0.warn
+   * @param root0.warnText
+   */
   render: ({
     dateFormat,
     disabled,
@@ -228,6 +263,21 @@ export const RangeWithCalendar = {
 export const RangeWithCalendarWithLayer = {
   args: defaultArgs,
   argTypes: controls,
+  /**
+   * Renders the range with calendar and layer date picker story
+   * @param root0
+   * @param root0.dateFormat
+   * @param root0.disabled
+   * @param root0.invalid
+   * @param root0.invalidText
+   * @param root0.maxDate
+   * @param root0.minDate
+   * @param root0.placeholder
+   * @param root0.readonly
+   * @param root0.size
+   * @param root0.warn
+   * @param root0.warnText
+   */
   render: ({
     dateFormat,
     disabled,
@@ -278,6 +328,21 @@ export const RangeWithCalendarWithLayer = {
 export const Simple = {
   args: defaultArgs,
   argTypes: controls,
+  /**
+   *
+   * @param root0
+   * @param root0.dateFormat
+   * @param root0.disabled
+   * @param root0.invalid
+   * @param root0.invalidText
+   * @param root0.maxDate
+   * @param root0.minDate
+   * @param root0.placeholder
+   * @param root0.readonly
+   * @param root0.size
+   * @param root0.warn
+   * @param root0.warnText
+   */
   render: ({
     dateFormat,
     disabled,
@@ -315,6 +380,21 @@ export const Simple = {
 export const SimpleWithLayer = {
   args: defaultArgs,
   argTypes: controls,
+  /**
+   *
+   * @param root0
+   * @param root0.dateFormat
+   * @param root0.disabled
+   * @param root0.invalid
+   * @param root0.invalidText
+   * @param root0.maxDate
+   * @param root0.minDate
+   * @param root0.placeholder
+   * @param root0.readonly
+   * @param root0.size
+   * @param root0.warn
+   * @param root0.warnText
+   */
   render: ({
     dateFormat,
     disabled,
@@ -353,6 +433,21 @@ export const SimpleWithLayer = {
 export const SingleWithCalendar = {
   args: defaultArgs,
   argTypes: controls,
+  /**
+   *
+   * @param root0
+   * @param root0.dateFormat
+   * @param root0.disabled
+   * @param root0.invalid
+   * @param root0.invalidText
+   * @param root0.maxDate
+   * @param root0.minDate
+   * @param root0.placeholder
+   * @param root0.readonly
+   * @param root0.size
+   * @param root0.warn
+   * @param root0.warnText
+   */
   render: ({
     dateFormat,
     disabled,
@@ -391,6 +486,21 @@ export const SingleWithCalendar = {
 export const SingleWithCalendarWithLayer = {
   args: defaultArgs,
   argTypes: controls,
+  /**
+   *
+   * @param root0
+   * @param root0.disabled
+   * @param root0.dateFormat
+   * @param root0.invalid
+   * @param root0.invalidText
+   * @param root0.maxDate
+   * @param root0.minDate
+   * @param root0.placeholder
+   * @param root0.readonly
+   * @param root0.size
+   * @param root0.warn
+   * @param root0.warnText
+   */
   render: ({
     disabled,
     dateFormat,
@@ -442,6 +552,12 @@ const skeletonControls = {
 export const Skeleton = {
   args: { hideLabel: false, range: true },
   argTypes: skeletonControls,
+  /**
+   *
+   * @param root0
+   * @param root0.hideLabel
+   * @param root0.range
+   */
   render: ({ hideLabel, range }) => html`
     <cds-date-picker-input-skeleton
       ?hide-label="${hideLabel}"
@@ -490,6 +606,21 @@ const actions = html`
 export const WithAILabel = {
   args: defaultArgs,
   argTypes: controls,
+  /**
+   *
+   * @param root0
+   * @param root0.dateFormat
+   * @param root0.disabled
+   * @param root0.invalid
+   * @param root0.invalidText
+   * @param root0.maxDate
+   * @param root0.minDate
+   * @param root0.placeholder
+   * @param root0.readonly
+   * @param root0.size
+   * @param root0.warn
+   * @param root0.warnText
+   */
   render: ({
     dateFormat,
     disabled,

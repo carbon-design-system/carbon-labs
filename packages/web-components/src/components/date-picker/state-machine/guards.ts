@@ -17,23 +17,23 @@ import type {
 /**
  * Guard map - determines if transitions are allowed
  */
-type GuardMap = Record<
-  DatePickerState,
-  Partial<Record<string, StateGuard>>
->;
+type GuardMap = Record<DatePickerState, Partial<Record<string, StateGuard>>>;
 
 /**
  * Check if the component is interactive (not disabled or readonly)
- * @param context
+ *
+ * @param {DatePickerContext} context - The current context
+ * @returns {boolean} True if interactive
  */
 const isInteractive = (context: DatePickerContext): boolean => {
   return !context.isDisabled && !context.isReadonly;
 };
 
-
 /**
  * Check if component is in range mode
- * @param context
+ *
+ * @param {DatePickerContext} context - The current context
+ * @returns {boolean} True if in range mode
  */
 const isRangeMode = (context: DatePickerContext): boolean => {
   return context.mode === 'range';
@@ -66,17 +66,21 @@ export const guards: GuardMap = {
 
   [DatePickerState.SELECTING_START]: {
     /**
+     * Guard for calendar open in range mode
      *
-     * @param context
+     * @param {DatePickerContext} context - The current context
+     * @returns {boolean} True if allowed
      */
     CALENDAR_OPEN: (context) => isInteractive(context) && isRangeMode(context),
   },
 
   [DatePickerState.SELECTING_END]: {
     /**
+     * Guard for range start selection
      *
-     * @param context
-     * @param event
+     * @param {DatePickerContext} context - The current context
+     * @param {DatePickerEvent} event - The event
+     * @returns {boolean} True if allowed
      */
     RANGE_START_SELECT: (context, event) => {
       if (!isInteractive(context) || !isRangeMode(context)) {
@@ -84,39 +88,41 @@ export const guards: GuardMap = {
       }
 
       const payload = event.payload as DateSelectPayload;
-      if (!payload?.date) {return false;}
+      if (!payload?.date) {
+        return false;
+      }
 
-      return isDateInRange(
-        payload.date,
-        context.minDate,
-        context.maxDate
-      );
+      return isDateInRange(payload.date, context.minDate, context.maxDate);
     },
   },
 
   [DatePickerState.DATE_SELECTED]: {
     /**
+     * Guard for date selection
      *
-     * @param context
-     * @param event
+     * @param {DatePickerContext} context - The current context
+     * @param {DatePickerEvent} event - The event
+     * @returns {boolean} True if allowed
      */
     DATE_SELECT: (context, event) => {
-      if (!isInteractive(context)) {return false;}
+      if (!isInteractive(context)) {
+        return false;
+      }
 
       const payload = event.payload as DateSelectPayload;
-      if (!payload?.date) {return false;}
+      if (!payload?.date) {
+        return false;
+      }
 
-      return isDateInRange(
-        payload.date,
-        context.minDate,
-        context.maxDate
-      );
+      return isDateInRange(payload.date, context.minDate, context.maxDate);
     },
 
     /**
+     * Guard for range end selection
      *
-     * @param context
-     * @param event
+     * @param {DatePickerContext} context - The current context
+     * @param {DatePickerEvent} event - The event
+     * @returns {boolean} True if allowed
      */
     RANGE_END_SELECT: (context, event) => {
       if (!isInteractive(context) || !isRangeMode(context)) {
@@ -124,16 +130,16 @@ export const guards: GuardMap = {
       }
 
       const payload = event.payload as DateSelectPayload;
-      if (!payload?.date) {return false;}
+      if (!payload?.date) {
+        return false;
+      }
 
       // Must have a start date selected
-      if (!context.startDate) {return false;}
+      if (!context.startDate) {
+        return false;
+      }
 
-      return isDateInRange(
-        payload.date,
-        context.minDate,
-        context.maxDate
-      );
+      return isDateInRange(payload.date, context.minDate, context.maxDate);
     },
   },
 

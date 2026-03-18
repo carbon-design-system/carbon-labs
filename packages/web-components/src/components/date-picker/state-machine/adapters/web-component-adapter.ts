@@ -94,9 +94,7 @@ export class WebComponentAdapter {
    * @param {Partial<DatePickerContext>} updates - Context updates
    * @returns Updated context
    */
-  public updateContext(
-    updates: Partial<DatePickerContext>
-  ): DatePickerContext {
+  public updateContext(updates: Partial<DatePickerContext>): DatePickerContext {
     return this.machine.updateContext(updates);
   }
 
@@ -179,7 +177,10 @@ export class WebComponentAdapter {
     context: DatePickerContext
   ): void {
     // Handle calendar opening
-    if (to === DatePickerState.CALENDAR_OPEN && from !== DatePickerState.CALENDAR_OPEN) {
+    if (
+      to === DatePickerState.CALENDAR_OPEN &&
+      from !== DatePickerState.CALENDAR_OPEN
+    ) {
       if (this.config.onCalendarOpen) {
         this.config.onCalendarOpen();
       }
@@ -191,7 +192,10 @@ export class WebComponentAdapter {
     }
 
     // Handle calendar closing
-    if (from === DatePickerState.CALENDAR_OPEN && to !== DatePickerState.CALENDAR_OPEN) {
+    if (
+      from === DatePickerState.CALENDAR_OPEN &&
+      to !== DatePickerState.CALENDAR_OPEN
+    ) {
       if (this.config.onCalendarClose) {
         this.config.onCalendarClose();
       }

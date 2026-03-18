@@ -21,7 +21,7 @@ $css--plex: true !default;
 
 :host(#{$prefix}-date-picker) {
   @extend .#{$prefix}--date-picker;
-  
+
   // Make host the positioning context for the calendar
   position: relative;
 
@@ -39,18 +39,18 @@ $css--plex: true !default;
     padding: 0;
     border: none;
     background: transparent;
-    
+
     // Remove focus outline from popover
     &:focus {
       outline: none;
     }
-    
+
     // Position using CSS anchor positioning
     position: absolute;
     position-anchor: --date-picker-input;
     inset-area: block-end span-inline-start;
     margin-block-start: $spacing-02;
-    
+
     // Fallback positioning for browsers without anchor positioning
     @supports not (inset-area: block-end) {
       position: absolute;
@@ -58,28 +58,28 @@ $css--plex: true !default;
       inset-inline-start: anchor(left);
       margin-block-start: $spacing-02;
     }
-    
+
     // Ensure calendar is above other content
     z-index: 9000;
-    
+
     // Handle viewport overflow
     position-try-options: --bottom-left, --top-left, --bottom-right, --top-right;
-    
+
     @position-try --bottom-left {
       inset-area: block-end span-inline-start;
       margin-block-start: $spacing-02;
     }
-    
+
     @position-try --top-left {
       inset-area: block-start span-inline-start;
       margin-block-end: $spacing-02;
     }
-    
+
     @position-try --bottom-right {
       inset-area: block-end span-inline-end;
       margin-block-start: $spacing-02;
     }
-    
+
     @position-try --top-right {
       inset-area: block-start span-inline-end;
       margin-block-end: $spacing-02;
@@ -89,7 +89,7 @@ $css--plex: true !default;
   .#{$prefix}--date-picker__calendar.open {
     margin-block-start: 0;
   }
-  
+
   // Remove focus outline from calendar container
   .#{$prefix}--date-picker__calendar {
     &:focus {
@@ -103,7 +103,7 @@ $css--plex: true !default;
     inset-inline-start: 0;
     inset-block-start: 100%;
     z-index: 9000;
-    
+
     cds-date-picker-calendar {
       display: block;
       margin-block-start: $spacing-02;
@@ -267,19 +267,19 @@ $css--plex: true !default;
 :host(#{$prefix}-date-picker-calendar) {
   display: block;
   outline: none;
-  
+
   .#{$prefix}--date-picker__calendar {
     display: block;
     background-color: $layer;
     box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
     padding: $spacing-03;
     min-inline-size: rem(288px);
-    
+
     &:focus {
       outline: none;
     }
   }
-  
+
   // Month header styling
   .#{$prefix}--date-picker__month {
     display: flex;
@@ -287,7 +287,7 @@ $css--plex: true !default;
     justify-content: space-between;
     margin-block-end: $spacing-03;
   }
-  
+
   .#{$prefix}--date-picker__month-nav {
     display: flex;
     align-items: center;
@@ -297,21 +297,21 @@ $css--plex: true !default;
     border: none;
     background-color: transparent;
     cursor: pointer;
-    
+
     &:hover {
       background-color: $layer-hover;
     }
-    
+
     &:focus {
       outline: 2px solid $focus;
       outline-offset: -2px;
     }
-    
+
     svg {
       fill: $icon-primary;
     }
   }
-  
+
   .#{$prefix}--date-picker__current-month {
     flex: 1;
     text-align: center;
@@ -319,7 +319,7 @@ $css--plex: true !default;
     font-weight: 600;
     color: $text-primary;
   }
-  
+
   // Weekdays grid - 7 columns
   .#{$prefix}--date-picker__weekdays {
     display: grid;
@@ -327,7 +327,7 @@ $css--plex: true !default;
     gap: 0;
     margin-block-end: $spacing-02;
   }
-  
+
   .#{$prefix}--date-picker__weekday {
     display: flex;
     align-items: center;
@@ -338,14 +338,14 @@ $css--plex: true !default;
     font-weight: 600;
     color: $text-primary;
   }
-  
+
   // Days grid - 7 columns, 6 rows
   .#{$prefix}--date-picker__days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 0;
   }
-  
+
   .#{$prefix}--date-picker__day {
     display: flex;
     align-items: center;
@@ -357,47 +357,47 @@ $css--plex: true !default;
     color: $text-primary;
     cursor: pointer;
     font-size: rem(14px);
-    
+
     &:hover:not(:disabled) {
       background-color: $layer-hover;
     }
-    
+
     &:focus {
       outline: 2px solid $focus;
       outline-offset: -2px;
     }
-    
+
     &:disabled {
       color: $text-disabled;
       cursor: not-allowed;
       opacity: 0.5;
     }
-    
+
     &.selected {
       background-color: $background-brand;
       color: $text-on-color;
-      
+
       // Ensure proper contrast even when in range
       &.inRange {
         background-color: $background-brand;
         color: $text-on-color;
       }
     }
-    
+
     &.today:not(.selected) {
       color: $link-primary;
       font-weight: 600;
     }
-    
+
     &.inRange:not(.selected) {
       background-color: $highlight;
     }
-    
+
     &.prevMonthDay,
     &.nextMonthDay {
       color: $text-secondary;
     }
-    
+
     // Keyboard focus state (different from browser :focus)
     &.focused:not(.selected) {
       outline: 2px solid $focus;

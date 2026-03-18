@@ -11,7 +11,11 @@ import { property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { prefix } from './temp-imports/globals/settings';
 import FocusMixin from './temp-imports/globals/mixins/focus';
-import { INPUT_SIZE, DATE_PICKER_INPUT_COLOR_SCHEME, DATE_PICKER_INPUT_KIND } from './defs';
+import {
+  INPUT_SIZE,
+  DATE_PICKER_INPUT_COLOR_SCHEME,
+  DATE_PICKER_INPUT_KIND,
+} from './defs';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
 import Calendar16 from '@carbon/icons/es/calendar/16.js';

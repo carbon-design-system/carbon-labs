@@ -160,7 +160,9 @@ class CDSDatePickerCalendar extends LitElement {
     }
     // Disable if going to previous month would be before minDate's month
     const prevMonth = this._currentMonth.subtract({ months: 1 });
-    const prevMonthLastDay = prevMonth.toPlainDate({ day: prevMonth.daysInMonth });
+    const prevMonthLastDay = prevMonth.toPlainDate({
+      day: prevMonth.daysInMonth,
+    });
     return Temporal.PlainDate.compare(prevMonthLastDay, this.minDate) < 0;
   }
 
@@ -216,7 +218,7 @@ class CDSDatePickerCalendar extends LitElement {
     if (this.selectedDates.length === 1 && previewDate) {
       const start = this.selectedDates[0];
       const end = previewDate;
-      
+
       // Sort to handle both forward and backward selection
       const [rangeStart, rangeEnd] = [start, end].sort((a, b) =>
         Temporal.PlainDate.compare(a, b)
@@ -300,17 +302,19 @@ class CDSDatePickerCalendar extends LitElement {
 
     for (let i = 0; i < 7; i++) {
       const date = baseDate.add({ days: i });
-      const formatter = new Intl.DateTimeFormat(this.locale, { weekday: 'short' });
+      const formatter = new Intl.DateTimeFormat(this.locale, {
+        weekday: 'short',
+      });
       // Use plainDateToDate to properly convert Temporal.PlainDate to Date
       let name = formatter.format(plainDateToDate(date));
-      
+
       // Special handling for Thursday to match Carbon's "Th" format
       if (name === 'Thu') {
         name = 'Th';
       } else {
         name = name.charAt(0);
       }
-      
+
       weekdays.push(name);
     }
 
@@ -394,14 +398,14 @@ class CDSDatePickerCalendar extends LitElement {
 
           const dayClasses = classMap({
             [`${prefix}--date-picker__day`]: true,
-            'prevMonthDay': !isCurrentMonth && date.month < currentMonthValue,
-            'nextMonthDay': !isCurrentMonth && date.month > currentMonthValue,
-            'disabled': isDisabled,
-            'selected': isSelected,
-            'inRange': isInRange,
-            'today': isToday && !isSelected,
+            prevMonthDay: !isCurrentMonth && date.month < currentMonthValue,
+            nextMonthDay: !isCurrentMonth && date.month > currentMonthValue,
+            disabled: isDisabled,
+            selected: isSelected,
+            inRange: isInRange,
+            today: isToday && !isSelected,
             'no-border': isToday && isSelected,
-            'focused': isFocused,
+            focused: isFocused,
           });
 
           return html`

@@ -10,6 +10,7 @@
  * Using Temporal for modern date handling
  */
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Temporal {
     interface PlainDate {
       readonly year: number;
@@ -17,13 +18,23 @@ declare global {
       readonly day: number;
       readonly daysInMonth: number;
       toString(): string;
-      with(dateLike: { year?: number; month?: number; day?: number }): PlainDate;
-      add(duration: { days?: number; months?: number; years?: number }): PlainDate;
+      with(dateLike: {
+        year?: number;
+        month?: number;
+        day?: number;
+      }): PlainDate;
+      add(duration: {
+        days?: number;
+        months?: number;
+        years?: number;
+      }): PlainDate;
       until(other: PlainDate): { days: number };
     }
 
     interface PlainDateConstructor {
-      from(item: string | { year: number; month: number; day: number }): PlainDate;
+      from(
+        item: string | { year: number; month: number; day: number }
+      ): PlainDate;
       compare(one: PlainDate, two: PlainDate): number;
     }
 
@@ -55,55 +66,55 @@ export type InputType = 'from' | 'to';
 export interface DatePickerContext {
   /** The mode of the date picker */
   mode: DatePickerMode;
-  
+
   /** The current value as ISO date string(s) */
   value: string;
-  
+
   /** The selected start date (using Temporal API) */
   startDate: Temporal.PlainDate | null;
-  
+
   /** The selected end date (range mode only, using Temporal API) */
   endDate: Temporal.PlainDate | null;
-  
+
   /** Whether the calendar dropdown is open */
   isOpen: boolean;
-  
+
   /** Whether an input has focus */
   isFocused: boolean;
-  
+
   /** Whether the component is disabled */
   isDisabled: boolean;
-  
+
   /** Whether the component is readonly */
   isReadonly: boolean;
-  
+
   /** Whether the component is in an invalid state */
   isInvalid: boolean;
-  
+
   /** The last focused input (for range mode) */
   lastFocusedInput: InputType | null;
-  
+
   /** Minimum selectable date (using Temporal API) */
   minDate: Temporal.PlainDate | null;
-  
+
   /** Maximum selectable date (using Temporal API) */
   maxDate: Temporal.PlainDate | null;
-  
+
   /** Date format string */
   dateFormat: string;
-  
+
   /** Whether to allow manual input */
   allowInput: boolean;
-  
+
   /** Whether to close calendar on date selection */
   closeOnSelect: boolean;
-  
+
   /** Error message if any */
   errorMessage?: string;
-  
+
   /** The currently viewed month in the calendar (using Temporal API) */
   viewDate: Temporal.PlainDate | null;
-  
+
   /** The date that currently has keyboard focus in the calendar */
   focusedDate: Temporal.PlainDate | null;
 }

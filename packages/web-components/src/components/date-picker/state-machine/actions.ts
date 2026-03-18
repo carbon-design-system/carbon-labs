@@ -6,10 +6,7 @@
  */
 
 import { DatePickerState } from './states';
-import {
-  plainDateToISOString,
-  comparePlainDates,
-} from './temporal-utils';
+import { plainDateToISOString, comparePlainDates } from './temporal-utils';
 import type {
   DatePickerContext,
   DatePickerEvent,
@@ -22,11 +19,7 @@ import type {
 /**
  * Action map - updates context during transitions
  */
-type ActionMap = Record<
-  DatePickerState,
-  Partial<Record<string, StateAction>>
->;
-
+type ActionMap = Record<DatePickerState, Partial<Record<string, StateAction>>>;
 
 /**
  * Actions for state transitions
@@ -41,7 +34,8 @@ export const actions: ActionMap = {
      */
     CALENDAR_ICON_CLICK: (context) => {
       // Initialize viewDate to today if not set
-      const viewDate = context.viewDate || context.startDate || Temporal.Now.plainDateISO();
+      const viewDate =
+        context.viewDate || context.startDate || Temporal.Now.plainDateISO();
       // Initialize focusedDate to selected date or today if no date is selected
       const focusedDate = context.startDate || Temporal.Now.plainDateISO();
       return {
@@ -69,11 +63,14 @@ export const actions: ActionMap = {
     /**
      * Action for INPUT_FOCUS event
      *
-     * @param _context
+     * @param {DatePickerContext} _context - The current context (unused)
      * @param {DatePickerEvent} event - The event
      * @returns {Partial<DatePickerContext>} Updated context
      */
-    INPUT_FOCUS: (_context, event: DatePickerEvent): Partial<DatePickerContext> => {
+    INPUT_FOCUS: (
+      _context,
+      event: DatePickerEvent
+    ): Partial<DatePickerContext> => {
       const payload = event.payload as InputFocusPayload;
       return {
         isFocused: true,
@@ -88,7 +85,8 @@ export const actions: ActionMap = {
      */
     CALENDAR_OPEN: (context) => {
       // Initialize viewDate to today if not set
-      const viewDate = context.viewDate || context.startDate || Temporal.Now.plainDateISO();
+      const viewDate =
+        context.viewDate || context.startDate || Temporal.Now.plainDateISO();
       // Initialize focusedDate to selected date or today if no date is selected
       const focusedDate = context.startDate || Temporal.Now.plainDateISO();
       return {
@@ -108,7 +106,8 @@ export const actions: ActionMap = {
      */
     CALENDAR_OPEN: (context) => {
       // Initialize viewDate to today if not set
-      const viewDate = context.viewDate || context.startDate || Temporal.Now.plainDateISO();
+      const viewDate =
+        context.viewDate || context.startDate || Temporal.Now.plainDateISO();
       // Initialize focusedDate for keyboard navigation
       const focusedDate = context.startDate || viewDate;
       return {
@@ -125,7 +124,8 @@ export const actions: ActionMap = {
      */
     CALENDAR_ICON_CLICK: (context) => {
       // Initialize viewDate to today if not set
-      const viewDate = context.viewDate || context.startDate || Temporal.Now.plainDateISO();
+      const viewDate =
+        context.viewDate || context.startDate || Temporal.Now.plainDateISO();
       // Initialize focusedDate for keyboard navigation
       const focusedDate = context.startDate || viewDate;
       return {
@@ -141,7 +141,10 @@ export const actions: ActionMap = {
      * @param {DatePickerEvent} event - The event
      * @returns {Partial<DatePickerContext>} Updated context
      */
-    RANGE_START_SELECT: (_context: DatePickerContext, event: DatePickerEvent): Partial<DatePickerContext> => {
+    RANGE_START_SELECT: (
+      _context: DatePickerContext,
+      event: DatePickerEvent
+    ): Partial<DatePickerContext> => {
       const payload = event.payload as DateSelectPayload;
       const startDate = payload?.date;
 
@@ -165,7 +168,10 @@ export const actions: ActionMap = {
      * @param {DatePickerEvent} event - The event
      * @returns {Partial<DatePickerContext>} Updated context
      */
-    DATE_SELECT: (_context: DatePickerContext, event: DatePickerEvent): Partial<DatePickerContext> => {
+    DATE_SELECT: (
+      _context: DatePickerContext,
+      event: DatePickerEvent
+    ): Partial<DatePickerContext> => {
       const payload = event.payload as DateSelectPayload;
       const startDate = payload?.date;
 
@@ -279,12 +285,19 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     ARROW_UP: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const newFocusedDate = focusedDate.add({ days: -7 });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -297,12 +310,19 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     ARROW_DOWN: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const newFocusedDate = focusedDate.add({ days: 7 });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -315,12 +335,19 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     ARROW_LEFT: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const newFocusedDate = focusedDate.add({ days: -1 });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -333,12 +360,19 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     ARROW_RIGHT: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const newFocusedDate = focusedDate.add({ days: 1 });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -355,8 +389,10 @@ export const actions: ActionMap = {
         return {};
       }
       const newViewDate = context.viewDate.add({ months: -1 });
-      const focusedDate = context.focusedDate ? context.focusedDate.add({ months: -1 }) : null;
-      
+      const focusedDate = context.focusedDate
+        ? context.focusedDate.add({ months: -1 })
+        : null;
+
       return {
         viewDate: newViewDate,
         focusedDate,
@@ -373,8 +409,10 @@ export const actions: ActionMap = {
         return {};
       }
       const newViewDate = context.viewDate.add({ months: 1 });
-      const focusedDate = context.focusedDate ? context.focusedDate.add({ months: 1 }) : null;
-      
+      const focusedDate = context.focusedDate
+        ? context.focusedDate.add({ months: 1 })
+        : null;
+
       return {
         viewDate: newViewDate,
         focusedDate,
@@ -387,17 +425,28 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     HOME_KEY: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       // Convert to JS Date to get day of week (0 = Sunday, 6 = Saturday)
-      const jsDate = new Date(focusedDate.year, focusedDate.month - 1, focusedDate.day);
+      const jsDate = new Date(
+        focusedDate.year,
+        focusedDate.month - 1,
+        focusedDate.day
+      );
       const dayOfWeek = jsDate.getDay();
       // Move to Sunday (start of week in US calendar)
       const daysToSubtract = dayOfWeek;
       const newFocusedDate = focusedDate.add({ days: -daysToSubtract });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -410,17 +459,28 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     END_KEY: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       // Convert to JS Date to get day of week (0 = Sunday, 6 = Saturday)
-      const jsDate = new Date(focusedDate.year, focusedDate.month - 1, focusedDate.day);
+      const jsDate = new Date(
+        focusedDate.year,
+        focusedDate.month - 1,
+        focusedDate.day
+      );
       const dayOfWeek = jsDate.getDay();
       // Move to Saturday (end of week in US calendar)
       const daysToAdd = 6 - dayOfWeek;
       const newFocusedDate = focusedDate.add({ days: daysToAdd });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -455,7 +515,10 @@ export const actions: ActionMap = {
      * @param {DatePickerEvent} event - The event
      * @returns {Partial<DatePickerContext>} Updated context
      */
-    RANGE_START_SELECT: (_context: DatePickerContext, event: DatePickerEvent): Partial<DatePickerContext> => {
+    RANGE_START_SELECT: (
+      _context: DatePickerContext,
+      event: DatePickerEvent
+    ): Partial<DatePickerContext> => {
       const payload = event.payload as DateSelectPayload;
       const startDate = payload?.date;
 
@@ -497,7 +560,9 @@ export const actions: ActionMap = {
       return {
         startDate: finalStartDate,
         endDate: finalEndDate,
-        value: `${plainDateToISOString(finalStartDate)}/${plainDateToISOString(finalEndDate)}`,
+        value: `${plainDateToISOString(finalStartDate)}/${plainDateToISOString(
+          finalEndDate
+        )}`,
         isOpen: false, // Always close after selecting end date in range mode
         lastFocusedInput: 'to', // Set to 'to' so the end date input gets updated
       };
@@ -525,12 +590,19 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     ARROW_UP: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const newFocusedDate = focusedDate.add({ days: -7 });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -543,12 +615,19 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     ARROW_DOWN: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const newFocusedDate = focusedDate.add({ days: 7 });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -561,12 +640,19 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     ARROW_LEFT: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const newFocusedDate = focusedDate.add({ days: -1 });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -579,12 +665,19 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     ARROW_RIGHT: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const newFocusedDate = focusedDate.add({ days: 1 });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -597,9 +690,13 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     PAGE_UP: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const newFocusedDate = focusedDate.add({ months: -1 });
-      
+
       return {
         focusedDate: newFocusedDate,
         viewDate: newFocusedDate,
@@ -612,9 +709,13 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     PAGE_DOWN: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const newFocusedDate = focusedDate.add({ months: 1 });
-      
+
       return {
         focusedDate: newFocusedDate,
         viewDate: newFocusedDate,
@@ -627,14 +728,21 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     HOME_KEY: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const dayOfWeek = focusedDate.dayOfWeek(); // 1 = Monday, 7 = Sunday
       const daysToSubtract = dayOfWeek === 7 ? 0 : dayOfWeek; // Move to Sunday
       const newFocusedDate = focusedDate.add({ days: -daysToSubtract });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -647,14 +755,21 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     END_KEY: (context) => {
-      const focusedDate = context.focusedDate || context.startDate || context.viewDate || Temporal.Now.plainDateISO();
+      const focusedDate =
+        context.focusedDate ||
+        context.startDate ||
+        context.viewDate ||
+        Temporal.Now.plainDateISO();
       const dayOfWeek = focusedDate.dayOfWeek(); // 1 = Monday, 7 = Sunday
       const daysToAdd = dayOfWeek === 7 ? 0 : 7 - dayOfWeek; // Move to Saturday
       const newFocusedDate = focusedDate.add({ days: daysToAdd });
-      
+
       // If we moved to a different month, update viewDate
-      const viewDate = newFocusedDate.month !== focusedDate.month ? newFocusedDate : context.viewDate;
-      
+      const viewDate =
+        newFocusedDate.month !== focusedDate.month
+          ? newFocusedDate
+          : context.viewDate;
+
       return {
         focusedDate: newFocusedDate,
         viewDate,
@@ -670,7 +785,7 @@ export const actions: ActionMap = {
       if (!context.focusedDate || !context.startDate) {
         return {};
       }
-      
+
       const endDate = context.focusedDate;
       const { startDate } = context;
 
@@ -686,7 +801,9 @@ export const actions: ActionMap = {
       return {
         startDate: finalStartDate,
         endDate: finalEndDate,
-        value: `${plainDateToISOString(finalStartDate)}/${plainDateToISOString(finalEndDate)}`,
+        value: `${plainDateToISOString(finalStartDate)}/${plainDateToISOString(
+          finalEndDate
+        )}`,
         isOpen: false, // Always close after selecting end date in range mode
       };
     },
@@ -775,7 +892,9 @@ export const actions: ActionMap = {
       return {
         startDate: finalStartDate,
         endDate: finalEndDate,
-        value: `${plainDateToISOString(finalStartDate)}/${plainDateToISOString(finalEndDate)}`,
+        value: `${plainDateToISOString(finalStartDate)}/${plainDateToISOString(
+          finalEndDate
+        )}`,
         isOpen: context.closeOnSelect ? false : context.isOpen,
       };
     },

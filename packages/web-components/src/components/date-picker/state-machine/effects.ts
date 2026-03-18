@@ -11,10 +11,7 @@ import type { DatePickerContext, DatePickerEvent, SideEffect } from './types';
 /**
  * Effect map - performs side effects after transitions
  */
-type EffectMap = Record<
-  DatePickerState,
-  Partial<Record<string, SideEffect>>
->;
+type EffectMap = Record<DatePickerState, Partial<Record<string, SideEffect>>>;
 
 /**
  * Side effects for state transitions

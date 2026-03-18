@@ -1,13 +1,16 @@
 # Date Picker State Machine
 
-A lightweight, framework-agnostic state machine for managing date picker logic including focus management, range selection, calendar toggling, and date navigation.
+A lightweight, framework-agnostic state machine for managing date picker logic
+including focus management, range selection, calendar toggling, and date
+navigation.
 
 ## Architecture
 
 The state machine is designed with the following principles:
 
 - **Zero Dependencies**: Uses only TypeScript standard library
-- **Framework Agnostic**: Core logic is pure TypeScript, easily portable to React/Angular/Vue
+- **Framework Agnostic**: Core logic is pure TypeScript, easily portable to
+  React/Angular/Vue
 - **Immutable Updates**: All state changes return new context objects
 - **Type Safe**: Full TypeScript coverage with strict mode
 - **Testable**: Easy to unit test without DOM dependencies
@@ -68,7 +71,7 @@ import { DatePickerStateMachine, DatePickerEvent } from './state-machine';
 const machine = new DatePickerStateMachine({
   mode: 'single',
   dateFormat: 'm/d/Y',
-  closeOnSelect: true
+  closeOnSelect: true,
 });
 
 // Send events
@@ -101,7 +104,7 @@ class CDSDatePicker extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    
+
     this.adapter = new WebComponentAdapter({
       component: this,
       initialContext: {
@@ -118,7 +121,7 @@ class CDSDatePicker extends LitElement {
       },
       onDateSelect: (context) => {
         // Handle date selection
-      }
+      },
     });
   }
 
@@ -138,7 +141,7 @@ class CDSDatePicker extends LitElement {
       },
       onClose: () => {
         this.adapter?.handleCalendarClose();
-      }
+      },
     });
   }
 }
@@ -160,7 +163,7 @@ The state machine handles range selection with the following flow:
 // Range mode
 const machine = new DatePickerStateMachine({
   mode: 'range',
-  closeOnSelect: true
+  closeOnSelect: true,
 });
 
 // Open calendar
@@ -169,14 +172,14 @@ machine.send(DatePickerEvent.CALENDAR_OPEN);
 
 // Select start date
 machine.send(DatePickerEvent.RANGE_START_SELECT, {
-  date: new Date('2024-01-15')
+  date: new Date('2024-01-15'),
 });
 // State: SELECTING_END
 // Context: { startDate: 2024-01-15, endDate: null }
 
 // Select end date
 machine.send(DatePickerEvent.RANGE_END_SELECT, {
-  date: new Date('2024-01-20')
+  date: new Date('2024-01-20'),
 });
 // State: DATE_SELECTED
 // Context: { startDate: 2024-01-15, endDate: 2024-01-20, value: '2024-01-15/2024-01-20' }
@@ -193,12 +196,12 @@ Guards determine if a transition is allowed:
   DATE_SELECT: (context, event) => {
     const date = event.payload?.date;
     if (!date) return false;
-    
+
     if (context.minDate && date < context.minDate) return false;
     if (context.maxDate && date > context.maxDate) return false;
-    
+
     return true;
-  }
+  };
 }
 ```
 
@@ -212,21 +215,21 @@ Actions update the context during transitions:
   RANGE_END_SELECT: (context, event) => {
     const endDate = event.payload?.date;
     const { startDate } = context;
-    
+
     // Swap if needed
     if (endDate < startDate) {
       return {
         startDate: endDate,
         endDate: startDate,
-        value: `${formatDate(endDate)}/${formatDate(startDate)}`
+        value: `${formatDate(endDate)}/${formatDate(startDate)}`,
       };
     }
-    
+
     return {
       endDate,
-      value: `${formatDate(startDate)}/${formatDate(endDate)}`
+      value: `${formatDate(startDate)}/${formatDate(endDate)}`,
     };
-  }
+  };
 }
 ```
 
@@ -235,36 +238,40 @@ Actions update the context during transitions:
 The state machine is designed to be easily testable:
 
 ```typescript
-import { DatePickerStateMachine, DatePickerState, DatePickerEvent } from './state-machine';
+import {
+  DatePickerStateMachine,
+  DatePickerState,
+  DatePickerEvent,
+} from './state-machine';
 
 describe('DatePickerStateMachine', () => {
   it('should transition from IDLE to FOCUSED on INPUT_FOCUS', () => {
     const machine = new DatePickerStateMachine();
-    
+
     expect(machine.getState()).toBe(DatePickerState.IDLE);
-    
+
     machine.send(DatePickerEvent.INPUT_FOCUS);
-    
+
     expect(machine.getState()).toBe(DatePickerState.FOCUSED);
     expect(machine.getContext().isFocused).toBe(true);
   });
 
   it('should handle range selection correctly', () => {
     const machine = new DatePickerStateMachine({ mode: 'range' });
-    
+
     machine.send(DatePickerEvent.CALENDAR_OPEN);
     machine.send(DatePickerEvent.RANGE_START_SELECT, {
-      date: new Date('2024-01-15')
+      date: new Date('2024-01-15'),
     });
-    
+
     expect(machine.getState()).toBe(DatePickerState.SELECTING_END);
-    
+
     machine.send(DatePickerEvent.RANGE_END_SELECT, {
-      date: new Date('2024-01-20')
+      date: new Date('2024-01-20'),
     });
-    
+
     expect(machine.getState()).toBe(DatePickerState.DATE_SELECTED);
-    
+
     const context = machine.getContext();
     expect(context.startDate).toEqual(new Date('2024-01-15'));
     expect(context.endDate).toEqual(new Date('2024-01-20'));
@@ -274,11 +281,13 @@ describe('DatePickerStateMachine', () => {
 
 ## Calendar Integration
 
-The state machine now includes full calendar integration with the following features:
+The state machine now includes full calendar integration with the following
+features:
 
 ### Calendar Rendering
 
-The calendar is rendered using the `calendar-renderer.ts` component, which provides:
+The calendar is rendered using the `calendar-renderer.ts` component, which
+provides:
 
 - Month/year navigation with previous/next buttons
 - Weekday headers (localized)
@@ -291,7 +300,8 @@ The calendar is rendered using the `calendar-renderer.ts` component, which provi
 
 ### Date Selection Flow
 
-1. User clicks calendar icon or focuses input → `CALENDAR_ICON_CLICK` or `INPUT_FOCUS` event
+1. User clicks calendar icon or focuses input → `CALENDAR_ICON_CLICK` or
+   `INPUT_FOCUS` event
 2. Calendar opens → `CALENDAR_OPEN` state
 3. User clicks a date → `DATE_SELECT` event
 4. Date is validated against min/max constraints
@@ -318,7 +328,7 @@ The date picker automatically closes the calendar when clicking outside:
 // Implemented in date-picker.ts
 private _handleOutsideClick = (event: MouseEvent) => {
   if (!this.open) return;
-  
+
   const target = event.target as Node;
   if (!this.contains(target) && !this.shadowRoot?.contains(target)) {
     this.open = false;
@@ -348,7 +358,7 @@ Dates outside the min/max range are automatically disabled:
 const machine = new DatePickerStateMachine({
   mode: 'single',
   minDate: new Date('2024-01-01'),
-  maxDate: new Date('2024-12-31')
+  maxDate: new Date('2024-12-31'),
 });
 
 // Dates before 2024-01-01 or after 2024-12-31 will be:
@@ -360,21 +370,28 @@ const machine = new DatePickerStateMachine({
 ## Recent Fixes and Improvements
 
 ### Date Selection Input Population
-- Fixed issue where selecting a date in the calendar didn't populate the input field
+
+- Fixed issue where selecting a date in the calendar didn't populate the input
+  field
 - Input now correctly displays selected date in MM/DD/YYYY format
 - Implemented in `_handleStateChange` method of date-picker.ts
 
 ### Min/Max Date Parsing
+
 - Fixed off-by-one month error in date conversions
-- Corrected Temporal.PlainDate to JavaScript Date conversions (month offset handling)
-- Added `parseDateToPlainDate` utility for robust date parsing from multiple formats
+- Corrected Temporal.PlainDate to JavaScript Date conversions (month offset
+  handling)
+- Added `parseDateToPlainDate` utility for robust date parsing from multiple
+  formats
 
 ### AI Label Positioning
+
 - Adjusted AI label spacing from `$spacing-10` (48px) to `$spacing-08` (32px)
 - Improved visual alignment with calendar icon
 - Proper vertical centering using `transform: translateY(-50%)`
 
 ### Outside Click Detection
+
 - Added document-level click listener to detect clicks outside the date picker
 - Calendar automatically closes when clicking outside
 - Proper cleanup of event listeners in `disconnectedCallback`
@@ -382,6 +399,7 @@ const machine = new DatePickerStateMachine({
 ## Current Implementation Status
 
 ### ✅ Completed Features
+
 - Calendar rendering with Carbon Design System styling
 - Month navigation (previous/next)
 - Date selection (single mode)
@@ -392,6 +410,7 @@ const machine = new DatePickerStateMachine({
 - AI label positioning
 
 ### 🚧 Pending Features
+
 - Keyboard navigation (arrow keys, Enter, Escape, Tab)
 - Range selection mode
 - Localization support (date formats, RTL languages)
@@ -403,40 +422,44 @@ const machine = new DatePickerStateMachine({
 The state machine is designed to be easily testable:
 
 ```typescript
-import { DatePickerStateMachine, DatePickerState, DatePickerEvent } from './state-machine';
+import {
+  DatePickerStateMachine,
+  DatePickerState,
+  DatePickerEvent,
+} from './state-machine';
 
 describe('DatePickerStateMachine', () => {
   it('should transition from IDLE to FOCUSED on INPUT_FOCUS', () => {
     const machine = new DatePickerStateMachine();
-    
+
     expect(machine.getState()).toBe(DatePickerState.IDLE);
-    
+
     machine.send(DatePickerEvent.INPUT_FOCUS);
-    
+
     expect(machine.getState()).toBe(DatePickerState.FOCUSED);
     expect(machine.getContext().isFocused).toBe(true);
   });
 
   it('should handle calendar opening and date selection', () => {
     const machine = new DatePickerStateMachine({ mode: 'single' });
-    
+
     machine.send(DatePickerEvent.CALENDAR_OPEN);
     expect(machine.getState()).toBe(DatePickerState.CALENDAR_OPEN);
-    
+
     machine.send(DatePickerEvent.DATE_SELECT, {
-      date: new Date('2024-01-15')
+      date: new Date('2024-01-15'),
     });
-    
+
     expect(machine.getState()).toBe(DatePickerState.DATE_SELECTED);
     expect(machine.getContext().selectedDate).toBeDefined();
   });
 
   it('should close calendar on outside click', () => {
     const machine = new DatePickerStateMachine({ mode: 'single' });
-    
+
     machine.send(DatePickerEvent.CALENDAR_OPEN);
     expect(machine.getState()).toBe(DatePickerState.CALENDAR_OPEN);
-    
+
     machine.send(DatePickerEvent.OUTSIDE_CLICK);
     expect(machine.getState()).toBe(DatePickerState.IDLE);
   });

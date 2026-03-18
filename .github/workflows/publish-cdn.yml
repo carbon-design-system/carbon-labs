@@ -28,8 +28,12 @@ jobs:
         run: yarn install
       - name: Build packages
         run: yarn build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
       - name: Build dist folders in each package
         run: yarn build:dist
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
       - name: Create one folder with dist contents from each package
         working-directory: 'packages/web-components'
         run: |

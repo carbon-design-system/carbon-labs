@@ -29,11 +29,11 @@ jobs:
       - name: Build packages
         run: yarn build
         env:
-          NODE_OPTIONS: --max-old-space-size=4096
+          NODE_OPTIONS: --max-old-space-size=6144
       - name: Build dist folders in each package
         run: yarn build:dist:canary
         env:
-          NODE_OPTIONS: --max-old-space-size=4096
+          NODE_OPTIONS: --max-old-space-size=6144
       - name: Create one folder with dist contents from each package
         working-directory: 'packages/web-components'
         run: |

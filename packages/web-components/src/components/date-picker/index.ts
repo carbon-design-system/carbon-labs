@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import './date-picker';
-import './date-picker-input';
-import './date-picker-input-skeleton';
-import './calendar-renderer';
+import './components/date-picker/date-picker';
+import './components/date-picker/date-picker-input';
+import './components/date-picker/date-picker-input-skeleton';
+import './components/date-picker/calendar-renderer';

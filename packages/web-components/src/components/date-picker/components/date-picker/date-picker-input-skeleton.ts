@@ -7,11 +7,11 @@
 
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { prefix } from './temp-imports/globals/settings';
+import { prefix } from '../../temp-imports/globals/settings';
 import { DATE_PICKER_INPUT_KIND } from './defs';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
-import { carbonElement as customElement } from './temp-imports/globals/decorators/carbon-element';
+import { carbonElement as customElement } from '../../temp-imports/globals/decorators/carbon-element';
 
 /**
  * Skeleton version of the input box for date picker.

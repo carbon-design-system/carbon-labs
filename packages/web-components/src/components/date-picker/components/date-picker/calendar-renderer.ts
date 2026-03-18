@@ -11,12 +11,12 @@ import { classMap } from 'lit/directives/class-map.js';
 // Temporal API is available globally via polyfill
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare const Temporal: typeof import('@js-temporal/polyfill').Temporal;
-import { prefix } from './temp-imports/globals/settings';
-import { carbonElement as customElement } from './temp-imports/globals/decorators/carbon-element';
+import { prefix } from '../../temp-imports/globals/settings';
+import { carbonElement as customElement } from '../../temp-imports/globals/decorators/carbon-element';
 import ChevronLeft16 from '@carbon/icons/es/chevron--left/16.js';
 import ChevronRight16 from '@carbon/icons/es/chevron--right/16.js';
-import { iconLoader } from './temp-imports/globals/internal/icon-loader';
-import { plainDateToDate } from './state-machine/temporal-utils';
+import { iconLoader } from '../../temp-imports/globals/internal/icon-loader';
+import { plainDateToDate } from '../../state-machine/temporal-utils';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
 

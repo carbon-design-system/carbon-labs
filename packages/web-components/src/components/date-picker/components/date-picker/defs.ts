@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export { FORM_ELEMENT_COLOR_SCHEME as DATE_PICKER_INPUT_COLOR_SCHEME } from './temp-imports/globals/shared-enums';
+export { FORM_ELEMENT_COLOR_SCHEME as DATE_PICKER_INPUT_COLOR_SCHEME } from '../../temp-imports/globals/shared-enums';
 
 /**
  * Input sizes.

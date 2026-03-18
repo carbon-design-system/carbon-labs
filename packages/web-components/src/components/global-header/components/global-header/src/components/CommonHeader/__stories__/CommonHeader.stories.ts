@@ -194,6 +194,13 @@ const headerPropsUnauthenticated: HeaderProps = {
       arialLabel: 'Log in',
     },
   ],
+  helperLinks: [
+    {
+      link: 'https://carbondesignsystem.com/',
+      label: 'Carbon Design System',
+      target: '_blank',
+    },
+  ],
 };
 
 const hybridIPaasHeaderProps = {

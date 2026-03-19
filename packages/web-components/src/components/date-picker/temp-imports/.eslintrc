@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "jsdoc/require-jsdoc": 0,
+    "jsdoc/require-param": 0,
+    "jsdoc/require-param-type": 0,
+    "jsdoc/require-param-description": 0,
+    "curly": 0
+  }
+}

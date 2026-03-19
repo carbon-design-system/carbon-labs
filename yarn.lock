@@ -1800,7 +1800,7 @@ __metadata:
     style-loader: "npm:^4.0.0"
     ts-jest: "npm:^29.2.5"
     typescript: "npm:^5.2.2"
-    typescript-config-carbon: "npm:^0.8.0"
+    typescript-config-carbon: "npm:^0.9.0"
     webpack: "npm:^5.97.0"
   peerDependencies:
     react: ^16.8.6 || ^17.0.1 || ^18.2.0
@@ -18538,9 +18538,9 @@ __metadata:
   linkType: hard
 
 "immutable@npm:^5.0.2":
-  version: 5.1.4
-  resolution: "immutable@npm:5.1.4"
-  checksum: 10c0/f1c98382e4cde14a0b218be3b9b2f8441888da8df3b8c064aa756071da55fbed6ad696e5959982508456332419be9fdeaf29b2e58d0eadc45483cc16963c0446
+  version: 5.1.5
+  resolution: "immutable@npm:5.1.5"
+  checksum: 10c0/8017ece1578e3c5939ba3305176aee059def1b8a90c7fa2a347ef583ebbd38cbe77ce1bbd786a5fab57e2da00bbcb0493b92e4332cdc4e1fe5cfb09a4688df31
   languageName: node
   linkType: hard
 
@@ -21822,8 +21822,8 @@ __metadata:
   linkType: hard
 
 "markdown-it@npm:^14.1.0":
-  version: 14.1.0
-  resolution: "markdown-it@npm:14.1.0"
+  version: 14.1.1
+  resolution: "markdown-it@npm:14.1.1"
   dependencies:
     argparse: "npm:^2.0.1"
     entities: "npm:^4.4.0"
@@ -21833,7 +21833,7 @@ __metadata:
     uc.micro: "npm:^2.1.0"
   bin:
     markdown-it: bin/markdown-it.mjs
-  checksum: 10c0/9a6bb444181d2db7016a4173ae56a95a62c84d4cbfb6916a399b11d3e6581bf1cc2e4e1d07a2f022ae72c25f56db90fbe1e529fca16fbf9541659dc53480d4b4
+  checksum: 10c0/c67f2a4c8069a307c78d8c15104bbcb15a2c6b17f4c904364ca218ec2eccf76a397eba1ea05f5ac5de72c4b67fcf115d422d22df0bfb86a09b663f55b9478d4f
   languageName: node
   linkType: hard
 
@@ -30977,12 +30977,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-config-carbon@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "typescript-config-carbon@npm:0.8.0"
+"typescript-config-carbon@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "typescript-config-carbon@npm:0.9.0"
   dependencies:
     typescript: "npm:^5.7.3"
-  checksum: 10c0/0b85ada1633ea1242edd376d2055badccd27cdc3a7a8ff12f93f744ec69bda584a9c4fa979c2d30d389afb0c414f07f1297e1a4819f878245160971d0c4b9b6e
+  checksum: 10c0/98a97b0949ec0661ce1db1db0ac5a0489d53df25ebc9c5b73e408af11365c78fb2d8cacdc91ef24934f429cc3c57d486a50459453b026b985e85591526d5d29f
   languageName: node
   linkType: hard
 

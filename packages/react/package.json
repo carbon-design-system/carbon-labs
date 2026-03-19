@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-labs",
   "scripts": {
-    "build": "yarn clean && lerna run build --scope '@carbon-labs/react-*' --scope '@carbon-labs/mdx-components' --include-dependencies",
+    "build": "yarn clean && lerna run build --scope '@carbon-labs/react-*' --scope '@carbon-labs/mdx-components' --include-dependencies --concurrency=2",
     "clean": "rimraf es lib scss storybook-static",
     "storybook": "storybook dev -p 6008",
     "generate": "node tasks/generate",
@@ -78,7 +78,7 @@
     "style-loader": "^4.0.0",
     "ts-jest": "^29.2.5",
     "typescript": "^5.2.2",
-    "typescript-config-carbon": "^0.8.0",
+    "typescript-config-carbon": "^0.9.0",
     "webpack": "^5.97.0"
   }
 }

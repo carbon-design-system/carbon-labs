@@ -5,6 +5,19 @@
   "overrides": [
     {
       "files": [
+        "**/*.stories.ts",
+        "**/*.stories.js"
+      ],
+      "rules": {
+        "jsdoc/require-jsdoc": 0,
+        "jsdoc/require-param-description": 0,
+        "jsdoc/require-param-name": 0,
+        "jsdoc/require-param": 0,
+        "jsdoc/require-param-type": 0
+      }
+    },
+    {
+      "files": [
         "**/*.js",
         "**/*.ts"
       ],

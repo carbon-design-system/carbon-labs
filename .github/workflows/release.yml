@@ -44,4 +44,4 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
       - name: Publish minor release of packages
         run: |
-          yarn lerna publish minor --dist-tag latest --yes --message 'chore: release'
+          yarn lerna publish minor --dist-tag latest --yes --force-git-tag --message 'chore: release'

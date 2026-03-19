@@ -12,6 +12,7 @@ import { html } from 'lit';
 // import * as CarbonIcons from '@carbon/icons/es';
 import {
   AiLaunch20,
+  Api16,
   AppConnectivity20,
   ArrowRight16,
   Checkmark16,
@@ -61,6 +62,7 @@ export const renderCarbonIcon = (
 
   const CarbonIcons = {
     AiLaunch20,
+    Api16,
     AppConnectivity20,
     ArrowRight16,
     Checkmark16,

@@ -66,7 +66,7 @@ type ColorItem = {
 };
 
 type IconItem = {
-  renderIcon: string | ((args?: any) => SVGTemplateResult);
+  renderIcon: ReturnType<typeof iconLoader>;
 };
 
 type PictogramItem = {

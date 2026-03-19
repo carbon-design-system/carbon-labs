@@ -38,8 +38,12 @@ jobs:
         run: yarn install
       - name: Run build
         run: yarn build
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
       - name: Run CDN (dist) build
         run: yarn build:dist
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
 
   format:
     runs-on: ubuntu-latest
@@ -100,6 +104,8 @@ jobs:
         run: yarn install
       - name: Run build
         run: yarn build
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
       - name: run React tests
         working-directory: 'packages/react'
         run: yarn test

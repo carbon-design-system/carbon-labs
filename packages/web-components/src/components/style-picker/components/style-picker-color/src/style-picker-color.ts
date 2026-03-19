@@ -7,8 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// @ts-ignore
 import { property } from 'lit/decorators.js';
+// @ts-ignore
 import styles from './style-picker-color.scss?inline';
 import { LitElement } from 'lit';
 

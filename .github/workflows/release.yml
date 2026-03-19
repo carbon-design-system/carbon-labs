@@ -2,11 +2,10 @@ name: Release
 
 ## on every PR merge into main, lerna will publish a minor version for packages that have been modified
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - main
-    types:
-      - closed
+    types: [closed]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

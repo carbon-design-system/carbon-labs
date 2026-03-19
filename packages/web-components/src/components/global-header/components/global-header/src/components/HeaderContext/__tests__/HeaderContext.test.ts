@@ -221,11 +221,27 @@ describe('HeaderContext Component', () => {
       productId: 'a22453643cdb9e22397c6eab9e9da97d',
     };
 
-    it('renders help links when prop is passed in', async () => {
+    it('renders help links when prop is passed in (authenticated)', async () => {
       const el = await fixture(
         html`<clabs-global-header-context
           .props="${{
             ...headerProps,
+            helperLinks,
+          }}"></clabs-global-header-context>`
+      );
+
+      const helpMenu = el.shadowRoot?.querySelector('[menu-label="Help"]');
+      expect(helpMenu).not.to.be.null;
+
+      const helpLinks = helpMenu?.querySelectorAll('[role="listitem"]');
+      expect(helpLinks?.length).to.equal(3);
+    });
+
+    it('renders help links when prop is passed in (unauthenticated)', async () => {
+      const el = await fixture(
+        html`<clabs-global-header-context
+          .props="${{
+            ...unauthenticatedProps,
             helperLinks,
           }}"></clabs-global-header-context>`
       );

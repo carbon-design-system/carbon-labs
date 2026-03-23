@@ -10,7 +10,7 @@
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es-custom/components/popover/index.js';
 import { TrialContent } from '../TrialContent/TrialContent';
 import { unsafeCSS } from 'lit';

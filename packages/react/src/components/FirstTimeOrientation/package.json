@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-first-time-orientation",
-  "version": "0.12.0",
+  "version": "0.14.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -26,7 +26,7 @@
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 18a7a4e1-d21d-4d71-9dce-20587f4abd2e --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "canary",
+    "@carbon-labs/utilities": "0.21.0",
     "@carbon/ibm-products": "^2.76.0"
   },
   "dependencies": {

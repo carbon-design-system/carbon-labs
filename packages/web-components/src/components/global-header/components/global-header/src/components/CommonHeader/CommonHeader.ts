@@ -10,7 +10,7 @@
 
 import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es-custom/components/ui-shell/index.js';
 import '@carbon/web-components/es-custom/components/popover/index.js';
 import { HeaderProps } from '../../types/Header.types';
@@ -25,6 +25,8 @@ import './WideSideNav';
 import '../SideNavItem/SideNavItem';
 import '../HeaderContext/HeaderContext';
 import useScript from '../../globals/useScript';
+import loadSidekickScript from '../../globals/loadSidekickScript';
+import loadSolisScript from '../../globals/loadSolisScript';
 
 const { stablePrefix: clabsPrefix } = settings;
 
@@ -51,6 +53,12 @@ export class CommonHeader extends LitElement {
   @state()
   assistMeScriptLoaded = false;
 
+  @state()
+  sidekickScriptLoaded = false;
+
+  @state()
+  solisScriptLoaded = false;
+
   handleNavItemClick = (e: Event) => {
     if (this.headerProps?.sideNav?.onClick) {
       this.headerProps?.sideNav?.onClick?.(e);
@@ -74,10 +82,50 @@ export class CommonHeader extends LitElement {
         }
       }) as EventListener);
     }
+    if (
+      this.headerProps.sidekickConfig &&
+      this.headerProps.sidekickConfig.isEnabled
+    ) {
+      loadSidekickScript(this.headerProps);
+
+      document.addEventListener('sidekick-script-status', ((e: CustomEvent) => {
+        if (
+          e.detail?.message &&
+          e.detail?.message === 'load' &&
+          this.headerProps.sidekickConfig
+        ) {
+          this.sidekickScriptLoaded = true;
+        } else if (e.detail?.message && e.detail?.message === 'error') {
+          console.error(
+            'An error occurred trying to load the sidekick script.'
+          );
+        }
+      }) as EventListener);
+    }
+    if (
+      this.headerProps.solisConfig &&
+      this.headerProps.solisConfig.isEnabled
+    ) {
+      loadSolisScript(this.headerProps);
+
+      document.addEventListener('solis-script-status', ((e: CustomEvent) => {
+        if (
+          e.detail?.message &&
+          e.detail?.message === 'load' &&
+          this.headerProps.solisConfig
+        ) {
+          this.solisScriptLoaded = true;
+        } else if (e.detail?.message && e.detail?.message === 'error') {
+          console.error('An error occurred trying to load the solis script.');
+        }
+      }) as EventListener);
+    }
   }
 
   disconnectedCallback() {
     this.removeEventListener('assist-me-script-status', () => {});
+    this.removeEventListener('sidekick-script-status', () => {});
+    this.removeEventListener('solis-script-status', () => {});
     super.disconnectedCallback();
   }
 
@@ -87,6 +135,18 @@ export class CommonHeader extends LitElement {
       changedProperties.has('headerProps')
     ) {
       useScript(this.headerProps);
+    }
+    if (
+      this.headerProps.sidekickConfig?.isEnabled &&
+      changedProperties.has('headerProps')
+    ) {
+      loadSidekickScript(this.headerProps);
+    }
+    if (
+      this.headerProps.solisConfig?.isEnabled &&
+      changedProperties.has('headerProps')
+    ) {
+      loadSolisScript(this.headerProps);
     }
   }
 
@@ -135,7 +195,8 @@ export class CommonHeader extends LitElement {
                     typeof this.headerProps.sideNav.isCollapsible !==
                       'undefined' && !this.headerProps.sideNav.isCollapsible,
                 })}">
-                <cds-custom-side-nav-items>
+                <cds-custom-side-nav-items
+                  class="${AUTOMATION_NAMESPACE_PREFIX}__side-nav-items">
                   <!-- sideNav group array render  -->
                   ${this.headerProps?.sideNav?.groups
                     ? html`
@@ -149,21 +210,21 @@ export class CommonHeader extends LitElement {
                                 return html`
                                   <clabs-global-header-side-nav-item
                                     .link="${{ ...link }}"
-                                    .isCollapsible="${this.headerProps.sideNav
+                                    ?isCollapsible="${this.headerProps.sideNav
                                       ?.isCollapsible}"
                                     .handleNavItemClick="${this
                                       .handleNavItemClick}"
                                     .isSideNavMenuItems="${link.isSideNavMenuItems}"
-                                    .isActive="${this.headerProps
+                                    ?isActive="${this.headerProps
                                       .isHybridIpaas && !link.isSideNavMenuItems
                                       ? window.location.href.includes(link.href)
                                       : link.isActive}"
-                                    .menuOpen="${this.isMenuOpen}"
-                                    .isOnClickAvailable="${typeof this
+                                    ?menuOpen="${this.isMenuOpen}"
+                                    ?isOnClickAvailable="${typeof this
                                       .headerProps?.sideNav?.onClick ===
-                                    'function'}">
-                                    .isHybridIpaas="${this.headerProps
-                                      .isHybridIpaas}"
+                                    'function'}"
+                                    ?isHybridIpaas="${this.headerProps
+                                      .isHybridIpaas}">
                                   </clabs-global-header-side-nav-item>
                                   ${
                                     // do not add a divider after the final group
@@ -187,7 +248,7 @@ export class CommonHeader extends LitElement {
                         ${this.headerProps.sideNav?.links?.map((link) => {
                           // Loop through the links array to render the menu items
                           return html`
-												<clabs-global-header-side-nav-item 
+												<clabs-global-header-side-nav-item
 												.link="${{ ...link }}"
 												.isCollapsible="${this.headerProps.sideNav?.isCollapsible}"
 												.handleNavItemClick="${this.handleNavItemClick}"
@@ -197,7 +258,7 @@ export class CommonHeader extends LitElement {
 												.isOnClickAvailable="${
                           typeof this.headerProps?.sideNav?.onClick ===
                           'function'
-                        }">	
+                        }">
 												</clabs-global-header-side-nav-item>
                                 </cds-custom-side-nav-menu>
                               `;
@@ -233,7 +294,7 @@ export class CommonHeader extends LitElement {
               ${this.headerProps.sideNavPropsV2?.links?.map((link) => {
                 // Loop through the links array to render the menu items
                 return html`
-									<clabs-global-header-side-nav-item 
+									<clabs-global-header-side-nav-item
 									.link="${{ ...link }}"
 									.isCollapsible="${this.headerProps.sideNavPropsV2?.isCollapsible}"
 									.handleNavItemClick="${this.handleNavItemClick}"

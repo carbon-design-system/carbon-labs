@@ -7,3 +7,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 declare module '@carbon-labs/wc-global-header';
+
+interface HybridIpaasHeader {
+  productName?: string;
+  productKey?: string;
+  fetchHeaders?: object;
+  solisSidekickEnabled?: boolean;
+  solisSwitcherEnabled?: boolean;
+  solisEnvironment?: string;
+  basePath?: string;
+  displayName?: string;
+  userEmail?: string;
+  productVersion?: string;
+  assistMeKey?: string;
+  aiCallback?: () => void;
+  aiCallbackEvent?: string;
+  logoutCallback?: () => void;
+  notificationOpenCallback?: () => void;
+  hasNewNotifications?: boolean;
+  searchConfigs?: object;
+  capabilityProfileFooterLinks?: Array<object>;
+  capabilityGlobalActions?: Array<object>;
+}

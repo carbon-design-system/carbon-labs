@@ -8,7 +8,7 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import popupElement from './src/popupElement.js';
 import { popupElementTemplate } from './src/popupElement.template.js';
 

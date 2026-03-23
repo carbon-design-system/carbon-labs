@@ -15,7 +15,7 @@ import '@carbon/web-components/es/components/search/index.js';
 import '@carbon/web-components/es/components/heading/index.js';
 import '@carbon/web-components/es/components/progress-bar/index.js';
 import '@carbon-labs/wc-empty-state/es/index.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import spread from '@carbon/web-components/es/globals/directives/spread.js';
 
 const { stablePrefix: clabsPrefix } = settings;

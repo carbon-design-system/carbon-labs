@@ -12,9 +12,11 @@ import { html } from 'lit';
 // import * as CarbonIcons from '@carbon/icons/es';
 import {
   AiLaunch20,
+  Api16,
   AppConnectivity20,
   ArrowRight16,
   Checkmark16,
+  CloudServices20,
   Document16,
   Email16,
   Help20,
@@ -24,6 +26,7 @@ import {
   Login16,
   Logout16,
   Notification20,
+  NotificationNew20,
   RequestQuote16,
   Settings16,
   Share16,
@@ -32,6 +35,7 @@ import {
   User24,
   User32,
   UserFollow16,
+  UserProfile16,
 } from '@carbon/icons/es';
 import { toSVG, getAttributes } from '@carbon/icon-helpers';
 import { EventProps } from '../types/Header.types';
@@ -58,9 +62,11 @@ export const renderCarbonIcon = (
 
   const CarbonIcons = {
     AiLaunch20,
+    Api16,
     AppConnectivity20,
     ArrowRight16,
     Checkmark16,
+    CloudServices20,
     Document16,
     Email16,
     Help20,
@@ -70,6 +76,7 @@ export const renderCarbonIcon = (
     Login16,
     Logout16,
     Notification20,
+    NotificationNew20,
     RequestQuote16,
     Settings16,
     Share16,
@@ -78,6 +85,7 @@ export const renderCarbonIcon = (
     User24,
     User32,
     UserFollow16,
+    UserProfile16,
   };
 
   const iconsRecord = CarbonIcons as Record<
@@ -122,6 +130,7 @@ export function getAssistMeUrl(environment: string) {
 }
 
 export const trackEvent = (eventName: string, props: EventProps) => {
+  // console.log('trackEvent', eventName, props) // For testing purposes
   const analytics =
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     (window as any)?.bluemixAnalytics;

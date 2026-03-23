@@ -28,7 +28,7 @@ describe('Switcher Component', () => {
         carbonIcon: 'Checkmark',
       },
       {
-        label: 'Manage environments',
+        label: 'Manage custom environments',
         isHeading: false,
         href: '#',
         id: '',

@@ -137,8 +137,13 @@ $prefix: 'clabs--animated-header__ai-prompt-tile' !default;
   position: relative;
   z-index: 4;
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
   margin-block-end: $spacing-05;
+}
+
+.#{$prefix}--tag {
+  z-index: 4;
 }
 
 .#{$prefix}--title {

@@ -14,7 +14,7 @@ import { APIPlugin } from '../../../services/APIPlugin/index.js';
 // @ts-ignore
 import styles from './chat.scss?inline';
 
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 /**
  * Input component using search typeahead api

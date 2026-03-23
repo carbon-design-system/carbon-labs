@@ -10,11 +10,12 @@
 
 import { css, LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import {
   CUSTOM_EVENT_NAME,
   CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,
   INITIAL_AUTOMATION_HEADER_PROPS,
+  SOLIS_CDN_HOSTNAMES,
 } from '../../constant';
 import {
   GlobalActionConfig,
@@ -22,6 +23,7 @@ import {
   MainSectionItem,
   ProfileFooterLinks,
   SearchConfigs,
+  solisDeploymentEnvironment,
 } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
 
@@ -41,6 +43,10 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: String }) productName = null;
   @property({ type: String }) productKey = '';
   @property({ type: Object }) fetchHeaders = {};
+  @property({ type: Boolean }) solisSidekickEnabled = false;
+  @property({ type: Boolean }) solisSwitcherEnabled = false;
+  @property({ type: String }) solisEnvironment = 'local';
+  @property({ type: Boolean }) solisDevMode = false; // override for storybook and local to use mock data
   @property({ type: String }) basePath = '';
   @property({ type: String }) displayName = '';
   @property({ type: String }) userEmail = '';
@@ -49,9 +55,15 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Function }) aiCallback: (() => void) | undefined;
   @property({ type: String }) aiCallbackEvent = '';
   @property({ type: Function }) logoutCallback: (() => void) | undefined;
+  @property({ type: String }) logoutCallbackEvent = '';
   @property({ type: Function }) notificationOpenCallback:
     | (() => void)
     | undefined;
+  @property({ type: String }) notificationOpenCallbackEvent = '';
+  @property({ type: Function }) searchCallback: (() => void) | undefined;
+  @property({ type: String }) searchCallbackEvent = '';
+  @property({ type: Function }) searchSubmitCallback: (() => void) | undefined;
+  @property({ type: String }) searchSubmitCallbackEvent = '';
   @property({ type: Boolean }) hasNewNotifications = false;
   @property({ type: Object }) searchConfigs: SearchConfigs | null = null;
   @property({ type: Array })
@@ -137,11 +149,50 @@ export class HybridIpaasHeader extends LitElement {
 
     if (this.logoutCallback) {
       footerLink.onClickHandler = this.logoutCallback;
+    } else if (this.logoutCallbackEvent) {
+      footerLink.onClickHandler = () => {
+        const event = new CustomEvent(this.logoutCallbackEvent, {
+          bubbles: true,
+          cancelable: true,
+        });
+        this.dispatchEvent(event);
+      };
     } else {
       footerLink.href = `${this.basePath}/logout`;
     }
 
     return footerLink;
+  }
+
+  private initSidekickOptions(env = 'local') {
+    return {
+      isEnabled: this.solisSidekickEnabled,
+      scriptUrl: SOLIS_CDN_HOSTNAMES[env] + '/sidekick/solis-sidekick.es.js',
+      insights_enabled: true,
+      overview_enabled: true,
+      chat_enabled: false,
+      tell_me_more_enabled: false,
+    };
+  }
+  private initSolisOptions(env = 'local', forSidekick = false, isProd = true) {
+    if (forSidekick) {
+      return {
+        isEnabled: false,
+        is_prod: isProd,
+        cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
+        deployment_environment: solisDeploymentEnvironment[env] || 'local',
+        product_id: 'ipaas',
+      };
+    } else {
+      return {
+        isEnabled: true,
+        scriptUrl: SOLIS_CDN_HOSTNAMES[env] + '/switcher/solis-switcher.es.js',
+        is_prod: isProd,
+        cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
+        deployment_environment: solisDeploymentEnvironment[env] || 'local',
+        product_id: 'ipaas',
+      };
+    }
   }
 
   private buildHeaderOptions(baseOptions: HeaderProps): HeaderProps {
@@ -215,12 +266,47 @@ export class HybridIpaasHeader extends LitElement {
         onClick: this.notificationOpenCallback,
       };
     }
+    if (this.notificationOpenCallbackEvent) {
+      updatedOptions.notificationConfigs = {
+        onClick: () => {
+          const event = new CustomEvent(this.notificationOpenCallbackEvent, {
+            bubbles: true,
+            cancelable: true,
+          });
+          this.dispatchEvent(event);
+        },
+      };
+    }
 
     if (this.searchConfigs) {
       updatedOptions.searchConfigs = {
         placeholder: this.searchConfigs?.placeholder ?? 'Search',
         callback: this.searchConfigs?.callback,
         submitCallback: this.searchConfigs?.submitCallback,
+      };
+    }
+
+    if (this.searchCallbackEvent) {
+      updatedOptions.searchConfigs = {
+        callback: () => {
+          const event = new CustomEvent(this.searchCallbackEvent, {
+            bubbles: true,
+            cancelable: true,
+          });
+          this.dispatchEvent(event);
+        },
+      };
+    }
+
+    if (this.searchSubmitCallbackEvent) {
+      updatedOptions.searchConfigs = {
+        submitCallback: () => {
+          const event = new CustomEvent(this.searchSubmitCallbackEvent, {
+            bubbles: true,
+            cancelable: true,
+          });
+          this.dispatchEvent(event);
+        },
       };
     }
 
@@ -241,6 +327,24 @@ export class HybridIpaasHeader extends LitElement {
       };
     }
 
+    if (this.solisSidekickEnabled) {
+      updatedOptions.solisConfig = this.initSolisOptions(
+        this.solisEnvironment,
+        true,
+        !this.solisDevMode
+      );
+      updatedOptions.sidekickConfig = this.initSidekickOptions(
+        this.solisEnvironment
+      );
+    }
+    if (this.solisSwitcherEnabled) {
+      updatedOptions.solisConfig = this.initSolisOptions(
+        this.solisEnvironment,
+        false,
+        !this.solisDevMode
+      );
+    }
+
     if (
       this.capabilityProfileFooterLinks &&
       this.capabilityProfileFooterLinks.length > 0
@@ -257,7 +361,6 @@ export class HybridIpaasHeader extends LitElement {
     ) {
       updatedOptions.globalActionConfigs = [...this.capabilityGlobalActions];
     }
-
     return updatedOptions;
   }
 

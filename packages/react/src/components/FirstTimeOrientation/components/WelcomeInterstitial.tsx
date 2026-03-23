@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { Column, FlexGrid, Row } from '@carbon/react';
 // @ts-ignore
 import welcomeInterstitialImage from './assets/welcomeInterstitial.png';

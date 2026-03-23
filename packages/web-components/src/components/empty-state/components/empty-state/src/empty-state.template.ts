@@ -8,7 +8,7 @@
  */
 import { html } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 import '@carbon/web-components/es/components/link/index.js';
 import errorIllustration from './assets/error-illustration';

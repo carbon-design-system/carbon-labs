@@ -8,6 +8,8 @@
  */
 
 @use '../../globals/styles/vars' as automation;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
 
 .#{automation.$namespace-prefix}__header {
   z-index: 8050;
@@ -18,11 +20,11 @@
 }
 
 .#{automation.$namespace-prefix}__capability-name {
-  overflow: hidden;
-  color: var(--cds-custom-text-primary);
-  font-weight: 400;
+  @include type-style('body-compact-01');
 
+  color: $text-primary;
   margin-inline-end: 1.5rem;
+  overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -36,4 +38,8 @@
   flex: 1 1 0%;
   justify-content: flex-end;
   block-size: 100%;
+}
+
+.#{automation.$namespace-prefix}__side-nav-items {
+  overflow: auto;
 }

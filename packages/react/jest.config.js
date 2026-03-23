@@ -12,6 +12,7 @@ export default {
   preset: 'ts-jest',
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/styleMock.js',
+    '^@carbon-labs/utilities$': '<rootDir>/../utilities/es/index.js',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transform: {

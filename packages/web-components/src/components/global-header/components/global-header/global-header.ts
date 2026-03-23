@@ -8,7 +8,7 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import globalHeader from './src/global-header.template.js';
 
 export { CommonHeader } from './src/components/CommonHeader/CommonHeader.js';

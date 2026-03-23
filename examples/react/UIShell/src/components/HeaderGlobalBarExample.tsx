@@ -8,11 +8,16 @@
  */
 
 import {
+  SideNav,
+  SideNavItems,
+  SideNavMenu,
+  SideNavLink,
   HeaderDivider,
   HeaderPopover,
   HeaderPopoverActions,
   HeaderPopoverButton,
   HeaderPopoverContent,
+  HeaderOverflowPanel,
   Profile,
 } from '@carbon-labs/react-ui-shell';
 import {
@@ -26,9 +31,9 @@ import {
   HeaderGlobalBar,
   MenuButton,
   MenuItemRadioGroup,
-  Theme,
   ContainedList,
   ContainedListItem,
+  SideNavDivider,
 } from '@carbon/react';
 import {
   Help,
@@ -40,6 +45,9 @@ import {
   Group,
   Money,
   Logout,
+  Launch,
+  ChartCustom,
+  Settings,
 } from '@carbon/react/icons';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router';
@@ -251,7 +259,7 @@ export const HeaderGlobalBarExample = ({
           />
         </ThemeSettings>
         <Profile.ReadOnly items={readOnlyItems} />
-        <ContainedList label="Profile links">
+        <ContainedList>
           <ContainedListItem
             renderIcon={User}
             onClick={() => (window.location.href = 'https://example.com')}>

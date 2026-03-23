@@ -14,7 +14,7 @@ import React, {
   forwardRef,
 } from 'react';
 import { rem } from '@carbon/layout';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import cx from 'classnames';
 import debounce from 'lodash.debounce';
 export const DEBOUNCE_DELAY = 100;

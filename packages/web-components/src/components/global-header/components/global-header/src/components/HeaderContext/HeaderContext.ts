@@ -10,7 +10,8 @@
 
 import { LitElement, css, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { settings } from '@carbon-labs/utilities';
 import {
   AUTOMATION_HEADER_BASE_CLASS,
   AUTOMATION_NAMESPACE_PREFIX,
@@ -36,7 +37,11 @@ import '../ProfilePopover/ProfilePopover';
 import '../UserProfileImage/UserProfileImage';
 
 import { HeaderContextProps, HeaderContextState } from './HeaderContext.types';
-import { isValidObject, renderCarbonIcon } from '../../globals/utils';
+import {
+  isValidObject,
+  renderCarbonIcon,
+  trackEvent,
+} from '../../globals/utils';
 
 import styles from './_index.scss?inline' assert { type: 'css' };
 
@@ -80,12 +85,27 @@ export class HeaderContext extends LitElement {
   @property({ type: Boolean }) assistMeScriptLoaded = false;
   @property({ type: Boolean }) hasNewNotifications = false;
 
+  // emit an event (does nothing if analytics has not been configured)
+  private _clickEventAnalytics = (label: string) => {
+    trackEvent('UI Interaction', {
+      action: 'clicked',
+      CTA: label,
+      elementId: `common header - ${label}`,
+    });
+  };
+
   _toggleTrialPopup() {
     this.isTrialOpen = !this.isTrialOpen;
+    this._clickEventAnalytics('Trial days left');
   }
 
   _toggleProfilePopup() {
     this.isProfileOpen = !this.isProfileOpen;
+  }
+
+  _toggleAIChat(callback) {
+    callback();
+    this._clickEventAnalytics('Launch Chat');
   }
 
   handleAssistmeToggleClick(e: { preventDefault: () => void }) {
@@ -118,6 +138,8 @@ export class HeaderContext extends LitElement {
     } else {
       assistMeController?.open({ callback });
     }
+
+    this._clickEventAnalytics('Assistance');
   }
 
   renderTrial() {
@@ -224,18 +246,33 @@ export class HeaderContext extends LitElement {
 
   renderChatBot() {
     const { chatBotConfigs } = this.props;
-    if (chatBotConfigs) {
+    if (chatBotConfigs && chatBotConfigs.onClick) {
       return html`
         <cds-custom-header-global-action
           id="${INTEGRATION_AGENT_BUTTON_ID}"
           role="button"
           aria-label="Launch Chat"
           tooltipAlignment="center"
+          class="${AUTOMATION_NAMESPACE_PREFIX}__globalaction"
           tabindex="${this.isTrialOpen ? -1 : 0}"
-          @click="${chatBotConfigs.onClick}">
+          @click="${() => this._toggleAIChat(chatBotConfigs.onClick)}">
           ${renderCarbonIcon('AiLaunch', 20, 'icon')}
         </cds-custom-header-global-action>
       `;
+    }
+  }
+
+  renderSidekick() {
+    const { sidekickConfig } = this.props;
+    if (sidekickConfig?.isEnabled) {
+      return html` <solis-sidekick />`;
+    }
+  }
+
+  renderSolis() {
+    const { solisConfig } = this.props;
+    if (solisConfig?.isEnabled) {
+      return html` <solis-switcher /> `;
     }
   }
 
@@ -283,7 +320,8 @@ export class HeaderContext extends LitElement {
           <cds-custom-header-global-action
             role="button"
             aria-label="${action.label}"
-            tooltipAlignment="center"
+            tooltip-text="${ifDefined(action.tooltip)}"
+            tooltip-position="bottom"
             class="${AUTOMATION_NAMESPACE_PREFIX}__globalaction"
             @click="${action.onClick}">
             ${renderCarbonIcon(action.carbonIcon, 20, 'icon')}
@@ -326,11 +364,11 @@ export class HeaderContext extends LitElement {
         ${this.renderChatBot()}
         ${!assistMeConfigs ? this.renderHelpMenu() : nothing}
         ${assistMeConfigs?.productId ? this.renderAssistMe() : nothing}
-        ${this.renderProfile()}
+        ${this.renderSidekick()} ${this.renderProfile()} ${this.renderSolis()}
       `;
     } else {
-      return html`<clabs-global-header-unauthenticated-context
-        .noAuthHeaderLinks="${noAuthHeaderLinks}"></clabs-global-header-unauthenticated-context>`;
+      return html`${this.renderHelpMenu()}<clabs-global-header-unauthenticated-context
+          .noAuthHeaderLinks="${noAuthHeaderLinks}"></clabs-global-header-unauthenticated-context>`;
     }
   }
 }

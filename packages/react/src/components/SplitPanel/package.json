@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-split-panel",
-  "version": "0.9.0",
+  "version": "0.12.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -36,7 +36,7 @@
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id c0e6b5ea-e44d-4fbc-a40a-b5f18bd8ed93 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "canary"
+    "@carbon-labs/utilities": "0.21.0"
   },
   "dependencies": {
     "@ibm/telemetry-js": "^1.10.2"

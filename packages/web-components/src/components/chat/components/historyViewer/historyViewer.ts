@@ -8,7 +8,7 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import historyViewer from './src/historyViewer.js';
 import { historyViewerTemplate } from './src/historyViewer.template.js';
 

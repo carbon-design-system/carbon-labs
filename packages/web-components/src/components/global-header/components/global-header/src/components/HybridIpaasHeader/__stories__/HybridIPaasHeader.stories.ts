@@ -152,12 +152,36 @@ export const WithAIChat: Story = {
   `,
 };
 
+export const WithSolis: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+          return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
+        }),
+      ],
+    },
+  },
+  render: () => html`
+    <div role="main">
+      <clabs-global-header-hybrid-ipaas
+        productName="App Connect"
+        productKey="appconnect"
+        solisEnvironment="local"
+        solisDevMode
+        solisSwitcherEnabled
+        solisSidekickEnabled>
+      </clabs-global-header-hybrid-ipaas>
+    </div>
+  `,
+};
+
 const capabilityProfileFooterLinks = [
   {
     text: 'About us',
     href: '#',
     arialLabel: 'About us',
-    carbonIcon: 'InformationSquareFilled',
+    carbonIcon: 'UserProfile',
   },
   {
     text: 'Helpful link',
@@ -169,10 +193,11 @@ const capabilityProfileFooterLinks = [
 
 const capabilityGlobalActions: GlobalActionConfig[] = [
   {
-    label: 'App Connect global action',
-    carbonIcon: 'AppConnectivity',
+    label: 'Cloud Services global action',
+    carbonIcon: 'CloudServices',
+    tooltip: 'This is a tooltip',
     onClick: () => {
-      console.log('App Connect global action clicked!');
+      console.log('Cloud Services global action clicked!');
     },
   },
 ];

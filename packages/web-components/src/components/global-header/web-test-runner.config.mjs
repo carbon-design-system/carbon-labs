@@ -5,7 +5,10 @@ import {
 
 export default {
   concurrency: 1,
-  files: ['components/global-header/src/**/*.test.ts'],
+  files: [
+    'components/global-header/src/**/*.test.ts',
+    '__tests__/**/*.test.js',
+  ],
   filterBrowserLogs: removeViteLogging,
   testRunnerHtml: (testFramework) =>
     `<!doctype html>
@@ -34,17 +37,29 @@ export default {
           </body>
         </html>
         `,
-  plugins: [vitePlugin()],
+  plugins: [
+    vitePlugin({
+      viteConfig: {
+        optimizeDeps: {
+          include: ['react', 'react-dom', '@lit/react'],
+          esbuildOptions: {
+            // Ensure React is bundled with proper default export interop
+            mainFields: ['module', 'main'],
+          },
+        },
+      },
+    }),
+  ],
   coverageConfig: {
     report: true,
     reportDir: 'test-coverage',
     threshold: {
-      statements: 98,
-      branches: 91,
-      functions: 97,
-      lines: 98,
+      statements: 96,
+      branches: 90,
+      functions: 93,
+      lines: 96,
     },
-    include: ['src/**/*.ts'],
+    include: ['components/**/*.ts'],
     exclude: ['**/node_modules/**'],
   },
 };

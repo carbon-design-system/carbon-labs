@@ -8,9 +8,9 @@
  */
 /* eslint jsdoc/require-jsdoc: 0 */
 
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 
 /* c8 ignore next */
 import cx from 'classnames';
@@ -108,13 +108,11 @@ export class Switcher extends LitElement {
                         <div
                           class="${!isSelected
                             ? `${AUTOMATION_HEADER_BASE_CLASS}__switcher-menu-item-title-hidden-checkmark`
-                            : ''}">
-                          <div>
-                            ${renderCarbonIcon(
-                              item.carbonIcon || 'Checkmark',
-                              16
-                            )}
-                          </div>
+                            : nothing}">
+                          ${renderCarbonIcon(
+                            item.carbonIcon || 'Checkmark',
+                            16
+                          )}
                         </div>
                       `
                     : ''}
@@ -160,7 +158,7 @@ export class Switcher extends LitElement {
   }
 
   render() {
-    const labelMaxLength = 15;
+    const labelMaxLength = 22;
     const switcherLabel =
       this.selectedItem?.label &&
       this.selectedItem?.label.length < labelMaxLength

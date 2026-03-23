@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.90.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.89.0...@carbon-labs/react-ui-shell@0.90.0) (2026-01-22)
+
+
+### Bug Fixes
+
+* **sidenav:** add isActive styles for `navType="panel"` ([#970](https://github.com/carbon-design-system/carbon-labs/issues/970)) ([7100734](https://github.com/carbon-design-system/carbon-labs/commit/710073464e53bfc749870201f486a56939b0fa88))
+
+
+
+
+
+# [0.89.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.88.0...@carbon-labs/react-ui-shell@0.89.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
+# [0.88.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.87.0...@carbon-labs/react-ui-shell@0.88.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
+# [0.87.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.86.0...@carbon-labs/react-ui-shell@0.87.0) (2025-11-14)
+
+
+### Bug Fixes
+
+* **uishell:** update header overflow action button styles ([#914](https://github.com/carbon-design-system/carbon-labs/issues/914)) ([83eb662](https://github.com/carbon-design-system/carbon-labs/commit/83eb662bc25a4d454999119761ccce85c49b1d61))
+
+
+
+
+
+# [0.86.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.85.0...@carbon-labs/react-ui-shell@0.86.0) (2025-11-10)
+
+
+### Features
+
+* **uishell:** update HeaderPopover styles ([#890](https://github.com/carbon-design-system/carbon-labs/issues/890)) ([2543742](https://github.com/carbon-design-system/carbon-labs/commit/254374236689fb8e338b493bd5c4ff1927c7e23d))
+
+
+
+
+
 # [0.85.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.84.0...@carbon-labs/react-ui-shell@0.85.0) (2025-11-03)
 
 **Note:** Version bump only for package @carbon-labs/react-ui-shell

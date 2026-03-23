@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/utilities",
-  "version": "0.17.0",
+  "version": "0.21.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -13,27 +13,53 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/utilities"
   },
+  "main": "./es/index.js",
+  "module": "./es/index.js",
+  "types": "./es/index.d.ts",
+  "sideEffects": false,
+  "typesVersions": {
+    "*": {
+      "usePrefix": [
+        "./es/usePrefix.d.ts"
+      ]
+    }
+  },
   "exports": {
     ".": {
-      "default": "./src/index.js"
+      "types": "./es/index.d.ts",
+      "import": "./es/index.js",
+      "default": "./es/index.js"
     },
-    "./es/": "./es/"
+    "./usePrefix": {
+      "types": "./es/usePrefix.d.ts",
+      "import": "./es/usePrefix.js",
+      "default": "./es/usePrefix.js"
+    },
+    "./es/*": {
+      "types": "./es/*.d.ts",
+      "import": "./es/*",
+      "default": "./es/*"
+    }
   },
   "scripts": {
-    "build": "yarn clean && babel src --quiet -d es",
+    "build": "bash scripts/build.sh",
     "clean": "rimraf es"
   },
   "files": [
     "es/**/*.js",
-    "es/index.js"
+    "es/**/*.d.ts",
+    "es/index.js",
+    "es/index.d.ts"
   ],
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.4",
     "babel-cli": "^6.26.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rimraf": "^6.0.1"
   }
 }

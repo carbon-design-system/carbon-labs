@@ -43,6 +43,16 @@ const config = {
     options: {},
   },
   webpack(config) {
+    // Add webpack alias to resolve @carbon-labs/utilities to built files
+    config.resolve = config.resolve || {};
+    config.resolve.alias = config.resolve.alias || {};
+
+    // Map clean imports to the built es directory
+    config.resolve.alias['@carbon-labs/utilities'] = path.resolve(
+      __dirname,
+      '../../utilities/es'
+    );
+
     config.module.rules.push({
       test: /\.s?css$/,
       sideEffects: true,

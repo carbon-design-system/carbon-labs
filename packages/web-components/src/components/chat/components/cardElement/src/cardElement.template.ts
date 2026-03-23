@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 import ArrowRight16 from '@carbon/icons/es/arrow--right/16.js';
 import PlayFilledAlt16 from '@carbon/icons/es/play--filled/16.js';

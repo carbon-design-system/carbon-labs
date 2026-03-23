@@ -10,7 +10,7 @@
 
 import { LitElement, css, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es-custom/components/search/index.js';
 
 import styles from './_index.scss?inline' assert { type: 'css' };
@@ -36,12 +36,12 @@ export class Search extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('cds-search-input', ((e: CustomEvent) =>
+    this.addEventListener('cds-custom-search-input', ((e: CustomEvent) =>
       this._handleSearchInput(e?.detail?.value)) as EventListener);
   }
 
   disconnectedCallback() {
-    this.removeEventListener('cds-search-input', () => {});
+    this.removeEventListener('cds-custom-search-input', () => {});
     super.disconnectedCallback();
   }
 
@@ -57,7 +57,9 @@ export class Search extends LitElement {
 
   _handleSearchInput(value: string) {
     this.searchValue = value;
-    this.props.callback(value);
+    if (this.props.callback) {
+      this.props.callback(value);
+    }
   }
 
   @property({ type: Object }) props: SearchConfigs = {

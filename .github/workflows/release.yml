@@ -35,11 +35,13 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
-          registry-url: 'https://registry.npmjs.org/'
       - name: Install dependencies
         run: yarn install
       - name: Build project
         run: yarn build
+      - name: Set NPM token
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.CARBON_BOT_NPM_TOKEN }}" >> .npmrc
       - name: Publish minor release of packages
         run: |
           yarn lerna publish minor --dist-tag latest --yes --force-git-tag --message 'chore: release'

@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.162.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.161.0...@carbon-labs/react@0.162.0) (2026-03-27)
+
+
+### Bug Fixes
+
+* spacing in uishell header name ([#1149](https://github.com/carbon-design-system/carbon-labs/issues/1149)) ([9e8e9ef](https://github.com/carbon-design-system/carbon-labs/commit/9e8e9ef97bf2f4e2f03afdac3be3c27479de065c))
+
+
+
+
+
+# [0.161.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.159.0...@carbon-labs/react@0.161.0) (2026-03-25)
+
+
+### Bug Fixes
+
+* **lerna:** optimize lerna build pipelines to reduce memory footprint ([#1132](https://github.com/carbon-design-system/carbon-labs/issues/1132)) ([b797935](https://github.com/carbon-design-system/carbon-labs/commit/b797935e8d1d230f94deb74da80a02cf7c23a837))
+* **storybookdemo:** fix initial variant empty display ([#1123](https://github.com/carbon-design-system/carbon-labs/issues/1123)) ([e33f886](https://github.com/carbon-design-system/carbon-labs/commit/e33f8862d1b16d991987aaa1d2f1880b9d2eef01))
+
+
+
+
+
 # [0.160.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.159.0...@carbon-labs/react@0.160.0) (2026-03-24)
 
 

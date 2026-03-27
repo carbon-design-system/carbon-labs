@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.13.0...@carbon-labs/mdx-components@0.15.0) (2026-03-25)
+
+
+### Bug Fixes
+
+* **storybookdemo:** fix initial variant empty display ([#1123](https://github.com/carbon-design-system/carbon-labs/issues/1123)) ([e33f886](https://github.com/carbon-design-system/carbon-labs/commit/e33f8862d1b16d991987aaa1d2f1880b9d2eef01))
+
+
+
+
+
 # [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.13.0...@carbon-labs/mdx-components@0.14.0) (2026-03-24)
 
 

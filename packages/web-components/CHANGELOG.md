@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.130.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.128.0...@carbon-labs/web-components@0.130.0) (2026-03-25)
+
+
+### Bug Fixes
+
+* **lerna:** optimize lerna build pipelines to reduce memory footprint ([#1132](https://github.com/carbon-design-system/carbon-labs/issues/1132)) ([b797935](https://github.com/carbon-design-system/carbon-labs/commit/b797935e8d1d230f94deb74da80a02cf7c23a837))
+
+
+### Features
+
+* **datepicker:** new datepicker using Temporal API, Popover API, and CSS anchor positioning ([#1130](https://github.com/carbon-design-system/carbon-labs/issues/1130)) ([9d1357d](https://github.com/carbon-design-system/carbon-labs/commit/9d1357dbeb58d4f509e4d539af60266b3c9c657d))
+
+
+
+
+
 # [0.129.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.128.0...@carbon-labs/web-components@0.129.0) (2026-03-24)
 
 

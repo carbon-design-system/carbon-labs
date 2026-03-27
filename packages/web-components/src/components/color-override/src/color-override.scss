@@ -1,0 +1,217 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/colors' as *;
+@use 'sass:map';
+@use 'sass:color';
+@use 'sass:math';
+
+// Define all available colors
+$color-names: (
+  red,
+  blue,
+  green,
+  purple,
+  cyan,
+  magenta,
+  orange,
+  teal,
+  gray,
+  cool-gray,
+  warm-gray,
+  yellow
+);
+// Theme-specific shade ranges for better contrast control (7 options each)
+// White theme (lightest): 10-70
+$white-shades: (10, 20, 30, 40, 50, 60, 70);
+// Gray 10 theme (light): 20-80
+$g10-shades: (20, 30, 40, 50, 60, 70, 80);
+// Gray 90 theme (dark): 20-80
+$g90-shades: (20, 30, 40, 50, 60, 70, 80);
+// Gray 100 theme (darkest): 30-90
+$g100-shades: (30, 40, 50, 60, 70, 80, 90);
+// All shades for generation
+$color-shades: (10, 20, 30, 40, 50, 60, 70, 80, 90, 100);
+
+// Map of all color variables
+$all-colors: (
+  'red-10': $red-10,
+  'red-20': $red-20,
+  'red-30': $red-30,
+  'red-40': $red-40,
+  'red-50': $red-50,
+  'red-60': $red-60,
+  'red-70': $red-70,
+  'red-80': $red-80,
+  'red-90': $red-90,
+  'red-100': $red-100,
+  'blue-10': $blue-10,
+  'blue-20': $blue-20,
+  'blue-30': $blue-30,
+  'blue-40': $blue-40,
+  'blue-50': $blue-50,
+  'blue-60': $blue-60,
+  'blue-70': $blue-70,
+  'blue-80': $blue-80,
+  'blue-90': $blue-90,
+  'blue-100': $blue-100,
+  'green-10': $green-10,
+  'green-20': $green-20,
+  'green-30': $green-30,
+  'green-40': $green-40,
+  'green-50': $green-50,
+  'green-60': $green-60,
+  'green-70': $green-70,
+  'green-80': $green-80,
+  'green-90': $green-90,
+  'green-100': $green-100,
+  'purple-10': $purple-10,
+  'purple-20': $purple-20,
+  'purple-30': $purple-30,
+  'purple-40': $purple-40,
+  'purple-50': $purple-50,
+  'purple-60': $purple-60,
+  'purple-70': $purple-70,
+  'purple-80': $purple-80,
+  'purple-90': $purple-90,
+  'purple-100': $purple-100,
+  'cyan-10': $cyan-10,
+  'cyan-20': $cyan-20,
+  'cyan-30': $cyan-30,
+  'cyan-40': $cyan-40,
+  'cyan-50': $cyan-50,
+  'cyan-60': $cyan-60,
+  'cyan-70': $cyan-70,
+  'cyan-80': $cyan-80,
+  'cyan-90': $cyan-90,
+  'cyan-100': $cyan-100,
+  'magenta-10': $magenta-10,
+  'magenta-20': $magenta-20,
+  'magenta-30': $magenta-30,
+  'magenta-40': $magenta-40,
+  'magenta-50': $magenta-50,
+  'magenta-60': $magenta-60,
+  'magenta-70': $magenta-70,
+  'magenta-80': $magenta-80,
+  'magenta-90': $magenta-90,
+  'magenta-100': $magenta-100,
+  'orange-10': $orange-10,
+  'orange-20': $orange-20,
+  'orange-30': $orange-30,
+  'orange-40': $orange-40,
+  'orange-50': $orange-50,
+  'orange-60': $orange-60,
+  'orange-70': $orange-70,
+  'orange-80': $orange-80,
+  'orange-90': $orange-90,
+  'orange-100': $orange-100,
+  'teal-10': $teal-10,
+  'teal-20': $teal-20,
+  'teal-30': $teal-30,
+  'teal-40': $teal-40,
+  'teal-50': $teal-50,
+  'teal-60': $teal-60,
+  'teal-70': $teal-70,
+  'teal-80': $teal-80,
+  'teal-90': $teal-90,
+  'teal-100': $teal-100,
+  'gray-10': $gray-10,
+  'gray-20': $gray-20,
+  'gray-30': $gray-30,
+  'gray-40': $gray-40,
+  'gray-50': $gray-50,
+  'gray-60': $gray-60,
+  'gray-70': $gray-70,
+  'gray-80': $gray-80,
+  'gray-90': $gray-90,
+  'gray-100': $gray-100,
+  'cool-gray-10': $cool-gray-10,
+  'cool-gray-20': $cool-gray-20,
+  'cool-gray-30': $cool-gray-30,
+  'cool-gray-40': $cool-gray-40,
+  'cool-gray-50': $cool-gray-50,
+  'cool-gray-60': $cool-gray-60,
+  'cool-gray-70': $cool-gray-70,
+  'cool-gray-80': $cool-gray-80,
+  'cool-gray-90': $cool-gray-90,
+  'cool-gray-100': $cool-gray-100,
+  'warm-gray-10': $warm-gray-10,
+  'warm-gray-20': $warm-gray-20,
+  'warm-gray-30': $warm-gray-30,
+  'warm-gray-40': $warm-gray-40,
+  'warm-gray-50': $warm-gray-50,
+  'warm-gray-60': $warm-gray-60,
+  'warm-gray-70': $warm-gray-70,
+  'warm-gray-80': $warm-gray-80,
+  'warm-gray-90': $warm-gray-90,
+  'warm-gray-100': $warm-gray-100,
+  'yellow-10': $yellow-10,
+  'yellow-20': $yellow-20,
+  'yellow-30': $yellow-30,
+  'yellow-40': $yellow-40,
+  'yellow-50': $yellow-50,
+  'yellow-60': $yellow-60,
+  'yellow-70': $yellow-70,
+  'yellow-80': $yellow-80,
+  'yellow-90': $yellow-90,
+  'yellow-100': $yellow-100,
+);
+
+// Function to calculate relative luminance of a color
+@function get-luminance($color) {
+  $red: math.div(color.channel($color, 'red', $space: rgb), 255);
+  $green: math.div(color.channel($color, 'green', $space: rgb), 255);
+  $blue: math.div(color.channel($color, 'blue', $space: rgb), 255);
+
+  // Apply gamma correction
+  @if $red <= 0.03928 {
+    $red: math.div($red, 12.92);
+  } @else {
+    $red: math.pow(math.div($red + 0.055, 1.055), 2.4);
+  }
+
+  @if $green <= 0.03928 {
+    $green: math.div($green, 12.92);
+  } @else {
+    $green: math.pow(math.div($green + 0.055, 1.055), 2.4);
+  }
+
+  @if $blue <= 0.03928 {
+    $blue: math.div($blue, 12.92);
+  } @else {
+    $blue: math.pow(math.div($blue + 0.055, 1.055), 2.4);
+  }
+
+  @return 0.2126 * $red + 0.7152 * $green + 0.0722 * $blue;
+}
+
+// Function to generate contrasting text color based on background
+@function get-contrasting-color($bg-color) {
+  $luminance: get-luminance($bg-color);
+
+  // WCAG AA standard: use white text for dark backgrounds, black for light
+  // Adjusted threshold to 0.179 to ensure 4.5:1 contrast ratio for mid-range shades (40, 50)
+  // This threshold provides better contrast for colors in both light and dark modes
+  @if $luminance > 0.179 {
+    @return #000000;
+  } @else {
+    @return #ffffff;
+  }
+}
+
+// Generate background color overrides for all color combinations
+@each $color-name in $color-names {
+  @each $shade in $color-shades {
+    $color-key: '#{$color-name}-#{$shade}';
+    $bg-color: map.get($all-colors, $color-key);
+
+    [data-override='#{$color-key}'] {
+      --cds-tag-background-gray: #{$bg-color};
+      --cds-tag-color-gray: #{get-contrasting-color($bg-color)};
+    }
+  }
+}

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.91.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.90.0...@carbon-labs/react-ui-shell@0.91.0) (2026-03-27)
+
+
+### Bug Fixes
+
+* spacing in uishell header name ([#1149](https://github.com/carbon-design-system/carbon-labs/issues/1149)) ([9e8e9ef](https://github.com/carbon-design-system/carbon-labs/commit/9e8e9ef97bf2f4e2f03afdac3be3c27479de065c))
+
+
+
+
+
 # [0.90.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.89.0...@carbon-labs/react-ui-shell@0.90.0) (2026-01-22)
 
 

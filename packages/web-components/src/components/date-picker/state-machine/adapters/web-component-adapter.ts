@@ -13,7 +13,7 @@ import type {
   StateTransition,
   DateSelectPayload,
 } from '../types';
-import type CDSDatePicker from '../../components/date-picker/date-picker';
+import type CDSDatePicker from '../../components/web-components/date-picker';
 
 /**
  * Adapter configuration

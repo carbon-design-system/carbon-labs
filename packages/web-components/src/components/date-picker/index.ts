@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import './components/date-picker/date-picker';
-import './components/date-picker/date-picker-input';
-import './components/date-picker/date-picker-input-skeleton';
-import './components/date-picker/calendar-renderer';
+// Web Components implementation
+import './components/web-components/date-picker';
+import './components/web-components/date-picker-input';
+import './components/web-components/date-picker-input-skeleton';
+import './components/web-components/calendar-renderer';
+
+// Export state machine for potential external use
+export * from './state-machine';

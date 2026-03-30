@@ -7,21 +7,21 @@
 
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-import { prefix } from '../../temp-imports/globals/settings';
-import FormMixin from '../../temp-imports/globals/mixins/form';
-import HostListenerMixin from '../../temp-imports/globals/mixins/host-listener';
-import HostListener from '../../temp-imports/globals/decorators/host-listener';
+import { prefix } from '../temp-imports/globals/settings';
+import FormMixin from '../temp-imports/globals/mixins/form';
+import HostListenerMixin from '../temp-imports/globals/mixins/host-listener';
+import HostListener from '../temp-imports/globals/decorators/host-listener';
 import CDSDatePickerInput from './date-picker-input';
-import { WebComponentAdapter } from '../../state-machine/adapters/web-component-adapter';
-import type { StateTransition } from '../../state-machine';
-import { DatePickerState, DatePickerEvent } from '../../state-machine';
+import { WebComponentAdapter } from '../adapters/web-component-adapter.js';
+import type { StateTransition } from '@carbon-labs/primitives/date-picker';
+import { DatePickerState, DatePickerEvent } from '@carbon-labs/primitives/date-picker';
 import {
   parseDateToPlainDate,
   parseISOToPlainDate,
-} from '../../state-machine/temporal-utils';
+} from '@carbon-labs/primitives/date-picker';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
-import { carbonElement as customElement } from '../../temp-imports/globals/decorators/carbon-element';
+import { carbonElement as customElement } from '../temp-imports/globals/decorators/carbon-element';
 
 /**
  * Date picker modes.

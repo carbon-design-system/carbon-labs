@@ -1,0 +1,8 @@
+projectId: 40597fb8-d0ed-45fb-a95a-5b1751e22c36
+version: 1
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  - npm
+  - jsx
+
+# Made with Bob

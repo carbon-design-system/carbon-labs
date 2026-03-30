@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { DatePickerState } from './states';
-import { isDateInRange } from './temporal-utils';
+import { DatePickerState } from './states.js';
+import { isDateInRange } from './temporal-utils.js';
 import type {
   DatePickerContext,
   DatePickerEvent,
   StateGuard,
   DateSelectPayload,
-} from './types';
+} from './types.js';
 
 /**
  * Guard map - determines if transitions are allowed

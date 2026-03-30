@@ -6,10 +6,10 @@
  */
 
 // Web Components implementation
-import './components/web-components/date-picker';
-import './components/web-components/date-picker-input';
-import './components/web-components/date-picker-input-skeleton';
-import './components/web-components/calendar-renderer';
+import './components/date-picker';
+import './components/date-picker-input';
+import './components/date-picker-input-skeleton';
+import './components/calendar-renderer';
 
-// Export state machine for potential external use
-export * from './state-machine';
+// Export state machine from primitives package
+export * from '@carbon-labs/primitives/date-picker';

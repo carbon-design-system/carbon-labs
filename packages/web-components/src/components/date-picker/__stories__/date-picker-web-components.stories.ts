@@ -10,14 +10,14 @@
 import { html } from 'lit';
 import { prefix } from '../temp-imports/globals/settings';
 import { iconLoader } from '../temp-imports/globals/internal/icon-loader';
-import { INPUT_SIZE } from '../components/web-components/defs.js';
+import { INPUT_SIZE } from '../components/defs';
 import View16 from '@carbon/icons/es/view/16.js';
 import FolderOpen16 from '@carbon/icons/es/folder--open/16.js';
 import Folders16 from '@carbon/icons/es/folders/16.js';
-import '../components/web-components/date-picker';
-import '../components/web-components/date-picker-input';
-import '../components/web-components/date-picker-input-skeleton';
-import '../components/web-components/calendar-renderer';
+import '../components/date-picker';
+import '../components/date-picker-input';
+import '../components/date-picker-input-skeleton';
+import '../components/calendar-renderer';
 import '@carbon/web-components/es/components/layer/index.js';
 import '@carbon/web-components/es/components/ai-label/index.js';
 import '../temp-imports/.storybook/templates/with-layer';
@@ -660,7 +660,7 @@ export const WithAILabel = {
 };
 
 const meta = {
-  title: 'Components/Date Picker/Web Components',
+  title: 'Components/Date Picker',
   parameters: {
     docs: {
       controls: { exclude: ['calendar'] },

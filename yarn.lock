@@ -1621,6 +1621,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/primitives@workspace:*, @carbon-labs/primitives@workspace:packages/primitives":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/primitives@workspace:packages/primitives"
+  dependencies:
+    "@types/node": "npm:^20.17.10"
+    rimraf: "npm:^6.0.1"
+    typescript: "npm:^5.7.2"
+    xstate: "npm:^5.18.2"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-animated-header@workspace:packages/react/src/components/AnimatedHeader":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-animated-header@workspace:packages/react/src/components/AnimatedHeader"
@@ -1629,6 +1640,20 @@ __metadata:
     "@ibm/telemetry-js": "npm:^1.10.2"
     jest-canvas-mock: "npm:^2.5.2"
     lottie-web: "npm:^5.12.2"
+  languageName: unknown
+  linkType: soft
+
+"@carbon-labs/react-date-picker@workspace:packages/react/src/components/DatePicker":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-date-picker@workspace:packages/react/src/components/DatePicker"
+  dependencies:
+    "@carbon-labs/primitives": "workspace:*"
+    "@carbon-labs/utilities": "npm:0.21.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    classnames: "npm:^2.3.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   languageName: unknown
   linkType: soft
 
@@ -1885,6 +1910,7 @@ __metadata:
   resolution: "@carbon-labs/wc-date-picker@workspace:packages/web-components/src/components/date-picker"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/primitives": "workspace:*"
     "@carbon-labs/utilities": "npm:0.21.0"
     "@carbon/web-components": "npm:^2.50.0"
     "@js-temporal/polyfill": "npm:~0.5.1"
@@ -8568,6 +8594,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^20.17.10":
+  version: 20.19.37
+  resolution: "@types/node@npm:20.19.37"
+  dependencies:
+    undici-types: "npm:~6.21.0"
+  checksum: 10c0/8420353aee776ae5c1e9720058949909a0e908fa2af85501e9db2645bb9f9acd7d767890f8aaee34d375e6f8b5f550a9a169e908d2d8cf7d5daf63dce64092a0
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^22.0.0":
   version: 22.19.7
   resolution: "@types/node@npm:22.19.7"
@@ -12322,7 +12357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.5.1, classnames@npm:^2.5.1":
+"classnames@npm:2.5.1, classnames@npm:^2.3.2, classnames@npm:^2.5.1":
   version: 2.5.1
   resolution: "classnames@npm:2.5.1"
   checksum: 10c0/afff4f77e62cea2d79c39962980bf316bacb0d7c49e13a21adaadb9221e1c6b9d3cdb829d8bb1b23c406f4e740507f37e1dcf506f7e3b7113d17c5bab787aa69
@@ -31004,7 +31039,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:>=3 < 6, typescript@npm:^5.1.3, typescript@npm:^5.2.2, typescript@npm:^5.7.3":
+"typescript@npm:>=3 < 6, typescript@npm:^5.1.3, typescript@npm:^5.2.2, typescript@npm:^5.7.2, typescript@npm:^5.7.3":
   version: 5.9.3
   resolution: "typescript@npm:5.9.3"
   bin:
@@ -31024,7 +31059,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.1.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.1.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.7.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>":
   version: 5.9.3
   resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
   bin:
@@ -32950,6 +32985,13 @@ __metadata:
   version: 0.0.7
   resolution: "xpath-builder@npm:0.0.7"
   checksum: 10c0/f811824c8fce5f7e75039dfc04d085f95c37a5a1d610586780241d7a5d725efb6bed6837903132bb038007a89c53602bdd708cf0900806982804ba76e2c296e3
+  languageName: node
+  linkType: hard
+
+"xstate@npm:^5.18.2":
+  version: 5.30.0
+  resolution: "xstate@npm:5.30.0"
+  checksum: 10c0/4c41be815bea6c62492952f813f363d8c630364010fdfd3be73b43b4eecaa9da3548e0b30d058c28f861c386d705b024815692ae654555cd1048dbba0ca5184f
   languageName: node
   linkType: hard
 

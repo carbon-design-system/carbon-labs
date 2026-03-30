@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { DatePickerState } from './states';
-import { plainDateToISOString, comparePlainDates } from './temporal-utils';
+import { DatePickerState } from './states.js';
+import { plainDateToISOString, comparePlainDates } from './temporal-utils.js';
 import type {
   DatePickerContext,
   DatePickerEvent,
@@ -14,7 +14,7 @@ import type {
   DateSelectPayload,
   InputFocusPayload,
   ValidationErrorPayload,
-} from './types';
+} from './types.js';
 
 /**
  * Action map - updates context during transitions
@@ -733,8 +733,10 @@ export const actions: ActionMap = {
         context.startDate ||
         context.viewDate ||
         Temporal.Now.plainDateISO();
-      const dayOfWeek = focusedDate.dayOfWeek(); // 1 = Monday, 7 = Sunday
-      const daysToSubtract = dayOfWeek === 7 ? 0 : dayOfWeek; // Move to Sunday
+      // Convert to JS Date to get day of week (0 = Sunday, 6 = Saturday)
+      const jsDate = new Date(focusedDate.year, focusedDate.month - 1, focusedDate.day);
+      const dayOfWeek = jsDate.getDay(); // 0 = Sunday, 6 = Saturday
+      const daysToSubtract = dayOfWeek; // Move to Sunday (0 days if already Sunday)
       const newFocusedDate = focusedDate.add({ days: -daysToSubtract });
 
       // If we moved to a different month, update viewDate
@@ -760,8 +762,10 @@ export const actions: ActionMap = {
         context.startDate ||
         context.viewDate ||
         Temporal.Now.plainDateISO();
-      const dayOfWeek = focusedDate.dayOfWeek(); // 1 = Monday, 7 = Sunday
-      const daysToAdd = dayOfWeek === 7 ? 0 : 7 - dayOfWeek; // Move to Saturday
+      // Convert to JS Date to get day of week (0 = Sunday, 6 = Saturday)
+      const jsDate = new Date(focusedDate.year, focusedDate.month - 1, focusedDate.day);
+      const dayOfWeek = jsDate.getDay(); // 0 = Sunday, 6 = Saturday
+      const daysToAdd = dayOfWeek === 6 ? 0 : 6 - dayOfWeek; // Move to Saturday (0 days if already Saturday)
       const newFocusedDate = focusedDate.add({ days: daysToAdd });
 
       // If we moved to a different month, update viewDate

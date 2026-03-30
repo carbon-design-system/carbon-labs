@@ -8,17 +8,17 @@
 import {
   DatePickerState,
   DatePickerEvent as DatePickerEventEnum,
-} from './states';
-import { checkGuard } from './guards';
-import { executeAction } from './actions';
-import { executeEffect } from './effects';
+} from './states.js';
+import { checkGuard } from './guards.js';
+import { executeAction } from './actions.js';
+import { executeEffect } from './effects.js';
 import type {
   DatePickerContext,
   DatePickerEvent,
   StateTransition,
   TransitionListener,
   TransitionMap,
-} from './types';
+} from './types.js';
 
 /**
  * State transition configuration

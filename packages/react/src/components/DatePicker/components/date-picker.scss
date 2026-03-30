@@ -1,0 +1,23 @@
+//
+// Copyright IBM Corp. 2019, 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+// Override the prefix to match Carbon Labs convention
+@use '@carbon/styles/scss/config' with ($prefix: 'clabs');
+
+// Import shared framework-agnostic styles from primitives (built output)
+@use '@carbon-labs/primitives/es/date-picker/styles/date-picker.scss';
+
+// =============================================================================
+// REACT SPECIFIC STYLES
+// All styles are already class-based in the shared file, so we just import it
+// No :host() or ::slotted() needed for React
+// =============================================================================
+
+// React uses standard class-based selectors, which are already defined
+// in the shared primitives SCSS file. No additional wrappers needed.
+
+// Made with Bob

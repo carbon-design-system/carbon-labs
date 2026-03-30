@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { DatePickerState } from './states';
-import type { DatePickerContext, DatePickerEvent, SideEffect } from './types';
+import { DatePickerState } from './states.js';
+import type { DatePickerContext, DatePickerEvent, SideEffect } from './types.js';
 
 /**
  * Effect map - performs side effects after transitions

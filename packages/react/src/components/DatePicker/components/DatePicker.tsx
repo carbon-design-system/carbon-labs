@@ -7,10 +7,22 @@
 
 import React, { Children, cloneElement, isValidElement, useRef } from 'react';
 import classNames from 'classnames';
-import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { useDatePicker } from '../hooks/useDatePicker';
 import { Calendar } from './Calendar';
 import type { DatePickerInputProps } from './DatePickerInput';
+
+/**
+ * Format Temporal.PlainDate to MM/DD/YYYY string
+ */
+function formatDate(date: Temporal.PlainDate | null): string {
+  if (!date) {
+    return '';
+  }
+  const month = String(date.month).padStart(2, '0');
+  const day = String(date.day).padStart(2, '0');
+  const year = String(date.year);
+  return `${month}/${day}/${year}`;
+}
 
 /**
  * DatePicker component props
@@ -128,8 +140,8 @@ export function DatePicker({
 }: DatePickerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Get prefix for CSS classes
-  const prefix = usePrefix();
+  // Use Carbon's standard 'cds' prefix to match Carbon's date-picker styles
+  const prefix = 'cds';
 
   // Use the date picker hook
   const {
@@ -165,7 +177,7 @@ export function DatePicker({
     send(eventType);
   };
 
-  // Handle calendar icon click
+  // Handle calendar icon click - toggle calendar open/close
   const handleIconClick = () => {
     if (isOpen) {
       closeCalendar();
@@ -188,20 +200,20 @@ export function DatePicker({
     // Get the appropriate ref
     const inputRef = isStartInput ? startInputRef : isEndInput ? endInputRef : undefined;
 
-    // Get the appropriate value
-    let inputValue = child.props.value;
-    if (inputValue === undefined) {
+    // Get the appropriate value - always use a string to keep input controlled
+    let inputValue = child.props.value ?? '';
+    if (inputValue === '') {
       if (isStartInput && context.startDate) {
-        inputValue = context.startDate.toString();
+        inputValue = formatDate(context.startDate);
       } else if (isEndInput && context.endDate) {
-        inputValue = context.endDate.toString();
+        inputValue = formatDate(context.endDate);
       }
     }
 
     // Clone the child with enhanced props
     const enhancedProps: Partial<DatePickerInputProps> = {
       ...child.props,
-      value: inputValue,
+      value: inputValue, // Always a string, never undefined
       disabled: child.props.disabled || context.isDisabled,
       readOnly: child.props.readOnly || readOnly,
       onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
@@ -223,12 +235,23 @@ export function DatePicker({
       hideIcon: datePickerType === 'simple' || child.props.hideIcon,
     };
 
-    // Use cloneElement with ref separately to avoid TypeScript issues
-    return cloneElement(child, {
-      ...enhancedProps,
-      // @ts-expect-error - ref is valid but TypeScript doesn't recognize it in cloneElement
-      ref: inputRef,
+    // Wrap each input in a container div with proper Carbon classes
+    const containerClasses = classNames(`${prefix}--date-picker-container`, {
+      [`${prefix}--date-picker-container--single`]: datePickerType === 'single',
+      [`${prefix}--date-picker-container--from`]: isStartInput && datePickerType === 'range',
+      [`${prefix}--date-picker-container--to`]: isEndInput && datePickerType === 'range',
     });
+
+    // Use cloneElement with ref separately to avoid TypeScript issues
+    return (
+      <div key={child.props.id} className={containerClasses}>
+        {cloneElement(child, {
+          ...enhancedProps,
+          // @ts-expect-error - ref is valid but TypeScript doesn't recognize it in cloneElement
+          ref: inputRef,
+        })}
+      </div>
+    );
   });
 
   // Generate class names
@@ -250,12 +273,15 @@ export function DatePicker({
 
   return (
     <div ref={containerRef} className={wrapperClasses}>
-      {/* Input fields */}
-      <div className={`${prefix}--date-picker-container`}>{enhancedChildren}</div>
+      {/* Input fields - each wrapped in its own container */}
+      {enhancedChildren}
 
       {/* Calendar dropdown */}
       {shouldRenderCalendar && (
-        <div ref={calendarRef} className={`${prefix}--date-picker__calendar-container`}>
+        <div
+          ref={calendarRef}
+          className={`${prefix}--date-picker__calendar-container`}
+        >
           <Calendar
             context={context}
             onDateSelect={selectDate}

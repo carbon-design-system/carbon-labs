@@ -5,114 +5,106 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { DatePicker, DatePickerInput } from '../index';
 import '../components/date-picker.scss';
+import { DatePicker, DatePickerInput } from '../index';
+import { Layer } from '@carbon/react';
 
-/**
- * Date picker component for React
- *
- * ## Overview
- * The DatePicker component allows users to select dates using a calendar interface.
- * It maintains 100% backwards compatibility with Carbon React v11 API while using
- * a modern state machine architecture shared with Web Components.
- *
- * ## Features
- * - Single date selection
- * - Date range selection
- * - Simple mode (no calendar)
- * - Min/max date constraints
- * - Validation states (invalid, warn)
- * - Keyboard navigation
- * - Accessibility compliant
- * - Shared state machine with Web Components
- *
- * ## Usage
- * ```tsx
- * import { DatePicker, DatePickerInput } from '@carbon/web-components/date-picker/react';
- *
- * function MyComponent() {
- *   return (
- *     <DatePicker datePickerType="single" onChange={(dates) => console.log(dates)}>
- *       <DatePickerInput
- *         id="date-picker-single"
- *         placeholder="mm/dd/yyyy"
- *         labelText="Date Picker label"
- *       />
- *     </DatePicker>
- *   );
- * }
- * ```
- */
+const sizes = {
+  'Small (sm)': 'sm',
+  'Medium (md)': 'md',
+  'Large (lg)': 'lg',
+} as const;
+
+const defaultArgs = {
+  dateFormat: 'm/d/Y',
+  disabled: false,
+  minDate: '',
+  maxDate: '',
+  readOnly: false,
+  short: false,
+  helperText: '',
+  invalid: false,
+  invalidText: '',
+  warn: false,
+  warnText: '',
+  placeholder: 'mm/dd/yyyy',
+  size: 'md' as const,
+};
+
+const controls = {
+  dateFormat: {
+    control: 'text',
+    description: 'The date format (e.g., m/d/Y, Y-m-d).',
+  },
+  disabled: {
+    control: 'boolean',
+    description: 'Specify whether the date picker should be disabled.',
+  },
+  helperText: {
+    control: 'text',
+    description: 'Helper text to display below the input.',
+  },
+  invalid: {
+    control: 'boolean',
+    description: 'Specify if the currently value is invalid.',
+  },
+  invalidText: {
+    control: 'text',
+    description: 'Message which is displayed if the value is invalid.',
+  },
+  maxDate: {
+    control: 'text',
+    description:
+      'The maximum date that a user can pick to (ISO format: YYYY-MM-DD).',
+  },
+  minDate: {
+    control: 'text',
+    description:
+      'The minimum date that a user can start picking from (ISO format: YYYY-MM-DD).',
+  },
+  placeholder: {
+    control: 'text',
+    description: 'Placeholder text for the input field.',
+  },
+  readOnly: {
+    control: 'boolean',
+    description:
+      'Whether the DatePicker is to be readOnly. If boolean, applies to all inputs; if array, applies to each input in order.',
+  },
+  short: {
+    control: 'boolean',
+    description: 'true to use the short version.',
+  },
+  size: {
+    control: 'select',
+    options: sizes,
+    description: 'Specify the size of the input.',
+  },
+  warn: {
+    control: 'boolean',
+    description: 'Specify whether the control is currently in warning state.',
+  },
+  warnText: {
+    control: 'text',
+    description:
+      'Provide the text that is displayed when the control is in warning state.',
+  },
+};
+
 const meta: Meta = {
   title: 'Components/Date Picker',
+  decorators: [
+    (Story) => (
+      <div style={{ padding: '3rem' }}>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
-    component: 'DatePicker',
     docs: {
-      description: {
-        component: 'Date picker component for selecting dates with a calendar interface.',
-      },
-    },
-  },
-  argTypes: {
-    datePickerType: {
-      control: 'select',
-      options: ['simple', 'single', 'range'],
-      description: 'The type of date picker',
-      table: {
-        defaultValue: { summary: 'single' },
-      },
-    },
-    dateFormat: {
-      control: 'text',
-      description: 'The date format string (Flatpickr-compatible)',
-      table: {
-        defaultValue: { summary: 'm/d/Y' },
-      },
-    },
-    minDate: {
-      control: 'text',
-      description: 'Minimum selectable date (mm/dd/yyyy format)',
-    },
-    maxDate: {
-      control: 'text',
-      description: 'Maximum selectable date (mm/dd/yyyy format)',
-    },
-    readOnly: {
-      control: 'boolean',
-      description: 'Whether the picker is read-only',
-      table: {
-        defaultValue: { summary: 'false' },
-      },
-    },
-    light: {
-      control: 'boolean',
-      description: 'Whether to use the light variant',
-      table: {
-        defaultValue: { summary: 'false' },
-      },
-    },
-    short: {
-      control: 'boolean',
-      description: 'Whether to use the short variant',
-      table: {
-        defaultValue: { summary: 'false' },
-      },
-    },
-    allowInput: {
-      control: 'boolean',
-      description: 'Whether to allow manual input',
-      table: {
-        defaultValue: { summary: 'true' },
-      },
-    },
-    closeOnSelect: {
-      control: 'boolean',
-      description: 'Whether to close calendar on date selection',
-      table: {
-        defaultValue: { summary: 'true' },
-      },
+      controls: { exclude: ['calendar'] },
     },
   },
 };
@@ -120,348 +112,469 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj<typeof DatePicker>;
 
-/**
- * Default single date picker with calendar
- */
 export const Default: Story = {
-  args: {
-    datePickerType: 'single',
+  args: { ...defaultArgs, datePickerType: 'single' },
+  argTypes: {
+    ...controls,
+    datePickerType: {
+      control: 'radio',
+      options: { Single: 'single', Simple: 'simple', Range: 'range' },
+      description: `The type of the date picker:
+    <ul>
+      <li><code>simple</code>
+        <ul><li>Without calendar dropdown.</li></ul>
+      </li>
+      <li><code>single</code>
+        <ul><li>With calendar dropdown and single date.</li></ul>
+      </li>
+      <li><code>range</code>
+        <ul><li>With calendar dropdown and a date range.</li></ul>
+      </li>
+    </ul>`,
+    },
   },
   render: function Render(args) {
-    const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+    const {
+      dateFormat,
+      disabled,
+      invalid,
+      invalidText,
+      datePickerType,
+      maxDate,
+      minDate,
+      placeholder,
+      readOnly,
+      size,
+      warn,
+      warnText,
+    } = args;
 
     return (
-      <div>
-        <DatePicker
-          {...args}
-          onChange={(dates) => {
-            setSelectedDates(dates);
-            console.log('Selected dates:', dates);
-          }}
-        >
+      <DatePicker
+        dateFormat={dateFormat}
+        disabled={disabled}
+        maxDate={maxDate}
+        minDate={minDate}
+        readOnly={readOnly}
+        datePickerType={datePickerType}
+      >
+        <DatePickerInput
+          id="date-picker-input-id"
+          placeholder={placeholder}
+          labelText="Date Picker label"
+          size={size}
+          invalid={invalid}
+          invalidText={invalidText}
+          warn={warn}
+          warnText={warnText}
+        />
+        {datePickerType === 'range' && (
           <DatePickerInput
-            id="date-picker-single"
-            placeholder="mm/dd/yyyy"
-            labelText="Date Picker label"
-            size="md"
-          />
-        </DatePicker>
-        {selectedDates.length > 0 && (
-          <div className="selected-date-display">
-            <strong>Selected date:</strong> {selectedDates[0].toLocaleDateString()}
-          </div>
-        )}
-      </div>
-    );
-  },
-};
-
-/**
- * Simple date picker without calendar (manual input only)
- */
-export const Simple: Story = {
-  args: {
-    datePickerType: 'simple',
-  },
-  render: (args) => (
-    <DatePicker {...args}>
-      <DatePickerInput
-        id="date-picker-simple"
-        placeholder="mm/dd/yyyy"
-        labelText="Date Picker label"
-        helperText="Enter date manually"
-      />
-    </DatePicker>
-  ),
-};
-
-/**
- * Date range picker with start and end dates
- */
-export const RangeWithCalendar: Story = {
-  args: {
-    datePickerType: 'range',
-  },
-  render: function Render(args) {
-    const [selectedDates, setSelectedDates] = useState<Date[]>([]);
-
-    return (
-      <div>
-        <DatePicker
-          {...args}
-          onChange={(dates) => {
-            setSelectedDates(dates);
-            console.log('Selected range:', dates);
-          }}
-        >
-          <DatePickerInput
-            id="date-picker-start"
-            placeholder="mm/dd/yyyy"
-            labelText="Start date"
-          />
-          <DatePickerInput
-            id="date-picker-end"
-            placeholder="mm/dd/yyyy"
+            id="date-picker-input-id-2"
+            placeholder={placeholder}
             labelText="End date"
+            size={size}
+            invalid={invalid}
+            invalidText={invalidText}
+            warn={warn}
+            warnText={warnText}
           />
-        </DatePicker>
-        {selectedDates.length === 2 && (
-          <div className="selected-date-display">
-            <strong>Selected range:</strong>{' '}
-            {selectedDates[0].toLocaleDateString()} -{' '}
-            {selectedDates[1].toLocaleDateString()}
-          </div>
         )}
-      </div>
+      </DatePicker>
     );
   },
 };
 
-/**
- * Date picker with min and max date constraints
- */
-export const WithMinMax: Story = {
-  args: {
-    datePickerType: 'single',
-    minDate: '01/01/2024',
-    maxDate: '12/31/2024',
-  },
-  render: (args) => (
-    <DatePicker {...args}>
-      <DatePickerInput
-        id="date-picker-minmax"
-        placeholder="mm/dd/yyyy"
-        labelText="Date Picker (2024 only)"
-        helperText="Only dates in 2024 are selectable"
-      />
-    </DatePicker>
-  ),
-};
-
-/**
- * Date picker with validation states
- */
-export const WithValidation: Story = {
-  render: () => (
-    <div className="story-container">
-      {/* Invalid state */}
-      <DatePicker datePickerType="single">
-        <DatePickerInput
-          id="date-picker-invalid"
-          placeholder="mm/dd/yyyy"
-          labelText="Invalid date"
-          invalid
-          invalidText="Please enter a valid date"
-        />
-      </DatePicker>
-
-      {/* Warning state */}
-      <DatePicker datePickerType="single">
-        <DatePickerInput
-          id="date-picker-warn"
-          placeholder="mm/dd/yyyy"
-          labelText="Date with warning"
-          warn
-          warnText="This date is in the past"
-        />
-      </DatePicker>
-
-      {/* With helper text */}
-      <DatePicker datePickerType="single">
-        <DatePickerInput
-          id="date-picker-helper"
-          placeholder="mm/dd/yyyy"
-          labelText="Date with helper text"
-          helperText="Select your preferred date"
-        />
-      </DatePicker>
-    </div>
-  ),
-};
-
-/**
- * Date picker with different sizes
- */
-export const Sizes: Story = {
-  render: () => (
-    <div className="story-container">
-      {/* Small */}
-      <DatePicker datePickerType="single">
-        <DatePickerInput
-          id="date-picker-sm"
-          placeholder="mm/dd/yyyy"
-          labelText="Small size"
-          size="sm"
-        />
-      </DatePicker>
-
-      {/* Medium (default) */}
-      <DatePicker datePickerType="single">
-        <DatePickerInput
-          id="date-picker-md"
-          placeholder="mm/dd/yyyy"
-          labelText="Medium size (default)"
-          size="md"
-        />
-      </DatePicker>
-
-      {/* Large */}
-      <DatePicker datePickerType="single">
-        <DatePickerInput
-          id="date-picker-lg"
-          placeholder="mm/dd/yyyy"
-          labelText="Large size"
-          size="lg"
-        />
-      </DatePicker>
-    </div>
-  ),
-};
-
-/**
- * Date picker with light theme
- */
-export const LightTheme: Story = {
-  args: {
-    datePickerType: 'single',
-    light: true,
-  },
-  render: (args) => (
-    <div className="light-theme-container">
-      <DatePicker {...args}>
-        <DatePickerInput
-          id="date-picker-light"
-          placeholder="mm/dd/yyyy"
-          labelText="Light theme date picker"
-        />
-      </DatePicker>
-    </div>
-  ),
-};
-
-/**
- * Date picker with short variant
- */
-export const ShortVariant: Story = {
-  args: {
-    datePickerType: 'single',
-    short: true,
-  },
-  render: (args) => (
-    <DatePicker {...args}>
-      <DatePickerInput
-        id="date-picker-short"
-        placeholder="mm/dd/yyyy"
-        labelText="Short variant"
-      />
-    </DatePicker>
-  ),
-};
-
-/**
- * Read-only date picker
- */
-export const ReadOnly: Story = {
-  args: {
-    datePickerType: 'single',
-    readOnly: true,
-  },
-  render: (args) => (
-    <DatePicker {...args}>
-      <DatePickerInput
-        id="date-picker-readonly"
-        placeholder="mm/dd/yyyy"
-        labelText="Read-only date picker"
-        value="03/30/2026"
-      />
-    </DatePicker>
-  ),
-};
-
-/**
- * Disabled date picker
- */
-export const Disabled: Story = {
-  render: () => (
-    <DatePicker datePickerType="single">
-      <DatePickerInput
-        id="date-picker-disabled"
-        placeholder="mm/dd/yyyy"
-        labelText="Disabled date picker"
-        disabled
-      />
-    </DatePicker>
-  ),
-};
-
-/**
- * Controlled date picker example
- */
-export const Controlled: Story = {
-  render: function Render() {
-    const [value, setValue] = useState('');
+export const RangeWithCalendar: Story = {
+  args: defaultArgs,
+  argTypes: controls,
+  render: function Render(args) {
+    const {
+      dateFormat,
+      disabled,
+      invalid,
+      invalidText,
+      maxDate,
+      minDate,
+      placeholder,
+      readOnly,
+      size,
+      warn,
+      warnText,
+    } = args;
 
     return (
+      <DatePicker
+        dateFormat={dateFormat}
+        disabled={disabled}
+        maxDate={maxDate}
+        minDate={minDate}
+        readOnly={readOnly}
+        datePickerType="range"
+      >
+        <DatePickerInput
+          id="date-picker-input-id-start"
+          placeholder={placeholder}
+          labelText="Start date"
+          size={size}
+          invalid={invalid}
+          invalidText={invalidText}
+          warn={warn}
+          warnText={warnText}
+        />
+        <DatePickerInput
+          id="date-picker-input-id-end"
+          placeholder={placeholder}
+          labelText="End date"
+          size={size}
+          invalid={invalid}
+          invalidText={invalidText}
+          warn={warn}
+          warnText={warnText}
+        />
+      </DatePicker>
+    );
+  },
+};
+
+export const RangeWithCalendarWithLayer: Story = {
+  args: defaultArgs,
+  argTypes: controls,
+  render: function Render(args) {
+    const {
+      dateFormat,
+      disabled,
+      invalid,
+      invalidText,
+      maxDate,
+      minDate,
+      placeholder,
+      readOnly,
+      size,
+      warn,
+      warnText,
+    } = args;
+
+    return (
+      <Layer>
+        <Layer>
+          <Layer>
+            <DatePicker
+              dateFormat={dateFormat}
+              disabled={disabled}
+              maxDate={maxDate}
+              minDate={minDate}
+              readOnly={readOnly}
+              datePickerType="range"
+            >
+              <DatePickerInput
+                id="date-picker-input-id-start-layer"
+                placeholder={placeholder}
+                labelText="Start date"
+                size={size}
+                invalid={invalid}
+                invalidText={invalidText}
+                warn={warn}
+                warnText={warnText}
+              />
+              <DatePickerInput
+                id="date-picker-input-id-end-layer"
+                placeholder={placeholder}
+                labelText="End date"
+                size={size}
+                invalid={invalid}
+                invalidText={invalidText}
+                warn={warn}
+                warnText={warnText}
+              />
+            </DatePicker>
+          </Layer>
+        </Layer>
+      </Layer>
+    );
+  },
+};
+
+export const Simple: Story = {
+  args: defaultArgs,
+  argTypes: controls,
+  render: function Render(args) {
+    const {
+      dateFormat,
+      disabled,
+      invalid,
+      invalidText,
+      maxDate,
+      minDate,
+      placeholder,
+      readOnly,
+      size,
+      warn,
+      warnText,
+    } = args;
+
+    return (
+      <DatePicker
+        dateFormat={dateFormat}
+        maxDate={maxDate}
+        minDate={minDate}
+        datePickerType="simple"
+      >
+        <DatePickerInput
+          id="date-picker-input-id"
+          disabled={disabled}
+          placeholder={placeholder}
+          labelText="Date Picker label"
+          readOnly={readOnly}
+          size={size}
+          invalid={invalid}
+          invalidText={invalidText}
+          warn={warn}
+          warnText={warnText}
+        />
+      </DatePicker>
+    );
+  },
+};
+
+export const SimpleWithLayer: Story = {
+  args: defaultArgs,
+  argTypes: controls,
+  render: function Render(args) {
+    const {
+      dateFormat,
+      disabled,
+      invalid,
+      invalidText,
+      maxDate,
+      minDate,
+      placeholder,
+      readOnly,
+      size,
+      warn,
+      warnText,
+    } = args;
+
+    return (
+      <Layer>
+        <Layer>
+          <Layer>
+            <DatePicker
+              dateFormat={dateFormat}
+              maxDate={maxDate}
+              minDate={minDate}
+              datePickerType="simple"
+            >
+              <DatePickerInput
+                id="date-picker-input-id-simple-layer"
+                disabled={disabled}
+                placeholder={placeholder}
+                labelText="Date Picker label"
+                readOnly={readOnly}
+                size={size}
+                invalid={invalid}
+                invalidText={invalidText}
+                warn={warn}
+                warnText={warnText}
+              />
+            </DatePicker>
+          </Layer>
+        </Layer>
+      </Layer>
+    );
+  },
+};
+
+export const SingleWithCalendar: Story = {
+  args: defaultArgs,
+  argTypes: controls,
+  render: function Render(args) {
+    const {
+      dateFormat,
+      disabled,
+      invalid,
+      invalidText,
+      maxDate,
+      minDate,
+      placeholder,
+      readOnly,
+      size,
+      warn,
+      warnText,
+    } = args;
+
+    return (
+      <DatePicker
+        dateFormat={dateFormat}
+        disabled={disabled}
+        maxDate={maxDate}
+        minDate={minDate}
+        readOnly={readOnly}
+        datePickerType="single"
+      >
+        <DatePickerInput
+          id="date-picker-input-id"
+          placeholder={placeholder}
+          labelText="Date Picker label"
+          size={size}
+          invalid={invalid}
+          invalidText={invalidText}
+          warn={warn}
+          warnText={warnText}
+        />
+      </DatePicker>
+    );
+  },
+};
+
+export const SingleWithCalendarWithLayer: Story = {
+  args: defaultArgs,
+  argTypes: controls,
+  render: function Render(args) {
+    const {
+      dateFormat,
+      disabled,
+      invalid,
+      invalidText,
+      maxDate,
+      minDate,
+      placeholder,
+      readOnly,
+      size,
+      warn,
+      warnText,
+    } = args;
+
+    return (
+      <Layer>
+        <Layer>
+          <Layer>
+            <DatePicker
+              dateFormat={dateFormat}
+              disabled={disabled}
+              maxDate={maxDate}
+              minDate={minDate}
+              readOnly={readOnly}
+              datePickerType="single"
+            >
+              <DatePickerInput
+                id="date-picker-input-id-single-layer"
+                placeholder={placeholder}
+                labelText="Date Picker label"
+                size={size}
+                invalid={invalid}
+                invalidText={invalidText}
+                warn={warn}
+                warnText={warnText}
+              />
+            </DatePicker>
+          </Layer>
+        </Layer>
+      </Layer>
+    );
+  },
+};
+
+export const Skeleton: Story = {
+  args: { hideLabel: false, range: true },
+  argTypes: {
+    hideLabel: {
+      control: 'boolean',
+      description: 'Specify whether the label should be hidden, or not',
+    },
+    range: {
+      control: 'boolean',
+      description: 'Specify whether the skeleton should be of range date picker.',
+    },
+  },
+  render: function Render(args) {
+    const { hideLabel, range } = args;
+    
+    return (
       <div>
-        <DatePicker
-          datePickerType="single"
-          onChange={(dates) => {
-            if (dates.length > 0) {
-              const date = dates[0];
-              setValue(
-                `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date
-                  .getDate()
-                  .toString()
-                  .padStart(2, '0')}/${date.getFullYear()}`
-              );
-            }
-          }}
-        >
-          <DatePickerInput
-            id="date-picker-controlled"
-            placeholder="mm/dd/yyyy"
-            labelText="Controlled date picker"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-        </DatePicker>
-        <div className="button-group">
-          <button
-            type="button"
-            onClick={() => setValue('12/25/2024')}
-          >
-            Set to Christmas 2024
-          </button>
-          <button
-            type="button"
-            onClick={() => setValue('')}
-          >
-            Clear
-          </button>
+        <div className="cds--form-item">
+          {!hideLabel && (
+            <label className="cds--label cds--skeleton" style={{ width: '75px', height: '14px' }} />
+          )}
+          <div className="cds--date-picker cds--date-picker--single cds--skeleton">
+            <div className="cds--date-picker-container">
+              <div className="cds--date-picker-input__wrapper">
+                <input className="cds--date-picker__input cds--skeleton" type="text" disabled />
+                <svg className="cds--date-picker__icon cds--skeleton" width="16" height="16">
+                  <rect width="16" height="16" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          {range && (
+            <div className="cds--date-picker cds--date-picker--single cds--skeleton">
+              <div className="cds--date-picker-container">
+                <div className="cds--date-picker-input__wrapper">
+                  <input className="cds--date-picker__input cds--skeleton" type="text" disabled />
+                  <svg className="cds--date-picker__icon cds--skeleton" width="16" height="16">
+                    <rect width="16" height="16" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
   },
+  parameters: {
+    percy: {
+      skip: true,
+    },
+  },
 };
 
-/**
- * Date picker with custom date format
- */
-export const CustomFormat: Story = {
-  args: {
-    datePickerType: 'single',
-    dateFormat: 'Y-m-d',
+export const WithAILabel: Story = {
+  args: defaultArgs,
+  argTypes: controls,
+  render: function Render(args) {
+    const {
+      dateFormat,
+      disabled,
+      invalid,
+      invalidText,
+      maxDate,
+      minDate,
+      placeholder,
+      readOnly,
+      size,
+      warn,
+      warnText,
+    } = args;
+
+    return (
+      <DatePicker
+        dateFormat={dateFormat}
+        disabled={disabled}
+        maxDate={maxDate}
+        minDate={minDate}
+        readOnly={readOnly}
+        datePickerType="single"
+      >
+        <DatePickerInput
+          id="date-picker-input-id-ai"
+          placeholder={placeholder}
+          labelText="Date Picker label"
+          size={size}
+          invalid={invalid}
+          invalidText={invalidText}
+          warn={warn}
+          warnText={warnText}
+        >
+          <div slot="slug" style={{ display: 'inline-flex', alignItems: 'center', marginLeft: '8px' }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 1L10.5 6L16 7L12 11L13 16L8 13.5L3 16L4 11L0 7L5.5 6L8 1Z" fill="currentColor"/>
+            </svg>
+          </div>
+        </DatePickerInput>
+      </DatePicker>
+    );
   },
-  render: (args) => (
-    <DatePicker {...args}>
-      <DatePickerInput
-        id="date-picker-format"
-        placeholder="yyyy-mm-dd"
-        labelText="ISO format (YYYY-MM-DD)"
-        helperText="Using Y-m-d format"
-      />
-    </DatePicker>
-  ),
 };
 
 // Made with Bob

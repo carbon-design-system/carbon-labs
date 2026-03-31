@@ -36,8 +36,10 @@ export const actions: ActionMap = {
       // Initialize viewDate to today if not set
       const viewDate =
         context.viewDate || context.startDate || Temporal.Now.plainDateISO();
-      // Initialize focusedDate to selected date or today if no date is selected
-      const focusedDate = context.startDate || Temporal.Now.plainDateISO();
+      // Preserve existing focusedDate if calendar is already open (e.g., during month navigation)
+      // Otherwise, set to selected date if one exists, or null (no focus box initially)
+      const focusedDate = context.focusedDate || context.startDate || null;
+      
       return {
         isOpen: true,
         viewDate,
@@ -84,11 +86,18 @@ export const actions: ActionMap = {
      * @returns {Partial<DatePickerContext>} Updated context
      */
     CALENDAR_OPEN: (context) => {
-      // Initialize viewDate to today if not set
-      const viewDate =
-        context.viewDate || context.startDate || Temporal.Now.plainDateISO();
       // Initialize focusedDate to selected date or today if no date is selected
       const focusedDate = context.startDate || Temporal.Now.plainDateISO();
+      // Set viewDate to show the month containing the focused date
+      const viewDate = focusedDate;
+      
+      console.log('FOCUSED->CALENDAR_OPEN action:', {
+        oldViewDate: context.viewDate?.toString(),
+        newViewDate: viewDate.toString(),
+        oldFocusedDate: context.focusedDate?.toString(),
+        newFocusedDate: focusedDate.toString(),
+      });
+      
       return {
         isOpen: true,
         viewDate,
@@ -116,6 +125,16 @@ export const actions: ActionMap = {
         focusedDate,
       };
     },
+    /**
+     * Action for OUTSIDE_CLICK event
+     * Close the calendar when clicking outside
+     *
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    OUTSIDE_CLICK: () => ({
+      isOpen: false,
+      isFocused: false,
+    }),
     /**
      * Action for CALENDAR_ICON_CLICK event
      *
@@ -195,8 +214,14 @@ export const actions: ActionMap = {
       if (!context.viewDate) {
         return {};
       }
+      const newViewDate = context.viewDate.add({ months: -1 });
+      const focusedDate = context.focusedDate
+        ? context.focusedDate.add({ months: -1 })
+        : null;
+      
       return {
-        viewDate: context.viewDate.add({ months: -1 }),
+        viewDate: newViewDate,
+        focusedDate,
       };
     },
     /**
@@ -209,8 +234,14 @@ export const actions: ActionMap = {
       if (!context.viewDate) {
         return {};
       }
+      const newViewDate = context.viewDate.add({ months: 1 });
+      const focusedDate = context.focusedDate
+        ? context.focusedDate.add({ months: 1 })
+        : null;
+      
       return {
-        viewDate: context.viewDate.add({ months: 1 }),
+        viewDate: newViewDate,
+        focusedDate,
       };
     },
     /**
@@ -821,8 +852,14 @@ export const actions: ActionMap = {
       if (!context.viewDate) {
         return {};
       }
+      const newViewDate = context.viewDate.add({ months: -1 });
+      const focusedDate = context.focusedDate
+        ? context.focusedDate.add({ months: -1 })
+        : null;
+      
       return {
-        viewDate: context.viewDate.add({ months: -1 }),
+        viewDate: newViewDate,
+        focusedDate,
       };
     },
     /**
@@ -835,8 +872,14 @@ export const actions: ActionMap = {
       if (!context.viewDate) {
         return {};
       }
+      const newViewDate = context.viewDate.add({ months: 1 });
+      const focusedDate = context.focusedDate
+        ? context.focusedDate.add({ months: 1 })
+        : null;
+      
       return {
-        viewDate: context.viewDate.add({ months: 1 }),
+        viewDate: newViewDate,
+        focusedDate,
       };
     },
   },

@@ -7,7 +7,6 @@
 
 import React, { forwardRef } from 'react';
 import classNames from 'classnames';
-import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 
 /**
  * DatePickerInput component props
@@ -189,8 +188,8 @@ export const DatePickerInput = forwardRef<HTMLInputElement, DatePickerInputProps
     },
     ref
   ) {
-    // Get prefix for CSS classes
-    const prefix = usePrefix();
+    // Use Carbon's standard 'cds' prefix to match Carbon's date-picker styles
+    const prefix = 'cds';
 
     // Generate class names following Carbon Design System patterns
     const wrapperClasses = classNames(`${prefix}--date-picker-input__wrapper`, className);
@@ -213,7 +212,7 @@ export const DatePickerInput = forwardRef<HTMLInputElement, DatePickerInputProps
     const showHelperText = !invalid && !warn && helperText;
 
     return (
-      <div className={wrapperClasses}>
+      <>
         {/* Label */}
         {labelText && (
           <label htmlFor={id} className={labelClasses}>
@@ -223,7 +222,7 @@ export const DatePickerInput = forwardRef<HTMLInputElement, DatePickerInputProps
         )}
 
         {/* Input wrapper with icon */}
-        <div className={`${prefix}--date-picker-container`}>
+        <div className={wrapperClasses}>
           <input
             {...rest}
             ref={ref}
@@ -299,7 +298,7 @@ export const DatePickerInput = forwardRef<HTMLInputElement, DatePickerInputProps
             {helperText}
           </div>
         )}
-      </div>
+      </>
     );
   }
 );

@@ -7,7 +7,6 @@
 
 import React, { useCallback, useMemo } from 'react';
 import classNames from 'classnames';
-import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import type { DatePickerContext } from '@carbon-labs/primitives/date-picker';
 import { addDays, plainDateToDate } from '@carbon-labs/primitives/date-picker';
 
@@ -116,7 +115,8 @@ export function Calendar({
   onNavigate,
   className,
 }: CalendarProps) {
-  const prefix = usePrefix();
+  // Use Carbon's standard 'cds' prefix to match Carbon's date-picker styles
+  const prefix = 'cds';
   const { viewDate, startDate, endDate, minDate, maxDate, focusedDate, mode } = context;
 
   // Generate calendar grid
@@ -176,8 +176,8 @@ export function Calendar({
     [mode, startDate, endDate]
   );
 
-  // Check if a date is the range start
-  const isRangeStart = useCallback(
+  // Check if a date is the range start (not currently used but kept for future range styling)
+  const _isRangeStart = useCallback(
     (date: Temporal.PlainDate): boolean => {
       if (mode !== 'range' || !startDate) {
         return false;
@@ -187,8 +187,8 @@ export function Calendar({
     [mode, startDate]
   );
 
-  // Check if a date is the range end
-  const isRangeEnd = useCallback(
+  // Check if a date is the range end (not currently used but kept for future range styling)
+  const _isRangeEnd = useCallback(
     (date: Temporal.PlainDate): boolean => {
       if (mode !== 'range' || !endDate) {
         return false;
@@ -213,7 +213,7 @@ export function Calendar({
     return null;
   }
 
-  const calendarClasses = classNames('${prefix}--date-picker__calendar', className);
+  const calendarClasses = classNames(`${prefix}--date-picker__calendar`, className);
 
   // Format month and year for display
   const monthNames = [
@@ -233,12 +233,12 @@ export function Calendar({
   const monthYear = `${monthNames[viewDate.month - 1]} ${viewDate.year}`;
 
   return (
-    <div className={calendarClasses}>
-      {/* Calendar Header */}
-      <div className={`${prefix}--date-picker__calendar-header`}>
+    <div className={calendarClasses} role="grid" aria-label="Calendar" tabIndex={0}>
+      {/* Month Header */}
+      <div className={`${prefix}--date-picker__month`}>
         <button
           type="button"
-          className={`${prefix}--date-picker__calendar-nav ${prefix}--date-picker__calendar-nav--prev`}
+          className={`${prefix}--date-picker__month-nav`}
           onClick={handlePrevMonth}
           aria-label="Previous month"
         >
@@ -256,11 +256,11 @@ export function Calendar({
           </svg>
         </button>
 
-        <div className={`${prefix}--date-picker__calendar-title`}>{monthYear}</div>
+        <div className={`${prefix}--date-picker__current-month`}>{monthYear}</div>
 
         <button
           type="button"
-          className={`${prefix}--date-picker__calendar-nav ${prefix}--date-picker__calendar-nav--next`}
+          className={`${prefix}--date-picker__month-nav`}
           onClick={handleNextMonth}
           aria-label="Next month"
         >
@@ -290,45 +290,38 @@ export function Calendar({
 
       {/* Calendar Grid */}
       <div className={`${prefix}--date-picker__days`}>
-        {calendarGrid.map((week, weekIndex) => (
-          <div key={weekIndex} className={`${prefix}--date-picker__week`}>
-            {week.map((dayCell, dayIndex) => {
-              const { date, isCurrentMonth, isDisabled, isToday } = dayCell;
-              const selected = isDateSelected(date);
-              const inRange = isDateInRange(date);
-              const rangeStart = isRangeStart(date);
-              const rangeEnd = isRangeEnd(date);
-              const focused = isDateFocused(date);
+        {calendarGrid.flat().map((dayCell, index) => {
+          const { date, isCurrentMonth, isDisabled, isToday } = dayCell;
+          const selected = isDateSelected(date);
+          const inRange = isDateInRange(date);
+          const focused = isDateFocused(date);
 
-              const dayClasses = classNames('${prefix}--date-picker__day', {
-                '${prefix}--date-picker__day--today': isToday,
-                '${prefix}--date-picker__day--selected': selected,
-                '${prefix}--date-picker__day--in-range': inRange,
-                '${prefix}--date-picker__day--range-start': rangeStart,
-                '${prefix}--date-picker__day--range-end': rangeEnd,
-                '${prefix}--date-picker__day--disabled': isDisabled,
-                '${prefix}--date-picker__day--other-month': !isCurrentMonth,
-                '${prefix}--date-picker__day--focused': focused,
-              });
+          const dayClasses = classNames(`${prefix}--date-picker__day`, {
+            today: isToday,
+            selected: selected,
+            inRange: inRange,
+            prevMonthDay: !isCurrentMonth && date.month < viewDate.month,
+            nextMonthDay: !isCurrentMonth && date.month > viewDate.month,
+            disabled: isDisabled,
+            focused: focused,
+          });
 
-              return (
-                <button
-                  key={dayIndex}
-                  type="button"
-                  className={dayClasses}
-                  onClick={() => handleDateClick(date, isDisabled)}
-                  disabled={isDisabled}
-                  aria-label={`${monthNames[date.month - 1]} ${date.day}, ${date.year}`}
-                  aria-pressed={selected || undefined}
-                  aria-current={isToday ? 'date' : undefined}
-                  tabIndex={focused ? 0 : -1}
-                >
-                  {date.day}
-                </button>
-              );
-            })}
-          </div>
-        ))}
+          return (
+            <button
+              key={index}
+              type="button"
+              className={dayClasses}
+              onClick={() => handleDateClick(date, isDisabled)}
+              disabled={isDisabled}
+              aria-label={`${monthNames[date.month - 1]} ${date.day}, ${date.year}`}
+              aria-pressed={selected || undefined}
+              aria-current={isToday ? 'date' : undefined}
+              tabIndex={focused ? 0 : -1}
+            >
+              {date.day}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

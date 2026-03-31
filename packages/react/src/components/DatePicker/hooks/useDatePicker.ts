@@ -272,6 +272,9 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
     return unsubscribe;
   }, [onOpen, onClose, context.isOpen]);
 
+  // Track previous dates to prevent infinite loops
+  const prevDatesRef = useRef<string>('');
+  
   // Handle onChange callback (convert Temporal.PlainDate to Date[])
   useEffect(() => {
     if (!onChange) {
@@ -292,8 +295,12 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
       }
     }
 
+    // Create a string representation of dates for comparison
+    const datesKey = dates.map(d => d.toISOString()).join(',');
+    
     // Only call onChange if dates have actually changed
-    if (dates.length > 0) {
+    if (dates.length > 0 && datesKey !== prevDatesRef.current) {
+      prevDatesRef.current = datesKey;
       onChange(dates);
     }
   }, [context.startDate, context.endDate, onChange]);
@@ -332,7 +339,9 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
   }, []);
 
   const openCalendar = useCallback(() => {
-    send(DatePickerEvent.CALENDAR_OPEN);
+    // Send CALENDAR_ICON_CLICK to trigger the state transition from IDLE
+    // The state machine will handle transitioning to CALENDAR_OPEN state
+    send(DatePickerEvent.CALENDAR_ICON_CLICK);
   }, [send]);
 
   const closeCalendar = useCallback(() => {
@@ -365,7 +374,11 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
 
   const handleInputFocus = useCallback(
     (inputType: 'from' | 'to' = 'from') => {
+      // Send INPUT_FOCUS to transition to FOCUSED state
       send(DatePickerEvent.INPUT_FOCUS, { inputType });
+      // Then send CALENDAR_OPEN to open the calendar
+      // This matches the expected state machine flow: IDLE -> FOCUSED -> CALENDAR_OPEN
+      send(DatePickerEvent.CALENDAR_OPEN);
     },
     [send]
   );
@@ -409,9 +422,15 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    // Delay adding listener to avoid catching the click that opened the calendar
+    // Use 'click' event with capture phase (true) to match Web Components behavior
+    const timeoutId = setTimeout(() => {
+      document.addEventListener('click', handleClickOutside, true);
+    }, 0);
+
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      clearTimeout(timeoutId);
+      document.removeEventListener('click', handleClickOutside, true);
     };
   }, [context.isOpen, send]);
 
@@ -422,16 +441,159 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
     }
 
     /**
-     * Handle keyboard events
+     * Handle keyboard events for calendar navigation
      *
      * @param {KeyboardEvent} event - Keyboard event
      */
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      const { key } = event;
+      const target = event.target as HTMLElement;
+
+      // Check if focus is in the calendar (not in input fields)
+      const calendarEl = calendarRef.current;
+      const startInputEl = startInputRef.current;
+      const endInputEl = endInputRef.current;
+
+      const isFocusInCalendar =
+        calendarEl &&
+        (calendarEl.contains(target) ||
+          target === calendarEl ||
+          target.classList?.contains('cds--date-picker__calendar'));
+
+      const isFocusInInput =
+        target === startInputEl ||
+        target === endInputEl ||
+        (startInputEl && startInputEl.contains(target)) ||
+        (endInputEl && endInputEl.contains(target));
+
+      // Handle Escape key - close calendar (works from anywhere)
+      if (key === 'Escape') {
         event.preventDefault();
         send(DatePickerEvent.ESCAPE_KEY);
-      } else if (event.key === 'Tab') {
-        send(DatePickerEvent.TAB_KEY);
+        return;
+      }
+
+      // Handle Tab key - complex focus management
+      if (key === 'Tab') {
+        // Case 1: Tab FROM input -> Focus the calendar container
+        if (isFocusInInput && !event.shiftKey) {
+          event.preventDefault();
+          // Focus the calendar container which has tabIndex={0}
+          if (calendarEl) {
+            setTimeout(() => {
+              const calendar = calendarEl.querySelector(
+                '.cds--date-picker__calendar'
+              ) as HTMLElement;
+              if (calendar) {
+                calendar.focus();
+              }
+            }, 0);
+          }
+          return;
+        }
+
+        // Case 2: Shift+Tab FROM calendar -> Focus input
+        if (isFocusInCalendar && event.shiftKey) {
+          event.preventDefault();
+          // Focus the appropriate input based on mode
+          if (datePickerType === 'range' && context.lastFocusedInput === 'to' && endInputEl) {
+            endInputEl.focus();
+          } else if (startInputEl) {
+            startInputEl.focus();
+          }
+          return;
+        }
+
+        // Case 3: Tab FROM calendar -> Close and move to next element
+        if (isFocusInCalendar && !event.shiftKey) {
+          // Let the state machine handle closing
+          send(DatePickerEvent.TAB_KEY);
+          // Don't prevent default - let browser move focus naturally
+          return;
+        }
+
+        // For other cases, let default Tab behavior work
+        return;
+      }
+
+      // Only handle navigation keys when focus is in calendar, not in input
+      if (!isFocusInCalendar || isFocusInInput) {
+        return;
+      }
+
+      // Handle Enter key - select focused date
+      if (key === 'Enter') {
+        event.preventDefault();
+
+        const focusedDate = context.focusedDate;
+        if (!focusedDate) {
+          return;
+        }
+
+        // Dispatch the appropriate event based on mode and current state
+        if (datePickerType === 'range') {
+          // In range mode, check if we're selecting start or end date
+          if (state === DatePickerState.SELECTING_END) {
+            send(DatePickerEvent.RANGE_END_SELECT, { date: focusedDate });
+          } else {
+            send(DatePickerEvent.RANGE_START_SELECT, { date: focusedDate });
+          }
+        } else {
+          // Single mode - just select the date
+          send(DatePickerEvent.DATE_SELECT, { date: focusedDate });
+        }
+        return;
+      }
+
+      // Handle arrow keys - navigate dates
+      if (key === 'ArrowUp') {
+        event.preventDefault();
+        send(DatePickerEvent.ARROW_UP);
+        return;
+      }
+
+      if (key === 'ArrowDown') {
+        event.preventDefault();
+        send(DatePickerEvent.ARROW_DOWN);
+        return;
+      }
+
+      if (key === 'ArrowLeft') {
+        event.preventDefault();
+        send(DatePickerEvent.ARROW_LEFT);
+        return;
+      }
+
+      if (key === 'ArrowRight') {
+        event.preventDefault();
+        send(DatePickerEvent.ARROW_RIGHT);
+        return;
+      }
+
+      // Handle Page Up/Down - navigate months
+      if (key === 'PageUp') {
+        event.preventDefault();
+        send(DatePickerEvent.PAGE_UP);
+        return;
+      }
+
+      if (key === 'PageDown') {
+        event.preventDefault();
+        send(DatePickerEvent.PAGE_DOWN);
+        return;
+      }
+
+      // Handle Home/End - navigate to start/end of week
+      if (key === 'Home') {
+        event.preventDefault();
+        send(DatePickerEvent.HOME_KEY);
+        return;
+      }
+
+      if (key === 'End') {
+        event.preventDefault();
+        send(DatePickerEvent.END_KEY);
+        return;
       }
     };
 
@@ -439,7 +601,7 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [context.isOpen, send]);
+  }, [context.isOpen, context.focusedDate, context.lastFocusedInput, state, datePickerType, send]);
 
   return {
     context,

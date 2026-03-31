@@ -5,16 +5,15 @@
 // LICENSE file in the root directory of this source tree.
 //
 
-// Override the prefix to match Carbon Labs convention
-@use '@carbon/styles/scss/config' with ($prefix: 'clabs');
-
 // Import shared framework-agnostic styles from primitives (built output)
+// Uses Carbon's standard 'cds' prefix for compatibility with Carbon Design System
 @use '@carbon-labs/primitives/es/date-picker/styles/date-picker.scss';
 
 // =============================================================================
 // REACT SPECIFIC STYLES
 // All styles are already class-based in the shared file, so we just import it
 // No :host() or ::slotted() needed for React
+// React components use 'cds' prefix (hardcoded) to match the imported styles
 // =============================================================================
 
 // React uses standard class-based selectors, which are already defined

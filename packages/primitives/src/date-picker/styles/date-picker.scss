@@ -7,6 +7,7 @@
 
 $css--plex: true !default;
 
+// Import Carbon modules with default 'cds' prefix
 @use '@carbon/styles/scss/config' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/utilities' as *;
@@ -16,8 +17,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/components/date-picker/date-picker' as *;
 @use '@carbon/styles/scss/utilities/ai-gradient' as *;
 
-$prefix: 'clabs' !default;
-
+// Include Carbon's date-picker mixin with default 'cds' prefix
 // https://github.com/carbon-design-system/carbon/issues/11408
 @include date-picker;
 
@@ -31,8 +31,33 @@ $prefix: 'clabs' !default;
   position: relative;
 }
 
+// Enable pointer events on the calendar icon button
+// Carbon sets pointer-events: none by default, but we need clicks to work
+.#{$prefix}--date-picker__icon {
+  pointer-events: auto;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  
+  // Remove focus outline, border, and background
+  &:focus {
+    outline: none;
+    border: none;
+    background: transparent;
+  }
+  
+  // Remove any hover/active borders and backgrounds
+  &:hover,
+  &:active {
+    border: none;
+    background: transparent;
+  }
+}
+
 // Set anchor name on the input wrapper for CSS anchor positioning
+// Also ensure it's positioned relatively for the absolutely positioned icon
 .#{$prefix}--date-picker-input__wrapper {
+  position: relative;
   anchor-name: --date-picker-input;
 }
 
@@ -118,7 +143,7 @@ $prefix: 'clabs' !default;
   inset-block-start: 100%;
   inset-inline-start: 0;
   display: block;
-  margin-block-start: $spacing-02;
+  margin-block-start: 0; // No gap between input and calendar
 }
 
 // =============================================================================
@@ -313,7 +338,7 @@ $prefix: 'clabs' !default;
   font-size: rem(14px);
   inline-size: rem(40px);
 
-  &:hover:not(:disabled) {
+  &:hover:not(:disabled):not(.selected) {
     background-color: $layer-hover;
   }
 
@@ -321,36 +346,49 @@ $prefix: 'clabs' !default;
     outline: 2px solid $focus;
     outline-offset: -2px;
   }
-
-  &:disabled {
-    color: $text-disabled;
-    cursor: not-allowed;
-    opacity: 0.5;
+  
+  // Selected date - white text on blue background (no hover state)
+  &.selected {
+    background-color: $interactive;
+    color: $text-inverse;
   }
 
-  &.selected {
-    background-color: $background-brand;
-    color: $text-on-color;
-
-    // Ensure proper contrast even when in range
-    &.inRange {
-      background-color: $background-brand;
-      color: $text-on-color;
+  // Today's date - blue dot indicator
+  &.today:not(.selected) {
+    position: relative;
+    color: $text-primary;
+    font-weight: 600;
+    
+    // Blue dot below the date number
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $interactive;
     }
   }
 
-  &.today:not(.selected) {
-    color: $link-primary;
-    font-weight: 600;
-  }
-
+  // Date in selected range (for range picker)
   &.inRange:not(.selected) {
     background-color: $highlight;
   }
 
-  &.prevMonthDay,
-  &.nextMonthDay {
+  // Dates from other months (but not if selected)
+  &.prevMonthDay:not(.selected),
+  &.nextMonthDay:not(.selected) {
     color: $text-secondary;
+  }
+
+  // Disabled dates
+  &.disabled {
+    color: $text-disabled;
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 
   // Keyboard focus state (different from browser :focus)

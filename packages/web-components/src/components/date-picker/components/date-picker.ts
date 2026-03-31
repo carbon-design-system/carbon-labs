@@ -596,7 +596,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     const target = event.target as Node;
     // Check if click is outside the date picker component
     if (!this.contains(target) && !this.shadowRoot?.contains(target)) {
-      this.open = false;
+      // Let the state machine handle closing via the OUTSIDE_CLICK action
       if (this._adapter) {
         this._adapter.send(DatePickerEvent.OUTSIDE_CLICK);
       }

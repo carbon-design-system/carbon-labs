@@ -40,9 +40,9 @@
 }
 
 .sb-annotation--background {
+  border-color: colors.$magenta-50;
   margin: -42px;
   min-block-size: 100vh;
-  border-color: colors.$magenta-50;
 }
 
 .sb-annotation--background > .sb-annotation__label {

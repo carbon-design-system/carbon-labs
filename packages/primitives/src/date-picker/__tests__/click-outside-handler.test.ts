@@ -5,11 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+/* eslint-disable jsdoc/require-jsdoc */
+
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import {
-  ClickOutsideHandler,
-  type ClickOutsideConfig,
-} from '../click-outside-handler';
+import { ClickOutsideHandler } from '../click-outside-handler';
 
 describe('ClickOutsideHandler', () => {
   let container: HTMLDivElement;
@@ -39,6 +38,9 @@ describe('ClickOutsideHandler', () => {
   });
 
   describe('Basic Functionality', () => {
+    /**
+     * Test that onOutsideClick is called when clicking outside the container
+     */
     it('should call onOutsideClick when clicking outside', () => {
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
@@ -56,6 +58,9 @@ describe('ClickOutsideHandler', () => {
       handler.detach();
     });
 
+    /**
+     * Test that onOutsideClick is not called when clicking inside the container
+     */
     it('should not call onOutsideClick when clicking inside', () => {
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
@@ -73,6 +78,9 @@ describe('ClickOutsideHandler', () => {
       handler.detach();
     });
 
+    /**
+     * Test that onOutsideClick is not called when the handler is not open
+     */
     it('should not call onOutsideClick when not open', () => {
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
@@ -92,6 +100,9 @@ describe('ClickOutsideHandler', () => {
   });
 
   describe('Timing and Delay', () => {
+    /**
+     * Test that the handler respects the attachDelay configuration
+     */
     it('should respect attachDelay', () => {
       vi.useFakeTimers();
       const onOutsideClick = vi.fn();
@@ -122,6 +133,9 @@ describe('ClickOutsideHandler', () => {
       vi.useRealTimers();
     });
 
+    /**
+     * Test that the handler uses a default delay of 0 when not specified
+     */
     it('should use default delay of 0', () => {
       vi.useFakeTimers();
       const onOutsideClick = vi.fn();
@@ -146,6 +160,9 @@ describe('ClickOutsideHandler', () => {
       vi.useRealTimers();
     });
 
+    /**
+     * Test that the opening click doesn't immediately close the handler when using delay
+     */
     it('should prevent opening click from closing when using delay', () => {
       vi.useFakeTimers();
       const onOutsideClick = vi.fn();
@@ -181,6 +198,9 @@ describe('ClickOutsideHandler', () => {
   });
 
   describe('Lifecycle Management', () => {
+    /**
+     * Test that the handler cleans up event listeners properly on detach
+     */
     it('should clean up properly on detach', () => {
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
@@ -197,6 +217,9 @@ describe('ClickOutsideHandler', () => {
       expect(onOutsideClick).not.toHaveBeenCalled();
     });
 
+    /**
+     * Test that multiple attach calls don't create duplicate listeners
+     */
     it('should handle multiple attach calls safely', () => {
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
@@ -216,6 +239,9 @@ describe('ClickOutsideHandler', () => {
       handler.detach();
     });
 
+    /**
+     * Test that multiple detach calls don't throw errors
+     */
     it('should handle multiple detach calls safely', () => {
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
@@ -233,6 +259,9 @@ describe('ClickOutsideHandler', () => {
       expect(onOutsideClick).not.toHaveBeenCalled();
     });
 
+    /**
+     * Test that detaching cancels any pending attachment timers
+     */
     it('should cancel pending attachment on detach', () => {
       vi.useFakeTimers();
       const onOutsideClick = vi.fn();
@@ -258,6 +287,9 @@ describe('ClickOutsideHandler', () => {
   });
 
   describe('Configuration Updates', () => {
+    /**
+     * Test that the isOpen state can be updated dynamically
+     */
     it('should update isOpen state', () => {
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
@@ -289,6 +321,9 @@ describe('ClickOutsideHandler', () => {
       handler.detach();
     });
 
+    /**
+     * Test that the containsNode function can be updated dynamically
+     */
     it('should update containsNode function', () => {
       const onOutsideClick = vi.fn();
       const secondContainer = document.createElement('div');
@@ -320,6 +355,9 @@ describe('ClickOutsideHandler', () => {
       handler.detach();
     });
 
+    /**
+     * Test that the onOutsideClick callback can be updated dynamically
+     */
     it('should update onOutsideClick callback', () => {
       const firstCallback = vi.fn();
       const secondCallback = vi.fn();
@@ -348,6 +386,9 @@ describe('ClickOutsideHandler', () => {
       handler.detach();
     });
 
+    /**
+     * Test that multiple configuration properties can be updated simultaneously
+     */
     it('should update multiple config properties at once', () => {
       const firstCallback = vi.fn();
       const secondCallback = vi.fn();
@@ -384,6 +425,9 @@ describe('ClickOutsideHandler', () => {
   });
 
   describe('Capture Phase', () => {
+    /**
+     * Test that the handler uses capture phase by default
+     */
     it('should use capture phase by default', () => {
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
@@ -411,6 +455,9 @@ describe('ClickOutsideHandler', () => {
       handler.detach();
     });
 
+    /**
+     * Test that the handler respects useCapture: false configuration
+     */
     it('should respect useCapture: false', () => {
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
@@ -441,6 +488,9 @@ describe('ClickOutsideHandler', () => {
   });
 
   describe('Status Methods', () => {
+    /**
+     * Test that isAttached() reports the correct attachment status
+     */
     it('should report attached status correctly', () => {
       const handler = new ClickOutsideHandler({
         isOpen: true,
@@ -457,6 +507,9 @@ describe('ClickOutsideHandler', () => {
       expect(handler.isAttached()).toBe(false);
     });
 
+    /**
+     * Test that isPending() reports the correct pending status
+     */
     it('should report pending status correctly', () => {
       vi.useFakeTimers();
       const handler = new ClickOutsideHandler({
@@ -482,11 +535,14 @@ describe('ClickOutsideHandler', () => {
   });
 
   describe('Edge Cases', () => {
+    /**
+     * Test that the handler handles null/undefined nodes gracefully
+     */
     it('should handle null/undefined nodes gracefully', () => {
       const onOutsideClick = vi.fn();
       const handler = new ClickOutsideHandler({
         isOpen: true,
-        containsNode: (node) => {
+        containsNode: (_node) => {
           // Simulate a case where container might be null
           return false;
         },
@@ -502,6 +558,9 @@ describe('ClickOutsideHandler', () => {
       handler.detach();
     });
 
+    /**
+     * Test that the handler works correctly with Shadow DOM
+     */
     it('should work with Shadow DOM', () => {
       // Create a custom element with shadow DOM
       const customElement = document.createElement('div');
@@ -533,6 +592,9 @@ describe('ClickOutsideHandler', () => {
       handler.detach();
     });
 
+    /**
+     * Test that the handler handles rapid open/close cycles correctly
+     */
     it('should handle rapid open/close cycles', () => {
       vi.useFakeTimers();
       const onOutsideClick = vi.fn();

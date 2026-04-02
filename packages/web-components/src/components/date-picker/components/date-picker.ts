@@ -833,11 +833,19 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     // Initialize click outside handler using shared utility
     this._clickOutsideHandler = new ClickOutsideHandler({
       isOpen: this.open,
+      /**
+       * Check if a node is contained within the date picker
+       * @param {Node} node - The node to check
+       * @returns {boolean} True if the node is within the date picker
+       */
       containsNode: (node: Node) => {
         return (
           this.contains(node) || (this.shadowRoot?.contains(node) ?? false)
         );
       },
+      /**
+       * Handle clicks outside the date picker
+       */
       onOutsideClick: () => {
         if (this._adapter) {
           this._adapter.send(DatePickerEvent.OUTSIDE_CLICK);

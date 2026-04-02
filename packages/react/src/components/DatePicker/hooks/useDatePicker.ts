@@ -390,6 +390,11 @@ export function useDatePicker(
 
     const handler = new ClickOutsideHandler({
       isOpen: context.isOpen,
+      /**
+       * Check if a node is contained within the date picker elements
+       * @param {Node} node - The node to check
+       * @returns {boolean} True if the node is within the date picker
+       */
       containsNode: (node: Node) => {
         const calendarEl = calendarRef.current;
         const startInputEl = startInputRef.current;
@@ -401,6 +406,9 @@ export function useDatePicker(
           (endInputEl?.contains(node) ?? false)
         );
       },
+      /**
+       * Handle clicks outside the date picker
+       */
       onOutsideClick: () => send(DatePickerEvent.OUTSIDE_CLICK),
       useCapture: true,
       attachDelay: 0,

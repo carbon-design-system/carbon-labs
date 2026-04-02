@@ -33,31 +33,33 @@ $css--plex: true !default;
 }
 
 // Input wrapper needs relative positioning for icon placement
+// Input wrapper needs relative positioning for icon placement
 .#{$prefix}--date-picker-input__wrapper {
   position: relative;
+  anchor-name: --date-picker-input;
 }
 
 // Enable pointer events on the calendar icon button
 // Carbon sets pointer-events: none by default, but we need clicks to work
 .#{$prefix}--date-picker__icon {
-  pointer-events: auto;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  padding: 0;
   position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  inset-block-start: 50%;
+  inset-inline-end: 1rem;
+  pointer-events: auto;
+  transform: translateY(-50%);
 
   // Remove focus outline, border, and background
   &:focus {
-    outline: none;
     border: none;
     background: transparent;
+    outline: none;
   }
 
   // Remove any hover/active borders and backgrounds
@@ -66,13 +68,6 @@ $css--plex: true !default;
     border: none;
     background: transparent;
   }
-}
-
-// Set anchor name on the input wrapper for CSS anchor positioning
-// Also ensure it's positioned relatively for the absolutely positioned icon
-.#{$prefix}--date-picker-input__wrapper {
-  position: relative;
-  anchor-name: --date-picker-input;
 }
 
 // Popover API styling with CSS anchor positioning
@@ -144,26 +139,17 @@ $css--plex: true !default;
 }
 
 // Remove focus outline from calendar container
-.#{$prefix}--date-picker__calendar {
-  &:focus {
-    outline: none;
-  }
-}
-
 // Calendar container styling
 .#{$prefix}--date-picker__calendar-container {
   position: absolute;
   z-index: 9000;
+  display: block;
   inset-block-start: 100%;
   inset-inline-start: 0;
-  display: block;
-  margin-block-start: 0; // No gap between input and calendar
+  margin-block-start: 0;
 }
 
-// =============================================================================
 // DATE PICKER INPUT STYLES
-// =============================================================================
-
 .#{$prefix}--date-picker-container {
   outline: none;
 
@@ -264,17 +250,15 @@ $css--plex: true !default;
     @include skeleton;
 
     position: relative;
-    block-size: rem(40px);
-    inline-size: 100%;
-    // Override any conflicting input styles (but keep skeleton background)
+    overflow: hidden;
     border: none;
+    block-size: rem(40px);
     cursor: default;
+    inline-size: 100%;
     pointer-events: none;
-    overflow: hidden; // Ensure ::before pseudo-element is contained
   }
 
   .#{$prefix}--date-picker__icon.#{$prefix}--skeleton {
-    // Hide the icon in skeleton state
     display: none;
   }
 }
@@ -286,6 +270,7 @@ $css--plex: true !default;
 .#{$prefix}--date-picker__calendar {
   display: block;
   padding: $spacing-03;
+  border: none;
   background-color: $layer;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
   inline-size: rem(288px);
@@ -376,8 +361,7 @@ $css--plex: true !default;
   font-size: rem(14px);
   // Remove fixed width to allow grid to distribute space evenly
   // inline-size: rem(40px);
-
-  &:hover:not(:disabled):not(.selected) {
+  &:hover:not(:disabled, .selected) {
     background-color: $layer-hover;
   }
 
@@ -400,15 +384,15 @@ $css--plex: true !default;
 
     // Blue dot below the date number
     &::after {
-      content: '';
       position: absolute;
-      bottom: 4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 4px;
       border-radius: 50%;
       background-color: $interactive;
+      block-size: 4px;
+      content: '';
+      inline-size: 4px;
+      inset-block-end: 4px;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
     }
   }
 

@@ -11,6 +11,11 @@ export { guards, getGuard, checkGuard } from './guards.js';
 export { actions, getAction, executeAction } from './actions.js';
 export { effects, getEffect, executeEffect } from './effects.js';
 export {
+  mapKeyboardToStateMachineEvent,
+  type KeyboardEventInfo,
+  type KeyboardEventResult,
+} from './keyboard-utils.js';
+export {
   dateToPlainDate,
   plainDateToDate,
   plainDateToISOString,

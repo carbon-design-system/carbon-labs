@@ -12,6 +12,7 @@ import {
   DatePickerState,
   parseDateToPlainDate,
   plainDateToDate,
+  mapKeyboardToStateMachineEvent,
   type DatePickerContext,
   type DatePickerMode,
 } from '@carbon-labs/primitives/date-picker';
@@ -488,78 +489,22 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
         return;
       }
 
-      // Handle Enter key - select focused date
-      if (key === 'Enter') {
-        event.preventDefault();
+      // Use shared keyboard mapper for navigation keys
+      const mappedEvent = mapKeyboardToStateMachineEvent({
+        key,
+        shiftKey: event.shiftKey,
+        mode: datePickerType as DatePickerMode,
+        state,
+        focusedDate: context.focusedDate,
+      });
 
-        const focusedDate = context.focusedDate;
-        if (!focusedDate) {
-          return;
+      if (mappedEvent) {
+        if (mappedEvent.preventDefault) {
+          event.preventDefault();
         }
-
-        // Dispatch the appropriate event based on mode and current state
-        if (datePickerType === 'range') {
-          // In range mode, check if we're selecting start or end date
-          if (state === DatePickerState.SELECTING_END) {
-            send(DatePickerEvent.RANGE_END_SELECT, { date: focusedDate });
-          } else {
-            send(DatePickerEvent.RANGE_START_SELECT, { date: focusedDate });
-          }
-        } else {
-          // Single mode - just select the date
-          send(DatePickerEvent.DATE_SELECT, { date: focusedDate });
+        if (mappedEvent.eventType) {
+          send(mappedEvent.eventType, mappedEvent.payload);
         }
-        return;
-      }
-
-      // Handle arrow keys - navigate dates
-      if (key === 'ArrowUp') {
-        event.preventDefault();
-        send(DatePickerEvent.ARROW_UP);
-        return;
-      }
-
-      if (key === 'ArrowDown') {
-        event.preventDefault();
-        send(DatePickerEvent.ARROW_DOWN);
-        return;
-      }
-
-      if (key === 'ArrowLeft') {
-        event.preventDefault();
-        send(DatePickerEvent.ARROW_LEFT);
-        return;
-      }
-
-      if (key === 'ArrowRight') {
-        event.preventDefault();
-        send(DatePickerEvent.ARROW_RIGHT);
-        return;
-      }
-
-      // Handle Page Up/Down - navigate months
-      if (key === 'PageUp') {
-        event.preventDefault();
-        send(DatePickerEvent.PAGE_UP);
-        return;
-      }
-
-      if (key === 'PageDown') {
-        event.preventDefault();
-        send(DatePickerEvent.PAGE_DOWN);
-        return;
-      }
-
-      // Handle Home/End - navigate to start/end of week
-      if (key === 'Home') {
-        event.preventDefault();
-        send(DatePickerEvent.HOME_KEY);
-        return;
-      }
-
-      if (key === 'End') {
-        event.preventDefault();
-        send(DatePickerEvent.END_KEY);
         return;
       }
     };

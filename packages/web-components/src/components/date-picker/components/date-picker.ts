@@ -19,6 +19,7 @@ import {
   parseDateToPlainDate,
   parseISOToPlainDate,
   formatPlainDate,
+  mapKeyboardToStateMachineEvent,
 } from '@carbon-labs/primitives/date-picker';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
@@ -739,99 +740,29 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       return;
     }
 
-    // Handle Escape key - close calendar
-    if (key === 'Escape') {
-      event.preventDefault();
-      this.open = false;
-      this._adapter.send(DatePickerEvent.ESCAPE_KEY);
-      return;
-    }
+    // Use shared keyboard mapper for navigation keys
+    const context = this._adapter.getContext();
+    const currentState = this._adapter.getState();
+    
+    const mappedEvent = mapKeyboardToStateMachineEvent({
+      key,
+      shiftKey: event.shiftKey,
+      mode: this._mode === DATE_PICKER_MODE.RANGE ? 'range' : 'single',
+      state: currentState,
+      focusedDate: context.focusedDate,
+    });
 
-    // Handle Enter key - select focused date
-    if (key === 'Enter') {
-      event.preventDefault();
-
-      // Get the focused date from context
-      const context = this._adapter.getContext();
-      const focusedDate = context.focusedDate;
-
-      if (!focusedDate) {
-        return;
+    if (mappedEvent) {
+      if (mappedEvent.preventDefault) {
+        event.preventDefault();
       }
-
-      // Dispatch the appropriate event based on mode and current state
-      const currentState = this._adapter.getState();
-
-      if (this._mode === DATE_PICKER_MODE.RANGE) {
-        // In range mode, check if we're selecting start or end date
-        if (currentState === 'selecting_end') {
-          // Selecting end date
-          this._adapter.send(DatePickerEvent.RANGE_END_SELECT, {
-            date: focusedDate,
-          });
-        } else {
-          // Selecting start date
-          this._adapter.send(DatePickerEvent.RANGE_START_SELECT, {
-            date: focusedDate,
-          });
-        }
-      } else {
-        // Single mode - just select the date
-        this._adapter.send(DatePickerEvent.DATE_SELECT, {
-          date: focusedDate,
-        });
+      if (mappedEvent.eventType) {
+        this._adapter.send(mappedEvent.eventType, mappedEvent.payload);
       }
-      return;
-    }
-
-    // Handle arrow keys - navigate dates
-    if (key === 'ArrowUp') {
-      event.preventDefault();
-      this._adapter.send(DatePickerEvent.ARROW_UP);
-      return;
-    }
-
-    if (key === 'ArrowDown') {
-      event.preventDefault();
-      this._adapter.send(DatePickerEvent.ARROW_DOWN);
-      return;
-    }
-
-    if (key === 'ArrowLeft') {
-      event.preventDefault();
-      this._adapter.send(DatePickerEvent.ARROW_LEFT);
-      return;
-    }
-
-    if (key === 'ArrowRight') {
-      event.preventDefault();
-      this._adapter.send(DatePickerEvent.ARROW_RIGHT);
-      return;
-    }
-
-    // Handle Page Up/Down - navigate months
-    if (key === 'PageUp') {
-      event.preventDefault();
-      this._adapter.send(DatePickerEvent.PAGE_UP);
-      return;
-    }
-
-    if (key === 'PageDown') {
-      event.preventDefault();
-      this._adapter.send(DatePickerEvent.PAGE_DOWN);
-      return;
-    }
-
-    // Handle Home/End - navigate to start/end of week
-    if (key === 'Home') {
-      event.preventDefault();
-      this._adapter.send(DatePickerEvent.HOME_KEY);
-      return;
-    }
-
-    if (key === 'End') {
-      event.preventDefault();
-      this._adapter.send(DatePickerEvent.END_KEY);
+      // Special handling for Escape key - also close the calendar
+      if (key === 'Escape') {
+        this.open = false;
+      }
       return;
     }
   };

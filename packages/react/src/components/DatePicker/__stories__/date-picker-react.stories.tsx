@@ -348,7 +348,7 @@ export const withAILabel = (args) => {
           labelText="Date Picker label"
           size="md"
           id="date-picker"
-          slug={aiLabel}
+          decorator={aiLabel}
           {...args}
         />
       </DatePicker>

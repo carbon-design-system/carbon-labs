@@ -19,6 +19,7 @@ export {
   comparePlainDates,
   isDateInRange,
   formatPlainDate,
+  formatPlainDateToUS,
   getToday,
   addDays,
   addMonths,

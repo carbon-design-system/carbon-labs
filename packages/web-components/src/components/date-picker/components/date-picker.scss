@@ -102,6 +102,10 @@
   outline: none;
   
   .#{$prefix}--date-picker__calendar {
+    // Override shared styles for Web Components
+    // Use box-sizing to include padding in width calculation
+    // This ensures the 288px includes the padding, making the content area 272px
+    box-sizing: border-box;
     inline-size: rem(288px);
     max-inline-size: rem(288px);
   }

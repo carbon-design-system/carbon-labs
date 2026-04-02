@@ -352,7 +352,8 @@ $css--plex: true !default;
   color: $text-primary;
   font-size: rem(12px);
   font-weight: 600;
-  inline-size: rem(40px);
+  // Remove fixed width to allow grid to distribute space evenly
+  // inline-size: rem(40px);
 }
 
 // Days grid - 7 columns, 6 rows
@@ -372,7 +373,8 @@ $css--plex: true !default;
   color: $text-primary;
   cursor: pointer;
   font-size: rem(14px);
-  inline-size: rem(40px);
+  // Remove fixed width to allow grid to distribute space evenly
+  // inline-size: rem(40px);
 
   &:hover:not(:disabled):not(.selected) {
     background-color: $layer-hover;

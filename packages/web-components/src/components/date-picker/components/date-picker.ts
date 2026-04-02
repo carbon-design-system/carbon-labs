@@ -18,6 +18,7 @@ import { DatePickerState, DatePickerEvent } from '@carbon-labs/primitives/date-p
 import {
   parseDateToPlainDate,
   parseISOToPlainDate,
+  formatPlainDateToUS,
 } from '@carbon-labs/primitives/date-picker';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
@@ -275,30 +276,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         ? [context.startDate]
         : [];
 
-      // Update input field value with formatted date
-      /**
-       * Format date as MM/DD/YYYY (matching Carbon's default format)
-       *
-       * @param {Temporal.PlainDate} date - The date to format
-       * @returns {string} Formatted date string
-       */
-      const formatDate = (date: Temporal.PlainDate) => {
-        // Safety check - ensure date is a valid Temporal.PlainDate
-        if (
-          !date ||
-          typeof date !== 'object' ||
-          !('month' in date) ||
-          !('day' in date) ||
-          !('year' in date)
-        ) {
-          console.error('formatDate received invalid date:', date);
-          return '';
-        }
-        const month = String(date.month).padStart(2, '0');
-        const day = String(date.day).padStart(2, '0');
-        const year = date.year;
-        return `${month}/${day}/${year}`;
-      };
+      // Update input field value with formatted date using shared utility
 
       // For range mode, update the correct input based on state
       if (this._mode === DATE_PICKER_MODE.RANGE) {
@@ -320,10 +298,10 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           context.endDate
         ) {
           if (inputFrom) {
-            inputFrom.value = formatDate(context.startDate);
+            inputFrom.value = formatPlainDateToUS(context.startDate);
           }
           if (inputTo) {
-            inputTo.value = formatDate(context.endDate);
+            inputTo.value = formatPlainDateToUS(context.endDate);
           }
         } else if (
           context.lastFocusedInput === 'to' &&
@@ -331,14 +309,14 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           context.endDate
         ) {
           // Otherwise, update based on lastFocusedInput
-          inputTo.value = formatDate(context.endDate);
+          inputTo.value = formatPlainDateToUS(context.endDate);
         } else if (inputFrom && context.startDate) {
-          inputFrom.value = formatDate(context.startDate);
+          inputFrom.value = formatPlainDateToUS(context.startDate);
         }
       } else {
         // For single mode, update the single input
         if (this._dateInteractNode && context.startDate) {
-          this._dateInteractNode.value = formatDate(context.startDate);
+          this._dateInteractNode.value = formatPlainDateToUS(context.startDate);
         }
       }
 

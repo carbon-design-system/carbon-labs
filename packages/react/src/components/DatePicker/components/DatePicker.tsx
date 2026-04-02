@@ -9,20 +9,8 @@ import React, { Children, cloneElement, isValidElement, useRef } from 'react';
 import classNames from 'classnames';
 import { useDatePicker } from '../hooks/useDatePicker';
 import { Calendar } from './Calendar';
+import { formatPlainDateToUS } from '@carbon-labs/primitives/date-picker';
 import type { DatePickerInputProps } from './DatePickerInput';
-
-/**
- * Format Temporal.PlainDate to MM/DD/YYYY string
- */
-function formatDate(date: Temporal.PlainDate | null): string {
-  if (!date) {
-    return '';
-  }
-  const month = String(date.month).padStart(2, '0');
-  const day = String(date.day).padStart(2, '0');
-  const year = String(date.year);
-  return `${month}/${day}/${year}`;
-}
 
 /**
  * DatePicker component props
@@ -204,9 +192,9 @@ export function DatePicker({
     let inputValue = child.props.value ?? '';
     if (inputValue === '') {
       if (isStartInput && context.startDate) {
-        inputValue = formatDate(context.startDate);
+        inputValue = formatPlainDateToUS(context.startDate);
       } else if (isEndInput && context.endDate) {
-        inputValue = formatDate(context.endDate);
+        inputValue = formatPlainDateToUS(context.endDate);
       }
     }
 

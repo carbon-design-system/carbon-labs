@@ -160,6 +160,25 @@ export function formatPlainDate(
 
   return format.replace('Y', year).replace('m', month).replace('d', day);
 }
+/**
+ * Format a Temporal.PlainDate to US date format (MM/DD/YYYY)
+ * This is the standard format used by Carbon date pickers
+ *
+ * @param {Temporal.PlainDate | null} date - Date to format
+ * @returns Formatted date string or empty string if date is null
+ */
+export function formatPlainDateToUS(
+  date: Temporal.PlainDate | null
+): string {
+  if (!date) {
+    return '';
+  }
+  const month = String(date.month).padStart(2, '0');
+  const day = String(date.day).padStart(2, '0');
+  const year = String(date.year);
+  return `${month}/${day}/${year}`;
+}
+
 
 /**
  * Get today's date as Temporal.PlainDate

@@ -9,7 +9,7 @@ import React, { Children, cloneElement, isValidElement, useRef } from 'react';
 import classNames from 'classnames';
 import { useDatePicker } from '../hooks/useDatePicker';
 import { Calendar } from './Calendar';
-import { formatPlainDateToUS } from '@carbon-labs/primitives/date-picker';
+import { formatPlainDate } from '@carbon-labs/primitives/date-picker';
 import type { DatePickerInputProps } from './DatePickerInput';
 
 /**
@@ -192,9 +192,9 @@ export function DatePicker({
     let inputValue = child.props.value ?? '';
     if (inputValue === '') {
       if (isStartInput && context.startDate) {
-        inputValue = formatPlainDateToUS(context.startDate);
+        inputValue = formatPlainDate(context.startDate, context.dateFormat);
       } else if (isEndInput && context.endDate) {
-        inputValue = formatPlainDateToUS(context.endDate);
+        inputValue = formatPlainDate(context.endDate, context.dateFormat);
       }
     }
 

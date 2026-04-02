@@ -18,7 +18,7 @@ import { DatePickerState, DatePickerEvent } from '@carbon-labs/primitives/date-p
 import {
   parseDateToPlainDate,
   parseISOToPlainDate,
-  formatPlainDateToUS,
+  formatPlainDate,
 } from '@carbon-labs/primitives/date-picker';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
@@ -298,10 +298,10 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           context.endDate
         ) {
           if (inputFrom) {
-            inputFrom.value = formatPlainDateToUS(context.startDate);
+            inputFrom.value = formatPlainDate(context.startDate, context.dateFormat);
           }
           if (inputTo) {
-            inputTo.value = formatPlainDateToUS(context.endDate);
+            inputTo.value = formatPlainDate(context.endDate, context.dateFormat);
           }
         } else if (
           context.lastFocusedInput === 'to' &&
@@ -309,14 +309,14 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           context.endDate
         ) {
           // Otherwise, update based on lastFocusedInput
-          inputTo.value = formatPlainDateToUS(context.endDate);
+          inputTo.value = formatPlainDate(context.endDate, context.dateFormat);
         } else if (inputFrom && context.startDate) {
-          inputFrom.value = formatPlainDateToUS(context.startDate);
+          inputFrom.value = formatPlainDate(context.startDate, context.dateFormat);
         }
       } else {
         // For single mode, update the single input
         if (this._dateInteractNode && context.startDate) {
-          this._dateInteractNode.value = formatPlainDateToUS(context.startDate);
+          this._dateInteractNode.value = formatPlainDate(context.startDate, context.dateFormat);
         }
       }
 

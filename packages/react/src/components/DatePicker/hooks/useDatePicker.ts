@@ -210,6 +210,7 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
     value = '',
     minDate = null,
     maxDate = null,
+    dateFormat = 'm/d/Y',
     closeOnSelect = true,
     disabled = false,
     readOnly = false,
@@ -234,6 +235,7 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
       value,
       minDate: parseDate(minDate),
       maxDate: parseDate(maxDate),
+      dateFormat,
       isDisabled: disabled,
       isReadonly: readOnly,
     });

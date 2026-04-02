@@ -144,42 +144,38 @@ export function isDateInRange(
 
 /**
  * Format a Temporal.PlainDate according to a format string
- * Supports common format tokens: Y, m, d
+ * Supports Flatpickr-compatible format tokens:
+ * - Y: 4-digit year (e.g., 2026)
+ * - y: 2-digit year (e.g., 26)
+ * - m: 2-digit month with leading zero (01-12)
+ * - n: month without leading zero (1-12)
+ * - d: 2-digit day with leading zero (01-31)
+ * - j: day without leading zero (1-31)
  *
  * @param {Temporal.PlainDate} date - Date to format
- * @param {string} format - Format string (e.g., 'm/d/Y', 'Y-m-d')
+ * @param {string} format - Format string (e.g., 'd/m/Y', 'm/d/Y', 'Y-m-d')
  * @returns Formatted date string
  */
 export function formatPlainDate(
   date: Temporal.PlainDate,
   format: string
 ): string {
-  const year = date.year.toString();
-  const month = date.month.toString().padStart(2, '0');
-  const day = date.day.toString().padStart(2, '0');
+  const year4 = date.year.toString();
+  const year2 = year4.slice(-2);
+  const month2 = date.month.toString().padStart(2, '0');
+  const month1 = date.month.toString();
+  const day2 = date.day.toString().padStart(2, '0');
+  const day1 = date.day.toString();
 
-  return format.replace('Y', year).replace('m', month).replace('d', day);
+  // Replace tokens in order of specificity (longer tokens first)
+  return format
+    .replace(/Y/g, year4)
+    .replace(/y/g, year2)
+    .replace(/m/g, month2)
+    .replace(/n/g, month1)
+    .replace(/d/g, day2)
+    .replace(/j/g, day1);
 }
-/**
- * Format a Temporal.PlainDate to US date format (MM/DD/YYYY)
- * This is the standard format used by Carbon date pickers
- *
- * @param {Temporal.PlainDate | null} date - Date to format
- * @returns Formatted date string or empty string if date is null
- */
-export function formatPlainDateToUS(
-  date: Temporal.PlainDate | null
-): string {
-  if (!date) {
-    return '';
-  }
-  const month = String(date.month).padStart(2, '0');
-  const day = String(date.day).padStart(2, '0');
-  const year = String(date.year);
-  return `${month}/${day}/${year}`;
-}
-
-
 /**
  * Get today's date as Temporal.PlainDate
  *

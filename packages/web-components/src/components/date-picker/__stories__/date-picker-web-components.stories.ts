@@ -114,7 +114,7 @@ export const Default = {
   args: {
     ...defaultArgs,
     kind: 'single',
-    dateFormat: "m/d/Y"
+    dateFormat: 'm/d/Y',
   },
   argTypes: {
     ...controls,

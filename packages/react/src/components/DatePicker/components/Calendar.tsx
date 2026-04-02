@@ -117,7 +117,8 @@ export function Calendar({
 }: CalendarProps) {
   // Use Carbon's standard 'cds' prefix to match Carbon's date-picker styles
   const prefix = 'cds';
-  const { viewDate, startDate, endDate, minDate, maxDate, focusedDate, mode } = context;
+  const { viewDate, startDate, endDate, minDate, maxDate, focusedDate, mode } =
+    context;
 
   // Generate calendar grid
   const calendarGrid = useMemo(() => {
@@ -168,7 +169,7 @@ export function Calendar({
       if (mode !== 'range' || !startDate) {
         return false;
       }
-      
+
       // If endDate exists, use it for the range
       if (endDate) {
         return (
@@ -176,19 +177,25 @@ export function Calendar({
           Temporal.PlainDate.compare(date, endDate) < 0
         );
       }
-      
+
       // If endDate doesn't exist but focusedDate does (user is selecting end date),
       // show the range between startDate and focusedDate
       if (focusedDate) {
-        const earlierDate = Temporal.PlainDate.compare(startDate, focusedDate) < 0 ? startDate : focusedDate;
-        const laterDate = Temporal.PlainDate.compare(startDate, focusedDate) < 0 ? focusedDate : startDate;
-        
+        const earlierDate =
+          Temporal.PlainDate.compare(startDate, focusedDate) < 0
+            ? startDate
+            : focusedDate;
+        const laterDate =
+          Temporal.PlainDate.compare(startDate, focusedDate) < 0
+            ? focusedDate
+            : startDate;
+
         return (
           Temporal.PlainDate.compare(date, earlierDate) > 0 &&
           Temporal.PlainDate.compare(date, laterDate) < 0
         );
       }
-      
+
       return false;
     },
     [mode, startDate, endDate, focusedDate]
@@ -231,7 +238,10 @@ export function Calendar({
     return null;
   }
 
-  const calendarClasses = classNames(`${prefix}--date-picker__calendar`, className);
+  const calendarClasses = classNames(
+    `${prefix}--date-picker__calendar`,
+    className
+  );
 
   // Format month and year for display
   const monthNames = [
@@ -251,15 +261,18 @@ export function Calendar({
   const monthYear = `${monthNames[viewDate.month - 1]} ${viewDate.year}`;
 
   return (
-    <div className={calendarClasses} role="grid" aria-label="Calendar" tabIndex={0}>
+    <div
+      className={calendarClasses}
+      role="grid"
+      aria-label="Calendar"
+      tabIndex={0}>
       {/* Month Header */}
       <div className={`${prefix}--date-picker__month`}>
         <button
           type="button"
           className={`${prefix}--date-picker__month-nav`}
           onClick={handlePrevMonth}
-          aria-label="Previous month"
-        >
+          aria-label="Previous month">
           <svg
             focusable="false"
             preserveAspectRatio="xMidYMid meet"
@@ -268,20 +281,23 @@ export function Calendar({
             width="16"
             height="16"
             viewBox="0 0 16 16"
-            aria-hidden="true"
-          >
-            <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z" transform="rotate(180 8 8)" />
+            aria-hidden="true">
+            <path
+              d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z"
+              transform="rotate(180 8 8)"
+            />
           </svg>
         </button>
 
-        <div className={`${prefix}--date-picker__current-month`}>{monthYear}</div>
+        <div className={`${prefix}--date-picker__current-month`}>
+          {monthYear}
+        </div>
 
         <button
           type="button"
           className={`${prefix}--date-picker__month-nav`}
           onClick={handleNextMonth}
-          aria-label="Next month"
-        >
+          aria-label="Next month">
           <svg
             focusable="false"
             preserveAspectRatio="xMidYMid meet"
@@ -290,8 +306,7 @@ export function Calendar({
             width="16"
             height="16"
             viewBox="0 0 16 16"
-            aria-hidden="true"
-          >
+            aria-hidden="true">
             <path d="M11 8l-5 5-.7-.7L9.6 8 5.3 3.7 6 3z" />
           </svg>
         </button>
@@ -300,7 +315,10 @@ export function Calendar({
       {/* Weekday Headers */}
       <div className={`${prefix}--date-picker__weekdays`}>
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-          <div key={day} className={`${prefix}--date-picker__weekday`} title={day}>
+          <div
+            key={day}
+            className={`${prefix}--date-picker__weekday`}
+            title={day}>
             {day}
           </div>
         ))}
@@ -331,11 +349,12 @@ export function Calendar({
               className={dayClasses}
               onClick={() => handleDateClick(date, isDisabled)}
               disabled={isDisabled}
-              aria-label={`${monthNames[date.month - 1]} ${date.day}, ${date.year}`}
+              aria-label={`${monthNames[date.month - 1]} ${date.day}, ${
+                date.year
+              }`}
               aria-pressed={selected || undefined}
               aria-current={isToday ? 'date' : undefined}
-              tabIndex={focused ? 0 : -1}
-            >
+              tabIndex={focused ? 0 : -1}>
               {date.day}
             </button>
           );

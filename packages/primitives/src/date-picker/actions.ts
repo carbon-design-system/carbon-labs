@@ -39,7 +39,7 @@ export const actions: ActionMap = {
       // Preserve existing focusedDate if calendar is already open (e.g., during month navigation)
       // Otherwise, set to selected date if one exists, or null (no focus box initially)
       const focusedDate = context.focusedDate || context.startDate || null;
-      
+
       return {
         isOpen: true,
         viewDate,
@@ -90,14 +90,14 @@ export const actions: ActionMap = {
       const focusedDate = context.startDate || Temporal.Now.plainDateISO();
       // Set viewDate to show the month containing the focused date
       const viewDate = focusedDate;
-      
+
       console.log('FOCUSED->CALENDAR_OPEN action:', {
         oldViewDate: context.viewDate?.toString(),
         newViewDate: viewDate.toString(),
         oldFocusedDate: context.focusedDate?.toString(),
         newFocusedDate: focusedDate.toString(),
       });
-      
+
       return {
         isOpen: true,
         viewDate,
@@ -218,7 +218,7 @@ export const actions: ActionMap = {
       const focusedDate = context.focusedDate
         ? context.focusedDate.add({ months: -1 })
         : null;
-      
+
       return {
         viewDate: newViewDate,
         focusedDate,
@@ -238,7 +238,7 @@ export const actions: ActionMap = {
       const focusedDate = context.focusedDate
         ? context.focusedDate.add({ months: 1 })
         : null;
-      
+
       return {
         viewDate: newViewDate,
         focusedDate,
@@ -765,7 +765,11 @@ export const actions: ActionMap = {
         context.viewDate ||
         Temporal.Now.plainDateISO();
       // Convert to JS Date to get day of week (0 = Sunday, 6 = Saturday)
-      const jsDate = new Date(focusedDate.year, focusedDate.month - 1, focusedDate.day);
+      const jsDate = new Date(
+        focusedDate.year,
+        focusedDate.month - 1,
+        focusedDate.day
+      );
       const dayOfWeek = jsDate.getDay(); // 0 = Sunday, 6 = Saturday
       const daysToSubtract = dayOfWeek; // Move to Sunday (0 days if already Sunday)
       const newFocusedDate = focusedDate.add({ days: -daysToSubtract });
@@ -794,7 +798,11 @@ export const actions: ActionMap = {
         context.viewDate ||
         Temporal.Now.plainDateISO();
       // Convert to JS Date to get day of week (0 = Sunday, 6 = Saturday)
-      const jsDate = new Date(focusedDate.year, focusedDate.month - 1, focusedDate.day);
+      const jsDate = new Date(
+        focusedDate.year,
+        focusedDate.month - 1,
+        focusedDate.day
+      );
       const dayOfWeek = jsDate.getDay(); // 0 = Sunday, 6 = Saturday
       const daysToAdd = dayOfWeek === 6 ? 0 : 6 - dayOfWeek; // Move to Saturday (0 days if already Saturday)
       const newFocusedDate = focusedDate.add({ days: daysToAdd });
@@ -856,7 +864,7 @@ export const actions: ActionMap = {
       const focusedDate = context.focusedDate
         ? context.focusedDate.add({ months: -1 })
         : null;
-      
+
       return {
         viewDate: newViewDate,
         focusedDate,
@@ -876,7 +884,7 @@ export const actions: ActionMap = {
       const focusedDate = context.focusedDate
         ? context.focusedDate.add({ months: 1 })
         : null;
-      
+
       return {
         viewDate: newViewDate,
         focusedDate,

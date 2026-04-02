@@ -171,7 +171,9 @@ export interface UseDatePickerReturn {
  * @param {UseDatePickerConfig} config - Configuration options
  * @returns {UseDatePickerReturn} Hook return object with state and handlers
  */
-export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerReturn {
+export function useDatePicker(
+  config: UseDatePickerConfig = {}
+): UseDatePickerReturn {
   const {
     datePickerType = 'single',
     value = '',
@@ -230,7 +232,8 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
         onOpen();
       }
       if (
-        (transition.to === DatePickerState.IDLE || transition.to === DatePickerState.FOCUSED) &&
+        (transition.to === DatePickerState.IDLE ||
+          transition.to === DatePickerState.FOCUSED) &&
         transition.from === DatePickerState.CALENDAR_OPEN &&
         onClose
       ) {
@@ -243,7 +246,7 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
 
   // Track previous dates to prevent infinite loops
   const prevDatesRef = useRef<string>('');
-  
+
   // Handle onChange callback (convert Temporal.PlainDate to Date[])
   useEffect(() => {
     if (!onChange) {
@@ -265,8 +268,8 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
     }
 
     // Create a string representation of dates for comparison
-    const datesKey = dates.map(d => d.toISOString()).join(',');
-    
+    const datesKey = dates.map((d) => d.toISOString()).join(',');
+
     // Only call onChange if dates have actually changed
     if (dates.length > 0 && datesKey !== prevDatesRef.current) {
       prevDatesRef.current = datesKey;
@@ -288,7 +291,9 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
 
     // Update readonly state
     if (readOnly !== context.isReadonly) {
-      machine.send(readOnly ? DatePickerEvent.SET_READONLY : DatePickerEvent.UNSET_READONLY);
+      machine.send(
+        readOnly ? DatePickerEvent.SET_READONLY : DatePickerEvent.UNSET_READONLY
+      );
     }
 
     // Update min/max dates
@@ -300,7 +305,14 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
     if (newMaxDate) {
       machine.send(DatePickerEvent.SET_MAX_DATE, { date: newMaxDate });
     }
-  }, [disabled, readOnly, minDate, maxDate, context.isDisabled, context.isReadonly]);
+  }, [
+    disabled,
+    readOnly,
+    minDate,
+    maxDate,
+    context.isDisabled,
+    context.isReadonly,
+  ]);
 
   // Event handlers
   const send = useCallback((eventType: string, payload?: any) => {
@@ -338,7 +350,14 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
         }
       }
     },
-    [datePickerType, context.startDate, context.endDate, closeOnSelect, send, closeCalendar]
+    [
+      datePickerType,
+      context.startDate,
+      context.endDate,
+      closeOnSelect,
+      send,
+      closeCalendar,
+    ]
   );
 
   const handleInputFocus = useCallback(
@@ -456,7 +475,11 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
         if (isFocusInCalendar && event.shiftKey) {
           event.preventDefault();
           // Focus the appropriate input based on mode
-          if (datePickerType === 'range' && context.lastFocusedInput === 'to' && endInputEl) {
+          if (
+            datePickerType === 'range' &&
+            context.lastFocusedInput === 'to' &&
+            endInputEl
+          ) {
             endInputEl.focus();
           } else if (startInputEl) {
             startInputEl.focus();
@@ -505,7 +528,14 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [context.isOpen, context.focusedDate, context.lastFocusedInput, state, datePickerType, send]);
+  }, [
+    context.isOpen,
+    context.focusedDate,
+    context.lastFocusedInput,
+    state,
+    datePickerType,
+    send,
+  ]);
 
   return {
     context,

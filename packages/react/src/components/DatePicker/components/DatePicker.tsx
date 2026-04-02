@@ -186,7 +186,11 @@ export function DatePicker({
     const isEndInput = index === 1 && datePickerType === 'range';
 
     // Get the appropriate ref
-    const inputRef = isStartInput ? startInputRef : isEndInput ? endInputRef : undefined;
+    const inputRef = isStartInput
+      ? startInputRef
+      : isEndInput
+      ? endInputRef
+      : undefined;
 
     // Get the appropriate value - always use a string to keep input controlled
     let inputValue = child.props.value ?? '';
@@ -226,8 +230,10 @@ export function DatePicker({
     // Wrap each input in a container div with proper Carbon classes
     const containerClasses = classNames(`${prefix}--date-picker-container`, {
       [`${prefix}--date-picker-container--single`]: datePickerType === 'single',
-      [`${prefix}--date-picker-container--from`]: isStartInput && datePickerType === 'range',
-      [`${prefix}--date-picker-container--to`]: isEndInput && datePickerType === 'range',
+      [`${prefix}--date-picker-container--from`]:
+        isStartInput && datePickerType === 'range',
+      [`${prefix}--date-picker-container--to`]:
+        isEndInput && datePickerType === 'range',
     });
 
     // Use cloneElement with ref separately to avoid TypeScript issues
@@ -268,8 +274,7 @@ export function DatePicker({
       {shouldRenderCalendar && (
         <div
           ref={calendarRef}
-          className={`${prefix}--date-picker__calendar-container`}
-        >
+          className={`${prefix}--date-picker__calendar-container`}>
           <Calendar
             context={context}
             onDateSelect={selectDate}

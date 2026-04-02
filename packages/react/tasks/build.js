@@ -129,7 +129,7 @@ function getTsCompilerOptions() {
   const baseOpts = loadBaseTsCompilerOpts();
   const projectTsConfigPath = path.resolve(__dirname, '../tsconfig.json');
   const overrideOpts = loadTsCompilerOpts(projectTsConfigPath);
-  
+
   // Check for component-specific tsconfig.json
   const componentTsConfigPath = path.resolve(process.cwd(), 'tsconfig.json');
   let componentOpts = {};
@@ -138,7 +138,7 @@ function getTsCompilerOptions() {
   } catch (e) {
     // No component tsconfig, use empty object
   }
-  
+
   return { ...baseOpts, ...overrideOpts, ...componentOpts };
 }
 

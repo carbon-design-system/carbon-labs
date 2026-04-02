@@ -12,7 +12,7 @@ export interface DatePickerSkeletonProps {
    * Specify whether the skeleton should be a range date picker
    */
   range?: boolean;
-  
+
   /**
    * Additional CSS class names
    */
@@ -37,12 +37,16 @@ export const DatePickerSkeleton: React.FC<DatePickerSkeletonProps> = ({
         } ${prefix}--skeleton ${className || ''}`}>
         <div className={`${prefix}--date-picker-container`}>
           <span className={`${prefix}--label ${prefix}--skeleton`} />
-          <div className={`${prefix}--date-picker__input ${prefix}--skeleton`} />
+          <div
+            className={`${prefix}--date-picker__input ${prefix}--skeleton`}
+          />
         </div>
         {range && (
           <div className={`${prefix}--date-picker-container`}>
             <span className={`${prefix}--label ${prefix}--skeleton`} />
-            <div className={`${prefix}--date-picker__input ${prefix}--skeleton`} />
+            <div
+              className={`${prefix}--date-picker__input ${prefix}--skeleton`}
+            />
           </div>
         )}
       </div>

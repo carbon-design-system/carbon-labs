@@ -52,14 +52,14 @@ $css--plex: true !default;
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   // Remove focus outline, border, and background
   &:focus {
     outline: none;
     border: none;
     background: transparent;
   }
-  
+
   // Remove any hover/active borders and backgrounds
   &:hover,
   &:active {
@@ -172,7 +172,9 @@ $css--plex: true !default;
   }
 }
 
-.#{$prefix}--date-picker-container--warn:not(.#{$prefix}--date-picker-container--invalid) {
+.#{$prefix}--date-picker-container--warn:not(
+    .#{$prefix}--date-picker-container--invalid
+  ) {
   .#{$prefix}--form-requirement {
     color: $text-primary;
   }
@@ -260,7 +262,7 @@ $css--plex: true !default;
 .#{$prefix}--date-picker.#{$prefix}--skeleton {
   .#{$prefix}--date-picker__input.#{$prefix}--skeleton {
     @include skeleton;
-    
+
     position: relative;
     block-size: rem(40px);
     inline-size: 100%;
@@ -270,13 +272,12 @@ $css--plex: true !default;
     pointer-events: none;
     overflow: hidden; // Ensure ::before pseudo-element is contained
   }
-  
+
   .#{$prefix}--date-picker__icon.#{$prefix}--skeleton {
     // Hide the icon in skeleton state
     display: none;
   }
 }
-
 
 // =============================================================================
 // CALENDAR COMPONENT STYLES
@@ -384,7 +385,7 @@ $css--plex: true !default;
     outline: 2px solid $focus;
     outline-offset: -2px;
   }
-  
+
   // Selected date - white text on blue background (no hover state)
   &.selected {
     background-color: $interactive;
@@ -396,7 +397,7 @@ $css--plex: true !default;
     position: relative;
     color: $text-primary;
     font-weight: 600;
-    
+
     // Blue dot below the date number
     &::after {
       content: '';

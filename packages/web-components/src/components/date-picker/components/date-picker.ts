@@ -14,7 +14,10 @@ import HostListener from '../temp-imports/globals/decorators/host-listener';
 import CDSDatePickerInput from './date-picker-input';
 import { WebComponentAdapter } from '../adapters/web-component-adapter.js';
 import type { StateTransition } from '@carbon-labs/primitives/date-picker';
-import { DatePickerState, DatePickerEvent } from '@carbon-labs/primitives/date-picker';
+import {
+  DatePickerState,
+  DatePickerEvent,
+} from '@carbon-labs/primitives/date-picker';
 import {
   parseDateToPlainDate,
   parseISOToPlainDate,
@@ -305,10 +308,16 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           context.endDate
         ) {
           if (inputFrom) {
-            inputFrom.value = formatPlainDate(context.startDate, context.dateFormat);
+            inputFrom.value = formatPlainDate(
+              context.startDate,
+              context.dateFormat
+            );
           }
           if (inputTo) {
-            inputTo.value = formatPlainDate(context.endDate, context.dateFormat);
+            inputTo.value = formatPlainDate(
+              context.endDate,
+              context.dateFormat
+            );
           }
         } else if (
           context.lastFocusedInput === 'to' &&
@@ -318,12 +327,18 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           // Otherwise, update based on lastFocusedInput
           inputTo.value = formatPlainDate(context.endDate, context.dateFormat);
         } else if (inputFrom && context.startDate) {
-          inputFrom.value = formatPlainDate(context.startDate, context.dateFormat);
+          inputFrom.value = formatPlainDate(
+            context.startDate,
+            context.dateFormat
+          );
         }
       } else {
         // For single mode, update the single input
         if (this._dateInteractNode && context.startDate) {
-          this._dateInteractNode.value = formatPlainDate(context.startDate, context.dateFormat);
+          this._dateInteractNode.value = formatPlainDate(
+            context.startDate,
+            context.dateFormat
+          );
         }
       }
 
@@ -736,7 +751,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     // Use shared keyboard mapper for navigation keys
     const context = this._adapter.getContext();
     const currentState = this._adapter.getState();
-    
+
     const mappedEvent = mapKeyboardToStateMachineEvent({
       key,
       shiftKey: event.shiftKey,
@@ -814,12 +829,14 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   connectedCallback() {
     super.connectedCallback();
     this._initializeDatePicker();
-    
+
     // Initialize click outside handler using shared utility
     this._clickOutsideHandler = new ClickOutsideHandler({
       isOpen: this.open,
       containsNode: (node: Node) => {
-        return this.contains(node) || (this.shadowRoot?.contains(node) ?? false);
+        return (
+          this.contains(node) || (this.shadowRoot?.contains(node) ?? false)
+        );
       },
       onOutsideClick: () => {
         if (this._adapter) {
@@ -829,9 +846,9 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       useCapture: true,
       attachDelay: 0,
     });
-    
+
     this._clickOutsideHandler.attach();
-    
+
     // Add keyboard event listener
     document.addEventListener('keydown', this._handleKeyDown, true);
   }
@@ -843,7 +860,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     // Clean up click outside handler
     this._clickOutsideHandler?.detach();
     this._clickOutsideHandler = null;
-    
+
     // Remove keyboard event listener
     document.removeEventListener('keydown', this._handleKeyDown, true);
     this._releaseDatePicker();
@@ -860,7 +877,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     if (changedProperties.has('open')) {
       this._clickOutsideHandler?.updateConfig({ isOpen: this.open });
     }
-    
+
     if (this._adapter) {
       if (
         changedProperties.has('minDate') ||

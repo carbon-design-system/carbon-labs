@@ -6,7 +6,10 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ClickOutsideHandler, type ClickOutsideConfig } from '../click-outside-handler';
+import {
+  ClickOutsideHandler,
+  type ClickOutsideConfig,
+} from '../click-outside-handler';
 
 describe('ClickOutsideHandler', () => {
   let container: HTMLDivElement;
@@ -30,7 +33,7 @@ describe('ClickOutsideHandler', () => {
     // Clean up DOM
     document.body.removeChild(container);
     document.body.removeChild(outsideElement);
-    
+
     // Clear all timers
     vi.clearAllTimers();
   });

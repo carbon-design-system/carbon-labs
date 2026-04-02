@@ -4,7 +4,9 @@ Framework-agnostic primitives for Carbon Labs components.
 
 ## Overview
 
-This package contains shared, framework-agnostic logic that can be used across different Carbon Labs implementations (Web Components, React, Vue, etc.). It includes state machines, utilities, and other reusable primitives.
+This package contains shared, framework-agnostic logic that can be used across
+different Carbon Labs implementations (Web Components, React, Vue, etc.). It
+includes state machines, utilities, and other reusable primitives.
 
 ## Installation
 
@@ -19,6 +21,7 @@ yarn add @carbon-labs/primitives
 ### Date Picker State Machine
 
 A comprehensive state machine for managing date picker behavior, including:
+
 - Single and range date selection
 - Calendar navigation
 - Keyboard interactions
@@ -35,7 +38,7 @@ const machine = new DatePickerStateMachine({
   mode: 'single',
   value: '',
   minDate: '2024-01-01',
-  maxDate: '2024-12-31'
+  maxDate: '2024-12-31',
 });
 
 // Subscribe to state changes
@@ -50,7 +53,8 @@ machine.send('DATE_SELECT', { date: { year: 2024, month: 3, day: 15 } });
 
 #### API
 
-See the [Date Picker documentation](./src/date-picker/README.md) for detailed API information.
+See the [Date Picker documentation](./src/date-picker/README.md) for detailed
+API information.
 
 ## Framework Integration
 
@@ -65,7 +69,7 @@ class MyDatePicker extends HTMLElement {
   constructor() {
     super();
     this.machine = new DatePickerStateMachine({
-      mode: 'single'
+      mode: 'single',
     });
   }
 }
@@ -78,11 +82,8 @@ import { useMemo } from 'react';
 import { DatePickerStateMachine } from '@carbon-labs/primitives/date-picker';
 
 function useDatePicker(config) {
-  const machine = useMemo(
-    () => new DatePickerStateMachine(config),
-    [config]
-  );
-  
+  const machine = useMemo(() => new DatePickerStateMachine(config), [config]);
+
   // Use machine in your component
   return machine;
 }

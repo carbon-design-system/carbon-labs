@@ -42,7 +42,9 @@ const Annotation: React.FC<{
 /**
  * WithLayer component for demonstrating components in different layer contexts
  */
-const WithLayer: React.FC<{ children: (layer: number) => React.ReactNode }> = ({ children }) => {
+const WithLayer: React.FC<{ children: (layer: number) => React.ReactNode }> = ({
+  children,
+}) => {
   function renderChild(layer: number) {
     return typeof children === 'function' ? children(layer) : children;
   }
@@ -159,10 +161,7 @@ const sharedArgTypes = {
 
 export const Default = ({ readOnly, ...args }) => {
   return (
-    <DatePicker
-      datePickerType="single"
-      {...args}
-      readOnly={readOnly}>
+    <DatePicker datePickerType="single" {...args} readOnly={readOnly}>
       <DatePickerInput
         placeholder="mm/dd/yyyy"
         labelText="Date Picker label"

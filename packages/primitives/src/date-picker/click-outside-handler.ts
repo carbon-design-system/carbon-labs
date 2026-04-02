@@ -16,7 +16,7 @@ export interface ClickOutsideConfig {
 
   /**
    * Function to check if a node is within the component
-   * 
+   *
    * React example:
    * ```typescript
    * containsNode: (node) => {
@@ -27,7 +27,7 @@ export interface ClickOutsideConfig {
    *   );
    * }
    * ```
-   * 
+   *
    * Web Components example:
    * ```typescript
    * containsNode: (node) => {
@@ -50,11 +50,11 @@ export interface ClickOutsideConfig {
 
   /**
    * Delay in milliseconds before attaching listener (default: 0)
-   * 
+   *
    * Setting this to 0 uses a defensive approach where the listener is attached
    * on the next event loop tick, preventing the click that opened the component
    * from immediately triggering a close.
-   * 
+   *
    * This is particularly important when the same click that opens the calendar
    * might otherwise be caught by the outside click handler.
    */
@@ -63,30 +63,30 @@ export interface ClickOutsideConfig {
 
 /**
  * Creates a click outside handler with proper lifecycle management
- * 
+ *
  * This utility provides a framework-agnostic way to detect clicks outside
  * a component and trigger a callback. It combines best practices from both
  * React and Web Components implementations:
- * 
+ *
  * - Uses defensive timing (from React) to prevent the opening click from closing
  * - Supports flexible element detection (from Web Components)
  * - Provides clean lifecycle management
  * - Fully testable and reusable
- * 
+ *
  * @example React usage
  * ```typescript
  * useEffect(() => {
  *   if (!context.isOpen) {
  *     return;
  *   }
- * 
+ *
  *   const handler = new ClickOutsideHandler({
  *     isOpen: context.isOpen,
  *     containsNode: (node: Node) => {
  *       const calendarEl = calendarRef.current;
  *       const startInputEl = startInputRef.current;
  *       const endInputEl = endInputRef.current;
- * 
+ *
  *       return (
  *         (calendarEl?.contains(node) ?? false) ||
  *         (startInputEl?.contains(node) ?? false) ||
@@ -97,20 +97,20 @@ export interface ClickOutsideConfig {
  *     useCapture: true,
  *     attachDelay: 0,
  *   });
- * 
+ *
  *   handler.attach();
- * 
+ *
  *   return () => {
  *     handler.detach();
  *   };
  * }, [context.isOpen, send]);
  * ```
- * 
+ *
  * @example Web Components usage
  * ```typescript
  * connectedCallback() {
  *   super.connectedCallback();
- * 
+ *
  *   this._clickOutsideHandler = new ClickOutsideHandler({
  *     isOpen: this.open,
  *     containsNode: (node: Node) => {
@@ -124,19 +124,19 @@ export interface ClickOutsideConfig {
  *     useCapture: true,
  *     attachDelay: 0,
  *   });
- * 
+ *
  *   this._clickOutsideHandler.attach();
  * }
- * 
+ *
  * disconnectedCallback() {
  *   super.disconnectedCallback();
  *   this._clickOutsideHandler?.detach();
  *   this._clickOutsideHandler = null;
  * }
- * 
+ *
  * updated(changedProperties: PropertyValues) {
  *   super.updated(changedProperties);
- *   
+ *
  *   if (changedProperties.has('open')) {
  *     this._clickOutsideHandler?.updateConfig({ isOpen: this.open });
  *   }
@@ -178,11 +178,11 @@ export class ClickOutsideHandler {
 
   /**
    * Attach the click outside listener
-   * 
+   *
    * This method adds the click event listener to the document.
    * If attachDelay is configured, it will delay the attachment to prevent
    * the opening click from immediately triggering a close.
-   * 
+   *
    * Calling attach() multiple times is safe - it will only attach once.
    */
   attach(): void {
@@ -204,10 +204,10 @@ export class ClickOutsideHandler {
 
   /**
    * Detach the click outside listener
-   * 
+   *
    * This method removes the click event listener and cleans up any pending timeouts.
    * It's safe to call detach() multiple times or even if attach() was never called.
-   * 
+   *
    * Always call detach() when the component unmounts or when you no longer need
    * click outside detection to prevent memory leaks.
    */
@@ -234,12 +234,12 @@ export class ClickOutsideHandler {
    * without needing to detach and reattach the handler.
    *
    * @param {Partial<ClickOutsideConfig>} config - Partial configuration to update
-   * 
+   *
    * @example
    * ```typescript
    * // Update just the isOpen state
    * handler.updateConfig({ isOpen: true });
-   * 
+   *
    * // Update multiple properties
    * handler.updateConfig({
    *   isOpen: true,
@@ -253,7 +253,7 @@ export class ClickOutsideHandler {
 
   /**
    * Check if the handler is currently attached
-   * 
+   *
    * @returns true if the handler is attached, false otherwise
    */
   isAttached(): boolean {
@@ -262,7 +262,7 @@ export class ClickOutsideHandler {
 
   /**
    * Check if there's a pending attachment
-   * 
+   *
    * @returns true if attachment is pending (waiting for delay), false otherwise
    */
   isPending(): boolean {

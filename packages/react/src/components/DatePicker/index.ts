@@ -19,7 +19,10 @@ export type { DatePickerProps } from './components/DatePicker';
 export type { DatePickerInputProps } from './components/DatePickerInput';
 export type { CalendarProps } from './components/Calendar';
 export type { DatePickerSkeletonProps } from './components/DatePickerSkeleton';
-export type { UseDatePickerConfig, UseDatePickerReturn } from './hooks/useDatePicker';
+export type {
+  UseDatePickerConfig,
+  UseDatePickerReturn,
+} from './hooks/useDatePicker';
 
 // Re-export state machine types for convenience
 export type {
@@ -34,6 +37,9 @@ export type {
   StateTransition,
 } from '@carbon-labs/primitives/date-picker';
 
-export { DatePickerState, DatePickerEvent } from '@carbon-labs/primitives/date-picker';
+export {
+  DatePickerState,
+  DatePickerEvent,
+} from '@carbon-labs/primitives/date-picker';
 
 // Made with Bob

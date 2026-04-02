@@ -1,6 +1,7 @@
 # React DatePicker Implementation
 
-This directory will contain the React implementation of the DatePicker component in Phase 2.
+This directory will contain the React implementation of the DatePicker component
+in Phase 2.
 
 ## Planned Structure
 
@@ -17,7 +18,8 @@ components/react/
 
 ## Implementation Guide
 
-See `../../REACT_IMPLEMENTATION_GUIDE.md` for detailed implementation instructions.
+See `../../REACT_IMPLEMENTATION_GUIDE.md` for detailed implementation
+instructions.
 
 ## Key Features
 
@@ -29,4 +31,5 @@ See `../../REACT_IMPLEMENTATION_GUIDE.md` for detailed implementation instructio
 
 ## Phase 2 Timeline
 
-React implementation is planned for Phase 2 of the Carbon Labs restructuring effort.
+React implementation is planned for Phase 2 of the Carbon Labs restructuring
+effort.

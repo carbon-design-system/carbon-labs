@@ -6,7 +6,10 @@
  */
 
 import { DatePickerStateMachine } from '@carbon-labs/primitives/date-picker';
-import { DatePickerState, DatePickerEvent } from '@carbon-labs/primitives/date-picker';
+import {
+  DatePickerState,
+  DatePickerEvent,
+} from '@carbon-labs/primitives/date-picker';
 import { dateToPlainDate } from '@carbon-labs/primitives/date-picker';
 import type {
   DatePickerContext,

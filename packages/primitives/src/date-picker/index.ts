@@ -11,6 +11,10 @@ export { guards, getGuard, checkGuard } from './guards.js';
 export { actions, getAction, executeAction } from './actions.js';
 export { effects, getEffect, executeEffect } from './effects.js';
 export {
+  ClickOutsideHandler,
+  type ClickOutsideConfig,
+} from './click-outside-handler.js';
+export {
   mapKeyboardToStateMachineEvent,
   type KeyboardEventInfo,
   type KeyboardEventResult,

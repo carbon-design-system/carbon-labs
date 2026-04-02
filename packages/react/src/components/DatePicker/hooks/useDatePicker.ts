@@ -13,6 +13,7 @@ import {
   parseDateToPlainDate,
   plainDateToDate,
   mapKeyboardToStateMachineEvent,
+  ClickOutsideHandler,
   type DatePickerContext,
   type DatePickerMode,
 } from '@carbon-labs/primitives/date-picker';
@@ -362,43 +363,34 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
     [send]
   );
 
-  // Handle click outside to close calendar
+  // Handle click outside to close calendar using shared utility
   useEffect(() => {
     if (!context.isOpen) {
       return;
     }
 
-    /**
-     * Handle click outside calendar
-     *
-     * @param {MouseEvent} event - Mouse event
-     */
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Node;
-      const calendarEl = calendarRef.current;
-      const startInputEl = startInputRef.current;
-      const endInputEl = endInputRef.current;
+    const handler = new ClickOutsideHandler({
+      isOpen: context.isOpen,
+      containsNode: (node: Node) => {
+        const calendarEl = calendarRef.current;
+        const startInputEl = startInputRef.current;
+        const endInputEl = endInputRef.current;
 
-      if (
-        calendarEl &&
-        !calendarEl.contains(target) &&
-        startInputEl &&
-        !startInputEl.contains(target) &&
-        (!endInputEl || !endInputEl.contains(target))
-      ) {
-        send(DatePickerEvent.OUTSIDE_CLICK);
-      }
-    };
+        return (
+          (calendarEl?.contains(node) ?? false) ||
+          (startInputEl?.contains(node) ?? false) ||
+          (endInputEl?.contains(node) ?? false)
+        );
+      },
+      onOutsideClick: () => send(DatePickerEvent.OUTSIDE_CLICK),
+      useCapture: true,
+      attachDelay: 0,
+    });
 
-    // Delay adding listener to avoid catching the click that opened the calendar
-    // Use 'click' event with capture phase (true) to match Web Components behavior
-    const timeoutId = setTimeout(() => {
-      document.addEventListener('click', handleClickOutside, true);
-    }, 0);
+    handler.attach();
 
     return () => {
-      clearTimeout(timeoutId);
-      document.removeEventListener('click', handleClickOutside, true);
+      handler.detach();
     };
   }, [context.isOpen, send]);
 

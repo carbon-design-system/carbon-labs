@@ -20,6 +20,7 @@ import {
   parseISOToPlainDate,
   formatPlainDate,
   mapKeyboardToStateMachineEvent,
+  ClickOutsideHandler,
 } from '@carbon-labs/primitives/date-picker';
 // @ts-ignore
 import styles from './date-picker.scss?inline';
@@ -69,6 +70,11 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * The adapter for Web Component integration.
    */
   private _adapter: WebComponentAdapter | null = null;
+
+  /**
+   * Click outside handler for closing calendar
+   */
+  private _clickOutsideHandler: ClickOutsideHandler | null = null;
 
   /**
    * Timestamp of when calendar was last closed via Tab key
@@ -567,20 +573,7 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    *
    * @param {MouseEvent} event - The click event
    */
-  private _handleOutsideClick = (event: MouseEvent) => {
-    if (!this.open) {
-      return;
-    }
-
-    const target = event.target as Node;
-    // Check if click is outside the date picker component
-    if (!this.contains(target) && !this.shadowRoot?.contains(target)) {
-      // Let the state machine handle closing via the OUTSIDE_CLICK action
-      if (this._adapter) {
-        this._adapter.send(DatePickerEvent.OUTSIDE_CLICK);
-      }
-    }
-  };
+  // Click outside handler removed - now using shared ClickOutsideHandler utility
 
   /**
    * Handle keyboard events for calendar navigation
@@ -821,8 +814,24 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   connectedCallback() {
     super.connectedCallback();
     this._initializeDatePicker();
-    // Add outside click listener
-    document.addEventListener('click', this._handleOutsideClick, true);
+    
+    // Initialize click outside handler using shared utility
+    this._clickOutsideHandler = new ClickOutsideHandler({
+      isOpen: this.open,
+      containsNode: (node: Node) => {
+        return this.contains(node) || (this.shadowRoot?.contains(node) ?? false);
+      },
+      onOutsideClick: () => {
+        if (this._adapter) {
+          this._adapter.send(DatePickerEvent.OUTSIDE_CLICK);
+        }
+      },
+      useCapture: true,
+      attachDelay: 0,
+    });
+    
+    this._clickOutsideHandler.attach();
+    
     // Add keyboard event listener
     document.addEventListener('keydown', this._handleKeyDown, true);
   }
@@ -831,8 +840,10 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * Lifecycle callback when element is disconnected
    */
   disconnectedCallback() {
-    // Remove outside click listener
-    document.removeEventListener('click', this._handleOutsideClick, true);
+    // Clean up click outside handler
+    this._clickOutsideHandler?.detach();
+    this._clickOutsideHandler = null;
+    
     // Remove keyboard event listener
     document.removeEventListener('keydown', this._handleKeyDown, true);
     this._releaseDatePicker();
@@ -845,6 +856,11 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * @param {Map<string, any>} changedProperties - Map of changed properties
    */
   updated(changedProperties: Map<string, any>) {
+    // Update click outside handler when open state changes
+    if (changedProperties.has('open')) {
+      this._clickOutsideHandler?.updateConfig({ isOpen: this.open });
+    }
+    
     if (this._adapter) {
       if (
         changedProperties.has('minDate') ||

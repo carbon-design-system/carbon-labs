@@ -10,6 +10,8 @@ import {
   DatePickerStateMachine,
   DatePickerEvent,
   DatePickerState,
+  parseDateToPlainDate,
+  plainDateToDate,
   type DatePickerContext,
   type DatePickerMode,
 } from '@carbon-labs/primitives/date-picker';
@@ -155,47 +157,10 @@ export interface UseDatePickerReturn {
   calendarRef: React.RefObject<HTMLDivElement>;
 }
 
-/**
- * Convert mm/dd/yyyy string to Temporal.PlainDate
- *
- * @param {string | null} dateStr - Date string in mm/dd/yyyy format
- * @returns {Temporal.PlainDate | null} Temporal.PlainDate or null
- */
-function parseDate(dateStr: string | null): Temporal.PlainDate | null {
-  if (!dateStr) {
-    return null;
-  }
-
-  try {
-    // Handle mm/dd/yyyy format (Carbon API)
-    const parts = dateStr.split('/');
-    if (parts.length === 3) {
-      const month = parseInt(parts[0], 10);
-      const day = parseInt(parts[1], 10);
-      const year = parseInt(parts[2], 10);
-      return Temporal.PlainDate.from({ year, month, day });
-    }
-
-    // Fallback to ISO format
-    return Temporal.PlainDate.from(dateStr);
-  } catch (error) {
-    console.warn('Failed to parse date:', dateStr, error);
-    return null;
-  }
-}
-
-/**
- * Convert Temporal.PlainDate to Date object (for Carbon API compatibility)
- *
- * @param {Temporal.PlainDate | null} plainDate - Temporal.PlainDate to convert
- * @returns {Date | null} Date object or null
- */
-function temporalToDate(plainDate: Temporal.PlainDate | null): Date | null {
-  if (!plainDate) {
-    return null;
-  }
-  return new Date(plainDate.year, plainDate.month - 1, plainDate.day);
-}
+// Note: parseDate and temporalToDate functions removed - now using shared utilities
+// from @carbon-labs/primitives/date-picker:
+// - parseDateToPlainDate() handles mm/dd/yyyy, ISO, and Date object parsing
+// - plainDateToDate() converts Temporal.PlainDate to Date objects
 
 /**
  * React hook for managing date picker state using the shared state machine
@@ -233,8 +198,8 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
     const machine = new DatePickerStateMachine({
       mode: datePickerType as DatePickerMode,
       value,
-      minDate: parseDate(minDate),
-      maxDate: parseDate(maxDate),
+      minDate: parseDateToPlainDate(minDate),
+      maxDate: parseDateToPlainDate(maxDate),
       dateFormat,
       isDisabled: disabled,
       isReadonly: readOnly,
@@ -285,13 +250,13 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
 
     const dates: Date[] = [];
     if (context.startDate) {
-      const date = temporalToDate(context.startDate);
+      const date = plainDateToDate(context.startDate);
       if (date) {
         dates.push(date);
       }
     }
     if (context.endDate) {
-      const date = temporalToDate(context.endDate);
+      const date = plainDateToDate(context.endDate);
       if (date) {
         dates.push(date);
       }
@@ -325,8 +290,8 @@ export function useDatePicker(config: UseDatePickerConfig = {}): UseDatePickerRe
     }
 
     // Update min/max dates
-    const newMinDate = parseDate(minDate);
-    const newMaxDate = parseDate(maxDate);
+    const newMinDate = parseDateToPlainDate(minDate);
+    const newMaxDate = parseDateToPlainDate(maxDate);
     if (newMinDate) {
       machine.send(DatePickerEvent.SET_MIN_DATE, { date: newMinDate });
     }

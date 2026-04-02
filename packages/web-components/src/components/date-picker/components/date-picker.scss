@@ -9,6 +9,7 @@
 @use '@carbon-labs/primitives/es/date-picker/styles/date-picker.scss' as *;
 @use '@carbon/styles/scss/config' as *;
 @use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/utilities' as *;
 
 // =============================================================================
 // WEB COMPONENTS SPECIFIC STYLES
@@ -99,6 +100,11 @@
 :host(#{$prefix}-date-picker-calendar) {
   display: block;
   outline: none;
+  
+  .#{$prefix}--date-picker__calendar {
+    inline-size: rem(288px);
+    max-inline-size: rem(288px);
+  }
 }
 
 // Made with Bob

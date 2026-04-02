@@ -165,15 +165,33 @@ export function Calendar({
   // Check if a date is in the selected range
   const isDateInRange = useCallback(
     (date: Temporal.PlainDate): boolean => {
-      if (mode !== 'range' || !startDate || !endDate) {
+      if (mode !== 'range' || !startDate) {
         return false;
       }
-      return (
-        Temporal.PlainDate.compare(date, startDate) > 0 &&
-        Temporal.PlainDate.compare(date, endDate) < 0
-      );
+      
+      // If endDate exists, use it for the range
+      if (endDate) {
+        return (
+          Temporal.PlainDate.compare(date, startDate) > 0 &&
+          Temporal.PlainDate.compare(date, endDate) < 0
+        );
+      }
+      
+      // If endDate doesn't exist but focusedDate does (user is selecting end date),
+      // show the range between startDate and focusedDate
+      if (focusedDate) {
+        const earlierDate = Temporal.PlainDate.compare(startDate, focusedDate) < 0 ? startDate : focusedDate;
+        const laterDate = Temporal.PlainDate.compare(startDate, focusedDate) < 0 ? focusedDate : startDate;
+        
+        return (
+          Temporal.PlainDate.compare(date, earlierDate) > 0 &&
+          Temporal.PlainDate.compare(date, laterDate) < 0
+        );
+      }
+      
+      return false;
     },
-    [mode, startDate, endDate]
+    [mode, startDate, endDate, focusedDate]
   );
 
   // Check if a date is the range start (not currently used but kept for future range styling)

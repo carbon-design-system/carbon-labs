@@ -9,6 +9,7 @@
 export { DatePicker } from './components/DatePicker';
 export { DatePickerInput } from './components/DatePickerInput';
 export { Calendar } from './components/Calendar';
+export { DatePickerSkeleton } from './components/DatePickerSkeleton';
 
 // Hooks
 export { useDatePicker } from './hooks/useDatePicker';
@@ -17,6 +18,7 @@ export { useDatePicker } from './hooks/useDatePicker';
 export type { DatePickerProps } from './components/DatePicker';
 export type { DatePickerInputProps } from './components/DatePickerInput';
 export type { CalendarProps } from './components/Calendar';
+export type { DatePickerSkeletonProps } from './components/DatePickerSkeleton';
 export type { UseDatePickerConfig, UseDatePickerReturn } from './hooks/useDatePicker';
 
 // Re-export state machine types for convenience

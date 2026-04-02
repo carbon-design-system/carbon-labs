@@ -11,6 +11,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/config' as *;
 @use '@carbon/styles/scss/theme' as *;
 @use '@carbon/styles/scss/utilities' as *;
+@use '@carbon/styles/scss/utilities/skeleton' as *;
 @use '@carbon/styles/scss/colors' as *;
 @use '@carbon/styles/scss/spacing' as *;
 @use '@carbon/styles/scss/components/form';
@@ -31,6 +32,11 @@ $css--plex: true !default;
   position: relative;
 }
 
+// Input wrapper needs relative positioning for icon placement
+.#{$prefix}--date-picker-input__wrapper {
+  position: relative;
+}
+
 // Enable pointer events on the calendar icon button
 // Carbon sets pointer-events: none by default, but we need clicks to work
 .#{$prefix}--date-picker__icon {
@@ -38,6 +44,14 @@ $css--plex: true !default;
   cursor: pointer;
   border: none;
   background: transparent;
+  padding: 0;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   // Remove focus outline, border, and background
   &:focus {
@@ -242,6 +256,27 @@ $css--plex: true !default;
     }
   }
 }
+// New skeleton styles for DatePickerSkeleton component
+.#{$prefix}--date-picker.#{$prefix}--skeleton {
+  .#{$prefix}--date-picker__input.#{$prefix}--skeleton {
+    @include skeleton;
+    
+    position: relative;
+    block-size: rem(40px);
+    inline-size: 100%;
+    // Override any conflicting input styles (but keep skeleton background)
+    border: none;
+    cursor: default;
+    pointer-events: none;
+    overflow: hidden; // Ensure ::before pseudo-element is contained
+  }
+  
+  .#{$prefix}--date-picker__icon.#{$prefix}--skeleton {
+    // Hide the icon in skeleton state
+    display: none;
+  }
+}
+
 
 // =============================================================================
 // CALENDAR COMPONENT STYLES
@@ -252,7 +287,8 @@ $css--plex: true !default;
   padding: $spacing-03;
   background-color: $layer;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
-  min-inline-size: rem(288px);
+  inline-size: rem(288px);
+  max-inline-size: rem(288px);
   outline: none;
 
   &:focus {

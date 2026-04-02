@@ -1,0 +1,48 @@
+//
+// Copyright IBM Corp. 2019, 2026
+//
+// This source code is licensed under the Apache-2.0 license found in the
+// LICENSE file in the root directory of this source tree.
+//
+
+@use '@carbon/styles/scss/colors';
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+
+.sb-with-layer-layer {
+  position: relative;
+  border: 1px dashed colors.$purple-50;
+  margin-block-start: spacing.$spacing-07;
+}
+
+.sb-with-layer-label {
+  @include type.type-style('code-01');
+
+  display: inline-flex;
+  align-items: center;
+  padding: spacing.$spacing-02;
+  background-color: colors.$purple-20;
+  color: colors.$purple-70;
+  column-gap: spacing.$spacing-02;
+
+  svg {
+    fill: currentColor;
+  }
+}
+
+.sb-with-layer-background {
+  border: 1px dashed colors.$magenta-50;
+  margin: -42px;
+  min-block-size: 100vh;
+}
+
+.sb-with-layer-background > .sb-with-layer-label {
+  background-color: colors.$magenta-20;
+  color: colors.$magenta-70;
+}
+
+.sb-with-layer-content {
+  padding: spacing.$spacing-05;
+}
+
+// Made with Bob

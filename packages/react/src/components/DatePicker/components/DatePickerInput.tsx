@@ -147,6 +147,16 @@ export interface DatePickerInputProps {
    * Whether the field is required
    */
   required?: boolean;
+
+  /**
+   * Callback when calendar opens (for internal use)
+   */
+  onOpen?: () => void;
+
+  /**
+   * Slug component (e.g., AI Label)
+   */
+  slug?: React.ReactNode;
 }
 
 /**
@@ -184,6 +194,8 @@ export const DatePickerInput = forwardRef<HTMLInputElement, DatePickerInputProps
       autoComplete = 'off',
       name,
       required = false,
+      onOpen: _onOpen,
+      slug: _slug,
       ...rest
     },
     ref

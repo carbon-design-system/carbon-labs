@@ -16,10 +16,16 @@ import * as DatePickerStories from './date-picker-react.stories.tsx';
 ## Table of Contents
 
 - [Overview](#overview)
-  - [Simple date picker](#simple-datepicker)
-  - [Range date picker](#range-datepicker)
+  - [Simple date picker](#simple-date-picker)
+  - [Single date picker](#single-date-picker)
+  - [Range date picker](#range-date-picker)
+  - [Skeleton state](#skeleton-state)
+  - [AI label](#ai-label)
 - [Component API](#component-api)
   - [API Compatibility](#api-compatibility)
+  - [Breaking changes](#breaking-changes)
+  - [`DatePicker`](#datepicker)
+  - [`DatePickerInput`](#datepickerinput)
   - [Date picker `dateFormat`](#date-picker-dateformat)
   - [Date picker `datePickerType`](#date-picker-datepickertype)
   - [Date picker `maxDate`](#date-picker-maxdate)
@@ -52,14 +58,34 @@ interactions that come with the calendar menu or a dropdown.
 
 <Canvas of={DatePickerStories.Simple} />
 
-### Range date picker
+### Single date picker
 
-Calendar pickers default to showing today's date when opened and only one month
-is shown at a time. Calendar pickers allow users to navigate through months and
-years, however they work best when used for recent or near future dates.
+Use the single date picker when you want to pair a text input with a calendar
+popover. Users can type a date directly, or open the calendar and select one.
 
 <Canvas of={DatePickerStories.SingleWithCalendar} />
+
+### Range date picker
+
+Use the range date picker when users need to choose a start and end date
+together. The first input is treated as the start date and the second input is
+treated as the end date.
+
 <Canvas of={DatePickerStories.RangeWithCalendar} />
+
+### Skeleton state
+
+Use the skeleton state while a date picker is loading or while dependent data is
+being fetched.
+
+<Canvas of={DatePickerStories.Skeleton} />
+
+### AI label
+
+The input also supports Carbon AI label decoration through the
+`DatePickerInput` `decorator` prop.
+
+<Canvas of={DatePickerStories.withAILabel} />
 
 ## Component API
 
@@ -68,30 +94,50 @@ years, however they work best when used for recent or near future dates.
 This implementation maintains **100% backward compatibility** with Carbon React v11 DatePicker API. All existing props and functionality work exactly as before:
 
 **`DatePicker` props:**
-- `allowInput` - Allow manual date entry (default: `true`)
-- `closeOnSelect` - Close calendar on date selection (default: `true`)
+- `allowInput` - Allow manual date entry
+- `appendTo` - Append the calendar to a specific element
+- `className` - Additional CSS class names
+- `closeOnSelect` - Close calendar on date selection
 - `dateFormat` - Date display format (default: `m/d/Y`)
 - `datePickerType` - Picker type (`simple`, `single`, `range`)
-- `disabled` - Disable the date picker
 - `light` - Use light theme variant
+- `locale` - Locale for date formatting
 - `maxDate` - Maximum selectable date
 - `minDate` - Minimum selectable date
 - `onChange` - Callback when date selection changes
+- `onClose` - Callback when the calendar closes
+- `onOpen` - Callback when the calendar opens
 - `readOnly` - Make date picker read-only
 - `short` - Use short variant
-- `value` - Selected date(s)
+- `value` - Selected date value
 
 **`DatePickerInput` props:**
+- `autoComplete` - Autocomplete attribute
+- `className` - Additional CSS class names
+- `decorator` - Decorator component such as an AI label
+- `defaultValue` - Default input value
 - `disabled` - Disable the input
 - `helperText` - Helper text below input
+- `hideIcon` - Hide the calendar icon
 - `hideLabel` - Hide the label text
+- `iconDescription` - Accessible description for the calendar icon
 - `id` - **Required.** Input identifier
 - `invalid` - Show invalid state
 - `invalidText` - Invalid state message
 - `labelText` - Label text
+- `name` - Input name attribute
+- `onBlur` - Blur handler
+- `onChange` - Change handler
+- `onFocus` - Focus handler
+- `onIconClick` - Calendar icon click handler
+- `onKeyDown` - Key down handler
+- `pattern` - Input validation pattern
 - `placeholder` - Placeholder text
 - `readOnly` - Make input read-only
+- `required` - Mark the field as required
 - `size` - Input size (`sm`, `md`, `lg`)
+- `slug` - Deprecated alias for `decorator`
+- `type` - Input type
 - `value` - Input value
 - `warn` - Show warning state
 - `warnText` - Warning state message
@@ -214,16 +260,12 @@ minimum date will be disabled in the calendar and navigation will be restricted.
 
 ### Date picker `value`
 
-By default the date picker will set the current date as its value. If you'd like
-to start this at a different date, you can pass in a date string.
+Pass a string value to either the `DatePicker` or the child `DatePickerInput`
+to initialize the selected date.
 
 ```tsx
-<DatePicker>
-  <DatePickerInput
-    id="date"
-    placeholder="mm/dd/yyyy"
-    value="04/17/2025"
-  />
+<DatePicker value="04/17/2025">
+  <DatePickerInput id="date" placeholder="mm/dd/yyyy" />
 </DatePicker>
 ```
 
@@ -258,7 +300,8 @@ This provides:
 
 States include: `IDLE`, `FOCUSED`, `CALENDAR_OPEN`, `DATE_SELECTED`, `RANGE_START_SELECTED`, `RANGE_SELECTING`
 
-For detailed state machine documentation, see the [state machine README](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/primitives/src/date-picker/README.md).
+For detailed shared state logic, see the primitives package in
+[GitHub](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/primitives/src/date-picker).
 
 ### Keyboard navigation
 

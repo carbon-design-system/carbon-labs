@@ -14,12 +14,16 @@ import * as DatePickerStories from './date-picker-web-components.stories';
 ## Table of Contents
 
 - [Overview](#overview)
-  - [Simple date picker](#simple-datepicker)
-  - [Range date picker](#range-datepicker)
+  - [Simple date picker](#simple-date-picker)
+  - [Single date picker](#single-date-picker)
+  - [Range date picker](#range-date-picker)
   - [Skeleton state](#skeleton-state)
   - [AI label](#ai-label)
 - [Component API](#component-api)
   - [API Compatibility](#api-compatibility)
+  - [Breaking changes](#breaking-changes)
+  - [`cds-date-picker`](#cds-date-picker)
+  - [`cds-date-picker-input`](#cds-date-picker-input)
   - [Date picker `date-format`](#date-picker-date-format)
   - [Date picker `kind`](#date-picker-kind)
   - [Date picker `max-date`](#date-picker-max-date)
@@ -29,7 +33,6 @@ import * as DatePickerStories from './date-picker-web-components.stories';
   - [Modern implementation](#modern-implementation)
   - [State machine](#state-machine)
   - [Keyboard navigation](#keyboard-navigation)
-- [CDN](#cdn)
 - [References](#references)
 - [Feedback](#feedback)
 
@@ -39,8 +42,8 @@ Date pickers allow users to select a single or a range of dates. Pickers are
 used to display past, present, or future dates. The kind of date (exact,
 approximate, memorable) you are requesting from the user will determine which
 picker is best to use. Each picker's format can be customized depending on
-location or need. The `date-picker` component expects a `cds-date-picker-input`
-as a child.
+location or need. The `cds-date-picker` component expects one or more
+`cds-date-picker-input` elements as children.
 
 <Canvas of={DatePickerStories.SingleWithCalendar} />
 
@@ -52,24 +55,32 @@ interactions that come with the calendar menu or a dropdown.
 
 <Canvas of={DatePickerStories.Simple} />
 
-### Range date picker
+### Single date picker
 
-Calendar pickers default to showing today's date when opened and only one month
-is shown at a time. Calendar pickers allow users to navigate through months and
-years, however they work best when used for recent or near future dates.
+Use the single date picker when you want to pair a text input with a calendar
+popover. Users can type a date directly, or open the calendar and select one.
 
 <Canvas of={DatePickerStories.SingleWithCalendar} />
+
+### Range date picker
+
+Use the range date picker when users need to choose a start and end date
+together. The first input should use `kind="from"` and the second should use
+`kind="to"`.
+
 <Canvas of={DatePickerStories.RangeWithCalendar} />
 
 ### Skeleton state
 
-You can use the `cds-date-picker-skeleton` component to render a skeleton
-variant of a date picker. This is useful to display while an initial date range
-in your date picker is being fetched from an external resource like an API.
+You can use the `cds-date-picker-input-skeleton` component to render a
+skeleton variant of a date picker. This is useful while the initial state or
+date range is loading.
 
 <Canvas of={DatePickerStories.Skeleton} />
 
 ### AI label
+
+The input supports Carbon AI label content as slotted child content.
 
 <Canvas of={DatePickerStories.WithAILabel} />
 
@@ -77,22 +88,20 @@ in your date picker is being fetched from an external resource like an API.
 
 ### API Compatibility
 
-This implementation maintains **full backward compatibility** with the existing Carbon Web Components date picker API. All existing attributes and properties work exactly as before:
+This implementation maintains backward compatibility with the existing Carbon
+Web Components date picker API while replacing the internal Flatpickr-based
+behavior with shared primitives and a state machine.
 
-**`cds-date-picker` attributes:**
-- `allow-input` - Allow manual date entry (default: `true`)
-- `close-on-select` - Close calendar on date selection (default: `true`)
+**`cds-date-picker` attributes/properties:**
 - `date-format` - Date display format (default: `m/d/Y`)
 - `disabled` - Disable the date picker
-- `enabled-range` - Specify enabled date range
 - `max-date` - Maximum selectable date
 - `min-date` - Minimum selectable date
-- `name` - Form field name
-- `open` - Control calendar visibility
-- `readonly` - Make date picker read-only
-- `value` - Selected date(s) in ISO8601 format
+- `name` - Form field name for form submission
+- `readonly` - Make the date picker read-only
+- `value` - Selected date value
 
-**`cds-date-picker-input` attributes:**
+**`cds-date-picker-input` attributes/properties:**
 - `color-scheme` - Color scheme variant
 - `disabled` - Disable the input
 - `hide-label` - Hide the label text
@@ -127,7 +136,7 @@ This implementation maintains **full backward compatibility** with the existing 
 - Improved accessibility
 
 **Migration:**
-No migration needed. Existing code continues to work without modifications.
+No migration is required for existing usage patterns.
 
 ## `cds-date-picker`
 
@@ -242,8 +251,7 @@ minimum date will be disabled in the calendar and navigation will be restricted.
 
 ### Date picker `value`
 
-By default the date picker will set the current date as its value. If you'd like
-to start this at a different date, you can pass in a date string or date object.
+Pass a value string to the input to initialize the selected date.
 
 <cds-date-picker>
   <cds-date-picker-input
@@ -291,7 +299,8 @@ This provides:
 
 States include: `IDLE`, `FOCUSED`, `CALENDAR_OPEN`, `DATE_SELECTED`, `RANGE_START_SELECTED`, `RANGE_SELECTING`
 
-For detailed state machine documentation, see the [state machine README](https://github.com/carbon-design-system/carbon/tree/main/packages/web-components/src/components/date-picker/state-machine/README.md).
+For more detail on the shared state logic, see the primitives package in
+[GitHub](https://github.com/carbon-design-system/carbon-labs/tree/main/packages/primitives/src/date-picker).
 
 ### Keyboard navigation
 

@@ -3,7 +3,7 @@
     "target": "es2018",
     "lib": ["es2018", "dom", "dom.iterable"],
     "module": "esNext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "typeRoots": ["declarations.d.ts", "../../node_modules/@types"],
     "declaration": true,
     "rootDir": ".",

@@ -91,13 +91,6 @@ export const actions: ActionMap = {
       // Set viewDate to show the month containing the focused date
       const viewDate = focusedDate;
 
-      console.log('FOCUSED->CALENDAR_OPEN action:', {
-        oldViewDate: context.viewDate?.toString(),
-        newViewDate: viewDate.toString(),
-        oldFocusedDate: context.focusedDate?.toString(),
-        newFocusedDate: focusedDate.toString(),
-      });
-
       return {
         isOpen: true,
         viewDate,

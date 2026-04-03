@@ -7,5 +7,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// Note: usePrefix is not exported from main index to avoid pulling React into web components
+// React components should import directly: import { usePrefix } from '@carbon-labs/utilities/es/usePrefix.js'
 export * from './settings/index.js';
-export { usePrefix, PrefixContext } from './usePrefix.js';

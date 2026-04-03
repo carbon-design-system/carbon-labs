@@ -160,6 +160,116 @@ In your styles file import
 
 ## Component APIs
 
+#### Using TOC Components
+
+The TOC components provide a fixed navigation sidebar with automatic active
+state tracking. You can use them with or without Carbon Grid.
+
+##### With Carbon Grid (Recommended for Responsive Layouts)
+
+```jsx
+import { Grid, Column } from '@carbon/react';
+import {
+  TocList,
+  TocItem,
+  TocSections,
+  TocSection,
+  TocActiveTracker,
+} from '@carbon-labs/react-whats-new';
+
+function DocumentationPage() {
+  return (
+    <>
+      <Grid fullWidth>
+        {/* Content: 12/16 on lg+, full width on smaller screens */}
+        <Column lg={12} md={8} sm={4}>
+          <TocSections>
+            <TocSection>
+              <h2 id="introduction">Introduction</h2>
+              <p>Your content here...</p>
+            </TocSection>
+            <TocSection>
+              <h2 id="features">Features</h2>
+              <p>More content...</p>
+            </TocSection>
+          </TocSections>
+        </Column>
+
+        {/* TOC: 4/16 on lg+, hidden on smaller screens */}
+        <Column lg={4} md={0} sm={0}>
+          <TocList ariaLabel="Page sections">
+            <TocItem href="#introduction">Introduction</TocItem>
+            <TocItem href="#features">Features</TocItem>
+          </TocList>
+        </Column>
+      </Grid>
+
+      <TocActiveTracker />
+    </>
+  );
+}
+```
+
+##### Without Grid (Simple Layout)
+
+```jsx
+import {
+  TocList,
+  TocItem,
+  TocSections,
+  TocSection,
+  TocActiveTracker,
+} from '@carbon-labs/react-whats-new';
+
+function SimplePage() {
+  return (
+    <>
+      <div style={{ display: 'flex', gap: '2rem' }}>
+        {/* Content area */}
+        <div style={{ flex: '1' }}>
+          <TocSections>
+            <TocSection>
+              <h2 id="introduction">Introduction</h2>
+              <p>Your content here...</p>
+            </TocSection>
+            <TocSection>
+              <h2 id="features">Features</h2>
+              <p>More content...</p>
+            </TocSection>
+          </TocSections>
+        </div>
+
+        {/* TOC sidebar */}
+        <aside style={{ width: '250px' }}>
+          <TocList ariaLabel="Page sections">
+            <TocItem href="#introduction">Introduction</TocItem>
+            <TocItem href="#features">Features</TocItem>
+          </TocList>
+        </aside>
+      </div>
+
+      <TocActiveTracker />
+    </>
+  );
+}
+```
+
+**Key Features:**
+
+- TOC stays fixed while content scrolls
+- Automatically highlights active section based on scroll position
+- Smooth scroll navigation when clicking TOC items
+- Works with or without Carbon Grid
+
+**Important Notes:**
+
+- **Heading Structure**: Currently supports one level of headings (h2). Each
+  `TocSection` must contain a visible `<h2>` element with an `id` attribute that
+  matches the `href` in the corresponding `TocItem` (e.g.,
+  `<h2 id="introduction">` matches `<TocItem href="#introduction">`).
+- **Future Support**: Multi-level heading support (h2-h3) is planned for future
+  releases.
+
 ### Toc API
 
 <ArgTypes of={TocStories.TocStory} />
@@ -672,6 +782,3 @@ function App() {
 
 export default App;
 ```
-
-
-

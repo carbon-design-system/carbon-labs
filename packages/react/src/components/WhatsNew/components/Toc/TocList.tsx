@@ -21,6 +21,12 @@ interface TocListProps extends HTMLProps<HTMLElement> {
    * @default "Table of contents"
    */
   ariaLabel?: string;
+  /**
+   * The offset from the top of the viewport where the TOC should stick.
+   * Accepts any valid CSS value (e.g., "128px", "8rem", "10vh").
+   * @default Carbon spacing-11 + spacing-09 (128px)
+   */
+  stickyOffset?: string;
 }
 
 /**
@@ -42,6 +48,8 @@ const TocList = ({
   children,
   className,
   ariaLabel = 'Table of contents',
+  stickyOffset,
+  style,
   ...rest
 }: TocListProps) => {
   const labsPrefix = usePrefix();
@@ -50,7 +58,16 @@ const TocList = ({
     <nav
       {...rest}
       aria-label={ariaLabel}
-      className={cx(`${labsPrefix}__toc-list`, className)}>
+      className={cx(`${labsPrefix}__toc-list`, className)}
+      // eslint-disable-next-line react/forbid-dom-props
+      style={
+        stickyOffset
+          ? ({
+              ...style,
+              '--toc-sticky-offset': stickyOffset,
+            } as React.CSSProperties)
+          : style
+      }>
       <div className={`${labsPrefix}__toc-active-bar`} aria-hidden="true" />
       {children}
     </nav>

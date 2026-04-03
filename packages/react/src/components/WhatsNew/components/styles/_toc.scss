@@ -17,7 +17,7 @@ $prefix: 'clabs' !default;
   position: sticky;
   padding: 0;
   margin: 0;
-  inset-block-start: 128px;
+  inset-block-start: var(--toc-sticky-offset, calc(#{$spacing-11} + #{$spacing-09}));
   list-style: none;
   min-inline-size: 10rem;
 }

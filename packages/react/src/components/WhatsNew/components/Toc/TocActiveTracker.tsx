@@ -72,15 +72,6 @@ export function TocActiveTracker({
   const labsPrefix = usePrefix();
 
   useEffect(() => {
-    const defaultContainerSelector = `.${labsPrefix}__toc-sections`;
-    const finalContainerSelector =
-      containerSelector || defaultContainerSelector;
-
-    console.log('[TocActiveTracker] Initializing with:', {
-      labsPrefix,
-      finalContainerSelector,
-    });
-
     // Small delay to ensure DOM is fully rendered
     const initTimeout = setTimeout(() => {
       // Cache class names and DOM elements
@@ -91,30 +82,14 @@ export function TocActiveTracker({
         `.${labsPrefix}__toc-active-bar`
       ) as HTMLElement;
 
-      console.log('[TocActiveTracker] DOM elements:', {
-        tocList: !!tocList,
-        activeBar: !!activeBar,
-        tocListClass,
-      });
-
       if (!tocList || !activeBar) {
-        console.warn('TocActiveTracker: Required elements not found', {
-          tocList: !!tocList,
-          activeBar: !!activeBar,
-        });
         return;
       }
 
       // Find sections - look for elements with data-toc-section attribute
       const sections = document.querySelectorAll('[data-toc-section]');
 
-      console.log('[TocActiveTracker] Sections found:', {
-        count: sections?.length,
-        selector: '[data-toc-section]',
-      });
-
       if (!sections?.length) {
-        console.warn('TocActiveTracker: No sections found');
         return;
       }
 
@@ -126,16 +101,7 @@ export function TocActiveTracker({
         return h2?.id && tocList.querySelector(`a[href="#${h2.id}"]`);
       });
 
-      console.log('[TocActiveTracker] Sections with TOC items:', {
-        count: sectionsWithTocItems.length,
-        ids: sectionsWithTocItems.map((s) => {
-          const h2 = (s as HTMLElement).querySelector('h2[id]') as HTMLElement;
-          return h2?.id;
-        }),
-      });
-
       if (!sectionsWithTocItems.length) {
-        console.warn('TocActiveTracker: No sections with matching TOC items');
         return;
       }
 
@@ -196,20 +162,12 @@ export function TocActiveTracker({
       // Check visible sections and update active state
       const checkAllSections = () => {
         if (isSmoothScrolling) {
-          console.log('[TocActiveTracker] Skipping check - smooth scrolling');
           return;
         }
 
         const viewportHeight = window.innerHeight;
         const topThreshold = viewportHeight * 0.2;
         const bottomThreshold = viewportHeight * 0.3;
-
-        console.log('[TocActiveTracker] Checking sections:', {
-          scrollY: window.scrollY,
-          viewportHeight,
-          topThreshold,
-          bottomThreshold,
-        });
 
         const visibleSections = sectionsWithTocItems
           .map((section) => {
@@ -223,11 +181,6 @@ export function TocActiveTracker({
             const isVisible =
               rect.top < viewportHeight - bottomThreshold &&
               rect.bottom > topThreshold;
-            console.log(`[TocActiveTracker] Section ${h2.id}:`, {
-              top: rect.top,
-              bottom: rect.bottom,
-              isVisible,
-            });
             return isVisible ? h2.id : null;
           })
           .filter((id): id is string => id !== null)
@@ -240,8 +193,6 @@ export function TocActiveTracker({
               : 0;
           });
 
-        console.log('[TocActiveTracker] Visible sections:', visibleSections);
-
         // Determine active section
         const activeId =
           visibleSections[0] ||
@@ -250,8 +201,6 @@ export function TocActiveTracker({
             .querySelector(`.${labsPrefix}__toc-item a`)
             ?.getAttribute('href')
             ?.slice(1);
-
-        console.log('[TocActiveTracker] Setting active:', activeId);
 
         if (activeId) {
           setActiveSection(activeId);
@@ -284,7 +233,6 @@ export function TocActiveTracker({
 
       let scrollTimeout: NodeJS.Timeout;
       const handleScroll = () => {
-        console.log('[TocActiveTracker] Scroll event fired');
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(checkAllSections, 50);
       };
@@ -293,7 +241,6 @@ export function TocActiveTracker({
         isSmoothScrolling = true;
       };
 
-      console.log('[TocActiveTracker] Adding event listeners');
       tocList.addEventListener('click', handleTocItemClick);
       window.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener(

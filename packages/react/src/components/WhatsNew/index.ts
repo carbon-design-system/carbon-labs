@@ -13,5 +13,6 @@ export {
   TocList,
   TocSection,
   TocSections,
+  TocActiveTracker,
 } from './components/Toc';
 export { ViewStack, View } from './components/ViewStack';

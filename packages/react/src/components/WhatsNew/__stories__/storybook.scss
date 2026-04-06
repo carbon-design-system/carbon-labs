@@ -144,9 +144,9 @@
 
 .TocExampleNavColumn {
   position: sticky;
-  top: 2rem;
   align-self: start;
   padding: 2rem 1rem;
+  inset-block-start: 2rem;
   max-block-size: calc(100vh - 4rem);
   overflow-y: auto;
 }

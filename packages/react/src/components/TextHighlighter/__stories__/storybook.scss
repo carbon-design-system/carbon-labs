@@ -25,18 +25,23 @@ p {
 
 // -- VersionComparison story --
 .th-compare {
-
   // min-width: 90vw;
   h6 {
     margin-block-end: $spacing-01;
   }
 }
 
-.th-compare .cds--structured-list .cds--structured-list-row .cds--structured-list-td:first-of-type {
+.th-compare
+  .cds--structured-list
+  .cds--structured-list-row
+  .cds--structured-list-td:first-of-type {
   border-inline-end: 1px solid $border-subtle-02;
 }
 
-.th-compare .cds--structured-list .cds--structured-list-row .cds--structured-list-td:not(.th-compare-title) {
+.th-compare
+  .cds--structured-list
+  .cds--structured-list-row
+  .cds--structured-list-td:not(.th-compare-title) {
   padding: $spacing-05;
   color: $text-primary;
 }

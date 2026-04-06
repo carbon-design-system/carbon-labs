@@ -17,7 +17,10 @@ $prefix: 'clabs' !default;
   position: sticky;
   padding: 0;
   margin: 0;
-  inset-block-start: var(--toc-sticky-offset, calc(#{$spacing-11} + #{$spacing-09}));
+  inset-block-start: var(
+    --toc-sticky-offset,
+    calc(#{$spacing-11} + #{$spacing-09})
+  );
   list-style: none;
   min-inline-size: 10rem;
 }
@@ -42,9 +45,9 @@ $prefix: 'clabs' !default;
   block-size: 2rem;
   border-inline-start: 0.25rem solid $border-subtle-01;
   color: $text-secondary;
-  text-decoration: none;
   inline-size: 100%;
   padding-inline-start: $spacing-05;
+  text-decoration: none;
 
   transition: color $duration-fast-02 motion(standard, productive);
 

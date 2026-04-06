@@ -2,11 +2,15 @@
 
 ## Overview
 
-This document outlines the accessibility standards and requirements for the Table of Contents (Toc) component, based on WCAG 2.0 guidelines (specifically technique G64), Carbon Design System accessibility patterns, and industry best practices.
+This document outlines the accessibility standards and requirements for the
+Table of Contents (Toc) component, based on WCAG 2.0 guidelines (specifically
+technique G64), Carbon Design System accessibility patterns, and industry best
+practices.
 
 ## WCAG 2.0 Technique G64: Providing a Table of Contents
 
-**Reference**: [WCAG 2.0 Technique G64](https://www.w3.org/TR/WCAG20-TECHS/G64.html)
+**Reference**:
+[WCAG 2.0 Technique G64](https://www.w3.org/TR/WCAG20-TECHS/G64.html)
 
 ### Purpose
 
@@ -19,9 +23,12 @@ The table of contents serves as a navigational aid that:
 
 ### Success Criteria
 
-- **WCAG 2.4.1 (Bypass Blocks)**: Level A - Provides a mechanism to bypass blocks of content
-- **WCAG 2.4.5 (Multiple Ways)**: Level AA - Provides multiple ways to locate content
-- **WCAG 2.4.8 (Location)**: Level AAA - Provides information about user's location within content
+- **WCAG 2.4.1 (Bypass Blocks)**: Level A - Provides a mechanism to bypass
+  blocks of content
+- **WCAG 2.4.5 (Multiple Ways)**: Level AA - Provides multiple ways to locate
+  content
+- **WCAG 2.4.8 (Location)**: Level AAA - Provides information about user's
+  location within content
 
 ---
 
@@ -37,7 +44,8 @@ The table of contents serves as a navigational aid that:
 
 **Requirements**:
 
-- Use semantic `<nav>` element to identify the table of contents as a navigation landmark
+- Use semantic `<nav>` element to identify the table of contents as a navigation
+  landmark
 - Screen readers can identify and navigate to this landmark region
 - Provides structural meaning to assistive technologies
 
@@ -86,7 +94,8 @@ The table of contents serves as a navigational aid that:
 **Rationale**:
 
 - Distinguishes this navigation from other `<nav>` elements on the page
-- Screen readers announce "Table of contents navigation" when users navigate to this landmark
+- Screen readers announce "Table of contents navigation" when users navigate to
+  this landmark
 - Follows Carbon Design System pattern for labeling navigation regions
 
 **Alternative**: Use `aria-labelledby` if there's a visible heading:
@@ -121,7 +130,8 @@ The table of contents serves as a navigational aid that:
 
 **Values for `aria-current`**:
 
-- `location` - Current location within the environment or context (recommended for ToC)
+- `location` - Current location within the environment or context (recommended
+  for ToC)
 - `page` - Current page within a set of pages
 - `step` - Current step within a process
 - `true` - Generic current item
@@ -163,7 +173,8 @@ The table of contents serves as a navigational aid that:
 
 ### 2. Activation
 
-**Current Implementation**: ✅ Implemented in [`TocItem.tsx`](./TocItem.tsx:41-139)
+**Current Implementation**: ✅ Implemented in
+[`TocItem.tsx`](./TocItem.tsx:41-139)
 
 **Requirements**:
 
@@ -246,23 +257,28 @@ const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
 
 ### 2. Focus After Navigation
 
-**Current Implementation**: ❌ **CRITICAL GAP** - Scrolls to target but doesn't move focus
+**Current Implementation**: ❌ **CRITICAL GAP** - Scrolls to target but doesn't
+move focus
 
-**The Problem**:
-When a keyboard/screen reader user activates a ToC link:
+**The Problem**: When a keyboard/screen reader user activates a ToC link:
 
 1. ✅ The page scrolls to the target section (visual feedback)
 2. ✅ The URL hash updates (browser history)
-3. ❌ **Focus remains on the ToC link** (keyboard/screen reader cursor doesn't move)
+3. ❌ **Focus remains on the ToC link** (keyboard/screen reader cursor doesn't
+   move)
 4. ❌ Screen reader doesn't announce the target content
 5. ❌ User must manually navigate to find where they are in the content
 
 **Why This Matters**:
 
-- **Screen reader users** hear nothing after activation - they don't know if navigation worked
-- **Keyboard users** must Tab many times to reach the content they just navigated to
-- **Violates user expectations** - clicking a link should take you to that content
-- **Poor UX** - Creates a disconnect between visual scroll and assistive technology experience
+- **Screen reader users** hear nothing after activation - they don't know if
+  navigation worked
+- **Keyboard users** must Tab many times to reach the content they just
+  navigated to
+- **Violates user expectations** - clicking a link should take you to that
+  content
+- **Poor UX** - Creates a disconnect between visual scroll and assistive
+  technology experience
 
 **The Solution**: Move focus to the target heading after navigation
 
@@ -311,8 +327,10 @@ const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
 1. **User activates ToC link** (Enter/Space/Click)
 2. **Page scrolls** to target section (visual feedback)
 3. **Focus moves** to target heading (programmatic focus)
-4. **Screen reader announces** the heading text (e.g., "Introduction, heading level 2")
-5. **User can immediately** Tab to next element or continue reading from that point
+4. **Screen reader announces** the heading text (e.g., "Introduction, heading
+   level 2")
+5. **User can immediately** Tab to next element or continue reading from that
+   point
 6. **Keyboard users** are now positioned at the content they wanted to reach
 
 **User Experience Flow**:
@@ -363,11 +381,13 @@ setTimeout(() => {
 **Testing**:
 
 1. **With Screen Reader**:
+
    - Activate a ToC link
    - Verify screen reader announces the target heading
    - Verify you can immediately Tab to next element
 
 2. **With Keyboard Only**:
+
    - Activate a ToC link with Enter
    - Verify focus indicator appears on target heading
    - Verify you can Tab to next element without searching
@@ -377,7 +397,8 @@ setTimeout(() => {
    - Verify page scrolls smoothly
    - Verify no unexpected focus behavior
 
-**Priority**: 🔴 **CRITICAL** - This is not optional for accessibility compliance
+**Priority**: 🔴 **CRITICAL** - This is not optional for accessibility
+compliance
 
 ---
 
@@ -519,20 +540,27 @@ setTimeout(() => {
 ### Required Changes
 
 - [ ] **🔴 CRITICAL: Move focus to target after navigation**
+
   - File: [`TocItem.tsx`](./TocItem.tsx)
   - Change: Implement focus management in `handleClick` function
-  - Impact: Without this, keyboard/screen reader users cannot effectively navigate content after using ToC
-  - Why: Screen readers stay on the ToC link and don't announce the target content
+  - Impact: Without this, keyboard/screen reader users cannot effectively
+    navigate content after using ToC
+  - Why: Screen readers stay on the ToC link and don't announce the target
+    content
   - Priority: **CRITICAL** - Blocks accessibility compliance
-  - See: [Focus After Navigation](#2-focus-after-navigation) section for complete implementation
+  - See: [Focus After Navigation](#2-focus-after-navigation) section for
+    complete implementation
 
 - [ ] **Add `aria-label` to TocList navigation**
+
   - File: [`TocList.tsx`](./TocList.tsx)
   - Add: `aria-label="Table of contents"` to `<nav>` element
   - Priority: HIGH
 
 - [ ] **Add `aria-current="location"` to active TocItem**
-  - File: [`TocItem.tsx`](./TocItem.tsx) or [`TocActiveTracker.tsx`](./TocActiveTracker.tsx)
+
+  - File: [`TocItem.tsx`](./TocItem.tsx) or
+    [`TocActiveTracker.tsx`](./TocActiveTracker.tsx)
   - Add: `aria-current="location"` to active link
   - Priority: HIGH
 
@@ -544,6 +572,7 @@ setTimeout(() => {
 ### Testing Checklist
 
 - [ ] **Keyboard Navigation**
+
   - [ ] Tab through all ToC links
   - [ ] Activate links with Enter key
   - [ ] Activate links with Space key
@@ -551,6 +580,7 @@ setTimeout(() => {
   - [ ] Test in both light and dark themes
 
 - [ ] **Screen Reader Testing**
+
   - [ ] Test with VoiceOver (macOS)
   - [ ] Test with JAWS (Windows)
   - [ ] Test with NVDA (Windows)
@@ -559,6 +589,7 @@ setTimeout(() => {
   - [ ] Verify list structure is announced
 
 - [ ] **Color and Contrast**
+
   - [ ] Verify text contrast ratios (4.5:1 minimum)
   - [ ] Verify focus indicator contrast (3:1 minimum)
   - [ ] Verify active indicator contrast (3:1 minimum)
@@ -736,10 +767,13 @@ export type { TocItemProps };
 
 ## Questions or Feedback
 
-For questions about these accessibility standards or to report accessibility issues, please:
+For questions about these accessibility standards or to report accessibility
+issues, please:
 
-1. Review the [Carbon Design System Accessibility Guidelines](https://carbondesignsystem.com/guidelines/accessibility/overview/)
+1. Review the
+   [Carbon Design System Accessibility Guidelines](https://carbondesignsystem.com/guidelines/accessibility/overview/)
 2. Open an issue in the project repository
 3. Contact the accessibility team
 
-**Remember**: Accessibility is not a feature—it's a fundamental requirement for inclusive design.
+**Remember**: Accessibility is not a feature—it's a fundamental requirement for
+inclusive design.

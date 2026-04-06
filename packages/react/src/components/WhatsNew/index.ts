@@ -8,7 +8,6 @@
  */
 export { Bubble, BubbleHeader } from './components/Bubble';
 export {
-  Toc,
   TocItem,
   TocList,
   TocSection,

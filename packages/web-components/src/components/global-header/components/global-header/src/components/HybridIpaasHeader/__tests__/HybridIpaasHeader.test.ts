@@ -310,6 +310,55 @@ describe('HybridIpaasHeader Component', () => {
     ]);
   });
 
+  describe('logoutCallbackEvent', () => {
+    let eventReceived: boolean;
+
+    const eventListener = () => {
+      eventReceived = true;
+    };
+
+    beforeEach(() => {
+      eventReceived = false;
+      document.addEventListener('logout-callback-event', eventListener);
+    });
+
+    afterEach(() => {
+      document.removeEventListener('logout-callback-event', eventListener);
+    });
+
+    it('should handle logoutCallbackEvent passed in', async () => {
+      fetchStub.resolves(
+        new Response(JSON.stringify(fetchResp), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        })
+      );
+      const el = await fixture<HybridIpaasHeader>(
+        html`<clabs-global-header-hybrid-ipaas
+          productName="Test Product"
+          productKey="test-productKey"
+          basePath="/base"
+          assistMeKey="assist-key"
+          logoutCallbackEvent="logout-callback-event"></clabs-global-header-hybrid-ipaas>`
+      );
+      await waitUntil(
+        () =>
+          el.headerOptions.mainSectionItems &&
+          el.headerOptions.mainSectionItems[0].text === 'Test Product',
+        'headerOptions were not updated as expected'
+      );
+
+      const footerLinks = el.headerOptions?.profileFooterLinks;
+      if (footerLinks && footerLinks.length > 0) {
+        const onClick = footerLinks[0].onClickHandler;
+        expect(typeof onClick).to.equal('function');
+        onClick && onClick();
+      }
+
+      await waitUntil(() => eventReceived, 'Custom event was not received');
+    });
+  });
+
   it('should handle notificationOpenCallback', async () => {
     fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {

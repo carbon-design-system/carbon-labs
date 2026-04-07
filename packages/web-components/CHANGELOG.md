@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.131.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.130.0...@carbon-labs/web-components@0.131.0) (2026-04-07)
+
+
+### Features
+
+* **global-header:** pre-render some header elements ([#1161](https://github.com/carbon-design-system/carbon-labs/issues/1161)) ([acac8dd](https://github.com/carbon-design-system/carbon-labs/commit/acac8dd7f5b477a538ac03f77fc47d5305d3e6fe))
+
+
+
+
+
 # [0.130.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.128.0...@carbon-labs/web-components@0.130.0) (2026-03-25)
 
 

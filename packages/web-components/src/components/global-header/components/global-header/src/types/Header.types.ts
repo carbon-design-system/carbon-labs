@@ -185,11 +185,11 @@ export interface SideNav {
   buttonLabel: string;
   sidebarLabel: string;
   isCollapsible?: boolean;
-  isRail: boolean;
+  isRail?: boolean;
   onClick?: (e: Event) => void;
-  links: SideNavLink[];
+  links?: SideNavLink[];
   groups?: GroupLinks[];
-  isChildOfHeader: boolean;
+  isChildOfHeader?: boolean;
   autoCollapseOnLeave?: boolean;
   buttonCloseLabel?: string;
 }

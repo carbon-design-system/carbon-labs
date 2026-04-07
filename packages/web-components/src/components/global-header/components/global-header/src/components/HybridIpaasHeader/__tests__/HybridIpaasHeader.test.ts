@@ -225,6 +225,10 @@ describe('HybridIpaasHeader Component', () => {
         productVersion="2.0.0"
         assistMeKey="assist-key"></clabs-global-header-hybrid-ipaas>`
     );
+    // capabilityName should be set upfront, before the options call
+    expect(el.headerOptions?.capabilityName?.label).to.equal('Test Product');
+
+    // now wait for the options call to update the remaining header options
     await waitUntil(
       () => el.headerOptions.profile?.email === 'test@example.com',
       'headerOptions were not updated as expected'
@@ -289,7 +293,9 @@ describe('HybridIpaasHeader Component', () => {
         .logoutCallback="${logoutCallbackSpy}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
-      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
     expect(el.headerOptions?.profileFooterLinks?.length).to.equal(1);
@@ -324,7 +330,9 @@ describe('HybridIpaasHeader Component', () => {
         .hasNewNotifications="${false}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
-      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
 
@@ -354,7 +362,9 @@ describe('HybridIpaasHeader Component', () => {
         .aiCallback="${aiCallbackSpy}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
-      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
 
@@ -380,7 +390,9 @@ describe('HybridIpaasHeader Component', () => {
         solisSwitcherEnabled></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
-      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
     expect(el.headerOptions?.solisConfig).to.exist;
@@ -404,7 +416,9 @@ describe('HybridIpaasHeader Component', () => {
         solisSidekickEnabled></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
-      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
 
@@ -431,7 +445,9 @@ describe('HybridIpaasHeader Component', () => {
         solisSidekickEnabled></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
-      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
     expect(el.headerOptions?.sidekickConfig).to.exist;
@@ -473,7 +489,9 @@ describe('HybridIpaasHeader Component', () => {
           aiCallbackEvent="ai-callback-event"></clabs-global-header-hybrid-ipaas>`
       );
       await waitUntil(
-        () => el.headerOptions.capabilityName?.label === 'Test Product',
+        () =>
+          el.headerOptions.mainSectionItems &&
+          el.headerOptions.mainSectionItems[0].text === 'Test Product',
         'headerOptions were not updated as expected'
       );
 
@@ -510,7 +528,9 @@ describe('HybridIpaasHeader Component', () => {
         .searchConfigs="${searchConfigs}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
-      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
 
@@ -555,7 +575,9 @@ describe('HybridIpaasHeader Component', () => {
         .capabilityProfileFooterLinks="${capabilityProfileFooterLinks}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
-      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
 
@@ -608,7 +630,9 @@ describe('HybridIpaasHeader Component', () => {
         .capabilityGlobalActions="${globalActionConfigs}"></clabs-global-header-hybrid-ipaas>`
     );
     await waitUntil(
-      () => el.headerOptions.capabilityName?.label === 'Test Product',
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
 

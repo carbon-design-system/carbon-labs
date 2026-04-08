@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.164.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.163.0...@carbon-labs/react@0.164.0) (2026-04-08)
+
+
+### Bug Fixes
+
+* added HeaderDivider between HeaderName and TrialCountdown ([#1165](https://github.com/carbon-design-system/carbon-labs/issues/1165)) ([a6433b4](https://github.com/carbon-design-system/carbon-labs/commit/a6433b4f4a5de4a60d29798c2420dd90f550bd4a))
+
+
+
+
+
+# [0.163.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.162.0...@carbon-labs/react@0.163.0) (2026-03-31)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.162.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.161.0...@carbon-labs/react@0.162.0) (2026-03-27)
 
 

@@ -7,30 +7,44 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+.handle-content {
+  display: flex;
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+.icon-container {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+}
+
 :host {
+  display: grid;
+  background: var(--cds-border-subtle);
+  cursor: ns-resize; /* Default cursor for standalone handles */
+  min-block-size: max(1px, var(--resizer-thickness));
+  min-inline-size: max(1px, var(--resizer-thickness));
   touch-action: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  display: grid;
-  background: var(--cds-border-subtle);
-  min-block-size: max(1px, var(--resizer-thickness));
-  min-inline-size: max(1px, var(--resizer-thickness));
-  cursor: ns-resize; // Default cursor for standalone handles
 
   .icon-container {
     position: relative;
 
     &::before {
-      content: '';
       position: absolute;
-      left: 0;
-      inline-size: 100%;
+      background-color: var(--resizer-grab-color);
       block-size: calc(
         max(1px, var(--resizer-thickness)) +
           max(0px, var(--resizer-grab-thickness))
       );
-      background-color: var(--resizer-grab-color);
+      content: '';
+      inline-size: 100%;
+      inset-inline-start: 0;
     }
   }
 }
@@ -66,16 +80,16 @@
     position: relative;
 
     &::before {
-      content: '';
       position: absolute;
-      top: 0;
-      left: auto;
+      background-color: var(--resizer-grab-color);
       block-size: 100%;
+      content: '';
       inline-size: calc(
         max(1px, var(--resizer-thickness)) +
           max(0px, var(--resizer-grab-thickness))
       );
-      background-color: var(--resizer-grab-color);
+      inset-block-start: 0;
+      inset-inline-start: auto;
     }
   }
 }
@@ -89,31 +103,17 @@
     position: relative;
 
     &::before {
-      content: '';
       position: absolute;
-      left: 0;
-      inline-size: 100%;
+      background-color: var(--resizer-grab-color);
       block-size: calc(
         max(1px, var(--resizer-thickness)) +
           max(0px, var(--resizer-grab-thickness))
       );
-      background-color: var(--resizer-grab-color);
+      content: '';
+      inline-size: 100%;
+      inset-inline-start: 0;
     }
   }
-}
-
-.handle-content {
-  block-size: 100%;
-  inline-size: 100%;
-  display: flex;
-}
-
-.icon-container {
-  flex-grow: 1;
-  display: flex;
-  block-size: 100%;
-  justify-content: center;
-  align-items: center;
 }
 
 .sr-only {
@@ -127,3 +127,5 @@
   inline-size: 1px;
   white-space: nowrap;
 }
+
+// Made with Bob

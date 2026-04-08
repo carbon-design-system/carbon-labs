@@ -1958,6 +1958,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/wc-resizer@workspace:packages/web-components/src/components/resizer":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/wc-resizer@workspace:packages/web-components/src/components/resizer"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.21.0"
+    lit: "npm:^3.2.1"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/wc-style-picker@workspace:^, @carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker"

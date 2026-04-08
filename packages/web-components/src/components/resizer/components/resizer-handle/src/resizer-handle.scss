@@ -1,0 +1,129 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+:host {
+  touch-action: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: grid;
+  background: var(--cds-border-subtle);
+  min-block-size: max(1px, var(--resizer-thickness));
+  min-inline-size: max(1px, var(--resizer-thickness));
+  cursor: ns-resize; // Default cursor for standalone handles
+
+  .icon-container {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      inline-size: 100%;
+      block-size: calc(
+        max(1px, var(--resizer-thickness)) +
+          max(0px, var(--resizer-grab-thickness))
+      );
+      background-color: var(--resizer-grab-color);
+    }
+  }
+}
+
+:host(:hover),
+:host([data-synthetic-hover]) {
+  @media (prefers-reduced-motion: no-preference) {
+    background-color: var(--cds-border-interactive);
+    transition: background-color var(--cds-duration-moderate-01);
+  }
+}
+
+:host(:focus) {
+  background-color: var(--cds-border-interactive);
+  outline: none;
+}
+
+:host(:active),
+:host([data-synthetic-active]) {
+  background-color: var(--cds-border-interactive);
+}
+
+:host(:focus:not(:focus-visible)) {
+  box-shadow: none;
+  outline: none;
+}
+
+:host([slot='handle-horizontal']),
+:host([orientation='horizontal']) {
+  cursor: ew-resize;
+
+  .icon-container {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: auto;
+      block-size: 100%;
+      inline-size: calc(
+        max(1px, var(--resizer-thickness)) +
+          max(0px, var(--resizer-grab-thickness))
+      );
+      background-color: var(--resizer-grab-color);
+    }
+  }
+}
+
+:host([slot='handle-vertical']),
+:host([orientation='vertical']) {
+  cursor: ns-resize;
+  min-inline-size: 0;
+
+  .icon-container {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      inline-size: 100%;
+      block-size: calc(
+        max(1px, var(--resizer-thickness)) +
+          max(0px, var(--resizer-grab-thickness))
+      );
+      background-color: var(--resizer-grab-color);
+    }
+  }
+}
+
+.handle-content {
+  block-size: 100%;
+  inline-size: 100%;
+  display: flex;
+}
+
+.icon-container {
+  flex-grow: 1;
+  display: flex;
+  block-size: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.sr-only {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  block-size: 1px;
+  clip: rect(0, 0, 0, 0);
+  inline-size: 1px;
+  white-space: nowrap;
+}

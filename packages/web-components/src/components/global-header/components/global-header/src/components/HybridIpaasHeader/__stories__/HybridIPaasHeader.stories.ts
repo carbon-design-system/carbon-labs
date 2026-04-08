@@ -201,6 +201,12 @@ const capabilityProfileFooterLinks = [
     arialLabel: 'Helpful link',
     carbonIcon: 'Launch',
   },
+  {
+    text: 'Cookie preferences',
+    href: '#',
+    arialLabel: 'Cookie preferences',
+    carbonIcon: 'Cookie',
+  },
 ];
 
 const capabilityGlobalActions: GlobalActionConfig[] = [

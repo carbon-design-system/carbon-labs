@@ -11,7 +11,7 @@ $prefix: 'cds' !default;
 
 .#{$prefix}--header__divider {
   flex-shrink: 0;
-  background: $border-subtle;
+  background: $border-subtle-01;
   block-size: convert.to-rem(24px);
   inline-size: 1px;
   margin-inline: -1px;

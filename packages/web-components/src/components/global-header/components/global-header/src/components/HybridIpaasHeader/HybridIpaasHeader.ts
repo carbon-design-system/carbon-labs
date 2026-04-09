@@ -93,10 +93,6 @@ export class HybridIpaasHeader extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // if a productName has been passed in use it immediately, without waiting for options call to return
-    if (this.productName && this.headerOptions.capabilityName) {
-      this.headerOptions.capabilityName.label = this.productName;
-    }
     document.addEventListener(CUSTOM_EVENT_NAME, this._customEventListener);
   }
 
@@ -120,6 +116,10 @@ export class HybridIpaasHeader extends LitElement {
       console.error(
         'A product key is required for the environment switcher to function.'
       );
+    }
+    // if a productName has been passed in use it immediately, without waiting for options call to return
+    if (this.productName && this.headerOptions.capabilityName) {
+      this.headerOptions.capabilityName.label = this.productName;
     }
     this.initializeHeaderOptions();
   }

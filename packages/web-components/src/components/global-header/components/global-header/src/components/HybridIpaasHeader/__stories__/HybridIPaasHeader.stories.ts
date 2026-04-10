@@ -10,7 +10,7 @@
 
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { initialize, mswLoader } from 'msw-storybook-addon';
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import { HybridIpaasHeader } from '../HybridIpaasHeader';
 import { html } from 'lit';
 import {
@@ -76,9 +76,13 @@ export const Basic: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
-          return HttpResponse.json(mockHeaderOptions);
-        }),
+        http.get(
+          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          async () => {
+            await delay();
+            return HttpResponse.json(mockHeaderOptions);
+          }
+        ),
       ],
     },
   },
@@ -97,9 +101,13 @@ export const BasicWithTrial: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
-          return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
-        }),
+        http.get(
+          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          async () => {
+            await delay();
+            return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
+          }
+        ),
       ],
     },
   },
@@ -117,9 +125,13 @@ export const Platform: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
-          return HttpResponse.json(mockHeaderOptions);
-        }),
+        http.get(
+          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          async () => {
+            await delay();
+            return HttpResponse.json(mockHeaderOptions);
+          }
+        ),
       ],
     },
   },
@@ -188,6 +200,12 @@ const capabilityProfileFooterLinks = [
     href: '#',
     arialLabel: 'Helpful link',
     carbonIcon: 'Launch',
+  },
+  {
+    text: 'Cookie preferences',
+    href: '#',
+    arialLabel: 'Cookie preferences',
+    carbonIcon: 'Cookie',
   },
 ];
 
@@ -309,9 +327,13 @@ export const RefreshOptions: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
-          return HttpResponse.json(mockHeaderOptions);
-        }),
+        http.get(
+          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          async () => {
+            await delay();
+            return HttpResponse.json(mockHeaderOptions);
+          }
+        ),
       ],
     },
   },

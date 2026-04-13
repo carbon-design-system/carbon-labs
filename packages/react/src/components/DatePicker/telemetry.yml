@@ -4,5 +4,3 @@ endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
 collect:
   - npm
   - jsx
-
-# Made with Bob

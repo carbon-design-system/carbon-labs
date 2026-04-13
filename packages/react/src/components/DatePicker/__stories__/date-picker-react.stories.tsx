@@ -357,4 +357,3 @@ export const withAILabel = (args) => {
 
 withAILabel.argTypes = { ...sharedArgTypes };
 
-// Made with Bob

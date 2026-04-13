@@ -1121,4 +1121,3 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
 
 export default CDSDatePicker;
 
-// Made with Bob

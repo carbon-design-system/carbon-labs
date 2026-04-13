@@ -15,5 +15,3 @@ find src -type f -name "*.scss" | while read -r scss_file; do
   # Copy the SCSS file
   cp "$scss_file" "es/$rel_path"
 done
-
-# Made with Bob

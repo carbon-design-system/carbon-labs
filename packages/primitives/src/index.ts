@@ -7,5 +7,3 @@
 
 // Export date picker primitives
 export * from './date-picker/index.js';
-
-// Made with Bob

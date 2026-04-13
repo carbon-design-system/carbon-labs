@@ -6,5 +6,3 @@
  */
 
 export { WithLayer } from './WithLayer';
-
-// Made with Bob

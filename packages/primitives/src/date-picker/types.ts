@@ -206,4 +206,3 @@ export interface StateConfig {
  */
 export type TransitionMap = Record<string, Partial<Record<string, string>>>;
 
-// Made with Bob

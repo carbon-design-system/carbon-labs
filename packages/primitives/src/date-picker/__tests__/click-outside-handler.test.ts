@@ -625,4 +625,3 @@ describe('ClickOutsideHandler', () => {
   });
 });
 
-// Made with Bob

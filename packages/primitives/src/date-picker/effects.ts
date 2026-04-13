@@ -115,4 +115,3 @@ export function executeEffect(
   }
 }
 
-// Made with Bob

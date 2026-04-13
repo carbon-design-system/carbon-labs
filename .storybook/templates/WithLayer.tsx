@@ -60,5 +60,3 @@ export const WithLayer: React.FC<WithLayerProps> = ({ children }) => {
     </>
   );
 };
-
-// Made with Bob

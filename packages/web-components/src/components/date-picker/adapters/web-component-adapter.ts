@@ -334,4 +334,3 @@ export class WebComponentAdapter {
   }
 }
 
-// Made with Bob

@@ -117,4 +117,3 @@ export enum DatePickerEvent {
   SET_DATE_FORMAT = 'SET_DATE_FORMAT',
 }
 
-// Made with Bob

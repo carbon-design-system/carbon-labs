@@ -61,4 +61,3 @@ export type {
   TransitionMap,
 } from './types.js';
 
-// Made with Bob

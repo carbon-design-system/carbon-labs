@@ -42,4 +42,3 @@ export {
   DatePickerEvent,
 } from '@carbon-labs/primitives/date-picker';
 
-// Made with Bob

@@ -366,4 +366,3 @@ export function Calendar({
 
 Calendar.displayName = 'Calendar';
 
-// Made with Bob

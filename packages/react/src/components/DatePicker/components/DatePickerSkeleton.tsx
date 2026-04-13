@@ -56,4 +56,3 @@ export const DatePickerSkeleton: React.FC<DatePickerSkeletonProps> = ({
 
 export default DatePickerSkeleton;
 
-// Made with Bob

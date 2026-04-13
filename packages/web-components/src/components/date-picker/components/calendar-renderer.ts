@@ -457,4 +457,3 @@ class CDSDatePickerCalendar extends LitElement {
 
 export default CDSDatePickerCalendar;
 
-// Made with Bob

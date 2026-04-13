@@ -354,4 +354,3 @@ export const DatePickerInput = forwardRef<
 
 DatePickerInput.displayName = 'DatePickerInput';
 
-// Made with Bob

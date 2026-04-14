@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.60.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.59.0...@carbon-labs/wc-global-header@0.60.0) (2026-04-09)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.59.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.58.0...@carbon-labs/wc-global-header@0.59.0) (2026-04-08)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.58.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.57.0...@carbon-labs/wc-global-header@0.58.0) (2026-04-07)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.57.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.56.0...@carbon-labs/wc-global-header@0.57.0) (2026-04-07)
+
+
+### Features
+
+* **global-header:** pre-render some header elements ([#1161](https://github.com/carbon-design-system/carbon-labs/issues/1161)) ([acac8dd](https://github.com/carbon-design-system/carbon-labs/commit/acac8dd7f5b477a538ac03f77fc47d5305d3e6fe))
+
+
+
+
+
 # [0.56.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.54.0...@carbon-labs/wc-global-header@0.56.0) (2026-03-25)
 
 **Note:** Version bump only for package @carbon-labs/wc-global-header

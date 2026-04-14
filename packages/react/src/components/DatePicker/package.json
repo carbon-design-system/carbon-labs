@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-date-picker",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -45,6 +45,6 @@
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "0.21.0"
+    "@carbon-labs/utilities": "0.22.0"
   }
 }

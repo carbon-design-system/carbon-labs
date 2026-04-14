@@ -201,12 +201,6 @@ const capabilityProfileFooterLinks = [
     arialLabel: 'Helpful link',
     carbonIcon: 'Launch',
   },
-  {
-    text: 'Cookie preferences',
-    href: '#',
-    arialLabel: 'Cookie preferences',
-    carbonIcon: 'Cookie',
-  },
 ];
 
 const capabilityGlobalActions: GlobalActionConfig[] = [
@@ -260,6 +254,26 @@ export const LogoutCallback: Story = {
           console.log(
             'Logout callback triggered!'
           )}"></clabs-global-header-hybrid-ipaas>
+    </div>
+  `,
+};
+
+export const WithCookiePrefs: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+          return HttpResponse.json(mockHeaderOptions);
+        }),
+      ],
+    },
+  },
+  render: () => html`
+    <div role="main">
+      <clabs-global-header-hybrid-ipaas
+        productName="App Connect"
+        productKey="appconnect"
+        addCookiePreferences></clabs-global-header-hybrid-ipaas>
     </div>
   `,
 };

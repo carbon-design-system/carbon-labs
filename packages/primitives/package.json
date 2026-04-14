@@ -1,0 +1,59 @@
+{
+  "name": "@carbon-labs/primitives",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Framework-agnostic primitives for Carbon Labs components",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/primitives"
+  },
+  "main": "./es/index.js",
+  "module": "./es/index.js",
+  "types": "./es/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.js",
+      "default": "./es/index.js"
+    },
+    "./date-picker": {
+      "types": "./es/date-picker/index.d.ts",
+      "import": "./es/date-picker/index.js",
+      "default": "./es/date-picker/index.js"
+    },
+    "./es/*": {
+      "types": "./es/*.d.ts",
+      "import": "./es/*",
+      "default": "./es/*"
+    }
+  },
+  "scripts": {
+    "build": "bash scripts/build.sh",
+    "clean": "rimraf es",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "files": [
+    "es/**/*.js",
+    "es/**/*.d.ts",
+    "es/**/*.scss",
+    "es/index.js",
+    "es/index.d.ts",
+    "src/**/*.ts",
+    "src/**/*.scss"
+  ],
+  "dependencies": {
+    "xstate": "^5.18.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.2"
+  }
+}

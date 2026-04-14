@@ -356,4 +356,3 @@ export const withAILabel = (args) => {
 };
 
 withAILabel.argTypes = { ...sharedArgTypes };
-

@@ -60,4 +60,3 @@ export type {
   StateConfig,
   TransitionMap,
 } from './types.js';
-

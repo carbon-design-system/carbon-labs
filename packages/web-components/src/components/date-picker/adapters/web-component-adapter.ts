@@ -333,4 +333,3 @@ export class WebComponentAdapter {
     }
   }
 }
-

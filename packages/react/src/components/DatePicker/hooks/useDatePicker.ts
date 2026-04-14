@@ -561,4 +561,3 @@ export function useDatePicker(
     calendarRef,
   };
 }
-

@@ -269,4 +269,3 @@ export class ClickOutsideHandler {
     return this.timeoutId !== null;
   }
 }
-

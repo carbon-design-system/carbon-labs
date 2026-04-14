@@ -365,4 +365,3 @@ export function Calendar({
 }
 
 Calendar.displayName = 'Calendar';
-

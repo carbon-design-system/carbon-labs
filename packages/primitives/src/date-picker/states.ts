@@ -116,4 +116,3 @@ export enum DatePickerEvent {
   SET_MAX_DATE = 'SET_MAX_DATE',
   SET_DATE_FORMAT = 'SET_DATE_FORMAT',
 }
-

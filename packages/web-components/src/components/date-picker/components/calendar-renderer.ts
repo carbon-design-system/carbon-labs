@@ -456,4 +456,3 @@ class CDSDatePickerCalendar extends LitElement {
 }
 
 export default CDSDatePickerCalendar;
-

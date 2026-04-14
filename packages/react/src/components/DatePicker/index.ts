@@ -41,4 +41,3 @@ export {
   DatePickerState,
   DatePickerEvent,
 } from '@carbon-labs/primitives/date-picker';
-

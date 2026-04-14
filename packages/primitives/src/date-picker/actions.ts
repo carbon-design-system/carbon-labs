@@ -1040,4 +1040,3 @@ export function executeAction(
   }
   return action(context, event);
 }
-

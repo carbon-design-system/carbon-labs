@@ -185,4 +185,3 @@ export function checkGuard(
   }
   return guard(context, event);
 }
-

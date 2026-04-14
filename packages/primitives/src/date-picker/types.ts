@@ -205,4 +205,3 @@ export interface StateConfig {
  * Transition map type
  */
 export type TransitionMap = Record<string, Partial<Record<string, string>>>;
-

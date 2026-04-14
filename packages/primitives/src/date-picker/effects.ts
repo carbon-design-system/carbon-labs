@@ -114,4 +114,3 @@ export function executeEffect(
     effect(context, event);
   }
 }
-

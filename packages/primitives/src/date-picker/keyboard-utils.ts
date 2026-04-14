@@ -149,4 +149,3 @@ export function mapKeyboardToStateMachineEvent(
   // Key not handled by this mapper
   return null;
 }
-

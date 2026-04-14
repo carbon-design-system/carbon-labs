@@ -313,4 +313,3 @@ export class DatePickerStateMachine {
     this.context = this.createInitialContext(initialContext || {});
   }
 }
-

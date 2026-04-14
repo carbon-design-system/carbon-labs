@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.166.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.165.0...@carbon-labs/react@0.166.0) (2026-04-14)
+
+
+### Bug Fixes
+
+* **deps:** add @carbon/utilities as direct dep ([#1180](https://github.com/carbon-design-system/carbon-labs/issues/1180)) ([9f92951](https://github.com/carbon-design-system/carbon-labs/commit/9f929518617afeb2392b40ecf30bc5b40c4e1442))
+
+
+
+
+
 # [0.165.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.164.0...@carbon-labs/react@0.165.0) (2026-04-14)
 
 

@@ -37,13 +37,13 @@
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 1e5a49a0-1bc8-4547-8a7c-4b96e1842ead --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "0.22.0",
     "@carbon/ibm-products": "^2.76.0"
   },
   "peerDependencies": {
     "@carbon/ibm-products": "^2.76.0"
   },
   "dependencies": {
+    "@carbon-labs/utilities": "^0.22.0",
     "@ibm/telemetry-js": "^1.10.2"
   }
 }

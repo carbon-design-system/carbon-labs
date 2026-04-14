@@ -677,7 +677,7 @@ describe('HybridIpaasHeader Component', () => {
 
     expect(el.headerOptions?.profileFooterLinks).to.exist;
     expect(el.headerOptions.profileFooterLinks?.length).to.equal(2);
-    expect(el.headerOptions.profileFooterLinks[0].text).to.equal(
+    expect(el.headerOptions.profileFooterLinks?.[0].text).to.equal(
       'Cookie preferences'
     );
   });

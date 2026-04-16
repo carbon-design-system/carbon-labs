@@ -1727,6 +1727,9 @@ __metadata:
   resolution: "@carbon-labs/react-tag-input@workspace:packages/react/src/components/TagInput"
   dependencies:
     "@carbon-labs/utilities": "npm:0.21.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   languageName: unknown
   linkType: soft
 
@@ -1845,6 +1848,16 @@ __metadata:
   version: 0.14.0
   resolution: "@carbon-labs/utilities@npm:0.14.0"
   checksum: 10c0/7456c7b6312dfead02a84cfc5d8c044fef996035e2443903f8dc706c30f528cd2a645c0a1308cac3264db27e3e650cb2dd6a29b0c0d1d0bc8ac2fe7e3b87fd57
+  languageName: node
+  linkType: hard
+
+"@carbon-labs/utilities@npm:0.21.0":
+  version: 0.21.0
+  resolution: "@carbon-labs/utilities@npm:0.21.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/57b347fe87f4fef0e21cde90e76fdba123af6e5781377921ca88d5351e6b679f7ed31ee0ffa2190626e6f197951f3871e4068280029dcb177621dab1ffe64f8c
   languageName: node
   linkType: hard
 

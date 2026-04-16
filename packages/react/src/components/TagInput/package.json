@@ -32,6 +32,10 @@
     "build": "node ../../../tasks/build.js",
     "clean": "rimraf es lib scss"
   },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
   "devDependencies": {
     "@carbon-labs/utilities": "0.21.0"
   }

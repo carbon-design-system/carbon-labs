@@ -1,0 +1,61 @@
+@use '@carbon/colors' as *;
+@use '@carbon/themes';
+
+// Carbon status aliases (semantic names) based on installed @carbon/colors.
+$status-green: $green-50 !default;
+$status-yellow: $yellow-30 !default;
+$status-red: $red-60 !default;
+
+// R3F canvas foundation color tokens - Dark theme (g100)
+$foundation-rack-front-dark: $gray-70; // #525252
+$foundation-rack-side-dark: $gray-80; // #393939
+$foundation-rack-top-dark: $gray-90; // #262626
+$foundation-rack-bottom-dark: $gray-90; // #262626
+$foundation-rack-back-dark: $gray-80; // #393939
+$foundation-rack-border-dark: $gray-90; // #262626
+$foundation-rack-panel-dark: $gray-60; // #6f6f6f (closed front insert)
+
+$foundation-worker-node-front-dark: $gray-70; // #525252
+$foundation-worker-node-side-dark: $gray-80; // #393939
+$foundation-worker-node-top-dark: $gray-90; // #262626
+$foundation-worker-node-bottom-dark: $gray-90; // #262626
+$foundation-worker-node-back-dark: $gray-80; // #393939
+$foundation-worker-node-buttons-dark: $gray-60; // #6f6f6f
+
+// R3F canvas foundation color tokens - Light theme (white)
+$foundation-rack-front-light: $gray-30; // #c6c6c6
+$foundation-rack-side-light: $gray-20; // #e0e0e0
+$foundation-rack-top-light: $gray-10; // #f4f4f4
+$foundation-rack-bottom-light: $gray-10; // #f4f4f4
+$foundation-rack-back-light: $gray-20; // #e0e0e0
+$foundation-rack-border-light: $gray-50; // #8d8d8d
+$foundation-rack-panel-light: $gray-40; // #a8a8a8 (closed front insert)
+
+$foundation-worker-node-front-light: $gray-30; // #c6c6c6
+$foundation-worker-node-side-light: $gray-20; // #e0e0e0
+$foundation-worker-node-top-light: $gray-10; // #f4f4f4
+$foundation-worker-node-bottom-light: $gray-10; // #f4f4f4
+$foundation-worker-node-back-light: $gray-20; // #e0e0e0
+$foundation-worker-node-buttons-light: $gray-40; // #a8a8a8
+
+// Default to dark theme for backward compatibility
+$foundation-rack-front: $foundation-rack-front-dark;
+$foundation-rack-side: $foundation-rack-side-dark;
+$foundation-rack-top: $foundation-rack-top-dark;
+$foundation-rack-bottom: $foundation-rack-bottom-dark;
+$foundation-rack-back: $foundation-rack-back-dark;
+$foundation-rack-border: $foundation-rack-border-dark;
+$foundation-rack-panel: $foundation-rack-panel-dark;
+
+$foundation-worker-node-front: $foundation-worker-node-front-dark;
+$foundation-worker-node-side: $foundation-worker-node-side-dark;
+$foundation-worker-node-top: $foundation-worker-node-top-dark;
+$foundation-worker-node-bottom: $foundation-worker-node-bottom-dark;
+$foundation-worker-node-back: $foundation-worker-node-back-dark;
+$foundation-worker-node-buttons: $foundation-worker-node-buttons-dark;
+
+// Status colors (same for both themes)
+$foundation-worker-node-status: $status-green;
+$foundation-worker-node-status-green: $status-green;
+$foundation-worker-node-status-yellow: $status-yellow;
+$foundation-worker-node-status-red: $status-red;

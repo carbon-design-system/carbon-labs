@@ -1697,6 +1697,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-tag-input@workspace:packages/react/src/components/TagInput":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-tag-input@workspace:packages/react/src/components/TagInput"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.21.0"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter"

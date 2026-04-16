@@ -69,6 +69,8 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Array })
   capabilityProfileFooterLinks: ProfileFooterLinks[] = [];
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
+  @property({ type: Boolean }) addCookiePreferences = false;
+
   @state()
   headerOptions: HeaderProps = {
     ...INITIAL_AUTOMATION_HEADER_PROPS,
@@ -158,6 +160,27 @@ export class HybridIpaasHeader extends LitElement {
     return response.json();
   }
 
+  private openCookiePrefs() {
+    // "click" on the hidden cookie preferences button
+    const teconsent = document.querySelector('#teconsent a');
+    if (teconsent) {
+      teconsent.click();
+    } else {
+      // backup option in case the cookie script didn't load for some reason
+      window.open('https://www.ibm.com/privacy');
+    }
+  }
+
+  private initCookiePrefsLink() {
+    const footerLink = {
+      text: 'Cookie preferences',
+      arialLabel: 'Cookie preferences',
+      carbonIcon: 'Cookie',
+      onClickHandler: this.openCookiePrefs,
+    };
+    return footerLink;
+  }
+
   private initLogoutLink() {
     const footerLink: ProfileFooterLinks = {
       text: 'Log out',
@@ -245,18 +268,20 @@ export class HybridIpaasHeader extends LitElement {
       label: this.productName ? this.productName : '',
     };
 
+    if (this.addCookiePreferences && baseOptions.profileFooterLinks) {
+      baseOptions.profileFooterLinks.push(this.initCookiePrefsLink());
+    }
+
+    // remove 'log out' entry if it comes from the service to avoid duplicate
     const logoutIndex = baseOptions.profileFooterLinks?.findIndex(
       (link) => link.text.toLowerCase() === 'log out'
     );
     if (logoutIndex !== undefined && logoutIndex > -1) {
-      baseOptions.profileFooterLinks?.splice(
-        logoutIndex,
-        1,
-        this.initLogoutLink()
-      );
-    } else {
-      baseOptions.profileFooterLinks?.push(this.initLogoutLink());
-    } // override the 'logout' object if it comes from the service to avoid duplicate
+      baseOptions.profileFooterLinks?.splice(logoutIndex, 1);
+    }
+
+    // add our own 'log out' entry at the end of the list
+    baseOptions.profileFooterLinks?.push(this.initLogoutLink());
 
     // The assumption is that input props take priority over values provided by the service
     const updatedOptions: HeaderProps = {

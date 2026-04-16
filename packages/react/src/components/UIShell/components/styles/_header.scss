@@ -83,6 +83,10 @@ $prefix: 'cds' !default;
   @include custom-property.declaration('link-focus-text-color', $focus);
 }
 
+.#{$prefix}--header .#{$prefix}--header__name {
+  padding-inline-end: $spacing-05;
+}
+
 //----------------------------------------------------------------------------
 // Menu button inside Header
 //----------------------------------------------------------------------------

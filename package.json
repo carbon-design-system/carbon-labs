@@ -14,7 +14,7 @@
     "packages/*/**"
   ],
   "scripts": {
-    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' && lerna run build --scope '@carbon-labs/vscode-snippets' && lerna run build --scope '@carbon-labs/react' && lerna run build --scope '@carbon-labs/web-components'",
+    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' && lerna run build --scope '@carbon-labs/primitives' && lerna run build --scope '@carbon-labs/vscode-snippets' && lerna run build --scope '@carbon-labs/react' && lerna run build --scope '@carbon-labs/web-components'",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "ci-check": "yarn run format:diff && yarn lint:license && yarn lint && yarn lint:styles",
@@ -41,8 +41,8 @@
     "@carbon/icons-react": "^11.65.0",
     "@carbon/react": "^1.95.0",
     "@carbon/styles": "^1.94.0",
-    "@commitlint/cli": "^19.0.0",
-    "@commitlint/config-conventional": "^19.0.0",
+    "@commitlint/cli": "^20.0.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",

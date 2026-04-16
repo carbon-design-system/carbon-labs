@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react",
-  "version": "0.159.0",
+  "version": "0.167.0",
   "private": true,
   "type": "module",
   "description": "React components for Carbon Labs",
@@ -41,7 +41,7 @@
     "@storybook/addon-a11y": "^9.1.2",
     "@storybook/addon-docs": "^9.1.2",
     "@storybook/addon-onboarding": "^9.1.2",
-    "@storybook/addon-webpack5-compiler-babel": "^3.0.6",
+    "@storybook/addon-webpack5-compiler-babel": "^4.0.0",
     "@storybook/react-webpack5": "^9.1.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.0.0",

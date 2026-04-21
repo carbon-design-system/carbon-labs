@@ -1,4 +1,13 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 export type CanvasInteractionLayer = "primary" | "core" | "foundation";
 
@@ -19,7 +28,7 @@ export interface CanvasInteractionApi {
 export function normalizeHoveredItem(
   item: CanvasHoveredItem | null | undefined,
 ): CanvasHoveredItem | null {
-  if (!item?.id || !item?.layer) return null;
+  if (!item?.id || !item?.layer) {return null;}
   return { id: item.id, layer: item.layer };
 }
 
@@ -44,13 +53,13 @@ export function createCanvasInteractionApi(
     getHoveredItem: () => hoveredItem,
     setHoveredItem: (item) => {
       const normalized = normalizeHoveredItem(item);
-      if (isSameHoveredItem(hoveredItem, normalized)) return;
+      if (isSameHoveredItem(hoveredItem, normalized)) {return;}
       hoveredItem = normalized;
       notify();
     },
     publishHoveredItem: (item) => {
       const normalized = normalizeHoveredItem(item);
-      if (isSameHoveredItem(hoveredItem, normalized)) return;
+      if (isSameHoveredItem(hoveredItem, normalized)) {return;}
       hoveredItem = normalized;
       notify();
       onHoveredItemChange?.(normalized);
@@ -91,7 +100,7 @@ export function useCanvasItemHover(
 
     const syncFromStore = (item: CanvasHoveredItem | null) => {
       const nextMatch = item?.id === id && item?.layer === layer;
-      if (latestMatchRef.current === nextMatch) return;
+      if (latestMatchRef.current === nextMatch) {return;}
       latestMatchRef.current = nextMatch;
       setIsHovered(nextMatch);
     };

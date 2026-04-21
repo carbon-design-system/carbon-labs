@@ -1,3 +1,14 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+
 import * as colors from '@carbon/colors';
 
 export type ColorToken =
@@ -74,10 +85,19 @@ export const BLOCK_COLOR_THEMES: Record<ColorToken, BlockColorTheme> = {
   },
 };
 
+/**
+ *
+ * @param value
+ */
 export function isColorToken(value: string): value is ColorToken {
   return Object.hasOwn(BLOCK_COLOR_THEMES, value);
 }
 
+/**
+ *
+ * @param token
+ * @param _theme
+ */
 export function getBlockColorTheme(
   token: ColorToken,
   _theme: Theme = 'dark',

@@ -1,9 +1,24 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+
 import { useMemo, useState } from 'react';
 import { BLOCK_HEIGHTS } from '../../constants';
 
 const PRIMARY_LAYER_GAP_REM = 0.25;
 const MAX_PRIMARY_LAYER_COLUMN_HEIGHT_REM = 14;
 
+/**
+ *
+ * @param size
+ */
 function getPrimaryBlockHeightRem(size) {
   return BLOCK_HEIGHTS[size] ?? BLOCK_HEIGHTS.md;
 }
@@ -11,6 +26,8 @@ function getPrimaryBlockHeightRem(size) {
 /**
  * Calculate columns for blocks with a given max column height.
  * Uses first-fit bin-packing strategy.
+ * @param blocks
+ * @param maxColumnHeight
  */
 function calculateColumnsWithHeight(blocks, maxColumnHeight) {
   const columns = [];
@@ -59,6 +76,8 @@ function calculateColumnsWithHeight(blocks, maxColumnHeight) {
  * Optimize column distribution for a single page by progressively reducing max height.
  * Tries to maximize columns (up to 8) while maintaining array order.
  * Based on CSS version algorithm from packages/ui/src/canvas/src/VisualizationCanvas.tsx
+ * @param blocks
+ * @param maxColumnsPerPage
  */
 function optimizeColumnsForPage(blocks, maxColumnsPerPage = 8) {
   const MIN_COLUMN_HEIGHT = 1.5; // At least one small block
@@ -88,6 +107,10 @@ function optimizeColumnsForPage(blocks, maxColumnsPerPage = 8) {
   return columns;
 }
 
+/**
+ *
+ * @param columns
+ */
 function flattenColumns(columns) {
   const pageBlocks = [];
 
@@ -107,6 +130,9 @@ function flattenColumns(columns) {
  * Apply bin-packing and pagination to blocks without columnIndex.
  * Returns array of pages, where each page is an array of blocks.
  * Based on CSS version algorithm from packages/ui/src/canvas/src/VisualizationCanvas.tsx
+ * @param primaryLayer
+ * @param maxColumnsPerPage
+ * @param paginate
  */
 function applyBinPackingAndPagination(
   primaryLayer,
@@ -153,6 +179,10 @@ function applyBinPackingAndPagination(
   return pages.length > 0 ? pages : [[]];
 }
 
+/**
+ *
+ * @param primaryLayer
+ */
 function paginatePrimaryLayerByColumnHeight(primaryLayer) {
   if (!Array.isArray(primaryLayer) || primaryLayer.length === 0) {
     return [[]];
@@ -179,7 +209,7 @@ function paginatePrimaryLayerByColumnHeight(primaryLayer) {
       const blockHeight = getPrimaryBlockHeightRem(block.size);
       let targetPageIndex = 0;
 
-      while (true) {
+      while (targetPageIndex <= columnPages.length) {
         const currentHeight = pageHeights[targetPageIndex] ?? 0;
         const nextHeight =
           currentHeight === 0
@@ -217,6 +247,12 @@ function paginatePrimaryLayerByColumnHeight(primaryLayer) {
   );
 }
 
+/**
+ *
+ * @param primaryLayer
+ * @param enabled
+ * @param maxColumnsPerPage
+ */
 export function usePrimaryLayerCarousel(
   primaryLayer,
   enabled = true,
@@ -249,8 +285,12 @@ export function usePrimaryLayerCarousel(
     [activePageIndex, paginatedPrimaryLayer],
   );
   const hasPages = pageCount > 0;
+  /**
+   *
+   * @param index
+   */
   const wrapIndex = (index) => {
-    if (!hasPages) return 0;
+    if (!hasPages) {return 0;}
     return ((index % pageCount) + pageCount) % pageCount;
   };
 
@@ -259,8 +299,18 @@ export function usePrimaryLayerCarousel(
     primaryLayerForRender,
     pageCount,
     activePageIndex,
+    /**
+     *
+     */
     goToPreviousPage: () => setPageIndex((prev) => wrapIndex(prev - 1)),
+    /**
+     *
+     */
     goToNextPage: () => setPageIndex((prev) => wrapIndex(prev + 1)),
+    /**
+     *
+     * @param nextPageIndex
+     */
     goToPage: (nextPageIndex) => setPageIndex(wrapIndex(nextPageIndex)),
   };
 }

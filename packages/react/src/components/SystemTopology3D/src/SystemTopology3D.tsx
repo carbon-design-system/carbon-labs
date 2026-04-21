@@ -1,3 +1,12 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import React, {
   memo,
   useMemo,
@@ -142,7 +151,7 @@ function SystemTopology3DContent({
       effectivePrimaryColumnCount;
   useLayoutEffect(() => {
     const shellElement = canvasShellRef.current;
-    if (!shellElement) return;
+    if (!shellElement) {return;}
 
     const updateCanvasWidth = (nextWidth: number) => {
       setCanvasWidth((currentWidth) =>
@@ -174,7 +183,7 @@ function SystemTopology3DContent({
   }, []);
 
   const handleInitialSceneReady = useCallback(() => {
-    if (hasStartedIntroRef.current || !hasInitializedRef.current) return;
+    if (hasStartedIntroRef.current || !hasInitializedRef.current) {return;}
     hasStartedIntroRef.current = true;
     setIsPlayingIntroAnimation(true);
   }, []);
@@ -323,9 +332,9 @@ function SystemTopology3DContent({
   );
 
   useEffect(() => {
-    if (!focusedIdForRender) return;
+    if (!focusedIdForRender) {return;}
     const focusedItem = a11yItemById.get(focusedIdForRender);
-    if (!focusedItem) return;
+    if (!focusedItem) {return;}
     publishHoveredItem({ id: focusedItem.id, layer: focusedItem.layer });
   }, [a11yItemById, focusedIdForRender, publishHoveredItem]);
 
@@ -416,6 +425,7 @@ function SystemTopology3DContent({
         <Canvas
           key={canvasKey}
           aria-hidden={enableA11y ? 'true' : undefined}
+          // eslint-disable-next-line react/forbid-component-props
           style={{ width: '100%', height: '100%' }}
           camera={{
             fov: CAMERA_CONFIG.fov,
@@ -481,7 +491,7 @@ function SystemTopology3D({
   }, [onHoveredItemChange]);
 
   useEffect(() => {
-    if (!canSyncExternalHover || hoveredItem === undefined) return;
+    if (!canSyncExternalHover || hoveredItem === undefined) {return;}
     interactionApiRef.current.setHoveredItem(normalizeHoveredItem(hoveredItem));
   }, [canSyncExternalHover, hoveredItem]);
 

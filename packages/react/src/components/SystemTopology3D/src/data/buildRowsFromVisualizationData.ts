@@ -1,3 +1,14 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+
 import {
   type CanvasRows,
   type CoreLayerConfig,
@@ -16,6 +27,10 @@ interface BuildRowsInput {
   foundationConfig?: FoundationConfig;
 }
 
+/**
+ *
+ * @param input
+ */
 export function buildRowsFromVisualizationData(
   input: BuildRowsInput = {}
 ): CanvasRows {
@@ -39,7 +54,7 @@ export function buildRowsFromVisualizationData(
   // Distribute blocks into columns based on columnIndex (defaults to 0 if undefined)
   for (const block of primaryLayer) {
     const colIndex = Math.max(0, Number(block.columnIndex ?? 0));
-    if (!primaryColumns[colIndex]) primaryColumns[colIndex] = [];
+    if (!primaryColumns[colIndex]) {primaryColumns[colIndex] = [];}
 
     // Default to blue color theme if no color is specified
     const colorTheme =

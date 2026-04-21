@@ -1,14 +1,20 @@
 /**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
  * Alternative mock account data for the R3F canvas WITHOUT columnIndex.
  * This demonstrates blocks that will be automatically positioned by the layout system.
  * When columnIndex is omitted, blocks are automatically distributed across
  * responsive columns by the primary-layer auto-placement logic.
  */
 import type {
-  CoreLayerConfig,
-  FoundationConfig,
   PrimaryLayerBlock,
-  TextBracketConfig,
   VisualizationData,
 } from "../types";
 import { BLOCK_SIZES, FOUNDATION_RACK_STATES } from "../types";

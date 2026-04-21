@@ -1,3 +1,14 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable react/no-unknown-property */
+
 import React, { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import type { AlignedGroupProps, SceneBounds } from './types/component-props';
@@ -13,12 +24,12 @@ function AlignedGroup({
 	const contentRef = useRef<THREE.Group>(null!);
 
 	useEffect(() => {
-		if (!groupRef.current || !contentRef.current) return;
+		if (!groupRef.current || !contentRef.current) {return;}
 
 		groupRef.current.position.set(0, 0, 0);
 
 		const publishBounds = () => {
-			if (!contentRef.current) return;
+			if (!contentRef.current) {return;}
 
 			const box = new THREE.Box3().setFromObject(contentRef.current);
 			if (box.isEmpty()) {

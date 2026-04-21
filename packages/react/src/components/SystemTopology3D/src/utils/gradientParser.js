@@ -1,3 +1,14 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+
 import * as THREE from "three";
 
 // Cache for gradient textures
@@ -6,6 +17,7 @@ const gradientCache = new Map();
 /**
  * Creates a Three.js texture from a CSS gradient string
  * Uses a hidden canvas element to render the gradient
+ * @param cssGradient
  */
 export const createGradientTexture = (cssGradient) => {
   // Check cache first
@@ -48,8 +60,8 @@ export const createGradientTexture = (cssGradient) => {
 
   for (let i = 0; i < match[1].length; i++) {
     const char = match[1][i];
-    if (char === "(") depth++;
-    if (char === ")") depth--;
+    if (char === "(") {depth++;}
+    if (char === ")") {depth--;}
 
     if (char === "," && depth === 0) {
       params.push(current.trim());
@@ -58,7 +70,7 @@ export const createGradientTexture = (cssGradient) => {
       current += char;
     }
   }
-  if (current) params.push(current.trim());
+  if (current) {params.push(current.trim());}
 
   // Parse angle
   let angle = 180;
@@ -120,6 +132,7 @@ export const createGradientTexture = (cssGradient) => {
 
 /**
  * Helper to check if a value is a CSS gradient string
+ * @param value
  */
 export const isGradient = (value) => {
   return typeof value === "string" && value.includes("gradient(");

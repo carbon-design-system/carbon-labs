@@ -1,3 +1,14 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+
 export const SR_ONLY_STYLE = Object.freeze({
   position: 'absolute',
   width: '1px',
@@ -24,6 +35,13 @@ export const DEFAULT_A11Y_COPY = Object.freeze({
   primaryCarouselPageLabel: 'Go to primary-layer page {position} of {total}',
 });
 
+/**
+ *
+ * @param i18n
+ * @param key
+ * @param fallback
+ * @param params
+ */
 export function resolveI18nMessage(i18n, key, fallback, params) {
   const value = i18n?.[key];
   const template =
@@ -32,7 +50,7 @@ export function resolveI18nMessage(i18n, key, fallback, params) {
       : typeof value === 'string'
       ? value
       : fallback;
-  if (typeof template !== 'string' || !params) return template;
+  if (typeof template !== 'string' || !params) {return template;}
   return template.replace(/\{(\w+)\}/g, (_, token) => {
     const replacement = params[token];
     return replacement == null ? `{${token}}` : String(replacement);

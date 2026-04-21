@@ -1,3 +1,12 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import React, { Suspense, useMemo } from 'react';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
 import type { SceneBounds, SceneProps } from './types/component-props';
@@ -18,7 +27,7 @@ const BRACKET_BOTTOM_PADDING = 2.25;
  * Determines if a row contains primary layer blocks
  */
 function isPrimaryLayerRow(rowData: any): boolean {
-  if (!rowData || rowData.length === 0) return false;
+  if (!rowData || rowData.length === 0) {return false;}
   // Primary layer rows are not long blocks (core) and not framed (foundation)
   const isLongBlock =
     rowData.length === 1 &&
@@ -37,7 +46,7 @@ function isPrimaryLayerRow(rowData: any): boolean {
  * Determines if a row contains core layer blocks (long blocks)
  */
 function isCoreLayerRow(rowData: any): boolean {
-  if (!rowData || rowData.length === 0) return false;
+  if (!rowData || rowData.length === 0) {return false;}
   return (
     rowData.length === 1 &&
     rowData[0].length === 1 &&
@@ -49,7 +58,7 @@ function isCoreLayerRow(rowData: any): boolean {
  * Determines if a row contains foundation layer blocks (framed)
  */
 function isFoundationLayerRow(rowData: any): boolean {
-  if (!rowData || rowData.length === 0) return false;
+  if (!rowData || rowData.length === 0) {return false;}
   return rowData.every(
     (column: any) =>
       Array.isArray(column) &&
@@ -63,7 +72,7 @@ function buildLogicalSceneBounds(
   primaryColumnCount,
   hasTextBracket: boolean
 ): SceneBounds | null {
-  if (!resolvedRows || resolvedRows.length === 0) return null;
+  if (!resolvedRows || resolvedRows.length === 0) {return null;}
 
   const primaryWorldWidth =
     Math.max(1, primaryColumnCount) * COLUMN_SPACING - COLUMN_GAP;

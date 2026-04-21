@@ -1,4 +1,13 @@
 /**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
  * Mock account data for the R3F canvas.
  * Structured like `packages/canvas/src/data/mockAccountData.ts`.
  */

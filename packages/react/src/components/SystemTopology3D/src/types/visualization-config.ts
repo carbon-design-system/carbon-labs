@@ -1,3 +1,14 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+
 import type { BlockColorTheme, ColorToken } from './color-tokens';
 
 export type BlockSize = 'sm' | 'md' | 'lg';
@@ -99,6 +110,12 @@ export const DEFAULT_FOUNDATION_RACK = Object.freeze({
   drawerSlideDistance: 3,
 } as const);
 
+/**
+ *
+ * @param size
+ * @param text
+ * @param theme
+ */
 export function createPrimaryBlock(
   size: BlockSize,
   text = 'Account',
@@ -111,6 +128,10 @@ export function createPrimaryBlock(
   };
 }
 
+/**
+ *
+ * @param overrides
+ */
 export function createCoreBlock(
   overrides: Partial<
     CoreLayerConfig & {
@@ -133,6 +154,11 @@ export function createCoreBlock(
   };
 }
 
+/**
+ *
+ * @param variant
+ * @param overrides
+ */
 export function createFoundationRackBlock(
   variant: FoundationRackVariant = FOUNDATION_RACK_STATES.closed,
   overrides: Partial<CanvasBlock> = {},

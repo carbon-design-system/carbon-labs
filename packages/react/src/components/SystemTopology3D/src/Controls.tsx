@@ -1,3 +1,12 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import React, {
   useCallback,
   useEffect,
@@ -103,7 +112,7 @@ function Controls({
 
   const getTargetVector = useCallback(() => {
     const controlsTarget = controlsRef.current?.target;
-    if (controlsTarget) return controlsTarget;
+    if (controlsTarget) {return controlsTarget;}
     return { x: target[0], y: target[1], z: target[2] };
   }, [target]);
 
@@ -122,7 +131,7 @@ function Controls({
   }, [camera, getTargetVector]);
 
   const queueReport = useCallback(() => {
-    if (!onChange || !controlsRef.current) return;
+    if (!onChange || !controlsRef.current) {return;}
     const target = controlsRef.current.target;
     // Snapshot current camera/target; overwritten if another change happens
     // before the next animation frame.
@@ -138,10 +147,10 @@ function Controls({
       target: { x: target.x, y: target.y, z: target.z },
     };
     // Coalesce rapid control events into a single report per frame.
-    if (rafRef.current) return;
+    if (rafRef.current) {return;}
     rafRef.current = requestAnimationFrame(() => {
       rafRef.current = 0;
-      if (!pendingRef.current) return;
+      if (!pendingRef.current) {return;}
       onChange(pendingRef.current);
       pendingRef.current = null;
     });
@@ -189,8 +198,8 @@ function Controls({
   );
 
   const getFittedCameraPosition = useCallback(() => {
-    if (!sceneBounds) return;
-    if (!(camera instanceof THREE.PerspectiveCamera)) return;
+    if (!sceneBounds) {return;}
+    if (!(camera instanceof THREE.PerspectiveCamera)) {return;}
 
     // Store camera as PerspectiveCamera to help TypeScript narrow the type
     const perspectiveCamera = camera as THREE.PerspectiveCamera;
@@ -250,7 +259,7 @@ function Controls({
 
   const applyFittedCamera = useCallback(() => {
     const nextCameraPosition = getFittedCameraPosition();
-    if (!nextCameraPosition) return;
+    if (!nextCameraPosition) {return;}
 
     applyCameraPosition(
       nextCameraPosition.x,
@@ -262,7 +271,7 @@ function Controls({
 
   const getIntroCameraPositions = useCallback(() => {
     const fittedPosition = getFittedCameraPosition();
-    if (!fittedPosition) return null;
+    if (!fittedPosition) {return null;}
 
     const targetVector = new THREE.Vector3(...target);
     const fittedOffset = fittedPosition.clone().sub(targetVector);
@@ -288,7 +297,7 @@ function Controls({
   }, [queueReport]);
 
   useLayoutEffect(() => {
-    if (hasPrimedIntroCameraRef.current) return;
+    if (hasPrimedIntroCameraRef.current) {return;}
 
     const introPositions = getIntroCameraPositions();
     if (introPositions) {
@@ -300,7 +309,7 @@ function Controls({
 
   useEffect(() => {
     const controls = controlsRef.current;
-    if (!controls) return;
+    if (!controls) {return;}
 
     const [nextX, nextY, nextZ] = target;
     const previousTarget = previousTargetRef.current;
@@ -330,7 +339,7 @@ function Controls({
   }, [syncBaseOrbitFromCamera]);
 
   useEffect(() => {
-    if (playIntroAnimation || !sceneBounds) return;
+    if (playIntroAnimation || !sceneBounds) {return;}
     const nextFitKey = JSON.stringify({
       sceneBounds,
       width: size.width,
@@ -358,12 +367,12 @@ function Controls({
       return;
     }
 
-    if (hasStartedCurrentIntroRef.current) return;
+    if (hasStartedCurrentIntroRef.current) {return;}
 
     // Only start the animation, don't reposition the camera
     // The camera is already at introStartPosition from useLayoutEffect
     const introPositions = getIntroCameraPositions();
-    if (!introPositions) return;
+    if (!introPositions) {return;}
     hasStartedCurrentIntroRef.current = true;
 
     introRef.current = {
@@ -420,7 +429,7 @@ function Controls({
       return;
     }
 
-    if (!enableMouseTracking || isUserInteractingRef.current) return;
+    if (!enableMouseTracking || isUserInteractingRef.current) {return;}
 
     const current = currentRotateRef.current;
     targetRotateRef.current = isPointerInside

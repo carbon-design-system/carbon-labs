@@ -1,4 +1,14 @@
-/// <reference path="./global.d.ts" />
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+import type {} from './global';
 import type { CanvasBlockSize } from './types';
 
 export const ANIM_DURATION = 0.2;
@@ -59,12 +69,20 @@ export const BLOCK_DIMENSIONS = {
   lg: { width: COLUMN_WIDTH, height: BLOCK_HEIGHTS.lg, depth: BLOCK_DEPTH },
 } as const;
 
+/**
+ *
+ * @param columnCount
+ */
 export function getPrimaryCenterX(columnCount: number): number {
   const safeColumnCount = Math.max(1, Number(columnCount) || 1);
   return ((safeColumnCount - 1) * COLUMN_SPACING) / 2;
 }
 
 // Helper function to create responsive dimensions object
+/**
+ *
+ * @param scaleFactor
+ */
 export function createResponsiveDimensions(scaleFactor = 1.0) {
   const COLUMN_WIDTH = BASE_COLUMN_WIDTH * scaleFactor;
   const COLUMN_GAP = BASE_COLUMN_GAP * scaleFactor;

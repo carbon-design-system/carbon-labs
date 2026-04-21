@@ -6,6 +6,7 @@
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description, react/prop-types */
 
 import React from 'react';
 import { render, screen } from '@testing-library/react';
@@ -15,6 +16,12 @@ import SystemTopology3D from '../src/SystemTopology3D';
 const mockSceneProps = [];
 
 jest.mock('@react-three/fiber', () => ({
+  /**
+   *
+   * @param root0
+   * @param root0.children
+   * @param root0.'aria-hidden'
+   */
   Canvas: ({ children, 'aria-hidden': ariaHidden }) => (
     <div data-testid="r3f-canvas" aria-hidden={ariaHidden}>
       {children}
@@ -28,14 +35,27 @@ jest.mock('@react-three/drei', () => ({
 
 jest.mock('../src/Scene', () => ({
   __esModule: true,
+  /**
+   *
+   * @param props
+   */
   default: (props) => {
     mockSceneProps.push(props);
     return <div data-testid="system-topology-scene" />;
   },
 }));
 
+/**
+ *
+ */
 class ResizeObserverMock {
+  /**
+   *
+   */
   observe() {}
+  /**
+   *
+   */
   disconnect() {}
 }
 

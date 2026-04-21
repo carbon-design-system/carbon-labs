@@ -1,9 +1,28 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+
 import { useCallback, useId, useMemo, useRef, useState } from "react";
 import {
   buildPrimaryNavigation,
   getNextPrimaryFocusId,
 } from "./primaryNavigation";
 
+/**
+ *
+ * @param root0
+ * @param root0.a11yItems
+ * @param root0.focusedId
+ * @param root0.onFocusedIdChange
+ * @param root0.enableA11y
+ */
 export function useCanvasA11y({
   a11yItems,
   focusedId,
@@ -20,7 +39,7 @@ export function useCanvasA11y({
 
   const requestedFocusedId = focusedId ?? internalFocusedId;
   const resolvedFocusedId = useMemo(() => {
-    if (requestedFocusedId == null) return null;
+    if (requestedFocusedId == null) {return null;}
     const exists = a11yItems.allItems.some((item) => item.id === requestedFocusedId);
     return exists ? requestedFocusedId : null;
   }, [a11yItems.allItems, requestedFocusedId]);
@@ -57,22 +76,22 @@ export function useCanvasA11y({
 
   const focusA11yItemById = useCallback(
     (id) => {
-      if (!id) return;
+      if (!id) {return;}
       setFocusedBlock(id);
       a11yButtonRefs.current.get(id)?.focus();
     },
     [setFocusedBlock],
   );
   const focusGroupByLayer = useCallback((layer) => {
-    if (!layer) return;
+    if (!layer) {return;}
     groupButtonRefs.current.get(layer)?.focus();
   }, []);
 
   const getLayerItems = useCallback(
     (layer) => {
-      if (layer === "primary") return a11yItems.primaryItems;
-      if (layer === "core") return a11yItems.coreItems;
-      if (layer === "foundation") return a11yItems.foundationItems;
+      if (layer === "primary") {return a11yItems.primaryItems;}
+      if (layer === "core") {return a11yItems.coreItems;}
+      if (layer === "foundation") {return a11yItems.foundationItems;}
       return [];
     },
     [a11yItems.coreItems, a11yItems.foundationItems, a11yItems.primaryItems],
@@ -91,7 +110,7 @@ export function useCanvasA11y({
   const handleLayerGroupActivate = useCallback(
     (layer) => {
       const layerItems = getLayerItems(layer);
-      if (layerItems.length === 0) return;
+      if (layerItems.length === 0) {return;}
       setIsFocusWithinCanvas(true);
       setFocusedGroupLayer(null);
       setActiveLayer(layer);
@@ -117,7 +136,7 @@ export function useCanvasA11y({
 
   const handleCanvasKeyDown = useCallback(
     (event) => {
-      if (!enableA11y) return;
+      if (!enableA11y) {return;}
       const { key } = event;
 
       if (key === "Escape" && activeLayer) {
@@ -129,7 +148,7 @@ export function useCanvasA11y({
         return;
       }
 
-      if (activeLayer !== "primary") return;
+      if (activeLayer !== "primary") {return;}
 
       if (
         key === "ArrowUp" ||
@@ -163,7 +182,7 @@ export function useCanvasA11y({
 
   const handleCanvasBlur = useCallback(
     (event) => {
-      if (!enableA11y) return;
+      if (!enableA11y) {return;}
       const nextFocusedElement = event.relatedTarget;
       if (
         nextFocusedElement &&
@@ -179,12 +198,12 @@ export function useCanvasA11y({
   );
 
   const handleCanvasFocus = useCallback(() => {
-    if (!enableA11y) return;
+    if (!enableA11y) {return;}
     setIsFocusWithinCanvas(true);
   }, [enableA11y]);
 
   const handleAuxiliaryControlFocus = useCallback(() => {
-    if (!enableA11y) return;
+    if (!enableA11y) {return;}
     // Auxiliary controls (like carousel SR-only buttons) should not keep
     // a layer/group focus ring active in the 3D scene.
     setIsFocusWithinCanvas(true);

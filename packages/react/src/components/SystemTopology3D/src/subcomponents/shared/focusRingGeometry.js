@@ -1,7 +1,26 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+
 import * as THREE from "three";
 
 const focusRingGeometryCache = new Map();
 
+/**
+ *
+ * @param width
+ * @param height
+ * @param root0
+ * @param root0.thickness
+ * @param root0.padding
+ */
 export function getFocusRingGeometry(
   width,
   height,
@@ -9,7 +28,7 @@ export function getFocusRingGeometry(
 ) {
   const key = `${width}|${height}|${thickness}|${padding}`;
   const cached = focusRingGeometryCache.get(key);
-  if (cached) return cached;
+  if (cached) {return cached;}
 
   const outerWidth = Math.max(0.1, width + padding * 2);
   const outerHeight = Math.max(0.1, height + padding * 2);

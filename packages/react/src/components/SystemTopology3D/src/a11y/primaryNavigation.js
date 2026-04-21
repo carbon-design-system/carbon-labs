@@ -1,3 +1,18 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+
+/**
+ *
+ * @param primaryItems
+ */
 export function buildPrimaryNavigation(primaryItems) {
 	const itemsById = new Map();
 	const itemsByColumn = new Map();
@@ -20,9 +35,15 @@ export function buildPrimaryNavigation(primaryItems) {
 	return { itemsById, itemsByColumn, columnIndexes };
 }
 
+/**
+ *
+ * @param itemsByColumn
+ * @param columnIndex
+ * @param targetRowIndex
+ */
 function getClosestItemInColumn(itemsByColumn, columnIndex, targetRowIndex) {
 	const columnItems = itemsByColumn.get(columnIndex) ?? [];
-	if (columnItems.length === 0) return null;
+	if (columnItems.length === 0) {return null;}
 
 	let nearest = columnItems[0];
 	let nearestDistance = Math.abs(columnItems[0].rowIndex - targetRowIndex);
@@ -39,11 +60,19 @@ function getClosestItemInColumn(itemsByColumn, columnIndex, targetRowIndex) {
 	return nearest;
 }
 
+/**
+ *
+ * @param root0
+ * @param root0.key
+ * @param root0.resolvedFocusedId
+ * @param root0.primaryItems
+ * @param root0.navigation
+ */
 export function getNextPrimaryFocusId({ key, resolvedFocusedId, primaryItems, navigation }) {
-	if (primaryItems.length === 0) return null;
+	if (primaryItems.length === 0) {return null;}
 
 	const current = navigation.itemsById.get(resolvedFocusedId) ?? primaryItems[0] ?? null;
-	if (!current) return null;
+	if (!current) {return null;}
 
 	const currentColumnItems = navigation.itemsByColumn.get(current.columnIndex) ?? [];
 	const currentIndexInColumn = currentColumnItems.findIndex((item) => item.id === current.id);

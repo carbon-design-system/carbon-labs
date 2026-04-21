@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 @use '@carbon/colors' as *;
 @use '@carbon/themes';
 
@@ -6,37 +13,37 @@ $status-green: $green-50 !default;
 $status-yellow: $yellow-30 !default;
 $status-red: $red-60 !default;
 
-// R3F canvas foundation color tokens - Dark theme (g100)
-$foundation-rack-front-dark: $gray-70; // #525252
-$foundation-rack-side-dark: $gray-80; // #393939
-$foundation-rack-top-dark: $gray-90; // #262626
-$foundation-rack-bottom-dark: $gray-90; // #262626
-$foundation-rack-back-dark: $gray-80; // #393939
-$foundation-rack-border-dark: $gray-90; // #262626
-$foundation-rack-panel-dark: $gray-60; // #6f6f6f (closed front insert)
+/* R3F canvas foundation color tokens: Dark theme (g100). */
+$foundation-rack-front-dark: $gray-70;
+$foundation-rack-side-dark: $gray-80;
+$foundation-rack-top-dark: $gray-90;
+$foundation-rack-bottom-dark: $gray-90;
+$foundation-rack-back-dark: $gray-80;
+$foundation-rack-border-dark: $gray-90;
+$foundation-rack-panel-dark: $gray-60;
 
-$foundation-worker-node-front-dark: $gray-70; // #525252
-$foundation-worker-node-side-dark: $gray-80; // #393939
-$foundation-worker-node-top-dark: $gray-90; // #262626
-$foundation-worker-node-bottom-dark: $gray-90; // #262626
-$foundation-worker-node-back-dark: $gray-80; // #393939
-$foundation-worker-node-buttons-dark: $gray-60; // #6f6f6f
+$foundation-worker-node-front-dark: $gray-70;
+$foundation-worker-node-side-dark: $gray-80;
+$foundation-worker-node-top-dark: $gray-90;
+$foundation-worker-node-bottom-dark: $gray-90;
+$foundation-worker-node-back-dark: $gray-80;
+$foundation-worker-node-buttons-dark: $gray-60;
 
-// R3F canvas foundation color tokens - Light theme (white)
-$foundation-rack-front-light: $gray-30; // #c6c6c6
-$foundation-rack-side-light: $gray-20; // #e0e0e0
-$foundation-rack-top-light: $gray-10; // #f4f4f4
-$foundation-rack-bottom-light: $gray-10; // #f4f4f4
-$foundation-rack-back-light: $gray-20; // #e0e0e0
-$foundation-rack-border-light: $gray-50; // #8d8d8d
-$foundation-rack-panel-light: $gray-40; // #a8a8a8 (closed front insert)
+/* R3F canvas foundation color tokens: Light theme (white). */
+$foundation-rack-front-light: $gray-30;
+$foundation-rack-side-light: $gray-20;
+$foundation-rack-top-light: $gray-10;
+$foundation-rack-bottom-light: $gray-10;
+$foundation-rack-back-light: $gray-20;
+$foundation-rack-border-light: $gray-50;
+$foundation-rack-panel-light: $gray-40;
 
-$foundation-worker-node-front-light: $gray-30; // #c6c6c6
-$foundation-worker-node-side-light: $gray-20; // #e0e0e0
-$foundation-worker-node-top-light: $gray-10; // #f4f4f4
-$foundation-worker-node-bottom-light: $gray-10; // #f4f4f4
-$foundation-worker-node-back-light: $gray-20; // #e0e0e0
-$foundation-worker-node-buttons-light: $gray-40; // #a8a8a8
+$foundation-worker-node-front-light: $gray-30;
+$foundation-worker-node-side-light: $gray-20;
+$foundation-worker-node-top-light: $gray-10;
+$foundation-worker-node-bottom-light: $gray-10;
+$foundation-worker-node-back-light: $gray-20;
+$foundation-worker-node-buttons-light: $gray-40;
 
 // Default to dark theme for backward compatibility
 $foundation-rack-front: $foundation-rack-front-dark;

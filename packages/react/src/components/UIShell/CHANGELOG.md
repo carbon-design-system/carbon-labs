@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.94.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.93.0...@carbon-labs/react-ui-shell@0.94.0) (2026-04-20)
+
+
+### Bug Fixes
+
+* **uishell:** added aria-hidden attribute for SharkFinIcon ([#1185](https://github.com/carbon-design-system/carbon-labs/issues/1185)) ([eb445dc](https://github.com/carbon-design-system/carbon-labs/commit/eb445dc9375a470a57e378181531a67ccb8865eb))
+
+
+
+
+
+# [0.93.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.92.0...@carbon-labs/react-ui-shell@0.93.0) (2026-04-14)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
 # [0.92.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.91.0...@carbon-labs/react-ui-shell@0.92.0) (2026-04-08)
 
 

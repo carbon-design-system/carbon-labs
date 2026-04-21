@@ -1,0 +1,13 @@
+import{j as t,M as i}from"./blocks-Sjd1PWsU.js";import{useMDXComponents as o}from"./index-Be9DKIfP.js";import{e as s}from"./tableElement.stories-DSg1FWuS.js";import"./preload-helper-C1FmrZbK.js";import"./iframe-Bwf46TdM.js";import"./tableElement-SzBQqRJR.js";import"./property-DjzuuF-y.js";import"./state-BX-bbzl3.js";import"./class-map-MVjhj_D_.js";import"./directive-CJw_OlP2.js";import"./carbon-element-DvT6Hso_.js";import"./collection-helpers-Cdc5z1rB.js";import"./host-listener-C4Ji6v3a.js";import"./query-BApjzB0v.js";import"./focus-CH_-ZGzI.js";import"./icon-loader-C8ik8MwU.js";import"./index-BjRVSAQi.js";import"./unsafe-html-CPNLcimY.js";import"./16-z4EPQvwm.js";import"./checkbox-skeleton-CaWPQeXI.js";import"./if-defined-CCA6N-77.js";import"./16-DeKHrdu0.js";import"./radio-button-skeleton-sF4IKZgu.js";import"./text-input-B_CBedPT.js";import"./16-B9g2nIv4.js";import"./16-DfaeAVym.js";import"./shared-enums-WsGAW9C4.js";import"./search-Tb2GKq0k.js";import"./16-B4-6OwK9.js";import"./16-D5maUdCH.js";import"./settings-BQP9c3yA.js";function e(n){const r={blockquote:"blockquote",code:"code",h1:"h1",li:"li",p:"p",strong:"strong",ul:"ul",...o(),...n.components};return t.jsxs(t.Fragment,{children:[t.jsx(i,{of:s}),`
+`,t.jsx(r.h1,{id:"carbon-ai-chat-table",children:"Carbon AI Chat: Table"}),`
+`,t.jsxs(r.blockquote,{children:[`
+`,t.jsx(r.p,{children:t.jsx(r.strong,{children:'NOTE: Chat components that reached "preview candidate" status are in the process of graduating to a stable library! If you are starting out new or currently using the existing Carbon Labs version, we recommend going to #carbon-ai-chat to request access to the new library.'})}),`
+`,t.jsx(r.p,{children:t.jsx(r.strong,{children:'The chat components in Carbon Labs that reached "preview candidate" status will continue to be supported here until they are fully migrated to the new location.'})}),`
+`]}),`
+`,t.jsxs(r.ul,{children:[`
+`,t.jsxs(r.li,{children:[t.jsx(r.strong,{children:"Initiative owner(s):"})," Owen Cornec"]}),`
+`,t.jsxs(r.li,{children:[t.jsx(r.strong,{children:"Status:"})," Draft"]}),`
+`,t.jsxs(r.li,{children:[t.jsx(r.strong,{children:"Target library:"})," ",t.jsx(r.code,{children:"Carbon AI Chat"})]}),`
+`,t.jsxs(r.li,{children:[t.jsx(r.strong,{children:"Target library maintainer(s) / PR Reviewer(s):"})," Ethan Winters, Damon Lundin"]}),`
+`,t.jsxs(r.li,{children:[t.jsx(r.strong,{children:"Support channel:"})," ",t.jsx(r.code,{children:"#carbon-ai-chat"})]}),`
+`]})]})}function F(n={}){const{wrapper:r}={...o(),...n.components};return r?t.jsx(r,{...n,children:t.jsx(e,{...n})}):e(n)}export{F as default};

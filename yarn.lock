@@ -1717,6 +1717,8 @@ __metadata:
     "@react-three/postprocessing": "npm:^2.0.0"
     "@types/react": "npm:^18.0.0"
     "@types/three": "npm:^0.150.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
     three: "npm:^0.170.0"
   peerDependencies:
     "@carbon/colors": ">=11"

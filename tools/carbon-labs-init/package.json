@@ -1,0 +1,32 @@
+{
+  "name": "@carbon-labs/carbon-labs-init",
+  "version": "0.1.0",
+  "description": "Carbon Labs squad incubation tooling — collapse the Labs contribution ceremony into a single command",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "bin": "./bin/carbon-labs-init.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "carbon-labs-init": "node ./bin/carbon-labs-init.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "echo 'No build step — pure ESM source'"
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.1.1",
+    "chalk": "^5.4.1",
+    "commander": "^12.1.0",
+    "execa": "^9.5.2",
+    "ora": "^8.1.1",
+    "prompts": "^2.4.2",
+    "simple-git": "^3.27.0"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0"
+  }
+}

@@ -11,7 +11,8 @@
   },
   "workspaces": [
     "packages/*",
-    "packages/*/**"
+    "packages/*/**",
+    "tools/*"
   ],
   "scripts": {
     "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' && lerna run build --scope '@carbon-labs/primitives' && lerna run build --scope '@carbon-labs/vscode-snippets' && lerna run build --scope '@carbon-labs/react' && lerna run build --scope '@carbon-labs/web-components'",
@@ -23,6 +24,7 @@
     "doctoc": "doctoc --title '## Table of Contents' docs",
     "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
+    "carbon-labs-init": "yarn workspace @carbon-labs/carbon-labs-init carbon-labs-init",
     "lint": "eslint packages --ext .js,.ts",
     "lint:license": "tools/check-license.cjs -a",
     "lint:license:staged": "tools/check-license.cjs -w",
@@ -60,6 +62,7 @@
     "eslint": "^8.57.0",
     "eslint-config-carbon": "^3.11.0",
     "fs-extra": "^11.2.0",
+    "glob": "^11.0.0",
     "globby": "^14.0.0",
     "husky": "^9.0.0",
     "lerna": "^9.0.0",

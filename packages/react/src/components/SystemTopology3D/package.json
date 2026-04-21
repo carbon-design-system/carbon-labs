@@ -51,7 +51,7 @@
     "three": "^0.170.0"
   },
   "dependencies": {
-    "@carbon-labs/utilities": "0.21.0",
+    "@carbon-labs/utilities": "0.22.0",
     "@ibm/telemetry-js": "^1.10.2"
   }
 }

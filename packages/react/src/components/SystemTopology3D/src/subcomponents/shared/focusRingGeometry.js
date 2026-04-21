@@ -9,7 +9,7 @@
 
 /* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
 
-import * as THREE from "three";
+import * as THREE from 'three';
 
 const focusRingGeometryCache = new Map();
 
@@ -24,11 +24,13 @@ const focusRingGeometryCache = new Map();
 export function getFocusRingGeometry(
   width,
   height,
-  { thickness = 0.12, padding = 0.08 } = {},
+  { thickness = 0.12, padding = 0.08 } = {}
 ) {
   const key = `${width}|${height}|${thickness}|${padding}`;
   const cached = focusRingGeometryCache.get(key);
-  if (cached) {return cached;}
+  if (cached) {
+    return cached;
+  }
 
   const outerWidth = Math.max(0.1, width + padding * 2);
   const outerHeight = Math.max(0.1, height + padding * 2);
@@ -61,4 +63,3 @@ export function getFocusRingGeometry(
 }
 
 export default getFocusRingGeometry;
-

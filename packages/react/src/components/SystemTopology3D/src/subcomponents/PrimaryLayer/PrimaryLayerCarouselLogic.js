@@ -137,7 +137,7 @@ function flattenColumns(columns) {
 function applyBinPackingAndPagination(
   primaryLayer,
   maxColumnsPerPage = 8,
-  paginate = true,
+  paginate = true
 ) {
   if (!Array.isArray(primaryLayer) || primaryLayer.length === 0) {
     return [[]];
@@ -145,7 +145,7 @@ function applyBinPackingAndPagination(
 
   // Check if any block is missing columnIndex
   const needsBinPacking = primaryLayer.some(
-    (block) => block.columnIndex === undefined || block.columnIndex === null,
+    (block) => block.columnIndex === undefined || block.columnIndex === null
   );
 
   if (!needsBinPacking) {
@@ -237,13 +237,13 @@ function paginatePrimaryLayerByColumnHeight(primaryLayer) {
 
   const totalPages = Math.max(
     1,
-    ...[...pagesByColumn.values()].map((columnPages) => columnPages.length),
+    ...[...pagesByColumn.values()].map((columnPages) => columnPages.length)
   );
 
   return Array.from({ length: totalPages }, (_, pageIndex) =>
     sortedColumnIndices.flatMap(
-      (columnIndex) => pagesByColumn.get(columnIndex)?.[pageIndex] ?? [],
-    ),
+      (columnIndex) => pagesByColumn.get(columnIndex)?.[pageIndex] ?? []
+    )
   );
 }
 
@@ -256,7 +256,7 @@ function paginatePrimaryLayerByColumnHeight(primaryLayer) {
 export function usePrimaryLayerCarousel(
   primaryLayer,
   enabled = true,
-  maxColumnsPerPage = 8,
+  maxColumnsPerPage = 8
 ) {
   const [pageIndex, setPageIndex] = useState(0);
 
@@ -265,7 +265,7 @@ export function usePrimaryLayerCarousel(
     const binPackedPages = applyBinPackingAndPagination(
       primaryLayer,
       maxColumnsPerPage,
-      enabled,
+      enabled
     );
     if (binPackedPages !== null) {
       return binPackedPages;
@@ -282,7 +282,7 @@ export function usePrimaryLayerCarousel(
   const activePageIndex = Math.min(Math.max(0, pageIndex), pageCount - 1);
   const primaryLayerForRender = useMemo(
     () => paginatedPrimaryLayer[activePageIndex] ?? [],
-    [activePageIndex, paginatedPrimaryLayer],
+    [activePageIndex, paginatedPrimaryLayer]
   );
   const hasPages = pageCount > 0;
   /**
@@ -290,7 +290,9 @@ export function usePrimaryLayerCarousel(
    * @param index
    */
   const wrapIndex = (index) => {
-    if (!hasPages) {return 0;}
+    if (!hasPages) {
+      return 0;
+    }
     return ((index % pageCount) + pageCount) % pageCount;
   };
 

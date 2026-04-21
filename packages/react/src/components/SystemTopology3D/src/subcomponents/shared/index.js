@@ -7,6 +7,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export { default as FrontLabel } from "./FrontLabel";
-export { default as TextBracket } from "./TextBracket";
-export { getFocusRingGeometry } from "./focusRingGeometry";
+export { default as FrontLabel } from './FrontLabel';
+export { default as TextBracket } from './TextBracket';
+export { getFocusRingGeometry } from './focusRingGeometry';

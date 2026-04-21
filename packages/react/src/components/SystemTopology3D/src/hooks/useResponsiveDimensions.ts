@@ -42,11 +42,10 @@ export const DEFAULT_RESPONSIVE_COLUMN_BREAKPOINTS: ResponsiveColumnBreakpoints 
  */
 export function useResponsiveColumnCount(
   containerWidth?: number,
-  breakpoints: ResponsiveColumnBreakpoints =
-    DEFAULT_RESPONSIVE_COLUMN_BREAKPOINTS,
+  breakpoints: ResponsiveColumnBreakpoints = DEFAULT_RESPONSIVE_COLUMN_BREAKPOINTS
 ) {
   const resolvedWidth =
-    typeof containerWidth === "number" && Number.isFinite(containerWidth)
+    typeof containerWidth === 'number' && Number.isFinite(containerWidth)
       ? containerWidth
       : CARBON_BREAKPOINTS.max;
 

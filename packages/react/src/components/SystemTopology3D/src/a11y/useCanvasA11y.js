@@ -9,11 +9,11 @@
 
 /* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
 
-import { useCallback, useId, useMemo, useRef, useState } from "react";
+import { useCallback, useId, useMemo, useRef, useState } from 'react';
 import {
   buildPrimaryNavigation,
   getNextPrimaryFocusId,
-} from "./primaryNavigation";
+} from './primaryNavigation';
 
 /**
  *
@@ -39,14 +39,18 @@ export function useCanvasA11y({
 
   const requestedFocusedId = focusedId ?? internalFocusedId;
   const resolvedFocusedId = useMemo(() => {
-    if (requestedFocusedId == null) {return null;}
-    const exists = a11yItems.allItems.some((item) => item.id === requestedFocusedId);
+    if (requestedFocusedId == null) {
+      return null;
+    }
+    const exists = a11yItems.allItems.some(
+      (item) => item.id === requestedFocusedId
+    );
     return exists ? requestedFocusedId : null;
   }, [a11yItems.allItems, requestedFocusedId]);
 
   const primaryNavigation = useMemo(
     () => buildPrimaryNavigation(a11yItems.primaryItems),
-    [a11yItems.primaryItems],
+    [a11yItems.primaryItems]
   );
 
   const setFocusedBlock = useCallback(
@@ -56,7 +60,7 @@ export function useCanvasA11y({
       }
       onFocusedIdChange?.(nextFocusedId ?? null);
     },
-    [focusedId, onFocusedIdChange],
+    [focusedId, onFocusedIdChange]
   );
 
   const registerA11yButton = useCallback((id, node) => {
@@ -76,25 +80,35 @@ export function useCanvasA11y({
 
   const focusA11yItemById = useCallback(
     (id) => {
-      if (!id) {return;}
+      if (!id) {
+        return;
+      }
       setFocusedBlock(id);
       a11yButtonRefs.current.get(id)?.focus();
     },
-    [setFocusedBlock],
+    [setFocusedBlock]
   );
   const focusGroupByLayer = useCallback((layer) => {
-    if (!layer) {return;}
+    if (!layer) {
+      return;
+    }
     groupButtonRefs.current.get(layer)?.focus();
   }, []);
 
   const getLayerItems = useCallback(
     (layer) => {
-      if (layer === "primary") {return a11yItems.primaryItems;}
-      if (layer === "core") {return a11yItems.coreItems;}
-      if (layer === "foundation") {return a11yItems.foundationItems;}
+      if (layer === 'primary') {
+        return a11yItems.primaryItems;
+      }
+      if (layer === 'core') {
+        return a11yItems.coreItems;
+      }
+      if (layer === 'foundation') {
+        return a11yItems.foundationItems;
+      }
       return [];
     },
-    [a11yItems.coreItems, a11yItems.foundationItems, a11yItems.primaryItems],
+    [a11yItems.coreItems, a11yItems.foundationItems, a11yItems.primaryItems]
   );
 
   const handleLayerGroupFocus = useCallback(
@@ -104,19 +118,21 @@ export function useCanvasA11y({
       setActiveLayer(null);
       setFocusedBlock(null);
     },
-    [setFocusedBlock],
+    [setFocusedBlock]
   );
 
   const handleLayerGroupActivate = useCallback(
     (layer) => {
       const layerItems = getLayerItems(layer);
-      if (layerItems.length === 0) {return;}
+      if (layerItems.length === 0) {
+        return;
+      }
       setIsFocusWithinCanvas(true);
       setFocusedGroupLayer(null);
       setActiveLayer(layer);
       focusA11yItemById(layerItems[0].id);
     },
-    [focusA11yItemById, getLayerItems],
+    [focusA11yItemById, getLayerItems]
   );
 
   const movePrimaryFocus = useCallback(
@@ -131,15 +147,22 @@ export function useCanvasA11y({
         focusA11yItemById(nextId);
       }
     },
-    [a11yItems.primaryItems, focusA11yItemById, primaryNavigation, resolvedFocusedId],
+    [
+      a11yItems.primaryItems,
+      focusA11yItemById,
+      primaryNavigation,
+      resolvedFocusedId,
+    ]
   );
 
   const handleCanvasKeyDown = useCallback(
     (event) => {
-      if (!enableA11y) {return;}
+      if (!enableA11y) {
+        return;
+      }
       const { key } = event;
 
-      if (key === "Escape" && activeLayer) {
+      if (key === 'Escape' && activeLayer) {
         event.preventDefault();
         setFocusedGroupLayer(activeLayer);
         setActiveLayer(null);
@@ -148,13 +171,15 @@ export function useCanvasA11y({
         return;
       }
 
-      if (activeLayer !== "primary") {return;}
+      if (activeLayer !== 'primary') {
+        return;
+      }
 
       if (
-        key === "ArrowUp" ||
-        key === "ArrowDown" ||
-        key === "ArrowLeft" ||
-        key === "ArrowRight"
+        key === 'ArrowUp' ||
+        key === 'ArrowDown' ||
+        key === 'ArrowLeft' ||
+        key === 'ArrowRight'
       ) {
         event.preventDefault();
         movePrimaryFocus(key);
@@ -167,7 +192,7 @@ export function useCanvasA11y({
       focusGroupByLayer,
       movePrimaryFocus,
       setFocusedBlock,
-    ],
+    ]
   );
 
   const handleA11yItemFocus = useCallback(
@@ -177,12 +202,14 @@ export function useCanvasA11y({
       setActiveLayer(layer);
       setFocusedBlock(id);
     },
-    [setFocusedBlock],
+    [setFocusedBlock]
   );
 
   const handleCanvasBlur = useCallback(
     (event) => {
-      if (!enableA11y) {return;}
+      if (!enableA11y) {
+        return;
+      }
       const nextFocusedElement = event.relatedTarget;
       if (
         nextFocusedElement &&
@@ -194,16 +221,20 @@ export function useCanvasA11y({
       setActiveLayer(null);
       setFocusedGroupLayer(null);
     },
-    [enableA11y],
+    [enableA11y]
   );
 
   const handleCanvasFocus = useCallback(() => {
-    if (!enableA11y) {return;}
+    if (!enableA11y) {
+      return;
+    }
     setIsFocusWithinCanvas(true);
   }, [enableA11y]);
 
   const handleAuxiliaryControlFocus = useCallback(() => {
-    if (!enableA11y) {return;}
+    if (!enableA11y) {
+      return;
+    }
     // Auxiliary controls (like carousel SR-only buttons) should not keep
     // a layer/group focus ring active in the 3D scene.
     setIsFocusWithinCanvas(true);

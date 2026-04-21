@@ -151,7 +151,9 @@ function SystemTopology3DContent({
       effectivePrimaryColumnCount;
   useLayoutEffect(() => {
     const shellElement = canvasShellRef.current;
-    if (!shellElement) {return;}
+    if (!shellElement) {
+      return;
+    }
 
     const updateCanvasWidth = (nextWidth: number) => {
       setCanvasWidth((currentWidth) =>
@@ -183,7 +185,9 @@ function SystemTopology3DContent({
   }, []);
 
   const handleInitialSceneReady = useCallback(() => {
-    if (hasStartedIntroRef.current || !hasInitializedRef.current) {return;}
+    if (hasStartedIntroRef.current || !hasInitializedRef.current) {
+      return;
+    }
     hasStartedIntroRef.current = true;
     setIsPlayingIntroAnimation(true);
   }, []);
@@ -332,9 +336,13 @@ function SystemTopology3DContent({
   );
 
   useEffect(() => {
-    if (!focusedIdForRender) {return;}
+    if (!focusedIdForRender) {
+      return;
+    }
     const focusedItem = a11yItemById.get(focusedIdForRender);
-    if (!focusedItem) {return;}
+    if (!focusedItem) {
+      return;
+    }
     publishHoveredItem({ id: focusedItem.id, layer: focusedItem.layer });
   }, [a11yItemById, focusedIdForRender, publishHoveredItem]);
 
@@ -383,7 +391,8 @@ function SystemTopology3DContent({
             ? resolveI18nMessage(
                 i18n,
                 'canvasRegionLabel',
-                DEFAULT_A11Y_COPY.canvasRegionLabel
+                DEFAULT_A11Y_COPY.canvasRegionLabel,
+                undefined
               )
             : undefined
         }
@@ -491,7 +500,9 @@ function SystemTopology3D({
   }, [onHoveredItemChange]);
 
   useEffect(() => {
-    if (!canSyncExternalHover || hoveredItem === undefined) {return;}
+    if (!canSyncExternalHover || hoveredItem === undefined) {
+      return;
+    }
     interactionApiRef.current.setHoveredItem(normalizeHoveredItem(hoveredItem));
   }, [canSyncExternalHover, hoveredItem]);
 

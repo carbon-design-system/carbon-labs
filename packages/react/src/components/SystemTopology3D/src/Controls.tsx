@@ -45,13 +45,13 @@ function getBoundsCorners(center, size) {
 function rotateOffset(
   offset: THREE.Vector3,
   deltaPitchDeg: number,
-  deltaYawDeg: number,
+  deltaYawDeg: number
 ) {
   const spherical = new THREE.Spherical().setFromVector3(offset);
   spherical.phi = clamp(
     spherical.phi + THREE.MathUtils.degToRad(deltaPitchDeg),
     0.1,
-    Math.PI - 0.1,
+    Math.PI - 0.1
   );
   spherical.theta += THREE.MathUtils.degToRad(deltaYawDeg);
   return new THREE.Vector3().setFromSpherical(spherical);
@@ -93,7 +93,7 @@ function Controls({
   const fitPadding = 1.05;
   const fallbackTarget = useMemo(
     (): CameraPosition => [getPrimaryCenterX(primaryColumnCount) - 1, 7, 0],
-    [primaryColumnCount],
+    [primaryColumnCount]
   );
   const target = fallbackTarget;
   const baseViewOffset = useMemo<CameraPosition>(() => {
@@ -112,7 +112,9 @@ function Controls({
 
   const getTargetVector = useCallback(() => {
     const controlsTarget = controlsRef.current?.target;
-    if (controlsTarget) {return controlsTarget;}
+    if (controlsTarget) {
+      return controlsTarget;
+    }
     return { x: target[0], y: target[1], z: target[2] };
   }, [target]);
 
@@ -131,7 +133,9 @@ function Controls({
   }, [camera, getTargetVector]);
 
   const queueReport = useCallback(() => {
-    if (!onChange || !controlsRef.current) {return;}
+    if (!onChange || !controlsRef.current) {
+      return;
+    }
     const target = controlsRef.current.target;
     // Snapshot current camera/target; overwritten if another change happens
     // before the next animation frame.
@@ -147,10 +151,14 @@ function Controls({
       target: { x: target.x, y: target.y, z: target.z },
     };
     // Coalesce rapid control events into a single report per frame.
-    if (rafRef.current) {return;}
+    if (rafRef.current) {
+      return;
+    }
     rafRef.current = requestAnimationFrame(() => {
       rafRef.current = 0;
-      if (!pendingRef.current) {return;}
+      if (!pendingRef.current) {
+        return;
+      }
       onChange(pendingRef.current);
       pendingRef.current = null;
     });
@@ -175,7 +183,7 @@ function Controls({
       controlsRef.current?.update();
       queueReport();
     },
-    [camera, getTargetVector, queueReport],
+    [camera, getTargetVector, queueReport]
   );
 
   const applyTrackedCamera = useCallback(
@@ -183,7 +191,7 @@ function Controls({
       const { x: baseX, y: baseY } = baseOrbitRef.current;
       applyOrbitCamera(baseX + offsetX, baseY + offsetY);
     },
-    [applyOrbitCamera],
+    [applyOrbitCamera]
   );
 
   const applyCameraPosition = useCallback(
@@ -194,12 +202,16 @@ function Controls({
       controlsRef.current?.update();
       queueReport();
     },
-    [camera, getTargetVector, queueReport],
+    [camera, getTargetVector, queueReport]
   );
 
   const getFittedCameraPosition = useCallback(() => {
-    if (!sceneBounds) {return;}
-    if (!(camera instanceof THREE.PerspectiveCamera)) {return;}
+    if (!sceneBounds) {
+      return;
+    }
+    if (!(camera instanceof THREE.PerspectiveCamera)) {
+      return;
+    }
 
     // Store camera as PerspectiveCamera to help TypeScript narrow the type
     const perspectiveCamera = camera as THREE.PerspectiveCamera;
@@ -222,7 +234,7 @@ function Controls({
 
     // Now we can safely call getEffectiveFOV on the perspectiveCamera
     const verticalFov = THREE.MathUtils.degToRad(
-      perspectiveCamera.getEffectiveFOV(),
+      perspectiveCamera.getEffectiveFOV()
     );
     const aspect = size.height === 0 ? 1 : size.width / size.height;
     const horizontalFov = 2 * Math.atan(Math.tan(verticalFov / 2) * aspect);
@@ -240,7 +252,7 @@ function Controls({
       requiredDistance = Math.max(
         requiredDistance,
         distanceForWidth,
-        distanceForHeight,
+        distanceForHeight
       );
     }
 
@@ -259,19 +271,23 @@ function Controls({
 
   const applyFittedCamera = useCallback(() => {
     const nextCameraPosition = getFittedCameraPosition();
-    if (!nextCameraPosition) {return;}
+    if (!nextCameraPosition) {
+      return;
+    }
 
     applyCameraPosition(
       nextCameraPosition.x,
       nextCameraPosition.y,
-      nextCameraPosition.z,
+      nextCameraPosition.z
     );
     syncBaseOrbitFromCamera();
   }, [applyCameraPosition, getFittedCameraPosition, syncBaseOrbitFromCamera]);
 
   const getIntroCameraPositions = useCallback(() => {
     const fittedPosition = getFittedCameraPosition();
-    if (!fittedPosition) {return null;}
+    if (!fittedPosition) {
+      return null;
+    }
 
     const targetVector = new THREE.Vector3(...target);
     const fittedOffset = fittedPosition.clone().sub(targetVector);
@@ -297,7 +313,9 @@ function Controls({
   }, [queueReport]);
 
   useLayoutEffect(() => {
-    if (hasPrimedIntroCameraRef.current) {return;}
+    if (hasPrimedIntroCameraRef.current) {
+      return;
+    }
 
     const introPositions = getIntroCameraPositions();
     if (introPositions) {
@@ -309,7 +327,9 @@ function Controls({
 
   useEffect(() => {
     const controls = controlsRef.current;
-    if (!controls) {return;}
+    if (!controls) {
+      return;
+    }
 
     const [nextX, nextY, nextZ] = target;
     const previousTarget = previousTargetRef.current;
@@ -321,7 +341,7 @@ function Controls({
       camera.position.set(
         camera.position.x + deltaX,
         camera.position.y + deltaY,
-        camera.position.z + deltaZ,
+        camera.position.z + deltaZ
       );
     }
 
@@ -339,7 +359,9 @@ function Controls({
   }, [syncBaseOrbitFromCamera]);
 
   useEffect(() => {
-    if (playIntroAnimation || !sceneBounds) {return;}
+    if (playIntroAnimation || !sceneBounds) {
+      return;
+    }
     const nextFitKey = JSON.stringify({
       sceneBounds,
       width: size.width,
@@ -367,12 +389,16 @@ function Controls({
       return;
     }
 
-    if (hasStartedCurrentIntroRef.current) {return;}
+    if (hasStartedCurrentIntroRef.current) {
+      return;
+    }
 
     // Only start the animation, don't reposition the camera
     // The camera is already at introStartPosition from useLayoutEffect
     const introPositions = getIntroCameraPositions();
-    if (!introPositions) {return;}
+    if (!introPositions) {
+      return;
+    }
     hasStartedCurrentIntroRef.current = true;
 
     introRef.current = {
@@ -429,7 +455,9 @@ function Controls({
       return;
     }
 
-    if (!enableMouseTracking || isUserInteractingRef.current) {return;}
+    if (!enableMouseTracking || isUserInteractingRef.current) {
+      return;
+    }
 
     const current = currentRotateRef.current;
     targetRotateRef.current = isPointerInside

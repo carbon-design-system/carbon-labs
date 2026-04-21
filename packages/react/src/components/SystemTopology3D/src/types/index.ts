@@ -7,6 +7,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export * from "./visualization-config";
-export * from "./color-tokens";
-export * from "./component-props";
+export * from './visualization-config';
+export * from './color-tokens';
+export * from './component-props';

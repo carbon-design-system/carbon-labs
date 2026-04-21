@@ -119,7 +119,7 @@ export const DEFAULT_FOUNDATION_RACK = Object.freeze({
 export function createPrimaryBlock(
   size: BlockSize,
   text = 'Account',
-  theme: Partial<BlockColorTheme> = {},
+  theme: Partial<BlockColorTheme> = {}
 ): CanvasBlock {
   return {
     text,
@@ -138,7 +138,7 @@ export function createCoreBlock(
       text: string;
       hoverText: string;
     } & BlockColorTheme & { fullWidth: boolean }
-  > = {},
+  > = {}
 ): CanvasBlock {
   return {
     id: 'sovereign-core',
@@ -161,7 +161,7 @@ export function createCoreBlock(
  */
 export function createFoundationRackBlock(
   variant: FoundationRackVariant = FOUNDATION_RACK_STATES.closed,
-  overrides: Partial<CanvasBlock> = {},
+  overrides: Partial<CanvasBlock> = {}
 ): CanvasBlock {
   return {
     ...DEFAULT_FOUNDATION_RACK,

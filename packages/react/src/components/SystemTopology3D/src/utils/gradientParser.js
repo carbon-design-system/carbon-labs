@@ -9,7 +9,7 @@
 
 /* eslint-disable jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
 
-import * as THREE from "three";
+import * as THREE from 'three';
 
 // Cache for gradient textures
 const gradientCache = new Map();
@@ -28,18 +28,18 @@ export const createGradientTexture = (cssGradient) => {
   }
 
   // Create a canvas
-  const canvas = document.createElement("canvas");
+  const canvas = document.createElement('canvas');
   canvas.width = 512;
   canvas.height = 512;
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext('2d');
 
   // Create a temporary div to render the gradient
-  const tempDiv = document.createElement("div");
-  tempDiv.style.width = "512px";
-  tempDiv.style.height = "512px";
+  const tempDiv = document.createElement('div');
+  tempDiv.style.width = '512px';
+  tempDiv.style.height = '512px';
   tempDiv.style.background = cssGradient;
-  tempDiv.style.position = "absolute";
-  tempDiv.style.left = "-9999px";
+  tempDiv.style.position = 'absolute';
+  tempDiv.style.left = '-9999px';
   document.body.appendChild(tempDiv);
 
   // Use html2canvas-like approach: draw the div onto canvas
@@ -49,42 +49,48 @@ export const createGradientTexture = (cssGradient) => {
   // Parse the gradient manually for canvas
   const match = cssGradient.match(/linear-gradient\((.+)\)/);
   if (!match) {
-    console.warn("Could not parse gradient:", cssGradient);
+    console.warn('Could not parse gradient:', cssGradient);
     return null;
   }
 
   // Split by commas, but not commas inside parentheses (for rgba, etc.)
   const params = [];
-  let current = "";
+  let current = '';
   let depth = 0;
 
   for (let i = 0; i < match[1].length; i++) {
     const char = match[1][i];
-    if (char === "(") {depth++;}
-    if (char === ")") {depth--;}
+    if (char === '(') {
+      depth++;
+    }
+    if (char === ')') {
+      depth--;
+    }
 
-    if (char === "," && depth === 0) {
+    if (char === ',' && depth === 0) {
       params.push(current.trim());
-      current = "";
+      current = '';
     } else {
       current += char;
     }
   }
-  if (current) {params.push(current.trim());}
+  if (current) {
+    params.push(current.trim());
+  }
 
   // Parse angle
   let angle = 180;
   let colorStops = params;
 
-  if (params[0].includes("deg")) {
+  if (params[0].includes('deg')) {
     angle = parseFloat(params[0]);
     colorStops = params.slice(1);
-  } else if (params[0].startsWith("to ")) {
+  } else if (params[0].startsWith('to ')) {
     const directions = {
-      "to top": 0,
-      "to right": 90,
-      "to bottom": 180,
-      "to left": 270,
+      'to top': 0,
+      'to right': 90,
+      'to bottom': 180,
+      'to left': 270,
     };
     angle = directions[params[0]] || 180;
     colorStops = params.slice(1);
@@ -135,5 +141,5 @@ export const createGradientTexture = (cssGradient) => {
  * @param value
  */
 export const isGradient = (value) => {
-  return typeof value === "string" && value.includes("gradient(");
+  return typeof value === 'string' && value.includes('gradient(');
 };

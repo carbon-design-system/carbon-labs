@@ -37,10 +37,11 @@ export const DEFAULT_A11Y_COPY = Object.freeze({
 
 /**
  *
- * @param i18n
- * @param key
- * @param fallback
- * @param params
+ * @param {Record<string, string | ((params?: Record<string, string | number>) => string)> | undefined} i18n
+ * @param {string} key
+ * @param {string} fallback
+ * @param {Record<string, string | number>} [params]
+ * @returns {string}
  */
 export function resolveI18nMessage(i18n, key, fallback, params) {
   const value = i18n?.[key];
@@ -50,7 +51,9 @@ export function resolveI18nMessage(i18n, key, fallback, params) {
       : typeof value === 'string'
       ? value
       : fallback;
-  if (typeof template !== 'string' || !params) {return template;}
+  if (typeof template !== 'string' || !params) {
+    return template;
+  }
   return template.replace(/\{(\w+)\}/g, (_, token) => {
     const replacement = params[token];
     return replacement == null ? `{${token}}` : String(replacement);

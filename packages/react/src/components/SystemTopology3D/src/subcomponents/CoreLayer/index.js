@@ -7,5 +7,5 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export { default as CoreLayer } from "./CoreLayer";
-export { default } from "./CoreLayer";
+export { default as CoreLayer } from './CoreLayer';
+export { default } from './CoreLayer';

@@ -7,5 +7,5 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export { default as FoundationLayer } from "./FoundationLayer";
-export { default } from "./FoundationLayer";
+export { default as FoundationLayer } from './FoundationLayer';
+export { default } from './FoundationLayer';

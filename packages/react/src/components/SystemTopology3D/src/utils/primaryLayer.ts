@@ -9,19 +9,19 @@
 
 /* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
 
-import type { PrimaryLayerBlock } from "../types/visualization-config";
+import type { PrimaryLayerBlock } from '../types/visualization-config';
 
 /**
  *
  * @param primaryLayer
  */
 export function hasMissingColumnIndex(
-  primaryLayer: PrimaryLayerBlock[] | undefined,
+  primaryLayer: PrimaryLayerBlock[] | undefined
 ) {
   return (
     Array.isArray(primaryLayer) &&
     primaryLayer.some(
-      (block) => block.columnIndex === undefined || block.columnIndex === null,
+      (block) => block.columnIndex === undefined || block.columnIndex === null
     )
   );
 }

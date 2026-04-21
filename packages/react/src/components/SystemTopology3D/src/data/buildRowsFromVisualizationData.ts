@@ -54,7 +54,9 @@ export function buildRowsFromVisualizationData(
   // Distribute blocks into columns based on columnIndex (defaults to 0 if undefined)
   for (const block of primaryLayer) {
     const colIndex = Math.max(0, Number(block.columnIndex ?? 0));
-    if (!primaryColumns[colIndex]) {primaryColumns[colIndex] = [];}
+    if (!primaryColumns[colIndex]) {
+      primaryColumns[colIndex] = [];
+    }
 
     // Default to blue color theme if no color is specified
     const colorTheme =

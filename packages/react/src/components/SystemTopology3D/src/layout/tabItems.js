@@ -9,7 +9,7 @@
 
 /* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
 
-import { isLongBlockRow } from "./utils";
+import { isLongBlockRow } from './utils';
 
 /**
  *

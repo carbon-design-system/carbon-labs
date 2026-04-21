@@ -100,7 +100,7 @@ export function isColorToken(value: string): value is ColorToken {
  */
 export function getBlockColorTheme(
   token: ColorToken,
-  _theme: Theme = 'dark',
+  _theme: Theme = 'dark'
 ): BlockColorTheme {
   // Same colors for both themes
   return BLOCK_COLOR_THEMES[token];

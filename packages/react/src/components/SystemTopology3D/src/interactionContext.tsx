@@ -7,9 +7,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
-export type CanvasInteractionLayer = "primary" | "core" | "foundation";
+export type CanvasInteractionLayer = 'primary' | 'core' | 'foundation';
 
 export interface CanvasHoveredItem {
   id: string | null;
@@ -26,21 +26,23 @@ export interface CanvasInteractionApi {
 }
 
 export function normalizeHoveredItem(
-  item: CanvasHoveredItem | null | undefined,
+  item: CanvasHoveredItem | null | undefined
 ): CanvasHoveredItem | null {
-  if (!item?.id || !item?.layer) {return null;}
+  if (!item?.id || !item?.layer) {
+    return null;
+  }
   return { id: item.id, layer: item.layer };
 }
 
 function isSameHoveredItem(
   left: CanvasHoveredItem | null,
-  right: CanvasHoveredItem | null,
+  right: CanvasHoveredItem | null
 ) {
   return left?.id === right?.id && left?.layer === right?.layer;
 }
 
 export function createCanvasInteractionApi(
-  onHoveredItemChange?: (item: CanvasHoveredItem | null) => void,
+  onHoveredItemChange?: (item: CanvasHoveredItem | null) => void
 ): CanvasInteractionApi {
   let hoveredItem: CanvasHoveredItem | null = null;
   const listeners = new Set<HoverListener>();
@@ -53,13 +55,17 @@ export function createCanvasInteractionApi(
     getHoveredItem: () => hoveredItem,
     setHoveredItem: (item) => {
       const normalized = normalizeHoveredItem(item);
-      if (isSameHoveredItem(hoveredItem, normalized)) {return;}
+      if (isSameHoveredItem(hoveredItem, normalized)) {
+        return;
+      }
       hoveredItem = normalized;
       notify();
     },
     publishHoveredItem: (item) => {
       const normalized = normalizeHoveredItem(item);
-      if (isSameHoveredItem(hoveredItem, normalized)) {return;}
+      if (isSameHoveredItem(hoveredItem, normalized)) {
+        return;
+      }
       hoveredItem = normalized;
       notify();
       onHoveredItemChange?.(normalized);
@@ -82,7 +88,7 @@ export function useCanvasInteractionApi() {
 
 export function useCanvasItemHover(
   id: string | undefined,
-  layer: CanvasInteractionLayer,
+  layer: CanvasInteractionLayer
 ) {
   const api = useCanvasInteractionApi();
   const [isHovered, setIsHovered] = useState(() => {
@@ -100,7 +106,9 @@ export function useCanvasItemHover(
 
     const syncFromStore = (item: CanvasHoveredItem | null) => {
       const nextMatch = item?.id === id && item?.layer === layer;
-      if (latestMatchRef.current === nextMatch) {return;}
+      if (latestMatchRef.current === nextMatch) {
+        return;
+      }
       latestMatchRef.current = nextMatch;
       setIsHovered(nextMatch);
     };

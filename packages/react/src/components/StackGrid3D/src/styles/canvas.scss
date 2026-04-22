@@ -1,0 +1,57 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/theme' as *;
+
+.stack-grid-3d-shell {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  block-size: 100%;
+  inline-size: 100%;
+  min-block-size: 0;
+}
+
+.stack-grid-3d {
+  position: relative;
+  flex: 1 1 auto;
+  block-size: 100%;
+  inline-size: 100%;
+  min-block-size: 0;
+  min-inline-size: 0;
+}
+
+.stack-grid-3d-loading {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  pointer-events: none;
+}
+
+.stack-grid-3d-spinner {
+  border: 0.25rem solid $layer-01;
+  border-radius: 50%;
+  animation: stack-grid-3d-spin 1000ms linear infinite;
+  block-size: 4rem;
+  border-block-start-color: $link-primary;
+  inline-size: 4rem;
+}
+
+@keyframes stack-grid-3d-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-grid-3d-spinner {
+    animation: none;
+  }
+}

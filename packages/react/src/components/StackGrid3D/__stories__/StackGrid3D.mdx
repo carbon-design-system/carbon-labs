@@ -1,0 +1,555 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as StackGrid3DStories from './StackGrid3D.stories';
+
+<Meta isTemplate />
+
+# StackGrid3D
+
+- **Initiative owner(s):** Drew Glapa & Matthew Fortier
+- **Status:** Active
+- **Target library:** Carbon Labs
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+## Table of Contents
+
+- [Overview](#overview)
+  - [Key Features](#key-features)
+  - [Anatomy](#anatomy)
+  - [Three-Layer Architecture](#three-layer-architecture)
+- [Theming](#theming)
+- [Responsive Behavior](#responsive-behavior)
+  - [Breakpoints](#breakpoints)
+  - [Custom Breakpoints](#custom-breakpoints)
+- [Data Configuration](#data-configuration)
+  - [Primary Layer Blocks](#primary-layer-blocks)
+  - [Core Layer Configuration](#core-layer-configuration)
+  - [Foundation Layer Configuration](#foundation-layer-configuration)
+  - [Text Bracket](#text-bracket)
+- [Block Sizes and Colors](#block-sizes-and-colors)
+- [Carousel Pagination](#carousel-pagination)
+- [Accessibility](#accessibility)
+  - [Keyboard Navigation](#keyboard-navigation)
+  - [Screen Reader Support](#screen-reader-support)
+  - [ARIA Labels](#aria-labels)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Basic Usage](#basic-usage)
+  - [SCSS](#scss)
+- [Component API](#component-api)
+- [Example Usages](#example-usages)
+  - [Complete Example](#complete-example)
+  - [Minimal Example](#minimal-example)
+  - [Responsive Layout](#responsive-layout)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+The StackGrid3D component is a powerful 3D visualization system built with React
+Three Fiber for creating interactive, multi-layered data visualizations. It's
+designed for displaying complex system architectures, infrastructure layouts,
+and hierarchical data relationships in an immersive 3D environment.
+
+### Key Features
+
+StackGrid3D provides a complete solution for rendering complex 3D visualizations
+with:
+
+- **Three-Layer Architecture**: Foundation, Core, and Primary layers for
+  organizing data hierarchically
+- **Interactive 3D Rendering**: Built on React Three Fiber for smooth,
+  performant 3D graphics
+- **Responsive Column Layout**: Automatically adapts between 2, 4, 6, and 8
+  columns based on container width
+- **Carousel Pagination**: Handles overflow content with accessible carousel
+  controls
+- **Full Accessibility**: Keyboard navigation, screen reader support, and ARIA
+  labels
+- **Theme Support**: Light and dark themes with Carbon Design System integration
+- **Flexible Data Model**: Support for blocks of varying sizes, colors, and
+  states
+
+<Canvas of={StackGrid3DStories.LightTheme} />
+
+### Anatomy
+
+**Primary Layer (Top):**
+
+- Individual blocks organized in responsive columns
+- Supports auto-placement or manual column positioning
+- Three size variants: small, medium, large
+- Color-coded blocks for categorization
+- Interactive hover states and click handlers
+
+**Core Layer (Middle):**
+
+- Central services or shared resources
+- Typically 1-3 blocks centered beneath primary layer
+- Distinct visual styling to differentiate from primary blocks
+
+**Foundation Layer (Bottom):**
+
+- Infrastructure racks with configurable slots
+- Open or closed rack states
+- Status indicators (green/yellow/red)
+- Represents physical or logical infrastructure
+
+**Text Bracket (Side):**
+
+- Optional title and supporting text
+- Rendered beside the visualization
+- Provides context and instructions
+
+**Carousel Controls (Bottom):**
+
+- Pagination for overflow content
+- Previous/Next navigation
+- Page indicators
+- Keyboard accessible
+
+### Three-Layer Architecture
+
+The component uses a hierarchical three-layer system to represent different
+levels of your data:
+
+1. **Foundation Layer**: Base infrastructure (racks, servers, physical
+   resources)
+2. **Core Layer**: Shared services and dependencies (databases, APIs, core
+   services)
+3. **Primary Layer**: Top-level entities (applications, services, accounts,
+   workloads)
+
+This architecture allows you to show complete system relationships from
+infrastructure to applications in a single visualization.
+
+---
+
+## Theming
+
+The default theme for StackGrid3D is **dark** (`theme="dark"`).
+
+StackGrid3D supports both **light** (`g10`) and **dark** (`g100`) themes from
+the Carbon Design System.
+
+To use a specific theme, set the `theme` prop and ensure your Storybook global
+theme matches:
+
+```jsx
+import { StackGrid3D } from '@carbon-labs/react-stack-grid-3d';
+
+function App() {
+  return (
+    <StackGrid3D
+      theme="light" // or "dark"
+      primaryLayer={myPrimaryData}
+      coreLayer={myCoreData}
+      foundationConfig={myFoundationConfig}
+    />
+  );
+}
+```
+
+**Theme Integration:** The component automatically adapts its colors, shadows,
+and visual styling based on the selected theme. Use `theme="light"` for
+applications with light backgrounds and `theme="dark"` for data-intensive
+dashboards and low-light environments.
+
+---
+
+## Responsive Behavior
+
+When `lockColumnCount={false}` (the default), the component automatically
+adjusts the number of columns based on container width using Carbon Design
+System breakpoints.
+
+### Breakpoints
+
+- **< 672px (Mobile)**: 2 columns
+- **672px - 1056px (Tablet)**: 4 columns
+- **1056px - 1312px (Desktop)**: 6 columns
+- **≥ 1312px (Large Desktop)**: 8 columns
+
+The component uses a ResizeObserver to monitor container width and intelligently
+redistributes blocks across columns when the layout changes.
+
+### Custom Breakpoints
+
+Override the default breakpoints using the `responsiveColumnBreakpoints` prop:
+
+```jsx
+<StackGrid3D
+  lockColumnCount={false}
+  responsiveColumnBreakpoints={{
+    twoColumns: 672, // Width threshold for 2 columns
+    fourColumns: 1056, // Width threshold for 4 columns
+    sixColumns: 1312, // Width threshold for 6 columns
+  }}
+  // ... other props
+/>
+```
+
+**Fixed Column Count:** To disable responsive behavior and use a fixed number of
+columns:
+
+```jsx
+<StackGrid3D
+  lockColumnCount={true}
+  primaryColumnCount={6} // Fixed at 6 columns
+  // ... other props
+/>
+```
+
+---
+
+## Data Configuration
+
+### Primary Layer Blocks
+
+Each block in the primary layer can specify:
+
+```jsx
+import { BLOCK_SIZES } from '@carbon-labs/react-stack-grid-3d';
+
+const primaryLayer = [
+  {
+    id: 'block-1', // Unique identifier
+    label: 'Service A', // Display text
+    hoverLabel: 'Service A - Active', // Hover text
+    columnIndex: 0, // Column position (optional for auto-placement)
+    size: BLOCK_SIZES.md, // sm, md, or lg
+    color: 'blue', // Block color
+  },
+  // ... more blocks
+];
+```
+
+**Auto-Placement:** Omit `columnIndex` to let the component automatically
+distribute blocks across columns.
+
+### Core Layer Configuration
+
+```jsx
+const coreLayer = [
+  {
+    id: 'core-1',
+    label: 'Core Service',
+    hoverLabel: 'Shared Database',
+    size: BLOCK_SIZES.lg,
+  },
+];
+```
+
+### Foundation Layer Configuration
+
+```jsx
+import { FOUNDATION_RACK_STATES } from '@carbon-labs/react-stack-grid-3d';
+
+const foundationConfig = {
+  id: 'foundation',
+  label: 'Infrastructure',
+  racks: [
+    {
+      id: 'rack-1',
+      slots: 4, // Number of slots (0 for closed)
+      variant: FOUNDATION_RACK_STATES.open, // 'open' or 'closed'
+      status: 'green', // 'green', 'yellow', or 'red'
+    },
+    {
+      id: 'rack-2',
+      slots: 0, // Closed rack
+      variant: FOUNDATION_RACK_STATES.closed,
+      status: 'green',
+    },
+  ],
+};
+```
+
+### Text Bracket
+
+```jsx
+const textBracket = {
+  title: 'System Architecture',
+  sections: [
+    'Multi-tier application stack',
+    'Responsive column layout',
+    'Interactive 3D visualization',
+  ],
+};
+```
+
+---
+
+## Block Sizes and Colors
+
+**Available Sizes:**
+
+```jsx
+import { BLOCK_SIZES } from '@carbon-labs/react-stack-grid-3d';
+
+BLOCK_SIZES.sm; // Small - compact height
+BLOCK_SIZES.md; // Medium - standard height
+BLOCK_SIZES.lg; // Large - prominent height
+```
+
+**Available Colors:**
+
+- `'blue'` - Default, neutral
+- `'green'` - Success, healthy, active
+- `'red'` - Errors, critical, alerts
+- `'purple'` - Special features
+- `'teal'` - Secondary category
+- `'magenta'` - Tertiary category
+
+Use colors consistently to represent status or category throughout your
+visualization.
+
+---
+
+## Carousel Pagination
+
+When primary layer content exceeds the visible height and
+`enablePrimaryLayerCarousel={true}`, pagination controls automatically appear:
+
+- **Previous/Next buttons**: Navigate between pages
+- **Page indicators**: Show current page and total pages
+- **Keyboard support**: Arrow keys for navigation
+- **Maintains layout**: Each page preserves the same column structure
+
+Disable carousel with `enablePrimaryLayerCarousel={false}` to show all content
+without pagination.
+
+---
+
+## Accessibility
+
+### Keyboard Navigation
+
+- **Tab**: Navigate between interactive elements
+- **Enter/Space**: Activate focused block
+- **Arrow Keys**: Navigate carousel pages (when enabled)
+- **Escape**: Close modals or overlays
+
+### Screen Reader Support
+
+The component includes comprehensive ARIA labels and live regions for announcing
+changes to assistive technology users.
+
+### ARIA Labels
+
+Customize accessibility labels using the `i18n` prop:
+
+```jsx
+const i18nLabels = {
+  canvasRegionLabel: 'System architecture visualization',
+  canvasInstructions: 'Use tab to navigate between blocks, enter to select',
+  primaryLayerGroupLabel: 'Application layer',
+  coreLayerGroupLabel: 'Core services layer',
+  foundationLayerGroupLabel: 'Infrastructure layer',
+  primaryCarouselGroupLabel: 'Application carousel',
+  primaryCarouselPreviousLabel: 'Previous page',
+  primaryCarouselNextLabel: 'Next page',
+};
+
+<StackGrid3D
+  enableA11y={true}
+  i18n={i18nLabels}
+  // ... other props
+/>;
+```
+
+---
+
+## Getting Started
+
+### Installation
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-stack-grid-3d
+```
+
+### Basic Usage
+
+```jsx
+import { StackGrid3D, BLOCK_SIZES } from '@carbon-labs/react-stack-grid-3d';
+
+function App() {
+  const primaryLayer = [
+    {
+      id: 'block-1',
+      label: 'Service A',
+      size: BLOCK_SIZES.md,
+      color: 'blue',
+    },
+  ];
+
+  return <StackGrid3D primaryLayer={primaryLayer} theme="dark" />;
+}
+
+export default App;
+```
+
+### SCSS
+
+Import the component styles in your SCSS file:
+
+```scss
+@use '@carbon/react';
+@use '@carbon-labs/react-stack-grid-3d/scss/canvas';
+```
+
+---
+
+## Component API
+
+<ArgTypes />
+
+---
+
+## Example Usages
+
+### Complete Example
+
+Example of StackGrid3D with all three layers and full configuration:
+
+```jsx
+import {
+  StackGrid3D,
+  BLOCK_SIZES,
+  FOUNDATION_RACK_STATES,
+} from '@carbon-labs/react-stack-grid-3d';
+
+function CompleteVisualization() {
+  const primaryLayer = [
+    {
+      id: 'block-1',
+      label: 'Service A',
+      hoverLabel: 'Service A - Active',
+      columnIndex: 0,
+      size: BLOCK_SIZES.md,
+      color: 'blue',
+    },
+    {
+      id: 'block-2',
+      label: 'Service B',
+      hoverLabel: 'Service B - Healthy',
+      columnIndex: 1,
+      size: BLOCK_SIZES.lg,
+      color: 'green',
+    },
+    // ... more blocks
+  ];
+
+  const coreLayer = [
+    {
+      id: 'core-1',
+      label: 'Database',
+      hoverLabel: 'Shared Database Service',
+      size: BLOCK_SIZES.lg,
+    },
+  ];
+
+  const foundationConfig = {
+    id: 'foundation',
+    label: 'Infrastructure',
+    racks: [
+      {
+        id: 'rack-1',
+        slots: 4,
+        variant: FOUNDATION_RACK_STATES.open,
+        status: 'green',
+      },
+      {
+        id: 'rack-2',
+        slots: 4,
+        variant: FOUNDATION_RACK_STATES.open,
+        status: 'green',
+      },
+    ],
+  };
+
+  const textBracket = {
+    title: 'System Architecture',
+    sections: [
+      'Multi-tier application stack',
+      'Responsive column layout',
+      'Interactive 3D visualization',
+    ],
+  };
+
+  const handleBlockClick = (blockId) => {
+    console.log('Block clicked:', blockId);
+  };
+
+  return (
+    <StackGrid3D
+      primaryLayer={primaryLayer}
+      coreLayer={coreLayer}
+      foundationConfig={foundationConfig}
+      textBracket={textBracket}
+      theme="dark"
+      lockColumnCount={false}
+      enablePrimaryLayerCarousel={true}
+      onBlockClick={handleBlockClick}
+      enableA11y={true}
+    />
+  );
+}
+```
+
+### Minimal Example
+
+Minimal configuration with just primary layer blocks:
+
+```jsx
+import { StackGrid3D, BLOCK_SIZES } from '@carbon-labs/react-stack-grid-3d';
+
+function MinimalVisualization() {
+  const primaryLayer = [
+    { id: '1', label: 'Block 1', size: BLOCK_SIZES.md },
+    { id: '2', label: 'Block 2', size: BLOCK_SIZES.md },
+    { id: '3', label: 'Block 3', size: BLOCK_SIZES.md },
+  ];
+
+  return <StackGrid3D primaryLayer={primaryLayer} theme="dark" />;
+}
+```
+
+### Responsive Layout
+
+Example with responsive column behavior and custom breakpoints:
+
+```jsx
+import { StackGrid3D, BLOCK_SIZES } from '@carbon-labs/react-stack-grid-3d';
+
+function ResponsiveVisualization() {
+  const primaryLayer = Array.from({ length: 16 }, (_, i) => ({
+    id: `block-${i}`,
+    label: `Block ${i + 1}`,
+    size: BLOCK_SIZES.md,
+    color: ['blue', 'green', 'purple'][i % 3],
+  }));
+
+  const customBreakpoints = {
+    twoColumns: 600,
+    fourColumns: 1000,
+    sixColumns: 1400,
+  };
+
+  return (
+    <StackGrid3D
+      primaryLayer={primaryLayer}
+      lockColumnCount={false}
+      responsiveColumnBreakpoints={customBreakpoints}
+      enablePrimaryLayerCarousel={true}
+      theme="dark"
+      onResponsiveColumnCountChange={(count) => {
+        console.log('Column count changed to:', count);
+      }}
+    />
+  );
+}
+```

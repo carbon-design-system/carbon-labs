@@ -159,6 +159,7 @@ export class CommonHeader extends LitElement {
           id="${APP_SWITCHER_BUTTON_ID}"
           button-label-active="Close menu"
           button-label-inactive="Open menu"></cds-custom-header-menu-button>
+        <slot name="header-logo"></slot>
         <cds-custom-header-name
           class="${AUTOMATION_NAMESPACE_PREFIX}__header-name"
           prefix="${this.headerProps?.brand?.company ?? 'IBM'}">

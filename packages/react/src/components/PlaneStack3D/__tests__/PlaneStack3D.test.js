@@ -41,7 +41,7 @@ jest.mock('../src/Scene', () => ({
    */
   default: (props) => {
     mockSceneProps.push(props);
-    return <div data-testid="stack-grid-scene" />;
+    return <div data-testid="plane-stack-scene" />;
   },
 }));
 
@@ -83,14 +83,14 @@ describe('PlaneStack3D', () => {
     );
 
     expect(
-      screen.getByRole('region', { name: '3D tenant stacked planes' })
+      screen.getByRole('region', { name: '3D tenant stacked plane' })
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Primary layer/ })).toBeVisible();
     expect(screen.getByTestId('r3f-canvas')).toHaveAttribute(
       'aria-hidden',
       'true'
     );
-    expect(screen.getByTestId('stack-grid-scene')).toBeInTheDocument();
+    expect(screen.getByTestId('plane-stack-scene')).toBeInTheDocument();
   });
 
   it('renders accessibility controls for primary, core, and foundation layers', () => {

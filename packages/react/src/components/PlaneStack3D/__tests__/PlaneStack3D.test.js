@@ -68,7 +68,7 @@ describe('PlaneStack3D', () => {
     mockSceneProps.length = 0;
   });
 
-  it('renders the accessible stacked grid region and 3D scene boundary', () => {
+  it('renders the accessible plane stack region and 3D scene boundary', () => {
     render(
       <PlaneStack3D
         primaryLayer={[
@@ -83,7 +83,7 @@ describe('PlaneStack3D', () => {
     );
 
     expect(
-      screen.getByRole('region', { name: '3D tenant stacked grid' })
+      screen.getByRole('region', { name: '3D tenant stacked planes' })
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Primary layer/ })).toBeVisible();
     expect(screen.getByTestId('r3f-canvas')).toHaveAttribute(

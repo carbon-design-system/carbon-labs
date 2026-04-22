@@ -197,7 +197,7 @@ export const mockFoundationConfig: FoundationConfig = {
 };
 
 export const mockTextBracket: TextBracketConfig = {
-  title: '3D Stacked Grid',
+  title: '3D Plane Stack',
   sections: ['18 microservices', '4 server racks'],
 };
 

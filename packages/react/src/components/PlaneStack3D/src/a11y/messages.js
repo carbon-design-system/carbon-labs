@@ -23,7 +23,7 @@ export const SR_ONLY_STYLE = Object.freeze({
 });
 
 export const DEFAULT_A11Y_COPY = Object.freeze({
-  canvasRegionLabel: '3D tenant stacked grid',
+  canvasRegionLabel: '3D tenant stacked plane',
   canvasInstructions:
     'Use Tab to move between Primary, Core, and Foundation groups. Press Enter on a group to browse its items. In Primary, use arrow keys to move between items. Press Escape to return to group navigation.',
   primaryLayerGroupLabel: 'Primary layer',

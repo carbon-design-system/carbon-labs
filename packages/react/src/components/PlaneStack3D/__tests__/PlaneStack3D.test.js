@@ -11,7 +11,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import StackGrid3D from '../src/StackGrid3D';
+import PlaneStack3D from '../src/PlaneStack3D';
 
 const mockSceneProps = [];
 
@@ -59,7 +59,7 @@ class ResizeObserverMock {
   disconnect() {}
 }
 
-describe('StackGrid3D', () => {
+describe('PlaneStack3D', () => {
   beforeAll(() => {
     window.ResizeObserver = ResizeObserverMock;
   });
@@ -70,7 +70,7 @@ describe('StackGrid3D', () => {
 
   it('renders the accessible stacked grid region and 3D scene boundary', () => {
     render(
-      <StackGrid3D
+      <PlaneStack3D
         primaryLayer={[
           {
             id: 'service-1',
@@ -95,7 +95,7 @@ describe('StackGrid3D', () => {
 
   it('renders accessibility controls for primary, core, and foundation layers', () => {
     render(
-      <StackGrid3D
+      <PlaneStack3D
         primaryLayer={[
           {
             id: 'service-1',
@@ -144,7 +144,7 @@ describe('StackGrid3D', () => {
 
   it('only renders accessibility controls for layers with data', () => {
     render(
-      <StackGrid3D
+      <PlaneStack3D
         primaryLayer={[
           {
             id: 'service-1',
@@ -167,7 +167,7 @@ describe('StackGrid3D', () => {
 
   it('passes skeleton loader rows to the 3D scene without adding a11y items', () => {
     render(
-      <StackGrid3D
+      <PlaneStack3D
         primaryLayer={[]}
         skeletonLoader
         lockColumnCount

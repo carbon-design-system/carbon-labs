@@ -149,7 +149,7 @@ function buildLogicalSceneBounds(
 /**
  * Scene Component
  * Contains all 3D scene content including effects, controls, and visualization layers
- * Separated from StackGrid3D for better organization
+ * Separated from PlaneStack3D for better organization
  */
 function Scene({
   resolvedRows,

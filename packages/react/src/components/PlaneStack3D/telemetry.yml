@@ -7,7 +7,7 @@ collect:
   jsx:
     elements:
       allowedAttributeNames:
-        # StackGrid3D
+        # PlaneStack3D
         - children
         - className
         - visualizationData

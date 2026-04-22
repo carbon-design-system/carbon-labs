@@ -8,19 +8,19 @@
  */
 
 import React, { useState } from 'react';
-import StackGrid3D from '../index';
+import PlaneStack3D from '../index';
 import { BLOCK_SIZES, FOUNDATION_RACK_STATES } from '../index';
 import '../src/styles/canvas.scss';
 
 const meta = {
-  title: 'Components/StackGrid3D/Block Styling',
-  component: StackGrid3D,
+  title: 'Components/PlaneStack3D/Block Styling',
+  component: PlaneStack3D,
   parameters: {
     layout: 'fullscreen',
     docs: {
       description: {
         component: `
-These stories demonstrate the visual customization options for blocks in the StackGrid3D, including color variations, size combinations, and styling patterns.
+These stories demonstrate the visual customization options for blocks in the PlaneStack3D, including color variations, size combinations, and styling patterns.
 
 ## Color System
 
@@ -166,7 +166,7 @@ const Template = (args) => {
 
   return (
     <div style={{ width: '100%', height: '100vh' }}>
-      <StackGrid3D
+      <PlaneStack3D
         primaryLayer={args.primaryLayer}
         coreLayer={args.coreLayer}
         foundationConfig={args.foundationConfig}

@@ -1,17 +1,17 @@
 {
-  "name": "@carbon-labs/react-stack-grid-3d",
+  "name": "@carbon-labs/react-plane-stack-3d",
   "version": "0.1.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
   "type": "module",
-  "description": "Carbon Labs - 3D stack grid visualization built with React Three Fiber",
+  "description": "Carbon Labs - 3D plane stack visualization built with React Three Fiber",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/carbon-design-system/carbon-labs",
-    "directory": "src/components/StackGrid3D"
+    "directory": "src/components/PlaneStack3D"
   },
   "files": [
     "es",

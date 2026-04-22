@@ -18,7 +18,7 @@ import React, {
 } from 'react';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
-import type { StackGrid3DProps } from './types/component-props';
+import type { PlaneStack3DProps } from './types/component-props';
 import LoadingOverlay from './LoadingOverlay';
 import Scene from './Scene';
 import { buildRowsFromVisualizationData } from './data/buildRowsFromVisualizationData';
@@ -101,13 +101,13 @@ function remapPrimaryLayerToColumnCount(
   });
 }
 
-interface StackGrid3DContentProps
-  extends Omit<StackGrid3DProps, 'hoveredItem' | 'onHoveredItemChange'> {
+interface PlaneStack3DContentProps
+  extends Omit<PlaneStack3DProps, 'hoveredItem' | 'onHoveredItemChange'> {
   interactionApi: ReturnType<typeof createCanvasInteractionApi>;
   onIntroAnimationComplete?: () => void;
 }
 
-function StackGrid3DContent({
+function PlaneStack3DContent({
   primaryLayer,
   coreLayer,
   foundationConfig,
@@ -128,7 +128,7 @@ function StackGrid3DContent({
   interactionApi,
   onIntroAnimationComplete: onIntroAnimationCompleteProp,
   theme = 'dark',
-}: StackGrid3DContentProps) {
+}: PlaneStack3DContentProps) {
   const hasStartedIntroRef = useRef(false);
   const hasInitializedRef = useRef(false);
   const previousEffectivePrimaryColumnCountRef = useRef<number | null>(null);
@@ -384,7 +384,7 @@ function StackGrid3DContent({
     <CanvasInteractionContext.Provider value={interactionApi}>
       <div
         ref={canvasShellRef}
-        className="stack-grid-3d"
+        className="plane-stack-3d"
         role={enableA11y ? 'region' : undefined}
         aria-label={
           enableA11y
@@ -484,11 +484,11 @@ function StackGrid3DContent({
   );
 }
 
-function StackGrid3D({
+function PlaneStack3D({
   hoveredItem,
   onHoveredItemChange,
   ...contentProps
-}: StackGrid3DProps) {
+}: PlaneStack3DProps) {
   const onHoveredItemChangeRef = useRef(onHoveredItemChange);
   const [canSyncExternalHover, setCanSyncExternalHover] = useState(false);
   const interactionApiRef = useRef(
@@ -507,8 +507,8 @@ function StackGrid3D({
   }, [canSyncExternalHover, hoveredItem]);
 
   return (
-    <div className="stack-grid-3d-shell">
-      <MemoizedStackGrid3DContent
+    <div className="plane-stack-3d-shell">
+      <MemoizedPlaneStack3DContent
         {...contentProps}
         interactionApi={interactionApiRef.current}
         onIntroAnimationComplete={() => setCanSyncExternalHover(true)}
@@ -520,8 +520,8 @@ function StackGrid3D({
 // Custom comparison function to prevent unnecessary rerenders
 // This helps prevent the intro animation from flickering when parent components rerender
 function arePropsEqual(
-  prevProps: StackGrid3DContentProps,
-  nextProps: StackGrid3DContentProps
+  prevProps: PlaneStack3DContentProps,
+  nextProps: PlaneStack3DContentProps
 ): boolean {
   // Compare primitive props
   if (
@@ -555,6 +555,6 @@ function arePropsEqual(
   return true;
 }
 
-const MemoizedStackGrid3DContent = memo(StackGrid3DContent, arePropsEqual);
+const MemoizedPlaneStack3DContent = memo(PlaneStack3DContent, arePropsEqual);
 
-export default StackGrid3D;
+export default PlaneStack3D;

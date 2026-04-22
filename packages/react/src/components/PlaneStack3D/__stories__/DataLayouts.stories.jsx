@@ -8,7 +8,7 @@
  */
 
 import React, { useState } from 'react';
-import StackGrid3D from '../index';
+import PlaneStack3D from '../index';
 import { BLOCK_SIZES, FOUNDATION_RACK_STATES } from '../index';
 import {
   mockPrimaryLayerNoColumnIndex,
@@ -18,14 +18,14 @@ import {
 import '../src/styles/canvas.scss';
 
 const meta = {
-  title: 'Components/StackGrid3D/Data Layouts',
-  component: StackGrid3D,
+  title: 'Components/PlaneStack3D/Data Layouts',
+  component: PlaneStack3D,
   parameters: {
     layout: 'fullscreen',
     docs: {
       description: {
         component: `
-These stories showcase different ways to organize and display data within the StackGrid3D, demonstrating various block arrangements, overflow handling, and auto-placement behaviors.
+These stories showcase different ways to organize and display data within the PlaneStack3D, demonstrating various block arrangements, overflow handling, and auto-placement behaviors.
 
 ## Layout Strategies
 
@@ -186,7 +186,7 @@ const Template = (args) => {
 
   return (
     <div style={{ width: '100%', height: '100vh' }}>
-      <StackGrid3D
+      <PlaneStack3D
         primaryLayer={args.primaryLayer}
         coreLayer={args.coreLayer}
         foundationConfig={args.foundationConfig}

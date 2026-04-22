@@ -8,7 +8,7 @@
  */
 
 import React, { useState } from 'react';
-import StackGrid3D from '../index';
+import PlaneStack3D from '../index';
 import {
   mockPrimaryLayer,
   mockCoreLayer,
@@ -18,11 +18,11 @@ import {
   FOUNDATION_RACK_STATES,
 } from '../index';
 import '../src/styles/canvas.scss';
-import mdx from './StackGrid3D.mdx';
+import mdx from './PlaneStack3D.mdx';
 
 const meta = {
-  title: 'Components/StackGrid3D',
-  component: StackGrid3D,
+  title: 'Components/PlaneStack3D',
+  component: PlaneStack3D,
   parameters: {
     docs: {
       page: mdx,
@@ -273,7 +273,7 @@ const genericFoundationConfig = {
 };
 
 const genericTextBracket = {
-  title: 'Stack Grid 3D',
+  title: 'Plane Stack 3D',
   sections: ['Multiple layers', 'Interactive blocks'],
 };
 
@@ -289,7 +289,7 @@ const Template = (args) => {
 
   return (
     <div style={{ width: '100%', height: '100vh' }}>
-      <StackGrid3D
+      <PlaneStack3D
         primaryLayer={args.primaryLayer}
         coreLayer={args.coreLayer}
         foundationConfig={args.foundationConfig}
@@ -335,7 +335,7 @@ ProductDemo.parameters = {
       story: `
 **Full-Featured Product Demonstration**
 
-This story showcases a complete StackGrid3D implementation with IBM Sovereign Core branding, demonstrating all three layers working together in a production-ready configuration.
+This story showcases a complete PlaneStack3D implementation with IBM Sovereign Core branding, demonstrating all three layers working together in a production-ready configuration.
 
 **Features Demonstrated:**
 - All three layers (Primary, Core, Foundation) fully populated
@@ -377,7 +377,7 @@ LightTheme.parameters = {
       story: `
 **Light Theme Variant**
 
-Demonstrates the StackGrid3D in light mode with the Carbon g10 theme, ideal for applications with light backgrounds or when matching light-themed interfaces.
+Demonstrates the PlaneStack3D in light mode with the Carbon g10 theme, ideal for applications with light backgrounds or when matching light-themed interfaces.
 
 **Key Characteristics:**
 - Light color palette optimized for readability on white backgrounds
@@ -420,7 +420,7 @@ DarkTheme.parameters = {
       story: `
 **Dark Theme Variant**
 
-Demonstrates the StackGrid3D in dark mode with the Carbon g100 theme, providing an immersive visualization experience ideal for data-intensive applications and low-light environments.
+Demonstrates the PlaneStack3D in dark mode with the Carbon g100 theme, providing an immersive visualization experience ideal for data-intensive applications and low-light environments.
 
 **Key Characteristics:**
 - Dark color palette reducing eye strain in low-light conditions

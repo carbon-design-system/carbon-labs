@@ -8,19 +8,19 @@
  */
 
 import React, { useState } from 'react';
-import StackGrid3D from '../index';
+import PlaneStack3D from '../index';
 import { BLOCK_SIZES, FOUNDATION_RACK_STATES } from '../index';
 import '../src/styles/canvas.scss';
 
 const meta = {
-  title: 'Components/StackGrid3D/Column Configurations',
-  component: StackGrid3D,
+  title: 'Components/PlaneStack3D/Column Configurations',
+  component: PlaneStack3D,
   parameters: {
     layout: 'fullscreen',
     docs: {
       description: {
         component: `
-These stories demonstrate different fixed column layouts for the StackGrid3D. Use \`lockColumnCount={true}\` with a specific \`primaryColumnCount\` to create fixed-width layouts that don't respond to container size changes.
+These stories demonstrate different fixed column layouts for the PlaneStack3D. Use \`lockColumnCount={true}\` with a specific \`primaryColumnCount\` to create fixed-width layouts that don't respond to container size changes.
 
 ## When to Use Fixed Columns
 
@@ -44,7 +44,7 @@ These stories demonstrate different fixed column layouts for the StackGrid3D. Us
 
 ## Responsive Alternative
 
-For layouts that adapt to screen size, see the "Responsive Columns" story in the main StackGrid3D section, which uses \`lockColumnCount={false}\` to automatically switch between 2, 4, 6, and 8 columns based on Carbon Design System breakpoints.
+For layouts that adapt to screen size, see the "Responsive Columns" story in the main PlaneStack3D section, which uses \`lockColumnCount={false}\` to automatically switch between 2, 4, 6, and 8 columns based on Carbon Design System breakpoints.
         `,
       },
     },
@@ -112,7 +112,7 @@ const Template = (args) => {
 
   return (
     <div style={{ width: '100%', height: '100vh' }}>
-      <StackGrid3D
+      <PlaneStack3D
         primaryLayer={args.primaryLayer}
         coreLayer={args.coreLayer}
         foundationConfig={args.foundationConfig}

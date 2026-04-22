@@ -8,8 +8,8 @@
  */
 
 // Main canvas exports
-export { default as StackGrid3D } from './StackGrid3D';
-export { default } from './StackGrid3D';
+export { default as PlaneStack3D } from './PlaneStack3D';
+export { default } from './PlaneStack3D';
 
 // Subcomponents
 export { PrimaryLayer } from './subcomponents/PrimaryLayer';

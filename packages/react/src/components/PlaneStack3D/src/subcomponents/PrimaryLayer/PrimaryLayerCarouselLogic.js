@@ -75,7 +75,7 @@ function calculateColumnsWithHeight(blocks, maxColumnHeight) {
 /**
  * Optimize column distribution for a single page by progressively reducing max height.
  * Tries to maximize columns (up to 8) while maintaining array order.
- * Based on CSS version algorithm from packages/ui/src/canvas/src/StackGrid3D.tsx
+ * Based on CSS version algorithm from packages/ui/src/canvas/src/PlaneStack3D.tsx
  * @param blocks
  * @param maxColumnsPerPage
  */
@@ -129,7 +129,7 @@ function flattenColumns(columns) {
 /**
  * Apply bin-packing and pagination to blocks without columnIndex.
  * Returns array of pages, where each page is an array of blocks.
- * Based on CSS version algorithm from packages/ui/src/canvas/src/StackGrid3D.tsx
+ * Based on CSS version algorithm from packages/ui/src/canvas/src/PlaneStack3D.tsx
  * @param primaryLayer
  * @param maxColumnsPerPage
  * @param paginate

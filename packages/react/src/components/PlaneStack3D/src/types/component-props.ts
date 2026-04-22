@@ -25,11 +25,11 @@ export interface SceneBounds {
 }
 
 /**
- * Props for the top-level Stack Grid 3D.
+ * Props for the top-level Plane Stack 3D.
  * Supply the data for each rendered layer, optional controlled interaction state,
  * layout behavior flags, and accessibility copy overrides.
  */
-export interface StackGrid3DProps {
+export interface PlaneStack3DProps {
   /** Primary blocks rendered in the top layer of the visualization. */
   primaryLayer?: PrimaryLayerBlock[];
   /** Core service blocks rendered beneath the primary layer. */

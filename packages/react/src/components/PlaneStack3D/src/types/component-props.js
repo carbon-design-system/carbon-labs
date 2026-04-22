@@ -13,11 +13,11 @@
 /* eslint-disable jsdoc/valid-types */
 
 /**
- * Props for the top-level Stack Grid 3D.
+ * Props for the top-level Plane Stack 3D.
  * Supply the data for each rendered layer, optional controlled interaction state,
  * layout behavior flags, and accessibility copy overrides.
  *
- * @typedef {object} StackGrid3DProps
+ * @typedef {object} PlaneStack3DProps
  * @property {import("./visualization-config").PrimaryLayerBlock[]=} primaryLayer
  * @property {import("./visualization-config").CoreLayerConfig[]=} coreLayer
  * @property {import("./visualization-config").FoundationConfig=} foundationConfig

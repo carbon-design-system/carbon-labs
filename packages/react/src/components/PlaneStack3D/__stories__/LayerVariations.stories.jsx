@@ -8,19 +8,19 @@
  */
 
 import React, { useState } from 'react';
-import StackGrid3D from '../index';
+import PlaneStack3D from '../index';
 import { BLOCK_SIZES, FOUNDATION_RACK_STATES } from '../index';
 import '../src/styles/canvas.scss';
 
 const meta = {
-  title: 'Components/StackGrid3D/Layer Variations',
-  component: StackGrid3D,
+  title: 'Components/PlaneStack3D/Layer Variations',
+  component: PlaneStack3D,
   parameters: {
     layout: 'fullscreen',
     docs: {
       description: {
         component: `
-These stories demonstrate the three-layer architecture of StackGrid3D and how different layer configurations create various visualization styles. Each layer serves a distinct purpose in the data hierarchy.
+These stories demonstrate the three-layer architecture of PlaneStack3D and how different layer configurations create various visualization styles. Each layer serves a distinct purpose in the data hierarchy.
 
 ## Three-Layer Architecture
 
@@ -152,7 +152,7 @@ const Template = (args) => {
 
   return (
     <div style={{ width: '100%', height: '100vh' }}>
-      <StackGrid3D
+      <PlaneStack3D
         primaryLayer={args.primaryLayer}
         coreLayer={args.coreLayer}
         foundationConfig={args.foundationConfig}

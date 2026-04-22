@@ -1,11 +1,11 @@
-# @carbon-labs/react-stack-grid-3d
+# @carbon-labs/react-plane-stack-3d
 
-3D stack grid visualization built with React Three Fiber for creating
+3D plane stack visualization built with React Three Fiber for creating
 interactive data visualizations.
 
 ## Features
 
-- 3D Stack Grid with React Three Fiber
+- 3D Plane Stack with React Three Fiber
 - Accessibility support with keyboard navigation
 - Responsive dimensions and adaptive pixel ratio
 - Theme context integration

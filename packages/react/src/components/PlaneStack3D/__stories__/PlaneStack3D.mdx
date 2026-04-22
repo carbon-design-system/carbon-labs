@@ -1,9 +1,9 @@
 import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
-import * as StackGrid3DStories from './StackGrid3D.stories';
+import * as PlaneStack3DStories from './PlaneStack3D.stories';
 
 <Meta isTemplate />
 
-# StackGrid3D
+# PlaneStack3D
 
 - **Initiative owner(s):** Drew Glapa & Matthew Fortier
 - **Status:** Active
@@ -48,14 +48,14 @@ import * as StackGrid3DStories from './StackGrid3D.stories';
 
 ## Overview
 
-The StackGrid3D component is a powerful 3D visualization system built with React
+The PlaneStack3D component is a powerful 3D visualization system built with React
 Three Fiber for creating interactive, multi-layered data visualizations. It's
 designed for displaying complex system architectures, infrastructure layouts,
 and hierarchical data relationships in an immersive 3D environment.
 
 ### Key Features
 
-StackGrid3D provides a complete solution for rendering complex 3D visualizations
+PlaneStack3D provides a complete solution for rendering complex 3D visualizations
 with:
 
 - **Three-Layer Architecture**: Foundation, Core, and Primary layers for
@@ -72,7 +72,7 @@ with:
 - **Flexible Data Model**: Support for blocks of varying sizes, colors, and
   states
 
-<Canvas of={StackGrid3DStories.LightTheme} />
+<Canvas of={PlaneStack3DStories.LightTheme} />
 
 ### Anatomy
 
@@ -129,20 +129,20 @@ infrastructure to applications in a single visualization.
 
 ## Theming
 
-The default theme for StackGrid3D is **dark** (`theme="dark"`).
+The default theme for PlaneStack3D is **dark** (`theme="dark"`).
 
-StackGrid3D supports both **light** (`g10`) and **dark** (`g100`) themes from
+PlaneStack3D supports both **light** (`g10`) and **dark** (`g100`) themes from
 the Carbon Design System.
 
 To use a specific theme, set the `theme` prop and ensure your Storybook global
 theme matches:
 
 ```jsx
-import { StackGrid3D } from '@carbon-labs/react-stack-grid-3d';
+import { PlaneStack3D } from '@carbon-labs/react-plane-stack-3d';
 
 function App() {
   return (
-    <StackGrid3D
+    <PlaneStack3D
       theme="light" // or "dark"
       primaryLayer={myPrimaryData}
       coreLayer={myCoreData}
@@ -180,7 +180,7 @@ redistributes blocks across columns when the layout changes.
 Override the default breakpoints using the `responsiveColumnBreakpoints` prop:
 
 ```jsx
-<StackGrid3D
+<PlaneStack3D
   lockColumnCount={false}
   responsiveColumnBreakpoints={{
     twoColumns: 672, // Width threshold for 2 columns
@@ -195,7 +195,7 @@ Override the default breakpoints using the `responsiveColumnBreakpoints` prop:
 columns:
 
 ```jsx
-<StackGrid3D
+<PlaneStack3D
   lockColumnCount={true}
   primaryColumnCount={6} // Fixed at 6 columns
   // ... other props
@@ -211,7 +211,7 @@ columns:
 Each block in the primary layer can specify:
 
 ```jsx
-import { BLOCK_SIZES } from '@carbon-labs/react-stack-grid-3d';
+import { BLOCK_SIZES } from '@carbon-labs/react-plane-stack-3d';
 
 const primaryLayer = [
   {
@@ -245,7 +245,7 @@ const coreLayer = [
 ### Foundation Layer Configuration
 
 ```jsx
-import { FOUNDATION_RACK_STATES } from '@carbon-labs/react-stack-grid-3d';
+import { FOUNDATION_RACK_STATES } from '@carbon-labs/react-plane-stack-3d';
 
 const foundationConfig = {
   id: 'foundation',
@@ -287,7 +287,7 @@ const textBracket = {
 **Available Sizes:**
 
 ```jsx
-import { BLOCK_SIZES } from '@carbon-labs/react-stack-grid-3d';
+import { BLOCK_SIZES } from '@carbon-labs/react-plane-stack-3d';
 
 BLOCK_SIZES.sm; // Small - compact height
 BLOCK_SIZES.md; // Medium - standard height
@@ -353,7 +353,7 @@ const i18nLabels = {
   primaryCarouselNextLabel: 'Next page',
 };
 
-<StackGrid3D
+<PlaneStack3D
   enableA11y={true}
   i18n={i18nLabels}
   // ... other props
@@ -368,13 +368,13 @@ const i18nLabels = {
 
 ```bash
 yarn add @carbon/react
-yarn add @carbon-labs/react-stack-grid-3d
+yarn add @carbon-labs/react-plane-stack-3d
 ```
 
 ### Basic Usage
 
 ```jsx
-import { StackGrid3D, BLOCK_SIZES } from '@carbon-labs/react-stack-grid-3d';
+import { PlaneStack3D, BLOCK_SIZES } from '@carbon-labs/react-plane-stack-3d';
 
 function App() {
   const primaryLayer = [
@@ -386,7 +386,7 @@ function App() {
     },
   ];
 
-  return <StackGrid3D primaryLayer={primaryLayer} theme="dark" />;
+  return <PlaneStack3D primaryLayer={primaryLayer} theme="dark" />;
 }
 
 export default App;
@@ -398,7 +398,7 @@ Import the component styles in your SCSS file:
 
 ```scss
 @use '@carbon/react';
-@use '@carbon-labs/react-stack-grid-3d/scss/canvas';
+@use '@carbon-labs/react-plane-stack-3d/scss/canvas';
 ```
 
 ---
@@ -413,14 +413,14 @@ Import the component styles in your SCSS file:
 
 ### Complete Example
 
-Example of StackGrid3D with all three layers and full configuration:
+Example of PlaneStack3D with all three layers and full configuration:
 
 ```jsx
 import {
-  StackGrid3D,
+  PlaneStack3D,
   BLOCK_SIZES,
   FOUNDATION_RACK_STATES,
-} from '@carbon-labs/react-stack-grid-3d';
+} from '@carbon-labs/react-plane-stack-3d';
 
 function CompleteVisualization() {
   const primaryLayer = [
@@ -485,7 +485,7 @@ function CompleteVisualization() {
   };
 
   return (
-    <StackGrid3D
+    <PlaneStack3D
       primaryLayer={primaryLayer}
       coreLayer={coreLayer}
       foundationConfig={foundationConfig}
@@ -505,7 +505,7 @@ function CompleteVisualization() {
 Minimal configuration with just primary layer blocks:
 
 ```jsx
-import { StackGrid3D, BLOCK_SIZES } from '@carbon-labs/react-stack-grid-3d';
+import { PlaneStack3D, BLOCK_SIZES } from '@carbon-labs/react-plane-stack-3d';
 
 function MinimalVisualization() {
   const primaryLayer = [
@@ -514,7 +514,7 @@ function MinimalVisualization() {
     { id: '3', label: 'Block 3', size: BLOCK_SIZES.md },
   ];
 
-  return <StackGrid3D primaryLayer={primaryLayer} theme="dark" />;
+  return <PlaneStack3D primaryLayer={primaryLayer} theme="dark" />;
 }
 ```
 
@@ -523,7 +523,7 @@ function MinimalVisualization() {
 Example with responsive column behavior and custom breakpoints:
 
 ```jsx
-import { StackGrid3D, BLOCK_SIZES } from '@carbon-labs/react-stack-grid-3d';
+import { PlaneStack3D, BLOCK_SIZES } from '@carbon-labs/react-plane-stack-3d';
 
 function ResponsiveVisualization() {
   const primaryLayer = Array.from({ length: 16 }, (_, i) => ({
@@ -540,7 +540,7 @@ function ResponsiveVisualization() {
   };
 
   return (
-    <StackGrid3D
+    <PlaneStack3D
       primaryLayer={primaryLayer}
       lockColumnCount={false}
       responsiveColumnBreakpoints={customBreakpoints}

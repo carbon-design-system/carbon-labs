@@ -1675,6 +1675,37 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-plane-stack-3d@workspace:packages/react/src/components/PlaneStack3D":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-plane-stack-3d@workspace:packages/react/src/components/PlaneStack3D"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon/colors": "npm:^11.0.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    "@react-spring/three": "npm:^9.7.0"
+    "@react-three/drei": "npm:^9.0.0"
+    "@react-three/fiber": "npm:^8.0.0"
+    "@react-three/postprocessing": "npm:^2.0.0"
+    "@types/react": "npm:^18.0.0"
+    "@types/three": "npm:^0.150.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    three: "npm:^0.170.0"
+  peerDependencies:
+    "@carbon/colors": ">=11"
+    "@react-spring/three": ">=9"
+    "@react-three/drei": ^9.0.0
+    "@react-three/fiber": ^8.0.0
+    "@react-three/postprocessing": ^2.0.0
+    "@types/react": ">=16.8.0"
+    react: ^18.0.0
+    react-dom: ^18.0.0
+    sass: ">=1"
+    three: ^0.168.0
+    typescript: ^5.7.2
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-processing@workspace:packages/react/src/components/Processing":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-processing@workspace:packages/react/src/components/Processing"
@@ -1708,37 +1739,6 @@ __metadata:
   dependencies:
     "@carbon-labs/utilities": "npm:0.22.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
-  languageName: unknown
-  linkType: soft
-
-"@carbon-labs/react-stack-grid-3d@workspace:packages/react/src/components/StackGrid3D":
-  version: 0.0.0-use.local
-  resolution: "@carbon-labs/react-stack-grid-3d@workspace:packages/react/src/components/StackGrid3D"
-  dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
-    "@carbon/colors": "npm:^11.0.0"
-    "@ibm/telemetry-js": "npm:^1.10.2"
-    "@react-spring/three": "npm:^9.7.0"
-    "@react-three/drei": "npm:^9.0.0"
-    "@react-three/fiber": "npm:^8.0.0"
-    "@react-three/postprocessing": "npm:^2.0.0"
-    "@types/react": "npm:^18.0.0"
-    "@types/three": "npm:^0.150.0"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
-    three: "npm:^0.170.0"
-  peerDependencies:
-    "@carbon/colors": ">=11"
-    "@react-spring/three": ">=9"
-    "@react-three/drei": ^9.0.0
-    "@react-three/fiber": ^8.0.0
-    "@react-three/postprocessing": ^2.0.0
-    "@types/react": ">=16.8.0"
-    react: ^18.0.0
-    react-dom: ^18.0.0
-    sass: ">=1"
-    three: ^0.168.0
-    typescript: ^5.7.2
   languageName: unknown
   linkType: soft
 

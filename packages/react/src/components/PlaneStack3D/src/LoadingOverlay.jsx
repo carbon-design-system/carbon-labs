@@ -16,8 +16,8 @@ function LoadingOverlay() {
   if (!active) return null;
 
   return (
-    <div className="stack-grid-3d-loading" aria-hidden="true">
-      <div className="stack-grid-3d-spinner" />
+    <div className="plane-stack-3d-loading" aria-hidden="true">
+      <div className="plane-stack-3d-spinner" />
     </div>
   );
 }

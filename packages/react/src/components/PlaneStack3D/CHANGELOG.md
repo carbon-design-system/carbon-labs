@@ -7,8 +7,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* **StackGrid3D:** Initial migration of StackGrid3D component from msp-tenant-illustration-r3f
-* Added 3D Stack Grid with React Three Fiber
+* **PlaneStack3D:** Initial migration of PlaneStack3D component from msp-tenant-illustration-r3f
+* Added 3D Plane Stack with React Three Fiber
 * Included accessibility support with keyboard navigation
 * Added responsive dimensions and adaptive pixel ratio
 * Integrated theme context

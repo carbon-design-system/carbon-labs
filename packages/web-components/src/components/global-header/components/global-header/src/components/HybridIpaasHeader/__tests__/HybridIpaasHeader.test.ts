@@ -790,4 +790,16 @@ describe('HybridIpaasHeader Component', () => {
       expect(fetchStub.calledOnce).to.be.true;
     });
   });
+
+  describe('Logo support', () => {
+    it('renders content in the header-logo slot', async () => {
+      const el = await fixture<HybridIpaasHeader>(
+        html`<cclabs-global-header-hybrid-ipaas
+          ><div slot="header-logo">LOGO</div></clabs-global-header-hybrid-ipaas
+        >`
+      );
+      expect(el).not.to.be.null;
+      expect(el).lightDom.to.equal('<div slot="header-logo">LOGO</div>');
+    });
+  });
 });

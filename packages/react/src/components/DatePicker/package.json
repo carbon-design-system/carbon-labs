@@ -1,0 +1,50 @@
+{
+  "name": "@carbon-labs/react-date-picker",
+  "version": "0.2.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - Date Picker for React",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/react/src/components/DatePicker"
+  },
+  "types": "./es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    },
+    "./es/*": "./es/*",
+    "./lib/*": "./lib/*",
+    "./scss/*": "./scss/*"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rimraf es lib scss",
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 40597fb8-d0ed-45fb-a95a-5b1751e22c36 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
+  },
+  "dependencies": {
+    "@carbon-labs/primitives": "workspace:*",
+    "@ibm/telemetry-js": "^1.10.2",
+    "classnames": "^2.3.2"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "@carbon-labs/utilities": "0.22.0"
+  }
+}

@@ -24,16 +24,14 @@
 }
 
 .#{with-prefix('theme-selector')} {
-  :global(.cds--dropdown)::after {
-    position: absolute;
-    display: block;
-    background-color: theme.$layer-selected;
-    block-size: convert.rem(40px);
-    content: '';
-    inline-size: 1px;
-    inset-block-start: 0;
-    inset-inline-end: -1px;
-  }
+  position: absolute;
+  display: block;
+  background-color: theme.$layer-selected;
+  block-size: convert.rem(40px);
+  content: '';
+  inline-size: 1px;
+  inset-block-start: 0;
+  inset-inline-end: -1px;
 }
 
 .#{with-prefix('storybook-demo')} {

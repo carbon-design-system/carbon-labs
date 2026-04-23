@@ -39,6 +39,6 @@
     "@carbon-labs/utilities": "0.22.0",
     "@carbon/web-components": "^2.50.0",
     "@js-temporal/polyfill": "~0.5.1",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.0"
   }
 }

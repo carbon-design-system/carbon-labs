@@ -41,6 +41,6 @@
     "@carbon-labs/utilities": "0.22.0",
     "@carbon/web-components": "^2.41.0",
     "@ibm/telemetry-js": "^1.10.2",
-    "uuid": "^9.0.1"
+    "uuid": "^14.0.0"
   }
 }

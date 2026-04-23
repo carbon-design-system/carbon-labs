@@ -15,6 +15,9 @@ From the root of a Carbon Labs checkout:
 npx @carbon-labs/create@latest <ComponentName>
 ```
 
+This should be the only command needed to create the generated files for the
+first component contribution.
+
 Use React by default. Use the web component flow only when the user explicitly
 asks for a web component:
 
@@ -122,11 +125,24 @@ yarn storybook
 
 ## Before Opening A PR
 
-Formatting and license checks are handled by Husky and lint-staged during
-commit. Before opening a PR:
+When the contribution is ready for PR review, run one repo-local prep command:
 
-- run the relevant tests
-- run `yarn lint:license` when files were added
+```bash
+yarn prep
+```
+
+This is the required PR prep path. It:
+
+- adds the IBM copyright header to added source files
+- runs `yarn format`
+- runs `yarn dedupe`
+- runs `yarn lint:license`
+
+Do not ask contributors to run additional cleanup commands for normal component
+contributions unless a command fails and you are helping debug the failure.
+
+Before opening a PR, confirm:
+
 - confirm the generated MDX problem statement is complete
 - confirm maintainers are listed correctly
 - confirm the Storybook story title and tags are appropriate

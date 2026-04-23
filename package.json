@@ -24,6 +24,7 @@
     "doctoc": "doctoc --title '## Table of Contents' docs",
     "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
+    "prep": "node tools/prep.js",
     "scaffold": "node tools/scaffold.js",
     "lint": "eslint packages --ext .js,.ts",
     "lint:license": "tools/check-license.cjs -a",

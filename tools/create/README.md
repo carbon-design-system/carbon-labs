@@ -50,6 +50,16 @@ npx @carbon-labs/create@latest my-component
 yarn workspace @carbon-labs/create create-carbon-labs my-component
 ```
 
+When your component is ready for PR review, run one repo-local prep command from
+the root of your Carbon Labs checkout:
+
+```bash
+yarn prep
+```
+
+`yarn prep` ensures added source files have the IBM copyright header, runs
+`yarn format`, runs `yarn dedupe`, and validates license headers.
+
 ## Usage
 
 ```

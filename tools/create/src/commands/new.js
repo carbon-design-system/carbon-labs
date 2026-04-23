@@ -24,6 +24,7 @@ import {
   ensureUpstream,
   createBranch,
   makeScaffoldCommit,
+  findRepoRoot,
   readNvmrc,
 } from '../utils/git.js';
 
@@ -42,7 +43,11 @@ function getBranchName(componentName) {
 
 async function resolveRepoPath(options, isDryRun) {
   if (!options.withGit) {
-    return { localPath: resolve(options.path ?? process.cwd()) };
+    if (options.path) {
+      return { localPath: expandPath(options.path) };
+    }
+
+    return { localPath: (await findRepoRoot(process.cwd())) ?? process.cwd() };
   }
 
   const rawPath = options.path ?? '~/carbon-labs';

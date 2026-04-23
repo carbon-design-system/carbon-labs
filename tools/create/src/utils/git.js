@@ -8,6 +8,7 @@
 import { simpleGit } from 'simple-git';
 import { existsSync } from 'fs';
 import { join } from 'path';
+import { execa } from 'execa';
 
 const UPSTREAM_REMOTE = 'upstream';
 const UPSTREAM_URL = 'https://github.com/carbon-design-system/carbon-labs.git';
@@ -90,6 +91,21 @@ export async function createBranch(git, branchName) {
 export async function makeScaffoldCommit(git, componentName) {
   await git.add('.');
   await git.commit(`feat(${componentName}): scaffold component`);
+}
+
+/**
+ * Finds the nearest Git repo root from a starting path. Returns null outside Git.
+ */
+export async function findRepoRoot(startPath) {
+  try {
+    const result = await execa('git', ['rev-parse', '--show-toplevel'], {
+      cwd: startPath,
+      stdio: 'pipe',
+    });
+    return result.stdout.trim();
+  } catch {
+    return null;
+  }
 }
 
 /**

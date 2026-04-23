@@ -7,6 +7,7 @@
 
 import { homedir } from 'os';
 import { resolve, join } from 'path';
+import { readFile } from 'fs/promises';
 import { execa } from 'execa';
 import { log, runStep } from '../utils/logger.js';
 import { validateComponentName, applyNameCasing } from '../utils/names.js';
@@ -136,6 +137,18 @@ async function checkNodeVersion(localPath) {
   }
 }
 
+async function validateGeneratedPackageJson(componentPath) {
+  const packageJsonPath = join(componentPath, 'package.json');
+
+  try {
+    JSON.parse(await readFile(packageJsonPath, 'utf8'));
+  } catch (error) {
+    throw new Error(
+      `Generated package.json is invalid at ${packageJsonPath}: ${error.message}`
+    );
+  }
+}
+
 export async function newCommand(componentName, options) {
   const isDryRun = Boolean(options.dryRun);
   if (isDryRun) {
@@ -208,6 +221,14 @@ export async function newCommand(componentName, options) {
     { dryRun: isDryRun }
   );
 
+  const componentPath = join(packageDir, 'src', 'components', casedName);
+
+  await runStep(
+    `Validating generated package.json for ${casedName}`,
+    () => validateGeneratedPackageJson(componentPath),
+    { dryRun: isDryRun }
+  );
+
   const scaffoldArgs = [
     'scaffold',
     '--name',
@@ -227,8 +248,6 @@ export async function newCommand(componentName, options) {
     () => execa('yarn', scaffoldArgs, { cwd: localPath, stdio: 'inherit' }),
     { dryRun: isDryRun }
   );
-
-  const componentPath = join(packageDir, 'src', 'components', casedName);
 
   if (options.withGit) {
     await runStep(

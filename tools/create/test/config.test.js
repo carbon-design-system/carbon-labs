@@ -102,21 +102,21 @@ describe('loadConfig', () => {
   let tmpDir;
 
   beforeEach(async () => {
-    tmpDir = await mkdtemp(join(tmpdir(), 'labs-kit-test-'));
+    tmpDir = await mkdtemp(join(tmpdir(), 'create-test-'));
   });
 
   afterEach(async () => {
     await rm(tmpDir, { recursive: true, force: true });
   });
 
-  it('returns defaults when no .labs-kit.json present', async () => {
+  it('returns defaults when no .carbon-labs-create.json present', async () => {
     const config = await loadConfig(tmpDir);
     expect(config).toMatchObject(DEFAULTS);
   });
 
   it('merges file values over defaults', async () => {
     await writeFile(
-      join(tmpDir, '.labs-kit.json'),
+      join(tmpDir, '.carbon-labs-create.json'),
       JSON.stringify({ squad: 'my-squad', defaultType: 'web-component' })
     );
     const config = await loadConfig(tmpDir);
@@ -127,7 +127,7 @@ describe('loadConfig', () => {
 
   it('parses string defaultOwners', async () => {
     await writeFile(
-      join(tmpDir, '.labs-kit.json'),
+      join(tmpDir, '.carbon-labs-create.json'),
       JSON.stringify({ defaultOwners: '@alice,@bob' })
     );
     const config = await loadConfig(tmpDir);
@@ -136,7 +136,7 @@ describe('loadConfig', () => {
 
   it('preserves array defaultOwners', async () => {
     await writeFile(
-      join(tmpDir, '.labs-kit.json'),
+      join(tmpDir, '.carbon-labs-create.json'),
       JSON.stringify({ defaultOwners: ['@alice', '@bob'] })
     );
     const config = await loadConfig(tmpDir);
@@ -144,7 +144,7 @@ describe('loadConfig', () => {
   });
 
   it('throws on malformed JSON', async () => {
-    await writeFile(join(tmpDir, '.labs-kit.json'), 'not json {{{');
+    await writeFile(join(tmpDir, '.carbon-labs-create.json'), 'not json {{{');
     await expect(loadConfig(tmpDir)).rejects.toThrow(/Failed to parse/);
   });
 });

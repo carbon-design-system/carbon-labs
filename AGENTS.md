@@ -6,49 +6,63 @@ repository.
 
 ## Default Contribution Path
 
-Prefer the repo-local `labs-kit` utility for new component contributions. It
-wraps the Carbon Labs generator and handles the setup work that contributors
-usually have to do by hand.
+Prefer `@carbon-labs/create` for new component contributions. It follows common
+starter conventions used by tools like Next, Vite, TanStack, and Storybook.
 
-From the repo root:
+From the root of a Carbon Labs checkout:
 
 ```bash
-yarn labs-kit new <ComponentName>
+npx @carbon-labs/create@latest <ComponentName>
 ```
 
 Use React by default. Use the web component flow only when the user explicitly
 asks for a web component:
 
 ```bash
-yarn labs-kit new <component-name> --type web-component
+npx @carbon-labs/create@latest <component-name> --type web-component
+```
+
+By default, the create utility must not run Git commands. If the user wants the
+tool to handle fork detection, clone/update, branch creation, and the initial
+scaffold commit, pass `--with-git`:
+
+```bash
+npx @carbon-labs/create@latest <ComponentName> --with-git
 ```
 
 If the user wants to preview the process without changing files:
 
 ```bash
-yarn labs-kit new <ComponentName> --dry-run
+npx @carbon-labs/create@latest <ComponentName> --dry-run
 ```
 
-## What `labs-kit new` Handles
+## What The Create Utility Handles
 
-`labs-kit new` is the preferred scaffold path because it:
+The create utility:
 
-- checks GitHub CLI authentication
-- finds or creates the contributor's fork of `carbon-design-system/carbon-labs`
-- clones or updates the local fork
-- ensures the `upstream` remote points to the canonical Carbon Labs repo
-- runs install and build steps needed by the generator
-- runs `yarn generate` in the correct package
-- injects owners and a problem-statement scaffold into the generated MDX
-- tags the Storybook story for squad/incubating contribution review
-- creates a `feat/<component-name>` branch
-- makes an initial Conventional Commit
+- validates the component name
+- optionally handles fork/clone/update/branch/commit when `--with-git` is passed
+- runs `yarn install`
+- runs `yarn build`
+- runs `yarn generate <name>` in the correct package
+- runs `yarn scaffold`
 - opens the generated component folder
-- starts Storybook
-- prints a draft PR URL
+- starts Storybook in the background
 
-Do not recreate this flow manually unless `labs-kit` is unavailable or the user
-explicitly asks for a manual setup.
+Do not recreate this flow manually unless `@carbon-labs/create` is unavailable
+or the user explicitly asks for a manual setup.
+
+## What `yarn scaffold` Handles
+
+`yarn scaffold` is the repo-local post-generation step. It:
+
+- injects owners into the generated MDX maintainer block
+- injects the problem-statement scaffold
+- tags the Storybook story for squad/incubating contribution review
+- adds the IBM copyright header to generated source files
+
+Future repo-local contribution commands should be added to the root
+`package.json` and run as `yarn <script-name>`.
 
 ## Prerequisites To Check
 
@@ -56,17 +70,18 @@ Before running the contribution flow, make sure the contributor has:
 
 - Node matching the repo's `.nvmrc`
 - Yarn available through the repo's configured package manager
-- GitHub CLI installed and authenticated with `gh auth login`
-- SSO authorized for the `carbon-design-system` GitHub organization when
-  required
+- GitHub CLI installed and authenticated with `gh auth login` when using
+  `--with-git`
+- SSO authorized for the `carbon-design-system` GitHub organization when using
+  `--with-git` and required by GitHub
 
 If GitHub CLI reports an SSO error, ask the user to authorize GitHub CLI for the
 `carbon-design-system` organization, then retry the command.
 
 ## Team Defaults
 
-For repeat contributions, use `.labs-kit.json` at the root of the contributor's
-Carbon Labs fork:
+For repeat contributions, use `.carbon-labs-create.json` at the root of the
+contributor's Carbon Labs fork:
 
 ```json
 {
@@ -77,24 +92,23 @@ Carbon Labs fork:
 }
 ```
 
-CLI flags override `.labs-kit.json`.
+CLI flags override `.carbon-labs-create.json`.
 
 Use `--owners` when the contributor provides maintainers explicitly:
 
 ```bash
-yarn labs-kit new <ComponentName> --owners @user1,@user2
+npx @carbon-labs/create@latest <ComponentName> --owners @user1,@user2
 ```
 
 ## After Scaffolding
 
-After `labs-kit new` completes:
+After the create utility completes:
 
 1. Open the generated component folder printed by the CLI.
 2. Fill in the problem statement in the generated MDX file.
 3. Implement the component in the generated source files.
 4. Review the Storybook story and tags.
-5. Keep the initial scaffold commit and add follow-up commits for meaningful
-   implementation work.
+5. Add meaningful implementation commits.
 
 If Storybook did not start automatically, run Storybook from the package that
 contains the generated component.
@@ -106,34 +120,11 @@ cd packages/react
 yarn storybook
 ```
 
-## Preparing A Branch For PR
+## Before Opening A PR
 
-When the user says the contribution is ready for review, use:
+Formatting and license checks are handled by Husky and lint-staged during
+commit. Before opening a PR:
 
-```bash
-yarn labs-kit prep
-```
-
-`labs-kit prep` prepares the branch by:
-
-- adding the IBM copyright header to newly added source files
-- running `yarn format` from the repo root
-- running `yarn dedupe` from the repo root
-
-To preview the prep actions:
-
-```bash
-yarn labs-kit prep --dry-run
-```
-
-Run tests or build commands relevant to the changed package after prep. At
-minimum, verify the utility or component-specific tests the user changed.
-
-## PR Checklist
-
-Before opening a PR:
-
-- run `yarn labs-kit prep`
 - run the relevant tests
 - run `yarn lint:license` when files were added
 - confirm the generated MDX problem statement is complete
@@ -141,8 +132,6 @@ Before opening a PR:
 - confirm the Storybook story title and tags are appropriate
 - push the feature branch to the contributor's fork
 - open a draft PR against `carbon-design-system/carbon-labs`
-
-Use the PR URL printed by `labs-kit new` when available.
 
 ## PR Template
 
@@ -173,17 +162,11 @@ Closes #
 - <verification step>
 ```
 
-## When Not To Use `labs-kit`
+## When Not To Use `@carbon-labs/create`
 
-Do not use `labs-kit new` for changes that are not new component contributions,
-such as documentation-only fixes, bug fixes to existing components, dependency
-maintenance, or repo infrastructure changes.
+Do not use the create utility for changes that are not new component
+contributions, such as documentation-only fixes, bug fixes to existing
+components, dependency maintenance, or repo infrastructure changes.
 
-For those changes, use normal Git workflow and still run:
-
-```bash
-yarn labs-kit prep
-```
-
-before opening the PR when the branch adds source files or changes dependency
-resolution.
+For those changes, use normal Git workflow and add any repo-local automation as
+a root `package.json` script.

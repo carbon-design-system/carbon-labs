@@ -1,111 +1,97 @@
-# @carbon-labs/labs-kit
+# @carbon-labs/create
 
 > **Status: v0** — the API may change before v1.
 
-Collapse the Carbon Labs contribution ceremony into focused commands. Go from
-idea to a live Storybook preview branch, then prepare the finished branch for PR
-review.
+Create a Carbon Labs component contribution from the command line. The package
+follows starter conventions used by tools like Next, Vite, TanStack, and
+Storybook.
 
 ## What it does
 
 ```bash
-yarn labs-kit new <component-name>
-yarn labs-kit prep
+npx @carbon-labs/create@latest <component-name>
 ```
 
-`labs-kit new`:
+By default, the command works in the current Carbon Labs checkout and does not
+run any Git commands.
 
-1. Checks your `gh` CLI auth
-2. Finds (or creates) your fork of `carbon-design-system/carbon-labs`
-3. Clones or updates the fork locally
-4. Ensures `upstream` points to the canonical repo
-5. Runs `yarn install && yarn build`
-6. Runs `yarn generate <name>` in the right package
-7. Re-links the workspace
-8. Injects owners and a problem-statement scaffold into the generated MDX
-9. Tags the Storybook story as `squad / incubating` (groups it in the sidebar)
-10. Creates a `feat/<component-name>` branch and makes an initial Conventional
-    Commit
-11. Opens the component folder in your editor
-12. Spawns Storybook in the background
-13. Prints the draft PR URL
+The create flow:
 
-`labs-kit prep`:
+1. Validates the component name
+2. Runs `yarn install`
+3. Runs `yarn build`
+4. Runs `yarn generate <name>` in the correct package
+5. Runs `yarn scaffold` to inject owners, Storybook tags, the problem-statement
+   scaffold, and copyright headers
+6. Opens the component folder in your editor
+7. Starts Storybook in the background
 
-1. Finds source files added on the current branch
-2. Adds the IBM copyright header where needed
-3. Runs `yarn format` from the repo root
-4. Runs `yarn dedupe` from the repo root
+Pass `--with-git` to opt in to fork detection, clone/update, branch creation,
+and the initial scaffold commit:
+
+```bash
+npx @carbon-labs/create@latest <component-name> --with-git
+```
 
 ## Prerequisites
 
 - Node 20+
 - [GitHub CLI (`gh`)](https://cli.github.com) — authenticated via
-  `gh auth login`
+  `gh auth login` when using `--with-git`
 - `yarn` available in your shell
 
 ## Running from Carbon Labs
 
 ```bash
-# From the root of your carbon-labs fork:
-yarn labs-kit new my-component
-yarn labs-kit prep
+# From the root of your carbon-labs fork
+npx @carbon-labs/create@latest my-component
 
 # Or run the binary directly from the tool workspace:
-cd tools/labs-kit
-yarn labs-kit new my-component
+yarn workspace @carbon-labs/create create-carbon-labs my-component
 ```
 
 ## Usage
 
 ```
-labs-kit new <component-name> [options]
-labs-kit prep [options]
+create-carbon-labs <component-name> [options]
 
 Options:
   --type <type>       Component type: "react" or "web-component"  [default: react]
   --owners <handles>  Comma-separated GitHub handles, e.g. @user1,@user2
-  --path <path>       Local clone path                            [default: ~/carbon-labs]
+  --path <path>       Carbon Labs repo path                       [default: cwd]
+  --with-git          Opt into fork setup, clone/update, branch, and commit
   --no-storybook      Skip spawning Storybook
   --no-editor         Skip opening your editor
   --dry-run           Print every step without making changes
   -h, --help          Display help
-
-Prep options:
-  --path <path>       Repo root to prepare                         [default: cwd]
-  --base <ref>        Base ref used to find newly added files       [default: upstream/main]
-  --dry-run           Print every step without making changes
 ```
 
 ### Examples
 
 ```bash
 # React component (default)
-labs-kit new DataTableFilter
+npx @carbon-labs/create@latest DataTableFilter
 
 # Web Component
-labs-kit new data-table-filter --type web-component
+npx @carbon-labs/create@latest data-table-filter --type web-component
 
 # With explicit owners
-labs-kit new MyWidget --owners @ajcase,@kenny-handle
+npx @carbon-labs/create@latest MyWidget --owners @ajcase,@kenny-handle
+
+# Opt into fork/clone/update/branch/commit handling
+npx @carbon-labs/create@latest MyWidget --with-git
 
 # Preview what would happen without touching anything
-labs-kit new MyWidget --dry-run
+npx @carbon-labs/create@latest MyWidget --dry-run
 
 # Custom local path
-labs-kit new MyWidget --path ~/projects/carbon-labs
-
-# Prepare your branch before opening a PR
-labs-kit prep
-
-# Preview PR prep steps
-labs-kit prep --dry-run
+npx @carbon-labs/create@latest MyWidget --path ~/projects/carbon-labs
 ```
 
 ## Config file
 
-Create `.labs-kit.json` at the root of your carbon-labs fork to set team-wide
-defaults:
+Create `.carbon-labs-create.json` at the root of your carbon-labs fork to set
+team-wide defaults:
 
 ```json
 {
@@ -134,7 +120,7 @@ defaults.
 ## Development
 
 ```bash
-cd tools/labs-kit
+cd tools/create
 yarn install
 yarn test           # vitest run
 yarn test:watch     # vitest watch mode
@@ -144,7 +130,7 @@ yarn test:watch     # vitest watch mode
 
 | Milestone                   | Status  | Description                                           |
 | --------------------------- | ------- | ----------------------------------------------------- |
-| 1 — CLI MVP                 | ✅ Done | fork/clone/generate/branch flow                       |
+| 1 — CLI MVP                 | ✅ Done | install/build/generate/scaffold flow                  |
 | 2 — Squad namespace         | Dropped | Replaced by Storybook `tags` (see step 9 above)       |
 | 3 — MDX auto-fill           | ✅ Done | Maintainer block + problem-statement scaffold         |
 | 4 — Issue template + Action | Planned | Zero-click path for designers and PMs                 |
@@ -153,7 +139,7 @@ yarn test:watch     # vitest watch mode
 ## Notes
 
 - **Does not replace `yarn generate`** — wraps it. If the upstream generator
-  changes, labs-kit inherits the change automatically.
+  changes, `@carbon-labs/create` inherits the change automatically.
 - The `storybook-publish` workflow in carbon-labs only runs on pushes to `main`
   (GitHub Pages). There is no per-PR preview — a draft PR link is the best we
   can provide until the component merges.

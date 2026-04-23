@@ -55,7 +55,7 @@ async function injectMdxFile({
   // ── 2. Problem-statement ──────────────────────────────────────────────
   // Inserted immediately after the "## Overview" heading.
   // Only inject once — idempotent if the file is processed again.
-  const SCAFFOLD_MARKER = '{/* labs-kit:problem-statement */}';
+  const SCAFFOLD_MARKER = '{/* carbon-labs-create:problem-statement */}';
   if (!content.includes(SCAFFOLD_MARKER)) {
     const body = problemStatement
       ? `> **Problem statement:** ${problemStatement}\n`

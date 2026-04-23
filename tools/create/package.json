@@ -1,18 +1,19 @@
 {
-  "name": "@carbon-labs/labs-kit",
+  "name": "@carbon-labs/create",
   "version": "0.1.0",
-  "description": "Carbon Labs squad incubation tooling — collapse the Labs contribution ceremony into a single command",
-  "private": true,
+  "description": "Create a Carbon Labs component contribution from the command line",
   "type": "module",
   "engines": {
     "node": ">=20.0.0"
   },
-  "bin": "./bin/labs-kit.js",
+  "bin": {
+    "create-carbon-labs": "./bin/create.js"
+  },
   "exports": {
     ".": "./src/index.js"
   },
   "scripts": {
-    "labs-kit": "node ./bin/labs-kit.js",
+    "create-carbon-labs": "node ./bin/create.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "build": "echo 'No build step — pure ESM source'"
@@ -23,7 +24,6 @@
     "commander": "^12.1.0",
     "execa": "^9.5.2",
     "ora": "^8.1.1",
-    "prompts": "^2.4.2",
     "simple-git": "^3.27.0"
   },
   "devDependencies": {

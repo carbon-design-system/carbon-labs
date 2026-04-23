@@ -54,14 +54,12 @@ export function printExperimentalWarning() {
   log.blank();
   console.log(
     chalk.yellow('┌─────────────────────────────────────────────────────┐\n') +
-      chalk.yellow(
-        '│  ⚗  labs-kit is EXPERIMENTAL — expect rough edges.  │\n'
-      ) +
+      chalk.yellow('│  @carbon-labs/create is experimental.              │\n') +
       chalk.yellow(
         '│  File issues at: github.com/carbon-design-system/    │\n'
       ) +
       chalk.yellow(
-        '│  carbon-labs (squad tooling label)                   │\n'
+        '│  carbon-labs                                         │\n'
       ) +
       chalk.yellow('└─────────────────────────────────────────────────────┘')
   );

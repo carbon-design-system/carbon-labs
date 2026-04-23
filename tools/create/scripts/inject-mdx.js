@@ -10,7 +10,7 @@
  * CLI shim used by the GitHub Action to inject MDX metadata.
  *
  * Usage:
- *   node tools/labs-kit/scripts/inject-mdx.js \
+ *   node tools/create/scripts/inject-mdx.js \
  *     <componentDir> <componentName> <owners> [storybookGroup] [problemStatement]
  *
  * Arguments:

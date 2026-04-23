@@ -6,12 +6,10 @@
  */
 
 import { program } from 'commander';
-import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { readFileSync } from 'fs';
 import { newCommand } from './commands/new.js';
-import { prepCommand } from './commands/prep.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const pkg = JSON.parse(
@@ -19,16 +17,14 @@ const pkg = JSON.parse(
 );
 
 program
-  .name('labs-kit')
+  .name('@carbon-labs/create')
   .version(pkg.version)
   .description(
-    'Carbon Labs squad incubation tooling.\n' +
-      'Collapse the Labs contribution ceremony into a single command.'
+    'Create a Carbon Labs component contribution from the command line.'
   );
 
 program
-  .command('new <component-name>')
-  .description('Scaffold a new squad-draft component in your carbon-labs fork')
+  .argument('<component-name>', 'Component name to generate')
   .option(
     '--type <type>',
     'Component type: "react" or "web-component" (default: react or config.defaultType)'
@@ -41,7 +37,11 @@ program
     '--group <name>',
     'Storybook sidebar group for the component (default: "Components" or config.storybookGroup)'
   )
-  .option('--path <path>', 'Local path to clone the fork into', '~/carbon-labs')
+  .option('--path <path>', 'Carbon Labs repo path (default: current directory)')
+  .option(
+    '--with-git',
+    'Opt in to fork detection, clone/update, branch creation, and initial commit'
+  )
   .option('--no-storybook', 'Skip spawning Storybook after scaffolding')
   .option('--no-editor', 'Skip opening your editor after scaffolding')
   .option(
@@ -49,21 +49,6 @@ program
     'Print every step that would be taken without making changes'
   )
   .action(newCommand);
-
-program
-  .command('prep')
-  .description('Prepare a contribution branch for PR review')
-  .option('--path <path>', 'Repo root to prepare', process.cwd())
-  .option(
-    '--base <ref>',
-    'Base ref used to find newly added files',
-    'upstream/main'
-  )
-  .option(
-    '--dry-run',
-    'Print every step that would be taken without making changes'
-  )
-  .action(prepCommand);
 
 program.parseAsync(process.argv).catch((err) => {
   console.error('\nFatal:', err.message);

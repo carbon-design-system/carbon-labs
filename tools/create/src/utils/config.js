@@ -9,7 +9,7 @@ import { readFile } from 'fs/promises';
 import { join } from 'path';
 import { parseOwners } from './owners.js';
 
-const CONFIG_FILE = '.labs-kit.json';
+const CONFIG_FILE = '.carbon-labs-create.json';
 
 export const DEFAULTS = {
   squad: 'carbon-squad',
@@ -20,7 +20,7 @@ export const DEFAULTS = {
 };
 
 /**
- * Reads .labs-kit.json from repoRoot. Returns merged defaults if file is absent.
+ * Reads .carbon-labs-create.json from repoRoot. Returns merged defaults if file is absent.
  * Throws on malformed JSON.
  */
 export async function loadConfig(repoRoot) {

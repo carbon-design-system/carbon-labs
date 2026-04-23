@@ -1610,20 +1610,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/labs-kit@workspace:tools/labs-kit":
+"@carbon-labs/create@workspace:tools/create":
   version: 0.0.0-use.local
-  resolution: "@carbon-labs/labs-kit@workspace:tools/labs-kit"
+  resolution: "@carbon-labs/create@workspace:tools/create"
   dependencies:
     "@octokit/rest": "npm:^20.1.1"
     chalk: "npm:^5.4.1"
     commander: "npm:^12.1.0"
     execa: "npm:^9.5.2"
     ora: "npm:^8.1.1"
-    prompts: "npm:^2.4.2"
     simple-git: "npm:^3.27.0"
     vitest: "npm:^3.0.0"
   bin:
-    labs-kit: ./bin/labs-kit.js
+    create-carbon-labs: ./bin/create.js
   languageName: unknown
   linkType: soft
 
@@ -27069,7 +27068,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prompts@npm:^2.0.1, prompts@npm:^2.4.2":
+"prompts@npm:^2.0.1":
   version: 2.4.2
   resolution: "prompts@npm:2.4.2"
   dependencies:

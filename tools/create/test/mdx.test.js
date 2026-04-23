@@ -54,7 +54,7 @@ describe('injectMdxMetadata', () => {
   let componentDir;
 
   beforeEach(async () => {
-    tmpDir = await mkdtemp(join(tmpdir(), 'labs-kit-mdx-test-'));
+    tmpDir = await mkdtemp(join(tmpdir(), 'create-mdx-test-'));
     componentDir = await makeComponentDir(tmpDir, 'ExampleButton');
   });
 
@@ -103,11 +103,11 @@ describe('injectMdxMetadata', () => {
       join(componentDir, '__stories__', 'ExampleButton.mdx'),
       'utf8'
     );
-    expect(content).toContain('labs-kit:problem-statement');
+    expect(content).toContain('carbon-labs-create:problem-statement');
     expect(content).toContain('Problem statement:');
     // Scaffold must appear after ## Overview
     const overviewIdx = content.indexOf('## Overview');
-    const scaffoldIdx = content.indexOf('labs-kit:problem-statement');
+    const scaffoldIdx = content.indexOf('carbon-labs-create:problem-statement');
     expect(scaffoldIdx).toBeGreaterThan(overviewIdx);
   });
 
@@ -126,7 +126,8 @@ describe('injectMdxMetadata', () => {
       join(componentDir, '__stories__', 'ExampleButton.mdx'),
       'utf8'
     );
-    const count = (content.match(/labs-kit:problem-statement/g) || []).length;
+    const count = (content.match(/carbon-labs-create:problem-statement/g) || [])
+      .length;
     expect(count).toBe(1);
   });
 

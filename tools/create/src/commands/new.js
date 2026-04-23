@@ -194,6 +194,7 @@ export async function newCommand(componentName, options) {
   );
 
   const packageDir = join(localPath, PACKAGE_DIR[componentType]);
+  const packageRelativeDir = PACKAGE_DIR[componentType];
   const casedName = applyNameCasing(componentName, componentType);
   log.info(`Component: ${casedName}  (type: ${componentType})`);
 
@@ -270,6 +271,10 @@ export async function newCommand(componentName, options) {
   log.success('Scaffold complete!');
   log.blank();
   console.log('  Component folder : ' + componentPath);
+  console.log('  Storybook path   : ' + packageRelativeDir);
+  console.log(
+    '  Storybook command: cd ' + packageRelativeDir + ' && yarn storybook'
+  );
   if (options.withGit) {
     console.log('  Branch           : ' + branchName);
     console.log('  Draft PR URL     : ' + buildPrUrl(username, branchName));
@@ -284,7 +289,9 @@ export async function newCommand(componentName, options) {
       casedName +
       '.mdx.\n' +
       '    2. Iterate on your component.\n' +
-      '    3. Run relevant tests.\n' +
+      '    3. Preview in Storybook with: cd ' +
+      packageRelativeDir +
+      ' && yarn storybook\n' +
       (options.withGit
         ? '    4. Push: git push -u origin ' + branchName + '\n'
         : '    4. Commit and push from your current branch.\n')

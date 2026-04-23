@@ -46,7 +46,7 @@ The create utility:
 - validates the component name
 - optionally handles fork/clone/update/branch/commit when `--with-git` is passed
 - runs `yarn install`
-- runs `yarn build`
+- runs `yarn build` so the repo is in a known good state before generation
 - runs `yarn generate <name>` in the correct package
 - runs `yarn scaffold`
 - opens the generated component folder
@@ -54,6 +54,10 @@ The create utility:
 
 Do not recreate this flow manually unless `@carbon-labs/create` is unavailable
 or the user explicitly asks for a manual setup.
+
+Do not run extra build or prep commands immediately after the create utility
+finishes. The next step is local component development and Storybook
+verification from source.
 
 ## What `yarn scaffold` Handles
 
@@ -113,6 +117,10 @@ After the create utility completes:
 4. Review the Storybook story and tags.
 5. Add meaningful implementation commits.
 
+Storybook is the primary local development and verification environment. It
+compiles from source files directly, so do not build the generated package just
+to preview the component in Storybook.
+
 If Storybook did not start automatically, run Storybook from the package that
 contains the generated component.
 
@@ -122,6 +130,25 @@ For React components:
 cd packages/react
 yarn storybook
 ```
+
+For web components:
+
+```bash
+cd packages/web-components
+yarn storybook
+```
+
+When helping implement a component, work in this order:
+
+1. Update the generated source, styles, tests, and Storybook story.
+2. Confirm the component renders and behaves correctly in Storybook.
+3. Keep iterating until the Storybook state matches the user's request.
+4. Run `yarn prep` only when the user says the contribution is ready for PR
+   review.
+
+Do not jump straight to `yarn prep`, package builds, or distribution-output
+checks before local Storybook confirmation. The component package `es` and `lib`
+directories are distribution artifacts, not required for Storybook development.
 
 ## Before Opening A PR
 

@@ -6,7 +6,7 @@
     "provenance": true
   },
   "type": "module",
-  "description": "Carbon Labs - Split Panel",
+  "description": "⚠️ DEPRECATED: Carbon Labs - Split Panel (use @carbon-labs/react-resizer instead)",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

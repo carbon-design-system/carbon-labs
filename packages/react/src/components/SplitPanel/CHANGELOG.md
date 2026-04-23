@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.13.0...@carbon-labs/react-split-panel@0.14.0) (2026-04-23)
+
+
+### Features
+
+* SplitPanel deprecation proposal ([#969](https://github.com/carbon-design-system/carbon-labs/issues/969)) ([4a8f886](https://github.com/carbon-design-system/carbon-labs/commit/4a8f8865968a9fbfba011586668bf4b19730296c))
+
+
+
+
+
 ## [Unreleased]
 
 ### ⚠ BREAKING CHANGES

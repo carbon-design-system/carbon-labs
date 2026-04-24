@@ -20,7 +20,6 @@ export default class IWHISessionManager {
     lastTokenRefreshTime: number;
     timers: object;
     warningShown: boolean;
-    warningDialog: {} | null;
     isLoggedOut: boolean;
     activityEvents: string[];
     constructor(config: sessionManagerConfig) {
@@ -33,6 +32,7 @@ export default class IWHISessionManager {
         // Configuration
         this.config = {
             capabilityName: config.capabilityName, // Must be passed in by the header
+            basePath: config.basePath, // Must be passed in by the header for use in log out function
             idleTimeout: urlIdleTimeout ? parseInt(urlIdleTimeout) * 60 * 1000 : (config.idleTimeout || 30 * 60 * 1000),
             tokenRefreshInterval: urlRefreshInterval ? parseInt(urlRefreshInterval) * 60 * 1000 : (config.tokenRefreshInterval || 32 * 60 * 1000),
             maxSessionDuration: config.maxSessionDuration || 8 * 60 * 60 * 1000, // default is 8 hours
@@ -71,7 +71,6 @@ export default class IWHISessionManager {
         this.lastTokenRefreshTime = Date.now();
         this.timers = {};
         this.warningShown = false;
-        this.warningDialog = null;
         this.isLoggedOut = false;
 
         // Activity events
@@ -108,7 +107,7 @@ export default class IWHISessionManager {
         // CRITICAL: If no cookie exists, check if logout happened recently
         // This prevents pages that load AFTER logout cookie expires from creating new cookie
         if (!existingState) {
-            const lastLogoutCheck = sessionStorage.getItem('iwhi_last_logout_check');
+            const lastLogoutCheck = sessionStorage.getItem('iwhi_last_logout_check'); // session storage is page session for a particular tab
             if (lastLogoutCheck) {
                 const timeSinceLogout = Date.now() - parseInt(lastLogoutCheck);
                 if (timeSinceLogout < 10000) { // Within 10 seconds of logout
@@ -123,24 +122,73 @@ export default class IWHISessionManager {
         // Initialize cookie state (now safe to clear stale data)
         this.initializeCookieState();
         
-        // Register activity listeners AFTER cookie initialization
-        // This prevents race condition where activity creates partial cookie
-        this.registerActivityListeners();
+        // // Register activity listeners AFTER cookie initialization
+        // // This prevents race condition where activity creates partial cookie
+        // this.registerActivityListeners();
         
-        // Start cookie polling
-        this.startCookiePolling();
+        // // Start cookie polling
+        // this.startCookiePolling();
         
-        // Attempt leader election
-        this.electLeader();
+        // // Attempt leader election
+        // this.electLeader();
         
-        // Start monitoring
-        this.startMonitoring();
+        // // Start monitoring
+        // this.startMonitoring();
         
-        // Handle visibility changes
-        this.handleVisibilityChange();
+        // // Handle visibility changes
+        // this.handleVisibilityChange();
         
-        // Cleanup on unload
-        window.addEventListener('beforeunload', () => this.cleanup());
+        // // Cleanup on unload
+        // window.addEventListener('beforeunload', () => this.cleanup());
+    }
+
+    readCookieState() {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split('=');
+            if (name === this.config.cookieName) {
+                try {
+                    return JSON.parse(decodeURIComponent(value));
+                } catch (e) {
+                    console.error('Error parsing cookie:', e);
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
+    async performLogout(reason) {
+        this.dismissWarning();
+        console.log(`Performing logout: reason=${reason}, tabId=${this.tabId}`);
+        
+        // Store logout timestamp to prevent race condition with slow-loading tabs
+        try {
+            sessionStorage.setItem('iwhi_last_logout_check', Date.now().toString());
+        } catch (e) {
+            console.error('Failed to set sessionStorage logout flag:', e);
+        }
+        
+        // Immediately redirect - no dialog, no delay
+        // Call user-provided logout callback or redirect to login
+        if (this.config.onLogout) {
+            this.config.onLogout(reason);
+        } else {
+            // Default: redirect to login page immediately
+            window.location.href = this.config.basePath + reason;
+        }
+    }
+
+    dismissWarning() {
+        if (!this.warningShown) return;
+
+        const warningDialog = document.getElementById('iwhi-session-warning-overlay') // TODO: can probably do this better once we refactor the warning dialog to carbon
+    
+        this.warningShown = false;
+        
+        if (warningDialog) {
+            warningDialog.remove(); // Remove warning dialog element from parent node
+        }
     }
 }
 

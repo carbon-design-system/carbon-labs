@@ -381,6 +381,7 @@ declare global {
 
 export interface sessionManagerConfig {
   capabilityName: string;
+  basePath: string;
   idleTimeout?: number;
   tokenRefreshInterval?: number;
   maxSessionDuration?: number;
@@ -399,5 +400,5 @@ export interface sessionManagerConfig {
   showWarningDialog?: boolean;
   warningMessage?: string;
   onWarning?: () => void | undefined;
-  onLogout?: () => void | undefined;
+  onLogout?: (reason: string) => void | undefined;
 }

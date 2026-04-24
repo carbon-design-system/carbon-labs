@@ -374,12 +374,13 @@ interface solisWindowConfig {
 declare global {
   interface Window {
     _solis: solisWindowConfig;
-    IWHI_SESSION_CONFIG: object; // TODO
+    IWHI_SESSION_CONFIG: sessionManagerConfig;
     iwhi_session_manager: any; // TODO
   }
 }
 
 export interface sessionManagerConfig {
+  capabilityName: string;
   idleTimeout?: number;
   tokenRefreshInterval?: number;
   maxSessionDuration?: number;

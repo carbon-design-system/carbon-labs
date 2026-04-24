@@ -378,3 +378,25 @@ declare global {
     iwhi_session_manager: any; // TODO
   }
 }
+
+export interface sessionManagerConfig {
+  idleTimeout?: number;
+  tokenRefreshInterval?: number;
+  maxSessionDuration?: number;
+  warningTime?: number; 
+  cookieName?: string; 
+  cookieDomain?: string;
+  cookieSecure?: boolean;
+  cookieSameSite?: string;
+  cookiePollInterval?: number;
+  leaderHeartbeatInterval?: number;
+  leaderStaleTimeout?: number;
+  logoutCookieExpiry?: number;
+  tokenRefreshEndpoint?: string;
+  preferVisibleLeader?: boolean;
+  debug?: boolean;
+  showWarningDialog?: boolean;
+  warningMessage?: string;
+  onWarning?: () => void | undefined;
+  onLogout?: () => void | undefined;
+}

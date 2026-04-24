@@ -374,5 +374,7 @@ interface solisWindowConfig {
 declare global {
   interface Window {
     _solis: solisWindowConfig;
+    IWHI_SESSION_CONFIG: object; // TODO
+    iwhi_session_manager: any; // TODO
   }
 }

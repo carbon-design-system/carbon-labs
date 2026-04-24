@@ -9,7 +9,7 @@
 /* eslint jsdoc/require-jsdoc: 0 */
 import { sessionManagerConfig } from '../types/Header.types'
 
-class IWHISessionManager {
+export default class IWHISessionManager {
     config: sessionManagerConfig;
     tabId: string;
     capability: string;
@@ -32,7 +32,7 @@ class IWHISessionManager {
 
         // Configuration
         this.config = {
-            capabilityName: config.capabilityName, // Must be passed in by header
+            capabilityName: config.capabilityName, // Must be passed in by the header
             idleTimeout: urlIdleTimeout ? parseInt(urlIdleTimeout) * 60 * 1000 : (config.idleTimeout || 30 * 60 * 1000),
             tokenRefreshInterval: urlRefreshInterval ? parseInt(urlRefreshInterval) * 60 * 1000 : (config.tokenRefreshInterval || 32 * 60 * 1000),
             maxSessionDuration: config.maxSessionDuration || 8 * 60 * 60 * 1000, // default is 8 hours
@@ -79,10 +79,68 @@ class IWHISessionManager {
             'mousedown', 'mousemove', 'keypress', 'scroll', 
             'touchstart', 'click', 'focus'
         ];
+
+        // Initialize
+        this.init();
     }
 
     generateTabId() {
         return `tab_${Date.now()}_${Math.random().toString(36).slice(2, 11)}`;
+    }
+
+    init() {
+        // Do we need to log this?
+        // Currently all we log to the console is errors in a few places
+        // Do we need to implement proper logging for this?
+        // DO we have IWHI wide logging? How would we hook in to that?
+        console.log('Initializing cookie-based session manager'); 
+        console.log('Capability:', this.capability);
+        console.log('Tab ID:', this.tabId);
+        
+        // Check if logout is in progress BEFORE initializing cookie state
+        const existingState = this.readCookieState();
+        if (existingState?.logoutCommand) {
+            console.log('Logout command found, performing logout immediately');
+            this.performLogout(existingState.logoutCommand.reason);
+            return; // Don't start normal operations
+        }
+        
+        // CRITICAL: If no cookie exists, check if logout happened recently
+        // This prevents pages that load AFTER logout cookie expires from creating new cookie
+        if (!existingState) {
+            const lastLogoutCheck = sessionStorage.getItem('iwhi_last_logout_check');
+            if (lastLogoutCheck) {
+                const timeSinceLogout = Date.now() - parseInt(lastLogoutCheck);
+                if (timeSinceLogout < 10000) { // Within 10 seconds of logout
+                    console.log('Recent logout detected during init, refusing to start session');
+                    this.isLoggedOut = true;
+                    this.performLogout('recent_logout_detected_on_init');
+                    return; // Don't start normal operations
+                }
+            }
+        }
+    
+        // Initialize cookie state (now safe to clear stale data)
+        this.initializeCookieState();
+        
+        // Register activity listeners AFTER cookie initialization
+        // This prevents race condition where activity creates partial cookie
+        this.registerActivityListeners();
+        
+        // Start cookie polling
+        this.startCookiePolling();
+        
+        // Attempt leader election
+        this.electLeader();
+        
+        // Start monitoring
+        this.startMonitoring();
+        
+        // Handle visibility changes
+        this.handleVisibilityChange();
+        
+        // Cleanup on unload
+        window.addEventListener('beforeunload', () => this.cleanup());
     }
 }
 

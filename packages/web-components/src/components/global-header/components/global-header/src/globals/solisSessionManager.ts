@@ -22,6 +22,7 @@ class IWHISessionManager {
     warningShown: boolean;
     warningDialog: {} | null;
     isLoggedOut: boolean;
+    activityEvents: string[];
     constructor(config: sessionManagerConfig) {
         // Parse URL parameters
         // Only used for testing, won't be present in production
@@ -72,6 +73,12 @@ class IWHISessionManager {
         this.warningShown = false;
         this.warningDialog = null;
         this.isLoggedOut = false;
+
+        // Activity events
+        this.activityEvents = [
+            'mousedown', 'mousemove', 'keypress', 'scroll', 
+            'touchstart', 'click', 'focus'
+        ];
     }
 
     generateTabId() {

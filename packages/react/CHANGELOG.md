@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.171.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.170.0...@carbon-labs/react@0.171.0) (2026-04-27)
+
+
+### Bug Fixes
+
+* **TextHighlighter:** Improve the visibility and readability of the reference annotation ([#1196](https://github.com/carbon-design-system/carbon-labs/issues/1196)) ([91ee333](https://github.com/carbon-design-system/carbon-labs/commit/91ee3330fc5940a3b857ff33a16b8cc84ed6dd90))
+
+
+### Features
+
+* **TagInput:** New react compoenet - initial commit  ([#1186](https://github.com/carbon-design-system/carbon-labs/issues/1186)) ([865c57e](https://github.com/carbon-design-system/carbon-labs/commit/865c57e0e4c158f9d45cf40a1da89cc785617639))
+
+
+
+
+
 # [0.170.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.169.0...@carbon-labs/react@0.170.0) (2026-04-23)
 
 

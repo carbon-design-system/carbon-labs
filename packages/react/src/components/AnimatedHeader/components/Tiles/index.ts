@@ -12,3 +12,5 @@ import { BaseTile } from './BaseTile/BaseTile';
 import { GlassTile } from './GlassTile/GlassTile';
 
 export { AITile, AIPromptTile, BaseTile, GlassTile };
+export type { AutotrackDataAttributes } from '../types';
+export { extractAutotrackAttributes } from '../utils';

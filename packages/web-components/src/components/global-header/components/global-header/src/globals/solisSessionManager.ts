@@ -32,12 +32,13 @@ export default class IWHISessionManager {
         // Configuration
         this.config = {
             capabilityName: config.capabilityName, // Must be passed in by the header
+            capabilityKey: config.capabilityKey, // Must be passed in by the header
             basePath: config.basePath, // Must be passed in by the header for use in log out function
             idleTimeout: urlIdleTimeout ? parseInt(urlIdleTimeout) * 60 * 1000 : (config.idleTimeout || 30 * 60 * 1000),
             tokenRefreshInterval: urlRefreshInterval ? parseInt(urlRefreshInterval) * 60 * 1000 : (config.tokenRefreshInterval || 32 * 60 * 1000),
             maxSessionDuration: config.maxSessionDuration || 8 * 60 * 60 * 1000, // default is 8 hours
             warningTime: config.warningTime || 5 * 60 * 1000, // default is 5 minutes
-            
+
             // Cookie settings
             cookieName: config.cookieName || 'iwhi_session_state',
             cookieDomain: config.cookieDomain || '.ipaas.automation.ibm.com',
@@ -47,13 +48,14 @@ export default class IWHISessionManager {
             leaderHeartbeatInterval: config.leaderHeartbeatInterval || 2000, // Leader updates cookie every 2 seconds
             leaderStaleTimeout: config.leaderStaleTimeout || 6000, // Leader is stale after 6 seconds (3x heartbeat)
             logoutCookieExpiry: config.logoutCookieExpiry || 6, // Cookie expires 6 seconds after logout (3 polling cycles)
-            
+
             // Endpoints
             tokenRefreshEndpoint: config.tokenRefreshEndpoint || '/api/refresh-token',
-            
+            solisLogoutEndpoint: config.solisLogoutEndpoint || '//hybrid-ipaas/v1/solis/session/logout',
+
             // Preferences
             preferVisibleLeader: config.preferVisibleLeader !== false, // Prefer visible tabs as leaders
-            
+
             debug: config.debug || false,
             showWarningDialog: config.showWarningDialog !== false,
             warningMessage: config.warningMessage || 'Your session will expire in {time} due to inactivity. Do you want to continue?',
@@ -75,7 +77,7 @@ export default class IWHISessionManager {
 
         // Activity events
         this.activityEvents = [
-            'mousedown', 'mousemove', 'keypress', 'scroll', 
+            'mousedown', 'mousemove', 'keypress', 'scroll',
             'touchstart', 'click', 'focus'
         ];
 
@@ -88,14 +90,6 @@ export default class IWHISessionManager {
     }
 
     init() {
-        // Do we need to log this?
-        // Currently all we log to the console is errors in a few places
-        // Do we need to implement proper logging for this?
-        // DO we have IWHI wide logging? How would we hook in to that?
-        console.log('Initializing cookie-based session manager'); 
-        console.log('Capability:', this.capability);
-        console.log('Tab ID:', this.tabId);
-        
         // Check if logout is in progress BEFORE initializing cookie state
         const existingState = this.readCookieState();
         if (existingState?.logoutCommand) {
@@ -103,7 +97,7 @@ export default class IWHISessionManager {
             this.performLogout(existingState.logoutCommand.reason);
             return; // Don't start normal operations
         }
-        
+
         // CRITICAL: If no cookie exists, check if logout happened recently
         // This prevents pages that load AFTER logout cookie expires from creating new cookie
         if (!existingState) {
@@ -118,33 +112,33 @@ export default class IWHISessionManager {
                 }
             }
         }
-    
+
         // Initialize cookie state (now safe to clear stale data)
-        this.initializeCookieState();
-        
+        //this.initializeCookieState();
+
         // // Register activity listeners AFTER cookie initialization
         // // This prevents race condition where activity creates partial cookie
         // this.registerActivityListeners();
-        
+
         // // Start cookie polling
         // this.startCookiePolling();
-        
+
         // // Attempt leader election
         // this.electLeader();
-        
+
         // // Start monitoring
         // this.startMonitoring();
-        
+
         // // Handle visibility changes
         // this.handleVisibilityChange();
-        
+
         // // Cleanup on unload
         // window.addEventListener('beforeunload', () => this.cleanup());
     }
 
     readCookieState() {
         const cookies = document.cookie.split(';');
-        for (let cookie of cookies) {
+        for (const cookie of cookies) {
             const [name, value] = cookie.trim().split('=');
             if (name === this.config.cookieName) {
                 try {
@@ -161,31 +155,54 @@ export default class IWHISessionManager {
     async performLogout(reason) {
         this.dismissWarning();
         console.log(`Performing logout: reason=${reason}, tabId=${this.tabId}`);
-        
+
         // Store logout timestamp to prevent race condition with slow-loading tabs
         try {
             sessionStorage.setItem('iwhi_last_logout_check', Date.now().toString());
         } catch (e) {
             console.error('Failed to set sessionStorage logout flag:', e);
         }
-        
+        try {
+          await this.performSolisLogoutFromServer({}, this.config.capabilityKey); //TODO Custom HEADERS
+        }
+        catch (e) {
+          console.error('Failed to logout through common service:', e);
+        }
         // Immediately redirect - no dialog, no delay
         // Call user-provided logout callback or redirect to login
         if (this.config.onLogout) {
             this.config.onLogout(reason);
         } else {
             // Default: redirect to login page immediately
-            window.location.href = this.config.basePath + reason;
+            window.location.href = this.config.basePath + reason; //TODO What is reason?
         }
     }
 
+    async performSolisLogoutFromServer(
+      headers: { [x: string]: string },
+      productKey: string
+    ) {
+      headers = headers || {};
+      headers['x-hybrid-ipaas-product-key'] = productKey;
+      const fetchRoute = this.config.basePath + this.config.solisLogoutEndpoint;
+      const response = await fetch(fetchRoute, {
+        credentials: 'same-origin',
+        headers,
+        method: "POST"
+      });
+      if (!response.ok) {
+        throw new Error('Failed to logout of solis through common service');
+      }
+      return response.json();
+    }
+
     dismissWarning() {
-        if (!this.warningShown) return;
+        if (!this.warningShown) {return;}
 
         const warningDialog = document.getElementById('iwhi-session-warning-overlay') // TODO: can probably do this better once we refactor the warning dialog to carbon
-    
+
         this.warningShown = false;
-        
+
         if (warningDialog) {
             warningDialog.remove(); // Remove warning dialog element from parent node
         }

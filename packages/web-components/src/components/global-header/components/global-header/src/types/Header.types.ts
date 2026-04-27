@@ -381,12 +381,13 @@ declare global {
 
 export interface sessionManagerConfig {
   capabilityName: string;
+  capabilityKey: string;
   basePath: string;
   idleTimeout?: number;
   tokenRefreshInterval?: number;
   maxSessionDuration?: number;
-  warningTime?: number; 
-  cookieName?: string; 
+  warningTime?: number;
+  cookieName?: string;
   cookieDomain?: string;
   cookieSecure?: boolean;
   cookieSameSite?: string;
@@ -394,6 +395,7 @@ export interface sessionManagerConfig {
   leaderHeartbeatInterval?: number;
   leaderStaleTimeout?: number;
   logoutCookieExpiry?: number;
+  solisLogoutEndpoint: string;
   tokenRefreshEndpoint?: string;
   preferVisibleLeader?: boolean;
   debug?: boolean;

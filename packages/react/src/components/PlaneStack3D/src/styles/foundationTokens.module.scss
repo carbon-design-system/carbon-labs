@@ -1,0 +1,30 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* stylelint-disable selector-pseudo-class-no-unknown, property-no-unknown, order/properties-order */
+@use './variables' as *;
+
+:export {
+  foundationRackFront: $foundation-rack-front;
+  foundationRackSide: $foundation-rack-side;
+  foundationRackTop: $foundation-rack-top;
+  foundationRackBottom: $foundation-rack-bottom;
+  foundationRackBack: $foundation-rack-back;
+  foundationRackBorder: $foundation-rack-border;
+  foundationRackPanel: $foundation-rack-panel;
+
+  foundationWorkerNodeFront: $foundation-worker-node-front;
+  foundationWorkerNodeSide: $foundation-worker-node-side;
+  foundationWorkerNodeTop: $foundation-worker-node-top;
+  foundationWorkerNodeBottom: $foundation-worker-node-bottom;
+  foundationWorkerNodeBack: $foundation-worker-node-back;
+  foundationWorkerNodeButtons: $foundation-worker-node-buttons;
+  foundationWorkerNodeStatus: $foundation-worker-node-status;
+  foundationWorkerNodeStatusGreen: $foundation-worker-node-status-green;
+  foundationWorkerNodeStatusYellow: $foundation-worker-node-status-yellow;
+  foundationWorkerNodeStatusRed: $foundation-worker-node-status-red;
+}

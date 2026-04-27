@@ -1,0 +1,112 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* eslint-disable jsdoc/require-jsdoc, jsdoc/require-param, jsdoc/require-param-type, jsdoc/require-param-description */
+
+import { BLOCK_GAP, BLOCK_HEIGHTS } from '../constants';
+import { BLOCK_SIZES } from '../types';
+
+/**
+ *
+ * @param rowData
+ */
+export function isLongBlockRow(rowData) {
+  const block = rowData?.[0]?.[0];
+  return (
+    rowData.length === 1 && rowData[0].length === 1 && block?.fullWidth === true
+  );
+}
+
+/**
+ *
+ * @param rowData
+ */
+export function isFramedRow(rowData) {
+  return (
+    Array.isArray(rowData) &&
+    rowData.length > 0 &&
+    rowData.every(
+      (column) =>
+        Array.isArray(column) &&
+        column.length === 1 &&
+        column[0].size === BLOCK_SIZES.framed
+    )
+  );
+}
+
+/**
+ *
+ * @param size
+ * @param blockHeights
+ */
+export function getBlockHeight(size, blockHeights = BLOCK_HEIGHTS) {
+  return blockHeights[size] ?? blockHeights.md;
+}
+
+/**
+ *
+ * @param columnBlocks
+ * @param blockHeights
+ * @param blockGap
+ */
+export function getColumnHeight(
+  columnBlocks,
+  blockHeights = BLOCK_HEIGHTS,
+  blockGap = BLOCK_GAP
+) {
+  if (columnBlocks.length === 0) {
+    return 0;
+  }
+  const total = columnBlocks.reduce(
+    (sum, block) => sum + getBlockHeight(block.size, blockHeights) + blockGap,
+    0
+  );
+  return Math.max(0, total - blockGap);
+}
+
+/**
+ *
+ * @param rowData
+ * @param blockHeights
+ * @param blockGap
+ */
+export function getRowHeight(
+  rowData,
+  blockHeights = BLOCK_HEIGHTS,
+  blockGap = BLOCK_GAP
+) {
+  if (isLongBlockRow(rowData)) {
+    return getBlockHeight(rowData[0][0].size, blockHeights);
+  }
+  if (isFramedRow(rowData)) {
+    return getBlockHeight(rowData[0][0].size, blockHeights);
+  }
+  if (rowData.length === 0) {
+    return 0;
+  }
+  return Math.max(
+    ...rowData.map((col) => getColumnHeight(col, blockHeights, blockGap))
+  );
+}
+
+/**
+ *
+ * @param rows
+ */
+export function getMaxColumns(rows) {
+  if (!rows || rows.length === 0) {
+    return 1;
+  }
+  const max = Math.max(
+    ...rows.map((row) =>
+      isLongBlockRow(row) || isFramedRow(row) ? 0 : row.length
+    )
+  );
+  return Math.max(1, max);
+}

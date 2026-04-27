@@ -1,0 +1,57 @@
+{
+  "name": "@carbon-labs/react-plane-stack-3d",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "description": "Carbon Labs - 3D plane stack visualization built with React Three Fiber",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "src/components/PlaneStack3D"
+  },
+  "files": [
+    "es",
+    "lib",
+    "scss",
+    "telemetry.yml"
+  ],
+  "scripts": {
+    "build": "node ../../../tasks/build.js",
+    "clean": "rimraf es lib scss",
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 18a7a4e1-d21d-4d71-9dce-20587f4abd2e --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./src/**/*.(tsx|ts|jsx|js)"
+  },
+  "peerDependencies": {
+    "@carbon/colors": ">=11",
+    "@react-spring/three": ">=9",
+    "@react-three/drei": "^9.0.0",
+    "@react-three/fiber": "^8.0.0",
+    "@react-three/postprocessing": "^2.0.0",
+    "@types/react": ">=16.8.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "sass": ">=1",
+    "three": "^0.168.0",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@carbon/colors": "^11.0.0",
+    "@react-spring/three": "^9.7.0",
+    "@react-three/drei": "^9.0.0",
+    "@react-three/fiber": "^8.0.0",
+    "@react-three/postprocessing": "^2.0.0",
+    "@types/react": "^18.0.0",
+    "@types/three": "^0.150.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.170.0"
+  },
+  "dependencies": {
+    "@carbon-labs/utilities": "0.22.0",
+    "@ibm/telemetry-js": "^1.10.2"
+  }
+}

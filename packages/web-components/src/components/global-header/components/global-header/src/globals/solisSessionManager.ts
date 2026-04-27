@@ -50,8 +50,8 @@ export default class IWHISessionManager {
             logoutCookieExpiry: config.logoutCookieExpiry || 6, // Cookie expires 6 seconds after logout (3 polling cycles)
 
             // Endpoints
-            tokenRefreshEndpoint: config.tokenRefreshEndpoint || '/api/refresh-token',
-            solisLogoutEndpoint: config.solisLogoutEndpoint || '//hybrid-ipaas/v1/solis/session/logout',
+            tokenRefreshEndpoint: config.tokenRefreshEndpoint || '/hybrid-ipaas/v1/solis/session/refresh-token',
+            solisLogoutEndpoint: config.solisLogoutEndpoint || '/hybrid-ipaas/v1/solis/session/logout',
 
             // Preferences
             preferVisibleLeader: config.preferVisibleLeader !== false, // Prefer visible tabs as leaders

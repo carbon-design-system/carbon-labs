@@ -10,7 +10,7 @@
 /**
  * Supported data attributes for IBM Carbon autotrack instrumentation.
  * These attributes enable automatic tracking and analytics for user interactions.
- * 
+ *
  * @see https://pages.github.ibm.com/carbon/ibm-products/developing/instrumentation/autotrack/#supported-data-attributes
  */
 export type AutotrackDataAttributes = {

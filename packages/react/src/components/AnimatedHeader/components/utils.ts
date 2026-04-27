@@ -13,7 +13,7 @@
  *
  * @param {Record<string, any>} props - Props object that may contain data-autotrack-* attributes
  * @returns {Record<string, string | undefined>} Object containing only data-autotrack-* attributes
- * 
+ *
  * @example
  * ```typescript
  * const props = { title: 'My Tile', 'data-autotrack-action': 'click', ...rest };

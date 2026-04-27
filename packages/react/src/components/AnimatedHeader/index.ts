@@ -15,9 +15,7 @@ export * from './assets';
 
 // Export all types
 export type { AnimatedHeaderProps } from './components/AnimatedHeader/AnimatedHeader';
-export type {
-  Tile,
-} from './components/AnimatedHeader/types';
+export type { Tile } from './components/AnimatedHeader/types';
 export type { AITileProps } from './components/Tiles/AITile/AITile';
 export type { AIPromptTileProps } from './components/Tiles/AIPromptTile/AIPromptTile';
 export type { GlassTileProps } from './components/Tiles/GlassTile/GlassTile';

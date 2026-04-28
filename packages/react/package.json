@@ -10,8 +10,10 @@
     "build": "yarn clean && lerna run build --scope '@carbon-labs/react-*' --scope '@carbon-labs/mdx-components' --include-dependencies --concurrency=2",
     "clean": "rimraf es lib scss storybook-static",
     "storybook": "storybook dev -p 6008",
+    "storybook:v12": "STORYBOOK_INCLUDE_V12=true storybook dev -p 6008",
     "generate": "node tasks/generate",
     "storybook:build": "storybook build",
+    "storybook:build:v12": "STORYBOOK_INCLUDE_V12=true storybook build",
     "test": "jest",
     "test:updateSnapshot": "jest -u"
   },

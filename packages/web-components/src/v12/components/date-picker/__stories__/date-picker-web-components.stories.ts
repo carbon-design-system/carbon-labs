@@ -664,7 +664,7 @@ export const WithAILabel = {
 };
 
 const meta = {
-  title: 'Components/Date Picker',
+  title: 'V12/Date Picker',
   parameters: {
     docs: {
       controls: { exclude: ['calendar'] },

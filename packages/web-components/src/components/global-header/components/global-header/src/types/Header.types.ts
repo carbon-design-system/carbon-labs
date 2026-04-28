@@ -395,7 +395,7 @@ export interface sessionManagerConfig {
   leaderHeartbeatInterval?: number;
   leaderStaleTimeout?: number;
   logoutCookieExpiry?: number;
-  solisLogoutEndpoint: string;
+  solisLogoutEndpoint?: string;
   tokenRefreshEndpoint?: string;
   preferVisibleLeader?: boolean;
   debug?: boolean;

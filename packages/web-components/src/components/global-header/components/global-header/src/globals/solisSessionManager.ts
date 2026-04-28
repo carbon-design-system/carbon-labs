@@ -90,6 +90,14 @@ export default class IWHISessionManager {
     }
 
     init() {
+        // Do we need to log this? - No, but lets keep this all for now. We can either have our own debug logger or just remove when we're going live.
+        // Currently all we log to the console is errors in a few places
+        // Do we need to implement proper logging for this?
+        // DO we have IWHI wide logging? How would we hook in to that?
+        console.log('Initializing cookie-based session manager');
+        console.log('Capability:', this.capability);
+        console.log('Tab ID:', this.tabId);
+
         // Check if logout is in progress BEFORE initializing cookie state
         const existingState = this.readCookieState();
         if (existingState?.logoutCommand) {

@@ -33,7 +33,9 @@
     "prepare": "husky install",
     "reset": "yarn cache clean && yarn clean && yarn install && yarn build",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "storybook:v12": "STORYBOOK_INCLUDE_V12=true storybook dev -p 6006",
+    "storybook:build": "storybook build",
+    "storybook:build:v12": "STORYBOOK_INCLUDE_V12=true storybook build -o storybook-static/v12"
   },
   "resolutions": {
     "@carbon/react": "^1.95.0",

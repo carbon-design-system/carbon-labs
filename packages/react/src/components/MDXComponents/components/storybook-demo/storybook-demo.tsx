@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Column, Dropdown, Grid, Link } from '@carbon/react';
+import { Column, Dropdown, FluidDropdown, Grid, Link } from '@carbon/react';
 import { clsx } from 'clsx';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -18,6 +18,7 @@ interface StorybookDemoProps {
   tall?: boolean | null;
   themeSelector?: boolean | null;
   wide?: boolean | null;
+  fluid?: boolean | null;
   url: string;
   variants?: Array<{
     label: string;
@@ -37,6 +38,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
   tall,
   themeSelector,
   wide,
+  fluid,
   url,
   variants,
 }) => {
@@ -88,17 +90,20 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
   const iframeUrl =
     url + '/iframe.html?id=' + variant + '&globals=theme:' + theme;
 
-  // Only add border when theme and variant selectors are being displayed
+  // Only add border separator when BOTH theme and variant selectors are displayed
   const border = clsx({
-    [withPrefix('theme-selector')]: multipleVariants,
+    [withPrefix('theme-selector')]: themeSelector && multipleVariants,
   });
+
+  // Use FluidDropdown when fluid prop is true, otherwise use regular Dropdown
+  const DropdownComponent = fluid ? FluidDropdown : Dropdown;
 
   return (
     <>
       <Grid condensed className={withPrefix('demo-dropdowns')}>
         {themeSelector && (
           <Column sm={2} md={4}>
-            <Dropdown
+            <DropdownComponent
               id="theme-selector"
               titleText="Theme selector"
               label="theme"
@@ -111,7 +116,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
         )}
         {multipleVariants && (
           <Column sm={2} md={4}>
-            <Dropdown
+            <DropdownComponent
               id="variant-selector"
               titleText="Variant selector"
               label="variant"
@@ -152,6 +157,10 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
 };
 
 StorybookDemo.propTypes = {
+  /**
+   * Use FluidDropdown instead of regular Dropdown for selectors
+   */
+  fluid: PropTypes.bool,
   /**
    * Storybook demo height
    */

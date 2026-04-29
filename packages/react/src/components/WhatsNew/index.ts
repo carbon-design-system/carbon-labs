@@ -8,10 +8,10 @@
  */
 export { Bubble, BubbleHeader } from './components/Bubble';
 export {
-  Toc,
   TocItem,
   TocList,
   TocSection,
   TocSections,
+  TocActiveTracker,
 } from './components/Toc';
 export { ViewStack, View } from './components/ViewStack';

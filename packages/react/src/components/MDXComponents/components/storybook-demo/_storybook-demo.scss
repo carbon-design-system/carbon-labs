@@ -13,12 +13,23 @@
 @use '../utils' as *;
 
 .#{with-prefix('demo-dropdowns')} {
-  // override carbon, label inset-inline-start padding
-  .cds--label {
+  // override carbon, label inset-inline-start padding for regular dropdown
+  .cds--dropdown .cds--label {
     padding-inline-start: spacing.$spacing-05;
   }
 
+  // regular dropdown border
   .cds--dropdown {
+    border-block-end: 1px solid theme.$layer-selected-01;
+  }
+
+  // fluid dropdown has different structure, no extra padding needed
+  .cds--list-box__wrapper--fluid .cds--label {
+    padding-inline-start: 0;
+  }
+
+  // fluid dropdown border
+  .cds--list-box__wrapper--fluid {
     border-block-end: 1px solid theme.$layer-selected-01;
   }
 }

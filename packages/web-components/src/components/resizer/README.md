@@ -1,0 +1,241 @@
+# Resizer Web Components
+
+A set of web components for creating resizable panels with support for both
+declarative (zero-setup) and programmatic (composable) usage modes.
+
+## Components
+
+- `clabs-resizer-grid` - Container for resizable panels
+- `clabs-resizer-panel` - Individual resizable panel
+- `clabs-resizer-handle` - Handle for resizing between panels
+- `clabs-resizer-handle-pivot` - Corner pivot for advanced resizing
+
+## Features
+
+### Zero-Setup Usage (Declarative)
+
+Enable direct usage of components without any JavaScript setup. Users can
+compose layouts purely via HTML and have resizing work out-of-the-box.
+
+### Composable Usage (Programmatic)
+
+Allow `clabs-resizer-handle` and `clabs-resizer-handle-pivot` to be used as
+standalone components that emit drag events and delta values. Consumers (e.g.,
+frameworks like React) can handle resizing logic via JavaScript.
+
+## Usage
+
+### Declarative Mode (Zero-Setup)
+
+#### Basic Horizontal Layout
+
+```html
+<clabs-resizer-grid axis="x">
+  <clabs-resizer-panel slot="left"> Left panel content </clabs-resizer-panel>
+
+  <clabs-resizer-handle slot="handle-horizontal"></clabs-resizer-handle>
+
+  <clabs-resizer-panel slot="right"> Right panel content </clabs-resizer-panel>
+</clabs-resizer-grid>
+```
+
+#### Basic Vertical Layout
+
+```html
+<clabs-resizer-grid axis="y">
+  <clabs-resizer-panel slot="top"> Top panel content </clabs-resizer-panel>
+
+  <clabs-resizer-handle slot="handle-vertical"></clabs-resizer-handle>
+
+  <clabs-resizer-panel slot="bottom">
+    Bottom panel content
+  </clabs-resizer-panel>
+</clabs-resizer-grid>
+```
+
+#### With Pivot Handle
+
+```html
+<clabs-resizer-grid axis="x">
+  <clabs-resizer-panel slot="left">
+    Left panel content
+    <clabs-resizer-handle slot="handle-horizontal">
+      <clabs-resizer-handle-pivot></clabs-resizer-handle-pivot>
+    </clabs-resizer-handle>
+  </clabs-resizer-panel>
+
+  <clabs-resizer-panel slot="right"> Right panel content </clabs-resizer-panel>
+</clabs-resizer-grid>
+```
+
+### Programmatic Mode (Event-Driven)
+
+The resizer handle can be used independently without a grid container by
+listening to its events:
+
+#### Events
+
+- `resize-start` - Fired when dragging starts
+
+  - `detail.axis` - The resize axis ('x' or 'y')
+  - `detail.startPosition` - Starting position {x, y}
+
+- `resize-drag` - Fired during dragging
+
+  - `detail.axis` - The resize axis ('x' or 'y')
+  - `detail.delta` - Movement delta in pixels
+  - `detail.position` - Current position {x, y}
+
+- `resize-end` - Fired when dragging ends
+
+  - `detail.axis` - The resize axis ('x' or 'y')
+  - `detail.delta` - Total movement delta in pixels
+  - `detail.position` - Final position {x, y}
+
+- `resize-reset` - Fired on double-tap/double-click
+
+#### Single Panel Example
+
+```html
+<div class="container">
+  <div class="panel" id="myPanel">Panel content</div>
+  <clabs-resizer-handle></clabs-resizer-handle>
+</div>
+
+<script>
+  const handle = document.querySelector('clabs-resizer-handle');
+  const panel = document.getElementById('myPanel');
+  let initialHeight = 0;
+
+  handle.addEventListener('resize-start', (e) => {
+    initialHeight = panel.offsetHeight;
+  });
+
+  handle.addEventListener('resize-drag', (e) => {
+    const newHeight = initialHeight + e.detail.delta;
+    panel.style.height = `${Math.max(48, newHeight)}px`;
+  });
+</script>
+```
+
+#### Bounded Resize Example
+
+```html
+<div class="container" style="height: 400px">
+  <div class="panel" id="boundedPanel">Panel content</div>
+  <clabs-resizer-handle></clabs-resizer-handle>
+</div>
+
+<script>
+  const handle = document.querySelector('clabs-resizer-handle');
+  const panel = document.getElementById('boundedPanel');
+  const container = document.querySelector('.container');
+  let initialHeight = 0;
+
+  handle.addEventListener('resize-start', (e) => {
+    initialHeight = panel.offsetHeight;
+  });
+
+  handle.addEventListener('resize-drag', (e) => {
+    const containerHeight = container.offsetHeight;
+    const newHeight = initialHeight + e.detail.delta;
+
+    // Constrain between min and max
+    const constrainedHeight = Math.max(
+      48,
+      Math.min(newHeight, containerHeight - 20)
+    );
+
+    panel.style.height = `${constrainedHeight}px`;
+  });
+</script>
+```
+
+## CSS Custom Properties
+
+- `--resizer-thickness` - Thickness of the resizer handle (default: 4px)
+- `--resizer-grab-thickness` - Additional grab area thickness (default: 0px)
+- `--resizer-grab-color` - Color of the grab area (default: transparent)
+- `--start-element-size` - Size of the start panel (default: 1fr)
+- `--end-element-size` - Size of the end panel (default: 1fr)
+
+## Accessibility
+
+### Keyboard Navigation
+
+The resizer handle supports keyboard navigation:
+
+- **Arrow Keys**: Move the resizer handle in 5px increments
+  - `ArrowUp`/`ArrowDown` for horizontal handles (y-axis)
+  - `ArrowLeft`/`ArrowRight` for vertical handles (x-axis)
+- **Shift + Arrow Keys**: Move in 25px increments for faster resizing
+- **Home**: Collapse the start panel to minimum size (grid mode only)
+- **End**: Expand the start panel to maximum size (grid mode only)
+- **Double-click/Double-tap**: Reset panels to default sizes
+
+### ARIA Attributes
+
+#### Grid-Based Usage (Automatic)
+
+When using `clabs-resizer-handle` within a `clabs-resizer-grid`, ARIA attributes
+are automatically managed:
+
+- `role="separator"` - Identifies the element as a separator
+- `aria-orientation` - Set to "vertical" or "horizontal" based on axis
+- `aria-valuenow` - Current split percentage (0-100)
+- `aria-valuemin="0"` - Minimum value
+- `aria-valuemax="100"` - Maximum value
+- `aria-valuetext` - Human-readable split ratio (e.g., "60% / 40%")
+- `aria-live="assertive"` - Announces changes to screen readers
+
+#### Standalone Usage (Manual)
+
+When using `clabs-resizer-handle` without a grid (programmatic mode), you are
+responsible for managing ARIA attributes to ensure accessibility:
+
+```html
+<div class="container">
+  <div class="panel" id="myPanel">Panel content</div>
+  <clabs-resizer-handle
+    aria-valuenow="50"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuetext="Panel height: 200px"></clabs-resizer-handle>
+</div>
+
+<script>
+  const handle = document.querySelector('clabs-resizer-handle');
+  const panel = document.getElementById('myPanel');
+  let initialHeight = 0;
+
+  handle.addEventListener('resize-start', (e) => {
+    initialHeight = panel.offsetHeight;
+  });
+
+  handle.addEventListener('resize-drag', (e) => {
+    const newHeight = initialHeight + e.detail.delta;
+    const constrainedHeight = Math.max(48, newHeight);
+    panel.style.height = `${constrainedHeight}px`;
+
+    // Update ARIA attributes for accessibility
+    const percentage = Math.round((constrainedHeight / 400) * 100);
+    handle.setAttribute('aria-valuenow', percentage.toString());
+    handle.setAttribute(
+      'aria-valuetext',
+      `Panel height: ${constrainedHeight}px`
+    );
+  });
+</script>
+```
+
+**Note**: The `role="separator"` attribute requires `aria-valuenow` to be
+present for proper accessibility compliance. When using standalone handles,
+always update these attributes during resize operations.
+
+## Browser Support
+
+Modern browsers with Web Components support (Chrome, Firefox, Safari, Edge)
+
+## License
+
+Apache-2.0

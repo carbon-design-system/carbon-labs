@@ -3,6 +3,119 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.64.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.63.0...@carbon-labs/wc-global-header@0.64.0) (2026-04-22)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.63.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.62.0...@carbon-labs/wc-global-header@0.63.0) (2026-04-21)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.62.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.61.0...@carbon-labs/wc-global-header@0.62.0) (2026-04-15)
+
+
+### Features
+
+* **global-header:** cookie preferences ([#1178](https://github.com/carbon-design-system/carbon-labs/issues/1178)) ([9c3ef00](https://github.com/carbon-design-system/carbon-labs/commit/9c3ef00febe178e6f024c87c7ca1958a8e5515ae))
+
+
+
+
+
+# [0.61.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.60.0...@carbon-labs/wc-global-header@0.61.0) (2026-04-14)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.60.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.59.0...@carbon-labs/wc-global-header@0.60.0) (2026-04-09)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.59.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.58.0...@carbon-labs/wc-global-header@0.59.0) (2026-04-08)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.58.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.57.0...@carbon-labs/wc-global-header@0.58.0) (2026-04-07)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.57.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.56.0...@carbon-labs/wc-global-header@0.57.0) (2026-04-07)
+
+
+### Features
+
+* **global-header:** pre-render some header elements ([#1161](https://github.com/carbon-design-system/carbon-labs/issues/1161)) ([acac8dd](https://github.com/carbon-design-system/carbon-labs/commit/acac8dd7f5b477a538ac03f77fc47d5305d3e6fe))
+
+
+
+
+
+# [0.56.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.54.0...@carbon-labs/wc-global-header@0.56.0) (2026-03-25)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.55.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.54.0...@carbon-labs/wc-global-header@0.55.0) (2026-03-24)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.54.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.53.0...@carbon-labs/wc-global-header@0.54.0) (2026-03-12)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.53.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.52.0...@carbon-labs/wc-global-header@0.53.0) (2026-02-19)
+
+**Note:** Version bump only for package @carbon-labs/wc-global-header
+
+
+
+
+
+# [0.52.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.51.0...@carbon-labs/wc-global-header@0.52.0) (2026-02-17)
+
+
+### Bug Fixes
+
+* (global-header) support tooltip plus other fixes ([#1022](https://github.com/carbon-design-system/carbon-labs/issues/1022)) ([b0e4feb](https://github.com/carbon-design-system/carbon-labs/commit/b0e4feb0e73128083b6dd5966dd774a256a1c688))
+
+
+
+
+
 # [0.51.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.50.0...@carbon-labs/wc-global-header@0.51.0) (2026-02-03)
 
 **Note:** Version bump only for package @carbon-labs/wc-global-header

@@ -69,8 +69,24 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: Array })
   capabilityProfileFooterLinks: ProfileFooterLinks[] = [];
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
+  @property({ type: Boolean }) addCookiePreferences = false;
+
   @state()
-  headerOptions: HeaderProps = { ...INITIAL_AUTOMATION_HEADER_PROPS };
+  headerOptions: HeaderProps = {
+    ...INITIAL_AUTOMATION_HEADER_PROPS,
+    brand: {
+      company: 'IBM',
+      product: 'webMethods Hybrid Integration',
+    },
+    capabilityName: {
+      label: '',
+    },
+    sideNav: {
+      isCollapsible: true,
+      buttonLabel: 'Open menu',
+      sidebarLabel: 'Side navigation',
+    },
+  };
 
   constructor() {
     super();
@@ -102,6 +118,10 @@ export class HybridIpaasHeader extends LitElement {
       console.error(
         'A product key is required for the environment switcher to function.'
       );
+    }
+    // if a productName has been passed in use it immediately, without waiting for options call to return
+    if (this.productName && this.headerOptions.capabilityName) {
+      this.headerOptions.capabilityName.label = this.productName;
     }
     this.initializeHeaderOptions();
   }
@@ -138,6 +158,27 @@ export class HybridIpaasHeader extends LitElement {
       throw new Error(`Failed to fetch header options: ${response.statusText}`);
     }
     return response.json();
+  }
+
+  private openCookiePrefs() {
+    // "click" on the hidden cookie preferences button
+    const teconsent = document.querySelector('#teconsent a');
+    if (teconsent) {
+      teconsent.click();
+    } else {
+      // backup option in case the cookie script didn't load for some reason
+      window.open('https://www.ibm.com/privacy');
+    }
+  }
+
+  private initCookiePrefsLink() {
+    const footerLink = {
+      text: 'Cookie preferences',
+      arialLabel: 'Cookie preferences',
+      carbonIcon: 'Cookie',
+      onClickHandler: this.openCookiePrefs,
+    };
+    return footerLink;
   }
 
   private initLogoutLink() {
@@ -227,18 +268,20 @@ export class HybridIpaasHeader extends LitElement {
       label: this.productName ? this.productName : '',
     };
 
+    if (this.addCookiePreferences && baseOptions.profileFooterLinks) {
+      baseOptions.profileFooterLinks.push(this.initCookiePrefsLink());
+    }
+
+    // remove 'log out' entry if it comes from the service to avoid duplicate
     const logoutIndex = baseOptions.profileFooterLinks?.findIndex(
       (link) => link.text.toLowerCase() === 'log out'
     );
     if (logoutIndex !== undefined && logoutIndex > -1) {
-      baseOptions.profileFooterLinks?.splice(
-        logoutIndex,
-        1,
-        this.initLogoutLink()
-      );
-    } else {
-      baseOptions.profileFooterLinks?.push(this.initLogoutLink());
-    } // override the 'logout' object if it comes from the service to avoid duplicate
+      baseOptions.profileFooterLinks?.splice(logoutIndex, 1);
+    }
+
+    // add our own 'log out' entry at the end of the list
+    baseOptions.profileFooterLinks?.push(this.initLogoutLink());
 
     // The assumption is that input props take priority over values provided by the service
     const updatedOptions: HeaderProps = {
@@ -368,7 +411,9 @@ export class HybridIpaasHeader extends LitElement {
     return html`<div id="ipaas-header-container">
       <clabs-global-header-apaas
         ?hasNewNotifications="${this.hasNewNotifications}"
-        .headerProps="${this.headerOptions}"></clabs-global-header-apaas>
+        .headerProps="${this.headerOptions}">
+        <slot name="header-logo" slot="header-logo"></slot>
+      </clabs-global-header-apaas>
     </div>`;
   }
 }

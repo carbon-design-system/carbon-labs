@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.94.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.93.0...@carbon-labs/react-ui-shell@0.94.0) (2026-04-20)
+
+
+### Bug Fixes
+
+* **uishell:** added aria-hidden attribute for SharkFinIcon ([#1185](https://github.com/carbon-design-system/carbon-labs/issues/1185)) ([eb445dc](https://github.com/carbon-design-system/carbon-labs/commit/eb445dc9375a470a57e378181531a67ccb8865eb))
+
+
+
+
+
+# [0.93.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.92.0...@carbon-labs/react-ui-shell@0.93.0) (2026-04-14)
+
+**Note:** Version bump only for package @carbon-labs/react-ui-shell
+
+
+
+
+
+# [0.92.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.91.0...@carbon-labs/react-ui-shell@0.92.0) (2026-04-08)
+
+
+### Bug Fixes
+
+* added HeaderDivider between HeaderName and TrialCountdown ([#1165](https://github.com/carbon-design-system/carbon-labs/issues/1165)) ([a6433b4](https://github.com/carbon-design-system/carbon-labs/commit/a6433b4f4a5de4a60d29798c2420dd90f550bd4a))
+
+
+
+
+
+# [0.91.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.90.0...@carbon-labs/react-ui-shell@0.91.0) (2026-03-27)
+
+
+### Bug Fixes
+
+* spacing in uishell header name ([#1149](https://github.com/carbon-design-system/carbon-labs/issues/1149)) ([9e8e9ef](https://github.com/carbon-design-system/carbon-labs/commit/9e8e9ef97bf2f4e2f03afdac3be3c27479de065c))
+
+
+
+
+
 # [0.90.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.89.0...@carbon-labs/react-ui-shell@0.90.0) (2026-01-22)
 
 

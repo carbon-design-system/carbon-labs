@@ -29,10 +29,6 @@ cds-custom-header-global-action clabs-global-header-user-profile-image {
     fill: $icon-on-color;
   }
 
-  ul {
-    transform: translateX(calc(3rem - 100%)) translateY(100%) !important;
-  }
-
   .ibm-automation-cds--text-truncate--end {
     display: flex;
     justify-content: space-between;
@@ -42,6 +38,10 @@ cds-custom-header-global-action clabs-global-header-user-profile-image {
   .ibm-automation-cds--header__menu-item {
     padding: 12px;
     block-size: 47px;
+  }
+
+  &::part(menu-body) {
+    transform: translateX(-50%) translateY(100%) !important;
   }
 }
 

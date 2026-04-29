@@ -1,13 +1,13 @@
 {
   "name": "@carbon-labs/react",
-  "version": "0.157.0",
+  "version": "0.172.0",
   "private": true,
   "type": "module",
   "description": "React components for Carbon Labs",
   "license": "Apache-2.0",
   "repository": "https://github.com/carbon-design-system/carbon-labs",
   "scripts": {
-    "build": "yarn clean && lerna run build --scope '@carbon-labs/react-*' --scope '@carbon-labs/mdx-components' --include-dependencies",
+    "build": "yarn clean && lerna run build --scope '@carbon-labs/react-*' --scope '@carbon-labs/mdx-components' --include-dependencies --concurrency=2",
     "clean": "rimraf es lib scss storybook-static",
     "storybook": "storybook dev -p 6008",
     "generate": "node tasks/generate",
@@ -41,7 +41,7 @@
     "@storybook/addon-a11y": "^9.1.2",
     "@storybook/addon-docs": "^9.1.2",
     "@storybook/addon-onboarding": "^9.1.2",
-    "@storybook/addon-webpack5-compiler-babel": "^3.0.6",
+    "@storybook/addon-webpack5-compiler-babel": "^4.0.0",
     "@storybook/react-webpack5": "^9.1.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.0.0",
@@ -78,7 +78,7 @@
     "style-loader": "^4.0.0",
     "ts-jest": "^29.2.5",
     "typescript": "^5.2.2",
-    "typescript-config-carbon": "^0.8.0",
+    "typescript-config-carbon": "^0.9.0",
     "webpack": "^5.97.0"
   }
 }

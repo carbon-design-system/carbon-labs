@@ -393,4 +393,209 @@ describe('solisSessionManager', () => {
             expect(cookieState.lastTokenRefresh).to.be.closeTo(now, 1000);
         })
     })
+
+    describe('writeCookieState', () => {
+        it('writes the current state to the correct cookie', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: ''
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            const state = {
+                leader: 'tab123',
+                leaderCapability: 'App Connect'
+            }
+            const expectedCookie = 'iwhi_session_state=%7B%22leader%22%3A%22tab123%22%2C%22leaderCapability%22%3A%22App%20Connect%22%7D';
+            sessionManager.writeCookieState(state);
+            const writtenCookie = document.cookie;
+            expect(writtenCookie).to.equal(expectedCookie);
+        })
+
+        it('adds the secure flag to the cookie if cookieSecure is true in the provided config', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            // Capture what's written to document.cookie
+            let capturedCookieString = '';
+            const originalDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie')!;
+            const originalCookieSetter = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie')!.set!;
+            Object.defineProperty(document, 'cookie', {
+                get: originalDescriptor.get,
+                set: function(value) {
+                    capturedCookieString = value;
+                    originalCookieSetter.call(this, value);
+                },
+                configurable: true
+            });
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: '',
+                cookieSecure: true
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            const state = {
+                leader: 'tab123',
+                leaderCapability: 'App Connect'
+            }
+            sessionManager.writeCookieState(state);
+            expect(capturedCookieString).to.include('; secure');
+            expect(capturedCookieString).to.include('iwhi_session_state=');
+
+            // Restore the original property descriptor
+            Object.defineProperty(document, 'cookie', originalDescriptor);
+        })
+
+        it('does not add the secure flag to the cookie if cookieSecure is false in the provided config', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            // Capture what's written to document.cookie
+            let capturedCookieString = '';
+            const originalDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie')!;
+            const originalCookieSetter = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie')!.set!;
+            Object.defineProperty(document, 'cookie', {
+                get: originalDescriptor.get,
+                set: function(value) {
+                    capturedCookieString = value;
+                    originalCookieSetter.call(this, value);
+                },
+                configurable: true
+            });
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: '',
+                cookieSecure: false
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            const state = {
+                leader: 'tab123',
+                leaderCapability: 'App Connect'
+            }
+            sessionManager.writeCookieState(state);
+            expect(capturedCookieString).to.not.include('; secure');
+            expect(capturedCookieString).to.include('iwhi_session_state=');
+
+            // Restore the original property descriptor
+            Object.defineProperty(document, 'cookie', originalDescriptor);
+        })
+
+        it('adds the samesite flag to the cookie if cookieSameSite is in the provided config', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            // Capture what's written to document.cookie
+            let capturedCookieString = '';
+            const originalDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie')!;
+            const originalCookieSetter = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie')!.set!;
+            Object.defineProperty(document, 'cookie', {
+                get: originalDescriptor.get,
+                set: function(value) {
+                    capturedCookieString = value;
+                    originalCookieSetter.call(this, value);
+                },
+                configurable: true
+            });
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: '',
+                cookieSameSite: 'foo'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            const state = {
+                leader: 'tab123',
+                leaderCapability: 'App Connect'
+            }
+            sessionManager.writeCookieState(state);
+            expect(capturedCookieString).to.include('; samesite=foo');
+            expect(capturedCookieString).to.include('iwhi_session_state=');
+
+            // Restore the original property descriptor
+            Object.defineProperty(document, 'cookie', originalDescriptor);
+        })
+
+        it('adds the domain to the cookie if cookieDomain is in the provided config', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            // Capture what's written to document.cookie
+            let capturedCookieString = '';
+            const originalDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie')!;
+            const originalCookieSetter = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie')!.set!;
+            Object.defineProperty(document, 'cookie', {
+                get: originalDescriptor.get,
+                set: function(value) {
+                    capturedCookieString = value;
+                    originalCookieSetter.call(this, value);
+                },
+                configurable: true
+            });
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: '.ibm.com'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            const state = {
+                leader: 'tab123',
+                leaderCapability: 'App Connect'
+            }
+            sessionManager.writeCookieState(state);
+            expect(capturedCookieString).to.include('; domain=.ibm.com');
+            expect(capturedCookieString).to.include('iwhi_session_state=');
+
+            // Restore the original property descriptor
+            Object.defineProperty(document, 'cookie', originalDescriptor);
+        })
+
+        it('adds the maxAge to the cookie if it is passed to the function', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            // Capture what's written to document.cookie
+            let capturedCookieString = '';
+            const originalDescriptor = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie')!;
+            const originalCookieSetter = Object.getOwnPropertyDescriptor(Document.prototype, 'cookie')!.set!;
+            Object.defineProperty(document, 'cookie', {
+                get: originalDescriptor.get,
+                set: function(value) {
+                    capturedCookieString = value;
+                    originalCookieSetter.call(this, value);
+                },
+                configurable: true
+            });
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            const state = {
+                leader: 'tab123',
+                leaderCapability: 'App Connect'
+            }
+            sessionManager.writeCookieState(state, '40');
+            expect(capturedCookieString).to.include('; max-age=40');
+            expect(capturedCookieString).to.include('iwhi_session_state=');
+
+            // Restore the original property descriptor
+            Object.defineProperty(document, 'cookie', originalDescriptor);
+        })
+    })
 })

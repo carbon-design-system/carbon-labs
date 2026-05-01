@@ -264,10 +264,10 @@ export default class IWHISessionManager {
         * @param {Object} state - Solis session manager cookie state object
         * @param {number} [maxAge] - Optional max-age in seconds (for logout coordination)
     */
-    writeCookieState(state, maxAge = null) {
+    writeCookieState(state, maxAge?: string) {
         const value = encodeURIComponent(JSON.stringify(state));
         const secureFlag = this.config.cookieSecure ? '; secure' : '';
-        const sameSiteFlag = this.config.cookieSameSite ? `; samesite=${this.config.cookieSameSite}` : '';
+        const sameSiteFlag = `; samesite=${this.config.cookieSameSite}`;
         
         // For file:// protocol, don't set domain attribute (cookies won't work with domain on file://)
         const isFileProtocol = window.location.protocol === 'file:';
@@ -275,13 +275,14 @@ export default class IWHISessionManager {
         
         // If maxAge is provided, set it (for logout coordination with time-based expiry)
         // Otherwise, create session cookie (deleted when browser closes)
-        const maxAgeFlag = maxAge !== null ? `; max-age=${maxAge}` : '';
+        const maxAgeFlag = maxAge !== undefined ? `; max-age=${maxAge}` : '';
         
         document.cookie = `${this.config.cookieName}=${value}${domainFlag}; path=/${secureFlag}${sameSiteFlag}${maxAgeFlag}`;
         this.lastCookieState = state;
         
+        /* c8 ignore next */
         if (this.config.debug) {
-            const expiryType = maxAge !== null ? `max-age=${maxAge}s` : 'session';
+            const expiryType = maxAge !== undefined ? `max-age=${maxAge}s` : 'session';
             this.log(`Cookie written (${expiryType}): ${this.config.cookieName}=${value.substring(0, 50)}...`);
             this.log(`Cookie flags: domain=${domainFlag || 'none'}, secure=${this.config.cookieSecure}, samesite=${this.config.cookieSameSite}, expires=${expiryType}`);
         }

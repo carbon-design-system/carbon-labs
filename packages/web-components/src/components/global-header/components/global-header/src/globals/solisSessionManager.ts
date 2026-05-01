@@ -169,9 +169,10 @@ export default class IWHISessionManager {
         // Call user-provided logout callback or redirect to login
         if (this.config.onLogout) {
             this.config.onLogout(reason);
+        /* c8 ignore next 4 */
         } else {
             // Default: redirect to login page immediately
-            window.location.href = this.config.basePath + reason;
+            window.location.href = this.config.basePath + reason; // Ignoring from test coverage as not possible to redefine location property
         }
     }
 

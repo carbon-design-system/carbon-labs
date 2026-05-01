@@ -603,7 +603,7 @@ describe('solisSessionManager', () => {
         it('calls dismissWarning, sets isLeader to false and cleans up any timers', () => {
             // Stub init to prevent beforeunload listener and other side effects
             sinon.stub(IWHISessionManager.prototype, 'init');
-             const dismissWarningStub = sinon.stub(IWHISessionManager.prototype, 'dismissWarning');
+            const dismissWarningStub = sinon.stub(IWHISessionManager.prototype, 'dismissWarning');
 
             const config = {
                 capabilityName: 'App Connect',
@@ -620,6 +620,69 @@ describe('solisSessionManager', () => {
             expect(dismissWarningStub).to.have.been.calledOnce;
             expect(sessionManager.isLeader).to.be.false;
             expect(sessionManager.timers).to.deep.equal({});
+        })
+    })
+
+    describe('performLogout', () => {
+        it('should store logout timestamp in sessionStorage, call dismiss warning, and call onLogout if it is present in the config', async () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const dismissWarningStub = sinon.stub(IWHISessionManager.prototype, 'dismissWarning');
+            const sessionStorageStub = sinon.stub(sessionStorage, 'setItem');
+            const onLogoutStub = sinon.stub();
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                onLogout: onLogoutStub
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            await sessionManager.performLogout('idle_timeout');
+            expect(dismissWarningStub).to.have.been.calledOnce;
+            expect(sessionStorageStub).to.have.been.calledOnce;
+            expect(sessionStorageStub.firstCall.args[0]).to.equal('iwhi_last_logout_check');
+            expect(sessionStorageStub.firstCall.args[1]).to.be.a('string');
+            expect(onLogoutStub).to.have.been.calledWith('idle_timeout');
+        })
+
+        it.skip('should redirect to basePath + reason when onLogout is not present in the config', async () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const dismissWarningStub = sinon.stub(IWHISessionManager.prototype, 'dismissWarning');
+            const sessionStorageStub = sinon.stub(sessionStorage, 'setItem');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            await sessionManager.performLogout('timeout');
+            expect(dismissWarningStub).to.have.been.calledOnce;
+            expect(sessionStorageStub).to.have.been.calledOnce;
+        })
+
+        it('should handle sessionStorage errors gracefully', async () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const dismissWarningStub = sinon.stub(IWHISessionManager.prototype, 'dismissWarning');
+            const sessionStorageStub = sinon.stub(sessionStorage, 'setItem');
+            sessionStorageStub.throws(new Error('Storage quota exceeded'));
+            const logStub = sinon.stub(IWHISessionManager.prototype, 'log');
+            const onLogoutStub = sinon.stub();
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                onLogout: onLogoutStub
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            await sessionManager.performLogout('timeout');
+            expect(dismissWarningStub).to.have.been.calledOnce;
+            expect(sessionStorageStub).to.have.been.calledOnce;
+            expect(logStub).to.have.been.calledWith('Failed to set sessionStorage logout flag:', sinon.match.instanceOf(Error));
         })
     })
 })

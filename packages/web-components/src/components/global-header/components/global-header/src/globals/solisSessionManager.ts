@@ -280,8 +280,8 @@ export default class IWHISessionManager {
         document.cookie = `${this.config.cookieName}=${value}${domainFlag}; path=/${secureFlag}${sameSiteFlag}${maxAgeFlag}`;
         this.lastCookieState = state;
         
-        /* c8 ignore next */
-        if (this.config.debug) {
+        /* c8 ignore next 5 */
+        if (this.config.debug) { // Ignoring the debug logging from test coverage 
             const expiryType = maxAge !== undefined ? `max-age=${maxAge}s` : 'session';
             this.log(`Cookie written (${expiryType}): ${this.config.cookieName}=${value.substring(0, 50)}...`);
             this.log(`Cookie flags: domain=${domainFlag || 'none'}, secure=${this.config.cookieSecure}, samesite=${this.config.cookieSameSite}, expires=${expiryType}`);

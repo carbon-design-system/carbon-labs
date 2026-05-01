@@ -275,4 +275,53 @@ describe('solisSessionManager', () => {
             expect(sessionCookie).to.be.null; 
         })
     })
+
+    describe('dismissWarning', () => {
+        beforeEach(() => {
+            const warningDialog = document.createElement('clabs-global-header-session-expiry-modal');
+            document.body.appendChild(warningDialog); // create the warning dialog 
+        })
+        afterEach(() => {
+            if (document.getElementsByTagName('clabs-global-header-session-expiry-modal').length > 0){
+                document.getElementsByTagName('clabs-global-header-session-expiry-modal')[0].remove();
+            }
+        })
+        it('does nothing if warningShown is false', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: '',
+                onLogout: () => {} // Prevent redirect
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.warningShown = false;
+            expect(document.getElementsByTagName('clabs-global-header-session-expiry-modal').length).to.equal(1);
+            sessionManager.dismissWarning();
+            expect(sessionManager.warningShown).to.be.false;
+            expect(document.getElementsByTagName('clabs-global-header-session-expiry-modal').length).to.equal(1); // warning dialog is not dismissed  
+        })
+
+        it('dismisses the warning dialog if warningShown is true', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: '',
+                onLogout: () => {} // Prevent redirect
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.warningShown = true;        
+            expect(document.getElementsByTagName('clabs-global-header-session-expiry-modal').length).to.equal(1);
+            sessionManager.dismissWarning();
+            expect(sessionManager.warningShown).to.be.false;
+            expect(document.getElementsByTagName('clabs-global-header-session-expiry-modal').length).to.equal(0); // warning dialog is not dismissed  
+        })
+    })
 })

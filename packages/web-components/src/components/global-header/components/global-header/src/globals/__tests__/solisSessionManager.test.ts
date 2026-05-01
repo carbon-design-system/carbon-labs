@@ -44,9 +44,7 @@ describe('solisSessionManager', () => {
         it('should set the config and state properties with default values when a new solisSessionManager is instatiated', () => {
             const config = {
                 capabilityName: 'App Connect',
-                basePath: 'some/basePath',
-                cookieDomain: '',
-                onLogout: () => {} // Prevent redirect
+                basePath: 'some/basePath'
             };
             const sessionManager = new IWHISessionManager(config);
             expect(sessionManager.config.capabilityName).to.equal('App Connect');
@@ -77,7 +75,7 @@ describe('solisSessionManager', () => {
                 showWarningDialog: false,
                 warningMessage: 'this is a warning',
                 onWarning: () => {console.log('warning message')},
-                onLogout: () => {} // Prevent redirect
+                onLogout: () => {console.log('logging out')}
             };
             const sessionManager = new IWHISessionManager(config);
             expect(sessionManager.config.capabilityName).to.equal('App Connect');
@@ -127,9 +125,7 @@ describe('solisSessionManager', () => {
             
             const config = {
                 capabilityName: 'App Connect',
-                basePath: 'some/basePath',
-                cookieDomain: '',
-                onLogout: () => {} // Prevent redirect
+                basePath: 'some/basePath'
             };
             
             const sessionManager = new IWHISessionManager(config);
@@ -153,9 +149,7 @@ describe('solisSessionManager', () => {
             
             const config = {
                 capabilityName: 'App Connect',
-                basePath: 'some/basePath',
-                cookieDomain: '',
-                onLogout: () => {} // Prevent redirect
+                basePath: 'some/basePath'
             };
             
             const sessionManager = new IWHISessionManager(config);
@@ -177,9 +171,7 @@ describe('solisSessionManager', () => {
             
             const config = {
                 capabilityName: 'App Connect',
-                basePath: 'some/basePath',
-                cookieDomain: '',
-                onLogout: () => {} // Prevent redirect
+                basePath: 'some/basePath'
             };
             
             const sessionManager = new IWHISessionManager(config);
@@ -203,9 +195,7 @@ describe('solisSessionManager', () => {
             
             const config = {
                 capabilityName: 'App Connect',
-                basePath: 'some/basePath',
-                cookieDomain: '',
-                onLogout: () => {} // Prevent redirect
+                basePath: 'some/basePath'
             };
             
             const sessionManager = new IWHISessionManager(config);
@@ -229,9 +219,7 @@ describe('solisSessionManager', () => {
 
             const config = {
                 capabilityName: 'App Connect',
-                basePath: 'some/basePath',
-                cookieDomain: '',
-                onLogout: () => {} // Prevent redirect
+                basePath: 'some/basePath'
             };
 
             const sessionManager = new IWHISessionManager(config);
@@ -247,9 +235,7 @@ describe('solisSessionManager', () => {
 
             const config = {
                 capabilityName: 'App Connect',
-                basePath: 'some/basePath',
-                cookieDomain: '',
-                onLogout: () => {} // Prevent redirect
+                basePath: 'some/basePath'
             };
 
             const sessionManager = new IWHISessionManager(config);
@@ -265,9 +251,7 @@ describe('solisSessionManager', () => {
 
             const config = {
                 capabilityName: 'App Connect',
-                basePath: 'some/basePath',
-                cookieDomain: '',
-                onLogout: () => {} // Prevent redirect
+                basePath: 'some/basePath'
             };
 
             const sessionManager = new IWHISessionManager(config);
@@ -292,9 +276,7 @@ describe('solisSessionManager', () => {
 
             const config = {
                 capabilityName: 'App Connect',
-                basePath: 'some/basePath',
-                cookieDomain: '',
-                onLogout: () => {} // Prevent redirect
+                basePath: 'some/basePath'
             };
 
             const sessionManager = new IWHISessionManager(config);
@@ -311,9 +293,7 @@ describe('solisSessionManager', () => {
 
             const config = {
                 capabilityName: 'App Connect',
-                basePath: 'some/basePath',
-                cookieDomain: '',
-                onLogout: () => {} // Prevent redirect
+                basePath: 'some/basePath'
             };
 
             const sessionManager = new IWHISessionManager(config);
@@ -322,6 +302,95 @@ describe('solisSessionManager', () => {
             sessionManager.dismissWarning();
             expect(sessionManager.warningShown).to.be.false;
             expect(document.getElementsByTagName('clabs-global-header-session-expiry-modal').length).to.equal(0); // warning dialog is not dismissed  
+        })
+    })
+
+    describe('initializeCookieState', () => {
+        it('initialises the cookie if the cookie does not already exist', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: ''
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.initializeCookieState();
+
+            const cookieState = sessionManager.readCookieState(); // cookie should have been set, so read the value
+            expect(cookieState).to.not.be.null;
+            expect(cookieState).to.have.property('sessionStart');
+            expect(cookieState).to.have.property('lastActivity');
+            expect(cookieState).to.have.property('lastTokenRefresh');
+            expect(cookieState.leader).to.be.null;
+            expect(cookieState.leaderLastSeen).to.equal(0);
+            expect(cookieState.leaderCapability).to.be.null;
+            expect(cookieState.logoutCommand).to.be.null;
+            
+            // Verify timestamps are recent (within 1 second)
+            const now = Date.now();
+            expect(cookieState.sessionStart).to.be.closeTo(now, 1000);
+            expect(cookieState.lastActivity).to.be.closeTo(now, 1000);
+            expect(cookieState.lastTokenRefresh).to.be.closeTo(now, 1000);
+        })
+
+        it('sets the logout cookie and does not repair the cookie if the logoutCommand is present in the cookie', () => {
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect', logoutCommand: { reason: 'logging out' } }
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+            
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const writeCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'writeCookieState');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: ''
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.initializeCookieState();
+     
+            expect(sessionManager.sessionStartTime).to.not.be.null;
+            expect(sessionManager.lastActivityTime).to.not.be.null;
+            expect(sessionManager.lastTokenRefreshTime).to.not.be.null;
+            expect(sessionManager.lastCookieState).to.not.be.null;
+            expect(writeCookieStateStub).to.not.be.called;     
+        })
+
+        it('repairs a partial cookie', () => {
+            const testCookieValue = { foo: 'bar' };
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(testCookieValue))}; path=/`;
+
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: ''
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.initializeCookieState();
+
+            const cookieState = sessionManager.readCookieState(); // cookie should have been set, so read the value
+            expect(cookieState).to.not.be.null;
+            expect(cookieState).to.have.property('sessionStart');
+            expect(cookieState).to.have.property('lastActivity');
+            expect(cookieState).to.have.property('lastTokenRefresh');
+            expect(cookieState.leader).to.be.null;
+            expect(cookieState.leaderLastSeen).to.equal(0);
+            expect(cookieState.leaderCapability).to.be.null;
+            expect(cookieState.logoutCommand).to.be.null;
+            
+            // Verify timestamps are recent (within 1 second)
+            const now = Date.now();
+            expect(cookieState.sessionStart).to.be.closeTo(now, 1000);
+            expect(cookieState.lastActivity).to.be.closeTo(now, 1000);
+            expect(cookieState.lastTokenRefresh).to.be.closeTo(now, 1000);
         })
     })
 })

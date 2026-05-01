@@ -40,7 +40,7 @@ export default class IWHISessionManager {
             
             // Cookie settings
             cookieName: config.cookieName || 'iwhi_session_state',
-            cookieDomain: config.cookieDomain || '.ipaas.automation.ibm.com',
+            cookieDomain: config.cookieDomain !== undefined ? config.cookieDomain : '.ipaas.automation.ibm.com',
             cookieSecure: config.cookieSecure !== false && (window.location.protocol === 'https:' || window.location.hostname === 'localhost'),
             cookieSameSite: config.cookieSameSite || 'lax',
             cookiePollInterval: config.cookiePollInterval || 2000, // Poll cookie every 2 seconds

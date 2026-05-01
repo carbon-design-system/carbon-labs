@@ -29,6 +29,7 @@ describe('solisSessionManager', () => {
         });
         sinon.restore();
     })
+
     describe('constructor', () => {
         let originalURLSearchParams: typeof URLSearchParams;
     
@@ -215,6 +216,63 @@ describe('solisSessionManager', () => {
             
             expect(initializeCookieStateStub).to.have.been.calledOnce;
             expect(addEventListenerStub).to.have.been.calledOnce;
+        })
+    })
+
+    describe('readCookieState', () => {
+        it('returns the correct value of the cookie named in the config', () => {
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect'};
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: '',
+                onLogout: () => {} // Prevent redirect
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            const sessionCookie = sessionManager.readCookieState();
+            expect(sessionCookie).to.deep.equal(cookieValue);
+        })
+
+        it('returns null if there is an error when decoding the cookie value', () => {
+            document.cookie = `iwhi_session_state=%E0%A4%A; path=/`;
+
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: '',
+                onLogout: () => {} // Prevent redirect
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            const sessionCookie = sessionManager.readCookieState();
+            expect(sessionCookie).to.be.null;            
+        })
+
+        it('returns null if the cookie named in the config is not found', () => {
+            document.cookie = `chocolate_chip=%E0%A4%A; path=/`;
+
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                cookieDomain: '',
+                onLogout: () => {} // Prevent redirect
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            const sessionCookie = sessionManager.readCookieState();
+            expect(sessionCookie).to.be.null; 
         })
     })
 })

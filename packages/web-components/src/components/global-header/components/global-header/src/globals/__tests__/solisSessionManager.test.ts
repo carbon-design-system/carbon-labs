@@ -598,4 +598,28 @@ describe('solisSessionManager', () => {
             Object.defineProperty(document, 'cookie', originalDescriptor);
         })
     })
+
+    describe('cleanup', () => {
+        it('calls dismissWarning, sets isLeader to false and cleans up any timers', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+             const dismissWarningStub = sinon.stub(IWHISessionManager.prototype, 'dismissWarning');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.isLeader = true;
+            sessionManager.timers = {
+                timerOne: 'foo',
+                timerTwo: 'bar'
+            }
+            sessionManager.cleanup();
+            expect(dismissWarningStub).to.have.been.calledOnce;
+            expect(sessionManager.isLeader).to.be.false;
+            expect(sessionManager.timers).to.deep.equal({});
+        })
+    })
 })

@@ -88,18 +88,14 @@ export default class IWHISessionManager {
     }
 
     init() {
-        // Do we need to log this?
-        // Currently all we log to the console is errors in a few places
-        // Do we need to implement proper logging for this?
-        // DO we have IWHI wide logging? How would we hook in to that?
-        console.log('Initializing cookie-based session manager'); 
-        console.log('Capability:', this.capability);
-        console.log('Tab ID:', this.tabId);
+        this.log('Initializing cookie-based session manager'); 
+        this.log('Capability:', this.capability);
+        this.log('Tab ID:', this.tabId);
         
         // Check if logout is in progress BEFORE initializing cookie state
         const existingState = this.readCookieState();
         if (existingState?.logoutCommand) {
-            console.log('Logout command found, performing logout immediately');
+            this.log('Logout command found, performing logout immediately');
             this.performLogout(existingState.logoutCommand.reason);
             return; // Don't start normal operations
         }
@@ -111,7 +107,7 @@ export default class IWHISessionManager {
             if (lastLogoutCheck) {
                 const timeSinceLogout = Date.now() - parseInt(lastLogoutCheck);
                 if (timeSinceLogout < 10000) { // Within 10 seconds of logout
-                    console.log('Recent logout detected during init, refusing to start session');
+                    this.log('Recent logout detected during init, refusing to start session');
                     this.isLoggedOut = true;
                     this.performLogout('recent_logout_detected_on_init');
                     return; // Don't start normal operations
@@ -139,7 +135,7 @@ export default class IWHISessionManager {
         // this.handleVisibilityChange();
         
         // // Cleanup on unload
-        // window.addEventListener('beforeunload', () => this.cleanup());
+        window.addEventListener('beforeunload', () => this.cleanup());
     }
 
     readCookieState() {
@@ -160,13 +156,13 @@ export default class IWHISessionManager {
 
     async performLogout(reason) {
         this.dismissWarning();
-        console.log(`Performing logout: reason=${reason}, tabId=${this.tabId}`);
+        this.log(`Performing logout: reason=${reason}, tabId=${this.tabId}`);
         
         // Store logout timestamp to prevent race condition with slow-loading tabs
         try {
             sessionStorage.setItem('iwhi_last_logout_check', Date.now().toString());
         } catch (e) {
-            console.error('Failed to set sessionStorage logout flag:', e);
+            this.log('Failed to set sessionStorage logout flag:', e);
         }
         
         // Immediately redirect - no dialog, no delay
@@ -182,7 +178,7 @@ export default class IWHISessionManager {
     dismissWarning() {
         if (!this.warningShown) return;
 
-        const warningDialog = document.getElementById('iwhi-session-warning-overlay') // TODO: can probably do this better once we refactor the warning dialog to carbon
+        const warningDialog = document.getElementsByTagName('clabs-global-header-session-expiry-modal')[0] // probably only one on the page
     
         this.warningShown = false;
         
@@ -190,9 +186,132 @@ export default class IWHISessionManager {
             warningDialog.remove(); // Remove warning dialog element from parent node
         }
     }
+
+    initializeCookieState() {
+        let state = this.readCookieState();
+
+        if (!state) {
+            // First tab to be opened - initialize cookie
+            state = {
+                sessionStart: Date.now(),
+                lastActivity: Date.now(),
+                lastTokenRefresh: Date.now(),
+                leader: null,
+                leaderLastSeen: 0,
+                leaderCapability: null,
+                logoutCommand: null
+            };
+            this.writeCookieState(state);
+            this.log('Initialized Solis session manager cookie state');
+        } else {
+            // CRITICAL: If logout command is present, DO NOT repair the cookie
+            // logoutCommand is present in cookie if triggerLogout has been called
+            // The logout cookie is intentionally minimal and should not be "fixed"
+            if (state.logoutCommand) {
+                this.log('Logout command present - skipping Solis session manager cookie repair');
+                // Don't repair, don't write, just sync local state
+                this.sessionStartTime = state.sessionStart || Date.now();
+                this.lastActivityTime = state.lastActivity || Date.now();
+                this.lastTokenRefreshTime = state.lastTokenRefresh || Date.now();
+                this.lastCookieState = state;
+                return;
+            }
+            // Validate and repair partial cookie (defense against race conditions)
+            let needsRepair = false;
+            const now = Date.now();
+            
+            if (!state.sessionStart) {
+                state.sessionStart = now;
+                needsRepair = true;
+                this.log('Repaired missing sessionStart');
+            }
+            if (!state.lastActivity) {
+                state.lastActivity = now;
+                needsRepair = true;
+                this.log('Repaired missing lastActivity');
+            }
+            if (!state.lastTokenRefresh) {
+                state.lastTokenRefresh = now;
+                needsRepair = true;
+                this.log('Repaired missing lastTokenRefresh');
+            }
+            if (!state.leader) {
+                state.leader = null;
+                needsRepair = true;
+            }
+            if (state.leaderLastSeen === undefined) {
+                state.leaderLastSeen = 0;
+                needsRepair = true;
+            }
+            if (state.leaderCapability === undefined) {
+                state.leaderCapability = null;
+                needsRepair = true;
+            }
+            if (state.logoutCommand === undefined) {
+                state.logoutCommand = null;
+                needsRepair = true;
+            }
+            
+            if (needsRepair) {
+                this.writeCookieState(state);
+                this.log('Repaired partial Solis session manager cookie state');
+            }
+        }
+    }
+
+    /**
+        * Write cookie state
+        * @param {Object} state - Solis session manager cookie state object
+        * @param {number} [maxAge] - Optional max-age in seconds (for logout coordination)
+    */
+    writeCookieState(state, maxAge = null) {
+        const value = encodeURIComponent(JSON.stringify(state));
+        const secureFlag = this.config.cookieSecure ? '; secure' : '';
+        const sameSiteFlag = this.config.cookieSameSite ? `; samesite=${this.config.cookieSameSite}` : '';
+        
+        // For file:// protocol, don't set domain attribute (cookies won't work with domain on file://)
+        const isFileProtocol = window.location.protocol === 'file:';
+        const domainFlag = !isFileProtocol && this.config.cookieDomain ? `; domain=${this.config.cookieDomain}` : '';
+        
+        // If maxAge is provided, set it (for logout coordination with time-based expiry)
+        // Otherwise, create session cookie (deleted when browser closes)
+        const maxAgeFlag = maxAge !== null ? `; max-age=${maxAge}` : '';
+        
+        document.cookie = `${this.config.cookieName}=${value}${domainFlag}; path=/${secureFlag}${sameSiteFlag}${maxAgeFlag}`;
+        this.lastCookieState = state;
+        
+        if (this.config.debug) {
+            const expiryType = maxAge !== null ? `max-age=${maxAge}s` : 'session';
+            this.log(`Cookie written (${expiryType}): ${this.config.cookieName}=${value.substring(0, 50)}...`);
+            this.log(`Cookie flags: domain=${domainFlag || 'none'}, secure=${this.config.cookieSecure}, samesite=${this.config.cookieSameSite}, expires=${expiryType}`);
+        }
+    }
+
+    cleanup() {
+        this.log('Solis session manager clean up');
+    
+        this.dismissWarning();
+        
+        // Clear leader flag first
+        this.isLeader = false;
+        
+        // Stop all timers
+        Object.values(this.timers).forEach(timer => clearInterval(timer));
+        this.timers = {};
+        
+        // Don't update cookie during cleanup - it may be a logout cookie
+        // or may not exist at all. Let the logout flow handle cookie state.
+    }
+    
+    log(...args) {
+        if (this.config.debug) {
+            console.log(`[IWHI Session Manager - ${this.capability} - ${this.tabId}]`, ...args);
+        }
+    }
 }
 
 // Auto-initialize
-if (typeof window.IWHI_SESSION_CONFIG !== 'undefined') {
+if (typeof window.IWHI_SESSION_CONFIG !== 'undefined' && 
+    (typeof process === 'undefined' || process.env.NODE_ENV !== 'test')) {
   window.iwhi_session_manager = new IWHISessionManager(window.IWHI_SESSION_CONFIG)
 }

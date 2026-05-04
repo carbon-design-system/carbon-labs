@@ -10,7 +10,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/carbon-design-system/carbon-labs",
-    "directory": "packages/date-picker"
+    "directory": "packages/web-components/src/v12/components/date-picker"
   },
   "main": "./src/index.js",
   "module": "./src/index.js",
@@ -28,9 +28,9 @@
   "types": "./src/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
-    "build": "node ../../../tasks/build.js",
-    "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
-    "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary",
+    "build": "node ../../../../tasks/build.js",
+    "build:dist": "rm -rf dist && rollup --config ../../../../tasks/build-dist.js",
+    "build:dist:canary": "rm -rf dist && rollup --config ../../../../tasks/build-dist.js --configCanary",
     "clean": "rimraf es lib"
   },
   "dependencies": {

@@ -1942,9 +1942,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/wc-date-picker@workspace:packages/web-components/src/components/date-picker":
+"@carbon-labs/wc-date-picker@workspace:packages/web-components/src/v12/components/date-picker":
   version: 0.0.0-use.local
-  resolution: "@carbon-labs/wc-date-picker@workspace:packages/web-components/src/components/date-picker"
+  resolution: "@carbon-labs/wc-date-picker@workspace:packages/web-components/src/v12/components/date-picker"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/primitives": "workspace:*"

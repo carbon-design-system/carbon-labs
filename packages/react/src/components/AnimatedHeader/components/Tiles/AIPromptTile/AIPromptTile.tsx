@@ -21,6 +21,8 @@ import {
   type AITileBodyProps,
   type AITileLabelVariant,
 } from '../AITile/AITileBody';
+import { AutotrackDataAttributes } from '../../types';
+import { extractAutotrackAttributes } from '../../utils';
 
 export type AIPromptTileProps = {
   variant: 'aiPrompt';
@@ -39,7 +41,7 @@ export type AIPromptTileProps = {
   open?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
-};
+} & AutotrackDataAttributes;
 
 export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   tileId,
@@ -57,6 +59,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
   open,
   isLoading,
   isDisabled,
+  ...rest
 }: AIPromptTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__ai-prompt-tile`;
@@ -81,6 +84,9 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
     }
   };
 
+  // Extract data attributes from rest props
+  const dataAttributes = extractAutotrackAttributes(rest);
+
   return (
     <div
       id={`${blockClass}`}
@@ -90,7 +96,8 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
       aria-label={ariaLabel ?? title ?? 'AI Tile'}
       role="listitem"
       title={isDisabled ? disabledTaskLabel ?? '' : ''}
-      key={tileId}>
+      key={tileId}
+      {...dataAttributes}>
       {isLoading ? (
         <SkeletonPlaceholder className={`${blockClass}--loading-skeleton`} />
       ) : (

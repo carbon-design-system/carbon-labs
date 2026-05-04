@@ -108,6 +108,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
               titleText="Theme selector"
               label="theme"
               items={themeItems}
+              itemToString={(item) => item?.label || ''}
               onChange={onThemeChange}
               initialSelectedItem={themeItems[0]}
               className={border}
@@ -121,6 +122,7 @@ export const StorybookDemo: MdxComponent<StorybookDemoProps> = ({
               titleText="Variant selector"
               label="variant"
               items={variants}
+              itemToString={(item) => item?.label || ''}
               initialSelectedItem={variants[0]}
               onChange={onVariantChange}
             />

@@ -28,21 +28,8 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Build storybook for Labs
-        working-directory: '.'
-        run: yarn storybook:build
-
-      - name: Build storybook for v12
-        working-directory: '.'
-        run: yarn storybook:build:v12
-
-      - name: Build storybook for web-components
-        working-directory: 'packages/web-components'
-        run: yarn storybook:build
-
-      - name: Build storybook for react
-        working-directory: 'packages/react'
-        run: yarn storybook:build
+      - name: Build all Storybooks (root + packages, standard + v12)
+        run: yarn storybook:build:full
 
       - name: Create CNAME
         run: |

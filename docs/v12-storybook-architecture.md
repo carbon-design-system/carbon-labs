@@ -2,7 +2,8 @@
 
 ## Overview
 
-This document describes the dual-build Storybook architecture that supports both the current Carbon Labs components and the new v12 migration components.
+This document describes the dual-build Storybook architecture that supports both
+the current Carbon Labs components and the new v12 migration components.
 
 ## Architecture
 
@@ -22,6 +23,7 @@ storybook-static/
 ### URL Structure (GitHub Pages)
 
 - **Standard (Public):**
+
   - Root: `https://labs.carbondesignsystem.com/`
   - Web Components: `https://labs.carbondesignsystem.com/web-components/`
   - React: `https://labs.carbondesignsystem.com/react/`
@@ -36,11 +38,13 @@ storybook-static/
 ### Port Assignments
 
 **Standard Storybooks:**
+
 - Root: `6006`
 - Web Components: `6007`
 - React: `6008`
 
 **V12 Storybooks:**
+
 - Root: `6016`
 - Web Components: `6017`
 - React: `6018`
@@ -48,6 +52,7 @@ storybook-static/
 ### Running Storybooks
 
 **Standard (Public):**
+
 ```bash
 # Root
 yarn storybook
@@ -60,6 +65,7 @@ yarn workspace @carbon-labs/react storybook
 ```
 
 **V12 (Internal):**
+
 ```bash
 # Root
 yarn storybook:v12
@@ -80,21 +86,26 @@ yarn storybook:build:full
 ```
 
 This command:
+
 1. Builds root Storybook (standard)
 2. Builds root Storybook (v12) to `storybook-static/v12/`
 3. Builds Web Components package (standard)
-4. Builds Web Components package (v12) to `packages/web-components/storybook-static/v12/`
+4. Builds Web Components package (v12) to
+   `packages/web-components/storybook-static/v12/`
 5. Builds React package (standard)
 6. Builds React package (v12) to `packages/react/storybook-static/v12/`
 7. Copies package builds to root structure:
-   - `packages/web-components/storybook-static/` → `storybook-static/web-components/`
+   - `packages/web-components/storybook-static/` →
+     `storybook-static/web-components/`
    - `packages/react/storybook-static/` → `storybook-static/react/`
-   - `packages/web-components/storybook-static/v12/` → `storybook-static/v12/web-components/`
+   - `packages/web-components/storybook-static/v12/` →
+     `storybook-static/v12/web-components/`
    - `packages/react/storybook-static/v12/` → `storybook-static/v12/react/`
 
 ### Individual Build Commands
 
 **Standard:**
+
 ```bash
 yarn storybook:build                                    # Root
 yarn workspace @carbon-labs/web-components storybook:build  # Web Components
@@ -102,6 +113,7 @@ yarn workspace @carbon-labs/react storybook:build          # React
 ```
 
 **V12:**
+
 ```bash
 yarn storybook:build:v12                                    # Root
 yarn workspace @carbon-labs/web-components storybook:build:v12  # Web Components
@@ -113,21 +125,25 @@ yarn workspace @carbon-labs/react storybook:build:v12          # React
 ### Standard Components
 
 Located in:
+
 - `packages/react/src/components/`
 - `packages/web-components/src/components/`
 
 ### V12 Components
 
 Located in:
+
 - `packages/react/src/v12/components/`
 - `packages/web-components/src/v12/components/`
 
 ### Story Titles
 
 **Standard components:**
+
 - Use natural component names (e.g., `'Components/Button'`)
 
 **V12 components:**
+
 - Must be prefixed with `'V12/'` (e.g., `'V12/DatePicker'`)
 - This ensures they appear in a separate "V12" section in the sidebar
 
@@ -135,25 +151,31 @@ Located in:
 
 ### Conditional Story Loading
 
-Both package Storybooks use the `STORYBOOK_INCLUDE_V12` environment variable to control which stories are loaded:
+Both package Storybooks use the `STORYBOOK_INCLUDE_V12` environment variable to
+control which stories are loaded:
 
 **Standard build** (`STORYBOOK_INCLUDE_V12` not set):
+
 - Loads stories from `src/components/` only
 - Excludes `src/v12/` directory
 
 **V12 build** (`STORYBOOK_INCLUDE_V12=true`):
+
 - Loads stories from all `src/` subdirectories
 - Includes both standard and v12 components
 
 ### Root Storybook Refs
 
-The root Storybook uses Storybook's `refs` feature to link to package Storybooks:
+The root Storybook uses Storybook's `refs` feature to link to package
+Storybooks:
 
 **Development mode:**
+
 - Standard root (port 6006) → points to ports 6007, 6008
 - V12 root (port 6016) → points to ports 6017, 6018
 
 **Production mode:**
+
 - Both use relative paths (`./web-components`, `./react`)
 - Standard root at `/` → resolves to `/web-components`, `/react`
 - V12 root at `/v12/` → resolves to `/v12/web-components`, `/v12/react`

@@ -40,7 +40,7 @@ const componentPackageJson = JSON.parse(
 function findTsConfig() {
   let currentDir = componentDir;
   const root = path.parse(currentDir).root;
-  
+
   while (currentDir !== root) {
     const tsConfigPath = path.join(currentDir, '../tsconfig.json');
     if (existsSync(tsConfigPath)) {
@@ -48,7 +48,7 @@ function findTsConfig() {
     }
     currentDir = path.dirname(currentDir);
   }
-  
+
   // Fallback to the original path
   return path.join(componentDir, '../../../tsconfig.json');
 }

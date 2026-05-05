@@ -1,0 +1,130 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// Carbon setting imports
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/motion' as *;
+
+$prefix: 'clabs' !default;
+
+// =============================================================================
+// Container
+// =============================================================================
+
+.#{$prefix}--tag-input__container {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: $layer-01;
+  border-block-end: 1px solid $border-subtle-01;
+  padding-inline: $spacing-03;
+
+  // Focus state for accessibility
+  &:focus-within {
+    outline: $spacing-01 solid $focus;
+    outline-offset: -2px;
+  }
+}
+
+// =============================================================================
+// Input Field
+// =============================================================================
+
+.#{$prefix}--tag-input__field {
+  .cds--text-input__label-wrapper {
+    display: none;
+  }
+
+  // Outer wrapper alignment
+  .cds--text-input__field-outer-wrapper {
+    justify-content: center;
+  }
+
+  // Input field styling
+  .cds--text-input {
+    flex: 0 1 auto;
+    border: 0;
+    background-color: transparent;
+    min-inline-size: var(--input-width, $spacing-13);
+    outline: 0;
+
+    // Remove focus outline (container handles focus state)
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  &:first-child {
+    .cds--text-input {
+      padding-inline-start: $spacing-03;
+    }
+  }
+}
+
+// =============================================================================
+// Tag Wrapper Styling
+// =============================================================================
+
+.#{$prefix}--tag-input__tag-wrapper {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  border-radius: $spacing-05;
+  block-size: min-content;
+  margin-block: $spacing-03;
+  margin-inline-start: $spacing-03;
+  outline: $spacing-01 solid transparent;
+  outline-offset: $spacing-01;
+  transition: outline-color $duration-fast-01 motion(standard, productive);
+
+  // Focus state for keyboard navigation
+  &:focus {
+    outline-color: $focus;
+    outline-offset: $spacing-01;
+  }
+
+  // Remove default focus outline from browser
+  &:focus:not(:focus-visible) {
+    outline-color: transparent;
+  }
+
+  // Enhanced focus for keyboard navigation
+  &:focus-visible {
+    outline-color: $focus;
+    outline-offset: $spacing-01;
+  }
+
+  // Ensure tag inside wrapper doesn't have extra margins
+  > * {
+    margin: 0;
+  }
+
+  // Keep close button clickable but remove focus outline
+  // (tabIndex is set to -1 via JavaScript)
+  button:focus {
+    outline: none;
+  }
+}
+
+// =============================================================================
+// Tag Styling (Legacy support)
+// =============================================================================
+
+// Support for direct tag children (backward compatibility)
+.#{$prefix}--tag-input__container
+  > :not(.#{$prefix}--tag-input__field):not(
+    .#{$prefix}--tag-input__tag-wrapper
+  ) {
+  flex-shrink: 0;
+  block-size: min-content;
+  margin-block: $spacing-03;
+  margin-inline-start: $spacing-03;
+}

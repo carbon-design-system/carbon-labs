@@ -1,12 +1,12 @@
 {
   "name": "@carbon-labs/react-split-panel",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
   "type": "module",
-  "description": "Carbon Labs - Split Panel",
+  "description": "⚠️ DEPRECATED: Carbon Labs - Split Panel (use @carbon-labs/react-resizer instead)",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

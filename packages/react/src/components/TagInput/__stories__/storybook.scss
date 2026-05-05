@@ -1,0 +1,124 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/react/scss/motion' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/theme' as *;
+
+#storybook-root {
+  margin: auto;
+  inline-size: 80%;
+  margin-block-start: $spacing-08;
+}
+
+// Toast notification container with animations
+.toast-notification-container {
+  position: fixed;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+  inset-block-start: $spacing-05;
+  inset-inline-end: $spacing-05;
+}
+
+// Individual toast notification with slide-in animation
+.toast-notification-item {
+  animation: slide-in-from-right $duration-moderate-02
+    motion(entrance, productive);
+  transform-origin: right center;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+// Keyframe animation for sliding in from right
+@keyframes slide-in-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Exit animation when toast is dismissed
+.toast-notification-item-exit {
+  animation: slide-out-to-right $duration-fast-02 motion(exit, productive);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes slide-out-to-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+// Common styles for content inside story-info
+.story-info {
+  @include type-style('code-02');
+
+  padding: $spacing-05;
+
+  pre {
+    margin-block-start: $spacing-03;
+  }
+
+  > div {
+    margin-block-start: $spacing-03;
+  }
+}
+
+.story-description {
+  @include type-style('label-02');
+}
+
+// WithSuggestions story styles
+.with-suggestions-container {
+  position: relative;
+}
+
+.tag-suggestions-dropdown {
+  position: absolute;
+  z-index: 1000;
+  border: 1px solid $border-subtle;
+  border-radius: 2px;
+  background-color: $layer-01;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  inset-block-start: 100%;
+  inset-inline: 0;
+  margin-block-start: $spacing-02;
+  max-block-size: 200px;
+  overflow-y: auto;
+}
+
+.tag-suggestion-item {
+  min-block-size: auto;
+
+  &[aria-selected='true'] {
+    background-color: $layer-selected-01;
+  }
+}
+
+// FullyControlled story styles
+.fully-controlled-buttons {
+  margin-block-end: $spacing-05;
+}

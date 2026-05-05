@@ -483,7 +483,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <li
         role={isTreeview ? 'treeitem' : undefined}
-        aria-expanded={isExpanded}
+        {...(isTreeview && { ariaExpanded: isExpanded })}
         className={className}
         ref={listRef}
         onKeyDown={handleKeyDown}

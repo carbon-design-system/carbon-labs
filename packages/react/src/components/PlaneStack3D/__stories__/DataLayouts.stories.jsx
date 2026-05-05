@@ -239,50 +239,66 @@ OverflowCarousel.args = {
 };
 OverflowCarousel.globals = { theme: 'g100' };
 
-export const SmallBlocks = Template.bind({});
-SmallBlocks.args = {
-  primaryLayer: createBlocksBySize('sm', 32, 8),
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Small Blocks',
-    sections: ['All blocks are small size'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-SmallBlocks.globals = { theme: 'g100' };
+// Consolidated block size story with control
+const BlockSizeTemplate = (args) => {
+  const [focusedId, setFocusedId] = useState(null);
+  const [hoveredItem, setHoveredItem] = useState(null);
 
-export const MediumBlocks = Template.bind({});
-MediumBlocks.args = {
-  primaryLayer: createBlocksBySize('md', 16, 8),
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Medium Blocks',
-    sections: ['All blocks are medium size'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-MediumBlocks.globals = { theme: 'g100' };
+  // Generate blocks based on size
+  const blockCount =
+    args.blockSize === 'sm' ? 32 : args.blockSize === 'md' ? 16 : 12;
+  const primaryLayer = createBlocksBySize(args.blockSize, blockCount, 8);
 
-export const LargeBlocks = Template.bind({});
-LargeBlocks.args = {
-  primaryLayer: createBlocksBySize('lg', 12, 8),
+  return (
+    <div style={{ width: '100%', height: '100vh' }}>
+      <PlaneStack3D
+        primaryLayer={primaryLayer}
+        coreLayer={args.coreLayer}
+        foundationConfig={args.foundationConfig}
+        textBracket={{
+          title: `${args.blockSize.toUpperCase()} Blocks`,
+          sections: [`All blocks are ${args.blockSize} size`],
+        }}
+        focusedId={focusedId}
+        onFocusedIdChange={setFocusedId}
+        hoveredItem={hoveredItem}
+        onHoveredItemChange={setHoveredItem}
+        lockColumnCount={args.lockColumnCount}
+        primaryColumnCount={args.primaryColumnCount}
+        skeletonLoader={args.skeletonLoader}
+        theme={args.theme}
+        enablePrimaryLayerCarousel={args.enablePrimaryLayerCarousel}
+      />
+    </div>
+  );
+};
+
+export const BlockSizeVariants = BlockSizeTemplate.bind({});
+BlockSizeVariants.args = {
+  blockSize: 'md',
   coreLayer: genericCoreLayer,
   foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Large Blocks',
-    sections: ['All blocks are large size'],
-  },
+  lockColumnCount: false,
+  primaryColumnCount: 8,
   skeletonLoader: false,
   theme: 'dark',
   enablePrimaryLayerCarousel: true,
 };
-LargeBlocks.globals = { theme: 'g100' };
+BlockSizeVariants.argTypes = {
+  blockSize: {
+    control: {
+      type: 'select',
+      labels: {
+        sm: 'Small',
+        md: 'Medium',
+        lg: 'Large',
+      },
+    },
+    options: ['sm', 'md', 'lg'],
+    description: 'Size of all blocks in the primary layer',
+  },
+};
+BlockSizeVariants.globals = { theme: 'g100' };
 
 export const NoColumnIndex = Template.bind({});
 NoColumnIndex.args = {

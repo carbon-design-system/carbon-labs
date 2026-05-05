@@ -145,18 +145,192 @@ const genericFoundationConfig = {
   ],
 };
 
-// Reusable story template
-const Template = (args) => {
+// ============================================================================
+// Primary Layer Variations
+// ============================================================================
+
+// Consolidated primary layer story with control
+const PrimaryLayerTemplate = (args) => {
   const [focusedId, setFocusedId] = useState(null);
   const [hoveredItem, setHoveredItem] = useState(null);
+
+  // Generate primary layer based on variant
+  let primaryLayer;
+  let title;
+  let sections;
+  let skeletonLoader = false;
+
+  switch (args.primaryVariant) {
+    case 'empty':
+      primaryLayer = [];
+      title = 'Empty Primary Layer';
+      sections = ['No primary blocks'];
+      break;
+    case 'skeleton':
+      primaryLayer = [];
+      title = 'Loading State';
+      sections = ['Skeleton loader active'];
+      skeletonLoader = true;
+      break;
+    case 'minimal':
+      primaryLayer = [
+        {
+          id: 'single',
+          label: 'Block',
+          hoverLabel: 'Single Block',
+          columnIndex: 3,
+          size: BLOCK_SIZES.lg,
+        },
+      ];
+      title = 'Minimal';
+      sections = ['Single block'];
+      break;
+    case 'standard':
+      primaryLayer = genericPrimaryLayer;
+      title = 'Standard';
+      sections = ['Multiple blocks'];
+      break;
+    default:
+      primaryLayer = genericPrimaryLayer;
+      title = 'Primary Layer';
+      sections = ['Default configuration'];
+  }
+
+  return (
+    <div style={{ width: '100%', height: '100vh' }}>
+      <PlaneStack3D
+        primaryLayer={primaryLayer}
+        coreLayer={args.coreLayer}
+        foundationConfig={args.foundationConfig}
+        textBracket={{
+          title,
+          sections,
+        }}
+        focusedId={focusedId}
+        onFocusedIdChange={setFocusedId}
+        hoveredItem={hoveredItem}
+        onHoveredItemChange={setHoveredItem}
+        lockColumnCount={args.lockColumnCount}
+        primaryColumnCount={args.primaryColumnCount}
+        skeletonLoader={skeletonLoader}
+        theme={args.theme}
+        enablePrimaryLayerCarousel={args.enablePrimaryLayerCarousel}
+      />
+    </div>
+  );
+};
+
+export const PrimaryLayerVariants = PrimaryLayerTemplate.bind({});
+PrimaryLayerVariants.args = {
+  primaryVariant: 'standard',
+  coreLayer: genericCoreLayer,
+  foundationConfig: genericFoundationConfig,
+  lockColumnCount: false,
+  primaryColumnCount: 8,
+  theme: 'dark',
+  enablePrimaryLayerCarousel: true,
+};
+PrimaryLayerVariants.argTypes = {
+  primaryVariant: {
+    control: {
+      type: 'select',
+      labels: {
+        empty: 'Empty',
+        skeleton: 'Skeleton Loader',
+        minimal: 'Minimal',
+        standard: 'Standard',
+      },
+    },
+    options: ['empty', 'skeleton', 'minimal', 'standard'],
+    description: 'Primary layer configuration',
+  },
+};
+PrimaryLayerVariants.globals = { theme: 'g100' };
+
+// ============================================================================
+// Core Layer Variations
+// ============================================================================
+
+// Consolidated core layer story with control
+const CoreLayerTemplate = (args) => {
+  const [focusedId, setFocusedId] = useState(null);
+  const [hoveredItem, setHoveredItem] = useState(null);
+
+  // Generate core layer based on variant
+  let coreLayer;
+  let title;
+  let sections;
+
+  switch (args.coreVariant) {
+    case 'none':
+      coreLayer = [];
+      title = 'No Core Layer';
+      sections = ['Primary and foundation only'];
+      break;
+    case 'single-small':
+      coreLayer = [
+        {
+          id: 'core-small',
+          label: 'Small Core',
+          hoverLabel: 'Compact Core Service',
+          size: BLOCK_SIZES.sm,
+        },
+      ];
+      title = 'Small Core';
+      sections = ['Compact core layer'];
+      break;
+    case 'single-medium':
+      coreLayer = [
+        {
+          id: 'core-1',
+          label: 'Core Service',
+          hoverLabel: 'Core Layer',
+          size: BLOCK_SIZES.md,
+        },
+      ];
+      title = 'Single Core';
+      sections = ['One core service'];
+      break;
+    case 'multiple':
+      coreLayer = [
+        {
+          id: 'core-1',
+          label: 'Core Service 1',
+          hoverLabel: 'Primary Core',
+          size: BLOCK_SIZES.lg,
+        },
+        {
+          id: 'core-2',
+          label: 'Core Service 2',
+          hoverLabel: 'Secondary Core',
+          size: BLOCK_SIZES.md,
+        },
+        {
+          id: 'core-3',
+          label: 'Core Service 3',
+          hoverLabel: 'Tertiary Core',
+          size: BLOCK_SIZES.sm,
+        },
+      ];
+      title = 'Multiple Core Services';
+      sections = ['3 core layer blocks', 'Different sizes'];
+      break;
+    default:
+      coreLayer = genericCoreLayer;
+      title = 'Core Layer';
+      sections = ['Default core configuration'];
+  }
 
   return (
     <div style={{ width: '100%', height: '100vh' }}>
       <PlaneStack3D
         primaryLayer={args.primaryLayer}
-        coreLayer={args.coreLayer}
+        coreLayer={coreLayer}
         foundationConfig={args.foundationConfig}
-        textBracket={args.textBracket}
+        textBracket={{
+          title,
+          sections,
+        }}
         focusedId={focusedId}
         onFocusedIdChange={setFocusedId}
         hoveredItem={hoveredItem}
@@ -171,250 +345,202 @@ const Template = (args) => {
   );
 };
 
-// ============================================================================
-// Empty States
-// ============================================================================
-
-export const SkeletonLoader = Template.bind({});
-SkeletonLoader.args = {
-  primaryLayer: [],
-  coreLayer: genericCoreLayer,
+export const CoreLayerVariants = CoreLayerTemplate.bind({});
+CoreLayerVariants.args = {
+  coreVariant: 'single-medium',
+  primaryLayer: genericPrimaryLayer,
   foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Loading State',
-    sections: ['Skeleton loader active'],
-  },
-  skeletonLoader: true,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-SkeletonLoader.globals = { theme: 'g100' };
-
-export const EmptyPrimaryLayer = Template.bind({});
-EmptyPrimaryLayer.args = {
-  primaryLayer: [],
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Empty Primary Layer',
-    sections: ['No primary blocks'],
-  },
+  lockColumnCount: false,
+  primaryColumnCount: 8,
   skeletonLoader: false,
   theme: 'dark',
   enablePrimaryLayerCarousel: true,
 };
-EmptyPrimaryLayer.globals = { theme: 'g100' };
-
-export const MinimalVisualization = Template.bind({});
-MinimalVisualization.args = {
-  primaryLayer: [
-    {
-      id: 'single',
-      label: 'Block',
-      hoverLabel: 'Single Block',
-      columnIndex: 3,
-      size: BLOCK_SIZES.lg,
-    },
-  ],
-  coreLayer: [
-    {
-      id: 'core-single',
-      label: 'Core',
-      hoverLabel: 'Single Core',
-      size: BLOCK_SIZES.md,
-    },
-  ],
-  foundationConfig: {
-    id: 'foundation-single',
-    label: 'Foundation',
-    racks: [
-      {
-        id: 'rack-single',
-        slots: 2,
-        variant: FOUNDATION_RACK_STATES.open,
-        status: 'green',
+CoreLayerVariants.argTypes = {
+  coreVariant: {
+    control: {
+      type: 'select',
+      labels: {
+        none: 'None',
+        'single-small': 'Single Small',
+        'single-medium': 'Single Medium',
+        multiple: 'Multiple',
       },
-    ],
-  },
-  textBracket: {
-    title: 'Minimal',
-    sections: ['One block per layer'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-MinimalVisualization.globals = { theme: 'g100' };
-
-// ============================================================================
-// Core Layer Variations
-// ============================================================================
-
-export const MultipleCoreBlocks = Template.bind({});
-MultipleCoreBlocks.args = {
-  primaryLayer: genericPrimaryLayer,
-  coreLayer: [
-    {
-      id: 'core-1',
-      label: 'Core Service 1',
-      hoverLabel: 'Primary Core',
-      size: BLOCK_SIZES.lg,
     },
-    {
-      id: 'core-2',
-      label: 'Core Service 2',
-      hoverLabel: 'Secondary Core',
-      size: BLOCK_SIZES.md,
-    },
-    {
-      id: 'core-3',
-      label: 'Core Service 3',
-      hoverLabel: 'Tertiary Core',
-      size: BLOCK_SIZES.sm,
-    },
-  ],
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Multiple Core Services',
-    sections: ['3 core layer blocks', 'Different sizes'],
+    options: ['none', 'single-small', 'single-medium', 'multiple'],
+    description: 'Core layer configuration',
   },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
 };
-MultipleCoreBlocks.globals = { theme: 'g100' };
-
-export const SmallCoreBlock = Template.bind({});
-SmallCoreBlock.args = {
-  primaryLayer: genericPrimaryLayer,
-  coreLayer: [
-    {
-      id: 'core-small',
-      label: 'Small Core',
-      hoverLabel: 'Compact Core Service',
-      size: BLOCK_SIZES.sm,
-    },
-  ],
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Small Core',
-    sections: ['Compact core layer'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-SmallCoreBlock.globals = { theme: 'g100' };
-
-export const NoCoreLayer = Template.bind({});
-NoCoreLayer.args = {
-  primaryLayer: genericPrimaryLayer,
-  coreLayer: [],
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'No Core Layer',
-    sections: ['Primary and foundation only'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-NoCoreLayer.globals = { theme: 'g100' };
+CoreLayerVariants.globals = { theme: 'g100' };
 
 // ============================================================================
 // Foundation Layer Variations
 // ============================================================================
 
-export const MinimalFoundation = Template.bind({});
-MinimalFoundation.args = {
-  primaryLayer: genericPrimaryLayer,
-  coreLayer: genericCoreLayer,
-  foundationConfig: {
-    id: 'foundation-minimal',
-    label: 'Foundation',
-    racks: [
-      {
-        id: 'rack-1',
-        slots: 2,
-        variant: FOUNDATION_RACK_STATES.open,
-        status: 'green',
-      },
-    ],
-  },
-  textBracket: {
-    title: 'Minimal Foundation',
-    sections: ['Single rack', '2 slots'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-MinimalFoundation.globals = { theme: 'g100' };
+// Consolidated foundation layer story with control
+const FoundationLayerTemplate = (args) => {
+  const [focusedId, setFocusedId] = useState(null);
+  const [hoveredItem, setHoveredItem] = useState(null);
 
-export const ExtendedFoundation = Template.bind({});
-ExtendedFoundation.args = {
-  primaryLayer: genericPrimaryLayer,
-  coreLayer: genericCoreLayer,
-  foundationConfig: {
-    id: 'foundation-extended',
-    label: 'Foundation',
-    racks: Array.from({ length: 8 }, (_, i) => ({
-      id: `rack-${i + 1}`,
-      slots: 4,
-      variant: FOUNDATION_RACK_STATES.open,
-      status: i % 3 === 0 ? 'yellow' : i % 3 === 1 ? 'red' : 'green',
-    })),
-  },
-  textBracket: {
-    title: 'Extended Foundation',
-    sections: ['8 racks', 'Mixed status indicators'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-ExtendedFoundation.globals = { theme: 'g100' };
+  // Generate foundation config based on variant
+  let foundationConfig;
+  let title;
+  let sections;
 
-export const ClosedRacks = Template.bind({});
-ClosedRacks.args = {
+  switch (args.foundationVariant) {
+    case 'minimal':
+      foundationConfig = {
+        id: 'foundation-minimal',
+        label: 'Foundation',
+        racks: [
+          {
+            id: 'rack-1',
+            slots: 2,
+            variant: FOUNDATION_RACK_STATES.open,
+            status: 'green',
+          },
+        ],
+      };
+      title = 'Minimal Foundation';
+      sections = ['Single rack', '2 slots'];
+      break;
+    case 'success':
+      foundationConfig = genericFoundationConfig;
+      title = 'Success';
+      sections = ['4 racks', 'All green'];
+      break;
+    case 'warning':
+      foundationConfig = {
+        id: 'foundation-yellow',
+        label: 'Foundation',
+        racks: Array.from({ length: 4 }, (_, i) => ({
+          id: `rack-${i + 1}`,
+          slots: 4,
+          variant: FOUNDATION_RACK_STATES.open,
+          status: 'yellow',
+        })),
+      };
+      title = 'Warning';
+      sections = ['4 racks', 'All yellow'];
+      break;
+    case 'error':
+      foundationConfig = {
+        id: 'foundation-red',
+        label: 'Foundation',
+        racks: Array.from({ length: 4 }, (_, i) => ({
+          id: `rack-${i + 1}`,
+          slots: 4,
+          variant: FOUNDATION_RACK_STATES.open,
+          status: 'red',
+        })),
+      };
+      title = 'Error';
+      sections = ['4 racks', 'All red'];
+      break;
+    case 'mixed':
+      foundationConfig = {
+        id: 'foundation-mixed',
+        label: 'Foundation',
+        racks: [
+          {
+            id: 'rack-1',
+            slots: 4,
+            variant: FOUNDATION_RACK_STATES.open,
+            status: 'green',
+          },
+          {
+            id: 'rack-2',
+            slots: 4,
+            variant: FOUNDATION_RACK_STATES.open,
+            status: 'yellow',
+          },
+          {
+            id: 'rack-3',
+            slots: 4,
+            variant: FOUNDATION_RACK_STATES.open,
+            status: 'red',
+          },
+          {
+            id: 'rack-4',
+            slots: 4,
+            variant: FOUNDATION_RACK_STATES.open,
+            status: 'green',
+          },
+        ],
+      };
+      title = 'Mixed Status';
+      sections = ['4 racks', 'Mixed statuses'];
+      break;
+    case 'closed':
+      foundationConfig = {
+        id: 'foundation-closed',
+        label: 'Foundation',
+        racks: Array.from({ length: 4 }, (_, i) => ({
+          id: `rack-${i + 1}`,
+          slots: 0,
+          variant: FOUNDATION_RACK_STATES.closed,
+          status: 'green',
+        })),
+      };
+      title = 'All Closed';
+      sections = ['4 racks', 'All closed'];
+      break;
+    default:
+      foundationConfig = genericFoundationConfig;
+      title = 'Foundation';
+      sections = ['Default configuration'];
+  }
+
+  return (
+    <div style={{ width: '100%', height: '100vh' }}>
+      <PlaneStack3D
+        primaryLayer={args.primaryLayer}
+        coreLayer={args.coreLayer}
+        foundationConfig={foundationConfig}
+        textBracket={{
+          title,
+          sections,
+        }}
+        focusedId={focusedId}
+        onFocusedIdChange={setFocusedId}
+        hoveredItem={hoveredItem}
+        onHoveredItemChange={setHoveredItem}
+        lockColumnCount={args.lockColumnCount}
+        primaryColumnCount={args.primaryColumnCount}
+        skeletonLoader={args.skeletonLoader}
+        theme={args.theme}
+        enablePrimaryLayerCarousel={args.enablePrimaryLayerCarousel}
+      />
+    </div>
+  );
+};
+
+export const FoundationLayerVariants = FoundationLayerTemplate.bind({});
+FoundationLayerVariants.args = {
+  foundationVariant: 'success',
   primaryLayer: genericPrimaryLayer,
   coreLayer: genericCoreLayer,
-  foundationConfig: {
-    id: 'foundation-closed',
-    label: 'Foundation',
-    racks: [
-      {
-        id: 'rack-1',
-        slots: 0,
-        variant: FOUNDATION_RACK_STATES.closed,
-        status: 'green',
-      },
-      {
-        id: 'rack-2',
-        slots: 0,
-        variant: FOUNDATION_RACK_STATES.closed,
-        status: 'green',
-      },
-      {
-        id: 'rack-3',
-        slots: 4,
-        variant: FOUNDATION_RACK_STATES.open,
-        status: 'yellow',
-      },
-      {
-        id: 'rack-4',
-        slots: 4,
-        variant: FOUNDATION_RACK_STATES.open,
-        status: 'red',
-      },
-    ],
-  },
-  textBracket: {
-    title: 'Mixed Rack States',
-    sections: ['Closed and open racks', 'Various statuses'],
-  },
+  lockColumnCount: false,
+  primaryColumnCount: 8,
   skeletonLoader: false,
   theme: 'dark',
   enablePrimaryLayerCarousel: true,
 };
-ClosedRacks.globals = { theme: 'g100' };
+FoundationLayerVariants.argTypes = {
+  foundationVariant: {
+    control: {
+      type: 'select',
+      labels: {
+        minimal: 'Minimal',
+        success: 'Success',
+        warning: 'Warning',
+        error: 'Error',
+        mixed: 'Mixed',
+        closed: 'Closed',
+      },
+    },
+    options: ['minimal', 'success', 'warning', 'error', 'mixed', 'closed'],
+    description: 'Foundation layer configuration',
+  },
+};
+FoundationLayerVariants.globals = { theme: 'g100' };

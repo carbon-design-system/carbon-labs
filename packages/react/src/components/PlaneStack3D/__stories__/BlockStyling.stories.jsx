@@ -204,134 +204,75 @@ ColoredBlocks.args = {
 };
 ColoredBlocks.globals = { theme: 'g100' };
 
-export const BlueBlocks = Template.bind({});
-BlueBlocks.args = {
-  primaryLayer: Array.from({ length: 16 }, (_, i) => ({
-    id: `blue-${i}`,
-    label: 'Block',
-    hoverLabel: `Blue Block ${i + 1}`,
-    columnIndex: i % 8,
-    size: BLOCK_SIZES.md,
-    color: 'blue',
-  })),
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Blue Theme',
-    sections: ['All blue blocks'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-BlueBlocks.globals = { theme: 'g100' };
+// Consolidated single color story with control
+const SingleColorBlocksTemplate = (args) => {
+  const [focusedId, setFocusedId] = useState(null);
+  const [hoveredItem, setHoveredItem] = useState(null);
 
-export const GreenBlocks = Template.bind({});
-GreenBlocks.args = {
-  primaryLayer: Array.from({ length: 16 }, (_, i) => ({
-    id: `green-${i}`,
+  // Generate blocks with the selected color
+  const primaryLayer = Array.from({ length: 16 }, (_, i) => ({
+    id: `${args.blockColor}-${i}`,
     label: 'Block',
-    hoverLabel: `Green Block ${i + 1}`,
+    hoverLabel: `${
+      args.blockColor.charAt(0).toUpperCase() + args.blockColor.slice(1)
+    } Block ${i + 1}`,
     columnIndex: i % 8,
     size: BLOCK_SIZES.md,
-    color: 'green',
-  })),
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Green Theme',
-    sections: ['All green blocks'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-GreenBlocks.globals = { theme: 'g100' };
+    color: args.blockColor,
+  }));
 
-export const RedBlocks = Template.bind({});
-RedBlocks.args = {
-  primaryLayer: Array.from({ length: 16 }, (_, i) => ({
-    id: `red-${i}`,
-    label: 'Block',
-    hoverLabel: `Red Block ${i + 1}`,
-    columnIndex: i % 8,
-    size: BLOCK_SIZES.md,
-    color: 'red',
-  })),
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Red Theme',
-    sections: ['All red blocks'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
+  return (
+    <div style={{ width: '100%', height: '100vh' }}>
+      <PlaneStack3D
+        primaryLayer={primaryLayer}
+        coreLayer={args.coreLayer}
+        foundationConfig={args.foundationConfig}
+        textBracket={{
+          title: `${
+            args.blockColor.charAt(0).toUpperCase() + args.blockColor.slice(1)
+          } Theme`,
+          sections: [`All ${args.blockColor} blocks`],
+        }}
+        focusedId={focusedId}
+        onFocusedIdChange={setFocusedId}
+        hoveredItem={hoveredItem}
+        onHoveredItemChange={setHoveredItem}
+        lockColumnCount={args.lockColumnCount}
+        primaryColumnCount={args.primaryColumnCount}
+        skeletonLoader={args.skeletonLoader}
+        theme={args.theme}
+        enablePrimaryLayerCarousel={args.enablePrimaryLayerCarousel}
+      />
+    </div>
+  );
 };
-RedBlocks.globals = { theme: 'g100' };
 
-export const PurpleBlocks = Template.bind({});
-PurpleBlocks.args = {
-  primaryLayer: Array.from({ length: 16 }, (_, i) => ({
-    id: `purple-${i}`,
-    label: 'Block',
-    hoverLabel: `Purple Block ${i + 1}`,
-    columnIndex: i % 8,
-    size: BLOCK_SIZES.md,
-    color: 'purple',
-  })),
+export const SingleColorBlocks = SingleColorBlocksTemplate.bind({});
+SingleColorBlocks.args = {
+  blockColor: 'blue',
   coreLayer: genericCoreLayer,
   foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Purple Theme',
-    sections: ['All purple blocks'],
-  },
+  lockColumnCount: false,
+  primaryColumnCount: 8,
   skeletonLoader: false,
   theme: 'dark',
   enablePrimaryLayerCarousel: true,
 };
-PurpleBlocks.globals = { theme: 'g100' };
-
-export const TealBlocks = Template.bind({});
-TealBlocks.args = {
-  primaryLayer: Array.from({ length: 16 }, (_, i) => ({
-    id: `teal-${i}`,
-    label: 'Block',
-    hoverLabel: `Teal Block ${i + 1}`,
-    columnIndex: i % 8,
-    size: BLOCK_SIZES.md,
-    color: 'teal',
-  })),
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Teal Theme',
-    sections: ['All teal blocks'],
+SingleColorBlocks.argTypes = {
+  blockColor: {
+    control: {
+      type: 'select',
+      labels: {
+        blue: 'Blue',
+        green: 'Green',
+        red: 'Red',
+        purple: 'Purple',
+        teal: 'Teal',
+        magenta: 'Magenta',
+      },
+    },
+    options: ['blue', 'green', 'red', 'purple', 'teal', 'magenta'],
+    description: 'Color to apply to all blocks',
   },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
 };
-TealBlocks.globals = { theme: 'g100' };
-
-export const MagentaBlocks = Template.bind({});
-MagentaBlocks.args = {
-  primaryLayer: Array.from({ length: 16 }, (_, i) => ({
-    id: `magenta-${i}`,
-    label: 'Block',
-    hoverLabel: `Magenta Block ${i + 1}`,
-    columnIndex: i % 8,
-    size: BLOCK_SIZES.md,
-    color: 'magenta',
-  })),
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: {
-    title: 'Magenta Theme',
-    sections: ['All magenta blocks'],
-  },
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-MagentaBlocks.globals = { theme: 'g100' };
+SingleColorBlocks.globals = { theme: 'g100' };

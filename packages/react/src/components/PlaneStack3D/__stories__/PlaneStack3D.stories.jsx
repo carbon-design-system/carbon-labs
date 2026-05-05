@@ -368,36 +368,7 @@ LightTheme.args = {
   theme: 'light',
   enablePrimaryLayerCarousel: true,
 };
-LightTheme.globals = {
-  theme: 'g10',
-};
-LightTheme.parameters = {
-  docs: {
-    description: {
-      story: `
-**Light Theme Variant**
-
-Demonstrates the PlaneStack3D in light mode with the Carbon g10 theme, ideal for applications with light backgrounds or when matching light-themed interfaces.
-
-**Key Characteristics:**
-- Light color palette optimized for readability on white backgrounds
-- Subtle shadows and borders for depth
-- High contrast text for accessibility
-- Matches Carbon Design System g10 theme tokens
-
-**When to Use Light Theme:**
-- Applications with predominantly light interfaces
-- Print or export scenarios requiring light backgrounds
-- User preference for light mode
-- Environments with bright ambient lighting
-- Accessibility requirements for high contrast on light backgrounds
-
-**Theme Integration:**
-The \`theme="light"\` prop works in conjunction with Storybook's global theme setting (\`g10\`) to ensure consistent styling across the entire visualization and surrounding UI.
-      `,
-    },
-  },
-};
+LightTheme.globals = { theme: 'g10' };
 
 export const DarkTheme = Template.bind({});
 DarkTheme.args = {
@@ -411,40 +382,7 @@ DarkTheme.args = {
   theme: 'dark',
   enablePrimaryLayerCarousel: true,
 };
-DarkTheme.globals = {
-  theme: 'g100',
-};
-DarkTheme.parameters = {
-  docs: {
-    description: {
-      story: `
-**Dark Theme Variant**
-
-Demonstrates the PlaneStack3D in dark mode with the Carbon g100 theme, providing an immersive visualization experience ideal for data-intensive applications and low-light environments.
-
-**Key Characteristics:**
-- Dark color palette reducing eye strain in low-light conditions
-- Vibrant colors that pop against dark backgrounds
-- Optimized contrast ratios for accessibility
-- Matches Carbon Design System g100 theme tokens
-
-**When to Use Dark Theme:**
-- Data visualization and analytics dashboards
-- Applications used in low-light environments
-- User preference for dark mode
-- Reducing screen glare and eye fatigue
-- Creating focus on data with minimal UI distraction
-- Modern, professional aesthetic
-
-**Theme Integration:**
-The \`theme="dark"\` prop works in conjunction with Storybook's global theme setting (\`g100\`) to ensure consistent styling across the entire visualization and surrounding UI.
-
-**Performance Note:**
-Dark themes can improve battery life on OLED displays and reduce power consumption, making them ideal for mobile or energy-conscious applications.
-      `,
-    },
-  },
-};
+DarkTheme.globals = { theme: 'g100' };
 
 export const ResponsiveColumns = Template.bind({});
 ResponsiveColumns.args = {

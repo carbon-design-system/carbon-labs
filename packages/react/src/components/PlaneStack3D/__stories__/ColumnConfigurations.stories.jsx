@@ -105,18 +105,41 @@ const createBlocksBySize = (size, count, columnCount) => {
   }));
 };
 
-// Reusable story template
-const Template = (args) => {
+// ============================================================================
+// Column Count Stories (Locked)
+// ============================================================================
+
+// Consolidated column configuration story with control
+const LockedColumnsTemplate = (args) => {
   const [focusedId, setFocusedId] = useState(null);
   const [hoveredItem, setHoveredItem] = useState(null);
+
+  // Generate blocks based on column count
+  const blockCount =
+    args.primaryColumnCount *
+    (args.primaryColumnCount === 2
+      ? 4
+      : args.primaryColumnCount === 4
+      ? 4
+      : args.primaryColumnCount === 6
+      ? 4
+      : 4);
+  const primaryLayer = createBlocksBySize(
+    'md',
+    blockCount,
+    args.primaryColumnCount
+  );
 
   return (
     <div style={{ width: '100%', height: '100vh' }}>
       <PlaneStack3D
-        primaryLayer={args.primaryLayer}
+        primaryLayer={primaryLayer}
         coreLayer={args.coreLayer}
         foundationConfig={args.foundationConfig}
-        textBracket={args.textBracket}
+        textBracket={{
+          title: `${args.primaryColumnCount} Columns`,
+          sections: ['Locked column count'],
+        }}
         focusedId={focusedId}
         onFocusedIdChange={setFocusedId}
         hoveredItem={hoveredItem}
@@ -131,62 +154,29 @@ const Template = (args) => {
   );
 };
 
-// ============================================================================
-// Column Count Stories (Locked)
-// ============================================================================
-
-export const TwoColumnsLocked = Template.bind({});
-TwoColumnsLocked.args = {
-  primaryLayer: createBlocksBySize('md', 8, 2),
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: { title: '2 Columns', sections: ['Locked column count'] },
-  lockColumnCount: true,
-  primaryColumnCount: 2,
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-TwoColumnsLocked.globals = { theme: 'g100' };
-
-export const FourColumnsLocked = Template.bind({});
-FourColumnsLocked.args = {
-  primaryLayer: createBlocksBySize('md', 16, 4),
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: { title: '4 Columns', sections: ['Locked column count'] },
-  lockColumnCount: true,
+export const LockedColumns = LockedColumnsTemplate.bind({});
+LockedColumns.args = {
   primaryColumnCount: 4,
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
-};
-FourColumnsLocked.globals = { theme: 'g100' };
-
-export const SixColumnsLocked = Template.bind({});
-SixColumnsLocked.args = {
-  primaryLayer: createBlocksBySize('sm', 24, 6),
   coreLayer: genericCoreLayer,
   foundationConfig: genericFoundationConfig,
-  textBracket: { title: '6 Columns', sections: ['Locked column count'] },
   lockColumnCount: true,
-  primaryColumnCount: 6,
   skeletonLoader: false,
   theme: 'dark',
   enablePrimaryLayerCarousel: true,
 };
-SixColumnsLocked.globals = { theme: 'g100' };
-
-export const EightColumnsLocked = Template.bind({});
-EightColumnsLocked.args = {
-  primaryLayer: createBlocksBySize('sm', 32, 8),
-  coreLayer: genericCoreLayer,
-  foundationConfig: genericFoundationConfig,
-  textBracket: { title: '8 Columns', sections: ['Locked column count'] },
-  lockColumnCount: true,
-  primaryColumnCount: 8,
-  skeletonLoader: false,
-  theme: 'dark',
-  enablePrimaryLayerCarousel: true,
+LockedColumns.argTypes = {
+  primaryColumnCount: {
+    control: {
+      type: 'select',
+      labels: {
+        2: '2 Columns',
+        4: '4 Columns',
+        6: '6 Columns',
+        8: '8 Columns',
+      },
+    },
+    options: [2, 4, 6, 8],
+    description: 'Number of columns to display',
+  },
 };
-EightColumnsLocked.globals = { theme: 'g100' };
+LockedColumns.globals = { theme: 'g100' };

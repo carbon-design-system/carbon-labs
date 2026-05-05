@@ -516,5 +516,3 @@ responsiveColumnBreakpoints={{
     },
   },
 };
-
-// Made with Bob

@@ -103,5 +103,3 @@ function CarouselA11yControls({
 }
 
 export default memo(CarouselA11yControls);
-
-// Made with Bob

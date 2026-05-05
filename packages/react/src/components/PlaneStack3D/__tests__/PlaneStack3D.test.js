@@ -189,5 +189,3 @@ describe('PlaneStack3D', () => {
     ).not.toBeInTheDocument();
   });
 });
-
-// Made with Bob

@@ -190,5 +190,3 @@ EightColumnsLocked.args = {
   enablePrimaryLayerCarousel: true,
 };
 EightColumnsLocked.globals = { theme: 'g100' };
-
-// Made with Bob

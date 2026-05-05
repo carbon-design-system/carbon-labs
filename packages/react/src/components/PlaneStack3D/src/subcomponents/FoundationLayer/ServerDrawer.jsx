@@ -433,5 +433,3 @@ const ServerDrawer = memo(function ServerDrawer({
 });
 
 export default ServerDrawer;
-
-// Made with Bob

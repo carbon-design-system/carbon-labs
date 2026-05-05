@@ -18,5 +18,3 @@ declare global {
 }
 
 export {};
-
-// Made with Bob

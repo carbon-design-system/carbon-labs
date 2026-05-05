@@ -335,5 +335,3 @@ MagentaBlocks.args = {
   enablePrimaryLayerCarousel: true,
 };
 MagentaBlocks.globals = { theme: 'g100' };
-
-// Made with Bob

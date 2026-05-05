@@ -329,5 +329,3 @@ export const mockVisualizationDataMinimal: VisualizationData = {
     sections: ['3 accounts'],
   },
 };
-
-// Made with Bob

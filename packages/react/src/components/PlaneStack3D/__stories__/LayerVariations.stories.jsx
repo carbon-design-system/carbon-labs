@@ -418,5 +418,3 @@ ClosedRacks.args = {
   enablePrimaryLayerCarousel: true,
 };
 ClosedRacks.globals = { theme: 'g100' };
-
-// Made with Bob

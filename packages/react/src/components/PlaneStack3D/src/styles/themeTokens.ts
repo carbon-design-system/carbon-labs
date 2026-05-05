@@ -142,5 +142,3 @@ export function getCarouselColors(theme: Theme): CarouselColors {
     arrowHover: colors.white,
   };
 }
-
-// Made with Bob

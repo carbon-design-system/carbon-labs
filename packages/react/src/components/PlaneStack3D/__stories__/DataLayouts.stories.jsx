@@ -366,5 +366,3 @@ LongBlockNames.args = {
   enablePrimaryLayerCarousel: true,
 };
 LongBlockNames.globals = { theme: 'g100' };
-
-// Made with Bob

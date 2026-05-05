@@ -60,6 +60,30 @@ before diving into our developer guide:
 
 - [Developer Guide](https://github.com/carbon-design-system/carbon-labs/blob/main/docs/developing.md)
 
+To start a new component contribution from a Carbon Labs checkout, use the
+create utility:
+
+```bash
+npx @carbon-labs/create@latest <component-name>
+```
+
+The command runs the repo install/build/generate flow and then runs
+`yarn scaffold` to add Carbon Labs contribution metadata, Storybook tags, and
+copyright headers to generated source files. Git operations are opt-in:
+
+```bash
+npx @carbon-labs/create@latest <component-name> --with-git
+```
+
+When the component is ready for PR review, run the repo prep command:
+
+```bash
+yarn prep
+```
+
+The prep command formats the repo, dedupes dependencies, validates license
+headers, and ensures added source files include the required copyright header.
+
 ## 📝 License
 
 Licensed under the

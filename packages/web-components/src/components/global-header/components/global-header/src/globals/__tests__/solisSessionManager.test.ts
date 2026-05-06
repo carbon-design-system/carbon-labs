@@ -685,4 +685,29 @@ describe('solisSessionManager', () => {
             expect(logStub).to.have.been.calledWith('Failed to set sessionStorage logout flag:', sinon.match.instanceOf(Error));
         })
     })
+
+    describe('registerActivityListeners', () => {
+        it('adds an event listener for each specified activity event', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const addEventListenerStub = sinon.stub(document, 'addEventListener');
+            const recordActivityStub = sinon.stub(IWHISessionManager.prototype, 'recordActivity');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+
+            sessionManager.activityEvents = ['mousedown', 'keypress'];
+            sessionManager.registerActivityListeners();
+            expect(addEventListenerStub).to.have.been.calledTwice;
+            expect(addEventListenerStub.firstCall.args[0]).to.equal('mousedown');
+            expect(addEventListenerStub.secondCall.args[0]).to.equal('keypress');
+
+            document.dispatchEvent(new Event('mousedown'));
+            expect(recordActivityStub).to.have.been.called;
+        })
+    })
 })

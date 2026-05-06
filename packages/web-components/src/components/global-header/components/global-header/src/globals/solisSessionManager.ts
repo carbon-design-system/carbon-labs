@@ -120,7 +120,7 @@ export default class IWHISessionManager {
         
         // // Register activity listeners AFTER cookie initialization
         // // This prevents race condition where activity creates partial cookie
-        // this.registerActivityListeners();
+        this.registerActivityListeners();
         
         // // Start cookie polling
         // this.startCookiePolling();
@@ -287,6 +287,19 @@ export default class IWHISessionManager {
             this.log(`Cookie written (${expiryType}): ${this.config.cookieName}=${value.substring(0, 50)}...`);
             this.log(`Cookie flags: domain=${domainFlag || 'none'}, secure=${this.config.cookieSecure}, samesite=${this.config.cookieSameSite}, expires=${expiryType}`);
         }
+    }
+
+    registerActivityListeners() {
+        this.activityEvents.forEach(eventType => {
+            document.addEventListener(eventType, () => this.recordActivity(), { 
+                passive: true,
+                capture: true 
+            });
+        });
+    }
+
+    recordActivity() {
+        console.log('hello for now');
     }
 
     cleanup() {

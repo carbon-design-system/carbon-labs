@@ -3,6 +3,82 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.175.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.174.0...@carbon-labs/react@0.175.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.174.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.173.0...@carbon-labs/react@0.174.0) (2026-05-06)
+
+
+### Features
+
+* storybook demo updated with fluid dropdown ([#1207](https://github.com/carbon-design-system/carbon-labs/issues/1207)) ([e09445e](https://github.com/carbon-design-system/carbon-labs/commit/e09445ea61f209ab300c17c5a6d3bfd7c624e438))
+
+
+
+
+
+# [0.173.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.172.0...@carbon-labs/react@0.173.0) (2026-04-29)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
+# [0.172.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.171.0...@carbon-labs/react@0.172.0) (2026-04-27)
+
+
+### Features
+
+* **tools:** add labs-kit ([#1195](https://github.com/carbon-design-system/carbon-labs/issues/1195)) ([9b427b2](https://github.com/carbon-design-system/carbon-labs/commit/9b427b2242bf7e34e9a0d708e570bca3bf82e261))
+
+
+
+
+
+# [0.171.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.170.0...@carbon-labs/react@0.171.0) (2026-04-27)
+
+
+### Bug Fixes
+
+* **TextHighlighter:** Improve the visibility and readability of the reference annotation ([#1196](https://github.com/carbon-design-system/carbon-labs/issues/1196)) ([91ee333](https://github.com/carbon-design-system/carbon-labs/commit/91ee3330fc5940a3b857ff33a16b8cc84ed6dd90))
+
+
+### Features
+
+* **TagInput:** New react compoenet - initial commit  ([#1186](https://github.com/carbon-design-system/carbon-labs/issues/1186)) ([865c57e](https://github.com/carbon-design-system/carbon-labs/commit/865c57e0e4c158f9d45cf40a1da89cc785617639))
+
+
+
+
+
+# [0.170.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.169.0...@carbon-labs/react@0.170.0) (2026-04-23)
+
+
+### Features
+
+* SplitPanel deprecation proposal ([#969](https://github.com/carbon-design-system/carbon-labs/issues/969)) ([4a8f886](https://github.com/carbon-design-system/carbon-labs/commit/4a8f8865968a9fbfba011586668bf4b19730296c))
+
+
+
+
+
+# [0.169.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.168.0...@carbon-labs/react@0.169.0) (2026-04-20)
+
+
+### Bug Fixes
+
+* **uishell:** added aria-hidden attribute for SharkFinIcon ([#1185](https://github.com/carbon-design-system/carbon-labs/issues/1185)) ([eb445dc](https://github.com/carbon-design-system/carbon-labs/commit/eb445dc9375a470a57e378181531a67ccb8865eb))
+
+
+
+
+
 # [0.168.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.167.0...@carbon-labs/react@0.168.0) (2026-04-16)
 
 **Note:** Version bump only for package @carbon-labs/react

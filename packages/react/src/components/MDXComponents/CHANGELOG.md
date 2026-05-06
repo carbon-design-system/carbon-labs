@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.18.0...@carbon-labs/mdx-components@0.19.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.17.0...@carbon-labs/mdx-components@0.18.0) (2026-05-06)
+
+
+### Features
+
+* storybook demo updated with fluid dropdown ([#1207](https://github.com/carbon-design-system/carbon-labs/issues/1207)) ([e09445e](https://github.com/carbon-design-system/carbon-labs/commit/e09445ea61f209ab300c17c5a6d3bfd7c624e438))
+
+
+
+
+
 # [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.16.0...@carbon-labs/mdx-components@0.17.0) (2026-04-16)
 
 **Note:** Version bump only for package @carbon-labs/mdx-components

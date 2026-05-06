@@ -1,0 +1,189 @@
+import { ArgTypes, Canvas, Meta, Controls } from '@storybook/addon-docs/blocks';
+import * as TagInputStories from './TagInput.stories';
+
+<Meta isTemplate />
+
+# TagInput
+
+- **Initiative owner(s):** Punnoose Wilson
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+{/* <!-- START doctoc generated TOC please keep comment here to allow auto update --> */}
+{/* <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE --> */}
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/TagInput)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/react/TagInput)
+
+## Table of Contents
+
+- [Overview](#overview)
+  - [Key Features](#key-features)
+- [Getting started](#getting-started)
+- [Component API](#component-api)
+- [Usage Examples](#usage-examples)
+  - [Basic Usage](#basic-usage)
+  - [With Initial Tags](#with-initial-tags)
+  - [Custom Placeholder](#custom-placeholder)
+  - [Fully Controlled](#fully-controlled)
+  - [With Colors](#with-colors)
+
+{/* <!-- END doctoc generated TOC please keep comment here to allow auto update --> */}
+
+## Overview
+
+The TagInput component provides an intuitive interface for users to add, manage, and remove tags. It combines a text input field with tag visualization, enabling users to create collections of labeled items through keyboard interaction. Tags are displayed inline with the input field, and users can navigate between tags using arrow keys, making it accessible and efficient for data entry.
+
+### Key Features
+
+- **Keyboard Navigation**: Full keyboard support with arrow keys for tag navigation, Enter to add tags, and Backspace/Delete to remove tags
+- **Controlled Component**: Parent component maintains full control over tag state through the `value` and `onTagsChange` props
+- **Customizable Rendering**: Use the `renderTag` prop to customize tag appearance, including colors, styles, and additional functionality
+- **Accessible**: Built with ARIA attributes and semantic HTML for screen reader support
+- **Flexible Sizing**: Supports three size variants (sm, md, lg) to match the design system
+- **Smart Input Width**: Input field automatically adjusts width based on placeholder text
+
+<Canvas of={TagInputStories.Default} />
+
+<Controls />
+
+## Getting started
+
+Here's a quick example to get you started.
+
+```bash
+yarn add @carbon/react
+yarn add @carbon-labs/react-tag-input
+```
+
+### JS (via import)
+
+```javascript
+import { TagInput } from '@carbon-labs/react-tag-input/es/index';
+import { useState } from 'react';
+
+function App() {
+  const [tags, setTags] = useState([]);
+
+  return (
+    <TagInput
+      id="my-tag-input"
+      placeholder="Type and press Enter"
+      value={tags}
+      onTagsChange={setTags}
+    />
+  );
+}
+
+export default App;
+```
+
+### SCSS
+
+In your styles file import
+
+```scss
+@use '@carbon/react';
+@use '@carbon-labs/react-tag-input/scss/tag-input';
+```
+
+## Component API
+
+The TagInput component accepts the following props:
+
+| Prop | Type | Required | Default | Description |
+|------|------|----------|---------|-------------|
+| `id` | `string` | Yes | - | Unique identifier for the input element |
+| `placeholder` | `string` | No | `'Type and press Enter'` | Placeholder text displayed in the input field |
+| `value` | `string[]` | No | `[]` | Array of tag strings to display. Component is controlled via this prop |
+| `onTagsChange` | `(tags: string[]) => void` | No | - | Callback function invoked when tags are added or removed. Receives updated array of tags |
+| `size` | `'sm' \| 'md' \| 'lg'` | No | `'md'` | Size variant of the input field and tags |
+| `renderTag` | `(tag: string, index: number, onRemove: () => void) => ReactNode` | No | - | Custom render function for tags. Receives tag text, index, and remove callback. Allows complete customization of tag appearance |
+
+### Prop Details
+
+#### `value` and `onTagsChange`
+
+The TagInput is a controlled component. The parent component must manage the tag state:
+
+```javascript
+const [tags, setTags] = useState(['Tag1', 'Tag2']);
+
+<TagInput
+  id="example"
+  value={tags}
+  onTagsChange={setTags}
+/>
+```
+
+#### `renderTag`
+
+Customize tag appearance with the `renderTag` prop. The function receives:
+- `tag`: The tag text
+- `index`: The tag's position in the array
+- `onRemove`: Callback to remove the tag
+
+```javascript
+<TagInput
+  id="example"
+  value={tags}
+  onTagsChange={setTags}
+  renderTag={(tag, index, onRemove) => (
+    <DismissibleTag
+      type="blue"
+      text={tag}
+      onClose={onRemove}
+    />
+  )}
+/>
+```
+
+### Keyboard Interactions
+
+| Key | Action |
+|-----|--------|
+| `Enter` | Add current input text as a new tag (if not empty) |
+| `Backspace` | Remove last tag when input is empty |
+| `ArrowLeft` | Focus last tag when cursor is at input start; continue pressing to navigate backward through tags |
+| `ArrowRight` | Navigate forward through tags; return focus to input when on last tag |
+| `Home` | Focus first tag (when on input or any tag) |
+| `End` | Return focus to input (when on any tag) |
+| `Delete` | Remove focused tag |
+| `Escape` | Return focus to input from any tag |
+
+## Usage Examples
+
+### Basic Usage
+
+The simplest implementation with default styling.
+
+<Canvas of={TagInputStories.Default} />
+
+### With Initial Tags
+
+Start with pre-populated tags.
+
+<Canvas of={TagInputStories.WithInitialTags} />
+
+### Custom Placeholder
+
+Customize the placeholder text to guide users.
+
+<Canvas of={TagInputStories.CustomPlaceholder} />
+
+### Fully Controlled
+
+Demonstrate full parent control with external buttons to add and clear tags.
+
+<Canvas of={TagInputStories.FullyControlled} />
+
+### With Colors
+
+Use the `renderTag` prop to customize tag colors based on content.
+
+<Canvas of={TagInputStories.WithColors} />

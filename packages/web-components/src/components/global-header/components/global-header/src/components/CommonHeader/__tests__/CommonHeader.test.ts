@@ -485,4 +485,16 @@ describe('CommonHeader tests', () => {
       expect(sideNav).to.have.attribute('aria-label', 'Side navigation');
     });
   });
+
+  describe('Logo support', () => {
+    it('renders content in the header-logo slot', async () => {
+      const el = await fixture<CommonHeader>(
+        html`<clabs-global-header-apaas
+          ><div slot="header-logo">LOGO</div></clabs-global-header-apaas
+        >`
+      );
+      expect(el).not.to.be.null;
+      expect(el).lightDom.to.equal('<div slot="header-logo">LOGO</div>');
+    });
+  });
 });

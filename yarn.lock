@@ -1596,7 +1596,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/web-components": "npm:^2.41.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
     "@types/highlightjs": "npm:^9"
@@ -1630,7 +1630,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/mdx-components@workspace:packages/react/src/components/MDXComponents"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
     clsx: "npm:^1.2.1"
     slugify: "npm:^1.6.6"
@@ -1652,7 +1652,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-animated-header@workspace:packages/react/src/components/AnimatedHeader"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
     jest-canvas-mock: "npm:^2.5.2"
     lottie-web: "npm:^5.12.2"
@@ -1664,7 +1664,7 @@ __metadata:
   resolution: "@carbon-labs/react-date-picker@workspace:packages/react/src/components/DatePicker"
   dependencies:
     "@carbon-labs/primitives": "workspace:*"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
     classnames: "npm:^2.3.2"
   peerDependencies:
@@ -1677,7 +1677,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-example-button@workspace:packages/react/src/components/ExampleButton"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
   languageName: unknown
   linkType: soft
 
@@ -1685,7 +1685,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-first-time-orientation@workspace:packages/react/src/components/FirstTimeOrientation"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/ibm-products": "npm:^2.76.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   languageName: unknown
@@ -1695,7 +1695,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-processing@workspace:packages/react/src/components/Processing"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   languageName: unknown
   linkType: soft
@@ -1713,7 +1713,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-resizer@workspace:packages/react/src/components/Resizer"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   languageName: unknown
   linkType: soft
@@ -1722,7 +1722,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-split-panel@workspace:packages/react/src/components/SplitPanel"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   languageName: unknown
   linkType: soft
@@ -1731,7 +1731,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-style-picker@workspace:packages/react/src/components/StylePicker"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon-labs/wc-style-picker": "workspace:^"
     "@ibm/telemetry-js": "npm:^1.11.0"
     "@lit/react": "npm:^1.0.1"
@@ -1753,7 +1753,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-text-highlighter@workspace:packages/react/src/components/TextHighlighter"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   languageName: unknown
   linkType: soft
@@ -1762,7 +1762,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-theme-settings@workspace:packages/react/src/components/ThemeSettings"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
     react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
@@ -1774,7 +1774,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-ui-shell@workspace:packages/react/src/components/UIShell"
   dependencies:
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/ibm-products": "npm:^2.76.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   languageName: unknown
@@ -1784,7 +1784,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-whats-new@workspace:packages/react/src/components/WhatsNew"
   dependencies:
-    "@carbon-labs/utilities": "npm:^0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/ibm-products": "npm:^2.76.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
   peerDependencies:
@@ -1877,7 +1877,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon-labs/utilities@npm:0.22.0, @carbon-labs/utilities@npm:^0.22.0, @carbon-labs/utilities@workspace:packages/utilities":
+"@carbon-labs/utilities@npm:0.23.0, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/utilities@workspace:packages/utilities"
   dependencies:
@@ -1908,7 +1908,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:^2.41.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
@@ -1922,7 +1922,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/grid": "npm:^11.45.0"
     "@carbon/web-components": "npm:^2.41.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
@@ -1935,7 +1935,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/grid": "npm:^11.45.0"
     "@carbon/web-components": "npm:^2.41.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
@@ -1948,7 +1948,7 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/primitives": "workspace:*"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/web-components": "npm:^2.50.0"
     "@js-temporal/polyfill": "npm:~0.5.1"
     uuid: "npm:^14.0.0"
@@ -1973,7 +1973,7 @@ __metadata:
   resolution: "@carbon-labs/wc-empty-state@workspace:packages/web-components/src/components/empty-state"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/web-components": "npm:^2.41.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
     uuid: "npm:^14.0.0"
@@ -1985,7 +1985,7 @@ __metadata:
   resolution: "@carbon-labs/wc-example-button@workspace:packages/web-components/src/components/example-button"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/web-components": "npm:^2.41.0"
   languageName: unknown
   linkType: soft
@@ -1995,7 +1995,7 @@ __metadata:
   resolution: "@carbon-labs/wc-global-header@workspace:packages/web-components/src/components/global-header"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/web-components": "npm:^2.47.0"
     "@lit-labs/motion": "npm:^1.0.9"
     "@remcovaes/web-test-runner-vite-plugin": "npm:^1.3.0"
@@ -2013,7 +2013,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.26.0"
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon/grid": "npm:^11.21.0"
     "@carbon/web-components": "npm:^2.41.0"
     "@ibm/telemetry-js": "npm:^1.10.2"
@@ -2026,7 +2026,7 @@ __metadata:
   resolution: "@carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-    "@carbon-labs/utilities": "npm:0.22.0"
+    "@carbon-labs/utilities": "npm:0.23.0"
     "@carbon-labs/wc-empty-state": "workspace:^"
     "@carbon/web-components": "npm:^2.41.0"
     "@ibm/telemetry-js": "npm:^1.10.2"

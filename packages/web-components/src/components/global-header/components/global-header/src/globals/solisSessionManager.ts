@@ -17,6 +17,7 @@ export default class IWHISessionManager {
     lastCookieState: string | null;
     sessionStartTime: number;
     lastActivityTime: number;
+    lastActivityUpdate: number | null;
     lastTokenRefreshTime: number;
     timers: object;
     warningShown: boolean;
@@ -68,6 +69,7 @@ export default class IWHISessionManager {
         this.lastCookieState = null;
         this.sessionStartTime = Date.now();
         this.lastActivityTime = Date.now();
+        this.lastActivityUpdate = null;
         this.lastTokenRefreshTime = Date.now();
         this.timers = {};
         this.warningShown = false;
@@ -299,6 +301,32 @@ export default class IWHISessionManager {
     }
 
     recordActivity() {
+        // Ignore activity after logout
+        if (this.isLoggedOut) {
+            return;
+        }
+        
+        const now = Date.now();
+        this.lastActivityTime = now;
+        
+        // Don't auto-dismiss warning on activity
+        // User must explicitly click "Continue Session" button
+        // This allows user to interact with the warning dialog
+        
+        // Update cookie (throttled)
+        // Only update if cookie is initialized (has sessionStart)
+        if (!this.lastActivityUpdate || now - this.lastActivityUpdate > 2000) {
+            const state = this.readCookieState();
+            if (state && state.sessionStart) {
+                this.updateCookieState({
+                    lastActivity: now
+                });
+                this.lastActivityUpdate = now;
+            }
+        }
+    }
+
+    updateCookieState(state) {
         console.log('hello for now');
     }
 

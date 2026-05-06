@@ -710,4 +710,88 @@ describe('solisSessionManager', () => {
             expect(recordActivityStub).to.have.been.called;
         })
     })
+
+    describe('recordActivity', () => {
+        it('does nothing if isLoggedOut is true', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const readCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'readCookieState');
+            const updateCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'updateCookieState');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.isLoggedOut = true;
+            sessionManager.recordActivity();
+            expect(readCookieStateStub).to.not.have.been.called;
+            expect(updateCookieStateStub).to.not.have.been.called;
+        })
+
+        it('updates the lastActivity property in the cookie if there has not been any previous activity', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const updateCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'updateCookieState');
+
+            const now = Date.now();
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect', sessionStart: now};
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            expect(sessionManager.lastActivityUpdate).to.be.null;
+            sessionManager.recordActivity();
+            expect(updateCookieStateStub).to.have.been.calledWith({ lastActivity: now })
+            expect(sessionManager.lastActivityUpdate).to.be.closeTo(now, 1000);
+        })
+
+        it('updates the lastActivity property in the cookie if there has not been previous activity for more than 2 seconds', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const updateCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'updateCookieState');
+
+            const now = Date.now();
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect', sessionStart: now};
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.lastActivityUpdate = now - 3000;
+            sessionManager.recordActivity();
+            expect(updateCookieStateStub).to.have.been.calledWith({ lastActivity: now })
+            expect(sessionManager.lastActivityUpdate).to.be.closeTo(now, 1000);
+        })
+
+        it('does not update the lastActivity property in the cookie if the cookie does not contain sessionStart', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const updateCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'updateCookieState');
+
+            const now = Date.now();
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect'};
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            const lastActivityUpdateTime = now - 3000;
+            sessionManager.lastActivityUpdate = lastActivityUpdateTime;
+            sessionManager.recordActivity();
+            expect(updateCookieStateStub).to.not.have.been.called;
+            expect(sessionManager.lastActivityUpdate).to.equal(lastActivityUpdateTime);
+        })
+    })
 })

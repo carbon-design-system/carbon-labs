@@ -326,8 +326,33 @@ export default class IWHISessionManager {
         }
     }
 
-    updateCookieState(state) {
-        console.log('hello for now');
+    updateCookieState(updates) {
+        const state = this.readCookieState();
+
+        // Only update if cookie already exists (was initialized)
+        // This prevents accidental cookie creation from focus events after logout
+        if (!state) {
+            if (this.config.debug) {
+                this.log('Cookie not initialized, skipping update');
+            }
+            return;
+        }
+        
+        // CRITICAL: Never overwrite a logout cookie
+        // If logout command is present, abort the update to preserve logout state
+        if (state.logoutCommand) {
+            this.log('Logout command present - refusing to update cookie');
+            // Mark this tab as logged out if not already
+            if (!this.isLoggedOut) {
+                this.isLoggedOut = true;
+                this.cleanup();
+                this.performLogout(state.logoutCommand.reason);
+            }
+            return;
+        }
+        
+        const newState = { ...state, ...updates };
+        this.writeCookieState(newState);
     }
 
     cleanup() {

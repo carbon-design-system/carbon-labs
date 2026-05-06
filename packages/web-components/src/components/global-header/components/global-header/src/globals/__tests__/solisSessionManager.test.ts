@@ -184,13 +184,14 @@ describe('solisSessionManager', () => {
             expect(initializeCookieStateStub).to.have.been.calledOnce;
         })
         
-        it('calls initializeCookieState if there is an existing cookie that does not contain a logoutCommand', () => {
+        it('calls initializeCookieState and registerActivityListeners if there is an existing cookie that does not contain a logoutCommand', () => {
             const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect' }
             document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
             
             // Stub init to prevent beforeunload listener and other side effects
             const initStub = sinon.stub(IWHISessionManager.prototype, 'init');
             const initializeCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'initializeCookieState');
+            const registerActivityListenersStub = sinon.stub(IWHISessionManager.prototype, 'registerActivityListeners');
             const addEventListenerStub = sinon.stub(window, 'addEventListener');
             
             const config = {
@@ -205,6 +206,7 @@ describe('solisSessionManager', () => {
             sessionManager.init();
             
             expect(initializeCookieStateStub).to.have.been.calledOnce;
+            expect(registerActivityListenersStub).to.have.been.calledOnce;
             expect(addEventListenerStub).to.have.been.calledOnce;
         })
     })
@@ -792,6 +794,78 @@ describe('solisSessionManager', () => {
             sessionManager.recordActivity();
             expect(updateCookieStateStub).to.not.have.been.called;
             expect(sessionManager.lastActivityUpdate).to.equal(lastActivityUpdateTime);
+        })
+    })
+
+    describe('updateCookieState', () => {
+        it('updates the cookie with the new values for the cookie properties', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const writeCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'writeCookieState');
+
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect'}
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                debug: true
+            };
+
+            const updateState = { foo: 'bar' }
+            const sessionManager = new IWHISessionManager(config);
+            let cookieState = sessionManager.readCookieState();
+            expect(cookieState).to.deep.equal(cookieValue);
+            sessionManager.updateCookieState(updateState);
+            const newState = { ...cookieState, ...updateState}
+            expect(writeCookieStateStub).to.have.been.calledWith(newState);
+        })
+
+        it('does nothing if the cookie is not initialised', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const writeCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'writeCookieState');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                debug: true
+            };
+
+            const newState = { foo: 'bar' }
+            const sessionManager = new IWHISessionManager(config);
+            let cookieState = sessionManager.readCookieState();
+            expect(cookieState).to.be.null;
+            sessionManager.updateCookieState(newState);
+            cookieState = sessionManager.readCookieState();
+            expect(writeCookieStateStub).to.not.have.been.called;
+            expect(cookieState).to.be.null;
+        })
+
+        it('does not update the cookie if there is a logoutCommand in the state', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const cleanupStub = sinon.stub(IWHISessionManager.prototype, 'cleanup');
+            const performLogoutStub = sinon.stub(IWHISessionManager.prototype, 'performLogout');
+            const writeCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'writeCookieState');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                debug: true
+            };
+
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect', logoutCommand: { reason: 'logging out' } }
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+
+            const newState = { foo: 'bar' }
+            const sessionManager = new IWHISessionManager(config);
+            expect(sessionManager.isLoggedOut).to.be.false;
+            sessionManager.updateCookieState(newState);
+            expect(sessionManager.isLoggedOut).to.be.true;
+            expect(cleanupStub).to.have.been.called;
+            expect(performLogoutStub).to.have.been.calledWith('logging out');
+            expect(writeCookieStateStub).to.not.have.been.called;
         })
     })
 })

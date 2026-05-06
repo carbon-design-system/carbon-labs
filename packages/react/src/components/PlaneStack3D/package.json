@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-plane-stack-3d",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -51,7 +51,7 @@
     "three": "^0.170.0"
   },
   "dependencies": {
-    "@carbon-labs/utilities": "0.23.0",
+    "@carbon-labs/utilities": "0.24.0",
     "@ibm/telemetry-js": "^1.10.2"
   }
 }

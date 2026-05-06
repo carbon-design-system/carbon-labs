@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-first-time-orientation@0.16.0...@carbon-labs/react-first-time-orientation@0.17.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/react-first-time-orientation
+
+
+
+
+
 # [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-first-time-orientation@0.15.0...@carbon-labs/react-first-time-orientation@0.16.0) (2026-05-06)
 
 **Note:** Version bump only for package @carbon-labs/react-first-time-orientation

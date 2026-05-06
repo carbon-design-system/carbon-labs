@@ -26,6 +26,7 @@ export type HeaderTitleProps = {
   welcomeText?: string;
   headerExpanded?: boolean;
   ariaLabels?: AriaLabels;
+  showTooltip?: boolean;
 };
 
 const HeaderTitle: React.FC<HeaderTitleProps> = ({
@@ -33,6 +34,7 @@ const HeaderTitle: React.FC<HeaderTitleProps> = ({
   welcomeText,
   headerExpanded,
   ariaLabels,
+  showTooltip = false,
 }: HeaderTitleProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__title`;
@@ -43,25 +45,31 @@ const HeaderTitle: React.FC<HeaderTitleProps> = ({
       : 'en';
   const isNameFirst = NAME_FIRST_LANGS.includes(currentLang.slice(0, 2));
 
-  return (
+  const titleContent = (
+    <h1
+      className={blockClass}
+      data-expanded={headerExpanded}
+      aria-label={ariaLabels?.welcome ?? `${welcomeText}, ${userName}`}>
+      {isNameFirst ? (
+        <>
+          <span className={`${blockClass}-first`}>{userName}, </span>
+          <span className={`${blockClass}-second`}>{welcomeText}</span>
+        </>
+      ) : (
+        <>
+          <span className={`${blockClass}-first`}>{welcomeText}, </span>
+          <span className={`${blockClass}-second`}>{userName}</span>
+        </>
+      )}
+    </h1>
+  );
+
+  return showTooltip ? (
     <Tooltip align="bottom" label={`${welcomeText}, ${userName}`}>
-      <h1
-        className={blockClass}
-        data-expanded={headerExpanded}
-        aria-label={ariaLabels?.welcome ?? `${welcomeText}, ${userName}`}>
-        {isNameFirst ? (
-          <>
-            <span className={`${blockClass}-first`}>{userName}, </span>
-            <span className={`${blockClass}-second`}>{welcomeText}</span>
-          </>
-        ) : (
-          <>
-            <span className={`${blockClass}-first`}>{welcomeText}, </span>
-            <span className={`${blockClass}-second`}>{userName}</span>
-          </>
-        )}
-      </h1>
+      {titleContent}
     </Tooltip>
+  ) : (
+    titleContent
   );
 };
 

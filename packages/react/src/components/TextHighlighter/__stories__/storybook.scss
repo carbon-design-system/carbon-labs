@@ -97,7 +97,7 @@ p {
 }
 
 .th-ref-right-panel-body {
-  margin: 0 -$spacing-05;
+  margin: 0 calc(#{$spacing-05} * -1);
 
   .cds--contained-list--on-page .cds--contained-list__header {
     background-color: transparent;

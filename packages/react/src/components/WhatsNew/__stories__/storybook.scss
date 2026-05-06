@@ -130,19 +130,25 @@
 
 // TOC
 .TocExampleLayout {
-  display: grid;
-  margin: 64px;
-  grid-template-columns: 1fr 3fr;
+  min-block-size: 100vh;
 }
 
 .TocExampleContentColumn {
-  padding: 32px;
-  block-size: 400px;
+  padding: 2rem;
 
   p {
-    margin-block: 24px;
-    padding-inline-end: 32px;
+    margin-block: 1.5rem;
+    padding-inline-end: 2rem;
   }
+}
+
+.TocExampleNavColumn {
+  position: sticky;
+  align-self: start;
+  padding: 2rem 1rem;
+  inset-block-start: 2rem;
+  max-block-size: calc(100vh - 4rem);
+  overflow-y: auto;
 }
 
 // BUBBLE

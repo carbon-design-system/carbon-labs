@@ -481,7 +481,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
 
     const content = (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-      <li
+      <span
         role={isTreeview ? 'treeitem' : undefined}
         aria-expanded={isExpanded}
         className={className}
@@ -578,7 +578,7 @@ export const SideNavMenu = React.forwardRef<HTMLElement, SideNavMenuProps>(
             {childrenToRender}
           </ul>
         )}
-      </li>
+      </span>
     );
 
     return navType == SIDE_NAV_TYPE.RAIL_PANEL && !sideNavExpanded ? (

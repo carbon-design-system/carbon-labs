@@ -12,11 +12,13 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/web-components/src/v12/components/date-picker"
   },
-  "main": "./src/index.js",
-  "module": "./src/index.js",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
   "exports": {
     ".": {
-      "default": "./src/index.js"
+      "import": "./es/index.js",
+      "require": "./lib/index.js",
+      "default": "./es/index.js"
     },
     "./es/*": "./es/*",
     "./lib/*": "./lib/*"
@@ -25,7 +27,7 @@
     "es/",
     "lib/"
   ],
-  "types": "./src/index.d.ts",
+  "types": "./es/index.d.ts",
   "customElements": "custom-elements.json",
   "scripts": {
     "build": "node ../../../../tasks/build.js",

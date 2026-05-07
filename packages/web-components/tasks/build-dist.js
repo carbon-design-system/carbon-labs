@@ -59,7 +59,8 @@ function _getVersion() {
  */
 function _getName() {
   const packagePath = process.cwd();
-  const name = /packages\/web-components\/src\/components\/(.*?)(?=$)/g.exec(
+  // Support both regular components and v12 components paths
+  const name = /packages\/web-components\/src\/(?:v12\/)?components\/(.*?)(?=$)/g.exec(
     packagePath
   );
   return name[1];

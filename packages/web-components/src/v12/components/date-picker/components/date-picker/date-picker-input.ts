@@ -9,8 +9,8 @@ import { classMap } from 'lit/directives/class-map.js';
 import { LitElement, html } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { prefix } from '../temp-imports/globals/settings';
-import FocusMixin from '../temp-imports/globals/mixins/focus';
+import { prefix } from '../../temp-imports/globals/settings';
+import FocusMixin from '../../temp-imports/globals/mixins/focus';
 import {
   INPUT_SIZE,
   DATE_PICKER_INPUT_COLOR_SCHEME,
@@ -21,8 +21,8 @@ import styles from './date-picker.scss?inline';
 import Calendar16 from '@carbon/icons/es/calendar/16.js';
 import WarningFilled16 from '@carbon/icons/es/warning--filled/16.js';
 import WarningAltFilled16 from '@carbon/icons/es/warning--alt--filled/16.js';
-import { carbonElement as customElement } from '../temp-imports/globals/decorators/carbon-element';
-import { iconLoader } from '../temp-imports/globals/internal/icon-loader';
+import { carbonElement as customElement } from '../../temp-imports/globals/decorators/carbon-element';
+import { iconLoader } from '../../temp-imports/globals/internal/icon-loader';
 
 export { DATE_PICKER_INPUT_COLOR_SCHEME, DATE_PICKER_INPUT_KIND };
 

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/utilities",
-  "version": "0.22.0",
+  "version": "0.24.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -52,8 +52,8 @@
     "es/index.d.ts"
   ],
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "react": "^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0",
+    "react-dom": "^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.4",

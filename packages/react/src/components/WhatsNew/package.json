@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-whats-new",
-  "version": "0.20.0",
+  "version": "0.22.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -43,7 +43,7 @@
     "@carbon/ibm-products": "^2.76.0"
   },
   "dependencies": {
-    "@carbon-labs/utilities": "^0.22.0",
+    "@carbon-labs/utilities": "0.24.0",
     "@ibm/telemetry-js": "^1.10.2"
   }
 }

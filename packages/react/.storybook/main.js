@@ -26,6 +26,7 @@ const storiesGlobs = includeV12
 
 const config = {
   stories: storiesGlobs,
+  staticDirs: ['../../../public'],
   addons: [
     getAbsolutePath('@storybook/addon-a11y'),
     getAbsolutePath('storybook-addon-accessibility-checker'),

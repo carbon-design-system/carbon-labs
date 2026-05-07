@@ -12,8 +12,8 @@
     "storybook": "storybook dev -p 6008",
     "storybook:v12": "STORYBOOK_INCLUDE_V12=true storybook dev -p 6018",
     "generate": "node tasks/generate",
-    "storybook:build": "storybook build",
-    "storybook:build:v12": "STORYBOOK_INCLUDE_V12=true storybook build -o storybook-static/v12",
+    "storybook:build": "NODE_OPTIONS='--max-old-space-size=6144' storybook build",
+    "storybook:build:v12": "NODE_OPTIONS='--max-old-space-size=6144' STORYBOOK_INCLUDE_V12=true storybook build -o storybook-static/v12",
     "test": "jest",
     "test:updateSnapshot": "jest -u"
   },

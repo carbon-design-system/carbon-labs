@@ -154,11 +154,16 @@ export class CommonHeader extends LitElement {
     return html`
       <cds-custom-header
         class="${AUTOMATION_NAMESPACE_PREFIX}__header"
-        aria-label="IBM webMethods Hybrid Integration">
-        <cds-custom-header-menu-button
-          id="${APP_SWITCHER_BUTTON_ID}"
-          button-label-active="Close menu"
-          button-label-inactive="Open menu"></cds-custom-header-menu-button>
+        aria-label="${this.headerProps?.brand?.company} ${this.headerProps
+          ?.brand?.product}">
+        ${this.headerProps && this.headerProps?.sideNav
+          ? html`
+              <cds-custom-header-menu-button
+                id="${APP_SWITCHER_BUTTON_ID}"
+                button-label-active="Close menu"
+                button-label-inactive="Open menu"></cds-custom-header-menu-button>
+            `
+          : nothing}
         <slot name="header-logo"></slot>
         <cds-custom-header-name
           class="${AUTOMATION_NAMESPACE_PREFIX}__header-name"

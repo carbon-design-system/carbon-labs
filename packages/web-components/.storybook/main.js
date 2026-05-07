@@ -22,11 +22,21 @@ function getAbsolutePath(value) {
   return dirname(require.resolve(join(value, 'package.json')));
 }
 
+const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
+
+// Build stories array based on environment variable
+const storiesGlobs = includeV12
+  ? [
+      '../src/**/__stories__/*.mdx',
+      '../src/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
+    ]
+  : [
+      '../src/components/**/__stories__/*.mdx',
+      '../src/components/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
+    ];
+
 const config = {
-  stories: [
-    '../src/**/__stories__/*.mdx',
-    '../src/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
-  ],
+  stories: storiesGlobs,
 
   addons: [
     getAbsolutePath('@storybook/addon-a11y'),

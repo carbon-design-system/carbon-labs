@@ -33,7 +33,10 @@
     "prepare": "husky install",
     "reset": "yarn cache clean && yarn clean && yarn install && yarn build",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "storybook:v12": "STORYBOOK_INCLUDE_V12=true storybook dev -p 6016",
+    "storybook:build": "NODE_OPTIONS='--max-old-space-size=6144' storybook build",
+    "storybook:build:v12": "NODE_OPTIONS='--max-old-space-size=6144' STORYBOOK_INCLUDE_V12=true storybook build -o storybook-static/v12",
+    "storybook:build:full": "NODE_OPTIONS='--max-old-space-size=6144' yarn storybook:build && NODE_OPTIONS='--max-old-space-size=6144' yarn storybook:build:v12 && NODE_OPTIONS='--max-old-space-size=6144' yarn workspace @carbon-labs/web-components storybook:build && NODE_OPTIONS='--max-old-space-size=6144' yarn workspace @carbon-labs/web-components storybook:build:v12 && NODE_OPTIONS='--max-old-space-size=6144' yarn workspace @carbon-labs/react storybook:build && NODE_OPTIONS='--max-old-space-size=6144' yarn workspace @carbon-labs/react storybook:build:v12 && cp -r packages/web-components/storybook-static storybook-static/web-components && cp -r packages/react/storybook-static storybook-static/react && cp -r packages/web-components/storybook-static/v12 storybook-static/v12/web-components && cp -r packages/react/storybook-static/v12 storybook-static/v12/react"
   },
   "resolutions": {
     "@carbon/react": "^1.95.0",

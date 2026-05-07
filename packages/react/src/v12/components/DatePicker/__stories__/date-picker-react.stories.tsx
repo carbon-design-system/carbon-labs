@@ -67,7 +67,7 @@ const WithLayer: React.FC<{ children: (layer: number) => React.ReactNode }> = ({
 };
 
 export default {
-  title: 'Components/DatePicker',
+  title: 'V12/DatePicker',
   component: DatePicker,
   subcomponents: {
     DatePickerInput,

@@ -1659,9 +1659,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/react-date-picker@workspace:packages/react/src/components/DatePicker":
+"@carbon-labs/react-date-picker@workspace:packages/react/src/v12/components/DatePicker":
   version: 0.0.0-use.local
-  resolution: "@carbon-labs/react-date-picker@workspace:packages/react/src/components/DatePicker"
+  resolution: "@carbon-labs/react-date-picker@workspace:packages/react/src/v12/components/DatePicker"
   dependencies:
     "@carbon-labs/primitives": "workspace:*"
     "@carbon-labs/utilities": "npm:0.24.0"
@@ -1973,9 +1973,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@carbon-labs/wc-date-picker@workspace:packages/web-components/src/components/date-picker":
+"@carbon-labs/wc-date-picker@workspace:packages/web-components/src/v12/components/date-picker":
   version: 0.0.0-use.local
-  resolution: "@carbon-labs/wc-date-picker@workspace:packages/web-components/src/components/date-picker"
+  resolution: "@carbon-labs/wc-date-picker@workspace:packages/web-components/src/v12/components/date-picker"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/primitives": "workspace:*"

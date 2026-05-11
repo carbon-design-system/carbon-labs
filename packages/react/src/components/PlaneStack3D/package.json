@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@carbon/colors": "^11.0.0",
-    "@react-spring/three": "^9.7.0",
+    "@react-spring/three": "^10.0.0",
     "@react-three/drei": "^9.0.0",
     "@react-three/fiber": "^8.0.0",
     "@react-three/postprocessing": "^2.0.0",

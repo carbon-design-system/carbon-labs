@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.33.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-feedback@0.32.0...@carbon-labs/wc-ai-feedback@0.33.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-feedback
+
+
+
+
+
+# [0.32.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-feedback@0.31.0...@carbon-labs/wc-ai-feedback@0.32.0) (2026-05-08)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-feedback
+
+
+
+
+
+# [0.31.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-feedback@0.30.0...@carbon-labs/wc-ai-feedback@0.31.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-feedback
+
+
+
+
+
+# [0.30.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-feedback@0.29.0...@carbon-labs/wc-ai-feedback@0.30.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-feedback
+
+
+
+
+
+# [0.29.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-feedback@0.28.0...@carbon-labs/wc-ai-feedback@0.29.0) (2026-04-27)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-feedback
+
+
+
+
+
 # [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-feedback@0.27.0...@carbon-labs/wc-ai-feedback@0.28.0) (2026-04-14)
 
 **Note:** Version bump only for package @carbon-labs/wc-ai-feedback

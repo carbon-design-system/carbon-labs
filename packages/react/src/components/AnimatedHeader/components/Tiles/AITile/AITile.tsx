@@ -14,6 +14,8 @@ import {
   AITileBodyProps,
   AITileLabelVariant,
 } from '../AITile/AITileBody';
+import { AutotrackDataAttributes } from '../../types';
+import { extractAutotrackAttributes } from '../../utils';
 
 export type AITileProps = {
   variant: 'ai';
@@ -33,7 +35,7 @@ export type AITileProps = {
   open?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
-};
+} & AutotrackDataAttributes;
 
 export const AITile: React.FC<AITileProps> = ({
   tileId,
@@ -52,6 +54,7 @@ export const AITile: React.FC<AITileProps> = ({
   open,
   isLoading,
   isDisabled,
+  ...rest
 }: AITileProps & AITileBodyProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__ai-tile`;
@@ -71,6 +74,9 @@ export const AITile: React.FC<AITileProps> = ({
     />
   );
 
+  // Extract data attributes from rest props
+  const dataAttributes = extractAutotrackAttributes(rest);
+
   // Non-interactive tile
   if (!href && !aiTileClickHandler) {
     return (
@@ -79,7 +85,8 @@ export const AITile: React.FC<AITileProps> = ({
         key={tileId}
         aria-label={ariaLabel ?? title ?? 'AI Tile'}
         title={isDisabled ? disabledTaskLabel ?? '' : ''}
-        tabIndex={-1}>
+        tabIndex={-1}
+        {...dataAttributes}>
         {body}
       </div>
     );
@@ -97,7 +104,8 @@ export const AITile: React.FC<AITileProps> = ({
       key={tileId}
       href={href ?? undefined}
       disabled={isDisabled || isLoading}
-      title={isDisabled ? disabledTaskLabel ?? '' : ''}>
+      title={isDisabled ? disabledTaskLabel ?? '' : ''}
+      {...dataAttributes}>
       {body}
     </Link>
   );

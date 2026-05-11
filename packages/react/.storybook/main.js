@@ -12,6 +12,7 @@ function getAbsolutePath(value) {
 
 const config = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  staticDirs: ['../../../public'],
   addons: [
     getAbsolutePath('@storybook/addon-a11y'),
     getAbsolutePath('storybook-addon-accessibility-checker'),

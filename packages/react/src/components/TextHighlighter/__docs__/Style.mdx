@@ -1,0 +1,164 @@
+<Meta title="Components/TextHighlighter/Docs/Style" />
+
+## Color
+
+The TextHighlighter component uses color tokens from the IBM Design Language [color palette](https://www.ibm.com/design/language/color/) and leverages [tag component tokens](https://carbondesignsystem.com/elements/color/tokens/#tag) for consistent theming across variants.
+
+### Mark variant
+
+<Row>
+<Column colLg={8}>
+
+| Element   | Property         | Color token         |
+| --------- | ---------------- | ------------------- |
+| Container | background-color | `$yellow-20`        |
+| Text      | color            | `$black`            |
+| Reference | color            | `$black` (inherited)|
+
+</Column>
+</Row>
+
+#### Color options
+
+The `mark` variant supports multiple color themes through the `type` prop. Each theme uses corresponding tag component tokens:
+
+<Row>
+<Column colLg={8}>
+
+| Type          | Background token            | Text token            |
+| ------------- | --------------------------- | --------------------- |
+| Default       | `$yellow-20`                | `$black`              |
+| Magenta       | `$tag-background-magenta`   | `$tag-color-magenta`  |
+| Purple        | `$tag-background-purple`    | `$tag-color-purple`   |
+| Blue          | `$tag-background-blue`      | `$tag-color-blue`     |
+| Cyan          | `$tag-background-cyan`      | `$tag-color-cyan`     |
+| Teal          | `$tag-background-teal`      | `$tag-color-teal`     |
+| Gray          | `$tag-background-gray`      | `$tag-color-gray`     |
+| Cool-gray     | `$tag-background-cool-gray` | `$tag-color-cool-gray`|
+| Warm-gray     | `$tag-background-warm-gray` | `$tag-color-warm-gray`|
+| High-contrast | `$background-inverse`       | `$text-inverse`       |
+
+</Column>
+</Row>
+
+### Ins variant
+
+The `ins` (insertion) variant uses green tokens to indicate added content:
+
+<Row>
+<Column colLg={8}>
+
+| Element   | Property         | Color token             |
+| --------- | ---------------- | ----------------------- |
+| Container | background-color | `$tag-background-green` |
+|           | border-bottom    | Current text color      |
+| Text      | color            | `$tag-color-green`      |
+
+</Column>
+</Row>
+
+### Del variant
+
+The `del` (deletion) variant uses red tokens to indicate removed content:
+
+<Row>
+<Column colLg={8}>
+
+| Element   | Property        | Color token            |
+| --------- | --------------- | ---------------------- |
+| Container | background-color| `$tag-background-red`  |
+| Text      | color           | `$tag-color-red`       |
+
+</Column>
+</Row>
+
+### High contrast mode
+
+All variants include enhanced styling for Windows high contrast mode to ensure accessibility:
+
+<Row>
+<Column colLg={8}>
+
+| Variant           | Background            | Text            |
+| ----------------- | --------------------- | --------------- |
+| Mark (default)    | `$yellow-30`          | Inherited       |
+| Mark (themed)     | `$yellow-30`          | Inherited       |
+| Ins               | `$background-inverse` | `$text-inverse` |
+| Del               | `$background-inverse` | `$text-inverse` |
+
+</Column>
+</Row>
+
+## Typography
+
+The TextHighlighter component inherits typography from its parent context and does not enforce specific font properties. The reference annotation (superscript) uses a reduced font size for visual hierarchy.
+
+<Row>
+<Column colLg={8}>
+
+| Element   | Font-size (px/rem) | Font-weight   | Type token |
+| --------- | ------------------ | ------------- | ---------- |
+| Text      | Inherited          | Inherited     | Inherited  |
+| Reference | 60% of parent      | Inherited     | –          |
+
+</Column>
+</Row>
+
+## Structure
+
+The TextHighlighter is an inline component that wraps text content seamlessly within the document flow. It does not enforce specific dimensions and adapts to the surrounding typography and layout.
+
+### Mark variant
+
+<Row>
+<Column colLg={8}>
+
+| Element   | Property      | px/rem        | Spacing token |
+| --------- | ------------- | ------------- | ------------- |
+| Container | padding-left  | 2 / 0.125     | `$spacing-01` |
+|           | padding-right | 2 / 0.125     | `$spacing-01` |
+| Reference | font-size     | 60%           | –             |
+|           | margin-top    | -0.3 / -0.019 | –             |
+|           | margin-left   | 4 / 0.25      | `$spacing-02` |
+
+</Column>
+</Row>
+
+### Ins variant
+
+The `ins` variant includes a dashed bottom border to visually distinguish inserted content.
+
+<Row>
+<Column colLg={8}>
+
+| Element   | Property      | px/rem    | Spacing token |
+| --------- | ------------- | --------- | ------------- |
+| Container | padding-left  | 2 / 0.125 | `$spacing-01` |
+|           | padding-right | 2 / 0.125 | `$spacing-01` |
+
+</Column>
+</Row>
+
+### Del variant
+
+The `del` variant uses a line-through text decoration to indicate deleted content.
+
+<Row>
+<Column colLg={8}>
+
+| Element   | Property      | px/rem    | Spacing token |
+| --------- | ------------- | --------- | ------------- |
+| Container | padding-left  | 2 / 0.125 | `$spacing-01` |
+|           | padding-right | 2 / 0.125 | `$spacing-01` |
+
+</Column>
+</Row>
+
+## References
+
+For more information about styling and tokens, see:
+
+- [IBM Design Language Color](https://www.ibm.com/design/language/color/)
+- [Carbon Design System Color Tokens](https://carbondesignsystem.com/elements/color/tokens/)
+- [Carbon Tag Component Style](https://carbondesignsystem.com/components/tag/style/)
+

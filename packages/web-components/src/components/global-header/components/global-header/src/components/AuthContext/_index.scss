@@ -10,6 +10,7 @@
 @use '@carbon/styles/scss/type' as *;
 @use '@carbon/styles/scss/colors' as *;
 @use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme' as *;
 @use '../../globals/styles/vars' as *;
 
 .#{$automation-prefix}popover__section {
@@ -86,6 +87,7 @@
   display: flex;
   padding: $spacing-05;
   color: #ffffff;
+  inline-size: 100%;
   text-decoration: none;
   transition: background-color 110ms, color 110ms;
 
@@ -98,8 +100,7 @@
   }
 
   &:hover {
-    // hover row
-    background-color: #353535;
+    background-color: $background-hover;
 
     .launch_icon {
       opacity: 1;
@@ -149,12 +150,12 @@
 
 .automation-global-header__popover__link-item {
   // override needed for the button to match the other list items
-  cds-button {
+  cds-custom-button {
     inline-size: 100%;
 
     &::part(button) {
       padding: 0;
-      inline-size: 100%;
+      background-color: transparent;
     }
   }
 }

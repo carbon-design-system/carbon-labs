@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.25.0...@carbon-labs/utilities@0.26.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/utilities
+
+
+
+
+
+# [0.25.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.24.0...@carbon-labs/utilities@0.25.0) (2026-05-08)
+
+
+### Bug Fixes
+
+* update React import in usePrefix ([#1217](https://github.com/carbon-design-system/carbon-labs/issues/1217)) ([e426e8c](https://github.com/carbon-design-system/carbon-labs/commit/e426e8cab5e1c6e2f9bf1d3bc7c333d9799b6c80))
+
+
+
+
+
+# [0.24.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.23.0...@carbon-labs/utilities@0.24.0) (2026-05-06)
+
+
+### Features
+
+* **PlaneStack3D:** new PlaneStack3D pattern ([#1187](https://github.com/carbon-design-system/carbon-labs/issues/1187)) ([2ec587b](https://github.com/carbon-design-system/carbon-labs/commit/2ec587b0d789d715b2c7955023ecccc352975ec6))
+
+
+
+
+
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.22.0...@carbon-labs/utilities@0.23.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/utilities
+
+
+
+
+
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.21.0...@carbon-labs/utilities@0.22.0) (2026-04-14)
+
+
+### Features
+
+* **datepicker:** added shared @carbon/primitives package, react implementation for datepicker ([#1158](https://github.com/carbon-design-system/carbon-labs/issues/1158)) ([b6a3662](https://github.com/carbon-design-system/carbon-labs/commit/b6a3662e6099576ee010ba9e1d66330013f0b24d))
+
+
+
+
+
 # [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.20.0...@carbon-labs/utilities@0.21.0) (2026-01-14)
 
 

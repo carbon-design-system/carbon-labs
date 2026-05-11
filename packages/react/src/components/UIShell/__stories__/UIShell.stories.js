@@ -396,6 +396,7 @@ export const Demo = () => {
               <HeaderName href="#" prefix="IBM">
                 [Platform]
               </HeaderName>
+              <HeaderDivider className="hide-at-md" />
               <HeaderPopover align="bottom">
                 <HeaderPopoverButton
                   label="Trial Countdown"

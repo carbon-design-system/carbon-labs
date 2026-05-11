@@ -279,7 +279,8 @@ describe('AuthContext Component', () => {
       );
       expect(profileFooterLinksSection).not.to.be.null;
 
-      const link = profileFooterLinksSection?.querySelector('cds-button');
+      const link =
+        profileFooterLinksSection?.querySelector('cds-custom-button');
       expect(link).to.exist;
       expect(profileFooterLinksSection).to.contains.text('Log out');
 

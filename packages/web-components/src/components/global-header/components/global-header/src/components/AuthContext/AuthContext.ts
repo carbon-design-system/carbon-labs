@@ -198,6 +198,13 @@ export class AuthContext extends LitElement {
     profileFooterLinks: ProfileFooterLinks[] | undefined
   ) => {
     if (profileFooterLinks) {
+      const clickAndDismiss = (onClickHandler) => {
+        // close the menu before invoking the click handler
+        this.dispatchEvent(
+          new CustomEvent('profile-toggle', { bubbles: true, composed: true })
+        );
+        onClickHandler();
+      };
       return profileFooterLinks.map((item) => {
         return html`
           <section
@@ -205,12 +212,12 @@ export class AuthContext extends LitElement {
             <ul class="${AUTOMATION_HEADER_BASE_CLASS}__popover__links">
               <li class="${AUTOMATION_HEADER_BASE_CLASS}__popover__link-item">
                 ${item.onClickHandler
-                  ? html`<cds-button
-                      @click="${item.onClickHandler}"
+                  ? html`<cds-custom-button
+                      @click="${() => clickAndDismiss(item.onClickHandler)}"
                       size="xs"
                       kind="ghost"
                       aria-label="${item.arialLabel}"
-                      >${this.renderLinkItem(item)}</cds-button
+                      >${this.renderLinkItem(item)}</cds-custom-button
                     >`
                   : html`<a
                       href="${item.href}"

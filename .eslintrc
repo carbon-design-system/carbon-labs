@@ -18,6 +18,27 @@
     },
     {
       "files": [
+        "**/*.test.ts",
+        "**/*.test.js",
+        "**/__tests__/**/*.ts",
+        "**/__tests__/**/*.js"
+      ],
+      "rules": {
+        "jsdoc/require-jsdoc": [
+          2,
+          {
+            "require": {
+              "ArrowFunctionExpression": false,
+              "ClassDeclaration": true,
+              "FunctionDeclaration": true,
+              "MethodDefinition": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "files": [
         "**/*.js",
         "**/*.ts"
       ],

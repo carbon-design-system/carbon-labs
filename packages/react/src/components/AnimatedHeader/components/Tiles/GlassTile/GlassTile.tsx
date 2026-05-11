@@ -11,6 +11,8 @@ import React, { ElementType } from 'react';
 import { Link } from '@carbon/react';
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { GlassTileBody, GlassTileBodyProps } from './GlassTileBody';
+import { AutotrackDataAttributes } from '../../types';
+import { extractAutotrackAttributes } from '../../utils';
 
 export type GlassTileProps = {
   variant?: 'glass';
@@ -29,7 +31,7 @@ export type GlassTileProps = {
   open?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
-};
+} & AutotrackDataAttributes;
 
 export const GlassTile: React.FC<GlassTileProps> = ({
   tileId,
@@ -47,6 +49,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
   open,
   isLoading,
   isDisabled,
+  ...rest
 }: GlassTileProps & GlassTileBodyProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__glass-tile`;
@@ -65,6 +68,9 @@ export const GlassTile: React.FC<GlassTileProps> = ({
     />
   );
 
+  // Extract data attributes from rest props
+  const dataAttributes = extractAutotrackAttributes(rest);
+
   // Non-interactive tile
   if (!href && !glassTileClickHandler) {
     return (
@@ -73,7 +79,8 @@ export const GlassTile: React.FC<GlassTileProps> = ({
         key={tileId}
         aria-label={ariaLabel ?? title ?? 'Glass Tile'}
         title={isDisabled ? disabledTaskLabel ?? '' : ''}
-        tabIndex={-1}>
+        tabIndex={-1}
+        {...dataAttributes}>
         {body}
       </div>
     );
@@ -91,7 +98,8 @@ export const GlassTile: React.FC<GlassTileProps> = ({
       key={tileId}
       href={href ?? undefined}
       disabled={isDisabled || isLoading}
-      title={isDisabled ? disabledTaskLabel ?? '' : ''}>
+      title={isDisabled ? disabledTaskLabel ?? '' : ''}
+      {...dataAttributes}>
       {body}
     </Link>
   );

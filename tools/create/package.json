@@ -1,0 +1,32 @@
+{
+  "name": "@carbon-labs/create",
+  "version": "0.2.0",
+  "description": "Create a Carbon Labs component contribution from the command line",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "bin": {
+    "create-carbon-labs": "./bin/create.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "create-carbon-labs": "node ./bin/create.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "echo 'No build step — pure ESM source'"
+  },
+  "dependencies": {
+    "@octokit/rest": "^20.1.1",
+    "chalk": "^5.4.1",
+    "commander": "^12.1.0",
+    "execa": "^9.5.2",
+    "ora": "^8.1.1",
+    "simple-git": "^3.27.0"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0"
+  }
+}

@@ -27,8 +27,8 @@ const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
 // Build stories array based on environment variable
 const storiesGlobs = includeV12
   ? [
-      '../src/**/__stories__/*.mdx',
-      '../src/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
+      '../src/v12/**/__stories__/*.mdx',
+      '../src/v12/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
     ]
   : [
       '../src/components/**/__stories__/*.mdx',

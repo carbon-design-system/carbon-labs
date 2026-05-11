@@ -161,8 +161,8 @@ control which stories are loaded:
 
 **V12 build** (`STORYBOOK_INCLUDE_V12=true`):
 
-- Loads stories from all `src/` subdirectories
-- Includes both standard and v12 components
+- Loads stories from `src/v12/` only
+- Excludes standard components from `src/components/`
 
 ### Root Storybook Refs
 

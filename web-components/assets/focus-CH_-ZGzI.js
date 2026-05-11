@@ -1,1 +1,0 @@
-import{s}from"./carbon-element-DvT6Hso_.js";const c=o=>class extends o{focus(){if(this.shadowRoot.delegatesFocus)super.focus();else{const e=this.shadowRoot.querySelector(s)||this.querySelector(s);e?e.focus():super.focus()}}};export{c as F};

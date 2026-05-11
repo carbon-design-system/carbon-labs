@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.25.0...@carbon-labs/utilities@0.26.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/utilities
+
+
+
+
+
+# [0.25.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.24.0...@carbon-labs/utilities@0.25.0) (2026-05-08)
+
+
+### Bug Fixes
+
+* update React import in usePrefix ([#1217](https://github.com/carbon-design-system/carbon-labs/issues/1217)) ([e426e8c](https://github.com/carbon-design-system/carbon-labs/commit/e426e8cab5e1c6e2f9bf1d3bc7c333d9799b6c80))
+
+
+
+
+
 # [0.24.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.23.0...@carbon-labs/utilities@0.24.0) (2026-05-06)
 
 

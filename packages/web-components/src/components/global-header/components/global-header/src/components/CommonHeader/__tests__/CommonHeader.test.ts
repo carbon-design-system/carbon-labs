@@ -23,10 +23,6 @@ describe('CommonHeader tests', () => {
     // Check that the default header renders
     const header = el.shadowRoot?.querySelector(`[role='banner']`);
     expect(header).to.exist;
-    expect(header).to.have.attribute(
-      'aria-label',
-      'IBM webMethods Hybrid Integration'
-    );
   });
 
   it('renders custom values in the header', async () => {
@@ -49,6 +45,14 @@ describe('CommonHeader tests', () => {
     // Check that the prop values render
     const header = el.shadowRoot?.querySelector(`[role='banner']`);
     expect(header).to.exist;
+
+    expect(header).to.have.attribute('aria-label', 'Test Company Test Product');
+
+    // no side-nav entries, so no hamburger menu
+    const hamburger = el.shadowRoot?.querySelector(
+      `#ibm-automation-cds-app-switcher-button`
+    );
+    expect(hamburger).not.to.exist;
 
     const headerName = header?.querySelector('cds-custom-header-name');
     expect(headerName).to.have.attribute('prefix', 'Test Company');
@@ -193,6 +197,11 @@ describe('CommonHeader tests', () => {
           .headerProps="${props}"></clabs-global-header-apaas>`
       );
       expect(el).not.to.be.null;
+
+      const hamburger = el.shadowRoot?.querySelector(
+        `#ibm-automation-cds-app-switcher-button`
+      );
+      expect(hamburger).to.exist;
 
       const sideNav = el.shadowRoot?.querySelector(`[role='navigation']`);
       expect(sideNav).to.exist;

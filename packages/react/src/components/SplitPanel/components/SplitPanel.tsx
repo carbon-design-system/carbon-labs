@@ -118,6 +118,17 @@ export const SplitPanel = ({
     sanitizeValue(defaultSplitValue, localSplitMin, localSplitMax)
   );
 
+  // Deprecation warning
+  React.useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(
+        'SplitPanel is deprecated and unlikely to progress to v1.0.0. ' +
+          'Please migrate to Resizer for continued support. ' +
+          'See migration guide: https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/SplitPanel/DEPRECATION-plan.md'
+      );
+    }
+  }, []);
+
   const updatePanelSize = () => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const splitPanelRect = splitPanelRef.current!.getBoundingClientRect();

@@ -1,0 +1,130 @@
+<Meta title="Components/TextHighlighter/Docs/Accessibility" />
+
+<PageDescription>
+
+The TextHighlighter component is designed with accessibility in mind, using semantic HTML elements and providing screen reader support to ensure all users can understand highlighted, inserted, or deleted content.
+
+</PageDescription>
+
+<AnchorLinks>
+
+<AnchorLink>What Carbon provides</AnchorLink>
+<AnchorLink>Development considerations</AnchorLink>
+
+</AnchorLinks>
+
+## What Carbon provides
+
+### Keyboard interactions
+
+The TextHighlighter component is a non-interactive element and does not require keyboard interactions. It is designed to be read by assistive technologies as part of the surrounding content flow.
+
+### Semantic HTML
+
+The TextHighlighter component uses native semantic HTML elements to convey meaning:
+
+<Row>
+<Column colLg={8}>
+
+| Variant | HTML element | Purpose                                      |
+| ------- | ------------ | -------------------------------------------- |
+| Mark    | `<mark>`     | Represents text marked or highlighted for reference purposes |
+| Ins     | `<ins>`      | Represents text that has been inserted into a document |
+| Del     | `<del>`      | Represents text that has been deleted from a document |
+
+</Column>
+</Row>
+
+Using these semantic elements ensures that the component's purpose is properly communicated to assistive technologies, search engines, and other tools that parse HTML content.
+
+### Screen reader support
+
+The TextHighlighter component provides enhanced accessibility through visually hidden announcements that inform screen reader users about the start and end of highlighted, inserted, or deleted content.
+
+<Row>
+<Column colLg={8}>
+
+| Variant | Before content      | After content       |
+| ------- | ------------------- | ------------------- |
+| Mark    | "[highlight start]" | "[highlight end]"   |
+| Ins     | "[insertion start]" | "[insertion end]"   |
+| Del     | "[deletion start]"  | "[deletion end]"    |
+
+</Column>
+</Row>
+
+### High contrast mode
+
+All TextHighlighter variants include enhanced styling for Windows high contrast mode to ensure visibility and accessibility:
+
+<Row>
+<Column colLg={8}>
+
+| Variant        | High contrast styling                        |
+| -------------- | -------------------------------------------- |
+| Mark (default) | Background color changes to `$yellow-30`     |
+| Mark (themed)  | Background color changes to `$yellow-30`     |
+| Ins            | Uses `$background-inverse` and `$text-inverse` |
+| Del            | Uses `$background-inverse` and `$text-inverse` |
+
+</Column>
+</Row>
+
+### Color contrast
+
+The TextHighlighter component uses color tokens that meet WCAG AA contrast requirements:
+
+- **Mark variant**: Uses high-contrast color combinations from Carbon's tag tokens
+- **Ins variant**: Green background with sufficient contrast for text
+- **Del variant**: Red background with sufficient contrast for text
+
+All color themes have been tested to ensure they meet accessibility standards for color contrast ratios.
+
+## Development considerations
+
+Keep these considerations in mind if you are modifying the TextHighlighter component or creating a custom component:
+
+### Use appropriate variants
+
+- Use the **mark** variant for highlighting content that needs attention or reference
+- Use the **ins** variant specifically for indicating newly added content in document comparisons
+- Use the **del** variant specifically for indicating removed content in document comparisons
+
+### Provide context
+
+When using TextHighlighter for document comparisons:
+
+- Ensure users understand they are viewing a comparison by providing clear headings or instructions
+- Consider adding a legend or key to explain what the different highlights mean
+- Group related changes together when possible to reduce cognitive load
+
+### Reference annotations
+
+When using reference annotations with the mark variant:
+
+- Keep annotations brief (maximum 3 characters or a symbol)
+- Provide a legend or explanation of what each reference means
+- Ensure the reference system is consistent throughout the document
+
+### Avoid overuse
+
+- Don't highlight too much text, as this reduces the effectiveness of highlighting
+- Use highlighting sparingly to draw attention to truly important content
+- Consider alternative methods (like headings or callouts) for organizing large amounts of important information
+
+### Color considerations
+
+- Don't rely solely on color to convey meaning
+- The ins and del variants use both color and visual indicators (dashed border and strikethrough)
+- When using multiple mark colors, provide additional context beyond just the color difference with reference annotations
+
+## Resources
+
+- [WCAG 2.1 Success Criterion 1.3.1: Info and Relationships](https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html) - Understanding semantic HTML
+- [WCAG 2.1 Success Criterion 1.4.3: Contrast (Minimum)](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html) - Color contrast requirements
+- [WCAG 2.1 Success Criterion 1.4.1: Use of Color](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html) - Not relying on color alone
+- [IBM Accessibility Requirements](https://www.ibm.com/able/requirements/requirements/)
+
+## Feedback
+
+Help us improve this component by providing feedback, asking questions, and leaving any other comments on [GitHub](https://github.com/carbon-design-system/carbon-labs/issues/new).

@@ -1,5 +1,17 @@
 # @carbon-labs/react-split-panel
 
+> ⚠️ **DEPRECATED**: This component is deprecated and unlikely to progress to
+> v1.0.0. Please use
+> [@carbon-labs/react-resizer](https://www.npmjs.com/package/@carbon-labs/react-resizer)
+> for new implementations.
+>
+> **Migration Guide**: See [DEPRECATION-plan.md](./DEPRECATION-plan.md) for
+> detailed migration instructions.
+>
+> **Replacement**:
+> [Resizer](https://labs.carbondesignsystem.com/react/?path=/docs/components-resizer--docs)
+> provides a more flexible, headless approach to resizable layouts.
+
 ## 📝 License
 
 Licensed under the

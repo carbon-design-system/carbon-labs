@@ -54,11 +54,12 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <div
-    style="height:calc(100vh - 84px); overflow:hidden; display:flex;max-width:100%;width:100%;">
-    <clabs-chat-carousel content="${carouselExamples[0].content}">
-    </clabs-chat-carousel>
-  </div>`,
+  render: () =>
+    html` <div
+      style="height:calc(100vh - 84px); overflow:hidden; display:flex;max-width:100%;width:100%;">
+      <clabs-chat-carousel content="${carouselExamples[0].content}">
+      </clabs-chat-carousel>
+    </div>`,
 };
 
 export const Showcase = {
@@ -67,11 +68,11 @@ export const Showcase = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <div
-    style="height:calc(100vh - 84px); overflow-x:hidden;max-width:100%;width:100%;">
-    ${carouselExamples.map(
-      (example) =>
-        html`
+  render: () =>
+    html` <div
+      style="height:calc(100vh - 84px); overflow-x:hidden;max-width:100%;width:100%;">
+      ${carouselExamples.map(
+        (example) => html`
           <div style="width:100%">
             <h5>${example.name}</h5>
             <br />
@@ -79,6 +80,6 @@ export const Showcase = {
             </clabs-chat-carousel>
           </div>
         `
-    )}
-  </div>`,
+      )}
+    </div>`,
 };

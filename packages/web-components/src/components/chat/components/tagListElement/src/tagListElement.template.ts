@@ -78,10 +78,10 @@ export function tagListElementTemplate(customElementClass) {
                         ${actionIcon === 'add'
                           ? iconLoader(Add16, { slot: 'icon' })
                           : actionIcon === 'upload'
-                          ? iconLoader(Upload16, { slot: 'icon' })
-                          : actionIcon === 'send'
-                          ? iconLoader(SendAlt16, { slot: 'icon' })
-                          : ''}
+                            ? iconLoader(Upload16, { slot: 'icon' })
+                            : actionIcon === 'send'
+                              ? iconLoader(SendAlt16, { slot: 'icon' })
+                              : ''}
                       </cds-chat-button>
                     `}
               </div>`

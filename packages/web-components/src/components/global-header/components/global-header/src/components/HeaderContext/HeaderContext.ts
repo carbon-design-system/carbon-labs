@@ -367,8 +367,8 @@ export class HeaderContext extends LitElement {
         ${this.renderSidekick()} ${this.renderProfile()} ${this.renderSolis()}
       `;
     } else {
-      return html`<clabs-global-header-unauthenticated-context
-        .noAuthHeaderLinks="${noAuthHeaderLinks}"></clabs-global-header-unauthenticated-context>`;
+      return html`${this.renderHelpMenu()}<clabs-global-header-unauthenticated-context
+          .noAuthHeaderLinks="${noAuthHeaderLinks}"></clabs-global-header-unauthenticated-context>`;
     }
   }
 }

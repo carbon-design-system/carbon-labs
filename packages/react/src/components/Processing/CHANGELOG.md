@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-processing@0.17.0...@carbon-labs/react-processing@0.18.0) (2026-05-12)
+
+**Note:** Version bump only for package @carbon-labs/react-processing
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-processing@0.16.0...@carbon-labs/react-processing@0.17.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/react-processing
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-processing@0.15.0...@carbon-labs/react-processing@0.16.0) (2026-05-08)
+
+**Note:** Version bump only for package @carbon-labs/react-processing
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-processing@0.14.0...@carbon-labs/react-processing@0.15.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/react-processing
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-processing@0.13.0...@carbon-labs/react-processing@0.14.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/react-processing
+
+
+
+
+
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-processing@0.12.0...@carbon-labs/react-processing@0.13.0) (2026-04-14)
+
+**Note:** Version bump only for package @carbon-labs/react-processing
+
+
+
+
+
 # [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-processing@0.11.0...@carbon-labs/react-processing@0.12.0) (2026-01-14)
 
 **Note:** Version bump only for package @carbon-labs/react-processing

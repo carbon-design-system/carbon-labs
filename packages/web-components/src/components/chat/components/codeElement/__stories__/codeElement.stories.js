@@ -23,9 +23,10 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-code
-    content="${'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True'}">
-  </clabs-chat-code>`,
+  render: () =>
+    html` <clabs-chat-code
+      content="${'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True'}">
+    </clabs-chat-code>`,
 };
 
 const defaultPlaygroundArgs = {
@@ -403,18 +404,17 @@ export const ColorTesting = {
    */
   render: () =>
     html` ${Object.keys(codeExamples).map(
-      (key) =>
-        html`
-          <clabs-chat-code
-            max-height="300px"
-            enable-language-display
-            enable-estimated-language
-            display-line-count
-            displayed-language=${key}
-            content="${codeExamples[key]}">
-          </clabs-chat-code>
-          <br />
-        `
+      (key) => html`
+        <clabs-chat-code
+          max-height="300px"
+          enable-language-display
+          enable-estimated-language
+          display-line-count
+          displayed-language=${key}
+          content="${codeExamples[key]}">
+        </clabs-chat-code>
+        <br />
+      `
     )}`,
 };
 
@@ -424,31 +424,30 @@ export const Comparison = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () =>
-    html`
-      <h3>Comparison</h3>
-      <br />
-      <clabs-chat-code
-        enable-edit-button
-        show-content-differences
-        disable-edit-button
-        content="${'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True'}"
-        new-content="${'from math import sqrt\n#hey\n\n#added lines here\n#prime function to check any number and see if  prime or not:\ndef Prime(number,itr):\n\t#base condition\n\n\n\tif !number % itr == 1:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\tprint("number is not prime")\n\t\treturn False\n\tprint("number is prime")\n\treturn True'}">
-      </clabs-chat-code>
-      <br /><br />
-      <h3>Source code</h3>
-      <br />
-      <clabs-chat-code
-        content="${'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True'}">
-      </clabs-chat-code>
-      <br />
-      <br />
-      <h3>Edited Code</h3>
-      <br />
-      <clabs-chat-code
-        content="${'from math import sqrt\n#hey\n#added lines here\n#prime function to check any number and see if  prime or not:\ndef Prime(number,itr):\n\t#base condition\n\n\n\tif !number % itr == 1:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\tprint("number is not prime")\n\t\treturn False\n\tprint("number is prime")\n\treturn True'}">
-      </clabs-chat-code>
-    `,
+  render: () => html`
+    <h3>Comparison</h3>
+    <br />
+    <clabs-chat-code
+      enable-edit-button
+      show-content-differences
+      disable-edit-button
+      content="${'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True'}"
+      new-content="${'from math import sqrt\n#hey\n\n#added lines here\n#prime function to check any number and see if  prime or not:\ndef Prime(number,itr):\n\t#base condition\n\n\n\tif !number % itr == 1:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\tprint("number is not prime")\n\t\treturn False\n\tprint("number is prime")\n\treturn True'}">
+    </clabs-chat-code>
+    <br /><br />
+    <h3>Source code</h3>
+    <br />
+    <clabs-chat-code
+      content="${'from math import sqrt\n#prime function to check given number prime or not:\ndef Prime(number,itr):\n\t#base condition\n\tif itr == 1:\n\t\treturn True\n\t#if given number divided by itr or not\n\tif number % itr == 0:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\treturn False\n\treturn True'}">
+    </clabs-chat-code>
+    <br />
+    <br />
+    <h3>Edited Code</h3>
+    <br />
+    <clabs-chat-code
+      content="${'from math import sqrt\n#hey\n#added lines here\n#prime function to check any number and see if  prime or not:\ndef Prime(number,itr):\n\t#base condition\n\n\n\tif !number % itr == 1:\n\t\treturn False\n\t#Recursive function Call\n\tif Prime(number,itr-1) == False:\n\t\tprint("number is not prime")\n\t\treturn False\n\tprint("number is prime")\n\treturn True'}">
+    </clabs-chat-code>
+  `,
 };
 
 export const Editing = {
@@ -457,24 +456,25 @@ export const Editing = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <h4>
-      JSON example without newlines/tabs and ticks, coloring & collapse
-    </h4>
-    <clabs-chat-code
-      ?editable="${true}"
-      max-height="246px"
-      auto-indent
-      disable-line-ticks
-      content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"fields":[{"name":"Country name","num_values":165,"sample_values":["Afghanistan","Albania","Algeria","Angola","Argentina"]},{"max":2023,"min":2005,"name":"year"},{"max":8.019,"min":1.281,"name":"Life Ladder"},{"max":11.676,"min":5.527,"name":"Log GDP per capita"},{"max":0.987,"min":0.228,"name":"Social support"},{"max":74.6,"min":6.72,"name":"Healthy life expectancy at birth"},{"max":0.985,"min":0.228,"name":"Freedom to make life choices"},{"max":0.7,"min":-0.34,"name":"Generosity"},{"max":0.983,"min":0.035,"name":"Perceptions of corruption"},{"max":0.884,"min":0.179,"name":"Positive affect"},{"max":0.705,"min":0.083,"name":"Negative affect"}],"file":"Happiness.csv"},"encoding":{"x":{"field":"Healthy life expectancy at birth","type":"quantitative"},"y":{"field":"Life Ladder","type":"quantitative"}},"mark":"point"}'>
-    </clabs-chat-code>
-    <br />
+  render: () =>
+    html` <h4>
+        JSON example without newlines/tabs and ticks, coloring & collapse
+      </h4>
+      <clabs-chat-code
+        ?editable="${true}"
+        max-height="246px"
+        auto-indent
+        disable-line-ticks
+        content='{"$schema":"https://vega.github.io/schema/vega-lite/v5.json","data":{"fields":[{"name":"Country name","num_values":165,"sample_values":["Afghanistan","Albania","Algeria","Angola","Argentina"]},{"max":2023,"min":2005,"name":"year"},{"max":8.019,"min":1.281,"name":"Life Ladder"},{"max":11.676,"min":5.527,"name":"Log GDP per capita"},{"max":0.987,"min":0.228,"name":"Social support"},{"max":74.6,"min":6.72,"name":"Healthy life expectancy at birth"},{"max":0.985,"min":0.228,"name":"Freedom to make life choices"},{"max":0.7,"min":-0.34,"name":"Generosity"},{"max":0.983,"min":0.035,"name":"Perceptions of corruption"},{"max":0.884,"min":0.179,"name":"Positive affect"},{"max":0.705,"min":0.083,"name":"Negative affect"}],"file":"Happiness.csv"},"encoding":{"x":{"field":"Healthy life expectancy at birth","type":"quantitative"},"y":{"field":"Life Ladder","type":"quantitative"}},"mark":"point"}'>
+      </clabs-chat-code>
+      <br />
 
-    <h4>JSON example with ticks, coloring & collapse</h4>
-    <clabs-chat-code
-      ?editable="${true}"
-      max-height="246px"
-      render-language="json"
-      content='{
+      <h4>JSON example with ticks, coloring & collapse</h4>
+      <clabs-chat-code
+        ?editable="${true}"
+        max-height="246px"
+        render-language="json"
+        content='{
 	"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	"data": {
 		"fields": [
@@ -554,64 +554,64 @@ export const Editing = {
 	},
 	"mark": "point"
 }'>
-    </clabs-chat-code>
-    <br />
-    <h4>Python example (no coloring or ticks)</h4>
-    <clabs-chat-code
-      ?editable="${true}"
-      max-height="246px"
-      enable-block-collapse
-      disable-line-ticks
-      disable-coloring
-      content="${codeExamples['python code']}">
-    </clabs-chat-code>
-    <br />
-    <h4>Python example (no ticks)</h4>
-    <clabs-chat-code
-      ?editable="${true}"
-      enable-block-collapse
-      disable-line-ticks
-      max-height="246px"
-      content="${codeExamples['python code']}">
-    </clabs-chat-code>
-    <br />
-    <h4>Python example (no coloring)</h4>
-    <clabs-chat-code
-      ?editable="${true}"
-      disable-coloring
-      enable-block-collapse
-      max-height="246px"
-      content="${codeExamples['python code']}">
-    </clabs-chat-code>
-    <br />
-    <h4>SQL example</h4>
-    <clabs-chat-code
-      ?editable="${true}"
-      enable-block-collapse
-      max-height="500px"
-      content="${codeExamples['SQL example']}">
-    </clabs-chat-code>
-    <br />
-    <h4>FORTRAN example</h4>
-    <clabs-chat-code
-      max-height="492px"
-      ?editable="${true}"
-      content="${codeExamples['FORTRAN']}">
-    </clabs-chat-code>
-    <br />
-    <h4>MATLAB example</h4>
-    <clabs-chat-code
-      max-height="492px"
-      ?editable="${true}"
-      content="${codeExamples['MATLAB']}">
-    </clabs-chat-code>
-    <br />
-    <h4>Dockerfile example</h4>
-    <clabs-chat-code
-      max-height="492px"
-      ?editable="${true}"
-      content="${codeExamples['Dockerfile']}">
-    </clabs-chat-code>`,
+      </clabs-chat-code>
+      <br />
+      <h4>Python example (no coloring or ticks)</h4>
+      <clabs-chat-code
+        ?editable="${true}"
+        max-height="246px"
+        enable-block-collapse
+        disable-line-ticks
+        disable-coloring
+        content="${codeExamples['python code']}">
+      </clabs-chat-code>
+      <br />
+      <h4>Python example (no ticks)</h4>
+      <clabs-chat-code
+        ?editable="${true}"
+        enable-block-collapse
+        disable-line-ticks
+        max-height="246px"
+        content="${codeExamples['python code']}">
+      </clabs-chat-code>
+      <br />
+      <h4>Python example (no coloring)</h4>
+      <clabs-chat-code
+        ?editable="${true}"
+        disable-coloring
+        enable-block-collapse
+        max-height="246px"
+        content="${codeExamples['python code']}">
+      </clabs-chat-code>
+      <br />
+      <h4>SQL example</h4>
+      <clabs-chat-code
+        ?editable="${true}"
+        enable-block-collapse
+        max-height="500px"
+        content="${codeExamples['SQL example']}">
+      </clabs-chat-code>
+      <br />
+      <h4>FORTRAN example</h4>
+      <clabs-chat-code
+        max-height="492px"
+        ?editable="${true}"
+        content="${codeExamples['FORTRAN']}">
+      </clabs-chat-code>
+      <br />
+      <h4>MATLAB example</h4>
+      <clabs-chat-code
+        max-height="492px"
+        ?editable="${true}"
+        content="${codeExamples['MATLAB']}">
+      </clabs-chat-code>
+      <br />
+      <h4>Dockerfile example</h4>
+      <clabs-chat-code
+        max-height="492px"
+        ?editable="${true}"
+        content="${codeExamples['Dockerfile']}">
+      </clabs-chat-code>`,
 };
 
 const playgroundControls = {

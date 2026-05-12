@@ -30,7 +30,7 @@ $css--plex: true !default;
     inline-size: 100%;
     margin-inline: auto;
     max-inline-size: 672px;
-    padding-block: 32px 32px;
+    padding-block: 32px;
   }
 
   .#{$clabs-prefix}--chat-messages-hidden-label {
@@ -49,7 +49,7 @@ $css--plex: true !default;
     overflow: hidden scroll;
     flex: 1;
     inline-size: 100%;
-    padding-block: 16px 16px;
+    padding-block: 16px;
   }
 
   .#{$clabs-prefix}--chat-messages-container-streaming {

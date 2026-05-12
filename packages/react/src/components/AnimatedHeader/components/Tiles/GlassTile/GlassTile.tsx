@@ -78,7 +78,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
         className={`${prefix}--animated-header__tile ${blockClass}`}
         key={tileId}
         aria-label={ariaLabel ?? title ?? 'Glass Tile'}
-        title={isDisabled ? disabledTaskLabel ?? '' : ''}
+        title={isDisabled ? (disabledTaskLabel ?? '') : ''}
         tabIndex={-1}
         {...dataAttributes}>
         {body}
@@ -98,7 +98,7 @@ export const GlassTile: React.FC<GlassTileProps> = ({
       key={tileId}
       href={href ?? undefined}
       disabled={isDisabled || isLoading}
-      title={isDisabled ? disabledTaskLabel ?? '' : ''}
+      title={isDisabled ? (disabledTaskLabel ?? '') : ''}
       {...dataAttributes}>
       {body}
     </Link>

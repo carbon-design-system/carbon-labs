@@ -101,8 +101,10 @@ function remapPrimaryLayerToColumnCount(
   });
 }
 
-interface PlaneStack3DContentProps
-  extends Omit<PlaneStack3DProps, 'hoveredItem' | 'onHoveredItemChange'> {
+interface PlaneStack3DContentProps extends Omit<
+  PlaneStack3DProps,
+  'hoveredItem' | 'onHoveredItemChange'
+> {
   interactionApi: ReturnType<typeof createCanvasInteractionApi>;
   onIntroAnimationComplete?: () => void;
 }

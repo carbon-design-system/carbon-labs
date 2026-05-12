@@ -69,7 +69,7 @@
     "lerna": "^9.0.0",
     "lint-staged": "^15.0.2",
     "lit": "^3.2.1",
-    "prettier": "^2.8.8",
+    "prettier": "^3.3.3",
     "prettier-config-carbon": "^0.12.0",
     "rimraf": "^6.0.1",
     "rollup": "^4.0.0",
@@ -78,8 +78,8 @@
     "rollup-plugin-postcss-lit": "^2.1.0",
     "storybook": "^9.1.2",
     "strip-comments": "^2.0.1",
-    "stylelint": "15.11.0",
-    "stylelint-config-carbon": "1.17.0",
+    "stylelint": "^17.0.0",
+    "stylelint-config-carbon": "1.22.0",
     "yargs": "^17.7.2"
   },
   "packageManager": "yarn@4.14.0"

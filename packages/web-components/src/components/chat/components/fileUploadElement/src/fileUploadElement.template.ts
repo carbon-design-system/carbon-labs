@@ -49,8 +49,8 @@ export function fileUploadElementTemplate(customElementClass) {
         ${status === 'loading'
           ? html` <cds-loading type="small"></cds-loading> `
           : status === 'success'
-          ? html` ${iconLoader(CheckMarkOutline16())} `
-          : html` ${iconLoader(Close16())}`}
+            ? html` ${iconLoader(CheckMarkOutline16())} `
+            : html` ${iconLoader(Close16())}`}
       </div>
     </div>
     ${status === 'error'

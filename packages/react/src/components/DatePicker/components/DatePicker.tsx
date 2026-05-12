@@ -189,8 +189,8 @@ export function DatePicker({
     const inputRef = isStartInput
       ? startInputRef
       : isEndInput
-      ? endInputRef
-      : undefined;
+        ? endInputRef
+        : undefined;
 
     // Get the appropriate value - always use a string to keep input controlled
     let inputValue = child.props.value ?? '';

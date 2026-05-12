@@ -37,7 +37,7 @@ export const DEFAULT_A11Y_COPY = Object.freeze({
 
 /**
  *
- * @param {Record<string, string | ((params?: Record<string, string | number>) => string)> | undefined} i18n
+ * @param {Record<string, string | ((params?: any) => string)> | undefined} i18n
  * @param {string} key
  * @param {string} fallback
  * @param {Record<string, string | number>} [params]

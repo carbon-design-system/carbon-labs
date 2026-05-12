@@ -213,3 +213,63 @@ components, dependency maintenance, or repo infrastructure changes.
 
 For those changes, use normal Git workflow and add any repo-local automation as
 a root `package.json` script.
+
+
+# Carbon Labs Preview Candidate Components
+
+This section documents the authoritative list of Carbon Labs components that are
+ready for preview candidate status. This list is intended to be scraped by the
+Carbon MCP tool and other automation systems.
+
+**Note:** This is the golden list for preview-ready components. Components listed
+here have reached a maturity level suitable for broader testing and feedback.
+
+## Component Registry
+
+The following components are ready for preview candidate status:
+
+### React Components
+
+| Component Name | Package Name | Directory Path | Description |
+|----------------|--------------|----------------|-------------|
+| UIShell | `@carbon-labs/react-ui-shell` | `packages/react/src/components/UIShell` | Shell component for application layout and navigation |
+| AnimatedHeader | `@carbon-labs/react-animated-header` | `packages/react/src/components/AnimatedHeader` | Animated header component with dynamic backgrounds and tiles |
+| WhatsNew | `@carbon-labs/react-whats-new` | `packages/react/src/components/WhatsNew` | Component for displaying new features and updates |
+| Resizer | `@carbon-labs/react-resizer` | `packages/react/src/components/Resizer` | Resizable panel component for flexible layouts |
+| Processing | `@carbon-labs/react-processing` | `packages/react/src/components/Processing` | Processing indicator component for long-running operations |
+
+### Web Components
+
+| Component Name | Package Name | Directory Path | Description |
+|----------------|--------------|----------------|-------------|
+| Global Header | `@carbon-labs/wc-global-header` | `packages/web-components/src/components/wc-global-header` | Web component for global application header |
+| AI Chat | `@carbon-labs/ai-chat` | `packages/web-components/src/components/ai-chat` | Web component for AI-powered chat interface |
+
+## Machine-Readable Format
+
+For automated parsing, each component entry contains:
+
+- **Component Name**: Human-readable display name
+- **Package Name**: NPM package identifier (format: `@carbon-labs/{component-name}`)
+- **Directory Path**: Relative path from repository root
+- **Description**: Brief description of component purpose and key features
+- **Framework Type**: Implicitly defined by section (React vs Web Components)
+
+## Usage for Scrapers
+
+Tools scraping this list should:
+
+1. Parse the markdown tables in the "React Components" and "Web Components" sections
+2. Extract the four fields for each component
+3. Use the section heading to determine the framework type
+4. Validate that the directory path exists in the repository
+5. Check the package.json in each component directory for additional metadata (including version)
+
+## Maintenance
+
+This list should be updated when:
+
+- A component reaches preview candidate maturity
+- A component is promoted from preview to stable
+- A component is deprecated or removed
+- Package names change

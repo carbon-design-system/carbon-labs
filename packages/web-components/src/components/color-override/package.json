@@ -1,0 +1,31 @@
+{
+  "name": "@carbon-labs/wc-color-override",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "description": "Carbon Labs - color-override SCSS-only style package",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carbon-design-system/carbon-labs",
+    "directory": "packages/web-components/src/components/color-override"
+  },
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./scss": "./src/color-override.scss"
+  },
+  "files": [
+    "src/",
+    "index.js"
+  ],
+  "scripts": {
+    "clean": "echo 'No build needed for SCSS-only package'"
+  },
+  "dependencies": {
+    "@carbon/styles": "^1.0.0"
+  }
+}

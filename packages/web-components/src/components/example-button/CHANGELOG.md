@@ -3,6 +3,130 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.22.0...@carbon-labs/wc-example-button@0.23.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/wc-example-button
+
+
+
+
+
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.21.0...@carbon-labs/wc-example-button@0.22.0) (2026-05-08)
+
+**Note:** Version bump only for package @carbon-labs/wc-example-button
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.20.0...@carbon-labs/wc-example-button@0.21.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/wc-example-button
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.19.0...@carbon-labs/wc-example-button@0.20.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/wc-example-button
+
+
+
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.18.0...@carbon-labs/wc-example-button@0.19.0) (2026-04-14)
+
+**Note:** Version bump only for package @carbon-labs/wc-example-button
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.16.0...@carbon-labs/wc-example-button@0.18.0) (2026-03-25)
+
+
+### Features
+
+* **datepicker:** new datepicker using Temporal API, Popover API, and CSS anchor positioning ([#1130](https://github.com/carbon-design-system/carbon-labs/issues/1130)) ([9d1357d](https://github.com/carbon-design-system/carbon-labs/commit/9d1357dbeb58d4f509e4d539af60266b3c9c657d))
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.16.0...@carbon-labs/wc-example-button@0.17.0) (2026-03-24)
+
+
+### Features
+
+* **datepicker:** new datepicker using Temporal API, Popover API, and CSS anchor positioning ([#1130](https://github.com/carbon-design-system/carbon-labs/issues/1130)) ([9d1357d](https://github.com/carbon-design-system/carbon-labs/commit/9d1357dbeb58d4f509e4d539af60266b3c9c657d))
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.15.0...@carbon-labs/wc-example-button@0.16.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/wc-example-button
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.14.0...@carbon-labs/wc-example-button@0.15.0) (2025-12-19)
+
+
+### Bug Fixes
+
+* **global-header:** Exclude react and react-dom from vite build ([#950](https://github.com/carbon-design-system/carbon-labs/issues/950)) ([bdd3c45](https://github.com/carbon-design-system/carbon-labs/commit/bdd3c45b3fa74fe6f69d5975431f1208ae126ab5))
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.13.0...@carbon-labs/wc-example-button@0.14.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.12.0...@carbon-labs/wc-example-button@0.13.0) (2025-12-01)
+
+**Note:** Version bump only for package @carbon-labs/wc-example-button
+
+
+
+
+
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.11.0...@carbon-labs/wc-example-button@0.12.0) (2025-10-22)
+
+**Note:** Version bump only for package @carbon-labs/wc-example-button
+
+
+
+
+
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.10.0...@carbon-labs/wc-example-button@0.11.0) (2025-10-15)
+
+**Note:** Version bump only for package @carbon-labs/wc-example-button
+
+
+
+
+
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.9.0...@carbon-labs/wc-example-button@0.10.0) (2025-10-01)
+
+**Note:** Version bump only for package @carbon-labs/wc-example-button
+
+
+
+
+
 # [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-example-button@0.8.0...@carbon-labs/wc-example-button@0.9.0) (2025-08-25)
 
 **Note:** Version bump only for package @carbon-labs/wc-example-button

@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.21.0...@carbon-labs/mdx-components@0.22.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.20.0...@carbon-labs/mdx-components@0.21.0) (2026-05-08)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.19.0...@carbon-labs/mdx-components@0.20.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.18.0...@carbon-labs/mdx-components@0.19.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.17.0...@carbon-labs/mdx-components@0.18.0) (2026-05-06)
+
+
+### Features
+
+* storybook demo updated with fluid dropdown ([#1207](https://github.com/carbon-design-system/carbon-labs/issues/1207)) ([e09445e](https://github.com/carbon-design-system/carbon-labs/commit/e09445ea61f209ab300c17c5a6d3bfd7c624e438))
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.16.0...@carbon-labs/mdx-components@0.17.0) (2026-04-16)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.15.0...@carbon-labs/mdx-components@0.16.0) (2026-04-14)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.13.0...@carbon-labs/mdx-components@0.15.0) (2026-03-25)
+
+
+### Bug Fixes
+
+* **storybookdemo:** fix initial variant empty display ([#1123](https://github.com/carbon-design-system/carbon-labs/issues/1123)) ([e33f886](https://github.com/carbon-design-system/carbon-labs/commit/e33f8862d1b16d991987aaa1d2f1880b9d2eef01))
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.13.0...@carbon-labs/mdx-components@0.14.0) (2026-03-24)
+
+
+### Bug Fixes
+
+* **storybookdemo:** fix initial variant empty display ([#1123](https://github.com/carbon-design-system/carbon-labs/issues/1123)) ([e33f886](https://github.com/carbon-design-system/carbon-labs/commit/e33f8862d1b16d991987aaa1d2f1880b9d2eef01))
+
+
+
+
+
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.12.0...@carbon-labs/mdx-components@0.13.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.11.0...@carbon-labs/mdx-components@0.12.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.10.0...@carbon-labs/mdx-components@0.11.0) (2025-10-01)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.9.0...@carbon-labs/mdx-components@0.10.0) (2025-09-22)
+
+
+### Bug Fixes
+
+* **mdx-components:** update package entrypoint ([#811](https://github.com/carbon-design-system/carbon-labs/issues/811)) ([763d680](https://github.com/carbon-design-system/carbon-labs/commit/763d6803e47446cbd336dec9a5be75afde23f6e7))
+
+
+
+
+
 # [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.8.0...@carbon-labs/mdx-components@0.9.0) (2025-09-11)
 
 **Note:** Version bump only for package @carbon-labs/mdx-components

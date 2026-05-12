@@ -14,7 +14,7 @@ import React, {
   forwardRef,
 } from 'react';
 import { rem } from '@carbon/layout';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import cx from 'classnames';
 import debounce from 'lodash.debounce';
 export const DEBOUNCE_DELAY = 100;
@@ -193,9 +193,6 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
 
     const handleMouseDown = useCallback(
       (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
         const element = getRefElement(ref);
         if (!element || event.button !== 0) {
           return;

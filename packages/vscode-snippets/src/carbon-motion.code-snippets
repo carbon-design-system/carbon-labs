@@ -1,0 +1,82 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * WARNING: installed by @carbon-labs/vscode-snippets - local updates will be lost on package install
+ */
+{
+  "fast-01 (70ms)": {
+    "scope": "scss",
+    "prefix": "$duration-fast-01",
+    "body": "$$duration-fast-01",
+    "description": "Carbon duration token"
+  },
+  "fast-02 (110ms)": {
+    "scope": "scss",
+    "prefix": "$duration-fast-02",
+    "body": "$$duration-fast-02",
+    "description": "Carbon duration token"
+  },
+  "moderate-01 (150ms)": {
+    "scope": "scss",
+    "prefix": "$duration-moderate-01",
+    "body": "$$duration-moderate-01",
+    "description": "Carbon duration token"
+  },
+  "moderate-02 (240ms)": {
+    "scope": "scss",
+    "prefix": "$duration-moderate-02",
+    "body": "$$duration-moderate-02",
+    "description": "Carbon duration token"
+  },
+  "slow-01 (400ms)": {
+    "scope": "scss",
+    "prefix": "$duration-slow-01",
+    "body": "$$duration-slow-01",
+    "description": "Carbon duration token"
+  },
+  "slow-02 (700ms)": {
+    "scope": "scss",
+    "prefix": "$duration-slow-02",
+    "body": "$$duration-slow-02",
+    "description": "Carbon duration token"
+  },
+  "motion('standard', 'productive')": {
+    "scope": "scss",
+    "prefix": ["motion", "standard", "productive"],
+    "body": "@include motion('standard', 'productive')",
+    "description": "Carbon motion token - standard easing"
+  },
+  "motion('standard', 'expressive')": {
+    "scope": "scss",
+    "prefix": ["motion", "standard", "expressive"],
+    "body": "@include motion('standard', 'expressive')",
+    "description": "Carbon motion token - standard easing"
+  },
+  "motion('entrance', 'productive')": {
+    "scope": "scss",
+    "prefix": ["motion", "entrance", "productive"],
+    "body": "@include motion('entrance', 'productive')",
+    "description": "Carbon motion token - entrance easing"
+  },
+  "motion('entrance', 'expressive')": {
+    "scope": "scss",
+    "prefix": ["motion", "entrance", "expressive"],
+    "body": "@include motion('entrance', 'expressive')",
+    "description": "Carbon motion token - entrance easing"
+  },
+  "motion('exit', 'productive')": {
+    "scope": "scss",
+    "prefix": ["motion", "exit", "productive"],
+    "body": "@include motion('exit', 'productive')",
+    "description": "Carbon motion token - exit easing"
+  },
+  "motion('exit', 'expressive')": {
+    "scope": "scss",
+    "prefix": ["motion", "exit", "expressive"],
+    "body": "@include motion('exit', 'expressive')",
+    "description": "Carbon motion token - exit easing"
+  }
+}

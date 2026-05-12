@@ -9,13 +9,14 @@
 
 import '../components/example-button/example-button';
 import { html } from 'lit';
-import ArrowRight16 from '@carbon/web-components/es/icons/arrow--right/16';
+import ArrowRight16 from '@carbon/icons/es/arrow--right/16';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
  */
 export default {
-  title: 'Example Component/Example button',
+  title: 'Components/Example button',
   component: 'clabs-example-button',
 };
 
@@ -36,6 +37,6 @@ export const Default = {
    */
   render: (args) =>
     html` <clabs-example-button>
-      ${args.label}${ArrowRight16({ slot: 'icon' })}
+      ${args.label}${iconLoader(ArrowRight16, { slot: 'icon' })}
     </clabs-example-button>`,
 };

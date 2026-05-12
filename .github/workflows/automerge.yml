@@ -12,7 +12,7 @@ jobs:
     if: github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Merge to main
         uses: devmasx/merge-branch@1.4.0
         with:

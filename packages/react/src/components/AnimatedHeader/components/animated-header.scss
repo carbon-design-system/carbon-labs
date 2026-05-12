@@ -6,6 +6,8 @@
  */
 
 @use 'AnimatedHeader/animated-header.scss';
+@use 'HeaderAction/header-action.scss';
 @use 'HeaderTitle/header-title.scss';
+@use 'Tiles/AITile/ai-tile.scss';
 @use 'Tiles/AIPromptTile/ai-prompt-tile.scss';
 @use 'Tiles/GlassTile/glass-tile.scss';

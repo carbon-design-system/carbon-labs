@@ -6,35 +6,36 @@
  */
 
 import React from 'react';
-import { Column, Grid } from '@carbon/react'
+import { Column, Grid } from '@carbon/react';
 
-import { Aside } from './aside'
+import { Aside } from './aside';
 
 export default {
-  title: 'MDX Components/Aside',
+  title: 'Components/MDX Components/Aside',
   component: Aside,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
     className: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
 const Template = (args) => (
   <Grid>
     <Column lg={4}>
       <Aside aria-label="Example aside" {...args}>
-        Lorem ipsum: dolor sit amet, elit. Curabitur ac odio arcu. Vestibulum egestas eleifend
-        porttitor. Quisque malesuada pulvinar pellentesque. Nunc dictum odio eu enim venenatis
-        fringilla. Nunc finibus enim dui, a tempus quam commodo vitae. Donec non eros gravida dolor
-        porta suscipit non vel quam.
+        Lorem ipsum: dolor sit amet, elit. Curabitur ac odio arcu. Vestibulum
+        egestas eleifend porttitor. Quisque malesuada pulvinar pellentesque.
+        Nunc dictum odio eu enim venenatis fringilla. Nunc finibus enim dui, a
+        tempus quam commodo vitae. Donec non eros gravida dolor porta suscipit
+        non vel quam.
       </Aside>
     </Column>
   </Grid>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

@@ -7,18 +7,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { headerTiles, workspaceData } from './data';
 import {
   AnimatedHeader,
   TasksControllerConfig,
   WorkspaceSelectorConfig,
+  type HeaderActionConfig,
+  type ContentSwitcherConfig,
   type AriaLabels,
   type TileGroup,
   type Workspace,
   watsonXAnimatedLight,
   watsonXStaticLight,
 } from '@carbon-labs/react-animated-header';
+import { Settings } from '@carbon/react/icons';
 
 function App() {
   const [tiles] = useState(headerTiles);
@@ -71,6 +74,44 @@ function App() {
     ariaLabel: 'Select a workspace',
   };
 
+  const contentSwitcherConfig: ContentSwitcherConfig = useMemo(() => {
+    const items = [
+      {
+        id: 'opt-0',
+        text: headerTiles[0].label,
+        onSelect: () => setSelectedTile(headerTiles[0]),
+      },
+      {
+        id: 'opt-1',
+        text: headerTiles[1].label,
+        onSelect: () => setSelectedTile(headerTiles[1]),
+      },
+    ];
+
+    const selectedIndex = Math.max(
+      0,
+      Math.min(
+        items.findIndex((_, i) => headerTiles[i] === selectedTile),
+        items.length - 1
+      )
+    );
+
+    return {
+      ariaLabel: 'Content switcher actions',
+      visibleCount: 2,
+      // lowContrast: true, // uncomment if you want low-contrast styling
+      items,
+      selectedIndex,
+    };
+  }, [selectedTile]);
+
+  const headerActionConfig: HeaderActionConfig = {
+    type: 'icon-button',
+    icon: Settings,
+    iconLabel: 'Open controls',
+    onClick: () => alert('Open any modal/panel'),
+  };
+
   const ariaLabelsConfig: AriaLabels = {
     welcome: 'Welcomes the user',
     description: 'Short description of the product',
@@ -81,15 +122,19 @@ function App() {
 
   return (
     <AnimatedHeader
-      ariaLabels={ariaLabelsConfig}
-      tasksControllerConfig={tasksControllerConfig}
-      workspaceSelectorConfig={workspaceSelectorConfig}
+      productName="[Product name]"
       description="Connect, monitor, and manage data."
+      welcomeText="Welcome"
+      userName="Drew"
+      ariaLabels={ariaLabelsConfig}
       headerAnimation={watsonXAnimatedLight}
       headerStatic={watsonXStaticLight}
-      productName="[Product name]"
-      userName="Drew"
-      welcomeText="Welcome"
+      allTileGroups={tiles}
+      selectedTileGroup={selectedTile}
+      workspaceSelectorConfig={workspaceSelectorConfig}
+      tasksControllerConfig={tasksControllerConfig}
+      contentSwitcherConfig={contentSwitcherConfig}
+      headerActionConfig={headerActionConfig}
       isLoading={false}
     />
   );

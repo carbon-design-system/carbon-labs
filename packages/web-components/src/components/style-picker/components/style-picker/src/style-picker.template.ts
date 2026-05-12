@@ -13,8 +13,9 @@ import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 import '@carbon/web-components/es/components/search/index.js';
 import '@carbon/web-components/es/components/heading/index.js';
+import '@carbon/web-components/es/components/progress-bar/index.js';
 import '@carbon-labs/wc-empty-state/es/index.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import spread from '@carbon/web-components/es/globals/directives/spread.js';
 
 const { stablePrefix: clabsPrefix } = settings;
@@ -31,6 +32,7 @@ export const stylePickerTemplate = (customElementClass) => {
     align,
     open,
     heading,
+    isLoading,
     enableSearch,
     onChangeSearchInput,
     showEmptyState,
@@ -64,7 +66,9 @@ export const stylePickerTemplate = (customElementClass) => {
             : nothing}
         </div>
         <cds-layer class=${`${blockClass}__sections`} level="1">
-          ${showEmptyState
+          ${isLoading
+            ? html`<cds-progress-bar size="small"></cds-progress-bar>`
+            : showEmptyState
             ? html`
                 <div class=${`${blockClass}__empty-state`}>
                   <clabs-empty-state
@@ -74,7 +78,6 @@ export const stylePickerTemplate = (customElementClass) => {
                 </div>
               `
             : html`<slot></slot>`}
-          <slot></slot>
         </cds-layer>
       </div>
     </cds-popover-content>

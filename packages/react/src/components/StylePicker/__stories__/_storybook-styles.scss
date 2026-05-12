@@ -1,0 +1,31 @@
+/**
+ * Copyright IBM Corp. 2025
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.toolbar-layer {
+  display: inline-block;
+  background-color: var(--cds-layer);
+  color: var(--cds-text-primary, #161616);
+}
+
+.inline-tile-holder {
+  margin-block-start: 0.2rem;
+}
+
+.inline-tile {
+  display: inline-block;
+  border-inline-start: 0.25rem solid #0f62fe;
+}
+
+.inline-tile-header {
+  display: flex;
+  align-items: start;
+  gap: 0.25rem;
+}
+
+.inline-pictogram-secondary-text {
+  margin-block-start: 0.5rem;
+}

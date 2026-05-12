@@ -1,0 +1,21 @@
+{
+  "extends": "typescript-config-carbon/tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "noImplicitAny": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "bundler"
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "**/__stories__/*.stories.tsx",
+    "**/__tests__/*",
+    "**/*.d.ts",
+    "node_modules",
+    "dist"
+  ]
+}

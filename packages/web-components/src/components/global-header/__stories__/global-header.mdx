@@ -1,0 +1,71 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/addon-docs/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import * as GlobalHeaderStories from './global-header.stories';
+import packageJson from '../package.json';
+
+<Meta of={GlobalHeaderStories} />
+
+# Global Header
+
+- **Initiative owner(s):** Matt Chapman
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** Matt Chapman, Sarah Hewitt, Allan Hurworth, Rory Mullan
+- **Support channel:** `#carbon-labs`
+
+## Overview
+
+This component is an implementation of the Carbon [Global header](https://carbondesignsystem.com/patterns/global-header/) pattern.
+
+It uses the Carbon [UI Shell](https://carbondesignsystem.com/components/UI-shell-header/usage/) component.
+
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-global-header';
+```
+
+### HTML
+
+For the base global header component `clabs-global-header-apaas` you first define your header properties in an object, for example:
+```js
+const headerProps = {
+    brand: {
+    company: 'IBM',
+    product: 'Platform'
+  },
+  noAuthHeaderLinks: [
+    {
+      href: '/login',
+      text: 'Log in',
+      carbonIcon: 'Login',
+      arialLabel: 'Log in'
+    }
+  ]
+}
+```
+
+This is then passed to the custom element, like this if using the Lit framework:
+```html
+html`<clabs-global-header-apaas .headerProps="${headerProps}"></clabs-global-header-apaas>`
+```
+
+Or like this from an Angular app:
+```html
+<clabs-global-header-apaas [headerProps]="headerProps"></clabs-global-header-apaas>
+```
+
+There is also a higher level component called `clabs-global-header-hybrid-ipaas` which wraps the base component. It makes a
+backend call to a route called `/hybrid-ipaas/v1/header/options` and uses the response from that as the `headerProps` into the
+base component. For example:
+```html
+<clabs-global-header-hybrid-ipaas productName="My Product" productKey="productkey"></clabs-global-header-hybrid-ipaas>
+```
+
+As above the wrapper component supports some properties like `productName` so that a basic form of the header can be rendered until the
+backend options call returns.

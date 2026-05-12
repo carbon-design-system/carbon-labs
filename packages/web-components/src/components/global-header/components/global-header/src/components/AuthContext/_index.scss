@@ -89,7 +89,9 @@
   color: #ffffff;
   inline-size: 100%;
   text-decoration: none;
-  transition: background-color 110ms, color 110ms;
+  transition:
+    background-color 110ms,
+    color 110ms;
 
   svg {
     block-size: 100%;

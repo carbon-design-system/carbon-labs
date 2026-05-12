@@ -11,8 +11,7 @@ import React, { ReactNode } from 'react';
 import { IconButton, IconButtonAlignment, ButtonSize } from '@carbon/react';
 import { usePrefix } from '../internal/usePrefix';
 
-interface IconButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Specify how the trigger should align with the tooltip
    */

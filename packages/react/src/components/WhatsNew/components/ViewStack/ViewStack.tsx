@@ -20,8 +20,10 @@ import { View, ViewProps } from './View';
 import { ViewStackContext } from './ViewStackContext';
 import { iViewStackCallbackResponse, iViewStackHistory } from './types';
 
-interface ViewStackProps
-  extends Omit<React.HTMLProps<HTMLDivElement>, 'aria-label' | 'role'> {
+interface ViewStackProps extends Omit<
+  React.HTMLProps<HTMLDivElement>,
+  'aria-label' | 'role'
+> {
   ariaLabel?: string;
   role?: string;
   children: React.ReactNode;

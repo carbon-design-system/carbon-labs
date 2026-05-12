@@ -37,7 +37,6 @@ optional but recommended.**
 ## Recording Steps
 
 1. **Setup VSCode**
-
    - Open a new SCSS file
    - Set zoom to 150-200% for better visibility
    - Use a clean theme (e.g., Dark+ or Light+)
@@ -48,25 +47,21 @@ optional but recommended.**
    Show these key features:
 
    a. **Spacing Tokens** (5 seconds)
-
    - Type `$spa` → show autocomplete
    - Select `$spacing-05`
    - Show the inserted token
 
    b. **Typography** (5 seconds)
-
    - Type `type` → show autocomplete
    - Select `@include type-style('body-01')`
    - Show the inserted mixin
 
    c. **Theme Tokens** (5 seconds)
-
    - Type `theme` → show autocomplete
    - Select `$background`
    - Show the inserted token
 
    d. **Imports** (5 seconds)
-
    - Type `@use spa` → show autocomplete
    - Select `@use spacing`
    - Show the inserted import
@@ -90,19 +85,16 @@ optional but recommended.**
 ### ezgif.com Method (Recommended for Beginners)
 
 1. **Record your screen**
-
    - Use your OS's built-in screen recorder
    - Record 15-30 seconds of snippet usage
    - Save as MP4 or MOV
 
 2. **Convert to GIF**
-
    - Go to [ezgif.com/video-to-gif](https://ezgif.com/video-to-gif)
    - Upload your video
    - Click "Upload video!"
 
 3. **Optimize**
-
    - Set "Size (width)" to 800
    - Click "Convert to GIF!"
    - On the next page, click "Optimize"

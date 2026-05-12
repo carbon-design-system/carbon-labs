@@ -24,10 +24,13 @@
 export function extractAutotrackAttributes(
   props: Record<string, any>
 ): Record<string, string | undefined> {
-  return Object.keys(props).reduce((acc, key) => {
-    if (key.startsWith('data-autotrack-')) {
-      acc[key] = props[key];
-    }
-    return acc;
-  }, {} as Record<string, string | undefined>);
+  return Object.keys(props).reduce(
+    (acc, key) => {
+      if (key.startsWith('data-autotrack-')) {
+        acc[key] = props[key];
+      }
+      return acc;
+    },
+    {} as Record<string, string | undefined>
+  );
 }

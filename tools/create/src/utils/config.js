@@ -35,8 +35,8 @@ export async function loadConfig(repoRoot) {
         typeof parsed.defaultOwners === 'string'
           ? parseOwners(parsed.defaultOwners)
           : Array.isArray(parsed.defaultOwners)
-          ? parsed.defaultOwners
-          : [],
+            ? parsed.defaultOwners
+            : [],
     };
   } catch (err) {
     if (err.code === 'ENOENT') return { ...DEFAULTS };
@@ -55,7 +55,7 @@ export function mergeOptions(flagOptions, config) {
   const owners =
     flagOptions.owners != null
       ? parseOwners(flagOptions.owners)
-      : config.defaultOwners ?? DEFAULTS.defaultOwners;
+      : (config.defaultOwners ?? DEFAULTS.defaultOwners);
 
   return {
     type: flagOptions.type ?? config.defaultType ?? DEFAULTS.defaultType,

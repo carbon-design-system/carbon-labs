@@ -283,8 +283,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       const selectedDates = context.endDate
         ? [context.startDate, context.endDate].filter((date) => date != null)
         : context.startDate
-        ? [context.startDate]
-        : [];
+          ? [context.startDate]
+          : [];
 
       // Update input field value with formatted date using shared utility
 
@@ -972,8 +972,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
     const selectedDates = context?.endDate
       ? [context.startDate, context.endDate].filter(Boolean)
       : context?.startDate
-      ? [context.startDate]
-      : [];
+        ? [context.startDate]
+        : [];
 
     return html`
       <a

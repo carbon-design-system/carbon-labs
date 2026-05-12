@@ -49,8 +49,8 @@ export function resolveI18nMessage(i18n, key, fallback, params) {
     typeof value === 'function'
       ? value(params)
       : typeof value === 'string'
-      ? value
-      : fallback;
+        ? value
+        : fallback;
   if (typeof template !== 'string' || !params) {
     return template;
   }

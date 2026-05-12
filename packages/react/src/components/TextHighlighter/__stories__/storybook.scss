@@ -109,6 +109,16 @@ p {
   display: flex;
   align-items: center;
 
+  &::before {
+    display: inline-block;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    block-size: $spacing-05;
+    content: '';
+    inline-size: $spacing-05;
+    margin-inline-end: $spacing-03;
+  }
+
   sup {
     font-size: 65%;
     vertical-align: top;
@@ -120,16 +130,6 @@ p {
     &::after {
       content: ']';
     }
-  }
-
-  &::before {
-    display: inline-block;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    block-size: $spacing-05;
-    content: '';
-    inline-size: $spacing-05;
-    margin-inline-end: $spacing-03;
   }
 }
 

@@ -170,13 +170,13 @@ export class NetworkGraph extends LitElement {
     const canvasHeight = this.canvasHeight
       ? this.canvasHeight
       : parentHeight
-      ? parentHeight
-      : null;
+        ? parentHeight
+        : null;
     const canvasWidth = this.canvasWidth
       ? this.canvasWidth
       : parentWidth
-      ? parentWidth
-      : null;
+        ? parentWidth
+        : null;
 
     if (this.data && this.shadowRoot?.getElementById('graph-container')) {
       const graph = ForceGraph2D();

@@ -14,7 +14,7 @@ $css--plex: true !default;
 
 @use '../../../../../globals/scss/vars' as *;
 @use '@carbon/styles/scss/theme';
-@use '../../../defs/vars.scss' as *;
+@use '../../../defs/vars' as *;
 
 $block-class: #{$clabs-prefix}--style-picker-section;
 

@@ -35,7 +35,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "sass": ">=1",
-    "three": "^0.168.0",
+    "three": "^0.184.0",
     "typescript": "^5.7.2"
   },
   "devDependencies": {
@@ -45,10 +45,10 @@
     "@react-three/fiber": "^8.0.0",
     "@react-three/postprocessing": "^2.0.0",
     "@types/react": "^18.0.0",
-    "@types/three": "^0.150.0",
+    "@types/three": "^0.184.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "three": "^0.170.0"
+    "three": "^0.184.0"
   },
   "dependencies": {
     "@carbon-labs/utilities": "0.26.0",

@@ -76,18 +76,15 @@ listening to its events:
 #### Events
 
 - `resize-start` - Fired when dragging starts
-
   - `detail.axis` - The resize axis ('x' or 'y')
   - `detail.startPosition` - Starting position {x, y}
 
 - `resize-drag` - Fired during dragging
-
   - `detail.axis` - The resize axis ('x' or 'y')
   - `detail.delta` - Movement delta in pixels
   - `detail.position` - Current position {x, y}
 
 - `resize-end` - Fired when dragging ends
-
   - `detail.axis` - The resize axis ('x' or 'y')
   - `detail.delta` - Total movement delta in pixels
   - `detail.position` - Final position {x, y}

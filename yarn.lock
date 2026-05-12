@@ -9180,22 +9180,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/three@npm:*":
-  version: 0.183.1
-  resolution: "@types/three@npm:0.183.1"
-  dependencies:
-    "@dimforge/rapier3d-compat": "npm:~0.12.0"
-    "@tweenjs/tween.js": "npm:~23.1.3"
-    "@types/stats.js": "npm:*"
-    "@types/webxr": "npm:>=0.5.17"
-    "@webgpu/types": "npm:*"
-    fflate: "npm:~0.8.2"
-    meshoptimizer: "npm:~1.0.1"
-  checksum: 10c0/ceb62a5a6e04b0c09d2641bb515c4b4b24e9e57135761f1f6a8c75a5e41f7feffc9ad37de772100b222f723f2c61cea2b87c3eea30cd5b58b2465a402f1a898f
-  languageName: node
-  linkType: hard
-
-"@types/three@npm:^0.184.0":
+"@types/three@npm:*, @types/three@npm:^0.184.0":
   version: 0.184.1
   resolution: "@types/three@npm:0.184.1"
   dependencies:
@@ -10219,13 +10204,6 @@ __metadata:
     "@webassemblyjs/ast": "npm:1.14.1"
     "@xtuc/long": "npm:4.2.2"
   checksum: 10c0/8d7768608996a052545251e896eac079c98e0401842af8dd4de78fba8d90bd505efb6c537e909cd6dae96e09db3fa2e765a6f26492553a675da56e2db51f9d24
-  languageName: node
-  linkType: hard
-
-"@webgpu/types@npm:*":
-  version: 0.1.69
-  resolution: "@webgpu/types@npm:0.1.69"
-  checksum: 10c0/52b95a176de5ee918fd1d7132103c35029006a0b4eb321767479a9e430560d272926c0994c3795a5bbaa22cebcc7dce71e66ba8b6496e01c90c0d179a02bd968
   languageName: node
   linkType: hard
 
@@ -23012,13 +22990,6 @@ __metadata:
   peerDependencies:
     three: ">=0.137"
   checksum: 10c0/95d5c7c90aca350530f37f9ea5c5e333a66ea0c50416fa6372c24a23321837a4c70d92d6a9a5942ee124484855a2d3fc8ca0656305feb8d8f86aa10513e324e4
-  languageName: node
-  linkType: hard
-
-"meshoptimizer@npm:~1.0.1":
-  version: 1.0.1
-  resolution: "meshoptimizer@npm:1.0.1"
-  checksum: 10c0/55a1164370474e1acd9f1116843a6ca9de27b4138b5d8cc13160652d50962eff29c91e8b05c9dfed97ddc41544f37509ed2ca382bebc8b332ddbcecdaa692027
   languageName: node
   linkType: hard
 

@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/vscode-snippets",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -33,7 +33,7 @@
   "scripts": {
     "build": "echo 'No build needed - static files only'",
     "clean": "echo 'No clean needed - static files only'",
-    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "postinstall": "node post-install.js"
   },
   "files": [

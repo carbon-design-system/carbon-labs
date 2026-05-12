@@ -8,6 +8,8 @@
  */
 
 @use '../../globals/styles/vars' as automation;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
 
 .#{automation.$namespace-prefix}__header {
   z-index: 8050;
@@ -18,9 +20,9 @@
 }
 
 .#{automation.$namespace-prefix}__capability-name {
-  color: var(--cds-custom-text-primary);
-  font-weight: 400;
-  line-height: normal;
+  @include type-style('body-compact-01');
+
+  color: $text-primary;
   margin-inline-end: 1.5rem;
   overflow-x: hidden;
   text-overflow: ellipsis;

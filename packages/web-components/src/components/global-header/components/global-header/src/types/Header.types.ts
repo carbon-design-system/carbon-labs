@@ -138,6 +138,7 @@ export type GlobalActionConfig = {
   label: string;
   carbonIcon: string;
   onClick?: () => void;
+  tooltip?: string;
 };
 
 export interface ManagementConsole {
@@ -184,11 +185,11 @@ export interface SideNav {
   buttonLabel: string;
   sidebarLabel: string;
   isCollapsible?: boolean;
-  isRail: boolean;
+  isRail?: boolean;
   onClick?: (e: Event) => void;
-  links: SideNavLink[];
+  links?: SideNavLink[];
   groups?: GroupLinks[];
-  isChildOfHeader: boolean;
+  isChildOfHeader?: boolean;
   autoCollapseOnLeave?: boolean;
   buttonCloseLabel?: string;
 }
@@ -264,7 +265,7 @@ export type SidekickConfig = {
   context?: string;
   insights_enabled?: boolean;
   chat_enabled?: boolean;
-  reports_enabled?: boolean;
+  overview_enabled?: boolean;
   tell_me_more_enabled?: boolean;
 };
 
@@ -357,7 +358,7 @@ export type SidekickInfo = {
   context?: string;
   insights_enabled?: boolean;
   chat_enabled?: boolean;
-  reports_enabled?: boolean;
+  overview_enabled?: boolean;
   tell_me_more_enabled?: boolean;
 };
 

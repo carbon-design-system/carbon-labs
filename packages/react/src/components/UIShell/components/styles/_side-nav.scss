@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2025, 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -554,9 +554,11 @@ div:has(.#{$prefix}--header)
     }
   }
 
-  // TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
-  .#{$prefix}--tooltip-content {
-    color: $text-primary;
+  // Active state for Side Nav Link Popover
+  .#{$prefix}--side-nav-link-popover.#{$prefix}--side-nav__link--current::before {
+    block-size: $spacing-07;
+    inset-block-start: -1px;
+    margin-inline-start: -1px;
   }
 }
 

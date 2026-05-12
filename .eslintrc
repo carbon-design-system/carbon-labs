@@ -5,6 +5,40 @@
   "overrides": [
     {
       "files": [
+        "**/*.stories.ts",
+        "**/*.stories.js"
+      ],
+      "rules": {
+        "jsdoc/require-jsdoc": 0,
+        "jsdoc/require-param-description": 0,
+        "jsdoc/require-param-name": 0,
+        "jsdoc/require-param": 0,
+        "jsdoc/require-param-type": 0
+      }
+    },
+    {
+      "files": [
+        "**/*.test.ts",
+        "**/*.test.js",
+        "**/__tests__/**/*.ts",
+        "**/__tests__/**/*.js"
+      ],
+      "rules": {
+        "jsdoc/require-jsdoc": [
+          2,
+          {
+            "require": {
+              "ArrowFunctionExpression": false,
+              "ClassDeclaration": true,
+              "FunctionDeclaration": true,
+              "MethodDefinition": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "files": [
         "**/*.js",
         "**/*.ts"
       ],

@@ -7,8 +7,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// @ts-ignore
 import { property, query, state } from 'lit/decorators.js';
+// @ts-ignore
 import styles from './style-picker-section.scss?inline';
 import { LitElement, PropertyValues } from 'lit';
 import { consume, provide } from '@lit/context';

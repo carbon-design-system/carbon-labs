@@ -124,7 +124,13 @@ export default (commandLineArgs) => {
         sourceMap: true,
       }),
       json(),
-      esbuild({ sourceMap: false, tsconfig: '../tsconfig.json' }),
+      esbuild({
+        sourceMap: false,
+        tsconfig: '../tsconfig.json',
+        // smiles-drawer 2.3.0 ships src/CIP.ts via app.js (no prebuild bundle)
+        // so esbuild needs to be told to transpile it
+        exclude: /node_modules\/(?!smiles-drawer\/src)/,
+      }),
       rollupPluginLitSCSS({
         includePaths: [path.resolve(__dirname, '../../../node_modules')],
         async preprocessor(contents, id) {

@@ -249,7 +249,7 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Components'],
+      order: ['V12', 'Components', '*'],
     },
   },
   // Small (<672)

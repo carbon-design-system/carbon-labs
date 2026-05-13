@@ -100,14 +100,14 @@ $block: '#{$prefix}--calendar' !default;
   display: flex;
   flex: 1;
   align-items: center;
-  padding: 0 0 $spacing-05 0;
+  padding: 0 0 $spacing-05;
 }
 
 .#{$block}__toolbar-right-end {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 0 $spacing-05 0;
+  padding: 0 0 $spacing-05;
 }
 
 .#{$block}__toolbar-sm {
@@ -338,7 +338,7 @@ $block: '#{$prefix}--calendar' !default;
     border-block-start: none;
 
     border-inline-end: none;
-    inset-block: 0 0;
+    inset-block: 0;
     inset-inline-start: 0;
   }
 }
@@ -397,7 +397,7 @@ $block: '#{$prefix}--calendar' !default;
   }
 
   p {
-    color: #a6a6a6;
+    color: $text-secondary;
   }
 
   &.selected {
@@ -406,7 +406,7 @@ $block: '#{$prefix}--calendar' !default;
     }
 
     p {
-      color: #000000;
+      color: $text-primary;
     }
   }
 
@@ -517,7 +517,9 @@ $block: '#{$prefix}--calendar' !default;
     position: relative;
     z-index: 3;
     color: $link-primary;
-    font-size: 12px;
+
+    @include type-style('label-01');
+
     inset-block-start: 0;
     text-align: end;
   }
@@ -544,7 +546,7 @@ $block: '#{$prefix}--calendar' !default;
     &::before {
       position: absolute;
       background-color: $background;
-      block-size: 4px;
+      block-size: $spacing-02;
       content: '';
       inline-size: 100%;
       inset-inline-start: 0;
@@ -552,12 +554,14 @@ $block: '#{$prefix}--calendar' !default;
   }
 
   &.#{$block}__hour-col-sm {
-    inline-size: 48px;
+    inline-size: $spacing-10;
 
     .#{$block}__current-timeline-label {
       position: absolute;
-      font-size: 12px;
-      inset-block-start: -8px;
+
+      @include type-style('label-01');
+
+      inset-block-start: calc(-1 * $spacing-03);
       text-align: end;
     }
   }
@@ -570,7 +574,7 @@ $block: '#{$prefix}--calendar' !default;
   padding: 0 $spacing-03;
   inline-size: 100%;
   inset-block-start: -10px;
-  inset-inline: 0 0;
+  inset-inline: 0;
   text-align: center;
 
   &::after {
@@ -662,7 +666,7 @@ $block: '#{$prefix}--calendar' !default;
 }
 
 .#{$block} tbody .#{$block}__half-row {
-  block-size: 22px;
+  block-size: $spacing-06;
 
   td,
   th[scope='row'] {

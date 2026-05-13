@@ -15,6 +15,7 @@ import React, {
   useState,
 } from 'react';
 import { usePrefix } from '@carbon-labs/utilities/usePrefix';
+import { breakpoints } from '@carbon/layout';
 
 import { DatePicker, DatePickerInput, IconButton } from '@carbon/react';
 import { SidePanelClose } from '@carbon/icons-react';
@@ -65,7 +66,7 @@ const toDate = (value: DateInput | undefined, fallback: Date): Date => {
   if (value == null) {
     return fallback;
   }
-  const parsedDate = value instanceof Date ? new Date(value) : new Date(value);
+  const parsedDate = value instanceof Date ? value : new Date(value);
   return Number.isNaN(parsedDate.getTime()) ? fallback : parsedDate;
 };
 
@@ -219,7 +220,7 @@ export function Calendar({
   const today = startOfDay(now);
 
   const [view, setView] = useState<CalendarView>(() =>
-    views.includes(defaultView) ? defaultView : views[0] ?? 'month'
+    views.includes(defaultView) ? defaultView : (views[0] ?? 'month')
   );
 
   const [currentDay, setCurrentDay] = useState<Date>(() =>
@@ -290,13 +291,14 @@ export function Calendar({
     }
     return observeSize(el, () => {
       const w = el.offsetWidth;
-      if (w <= 320) {
+      // Using Carbon breakpoints: sm=320px, md=672px, lg=1056px, xlg=1312px, max=1584px
+      if (w <= parseInt(breakpoints.sm.width)) {
         setDevice('xsm');
-      } else if (w <= 576) {
+      } else if (w <= parseInt(breakpoints.md.width)) {
         setDevice('sm');
-      } else if (w <= 768) {
+      } else if (w <= parseInt(breakpoints.lg.width)) {
         setDevice('md');
-      } else if (w <= 1056) {
+      } else if (w <= parseInt(breakpoints.xlg.width)) {
         setDevice('lg');
       } else {
         setDevice('xlg');
@@ -625,8 +627,8 @@ export function Calendar({
       const date = dayElements.dateObj
         ? new Date(dayElements.dateObj)
         : dObj instanceof Date
-        ? dObj
-        : new Date(dObj);
+          ? dObj
+          : new Date(dObj);
       if (isNaN(date.getTime())) {
         return;
       }

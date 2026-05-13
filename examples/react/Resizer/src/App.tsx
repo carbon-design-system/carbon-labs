@@ -16,7 +16,7 @@ function App() {
       <Resizer orientation="vertical thinkness={4}" />
       <div className="resizer-demo__pane">Second region</div>
     </div>
-  )
+  );
 }
 
 export default App;

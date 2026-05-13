@@ -15,5 +15,5 @@ export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
     include: ['@lit/react', '@carbon-labs/react-style-picker'],
-  }
+  },
 });

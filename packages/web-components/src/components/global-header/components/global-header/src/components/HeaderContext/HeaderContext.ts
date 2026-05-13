@@ -36,7 +36,10 @@ import '../Switcher/Switcher';
 import '../ProfilePopover/ProfilePopover';
 import '../UserProfileImage/UserProfileImage';
 
-import type { HeaderContextProps, HeaderContextState } from './HeaderContext.types';
+import type {
+  HeaderContextProps,
+  HeaderContextState,
+} from './HeaderContext.types';
 import {
   isValidObject,
   renderCarbonIcon,

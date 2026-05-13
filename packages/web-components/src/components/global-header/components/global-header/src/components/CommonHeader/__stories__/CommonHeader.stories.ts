@@ -12,7 +12,10 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { CommonHeader } from '../CommonHeader';
 import { html } from 'lit';
 import type { HeaderProps, SearchConfigs } from '../../../types/Header.types';
-import { TrialLinkType, solisDeploymentEnvironment } from '../../../types/Header.types';
+import {
+  TrialLinkType,
+  solisDeploymentEnvironment,
+} from '../../../types/Header.types';
 
 const trialDate = new Date();
 trialDate.setDate(trialDate.getDate() + 30);

@@ -11,7 +11,11 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { CommonHeader } from '../CommonHeader';
 import { html } from 'lit';
-import type { HeaderProps, SideNav, SideNavPropsV2 } from '../../../types/Header.types';
+import type {
+  HeaderProps,
+  SideNav,
+  SideNavPropsV2,
+} from '../../../types/Header.types';
 import { TrialLinkType } from '../../../types/Header.types';
 
 const headerProps: HeaderProps = {

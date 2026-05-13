@@ -12,13 +12,7 @@ exports[`TagInput renders as expected - Component API should match snapshot 1`] 
     >
       <div
         class="cds--text-input__label-wrapper"
-      >
-        <label
-          class="cds--label"
-          dir="auto"
-          for="test-tag-input"
-        />
-      </div>
+      />
       <div
         class="cds--text-input__field-outer-wrapper"
       >

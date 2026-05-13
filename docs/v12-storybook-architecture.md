@@ -23,7 +23,6 @@ storybook-static/
 ### URL Structure (GitHub Pages)
 
 - **Standard (Public):**
-
   - Root: `https://labs.carbondesignsystem.com/`
   - Web Components: `https://labs.carbondesignsystem.com/web-components/`
   - React: `https://labs.carbondesignsystem.com/react/`

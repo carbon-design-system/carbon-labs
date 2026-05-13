@@ -7,11 +7,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
-import { Resizer } from '@carbon-labs/react-resizer/es/index';
+import { Resizer } from '@carbon-labs/react-resizer';
 
 function App() {
-  return <Resizer />;
+  return (
+    <div className="resizer-demo">
+      <div className="resizer-demo__pane">First region</div>
+      <Resizer orientation="vertical thinkness={4}" />
+      <div className="resizer-demo__pane">Second region</div>
+    </div>
+  )
 }
 
 export default App;

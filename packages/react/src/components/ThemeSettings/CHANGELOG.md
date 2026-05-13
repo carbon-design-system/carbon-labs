@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.27.0...@carbon-labs/react-theme-settings@0.28.0) (2026-05-13)
+
+**Note:** Version bump only for package @carbon-labs/react-theme-settings
+
+
+
+
+
 # [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-theme-settings@0.26.0...@carbon-labs/react-theme-settings@0.27.0) (2026-05-12)
 
 **Note:** Version bump only for package @carbon-labs/react-theme-settings

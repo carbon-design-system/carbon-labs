@@ -170,5 +170,3 @@ export type AutotrackDataAttributes = {
   'data-autotrack-variation'?: string;
   'data-autotrack-version'?: string;
 };
-
-// Made with Bob

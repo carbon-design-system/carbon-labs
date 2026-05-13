@@ -14,12 +14,14 @@ export default class IWHISessionManager {
     tabId: string;
     capability: string;
     isLeader: boolean;
-    lastCookieState: string | null;
+    lastCookieState: {} | null;
     sessionStartTime: number;
     lastActivityTime: number;
     lastActivityUpdate: number | null;
     lastTokenRefreshTime: number;
-    timers: object;
+    timers: {
+        cookiePolling?: ReturnType<typeof setTimeout>;
+    };
     warningShown: boolean;
     isLoggedOut: boolean;
     activityEvents: string[];
@@ -125,7 +127,7 @@ export default class IWHISessionManager {
         this.registerActivityListeners();
         
         // // Start cookie polling
-        // this.startCookiePolling();
+        this.startCookiePolling();
         
         // // Attempt leader election
         // this.electLeader();
@@ -353,6 +355,71 @@ export default class IWHISessionManager {
         
         const newState = { ...state, ...updates };
         this.writeCookieState(newState);
+    }
+
+    startCookiePolling() {
+        this.timers.cookiePolling = setInterval(() => {
+            // Don't poll after logout
+            if (this.isLoggedOut) {
+                return;
+            }
+        
+            const state = this.readCookieState();
+        
+            // CRITICAL: If cookie disappears unexpectedly, trigger logout
+            if (!state && this.lastCookieState) {
+                // Cookie existed before but is now gone
+                // This happens when:
+                // 1. Logout cookie expired (after 6 seconds)
+                // 2. Cookie was manually deleted
+                // 3. Browser cleared cookies
+                
+                // Check sessionStorage for recent logout to determine reason
+                const lastLogoutCheck = sessionStorage.getItem('iwhi_last_logout_check');
+                let reason = 'cookie_disappeared';
+                
+                if (lastLogoutCheck) {
+                    const timeSinceLogout = Date.now() - parseInt(lastLogoutCheck);
+                    if (timeSinceLogout < 10000) { // Within 10 seconds
+                        reason = 'cookie_disappeared_after_logout';
+                    }
+                }
+                
+                // ALWAYS trigger logout when cookie disappears
+                // Don't leave tabs running without a session cookie
+                this.log('Cookie disappeared, performing logout');
+                this.isLoggedOut = true;
+                this.cleanup();
+                this.performLogout(reason);
+                return;
+            }
+        
+            if (!state) return;
+        
+            // Check if state changed
+            if (JSON.stringify(state) !== JSON.stringify(this.lastCookieState)) {
+                this.handleCookieStateChange(state);
+                this.lastCookieState = state;
+            }
+        
+            // Check if leader is stale or missing (but NOT during logout)
+            const now = Date.now();
+            if (state.leader !== this.tabId && !state.logoutCommand) {
+                // Leader is either null (no leader) or another tab
+                if (!state.leader || now - state.leaderLastSeen > (this.config.leaderStaleTimeout ?? 6000)) {
+                    this.log('Leader is stale or missing, attempting election');
+                    this.electLeader();
+                }
+            }
+        }, this.config.cookiePollInterval);
+    }
+
+    handleCookieStateChange(state) {
+        console.log('hello for now ', state);
+    }
+
+    electLeader() {
+        console.log('hello for now');
     }
 
     cleanup() {

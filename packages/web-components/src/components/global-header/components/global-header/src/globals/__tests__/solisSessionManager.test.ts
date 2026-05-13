@@ -615,8 +615,7 @@ describe('solisSessionManager', () => {
             const sessionManager = new IWHISessionManager(config);
             sessionManager.isLeader = true;
             sessionManager.timers = {
-                timerOne: 'foo',
-                timerTwo: 'bar'
+                cookiePolling: setTimeout(() => {}, 1000)
             }
             sessionManager.cleanup();
             expect(dismissWarningStub).to.have.been.calledOnce;
@@ -866,6 +865,232 @@ describe('solisSessionManager', () => {
             expect(cleanupStub).to.have.been.called;
             expect(performLogoutStub).to.have.been.calledWith('logging out');
             expect(writeCookieStateStub).to.not.have.been.called;
+        })
+    })
+
+    describe(('startCookiePolling'), () => {
+        let clock;
+    
+        beforeEach(() => {
+            clock = sinon.useFakeTimers();
+        });
+        
+        afterEach(() => {
+            clock.restore();
+        });
+
+        it('sets the cookiePolling timer', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.startCookiePolling();
+            expect(sessionManager.timers.cookiePolling).to.not.be.undefined;
+            expect(sessionManager.timers.cookiePolling).to.not.be.null;
+        })
+
+        it('sets a timer that does nothing if logged out', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const readCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'readCookieState');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.isLoggedOut = true;
+            sessionManager.startCookiePolling();
+            clock.tick(2000); // Advance the timers to trigger the timeout function
+            expect(readCookieStateStub).to.not.have.been.called;
+        })
+
+        it('sets a timer that triggers logout if the cookie has disappeared', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const cleanupStub = sinon.stub(IWHISessionManager.prototype, 'cleanup');
+            const onLogoutSpy = sinon.spy();
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                onLogout: onLogoutSpy
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.lastCookieState = { leader: 'tab123', leaderCapability: 'App Connect' };
+            expect(sessionManager.isLoggedOut).to.be.false;
+            sessionManager.startCookiePolling();
+            clock.tick(2000); // Advance the timers to trigger the timeout function
+            expect(cleanupStub).to.have.been.calledOnce;
+            expect(onLogoutSpy).to.have.been.calledWith('cookie_disappeared');
+            expect(sessionManager.isLoggedOut).to.be.true;
+        })
+
+        it('sets a timer that triggers logout if the cookie has disappeared after logout', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const cleanupStub = sinon.stub(IWHISessionManager.prototype, 'cleanup');
+            const onLogoutSpy = sinon.spy();
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                onLogout: onLogoutSpy
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.lastCookieState = { leader: 'tab123', leaderCapability: 'App Connect' };
+            expect(sessionManager.isLoggedOut).to.be.false;
+            sessionManager.startCookiePolling();
+            sessionStorage.setItem('iwhi_last_logout_check', Date.now().toString() + 1000);
+            clock.tick(2000); // Advance the timers to trigger the timeout function
+            expect(cleanupStub).to.have.been.calledOnce;
+            expect(onLogoutSpy).to.have.been.calledWith('cookie_disappeared_after_logout');
+            expect(sessionManager.isLoggedOut).to.be.true;
+        })
+
+        it('sets a timer that does nothing if the cookie has not been initialised', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const readCookieStateStub = sinon.stub(IWHISessionManager.prototype, 'readCookieState');
+            const handleCookieStateChangeStub = sinon.stub(IWHISessionManager.prototype, 'handleCookieStateChange');
+            const electLeaderStub = sinon.stub(IWHISessionManager.prototype, 'electLeader');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+            
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.startCookiePolling();
+            clock.tick(2000); // Advance the timers to trigger the timeout function
+            expect(readCookieStateStub).to.have.been.calledOnce;
+            expect(handleCookieStateChangeStub).to.not.have.been.called;
+            expect(electLeaderStub).to.not.have.been.called;
+        })
+
+        it('sets a timer that calls handleCookieStateChange if the session state has changed', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const handleCookieStateChangeStub = sinon.stub(IWHISessionManager.prototype, 'handleCookieStateChange');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect' }
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+            
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.lastCookieState = { leader: 'tab123', leaderCapability: 'App Connect', foo: 'bar' };
+            sessionManager.startCookiePolling();
+            clock.tick(2000); // Advance the timers to trigger the timeout function
+            expect(handleCookieStateChangeStub).to.have.been.calledWith(cookieValue);
+        })
+
+        it('sets a timer that calls electLeader if there is not currently a leader tab', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const electLeaderStub = sinon.stub(IWHISessionManager.prototype, 'electLeader');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const cookieValue = { leader: null, leaderCapability: null, sessionStart: Date.now() };
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+            
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.startCookiePolling();
+            clock.tick(2000); // Advance the timers to trigger the timeout function
+            expect(electLeaderStub).to.have.been.calledOnce;
+        })
+
+        it('sets a timer that does not call electLeader if the current tab is the leader', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const electLeaderStub = sinon.stub(IWHISessionManager.prototype, 'electLeader');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect' };
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+            
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.tabId = 'tab123';
+            sessionManager.startCookiePolling();
+            clock.tick(2000); // Advance the timers to trigger the timeout function
+            expect(electLeaderStub).to.not.have.been.called;
+        })
+
+        it('sets a timer that does not call electLeader if a logoutCommand is present in the cookie', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const electLeaderStub = sinon.stub(IWHISessionManager.prototype, 'electLeader');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const cookieValue = { leader: null, leaderCapability: null, logoutCommand: { reason: 'logging out' } };
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+            
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.startCookiePolling();
+            clock.tick(2000); // Advance the timers to trigger the timeout function
+            expect(electLeaderStub).to.not.have.been.called;
+        })
+
+        it('sets a timer that calls electLeader if the current leader is stale', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const electLeaderStub = sinon.stub(IWHISessionManager.prototype, 'electLeader');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                leaderStaleTimeout: 1000
+            };
+
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect', leaderLastSeen: 0 };
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+            
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.startCookiePolling();
+            clock.tick(2000); // Advance the timers to trigger the timeout function
+            expect(electLeaderStub).to.have.been.calledOnce;
+        })
+
+        it('sets a timer that does not call electLeader if the current leader is not stale', () => {
+            // Stub init to prevent beforeunload listener and other side effects
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const electLeaderStub = sinon.stub(IWHISessionManager.prototype, 'electLeader');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath',
+                leaderStaleTimeout: 1000
+            };
+
+            const cookieValue = { leader: 'tab123', leaderCapability: 'App Connect', leaderLastSeen: 1990 };
+            document.cookie = `iwhi_session_state=${encodeURIComponent(JSON.stringify(cookieValue))}; path=/`;
+            
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.startCookiePolling();
+            clock.tick(2000); // Advance the timers to trigger the timeout function
+            expect(electLeaderStub).to.not.have.been.called;
         })
     })
 })

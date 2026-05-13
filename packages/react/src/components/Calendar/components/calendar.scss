@@ -242,10 +242,16 @@ $block: '#{$prefix}--calendar' !default;
   flex: 1 1 auto;
   block-size: 100%;
   inline-size: 100%;
+  transition-duration: $duration-moderate-02;
+  transition-property: inline-size;
+  @include motion(standard, productive);
 }
 
 .#{$block}__calendar.#{$block}__date-picker-open {
   inline-size: calc(100% - ($spacing-07 + $spacing-12 + $spacing-13));
+  transition-duration: $duration-moderate-02;
+  transition-property: inline-size;
+  @include motion(standard, productive);
 }
 
 .#{$block}__date-picker-overlay {
@@ -278,15 +284,14 @@ $block: '#{$prefix}--calendar' !default;
 /* Datepicker panel */
 .#{$block}__date-picker-panel {
   z-index: 1;
+  overflow: hidden;
   flex: 0 0 auto;
   block-size: 100%;
   inline-size: 0;
   max-inline-size: 100%;
-  transition-behavior: allow-discrete;
   transition-duration: $duration-moderate-01;
-
-  transition-property: inline-size, flex, max-inline-size;
-  @include motion(exit, expressive);
+  transition-property: inline-size;
+  @include motion(standard, productive);
 
   .cds--date-picker {
     display: none;
@@ -294,10 +299,10 @@ $block: '#{$prefix}--calendar' !default;
     inline-size: 100%;
     opacity: 0;
     transition-behavior: allow-discrete;
-    transition-duration: $duration-moderate-01;
-
+    transition-delay: 0s;
+    transition-duration: $duration-fast-02;
     transition-property: opacity, display;
-    @include motion(exit, expressive);
+    @include motion(standard, productive);
   }
 
   &.#{$block}__date-picker-slide {
@@ -309,20 +314,18 @@ $block: '#{$prefix}--calendar' !default;
   &.#{$block}__date-picker-open {
     border-block-start: 1px solid $border-subtle-02;
     inline-size: calc($spacing-07 + $spacing-12 + $spacing-13);
-    transition-behavior: allow-discrete;
     transition-duration: $duration-moderate-01;
-
     transition-property: inline-size;
-    @include motion(entrance, expressive);
+    @include motion(standard, productive);
 
     .cds--date-picker {
       display: flex;
       opacity: 1;
       transition-behavior: allow-discrete;
+      transition-delay: $duration-fast-02;
       transition-duration: $duration-moderate-01;
-
       transition-property: opacity, display;
-      @include motion(entrance, expressive);
+      @include motion(entrance, productive);
     }
   }
 
@@ -357,10 +360,16 @@ $block: '#{$prefix}--calendar' !default;
   .#{$block}__toolbar-left {
     flex: 0 0 calc($spacing-12 * 3);
     inline-size: calc($spacing-12 * 3);
+    transition-duration: $duration-moderate-01;
+    transition-property: flex, inline-size;
+    @include motion(standard, productive);
   }
 
   .#{$block}__toolbar-right {
     border-inline-start: 1px solid $border-subtle-02;
+    transition-duration: $duration-moderate-01;
+    transition-property: border-inline-start;
+    @include motion(standard, productive);
   }
 }
 

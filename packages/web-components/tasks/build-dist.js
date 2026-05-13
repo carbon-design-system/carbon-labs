@@ -59,9 +59,11 @@ function _getVersion() {
  */
 function _getName() {
   const packagePath = process.cwd();
-  const name = /packages\/web-components\/src\/components\/(.*?)(?=$)/g.exec(
-    packagePath
-  );
+  // Support both regular components and v12 components paths
+  const name =
+    /packages\/web-components\/src\/(?:v12\/)?components\/(.*?)(?=$)/g.exec(
+      packagePath
+    );
   return name[1];
 }
 
@@ -122,7 +124,13 @@ export default (commandLineArgs) => {
         sourceMap: true,
       }),
       json(),
-      esbuild({ sourceMap: false, tsconfig: '../tsconfig.json' }),
+      esbuild({
+        sourceMap: false,
+        tsconfig: '../tsconfig.json',
+        // smiles-drawer 2.3.0 ships src/CIP.ts via app.js (no prebuild bundle)
+        // so esbuild needs to be told to transpile it
+        exclude: /node_modules\/(?!smiles-drawer\/src)/,
+      }),
       rollupPluginLitSCSS({
         includePaths: [path.resolve(__dirname, '../../../node_modules')],
         async preprocessor(contents, id) {

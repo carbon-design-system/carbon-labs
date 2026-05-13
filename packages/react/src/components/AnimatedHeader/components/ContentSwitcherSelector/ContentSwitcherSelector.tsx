@@ -66,7 +66,7 @@ const ContentSwitcherSelector: React.FC<ContentSwitcherSelectorProps> = ({
   const visibleItems = items.slice(0, count);
 
   const selectedIndexSafe = Math.min(
-    Math.max(selectedIndex, 0),
+    Math.max(selectedIndex ?? 0, 0),
     visibleItems.length - 1
   );
 

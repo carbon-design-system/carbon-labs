@@ -14,9 +14,9 @@ import { property, state } from 'lit/decorators.js';
 import styles from './style-picker.scss?inline';
 import {
   stylePickerContext,
-  StylePickerContextType,
+  type StylePickerContextType,
 } from '../../../context/style-picker-context';
-import { Kind, prefix } from '../../../defs';
+import { prefix, type Kind } from '../../../defs';
 import CLABSStylePicker from '../style-picker';
 
 /**

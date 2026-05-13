@@ -13,7 +13,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
 import styles from './_index.scss?inline';
 import { animate, fadeIn, fadeOut } from '@lit-labs/motion';
-import { HeaderContextProps } from '../HeaderContext/HeaderContext.types';
+import type { HeaderContextProps } from '../HeaderContext/HeaderContext.types';
 
 const { stablePrefix: clabsPrefix } = settings;
 

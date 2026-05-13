@@ -9,10 +9,8 @@
 
 import { expect } from '@open-wc/testing';
 import * as loadSidekickScript from '../loadSidekickScript';
-import {
-  HeaderProps,
-  solisDeploymentEnvironment,
-} from '../../types/Header.types';
+import type { HeaderProps } from '../../types/Header.types';
+import { solisDeploymentEnvironment } from '../../types/Header.types';
 
 const propsWithSidekickConfig: HeaderProps = {
   brand: {

@@ -11,7 +11,7 @@ import { html, fixture, expect } from '@open-wc/testing';
 import '../AuthContext';
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../../constant';
 import sinon from 'sinon';
-import { ProfileFooterLinks } from '../../../types/Header.types';
+import type { ProfileFooterLinks } from '../../../types/Header.types';
 import { AuthContext } from '../AuthContext';
 
 const profile = {

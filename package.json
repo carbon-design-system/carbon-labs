@@ -11,10 +11,11 @@
   },
   "workspaces": [
     "packages/*",
-    "packages/*/**"
+    "packages/*/**",
+    "tools/*"
   ],
   "scripts": {
-    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' --concurrency=1 && lerna run build --scope '@carbon-labs/vscode-snippets' --concurrency=1 && lerna run build --scope '@carbon-labs/react' --concurrency=1 && lerna run build --scope '@carbon-labs/web-components' --concurrency=1",
+    "build": "yarn clean && lerna run build --scope '@carbon-labs/utilities' && lerna run build --scope '@carbon-labs/primitives' && lerna run build --scope '@carbon-labs/vscode-snippets' && lerna run build --scope '@carbon-labs/react' && lerna run build --scope '@carbon-labs/web-components'",
     "build:dist": "lerna run build:dist --stream",
     "build:dist:canary": "lerna run build:dist:canary --stream",
     "ci-check": "yarn run format:diff && yarn lint:license && yarn lint && yarn lint:styles",
@@ -23,6 +24,8 @@
     "doctoc": "doctoc --title '## Table of Contents' docs",
     "format": "prettier --cache --write '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
     "format:diff": "prettier --list-different '**/*.{js,md,scss,ts,tsx}' '!**/*.snap.js' '!**/{build,es,lib,.storybook,ts,umd,storybook-static}/**'",
+    "prep": "node tools/prep.js",
+    "scaffold": "node tools/scaffold.js",
     "lint": "eslint packages --ext .js,.ts",
     "lint:license": "tools/check-license.cjs -a",
     "lint:license:staged": "tools/check-license.cjs -w",
@@ -41,8 +44,8 @@
     "@carbon/icons-react": "^11.65.0",
     "@carbon/react": "^1.95.0",
     "@carbon/styles": "^1.94.0",
-    "@commitlint/cli": "^19.0.0",
-    "@commitlint/config-conventional": "^19.0.0",
+    "@commitlint/cli": "^20.0.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.0",
@@ -60,12 +63,13 @@
     "eslint": "^8.57.0",
     "eslint-config-carbon": "^3.11.0",
     "fs-extra": "^11.2.0",
+    "glob": "^11.0.0",
     "globby": "^14.0.0",
     "husky": "^9.0.0",
     "lerna": "^9.0.0",
     "lint-staged": "^15.0.2",
     "lit": "^3.2.1",
-    "prettier": "^2.8.8",
+    "prettier": "^3.3.3",
     "prettier-config-carbon": "^0.12.0",
     "rimraf": "^6.0.1",
     "rollup": "^4.0.0",
@@ -74,9 +78,9 @@
     "rollup-plugin-postcss-lit": "^2.1.0",
     "storybook": "^9.1.2",
     "strip-comments": "^2.0.1",
-    "stylelint": "15.11.0",
-    "stylelint-config-carbon": "1.17.0",
+    "stylelint": "^17.0.0",
+    "stylelint-config-carbon": "1.22.0",
     "yargs": "^17.7.2"
   },
-  "packageManager": "yarn@4.12.0"
+  "packageManager": "yarn@4.14.0"
 }

@@ -155,18 +155,16 @@ export function headerTemplate(customElementClass) {
                                 @keydown="${checkKeyboardMenu}"
                                 id="${clabsPrefix}--chat-header-overflow-body-unique">
                                 ${menuItems.map(
-                                  (
-                                    menuItem,
-                                    index
-                                  ) => html` <cds-overflow-menu-item
-                                    size=${dockingEnabled ? 'sm' : 'md'}
-                                    aria-label="Menu Option ${index}"
-                                    data-menuindex="${index}"
-                                    role="menuitem"
-                                    class="${clabsPrefix}--chat-header-overflow-menu-item-${index}"
-                                    @mousedown="${handleMenuItemSelected}">
-                                    ${menuItem.title}
-                                  </cds-overflow-menu-item>`
+                                  (menuItem, index) =>
+                                    html` <cds-overflow-menu-item
+                                      size=${dockingEnabled ? 'sm' : 'md'}
+                                      aria-label="Menu Option ${index}"
+                                      data-menuindex="${index}"
+                                      role="menuitem"
+                                      class="${clabsPrefix}--chat-header-overflow-menu-item-${index}"
+                                      @mousedown="${handleMenuItemSelected}">
+                                      ${menuItem.title}
+                                    </cds-overflow-menu-item>`
                                 )}
                               </cds-overflow-menu-body>
                             </cds-overflow-menu>
@@ -247,39 +245,39 @@ export function headerTemplate(customElementClass) {
                   </div>
                 </cds-slug> `
               : useAiLabel
-              ? html`
-                  <cds-ai-label kind="inline" ai-text-label="Text goes here">
-                    <div slot="body-text">
-                      Explanation of AI-generated content
-                    </div>
-                  </cds-ai-label>
-                `
-              : html` <cds-icon-button
-                  size="sm"
-                  kind="tertiary"
-                  align="right"
-                  role="button"
-                  tabindex="0"
-                  class="${clabsPrefix}--chat-header-ai-button"
-                  aria-expanded="${slugOpened}"
-                  aria-controls="${slugOpened
-                    ? clabsPrefix + '--chat-popup-unique-slug'
-                    : ''}"
-                  label="${renderLabel(
-                    slugOpened
-                      ? 'message-undo-like-button'
-                      : 'message-like-button'
-                  )}"
-                  @click="${handleSlugClick}">
-                  <span slot="icon" class="cds--slug__text">AI</span>
-                  <span slot="tooltip-content"
-                    >${renderLabel(
+                ? html`
+                    <cds-ai-label kind="inline" ai-text-label="Text goes here">
+                      <div slot="body-text">
+                        Explanation of AI-generated content
+                      </div>
+                    </cds-ai-label>
+                  `
+                : html` <cds-icon-button
+                    size="sm"
+                    kind="tertiary"
+                    align="right"
+                    role="button"
+                    tabindex="0"
+                    class="${clabsPrefix}--chat-header-ai-button"
+                    aria-expanded="${slugOpened}"
+                    aria-controls="${slugOpened
+                      ? clabsPrefix + '--chat-popup-unique-slug'
+                      : ''}"
+                    label="${renderLabel(
                       slugOpened
                         ? 'message-undo-like-button'
                         : 'message-like-button'
-                    )}</span
-                  >
-                </cds-icon-button>`}
+                    )}"
+                    @click="${handleSlugClick}">
+                    <span slot="icon" class="cds--slug__text">AI</span>
+                    <span slot="tooltip-content"
+                      >${renderLabel(
+                        slugOpened
+                          ? 'message-undo-like-button'
+                          : 'message-like-button'
+                      )}</span
+                    >
+                  </cds-icon-button>`}
           </div>
 
           ${!disableHeaderButtons

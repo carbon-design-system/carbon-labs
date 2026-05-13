@@ -69,15 +69,15 @@ export const stylePickerTemplate = (customElementClass) => {
           ${isLoading
             ? html`<cds-progress-bar size="small"></cds-progress-bar>`
             : showEmptyState
-            ? html`
-                <div class=${`${blockClass}__empty-state`}>
-                  <clabs-empty-state
-                    kind="notFound"
-                    title=${emptyStateTitle}
-                    subtitle=${emptyStateSubtitle}></clabs-empty-state>
-                </div>
-              `
-            : html`<slot></slot>`}
+              ? html`
+                  <div class=${`${blockClass}__empty-state`}>
+                    <clabs-empty-state
+                      kind="notFound"
+                      title=${emptyStateTitle}
+                      subtitle=${emptyStateSubtitle}></clabs-empty-state>
+                  </div>
+                `
+              : html`<slot></slot>`}
         </cds-layer>
       </div>
     </cds-popover-content>

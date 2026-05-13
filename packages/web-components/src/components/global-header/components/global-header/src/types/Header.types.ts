@@ -138,6 +138,7 @@ export type GlobalActionConfig = {
   label: string;
   carbonIcon: string;
   onClick?: () => void;
+  tooltip?: string;
 };
 
 export interface ManagementConsole {
@@ -184,11 +185,11 @@ export interface SideNav {
   buttonLabel: string;
   sidebarLabel: string;
   isCollapsible?: boolean;
-  isRail: boolean;
+  isRail?: boolean;
   onClick?: (e: Event) => void;
-  links: SideNavLink[];
+  links?: SideNavLink[];
   groups?: GroupLinks[];
-  isChildOfHeader: boolean;
+  isChildOfHeader?: boolean;
   autoCollapseOnLeave?: boolean;
   buttonCloseLabel?: string;
 }
@@ -297,8 +298,10 @@ export interface HeaderProps {
   solisConfig?: SolisConfig;
 }
 
-export interface ReactWrapperProps
-  extends Omit<HeaderProps, 'chatBotConfigs' | 'notificationConfigs'> {
+export interface ReactWrapperProps extends Omit<
+  HeaderProps,
+  'chatBotConfigs' | 'notificationConfigs'
+> {
   productKey: string;
   productName?: null;
   fetchHeaders?: Record<string, string>;

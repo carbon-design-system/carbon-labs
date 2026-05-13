@@ -32,8 +32,9 @@ const defaultControls = {
 export const Horizontal = {
   argTypes: defaultControls,
   args: defaultArgs,
-  render: ({ orientation }) =>
-    html` <clabs-toolbar orientation=${orientation}></clabs-toolbar> `,
+  render: ({ orientation }) => html`
+    <clabs-toolbar orientation=${orientation}></clabs-toolbar>
+  `,
 };
 
 export const Vertical = {
@@ -41,9 +42,7 @@ export const Vertical = {
   args: {
     orientation: 'vertical',
   },
-  render: ({ orientation }) =>
-    html`
-      <clabs-toolbar-vertical
-        orientation=${orientation}></clabs-toolbar-vertical>
-    `,
+  render: ({ orientation }) => html`
+    <clabs-toolbar-vertical orientation=${orientation}></clabs-toolbar-vertical>
+  `,
 };

@@ -140,29 +140,28 @@ export const Showcase = {
    */
   render: () =>
     html` ${examples.map(
-      (example) =>
-        html`
-          ${example.width && example.height
-            ? html`<p style="font-style:italic;font-size:14px;">
-                (${example.width}px x ${example.height}px)
-                ${example.thumbnail ? '- thumbail-mode enabled' : ''}
-              </p>`
-            : ``}
-          <br />
-          <clabs-chat-code
-            ?disable-line-ticks="${true}"
-            ?disable-copy-button="${true}"
-            content="SMILES String: ${example.smiles}">
-          </clabs-chat-code>
+      (example) => html`
+        ${example.width && example.height
+          ? html`<p style="font-style:italic;font-size:14px;">
+              (${example.width}px x ${example.height}px)
+              ${example.thumbnail ? '- thumbail-mode enabled' : ''}
+            </p>`
+          : ``}
+        <br />
+        <clabs-chat-code
+          ?disable-line-ticks="${true}"
+          ?disable-copy-button="${true}"
+          content="SMILES String: ${example.smiles}">
+        </clabs-chat-code>
 
-          <clabs-chat-molecule
-            title="${example.title}"
-            width="${example.width}"
-            height="${example.height}"
-            ?thumbnail-mode=${example.thumbnail}
-            content="${example.smiles}">
-          </clabs-chat-molecule>
-          <br />
-        `
+        <clabs-chat-molecule
+          title="${example.title}"
+          width="${example.width}"
+          height="${example.height}"
+          ?thumbnail-mode=${example.thumbnail}
+          content="${example.smiles}">
+        </clabs-chat-molecule>
+        <br />
+      `
     )}`,
 };

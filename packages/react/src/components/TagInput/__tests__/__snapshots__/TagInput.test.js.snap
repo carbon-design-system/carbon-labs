@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TagInput renders as expected - Component API should match snapshot 1`] = `
+<div>
+  <div
+    aria-label="Tag list"
+    class="clabs--tag-input__container"
+    role="listbox"
+  >
+    <div
+      class="cds--form-item clabs--tag-input__field cds--text-input-wrapper"
+    >
+      <div
+        class="cds--text-input__label-wrapper"
+      />
+      <div
+        class="cds--text-input__field-outer-wrapper"
+      >
+        <div
+          class="cds--text-input__field-wrapper"
+        >
+          <input
+            autocomplete="off"
+            class="cds--text-input cds--text-input--md cds--layout--size-md"
+            id="test-tag-input"
+            placeholder="Type and press Enter"
+            style="--input-width: 200px;"
+            title="Type and press Enter"
+            type="text"
+          />
+          <span
+            aria-atomic="true"
+            aria-live="assertive"
+            class="cds--text-input__counter-alert"
+            role="alert"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

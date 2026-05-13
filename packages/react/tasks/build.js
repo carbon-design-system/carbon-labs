@@ -129,7 +129,17 @@ function getTsCompilerOptions() {
   const baseOpts = loadBaseTsCompilerOpts();
   const projectTsConfigPath = path.resolve(__dirname, '../tsconfig.json');
   const overrideOpts = loadTsCompilerOpts(projectTsConfigPath);
-  return { ...baseOpts, ...overrideOpts };
+
+  // Check for component-specific tsconfig.json
+  const componentTsConfigPath = path.resolve(process.cwd(), 'tsconfig.json');
+  let componentOpts = {};
+  try {
+    componentOpts = loadTsCompilerOpts(componentTsConfigPath);
+  } catch (e) {
+    // No component tsconfig, use empty object
+  }
+
+  return { ...baseOpts, ...overrideOpts, ...componentOpts };
 }
 
 /**
@@ -166,7 +176,7 @@ function getRollupConfig(input, rootDir, outDir) {
     }),
     plugins: [
       nodeResolve({
-        extensions: ['.mjs', '.js', '.json', '.node', '.ts', '.tsx'],
+        extensions: ['.mjs', '.js', '.jsx', '.json', '.node', '.ts', '.tsx'],
       }),
       commonjs({
         include: /node_modules/,
@@ -190,7 +200,8 @@ function getRollupConfig(input, rootDir, outDir) {
         outputToFilesystem: false,
         compilerOptions: {
           ...getTsCompilerOptions(),
-          rootDir,
+          // Only override rootDir if component tsconfig doesn't specify it
+          ...(getTsCompilerOptions().rootDir ? {} : { rootDir }),
           outDir,
         },
       }),

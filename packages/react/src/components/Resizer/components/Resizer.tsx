@@ -193,9 +193,6 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
 
     const handleMouseDown = useCallback(
       (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
         const element = getRefElement(ref);
         if (!element || event.button !== 0) {
           return;
@@ -310,14 +307,12 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
       } else {
         const prop = orientation === 'horizontal' ? 'height' : 'width';
         if (prevSibling) {
-          prevSibling.style[
-            prop
-          ] = `${initialSizes.current.prevSiblingSize[prop]}px`;
+          prevSibling.style[prop] =
+            `${initialSizes.current.prevSiblingSize[prop]}px`;
         }
         if (nextSibling) {
-          nextSibling.style[
-            prop
-          ] = `${initialSizes.current.nextSiblingSize[prop]}px`;
+          nextSibling.style[prop] =
+            `${initialSizes.current.nextSiblingSize[prop]}px`;
         }
       }
     };

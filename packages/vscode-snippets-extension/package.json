@@ -65,6 +65,6 @@
   },
   "devDependencies": {
     "@vscode/vsce": "^3.2.1",
-    "rimraf": "^6.0.1"
+    "rimraf": "^6.1.3"
   }
 }

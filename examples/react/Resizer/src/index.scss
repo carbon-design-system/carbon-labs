@@ -29,17 +29,17 @@ body {
 .resizer-demo {
   display: flex;
   flex-direction: row;
-  inline-size: 100%;
   block-size: 100%;
+  inline-size: 100%;
   min-block-size: 100vh;
 }
 
 .resizer-demo__pane {
+  overflow: auto;
   box-sizing: border-box;
   flex: 0 0 auto;
-  inline-size: calc((100% - 0.25rem) / 2);
-  min-inline-size: 0;
-  overflow: auto;
   padding: 1rem;
   background: var(--cds-layer);
+  inline-size: calc((100% - 0.25rem) / 2);
+  min-inline-size: 0;
 }

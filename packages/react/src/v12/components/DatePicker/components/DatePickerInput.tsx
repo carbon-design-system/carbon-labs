@@ -288,10 +288,10 @@ export const DatePickerInput = forwardRef<
               showInvalidText
                 ? `${id}-error`
                 : showWarnText
-                ? `${id}-warn`
-                : showHelperText
-                ? `${id}-helper`
-                : undefined
+                  ? `${id}-warn`
+                  : showHelperText
+                    ? `${id}-helper`
+                    : undefined
             }
           />
 

@@ -1,0 +1,13 @@
+/**
+ * @license
+ *
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import './components/resizer-handle/resizer-handle.js';
+import './components/resizer-handle-pivot/resizer-handle-pivot.js';
+import './components/resizer-grid/resizer-grid.js';
+import './components/resizer-panel/resizer-panel.js';

@@ -218,8 +218,8 @@ const AnimatedHeader: React.FC<AnimatedHeaderProps> = ({
             aria-controls={`${blockClass}-content`}
             aria-label={
               isOpen
-                ? ariaLabels?.collapseButton ?? 'Collapse header details'
-                : ariaLabels?.expandButton ?? 'Expand header details'
+                ? (ariaLabels?.collapseButton ?? 'Collapse header details')
+                : (ariaLabels?.expandButton ?? 'Expand header details')
             }>
             {isOpen ? collapseButtonLabel : expandButtonLabel}
           </Button>

@@ -7,7 +7,7 @@
 
 // Import shared framework-agnostic styles from primitives (built output)
 // Uses Carbon's standard 'cds' prefix for compatibility with Carbon Design System
-@use '@carbon-labs/primitives/es/date-picker/styles/date-picker.scss';
+@use '@carbon-labs/primitives/es/date-picker/styles/date-picker';
 
 // =============================================================================
 // REACT SPECIFIC STYLES

@@ -298,8 +298,10 @@ export interface HeaderProps {
   solisConfig?: SolisConfig;
 }
 
-export interface ReactWrapperProps
-  extends Omit<HeaderProps, 'chatBotConfigs' | 'notificationConfigs'> {
+export interface ReactWrapperProps extends Omit<
+  HeaderProps,
+  'chatBotConfigs' | 'notificationConfigs'
+> {
   productKey: string;
   productName?: null;
   fetchHeaders?: Record<string, string>;

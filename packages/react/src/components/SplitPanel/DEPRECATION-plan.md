@@ -394,13 +394,11 @@ guide directly, while those who want convenience can use the helpers.
 Resizer
 
 1. **Add deprecation notice to SplitPanel documentation**
-
    - Update README.md with deprecation warning and link to Resizer
    - Add prominent banner to Storybook stories
    - Update package.json description with deprecation notice
 
 2. **Create comprehensive migration guide**
-
    - Document all migration stories (see above sections)
    - Provide side-by-side comparisons of SplitPanel vs Resizer
    - Include links to Resizer documentation and examples
@@ -427,19 +425,16 @@ Resizer
 **Goal**: Investigate if developer hooks/helpers would reduce migration friction
 
 1. **Gather migration feedback**
-
    - Monitor migration questions and pain points
    - Identify common patterns that require significant boilerplate
    - Assess if helpers would provide meaningful value
 
 2. **Evaluate helper utility options**
-
    - Determine if percentage-based split helpers are needed
    - Consider gap management utilities
    - Assess demand for onChange callback helpers
 
 3. **Decision point: Implement helpers or not**
-
    - **If helpers are valuable**: Create optional utility hooks/functions
    - **If not needed**: Continue with migration guide only approach
    - Document decision and rationale
@@ -470,13 +465,11 @@ Resizer
    ```
 
 2. **Update all examples and documentation**
-
    - Replace SplitPanel examples with Resizer equivalents
    - Update Stackblitz examples
    - Archive old SplitPanel examples with deprecation notice
 
 3. **Monitor usage and provide support**
-
    - Track npm download trends
    - Respond to migration questions
    - Collect feedback on migration guide and helpers (if implemented)
@@ -486,19 +479,16 @@ Resizer
 **Goal**: Maintain deprecated status without active removal
 
 1. **Ongoing status**
-
    - Keep component marked as deprecated in npm
    - Maintain deprecation warnings in documentation
    - Source code remains in repository for potential future use
 
 2. **No active development**
-
    - No new features will be added
    - Only critical security fixes if necessary
    - Component will not progress to v1.0.0
 
 3. **Future options**
-
    - Code remains available for resurrection if use case emerges
    - Can be removed in future major cleanup if desired
    - Serves as reference implementation for migration guide
@@ -506,13 +496,11 @@ Resizer
 ## Success Metrics
 
 1. **Adoption Metrics**
-
    - Decrease in SplitPanel npm downloads
    - Increase in Resizer npm downloads
    - Reduction in SplitPanel-related support questions
 
 2. **Migration Completion**
-
    - Zero internal Carbon Labs usage of SplitPanel
    - All examples migrated to Resizer
    - Documentation fully updated

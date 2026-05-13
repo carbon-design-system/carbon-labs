@@ -111,7 +111,7 @@ $css--plex: true !default;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 14px;
     inset-block-end: 8px;
-    inset-inline: 0 0;
+    inset-inline: 0;
     line-height: 18px;
     padding-inline: 8px;
     pointer-events: none;
@@ -147,8 +147,13 @@ $css--plex: true !default;
     display: flex;
     overflow: hidden;
     flex-direction: row;
-    font-family: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont,
-      '.SFNSText-Regular', sans-serif;
+    font-family:
+      'IBM Plex Sans',
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      '.SFNSText-Regular',
+      sans-serif;
     font-size: 16px;
     font-weight: 600;
     inset-block-end: 16px;

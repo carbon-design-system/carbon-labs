@@ -95,7 +95,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
       }`}
       aria-label={ariaLabel ?? title ?? 'AI Tile'}
       role="listitem"
-      title={isDisabled ? disabledTaskLabel ?? '' : ''}
+      title={isDisabled ? (disabledTaskLabel ?? '') : ''}
       key={tileId}
       {...dataAttributes}>
       {isLoading ? (

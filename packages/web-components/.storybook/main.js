@@ -41,8 +41,8 @@ const config = {
   addons: [
     getAbsolutePath('@storybook/addon-a11y'),
     getAbsolutePath('storybook-addon-accessibility-checker'),
-    getAbsolutePath("@storybook/addon-links"),
-    getAbsolutePath("@storybook/addon-docs")
+    getAbsolutePath('@storybook/addon-links'),
+    getAbsolutePath('@storybook/addon-docs'),
   ],
 
   framework: {
@@ -58,6 +58,9 @@ const config = {
 
   async viteFinal(config) {
     return mergeConfig(config, {
+      build: {
+        cssMinify: 'esbuild',
+      },
       css: {
         preprocessorOptions: {
           scss: {
@@ -79,6 +82,6 @@ const config = {
         }),
       ],
     });
-  }
+  },
 };
 export default config;

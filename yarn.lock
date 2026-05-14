@@ -1953,6 +1953,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carbon-labs/utilities@npm:0.26.0":
+  version: 0.26.0
+  resolution: "@carbon-labs/utilities@npm:0.26.0"
+  peerDependencies:
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  checksum: 10c0/901614ab2f23fb9bc57fef415b828a088079fb9563112417e390aa4b3461c639c6d6f54b9a8f2f9adbd2970d636d2f50a7917f7fbe3e5f276b05a2d361874956
+  languageName: node
+  linkType: hard
+
 "@carbon-labs/utilities@npm:0.27.0, @carbon-labs/utilities@workspace:packages/utilities":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/utilities@workspace:packages/utilities"

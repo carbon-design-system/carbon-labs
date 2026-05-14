@@ -872,11 +872,15 @@ describe('solisSessionManager', () => {
         let clock;
     
         beforeEach(() => {
-            clock = sinon.useFakeTimers();
+            clock = sinon.useFakeTimers({
+                shouldAdvanceTime: false,
+                toFake: ['setInterval', 'clearInterval', 'Date']
+            });
         });
         
         afterEach(() => {
             clock.restore();
+            clock.null;
         });
 
         it('sets the cookiePolling timer', () => {
@@ -892,6 +896,7 @@ describe('solisSessionManager', () => {
             sessionManager.startCookiePolling();
             expect(sessionManager.timers.cookiePolling).to.not.be.undefined;
             expect(sessionManager.timers.cookiePolling).to.not.be.null;
+            clock.restore();
         })
 
         it('sets a timer that does nothing if logged out', () => {
@@ -909,6 +914,7 @@ describe('solisSessionManager', () => {
             sessionManager.startCookiePolling();
             clock.tick(2000); // Advance the timers to trigger the timeout function
             expect(readCookieStateStub).to.not.have.been.called;
+            clock.restore();
         })
 
         it('sets a timer that triggers logout if the cookie has disappeared', () => {
@@ -930,6 +936,7 @@ describe('solisSessionManager', () => {
             expect(cleanupStub).to.have.been.calledOnce;
             expect(onLogoutSpy).to.have.been.calledWith('cookie_disappeared');
             expect(sessionManager.isLoggedOut).to.be.true;
+            clock.restore();
         })
 
         it('sets a timer that triggers logout if the cookie has disappeared after logout', () => {
@@ -953,6 +960,7 @@ describe('solisSessionManager', () => {
             expect(cleanupStub).to.have.been.calledOnce;
             expect(onLogoutSpy).to.have.been.calledWith('cookie_disappeared_after_logout');
             expect(sessionManager.isLoggedOut).to.be.true;
+            clock.restore();
         })
 
         it('sets a timer that does nothing if the cookie has not been initialised', () => {
@@ -973,6 +981,7 @@ describe('solisSessionManager', () => {
             expect(readCookieStateStub).to.have.been.calledOnce;
             expect(handleCookieStateChangeStub).to.not.have.been.called;
             expect(electLeaderStub).to.not.have.been.called;
+            clock.restore();
         })
 
         it('sets a timer that calls handleCookieStateChange if the session state has changed', () => {
@@ -993,6 +1002,7 @@ describe('solisSessionManager', () => {
             sessionManager.startCookiePolling();
             clock.tick(2000); // Advance the timers to trigger the timeout function
             expect(handleCookieStateChangeStub).to.have.been.calledWith(cookieValue);
+            clock.restore();
         })
 
         it('sets a timer that calls electLeader if there is not currently a leader tab', () => {
@@ -1012,6 +1022,7 @@ describe('solisSessionManager', () => {
             sessionManager.startCookiePolling();
             clock.tick(2000); // Advance the timers to trigger the timeout function
             expect(electLeaderStub).to.have.been.calledOnce;
+            clock.restore();
         })
 
         it('sets a timer that does not call electLeader if the current tab is the leader', () => {
@@ -1032,6 +1043,7 @@ describe('solisSessionManager', () => {
             sessionManager.startCookiePolling();
             clock.tick(2000); // Advance the timers to trigger the timeout function
             expect(electLeaderStub).to.not.have.been.called;
+            clock.restore();
         })
 
         it('sets a timer that does not call electLeader if a logoutCommand is present in the cookie', () => {
@@ -1051,6 +1063,7 @@ describe('solisSessionManager', () => {
             sessionManager.startCookiePolling();
             clock.tick(2000); // Advance the timers to trigger the timeout function
             expect(electLeaderStub).to.not.have.been.called;
+            clock.restore();
         })
 
         it('sets a timer that calls electLeader if the current leader is stale', () => {
@@ -1071,6 +1084,7 @@ describe('solisSessionManager', () => {
             sessionManager.startCookiePolling();
             clock.tick(2000); // Advance the timers to trigger the timeout function
             expect(electLeaderStub).to.have.been.calledOnce;
+            clock.restore();
         })
 
         it('sets a timer that does not call electLeader if the current leader is not stale', () => {
@@ -1091,6 +1105,7 @@ describe('solisSessionManager', () => {
             sessionManager.startCookiePolling();
             clock.tick(2000); // Advance the timers to trigger the timeout function
             expect(electLeaderStub).to.not.have.been.called;
+            clock.restore();
         })
     })
 })

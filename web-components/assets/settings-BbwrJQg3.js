@@ -1,0 +1,1 @@
+var e={stablePrefix:`clabs`,prefix:`cds`};export{e as t};

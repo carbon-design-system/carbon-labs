@@ -1,0 +1,1 @@
+import{t as e}from"./lib-SZf5Byc3.js";export{e as MDXProvider};

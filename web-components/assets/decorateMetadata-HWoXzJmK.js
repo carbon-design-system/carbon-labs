@@ -1,0 +1,1 @@
+function e(e,t){if(typeof Reflect==`object`&&typeof Reflect.metadata==`function`)return Reflect.metadata(e,t)}export{e as t};

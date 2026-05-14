@@ -1,15 +1,17 @@
 /* @web/test-runner snapshot v1 */
 export const snapshots = {};
 
-snapshots['clabs-resizer-panel should render clabs-resizer-panel'] =
-  `<clabs-resizer-panel>
+snapshots[
+  'clabs-resizer-panel should render clabs-resizer-panel'
+] = `<clabs-resizer-panel>
   Panel content
 </clabs-resizer-panel>
 `;
 /* end snapshot clabs-resizer-panel should render clabs-resizer-panel */
 
-snapshots['clabs-resizer-handle should render clabs-resizer-handle'] =
-  `<clabs-resizer-handle
+snapshots[
+  'clabs-resizer-handle should render clabs-resizer-handle'
+] = `<clabs-resizer-handle
   aria-live="assertive"
   aria-orientation="horizontal"
   aria-valuemax="100"
@@ -33,8 +35,9 @@ snapshots[
 `;
 /* end snapshot clabs-resizer-handle-pivot should render clabs-resizer-handle-pivot */
 
-snapshots['clabs-resizer-grid should render clabs-resizer-grid'] =
-  `<clabs-resizer-grid>
+snapshots[
+  'clabs-resizer-grid should render clabs-resizer-grid'
+] = `<clabs-resizer-grid>
   <clabs-resizer-panel slot="left">
     Left panel
   </clabs-resizer-panel>

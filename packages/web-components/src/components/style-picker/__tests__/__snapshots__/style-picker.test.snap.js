@@ -1,9 +1,8 @@
 /* @web/test-runner snapshot v1 */
 export const snapshots = {};
 
-snapshots[
-  'clabs-style-picker should render single variant color picker module'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker should render single variant color picker module"] = 
+`<clabs-style-picker
   align="bottom"
   kind="single"
   open=""
@@ -26,9 +25,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker should render single variant color picker module */
 
-snapshots[
-  'clabs-style-picker should render single variant icon picker module'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker should render single variant icon picker module"] = 
+`<clabs-style-picker
   align="bottom"
   kind="single"
   open=""
@@ -51,9 +49,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker should render single variant icon picker module */
 
-snapshots[
-  'clabs-style-picker should render single variant with color picker module'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker should render single variant with color picker module"] = 
+`<clabs-style-picker
   align="bottom"
   kind="single"
   open=""
@@ -76,9 +73,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker should render single variant with color picker module */
 
-snapshots[
-  'clabs-style-picker should render single variant with icon picker module'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker should render single variant with icon picker module"] = 
+`<clabs-style-picker
   align="bottom"
   kind="single"
   open=""
@@ -101,9 +97,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker should render single variant with icon picker module */
 
-snapshots[
-  'clabs-style-picker should render single variant with pictogram picker module'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker should render single variant with pictogram picker module"] = 
+`<clabs-style-picker
   align="bottom"
   kind="single"
   open=""
@@ -126,9 +121,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker should render single variant with pictogram picker module */
 
-snapshots[
-  'clabs-style-picker should render single variant with color picker options'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker should render single variant with color picker options"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -2321,9 +2315,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker should render single variant with color picker options */
 
-snapshots[
-  'clabs-style-picker should render single variant with icon picker options'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker should render single variant with icon picker options"] = 
+`<clabs-style-picker
   align="bottom"
   heading="Choose icon"
   kind="single"
@@ -2400,8 +2393,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker should render single variant with icon picker options */
 
-snapshots['clabs-style-picker should select a color option'] =
-  `<clabs-style-picker
+snapshots["clabs-style-picker should select a color option"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -4594,9 +4587,8 @@ snapshots['clabs-style-picker should select a color option'] =
 `;
 /* end snapshot clabs-style-picker should select a color option */
 
-snapshots[
-  'clabs-style-picker single variant should render single variant with color picker options'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker single variant should render single variant with color picker options"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -6789,8 +6781,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker single variant should render single variant with color picker options */
 
-snapshots['clabs-style-picker single variant should select a color option'] =
-  `<clabs-style-picker
+snapshots["clabs-style-picker single variant should select a color option"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -8983,9 +8975,8 @@ snapshots['clabs-style-picker single variant should select a color option'] =
 `;
 /* end snapshot clabs-style-picker single variant should select a color option */
 
-snapshots[
-  'clabs-style-picker single variant color picker should render single variant with color picker options'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker single variant color picker should render single variant with color picker options"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -11178,9 +11169,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker single variant color picker should render single variant with color picker options */
 
-snapshots[
-  'clabs-style-picker single variant color picker should select a color option'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker single variant color picker should select a color option"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -13374,9 +13364,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker single variant color picker should select a color option */
 
-snapshots[
-  'clabs-style-picker single variant icon picker should render single variant with icon picker options'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker single variant icon picker should render single variant with icon picker options"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -13499,9 +13488,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker single variant icon picker should render single variant with icon picker options */
 
-snapshots[
-  'clabs-style-picker single variant icon picker should select a icon option'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker single variant icon picker should select a icon option"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -13624,9 +13612,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker single variant icon picker should select a icon option */
 
-snapshots[
-  'clabs-style-picker flat variant color and icon picker should render color and icon picker flat variant'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker flat variant color and icon picker should render color and icon picker flat variant"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -13929,9 +13916,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker flat variant color and icon picker should render color and icon picker flat variant */
 
-snapshots[
-  'clabs-style-picker single variant color picker should render single variant with color options'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker single variant color picker should render single variant with color options"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -16125,9 +16111,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker single variant color picker should render single variant with color options */
 
-snapshots[
-  'clabs-style-picker flat variant color and icon picker should render flat variant with color and icon options '
-] = `<clabs-style-picker
+snapshots["clabs-style-picker flat variant color and icon picker should render flat variant with color and icon options "] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -16431,9 +16416,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker flat variant color and icon picker should render flat variant with color and icon options  */
 
-snapshots[
-  'clabs-style-picker flat variant color and icon picker should select a different color and icon options'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker flat variant color and icon picker should select a different color and icon options"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -16737,9 +16721,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker flat variant color and icon picker should select a different color and icon options */
 
-snapshots[
-  'clabs-style-picker single variant color picker should enable search'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker single variant color picker should enable search"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle="Try a different search"
   empty-state-title="No results found"
@@ -18933,9 +18916,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker single variant color picker should enable search */
 
-snapshots[
-  'clabs-style-picker flat variant color and icon picker should enable search'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker flat variant color and icon picker should enable search"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle="Try a different search"
   empty-state-title="No results found"
@@ -19239,9 +19221,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker flat variant color and icon picker should enable search */
 
-snapshots[
-  'clabs-style-picker single variant color picker should enable search in single variant'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker single variant color picker should enable search in single variant"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle="Try a different search"
   empty-state-title="No results found"
@@ -21436,9 +21417,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker single variant color picker should enable search in single variant */
 
-snapshots[
-  'clabs-style-picker flat variant color and icon picker should enable search in flat variant'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker flat variant color and icon picker should enable search in flat variant"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle="Try a different search"
   empty-state-title="No results found"
@@ -21743,9 +21723,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker flat variant color and icon picker should enable search in flat variant */
 
-snapshots[
-  'clabs-style-picker flat variant color and icon picker should search color and icon'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker flat variant color and icon picker should search color and icon"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle="Try a different search"
   empty-state-title="No results found"
@@ -22065,9 +22044,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker flat variant color and icon picker should search color and icon */
 
-snapshots[
-  'clabs-style-picker disclosed variant color and icon picker should render disclosed variant with color and icon options'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker disclosed variant color and icon picker should render disclosed variant with color and icon options"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -24358,9 +24336,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker disclosed variant color and icon picker should render disclosed variant with color and icon options */
 
-snapshots[
-  'clabs-style-picker disclosed variant color and icon picker should select a different color and icon options'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker disclosed variant color and icon picker should select a different color and icon options"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -26651,9 +26628,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker disclosed variant color and icon picker should select a different color and icon options */
 
-snapshots[
-  'clabs-style-picker disclosed variant color and icon picker should enable search in disclosed variant'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker disclosed variant color and icon picker should enable search in disclosed variant"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle="Try a different search"
   empty-state-title="No results found"
@@ -28945,9 +28921,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker disclosed variant color and icon picker should enable search in disclosed variant */
 
-snapshots[
-  'clabs-style-picker disclosed variant color and icon picker should search color and icon'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker disclosed variant color and icon picker should search color and icon"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle="Try a different search"
   empty-state-title="No results found"
@@ -31297,9 +31272,8 @@ snapshots[
 `;
 /* end snapshot clabs-style-picker disclosed variant color and icon picker should search color and icon */
 
-snapshots[
-  'clabs-style-picker single variant color picker should render loading state'
-] = `<clabs-style-picker
+snapshots["clabs-style-picker single variant color picker should render loading state"] = 
+`<clabs-style-picker
   align="bottom"
   empty-state-subtitle=""
   empty-state-title=""
@@ -33492,3 +33466,4 @@ snapshots[
 </clabs-style-picker>
 `;
 /* end snapshot clabs-style-picker single variant color picker should render loading state */
+

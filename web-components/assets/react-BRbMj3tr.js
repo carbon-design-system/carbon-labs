@@ -1,0 +1,1 @@
+import{t as e}from"./lib-FWEvyWN8.js";export{e as MDXProvider};

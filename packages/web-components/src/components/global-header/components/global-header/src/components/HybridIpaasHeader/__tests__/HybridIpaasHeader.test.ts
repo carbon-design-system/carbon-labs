@@ -15,7 +15,7 @@ import { waitUntil } from '@open-wc/testing';
 import '../HybridIpaasHeader';
 import { HybridIpaasHeader } from '../HybridIpaasHeader';
 import '../HybridIpaasHeader';
-import {
+import type {
   GlobalActionConfig,
   ProfileFooterLinks,
   SearchConfigs,

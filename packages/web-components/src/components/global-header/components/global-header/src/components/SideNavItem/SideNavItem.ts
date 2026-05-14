@@ -9,7 +9,7 @@
 /* eslint jsdoc/require-jsdoc: 0 */
 
 import { css, html, LitElement, nothing, unsafeCSS } from 'lit';
-import { SideNavLink, SideNavMenuItems } from '../../types/Header.types';
+import type { SideNavLink, SideNavMenuItems } from '../../types/Header.types';
 
 /* c8 ignore next */
 import cx from 'classnames';

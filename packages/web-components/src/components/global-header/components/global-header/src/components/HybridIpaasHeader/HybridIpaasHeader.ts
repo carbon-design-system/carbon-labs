@@ -17,14 +17,14 @@ import {
   INITIAL_AUTOMATION_HEADER_PROPS,
   SOLIS_CDN_HOSTNAMES,
 } from '../../constant';
-import {
+import type {
   GlobalActionConfig,
   HeaderProps,
   MainSectionItem,
   ProfileFooterLinks,
   SearchConfigs,
-  solisDeploymentEnvironment,
 } from '../../types/Header.types';
+import { solisDeploymentEnvironment } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
 
 import styles from '../../index.scss?inline';

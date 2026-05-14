@@ -9,7 +9,7 @@
 /* eslint jsdoc/require-jsdoc: 0 */
 
 import sinon from 'sinon';
-import { SearchConfigs } from '../../../types/Header.types';
+import type { SearchConfigs } from '../../../types/Header.types';
 import '../Search';
 
 import { fixture, html, expect } from '@open-wc/testing';

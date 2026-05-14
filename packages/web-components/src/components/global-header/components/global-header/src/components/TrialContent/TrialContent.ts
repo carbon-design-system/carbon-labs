@@ -9,7 +9,7 @@
 /* eslint jsdoc/require-jsdoc: 0 */
 
 import { html, nothing } from 'lit';
-import { TrialTooltipProps } from './TrialContent.types';
+import type { TrialTooltipProps } from './TrialContent.types';
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
 import { renderCarbonIcon, trackEvent } from '../../globals/utils';
 import '@carbon/web-components/es-custom/components/button/index.js';

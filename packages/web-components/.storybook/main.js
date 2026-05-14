@@ -58,6 +58,9 @@ const config = {
 
   async viteFinal(config) {
     return mergeConfig(config, {
+      build: {
+        cssMinify: 'esbuild',
+      },
       css: {
         preprocessorOptions: {
           scss: {

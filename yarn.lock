@@ -1695,6 +1695,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-calendar@workspace:packages/react/src/components/Calendar":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-calendar@workspace:packages/react/src/components/Calendar"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.26.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-date-picker@workspace:packages/react/src/v12/components/DatePicker":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-date-picker@workspace:packages/react/src/v12/components/DatePicker"
@@ -1941,6 +1950,16 @@ __metadata:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/57b347fe87f4fef0e21cde90e76fdba123af6e5781377921ca88d5351e6b679f7ed31ee0ffa2190626e6f197951f3871e4068280029dcb177621dab1ffe64f8c
+  languageName: node
+  linkType: hard
+
+"@carbon-labs/utilities@npm:0.26.0":
+  version: 0.26.0
+  resolution: "@carbon-labs/utilities@npm:0.26.0"
+  peerDependencies:
+    react: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+    react-dom: ^16.8.6 || ^17.0.1 || ^18.2.0 || ^19.0.0
+  checksum: 10c0/901614ab2f23fb9bc57fef415b828a088079fb9563112417e390aa4b3461c639c6d6f54b9a8f2f9adbd2970d636d2f50a7917f7fbe3e5f276b05a2d361874956
   languageName: node
   linkType: hard
 

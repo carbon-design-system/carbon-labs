@@ -23,7 +23,7 @@ export const WithLayer: React.FC<WithLayerProps> = ({ children }) => {
       <div className="sb-with-layer-background">
         <div className="sb-with-layer-label">
           <svg width="16" height="16" viewBox="0 0 16 16">
-            <path d="M8.5 3L14 6.062v4.875L8.5 14 3 10.937V6.063L8.5 3zm0 1.5L4.5 6.75v2.5L8.5 12l4-2.75v-2.5L8.5 4.5z"/>
+            <path d="M8.5 3L14 6.062v4.875L8.5 14 3 10.937V6.063L8.5 3zm0 1.5L4.5 6.75v2.5L8.5 12l4-2.75v-2.5L8.5 4.5z" />
           </svg>
           $background
         </div>
@@ -33,7 +33,7 @@ export const WithLayer: React.FC<WithLayerProps> = ({ children }) => {
             <div className="sb-with-layer-layer">
               <div className="sb-with-layer-label">
                 <svg width="16" height="16" viewBox="0 0 16 16">
-                  <path d="M8.5 3L14 6.062v4.875L8.5 14 3 10.937V6.063L8.5 3zm0 1.5L4.5 6.75v2.5L8.5 12l4-2.75v-2.5L8.5 4.5z"/>
+                  <path d="M8.5 3L14 6.062v4.875L8.5 14 3 10.937V6.063L8.5 3zm0 1.5L4.5 6.75v2.5L8.5 12l4-2.75v-2.5L8.5 4.5z" />
                 </svg>
                 $layer-01
               </div>
@@ -43,13 +43,11 @@ export const WithLayer: React.FC<WithLayerProps> = ({ children }) => {
                   <div className="sb-with-layer-layer">
                     <div className="sb-with-layer-label">
                       <svg width="16" height="16" viewBox="0 0 16 16">
-                        <path d="M8.5 3L14 6.062v4.875L8.5 14 3 10.937V6.063L8.5 3zm0 1.5L4.5 6.75v2.5L8.5 12l4-2.75v-2.5L8.5 4.5z"/>
+                        <path d="M8.5 3L14 6.062v4.875L8.5 14 3 10.937V6.063L8.5 3zm0 1.5L4.5 6.75v2.5L8.5 12l4-2.75v-2.5L8.5 4.5z" />
                       </svg>
                       $layer-02
                     </div>
-                    <div className="sb-with-layer-content">
-                      {children(2)}
-                    </div>
+                    <div className="sb-with-layer-content">{children(2)}</div>
                   </div>
                 </Layer>
               </div>

@@ -14,7 +14,18 @@ export default class IWHISessionManager {
     tabId: string;
     capability: string;
     isLeader: boolean;
-    lastCookieState: {} | null;
+    lastCookieState: {
+        sessionStart?: number,
+        lastActivity?: number,
+        lastTokenRefresh?: number,
+        leaderLastSeen?: number,
+        leader?: string,
+        leaderCapability?: string,
+        logoutCommand?: {
+            timestamp?: number,
+            reason?: string
+        }
+    } | null;
     sessionStartTime: number;
     lastActivityTime: number;
     lastActivityUpdate: number | null;
@@ -414,11 +425,60 @@ export default class IWHISessionManager {
         }, this.config.cookiePollInterval);
     }
 
-    handleCookieStateChange(state) {
-        console.log('hello for now ', state);
+    handleCookieStateChange(newState) {
+        this.log('Cookie state changed:', newState);
+    
+        // Check for logout command FIRST - highest priority
+        if (newState.logoutCommand &&
+            (!this.lastCookieState?.logoutCommand ||
+            newState.logoutCommand.timestamp !== this.lastCookieState.logoutCommand.timestamp)) {
+            this.log('Logout command received from cookie');
+            
+            // Mark as logged out to prevent further activity
+            this.isLoggedOut = true;
+            
+            // Stop all timers
+            this.cleanup();
+            
+            // Perform logout (redirect)
+            this.performLogout(newState.logoutCommand.reason);
+            return; // Don't process any other state changes
+        }
+            
+        // Don't process other state changes after logout
+        if (this.isLoggedOut) {
+            return;
+        }
+        
+        // Update local state
+        if (newState.lastActivity > this.lastActivityTime) {
+            this.lastActivityTime = newState.lastActivity;
+            // Don't auto-dismiss warning when activity is detected
+            // User must explicitly click "Continue Session" button
+            // This allows user to interact with the warning dialog
+        }
+        
+        if (newState.lastTokenRefresh > this.lastTokenRefreshTime) {
+            this.lastTokenRefreshTime = newState.lastTokenRefresh;
+            this.log('Token was refreshed by another tab');
+        }
+        
+        if (newState.sessionStart) {
+            this.sessionStartTime = newState.sessionStart;
+        }
+        
+        // Check leader status
+        if (newState.leader !== this.tabId && this.isLeader) {
+            this.log('Another tab claimed leadership');
+            this.resignLeadership();
+        }
     }
 
     electLeader() {
+        console.log('hello for now');
+    }
+
+    resignLeadership() {
         console.log('hello for now');
     }
 

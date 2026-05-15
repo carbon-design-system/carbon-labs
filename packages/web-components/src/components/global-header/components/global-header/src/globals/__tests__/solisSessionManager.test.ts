@@ -1119,4 +1119,114 @@ describe('solisSessionManager', () => {
             expect(electLeaderStub).to.not.have.been.called;
         })
     })
+
+    describe(('handleCookieStateChange'), () => {
+        it('calls performLogout if the new cookie state contains a logoutCommand and the previous state does not', () => {
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const cleanupStub = sinon.stub(IWHISessionManager.prototype, 'cleanup');
+            const performLogoutStub = sinon.stub(IWHISessionManager.prototype, 'performLogout');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const newState = { leader: 'tab123', leaderCapability: 'App Connect', logoutCommand: { reason: 'logout_requested' } }
+            const sessionManager = new IWHISessionManager(config);
+            expect(sessionManager.isLoggedOut).to.be.false;
+            sessionManager.handleCookieStateChange(newState);
+            expect(sessionManager.isLoggedOut).to.be.true;
+            expect(cleanupStub).to.have.been.calledOnce;
+            expect(performLogoutStub).to.have.been.calledWith('logout_requested');
+        })
+
+        it('calls performLogout if the new cookie state contains a logoutCommand and the timestamp of the new logout command is different', () => {
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const cleanupStub = sinon.stub(IWHISessionManager.prototype, 'cleanup');
+            const performLogoutStub = sinon.stub(IWHISessionManager.prototype, 'performLogout');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const newState = { leader: 'tab123', leaderCapability: 'App Connect', logoutCommand: { reason: 'logout_requested', timestamp: 2000 }}
+            const sessionManager = new IWHISessionManager(config);
+            expect(sessionManager.isLoggedOut).to.be.false;
+            sessionManager.lastCookieState = {
+                logoutCommand: {
+                    timestamp: 1000
+                }
+            }
+            sessionManager.handleCookieStateChange(newState);
+            expect(sessionManager.isLoggedOut).to.be.true;
+            expect(cleanupStub).to.have.been.calledOnce;
+            expect(performLogoutStub).to.have.been.calledWith('logout_requested');
+        })
+
+        it('does nothing if already logged out', () => {
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const cleanupStub = sinon.stub(IWHISessionManager.prototype, 'cleanup');
+            const performLogoutStub = sinon.stub(IWHISessionManager.prototype, 'performLogout');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const newState = { leader: 'tab123', leaderCapability: 'App Connect'}
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.isLoggedOut = true;
+            sessionManager.handleCookieStateChange(newState);
+            expect(sessionManager.isLoggedOut).to.be.true;
+            expect(cleanupStub).to.not.have.been.called;
+            expect(performLogoutStub).to.not.have.been.called;
+        })
+
+        it('updates local state with the newState', () => {
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const newState = {
+                leader: 'tab123',
+                leaderCapability: 'App Connect',
+                lastActivity: 500,
+                lastTokenRefresh: 600,
+                sessionStart: 200,
+
+            }
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.lastActivityTime = 300;
+            sessionManager.lastTokenRefreshTime = 400;
+            sessionManager.sessionStartTime = 0;
+            sessionManager.handleCookieStateChange(newState);
+            expect(sessionManager.lastActivityTime).to.equal(500);
+            expect(sessionManager.lastTokenRefreshTime).to.equal(600);
+            expect(sessionManager.sessionStartTime).to.equal(200);
+        })
+
+        it('calls resignLeadership if the leader in the newState is not the current tab', () => {
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const resignLeadershipStub = sinon.stub(IWHISessionManager.prototype, 'resignLeadership');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const newState = {
+                leader: 'tab123'
+            }
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.tabId = 'tab456';
+            sessionManager.isLeader = true;
+            sessionManager.handleCookieStateChange(newState);
+            expect(resignLeadershipStub).to.have.been.called;
+        })
+    })
 })

@@ -339,6 +339,10 @@ export default class IWHISessionManager {
         }
     }
 
+    /**
+        * Update cookie state
+        * @param {Object} updates - new property values to be written to the Solis session manager cookie state object
+    */
     updateCookieState(updates) {
         const state = this.readCookieState();
 
@@ -425,6 +429,10 @@ export default class IWHISessionManager {
         }, this.config.cookiePollInterval);
     }
 
+    /**
+        * Write cookie state
+        * @param {Object} newState - the new Solis session manager cookie state object
+    */
     handleCookieStateChange(newState) {
         this.log('Cookie state changed:', newState);
     
@@ -479,6 +487,17 @@ export default class IWHISessionManager {
     }
 
     resignLeadership() {
+        this.log('Resigning leadership');
+        this.isLeader = false;
+        this.stopLeaderHeartbeat();
+        this.stopTokenRefreshTimer();
+    }
+
+    stopLeaderHeartbeat() {
+        console.log('hello for now');
+    }
+
+    stopTokenRefreshTimer() {
         console.log('hello for now');
     }
 

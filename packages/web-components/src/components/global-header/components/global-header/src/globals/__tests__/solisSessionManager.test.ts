@@ -1229,4 +1229,24 @@ describe('solisSessionManager', () => {
             expect(resignLeadershipStub).to.have.been.called;
         })
     })
+
+    describe('resignLeadership', () => {
+        it('sets isLeader to false and calls stopLeaderHeartbeat and stopTokenRefreshTimer', () => {
+            sinon.stub(IWHISessionManager.prototype, 'init');
+            const stopLeaderHeartbeatStub = sinon.stub(IWHISessionManager.prototype, 'stopLeaderHeartbeat');
+            const stopTokenRefreshTimerStub = sinon.stub(IWHISessionManager.prototype, 'stopTokenRefreshTimer');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.isLeader = true;
+            sessionManager.resignLeadership();
+            expect(sessionManager.isLeader).to.be.false;
+            expect(stopLeaderHeartbeatStub).to.have.been.called;
+            expect(stopTokenRefreshTimerStub).to.have.been.called;
+        })
+    })
 })

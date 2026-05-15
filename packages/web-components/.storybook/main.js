@@ -31,8 +31,8 @@ const storiesGlobs = includeV12
       '../src/v12/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
     ]
   : [
-      '../src/**/!(v12)/**/__stories__/*.mdx',
-      '../src/**/!(v12)/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
+      '../src/components/**/__stories__/*.mdx',
+      '../src/components/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
     ];
 
 const config = {

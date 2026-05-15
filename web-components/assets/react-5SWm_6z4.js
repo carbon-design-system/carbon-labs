@@ -1,0 +1,1 @@
+import{t as e}from"./lib-BFRReuxJ.js";export{e as MDXProvider};

@@ -1,1 +1,0 @@
-import{t as e}from"./lib-y9TBKSl2.js";export{e as MDXProvider};

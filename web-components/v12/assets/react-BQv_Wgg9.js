@@ -1,0 +1,1 @@
+import{t as e}from"./lib-DfElfl_n.js";export{e as MDXProvider};

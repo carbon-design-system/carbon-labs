@@ -1,0 +1,1 @@
+import{r as e}from"./decorate-CHe6eMGd.js";var t=t=>class extends t{focus(){if(this.shadowRoot.delegatesFocus)super.focus();else{let t=this.shadowRoot.querySelector(e)||this.querySelector(e);t?t.focus():super.focus()}}};export{t};

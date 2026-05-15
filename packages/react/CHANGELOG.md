@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.185.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.184.0...@carbon-labs/react@0.185.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.184.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.183.0...@carbon-labs/react@0.184.0) (2026-05-14)
 
 

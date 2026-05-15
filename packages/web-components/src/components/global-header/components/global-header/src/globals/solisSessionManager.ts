@@ -32,6 +32,8 @@ export default class IWHISessionManager {
     lastTokenRefreshTime: number;
     timers: {
         cookiePolling?: ReturnType<typeof setTimeout>;
+        leaderHeartbeat?: ReturnType<typeof setTimeout>;
+        tokenRefresh?: ReturnType<typeof setTimeout>;
     };
     warningShown: boolean;
     isLoggedOut: boolean;
@@ -494,11 +496,17 @@ export default class IWHISessionManager {
     }
 
     stopLeaderHeartbeat() {
-        console.log('hello for now');
+        if (this.timers.leaderHeartbeat) {
+            clearInterval(this.timers.leaderHeartbeat);
+            delete this.timers.leaderHeartbeat;
+        }
     }
 
     stopTokenRefreshTimer() {
-        console.log('hello for now');
+        if (this.timers.tokenRefresh) {
+            clearInterval(this.timers.tokenRefresh);
+            delete this.timers.tokenRefresh;
+        }
     }
 
     cleanup() {

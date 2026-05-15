@@ -1249,4 +1249,40 @@ describe('solisSessionManager', () => {
             expect(stopTokenRefreshTimerStub).to.have.been.called;
         })
     })
+
+    describe('stopLeaderHeartbeat', () => {
+        it('clears and deletes the leaderHeartbeat interval', () => {
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.timers = {
+                leaderHeartbeat: setTimeout(() => {}, 1000)
+            }
+            sessionManager.stopLeaderHeartbeat();
+            expect(sessionManager.timers).to.deep.equal({});
+        })
+    })
+
+    describe('stopTokenRefreshTimer', () => {
+        it('clears and deletes the leaderHeartbeat interval', () => {
+            sinon.stub(IWHISessionManager.prototype, 'init');
+
+            const config = {
+                capabilityName: 'App Connect',
+                basePath: 'some/basePath'
+            };
+
+            const sessionManager = new IWHISessionManager(config);
+            sessionManager.timers = {
+                tokenRefresh: setTimeout(() => {}, 1000)
+            }
+            sessionManager.stopTokenRefreshTimer();
+            expect(sessionManager.timers).to.deep.equal({});
+        })
+    })
 })

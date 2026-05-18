@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.186.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.185.0...@carbon-labs/react@0.186.0) (2026-05-16)
+
+
+### Bug Fixes
+
+* missing storybook patterns section ([#1236](https://github.com/carbon-design-system/carbon-labs/issues/1236)) ([56adcf8](https://github.com/carbon-design-system/carbon-labs/commit/56adcf885032dd468d163fbfcb8042debd2f0ad3))
+
+
+
+
+
+# [0.185.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.184.0...@carbon-labs/react@0.185.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/react
+
+
+
+
+
 # [0.184.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.183.0...@carbon-labs/react@0.184.0) (2026-05-14)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.187.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.186.0...@carbon-labs/react@0.187.0) (2026-05-18)
+
+
+### Bug Fixes
+
+* **calendar:** update Usage.mdx story IDs to match exports ([#1237](https://github.com/carbon-design-system/carbon-labs/issues/1237)) ([4b0fc89](https://github.com/carbon-design-system/carbon-labs/commit/4b0fc89a9a89fb7c01d9d2cf1ec80d7f2d43dbbd))
+
+
+
+
+
 # [0.186.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.185.0...@carbon-labs/react@0.186.0) (2026-05-16)
 
 

@@ -1,0 +1,1 @@
+import{t as e}from"./lib-CO66VxD-.js";export{e as MDXProvider};

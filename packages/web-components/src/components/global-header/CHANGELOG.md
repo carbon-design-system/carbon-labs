@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.76.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.75.0...@carbon-labs/wc-global-header@0.76.0) (2026-05-18)
+
+
+### Bug Fixes
+
+* turning off sidekick everywhere for now ([#1241](https://github.com/carbon-design-system/carbon-labs/issues/1241)) ([b67d0ba](https://github.com/carbon-design-system/carbon-labs/commit/b67d0ba866a445e2b94b10142a5237d77a5a0b8a))
+
+
+
+
+
 # [0.75.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.74.0...@carbon-labs/wc-global-header@0.75.0) (2026-05-15)
 
 **Note:** Version bump only for package @carbon-labs/wc-global-header

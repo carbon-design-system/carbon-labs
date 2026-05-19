@@ -56,10 +56,25 @@ const config = {
 
   staticDirs: ['../public'],
 
-  async viteFinal(config) {
+  async viteFinal(config, { configType }) {
+    const productionBuild =
+      configType === 'PRODUCTION'
+        ? {
+            rolldownOptions: {
+              output: {
+                // Vite 8 / Rolldown can split CSF and MDX into separate module instances.
+                // Storybook resolves <Meta of={Stories} /> by object identity, which breaks
+                // when the runtime import and MDX import get different copies (see #34373).
+                strictExecutionOrder: true,
+              },
+            },
+          }
+        : {};
+
     return mergeConfig(config, {
       build: {
         cssMinify: 'esbuild',
+        ...productionBuild,
       },
       css: {
         preprocessorOptions: {

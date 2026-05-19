@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.188.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.187.0...@carbon-labs/react@0.188.0) (2026-05-19)
+
+
+### Bug Fixes
+
+* fixed the theme selector going behind the background ([#1240](https://github.com/carbon-design-system/carbon-labs/issues/1240)) ([05b1131](https://github.com/carbon-design-system/carbon-labs/commit/05b1131f623266a28016cdd28ea0e8aa2807a829))
+
+
+
+
+
 # [0.187.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react@0.186.0...@carbon-labs/react@0.187.0) (2026-05-18)
 
 

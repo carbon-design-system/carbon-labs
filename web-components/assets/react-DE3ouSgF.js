@@ -1,1 +1,0 @@
-import{t as e}from"./lib-Bpi7wRx2.js";export{e as MDXProvider};

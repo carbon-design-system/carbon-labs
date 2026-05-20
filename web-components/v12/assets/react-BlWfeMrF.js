@@ -1,0 +1,1 @@
+import{t as e}from"./lib-CUL0IAt7.js";export{e as MDXProvider};

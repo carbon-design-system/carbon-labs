@@ -20,6 +20,23 @@ $css--plex: true !default;
     display: inline-block;
   }
 
+  // Drag-over state for file-wrapper
+  .file-wrapper.drag-over .file-button {
+    border-color: var(--cds-focus);
+    background: var(--cds-button-primary-hover);
+    box-shadow:
+      inset 0 0 0 1px var(--cds-focus),
+      inset 0 0 0 2px var(--cds-background);
+  }
+
+  .file-wrapper.drag-over .file-drop-area {
+    border-color: var(--cds-focus);
+    border-style: solid;
+    background: var(--cds-layer-hover);
+    outline: 2px solid var(--cds-focus);
+    outline-offset: -2px;
+  }
+
   // Hidden file input
   input[type='file'] {
     position: absolute;
@@ -46,6 +63,7 @@ $css--plex: true !default;
   .file-button {
     @include type-style('body-compact-01');
 
+    box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     block-size: $spacing-09;
@@ -64,6 +82,7 @@ $css--plex: true !default;
   .file-drop-area {
     @include type-style('body-compact-01');
 
+    box-sizing: border-box;
     display: inline-flex;
     padding: $spacing-05;
     inline-size: calc($spacing-13 * 2);
@@ -79,11 +98,13 @@ $css--plex: true !default;
 
   // Hover - button
   .file-wrapper:hover .file-button {
+    border: 1px solid var(--cds-button-primary-hover);
     background: var(--cds-button-primary-hover);
   }
 
   // Active - button
   .file-wrapper:active .file-button {
+    border: 1px solid var(--cds-button-primary-active);
     background: var(--cds-button-primary-active);
   }
 

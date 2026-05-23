@@ -9,6 +9,7 @@
 
 import '../components/file-uploader-button/file-uploader-button';
 import { html } from 'lit';
+import { action } from 'storybook/actions';
 
 /**
  * More on how to set up stories at: https://storybook.js.org/docs/web-components/writing-stories/introduction
@@ -152,6 +153,15 @@ export const Default = {
    * @returns {TemplateResult<1>}
    */
   render: (args) => {
+    /**
+     * Handle change event
+     * @param {CustomEvent} e - The change event
+     */
+    const handleChange = (e) => {
+      console.log('change event:', e);
+      action('change')(e);
+    };
+
     return html`
       <clabs-file-uploader-button
         accept=${args.accept}
@@ -166,7 +176,8 @@ export const Default = {
         aria-label=${args.ariaLabel}
         button-text=${args.buttonText}
         kind=${args.kind}
-        ?drop-container=${args.dropContainer}>
+        ?drop-container=${args.dropContainer}
+        @change=${handleChange}>
       </clabs-file-uploader-button>
     `;
   },

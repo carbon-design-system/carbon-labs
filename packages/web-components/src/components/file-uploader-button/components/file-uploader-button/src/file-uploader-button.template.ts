@@ -9,7 +9,8 @@
 
 import { LitElement, html } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { property } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 // @ts-ignore
 import styles from './file-uploader-button.scss?inline';
 
@@ -98,6 +99,91 @@ class FileUploaderButton extends LitElement {
   dropContainer = false;
 
   /**
+   * Internal state tracking drag-over status
+   */
+  @state()
+  private _isDragOver = false;
+
+  /**
+   * Handle dragenter event
+   * @param {DragEvent} e - The drag event
+   */
+  private _handleDragEnter = (e: DragEvent) => {
+    e.preventDefault();
+    if (!this.disabled) {
+      this._isDragOver = true;
+    }
+  };
+
+  /**
+   * Handle dragover event - required to allow drop
+   * @param {DragEvent} e - The drag event
+   */
+  private _handleDragOver = (e: DragEvent) => {
+    e.preventDefault();
+  };
+
+  /**
+   * Handle dragleave event
+   * @param {DragEvent} e - The drag event
+   */
+  private _handleDragLeave = (e: DragEvent) => {
+    e.preventDefault();
+    // Only remove drag-over state if leaving the wrapper itself
+    const target = e.currentTarget as HTMLElement;
+    const relatedTarget = e.relatedTarget as Node;
+    if (!target.contains(relatedTarget)) {
+      this._isDragOver = false;
+    }
+  };
+
+  /**
+   * Handle drop event
+   * @param {DragEvent} e - The drag event
+   */
+  private _handleDrop = (e: DragEvent) => {
+    e.preventDefault();
+    this._isDragOver = false;
+
+    if (!this.disabled && e.dataTransfer?.files) {
+      const input = this.shadowRoot?.querySelector(
+        'input[type="file"]'
+      ) as HTMLInputElement;
+      if (input) {
+        // Create a new DataTransfer to set files on the input
+        const dataTransfer = new DataTransfer();
+        Array.from(e.dataTransfer.files).forEach((file) => {
+          dataTransfer.items.add(file);
+        });
+        input.files = dataTransfer.files;
+
+        // Dispatch change event
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
+  };
+
+  /**
+   * Handle file input change event
+   * @param {Event} e - The change event
+   */
+  private _handleChange = (e: Event) => {
+    const input = e.target as HTMLInputElement;
+    const files = input.files;
+
+    // Dispatch custom change event with file details
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {
+          files: files ? Array.from(files) : [],
+        },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  };
+
+  /**
    * Render the component
    * @returns {TemplateResult} The template result
    */
@@ -106,8 +192,18 @@ class FileUploaderButton extends LitElement {
       ? 'file-drop-area'
       : 'file-button';
 
+    const wrapperClasses = {
+      'file-wrapper': true,
+      'drag-over': this._isDragOver,
+    };
+
     return html`
-      <div class="file-wrapper">
+      <div
+        class=${classMap(wrapperClasses)}
+        @dragenter=${this._handleDragEnter}
+        @dragover=${this._handleDragOver}
+        @dragleave=${this._handleDragLeave}
+        @drop=${this._handleDrop}>
         <input
           type="file"
           accept=${ifDefined(this.accept || undefined)}
@@ -119,7 +215,8 @@ class FileUploaderButton extends LitElement {
           ?required=${this.required}
           ?multiple=${this.multiple}
           ?webkitdirectory=${this.webkitdirectory}
-          aria-label=${this.ariaLabel || this.buttonText} />
+          aria-label=${this.ariaLabel || this.buttonText}
+          @change=${this._handleChange} />
         <span class="${containerClass}">${this.buttonText}</span>
       </div>
     `;

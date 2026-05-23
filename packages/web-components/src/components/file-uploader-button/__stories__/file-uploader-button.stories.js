@@ -115,6 +115,14 @@ export default {
         defaultValue: { summary: 'primary' },
       },
     },
+    dropContainer: {
+      control: 'boolean',
+      description: 'Render as a drop container instead of a button',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: 'false' },
+      },
+    },
   },
 };
 
@@ -135,6 +143,7 @@ export const Default = {
     ariaLabel: '',
     buttonText: 'Upload file',
     kind: 'primary',
+    dropContainer: false,
   },
 
   /**
@@ -156,7 +165,8 @@ export const Default = {
         ?webkitdirectory=${args.webkitdirectory}
         aria-label=${args.ariaLabel}
         button-text=${args.buttonText}
-        kind=${args.kind}>
+        kind=${args.kind}
+        ?drop-container=${args.dropContainer}>
       </clabs-file-uploader-button>
     `;
   },

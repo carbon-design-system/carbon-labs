@@ -92,10 +92,20 @@ class FileUploaderButton extends LitElement {
   buttonText = 'Upload file';
 
   /**
+   * Render as a drop container instead of a button
+   */
+  @property({ type: Boolean, attribute: 'drop-container', reflect: true })
+  dropContainer = false;
+
+  /**
    * Render the component
    * @returns {TemplateResult} The template result
    */
   render() {
+    const containerClass = this.dropContainer
+      ? 'file-drop-area'
+      : 'file-button';
+
     return html`
       <div class="file-wrapper">
         <input
@@ -110,7 +120,7 @@ class FileUploaderButton extends LitElement {
           ?multiple=${this.multiple}
           ?webkitdirectory=${this.webkitdirectory}
           aria-label=${this.ariaLabel || this.buttonText} />
-        <span class="file-button">${this.buttonText}</span>
+        <span class="${containerClass}">${this.buttonText}</span>
       </div>
     `;
   }

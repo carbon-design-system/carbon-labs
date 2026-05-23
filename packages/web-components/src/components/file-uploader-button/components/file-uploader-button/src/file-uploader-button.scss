@@ -48,7 +48,6 @@ $css--plex: true !default;
 
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     block-size: $spacing-09;
     padding-block: 0;
     padding-inline: $spacing-05;
@@ -61,17 +60,34 @@ $css--plex: true !default;
     user-select: none;
   }
 
-  // Hover
+  // Drop area container
+  .file-drop-area {
+    @include type-style('body-compact-01');
+
+    display: inline-flex;
+    padding: $spacing-05;
+    inline-size: calc($spacing-13 * 2);
+    block-size: calc($spacing-12);
+    border: 1px dashed var(--cds-border-strong);
+    color: var(--cds-text-secondary);
+    background: var(--cds-layer);
+    transition:
+      background-color 70ms cubic-bezier(0, 0, 0.38, 0.9),
+      border-color 70ms cubic-bezier(0, 0, 0.38, 0.9);
+    user-select: none;
+  }
+
+  // Hover - button
   .file-wrapper:hover .file-button {
     background: var(--cds-button-primary-hover);
   }
 
-  // Active
+  // Active - button
   .file-wrapper:active .file-button {
     background: var(--cds-button-primary-active);
   }
 
-  // Focus
+  // Focus - button
   input[type='file']:focus-visible + .file-button {
     border-color: var(--cds-focus);
     box-shadow:
@@ -79,7 +95,7 @@ $css--plex: true !default;
       inset 0 0 0 2px var(--cds-background);
   }
 
-  // Disabled
+  // Disabled - button
   input[type='file']:disabled + .file-button {
     border-color: var(--cds-button-disabled);
     color: var(--cds-text-disabled);
@@ -90,6 +106,38 @@ $css--plex: true !default;
   .file-wrapper:has(input:disabled):hover .file-button,
   .file-wrapper:has(input:disabled):active .file-button {
     background: var(--cds-button-disabled);
+  }
+
+  // Hover - drop area
+  .file-wrapper:hover .file-drop-area {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: -2px;
+    background: var(--cds-layer-hover);
+  }
+
+  // Active - drop area
+  .file-wrapper:active .file-drop-area {
+    background: var(--cds-layer-active);
+  }
+
+  // Focus - drop area
+  input[type='file']:focus-visible + .file-drop-area {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: -2px;
+  }
+
+  // Disabled - drop area
+  input[type='file']:disabled + .file-drop-area {
+    border-color: var(--cds-border-disabled);
+    color: var(--cds-text-disabled);
+    background: var(--cds-layer);
+    cursor: not-allowed;
+  }
+
+  .file-wrapper:has(input:disabled):hover .file-drop-area,
+  .file-wrapper:has(input:disabled):active .file-drop-area {
+    border-color: var(--cds-border-disabled);
+    background: var(--cds-layer);
   }
 }
 

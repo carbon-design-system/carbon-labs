@@ -1,0 +1,65 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/addon-docs/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import meta from './file-uploader-button.stories';
+import packageJson from '../package.json';
+
+<Meta of={meta} />
+
+# File Uploader Button
+
+- **Initiative owner(s):** FILL THIS LINE
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** N/A
+- **Support channel:** `#carbon-labs`
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/file-uploader-button)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/file-uploader-button)
+
+## Overview
+
+carbon-labs-create:problem-statement
+
+TODO: Replace this block with a concise problem statement.
+
+Answer:
+
+- What gap does this component fill?
+- What user need does it address?
+- Which existing Carbon component is the nearest neighbor (if any)?
+  > **Problem statement:** Describe the gap this component fills (edit or delete
+  > this line).
+
+Add description of component here.
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-file-uploader-button/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['file-uploader-button'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+```html
+<clabs-file-uploader-button> File Uploader Button </clabs-file-uploader-button>
+```
+
+### &lt;clabs-file-uploader-button&gt; attributes and properties
+
+<ArgTypes of="clabs-file-uploader-button" />

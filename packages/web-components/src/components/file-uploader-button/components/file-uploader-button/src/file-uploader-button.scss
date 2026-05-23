@@ -1,0 +1,66 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+
+:host(#{$clabs-prefix}-file-uploader-button) {
+  display: inline-block;
+
+  .file-wrapper {
+    position: relative;
+    display: inline-block;
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+  }
+
+  /* The REAL input handles click + drop */
+  .file-wrapper input[type='file'] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+
+    &::file-selector-button {
+      inline-size: 100%;
+      block-size: 100%;
+      margin: none;
+    }
+  }
+
+  /* Visual button */
+  .file-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #0f62fe;
+    color: #0f62fe;
+    background: transparent;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+
+  .file-wrapper:hover .file-button {
+    background: #0f62fe;
+    color: #fff;
+  }
+
+  .file-wrapper:active .file-button {
+    background: #002d9c;
+    border-color: #002d9c;
+    color: #fff;
+  }
+
+  /* Focus ring */
+  .file-wrapper input[type='file']:focus-visible + .file-button {
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 4px #0f62fe;
+  }
+}

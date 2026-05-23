@@ -18,12 +18,101 @@ export default {
   tags: ['squad', 'incubating'],
   component: 'clabs-file-uploader-button',
   argTypes: {
+    accept: {
+      control: 'text',
+      description: 'Comma-separated accepted file types',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: '' },
+      },
+    },
+    autofocus: {
+      control: 'boolean',
+      description: 'Autofocus the input on page load',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: 'false' },
+      },
+    },
+    capture: {
+      control: 'text',
+      description: 'Capture source hint for mobile devices',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: '' },
+      },
+    },
+    disabled: {
+      control: 'boolean',
+      description: 'Disable file selection',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: 'false' },
+      },
+    },
+    form: {
+      control: 'text',
+      description: 'Associate the input with a form',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: '' },
+      },
+    },
+    name: {
+      control: 'text',
+      description: 'Input name for form submission',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: '' },
+      },
+    },
+    required: {
+      control: 'boolean',
+      description: 'Require a file before form submission',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: 'false' },
+      },
+    },
     multiple: {
       control: 'boolean',
       description: 'Allow multiple file selection',
       table: {
         category: 'Controls',
         defaultValue: { summary: 'false' },
+      },
+    },
+    webkitdirectory: {
+      control: 'boolean',
+      description: 'Enable directory selection in supporting browsers',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: 'false' },
+      },
+    },
+    ariaLabel: {
+      control: 'text',
+      description: 'Accessible label override for the input',
+      table: {
+        category: 'Accessibility',
+        defaultValue: { summary: '' },
+      },
+    },
+    buttonText: {
+      control: 'text',
+      description: 'Button text label',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: 'Upload file' },
+      },
+    },
+    kind: {
+      control: 'select',
+      options: ['primary', 'secondary', 'tertiary', 'ghost', 'danger'],
+      description: 'Button kind/variant',
+      table: {
+        category: 'Controls',
+        defaultValue: { summary: 'primary' },
       },
     },
   },
@@ -34,7 +123,18 @@ export default {
  */
 export const Default = {
   args: {
+    accept: '',
+    autofocus: false,
+    capture: '',
+    disabled: false,
+    form: '',
+    name: '',
+    required: false,
     multiple: false,
+    webkitdirectory: false,
+    ariaLabel: '',
+    buttonText: 'Upload file',
+    kind: 'primary',
   },
 
   /**
@@ -44,28 +144,19 @@ export const Default = {
    */
   render: (args) => {
     return html`
-      <clabs-file-uploader-button ?multiple=${args.multiple}>
-      </clabs-file-uploader-button>
-    `;
-  },
-};
-
-/**
- * Multiple file selection story
- */
-export const Multiple = {
-  args: {
-    multiple: true,
-  },
-
-  /**
-   * Renders the template for Storybook
-   * @param {object} args Storybook arguments
-   * @returns {TemplateResult<1>}
-   */
-  render: (args) => {
-    return html`
-      <clabs-file-uploader-button ?multiple=${args.multiple}>
+      <clabs-file-uploader-button
+        accept=${args.accept}
+        ?autofocus=${args.autofocus}
+        capture=${args.capture}
+        ?disabled=${args.disabled}
+        form=${args.form}
+        name=${args.name}
+        ?required=${args.required}
+        ?multiple=${args.multiple}
+        ?webkitdirectory=${args.webkitdirectory}
+        aria-label=${args.ariaLabel}
+        button-text=${args.buttonText}
+        kind=${args.kind}>
       </clabs-file-uploader-button>
     `;
   },

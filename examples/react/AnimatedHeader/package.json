@@ -16,11 +16,12 @@
   },
   "devDependencies": {
     "@carbon-labs/react-animated-header": "latest",
+    "@carbon-labs/utilities": "latest",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",
-    "sass": "~1.83.0",
+    "sass": "~1.99.0",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^8.0.12"
   }
 }

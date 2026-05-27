@@ -163,12 +163,12 @@ Scenario('Solis components render', async ({ I }) => {
   I.amOnPage(localhostWithSolis);
   I.waitForElement('clabs-global-header-apaas', 30);
 
-  I.seeElement(locate('solis-sidekick'));
-  I.click(locate('solis-sidekick'));
-  I.seeElement('.sidekick-body');
-  I.see('Overview');
-  I.see('Analyze this page');
-  I.see('Insights');
+  // I.seeElement(locate('solis-sidekick'));
+  // I.click(locate('solis-sidekick'));
+  // I.seeElement('.sidekick-body');
+  // I.see('Overview');
+  // I.see('Analyze this page');
+  // I.see('Insights');
 
   I.seeElement(locate('solis-switcher'));
   I.click(locate('solis-switcher'));

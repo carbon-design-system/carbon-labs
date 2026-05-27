@@ -11,12 +11,12 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { CommonHeader } from '../CommonHeader';
 import { html } from 'lit';
-import {
+import type {
   HeaderProps,
   SideNav,
   SideNavPropsV2,
-  TrialLinkType,
 } from '../../../types/Header.types';
+import { TrialLinkType } from '../../../types/Header.types';
 
 const headerProps: HeaderProps = {
   brand: {

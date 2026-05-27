@@ -13,7 +13,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es-custom/components/ui-shell/index.js';
 import '@carbon/web-components/es-custom/components/popover/index.js';
-import { HeaderProps } from '../../types/Header.types';
+import type { HeaderProps } from '../../types/Header.types';
 import {
   AUTOMATION_NAMESPACE_PREFIX,
   APP_SWITCHER_BUTTON_ID,

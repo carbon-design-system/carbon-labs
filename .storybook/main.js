@@ -17,7 +17,7 @@ const config = {
     './welcome/**/*.mdx',
     './welcome/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
-  addons: [getAbsolutePath("@storybook/addon-docs")],
+  addons: [getAbsolutePath('@storybook/addon-docs')],
   framework: {
     name: getAbsolutePath('@storybook/web-components-vite'),
     options: {},
@@ -48,7 +48,7 @@ const config = {
     return {
       'web-components': {
         title: 'Web Components',
-        url: './web-components',
+       url: './web-components',
       },
       react: {
         title: 'React components',

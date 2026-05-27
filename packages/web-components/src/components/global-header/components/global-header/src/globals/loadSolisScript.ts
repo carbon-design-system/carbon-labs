@@ -8,7 +8,7 @@
  */
 /* eslint jsdoc/require-jsdoc: 0 */
 
-import { HeaderProps } from '../types/Header.types';
+import type { HeaderProps } from '../types/Header.types';
 
 export default function loadSolisScript(props: HeaderProps) {
   const solisUrl = props?.solisConfig?.scriptUrl;

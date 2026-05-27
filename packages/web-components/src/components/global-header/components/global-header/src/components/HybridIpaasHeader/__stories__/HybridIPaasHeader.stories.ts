@@ -13,12 +13,12 @@ import { initialize, mswLoader } from 'msw-storybook-addon';
 import { delay, http, HttpResponse } from 'msw';
 import { HybridIpaasHeader } from '../HybridIpaasHeader';
 import { html } from 'lit';
-import {
+import type {
   GlobalActionConfig,
   SearchConfigs,
   TrialConfigs,
-  TrialLinkType,
 } from '../../../types/Header.types';
+import { TrialLinkType } from '../../../types/Header.types';
 import {
   CUSTOM_EVENT_NAME,
   CUSTOM_EVENT_DETAIL_REFRESH_OPTIONS,

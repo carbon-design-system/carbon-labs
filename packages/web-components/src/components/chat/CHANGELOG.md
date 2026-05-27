@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.37.0...@carbon-labs/ai-chat@0.38.0) (2026-05-20)
+
+**Note:** Version bump only for package @carbon-labs/ai-chat
+
+
+
+
+
+# [0.37.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.36.0...@carbon-labs/ai-chat@0.37.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/ai-chat
+
+
+
+
+
+# [0.36.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.35.0...@carbon-labs/ai-chat@0.36.0) (2026-05-14)
+
+
+### Bug Fixes
+
+* **examples:** update react and web components standalone examples ([#1230](https://github.com/carbon-design-system/carbon-labs/issues/1230)) ([0ba3c58](https://github.com/carbon-design-system/carbon-labs/commit/0ba3c5866a08459a9e220737e85ce256cec08463))
+
+
+
+
+
 # [0.35.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/ai-chat@0.34.0...@carbon-labs/ai-chat@0.35.0) (2026-05-12)
 
 **Note:** Version bump only for package @carbon-labs/ai-chat

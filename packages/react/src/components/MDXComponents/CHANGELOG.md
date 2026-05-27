@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.25.0...@carbon-labs/mdx-components@0.26.0) (2026-05-19)
+
+
+### Bug Fixes
+
+* fixed the theme selector going behind the background ([#1240](https://github.com/carbon-design-system/carbon-labs/issues/1240)) ([05b1131](https://github.com/carbon-design-system/carbon-labs/commit/05b1131f623266a28016cdd28ea0e8aa2807a829))
+
+
+
+
+
+# [0.25.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.24.0...@carbon-labs/mdx-components@0.25.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
+# [0.24.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.23.0...@carbon-labs/mdx-components@0.24.0) (2026-05-14)
+
+**Note:** Version bump only for package @carbon-labs/mdx-components
+
+
+
+
+
 # [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/mdx-components@0.22.0...@carbon-labs/mdx-components@0.23.0) (2026-05-12)
 
 **Note:** Version bump only for package @carbon-labs/mdx-components

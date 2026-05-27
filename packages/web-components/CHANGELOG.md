@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.153.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.152.0...@carbon-labs/web-components@0.153.0) (2026-05-20)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.152.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.151.0...@carbon-labs/web-components@0.152.0) (2026-05-18)
+
+
+### Bug Fixes
+
+* turning off sidekick everywhere for now ([#1241](https://github.com/carbon-design-system/carbon-labs/issues/1241)) ([b67d0ba](https://github.com/carbon-design-system/carbon-labs/commit/b67d0ba866a445e2b94b10142a5237d77a5a0b8a))
+
+
+
+
+
+# [0.151.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.150.0...@carbon-labs/web-components@0.151.0) (2026-05-16)
+
+
+### Bug Fixes
+
+* missing storybook patterns section ([#1236](https://github.com/carbon-design-system/carbon-labs/issues/1236)) ([56adcf8](https://github.com/carbon-design-system/carbon-labs/commit/56adcf885032dd468d163fbfcb8042debd2f0ad3))
+
+
+
+
+
+# [0.150.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.149.0...@carbon-labs/web-components@0.150.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.149.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.148.0...@carbon-labs/web-components@0.149.0) (2026-05-14)
+
+
+### Bug Fixes
+
+* **examples:** update react and web components standalone examples ([#1230](https://github.com/carbon-design-system/carbon-labs/issues/1230)) ([0ba3c58](https://github.com/carbon-design-system/carbon-labs/commit/0ba3c5866a08459a9e220737e85ce256cec08463))
+
+
+
+
+
 # [0.148.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.147.0...@carbon-labs/web-components@0.148.0) (2026-05-13)
 
 

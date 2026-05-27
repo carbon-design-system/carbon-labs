@@ -14,13 +14,13 @@ import {
   POPOVER_LABEL_ID,
   AUTOMATION_HEADER_BASE_CLASS,
 } from '../../constant';
-import {
+import type {
   MainSectionItem,
   ManagementConsole,
   ProfileFooterLinks,
   UserManagement,
 } from '../../types/Header.types';
-import { AuthContextProps } from './AuthContext.types';
+import type { AuthContextProps } from './AuthContext.types';
 import '../UserProfileImage/UserProfileImage';
 import { customElement, property } from 'lit/decorators.js';
 import { settings } from '@carbon-labs/utilities';

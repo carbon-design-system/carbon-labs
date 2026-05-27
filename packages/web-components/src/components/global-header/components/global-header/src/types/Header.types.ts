@@ -131,6 +131,7 @@ export type ProfileFooterLinks = {
   carbonIcon?: string;
   newTab?: boolean;
   newTabIcon?: boolean;
+  'data-ypc-link'?: boolean;
   onClickHandler?: () => void;
 };
 

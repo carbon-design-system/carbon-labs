@@ -298,9 +298,14 @@ describe('HybridIpaasHeader Component', () => {
         el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
-    expect(el.headerOptions?.profileFooterLinks?.length).to.equal(1);
+    expect(el.headerOptions?.profileFooterLinks?.length).to.equal(2);
 
     expect(el.headerOptions?.profileFooterLinks).to.have.deep.members([
+      {
+        arialLabel: 'Your privacy choices',
+        'data-ypc-link': true,
+        text: ''
+      },
       {
         arialLabel: 'Logout',
         carbonIcon: 'Logout',
@@ -350,7 +355,7 @@ describe('HybridIpaasHeader Component', () => {
 
       const footerLinks = el.headerOptions?.profileFooterLinks;
       if (footerLinks && footerLinks.length > 0) {
-        const onClick = footerLinks[0].onClickHandler;
+        const onClick = footerLinks[1].onClickHandler;
         expect(typeof onClick).to.equal('function');
         onClick && onClick();
       }
@@ -632,7 +637,7 @@ describe('HybridIpaasHeader Component', () => {
     );
 
     expect(el.headerOptions?.profileFooterLinks).to.exist;
-    expect(el.headerOptions.profileFooterLinks?.length).to.equal(3);
+    expect(el.headerOptions.profileFooterLinks?.length).to.equal(4);
     expect(el.headerOptions.profileFooterLinks).to.deep.include({
       text: 'About Us',
       href: '/aboutus',
@@ -677,7 +682,7 @@ describe('HybridIpaasHeader Component', () => {
     );
 
     expect(el.headerOptions?.profileFooterLinks).to.exist;
-    expect(el.headerOptions.profileFooterLinks?.length).to.equal(2);
+    expect(el.headerOptions.profileFooterLinks?.length).to.equal(3);
     expect(el.headerOptions.profileFooterLinks?.[0].text).to.equal(
       'Cookie preferences'
     );

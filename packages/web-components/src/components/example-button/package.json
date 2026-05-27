@@ -6,6 +6,10 @@
     "provenance": true
   },
   "description": "Carbon Labs - example-button component",
+  "labs": {
+    "status": "draft",
+    "title": "WC Example Button"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

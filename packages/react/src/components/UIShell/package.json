@@ -7,6 +7,10 @@
   },
   "type": "module",
   "description": "Carbon Labs - Ui Shell",
+  "labs": {
+    "status": "preview",
+    "title": "React UI Shell"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

@@ -7,6 +7,10 @@
   },
   "type": "module",
   "description": "Carbon Labs - chat component",
+  "labs": {
+    "status": "preview",
+    "title": "WC AI Chat"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

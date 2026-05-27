@@ -7,6 +7,10 @@
   },
   "type": "module",
   "description": "Carbon Labs - Example Button",
+  "labs": {
+    "status": "draft",
+    "title": "React example button"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

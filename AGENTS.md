@@ -214,10 +214,11 @@ components, dependency maintenance, or repo infrastructure changes.
 For those changes, use normal Git workflow and add any repo-local automation as
 a root `package.json` script.
 
-
 ## Component Status Tracking
 
-Component status is tracked in a structured way using a `labs` field in each component's `package.json` file. This approach provides a reliable and machine-readable way to track component maturity.
+Component status is tracked in a structured way using a `labs` field in each
+component's `package.json` file. This approach provides a reliable and
+machine-readable way to track component maturity.
 
 ### Labs Field Structure
 
@@ -237,6 +238,6 @@ Each component package includes a `labs` field with the following structure:
 ### Status Values
 
 - **draft**: Component is in early development, not ready for preview
-- **preview**: Component is ready for preview candidate status and broader testing
+- **preview**: Component is ready for preview candidate status and broader
+  testing
 - **stable**: Component has been promoted to stable (future use)
-

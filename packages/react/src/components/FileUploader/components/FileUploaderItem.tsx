@@ -44,8 +44,6 @@ export interface FileUploaderItemHandle {
   focusDeleteButton: () => void;
 }
 
-type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-
 /**
  * Splits a file name into name and extension parts
  */
@@ -157,7 +155,7 @@ export const FileUploaderItem = forwardRef<
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               className={`${prefix}--file-uploader-item__name-input`}
-              size={size as ButtonSize}
+              size={size as 'xs' | 'sm' | 'md' | 'lg'}
             />
           ) : (
             <p className={`${prefix}--file-uploader-item__name`}>{name}</p>
@@ -173,7 +171,7 @@ export const FileUploaderItem = forwardRef<
             <IconButton
               ref={editButtonRef}
               kind="ghost"
-              size={size as ButtonSize}
+              size={size as 'xs' | 'sm' | 'md' | 'lg'}
               label={isEditing ? 'Save' : 'Edit'}
               autoAlign
               align="bottom-end"
@@ -187,7 +185,7 @@ export const FileUploaderItem = forwardRef<
             <IconButton
               ref={deleteButtonRef}
               kind="ghost"
-              size={size as ButtonSize}
+              size={size as 'xs' | 'sm' | 'md' | 'lg'}
               label={`Remove ${name}`}
               autoAlign
               align="bottom-end"

@@ -278,6 +278,95 @@ export const WithCookiePrefs: Story = {
   `,
 };
 
+export const WithYPCContentInjected: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+          return HttpResponse.json(mockHeaderOptions);
+        }),
+      ],
+    },
+    docs: {
+      description: {
+        story: 'This story demonstrates how external scripts can inject content into the `data-ypc-link` placeholder. **Click the profile menu** to see the "Your privacy choices" link with icon automatically appear in the footer.',
+      },
+    },
+  },
+  render: () => {
+    // Set up a global script that mimics privacy compliance tools
+    if (!(window as any).__ypcInjectorSetup) {
+      (window as any).__ypcInjectorSetup = true;
+      
+      const injectYPCContent = (ypcDiv: Element) => {
+        if (ypcDiv.innerHTML.trim() === '') {
+          ypcDiv.innerHTML = `
+            <a
+              href="#"
+              class="automation-global-header__popover__link"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Your privacy choices">
+              <span class="link_icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="currentColor">
+                  <path d="M8 1L3 3v4c0 3.5 2.5 6.5 5 7 2.5-.5 5-3.5 5-7V3l-5-2zm0 1.3L12 4v3c0 2.8-2 5.2-4 5.9-2-.7-4-3.1-4-5.9V4l4-1.7z"/>
+                  <path d="M6.5 7.5L5 9l2 2 4-4-1.5-1.5L7 8z"/>
+                </svg>
+              </span>
+              <span class="link_text">Your privacy choices</span>
+            </a>
+          `;
+          console.log('✅ YPC content injected successfully!');
+        }
+      };
+      
+      const checkForYPCDiv = () => {
+        const searchInShadowRoot = (root: ShadowRoot | Document): Element | null => {
+          // Search in this shadow root
+          const ypcDiv = root.querySelector('div[data-ypc-link]');
+          if (ypcDiv) {
+            return ypcDiv;
+          }
+          
+          // Search in nested shadow roots
+          const elements = root.querySelectorAll('*');
+          for (const el of elements) {
+            if (el.shadowRoot) {
+              const found = searchInShadowRoot(el.shadowRoot);
+              if (found) {
+                return found;
+              }
+            }
+          }
+          return null;
+        };
+        
+        const ypcDiv = searchInShadowRoot(document);
+        if (ypcDiv) {
+          injectYPCContent(ypcDiv);
+        }
+      };
+      
+      // Check every 300ms for the YPC div
+      setInterval(checkForYPCDiv, 300);
+      console.log('🔍 YPC injector script active - monitoring for data-ypc-link div...');
+    }
+    
+    return html`
+      <div role="main">
+        <clabs-global-header-hybrid-ipaas
+          productName="App Connect"
+          productKey="appconnect"></clabs-global-header-hybrid-ipaas>
+      </div>
+    `;
+  },
+};
+
 export const CustomActions: Story = {
   parameters: {
     msw: {

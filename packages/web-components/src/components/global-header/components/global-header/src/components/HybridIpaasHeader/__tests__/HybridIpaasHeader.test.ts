@@ -688,6 +688,42 @@ describe('HybridIpaasHeader Component', () => {
     );
   });
 
+  it('should handle Your privacy choices', async () => {
+    fetchStub.resolves(
+      new Response(JSON.stringify(fetchResp), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    );
+
+    const el = await fixture<HybridIpaasHeader>(
+      html`<clabs-global-header-hybrid-ipaas
+        productName="Test Product"
+        productKey="test-productKey"
+        basePath="/base"
+        assistMeKey="assist-key"></clabs-global-header-hybrid-ipaas>`
+    );
+
+    await waitUntil(
+      () =>
+        el.headerOptions.mainSectionItems &&
+        el.headerOptions.mainSectionItems[0].text === 'Test Product',
+      'headerOptions were not updated as expected'
+    );
+
+    expect(el.headerOptions?.profileFooterLinks).to.exist;
+    expect(el.headerOptions.profileFooterLinks?.length).to.equal(2);
+    expect(el.headerOptions.profileFooterLinks?.[0].text).to.equal(
+      ''
+    );
+    expect(el.headerOptions.profileFooterLinks?.[0].arialLabel).to.equal(
+      'Your privacy choices'
+    );
+    expect(el.headerOptions.profileFooterLinks?.[0]['data-ypc-link']).to.equal(
+      true
+    );
+  })
+
   it('should handle searchConfigs', async () => {
     fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {

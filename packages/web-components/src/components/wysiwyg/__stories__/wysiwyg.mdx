@@ -1,0 +1,84 @@
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/addon-docs/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import meta, { Default } from './wysiwyg.stories';
+import packageJson from '../package.json';
+
+<Meta of={meta} />
+
+# WYSIWYG Editor
+
+- **Initiative owner(s):** Nandan Devadula
+- **Status:** Draft
+- **Target library:** Carbon Labs Web Components
+- **Target library maintainer(s) / PR Reviewer(s):** Nandan Devadula
+- **Support channel:** `#carbon-labs`
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/wysiwyg)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/wysiwyg)
+
+## Overview
+
+> **Problem statement:** Carbon Design System lacks a rich text editor component
+> or an example that provides a consistent, accessible WYSIWYG editing
+> experience integrated with Carbon's design language and component ecosystem.
+
+The WYSIWYG (What You See Is What You Get) component fills the gap for rich text
+editing capabilities within Carbon applications. It addresses the need for users
+to create and edit formatted content with a visual interface, supporting common
+text formatting, lists, tables, images, and links.
+
+This component is built on top of open source TipTap editor and extensions along
+with Carbon Design System primitives. While Carbon provides form inputs and text
+areas for plain text, this component extends that capability to structured,
+formatted content editing.
+
+- [TipTap Core](https://tiptap.dev/docs/editor/getting-started/overview)
+- [Open source Extensions](https://tiptap.dev/docs/editor/extensions/overview?filter=opensource)
+
+**Key features:**
+
+- Text formatting (bold, italic, underline, strikethrough, code)
+- Headings (H1, H2, H3) and paragraphs
+- Lists (bulleted and numbered)
+- Text alignment (left, center, right)
+- Block elements (blockquotes, code blocks)
+- Tables with full editing capabilities
+- Links and images
+- Undo/redo functionality
+- Configurable toolbar orientation (horizontal/vertical)
+- Full keyboard navigation support
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-wysiwyg/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['wysiwyg'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+```html
+web component supports content property through js
+<clabs-wysiwyg
+  aria-label="WYSIWYG editor"
+  .content="your rich content here"></clabs-wysiwyg>
+```
+
+## Preview
+
+<Canvas of={Default} />

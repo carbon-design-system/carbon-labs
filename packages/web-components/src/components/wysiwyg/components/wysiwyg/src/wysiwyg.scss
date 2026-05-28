@@ -1,0 +1,220 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+
+:host(#{$clabs-prefix}-wysiwyg) {
+  display: block;
+  box-sizing: border-box;
+  block-size: 100%;
+  inline-size: 100%;
+
+  .#{$clabs-prefix}--wysiwyg__editor-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $border-subtle-01;
+    background: $layer-01;
+    block-size: 100%;
+  }
+
+  .#{$clabs-prefix}--wysiwyg__toolbar {
+    background: $layer;
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: inset 0 -1px 0 0 $border-subtle-01;
+    margin-inline-start: -1px;
+
+    svg {
+      pointer-events: none;
+    }
+
+    // stylelint-disable-next-line selector-type-no-unknown
+    cds-icon-button[disabled]::part(button) {
+      color: $text-disabled;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  .#{$clabs-prefix}--wysiwyg__toolbar-group {
+    flex-direction: row;
+    border: 1px solid $border-subtle-01;
+    background: $layer;
+    margin-block-start: -1px;
+    margin-inline-end: -1px;
+
+    cds-dropdown {
+      gap: 0;
+    }
+  }
+
+  .#{$clabs-prefix}--wysiwyg__editor-content {
+    flex: 1;
+    padding: $spacing-05;
+    background: $background;
+    overflow-y: auto;
+  }
+
+  .ProseMirror {
+    color: $text-primary;
+    min-block-size: 200px;
+    outline: none;
+
+    h1 {
+      @include type-style('heading-05');
+
+      margin: $spacing-05 0 $spacing-03;
+      color: $text-primary;
+    }
+
+    h2 {
+      @include type-style('heading-04');
+
+      margin: $spacing-05 0 $spacing-03;
+      color: $text-primary;
+    }
+
+    h3 {
+      @include type-style('heading-03');
+
+      margin: $spacing-05 0 $spacing-03;
+      color: $text-primary;
+    }
+
+    h4 {
+      @include type-style('heading-02');
+
+      margin: $spacing-05 0 $spacing-03;
+      color: $text-primary;
+    }
+
+    h5 {
+      @include type-style('heading-01');
+
+      margin: $spacing-05 0 $spacing-03;
+      color: $text-primary;
+    }
+
+    h6 {
+      @include type-style('body-02');
+
+      margin: $spacing-05 0 $spacing-03;
+      color: $text-primary;
+      font-weight: 600;
+    }
+
+    p {
+      @include type-style('body-01');
+
+      margin: 0;
+    }
+
+    ul,
+    ol {
+      margin: $spacing-03 0;
+      padding-inline-start: $spacing-06;
+    }
+
+    li {
+      @include type-style('body-01');
+
+      margin: $spacing-02 0;
+    }
+
+    blockquote {
+      margin: $spacing-05 0;
+      border-inline-start: 3px solid $border-strong;
+      color: $text-secondary;
+      padding-inline-start: $spacing-05;
+    }
+
+    code {
+      @include type-style('code-01');
+
+      padding: $spacing-01 $spacing-02;
+      border-radius: 3px;
+      background: $layer-01;
+    }
+
+    pre {
+      @include type-style('code-01');
+
+      padding: $spacing-05;
+      border-radius: 4px;
+      margin: $spacing-05 0;
+      background: $layer-01;
+      overflow-x: auto;
+
+      code {
+        padding: 0;
+        background: none;
+      }
+    }
+
+    table {
+      overflow: hidden;
+      margin: $spacing-05 0;
+      border-collapse: collapse;
+      inline-size: 100%;
+    }
+
+    th,
+    td {
+      padding: $spacing-03;
+      border: 1px solid $border-subtle;
+      text-align: start;
+      vertical-align: top;
+    }
+
+    th {
+      @include type-style('heading-01');
+
+      background: $layer-01;
+    }
+
+    td {
+      @include type-style('body-01');
+    }
+
+    img {
+      border-radius: 4px;
+      block-size: auto;
+      max-inline-size: 100%;
+    }
+
+    a {
+      color: $link-primary;
+      text-decoration: underline;
+
+      &:hover {
+        color: $link-primary-hover;
+      }
+    }
+
+    hr {
+      border: 0;
+      margin: $spacing-05 0;
+      border-block-start: 1px solid $border-subtle;
+    }
+
+    .selectedCell {
+      background: $layer-selected-01;
+    }
+  }
+
+  .#{$clabs-prefix}--wysiwyg__modal-content {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-05;
+    gap: $spacing-05;
+  }
+}

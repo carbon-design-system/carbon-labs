@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.78.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.77.0...@carbon-labs/wc-global-header@0.78.0) (2026-05-28)
+
+
+### Features
+
+* **global-header:** add support for Your privacy choices ([#1259](https://github.com/carbon-design-system/carbon-labs/issues/1259)) ([3f3f26d](https://github.com/carbon-design-system/carbon-labs/commit/3f3f26d44c6f5517f84ad581e76d6b4bc86245cd))
+
+
+
+
+
 # [0.77.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.76.0...@carbon-labs/wc-global-header@0.77.0) (2026-05-20)
 
 **Note:** Version bump only for package @carbon-labs/wc-global-header

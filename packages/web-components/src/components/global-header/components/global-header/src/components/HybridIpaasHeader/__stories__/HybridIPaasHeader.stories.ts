@@ -297,7 +297,7 @@ export const WithYPCContentInjected: Story = {
   render: () => {
     // Use a unique ID for this story instance
     const storyId = 'ypc-injector-' + Date.now();
-    
+
     const injectYPCContent = (ypcDiv: Element) => {
       if (ypcDiv.innerHTML.trim() === '') {
         ypcDiv.innerHTML = `
@@ -357,19 +357,22 @@ export const WithYPCContentInjected: Story = {
     // Set up interval and store the ID
     const intervalId = setInterval(checkForYPCDiv, 300);
     (window as any)[storyId] = intervalId;
-    
+
     console.log('🔍 YPC injector script active for this story only');
 
     // Create a container that will clean up when removed
     const container = document.createElement('div');
     container.setAttribute('role', 'main');
     container.setAttribute('data-ypc-story', storyId);
-    
+
     // Set up cleanup when the story unmounts
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.removedNodes.forEach((node) => {
-          if (node === container || (node as Element).querySelector?.(`[data-ypc-story="${storyId}"]`)) {
+          if (
+            node === container ||
+            (node as Element).querySelector?.(`[data-ypc-story="${storyId}"]`)
+          ) {
             clearInterval((window as any)[storyId]);
             delete (window as any)[storyId];
             observer.disconnect();
@@ -378,7 +381,7 @@ export const WithYPCContentInjected: Story = {
         });
       });
     });
-    
+
     observer.observe(document.body, { childList: true, subtree: true });
 
     return html`

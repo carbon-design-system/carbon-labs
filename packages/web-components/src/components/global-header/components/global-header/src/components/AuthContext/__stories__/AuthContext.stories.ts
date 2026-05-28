@@ -63,7 +63,7 @@ Default.args = {
     {
       'data-ypc-link': true,
       text: '',
-      arialLabel: 'Your privacy choices'
+      arialLabel: 'Your privacy choices',
     },
     {
       text: 'Log out',

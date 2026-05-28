@@ -351,7 +351,7 @@ describe('AuthContext Component', () => {
       {
         'data-ypc-link': true,
         text: '',
-        arialLabel: 'Your privacy choices'
+        arialLabel: 'Your privacy choices',
       },
     ];
 
@@ -374,5 +374,5 @@ describe('AuthContext Component', () => {
     expect(link).to.be.empty;
     expect(link).to.have.attribute('data-ypc-link');
     expect(link).to.have.style('display', 'none');
-  })
+  });
 });

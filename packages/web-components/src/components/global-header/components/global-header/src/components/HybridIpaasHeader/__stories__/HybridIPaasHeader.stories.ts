@@ -289,7 +289,8 @@ export const WithYPCContentInjected: Story = {
     },
     docs: {
       description: {
-        story: 'This story demonstrates how external scripts can inject content into the `data-ypc-link` placeholder. **Click the profile menu** to see the "Your privacy choices" link with icon automatically appear in the footer.',
+        story:
+          'This story demonstrates how external scripts can inject content into the `data-ypc-link` placeholder. **Click the profile menu** to see the "Your privacy choices" link with icon automatically appear in the footer.',
       },
     },
   },
@@ -297,7 +298,7 @@ export const WithYPCContentInjected: Story = {
     // Set up a global script that mimics privacy compliance tools
     if (!(window as any).__ypcInjectorSetup) {
       (window as any).__ypcInjectorSetup = true;
-      
+
       const injectYPCContent = (ypcDiv: Element) => {
         if (ypcDiv.innerHTML.trim() === '') {
           ypcDiv.innerHTML = `
@@ -324,15 +325,17 @@ export const WithYPCContentInjected: Story = {
           console.log('✅ YPC content injected successfully!');
         }
       };
-      
+
       const checkForYPCDiv = () => {
-        const searchInShadowRoot = (root: ShadowRoot | Document): Element | null => {
+        const searchInShadowRoot = (
+          root: ShadowRoot | Document
+        ): Element | null => {
           // Search in this shadow root
           const ypcDiv = root.querySelector('div[data-ypc-link]');
           if (ypcDiv) {
             return ypcDiv;
           }
-          
+
           // Search in nested shadow roots
           const elements = root.querySelectorAll('*');
           for (const el of elements) {
@@ -345,18 +348,20 @@ export const WithYPCContentInjected: Story = {
           }
           return null;
         };
-        
+
         const ypcDiv = searchInShadowRoot(document);
         if (ypcDiv) {
           injectYPCContent(ypcDiv);
         }
       };
-      
+
       // Check every 300ms for the YPC div
       setInterval(checkForYPCDiv, 300);
-      console.log('🔍 YPC injector script active - monitoring for data-ypc-link div...');
+      console.log(
+        '🔍 YPC injector script active - monitoring for data-ypc-link div...'
+      );
     }
-    
+
     return html`
       <div role="main">
         <clabs-global-header-hybrid-ipaas

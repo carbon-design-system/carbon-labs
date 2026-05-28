@@ -304,7 +304,7 @@ describe('HybridIpaasHeader Component', () => {
       {
         arialLabel: 'Your privacy choices',
         'data-ypc-link': true,
-        text: ''
+        text: '',
       },
       {
         arialLabel: 'Logout',
@@ -713,16 +713,14 @@ describe('HybridIpaasHeader Component', () => {
 
     expect(el.headerOptions?.profileFooterLinks).to.exist;
     expect(el.headerOptions.profileFooterLinks?.length).to.equal(2);
-    expect(el.headerOptions.profileFooterLinks?.[0].text).to.equal(
-      ''
-    );
+    expect(el.headerOptions.profileFooterLinks?.[0].text).to.equal('');
     expect(el.headerOptions.profileFooterLinks?.[0].arialLabel).to.equal(
       'Your privacy choices'
     );
     expect(el.headerOptions.profileFooterLinks?.[0]['data-ypc-link']).to.equal(
       true
     );
-  })
+  });
 
   it('should handle searchConfigs', async () => {
     fetchStub.resolves(

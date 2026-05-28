@@ -185,7 +185,7 @@ export class HybridIpaasHeader extends LitElement {
     const footerLink = {
       'data-ypc-link': true,
       text: '',
-      arialLabel: 'Your privacy choices'
+      arialLabel: 'Your privacy choices',
     };
     return footerLink;
   }

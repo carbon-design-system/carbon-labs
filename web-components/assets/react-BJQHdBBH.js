@@ -1,1 +1,0 @@
-import{t as e}from"./lib-DXzy2btU.js";export{e as MDXProvider};

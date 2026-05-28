@@ -1,1 +1,0 @@
-import{$t as e,ht as t}from"./diagramElement-DvkWa6pO.js";var n=e((e,n)=>{let r;return n===`sandbox`&&(r=t(`#i`+e)),t(n===`sandbox`?r.nodes()[0].contentDocument.body:`body`).select(`[id="${e}"]`)},`getDiagramElement`);export{n as t};

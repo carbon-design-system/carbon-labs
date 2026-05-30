@@ -1,0 +1,174 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/element-styles/scss/elements/checkbox' as checkbox;
+
+// Carbon component overrides and customizations
+
+#{$cds-prefix}-icon-button[disabled]::part(button) {
+  color: $text-disabled;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+// Style the text color icon's bottom bar to match selected color
+#{$cds-prefix}-icon-button.text-color-button svg path:last-child {
+  fill: var(--selected-text-color, $text-primary);
+}
+
+// Font family map for dropdown styling
+$font-families: (
+  'IBM Plex Sans': (
+    'IBM Plex Sans',
+    'Helvetica Neue',
+    Arial,
+    sans-serif,
+  ),
+  'IBM Plex Serif': (
+    'IBM Plex Serif',
+    'Georgia',
+    Times,
+    serif,
+  ),
+  'IBM Plex Mono': (
+    'IBM Plex Mono',
+    'Menlo',
+    'DejaVu Sans Mono',
+    'Bitstream Vera Sans Mono',
+    Courier,
+    monospace,
+  ),
+  'Arial': (
+    Arial,
+    sans-serif,
+  ),
+  'Helvetica': (
+    Helvetica,
+    Arial,
+    sans-serif,
+  ),
+  'Times New Roman': (
+    'Times New Roman',
+    Times,
+    serif,
+  ),
+  'Courier New': (
+    'Courier New',
+    Courier,
+    monospace,
+  ),
+);
+
+#{$cds-prefix}-dropdown {
+  --cds-border-strong: transparent;
+
+  inline-size: 100%;
+
+  // Apply font family to trigger button based on dropdown value attribute
+  @each $name, $stack in $font-families {
+    &[value='#{$name}']::part(trigger-button) {
+      font-family: $stack;
+    }
+  }
+}
+
+// Apply font family to dropdown items based on their value attribute
+#{$cds-prefix}-dropdown-item {
+  @each $name, $stack in $font-families {
+    &[value='#{$name}'] {
+      font-family: $stack;
+    }
+  }
+}
+
+#{$cds-prefix}-search {
+  --cds-border-strong: transparent;
+
+  input {
+    border: none;
+  }
+}
+
+#{$cds-prefix}-file-uploader-item {
+  flex: 1;
+  margin: 0;
+  border-inline-end: 1px solid $border-subtle-01;
+  min-inline-size: calc($spacing-10 * 2);
+}
+
+// ProseMirror-specific overrides for Carbon element styles
+.ProseMirror {
+  // Remove max-inline-size constraint from paragraphs
+  p {
+    max-inline-size: unset;
+  }
+
+  // Override code block background
+  pre,
+  code {
+    background-color: $layer-02;
+  }
+
+  // Table border and cell customizations
+  table {
+    border-block-start: 1px solid $border-subtle-01;
+    border-inline: 1px solid $border-subtle-01;
+
+    p {
+      margin: unset;
+    }
+
+    td {
+      border-color: $border-subtle-01;
+    }
+
+    td:not(:last-child) {
+      border-inline-end: 1px solid $border-subtle-01;
+    }
+  }
+
+  // Task list styles - custom ProseMirror extension
+  ul[data-type='taskList'] {
+    list-style: none;
+    padding-inline-start: 0;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      margin-inline-start: 0;
+      padding-inline-start: 0;
+    }
+  }
+}
+
+// Task list item content styles
+.ProseMirror ul[data-type='taskList'] li p {
+  margin: $spacing-01;
+}
+
+.ProseMirror ul[data-type='taskList'] li > label {
+  @include checkbox.styles(
+    (
+      selector: '&',
+    )
+  );
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ProseMirror ul[data-type='taskList'] li > div {
+  flex: 1;
+}
+
+.ProseMirror ul[data-type='taskList'] li[data-checked='true'] > div {
+  color: $text-secondary;
+  text-decoration: line-through;
+}

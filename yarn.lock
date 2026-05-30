@@ -1969,6 +1969,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carbon-labs/utilities@npm:0.20.0":
+  version: 0.20.0
+  resolution: "@carbon-labs/utilities@npm:0.20.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/e647f964a2b426802a0245840ef653bffab41f5b0c48de0d72c08b7fd1923112b9d66a16009369de5f50cd0a4d3c164877cdbf4f6d980eb502a360189398c542
+  languageName: node
+  linkType: hard
+
 "@carbon-labs/utilities@npm:0.21.0":
   version: 0.21.0
   resolution: "@carbon-labs/utilities@npm:0.21.0"
@@ -2077,6 +2087,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/wc-empty-state@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "@carbon-labs/wc-empty-state@npm:0.12.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.20.0"
+    "@carbon/web-components": "npm:^2.41.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    uuid: "npm:^9.0.1"
+  checksum: 10c0/486cb7b4def0cd0b55b4175cd8d20d7f1ec330a9edfb84efb8d819f5c71675b2e484b651ca9f9024f7a72de3e5c1f5c695e3d73771a663ec1810179c44b5bf65
+  languageName: node
+  linkType: hard
+
 "@carbon-labs/wc-empty-state@npm:^0.9.0":
   version: 0.9.0
   resolution: "@carbon-labs/wc-empty-state@npm:0.9.0"
@@ -2153,6 +2176,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/wc-style-picker@npm:0.21.0":
+  version: 0.21.0
+  resolution: "@carbon-labs/wc-style-picker@npm:0.21.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+    "@carbon-labs/utilities": "npm:0.20.0"
+    "@carbon-labs/wc-empty-state": "npm:^0.12.0"
+    "@carbon/web-components": "npm:^2.41.0"
+    "@ibm/telemetry-js": "npm:^1.10.2"
+    "@lit/context": "npm:^1.1.5"
+  checksum: 10c0/3f1cd0c0a9c1ff431efbf922a454b0f57d06b38ab749347c212e804a21a39976542d4b730e0371f6ca27d68ee0cfe55d12edec33e4e2ccbf847820f81498946d
+  languageName: node
+  linkType: hard
+
 "@carbon-labs/wc-style-picker@workspace:^, @carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/wc-style-picker@workspace:packages/web-components/src/components/style-picker"
@@ -2172,6 +2209,7 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
     "@carbon-labs/utilities": "npm:0.21.0"
+    "@carbon-labs/wc-style-picker": "npm:0.21.0"
     "@carbon/web-components": "npm:^2.40.0"
     "@tiptap/core": "npm:^3.23.6"
     "@tiptap/extension-blockquote": "npm:^3.23.6"
@@ -2181,11 +2219,11 @@ __metadata:
     "@tiptap/extension-code-block": "npm:^3.23.6"
     "@tiptap/extension-color": "npm:^3.23.6"
     "@tiptap/extension-document": "npm:^3.23.6"
+    "@tiptap/extension-font-family": "npm:^3.23.6"
     "@tiptap/extension-heading": "npm:^3.23.6"
     "@tiptap/extension-history": "npm:^3.23.6"
     "@tiptap/extension-image": "npm:^3.23.6"
     "@tiptap/extension-italic": "npm:^3.23.6"
-    "@tiptap/extension-link": "npm:^3.23.6"
     "@tiptap/extension-list-item": "npm:^3.23.6"
     "@tiptap/extension-ordered-list": "npm:^3.23.6"
     "@tiptap/extension-paragraph": "npm:^3.23.6"
@@ -2194,10 +2232,11 @@ __metadata:
     "@tiptap/extension-table-cell": "npm:^3.23.6"
     "@tiptap/extension-table-header": "npm:^3.23.6"
     "@tiptap/extension-table-row": "npm:^3.23.6"
+    "@tiptap/extension-task-item": "npm:^3.23.6"
+    "@tiptap/extension-task-list": "npm:^3.23.6"
     "@tiptap/extension-text": "npm:^3.23.6"
     "@tiptap/extension-text-align": "npm:^3.23.6"
     "@tiptap/extension-text-style": "npm:^3.23.6"
-    "@tiptap/extension-underline": "npm:^3.23.6"
     "@tiptap/starter-kit": "npm:^3.23.6"
     lit: "npm:^3.1.0"
   peerDependencies:
@@ -2209,6 +2248,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@carbon-labs/web-components@workspace:packages/web-components"
   dependencies:
+    "@carbon/element-styles": "npm:^0.2.5"
     "@carbon/grid": "npm:^11.45.0"
     "@carbon/ibm-products-web-components": "npm:^0.25.0"
     "@carbon/icon-helpers": "npm:^10.68.0"
@@ -2269,6 +2309,17 @@ __metadata:
   dependencies:
     "@ibm/telemetry-js": "npm:^1.5.0"
   checksum: 10c0/6db9bd678be108eb3e3576a045244c3e1bc94d371d166ea3e0d50192b6787d87bd26f2787318a5f2f5a03d2c106b9623ae782242570b9af547f0d55108d99b03
+  languageName: node
+  linkType: hard
+
+"@carbon/element-styles@npm:^0.2.5":
+  version: 0.2.5
+  resolution: "@carbon/element-styles@npm:0.2.5"
+  dependencies:
+    "@ibm/telemetry-js": "npm:^1.11.0"
+  peerDependencies:
+    "@carbon/styles": ^1.102.0
+  checksum: 10c0/a2c8801c11f9d5546cf251a7698a348208d54f1f0d03265d5cd215b20ed1b234fb95c87a8a0229157bcd875821f019bfb62daeec77b172c52462b697eaa438a4
   languageName: node
   linkType: hard
 
@@ -2386,16 +2437,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons@npm:^11.70.0, @carbon/icons@npm:^11.80.0":
-  version: 11.80.0
-  resolution: "@carbon/icons@npm:11.80.0"
-  dependencies:
-    "@ibm/telemetry-js": "npm:^1.5.0"
-  checksum: 10c0/724ed19b2bf9039de32d43b718899d10f46f91b615ea50e52f83618c8a80e9f315afa519ffde36e55cfd698b818a46dff49fdf02c91c22dbffbab12ae9fc64ef
-  languageName: node
-  linkType: hard
-
-"@carbon/icons@npm:^11.81.0":
+"@carbon/icons@npm:^11.70.0, @carbon/icons@npm:^11.81.0":
   version: 11.81.0
   resolution: "@carbon/icons@npm:11.81.0"
   dependencies:
@@ -2588,7 +2630,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/web-components@npm:^2.40.0":
+"@carbon/web-components@npm:^2.40.0, @carbon/web-components@npm:^2.41.0, @carbon/web-components@npm:^2.47.0, @carbon/web-components@npm:^2.50.0":
   version: 2.55.0
   resolution: "@carbon/web-components@npm:2.55.0"
   dependencies:
@@ -2604,25 +2646,6 @@ __metadata:
     lodash-es: "npm:^4.17.21"
     tslib: "npm:^2.6.3"
   checksum: 10c0/a7d65908494808d7ca3fe8661139ff593a374716138f0127c6a3817bf0bd47b46cfa20a3f5a81da5cfe9038af671e42266f341880a1ccdbd421fa51214ece8e1
-  languageName: node
-  linkType: hard
-
-"@carbon/web-components@npm:^2.41.0, @carbon/web-components@npm:^2.47.0, @carbon/web-components@npm:^2.50.0":
-  version: 2.54.0
-  resolution: "@carbon/web-components@npm:2.54.0"
-  dependencies:
-    "@carbon/icon-helpers": "npm:10.47.0"
-    "@carbon/icons": "npm:^11.80.0"
-    "@carbon/styles": "npm:^1.106.0"
-    "@carbon/utilities": "npm:^0.17.0"
-    "@floating-ui/dom": "npm:^1.6.3"
-    "@ibm/telemetry-js": "npm:^1.10.2"
-    "@lit/context": "npm:^1.1.3"
-    flatpickr: "npm:*"
-    lit: "npm:^3.1.0"
-    lodash-es: "npm:^4.17.21"
-    tslib: "npm:^2.6.3"
-  checksum: 10c0/15c949d02ec650c66ce085a4518173458e1e4161eea86edd293d89ca4fff5ea85ed17a292a9fc47b52150290b84a0bc0e61187dea2b82792566ae54c985d27ac
   languageName: node
   linkType: hard
 
@@ -8505,6 +8528,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-font-family@npm:^3.23.6":
+  version: 3.23.6
+  resolution: "@tiptap/extension-font-family@npm:3.23.6"
+  peerDependencies:
+    "@tiptap/extension-text-style": 3.23.6
+  checksum: 10c0/e3884bbaa168a892f1a6044c5edc9145f3a7a30c9bfe44558e0f8d4fff2ae20d24e293b6d304859a7ee04044dd8421b62f7c883bb9352f19beaf905c65ccdc3f
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-gapcursor@npm:^3.23.6":
   version: 3.23.6
   resolution: "@tiptap/extension-gapcursor@npm:3.23.6"
@@ -8670,6 +8702,24 @@ __metadata:
     "@tiptap/core": 3.23.6
     "@tiptap/pm": 3.23.6
   checksum: 10c0/87a4087ac9eded7e67a6df5197927ecd51dc09ebf6daddd94578e01c52847ea74a0f4dd6cb888fd484e3ed49113cc32e512df45c9b2aea95cc1dc4e0279d466e
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-task-item@npm:^3.23.6":
+  version: 3.23.6
+  resolution: "@tiptap/extension-task-item@npm:3.23.6"
+  peerDependencies:
+    "@tiptap/extension-list": 3.23.6
+  checksum: 10c0/6c4dd1f45a415e55279a999686ff83ca515641a174f8a2e40fd338a65253659332975b58ea52c05592b105287f8d79a21e8553813240c78632fb9f607a89f234
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-task-list@npm:^3.23.6":
+  version: 3.23.6
+  resolution: "@tiptap/extension-task-list@npm:3.23.6"
+  peerDependencies:
+    "@tiptap/extension-list": 3.23.6
+  checksum: 10c0/4eae8912048002396f32d0759307daa12a8af0dd16023a4d970cfba6e7377e38f77075dff1ae1817c34f84f183e5defce3c277ee01dbfb7fe8b6820da66e8e18
   languageName: node
   linkType: hard
 

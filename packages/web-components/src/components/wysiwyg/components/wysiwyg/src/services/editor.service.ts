@@ -14,11 +14,12 @@ import { TableRow } from '@tiptap/extension-table-row';
 import { TableCell } from '@tiptap/extension-table-cell';
 import { TableHeader } from '@tiptap/extension-table-header';
 import Image from '@tiptap/extension-image';
-import Link from '@tiptap/extension-link';
-import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import { TextStyle } from '@tiptap/extension-text-style';
 import { Color } from '@tiptap/extension-color';
+import { FontFamily } from '@tiptap/extension-font-family';
+import TaskList from '@tiptap/extension-task-list';
+import TaskItem from '@tiptap/extension-task-item';
 
 import type {
   EditorConfig,
@@ -89,17 +90,22 @@ export class EditorService {
         heading: {
           levels: [...HEADING_LEVELS],
         },
+        // Configure link through StarterKit with custom options
+        link: LINK_CONFIG,
       }),
-      Underline,
       TextStyle,
       Color,
+      FontFamily,
       TextAlign.configure(TEXT_ALIGN_CONFIG),
-      Link.configure(LINK_CONFIG),
       Image.configure(IMAGE_CONFIG),
       Table.configure(TABLE_CONFIG),
       TableRow,
       TableHeader,
       TableCell,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
     ];
   }
 
@@ -142,89 +148,91 @@ export class EditorService {
   }
 
   /**
-   * Toggle bold formatting
+   * Execute a toggle command on the editor
+   * @param {string} command - The command name to toggle
    */
+  private executeToggleCommand(command: string): void {
+    this.editor?.chain().focus()[command]().run();
+  }
+
+  /**
+   * Execute a command with attributes on the editor
+   * @param {string} command - The command name to execute
+   * @param {any} attrs - The attributes to pass to the command
+   */
+  private executeCommandWithAttrs(command: string, attrs: any): void {
+    this.editor?.chain().focus()[command](attrs).run();
+  }
+
+  /** Toggle bold formatting */
   public toggleBold(): void {
-    this.editor?.chain().focus().toggleBold().run();
+    this.executeToggleCommand('toggleBold');
   }
 
-  /**
-   * Toggle italic formatting
-   */
+  /** Toggle italic formatting */
   public toggleItalic(): void {
-    this.editor?.chain().focus().toggleItalic().run();
+    this.executeToggleCommand('toggleItalic');
   }
 
-  /**
-   * Toggle underline formatting
-   */
+  /** Toggle underline formatting */
   public toggleUnderline(): void {
-    this.editor?.chain().focus().toggleUnderline().run();
+    this.executeToggleCommand('toggleUnderline');
   }
 
-  /**
-   * Toggle strikethrough formatting
-   */
+  /** Toggle strikethrough formatting */
   public toggleStrike(): void {
-    this.editor?.chain().focus().toggleStrike().run();
+    this.executeToggleCommand('toggleStrike');
   }
 
-  /**
-   * Toggle inline code formatting
-   */
+  /** Toggle inline code formatting */
   public toggleCode(): void {
-    this.editor?.chain().focus().toggleCode().run();
+    this.executeToggleCommand('toggleCode');
   }
 
   /**
    * Set heading level
-   * @param {HeadingLevel} level - The heading level (1, 2, or 3)
+   * @param {HeadingLevel} level - The heading level (1-6)
    */
   public setHeading(level: HeadingLevel): void {
-    this.editor?.chain().focus().toggleHeading({ level }).run();
+    this.executeCommandWithAttrs('toggleHeading', { level });
   }
 
-  /**
-   * Set paragraph
-   */
+  /** Set paragraph */
   public setParagraph(): void {
-    this.editor?.chain().focus().setParagraph().run();
+    this.executeToggleCommand('setParagraph');
   }
 
-  /**
-   * Toggle bullet list
-   */
+  /** Toggle bullet list */
   public toggleBulletList(): void {
-    this.editor?.chain().focus().toggleBulletList().run();
+    this.executeToggleCommand('toggleBulletList');
   }
 
-  /**
-   * Toggle ordered list
-   */
+  /** Toggle ordered list */
   public toggleOrderedList(): void {
-    this.editor?.chain().focus().toggleOrderedList().run();
+    this.executeToggleCommand('toggleOrderedList');
+  }
+
+  /** Toggle task list */
+  public toggleTaskList(): void {
+    this.executeToggleCommand('toggleTaskList');
   }
 
   /**
    * Set text alignment
-   * @param {TextAlignment} alignment - The text alignment (left, center, right, or justify)
+   * @param {TextAlignment} alignment - The text alignment
    */
   public setTextAlign(alignment: TextAlignment): void {
-    this.editor?.chain().focus().setTextAlign(alignment).run();
+    this.executeCommandWithAttrs('setTextAlign', alignment);
   }
 
-  /**
-   * Toggle blockquote
-   */
+  /** Toggle blockquote */
   public toggleBlockquote(): void {
-    this.editor?.chain().focus().toggleBlockquote().run();
+    this.executeToggleCommand('toggleBlockquote');
   }
 
-  /**
-   * Toggle code block
-   */
+  /** Toggle code block */
   public toggleCodeBlock(): void {
-    this.editor?.chain().focus().toggleCodeBlock().run();
+    this.executeToggleCommand('toggleCodeBlock');
   }
 
   /**
@@ -265,74 +273,54 @@ export class EditorService {
     this.editor?.chain().focus().setImage(attrs).run();
   }
 
-  /**
-   * Add column before
-   */
+  /** Add column before current column */
   public addColumnBefore(): void {
-    this.editor?.chain().focus().addColumnBefore().run();
+    this.executeToggleCommand('addColumnBefore');
   }
 
-  /**
-   * Add column after
-   */
+  /** Add column after current column */
   public addColumnAfter(): void {
-    this.editor?.chain().focus().addColumnAfter().run();
+    this.executeToggleCommand('addColumnAfter');
   }
 
-  /**
-   * Delete column
-   */
+  /** Delete current column */
   public deleteColumn(): void {
-    this.editor?.chain().focus().deleteColumn().run();
+    this.executeToggleCommand('deleteColumn');
   }
 
-  /**
-   * Add row before
-   */
+  /** Add row before current row */
   public addRowBefore(): void {
-    this.editor?.chain().focus().addRowBefore().run();
+    this.executeToggleCommand('addRowBefore');
   }
 
-  /**
-   * Add row after
-   */
+  /** Add row after current row */
   public addRowAfter(): void {
-    this.editor?.chain().focus().addRowAfter().run();
+    this.executeToggleCommand('addRowAfter');
   }
 
-  /**
-   * Delete row
-   */
+  /** Delete current row */
   public deleteRow(): void {
-    this.editor?.chain().focus().deleteRow().run();
+    this.executeToggleCommand('deleteRow');
   }
 
-  /**
-   * Toggle header row
-   */
+  /** Toggle header row */
   public toggleHeaderRow(): void {
-    this.editor?.chain().focus().toggleHeaderRow().run();
+    this.executeToggleCommand('toggleHeaderRow');
   }
 
-  /**
-   * Delete table
-   */
+  /** Delete table */
   public deleteTable(): void {
-    this.editor?.chain().focus().deleteTable().run();
+    this.executeToggleCommand('deleteTable');
   }
 
-  /**
-   * Undo last action
-   */
+  /** Undo last action */
   public undo(): void {
-    this.editor?.chain().focus().undo().run();
+    this.executeToggleCommand('undo');
   }
 
-  /**
-   * Redo last undone action
-   */
+  /** Redo last undone action */
   public redo(): void {
-    this.editor?.chain().focus().redo().run();
+    this.executeToggleCommand('redo');
   }
 
   /**
@@ -348,5 +336,78 @@ export class EditorService {
    */
   public setContent(content: string): void {
     this.editor?.commands.setContent(content);
+  }
+
+  /**
+   * Cut selected text to clipboard
+   */
+  public cut(): void {
+    if (this.editor) {
+      const { from, to } = this.editor.state.selection;
+      const text = this.editor.state.doc.textBetween(from, to, ' ');
+      navigator.clipboard.writeText(text);
+      this.editor.chain().focus().deleteSelection().run();
+    }
+  }
+
+  /**
+   * Copy selected text to clipboard
+   */
+  public copy(): void {
+    if (this.editor) {
+      const { from, to } = this.editor.state.selection;
+      const text = this.editor.state.doc.textBetween(from, to, ' ');
+      navigator.clipboard.writeText(text);
+    }
+  }
+
+  /**
+   * Paste text from clipboard
+   */
+  public async paste(): Promise<void> {
+    if (this.editor) {
+      try {
+        const text = await navigator.clipboard.readText();
+        this.editor.chain().focus().insertContent(text).run();
+      } catch (err) {
+        console.error('Failed to paste:', err);
+      }
+    }
+  }
+
+  /** Increase indent */
+  public indent(): void {
+    this.executeCommandWithAttrs('sinkListItem', 'listItem');
+  }
+
+  /** Decrease indent */
+  public outdent(): void {
+    this.executeCommandWithAttrs('liftListItem', 'listItem');
+  }
+
+  /**
+   * Set text color
+   * @param {string} color - The color value (hex, rgb, etc.)
+   */
+  public setColor(color: string): void {
+    this.executeCommandWithAttrs('setColor', color);
+  }
+
+  /** Unset text color */
+  public unsetColor(): void {
+    this.executeToggleCommand('unsetColor');
+  }
+
+  /**
+   * Set font family
+   * @param {string} fontFamily - The font family name
+   */
+  public setFontFamily(fontFamily: string): void {
+    this.executeCommandWithAttrs('setFontFamily', fontFamily);
+  }
+
+  /** Unset font family */
+  public unsetFontFamily(): void {
+    this.executeToggleCommand('unsetFontFamily');
   }
 }

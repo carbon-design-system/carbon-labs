@@ -8,6 +8,7 @@
  */
 
 import type { Editor } from '@tiptap/core';
+import type { TemplateResult } from 'lit';
 
 /**
  * Editor orientation for toolbar layout
@@ -70,11 +71,69 @@ export interface EditorConfig {
 }
 
 /**
- * Modal state interface
+ * Popover state interface
  */
-export interface ModalState {
-  showLinkModal: boolean;
-  showImageModal: boolean;
+export interface PopoverState {
+  showLinkPopover: boolean;
+  showImagePopover: boolean;
   linkUrl: string;
   imageUrl: string;
+  imageAlt: string;
+  imageTitle: string;
+}
+
+/**
+ * Built-in toolbar group names
+ */
+export type BuiltInToolbarGroupName =
+  | 'clipboard'
+  | 'fontFamily'
+  | 'textFormatting'
+  | 'headings'
+  | 'colorPicker'
+  | 'lists'
+  | 'alignment'
+  | 'blocks'
+  | 'insert'
+  | 'search'
+  | 'tableOperations';
+
+/**
+ * Toolbar group configuration with optional item-level control
+ */
+export interface ToolbarGroup {
+  name: BuiltInToolbarGroupName | string;
+  enabled?: boolean;
+  items?: Record<string, boolean>;
+}
+
+/**
+ * Toolbar options as an array for controlling order and visibility of groups
+ * Can include both built-in toolbar groups and custom toolbar groups
+ */
+export type ToolbarOptions = (ToolbarGroup | CustomToolbarGroup)[];
+
+/**
+ * Custom toolbar item configuration
+ * Allows users to add custom buttons or controls to the toolbar
+ */
+export interface CustomToolbarItem {
+  /** Unique identifier for the item */
+  id: string;
+  /** Render function that returns a Lit template */
+  render: (editor: Editor | null) => TemplateResult;
+  /** Optional tooltip text */
+  tooltip?: string;
+}
+
+/**
+ * Custom toolbar group configuration
+ * Groups custom items together in the toolbar
+ * Reference the group by its ID in toolbarOptions to control position
+ */
+export interface CustomToolbarGroup {
+  /** Unique identifier for the group - use this in toolbarOptions array */
+  id: string;
+  /** Array of custom toolbar items */
+  items: CustomToolbarItem[];
 }

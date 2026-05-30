@@ -49,10 +49,28 @@ export const LINK_CONFIG = {
  * Image configuration
  */
 export const IMAGE_CONFIG = {
+  inline: true,
+  allowBase64: true,
   HTMLAttributes: {
     class: 'editor-image',
   },
-} as const;
+  resize: {
+    enabled: true,
+    directions: [
+      'top',
+      'bottom',
+      'left',
+      'right',
+      'top-left',
+      'top-right',
+      'bottom-left',
+      'bottom-right',
+    ] as any,
+    minWidth: 50,
+    minHeight: 50,
+    alwaysPreserveAspectRatio: true,
+  },
+};
 
 /**
  * Table configuration
@@ -81,7 +99,7 @@ export const NAVIGATION_KEYS = {
  * Focusable element selectors
  */
 export const FOCUSABLE_SELECTORS =
-  'cds-icon-button, cds-dropdown, cds-overflow-menu' as const;
+  'cds-icon-button, cds-dropdown, cds-overflow-menu, cds-search' as const;
 
 /**
  * Tooltip configuration
@@ -93,9 +111,9 @@ export const TOOLTIP_CONFIG = {
 } as const;
 
 /**
- * Modal labels
+ * Popover labels
  */
-export const MODAL_LABELS = {
+export const POPOVER_LABELS = {
   link: {
     title: 'Insert/Edit Link',
     urlLabel: 'URL',
@@ -107,6 +125,10 @@ export const MODAL_LABELS = {
     title: 'Insert Image',
     urlLabel: 'Image URL',
     urlPlaceholder: 'https://example.com/image.jpg',
+    altLabel: 'Alt Text',
+    altPlaceholder: 'Describe the image',
+    titleLabel: 'Title',
+    titlePlaceholder: 'Image title (optional)',
     insertButton: 'Insert Image',
     cancelButton: 'Cancel',
   },
@@ -118,6 +140,9 @@ export const MODAL_LABELS = {
 export const TOOLBAR_LABELS = {
   undo: 'Undo',
   redo: 'Redo',
+  cut: 'Cut',
+  copy: 'Copy',
+  paste: 'Paste',
   bold: 'Bold',
   italic: 'Italic',
   underline: 'Underline',
@@ -125,14 +150,20 @@ export const TOOLBAR_LABELS = {
   code: 'Code',
   bulletList: 'Bullet List',
   numberedList: 'Numbered List',
+  taskList: 'Task List',
   alignLeft: 'Align Left',
   alignCenter: 'Align Center',
   alignRight: 'Align Right',
+  alignJustify: 'Justify',
+  indent: 'Indent More',
+  outdent: 'Indent Less',
+  textColor: 'Text Color',
   blockquote: 'Blockquote',
   codeBlock: 'Code Block',
   insertTable: 'Insert Table',
   insertLink: 'Insert Link',
   insertImage: 'Insert Image',
+  attachment: 'Attach File',
   tableOptions: 'Table Options',
 } as const;
 
@@ -149,3 +180,211 @@ export const TABLE_MENU_ITEMS = {
   toggleHeaderRow: 'Toggle Header Row',
   deleteTable: 'Delete Table',
 } as const;
+
+/**
+ * Font family options
+ */
+export const FONT_FAMILIES = [
+  { label: 'IBM Plex Sans', value: 'IBM Plex Sans' },
+  { label: 'IBM Plex Serif', value: 'IBM Plex Serif' },
+  { label: 'IBM Plex Mono', value: 'IBM Plex Mono' },
+  { label: 'Arial', value: 'Arial' },
+  { label: 'Helvetica', value: 'Helvetica' },
+  { label: 'Times New Roman', value: 'Times New Roman' },
+  { label: 'Courier New', value: 'Courier New' },
+] as const;
+
+/**
+ * Font size options (in pixels)
+ */
+export const FONT_SIZES = [
+  { label: 'Small', value: '12px' },
+  { label: 'Normal', value: '14px' },
+  { label: 'Medium', value: '16px' },
+  { label: 'Large', value: '18px' },
+  { label: 'Extra Large', value: '24px' },
+] as const;
+
+/**
+ * Text color options using Carbon theme tokens
+ * These tokens automatically adapt to light/dark mode
+ */
+export const TEXT_COLOR_GROUPS = [
+  {
+    label: 'Text',
+    items: [
+      { label: 'Primary Text', token: 'text-primary' },
+      { label: 'Secondary Text', token: 'text-secondary' },
+      { label: 'Placeholder', token: 'text-placeholder' },
+      { label: 'Link', token: 'link-primary' },
+    ],
+  },
+  {
+    label: 'Status',
+    items: [
+      { label: 'Info', token: 'support-info' },
+      { label: 'Success', token: 'support-success' },
+      { label: 'Error', token: 'support-error' },
+      { label: 'Warning', token: 'support-warning' },
+      { label: 'Caution', token: 'support-caution-major' },
+    ],
+  },
+] as const;
+
+/**
+ * Heading dropdown options
+ */
+export const HEADING_OPTIONS = [
+  { value: 'p', label: 'Paragraph' },
+  { value: 'h1', label: 'Heading 1' },
+  { value: 'h2', label: 'Heading 2' },
+  { value: 'h3', label: 'Heading 3' },
+  { value: 'h4', label: 'Heading 4' },
+  { value: 'h5', label: 'Heading 5' },
+  { value: 'h6', label: 'Heading 6' },
+] as const;
+
+/**
+ * CSS class names used in the component
+ */
+export const CSS_CLASSES = {
+  editorContainer: 'clabs--wysiwyg__editor-container',
+  toolbar: 'clabs--wysiwyg__toolbar',
+  toolbarGroup: 'clabs--wysiwyg__toolbar-group',
+  editorContent: 'clabs--wysiwyg__editor-content',
+  popoverContent: 'clabs--wysiwyg__popover-content',
+  popoverActions: 'clabs--wysiwyg__popover-actions',
+  attachments: 'clabs--wysiwyg__attachments',
+  textColorButton: 'text-color-button',
+  toolbarButton: 'clabs--wysiwyg__toolbar-button',
+  popoverWrapper: 'clabs--wysiwyg__popover-wrapper',
+  proseMirror: 'tiptap.ProseMirror',
+} as const;
+
+/**
+ * File attachment configuration
+ */
+export const FILE_ATTACHMENT_CONFIG = {
+  attachmentPrefix: 'Attached: ',
+} as const;
+
+/**
+ * Button configuration for toolbar groups
+ * Defines the structure and behavior of toolbar buttons in a data-driven way
+ */
+export interface ButtonConfig {
+  id: string;
+  icon: string;
+  label: string;
+  action: string;
+  checkActive?: string;
+}
+
+/**
+ * Text formatting button configurations
+ */
+export const TEXT_FORMATTING_BUTTONS: ButtonConfig[] = [
+  {
+    id: 'bold',
+    icon: 'TextBold',
+    label: 'Bold',
+    action: 'toggleBold',
+    checkActive: 'bold',
+  },
+  {
+    id: 'italic',
+    icon: 'TextItalic',
+    label: 'Italic',
+    action: 'toggleItalic',
+    checkActive: 'italic',
+  },
+  {
+    id: 'underline',
+    icon: 'TextUnderline',
+    label: 'Underline',
+    action: 'toggleUnderline',
+    checkActive: 'underline',
+  },
+  {
+    id: 'strikethrough',
+    icon: 'TextStrikethrough',
+    label: 'Strikethrough',
+    action: 'toggleStrike',
+    checkActive: 'strike',
+  },
+  {
+    id: 'code',
+    icon: 'Code',
+    label: 'Code',
+    action: 'toggleCode',
+    checkActive: 'code',
+  },
+] as const;
+
+/**
+ * Clipboard button configurations
+ */
+export const CLIPBOARD_BUTTONS: ButtonConfig[] = [
+  { id: 'cut', icon: 'Cut', label: 'Cut', action: 'cut' },
+  { id: 'copy', icon: 'Copy', label: 'Copy', action: 'copy' },
+  { id: 'paste', icon: 'Paste', label: 'Paste', action: 'paste' },
+] as const;
+
+/**
+ * List button configurations
+ */
+export const LIST_BUTTONS: ButtonConfig[] = [
+  {
+    id: 'bulletList',
+    icon: 'ListBulleted',
+    label: 'Bullet List',
+    action: 'toggleBulletList',
+    checkActive: 'bulletList',
+  },
+  {
+    id: 'numberedList',
+    icon: 'ListNumbered',
+    label: 'Numbered List',
+    action: 'toggleOrderedList',
+    checkActive: 'orderedList',
+  },
+  {
+    id: 'taskList',
+    icon: 'ListChecked',
+    label: 'Task List',
+    action: 'toggleTaskList',
+    checkActive: 'taskList',
+  },
+  {
+    id: 'outdent',
+    icon: 'IndentLess',
+    label: 'Indent Less',
+    action: 'outdent',
+  },
+  {
+    id: 'indent',
+    icon: 'IndentMore',
+    label: 'Indent More',
+    action: 'indent',
+  },
+] as const;
+
+/**
+ * Block button configurations
+ */
+export const BLOCK_BUTTONS: ButtonConfig[] = [
+  {
+    id: 'blockquote',
+    icon: 'Quotes',
+    label: 'Blockquote',
+    action: 'toggleBlockquote',
+    checkActive: 'blockquote',
+  },
+  {
+    id: 'codeBlock',
+    icon: 'CodeBlock',
+    label: 'Code Block',
+    action: 'toggleCodeBlock',
+    checkActive: 'codeBlock',
+  },
+] as const;

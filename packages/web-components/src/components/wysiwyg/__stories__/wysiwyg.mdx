@@ -1,9 +1,9 @@
 import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/addon-docs/blocks';
 import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
-import * as DefaultStories from './01-Default.stories';
+import meta, * as DefaultStories from './01-Default.stories';
 import packageJson from '../package.json';
 
-<Meta of={DefaultStories} name="Docs" />
+<Meta of={meta} name="Docs" />
 
 # WYSIWYG Editor
 

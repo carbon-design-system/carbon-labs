@@ -10,7 +10,7 @@
 import { LitElement, html, nothing } from 'lit';
 import type { TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import type { Editor } from '@tiptap/core';
+import type { Editor, Extensions } from '@tiptap/core';
 import { settings } from '@carbon-labs/utilities';
 
 const { stablePrefix: clabsPrefix } = settings;
@@ -102,6 +102,9 @@ class wysiwyg extends LitElement {
   toolbarOptions?: ToolbarOptions;
 
   @property({ type: Array })
+  extensions?: Extensions;
+
+  @property({ type: Array })
   files: FileMetadata[] = [];
 
   @state() private popoverState: PopoverState =
@@ -110,7 +113,7 @@ class wysiwyg extends LitElement {
   @state() private selectedColor = ThemeUtils.getDefaultTextColor();
 
   private editorService = new EditorService();
-  public editor: Editor | null = null; // public for extensions
+  private editor: Editor | null = null;
   private isUpdatingFromEditor = false; // Flag to track editor-initiated updates
 
   /**
@@ -118,7 +121,7 @@ class wysiwyg extends LitElement {
    * Allows users to call custom methods on the editor
    * @returns {Editor | null} The editor instance or null if not initialized
    * @example
-   * const editor = document.querySelector('clabs-wysiwyg').editor;
+   * const editor = document.querySelector('clabs-wysiwyg').editorInstance;
    * if (editor) {
    *   editor.chain().focus().toggleBold().run();
    * }
@@ -182,7 +185,11 @@ class wysiwyg extends LitElement {
 
     this.editor = this.editorService.initialize(
       editorElement,
-      { content: this.content, orientation: 'horizontal' },
+      {
+        content: this.content,
+        orientation: 'horizontal',
+        extensions: this.extensions,
+      },
       (editor: Editor) => {
         // Mark that this update is coming from the editor to prevent circular updates
         this.isUpdatingFromEditor = true;

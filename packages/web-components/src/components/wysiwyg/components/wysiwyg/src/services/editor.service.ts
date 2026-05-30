@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Editor } from '@tiptap/core';
+import { Editor, type Extensions } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import { Table } from '@tiptap/extension-table';
 import { TableRow } from '@tiptap/extension-table-row';
@@ -58,7 +58,7 @@ export class EditorService {
   ): Editor {
     this.editor = new Editor({
       element,
-      extensions: this.getExtensions(),
+      extensions: this.getExtensions(config.extensions),
       content: config.content || '',
       editable: config.editable ?? true,
       autofocus: config.autofocus ?? false,
@@ -83,9 +83,11 @@ export class EditorService {
 
   /**
    * Get configured extensions for the editor
+   * @param {Extensions} customExtensions - Optional custom TipTap extensions to add
+   * @returns {Extensions} Array of TipTap extensions
    */
-  private getExtensions() {
-    return [
+  private getExtensions(customExtensions?: Extensions) {
+    const defaultExtensions = [
       StarterKit.configure({
         heading: {
           levels: [...HEADING_LEVELS],
@@ -107,6 +109,11 @@ export class EditorService {
         nested: true,
       }),
     ];
+
+    // Merge custom extensions if provided
+    return customExtensions
+      ? [...defaultExtensions, ...customExtensions]
+      : defaultExtensions;
   }
 
   /**

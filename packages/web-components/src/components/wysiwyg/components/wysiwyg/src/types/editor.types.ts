@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { Editor } from '@tiptap/core';
+import type { Editor, Extensions } from '@tiptap/core';
 import type { TemplateResult } from 'lit';
 
 /**
@@ -68,6 +68,7 @@ export interface EditorConfig {
   orientation?: EditorOrientation;
   editable?: boolean;
   autofocus?: boolean;
+  extensions?: Extensions;
 }
 
 /**

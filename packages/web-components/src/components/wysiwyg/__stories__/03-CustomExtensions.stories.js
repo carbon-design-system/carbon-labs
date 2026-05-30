@@ -10,11 +10,35 @@
 import '../components/wysiwyg/wysiwyg';
 import { html } from 'lit';
 import { ref } from 'lit/directives/ref.js';
+import { Mark } from '@tiptap/core';
 import Time16 from '@carbon/icons/es/time/16.js';
 import Edit16 from '@carbon/icons/es/edit/16.js';
 import ChartBar16 from '@carbon/icons/es/chart--bar/16.js';
 import TextClearFormat16 from '@carbon/icons/es/text--clear-format/16.js';
+import TextHighlight16 from '@carbon/icons/es/text--highlight/16.js';
 import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
+
+// Create a custom TipTap extension for highlighting
+const HighlightExtension = Mark.create({
+  name: 'highlight',
+  parseHTML() {
+    return [{ tag: 'mark' }];
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ['mark', HTMLAttributes, 0];
+  },
+  addCommands() {
+    return {
+      /**
+       * Toggle highlight mark
+       */
+      toggleHighlight:
+        () =>
+        ({ commands }) =>
+          commands.toggleMark(this.name),
+    };
+  },
+});
 
 /**
  * Render clear formatting button
@@ -135,32 +159,92 @@ export default {
 };
 
 /**
- * Story demonstrating custom extension points
+ * Render highlight button (uses custom TipTap extension)
+ * @param {Editor | null} editor - Editor instance
+ * @returns {TemplateResult} Button template
+ */
+const renderHighlightButton = (editor) => html`
+  <cds-icon-button
+    size="md"
+    autoalign
+    kind="ghost"
+    enter-delay-ms="100"
+    leave-delay-ms="100"
+    align="top"
+    @click=${() => {
+      editor?.chain().focus().toggleHighlight().run();
+    }}>
+    ${iconLoader(TextHighlight16, { slot: 'icon' })}
+    <span slot="tooltip-content">Toggle Highlight</span>
+  </cds-icon-button>
+`;
+
+/**
+ * Story demonstrating both custom toolbar buttons AND custom TipTap extensions
  */
 export const CustomExtensions = {
   args: {
     content: `
-      <h3>Custom Extension Points</h3>
-      <p>This story demonstrates the extension API. Custom toolbar groups can be defined in <code>toolbarOptions</code>:</p>
+      <h3>Custom Extensions</h3>
+      <p>This story demonstrates both types of extensibility:</p>
+      
+      <h4>1. Custom Toolbar Buttons</h4>
+      <p>Add custom buttons to the toolbar via the <code>toolbarOptions</code> property. Each custom group can contain multiple button items with custom render functions:</p>
       <ul>
-        <li><strong>'custom-actions':</strong> Clear Formatting button (after clipboard)</li>
-        <li><strong>'custom-inserts':</strong> Timestamp and Signature buttons (before insert)</li>
-        <li><strong>'custom-utilities':</strong> Statistics button (at the end)</li>
+        <li><strong>Clear Formatting:</strong> Removes all formatting from selected text</li>
+        <li><strong>Insert Timestamp:</strong> Adds current date/time to the document</li>
+        <li><strong>Insert Signature:</strong> Adds a signature block</li>
+        <li><strong>Show Statistics:</strong> Displays word/character count</li>
+        <li><strong>Toggle Highlight:</strong> Uses custom TipTap extension (see below)</li>
       </ul>
-      <p>Simply add custom group objects to <code>toolbarOptions</code> array to control their position:</p>
-      <pre><code>toolbarOptions: [
+      
+      <h4>2. Custom TipTap Extensions</h4>
+      <p>Add TipTap extensions via the <code>.extensions</code> property. This example includes a <strong>Highlight</strong> extension that renders <mark>highlighted text</mark> using Carbon element styles for marked-text.</p>
+      
+      <h4>Complete Usage Example:</h4>
+      <pre><code>import { Mark } from '@tiptap/core';
+
+// 1. Create custom TipTap extension
+const Highlight = Mark.create({
+  name: 'highlight',
+  parseHTML() { return [{ tag: 'mark' }]; },
+  renderHTML() { return ['mark', {}, 0]; },
+  addCommands() {
+    return {
+      toggleHighlight: () => ({ commands }) =>
+        commands.toggleMark(this.name)
+    };
+  },
+});
+
+// 2. Define custom toolbar buttons
+const toolbarOptions = [
   { name: 'clipboard' },
   {
     id: 'custom-actions',
-    items: [{ id: 'clear-formatting', render: (editor) => ... }]
+    items: [{
+      id: 'highlight',
+      render: (editor) => html\`
+        <cds-icon-button
+          @click=\${() => editor?.chain().focus().toggleHighlight().run()}>
+          ...
+        </cds-icon-button>
+      \`
+    }]
   },
-  { name: 'textFormatting' },
   ...
-]</code></pre>
-      <p>The editor instance is passed to each custom item's render function, allowing direct access to TipTap methods.</p>
-      <p>Custom buttons participate in roving tab navigation and match internal button styling.</p>
-      <p>Try using the custom buttons in the toolbar above!</p>
+];
+
+// 3. Use both together
+<clabs-wysiwyg
+  .extensions=\${[Highlight]}
+  .toolbarOptions=\${toolbarOptions}>
+</clabs-wysiwyg></code></pre>
+      
+      <p>Try the custom buttons in the toolbar above! The Highlight button uses the custom TipTap extension.</p>
+      <p>Learn more about TipTap extensions: <a href="https://tiptap.dev/docs/editor/extensions/overview" target="_blank" rel="noopener noreferrer">TipTap Extensions Overview</a></p>
     `,
+    extensions: [HighlightExtension],
   },
 
   /**
@@ -211,6 +295,10 @@ export const CustomExtensions = {
         id: 'custom-utilities',
         items: [
           {
+            id: 'highlight',
+            render: renderHighlightButton,
+          },
+          {
             id: 'show-stats',
             render: renderStatisticsButton,
           },
@@ -222,12 +310,14 @@ export const CustomExtensions = {
       ${ref((el) => {
         if (el) {
           el.updateComplete.then(() => {
-            console.log('Editor instance:', el.editor);
+            console.log('Editor instance:', el.editorInstance);
+            console.log('Custom extensions:', args.extensions);
           });
         }
       })}
       aria-label="WYSIWYG editor with custom extensions"
       .content=${args.content}
+      .extensions=${args.extensions}
       .toolbarOptions=${toolbarOptions}></clabs-wysiwyg>`;
   },
 };

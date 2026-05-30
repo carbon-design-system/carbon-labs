@@ -17,7 +17,7 @@ $css--plex: true !default;
 :host(#{$clabs-prefix}-wysiwyg) {
   display: block;
   box-sizing: border-box;
-  block-size: 100%;
+  block-size: calc(100% - 2px);
   inline-size: 100%;
 
   .#{$clabs-prefix}--wysiwyg__editor-container {
@@ -99,6 +99,8 @@ $css--plex: true !default;
 
   // ProseMirror editor base styles
   .ProseMirror {
+    overflow: auto;
+    block-size: 100%;
     color: $text-primary;
     min-block-size: 200px;
     outline: none;

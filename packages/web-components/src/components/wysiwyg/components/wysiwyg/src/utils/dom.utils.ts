@@ -38,10 +38,10 @@ export class DOMUtils {
   }
 
   /**
-   * Get focusable elements from shadow root, excluding disabled elements
+   * Get focusable elements from shadow root, excluding disabled elements and nested elements eg. popover internals.
    * @param {ShadowRoot} shadowRoot - The shadow root to query for focusable elements
    * @param {string} selector - CSS selector for focusable elements
-   * @returns {HTMLElement[]} Array of focusable, non-disabled elements
+   * @returns {HTMLElement[]} Array of focusable, non-disabled, top-level elements
    */
   public static getFocusableElements(
     shadowRoot: ShadowRoot,
@@ -50,7 +50,9 @@ export class DOMUtils {
     const allElements = Array.from(
       shadowRoot.querySelectorAll<HTMLElement>(selector)
     );
-    return allElements.filter((el) => !this.isElementDisabled(el));
+    return allElements.filter(
+      (el) => !this.isElementDisabled(el) && !el.closest('cds-popover-content')
+    );
   }
 
   /**

@@ -96,10 +96,10 @@ export const NAVIGATION_KEYS = {
 } as const;
 
 /**
- * Focusable element selectors
+ * Focusable element selectors for toolbar navigation
  */
 export const FOCUSABLE_SELECTORS =
-  'cds-icon-button, cds-dropdown, cds-overflow-menu, cds-search' as const;
+  'cds-icon-button, cds-button, cds-dropdown, cds-overflow-menu, cds-search' as const;
 
 /**
  * Tooltip configuration

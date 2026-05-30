@@ -1,0 +1,226 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+$css--plex: true !default;
+
+@use '../../../../../globals/scss/vars' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/type' as *;
+@use './carbon-elements' as *;
+@use './overrides' as *;
+
+:host(#{$clabs-prefix}-wysiwyg) {
+  display: block;
+  box-sizing: border-box;
+  block-size: 100%;
+  inline-size: 100%;
+
+  .#{$clabs-prefix}--wysiwyg__editor-container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $border-subtle-01;
+    background: $layer-01;
+    block-size: 100%;
+  }
+
+  .#{$clabs-prefix}--wysiwyg__toolbar {
+    position: sticky;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    background: $layer;
+    box-shadow: inset 0 -1px 0 0 $border-subtle-01;
+    inset-block-start: 0;
+    margin-block-start: -1px;
+    margin-inline-start: -1px;
+    padding-block-start: 1px;
+
+    svg {
+      pointer-events: none;
+    }
+  }
+
+  .#{$clabs-prefix}--wysiwyg__toolbar-group {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid $border-subtle-01;
+    background: $layer;
+    margin-block-start: -1px;
+    margin-inline-end: -1px;
+
+    // stylelint-disable-next-line selector-type-no-unknown
+    &:has(cds-dropdown, cds-search) {
+      flex: 1;
+    }
+  }
+
+  .#{$clabs-prefix}--wysiwyg__toolbar-button {
+    display: inline-block;
+  }
+
+  .#{$clabs-prefix}--wysiwyg__editor-content {
+    flex: 1;
+    padding: $spacing-05;
+    background: $layer;
+    overflow-y: auto;
+  }
+
+  .#{$clabs-prefix}--wysiwyg__popover-wrapper {
+    position: relative;
+  }
+
+  .#{$clabs-prefix}--wysiwyg__popover-content {
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-05;
+    background-color: $layer-02;
+    gap: $spacing-03;
+    min-inline-size: 300px;
+  }
+
+  .#{$clabs-prefix}--wysiwyg__popover-actions {
+    display: grid;
+    gap: $spacing-03;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    margin-block-start: $spacing-05;
+  }
+
+  .#{$clabs-prefix}--wysiwyg__attachments {
+    display: flex;
+    overflow: scroll;
+    border-block-start: 1px solid $border-subtle-01;
+  }
+
+  // ProseMirror editor base styles
+  .ProseMirror {
+    color: $text-primary;
+    min-block-size: 200px;
+    outline: none;
+    white-space: pre-wrap;
+  }
+
+  // Image resize wrapper
+  .ProseMirror [data-resize-wrapper] {
+    position: relative;
+    display: inline-block;
+
+    img {
+      display: block;
+      block-size: auto;
+      max-inline-size: 100%;
+    }
+  }
+
+  // Hide resize handles by default
+  .ProseMirror [data-resize-wrapper] [data-resize-handle] {
+    position: absolute;
+    z-index: 10;
+    background: $border-interactive;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    .ProseMirror [data-resize-wrapper] [data-resize-handle] {
+      transition: none;
+    }
+  }
+
+  // Show handles on hover or when image is selected
+  .ProseMirror [data-resize-wrapper]:hover [data-resize-handle],
+  .ProseMirror
+    [data-resize-wrapper]:has(img.ProseMirror-selectednode)
+    [data-resize-handle] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  // Edge handles - bars
+  .ProseMirror [data-resize-wrapper] [data-resize-handle='top'] {
+    block-size: 2px;
+    cursor: ns-resize;
+    inline-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
+
+  .ProseMirror [data-resize-wrapper] [data-resize-handle='bottom'] {
+    block-size: 2px;
+    cursor: ns-resize;
+    inline-size: 100%;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+  }
+
+  .ProseMirror [data-resize-wrapper] [data-resize-handle='left'] {
+    block-size: 100%;
+    cursor: ew-resize;
+    inline-size: 2px;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
+
+  .ProseMirror [data-resize-wrapper] [data-resize-handle='right'] {
+    block-size: 100%;
+    cursor: ew-resize;
+    inline-size: 2px;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+  }
+
+  // Corner handles - triangles
+  .ProseMirror [data-resize-wrapper] [data-resize-handle='top-left'] {
+    border-width: 12px 12px 0 0;
+    border-style: solid;
+    border-color: $border-interactive transparent transparent transparent;
+    background: transparent;
+    block-size: 0;
+    cursor: nwse-resize;
+    inline-size: 0;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
+
+  .ProseMirror [data-resize-wrapper] [data-resize-handle='top-right'] {
+    border-width: 0 12px 12px 0;
+    border-style: solid;
+    border-color: transparent $border-interactive transparent transparent;
+    background: transparent;
+    block-size: 0;
+    cursor: nesw-resize;
+    inline-size: 0;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+  }
+
+  .ProseMirror [data-resize-wrapper] [data-resize-handle='bottom-left'] {
+    border-width: 12px 0 0 12px;
+    border-style: solid;
+    border-color: transparent transparent transparent $border-interactive;
+    background: transparent;
+    block-size: 0;
+    cursor: nesw-resize;
+    inline-size: 0;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+  }
+
+  .ProseMirror [data-resize-wrapper] [data-resize-handle='bottom-right'] {
+    border-width: 0 0 12px 12px;
+    border-style: solid;
+    border-color: transparent transparent $border-interactive;
+    background: transparent;
+    block-size: 0;
+    cursor: nwse-resize;
+    inline-size: 0;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+  }
+}

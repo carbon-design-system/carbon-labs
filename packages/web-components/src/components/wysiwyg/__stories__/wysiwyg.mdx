@@ -1,0 +1,542 @@
+import { ArgTypes, Canvas, Markdown, Meta } from '@storybook/addon-docs/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import * as DefaultStories from './01-Default.stories';
+import packageJson from '../package.json';
+
+<Meta of={DefaultStories} name="Docs" />
+
+# WYSIWYG Editor
+
+- **Initiative owner(s):** Nandan Devadula
+- **Status:** Draft
+- **Target library:** Carbon Labs Web Components
+- **Target library maintainer(s) / PR Reviewer(s):** Nandan Devadula
+- **Support channel:** `#carbon-labs`
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/wysiwyg)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/wysiwyg)
+
+## Overview
+
+> **Problem statement:** Carbon Design System lacks a rich text editor component
+> or an example that provides a consistent, accessible WYSIWYG editing
+> experience integrated with Carbon's design language and component ecosystem.
+
+The WYSIWYG (What You See Is What You Get) component fills the gap for rich text
+editing capabilities within Carbon applications. It addresses the need for users
+to create and edit formatted content with a visual interface, supporting common
+text formatting, lists, tables, images, and links.
+
+This component is built on top of open source TipTap editor and extensions along
+with Carbon Design System primitives. While Carbon provides form inputs and text
+areas for plain text, this component extends that capability to structured,
+formatted content editing.
+
+- [TipTap Core](https://tiptap.dev/docs/editor/getting-started/overview)
+- [Open source Extensions](https://tiptap.dev/docs/editor/extensions/overview?filter=opensource)
+
+**Key features:**
+
+- Text formatting (bold, italic, underline, strikethrough, code)
+- Headings (H1, H2, H3, H4, H5, H6) and paragraphs
+- Lists (bulleted and numbered)
+- Text alignment (left, center, right)
+- Block elements (blockquotes, code blocks)
+- Tables with full editing capabilities
+- Links and images
+- Undo/redo functionality
+- Full keyboard navigation support
+
+## Keyboard Shortcuts
+
+The WYSIWYG editor supports comprehensive keyboard shortcuts for efficient
+editing.
+
+### Text Formatting
+
+<table>
+  <thead>
+    <tr>
+      <th>Mac</th>
+      <th>Windows/Linux</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Cmd + B</code>
+      </td>
+      <td>
+        <code>Ctrl + B</code>
+      </td>
+      <td>Bold text</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + I</code>
+      </td>
+      <td>
+        <code>Ctrl + I</code>
+      </td>
+      <td>Italic text</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + U</code>
+      </td>
+      <td>
+        <code>Ctrl + U</code>
+      </td>
+      <td>Underline text</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Shift + X</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + X</code>
+      </td>
+      <td>Strikethrough</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + E</code>
+      </td>
+      <td>
+        <code>Ctrl + E</code>
+      </td>
+      <td>Inline code</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Shift + C</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + C</code>
+      </td>
+      <td>Code block</td>
+    </tr>
+  </tbody>
+</table>
+
+### Headings
+
+<table>
+  <thead>
+    <tr>
+      <th>Mac</th>
+      <th>Windows/Linux</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Cmd + Option + 1</code>
+      </td>
+      <td>
+        <code>Ctrl + Alt + 1</code>
+      </td>
+      <td>Heading 1</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Option + 2</code>
+      </td>
+      <td>
+        <code>Ctrl + Alt + 2</code>
+      </td>
+      <td>Heading 2</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Option + 3</code>
+      </td>
+      <td>
+        <code>Ctrl + Alt + 3</code>
+      </td>
+      <td>Heading 3</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Option + 4</code>
+      </td>
+      <td>
+        <code>Ctrl + Alt + 4</code>
+      </td>
+      <td>Heading 4</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Option + 5</code>
+      </td>
+      <td>
+        <code>Ctrl + Alt + 5</code>
+      </td>
+      <td>Heading 5</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Option + 6</code>
+      </td>
+      <td>
+        <code>Ctrl + Alt + 6</code>
+      </td>
+      <td>Heading 6</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Option + 0</code>
+      </td>
+      <td>
+        <code>Ctrl + Alt + 0</code>
+      </td>
+      <td>Paragraph</td>
+    </tr>
+  </tbody>
+</table>
+
+### Lists
+
+<table>
+  <thead>
+    <tr>
+      <th>Mac</th>
+      <th>Windows/Linux</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Cmd + Shift + 8</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + 8</code>
+      </td>
+      <td>Bullet list</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Shift + 7</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + 7</code>
+      </td>
+      <td>Numbered list</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Shift + 9</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + 9</code>
+      </td>
+      <td>Task list</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Tab</code>
+      </td>
+      <td>
+        <code>Tab</code>
+      </td>
+      <td>Indent list item</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Shift + Tab</code>
+      </td>
+      <td>
+        <code>Shift + Tab</code>
+      </td>
+      <td>Outdent list item</td>
+    </tr>
+  </tbody>
+</table>
+
+### Text Alignment
+
+<table>
+  <thead>
+    <tr>
+      <th>Mac</th>
+      <th>Windows/Linux</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Cmd + Shift + L</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + L</code>
+      </td>
+      <td>Align left</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Shift + E</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + E</code>
+      </td>
+      <td>Align center</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Shift + R</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + R</code>
+      </td>
+      <td>Align right</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Shift + J</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + J</code>
+      </td>
+      <td>Justify</td>
+    </tr>
+  </tbody>
+</table>
+
+### Blocks
+
+<table>
+  <thead>
+    <tr>
+      <th>Mac</th>
+      <th>Windows/Linux</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Cmd + Shift + B</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + B</code>
+      </td>
+      <td>Blockquote</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Enter</code>
+      </td>
+      <td>
+        <code>Ctrl + Enter</code>
+      </td>
+      <td>Hard break</td>
+    </tr>
+    <tr>
+      <td>
+        <code>--- + Space</code>
+      </td>
+      <td>
+        <code>--- + Space</code>
+      </td>
+      <td>Horizontal rule</td>
+    </tr>
+  </tbody>
+</table>
+
+### Editing
+
+<table>
+  <thead>
+    <tr>
+      <th>Mac</th>
+      <th>Windows/Linux</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Cmd + Z</code>
+      </td>
+      <td>
+        <code>Ctrl + Z</code>
+      </td>
+      <td>Undo</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Shift + Z</code>
+      </td>
+      <td>
+        <code>Ctrl + Shift + Z</code>
+      </td>
+      <td>Redo</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + Y</code>
+      </td>
+      <td>
+        <code>Ctrl + Y</code>
+      </td>
+      <td>Redo (alternative)</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + X</code>
+      </td>
+      <td>
+        <code>Ctrl + X</code>
+      </td>
+      <td>Cut</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + C</code>
+      </td>
+      <td>
+        <code>Ctrl + C</code>
+      </td>
+      <td>Copy</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + V</code>
+      </td>
+      <td>
+        <code>Ctrl + V</code>
+      </td>
+      <td>Paste</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Cmd + A</code>
+      </td>
+      <td>
+        <code>Ctrl + A</code>
+      </td>
+      <td>Select all</td>
+    </tr>
+  </tbody>
+</table>
+
+### Toolbar Navigation
+
+<table>
+  <thead>
+    <tr>
+      <th>Shortcut</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Arrow Left</code>
+      </td>
+      <td>Move focus to previous toolbar button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Arrow Right</code>
+      </td>
+      <td>Move focus to next toolbar button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Home</code>
+      </td>
+      <td>Move focus to first toolbar button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>End</code>
+      </td>
+      <td>Move focus to last toolbar button</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Enter</code> or <code>Space</code>
+      </td>
+      <td>Activate focused toolbar button</td>
+    </tr>
+  </tbody>
+</table>
+
+**Note:** Toolbar navigation automatically skips disabled buttons (e.g.,
+Undo/Redo when unavailable).
+
+### Markdown Shortcuts
+
+The editor also supports common Markdown shortcuts:
+
+- Type `#` + `Space` for Heading 1
+- Type `##` + `Space` for Heading 2
+- Type `###` + `Space` for Heading 3 (and so on)
+- Type `*` or `-` + `Space` for bullet list
+- Type `1.` + `Space` for numbered list
+- Type `[ ]` + `Space` for task list
+- Type `` ` `` + text + `` ` `` for inline code
+- Type `>` + `Space` for blockquote
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-wysiwyg/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['wysiwyg'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+```html
+web component supports content property through js
+<clabs-wysiwyg
+  aria-label="WYSIWYG editor"
+  .content="your rich content here"></clabs-wysiwyg>
+```
+
+## Events
+
+The WYSIWYG component dispatches the following custom events:
+
+### `clabs-wysiwyg-on-change`
+
+Fired whenever the editor content changes (typing, formatting, etc.).
+
+**Event detail:**
+
+- `content` (string): The current HTML content of the editor
+- `editor` (Editor): The TipTap editor instance
+
+**Example:**
+
+```javascript
+const editor = document.querySelector('clabs-wysiwyg');
+editor.addEventListener('clabs-wysiwyg-on-change', (event) => {
+  console.log('Content changed:', event.detail.content);
+  console.log('Editor instance:', event.detail.editor);
+});
+```
+
+## Preview
+
+<Canvas of={DefaultStories.Default} />

@@ -64,8 +64,8 @@ $css--plex: true !default;
   }
 
   .#{$clabs-prefix}--wysiwyg__editor-content {
-    flex: 1;
     display: contents;
+    flex: 1;
     background: $layer;
     overflow-y: auto;
   }
@@ -93,19 +93,19 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--wysiwyg__attachments {
     display: flex;
-    flex: none;
     overflow: scroll;
+    flex: none;
     border-block-start: 1px solid $border-subtle-01;
   }
 
   // ProseMirror editor base styles
   .ProseMirror {
     overflow: auto;
+    padding: $spacing-05;
     block-size: 100%;
     color: $text-primary;
     min-block-size: 200px;
     outline: none;
-    padding: $spacing-05;
     white-space: pre-wrap;
   }
 

@@ -65,7 +65,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--wysiwyg__editor-content {
     flex: 1;
-    padding: $spacing-05;
+    display: contents;
     background: $layer;
     overflow-y: auto;
   }
@@ -93,6 +93,7 @@ $css--plex: true !default;
 
   .#{$clabs-prefix}--wysiwyg__attachments {
     display: flex;
+    flex: none;
     overflow: scroll;
     border-block-start: 1px solid $border-subtle-01;
   }
@@ -104,6 +105,7 @@ $css--plex: true !default;
     color: $text-primary;
     min-block-size: 200px;
     outline: none;
+    padding: $spacing-05;
     white-space: pre-wrap;
   }
 

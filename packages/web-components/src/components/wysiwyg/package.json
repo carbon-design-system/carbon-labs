@@ -38,7 +38,7 @@
     "@carbon-labs/wc-style-picker": "0.21.0",
     "@carbon/element-styles": "^0.2.5",
     "@carbon/styles": "^1.107.0",
-    "@carbon/web-components": "^2.40.0",
+    "@carbon/web-components": "^2.41.0",
     "@tiptap/core": "^3.23.6",
     "@tiptap/extension-blockquote": "^3.23.6",
     "@tiptap/extension-bold": "^3.23.6",

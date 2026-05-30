@@ -298,14 +298,9 @@ describe('HybridIpaasHeader Component', () => {
         el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
-    expect(el.headerOptions?.profileFooterLinks?.length).to.equal(2);
+    expect(el.headerOptions?.profileFooterLinks?.length).to.equal(1);
 
     expect(el.headerOptions?.profileFooterLinks).to.have.deep.members([
-      {
-        arialLabel: 'Your privacy choices',
-        'data-ypc-link': true,
-        text: '',
-      },
       {
         arialLabel: 'Logout',
         carbonIcon: 'Logout',
@@ -355,7 +350,7 @@ describe('HybridIpaasHeader Component', () => {
 
       const footerLinks = el.headerOptions?.profileFooterLinks;
       if (footerLinks && footerLinks.length > 0) {
-        const onClick = footerLinks[1].onClickHandler;
+        const onClick = footerLinks[0].onClickHandler;
         expect(typeof onClick).to.equal('function');
         onClick && onClick();
       }
@@ -454,8 +449,7 @@ describe('HybridIpaasHeader Component', () => {
     expect(el.headerOptions.solisConfig?.is_prod).to.be.false;
   });
 
-  // Test skipped: solisSidekickEnabled is now hardcoded to false and cannot be enabled
-  xit('should handle solis sidekick rendering', async () => {
+  it('should handle solis sidekick rendering', async () => {
     fetchStub.resolves(
       new Response(JSON.stringify(fetchResp), {
         status: 200,
@@ -505,8 +499,8 @@ describe('HybridIpaasHeader Component', () => {
         el.headerOptions.mainSectionItems[0].text === 'Test Product',
       'headerOptions were not updated as expected'
     );
-    // expect(el.headerOptions?.sidekickConfig).to.exist;
-    // expect(el.headerOptions.sidekickConfig?.isEnabled).to.be.true;
+    expect(el.headerOptions?.sidekickConfig).to.exist;
+    expect(el.headerOptions.sidekickConfig?.isEnabled).to.be.true;
     expect(el.headerOptions?.solisConfig).to.exist;
     expect(el.headerOptions.solisConfig?.isEnabled).to.be.true;
     expect(el.headerOptions.solisConfig?.is_prod).to.be.true;
@@ -637,7 +631,7 @@ describe('HybridIpaasHeader Component', () => {
     );
 
     expect(el.headerOptions?.profileFooterLinks).to.exist;
-    expect(el.headerOptions.profileFooterLinks?.length).to.equal(4);
+    expect(el.headerOptions.profileFooterLinks?.length).to.equal(3);
     expect(el.headerOptions.profileFooterLinks).to.deep.include({
       text: 'About Us',
       href: '/aboutus',
@@ -682,43 +676,9 @@ describe('HybridIpaasHeader Component', () => {
     );
 
     expect(el.headerOptions?.profileFooterLinks).to.exist;
-    expect(el.headerOptions.profileFooterLinks?.length).to.equal(3);
+    expect(el.headerOptions.profileFooterLinks?.length).to.equal(2);
     expect(el.headerOptions.profileFooterLinks?.[0].text).to.equal(
       'Cookie preferences'
-    );
-  });
-
-  it('should handle Your privacy choices', async () => {
-    fetchStub.resolves(
-      new Response(JSON.stringify(fetchResp), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      })
-    );
-
-    const el = await fixture<HybridIpaasHeader>(
-      html`<clabs-global-header-hybrid-ipaas
-        productName="Test Product"
-        productKey="test-productKey"
-        basePath="/base"
-        assistMeKey="assist-key"></clabs-global-header-hybrid-ipaas>`
-    );
-
-    await waitUntil(
-      () =>
-        el.headerOptions.mainSectionItems &&
-        el.headerOptions.mainSectionItems[0].text === 'Test Product',
-      'headerOptions were not updated as expected'
-    );
-
-    expect(el.headerOptions?.profileFooterLinks).to.exist;
-    expect(el.headerOptions.profileFooterLinks?.length).to.equal(2);
-    expect(el.headerOptions.profileFooterLinks?.[0].text).to.equal('');
-    expect(el.headerOptions.profileFooterLinks?.[0].arialLabel).to.equal(
-      'Your privacy choices'
-    );
-    expect(el.headerOptions.profileFooterLinks?.[0]['data-ypc-link']).to.equal(
-      true
     );
   });
 

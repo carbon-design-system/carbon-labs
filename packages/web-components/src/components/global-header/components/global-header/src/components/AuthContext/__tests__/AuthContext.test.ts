@@ -345,34 +345,4 @@ describe('AuthContext Component', () => {
     expect(userManagementSection?.querySelectorAll('a').length).to.equal(1);
     expect(userManagementSection).to.contains.text('User management');
   });
-
-  it('renders an empty div with the attribut data-ypc-link', async () => {
-    const profileFooterLinks: ProfileFooterLinks[] = [
-      {
-        'data-ypc-link': true,
-        text: '',
-        arialLabel: 'Your privacy choices',
-      },
-    ];
-
-    const el = await fixture(
-      html`<clabs-global-header-auth-context
-        .props="${{
-          enableLogs: true,
-          profileFooterLinks,
-        }}"></clabs-global-header-auth-context>`
-    );
-    expect(el).not.to.be.undefined;
-
-    const profileFooterLinksSection = el.shadowRoot?.querySelector(
-      `.${AUTOMATION_HEADER_BASE_CLASS}__profile_footer`
-    );
-    expect(profileFooterLinksSection).not.to.be.null;
-
-    const link = profileFooterLinksSection?.querySelector('div');
-    expect(link).to.exist;
-    expect(link).to.be.empty;
-    expect(link).to.have.attribute('data-ypc-link');
-    expect(link).to.have.style('display', 'none');
-  });
 });

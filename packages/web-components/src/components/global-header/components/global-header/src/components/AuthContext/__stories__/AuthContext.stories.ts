@@ -61,11 +61,6 @@ Default.args = {
   },
   profileFooterLinks: [
     {
-      'data-ypc-link': true,
-      text: '',
-      arialLabel: 'Your privacy choices',
-    },
-    {
       text: 'Log out',
       href: '/logout',
       carbonIcon: 'Logout',

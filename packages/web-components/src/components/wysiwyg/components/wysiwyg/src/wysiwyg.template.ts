@@ -986,9 +986,6 @@ class wysiwyg extends LitElement {
   }
 
   /**
-   * Renders the editor toolbar, content area, and active popovers.
-   */
-  /**
    * Default order for toolbar groups when no custom configuration is provided
    */
   private readonly DEFAULT_GROUP_ORDER = DEFAULT_GROUP_ORDER;
@@ -1024,10 +1021,6 @@ class wysiwyg extends LitElement {
     tableOperations: () => this.renderTableOperations(),
   };
 
-  /**
-   * Render toolbar groups based on array configuration
-   * @returns {Array} Array of template results for toolbar groups
-   */
   /**
    * Render all toolbar groups (standard + custom) in the correct order
    * @returns {Array<TemplateResult | typeof nothing>} Array of toolbar group templates
@@ -1094,7 +1087,7 @@ class wysiwyg extends LitElement {
                 ${this.renderUndoRedoGroup()} ${this.renderAllToolbarGroups()}
               </div>
             `
-          : ''}
+          : nothing}
 
         <div class="${CSS_CLASSES.editorContent}" role="region"></div>
 

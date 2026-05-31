@@ -10,43 +10,13 @@
 import '../components/wysiwyg/wysiwyg';
 import { html } from 'lit';
 import { ref } from 'lit/directives/ref.js';
-import { Mark } from '@tiptap/core';
 import Time16 from '@carbon/icons/es/time/16.js';
 import Edit16 from '@carbon/icons/es/edit/16.js';
 import ChartBar16 from '@carbon/icons/es/chart--bar/16.js';
 import TextClearFormat16 from '@carbon/icons/es/text--clear-format/16.js';
 import TextHighlight16 from '@carbon/icons/es/text--highlight/16.js';
 import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
-
-// Create a custom TipTap extension for highlighting
-const HighlightExtension = Mark.create({
-  name: 'highlight',
-  parseHTML() {
-    return [{ tag: 'mark' }];
-  },
-  renderHTML({ HTMLAttributes }) {
-    return ['mark', HTMLAttributes, 0];
-  },
-  addCommands() {
-    return {
-      /**
-       * Toggle highlight mark
-       */
-      toggleHighlight:
-        () =>
-        ({ commands }) =>
-          commands.toggleMark(this.name),
-    };
-  },
-});
-
-// Add styles property to the extension
-HighlightExtension.styles = `
-  .ProseMirror mark {
-    background-color: #fddc69;
-    padding-inline: 0.125rem;
-  }
-`;
+import { HighlightExtension } from './story-utils.js';
 
 /**
  * Render clear formatting button
@@ -206,7 +176,7 @@ export const CustomExtensions = {
       </ul>
       
       <h4>Try It Out</h4>
-      <p>Select some text and click the <strong>Highlight</strong> button (yellow marker icon) in the toolbar to see the custom extension with <mark style="background-color: #ffd700; padding: 2px 4px; border-radius: 2px;">custom styling</mark> in action!</p>
+      <p>Select some text and click the <strong>Highlight</strong> button (yellow marker icon) in the toolbar to see the <mark>custom extension</mark> in action!</p>
       
       <p>See the <strong>Docs</strong> tab for complete usage examples and how to add your own custom extensions with Carbon element styles.</p>
     `,

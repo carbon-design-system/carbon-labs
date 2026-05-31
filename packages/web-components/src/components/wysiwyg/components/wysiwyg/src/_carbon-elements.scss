@@ -5,40 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '@carbon/element-styles/scss/elements/heading-level-1' as h1;
-@use '@carbon/element-styles/scss/elements/heading-level-2' as h2;
-@use '@carbon/element-styles/scss/elements/heading-level-3' as h3;
-@use '@carbon/element-styles/scss/elements/heading-level-4' as h4;
-@use '@carbon/element-styles/scss/elements/heading-level-5' as h5;
-@use '@carbon/element-styles/scss/elements/heading-level-6' as h6;
-@use '@carbon/element-styles/scss/elements/paragraph' as paragraph;
-@use '@carbon/element-styles/scss/elements/ordered-list' as ol;
-@use '@carbon/element-styles/scss/elements/unordered-list' as ul;
-@use '@carbon/element-styles/scss/elements/block-quotation' as blockquote;
-@use '@carbon/element-styles/scss/elements/code' as code;
-@use '@carbon/element-styles/scss/elements/preformatted' as pre;
-@use '@carbon/element-styles/scss/elements/table' as table;
-@use '@carbon/element-styles/scss/elements/image' as image;
-@use '@carbon/element-styles/scss/elements/anchor' as anchor;
-@use '@carbon/element-styles/scss/elements/horizontal-rule' as hr;
-@use '@carbon/element-styles/scss/elements/checkbox' as checkbox;
+@use '@carbon/element-styles/scss/prebuilt/productive/elements';
 
-// Apply Carbon element styles to ProseMirror editor content
+// Apply all Carbon element styles to ProseMirror editor content
 .ProseMirror {
-  @include h1.styles;
-  @include h2.styles;
-  @include h3.styles;
-  @include h4.styles;
-  @include h5.styles;
-  @include h6.styles;
-  @include paragraph.styles;
-  @include ul.styles;
-  @include ol.styles;
-  @include blockquote.styles;
-  @include code.styles;
-  @include pre.styles;
-  @include table.styles;
-  @include image.styles;
-  @include anchor.styles;
-  @include hr.styles;
+  @include elements.styles;
 }

@@ -14,7 +14,7 @@ import {
   demoContent,
   isContentEmpty,
   updateButtonVisibility,
-} from './_story-utils';
+} from './story-utils';
 
 export default {
   title: 'Components/Wysiwyg',

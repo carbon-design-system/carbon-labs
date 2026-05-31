@@ -7,7 +7,46 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Mark } from '@tiptap/core';
 import { DEFAULT_GROUP_ORDER } from '../components/wysiwyg/src/wysiwyg.template';
+
+/**
+ * Custom TipTap extension for highlighting text with custom styles
+ * Demonstrates how to create an extension with user-defined styles
+ */
+export const HighlightExtension = Object.assign(
+  Mark.create({
+    name: 'highlight',
+    parseHTML() {
+      return [{ tag: 'mark' }];
+    },
+    renderHTML({ HTMLAttributes }) {
+      return ['mark', HTMLAttributes, 0];
+    },
+    addCommands() {
+      return {
+        /**
+         * Toggle highlight mark
+         */
+        toggleHighlight:
+          () =>
+          ({ commands }) =>
+            commands.toggleMark(this.name),
+      };
+    },
+  }),
+  {
+    // Use a more specific selector to override Carbon element styles. uncomment below to see.
+    // styles: `
+    //   .clabs--wysiwyg__editor-content .ProseMirror mark {
+    //     background-color: var(--cds-tag-background-green);
+    //     color: var(--cds-tag-color-green);
+    //     border-block-end: 1px dashed;
+    //     padding: 0;
+    //   }
+    // `,
+  }
+);
 
 /**
  * Generate toolbar options in the correct order based on DEFAULT_GROUP_ORDER

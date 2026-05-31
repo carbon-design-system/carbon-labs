@@ -40,6 +40,14 @@ const HighlightExtension = Mark.create({
   },
 });
 
+// Add styles property to the extension
+HighlightExtension.styles = `
+  .ProseMirror mark {
+    background-color: #fddc69;
+    padding-inline: 0.125rem;
+  }
+`;
+
 /**
  * Render clear formatting button
  * @param {Editor | null} editor - Editor instance
@@ -180,69 +188,27 @@ const renderHighlightButton = (editor) => html`
 `;
 
 /**
- * Story demonstrating both custom toolbar buttons AND custom TipTap extensions
+ * Story demonstrating custom toolbar buttons and TipTap extensions with styles
  */
 export const CustomExtensions = {
   args: {
     content: `
-      <h3>Custom Extensions</h3>
-      <p>This story demonstrates both types of extensibility:</p>
+      <h3>Custom Extensions Demo</h3>
+      <p>This story demonstrates custom extensibility:</p>
       
-      <h4>1. Custom Toolbar Buttons</h4>
-      <p>Add custom buttons to the toolbar via the <code>toolbarOptions</code> property. Each custom group can contain multiple button items with custom render functions:</p>
+      <h4>Custom Toolbar Buttons</h4>
       <ul>
         <li><strong>Clear Formatting:</strong> Removes all formatting from selected text</li>
         <li><strong>Insert Timestamp:</strong> Adds current date/time to the document</li>
         <li><strong>Insert Signature:</strong> Adds a signature block</li>
         <li><strong>Show Statistics:</strong> Displays word/character count</li>
-        <li><strong>Toggle Highlight:</strong> Uses custom TipTap extension (see below)</li>
+        <li><strong>Toggle Highlight:</strong> Uses custom TipTap extension with custom styles</li>
       </ul>
       
-      <h4>2. Custom TipTap Extensions</h4>
-      <p>Add TipTap extensions via the <code>.extensions</code> property. This example includes a <strong>Highlight</strong> extension that renders <mark>highlighted text</mark> using Carbon element styles for marked-text.</p>
+      <h4>Try It Out</h4>
+      <p>Select some text and click the <strong>Highlight</strong> button (yellow marker icon) in the toolbar to see the custom extension with <mark style="background-color: #ffd700; padding: 2px 4px; border-radius: 2px;">custom styling</mark> in action!</p>
       
-      <h4>Complete Usage Example:</h4>
-      <pre><code>import { Mark } from '@tiptap/core';
-
-// 1. Create custom TipTap extension
-const Highlight = Mark.create({
-  name: 'highlight',
-  parseHTML() { return [{ tag: 'mark' }]; },
-  renderHTML() { return ['mark', {}, 0]; },
-  addCommands() {
-    return {
-      toggleHighlight: () => ({ commands }) =>
-        commands.toggleMark(this.name)
-    };
-  },
-});
-
-// 2. Define custom toolbar buttons
-const toolbarOptions = [
-  { name: 'clipboard' },
-  {
-    id: 'custom-actions',
-    items: [{
-      id: 'highlight',
-      render: (editor) => html\`
-        <cds-icon-button
-          @click=\${() => editor?.chain().focus().toggleHighlight().run()}>
-          ...
-        </cds-icon-button>
-      \`
-    }]
-  },
-  ...
-];
-
-// 3. Use both together
-<clabs-wysiwyg
-  .extensions=\${[Highlight]}
-  .toolbarOptions=\${toolbarOptions}>
-</clabs-wysiwyg></code></pre>
-      
-      <p>Try the custom buttons in the toolbar above! The Highlight button uses the custom TipTap extension.</p>
-      <p>Learn more about TipTap extensions: <a href="https://tiptap.dev/docs/editor/extensions/overview" target="_blank" rel="noopener noreferrer">TipTap Extensions Overview</a></p>
+      <p>See the <strong>Docs</strong> tab for complete usage examples and how to add your own custom extensions with Carbon element styles.</p>
     `,
     extensions: [HighlightExtension],
   },

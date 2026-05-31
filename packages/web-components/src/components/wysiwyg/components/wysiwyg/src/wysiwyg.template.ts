@@ -1086,7 +1086,17 @@ class wysiwyg extends LitElement {
     const shouldRenderToolbar =
       !this.toolbarOptions || this.toolbarOptions.length > 0;
 
+    const extensionStyles = this.extensions
+      ?.map((ext: any) => ext.styles)
+      .filter(Boolean)
+      .join('\n');
+
     return html`
+      ${extensionStyles
+        ? html`<style>
+            ${extensionStyles}
+          </style>`
+        : nothing}
       <div class="${CSS_CLASSES.editorContainer}">
         ${shouldRenderToolbar
           ? html`

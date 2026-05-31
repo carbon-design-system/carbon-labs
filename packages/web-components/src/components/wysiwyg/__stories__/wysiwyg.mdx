@@ -50,6 +50,10 @@ formatted content editing.
 - Undo/redo functionality
 - Full keyboard navigation support
 
+## Preview
+
+<Canvas of={DefaultStories.Default} />
+
 ## Keyboard Shortcuts
 
 The WYSIWYG editor supports comprehensive keyboard shortcuts for efficient
@@ -350,6 +354,31 @@ editing.
   </tbody>
 </table>
 
+### Tables
+
+<table>
+  <thead>
+    <tr>
+      <th>Shortcut</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>Tab</code>
+      </td>
+      <td>Move to next cell in table</td>
+    </tr>
+    <tr>
+      <td>
+        <code>Shift + Tab</code>
+      </td>
+      <td>Move to previous cell in table</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Editing
 
 <table>
@@ -451,13 +480,13 @@ editing.
     </tr>
     <tr>
       <td>
-        <code>Home</code>
+        <code>Home (coming soon)</code>
       </td>
       <td>Move focus to first toolbar button</td>
     </tr>
     <tr>
       <td>
-        <code>End</code>
+        <code>End (coming soon)</code>
       </td>
       <td>Move focus to last toolbar button</td>
     </tr>
@@ -537,6 +566,73 @@ editor.addEventListener('clabs-wysiwyg-on-change', (event) => {
 });
 ```
 
-## Preview
+## Custom Extensions
 
-<Canvas of={DefaultStories.Default} />
+The WYSIWYG component supports custom TipTap extensions with styles. You can add
+custom functionality and styling by creating TipTap extensions and attaching a
+`styles` property.
+
+### Adding Custom Extensions with Styles
+
+```javascript
+import { Mark } from '@tiptap/core';
+
+// Create custom TipTap extension
+const Highlight = Mark.create({
+  name: 'highlight',
+  parseHTML() {
+    return [{ tag: 'mark' }];
+  },
+  renderHTML() {
+    return ['mark', {}, 0];
+  },
+  addCommands() {
+    return {
+      toggleHighlight:
+        () =>
+        ({ commands }) =>
+          commands.toggleMark(this.name),
+    };
+  },
+});
+
+// Add styles property to extension
+Highlight.styles = `
+  .ProseMirror mark {
+    background-color: #ffd700;
+    padding: 2px 4px;
+    border-radius: 2px;
+  }
+`;
+
+// Use extension with styles
+<clabs-wysiwyg .extensions=${[Highlight]}></clabs-wysiwyg>;
+```
+
+### Using Carbon Element Styles
+
+You can compile SCSS with Carbon element styles and add it to the extension's
+`styles` property:
+
+```scss
+// custom-mark-styles.scss
+@use '@carbon/element-styles/scss/elements/marked-text' as mark;
+
+.ProseMirror {
+  @include mark.styles;
+
+  mark {
+    background-color: #ffd700;
+    padding: 2px 4px;
+  }
+}
+```
+
+```javascript
+// Import and use
+import markStyles from './custom-mark-styles.scss?inline';
+Highlight.styles = markStyles;
+```
+
+**Note:** The component automatically extracts and injects styles from all
+extensions into the shadow DOM.

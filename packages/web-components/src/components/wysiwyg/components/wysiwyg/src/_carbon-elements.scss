@@ -22,7 +22,6 @@
 @use '@carbon/element-styles/scss/elements/anchor' as anchor;
 @use '@carbon/element-styles/scss/elements/horizontal-rule' as hr;
 @use '@carbon/element-styles/scss/elements/checkbox' as checkbox;
-@use '@carbon/element-styles/scss/elements/marked-text' as mark;
 
 // Apply Carbon element styles to ProseMirror editor content
 .ProseMirror {
@@ -42,5 +41,4 @@
   @include image.styles;
   @include anchor.styles;
   @include hr.styles;
-  @include mark.styles;
 }

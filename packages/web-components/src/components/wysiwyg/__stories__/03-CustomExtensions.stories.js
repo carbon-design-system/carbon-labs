@@ -177,8 +177,8 @@ export const CustomExtensions = {
       
       <h4>Try It Out</h4>
       <p>Select some text and click the <strong>Highlight</strong> button (yellow marker icon) in the toolbar to see the <mark>custom extension</mark> in action!</p>
-      
       <p>See the <strong>Docs</strong> tab for complete usage examples and how to add your own custom extensions.</p>
+      <p>Learn more about TipTap extensions at <a href="https://tiptap.dev/docs/editor/extensions/overview" target="_blank">https://tiptap.dev/docs/editor/extensions/overview</a>.</p>
     `,
     extensions: [HighlightExtension],
   },

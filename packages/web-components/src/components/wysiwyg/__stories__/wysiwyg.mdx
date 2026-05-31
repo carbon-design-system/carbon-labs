@@ -609,30 +609,5 @@ Highlight.styles = `
 <clabs-wysiwyg .extensions=${[Highlight]}></clabs-wysiwyg>;
 ```
 
-### Using Carbon Element Styles
-
-You can compile SCSS with Carbon element styles and add it to the extension's
-`styles` property:
-
-```scss
-// custom-mark-styles.scss
-@use '@carbon/element-styles/scss/elements/marked-text' as mark;
-
-.ProseMirror {
-  @include mark.styles;
-
-  mark {
-    background-color: #ffd700;
-    padding: 2px 4px;
-  }
-}
-```
-
-```javascript
-// Import and use
-import markStyles from './custom-mark-styles.scss?inline';
-Highlight.styles = markStyles;
-```
-
 **Note:** The component automatically extracts and injects styles from all
 extensions into the shadow DOM.

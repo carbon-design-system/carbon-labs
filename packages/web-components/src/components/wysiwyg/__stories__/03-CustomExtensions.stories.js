@@ -178,7 +178,7 @@ export const CustomExtensions = {
       <h4>Try It Out</h4>
       <p>Select some text and click the <strong>Highlight</strong> button (yellow marker icon) in the toolbar to see the <mark>custom extension</mark> in action!</p>
       
-      <p>See the <strong>Docs</strong> tab for complete usage examples and how to add your own custom extensions with Carbon element styles.</p>
+      <p>See the <strong>Docs</strong> tab for complete usage examples and how to add your own custom extensions.</p>
     `,
     extensions: [HighlightExtension],
   },

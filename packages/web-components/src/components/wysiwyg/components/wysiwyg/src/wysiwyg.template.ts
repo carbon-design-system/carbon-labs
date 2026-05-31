@@ -1090,19 +1090,13 @@ class wysiwyg extends LitElement {
       <div class="${CSS_CLASSES.editorContainer}">
         ${shouldRenderToolbar
           ? html`
-              <div
-                part="toolbar"
-                class="${CSS_CLASSES.toolbar}"
-                orientation="horizontal">
+              <div class="${CSS_CLASSES.toolbar}" orientation="horizontal">
                 ${this.renderUndoRedoGroup()} ${this.renderAllToolbarGroups()}
               </div>
             `
           : nothing}
 
-        <div
-          part="editor"
-          class="${CSS_CLASSES.editorContent}"
-          role="region"></div>
+        <div class="${CSS_CLASSES.editorContent}" role="region"></div>
 
         ${this.renderAttachedFiles()}
       </div>

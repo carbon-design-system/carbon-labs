@@ -7,46 +7,401 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Mark } from '@tiptap/core';
+import { Mark, Extension, Node, mergeAttributes } from '@tiptap/core';
 import { DEFAULT_GROUP_ORDER } from '../components/wysiwyg/src/wysiwyg.template';
 
 /**
- * Custom TipTap extension for highlighting text with custom styles
- * Demonstrates how to create an extension with user-defined styles
+ * Custom TipTap extension for highlighting text
+ * Simple mark extension without boilerplate
  */
-export const HighlightExtension = Object.assign(
-  Mark.create({
-    name: 'highlight',
-    parseHTML() {
-      return [{ tag: 'mark' }];
-    },
-    renderHTML({ HTMLAttributes }) {
-      return ['mark', HTMLAttributes, 0];
-    },
-    addCommands() {
-      return {
+export const HighlightExtension = Mark.create({
+  name: 'highlight',
+  parseHTML() {
+    return [{ tag: 'mark' }];
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ['mark', HTMLAttributes, 0];
+  },
+  addCommands() {
+    return {
+      /**
+       * Toggle highlight mark
+       * @returns {Function} Command function
+       */
+      toggleHighlight:
+        () =>
+        ({ commands }) =>
+          commands.toggleMark(this.name),
+    };
+  },
+});
+
+/**
+ * Format HTML with proper indentation
+ * @param {string} html - HTML string to format
+ * @returns {string} Formatted HTML
+ */
+function formatHtml(html) {
+  let formatted = '';
+  let indent = 0;
+  const tab = '  ';
+
+  const tokens = html.split(/(<[^>]+>)/g).filter((token) => token.trim());
+
+  tokens.forEach((token) => {
+    if (token.match(/^<\/\w/)) {
+      indent = Math.max(0, indent - 1);
+      formatted += tab.repeat(indent) + token + '\n';
+    } else if (token.match(/^<\w[^>]*[^/]>$/)) {
+      formatted += tab.repeat(indent) + token + '\n';
+      indent++;
+    } else if (token.match(/^<\w[^>]*\/>$/)) {
+      formatted += tab.repeat(indent) + token + '\n';
+    } else if (token.trim()) {
+      formatted += tab.repeat(indent) + token.trim() + '\n';
+    }
+  });
+
+  return formatted.trim();
+}
+
+/**
+ * HTML Source View Extension
+ * Toggles between WYSIWYG and raw HTML editing
+ */
+export const HtmlSourceExtension = Extension.create({
+  name: 'htmlSourceView',
+
+  addOptions() {
+    return {
+      onToggle: null,
+    };
+  },
+
+  addStorage() {
+    return {
+      isSourceMode: false,
+      sourceContent: '',
+      sourceElement: null,
+    };
+  },
+
+  addCommands() {
+    return {
+      /**
+       * Toggle between WYSIWYG and HTML source view
+       * @returns {Function} Command function
+       */
+      toggleHtmlSource:
+        () =>
+        ({ editor }) => {
+          const storage = this.storage;
+          storage.isSourceMode = !storage.isSourceMode;
+
+          if (storage.isSourceMode) {
+            const currentHtml = editor.getHTML();
+            storage.sourceContent = formatHtml(currentHtml);
+
+            // Get the ProseMirror editor element and its container
+            const proseMirrorElement = editor.view.dom;
+            const editorContainer = proseMirrorElement.parentElement;
+
+            if (!editorContainer) {
+              return false;
+            }
+
+            // Hide the ProseMirror editor
+            proseMirrorElement.style.display = 'none';
+
+            // Create source container
+            const sourceContainer = document.createElement('div');
+            sourceContainer.className = 'html-source-container';
+            sourceContainer.style.cssText = `
+              position: relative;
+              padding: 1rem;
+            `;
+
+            // Create editable pre element
+            const pre = document.createElement('pre');
+            pre.className = 'html-source-editor';
+            pre.contentEditable = 'true';
+            pre.spellcheck = false;
+            pre.textContent = storage.sourceContent;
+            pre.style.cssText = `
+              font-family: 'IBM Plex Mono', 'Menlo', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', Courier, monospace;
+              font-size: 13px;
+              line-height: 1.6;
+              white-space: pre;
+              overflow-x: auto;
+              color: var(--cds-text-primary, #161616);
+              background: transparent;
+              border: none;
+              outline: none;
+              width: 100%;
+              min-height: 400px;
+              padding: 0;
+              margin: 0;
+              tab-size: 2;
+            `;
+
+            // Add label
+            const label = document.createElement('div');
+            label.textContent = 'HTML Source';
+            label.style.cssText = `
+              position: absolute;
+              top: 0.5rem;
+              right: 0.5rem;
+              font-size: 0.75rem;
+              font-weight: 600;
+              color: var(--cds-text-secondary, #525252);
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              pointer-events: none;
+              background: var(--cds-layer-01, #f4f4f4);
+              padding: 0.25rem 0.5rem;
+              border-radius: 2px;
+            `;
+
+            sourceContainer.appendChild(label);
+            sourceContainer.appendChild(pre);
+
+            // Insert the source container in the editor container
+            editorContainer.appendChild(sourceContainer);
+
+            storage.sourceElement = sourceContainer;
+
+            // Update storage on input
+            pre.addEventListener('input', () => {
+              storage.sourceContent = pre.textContent || '';
+            });
+
+            // Focus the pre element
+            setTimeout(() => pre.focus(), 0);
+          } else {
+            const proseMirrorElement = editor.view.dom;
+
+            if (storage.sourceElement && storage.sourceElement.parentElement) {
+              storage.sourceElement.parentElement.removeChild(
+                storage.sourceElement
+              );
+              storage.sourceElement = null;
+            }
+
+            proseMirrorElement.style.display = '';
+
+            // Update content if it was modified in source mode
+            if (storage.sourceContent) {
+              // Use setTimeout to ensure the editor is ready before updating
+              setTimeout(() => {
+                try {
+                  editor.commands.setContent(storage.sourceContent);
+                  editor.commands.focus();
+                } catch (error) {
+                  console.error('Error updating content from source:', error);
+                }
+              }, 0);
+            } else {
+              setTimeout(() => editor.commands.focus(), 0);
+            }
+          }
+
+          if (this.options.onToggle) {
+            this.options.onToggle(storage.isSourceMode);
+          }
+
+          return true;
+        },
+
+      /**
+       * Check if in source mode
+       * @returns {Function} Command function
+       */
+      isHtmlSourceMode: () => () => {
+        return this.storage.isSourceMode;
+      },
+    };
+  },
+});
+
+/**
+ * Details extension for collapsible content
+ */
+export const DetailsExtension = Node.create({
+  name: 'details',
+  group: 'block',
+  content: 'detailsSummary detailsContent',
+  defining: true,
+  atom: true,
+  selectable: true,
+  draggable: true,
+
+  addAttributes() {
+    return {
+      open: {
+        default: null,
         /**
-         * Toggle highlight mark
+         * Parse HTML element for open attribute
+         * @param {HTMLElement} element - The HTML element
+         * @returns {boolean} Whether element has open attribute
          */
-        toggleHighlight:
-          () =>
-          ({ commands }) =>
-            commands.toggleMark(this.name),
+        parseHTML: (element) => element.hasAttribute('open'),
+        /**
+         * Render HTML attributes
+         * @param {Object} attributes - Node attributes
+         * @returns {Object} HTML attributes
+         */
+        renderHTML: (attributes) => {
+          if (attributes.open) {
+            return { open: '' };
+          }
+          return {};
+        },
+      },
+    };
+  },
+
+  parseHTML() {
+    return [
+      {
+        tag: 'details',
+        /**
+         * Get attributes from node
+         * @param {HTMLElement} node - The HTML node
+         * @returns {Object} Node attributes
+         */
+        getAttrs: (node) => ({
+          open: node.hasAttribute('open'),
+        }),
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ['details', mergeAttributes(HTMLAttributes), 0];
+  },
+
+  addNodeView() {
+    return ({ node, HTMLAttributes, getPos, editor }) => {
+      const dom = document.createElement('details');
+      Object.entries(mergeAttributes(HTMLAttributes)).forEach(
+        ([key, value]) => {
+          if (value !== null && value !== undefined) {
+            dom.setAttribute(key, value);
+          }
+        }
+      );
+
+      if (node.attrs.open) {
+        dom.setAttribute('open', '');
+      }
+
+      dom.addEventListener('click', (e) => {
+        if (e.target.tagName === 'SUMMARY' || e.target.closest('summary')) {
+          e.preventDefault();
+          const newOpenState = !dom.hasAttribute('open');
+
+          if (typeof getPos === 'function') {
+            editor.commands.updateAttributes('details', {
+              open: newOpenState,
+            });
+          }
+        }
+      });
+
+      return {
+        dom,
+        contentDOM: dom,
+        /**
+         * Update node view
+         * @param {Node} updatedNode - Updated node
+         * @returns {boolean} Whether update was successful
+         */
+        update: (updatedNode) => {
+          if (updatedNode.type !== node.type) {
+            return false;
+          }
+          if (updatedNode.attrs.open) {
+            dom.setAttribute('open', '');
+          } else {
+            dom.removeAttribute('open');
+          }
+          return true;
+        },
       };
-    },
-  }),
-  {
-    // Use a more specific selector to override Carbon element styles. uncomment below to see.
-    // styles: `
-    //   .clabs--wysiwyg__editor-content .ProseMirror mark {
-    //     background-color: var(--cds-tag-background-green);
-    //     color: var(--cds-tag-color-green);
-    //     border-block-end: 1px dashed;
-    //     padding: 0;
-    //   }
-    // `,
-  }
-);
+    };
+  },
+
+  addCommands() {
+    return {
+      /**
+       * Insert a details block
+       * @returns {Function} Command function
+       */
+      setDetails:
+        () =>
+        ({ commands }) => {
+          return commands.insertContent({
+            type: this.name,
+            content: [
+              {
+                type: 'detailsSummary',
+                content: [{ type: 'text', text: 'Click to expand' }],
+              },
+              {
+                type: 'detailsContent',
+                content: [
+                  {
+                    type: 'paragraph',
+                    content: [
+                      { type: 'text', text: 'Add your content here...' },
+                    ],
+                  },
+                ],
+              },
+            ],
+          });
+        },
+    };
+  },
+});
+
+/**
+ * DetailsSummary extension for the summary part
+ */
+export const DetailsSummaryExtension = Node.create({
+  name: 'detailsSummary',
+  content: 'inline*',
+  defining: true,
+
+  parseHTML() {
+    return [{ tag: 'summary' }];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ['summary', mergeAttributes(HTMLAttributes), 0];
+  },
+});
+
+/**
+ * DetailsContent extension for the content part
+ */
+export const DetailsContentExtension = Node.create({
+  name: 'detailsContent',
+  content: 'block+',
+  defining: true,
+
+  parseHTML() {
+    return [{ tag: 'div[data-type="details-content"]' }];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return [
+      'div',
+      mergeAttributes(HTMLAttributes, { 'data-type': 'details-content' }),
+      0,
+    ];
+  },
+});
 
 /**
  * Generate toolbar options in the correct order based on DEFAULT_GROUP_ORDER

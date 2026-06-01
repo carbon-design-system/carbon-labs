@@ -214,6 +214,7 @@ class wysiwyg extends LitElement {
         requestAnimationFrame(() => this.requestUpdate());
       }
     );
+    this.requestUpdate();
   }
 
   /**

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.34.0...@carbon-labs/wc-style-picker@0.35.0) (2026-06-02)
+
+**Note:** Version bump only for package @carbon-labs/wc-style-picker
+
+
+
+
+
 # [0.34.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-style-picker@0.33.0...@carbon-labs/wc-style-picker@0.34.0) (2026-05-20)
 
 **Note:** Version bump only for package @carbon-labs/wc-style-picker

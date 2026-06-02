@@ -1,0 +1,1 @@
+import{t as e}from"./lib-BY-uDput.js";export{e as MDXProvider};

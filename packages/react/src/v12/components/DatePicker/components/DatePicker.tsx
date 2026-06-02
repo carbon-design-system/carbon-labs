@@ -9,6 +9,7 @@ import React, { Children, cloneElement, isValidElement, useRef } from 'react';
 import classNames from 'classnames';
 import { useDatePicker } from '../hooks/useDatePicker';
 import { Calendar } from './Calendar';
+import type { CalendarDayRenderProps } from './Calendar';
 import { formatPlainDate } from '@carbon-labs/primitives/date-picker';
 import type { DatePickerInputProps } from './DatePickerInput';
 
@@ -101,6 +102,11 @@ export interface DatePickerProps {
    * Append the calendar to a specific element
    */
   appendTo?: HTMLElement;
+
+  /**
+   * Custom renderer for calendar day content
+   */
+  renderDay?: (props: CalendarDayRenderProps) => React.ReactNode;
 }
 
 /**
@@ -125,6 +131,7 @@ export function DatePicker({
   className,
   children,
   value,
+  renderDay,
 }: DatePickerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -279,6 +286,7 @@ export function DatePicker({
             context={context}
             onDateSelect={selectDate}
             onNavigate={handleNavigate}
+            renderDay={renderDay}
           />
         </div>
       )}

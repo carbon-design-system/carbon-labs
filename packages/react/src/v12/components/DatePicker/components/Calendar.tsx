@@ -13,6 +13,46 @@ import { addDays, plainDateToDate } from '@carbon-labs/primitives/date-picker';
 /**
  * Calendar component props
  */
+export interface CalendarDayRenderProps {
+  /**
+   * Date represented by the day cell
+   */
+  date: Temporal.PlainDate;
+
+  /**
+   * Whether the date belongs to the current visible month
+   */
+  isCurrentMonth: boolean;
+
+  /**
+   * Whether the date is disabled
+   */
+  isDisabled: boolean;
+
+  /**
+   * Whether the date is today
+   */
+  isToday: boolean;
+
+  /**
+   * Whether the date is selected
+   */
+  isSelected: boolean;
+
+  /**
+   * Whether the date is inside a selected range
+   */
+  isInRange: boolean;
+
+  /**
+   * Whether the date is focused
+   */
+  isFocused: boolean;
+}
+
+/**
+ * Calendar component props
+ */
 export interface CalendarProps {
   /**
    * State machine context
@@ -33,6 +73,11 @@ export interface CalendarProps {
    * Additional CSS class names
    */
   className?: string;
+
+  /**
+   * Custom renderer for day cell content
+   */
+  renderDay?: (props: CalendarDayRenderProps) => React.ReactNode;
 }
 
 /**
@@ -114,6 +159,7 @@ export function Calendar({
   onDateSelect,
   onNavigate,
   className,
+  renderDay,
 }: CalendarProps) {
   // Use Carbon's standard 'cds' prefix to match Carbon's date-picker styles
   const prefix = 'cds';
@@ -342,6 +388,16 @@ export function Calendar({
             focused: focused,
           });
 
+          const renderProps: CalendarDayRenderProps = {
+            date,
+            isCurrentMonth,
+            isDisabled,
+            isToday,
+            isSelected: selected,
+            isInRange: inRange,
+            isFocused: focused,
+          };
+
           return (
             <button
               key={index}
@@ -352,10 +408,9 @@ export function Calendar({
               aria-label={`${monthNames[date.month - 1]} ${date.day}, ${
                 date.year
               }`}
-              aria-pressed={selected || undefined}
               aria-current={isToday ? 'date' : undefined}
               tabIndex={focused ? 0 : -1}>
-              {date.day}
+              {renderDay ? renderDay(renderProps) : date.day}
             </button>
           );
         })}

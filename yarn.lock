@@ -1751,6 +1751,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@carbon-labs/react-file-uploader@workspace:packages/react/src/components/FileUploader":
+  version: 0.0.0-use.local
+  resolution: "@carbon-labs/react-file-uploader@workspace:packages/react/src/components/FileUploader"
+  dependencies:
+    "@carbon-labs/utilities": "npm:0.28.0"
+  languageName: unknown
+  linkType: soft
+
 "@carbon-labs/react-first-time-orientation@workspace:packages/react/src/components/FirstTimeOrientation":
   version: 0.0.0-use.local
   resolution: "@carbon-labs/react-first-time-orientation@workspace:packages/react/src/components/FirstTimeOrientation"

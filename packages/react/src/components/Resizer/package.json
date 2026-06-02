@@ -9,6 +9,10 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "description": "Carbon Labs - Resize Bar",
+  "labs": {
+    "status": "preview",
+    "title": "React Resizer"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

@@ -7,6 +7,10 @@
   },
   "type": "module",
   "description": "Carbon Labs - Whats New",
+  "labs": {
+    "status": "preview",
+    "title": "React Whats New"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

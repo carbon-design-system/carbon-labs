@@ -6,6 +6,10 @@
     "provenance": true
   },
   "description": "Carbon Labs - style-picker component",
+  "labs": {
+    "status": "draft",
+    "title": "WC Style Picker"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

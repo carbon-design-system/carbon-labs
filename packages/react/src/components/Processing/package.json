@@ -7,6 +7,10 @@
   },
   "type": "module",
   "description": "Carbon Labs - Processing",
+  "labs": {
+    "status": "preview",
+    "title": "React Processing"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

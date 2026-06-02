@@ -7,6 +7,10 @@
   },
   "type": "module",
   "description": "Carbon Labs - Animated Header",
+  "labs": {
+    "status": "preview",
+    "title": "React Animated Header"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

@@ -1,0 +1,108 @@
+// This file contains override styles that need to come after Carbon's element styles
+// Import this file's content at the end of wysiwyg.scss using a mixin
+
+@use '@carbon/styles/scss/theme';
+
+$prefix: 'clabs';
+$BASE_CLASS: #{$prefix}-wysiwyg;
+$cds-prefix: 'cds';
+
+@mixin overrides {
+  #{$cds-prefix}-layer {
+    display: contents;
+  }
+
+  #{$cds-prefix}-tooltip {
+    display: contents;
+  }
+
+  #{$cds-prefix}-icon-button[disabled][kind='ghost'] {
+    svg {
+      color: theme.$text-disabled;
+    }
+  }
+
+  #{$cds-prefix}-icon-button {
+    display: inline-block;
+    svg {
+      pointer-events: none;
+    }
+  }
+
+  // Style content inside ProseMirror
+  .#{$BASE_CLASS}__editor .ProseMirror {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+      max-inline-size: unset;
+    }
+  }
+
+  // Table styles for ProseMirror editor
+  .#{$BASE_CLASS}__editor .ProseMirror {
+    table {
+      border-collapse: collapse;
+      table-layout: fixed;
+      width: 100%;
+      margin: 1rem 0;
+      overflow: hidden;
+      border: 1px solid theme.$border-subtle;
+    }
+
+    table td,
+    table th {
+      min-width: 1em;
+      border: 1px solid theme.$border-subtle;
+      padding: 0.5rem 0.75rem;
+      vertical-align: top;
+      box-sizing: border-box;
+      position: relative;
+      background-color: theme.$layer;
+    }
+
+    table th {
+      font-weight: 600;
+      text-align: left;
+      background-color: theme.$layer-02;
+      color: theme.$text-primary;
+    }
+
+    table .selectedCell {
+      background: theme.$layer-selected;
+    }
+
+    table .column-resize-handle {
+      position: absolute;
+      right: -2px;
+      top: 0;
+      bottom: -2px;
+      width: 2px;
+      background-color: theme.$border-interactive;
+      z-index: 200;
+      cursor: col-resize;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: -2px;
+        top: 0;
+        width: 10px;
+        height: 100%;
+      }
+    }
+
+    table p {
+      margin: 0;
+    }
+  }
+
+  .#{$BASE_CLASS}__editor,
+  .markdown-editor,
+  .html-editor {
+    scrollbar-color: theme.$border-strong theme.$layer;
+  }
+}

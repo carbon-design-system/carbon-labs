@@ -1,0 +1,423 @@
+import { ArgTypes, Markdown, Meta } from '@storybook/addon-docs/blocks';
+import { cdnJs, cdnCss } from '../../../globals/internal/storybook-cdn';
+import meta from './wysiwyg.stories';
+import packageJson from '../package.json';
+
+<Meta of={meta} />
+
+# Wysiwyg
+
+- **Initiative owner(s):** Nandan Devadula
+- **Status:** Draft
+- **Target library:** TBD
+- **Target library maintainer(s) / PR Reviewer(s):** Nandan Devadula
+- **Support channel:** `#carbon-labs`
+
+> 💡 Check our
+> [Stackblitz](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/wysiwyg)
+> example implementation.
+
+[![Edit carbon-labs](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/carbon-design-system/carbon-labs/tree/main/examples/web-components/wysiwyg)
+
+## Overview
+
+The WYSIWYG (What You See Is What You Get) editor is a rich text editing
+component built on [TipTap](https://tiptap.dev/), a headless editor framework.
+It provides a comprehensive set of text editing features with a Carbon Design
+System-styled toolbar and seamless integration with Carbon components.
+
+### Key Features
+
+- **Rich Text Editing**: Full-featured text formatting including bold, italic,
+  underline, strikethrough, and inline code
+- **Typography**: Six heading levels and paragraph formatting
+- **Lists**: Bullet lists, numbered lists, and interactive task lists with
+  nesting support
+- **Tables**: Complete table editing with row/column operations, cell merging,
+  and splitting
+- **Text Alignment**: Left, center, right, and justify alignment options
+- **Colors**: Text colors and highlighting using Carbon Design System tokens
+- **Search**: In-editor search with real-time match highlighting
+- **Code & Quotes**: Code blocks and blockquotes for technical content
+- **Links & Images**: Insert and edit hyperlinks and images with resizing
+  support
+- **Source Editing**: Toggle between visual editing and HTML/Markdown source
+  modes
+- **History**: Full undo/redo support with keyboard shortcuts
+- **Extensible**: Built on TipTap's extension system for easy customization
+
+### Problem Statement
+
+Modern web applications often require rich text editing capabilities for content
+creation, documentation, comments, and collaborative editing. While many WYSIWYG
+editors exist, they often lack:
+
+- Integration with design systems
+- Accessibility features
+- Extensibility for custom use cases
+- Modern framework compatibility
+
+The Carbon Labs WYSIWYG editor addresses these gaps by providing a
+fully-featured rich text editor that:
+
+- Uses Carbon Design System components and tokens for consistent styling
+- Built with web components for framework-agnostic usage
+- Leverages TipTap's robust extension system for customization
+- Provides accessible toolbar controls with keyboard shortcuts
+- Supports multiple editing modes (visual, HTML, Markdown)
+
+## Getting started
+
+Here's a quick example to get you started.
+
+### JS (via import)
+
+```javascript
+import '@carbon-labs/wc-wysiwyg/es/index.js';
+
+// Import extensions you want to use
+import {
+  TextFormatting,
+  Typography,
+  Lists,
+  History,
+} from '@carbon-labs/wc-wysiwyg/es/index.js';
+```
+
+### Styles
+
+You'll also need to import the theming tokens from `@carbon/styles` either from
+npm or from our CDN helpers. Checkout our Stackblitz example above to see how
+that is implemented.
+
+<Markdown>{`${cdnJs({ components: ['wysiwyg'] }, packageJson)}`}</Markdown>
+<Markdown>{`${cdnCss()}`}</Markdown>
+
+### HTML
+
+```html
+<clabs-wysiwyg id="editor" toolbar-size="md" content="<p>Start typing...</p>">
+</clabs-wysiwyg>
+
+<script type="module">
+  const editor = document.getElementById('editor');
+
+  // Set extensions
+  editor.extensions = [TextFormatting, Typography, Lists, History];
+
+  // Listen for content changes
+  editor.addEventListener('content-change', (e) => {
+    console.log('HTML:', e.detail.html);
+    console.log('Markdown:', e.detail.markdown);
+  });
+</script>
+```
+
+## Usage
+
+### Basic Example
+
+```javascript
+import '@carbon-labs/wc-wysiwyg/es/index.js';
+import {
+  TextFormatting,
+  Typography,
+  History,
+} from '@carbon-labs/wc-wysiwyg/es/index.js';
+
+const editor = document.querySelector('clabs-wysiwyg');
+editor.extensions = [History, TextFormatting, Typography];
+editor.content = '<p>Initial content</p>';
+```
+
+### With All Extensions
+
+```javascript
+import '@carbon-labs/wc-wysiwyg/es/index.js';
+import {
+  History,
+  TextFormatting,
+  Typography,
+  Lists,
+  Tables,
+  Alignment,
+  TextColor,
+  Search,
+  Html,
+  Markdown,
+  Blocks,
+  Insert,
+  Typeface,
+} from '@carbon-labs/wc-wysiwyg/es/index.js';
+
+const editor = document.querySelector('clabs-wysiwyg');
+editor.extensions = [
+  History,
+  TextFormatting,
+  Typography,
+  Lists,
+  Tables,
+  Alignment,
+  TextColor,
+  Search,
+  Html,
+  Markdown,
+  Blocks,
+  Insert,
+  Typeface,
+];
+```
+
+### Event Handling
+
+```javascript
+editor.addEventListener('content-change', (event) => {
+  const { html, markdown, content } = event.detail;
+
+  // html: Full HTML content
+  // markdown: Markdown representation (if Markdown extension is enabled)
+  // content: Same as html (for backwards compatibility)
+
+  console.log('Content updated:', html);
+});
+```
+
+## Extensions
+
+The editor's functionality is provided through extensions. Each extension adds
+specific features and toolbar controls.
+
+### Available Extensions
+
+| Extension        | Description                  | Features                                                 |
+| ---------------- | ---------------------------- | -------------------------------------------------------- |
+| `History`        | Undo/redo functionality      | Undo, redo buttons with keyboard shortcuts               |
+| `TextFormatting` | Basic text formatting        | Bold, italic, underline, strikethrough, code             |
+| `Typography`     | Heading and paragraph styles | H1-H6, paragraph dropdown                                |
+| `Lists`          | List formatting              | Bullet, numbered, task lists with indentation            |
+| `Tables`         | Table editing                | Insert, edit, merge/split cells, add/delete rows/columns |
+| `Alignment`      | Text alignment               | Left, center, right, justify                             |
+| `TextColor`      | Text colors and highlights   | Carbon token colors, highlighting, semantic marks        |
+| `Search`         | In-editor search             | Real-time search with match highlighting                 |
+| `Html`           | HTML source editing          | Toggle to HTML source view                               |
+| `Markdown`       | Markdown editing             | Toggle to Markdown source view                           |
+| `Blocks`         | Code and quote blocks        | Code blocks, blockquotes                                 |
+| `Insert`         | Links and images             | Insert/edit links and images                             |
+| `Typeface`       | Font family selection        | IBM Plex fonts and common typefaces                      |
+
+### Extension Usage
+
+Extensions are passed as an array to the `extensions` property:
+
+```javascript
+editor.extensions = [
+  History, // Always recommended
+  TextFormatting, // Basic formatting
+  Typography, // Headings
+  Lists, // Lists
+  // Add more as needed
+];
+```
+
+### Creating Custom Extensions
+
+You can create custom extensions using TipTap's extension API. See the "Custom
+Extensions" story in Storybook for detailed examples.
+
+```javascript
+import { Extension, Mark } from '@tiptap/core';
+
+const MyCustomMark = Mark.create({
+  name: 'myMark',
+  parseHTML() {
+    return [{ tag: 'span.my-mark' }];
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ['span', { class: 'my-mark', ...HTMLAttributes }, 0];
+  },
+});
+
+const MyExtension = Extension.create({
+  name: 'myExtension',
+  addExtensions: () => [MyCustomMark],
+});
+
+// Add toolbar rendering
+MyExtension.toolbarRender = (editor, toolbarSize) => {
+  // Return Lit template for toolbar UI
+};
+```
+
+## Properties
+
+### `<clabs-wysiwyg>` attributes and properties
+
+<ArgTypes of="clabs-wysiwyg" />
+
+### Property Details
+
+#### `content`
+
+- **Type:** `string`
+- **Default:** `''`
+- **Description:** The HTML content of the editor. Can be set programmatically
+  or via attribute.
+
+#### `extensions`
+
+- **Type:** `Array<Extension>`
+- **Default:** `[]`
+- **Description:** Array of extension objects that provide editor functionality
+  and toolbar controls.
+
+#### `toolbarSize`
+
+- **Type:** `'sm' | 'md' | 'lg'`
+- **Default:** `'md'`
+- **Description:** Size of toolbar buttons. Matches Carbon button sizes.
+
+## Events
+
+### `content-change`
+
+Fired whenever the editor content changes.
+
+**Event Detail:**
+
+```typescript
+{
+  content: string; // HTML content
+  html: string; // HTML content (same as content)
+  markdown: string; // Markdown representation (if Markdown extension enabled)
+}
+```
+
+**Example:**
+
+```javascript
+editor.addEventListener('content-change', (event) => {
+  console.log('New content:', event.detail.html);
+
+  // Save to backend
+  saveContent(event.detail.html);
+});
+```
+
+## Keyboard Shortcuts
+
+The editor supports standard keyboard shortcuts:
+
+| Action     | Windows/Linux  | Mac           |
+| ---------- | -------------- | ------------- |
+| Bold       | `Ctrl+B`       | `Cmd+B`       |
+| Italic     | `Ctrl+I`       | `Cmd+I`       |
+| Underline  | `Ctrl+U`       | `Cmd+U`       |
+| Undo       | `Ctrl+Z`       | `Cmd+Z`       |
+| Redo       | `Ctrl+Shift+Z` | `Cmd+Shift+Z` |
+| Select All | `Ctrl+A`       | `Cmd+A`       |
+
+## Accessibility
+
+The WYSIWYG editor is built with accessibility in mind:
+
+- **Keyboard Navigation**: All toolbar controls are keyboard accessible
+- **ARIA Labels**: Proper ARIA labels on all interactive elements
+- **Tooltips**: Descriptive tooltips on all toolbar buttons
+- **Focus Management**: Proper focus handling when switching between modes
+- **Screen Reader Support**: Semantic HTML and proper ARIA roles
+
+## Styling
+
+The editor uses Carbon Design System tokens for all styling:
+
+- Toolbar uses Carbon layer tokens
+- Text colors use Carbon text tokens
+- Interactive elements use Carbon interactive tokens
+- Spacing follows Carbon spacing scale
+
+### Custom Styling
+
+You can customize the editor appearance using CSS custom properties:
+
+```css
+clabs-wysiwyg {
+  --cds-layer-01: #f4f4f4;
+  --cds-text-primary: #161616;
+  /* Override other tokens as needed */
+}
+```
+
+## Best Practices
+
+1. **Always include History extension** for undo/redo functionality
+2. **Start with basic extensions** and add more as needed
+3. **Handle content-change events** to save user content
+4. **Provide initial content** for better user experience
+5. **Use appropriate toolbar size** for your layout (sm for compact, lg for
+   spacious)
+6. **Test with keyboard navigation** to ensure accessibility
+7. **Consider mobile users** - the toolbar is responsive but some features work
+   better on desktop
+
+## Browser Support
+
+The WYSIWYG editor supports all modern browsers:
+
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+## Performance
+
+The editor is optimized for performance:
+
+- Lazy loading of extensions
+- Efficient DOM updates via Lit
+- Debounced content-change events
+- Minimal re-renders
+
+For large documents (>10,000 words), consider:
+
+- Pagination or lazy loading
+- Disabling real-time search
+- Limiting history depth
+
+## Troubleshooting
+
+### Content not updating
+
+Ensure you're listening to the `content-change` event and the extensions array
+is set correctly.
+
+### Toolbar buttons not working
+
+Check that the required extensions are included in the `extensions` array.
+
+### Styling issues
+
+Verify that Carbon styles are loaded and CSS custom properties are not being
+overridden.
+
+### Performance issues
+
+Reduce the number of extensions or implement content pagination for very large
+documents.
+
+## Related Components
+
+- [Text Input](https://carbondesignsystem.com/components/text-input/usage/) -
+  For simple text entry
+- [Text Area](https://carbondesignsystem.com/components/text-area/usage/) - For
+  multi-line plain text
+- [Code Snippet](https://carbondesignsystem.com/components/code-snippet/usage/) -
+  For displaying code
+
+## Feedback
+
+This component is in draft status. We welcome feedback and contributions:
+
+- Report issues on
+  [GitHub](https://github.com/carbon-design-system/carbon-labs/issues)
+- Join discussions in `#carbon-labs` Slack channel
+- Contribute extensions or improvements via pull requests

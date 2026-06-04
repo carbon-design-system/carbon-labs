@@ -1,0 +1,98 @@
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/motion';
+@use '@carbon/element-styles/scss/prebuilt/productive/elements';
+@use './_overrides.scss' as overrides;
+
+$prefix: 'clabs';
+$BASE_CLASS: #{$prefix}-wysiwyg;
+
+:host(#{$BASE_CLASS}) {
+  display: block;
+  block-size: 100%;
+}
+
+.#{$BASE_CLASS}__container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border: 1px solid theme.$border-subtle;
+  background-color: theme.$layer;
+  block-size: 100%;
+}
+
+.#{$BASE_CLASS}__editor {
+  block-size: 100%;
+  background-color: theme.$layer;
+  display: contents;
+}
+
+.#{$BASE_CLASS}__editor .ProseMirror {
+  // Include Carbon element styles for typography and content
+  @include elements.styles;
+
+  overflow: auto;
+  padding: spacing.$spacing-05;
+  block-size: 100%;
+  color: theme.$text-primary;
+  min-block-size: 200px;
+  outline: none;
+  white-space: pre-wrap;
+}
+
+.#{$BASE_CLASS}__toolbar {
+  position: sticky;
+  z-index: 1000;
+  display: flex;
+  background-color: theme.$layer;
+  flex-wrap: wrap;
+  box-shadow: inset 0 -1px 0 0 theme.$border-subtle;
+  margin-block-start: -1px;
+  margin-inline-start: -1px;
+  padding-block-start: 1px;
+  inset-block-start: 0px;
+}
+
+.#{$BASE_CLASS}__toolbar-group {
+  display: flex;
+  margin-block-start: -1px;
+  margin-inline-end: -1px;
+  border: 1px solid theme.$border-subtle;
+  transition: all motion.$duration-fast-02 motion(standard, productive);
+}
+
+.#{$BASE_CLASS}__toolbar-group [caret]::part(button) {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    background: linear-gradient(
+      to right bottom,
+      transparent 50%,
+      theme.$icon-primary 50%
+    );
+    block-size: calc(var(--cds-layout-size-height-local) / 6);
+    content: '';
+    inline-size: calc(var(--cds-layout-size-height-local) / 6);
+    inset-block-end: calc(var(--cds-layout-size-height-local) / 40);
+    inset-inline-end: calc(var(--cds-layout-size-height-local) / 40);
+  }
+
+  &:disabled::before {
+    background: linear-gradient(
+      to right bottom,
+      transparent 50%,
+      theme.$icon-disabled 50%
+    );
+  }
+}
+
+// Search highlight styles
+.#{$BASE_CLASS}__editor .ProseMirror .search-highlight {
+  background-color: theme.$layer-selected-inverse;
+  color: theme.$text-inverse;
+}
+
+// Overrides - imported from separate file for maintainability
+// These must come last to override Carbon's element styles
+@include overrides.overrides;

@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // This file contains override styles that need to come after Carbon's element styles
 // Import this file's content at the end of wysiwyg.scss using a mixin
 
@@ -24,6 +31,7 @@ $cds-prefix: 'cds';
 
   #{$cds-prefix}-icon-button {
     display: inline-block;
+
     svg {
       pointer-events: none;
     }
@@ -45,30 +53,30 @@ $cds-prefix: 'cds';
   // Table styles for ProseMirror editor
   .#{$BASE_CLASS}__editor .ProseMirror {
     table {
-      border-collapse: collapse;
-      table-layout: fixed;
-      width: 100%;
-      margin: 1rem 0;
       overflow: hidden;
       border: 1px solid theme.$border-subtle;
+      margin: 1rem 0;
+      border-collapse: collapse;
+      inline-size: 100%;
+      table-layout: fixed;
     }
 
     table td,
     table th {
-      min-width: 1em;
-      border: 1px solid theme.$border-subtle;
-      padding: 0.5rem 0.75rem;
-      vertical-align: top;
-      box-sizing: border-box;
       position: relative;
+      box-sizing: border-box;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid theme.$border-subtle;
       background-color: theme.$layer;
+      min-inline-size: 1em;
+      vertical-align: top;
     }
 
     table th {
-      font-weight: 600;
-      text-align: left;
       background-color: theme.$layer-02;
       color: theme.$text-primary;
+      font-weight: 600;
+      text-align: start;
     }
 
     table .selectedCell {
@@ -77,21 +85,20 @@ $cds-prefix: 'cds';
 
     table .column-resize-handle {
       position: absolute;
-      right: -2px;
-      top: 0;
-      bottom: -2px;
-      width: 2px;
-      background-color: theme.$border-interactive;
       z-index: 200;
+      background-color: theme.$border-interactive;
       cursor: col-resize;
+      inline-size: 2px;
+      inset-block: 0 -2px;
+      inset-inline-end: -2px;
 
       &::before {
-        content: '';
         position: absolute;
-        left: -2px;
-        top: 0;
-        width: 10px;
-        height: 100%;
+        block-size: 100%;
+        content: '';
+        inline-size: 10px;
+        inset-block-start: 0;
+        inset-inline-start: -2px;
       }
     }
 
@@ -104,5 +111,26 @@ $cds-prefix: 'cds';
   .markdown-editor,
   .html-editor {
     scrollbar-color: theme.$border-strong theme.$layer;
+  }
+
+  // AI processing indicator styles
+  .#{$BASE_CLASS}__editor .ProseMirror span.ai-processing {
+    animation: ripple 3000ms linear infinite;
+    background: linear-gradient(
+      90deg,
+      theme.$ai-aura-start 0%,
+      theme.$ai-aura-start 40%,
+      theme.$ai-aura-hover-start 50%,
+      theme.$ai-aura-start 60%,
+      theme.$ai-aura-start 100%
+    );
+    background-position: 250% 0;
+    background-size: 250% 100%;
+  }
+
+  @keyframes ripple {
+    to {
+      background-position: -250% 0;
+    }
   }
 }

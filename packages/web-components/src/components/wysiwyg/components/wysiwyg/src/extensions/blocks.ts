@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // TipTap core imports
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
@@ -15,7 +22,8 @@ import Quotes from '@carbon/icons/es/quotes/16.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 
 // Local imports
-import { BASE_CLASS } from '../constants';
+import { BASE_CLASS } from '../constants.js';
+import type { ToolbarSize } from '../types.js';
 import {
   TOOLTIP_ENTER_DELAY_MS,
   TOOLTIP_LEAVE_DELAY_MS,
@@ -96,12 +104,12 @@ export interface BlocksExtension extends Extension<any> {
   /**
    * Renders the blocks toolbar controls.
    * @param {Editor | null} editor - The TipTap editor instance
-   * @param {string} [toolbarSize='md'] - Size of the toolbar buttons
+   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
    * @returns {TemplateResult} Lit template for the blocks toolbar
    */
   toolbarRender: (
     editor: Editor | null,
-    toolbarSize?: string
+    toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
@@ -122,10 +130,13 @@ export const Blocks = Extension.create({
 /**
  * Renders the blocks toolbar with code block and blockquote controls.
  * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} toolbarSize - Size of the toolbar buttons
+ * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
  * @returns {TemplateResult} Lit template for the blocks toolbar
  */
-Blocks.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
+Blocks.toolbarRender = (
+  editor: Editor | null,
+  toolbarSize: ToolbarSize = 'md'
+) => {
   /**
    * Toggles code block formatting.
    * @returns {void}
@@ -152,7 +163,7 @@ Blocks.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
         leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
         ?disabled=${!editor?.can().toggleCodeBlock()}
-        ?selected=${editor?.isActive('codeBlock')}
+        ?isselected=${editor?.isActive('codeBlock')}
         @click=${toggleCodeBlock}>
         ${iconLoader(CodeBlock, { slot: 'icon' })}
         <span slot="tooltip-content">Code Block</span>
@@ -165,7 +176,7 @@ Blocks.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
         leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
         ?disabled=${!editor?.can().toggleBlockquote()}
-        ?selected=${editor?.isActive('blockquote')}
+        ?isselected=${editor?.isActive('blockquote')}
         @click=${toggleBlockquote}>
         ${iconLoader(Quotes, { slot: 'icon' })}
         <span slot="tooltip-content">Blockquote</span>

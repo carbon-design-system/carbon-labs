@@ -10,6 +10,7 @@
 import { html } from 'lit';
 import '../components/wysiwyg/wysiwyg';
 import { demoContent, allExtensions } from './story-helpers.js';
+import '@carbon/web-components/es/components/button/index.js';
 
 /**
  * WYSIWYG Editor component built with TipTap
@@ -24,10 +25,25 @@ export default {
       options: ['sm', 'md', 'lg'],
       description: 'Toolbar button size',
     },
+    content: {
+      control: 'text',
+      description: 'Initial content of the editor',
+    },
   },
   args: {
     toolbarSize: 'md',
+    content: demoContent,
   },
+  decorators: [
+    (story) => html`
+      <style>
+        #main-content {
+          block-size: 100dvh;
+        }
+      </style>
+      ${story()}
+    `,
+  ],
 };
 
 /**
@@ -40,24 +56,13 @@ export const Default = {
    * @returns {TemplateResult} Template result
    */
   render: (args) => {
-    setTimeout(() => {
-      const editor = document.querySelector('#default-wysiwyg');
-      if (editor && !editor.dataset.listenerAttached) {
-        editor.dataset.listenerAttached = 'true';
-
-        editor.addEventListener('content-change', (event) => {
-          const { content, markdown } = event.detail;
-          console.log('Content:', content);
-          console.log('Markdown:', markdown);
-        });
-      }
-    }, 100);
-
     return html`
       <clabs-wysiwyg
-        id="default-wysiwyg"
         .extensions=${allExtensions}
-        .content=${demoContent}
+        .content=${args.content}
+        @content-change=${(e) => {
+          console.log('content-change', e);
+        }}
         toolbar-size=${args.toolbarSize}>
       </clabs-wysiwyg>
     `;
@@ -82,7 +87,10 @@ export const NoToolbar = {
     return html`
       <clabs-wysiwyg
         .extensions=${extensionsForEditor}
-        .content=${demoContent}
+        .content=${args.content}
+        @content-change=${(e) => {
+          console.log('content-change', e);
+        }}
         toolbar-size=${args.toolbarSize}>
       </clabs-wysiwyg>
     `;

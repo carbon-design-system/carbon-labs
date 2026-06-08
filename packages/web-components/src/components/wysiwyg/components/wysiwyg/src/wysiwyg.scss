@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 @use '@carbon/styles/scss/theme';
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/motion';
@@ -14,17 +21,17 @@ $BASE_CLASS: #{$prefix}-wysiwyg;
 
 .#{$BASE_CLASS}__container {
   display: flex;
-  flex-direction: column;
   box-sizing: border-box;
+  flex-direction: column;
   border: 1px solid theme.$border-subtle;
   background-color: theme.$layer;
   block-size: 100%;
 }
 
 .#{$BASE_CLASS}__editor {
-  block-size: 100%;
-  background-color: theme.$layer;
   display: contents;
+  background-color: theme.$layer;
+  block-size: 100%;
 }
 
 .#{$BASE_CLASS}__editor .ProseMirror {
@@ -35,29 +42,26 @@ $BASE_CLASS: #{$prefix}-wysiwyg;
   padding: spacing.$spacing-05;
   block-size: 100%;
   color: theme.$text-primary;
-  min-block-size: 200px;
   outline: none;
+  scroll-behavior: smooth;
   white-space: pre-wrap;
 }
 
 .#{$BASE_CLASS}__toolbar {
-  position: sticky;
-  z-index: 1000;
   display: flex;
-  background-color: theme.$layer;
   flex-wrap: wrap;
+  background-color: theme.$layer;
   box-shadow: inset 0 -1px 0 0 theme.$border-subtle;
   margin-block-start: -1px;
   margin-inline-start: -1px;
   padding-block-start: 1px;
-  inset-block-start: 0px;
 }
 
 .#{$BASE_CLASS}__toolbar-group {
   display: flex;
+  border: 1px solid theme.$border-subtle;
   margin-block-start: -1px;
   margin-inline-end: -1px;
-  border: 1px solid theme.$border-subtle;
   transition: all motion.$duration-fast-02 motion(standard, productive);
 }
 

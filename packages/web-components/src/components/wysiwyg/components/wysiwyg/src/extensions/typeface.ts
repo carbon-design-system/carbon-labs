@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // TipTap core imports
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
@@ -10,7 +17,8 @@ import type { TemplateResult } from 'lit';
 import '@carbon/web-components/es/components/dropdown/index.js';
 
 // Local imports
-import { BASE_CLASS } from '../constants';
+import { BASE_CLASS } from '../constants.js';
+import type { ToolbarSize } from '../types.js';
 
 // TipTap extensions
 import { FontFamily } from '@tiptap/extension-font-family';
@@ -81,12 +89,12 @@ export interface TypefaceExtension extends Extension<any> {
   /**
    * Renders the typeface toolbar controls.
    * @param {Editor | null} editor - The TipTap editor instance
-   * @param {string} [toolbarSize='md'] - Size of the toolbar buttons
+   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
    * @returns {TemplateResult} Lit template for the typeface toolbar
    */
   toolbarRender: (
     editor: Editor | null,
-    toolbarSize?: string
+    toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
@@ -110,10 +118,13 @@ export const Typeface = Extension.create({
 /**
  * Renders the typeface toolbar with font family dropdown.
  * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} toolbarSize - Size of the toolbar buttons
+ * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
  * @returns {TemplateResult} Lit template for the typeface toolbar
  */
-Typeface.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
+Typeface.toolbarRender = (
+  editor: Editor | null,
+  toolbarSize: ToolbarSize = 'md'
+) => {
   const currentFont = getCurrentFont(editor);
 
   return html`
@@ -124,6 +135,8 @@ Typeface.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
       class="${BASE_CLASS}__toolbar-group ${BASE_CLASS}__toolbar-group--typeface">
       <cds-dropdown
         label="Font"
+        hide-label
+        title-text="Select font family"
         .size=${toolbarSize as any}
         .value=${currentFont}
         @cds-dropdown-selected=${(e: any) => handleFontChange(editor, e)}

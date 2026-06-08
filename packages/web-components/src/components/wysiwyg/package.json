@@ -13,6 +13,17 @@
     "url": "https://github.com/carbon-design-system/carbon-labs",
     "directory": "packages/wysiwyg"
   },
+  "keywords": [
+    "carbon",
+    "carbon-labs",
+    "web-components",
+    "wysiwyg",
+    "rich-text-editor",
+    "editor",
+    "tiptap",
+    "text-editor",
+    "content-editor"
+  ],
   "exports": {
     ".": {
       "default": "./src/index.js"
@@ -34,28 +45,43 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.14.0",
+    "@carbon-labs/utilities": "0.28.0",
     "@carbon/element-styles": "^0.2.5",
     "@carbon/web-components": "^2.40.0",
     "@tiptap/core": "3.25.0",
     "@tiptap/extension-blockquote": "3.25.0",
+    "@tiptap/extension-bold": "3.25.0",
+    "@tiptap/extension-bullet-list": "3.25.0",
+    "@tiptap/extension-code": "3.25.0",
     "@tiptap/extension-code-block": "3.25.0",
     "@tiptap/extension-color": "3.25.0",
+    "@tiptap/extension-document": "3.25.0",
     "@tiptap/extension-font-family": "3.25.0",
+    "@tiptap/extension-hard-break": "3.25.0",
+    "@tiptap/extension-heading": "3.25.0",
     "@tiptap/extension-highlight": "3.25.0",
+    "@tiptap/extension-horizontal-rule": "3.25.0",
     "@tiptap/extension-image": "3.25.0",
+    "@tiptap/extension-italic": "3.25.0",
     "@tiptap/extension-link": "3.25.0",
+    "@tiptap/extension-list": "3.25.0",
+    "@tiptap/extension-list-item": "3.25.0",
+    "@tiptap/extension-ordered-list": "3.25.0",
+    "@tiptap/extension-paragraph": "3.25.0",
+    "@tiptap/extension-strike": "3.25.0",
     "@tiptap/extension-table": "3.25.0",
     "@tiptap/extension-table-cell": "3.25.0",
     "@tiptap/extension-table-header": "3.25.0",
     "@tiptap/extension-table-row": "3.25.0",
     "@tiptap/extension-task-item": "3.25.0",
     "@tiptap/extension-task-list": "3.25.0",
+    "@tiptap/extension-text": "3.25.0",
     "@tiptap/extension-text-align": "3.25.0",
     "@tiptap/extension-text-style": "3.25.0",
-    "@tiptap/markdown": "^3.25.0",
-    "@tiptap/pm": "3.25.0",
-    "@tiptap/starter-kit": "3.25.0",
-    "js-beautify": "^1.15.4"
+    "@tiptap/extension-underline": "3.25.0",
+    "@tiptap/pm": "3.25.0"
+  },
+  "devDependencies": {
+    "@tiptap/markdown": "3.25.0"
   }
 }

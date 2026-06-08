@@ -21,50 +21,17 @@ import packageJson from '../package.json';
 
 ## Overview
 
-The WYSIWYG (What You See Is What You Get) editor is a rich text editing
-component built on [TipTap](https://tiptap.dev/), a headless editor framework.
-It provides a comprehensive set of text editing features with a Carbon Design
-System-styled toolbar and seamless integration with Carbon components.
-
-### Key Features
-
-- **Rich Text Editing**: Full-featured text formatting including bold, italic,
-  underline, strikethrough, and inline code
-- **Typography**: Six heading levels and paragraph formatting
-- **Lists**: Bullet lists, numbered lists, and interactive task lists with
-  nesting support
-- **Tables**: Complete table editing with row/column operations, cell merging,
-  and splitting
-- **Text Alignment**: Left, center, right, and justify alignment options
-- **Colors**: Text colors and highlighting using Carbon Design System tokens
-- **Search**: In-editor search with real-time match highlighting
-- **Code & Quotes**: Code blocks and blockquotes for technical content
-- **Links & Images**: Insert and edit hyperlinks and images with resizing
-  support
-- **Source Editing**: Toggle between visual editing and HTML/Markdown source
-  modes
-- **History**: Full undo/redo support with keyboard shortcuts
-- **Extensible**: Built on TipTap's extension system for easy customization
+A rich text editor component built on [TipTap](https://tiptap.dev/) with Carbon
+Design System styling. Provides text formatting, lists, tables, alignment,
+colors, search, and extensible functionality through a modular extension system.
 
 ### Problem Statement
 
-Modern web applications often require rich text editing capabilities for content
-creation, documentation, comments, and collaborative editing. While many WYSIWYG
-editors exist, they often lack:
-
-- Integration with design systems
-- Accessibility features
-- Extensibility for custom use cases
-- Modern framework compatibility
-
-The Carbon Labs WYSIWYG editor addresses these gaps by providing a
-fully-featured rich text editor that:
-
-- Uses Carbon Design System components and tokens for consistent styling
-- Built with web components for framework-agnostic usage
-- Leverages TipTap's robust extension system for customization
-- Provides accessible toolbar controls with keyboard shortcuts
-- Supports multiple editing modes (visual, HTML, Markdown)
+Modern web applications require rich text editing for content creation,
+documentation, and collaborative editing. The Carbon Labs WYSIWYG editor
+provides a fully-featured rich text editor with Carbon Design System
+integration, web component architecture for framework-agnostic usage, and
+TipTap's extension system for customization.
 
 ## Getting started
 
@@ -107,79 +74,9 @@ that is implemented.
 
   // Listen for content changes
   editor.addEventListener('content-change', (e) => {
-    console.log('HTML:', e.detail.html);
-    console.log('Markdown:', e.detail.markdown);
+    console.log('HTML:', e.detail);
   });
 </script>
-```
-
-## Usage
-
-### Basic Example
-
-```javascript
-import '@carbon-labs/wc-wysiwyg/es/index.js';
-import {
-  TextFormatting,
-  Typography,
-  History,
-} from '@carbon-labs/wc-wysiwyg/es/index.js';
-
-const editor = document.querySelector('clabs-wysiwyg');
-editor.extensions = [History, TextFormatting, Typography];
-editor.content = '<p>Initial content</p>';
-```
-
-### With All Extensions
-
-```javascript
-import '@carbon-labs/wc-wysiwyg/es/index.js';
-import {
-  History,
-  TextFormatting,
-  Typography,
-  Lists,
-  Tables,
-  Alignment,
-  TextColor,
-  Search,
-  Html,
-  Markdown,
-  Blocks,
-  Insert,
-  Typeface,
-} from '@carbon-labs/wc-wysiwyg/es/index.js';
-
-const editor = document.querySelector('clabs-wysiwyg');
-editor.extensions = [
-  History,
-  TextFormatting,
-  Typography,
-  Lists,
-  Tables,
-  Alignment,
-  TextColor,
-  Search,
-  Html,
-  Markdown,
-  Blocks,
-  Insert,
-  Typeface,
-];
-```
-
-### Event Handling
-
-```javascript
-editor.addEventListener('content-change', (event) => {
-  const { html, markdown, content } = event.detail;
-
-  // html: Full HTML content
-  // markdown: Markdown representation (if Markdown extension is enabled)
-  // content: Same as html (for backwards compatibility)
-
-  console.log('Content updated:', html);
-});
 ```
 
 ## Extensions
@@ -189,235 +86,582 @@ specific features and toolbar controls.
 
 ### Available Extensions
 
-| Extension        | Description                  | Features                                                 |
-| ---------------- | ---------------------------- | -------------------------------------------------------- |
-| `History`        | Undo/redo functionality      | Undo, redo buttons with keyboard shortcuts               |
-| `TextFormatting` | Basic text formatting        | Bold, italic, underline, strikethrough, code             |
-| `Typography`     | Heading and paragraph styles | H1-H6, paragraph dropdown                                |
-| `Lists`          | List formatting              | Bullet, numbered, task lists with indentation            |
-| `Tables`         | Table editing                | Insert, edit, merge/split cells, add/delete rows/columns |
-| `Alignment`      | Text alignment               | Left, center, right, justify                             |
-| `TextColor`      | Text colors and highlights   | Carbon token colors, highlighting, semantic marks        |
-| `Search`         | In-editor search             | Real-time search with match highlighting                 |
-| `Html`           | HTML source editing          | Toggle to HTML source view                               |
-| `Markdown`       | Markdown editing             | Toggle to Markdown source view                           |
-| `Blocks`         | Code and quote blocks        | Code blocks, blockquotes                                 |
-| `Insert`         | Links and images             | Insert/edit links and images                             |
-| `Typeface`       | Font family selection        | IBM Plex fonts and common typefaces                      |
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Extension</th>
+      <th>Description</th>
+      <th>Features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>
+        <code>History</code>
+      </td>
+      <td>Undo/redo functionality</td>
+      <td>Undo, redo buttons with keyboard shortcuts</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>
+        <code>TextFormatting</code>
+      </td>
+      <td>Basic text formatting</td>
+      <td>Bold, italic, underline, strikethrough, code</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>
+        <code>Typography</code>
+      </td>
+      <td>Heading and paragraph styles</td>
+      <td>H1-H6, paragraph dropdown</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>
+        <code>Lists</code>
+      </td>
+      <td>List formatting</td>
+      <td>Bullet, numbered, task lists with indentation</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>
+        <code>Tables</code>
+      </td>
+      <td>Table editing</td>
+      <td>Insert, edit, merge/split cells, add/delete rows/columns</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>
+        <code>Alignment</code>
+      </td>
+      <td>Text alignment</td>
+      <td>Left, center, right, justify</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>
+        <code>TextColor</code>
+      </td>
+      <td>Text colors and highlights</td>
+      <td>Carbon token colors, highlighting, semantic marks</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>
+        <code>Search</code>
+      </td>
+      <td>In-editor search</td>
+      <td>Real-time search with match highlighting</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>
+        <code>Blocks</code>
+      </td>
+      <td>Code and quote blocks</td>
+      <td>Code blocks, blockquotes</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>
+        <code>Insert</code>
+      </td>
+      <td>Links and images</td>
+      <td>Insert/edit links and images</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>
+        <code>Typeface</code>
+      </td>
+      <td>Font family selection</td>
+      <td>IBM Plex fonts and common typefaces</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>
+        <code>Clipboard</code>
+      </td>
+      <td>Clipboard operations</td>
+      <td>Copy, cut, and paste controls</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Extension Usage
-
-Extensions are passed as an array to the `extensions` property:
 
 ```javascript
 editor.extensions = [
   History, // Always recommended
-  TextFormatting, // Basic formatting
-  Typography, // Headings
-  Lists, // Lists
+  TextFormatting,
+  Typography,
+  Lists,
   // Add more as needed
 ];
 ```
 
-### Creating Custom Extensions
-
-You can create custom extensions using TipTap's extension API. See the "Custom
-Extensions" story in Storybook for detailed examples.
-
-```javascript
-import { Extension, Mark } from '@tiptap/core';
-
-const MyCustomMark = Mark.create({
-  name: 'myMark',
-  parseHTML() {
-    return [{ tag: 'span.my-mark' }];
-  },
-  renderHTML({ HTMLAttributes }) {
-    return ['span', { class: 'my-mark', ...HTMLAttributes }, 0];
-  },
-});
-
-const MyExtension = Extension.create({
-  name: 'myExtension',
-  addExtensions: () => [MyCustomMark],
-});
-
-// Add toolbar rendering
-MyExtension.toolbarRender = (editor, toolbarSize) => {
-  // Return Lit template for toolbar UI
-};
-```
-
-## Properties
-
-### `<clabs-wysiwyg>` attributes and properties
-
-<ArgTypes of="clabs-wysiwyg" />
-
-### Property Details
-
-#### `content`
-
-- **Type:** `string`
-- **Default:** `''`
-- **Description:** The HTML content of the editor. Can be set programmatically
-  or via attribute.
-
-#### `extensions`
-
-- **Type:** `Array<Extension>`
-- **Default:** `[]`
-- **Description:** Array of extension objects that provide editor functionality
-  and toolbar controls.
-
-#### `toolbarSize`
-
-- **Type:** `'sm' | 'md' | 'lg'`
-- **Default:** `'md'`
-- **Description:** Size of toolbar buttons. Matches Carbon button sizes.
-
-## Events
-
-### `content-change`
-
-Fired whenever the editor content changes.
-
-**Event Detail:**
-
-```typescript
-{
-  content: string; // HTML content
-  html: string; // HTML content (same as content)
-  markdown: string; // Markdown representation (if Markdown extension enabled)
-}
-```
-
-**Example:**
-
-```javascript
-editor.addEventListener('content-change', (event) => {
-  console.log('New content:', event.detail.html);
-
-  // Save to backend
-  saveContent(event.detail.html);
-});
-```
-
 ## Keyboard Shortcuts
 
-The editor supports standard keyboard shortcuts:
+The editor supports standard keyboard shortcuts for formatting and navigation.
 
-| Action     | Windows/Linux  | Mac           |
-| ---------- | -------------- | ------------- |
-| Bold       | `Ctrl+B`       | `Cmd+B`       |
-| Italic     | `Ctrl+I`       | `Cmd+I`       |
-| Underline  | `Ctrl+U`       | `Cmd+U`       |
-| Undo       | `Ctrl+Z`       | `Cmd+Z`       |
-| Redo       | `Ctrl+Shift+Z` | `Cmd+Shift+Z` |
-| Select All | `Ctrl+A`       | `Cmd+A`       |
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Action</th>
+      <th>Windows/Linux</th>
+      <th>Mac</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colSpan="4">
+        <strong>Text Formatting</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Bold</td>
+      <td>
+        <code>Ctrl+B</code>
+      </td>
+      <td>
+        <code>Cmd+B</code>
+      </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Italic</td>
+      <td>
+        <code>Ctrl+I</code>
+      </td>
+      <td>
+        <code>Cmd+I</code>
+      </td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Underline</td>
+      <td>
+        <code>Ctrl+U</code>
+      </td>
+      <td>
+        <code>Cmd+U</code>
+      </td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Strikethrough</td>
+      <td>
+        <code>Ctrl+Shift+S</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+S</code>
+      </td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Code (inline)</td>
+      <td>
+        <code>Ctrl+E</code>
+      </td>
+      <td>
+        <code>Cmd+E</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>Typography</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Heading 1</td>
+      <td>
+        <code>Ctrl+Alt+1</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+1</code>
+      </td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Heading 2</td>
+      <td>
+        <code>Ctrl+Alt+2</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+2</code>
+      </td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Heading 3</td>
+      <td>
+        <code>Ctrl+Alt+3</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+3</code>
+      </td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Heading 4</td>
+      <td>
+        <code>Ctrl+Alt+4</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+4</code>
+      </td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Heading 5</td>
+      <td>
+        <code>Ctrl+Alt+5</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+5</code>
+      </td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>Heading 6</td>
+      <td>
+        <code>Ctrl+Alt+6</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+6</code>
+      </td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Paragraph</td>
+      <td>
+        <code>Ctrl+Alt+0</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+0</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>Lists</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Bullet List</td>
+      <td>
+        <code>Ctrl+Shift+8</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+8</code>
+      </td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Numbered List</td>
+      <td>
+        <code>Ctrl+Shift+7</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+7</code>
+      </td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>Task List</td>
+      <td>
+        <code>Ctrl+Shift+9</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+9</code>
+      </td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>Indent (Sink List Item)</td>
+      <td>
+        <code>Tab</code>
+      </td>
+      <td>
+        <code>Tab</code>
+      </td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>Outdent (Lift List Item)</td>
+      <td>
+        <code>Shift+Tab</code>
+      </td>
+      <td>
+        <code>Shift+Tab</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>Blocks</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Blockquote</td>
+      <td>
+        <code>Ctrl+Shift+B</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+B</code>
+      </td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>Code Block</td>
+      <td>
+        <code>Ctrl+Alt+C</code>
+      </td>
+      <td>
+        <code>Cmd+Alt+C</code>
+      </td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>Hard Break (line break)</td>
+      <td>
+        <code>Shift+Enter</code>
+      </td>
+      <td>
+        <code>Shift+Enter</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>History</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>Undo</td>
+      <td>
+        <code>Ctrl+Z</code>
+      </td>
+      <td>
+        <code>Cmd+Z</code>
+      </td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>Redo</td>
+      <td>
+        <code>Ctrl+Shift+Z</code> or <code>Ctrl+Y</code>
+      </td>
+      <td>
+        <code>Cmd+Shift+Z</code> or <code>Cmd+Y</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>Search</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>Open Search</td>
+      <td>
+        <code>Ctrl+F</code>
+      </td>
+      <td>
+        <code>Cmd+F</code>
+      </td>
+    </tr>
+    <tr>
+      <td colSpan="4">
+        <strong>General</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>Select All</td>
+      <td>
+        <code>Ctrl+A</code>
+      </td>
+      <td>
+        <code>Cmd+A</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-## Accessibility
+## Markdown Input Rules
 
-The WYSIWYG editor is built with accessibility in mind:
+The editor supports Markdown-style input patterns that automatically convert to
+formatted content as you type. These work with the base TipTap StarterKit
+extensions.
 
-- **Keyboard Navigation**: All toolbar controls are keyboard accessible
-- **ARIA Labels**: Proper ARIA labels on all interactive elements
-- **Tooltips**: Descriptive tooltips on all toolbar buttons
-- **Focus Management**: Proper focus handling when switching between modes
-- **Screen Reader Support**: Semantic HTML and proper ARIA roles
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Pattern</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colSpan="3"><strong>Headings</strong></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>
+        <code># </code> + space
+      </td>
+      <td>Heading 1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>
+        <code>## </code> + space
+      </td>
+      <td>Heading 2</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>
+        <code>### </code> + space
+      </td>
+      <td>Heading 3</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>
+        <code>#### </code> + space
+      </td>
+      <td>Heading 4</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>
+        <code>##### </code> + space
+      </td>
+      <td>Heading 5</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>
+        <code>###### </code> + space
+      </td>
+      <td>Heading 6</td>
+    </tr>
+    <tr>
+      <td colSpan="3"><strong>Lists</strong></td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>
+        <code>* </code> + space
+      </td>
+      <td>Bullet list</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>
+        <code>- </code> + space
+      </td>
+      <td>Bullet list</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>
+        <code>+ </code> + space
+      </td>
+      <td>Bullet list</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>
+        <code>1. </code> + space
+      </td>
+      <td>Numbered list</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>
+        <code>[ ] </code> + space
+      </td>
+      <td>Task list (unchecked)</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>
+        <code>[x] </code> + space
+      </td>
+      <td>Task list (checked)</td>
+    </tr>
+    <tr>
+      <td colSpan="3"><strong>Inline Formatting</strong></td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>
+        <code>text (wrapped in backticks)</code>
+      </td>
+      <td>Inline code</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>
+        `**text**`
+      </td>
+      <td>Bold</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>
+        `*text*` or `_text_`
+      </td>
+      <td>Italic</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>
+        <code>~~text~~</code>
+      </td>
+      <td>Strikethrough</td>
+    </tr>
+    <tr>
+      <td colSpan="3"><strong>Blocks</strong></td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>
+        <code>``` </code> + space
+      </td>
+      <td>Code block</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>
+        <code>> </code> + space
+      </td>
+      <td>Blockquote</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>
+        <code>---</code> + Enter
+      </td>
+      <td>Horizontal rule (divider)</td>
+    </tr>
+  </tbody>
+</table>
 
-## Styling
-
-The editor uses Carbon Design System tokens for all styling:
-
-- Toolbar uses Carbon layer tokens
-- Text colors use Carbon text tokens
-- Interactive elements use Carbon interactive tokens
-- Spacing follows Carbon spacing scale
-
-### Custom Styling
-
-You can customize the editor appearance using CSS custom properties:
-
-```css
-clabs-wysiwyg {
-  --cds-layer-01: #f4f4f4;
-  --cds-text-primary: #161616;
-  /* Override other tokens as needed */
-}
-```
-
-## Best Practices
-
-1. **Always include History extension** for undo/redo functionality
-2. **Start with basic extensions** and add more as needed
-3. **Handle content-change events** to save user content
-4. **Provide initial content** for better user experience
-5. **Use appropriate toolbar size** for your layout (sm for compact, lg for
-   spacious)
-6. **Test with keyboard navigation** to ensure accessibility
-7. **Consider mobile users** - the toolbar is responsive but some features work
-   better on desktop
-
-## Browser Support
-
-The WYSIWYG editor supports all modern browsers:
-
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## Performance
-
-The editor is optimized for performance:
-
-- Lazy loading of extensions
-- Efficient DOM updates via Lit
-- Debounced content-change events
-- Minimal re-renders
-
-For large documents (>10,000 words), consider:
-
-- Pagination or lazy loading
-- Disabling real-time search
-- Limiting history depth
-
-## Troubleshooting
-
-### Content not updating
-
-Ensure you're listening to the `content-change` event and the extensions array
-is set correctly.
-
-### Toolbar buttons not working
-
-Check that the required extensions are included in the `extensions` array.
-
-### Styling issues
-
-Verify that Carbon styles are loaded and CSS custom properties are not being
-overridden.
-
-### Performance issues
-
-Reduce the number of extensions or implement content pagination for very large
-documents.
-
-## Related Components
-
-- [Text Input](https://carbondesignsystem.com/components/text-input/usage/) -
-  For simple text entry
-- [Text Area](https://carbondesignsystem.com/components/text-area/usage/) - For
-  multi-line plain text
-- [Code Snippet](https://carbondesignsystem.com/components/code-snippet/usage/) -
-  For displaying code
-
-## Feedback
-
-This component is in draft status. We welcome feedback and contributions:
-
-- Report issues on
-  [GitHub](https://github.com/carbon-design-system/carbon-labs/issues)
-- Join discussions in `#carbon-labs` Slack channel
-- Contribute extensions or improvements via pull requests
+**Note:** Input rules are triggered when you type the pattern and press space or
+Enter. They provide a natural Markdown-like editing experience within the rich
+text editor.

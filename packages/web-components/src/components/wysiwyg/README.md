@@ -69,7 +69,7 @@ editor.content = '<p>Start typing...</p>';
 
 // Listen for changes
 editor.addEventListener('content-change', (e) => {
-  console.log('Content:', e.detail.html);
+  console.log('Content:', e.detail.content);
 });
 ```
 
@@ -187,7 +187,6 @@ Fired when editor content changes.
 ```typescript
 {
   content: string; // HTML content
-  html: string; // HTML content (same as content)
   markdown: string; // Markdown (if Markdown extension enabled)
 }
 ```
@@ -196,8 +195,8 @@ Fired when editor content changes.
 
 ```javascript
 editor.addEventListener('content-change', (event) => {
-  const { html, markdown } = event.detail;
-  console.log('HTML:', html);
+  const { content, markdown } = event.detail;
+  console.log('HTML:', content);
   console.log('Markdown:', markdown);
 });
 ```
@@ -504,10 +503,10 @@ const editor = document.querySelector('clabs-wysiwyg');
 
 editor.addEventListener('content-change', (e) => {
   // Auto-save
-  localStorage.setItem('draft', e.detail.html);
+  localStorage.setItem('draft', e.detail.content);
 
   // Update character count
-  const text = e.detail.html.replace(/<[^>]*>/g, '');
+  const text = e.detail.content.replace(/<[^>]*>/g, '');
   document.getElementById('char-count').textContent = text.length;
 });
 ```

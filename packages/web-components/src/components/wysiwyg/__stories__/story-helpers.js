@@ -1,22 +1,26 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // Import all extensions
-import { TextFormatting } from '../components/wysiwyg/src/extensions/text-formatting';
-import { Typography } from '../components/wysiwyg/src/extensions/typography';
-import { Lists } from '../components/wysiwyg/src/extensions/lists';
-import { Tables } from '../components/wysiwyg/src/extensions/tables';
-import { Alignment } from '../components/wysiwyg/src/extensions/alignment';
-import { TextColor } from '../components/wysiwyg/src/extensions/text-color';
-import { Search } from '../components/wysiwyg/src/extensions/search';
-import { Html } from '../components/wysiwyg/src/extensions/html';
-import { Markdown } from '../components/wysiwyg/src/extensions/markdown';
-import { History } from '../components/wysiwyg/src/extensions/history';
-import { Blocks } from '../components/wysiwyg/src/extensions/blocks';
-import { Insert } from '../components/wysiwyg/src/extensions/insert';
-import { Typeface } from '../components/wysiwyg/src/extensions/typeface';
-import { Clipboard } from '../components/wysiwyg/src/extensions/clipboard';
-import { FileUpload } from '../components/wysiwyg/src/extensions/file-upload';
+import { TextFormatting } from '../components/wysiwyg/src/extensions/text-formatting.js';
+import { Typography } from '../components/wysiwyg/src/extensions/typography.js';
+import { Lists } from '../components/wysiwyg/src/extensions/lists.js';
+import { Tables } from '../components/wysiwyg/src/extensions/tables.js';
+import { Alignment } from '../components/wysiwyg/src/extensions/alignment.js';
+import { TextColor } from '../components/wysiwyg/src/extensions/text-color.js';
+import { Search } from '../components/wysiwyg/src/extensions/search.js';
+import { History } from '../components/wysiwyg/src/extensions/history.js';
+import { Blocks } from '../components/wysiwyg/src/extensions/blocks.js';
+import { Insert } from '../components/wysiwyg/src/extensions/insert.js';
+import { Typeface } from '../components/wysiwyg/src/extensions/typeface.js';
+import { Clipboard } from '../components/wysiwyg/src/extensions/clipboard.js';
 
 /**
- * All available extensions for the WYSIWYG editor
+ * All available extensions for the WYSIWYG editor.
  * @type {Array<import('../components/wysiwyg/wysiwyg').ExtensionWithToolbar>}
  */
 export const allExtensions = /** @type {any} */ ([
@@ -31,11 +35,179 @@ export const allExtensions = /** @type {any} */ ([
   Lists,
   Alignment,
   Tables,
-  FileUpload,
   Search,
-  Markdown,
-  Html,
 ]);
+
+/**
+ * Simulate AI processing for demo purposes
+ * @param {string} text - Selected text
+ * @returns {Promise<string>} Processed text
+ */
+export const processWithAI = async (text) => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
+  // Convert "title: item1, item2" to list
+  const listPattern = /^(.+?):\s*(.+)$/;
+  const match = text.match(listPattern);
+  if (match) {
+    const [, title, items] = match;
+    const itemList = items
+      .split(/,\s*/)
+      .map((item) => `<li>${item.trim()}</li>`)
+      .join('');
+    return `<p><strong>${title.trim()}:</strong></p><ul>${itemList}</ul>`;
+  }
+
+  // Convert comma-separated text to list
+  if (text.includes(',')) {
+    const items = text
+      .split(/,\s*/)
+      .map((item) => `<li>${item.trim()}</li>`)
+      .join('');
+    return `<ul>${items}</ul>`;
+  }
+
+  // Simple text enhancements
+  return text
+    .replace(/quick brown fox/gi, 'agile, swift fox')
+    .replace(/lazy dog/gi, 'relaxed canine');
+};
+
+/**
+ * Context menu styles for table operations
+ */
+export const contextMenuStyles = `
+  .context-menu {
+    position: fixed;
+    background: var(--cds-layer);
+    border: 1px solid var(--cds-border-subtle);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    padding: 4px 0;
+    max-width: 160px;
+    z-index: 9999;
+    display: none;
+  }
+  .context-menu.open {
+    display: block;
+  }
+  .context-menu button {
+    width: 100%;
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    color: var(--cds-text-primary);
+    text-align: left;
+    cursor: pointer;
+  }
+  .context-menu button:hover:not(:disabled) {
+    background: var(--cds-layer-hover);
+  }
+  .context-menu button:active {
+    outline: 2px solid var(--cds-focus);
+    outline-offset: -2px;
+  }
+  .context-menu button:disabled {
+    color: var(--cds-text-disabled);
+  }
+  .context-menu button[data-delete]:hover:not(:disabled) {
+    background: var(--cds-button-danger-primary, #da1e28);
+    color: var(--cds-text-on-color, #ffffff);
+  }
+  .context-menu button[data-delete]:active:not(:disabled) {
+    background: var(--cds-button-danger-active, #750e13);
+    color: var(--cds-text-on-color, #ffffff);
+  }
+  .context-menu hr {
+    margin: 4px 0;
+    border: none;
+    border-top: 1px solid var(--cds-border-subtle);
+  }
+`;
+
+/**
+ * Create context menu manager for table operations
+ * @param {object} editor - Editor instance
+ * @param {HTMLElement} menu - Menu element
+ * @returns {object} Menu manager with showMenu and runAction methods
+ */
+export const createContextMenuManager = (editor, menu) => {
+  /**
+   * Show context menu at position
+   * @param {number} x - X coordinate
+   * @param {number} y - Y coordinate
+   */
+  const showMenu = (x, y) => {
+    if (!menu || !editor) {
+      return;
+    }
+
+    menu.style.left = `${x}px`;
+    menu.style.top = `${y}px`;
+    menu.classList.add('open');
+
+    const merge = menu.querySelector('[data-action="merge"]');
+    const split = menu.querySelector('[data-action="split"]');
+    const divider = menu.querySelector('[data-divider]');
+
+    const canMerge = editor.can().mergeCells();
+    const canSplit = editor.can().splitCell();
+
+    merge.style.display = canMerge ? '' : 'none';
+    split.style.display = canSplit ? '' : 'none';
+    divider.style.display = canMerge || canSplit ? '' : 'none';
+  };
+
+  /**
+   * Run table action
+   * @param {Event} e - Event
+   * @param {string} action - Action name
+   */
+  const runAction = (e, action) => {
+    e.stopPropagation();
+    menu?.classList.remove('open');
+    setTimeout(() => editor?.chain().focus()[action]().run(), 0);
+  };
+
+  return { showMenu, runAction };
+};
+
+/**
+ * Custom toolbar demo content
+ */
+export const customToolbarContent = `
+  <h2>Custom Toolbar Rendering</h2>
+  <p>Any toolbar item can be intercepted to render custom elements and functionality that matter to your products.</p>
+  <p>This example demonstrates overriding the <code>toolbarRender</code> method for the tables extension. The default table button is replaced with a custom implementation that adds a right-click context menu for table operations.</p>
+  <h3>Try It Out</h3>
+  <p>Right-click on any table cell while the text cursor is inside the table below to see the custom context menu in action:</p>
+  <table>
+    <tbody>
+      <tr>
+        <th><p>Header 1</p></th>
+        <th><p>Header 2</p></th>
+        <th><p>Header 3</p></th>
+      </tr>
+      <tr>
+        <td><p>Cell 1</p></td>
+        <td><p>Cell 2</p></td>
+        <td><p>Cell 3</p></td>
+      </tr>
+      <tr>
+        <td><p>Cell 4</p></td>
+        <td><p>Cell 5</p></td>
+        <td><p>Cell 6</p></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Customization Possibilities</h3>
+  <ul>
+    <li><strong>Custom color pickers and icons:</strong> Don't like the limited set of colors? Extend it with a <code>style picker</code> that matches your requirement. Add carbon icon libraries or pictogram sets specific to your domain.</li>
+    <li><strong>Inline context menus:</strong> Want to open context menus inline instead of in the toolbar? DIY with custom event handlers.</li>
+    <li><strong>AI-powered selection refactoring:</strong> Hook selection actions to your own backend, process selected text, and asynchronously update the selection with the result.</li>
+    <li><strong>Product-specific tools:</strong> Integrate specialized formatting tools, templates, or workflows unique to your application.</li>
+    <li><strong>Endless possibilities:</strong> Customizations are bounded only by imagination. See also: <a target="_blank" rel="noopener noreferrer" href="https://tiptap.dev/docs/examples">Examples</a></li>
+  </ul>
+`;
 
 /**
  * Demo content showcasing all editor features
@@ -177,9 +349,9 @@ console.log(message);</code></pre>
   <table>
     <thead>
       <tr>
-        <th>Feature</th>
-        <th>Status</th>
-        <th>Description</th>
+        <th scope="col">Feature</th>
+        <th scope="col">Status</th>
+        <th scope="col">Description</th>
       </tr>
     </thead>
     <tbody>
@@ -220,10 +392,10 @@ console.log(message);</code></pre>
   <table>
     <thead>
       <tr>
-        <th>Product</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total</th>
       </tr>
     </thead>
     <tbody>
@@ -252,30 +424,8 @@ console.log(message);</code></pre>
     </tbody>
   </table>
   
-  <h2>File Upload</h2>
-  <p>Attach files to your document using the file upload button in the toolbar. Uploaded files appear below the editor for easy management.</p>
-  
   <h2>Search Functionality</h2>
   <p>Use the search bar in the toolbar to find and highlight text throughout your document. The search feature provides real-time highlighting and match counting.</p>
-  
-  <h2>Markdown Support</h2>
-  <p>Toggle between rich text and markdown modes using the view/edit button. The editor seamlessly converts between HTML and Markdown formats.</p>
-  <h3>Markdown Limitations</h3>
-  <ul>
-    <li>Text colors are not preserved.</li>
-    <li>Custom fonts are not preserved.</li>
-    <li>Text alignment is not preserved.</li>
-    <li><code>del</code> and <code>ins</code> elements are not preserved.</li>
-    <li>Table cell merging and custom column widths are not preserved.</li>
-    <li>Blockquote citations are not preserved.</li>
-  </ul>
-
-  <p>
-    See also:
-    <a href="https://www.markdownguide.org/hacks" target="_blank" rel="noopener noreferrer">
-      Markdown Hacks
-    </a>
-  </p>
   
   <h2>History & Clipboard</h2>
   <p>Full undo/redo support with keyboard shortcuts (Ctrl/Cmd+Z, Ctrl/Cmd+Shift+Z). Copy, cut, and paste operations work seamlessly with formatted content.</p>
@@ -315,8 +465,6 @@ console.log(message);</code></pre>
     <li>Change text alignment and colors</li>
     <li>Switch between different font families</li>
     <li>Use the search feature to find content</li>
-    <li>Toggle markdown mode to see the source</li>
-    <li>Upload files using the upload button</li>
     <li>Experiment with undo/redo operations</li>
   </ol>
   

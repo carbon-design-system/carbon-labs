@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // TipTap core imports
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
@@ -10,11 +17,13 @@ import type { TemplateResult } from 'lit';
 import '@carbon/web-components/es/components/dropdown/index.js';
 
 // Local imports
-import { BASE_CLASS } from '../constants';
+import { BASE_CLASS } from '../constants.js';
+import type { ToolbarSize } from '../types.js';
 
 // TipTap extensions
 import Heading from '@tiptap/extension-heading';
-import Paragraph from '@tiptap/extension-paragraph';
+import HardBreak from '@tiptap/extension-hard-break';
+import HorizontalRule from '@tiptap/extension-horizontal-rule';
 
 /**
  * Available typography options (paragraph and heading levels).
@@ -101,12 +110,12 @@ export interface TypographyExtension extends Extension<any> {
   /**
    * Renders the typography toolbar controls.
    * @param {Editor | null} editor - The TipTap editor instance
-   * @param {string} [toolbarSize='md'] - Size of the toolbar buttons
+   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
    * @returns {TemplateResult} Lit template for the typography toolbar
    */
   toolbarRender: (
     editor: Editor | null,
-    toolbarSize?: string
+    toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
@@ -118,24 +127,29 @@ export interface TypographyExtension extends Extension<any> {
 export const Typography = Extension.create({
   name: 'typography',
   /**
-   * Adds the paragraph and heading extensions.
+   * Adds heading and related typography extensions.
+   * Note: Document, Paragraph, and Text extensions are internally included by the component. since they are mandatory.
    * @returns {Array} Array of TipTap extensions
    */
   addExtensions: () => [
-    Paragraph,
     Heading.configure({
       levels: [1, 2, 3, 4, 5, 6],
     }),
+    HardBreak,
+    HorizontalRule,
   ],
 }) as unknown as TypographyExtension;
 
 /**
  * Renders the typography toolbar with level dropdown.
  * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} toolbarSize - Size of the toolbar buttons
+ * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
  * @returns {TemplateResult} Lit template for the typography toolbar
  */
-Typography.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
+Typography.toolbarRender = (
+  editor: Editor | null,
+  toolbarSize: ToolbarSize = 'md'
+) => {
   const currentLevel = getCurrentLevel(editor);
 
   return html`
@@ -146,6 +160,8 @@ Typography.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
       class="${BASE_CLASS}__toolbar-group ${BASE_CLASS}__toolbar-group--typography">
       <cds-dropdown
         label="Typography"
+        hide-label
+        title-text="Select typography level"
         .size=${toolbarSize as any}
         .value=${currentLevel}
         @cds-dropdown-selected=${(e: any) => handleTypographyChange(editor, e)}>

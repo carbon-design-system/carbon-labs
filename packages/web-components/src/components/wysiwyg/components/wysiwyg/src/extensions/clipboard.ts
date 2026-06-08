@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // TipTap core imports
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
@@ -16,7 +23,8 @@ import Paste from '@carbon/icons/es/paste/16.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 
 // Local imports
-import { BASE_CLASS } from '../constants';
+import { BASE_CLASS } from '../constants.js';
+import type { ToolbarSize } from '../types.js';
 import {
   TOOLTIP_ENTER_DELAY_MS,
   TOOLTIP_LEAVE_DELAY_MS,
@@ -30,12 +38,12 @@ export interface ClipboardExtension extends Extension<any> {
   /**
    * Renders the clipboard toolbar controls.
    * @param {Editor | null} editor - The TipTap editor instance
-   * @param {string} [toolbarSize='md'] - Size of the toolbar buttons
+   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
    * @returns {TemplateResult} Lit template for the clipboard toolbar
    */
   toolbarRender: (
     editor: Editor | null,
-    toolbarSize?: string
+    toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
@@ -59,10 +67,13 @@ export const Clipboard = Extension.create({
 /**
  * Renders the clipboard toolbar with copy, cut, and paste controls.
  * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} toolbarSize - Size of the toolbar buttons
+ * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
  * @returns {TemplateResult} Lit template for the clipboard toolbar
  */
-Clipboard.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
+Clipboard.toolbarRender = (
+  editor: Editor | null,
+  toolbarSize: ToolbarSize = 'md'
+) => {
   /**
    * Copies selected text to clipboard.
    * @returns {void}

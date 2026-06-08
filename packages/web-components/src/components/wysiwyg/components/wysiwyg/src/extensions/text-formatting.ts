@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // TipTap core imports
 import { Extension, Mark, mergeAttributes } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
@@ -18,7 +25,8 @@ import Code from '@carbon/icons/es/code/16.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 
 // Local imports
-import { BASE_CLASS } from '../constants';
+import { BASE_CLASS } from '../constants.js';
+import type { ToolbarSize } from '../types.js';
 import {
   TOOLTIP_ENTER_DELAY_MS,
   TOOLTIP_LEAVE_DELAY_MS,
@@ -33,9 +41,10 @@ import CodeMark from '@tiptap/extension-code';
 
 /**
  * Custom Delete mark extension for <del> tag.
+ * Note: Renamed to avoid conflict with TiptapMarkdown's delete mark.
  */
 const Delete = Mark.create({
-  name: 'delete',
+  name: 'deleteMark',
 
   parseHTML() {
     return [{ tag: 'del' }];
@@ -92,12 +101,12 @@ export interface TextFormattingExtension extends Extension<any> {
   /**
    * Renders the text formatting toolbar controls.
    * @param {Editor | null} editor - The TipTap editor instance
-   * @param {string} [toolbarSize='md'] - Size of the toolbar buttons
+   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
    * @returns {TemplateResult} Lit template for the text formatting toolbar
    */
   toolbarRender: (
     editor: Editor | null,
-    toolbarSize?: string
+    toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
@@ -126,10 +135,13 @@ export const TextFormatting = Extension.create({
 /**
  * Renders the text formatting toolbar with formatting controls.
  * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} toolbarSize - Size of the toolbar buttons
+ * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
  * @returns {TemplateResult} Lit template for the text formatting toolbar
  */
-TextFormatting.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
+TextFormatting.toolbarRender = (
+  editor: Editor | null,
+  toolbarSize: ToolbarSize = 'md'
+) => {
   /**
    * Toggles bold formatting.
    * @returns {void}
@@ -180,7 +192,7 @@ TextFormatting.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
         leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
         ?disabled=${!editor?.can().toggleBold()}
-        ?selected=${editor?.isActive('bold')}
+        ?isselected=${editor?.isActive('bold')}
         @click=${toggleBold}>
         ${iconLoader(TextBold, { slot: 'icon' })}
         <span slot="tooltip-content">Bold</span>
@@ -193,7 +205,7 @@ TextFormatting.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
         leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
         ?disabled=${!editor?.can().toggleItalic()}
-        ?selected=${editor?.isActive('italic')}
+        ?isselected=${editor?.isActive('italic')}
         @click=${toggleItalic}>
         ${iconLoader(TextItalic, { slot: 'icon' })}
         <span slot="tooltip-content">Italic</span>
@@ -206,7 +218,7 @@ TextFormatting.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
         leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
         ?disabled=${!editor?.can().toggleUnderline()}
-        ?selected=${editor?.isActive('underline')}
+        ?isselected=${editor?.isActive('underline')}
         @click=${toggleUnderline}>
         ${iconLoader(TextUnderline, { slot: 'icon' })}
         <span slot="tooltip-content">Underline</span>
@@ -219,7 +231,7 @@ TextFormatting.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
         leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
         ?disabled=${!editor?.can().toggleStrike()}
-        ?selected=${editor?.isActive('strike')}
+        ?isselected=${editor?.isActive('strike')}
         @click=${toggleStrike}>
         ${iconLoader(TextStrikethrough, { slot: 'icon' })}
         <span slot="tooltip-content">Strikethrough</span>
@@ -232,7 +244,7 @@ TextFormatting.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
         leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
         ?disabled=${!editor?.can().toggleCode()}
-        ?selected=${editor?.isActive('code')}
+        ?isselected=${editor?.isActive('code')}
         @click=${toggleCode}>
         ${iconLoader(Code, { slot: 'icon' })}
         <span slot="tooltip-content">Code</span>

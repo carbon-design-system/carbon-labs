@@ -10,20 +10,21 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { Editor } from '@tiptap/core';
-import type { Extension } from '@tiptap/core';
-import StarterKit from '@tiptap/starter-kit';
 import { createRef, ref } from 'lit/directives/ref.js';
 import type { Ref } from 'lit/directives/ref.js';
 /* @ts-ignore */
 import styles from './wysiwyg.scss?inline';
 import { BASE_CLASS } from './constants.js';
+import { toolbarRovingTabindex } from './useRovingTabindex.js';
+import type { ExtensionWithToolbar, ToolbarSize } from './types.js';
+
+// Required TipTap base extensions
+import Document from '@tiptap/extension-document';
+import Paragraph from '@tiptap/extension-paragraph';
+import Text from '@tiptap/extension-text';
 
 // Carbon components
 import '@carbon/web-components/es/components/layer/index.js';
-
-export interface ExtensionWithToolbar extends Extension<any> {
-  toolbarRender?: (editor: Editor | null, toolbarSize?: string) => any;
-}
 
 /**
  * WYSIWYG editor component
@@ -31,35 +32,19 @@ export interface ExtensionWithToolbar extends Extension<any> {
 class Wysiwyg extends LitElement {
   static styles = styles;
 
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   content = '';
 
   @property({ type: Array })
   extensions: ExtensionWithToolbar[] = [];
 
   @property({ type: String, reflect: true, attribute: 'toolbar-size' })
-  toolbarSize = 'md';
+  toolbarSize: ToolbarSize = 'md';
 
-  private editor: Editor | null = null;
+  public editor: Editor | null = null;
   private editorRef: Ref<HTMLDivElement> = createRef();
-
-  /**
-   * Dispatches the current editor content.
-   */
-  public dispatchContentChange() {
-    if (this.editor) {
-      this.content = this.editor.getHTML();
-      this.dispatchEvent(
-        new CustomEvent('content-change', {
-          detail: {
-            content: this.content,
-          },
-          bubbles: true,
-          composed: true,
-        })
-      );
-    }
-  }
+  private toolbarRef: Ref<HTMLDivElement> = createRef();
+  private cleanupRovingTabindex?: () => void;
 
   /**
    * Initializes the editor after the component is first rendered.
@@ -68,14 +53,31 @@ class Wysiwyg extends LitElement {
     if (this.editorRef.value) {
       this.editor = new Editor({
         element: this.editorRef.value,
-        extensions: [StarterKit, ...this.extensions],
+        extensions: [Document, Paragraph, Text, ...this.extensions],
         content: this.content,
+        editorProps: {
+          attributes: {
+            'aria-label': 'Rich text editor',
+          },
+        },
         /** Updates component state when editor content changes. */
         onUpdate: () => {
-          this.dispatchContentChange();
+          if (this.editor) {
+            this.dispatchEvent(
+              new CustomEvent('content-change', {
+                detail: {
+                  editor: this.editor,
+                },
+                bubbles: true,
+                composed: true,
+              })
+            );
+          }
         },
         /** Requests a re-render when the editor selection changes. */
-        onSelectionUpdate: () => this.requestUpdate(),
+        onSelectionUpdate: () => {
+          queueMicrotask(() => this.requestUpdate());
+        },
       });
 
       // Store reference to component in editor for extensions to access
@@ -94,6 +96,12 @@ class Wysiwyg extends LitElement {
         this.editor.commands.setContent(this.content, { emitUpdate: false });
       }
     }
+
+    // && !this.cleanupRovingTabindex
+    if (this.toolbarRef.value) {
+      this.cleanupRovingTabindex?.();
+      this.cleanupRovingTabindex = toolbarRovingTabindex(this.toolbarRef.value);
+    }
   }
 
   /**
@@ -101,6 +109,7 @@ class Wysiwyg extends LitElement {
    */
   disconnectedCallback() {
     super.disconnectedCallback();
+    this.cleanupRovingTabindex?.();
     this.editor?.destroy();
   }
 
@@ -111,7 +120,10 @@ class Wysiwyg extends LitElement {
     return html`
       <cds-layer>
         <div class="${BASE_CLASS}__container">
-          <div class="${BASE_CLASS}__toolbar" data-floating-menu-container>
+          <div
+            class="${BASE_CLASS}__toolbar"
+            data-floating-menu-container
+            ${ref(this.toolbarRef)}>
             ${this.extensions.map((ext) =>
               ext.toolbarRender?.(this.editor, this.toolbarSize)
             )}

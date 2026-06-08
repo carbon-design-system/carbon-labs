@@ -1,5 +1,12 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // TipTap core imports
-import { Extension, Mark } from '@tiptap/core';
+import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
 
 // Lit imports
@@ -22,42 +29,17 @@ import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 
 // Local imports
-import { BASE_CLASS } from '../constants';
+import { BASE_CLASS } from '../constants.js';
+import type { ToolbarSize } from '../types.js';
 import {
   TOOLTIP_ENTER_DELAY_MS,
   TOOLTIP_LEAVE_DELAY_MS,
 } from '../constants.js';
+import { popoverRovingTabIndex } from '../useRovingTabindex.js';
 
 // TipTap extensions
 import { Color } from '@tiptap/extension-color';
-import { TextStyle } from '@tiptap/extension-text-style';
 import { Highlight } from '@tiptap/extension-highlight';
-
-/**
- * Custom Del mark for <del> tag (strikethrough/deletion).
- */
-const Del = Mark.create({
-  name: 'del',
-  parseHTML() {
-    return [{ tag: 'del' }];
-  },
-  renderHTML() {
-    return ['del', 0];
-  },
-});
-
-/**
- * Custom Ins mark for <ins> tag (insertion/underline).
- */
-const Ins = Mark.create({
-  name: 'ins',
-  parseHTML() {
-    return [{ tag: 'ins' }];
-  },
-  renderHTML() {
-    return ['ins', 0];
-  },
-});
 
 /**
  * Predefined text color groups with Carbon Design System tokens.
@@ -94,6 +76,10 @@ const styles = `
     gap: var(--cds-spacing-03);
     padding: var(--cds-spacing-03);
   }
+
+  .${BASE_CLASS}__text-color[open]::part(content), .${BASE_CLASS}__highlight[open]::part(content) {
+    display: flex;
+  }
   
   .${BASE_CLASS}__text-color-box {
     inline-size: 1.4rem;
@@ -110,12 +96,12 @@ export interface TextColorExtension extends Extension<any> {
   /**
    * Renders the text color toolbar controls.
    * @param {Editor | null} editor - The TipTap editor instance
-   * @param {string} [toolbarSize='md'] - Size of the toolbar buttons
+   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
    * @returns {TemplateResult} Lit template for the text color toolbar
    */
   toolbarRender: (
     editor: Editor | null,
-    toolbarSize?: string
+    toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
@@ -127,105 +113,148 @@ export interface TextColorExtension extends Extension<any> {
 export const TextColor = Extension.create({
   name: 'textColor',
   /**
-   * Adds the text color, highlight, and mark extensions.
+   * Adds the text color and highlight extensions.
+   * Note: TextStyle is provided by the Typeface extension to avoid duplication.
+   * Note: Del and Ins marks are provided by the TextFormatting extension.
    * @returns {Array} Array of TipTap extensions
    */
   addExtensions: () => [
-    TextStyle,
     Color,
     Highlight.configure({
       multicolor: false,
     }),
-    Del,
-    Ins,
   ],
 }) as unknown as TextColorExtension;
 
 /**
- * Applies a color token to selected text.
- * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} token - Carbon Design System color token
- * @param {any} popoverRef - Popover reference to close
- * @returns {void}
+ * Closes a popover if it's open.
+ * @param {any} popoverRef - Popover reference
+ */
+const closePopover = (popoverRef: any) => {
+  if (popoverRef.value) {
+    popoverRef.value.open = false;
+  }
+};
+
+/**
+ * Toggles a popover's open state.
+ * @param {any} popoverRef - Popover reference
+ */
+const togglePopover = (popoverRef: any) => {
+  if (popoverRef.value) {
+    popoverRef.value.open = !popoverRef.value.open;
+  }
+};
+
+/**
+ * Applies a color token to selected text and closes popover.
+ * @param {Editor | null} editor - Editor instance
+ * @param {string} token - Color token
+ * @param {any} popoverRef - Popover reference
  */
 const applyColor = (editor: Editor | null, token: string, popoverRef: any) => {
   if (!editor) {
     return;
   }
   editor.chain().focus().setColor(`var(--cds-${token})`).run();
-  if (popoverRef.value) {
-    popoverRef.value.open = false;
-  }
+  closePopover(popoverRef);
 };
 
 /**
- * Toggles highlight mark on selected text.
- * @param {Editor | null} editor - The TipTap editor instance
- * @param {any} popoverRef - Popover reference to close
- * @returns {void}
- */
-const toggleMark = (editor: Editor | null, popoverRef: any) => {
-  editor?.chain().focus().toggleHighlight().run();
-  if (popoverRef.value) {
-    popoverRef.value.open = false;
-  }
-};
-
-/**
- * Toggles delete mark on selected text.
- * @param {Editor | null} editor - The TipTap editor instance
- * @param {any} popoverRef - Popover reference to close
- * @returns {void}
- */
-const toggleDel = (editor: Editor | null, popoverRef: any) => {
-  editor?.chain().focus().toggleMark('del').run();
-  if (popoverRef.value) {
-    popoverRef.value.open = false;
-  }
-};
-
-/**
- * Toggles insert mark on selected text.
- * @param {Editor | null} editor - The TipTap editor instance
- * @param {any} popoverRef - Popover reference to close
- * @returns {void}
- */
-const toggleIns = (editor: Editor | null, popoverRef: any) => {
-  editor?.chain().focus().toggleMark('ins').run();
-  if (popoverRef.value) {
-    popoverRef.value.open = false;
-  }
-};
-
-/**
- * Toggles the text color popover open/closed state.
+ * Toggles a mark and closes popover.
+ * @param {Editor | null} editor - Editor instance
+ * @param {string} mark - Mark name or 'highlight'
  * @param {any} popoverRef - Popover reference
- * @returns {void}
  */
-const toggleTextColorPopover = (popoverRef: any) => {
-  if (popoverRef.value) {
-    popoverRef.value.open = !popoverRef.value.open;
+const toggleMarkAndClose = (
+  editor: Editor | null,
+  mark: string,
+  popoverRef: any
+) => {
+  if (!editor) {
+    return;
   }
+  const chain = editor.chain().focus();
+  mark === 'highlight' ? chain.toggleHighlight() : chain.toggleMark(mark);
+  chain.run();
+  closePopover(popoverRef);
 };
 
 /**
- * Toggles the highlight popover open/closed state.
- * @param {any} popoverRef - Popover reference
- * @returns {void}
+ * Handles popover content initialization with roving tab index and Escape key.
+ * @param {Element} element - Popover content element
  */
-const toggleHighlightPopover = (popoverRef: any) => {
-  if (popoverRef.value) {
-    popoverRef.value.open = !popoverRef.value.open;
+const handlePopoverContentRef = (element: Element | undefined) => {
+  if (!element) {
+    return;
   }
+
+  requestAnimationFrame(() => {
+    const popoverContent = element as HTMLElement;
+    const popover = popoverContent.closest('cds-popover') as any;
+    if (!popover) {
+      return;
+    }
+
+    let cleanup: (() => void) | null = null;
+
+    /** @param {KeyboardEvent} event - Keyboard event */
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && popover.open) {
+        event.preventDefault();
+        event.stopPropagation();
+        popover.open = false;
+        // Return focus to trigger button
+        const trigger = popover.querySelector('cds-icon-button') as HTMLElement;
+        trigger?.focus();
+      }
+    };
+
+    /** @param {boolean} isOpen - Whether popover is open */
+    const handleOpenChange = (isOpen: boolean) => {
+      if (isOpen) {
+        cleanup = popoverRovingTabIndex(popoverContent);
+        popoverContent.addEventListener('keydown', handleKeyDown);
+        requestAnimationFrame(() => {
+          const firstFocusable = popoverContent.querySelector(
+            'cds-icon-button:not([disabled])'
+          ) as HTMLElement;
+          firstFocusable?.focus();
+        });
+      } else if (cleanup) {
+        cleanup();
+        cleanup = null;
+        popoverContent.removeEventListener('keydown', handleKeyDown);
+      }
+    };
+
+    new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'open'
+        ) {
+          handleOpenChange(popover.open);
+        }
+      });
+    }).observe(popover, { attributes: true, attributeFilter: ['open'] });
+
+    if (popover.open) {
+      handleOpenChange(true);
+    }
+  });
 };
 
 /**
  * Renders the text color toolbar with color picker and text decoration controls.
  * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} toolbarSize - Size of the toolbar buttons
+ * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
  * @returns {TemplateResult} Lit template for the text color toolbar
  */
-TextColor.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
+TextColor.toolbarRender = (
+  editor: Editor | null,
+  toolbarSize: ToolbarSize = 'md'
+) => {
   const textColorPopoverRef: Ref<any> = createRef();
   const highlightPopoverRef: Ref<any> = createRef();
 
@@ -254,7 +283,7 @@ TextColor.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         <cds-popover
           ${ref(textColorPopoverRef)}
           tabtip
-          align="bottom"
+          align="bottom-end"
           autoalign>
           <cds-icon-button
             kind="ghost"
@@ -265,11 +294,11 @@ TextColor.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
             enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
             leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
             ?disabled=${isTextColorDisabled}
-            @click=${() => toggleTextColorPopover(textColorPopoverRef)}>
+            @click=${() => togglePopover(textColorPopoverRef)}>
             ${iconLoader(customTextColorIcon, { slot: 'icon', tabIndex: '-1' })}
             <span slot="tooltip-content">Text Color</span>
           </cds-icon-button>
-          <cds-popover-content slot="content">
+          <cds-popover-content slot="content" class="${BASE_CLASS}__text-color">
             <div class="${BASE_CLASS}__text-color-boxes">
               ${TEXT_COLOR_GROUPS.reduce(
                 (acc, group) => [...acc, ...group.items],
@@ -294,7 +323,7 @@ TextColor.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         <cds-popover
           ${ref(highlightPopoverRef)}
           tabtip
-          align="bottom"
+          align="bottom-end"
           autoalign>
           <cds-icon-button
             kind="ghost"
@@ -305,11 +334,14 @@ TextColor.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
             enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
             leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
             ?disabled=${!editor?.can().toggleHighlight()}
-            @click=${() => toggleHighlightPopover(highlightPopoverRef)}>
+            @click=${() => togglePopover(highlightPopoverRef)}>
             ${iconLoader(TextHighlight16, { slot: 'icon' })}
             <span slot="tooltip-content">Highlight</span>
           </cds-icon-button>
-          <cds-popover-content slot="content">
+          <cds-popover-content
+            slot="content"
+            ${ref(handlePopoverContentRef)}
+            class="${BASE_CLASS}__highlight">
             <cds-icon-button
               kind="ghost"
               autoalign
@@ -318,8 +350,9 @@ TextColor.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
               enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
               leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
               ?disabled=${!editor?.can().toggleHighlight()}
-              ?selected=${editor?.isActive('highlight')}
-              @click=${() => toggleMark(editor, highlightPopoverRef)}>
+              ?isselected=${editor?.isActive('highlight')}
+              @click=${() =>
+                toggleMarkAndClose(editor, 'highlight', highlightPopoverRef)}>
               ${iconLoader(TextHighlight16, { slot: 'icon' })}
               <span slot="tooltip-content">Mark</span>
             </cds-icon-button>
@@ -330,9 +363,10 @@ TextColor.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
               .size=${toolbarSize as any}
               enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
               leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-              ?disabled=${!editor?.can().toggleMark('del')}
-              ?selected=${editor?.isActive('del')}
-              @click=${() => toggleDel(editor, highlightPopoverRef)}>
+              ?disabled=${!editor?.can().toggleMark('deleteMark')}
+              ?isselected=${editor?.isActive('deleteMark')}
+              @click=${() =>
+                toggleMarkAndClose(editor, 'deleteMark', highlightPopoverRef)}>
               ${iconLoader(Subtract, { slot: 'icon' })}
               <span slot="tooltip-content">Delete</span>
             </cds-icon-button>
@@ -343,9 +377,10 @@ TextColor.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
               .size=${toolbarSize as any}
               enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
               leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-              ?disabled=${!editor?.can().toggleMark('ins')}
-              ?selected=${editor?.isActive('ins')}
-              @click=${() => toggleIns(editor, highlightPopoverRef)}>
+              ?disabled=${!editor?.can().toggleMark('insertMark')}
+              ?isselected=${editor?.isActive('insertMark')}
+              @click=${() =>
+                toggleMarkAndClose(editor, 'insertMark', highlightPopoverRef)}>
               ${iconLoader(Add, { slot: 'icon' })}
               <span slot="tooltip-content">Insert</span>
             </cds-icon-button>

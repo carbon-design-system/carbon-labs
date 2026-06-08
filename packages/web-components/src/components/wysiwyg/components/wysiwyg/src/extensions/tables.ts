@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // TipTap core imports
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
@@ -25,11 +32,13 @@ import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 
 // Local imports
-import { BASE_CLASS } from '../constants';
+import { BASE_CLASS } from '../constants.js';
+import type { ToolbarSize } from '../types.js';
 import {
   TOOLTIP_ENTER_DELAY_MS,
   TOOLTIP_LEAVE_DELAY_MS,
 } from '../constants.js';
+import { popoverRovingTabIndex } from '../useRovingTabindex.js';
 
 // TipTap extensions
 import { Table as TiptapTable } from '@tiptap/extension-table';
@@ -39,7 +48,7 @@ import { TableHeader } from '@tiptap/extension-table-header';
 
 // Styles
 const styles = `
-  .${BASE_CLASS}__toolbar-group--table {
+  .${BASE_CLASS}__toolbar-group--table[open]::part(content) {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
   }
@@ -53,12 +62,12 @@ export interface TablesExtension extends Extension<any> {
   /**
    * Renders the tables toolbar controls.
    * @param {Editor | null} editor - The TipTap editor instance
-   * @param {string} [toolbarSize='md'] - Size of the toolbar buttons
+   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
    * @returns {TemplateResult} Lit template for the tables toolbar
    */
   toolbarRender: (
     editor: Editor | null,
-    toolbarSize?: string
+    toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
@@ -92,18 +101,86 @@ const tablePopoverRef: Ref<any> = createRef();
 /**
  * Renders the tables toolbar with table manipulation controls.
  * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} toolbarSize - Size of the toolbar buttons
+ * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
  * @returns {TemplateResult} Lit template for the tables toolbar
  */
-Tables.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
+Tables.toolbarRender = (
+  editor: Editor | null,
+  toolbarSize: ToolbarSize = 'md'
+) => {
   /**
    * Toggles the table popover open/closed state.
-   * @returns {void}
    */
   const togglePopover = () => {
     if (tablePopoverRef.value) {
       tablePopoverRef.value.open = !tablePopoverRef.value.open;
     }
+  };
+
+  /**
+   * Handles popover content initialization with Escape key support.
+   * @param {Element} element - Popover content element
+   */
+  const handlePopoverContentRef = (element: Element | undefined) => {
+    if (!element) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      const popoverContent = element as HTMLElement;
+      const popover = popoverContent.closest('cds-popover') as any;
+      if (!popover) {
+        return;
+      }
+
+      let cleanup: (() => void) | null = null;
+
+      /** @param {KeyboardEvent} event - Keyboard event */
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape' && popover.open) {
+          event.preventDefault();
+          event.stopPropagation();
+          popover.open = false;
+          const trigger = popover.querySelector(
+            'cds-icon-button'
+          ) as HTMLElement;
+          trigger?.focus();
+        }
+      };
+
+      /** @param {boolean} isOpen - Whether popover is open */
+      const handleOpenChange = (isOpen: boolean) => {
+        if (isOpen) {
+          cleanup = popoverRovingTabIndex(popoverContent);
+          popoverContent.addEventListener('keydown', handleKeyDown);
+          requestAnimationFrame(() => {
+            const firstFocusable = popoverContent.querySelector(
+              'cds-icon-button:not([disabled])'
+            ) as HTMLElement;
+            firstFocusable?.focus();
+          });
+        } else if (cleanup) {
+          cleanup();
+          cleanup = null;
+          popoverContent.removeEventListener('keydown', handleKeyDown);
+        }
+      };
+
+      new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (
+            mutation.type === 'attributes' &&
+            mutation.attributeName === 'open'
+          ) {
+            handleOpenChange(popover.open);
+          }
+        });
+      }).observe(popover, { attributes: true, attributeFilter: ['open'] });
+
+      if (popover.open) {
+        handleOpenChange(true);
+      }
+    });
   };
 
   /**
@@ -248,128 +325,129 @@ Tables.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
                   ${iconLoader(Table, { slot: 'icon' })}
                   <span slot="tooltip-content">Table</span>
                 </cds-icon-button>
-                <cds-popover-content slot="content">
-                  <div class="${BASE_CLASS}__toolbar-group--table">
-                    <cds-icon-button
-                      kind="ghost"
-                      autoalign
-                      align="top"
-                      .size=${toolbarSize as any}
-                      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-                      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-                      ?disabled=${!editor?.can().addColumnBefore()}
-                      @click=${addColumnBefore}>
-                      ${iconLoader(ColumnInsert, { slot: 'icon' })}
-                      <span slot="tooltip-content">Add Column Before</span>
-                    </cds-icon-button>
-                    <cds-icon-button
-                      kind="ghost"
-                      autoalign
-                      align="top"
-                      .size=${toolbarSize as any}
-                      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-                      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-                      ?disabled=${!editor?.can().addColumnAfter()}
-                      @click=${addColumnAfter}>
-                      ${iconLoader(ColumnInsert, { slot: 'icon' })}
-                      <span slot="tooltip-content">Add Column After</span>
-                    </cds-icon-button>
-                    <cds-icon-button
-                      kind="danger-ghost"
-                      autoalign
-                      align="top"
-                      .size=${toolbarSize as any}
-                      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-                      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-                      ?disabled=${!editor?.can().deleteColumn()}
-                      @click=${deleteColumn}>
-                      ${iconLoader(ColumnDelete, { slot: 'icon' })}
-                      <span slot="tooltip-content">Delete Column</span>
-                    </cds-icon-button>
-                    <cds-icon-button
-                      kind="ghost"
-                      autoalign
-                      align="top"
-                      .size=${toolbarSize as any}
-                      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-                      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-                      ?disabled=${!editor?.can().mergeCells()}
-                      @click=${mergeCells}>
-                      ${iconLoader(TableSplit, { slot: 'icon' })}
-                      <span slot="tooltip-content">Merge Cells</span>
-                    </cds-icon-button>
-                    <cds-icon-button
-                      kind="ghost"
-                      autoalign
-                      align="top"
-                      .size=${toolbarSize as any}
-                      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-                      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-                      ?disabled=${!editor?.can().addRowBefore()}
-                      @click=${addRowBefore}>
-                      ${iconLoader(RowInsert, { slot: 'icon' })}
-                      <span slot="tooltip-content">Add Row Before</span>
-                    </cds-icon-button>
-                    <cds-icon-button
-                      kind="ghost"
-                      autoalign
-                      align="top"
-                      .size=${toolbarSize as any}
-                      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-                      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-                      ?disabled=${!editor?.can().addRowAfter()}
-                      @click=${addRowAfter}>
-                      ${iconLoader(RowInsert, { slot: 'icon' })}
-                      <span slot="tooltip-content">Add Row After</span>
-                    </cds-icon-button>
-                    <cds-icon-button
-                      kind="danger-ghost"
-                      autoalign
-                      align="top"
-                      .size=${toolbarSize as any}
-                      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-                      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-                      ?disabled=${!editor?.can().deleteRow()}
-                      @click=${deleteRow}>
-                      ${iconLoader(RowDelete, { slot: 'icon' })}
-                      <span slot="tooltip-content">Delete Row</span>
-                    </cds-icon-button>
-                    <cds-icon-button
-                      kind="ghost"
-                      autoalign
-                      align="top"
-                      .size=${toolbarSize as any}
-                      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-                      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-                      ?disabled=${!editor?.can().splitCell()}
-                      @click=${splitCell}>
-                      ${iconLoader(TableSplit, { slot: 'icon' })}
-                      <span slot="tooltip-content">Split Cell</span>
-                    </cds-icon-button>
-                    <cds-icon-button
-                      kind="ghost"
-                      autoalign
-                      align="top"
-                      .size=${toolbarSize as any}
-                      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-                      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-                      @click=${insertTable}>
-                      ${iconLoader(TableAdd, { slot: 'icon' })}
-                      <span slot="tooltip-content">Insert Table</span>
-                    </cds-icon-button>
-                    <cds-icon-button
-                      kind="danger-ghost"
-                      autoalign
-                      align="top"
-                      .size=${toolbarSize as any}
-                      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-                      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-                      ?disabled=${!editor?.can().deleteTable()}
-                      @click=${deleteTable}>
-                      ${iconLoader(TrashCan, { slot: 'icon' })}
-                      <span slot="tooltip-content">Delete Table</span>
-                    </cds-icon-button>
-                  </div>
+                <cds-popover-content
+                  class="${BASE_CLASS}__toolbar-group--table"
+                  slot="content"
+                  ${ref(handlePopoverContentRef)}>
+                  <cds-icon-button
+                    kind="ghost"
+                    autoalign
+                    align="top"
+                    .size=${toolbarSize as any}
+                    enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
+                    leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
+                    ?disabled=${!editor?.can().addColumnBefore()}
+                    @click=${addColumnBefore}>
+                    ${iconLoader(ColumnInsert, { slot: 'icon' })}
+                    <span slot="tooltip-content">Add Column Before</span>
+                  </cds-icon-button>
+                  <cds-icon-button
+                    kind="ghost"
+                    autoalign
+                    align="top"
+                    .size=${toolbarSize as any}
+                    enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
+                    leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
+                    ?disabled=${!editor?.can().addColumnAfter()}
+                    @click=${addColumnAfter}>
+                    ${iconLoader(ColumnInsert, { slot: 'icon' })}
+                    <span slot="tooltip-content">Add Column After</span>
+                  </cds-icon-button>
+                  <cds-icon-button
+                    kind="danger-ghost"
+                    autoalign
+                    align="top"
+                    .size=${toolbarSize as any}
+                    enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
+                    leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
+                    ?disabled=${!editor?.can().deleteColumn()}
+                    @click=${deleteColumn}>
+                    ${iconLoader(ColumnDelete, { slot: 'icon' })}
+                    <span slot="tooltip-content">Delete Column</span>
+                  </cds-icon-button>
+                  <cds-icon-button
+                    kind="ghost"
+                    autoalign
+                    align="top"
+                    .size=${toolbarSize as any}
+                    enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
+                    leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
+                    ?disabled=${!editor?.can().mergeCells()}
+                    @click=${mergeCells}>
+                    ${iconLoader(TableSplit, { slot: 'icon' })}
+                    <span slot="tooltip-content">Merge Cells</span>
+                  </cds-icon-button>
+                  <cds-icon-button
+                    kind="ghost"
+                    autoalign
+                    align="top"
+                    .size=${toolbarSize as any}
+                    enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
+                    leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
+                    ?disabled=${!editor?.can().addRowBefore()}
+                    @click=${addRowBefore}>
+                    ${iconLoader(RowInsert, { slot: 'icon' })}
+                    <span slot="tooltip-content">Add Row Before</span>
+                  </cds-icon-button>
+                  <cds-icon-button
+                    kind="ghost"
+                    autoalign
+                    align="top"
+                    .size=${toolbarSize as any}
+                    enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
+                    leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
+                    ?disabled=${!editor?.can().addRowAfter()}
+                    @click=${addRowAfter}>
+                    ${iconLoader(RowInsert, { slot: 'icon' })}
+                    <span slot="tooltip-content">Add Row After</span>
+                  </cds-icon-button>
+                  <cds-icon-button
+                    kind="danger-ghost"
+                    autoalign
+                    align="top"
+                    .size=${toolbarSize as any}
+                    enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
+                    leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
+                    ?disabled=${!editor?.can().deleteRow()}
+                    @click=${deleteRow}>
+                    ${iconLoader(RowDelete, { slot: 'icon' })}
+                    <span slot="tooltip-content">Delete Row</span>
+                  </cds-icon-button>
+                  <cds-icon-button
+                    kind="ghost"
+                    autoalign
+                    align="top"
+                    .size=${toolbarSize as any}
+                    enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
+                    leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
+                    ?disabled=${!editor?.can().splitCell()}
+                    @click=${splitCell}>
+                    ${iconLoader(TableSplit, { slot: 'icon' })}
+                    <span slot="tooltip-content">Split Cell</span>
+                  </cds-icon-button>
+                  <cds-icon-button
+                    kind="ghost"
+                    autoalign
+                    align="top"
+                    .size=${toolbarSize as any}
+                    enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
+                    leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
+                    @click=${insertTable}>
+                    ${iconLoader(TableAdd, { slot: 'icon' })}
+                    <span slot="tooltip-content">Insert Table</span>
+                  </cds-icon-button>
+                  <cds-icon-button
+                    kind="danger-ghost"
+                    autoalign
+                    align="top"
+                    .size=${toolbarSize as any}
+                    enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
+                    leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
+                    ?disabled=${!editor?.can().deleteTable()}
+                    @click=${deleteTable}>
+                    ${iconLoader(TrashCan, { slot: 'icon' })}
+                    <span slot="tooltip-content">Delete Table</span>
+                  </cds-icon-button>
                 </cds-popover-content>
               </cds-popover>
             `

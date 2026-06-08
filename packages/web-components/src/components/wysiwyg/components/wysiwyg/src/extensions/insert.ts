@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // TipTap core imports
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
@@ -22,11 +29,13 @@ import '@carbon/web-components/es/components/text-input/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
 
 // Local imports
-import { BASE_CLASS } from '../constants';
+import { BASE_CLASS } from '../constants.js';
+import type { ToolbarSize } from '../types.js';
 import {
   TOOLTIP_ENTER_DELAY_MS,
   TOOLTIP_LEAVE_DELAY_MS,
 } from '../constants.js';
+import { popoverRovingTabIndex } from '../useRovingTabindex.js';
 
 // TipTap extensions
 import { Link } from '@tiptap/extension-link';
@@ -59,7 +68,7 @@ const IMAGE_CONFIG = {
 
 // Styles
 const styles = `
-  .${BASE_CLASS}__insert-popover-content {
+  .${BASE_CLASS}__insert-popover-content[open]::part(content) {
     display: flex;
     min-inline-size: 20rem;
   }
@@ -212,12 +221,12 @@ export interface InsertExtension extends Extension<any> {
   /**
    * Renders the insert toolbar controls.
    * @param {Editor | null} editor - The TipTap editor instance
-   * @param {string} [toolbarSize='md'] - Size of the toolbar buttons
+   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
    * @returns {TemplateResult} Lit template for the insert toolbar
    */
   toolbarRender: (
     editor: Editor | null,
-    toolbarSize?: string
+    toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
@@ -272,6 +281,74 @@ type UrlPopoverOptions = {
 };
 
 /**
+ * Handles popover content initialization with Escape key support and roving tab index.
+ * @param {Element} element - Popover content element
+ * @param {Ref<any>} _popoverRef - Popover reference (unused, passed for context)
+ */
+const handlePopoverContentRef = (
+  element: Element | undefined,
+  _popoverRef: Ref<any>
+) => {
+  if (!element) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    const popoverContent = element as HTMLElement;
+    const popover = popoverContent.closest('cds-popover') as any;
+    if (!popover) {
+      return;
+    }
+
+    let cleanup: (() => void) | null = null;
+
+    /** @param {KeyboardEvent} event - Keyboard event */
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && popover.open) {
+        event.preventDefault();
+        event.stopPropagation();
+        popover.open = false;
+        const trigger = popover.querySelector('cds-icon-button') as HTMLElement;
+        trigger?.focus();
+      }
+    };
+
+    /** @param {boolean} isOpen - Whether popover is open */
+    const handleOpenChange = (isOpen: boolean) => {
+      if (isOpen) {
+        cleanup = popoverRovingTabIndex(popoverContent);
+        popoverContent.addEventListener('keydown', handleKeyDown);
+        requestAnimationFrame(() => {
+          const firstInput = popoverContent.querySelector(
+            'cds-text-input'
+          ) as any;
+          firstInput?.focus();
+        });
+      } else if (cleanup) {
+        cleanup();
+        cleanup = null;
+        popoverContent.removeEventListener('keydown', handleKeyDown);
+      }
+    };
+
+    new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'open'
+        ) {
+          handleOpenChange(popover.open);
+        }
+      });
+    }).observe(popover, { attributes: true, attributeFilter: ['open'] });
+
+    if (popover.open) {
+      handleOpenChange(true);
+    }
+  });
+};
+
+/**
  * Renders a URL input popover for links or images.
  * @param {UrlPopoverOptions} options - Popover configuration options
  * @returns {TemplateResult} Lit template for the URL popover
@@ -298,7 +375,7 @@ const renderUrlPopover = ({
       .size=${size as any}
       enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
       leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-      ?selected=${selected}
+      ?isselected=${selected}
       ?disabled=${disabled}
       @click=${() => {
         if (popoverRef.value) {
@@ -309,37 +386,42 @@ const renderUrlPopover = ({
       <span slot="tooltip-content">${tooltip}</span>
     </cds-icon-button>
 
-    <cds-popover-content slot="content">
-      <div class="${BASE_CLASS}__insert-popover-content">
-        <cds-text-input
-          ${ref(inputRef)}
-          hide-label
-          label=${tooltip}
-          .size=${size as any}
-          placeholder=${placeholder}
-          .value=${value}
-          @keydown=${onEnterKey(onSave)}></cds-text-input>
+    <cds-popover-content
+      class="${BASE_CLASS}__insert-popover-content"
+      slot="content"
+      ${ref((el: Element | undefined) =>
+        handlePopoverContentRef(el, popoverRef)
+      )}>
+      <cds-text-input
+        ${ref(inputRef)}
+        hide-label
+        label=${tooltip}
+        .size=${size as any}
+        placeholder=${placeholder}
+        .value=${value}
+        @keydown=${onEnterKey(onSave)}></cds-text-input>
 
-        <cds-icon-button
-          kind="ghost"
-          align="top"
-          .size=${size as any}
-          @click=${onSave}>
-          ${iconLoader(SaveIcon, { slot: 'icon' })}
-          <span slot="tooltip-content">Insert</span>
-        </cds-icon-button>
+      <cds-icon-button
+        kind="ghost"
+        align="top"
+        autoalign
+        .size=${size as any}
+        @click=${onSave}>
+        ${iconLoader(SaveIcon, { slot: 'icon' })}
+        <span slot="tooltip-content">Insert</span>
+      </cds-icon-button>
 
-        ${onDelete
-          ? html` <cds-icon-button
-              kind="danger-ghost"
-              align="top"
-              .size=${size as any}
-              @click=${onDelete}>
-              ${iconLoader(TrashCanIcon, { slot: 'icon' })}
-              <span slot="tooltip-content">Delete</span>
-            </cds-icon-button>`
-          : ''}
-      </div>
+      ${onDelete
+        ? html` <cds-icon-button
+            kind="danger-ghost"
+            align="top"
+            autoalign
+            .size=${size as any}
+            @click=${onDelete}>
+            ${iconLoader(TrashCanIcon, { slot: 'icon' })}
+            <span slot="tooltip-content">Delete</span>
+          </cds-icon-button>`
+        : ''}
     </cds-popover-content>
   </cds-popover>
 `;
@@ -418,10 +500,13 @@ const setImage = (
 /**
  * Renders the insert toolbar with link and image controls.
  * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} toolbarSize - Size of the toolbar buttons
+ * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
  * @returns {TemplateResult} Lit template for the insert toolbar
  */
-Insert.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
+Insert.toolbarRender = (
+  editor: Editor | null,
+  toolbarSize: ToolbarSize = 'md'
+) => {
   const linkPopover = createRef<any>(),
     linkInput = createRef<any>();
   const imagePopover = createRef<any>(),

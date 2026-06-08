@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // TipTap core imports
 import { Extension, Mark } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
@@ -14,9 +21,45 @@ import '@carbon/web-components/es/components/search/index.js';
 
 // Local imports
 import { BASE_CLASS } from '../constants';
+import type { ToolbarSize } from '../types.js';
+import type { EditorComponent } from '../types';
+
+// Instance-specific state management using WeakMap
+interface SearchState {
+  searchTerm: string;
+  currentSearchTerm: string;
+  matchCount: number;
+  searchInputElement: any;
+  cachedElements: {
+    container?: Element;
+    searchHighlight?: Element;
+  };
+}
+
+const editorSearchState = new WeakMap<Editor, SearchState>();
+
+/**
+ * Gets or creates search state for an editor instance
+ * @param {Editor} editor - The TipTap editor instance
+ * @returns {SearchState} The search state for this editor
+ */
+const getSearchState = (editor: Editor): SearchState => {
+  let state = editorSearchState.get(editor);
+  if (!state) {
+    state = {
+      searchTerm: '',
+      currentSearchTerm: '',
+      matchCount: 0,
+      searchInputElement: null,
+      cachedElements: {},
+    };
+    editorSearchState.set(editor, state);
+  }
+  return state;
+};
 
 // Styles
-const styles = `
+const searchToolbarStyles = `
   .${BASE_CLASS}__toolbar-group--search {
     display: flex;
     align-items: center;
@@ -38,10 +81,10 @@ const searchOutlineStyles = `
 /**
  * Custom Mark for search result highlighting.
  * Creates a <mark> element with search-highlight class.
+ * @type {Mark}
  */
 const SearchHighlight = Mark.create({
   name: 'searchHighlight',
-
   addOptions() {
     return {
       HTMLAttributes: {
@@ -49,7 +92,6 @@ const SearchHighlight = Mark.create({
       },
     };
   },
-
   parseHTML() {
     return [
       {
@@ -57,25 +99,23 @@ const SearchHighlight = Mark.create({
       },
     ];
   },
-
   renderHTML({ HTMLAttributes }) {
     return ['mark', { ...this.options.HTMLAttributes, ...HTMLAttributes }, 0];
   },
 });
 
-/** Plugin key for search functionality */
+/**
+ * Plugin key for search functionality.
+ * @type {PluginKey}
+ */
 const searchPluginKey = new PluginKey('search');
 
-/** Current search term */
-let currentSearchTerm = '';
-/** Number of search matches found */
-let matchCount = 0;
-
 /**
- * Creates a ProseMirror plugin for search highlighting.
+ * Creates a ProseMirror plugin for search highlighting with decorations.
+ * @param {Editor} editor - The TipTap editor instance
  * @returns {Plugin} ProseMirror plugin instance
  */
-function createSearchPlugin() {
+const createSearchPlugin = (editor: Editor) => {
   return new Plugin({
     key: searchPluginKey,
     state: {
@@ -90,14 +130,15 @@ function createSearchPlugin() {
       decorations(state) {
         const { doc } = state;
         const decorations: Decoration[] = [];
+        const searchState = getSearchState(editor);
 
-        if (!currentSearchTerm) {
-          matchCount = 0;
+        if (!searchState.currentSearchTerm) {
+          searchState.matchCount = 0;
           return DecorationSet.empty;
         }
 
         const searchRegex = new RegExp(
-          currentSearchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+          searchState.currentSearchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
           'gi'
         );
 
@@ -121,12 +162,93 @@ function createSearchPlugin() {
           }
         });
 
-        matchCount = count;
+        searchState.matchCount = count;
         return DecorationSet.create(doc, decorations);
       },
     },
   });
-}
+};
+
+/**
+ * Injects custom styles into the search element's shadow root.
+ * @param {Element} el - Search element
+ * @returns {void}
+ */
+const injectSearchStyles = (el: Element) => {
+  if (el.shadowRoot) {
+    const style = el.shadowRoot.querySelector('style[data-search-outline]');
+    if (!style) {
+      const styleEl = document.createElement('style');
+      styleEl.setAttribute('data-search-outline', '');
+      styleEl.textContent = searchOutlineStyles;
+      el.shadowRoot.appendChild(styleEl);
+    }
+  }
+};
+
+/**
+ * Scrolls the first search highlight into view with caching.
+ * @param {Editor} editor - The TipTap editor instance
+ * @returns {void}
+ */
+const scrollToFirstMatch = (editor: Editor) => {
+  const searchState = getSearchState(editor);
+  const component = (editor as any)?.component as EditorComponent;
+
+  // Use cached element if available and still in DOM
+  let searchHighlight = searchState.cachedElements.searchHighlight;
+  if (!searchHighlight || !searchHighlight.isConnected) {
+    searchHighlight =
+      component?.shadowRoot?.querySelector('.search-highlight') || undefined;
+    searchState.cachedElements.searchHighlight = searchHighlight;
+  }
+
+  if (searchHighlight) {
+    requestAnimationFrame(() => {
+      try {
+        searchHighlight?.scrollIntoView({
+          block: 'start',
+        });
+      } catch (error) {
+        console.warn('Failed to scroll to search match:', error);
+      }
+    });
+  }
+};
+
+/**
+ * Updates the editor view and triggers component re-render.
+ * @param {Editor} editor - The TipTap editor instance
+ * @returns {void}
+ */
+const updateEditorView = (editor: Editor) => {
+  editor.view.updateState(editor.view.state);
+  const component = (editor as any).component as EditorComponent;
+  if (component && component.requestUpdate) {
+    queueMicrotask(() => component.requestUpdate());
+  }
+};
+
+/**
+ * Focuses the search input and optionally sets its value.
+ * @param {Editor} editor - The TipTap editor instance
+ * @param {string} [value] - Optional value to set in the search input
+ * @returns {void}
+ */
+const focusSearchForEditor = (editor: Editor, value?: string) => {
+  const searchState = getSearchState(editor);
+  if (searchState.searchInputElement) {
+    if (value !== undefined) {
+      searchState.searchInputElement.value = value;
+      searchState.searchTerm = value;
+      searchState.currentSearchTerm = value;
+      searchState.searchInputElement.dispatchEvent(
+        new Event('input', { bubbles: true })
+      );
+    }
+    searchState.searchInputElement.focus();
+  }
+};
 
 /**
  * Interface for the Search extension with toolbar rendering capability.
@@ -136,42 +258,87 @@ export interface SearchExtension extends Extension<any> {
   /**
    * Renders the search toolbar controls.
    * @param {Editor | null} editor - The TipTap editor instance
-   * @param {string} [toolbarSize='md'] - Size of the toolbar buttons
+   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
    * @returns {TemplateResult} Lit template for the search toolbar
    */
   toolbarRender: (
     editor: Editor | null,
-    toolbarSize?: string
+    toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
-/** Current search term in the UI */
-let searchTerm = '';
-
 /**
- * Search extension for finding and highlighting text.
- * Provides a search input with live highlighting of matches.
+ * Search extension for finding and highlighting text in the editor.
+ * Provides a search input with live highlighting of matches and keyboard shortcuts.
  * @type {SearchExtension}
  */
 export const Search = Extension.create({
   name: 'search',
-
+  /**
+   * Adds the SearchHighlight mark extension.
+   * @returns {Array} Array containing the SearchHighlight extension
+   */
   addExtensions() {
     return [SearchHighlight];
   },
-
+  /**
+   * Adds the search plugin for decoration-based highlighting.
+   * @returns {Array} Array containing the search plugin
+   */
   addProseMirrorPlugins() {
-    return [createSearchPlugin()];
+    return [createSearchPlugin(this.editor)];
+  },
+  /**
+   * Cleanup when extension is destroyed
+   * @returns {void}
+   */
+  onDestroy() {
+    editorSearchState.delete(this.editor);
+  },
+  /**
+   * Adds keyboard shortcuts for search functionality.
+   * @returns {Object} Keyboard shortcut configuration
+   */
+  addKeyboardShortcuts() {
+    return {
+      /**
+       * Handles Cmd/Ctrl+F keyboard shortcut to focus search.
+       * If text is selected, it pre-fills the search input with the selection.
+       * @returns {boolean} True to prevent default browser find behavior
+       */
+      'Mod-f': () => {
+        const { state } = this.editor;
+        const { from, to } = state.selection;
+        const selectedText = state.doc.textBetween(from, to, ' ');
+
+        if (selectedText) {
+          focusSearchForEditor(this.editor, selectedText);
+        } else {
+          focusSearchForEditor(this.editor);
+        }
+
+        return true;
+      },
+    };
   },
 }) as unknown as SearchExtension;
 
 /**
- * Renders the search toolbar with search input and match count.
+ * Renders the search toolbar with search input and match count display.
  * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} toolbarSize - Size of the toolbar buttons
+ * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
  * @returns {TemplateResult} Lit template for the search toolbar
  */
-Search.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
+Search.toolbarRender = (
+  editor: Editor | null,
+  toolbarSize: ToolbarSize = 'md'
+) => {
+  if (!editor) {
+    return html``;
+  }
+
+  const searchState = getSearchState(editor);
+
   /**
    * Handles search input changes and updates highlights.
    * @param {Event} e - Input event
@@ -179,18 +346,10 @@ Search.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
    */
   const handleSearchInput = (e: Event) => {
     const value = (e.target as any).value;
-    searchTerm = value;
-    currentSearchTerm = value;
-
-    // Force update of decorations
-    if (editor) {
-      editor.view.updateState(editor.view.state);
-      // Trigger re-render of the component
-      const component = (editor as any).component;
-      if (component && component.requestUpdate) {
-        component.requestUpdate();
-      }
-    }
+    searchState.searchTerm = value;
+    searchState.currentSearchTerm = value;
+    updateEditorView(editor);
+    scrollToFirstMatch(editor);
   };
 
   /**
@@ -201,39 +360,27 @@ Search.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
   const handleClear = (e: CustomEvent) => {
     const shouldClear = e.detail.value === '';
     if (shouldClear) {
-      searchTerm = '';
-      currentSearchTerm = '';
-      if (editor) {
-        editor.view.updateState(editor.view.state);
-        const component = (editor as any).component;
-        if (component && component.requestUpdate) {
-          component.requestUpdate();
-        }
-      }
+      searchState.searchTerm = '';
+      searchState.currentSearchTerm = '';
+      updateEditorView(editor);
     }
   };
 
   /**
-   * Handles search element reference to inject custom styles.
+   * Handles search element reference to inject custom styles and store reference.
    * @param {Element | undefined} el - Search element
    * @returns {void}
    */
   const handleSearchRef = (el: Element | undefined) => {
-    if (el && el.shadowRoot) {
-      // Add style to shadow root for outline offset
-      const style = el.shadowRoot.querySelector('style[data-search-outline]');
-      if (!style) {
-        const styleEl = document.createElement('style');
-        styleEl.setAttribute('data-search-outline', '');
-        styleEl.textContent = searchOutlineStyles;
-        el.shadowRoot.appendChild(styleEl);
-      }
+    if (el) {
+      searchState.searchInputElement = el;
+      injectSearchStyles(el);
     }
   };
 
   return html`
     <style>
-      ${styles}
+      ${searchToolbarStyles}
     </style>
     <div
       class="${BASE_CLASS}__toolbar-group ${BASE_CLASS}__toolbar-group--search">
@@ -244,15 +391,15 @@ Search.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         placeholder="Search"
         label-text="Search"
         close-button-label-text="Clear search input"
-        .value=${searchTerm}
+        .value=${searchState.searchTerm}
         @input=${handleSearchInput}
         @cds-search-input=${handleClear}>
       </cds-search>
-      ${searchTerm
+      ${searchState.searchTerm
         ? html`
             <span
               style="font-size: 0.875rem; color: var(--cds-text-secondary, #525252); white-space: nowrap; padding-inline: 0.4rem;">
-              ${matchCount}
+              ${searchState.matchCount}
             </span>
           `
         : ''}

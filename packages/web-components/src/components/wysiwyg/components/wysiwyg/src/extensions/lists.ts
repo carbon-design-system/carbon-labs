@@ -1,3 +1,10 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 // TipTap core imports
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
@@ -18,7 +25,8 @@ import IndentMore from '@carbon/icons/es/text--indent--more/16.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 
 // Local imports
-import { BASE_CLASS } from '../constants';
+import { BASE_CLASS } from '../constants.js';
+import type { ToolbarSize } from '../types.js';
 import {
   TOOLTIP_ENTER_DELAY_MS,
   TOOLTIP_LEAVE_DELAY_MS,
@@ -65,12 +73,12 @@ export interface ListsExtension extends Extension<any> {
   /**
    * Renders the lists toolbar controls.
    * @param {Editor | null} editor - The TipTap editor instance
-   * @param {string} [toolbarSize='md'] - Size of the toolbar buttons
+   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
    * @returns {TemplateResult} Lit template for the lists toolbar
    */
   toolbarRender: (
     editor: Editor | null,
-    toolbarSize?: string
+    toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
@@ -99,10 +107,13 @@ export const Lists = Extension.create({
 /**
  * Renders the lists toolbar with list type and indentation controls.
  * @param {Editor | null} editor - The TipTap editor instance
- * @param {string} toolbarSize - Size of the toolbar buttons
+ * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
  * @returns {TemplateResult} Lit template for the lists toolbar
  */
-Lists.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
+Lists.toolbarRender = (
+  editor: Editor | null,
+  toolbarSize: ToolbarSize = 'md'
+) => {
   /**
    * Toggles bullet list formatting.
    * @returns {void}
@@ -156,7 +167,7 @@ Lists.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
         leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
         ?disabled=${!editor?.can().toggleBulletList()}
-        ?selected=${editor?.isActive('bulletList')}
+        ?isselected=${editor?.isActive('bulletList')}
         @click=${toggleBulletList}>
         ${iconLoader(ListBulleted, { slot: 'icon' })}
         <span slot="tooltip-content">Bullet List</span>
@@ -169,7 +180,7 @@ Lists.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
         leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
         ?disabled=${!editor?.can().toggleOrderedList()}
-        ?selected=${editor?.isActive('orderedList')}
+        ?isselected=${editor?.isActive('orderedList')}
         @click=${toggleOrderedList}>
         ${iconLoader(ListNumbered, { slot: 'icon' })}
         <span slot="tooltip-content">Numbered List</span>
@@ -182,7 +193,7 @@ Lists.toolbarRender = (editor: Editor | null, toolbarSize = 'md') => {
         enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
         leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
         ?disabled=${!editor?.can().toggleTaskList()}
-        ?selected=${editor?.isActive('taskList')}
+        ?isselected=${editor?.isActive('taskList')}
         @click=${toggleTaskList}>
         ${iconLoader(ListChecked, { slot: 'icon' })}
         <span slot="tooltip-content">Task List</span>

@@ -13,6 +13,7 @@
 @use '@carbon/react/scss/utilities/z-index' as *;
 @use '@carbon/react/scss/utilities/box-shadow' as *;
 @use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/components/button/tokens' as button-tokens;
 
 $prefix: 'cds' !default;
 
@@ -106,12 +107,36 @@ $prefix: 'cds' !default;
   color: $text-primary;
 }
 
-.#{$prefix}--header .#{$prefix}--menu.#{$prefix}--menu--border {
-  @include box-shadow;
+.#{$prefix}--header {
+  .#{$prefix}--menu.#{$prefix}--menu--border {
+    @include box-shadow;
+    border: 1px solid $border-subtle-01;
+    outline: none;
+  }
 
-  outline: none;
-  border: 1px solid $border-subtle-01;
-  transform: translateY(-0.5px);
+  .#{$prefix}--menu--background-token__background {
+    background-color: $layer-background;
+  }
+
+  .#{$prefix}--menu-button__trigger {
+    position: relative;
+    z-index: z('modal') + 1; // z-index of menu + 1
+
+    &[aria-expanded='true'] {
+      border: 1px solid $border-subtle-01;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -$spacing-01;
+        height: $spacing-01;
+        background: $background;
+        pointer-events: none;
+      }
+    }
+  }
 }
 
 //----------------------------------------------------------------------------

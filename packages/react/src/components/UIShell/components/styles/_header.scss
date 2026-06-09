@@ -109,6 +109,7 @@ $prefix: 'cds' !default;
 .#{$prefix}--header {
   .#{$prefix}--menu.#{$prefix}--menu--border {
     @include box-shadow;
+
     border: 1px solid $border-subtle-01;
     outline: none;
   }
@@ -119,21 +120,22 @@ $prefix: 'cds' !default;
 
   .#{$prefix}--menu-button__trigger {
     position: relative;
-    z-index: z('modal') + 1; // z-index of menu + 1
+
+    // z-index of menu + 1
+    z-index: z('modal') + 1;
 
     &[aria-expanded='true'] {
       border: 1px solid $border-subtle-01;
+    }
 
-      &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -$spacing-01;
-        height: $spacing-01;
-        background: $background;
-        pointer-events: none;
-      }
+    &[aria-expanded='true']::after {
+      position: absolute;
+      background: $background;
+      block-size: $spacing-01;
+      content: '';
+      inset-block-end: -$spacing-01;
+      inset-inline: 0;
+      pointer-events: none;
     }
   }
 }

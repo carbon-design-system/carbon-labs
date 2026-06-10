@@ -21,10 +21,7 @@ export type {
   ExtensionWithToolbar,
   ToolbarSize,
 } from './components/wysiwyg/src/types';
-export {
-  hasToolbarRender,
-  getEditorComponent,
-} from './components/wysiwyg/src/types';
+export { hasToolbarRender } from './components/wysiwyg/src/types';
 
 // Extension exports
 export { History } from './components/wysiwyg/src/extensions/history';

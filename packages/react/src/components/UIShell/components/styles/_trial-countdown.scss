@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2025, 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,6 +9,7 @@
 @use '@carbon/react/scss/type' as *;
 @use '@carbon/react/scss/colors' as *;
 @use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/utilities/convert' as convert;
 
 $prefix: 'cds' !default;
 
@@ -34,14 +35,55 @@ $trial-countdown-gradient:
     var(--trial-countdown-end)
   );
 
+$trial-countdown-gradient--hover:
+  linear-gradient(135deg, $layer-hover, $layer-hover),
+  linear-gradient(
+    135deg,
+    var(--trial-countdown-start),
+    var(--trial-countdown-end)
+  );
+
+$trial-countdown-gradient--active:
+  linear-gradient(135deg, $layer-active, $layer-active),
+  linear-gradient(
+    135deg,
+    var(--trial-countdown-start),
+    var(--trial-countdown-end)
+  );
+
+.#{$prefix}--header-action__button:has(.#{$prefix}--trial-countdown) {
+  padding-inline: $spacing-05;
+}
+
+.#{$prefix}--header-action:not(.#{$prefix}--popover--open)
+  .#{$prefix}--header-action__button:has(.#{$prefix}--trial-countdown) {
+  &:not(:focus) {
+    border-block-end: 1px solid $border-subtle;
+  }
+
+  &:hover .#{$prefix}--trial-countdown__count {
+    background-image: $trial-countdown-gradient--hover;
+  }
+
+  &:active .#{$prefix}--trial-countdown__count {
+    background-image: $trial-countdown-gradient--active;
+  }
+}
+
+.#{$prefix}--header-action:has(.#{$prefix}--trial-countdown) {
+  :hover p {
+    color: $text-primary;
+  }
+}
+
 .#{$prefix}--trial-countdown {
   @include type-style('label-01');
 
-  color: $text-primary;
+  color: $text-secondary;
 }
 
 .#{$prefix}--trial-countdown__count {
-  @include type-style('label-02');
+  @include type-style('heading-compact-01');
 
   display: inline-block;
   border: 1px solid rgba(0, 0, 0, 0);
@@ -49,8 +91,11 @@ $trial-countdown-gradient:
   background-clip: padding-box, border-box;
   background-image: $trial-countdown-gradient;
   background-origin: padding-box, border-box;
+  color: $text-primary;
   font-weight: 600;
-  min-inline-size: 1rem;
+  margin-inline-end: $spacing-03;
+  min-inline-size: convert.to-rem(20px);
+  padding-inline: 1px;
   text-align: center;
 }
 

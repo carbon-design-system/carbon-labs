@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2025, 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -11,6 +11,7 @@
 @use '@carbon/react/scss/utilities/convert' as convert;
 @use '@carbon/react/scss/utilities/custom-property' as custom-property;
 @use '@carbon/react/scss/utilities/z-index' as *;
+@use '@carbon/react/scss/utilities/box-shadow' as *;
 @use '@carbon/react/scss/breakpoint' as *;
 
 $prefix: 'cds' !default;
@@ -58,7 +59,9 @@ $prefix: 'cds' !default;
 .#{$prefix}--header-action.#{$prefix}--popover--border
   > .#{$prefix}--popover
   > .#{$prefix}--popover-content {
-  border: 1px solid $border-subtle;
+  @include box-shadow;
+
+  border: 1px solid $border-subtle-01;
   border-block-start: none;
   outline: none;
 }
@@ -101,6 +104,40 @@ $prefix: 'cds' !default;
     [disabled]
   ):hover {
   color: $text-primary;
+}
+
+.#{$prefix}--header {
+  .#{$prefix}--menu.#{$prefix}--menu--border {
+    @include box-shadow;
+
+    border: 1px solid $border-subtle-01;
+    outline: none;
+  }
+
+  .#{$prefix}--menu--background-token__background {
+    background-color: $layer-background;
+  }
+
+  .#{$prefix}--menu-button__trigger {
+    position: relative;
+
+    // z-index of menu + 1
+    z-index: z('modal') + 1;
+
+    &[aria-expanded='true'] {
+      border: 1px solid $border-subtle-01;
+    }
+
+    &[aria-expanded='true']::after {
+      position: absolute;
+      background: $background;
+      block-size: $spacing-01;
+      content: '';
+      inset-block-end: -$spacing-01;
+      inset-inline: 0;
+      pointer-events: none;
+    }
+  }
 }
 
 //----------------------------------------------------------------------------

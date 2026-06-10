@@ -5,31 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// TipTap core imports
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
-
-// Lit imports
 import { html } from 'lit';
 import type { TemplateResult } from 'lit';
-
-// Carbon icons
-import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 import CodeBlock from '@carbon/icons/es/code-block/16.js';
 import Quotes from '@carbon/icons/es/quotes/16.js';
-
-// Carbon components
 import '@carbon/web-components/es/components/icon-button/index.js';
-
-// Local imports
 import { BASE_CLASS } from '../constants.js';
 import type { ToolbarSize } from '../types.js';
-import {
-  TOOLTIP_ENTER_DELAY_MS,
-  TOOLTIP_LEAVE_DELAY_MS,
-} from '../constants.js';
-
-// TipTap extensions
+import { iconButton } from './button-helper.js';
 import TiptapCodeBlock from '@tiptap/extension-code-block';
 import TiptapBlockquote from '@tiptap/extension-blockquote';
 import { Node, mergeAttributes } from '@tiptap/core';
@@ -56,24 +41,22 @@ const Cite = Node.create({
   addKeyboardShortcuts() {
     return {
       /**
-       * Handles Enter key to exit cite element.
-       * @returns {boolean} True if the command was handled
+       * Exits cite blocks on Enter by inserting a paragraph after the cite node.
+       * @returns {boolean} Whether the shortcut was handled
        */
       Enter: () => {
-        // Exit cite on Enter
         const { state, dispatch } = this.editor.view;
         const { $from } = state.selection;
 
-        if ($from.parent.type.name === 'cite') {
-          const tr = state.tr;
-          const pos = $from.after();
-          tr.insert(pos, state.schema.nodes.paragraph.create());
-          const resolvedPos = tr.doc.resolve(pos + 1);
-          tr.setSelection(TextSelection.near(resolvedPos));
-          dispatch(tr);
-          return true;
+        if ($from.parent.type.name !== 'cite') {
+          return false;
         }
-        return false;
+
+        const pos = $from.after();
+        const tr = state.tr.insert(pos, state.schema.nodes.paragraph.create());
+        tr.setSelection(TextSelection.near(tr.doc.resolve(pos + 1)));
+        dispatch(tr);
+        return true;
       },
     };
   },
@@ -87,12 +70,7 @@ const Blockquote = TiptapBlockquote.extend({
   content: 'block+',
 
   parseHTML() {
-    return [
-      {
-        tag: 'blockquote',
-        preserveWhitespace: 'full',
-      },
-    ];
+    return [{ tag: 'blockquote', preserveWhitespace: 'full' }];
   },
 });
 
@@ -136,51 +114,27 @@ export const Blocks = Extension.create({
 Blocks.toolbarRender = (
   editor: Editor | null,
   toolbarSize: ToolbarSize = 'md'
-) => {
-  /**
-   * Toggles code block formatting.
-   * @returns {void}
-   */
-  const toggleCodeBlock = () => {
-    editor?.chain().focus().toggleCodeBlock().run();
-  };
-
-  /**
-   * Toggles blockquote formatting.
-   * @returns {void}
-   */
-  const toggleBlockquote = () => {
-    editor?.chain().focus().toggleBlockquote().run();
-  };
-
-  return html`
-    <div class="${BASE_CLASS}__toolbar-group">
-      <cds-icon-button
-        kind="ghost"
-        autoalign
-        align="top"
-        .size=${toolbarSize as any}
-        enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-        leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-        ?disabled=${!editor?.can().toggleCodeBlock()}
-        ?isselected=${editor?.isActive('codeBlock')}
-        @click=${toggleCodeBlock}>
-        ${iconLoader(CodeBlock, { slot: 'icon' })}
-        <span slot="tooltip-content">Code Block</span>
-      </cds-icon-button>
-      <cds-icon-button
-        kind="ghost"
-        autoalign
-        align="top"
-        .size=${toolbarSize as any}
-        enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-        leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-        ?disabled=${!editor?.can().toggleBlockquote()}
-        ?isselected=${editor?.isActive('blockquote')}
-        @click=${toggleBlockquote}>
-        ${iconLoader(Quotes, { slot: 'icon' })}
-        <span slot="tooltip-content">Blockquote</span>
-      </cds-icon-button>
-    </div>
-  `;
-};
+) => html`
+  <div class="${BASE_CLASS}__toolbar-group">
+    ${iconButton(
+      CodeBlock,
+      () => editor?.chain().focus().toggleCodeBlock().run(),
+      toolbarSize,
+      {
+        disabled: !editor?.can().toggleCodeBlock(),
+        selected: editor?.isActive('codeBlock'),
+        tooltip: 'Code Block',
+      }
+    )}
+    ${iconButton(
+      Quotes,
+      () => editor?.chain().focus().toggleBlockquote().run(),
+      toolbarSize,
+      {
+        disabled: !editor?.can().toggleBlockquote(),
+        selected: editor?.isActive('blockquote'),
+        tooltip: 'Blockquote',
+      }
+    )}
+  </div>
+`;

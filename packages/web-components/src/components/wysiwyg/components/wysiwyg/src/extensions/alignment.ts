@@ -5,41 +5,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// TipTap core imports
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
-
-// Lit imports
 import { html } from 'lit';
 import type { TemplateResult } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
-import type { Ref } from 'lit/directives/ref.js';
-
-// Carbon icons
-import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 import TextAlignLeft from '@carbon/icons/es/text--align--left/16.js';
 import TextAlignCenter from '@carbon/icons/es/text--align--center/16.js';
 import TextAlignRight from '@carbon/icons/es/text--align--right/16.js';
 import TextAlignJustify from '@carbon/icons/es/text--align--justify/16.js';
-
-// Carbon components
 import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
-
-// Local imports
 import { BASE_CLASS } from '../constants.js';
-import {
-  TOOLTIP_ENTER_DELAY_MS,
-  TOOLTIP_LEAVE_DELAY_MS,
-} from '../constants.js';
 import type { ToolbarSize } from '../types.js';
-import { popoverRovingTabIndex } from '../useRovingTabindex.js';
-
-// TipTap extensions
+import { iconButton } from './button-helper.js';
+import {
+  setupPopoverContent,
+  togglePopover,
+  closePopover,
+} from './popover-utils.js';
+import '../roving-tabindex.js';
 import TextAlign from '@tiptap/extension-text-align';
 
-// Styles
 const styles = `
   .${BASE_CLASS}__alignment-popover-content[open]::part(content) {
     display: flex;
@@ -93,114 +81,24 @@ Alignment.toolbarRender = (
   editor: Editor | null,
   toolbarSize: ToolbarSize = 'md'
 ) => {
-  const alignmentPopoverRef: Ref<any> = createRef();
-
+  const popover = createRef<any>();
   /**
-   * Sets the text alignment and closes the popover.
-   * @param {string} alignment - The alignment value ('left', 'center', 'right', 'justify')
+   * Set alignment and close popover
+   * @param {string} alignment - Alignment value
    */
-  const setAlignment = (alignment: string) => {
+  const set = (alignment: string) => {
     editor?.chain().focus().setTextAlign(alignment).run();
-    if (alignmentPopoverRef.value) {
-      alignmentPopoverRef.value.open = false;
-    }
-    const component = (editor as any)?.component;
-    component.requestUpdate();
+    closePopover(popover);
+    (editor as any)?.component?.requestUpdate?.();
   };
 
-  /**
-   * Toggles the alignment popover open/closed state.
-   */
-  const toggleAlignmentPopover = () => {
-    if (alignmentPopoverRef.value) {
-      alignmentPopoverRef.value.open = !alignmentPopoverRef.value.open;
-    }
-  };
-
-  /**
-   * Handles popover content initialization with Escape key support.
-   * @param {Element} element - Popover content element
-   */
-  const handlePopoverContentRef = (element: Element | undefined) => {
-    if (!element) {
-      return;
-    }
-
-    requestAnimationFrame(() => {
-      const popoverContent = element as HTMLElement;
-      const popover = popoverContent.closest('cds-popover') as any;
-      if (!popover) {
-        return;
-      }
-
-      let cleanup: (() => void) | null = null;
-
-      /** @param {KeyboardEvent} event - Keyboard event */
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === 'Escape' && popover.open) {
-          event.preventDefault();
-          event.stopPropagation();
-          popover.open = false;
-          const trigger = popover.querySelector(
-            'cds-icon-button'
-          ) as HTMLElement;
-          trigger?.focus();
-        }
-      };
-
-      /** @param {boolean} isOpen - Whether popover is open */
-      const handleOpenChange = (isOpen: boolean) => {
-        if (isOpen) {
-          cleanup = popoverRovingTabIndex(popoverContent);
-          popoverContent.addEventListener('keydown', handleKeyDown);
-          requestAnimationFrame(() => {
-            const firstFocusable = popoverContent.querySelector(
-              'cds-icon-button:not([disabled])'
-            ) as HTMLElement;
-            firstFocusable?.focus();
-          });
-        } else if (cleanup) {
-          cleanup();
-          cleanup = null;
-          popoverContent.removeEventListener('keydown', handleKeyDown);
-        }
-      };
-
-      new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          if (
-            mutation.type === 'attributes' &&
-            mutation.attributeName === 'open'
-          ) {
-            handleOpenChange(popover.open);
-          }
-        });
-      }).observe(popover, { attributes: true, attributeFilter: ['open'] });
-
-      if (popover.open) {
-        handleOpenChange(true);
-      }
-    });
-  };
-
-  /**
-   * Determines the current alignment icon based on editor state.
-   * @returns {any} The icon object for the current alignment
-   */
-  const getCurrentAlignmentIcon = () => {
-    if (editor?.isActive({ textAlign: 'center' })) {
-      return TextAlignCenter;
-    }
-    if (editor?.isActive({ textAlign: 'right' })) {
-      return TextAlignRight;
-    }
-    if (editor?.isActive({ textAlign: 'justify' })) {
-      return TextAlignJustify;
-    }
-    return TextAlignLeft;
-  };
-
-  const isAlignmentDisabled = !editor?.can().setTextAlign('left');
+  const icon = editor?.isActive({ textAlign: 'center' })
+    ? TextAlignCenter
+    : editor?.isActive({ textAlign: 'right' })
+      ? TextAlignRight
+      : editor?.isActive({ textAlign: 'justify' })
+        ? TextAlignJustify
+        : TextAlignLeft;
 
   return html`
     <style>
@@ -208,83 +106,44 @@ Alignment.toolbarRender = (
     </style>
     <div class="${BASE_CLASS}__toolbar-group">
       <cds-layer>
-        <cds-popover
-          ${ref(alignmentPopoverRef)}
-          tabtip
-          align="bottom"
-          autoalign>
-          <cds-icon-button
-            kind="ghost"
-            autoalign
-            caret
-            align="top"
-            .size=${toolbarSize as any}
-            enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-            leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-            ?disabled=${isAlignmentDisabled}
-            @click=${toggleAlignmentPopover}>
-            ${iconLoader(getCurrentAlignmentIcon(), {
-              slot: 'icon',
-              tabIndex: '-1',
-            })}
-            <span slot="tooltip-content">Text Alignment</span>
-          </cds-icon-button>
+        <cds-popover ${ref(popover)} tabtip align="bottom" autoalign>
+          ${iconButton(icon, () => togglePopover(popover), toolbarSize, {
+            disabled: !editor?.can().setTextAlign('left'),
+            tooltip: 'Text Alignment',
+            caret: true,
+            iconTabIndex: '-1',
+          })}
           <cds-popover-content
             slot="content"
             class="${BASE_CLASS}__alignment-popover-content"
-            ${ref(handlePopoverContentRef)}>
-            <cds-icon-button
-              kind="ghost"
-              autoalign
-              align="top"
-              .size=${toolbarSize as any}
-              enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-              leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-              ?disabled=${!editor?.can().setTextAlign('left')}
-              ?isselected=${editor?.isActive({ textAlign: 'left' })}
-              @click=${() => setAlignment('left')}>
-              ${iconLoader(TextAlignLeft, { slot: 'icon' })}
-              <span slot="tooltip-content">Align Left</span>
-            </cds-icon-button>
-            <cds-icon-button
-              kind="ghost"
-              autoalign
-              align="top"
-              .size=${toolbarSize as any}
-              enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-              leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-              ?disabled=${!editor?.can().setTextAlign('center')}
-              ?isselected=${editor?.isActive({ textAlign: 'center' })}
-              @click=${() => setAlignment('center')}>
-              ${iconLoader(TextAlignCenter, { slot: 'icon' })}
-              <span slot="tooltip-content">Align Center</span>
-            </cds-icon-button>
-            <cds-icon-button
-              kind="ghost"
-              autoalign
-              align="top"
-              .size=${toolbarSize as any}
-              enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-              leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-              ?disabled=${!editor?.can().setTextAlign('right')}
-              ?isselected=${editor?.isActive({ textAlign: 'right' })}
-              @click=${() => setAlignment('right')}>
-              ${iconLoader(TextAlignRight, { slot: 'icon' })}
-              <span slot="tooltip-content">Align Right</span>
-            </cds-icon-button>
-            <cds-icon-button
-              kind="ghost"
-              autoalign
-              align="top"
-              .size=${toolbarSize as any}
-              enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-              leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-              ?disabled=${!editor?.can().setTextAlign('justify')}
-              ?isselected=${editor?.isActive({ textAlign: 'justify' })}
-              @click=${() => setAlignment('justify')}>
-              ${iconLoader(TextAlignJustify, { slot: 'icon' })}
-              <span slot="tooltip-content">Justify</span>
-            </cds-icon-button>
+            ${ref(setupPopoverContent)}>
+            <clabs-roving-tabindex>
+              ${iconButton(TextAlignLeft, () => set('left'), toolbarSize, {
+                disabled: !editor?.can().setTextAlign('left'),
+                selected: editor?.isActive({ textAlign: 'left' }),
+                tooltip: 'Align Left',
+              })}
+              ${iconButton(TextAlignCenter, () => set('center'), toolbarSize, {
+                disabled: !editor?.can().setTextAlign('center'),
+                selected: editor?.isActive({ textAlign: 'center' }),
+                tooltip: 'Align Center',
+              })}
+              ${iconButton(TextAlignRight, () => set('right'), toolbarSize, {
+                disabled: !editor?.can().setTextAlign('right'),
+                selected: editor?.isActive({ textAlign: 'right' }),
+                tooltip: 'Align Right',
+              })}
+              ${iconButton(
+                TextAlignJustify,
+                () => set('justify'),
+                toolbarSize,
+                {
+                  disabled: !editor?.can().setTextAlign('justify'),
+                  selected: editor?.isActive({ textAlign: 'justify' }),
+                  tooltip: 'Justify',
+                }
+              )}
+            </clabs-roving-tabindex>
           </cds-popover-content>
         </cds-popover>
       </cds-layer>

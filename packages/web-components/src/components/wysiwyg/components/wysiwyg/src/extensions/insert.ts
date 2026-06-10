@@ -5,68 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// TipTap core imports
 import { Extension } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
-
-// Lit imports
 import { html } from 'lit';
 import type { TemplateResult } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
-import type { Ref } from 'lit/directives/ref.js';
-
-// Carbon icons
-import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 import LinkIcon from '@carbon/icons/es/link/16.js';
 import ImageIcon from '@carbon/icons/es/image/16.js';
 import SaveIcon from '@carbon/icons/es/checkmark/16.js';
 import TrashCanIcon from '@carbon/icons/es/trash-can/16.js';
-
-// Carbon components
 import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/popover/index.js';
 import '@carbon/web-components/es/components/text-input/index.js';
 import '@carbon/web-components/es/components/layer/index.js';
-
-// Local imports
 import { BASE_CLASS } from '../constants.js';
 import type { ToolbarSize } from '../types.js';
+import { iconButton } from './button-helper.js';
 import {
-  TOOLTIP_ENTER_DELAY_MS,
-  TOOLTIP_LEAVE_DELAY_MS,
-} from '../constants.js';
-import { popoverRovingTabIndex } from '../useRovingTabindex.js';
-
-// TipTap extensions
+  setupPopoverContent,
+  togglePopover,
+  closePopover,
+} from './popover-utils.js';
+import '../roving-tabindex.js';
 import { Link } from '@tiptap/extension-link';
 import { Image } from '@tiptap/extension-image';
 
-// Constants
-const IMAGE_CONFIG = {
-  inline: true,
-  allowBase64: true,
-  HTMLAttributes: {
-    class: 'editor-image',
-  },
-  resize: {
-    enabled: true,
-    directions: [
-      'top',
-      'bottom',
-      'left',
-      'right',
-      'top-left',
-      'top-right',
-      'bottom-left',
-      'bottom-right',
-    ],
-    minWidth: 50,
-    minHeight: 50,
-    alwaysPreserveAspectRatio: true,
-  },
-};
-
-// Styles
 const styles = `
   .${BASE_CLASS}__insert-popover-content[open]::part(content) {
     display: flex;
@@ -177,340 +140,59 @@ const styles = `
   }
 `;
 
-/**
- * Converts a URL string to an absolute URL with protocol.
- * @param {string} value - The URL string to convert
- * @returns {string | null} Absolute URL or null if invalid
- */
-const toAbsoluteUrl = (value: string): string | null => {
-  const href = /^https?:\/\//.test(value) ? value : `https://${value}`;
-  try {
-    new URL(href);
-    return href;
-  } catch {
-    return null;
-  }
-};
-
-/**
- * Extracts and converts URL from input element.
- * @param {Object} [input] - Input element with value property
- * @param {string} [input.value] - The input value
- * @returns {string | null} Absolute URL or null
- */
-const urlFromInput = (input?: { value?: string }) =>
-  toAbsoluteUrl(input?.value?.trim() ?? '');
-
-/**
- * Creates a keyboard event handler that executes on Enter key.
- * @param {Function} fn - Function to execute on Enter
- * @returns {Function} Keyboard event handler
- */
-const onEnterKey = (fn: () => void) => (e: KeyboardEvent) => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    fn();
-  }
-};
-
-/**
- * Interface for the Insert extension with toolbar rendering capability.
- * @extends {Extension<any>}
- */
 export interface InsertExtension extends Extension<any> {
-  /**
-   * Renders the insert toolbar controls.
-   * @param {Editor | null} editor - The TipTap editor instance
-   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
-   * @returns {TemplateResult} Lit template for the insert toolbar
-   */
   toolbarRender: (
     editor: Editor | null,
     toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
-/**
- * Insert extension for links and images.
- * Provides toolbar controls for inserting links and images with URL popovers.
- * @type {InsertExtension}
- */
 export const Insert = Extension.create({
   name: 'insert',
-  /**
-   * Adds the Link and Image extensions.
-   * @returns {Array} Array of TipTap extensions
-   */
+  /** Adds the Link and Image extensions */
   addExtensions: () => [
     Link.configure({
       openOnClick: false,
       autolink: false,
       defaultProtocol: 'https',
     }),
-    Image.configure(IMAGE_CONFIG as any),
+    Image.configure({
+      inline: true,
+      allowBase64: true,
+      HTMLAttributes: { class: 'editor-image' },
+      resize: {
+        enabled: true,
+        directions: [
+          'top',
+          'bottom',
+          'left',
+          'right',
+          'top-left',
+          'top-right',
+          'bottom-left',
+          'bottom-right',
+        ],
+        minWidth: 50,
+        minHeight: 50,
+        alwaysPreserveAspectRatio: true,
+      },
+    } as any),
   ],
 }) as unknown as InsertExtension;
-
-/**
- * Options for rendering a URL popover.
- * @typedef {Object} UrlPopoverOptions
- * @property {any} icon - Icon to display
- * @property {string} tooltip - Tooltip text
- * @property {string} placeholder - Input placeholder
- * @property {string} size - Button size
- * @property {Ref<any>} popoverRef - Popover reference
- * @property {Ref<any>} inputRef - Input reference
- * @property {boolean} [selected] - Whether button is selected
- * @property {boolean} [disabled] - Whether button is disabled
- * @property {string} [value] - Input value
- * @property {Function} onSave - Save callback
- * @property {Function} [onDelete] - Delete callback
- */
-type UrlPopoverOptions = {
-  icon: any;
-  tooltip: string;
-  placeholder: string;
-  size: string;
-  popoverRef: Ref<any>;
-  inputRef: Ref<any>;
-  selected?: boolean;
-  disabled?: boolean;
-  value?: string;
-  onSave: () => void;
-  onDelete?: () => void;
-};
-
-/**
- * Handles popover content initialization with Escape key support and roving tab index.
- * @param {Element} element - Popover content element
- * @param {Ref<any>} _popoverRef - Popover reference (unused, passed for context)
- */
-const handlePopoverContentRef = (
-  element: Element | undefined,
-  _popoverRef: Ref<any>
-) => {
-  if (!element) {
-    return;
-  }
-
-  requestAnimationFrame(() => {
-    const popoverContent = element as HTMLElement;
-    const popover = popoverContent.closest('cds-popover') as any;
-    if (!popover) {
-      return;
-    }
-
-    let cleanup: (() => void) | null = null;
-
-    /** @param {KeyboardEvent} event - Keyboard event */
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && popover.open) {
-        event.preventDefault();
-        event.stopPropagation();
-        popover.open = false;
-        const trigger = popover.querySelector('cds-icon-button') as HTMLElement;
-        trigger?.focus();
-      }
-    };
-
-    /** @param {boolean} isOpen - Whether popover is open */
-    const handleOpenChange = (isOpen: boolean) => {
-      if (isOpen) {
-        cleanup = popoverRovingTabIndex(popoverContent);
-        popoverContent.addEventListener('keydown', handleKeyDown);
-        requestAnimationFrame(() => {
-          const firstInput = popoverContent.querySelector(
-            'cds-text-input'
-          ) as any;
-          firstInput?.focus();
-        });
-      } else if (cleanup) {
-        cleanup();
-        cleanup = null;
-        popoverContent.removeEventListener('keydown', handleKeyDown);
-      }
-    };
-
-    new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (
-          mutation.type === 'attributes' &&
-          mutation.attributeName === 'open'
-        ) {
-          handleOpenChange(popover.open);
-        }
-      });
-    }).observe(popover, { attributes: true, attributeFilter: ['open'] });
-
-    if (popover.open) {
-      handleOpenChange(true);
-    }
-  });
-};
-
-/**
- * Renders a URL input popover for links or images.
- * @param {UrlPopoverOptions} options - Popover configuration options
- * @returns {TemplateResult} Lit template for the URL popover
- */
-const renderUrlPopover = ({
-  icon,
-  tooltip,
-  placeholder,
-  size,
-  popoverRef,
-  inputRef,
-  selected = false,
-  disabled = false,
-  value = '',
-  onSave,
-  onDelete,
-}: UrlPopoverOptions) => html`
-  <cds-popover ${ref(popoverRef)} align="bottom-end" autoalign tabtip>
-    <cds-icon-button
-      kind="ghost"
-      autoalign
-      caret
-      align="top"
-      .size=${size as any}
-      enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-      leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-      ?isselected=${selected}
-      ?disabled=${disabled}
-      @click=${() => {
-        if (popoverRef.value) {
-          popoverRef.value.open = !popoverRef.value.open;
-        }
-      }}>
-      ${iconLoader(icon, { slot: 'icon' })}
-      <span slot="tooltip-content">${tooltip}</span>
-    </cds-icon-button>
-
-    <cds-popover-content
-      class="${BASE_CLASS}__insert-popover-content"
-      slot="content"
-      ${ref((el: Element | undefined) =>
-        handlePopoverContentRef(el, popoverRef)
-      )}>
-      <cds-text-input
-        ${ref(inputRef)}
-        hide-label
-        label=${tooltip}
-        .size=${size as any}
-        placeholder=${placeholder}
-        .value=${value}
-        @keydown=${onEnterKey(onSave)}></cds-text-input>
-
-      <cds-icon-button
-        kind="ghost"
-        align="top"
-        autoalign
-        .size=${size as any}
-        @click=${onSave}>
-        ${iconLoader(SaveIcon, { slot: 'icon' })}
-        <span slot="tooltip-content">Insert</span>
-      </cds-icon-button>
-
-      ${onDelete
-        ? html` <cds-icon-button
-            kind="danger-ghost"
-            align="top"
-            autoalign
-            .size=${size as any}
-            @click=${onDelete}>
-            ${iconLoader(TrashCanIcon, { slot: 'icon' })}
-            <span slot="tooltip-content">Delete</span>
-          </cds-icon-button>`
-        : ''}
-    </cds-popover-content>
-  </cds-popover>
-`;
-
-/**
- * Closes a popover by reference.
- * @param {Ref<any>} r - Popover reference
- * @returns {void}
- */
-const closePopover = (r: Ref<any>) => {
-  if (r.value) {
-    r.value.open = false;
-  }
-};
-
-/**
- * Sets a link on the selected text.
- * @param {Editor | null} editor - The TipTap editor instance
- * @param {Ref<any>} linkInput - Link input reference
- * @param {Ref<any>} linkPopover - Link popover reference
- * @returns {void}
- */
-const setLink = (
-  editor: Editor | null,
-  linkInput: Ref<any>,
-  linkPopover: Ref<any>
-) => {
-  if (!editor || editor.state.selection.empty) {
-    return;
-  }
-  const href = urlFromInput(linkInput.value);
-  if (!href) {
-    return;
-  }
-  editor.chain().focus().setLink({ href }).run();
-  closePopover(linkPopover);
-};
-
-/**
- * Removes a link from the selected text.
- * @param {Editor | null} editor - The TipTap editor instance
- * @param {Ref<any>} linkPopover - Link popover reference
- * @returns {void}
- */
-const unsetLink = (editor: Editor | null, linkPopover: Ref<any>) => {
-  if (!editor?.isActive('link')) {
-    return;
-  }
-  editor.chain().focus().extendMarkRange('link').unsetLink().run();
-  closePopover(linkPopover);
-};
-
-/**
- * Inserts an image at the cursor position.
- * @param {Editor | null} editor - The TipTap editor instance
- * @param {Ref<any>} imageInput - Image input reference
- * @param {Ref<any>} imagePopover - Image popover reference
- * @returns {void}
- */
-const setImage = (
-  editor: Editor | null,
-  imageInput: Ref<any>,
-  imagePopover: Ref<any>
-) => {
-  if (!editor) {
-    return;
-  }
-  const src = urlFromInput(imageInput.value);
-  if (!src) {
-    return;
-  }
-  editor.chain().focus().setImage({ src }).run();
-  closePopover(imagePopover);
-};
 
 /**
  * Renders the insert toolbar with link and image controls.
  * @param {Editor | null} editor - The TipTap editor instance
  * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
- * @returns {TemplateResult} Lit template for the insert toolbar
  */
 Insert.toolbarRender = (
   editor: Editor | null,
   toolbarSize: ToolbarSize = 'md'
 ) => {
-  const linkPopover = createRef<any>(),
-    linkInput = createRef<any>();
-  const imagePopover = createRef<any>(),
-    imageInput = createRef<any>();
+  const linkPopover = createRef<any>();
+  const linkInput = createRef<any>();
+  const imagePopover = createRef<any>();
+  const imageInput = createRef<any>();
 
   return html`
     <style>
@@ -518,37 +200,171 @@ Insert.toolbarRender = (
     </style>
     <div class="${BASE_CLASS}__toolbar-group">
       <cds-layer>
-        ${renderUrlPopover({
-          icon: LinkIcon,
-          tooltip: 'Link',
-          placeholder: 'Paste link',
-          size: toolbarSize,
-          popoverRef: linkPopover,
-          inputRef: linkInput,
-          disabled: !editor || editor.state.selection.empty,
-          selected: editor?.isActive('link'),
-          value: editor?.getAttributes('link').href ?? '',
-          /** Saves the link */
-          onSave: () => {
-            setLink(editor, linkInput, linkPopover);
-          },
-          /** Deletes the link */
-          onDelete: () => {
-            unsetLink(editor, linkPopover);
-          },
-        })}
-        ${renderUrlPopover({
-          icon: ImageIcon,
-          tooltip: 'Image',
-          placeholder: 'Paste image URL',
-          size: toolbarSize,
-          popoverRef: imagePopover,
-          inputRef: imageInput,
-          /** Saves the image */
-          onSave: () => {
-            setImage(editor, imageInput, imagePopover);
-          },
-        })}
+        <cds-popover ${ref(linkPopover)} align="bottom-end" autoalign tabtip>
+          ${iconButton(
+            LinkIcon,
+            () => togglePopover(linkPopover),
+            toolbarSize,
+            {
+              selected: editor?.isActive('link'),
+              disabled:
+                !editor?.can().setLink({ href: '' }) ||
+                editor.state.selection.empty,
+              tooltip: 'Link',
+              caret: true,
+            }
+          )}
+          <cds-popover-content
+            class="${BASE_CLASS}__insert-popover-content"
+            slot="content"
+            ${ref((el: Element | undefined) =>
+              setupPopoverContent(el, 'cds-text-input')
+            )}>
+            <clabs-roving-tabindex>
+              <cds-text-input
+                ${ref(linkInput)}
+                hide-label
+                label="Link"
+                .size=${toolbarSize as any}
+                placeholder="Paste link"
+                .value=${editor?.getAttributes('link').href ?? ''}
+                @keydown=${(e: KeyboardEvent) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (!editor || editor.state.selection.empty) {
+                      return;
+                    }
+                    const value = linkInput.value?.value?.trim() ?? '';
+                    if (!value) {
+                      return;
+                    }
+                    const href = /^https?:\/\//.test(value)
+                      ? value
+                      : `https://${value}`;
+                    try {
+                      new URL(href);
+                    } catch {
+                      return;
+                    }
+                    editor.chain().focus().setLink({ href }).run();
+                    closePopover(linkPopover);
+                  }
+                }}></cds-text-input>
+              ${iconButton(
+                SaveIcon,
+                () => {
+                  if (!editor || editor.state.selection.empty) {
+                    return;
+                  }
+                  const value = linkInput.value?.value?.trim() ?? '';
+                  if (!value) {
+                    return;
+                  }
+                  const href = /^https?:\/\//.test(value)
+                    ? value
+                    : `https://${value}`;
+                  try {
+                    new URL(href);
+                  } catch {
+                    return;
+                  }
+                  editor.chain().focus().setLink({ href }).run();
+                  closePopover(linkPopover);
+                },
+                toolbarSize,
+                { tooltip: 'Insert' }
+              )}
+              ${iconButton(
+                TrashCanIcon,
+                () => {
+                  if (editor?.isActive('link')) {
+                    editor
+                      .chain()
+                      .focus()
+                      .extendMarkRange('link')
+                      .unsetLink()
+                      .run();
+                    closePopover(linkPopover);
+                  }
+                },
+                toolbarSize,
+                { tooltip: 'Delete', kind: 'danger-ghost' }
+              )}
+            </clabs-roving-tabindex>
+          </cds-popover-content>
+        </cds-popover>
+        <cds-popover ${ref(imagePopover)} align="bottom-end" autoalign tabtip>
+          ${iconButton(
+            ImageIcon,
+            () => togglePopover(imagePopover),
+            toolbarSize,
+            {
+              tooltip: 'Image',
+              caret: true,
+            }
+          )}
+          <cds-popover-content
+            class="${BASE_CLASS}__insert-popover-content"
+            slot="content"
+            ${ref((el: Element | undefined) =>
+              setupPopoverContent(el, 'cds-text-input')
+            )}>
+            <clabs-roving-tabindex>
+              <cds-text-input
+                ${ref(imageInput)}
+                hide-label
+                label="Image"
+                .size=${toolbarSize as any}
+                placeholder="Paste image URL"
+                @keydown=${(e: KeyboardEvent) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (!editor) {
+                      return;
+                    }
+                    const value = imageInput.value?.value?.trim() ?? '';
+                    if (!value) {
+                      return;
+                    }
+                    const src = /^https?:\/\//.test(value)
+                      ? value
+                      : `https://${value}`;
+                    try {
+                      new URL(src);
+                    } catch {
+                      return;
+                    }
+                    editor.chain().focus().setImage({ src }).run();
+                    closePopover(imagePopover);
+                  }
+                }}></cds-text-input>
+              ${iconButton(
+                SaveIcon,
+                () => {
+                  if (!editor) {
+                    return;
+                  }
+                  const value = imageInput.value?.value?.trim() ?? '';
+                  if (!value) {
+                    return;
+                  }
+                  const src = /^https?:\/\//.test(value)
+                    ? value
+                    : `https://${value}`;
+                  try {
+                    new URL(src);
+                  } catch {
+                    return;
+                  }
+                  editor.chain().focus().setImage({ src }).run();
+                  closePopover(imagePopover);
+                },
+                toolbarSize,
+                { tooltip: 'Insert' }
+              )}
+            </clabs-roving-tabindex>
+          </cds-popover-content>
+        </cds-popover>
       </cds-layer>
     </div>
   `;

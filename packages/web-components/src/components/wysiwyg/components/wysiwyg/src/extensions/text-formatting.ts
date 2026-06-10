@@ -5,44 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// TipTap core imports
 import { Extension, Mark, mergeAttributes } from '@tiptap/core';
 import type { Editor } from '@tiptap/core';
-
-// Lit imports
 import { html } from 'lit';
 import type { TemplateResult } from 'lit';
-
-// Carbon icons
-import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 import TextBold from '@carbon/icons/es/text--bold/16.js';
 import TextItalic from '@carbon/icons/es/text--italic/16.js';
 import TextUnderline from '@carbon/icons/es/text--underline/16.js';
 import TextStrikethrough from '@carbon/icons/es/text--strikethrough/16.js';
 import Code from '@carbon/icons/es/code/16.js';
-
-// Carbon components
 import '@carbon/web-components/es/components/icon-button/index.js';
-
-// Local imports
 import { BASE_CLASS } from '../constants.js';
 import type { ToolbarSize } from '../types.js';
-import {
-  TOOLTIP_ENTER_DELAY_MS,
-  TOOLTIP_LEAVE_DELAY_MS,
-} from '../constants.js';
-
-// TipTap extensions
+import { iconButton } from './button-helper.js';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
 import Underline from '@tiptap/extension-underline';
 import Strike from '@tiptap/extension-strike';
 import CodeMark from '@tiptap/extension-code';
 
-/**
- * Custom Delete mark extension for <del> tag.
- * Note: Renamed to avoid conflict with TiptapMarkdown's delete mark.
- */
+/** Custom Delete mark extension for <del> tag */
 const Delete = Mark.create({
   name: 'deleteMark',
 
@@ -55,9 +37,7 @@ const Delete = Mark.create({
   },
 });
 
-/**
- * Custom Insert mark extension for <ins> tag.
- */
+/** Custom Insert mark extension for <ins> tag */
 const InsertMark = Mark.create({
   name: 'insertMark',
 
@@ -70,9 +50,7 @@ const InsertMark = Mark.create({
   },
 });
 
-/**
- * Custom Strike extension configured to use <s> tag only, not <del>.
- */
+/** Custom Strike extension configured to use <s> tag only, not <del> */
 const StrikeCustom = Strike.extend({
   parseHTML() {
     return [
@@ -82,9 +60,8 @@ const StrikeCustom = Strike.extend({
         style: 'text-decoration',
         consuming: false,
         /**
-         * Gets attributes from style string.
+         * Gets attributes from style string
          * @param {string} style - CSS style string
-         * @returns {Object | false} Attributes object or false
          */
         getAttrs: (style) =>
           (style as string).includes('line-through') ? {} : false,
@@ -93,34 +70,16 @@ const StrikeCustom = Strike.extend({
   },
 });
 
-/**
- * Interface for the TextFormatting extension with toolbar rendering capability.
- * @extends {Extension<any>}
- */
 export interface TextFormattingExtension extends Extension<any> {
-  /**
-   * Renders the text formatting toolbar controls.
-   * @param {Editor | null} editor - The TipTap editor instance
-   * @param {ToolbarSize} [toolbarSize='md'] - Size of the toolbar buttons
-   * @returns {TemplateResult} Lit template for the text formatting toolbar
-   */
   toolbarRender: (
     editor: Editor | null,
     toolbarSize?: ToolbarSize
   ) => TemplateResult;
 }
 
-/**
- * TextFormatting extension for basic text formatting (bold, italic, underline, strikethrough, code).
- * Provides toolbar controls for common text formatting options.
- * @type {TextFormattingExtension}
- */
 export const TextFormatting = Extension.create({
   name: 'textFormatting',
-  /**
-   * Adds the text formatting extensions (bold, italic, underline, strike, code).
-   * @returns {Array} Array of TipTap extensions
-   */
+  /** Adds the text formatting extensions (bold, italic, underline, strike, code) */
   addExtensions: () => [
     Bold,
     Italic,
@@ -136,119 +95,61 @@ export const TextFormatting = Extension.create({
  * Renders the text formatting toolbar with formatting controls.
  * @param {Editor | null} editor - The TipTap editor instance
  * @param {ToolbarSize} toolbarSize - Size of the toolbar buttons
- * @returns {TemplateResult} Lit template for the text formatting toolbar
  */
 TextFormatting.toolbarRender = (
   editor: Editor | null,
   toolbarSize: ToolbarSize = 'md'
-) => {
-  /**
-   * Toggles bold formatting.
-   * @returns {void}
-   */
-  const toggleBold = () => {
-    editor?.chain().focus().toggleBold().run();
-  };
-
-  /**
-   * Toggles italic formatting.
-   * @returns {void}
-   */
-  const toggleItalic = () => {
-    editor?.chain().focus().toggleItalic().run();
-  };
-
-  /**
-   * Toggles underline formatting.
-   * @returns {void}
-   */
-  const toggleUnderline = () => {
-    editor?.chain().focus().toggleUnderline().run();
-  };
-
-  /**
-   * Toggles strikethrough formatting.
-   * @returns {void}
-   */
-  const toggleStrike = () => {
-    editor?.chain().focus().toggleStrike().run();
-  };
-
-  /**
-   * Toggles inline code formatting.
-   * @returns {void}
-   */
-  const toggleCode = () => {
-    editor?.chain().focus().toggleCode().run();
-  };
-
-  return html`
-    <div class="${BASE_CLASS}__toolbar-group">
-      <cds-icon-button
-        kind="ghost"
-        autoalign
-        align="top"
-        .size=${toolbarSize as any}
-        enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-        leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-        ?disabled=${!editor?.can().toggleBold()}
-        ?isselected=${editor?.isActive('bold')}
-        @click=${toggleBold}>
-        ${iconLoader(TextBold, { slot: 'icon' })}
-        <span slot="tooltip-content">Bold</span>
-      </cds-icon-button>
-      <cds-icon-button
-        kind="ghost"
-        autoalign
-        align="top"
-        .size=${toolbarSize as any}
-        enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-        leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-        ?disabled=${!editor?.can().toggleItalic()}
-        ?isselected=${editor?.isActive('italic')}
-        @click=${toggleItalic}>
-        ${iconLoader(TextItalic, { slot: 'icon' })}
-        <span slot="tooltip-content">Italic</span>
-      </cds-icon-button>
-      <cds-icon-button
-        kind="ghost"
-        autoalign
-        align="top"
-        .size=${toolbarSize as any}
-        enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-        leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-        ?disabled=${!editor?.can().toggleUnderline()}
-        ?isselected=${editor?.isActive('underline')}
-        @click=${toggleUnderline}>
-        ${iconLoader(TextUnderline, { slot: 'icon' })}
-        <span slot="tooltip-content">Underline</span>
-      </cds-icon-button>
-      <cds-icon-button
-        kind="ghost"
-        autoalign
-        align="top"
-        .size=${toolbarSize as any}
-        enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-        leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-        ?disabled=${!editor?.can().toggleStrike()}
-        ?isselected=${editor?.isActive('strike')}
-        @click=${toggleStrike}>
-        ${iconLoader(TextStrikethrough, { slot: 'icon' })}
-        <span slot="tooltip-content">Strikethrough</span>
-      </cds-icon-button>
-      <cds-icon-button
-        kind="ghost"
-        autoalign
-        align="top"
-        .size=${toolbarSize as any}
-        enter-delay-ms="${TOOLTIP_ENTER_DELAY_MS}"
-        leave-delay-ms="${TOOLTIP_LEAVE_DELAY_MS}"
-        ?disabled=${!editor?.can().toggleCode()}
-        ?isselected=${editor?.isActive('code')}
-        @click=${toggleCode}>
-        ${iconLoader(Code, { slot: 'icon' })}
-        <span slot="tooltip-content">Code</span>
-      </cds-icon-button>
-    </div>
-  `;
-};
+) => html`
+  <div class="${BASE_CLASS}__toolbar-group">
+    ${iconButton(
+      TextBold,
+      () => editor?.chain().focus().toggleBold().run(),
+      toolbarSize,
+      {
+        disabled: !editor?.can().toggleBold(),
+        selected: editor?.isActive('bold'),
+        tooltip: 'Bold',
+      }
+    )}
+    ${iconButton(
+      TextItalic,
+      () => editor?.chain().focus().toggleItalic().run(),
+      toolbarSize,
+      {
+        disabled: !editor?.can().toggleItalic(),
+        selected: editor?.isActive('italic'),
+        tooltip: 'Italic',
+      }
+    )}
+    ${iconButton(
+      TextUnderline,
+      () => editor?.chain().focus().toggleUnderline().run(),
+      toolbarSize,
+      {
+        disabled: !editor?.can().toggleUnderline(),
+        selected: editor?.isActive('underline'),
+        tooltip: 'Underline',
+      }
+    )}
+    ${iconButton(
+      TextStrikethrough,
+      () => editor?.chain().focus().toggleStrike().run(),
+      toolbarSize,
+      {
+        disabled: !editor?.can().toggleStrike(),
+        selected: editor?.isActive('strike'),
+        tooltip: 'Strikethrough',
+      }
+    )}
+    ${iconButton(
+      Code,
+      () => editor?.chain().focus().toggleCode().run(),
+      toolbarSize,
+      {
+        disabled: !editor?.can().toggleCode(),
+        selected: editor?.isActive('code'),
+        tooltip: 'Code',
+      }
+    )}
+  </div>
+`;

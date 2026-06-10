@@ -62,6 +62,8 @@ const CustomTable = {
  * Render context menu template
  * @param {Function} runAction - Action handler
  * @returns {TemplateResult} Template
+ *
+ * TODO: replace with menu once https://github.com/carbon-design-system/carbon/pull/22392 gets merged
  */
 const renderContextMenu = (runAction) => html`
   <div class="context-menu">

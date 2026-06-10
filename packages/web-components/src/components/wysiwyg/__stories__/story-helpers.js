@@ -75,6 +75,8 @@ export const processWithAI = async (text) => {
 
 /**
  * Context menu styles for table operations
+ *
+ * TODO: remove once https://github.com/carbon-design-system/carbon/pull/22392 gets merged
  */
 export const contextMenuStyles = `
   .context-menu {

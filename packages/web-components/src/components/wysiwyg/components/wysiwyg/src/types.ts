@@ -74,14 +74,3 @@ export function hasToolbarRender(
     typeof extension.toolbarRender === 'function'
   );
 }
-
-/**
- * Helper to safely access the component from an editor instance.
- * @param {Editor} editor - The TipTap editor instance
- * @returns {EditorComponent | undefined} The component if available, undefined otherwise
- */
-export function getEditorComponent(
-  editor: Editor
-): EditorComponent | undefined {
-  return (editor as any).component as EditorComponent | undefined;
-}

@@ -15,7 +15,7 @@ import type { Ref } from 'lit/directives/ref.js';
 /* @ts-ignore */
 import styles from './wysiwyg.scss?inline';
 import { BASE_CLASS } from './constants.js';
-import { toolbarRovingTabindex } from './useRovingTabindex.js';
+import './roving-tabindex.js';
 import type { ExtensionWithToolbar, ToolbarSize } from './types.js';
 
 // Required TipTap base extensions
@@ -44,7 +44,6 @@ class Wysiwyg extends LitElement {
   public editor: Editor | null = null;
   private editorRef: Ref<HTMLDivElement> = createRef();
   private toolbarRef: Ref<HTMLDivElement> = createRef();
-  private cleanupRovingTabindex?: () => void;
 
   /**
    * Initializes the editor after the component is first rendered.
@@ -62,17 +61,15 @@ class Wysiwyg extends LitElement {
         },
         /** Updates component state when editor content changes. */
         onUpdate: () => {
-          if (this.editor) {
-            this.dispatchEvent(
-              new CustomEvent('content-change', {
-                detail: {
-                  editor: this.editor,
-                },
-                bubbles: true,
-                composed: true,
-              })
-            );
-          }
+          this.dispatchEvent(
+            new CustomEvent('content-change', {
+              detail: {
+                editor: this.editor,
+              },
+              bubbles: true,
+              composed: true,
+            })
+          );
         },
         /** Requests a re-render when the editor selection changes. */
         onSelectionUpdate: () => {
@@ -82,25 +79,9 @@ class Wysiwyg extends LitElement {
 
       // Store reference to component in editor for extensions to access
       (this.editor as any).component = this;
-    }
-  }
 
-  /**
-   * Syncs external content changes into the editor instance.
-   *
-   * @param {Map<string, unknown>} changedProperties - The properties changed in the current update.
-   */
-  updated(changedProperties: Map<string, unknown>) {
-    if (changedProperties.has('content') && this.editor) {
-      if (this.content !== this.editor.getHTML()) {
-        this.editor.commands.setContent(this.content, { emitUpdate: false });
-      }
-    }
-
-    // && !this.cleanupRovingTabindex
-    if (this.toolbarRef.value) {
-      this.cleanupRovingTabindex?.();
-      this.cleanupRovingTabindex = toolbarRovingTabindex(this.toolbarRef.value);
+      // Request update to render toolbar with initialized editor
+      this.requestUpdate();
     }
   }
 
@@ -109,7 +90,6 @@ class Wysiwyg extends LitElement {
    */
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.cleanupRovingTabindex?.();
     this.editor?.destroy();
   }
 
@@ -124,9 +104,11 @@ class Wysiwyg extends LitElement {
             class="${BASE_CLASS}__toolbar"
             data-floating-menu-container
             ${ref(this.toolbarRef)}>
-            ${this.extensions.map((ext) =>
-              ext.toolbarRender?.(this.editor, this.toolbarSize)
-            )}
+            <clabs-roving-tabindex>
+              ${this.extensions.map((ext) =>
+                ext.toolbarRender?.(this.editor, this.toolbarSize)
+              )}
+            </clabs-roving-tabindex>
           </div>
           <cds-layer>
             <div class="${BASE_CLASS}__editor" ${ref(this.editorRef)}></div>

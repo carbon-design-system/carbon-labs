@@ -52,12 +52,15 @@ $trial-countdown-gradient--active:
   );
 
 .#{$prefix}--header-action__button:has(.#{$prefix}--trial-countdown) {
-  border-block-end: 1px solid $border-subtle;
   padding-inline: $spacing-05;
 }
 
 .#{$prefix}--header-action:not(.#{$prefix}--popover--open)
   .#{$prefix}--header-action__button:has(.#{$prefix}--trial-countdown) {
+  &:not(:focus) {
+    border-block-end: 1px solid $border-subtle;
+  }
+
   &:hover .#{$prefix}--trial-countdown__count {
     background-image: $trial-countdown-gradient--hover;
   }

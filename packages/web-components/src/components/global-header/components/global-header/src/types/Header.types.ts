@@ -370,7 +370,7 @@ export type SidekickInfo = {
 export type SwitcherInfo = {
   openSwitcher?: () => void | undefined;
   closeSwitcher?: () => void | undefined;
-}
+};
 
 interface solisWindowConfig {
   is_prod?: boolean;

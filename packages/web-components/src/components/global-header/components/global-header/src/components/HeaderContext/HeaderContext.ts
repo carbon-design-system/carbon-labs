@@ -271,7 +271,7 @@ export class HeaderContext extends LitElement {
     const { sidekickConfig } = this.props;
     if (sidekickConfig?.isEnabled) {
       // return html` <solis-sidekick />`;
-      return html `
+      return html`
         <cds-custom-header-global-action
           role="button"
           aria-label="Solis sidekick"
@@ -291,7 +291,7 @@ export class HeaderContext extends LitElement {
     const { solisConfig } = this.props;
     if (solisConfig?.isEnabled) {
       // return html` <solis-switcher /> `;
-      return html `
+      return html`
         <cds-custom-header-global-action
           role="button"
           aria-label="Solis switcher"

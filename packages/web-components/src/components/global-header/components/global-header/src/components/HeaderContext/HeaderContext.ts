@@ -270,8 +270,8 @@ export class HeaderContext extends LitElement {
   renderSidekick() {
     const { sidekickConfig } = this.props;
     if (sidekickConfig?.isEnabled) {
-      // return html` <solis-sidekick />`;
       return html`
+        <solis-sidekick></solis-sidekick>
         <cds-custom-header-global-action
           role="button"
           aria-label="Solis sidekick"
@@ -290,8 +290,8 @@ export class HeaderContext extends LitElement {
   renderSolis() {
     const { solisConfig } = this.props;
     if (solisConfig?.isEnabled) {
-      // return html` <solis-switcher /> `;
       return html`
+        <solis-switcher></solis-switcher>
         <cds-custom-header-global-action
           role="button"
           aria-label="Solis switcher"

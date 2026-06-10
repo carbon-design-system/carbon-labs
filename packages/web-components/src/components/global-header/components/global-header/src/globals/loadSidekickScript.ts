@@ -40,6 +40,7 @@ export default function loadSidekickScript(props: HeaderProps) {
       cdn_hostname: props.solisConfig.cdn_hostname,
       deployment_environment: props.solisConfig.deployment_environment,
       backend_proxy: props.solisConfig.backendProxy,
+      custom_sidekick_button: true,
     };
     window._solis.sidekick = {
       correlation_id: props.sidekickConfig.correlationId,

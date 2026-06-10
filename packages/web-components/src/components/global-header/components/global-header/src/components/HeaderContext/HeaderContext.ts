@@ -21,6 +21,8 @@ import {
   NOTIFICATIONS_BUTTON_ID,
   PROFILE_MENU_BUTTON_ID,
   SEARCH_BUTTON_ID,
+  SOLIS_SIDEKICK_BUTTON_ID,
+  SOLIS_SWITCHER_BUTTON_ID,
   TRIAL_POPOVER_BUTTON_ID,
 } from '../../constant';
 
@@ -268,14 +270,40 @@ export class HeaderContext extends LitElement {
   renderSidekick() {
     const { sidekickConfig } = this.props;
     if (sidekickConfig?.isEnabled) {
-      return html` <solis-sidekick />`;
+      // return html` <solis-sidekick />`;
+      return html `
+        <cds-custom-header-global-action
+          role="button"
+          aria-label="Solis sidekick"
+          tooltipAlignment="center"
+          class="${AUTOMATION_NAMESPACE_PREFIX}__globalaction"
+          tabindex="${this.isTrialOpen ? -1 : 0}"
+          <button
+            id="${SOLIS_SIDEKICK_BUTTON_ID}">
+              ${renderCarbonIcon('ChartVennDiagram', 16, 'icon')}
+          </button>
+        </cds-custom-header-global-action>
+      `;
     }
   }
 
   renderSolis() {
     const { solisConfig } = this.props;
     if (solisConfig?.isEnabled) {
-      return html` <solis-switcher /> `;
+      // return html` <solis-switcher /> `;
+      return html `
+        <cds-custom-header-global-action
+          role="button"
+          aria-label="Solis switcher"
+          tooltipAlignment="center"
+          class="${AUTOMATION_NAMESPACE_PREFIX}__globalaction"
+          tabindex="${this.isTrialOpen ? -1 : 0}"
+          <button
+            id="${SOLIS_SWITCHER_BUTTON_ID}">
+              ${renderCarbonIcon('Switcher', 16, 'icon')}
+          </button>
+        </cds-custom-header-global-action>
+      `;
     }
   }
 

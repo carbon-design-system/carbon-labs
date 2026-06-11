@@ -280,7 +280,7 @@ export class HeaderContext extends LitElement {
           tabindex="${this.isTrialOpen ? -1 : 0}"
           <button
             id="${SOLIS_SIDEKICK_BUTTON_ID}">
-              ${renderCarbonIcon('ChartVennDiagram', 16, 'icon')}
+              ${renderCarbonIcon('ChartVennDiagram', 20, 'icon')}
           </button>
         </cds-custom-header-global-action>
       `;
@@ -300,7 +300,7 @@ export class HeaderContext extends LitElement {
           tabindex="${this.isTrialOpen ? -1 : 0}"
           <button
             id="${SOLIS_SWITCHER_BUTTON_ID}">
-              ${renderCarbonIcon('Switcher', 16, 'icon')}
+              ${renderCarbonIcon('Switcher', 20, 'icon')}
           </button>
         </cds-custom-header-global-action>
       `;

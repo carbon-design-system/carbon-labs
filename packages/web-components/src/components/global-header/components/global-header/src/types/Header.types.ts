@@ -380,6 +380,7 @@ interface solisWindowConfig {
   switcher?: SwitcherInfo;
   product_id: string;
   backend_proxy?: string;
+  coachmark_enabled?: boolean;
   custom_switcher_button?: boolean;
   custom_sidekick_button?: boolean;
 }

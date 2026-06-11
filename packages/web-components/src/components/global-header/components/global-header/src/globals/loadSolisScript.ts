@@ -41,9 +41,10 @@ export default function loadSolisScript(props: HeaderProps) {
         cdn_hostname: props.solisConfig.cdn_hostname,
         deployment_environment: props.solisConfig.deployment_environment,
         backend_proxy: props.solisConfig.backendProxy,
-        custom_switcher_button: true,
       };
     }
+    
+    window._solis.custom_switcher_button = true;
 
     const setAttributeFromEvent = (event: { type: string }) => {
       script?.setAttribute(

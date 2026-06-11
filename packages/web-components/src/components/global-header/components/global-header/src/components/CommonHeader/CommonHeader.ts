@@ -155,10 +155,17 @@ export class CommonHeader extends LitElement {
               headerContext.shadowRoot.getElementById(sidekickButtonId);
             if (sidekickButton) {
               console.info(
-                'Attaching openSidekick function to Solis sidekick button'
+                'Attaching openSidekick/closeSidekick functions to Solis sidekick button'
               );
+              let sidekickOpen = false;
               sidekickButton.addEventListener('click', () => {
-                window._solis.sidekick?.openSidekick?.();
+                if (sidekickOpen) {
+                  window._solis.sidekick?.closeSidekick?.();
+                  sidekickOpen = false;
+                } else {
+                  window._solis.sidekick?.openSidekick?.();
+                  sidekickOpen = true;
+                }
               });
             } else {
               console.warn('Solis switcher button not found');
@@ -183,10 +190,17 @@ export class CommonHeader extends LitElement {
               headerContext.shadowRoot.getElementById(switcherButtonId);
             if (switcherButton) {
               console.info(
-                'Attaching openSwitcher function to Solis switcher button'
+                'Attaching openSwitcher/closeSwitcher functions to Solis switcher button'
               );
+              let switcherOpen = false;
               switcherButton.addEventListener('click', () => {
-                window._solis.switcher?.openSwitcher?.();
+                if (switcherOpen) {
+                  window._solis.switcher?.closeSwitcher?.();
+                  switcherOpen = false;
+                } else {
+                  window._solis.switcher?.openSwitcher?.();
+                  switcherOpen = true;
+                }
               });
             } else {
               console.warn('Solis switcher button not found');

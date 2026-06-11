@@ -43,7 +43,7 @@ export default function loadSolisScript(props: HeaderProps) {
         backend_proxy: props.solisConfig.backendProxy,
       };
     }
-    
+
     window._solis.custom_switcher_button = true;
 
     const setAttributeFromEvent = (event: { type: string }) => {

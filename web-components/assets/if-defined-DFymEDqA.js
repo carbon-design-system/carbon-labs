@@ -1,1 +1,0 @@
-import{F as e}from"./iframe-DJFEBb6G.js";var t=t=>t??e;export{t};

@@ -1,0 +1,1 @@
+import{t as e}from"./lib-BWl-EYKV.js";export{e as MDXProvider};

@@ -277,7 +277,6 @@ export class HeaderContext extends LitElement {
           aria-label="Solis sidekick"
           tooltipAlignment="center"
           class="${AUTOMATION_NAMESPACE_PREFIX}__globalaction"
-          tabindex="${this.isTrialOpen ? -1 : 0}"
           id="${SOLIS_SIDEKICK_BUTTON_ID}">
           ${renderCarbonIcon('ChartVennDiagram', 20, 'icon')}
         </cds-custom-header-global-action>
@@ -295,7 +294,6 @@ export class HeaderContext extends LitElement {
           aria-label="Solis switcher"
           tooltipAlignment="center"
           class="${AUTOMATION_NAMESPACE_PREFIX}__globalaction"
-          tabindex="${this.isTrialOpen ? -1 : 0}"
           id="${SOLIS_SWITCHER_BUTTON_ID}">
           ${renderCarbonIcon('Switcher', 20, 'icon')}
         </cds-custom-header-global-action>

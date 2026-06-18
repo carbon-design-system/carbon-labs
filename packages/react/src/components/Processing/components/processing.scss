@@ -43,7 +43,8 @@ $prefix: 'clabs--processing' !default;
 /* LINEAR */
 .#{$prefix}__linear {
   .#{$prefix}__dot--left {
-    animation: linear-load-size, linear-load-stroke, linear-loop-size,
+    animation:
+      linear-load-size, linear-load-stroke, linear-loop-size,
       linear-loop-stroke, linear-unload-size, linear-unload-stroke;
     animation-delay: 1000ms, 1000ms, 2000ms, 2000ms, 7000ms, 7000ms;
     animation-duration: 1000ms;
@@ -53,7 +54,8 @@ $prefix: 'clabs--processing' !default;
   }
 
   .#{$prefix}__dot--center {
-    animation: linear-load-size, linear-load-stroke, linear-loop-size,
+    animation:
+      linear-load-size, linear-load-stroke, linear-loop-size,
       linear-loop-stroke, linear-unload-size, linear-unload-stroke;
     animation-delay: 1167ms, 1167ms, 2167ms, 2167ms, 7167ms, 7167ms;
     animation-duration: 1000ms;
@@ -63,7 +65,8 @@ $prefix: 'clabs--processing' !default;
   }
 
   .#{$prefix}__dot--right {
-    animation: linear-load-size, linear-load-stroke, linear-loop-size,
+    animation:
+      linear-load-size, linear-load-stroke, linear-loop-size,
       linear-loop-stroke, linear-unload-size, linear-unload-stroke;
     animation-delay: 1334ms, 1334ms, 2334ms, 2334ms, 7334ms, 7334ms;
     animation-duration: 1000ms;
@@ -89,7 +92,8 @@ $prefix: 'clabs--processing' !default;
 
 .#{$prefix}__linear--no-loop {
   .#{$prefix}__dot--left {
-    animation: linear-load-size, linear-load-stroke, linear-unload-size,
+    animation:
+      linear-load-size, linear-load-stroke, linear-unload-size,
       linear-unload-stroke;
     animation-delay: 1000ms, 1000ms, 2000ms, 2000ms;
     animation-duration: 1000ms;
@@ -99,7 +103,8 @@ $prefix: 'clabs--processing' !default;
   }
 
   .#{$prefix}__dot--center {
-    animation: linear-load-size, linear-load-stroke, linear-unload-size,
+    animation:
+      linear-load-size, linear-load-stroke, linear-unload-size,
       linear-unload-stroke;
     animation-delay: 1167ms, 1167ms, 2167ms, 2167ms;
     animation-duration: 1000ms;
@@ -109,7 +114,8 @@ $prefix: 'clabs--processing' !default;
   }
 
   .#{$prefix}__dot--right {
-    animation: linear-load-size, linear-load-stroke, linear-unload-size,
+    animation:
+      linear-load-size, linear-load-stroke, linear-unload-size,
       linear-unload-stroke;
     animation-delay: 1334ms, 1334ms, 2334ms, 2334ms;
     animation-duration: 1000ms;

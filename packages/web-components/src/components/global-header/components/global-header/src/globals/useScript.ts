@@ -8,7 +8,7 @@
  */
 /* eslint jsdoc/require-jsdoc: 0 */
 
-import { HeaderProps } from '../types/Header.types';
+import type { HeaderProps } from '../types/Header.types';
 import { getAssistMeUrl } from './utils';
 
 export default function useScript(props: HeaderProps) {

@@ -12,7 +12,7 @@ import React from 'react';
 import { createComponent } from '@lit/react';
 
 import { HybridIpaasHeader } from '../HybridIpaasHeader/HybridIpaasHeader';
-import { ReactWrapperProps } from '../../types/Header.types';
+import type { ReactWrapperProps } from '../../types/Header.types';
 
 const AI_CALLBACK_EVENT = 'clabs-hybrid-ipaas-header-ai-callback';
 const NOTIFICATION_OPEN_CALLBACK_EVENT =

@@ -67,10 +67,11 @@ export const Showcase = {
   render: () =>
     html`<div style="display:flex; flex-wrap:wrap;">
       ${mathExamples.map(
-        (example) => html` <div>
-          <h4>${example.title}</h4>
-          <clabs-chat-formula content="${example.math}"> </clabs-chat-formula>
-        </div>`
+        (example) =>
+          html` <div>
+            <h4>${example.title}</h4>
+            <clabs-chat-formula content="${example.math}"> </clabs-chat-formula>
+          </div>`
       )}
     </div>`,
 };

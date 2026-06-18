@@ -17,7 +17,7 @@ import { unsafeCSS } from 'lit';
 import { animate, fadeIn, fadeOut } from '@lit-labs/motion';
 
 import styles from './_index.scss?inline';
-import { TrialConfigs } from '../../types/Header.types';
+import type { TrialConfigs } from '../../types/Header.types';
 
 const { stablePrefix: clabsPrefix } = settings;
 

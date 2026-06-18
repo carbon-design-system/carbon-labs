@@ -303,19 +303,18 @@ document.addEventListener('DOMContentLoaded', () => {
             </cds-icon-button>
             <clabs-style-picker-section heading="Icons">
               ${icons.map(
-                (item) =>
-                  html`
-                    <clabs-style-picker-option
-                      value=${item.value}
-                      label=${item.label}
-                      ?selected=${item.value === 'apple'}
-                      @clabs-style-picker-option-select=${(ev) =>
-                        changeIcon(ev, 'inline-tile-icon-single')}>
-                      <clabs-style-picker-icon>
-                        ${iconLoader(item.icon)}
-                      </clabs-style-picker-icon>
-                    </clabs-style-picker-option>
-                  `
+                (item) => html`
+                  <clabs-style-picker-option
+                    value=${item.value}
+                    label=${item.label}
+                    ?selected=${item.value === 'apple'}
+                    @clabs-style-picker-option-select=${(ev) =>
+                      changeIcon(ev, 'inline-tile-icon-single')}>
+                    <clabs-style-picker-icon>
+                      ${iconLoader(item.icon)}
+                    </clabs-style-picker-icon>
+                  </clabs-style-picker-option>
+                `
               )}
             </clabs-style-picker-section>
           </clabs-style-picker>
@@ -393,19 +392,18 @@ document.addEventListener('DOMContentLoaded', () => {
             </clabs-style-picker-section>
             <clabs-style-picker-section heading="Icons">
               ${icons.map(
-                (item) =>
-                  html`
-                    <clabs-style-picker-option
-                      value=${item.value}
-                      label=${item.label}
-                      ?selected=${item.value === 'apple'}
-                      @clabs-style-picker-option-select=${(ev) =>
-                        changeIcon(ev, 'inline-tile-icon-flat')}>
-                      <clabs-style-picker-icon>
-                        ${iconLoader(item.icon)}
-                      </clabs-style-picker-icon>
-                    </clabs-style-picker-option>
-                  `
+                (item) => html`
+                  <clabs-style-picker-option
+                    value=${item.value}
+                    label=${item.label}
+                    ?selected=${item.value === 'apple'}
+                    @clabs-style-picker-option-select=${(ev) =>
+                      changeIcon(ev, 'inline-tile-icon-flat')}>
+                    <clabs-style-picker-icon>
+                      ${iconLoader(item.icon)}
+                    </clabs-style-picker-icon>
+                  </clabs-style-picker-option>
+                `
               )}
             </clabs-style-picker-section>
           </clabs-style-picker>
@@ -470,19 +468,18 @@ document.addEventListener('DOMContentLoaded', () => {
             <clabs-style-picker-sections>
               <clabs-style-picker-section heading="Icons">
                 ${icons.map(
-                  (item) =>
-                    html`
-                      <clabs-style-picker-option
-                        value=${item.value}
-                        label=${item.label}
-                        ?selected=${item.value === 'apple'}
-                        @clabs-style-picker-option-select=${(ev) =>
-                          changeIcon(ev, 'inline-tile-icon-disclosed')}>
-                        <clabs-style-picker-icon>
-                          ${iconLoader(item.icon)}
-                        </clabs-style-picker-icon>
-                      </clabs-style-picker-option>
-                    `
+                  (item) => html`
+                    <clabs-style-picker-option
+                      value=${item.value}
+                      label=${item.label}
+                      ?selected=${item.value === 'apple'}
+                      @clabs-style-picker-option-select=${(ev) =>
+                        changeIcon(ev, 'inline-tile-icon-disclosed')}>
+                      <clabs-style-picker-icon>
+                        ${iconLoader(item.icon)}
+                      </clabs-style-picker-icon>
+                    </clabs-style-picker-option>
+                  `
                 )}
               </clabs-style-picker-section>
               <clabs-style-picker-section heading="Colors">

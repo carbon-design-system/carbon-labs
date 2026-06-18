@@ -12,7 +12,7 @@ import { stylePickerGroupTemplate } from './src/style-picker-group.template';
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
-  StylePickerContextType,
+  type StylePickerContextType,
 } from '../../context/style-picker-context.js';
 import StylePickerGroup from './src/style-picker-group';
 import { TemplateResult } from 'lit';

@@ -87,10 +87,8 @@ $css--plex: true !default;
     outline: none;
   }
 
-  /* stylelint-disable-next-line property-no-unknown */
   inset-area: block-end span-inline-start;
   margin-block-start: $spacing-02;
-  /* stylelint-disable-next-line property-no-unknown */
   position-anchor: --date-picker-input;
 
   // Fallback positioning for browsers without anchor positioning
@@ -102,33 +100,24 @@ $css--plex: true !default;
   }
 
   // Handle viewport overflow
-  /* stylelint-disable-next-line property-no-unknown */
   position-try-options: --bottom-left, --top-left, --bottom-right, --top-right;
 
-  /* stylelint-disable-next-line scss/at-rule-no-unknown */
   @position-try --bottom-left {
-    /* stylelint-disable-next-line property-no-unknown */
     inset-area: block-end span-inline-start;
     margin-block-start: $spacing-02;
   }
 
-  /* stylelint-disable-next-line scss/at-rule-no-unknown */
   @position-try --top-left {
-    /* stylelint-disable-next-line property-no-unknown */
     inset-area: block-start span-inline-start;
     margin-block-end: $spacing-02;
   }
 
-  /* stylelint-disable-next-line scss/at-rule-no-unknown */
   @position-try --bottom-right {
-    /* stylelint-disable-next-line property-no-unknown */
     inset-area: block-end span-inline-end;
     margin-block-start: $spacing-02;
   }
 
-  /* stylelint-disable-next-line scss/at-rule-no-unknown */
   @position-try --top-right {
-    /* stylelint-disable-next-line property-no-unknown */
     inset-area: block-start span-inline-end;
     margin-block-end: $spacing-02;
   }
@@ -159,8 +148,8 @@ $css--plex: true !default;
 }
 
 .#{$prefix}--date-picker-container--warn:not(
-    .#{$prefix}--date-picker-container--invalid
-  ) {
+  .#{$prefix}--date-picker-container--invalid
+) {
   .#{$prefix}--form-requirement {
     color: $text-primary;
   }

@@ -21,7 +21,8 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-error
-    content="Sample error: SEGMENTATION FAULT: Fatal error">
-  </clabs-chat-error>`,
+  render: () =>
+    html` <clabs-chat-error
+      content="Sample error: SEGMENTATION FAULT: Fatal error">
+    </clabs-chat-error>`,
 };

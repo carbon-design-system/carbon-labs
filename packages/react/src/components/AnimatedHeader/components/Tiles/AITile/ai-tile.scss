@@ -122,9 +122,12 @@ $prefix: 'clabs--animated-header__ai-tile' !default;
   background-size: 100% 150%;
   content: '';
   inset: 0;
-  -webkit-mask: linear-gradient(#ffffff 0 0) padding-box,
+  -webkit-mask:
+    linear-gradient(#ffffff 0 0) padding-box,
     linear-gradient(#ffffff 0 0);
-  mask: linear-gradient(#ffffff 0 0) padding-box, linear-gradient(#ffffff 0 0);
+  mask:
+    linear-gradient(#ffffff 0 0) padding-box,
+    linear-gradient(#ffffff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
 }

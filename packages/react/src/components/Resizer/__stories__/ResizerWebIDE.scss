@@ -22,7 +22,9 @@
 
   // Override Carbon tooltip focus styles
   .cds--tooltip-trigger__wrapper .cds--btn--ghost:focus {
-    box-shadow: inset 0 0 0 1px $focus, inset 0 0 0 2px $background;
+    box-shadow:
+      inset 0 0 0 1px $focus,
+      inset 0 0 0 2px $background;
     outline: none;
   }
 }

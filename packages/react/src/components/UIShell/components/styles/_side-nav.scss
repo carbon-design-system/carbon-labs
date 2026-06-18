@@ -389,7 +389,9 @@ div:has(.#{$prefix}--header)
     padding: 0 $spacing-05;
     block-size: $spacing-07;
     color: $text-secondary;
-    transition: color $duration-fast-02, background-color $duration-fast-02,
+    transition:
+      color $duration-fast-02,
+      background-color $duration-fast-02,
       outline $duration-fast-02;
 
     &:hover {
@@ -633,7 +635,7 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__slot {
   display: flex;
   align-items: center;
-  margin: 0 $spacing-05 $spacing-05 $spacing-05;
+  margin: 0 $spacing-05 $spacing-05;
   block-size: 2rem;
 }
 

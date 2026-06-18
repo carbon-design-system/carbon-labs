@@ -21,8 +21,9 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-file-upload content="Test_file.pdf">
-  </clabs-chat-file-upload>`,
+  render: () =>
+    html` <clabs-chat-file-upload content="Test_file.pdf">
+    </clabs-chat-file-upload>`,
 };
 
 export const Showcase = {

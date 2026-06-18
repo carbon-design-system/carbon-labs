@@ -22,8 +22,9 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-text content="Hello, how may I help you?">
-  </clabs-chat-text>`,
+  render: () =>
+    html` <clabs-chat-text content="Hello, how may I help you?">
+    </clabs-chat-text>`,
 };
 
 const targetingElementsExample = [

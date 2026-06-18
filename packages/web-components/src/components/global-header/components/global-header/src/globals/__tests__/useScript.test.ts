@@ -9,7 +9,7 @@
 
 import { html, fixture, expect } from '@open-wc/testing';
 import * as useScript from '../useScript';
-import { HeaderProps } from '../../types/Header.types';
+import type { HeaderProps } from '../../types/Header.types';
 
 const propsWithAssisitMeConfig: HeaderProps = {
   brand: {

@@ -74,10 +74,10 @@ export function footerTemplate(customElementClass) {
               'error'
                 ? '-error'
                 : contextMessageType === 'info'
-                ? '-info'
-                : contextMessageType === 'warning'
-                ? '-warning'
-                : ''}">
+                  ? '-info'
+                  : contextMessageType === 'warning'
+                    ? '-warning'
+                    : ''}">
               <div class="${clabsPrefix}--chat-footer-menu-container">
                 <div class="${clabsPrefix}--chat-footer-menu-container-item">
                   ${contextMessageType === 'error'
@@ -86,16 +86,16 @@ export function footerTemplate(customElementClass) {
                         ${iconLoader(WarningFilled16())}
                       </div>`
                     : contextMessageType === 'info'
-                    ? html`<div
-                        class="${clabsPrefix}--chat-footer-menu-container-item-icon-info">
-                        ${iconLoader(InformationFilled16())}
-                      </div>`
-                    : contextMessageType === 'warning'
-                    ? html`<div
-                        class="${clabsPrefix}--chat-footer-menu-container-item-icon-warning">
-                        ${iconLoader(WarningFilled16())}
-                      </div>`
-                    : html``}
+                      ? html`<div
+                          class="${clabsPrefix}--chat-footer-menu-container-item-icon-info">
+                          ${iconLoader(InformationFilled16())}
+                        </div>`
+                      : contextMessageType === 'warning'
+                        ? html`<div
+                            class="${clabsPrefix}--chat-footer-menu-container-item-icon-warning">
+                            ${iconLoader(WarningFilled16())}
+                          </div>`
+                        : html``}
                 </div>
 
                 <div
@@ -103,10 +103,10 @@ export function footerTemplate(customElementClass) {
                   'error'
                     ? '-error'
                     : contextMessageType === 'info'
-                    ? '-info'
-                    : contextMessageType === 'warning'
-                    ? '-warning'
-                    : ''}">
+                      ? '-info'
+                      : contextMessageType === 'warning'
+                        ? '-warning'
+                        : ''}">
                   ${contextMessage}
                 </div>
                 <div

@@ -291,12 +291,12 @@ exports[`ThemeSettings renders as expected - Component API should match snapshot
           for="theme-menu-complement"
           title=""
         >
-          <span
+          <div
             class="cds--checkbox-label-text"
             dir="auto"
           >
             Complement menu theme
-          </span>
+          </div>
         </label>
         <div
           class="cds--checkbox__validation-msg"

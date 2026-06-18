@@ -91,7 +91,7 @@ export const SideNavMenuItem = React.forwardRef<
     <li className={className}>
       <Component
         {...rest}
-        aria-selected={isActive ? 'true' : 'false'}
+        aria-current={isActive && !isFlyoutMenuItem ? 'page' : undefined}
         role={isTreeview ? 'treeitem' : undefined}
         className={linkClassName}
         tabIndex={isTreeview ? -1 : 0}

@@ -66,12 +66,12 @@ export function cardElementTemplate(customElementClass) {
                     src="${cardData.imageUrl}" />
                 </div>`
               : type === 'video'
-              ? html` <div class="${clabsPrefix}--chat-card-video-container">
-                  <video controls>
-                    <source src="${content}" type="video/webm" />
-                  </video>
-                </div>`
-              : html``}
+                ? html` <div class="${clabsPrefix}--chat-card-video-container">
+                    <video controls>
+                      <source src="${content}" type="video/webm" />
+                    </video>
+                  </div>`
+                : html``}
 
             <div
               class="${clabsPrefix}--chat-card-detail-container${type ===
@@ -83,34 +83,36 @@ export function cardElementTemplate(customElementClass) {
                     ${fileType === 'mp3'
                       ? html`${iconLoader(mp324())}`
                       : fileType === 'mp4'
-                      ? html`${iconLoader(mp424())}`
-                      : fileType === 'png'
-                      ? html`${iconLoader(png24())}`
-                      : fileType === 'pdf'
-                      ? html`${iconLoader(pdf24())}`
-                      : fileType === 'ppt'
-                      ? html`${iconLoader(ppt24())}`
-                      : fileType === 'svg'
-                      ? html`${iconLoader(svg24())}`
-                      : fileType === 'xls'
-                      ? html`${iconLoader(xls24())}`
-                      : fileType === 'zip'
-                      ? html`${iconLoader(zip24())}`
-                      : fileType === 'wmv'
-                      ? html`${iconLoader(wmv24())}`
-                      : fileType === 'txt'
-                      ? html`${iconLoader(txt24())}`
-                      : fileType === 'tsv'
-                      ? html`${iconLoader(tsv24())}`
-                      : fileType === 'mov'
-                      ? html`${iconLoader(mov24())}`
-                      : fileType === 'jpg'
-                      ? html`${iconLoader(jpg24())}`
-                      : fileType === 'gif'
-                      ? html`${iconLoader(gif24())}`
-                      : fileType === 'csv'
-                      ? html`${iconLoader(csv24())}`
-                      : html`${iconLoader(documentBlank24())}`}
+                        ? html`${iconLoader(mp424())}`
+                        : fileType === 'png'
+                          ? html`${iconLoader(png24())}`
+                          : fileType === 'pdf'
+                            ? html`${iconLoader(pdf24())}`
+                            : fileType === 'ppt'
+                              ? html`${iconLoader(ppt24())}`
+                              : fileType === 'svg'
+                                ? html`${iconLoader(svg24())}`
+                                : fileType === 'xls'
+                                  ? html`${iconLoader(xls24())}`
+                                  : fileType === 'zip'
+                                    ? html`${iconLoader(zip24())}`
+                                    : fileType === 'wmv'
+                                      ? html`${iconLoader(wmv24())}`
+                                      : fileType === 'txt'
+                                        ? html`${iconLoader(txt24())}`
+                                        : fileType === 'tsv'
+                                          ? html`${iconLoader(tsv24())}`
+                                          : fileType === 'mov'
+                                            ? html`${iconLoader(mov24())}`
+                                            : fileType === 'jpg'
+                                              ? html`${iconLoader(jpg24())}`
+                                              : fileType === 'gif'
+                                                ? html`${iconLoader(gif24())}`
+                                                : fileType === 'csv'
+                                                  ? html`${iconLoader(csv24())}`
+                                                  : html`${iconLoader(
+                                                      documentBlank24()
+                                                    )}`}
                   </div>`
                 : html``}
               ${type === 'video'
@@ -126,8 +128,8 @@ export function cardElementTemplate(customElementClass) {
                           ${fileType === 'mp3'
                             ? html`${iconLoader(mp324())}`
                             : fileType === 'wmv'
-                            ? html`${iconLoader(wmv24())}`
-                            : html`${iconLoader(music24())}`}
+                              ? html`${iconLoader(wmv24())}`
+                              : html`${iconLoader(music24())}`}
                         </div>`
                       : html``}
                   `
@@ -217,9 +219,9 @@ export function cardElementTemplate(customElementClass) {
               ? html` <div
                   class="${clabsPrefix}--chat-card-image-container"></div>`
               : type === 'video'
-              ? html` <div
-                  class="${clabsPrefix}--chat-card-video-container"></div>`
-              : html``}
+                ? html` <div
+                    class="${clabsPrefix}--chat-card-video-container"></div>`
+                : html``}
 
             <div
               class="${clabsPrefix}--chat-card-detail-container${type ===

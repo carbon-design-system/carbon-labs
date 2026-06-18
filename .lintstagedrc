@@ -1,5 +1,5 @@
 {
-  "**/*.js, !**/*.snap.js": [
+  "**/*.{js,ts,tsx}": [
     "prettier --cache --write",
     "eslint",
     "yarn lint:license:staged"

@@ -6,4 +6,40 @@
  */
 
 @use '@carbon/react';
-@use '@carbon-labs/react-resizer/scss/resize-bar';
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/themes';
+@use '@carbon-labs/react-resizer/scss/resizer';
+
+:root {
+  @include theme.theme(themes.$white);
+}
+
+html,
+body,
+#root {
+  block-size: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--cds-background);
+  color: var(--cds-text-primary);
+}
+
+.resizer-demo {
+  display: flex;
+  flex-direction: row;
+  block-size: 100%;
+  inline-size: 100%;
+  min-block-size: 100vh;
+}
+
+.resizer-demo__pane {
+  overflow: auto;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  padding: 1rem;
+  background: var(--cds-layer);
+  inline-size: calc((100% - 0.25rem) / 2);
+  min-inline-size: 0;
+}

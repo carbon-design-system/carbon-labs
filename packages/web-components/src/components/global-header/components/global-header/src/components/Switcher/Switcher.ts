@@ -15,7 +15,7 @@ import { settings } from '@carbon-labs/utilities';
 /* c8 ignore next */
 import cx from 'classnames';
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../constant';
-import { ItemLink } from './Switcher.types';
+import type { ItemLink } from './Switcher.types';
 import { unsafeCSS } from 'lit';
 
 import styles from './_index.scss?inline';

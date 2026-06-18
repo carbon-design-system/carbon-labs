@@ -10,13 +10,13 @@
 
 import { html, fixture, expect } from '@open-wc/testing';
 import '../HeaderContext';
-import {
+import type {
   GlobalActionConfig,
   HeaderProps,
   NotificationConfigs,
   SearchConfigs,
-  TrialLinkType,
 } from '../../../types/Header.types';
+import { TrialLinkType } from '../../../types/Header.types';
 import sinon from 'sinon';
 import { HeaderContext } from '../HeaderContext';
 import { AUTOMATION_HEADER_BASE_CLASS } from '../../../constant';

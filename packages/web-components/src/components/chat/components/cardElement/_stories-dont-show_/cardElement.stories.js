@@ -33,11 +33,12 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-card
-    .cardElements=${defaultCardElements}
-    type="url"
-    content="https://en.wikipedia.org/wiki/Artificial_intelligence">
-  </clabs-chat-card>`,
+  render: () =>
+    html` <clabs-chat-card
+      .cardElements=${defaultCardElements}
+      type="url"
+      content="https://en.wikipedia.org/wiki/Artificial_intelligence">
+    </clabs-chat-card>`,
 };
 
 const defaultPlaygroundArgs = {

@@ -64,8 +64,7 @@ const defaultTranslateWithId = (id: TranslationKey): string =>
   defaultTranslations[id];
 
 export interface SideNavProps
-  extends ComponentProps<'nav'>,
-    TranslateWithId<TranslationKey> {
+  extends ComponentProps<'nav'>, TranslateWithId<TranslationKey> {
   expanded?: boolean;
   defaultExpanded?: boolean;
   isChildOfHeader?: boolean;

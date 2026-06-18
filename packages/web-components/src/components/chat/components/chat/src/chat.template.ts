@@ -83,8 +83,8 @@ export function chatTemplate(customElementClass) {
     class="${clabsPrefix}--chat-container ${closed && !enableLauncher
       ? clabsPrefix + '--chat-closed'
       : closed && enableLauncher
-      ? clabsPrefix + '--chat-launcher-container'
-      : ''} ${enableDocking ? clabsPrefix + '--chat-docked' : ''} ${isDragging
+        ? clabsPrefix + '--chat-launcher-container'
+        : ''} ${enableDocking ? clabsPrefix + '--chat-docked' : ''} ${isDragging
       ? clabsPrefix + '--chat-docked-dragging'
       : ''}  ${enableFullscreen ? clabsPrefix + '--chat-fullscreen' : ''}">
     ${enableLauncher && closed

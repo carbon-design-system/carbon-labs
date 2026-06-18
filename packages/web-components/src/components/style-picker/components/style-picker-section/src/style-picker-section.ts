@@ -14,9 +14,9 @@ import { LitElement, PropertyValues } from 'lit';
 import { consume, provide } from '@lit/context';
 import {
   stylePickerContext,
-  StylePickerContextType,
+  type StylePickerContextType,
 } from '../../../context/style-picker-context';
-import { prefix, Size } from '../../../defs';
+import { prefix, type Size } from '../../../defs';
 import HostListener from '@carbon/web-components/es/globals/decorators/host-listener.js';
 import HostListenerMixin from '@carbon/web-components/es/globals/mixins/host-listener.js';
 

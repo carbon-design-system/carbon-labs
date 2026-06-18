@@ -21,6 +21,8 @@ export const INTEGRATION_AGENT_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-chatb
 export const NOTIFICATIONS_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-notifications-button`;
 export const PROFILE_MENU_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-profile-menu-button`;
 export const SEARCH_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-search-button`;
+export const SOLIS_SIDEKICK_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-solis-sidekick-button`;
+export const SOLIS_SWITCHER_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-solis-switcher-button`;
 export const TRIAL_POPOVER_BUTTON_ID = `${AUTOMATION_NAMESPACE_PREFIX}-trial-popover-button`;
 
 export const CUSTOM_EVENT_NAME = 'global-header';

@@ -26,7 +26,8 @@ $prefix: 'cds' !default;
   --trial-countdown-end: #{$purple-40};
 }
 
-$trial-countdown-gradient: linear-gradient(135deg, $background, $background),
+$trial-countdown-gradient:
+  linear-gradient(135deg, $background, $background),
   linear-gradient(
     135deg,
     var(--trial-countdown-start),

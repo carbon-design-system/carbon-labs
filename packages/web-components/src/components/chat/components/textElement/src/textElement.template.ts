@@ -118,36 +118,37 @@ export function textElementTemplate(customElementClass) {
                     : html``}
                 `
               : alignRight
-              ? html` <span
-                  class="${streaming
-                    ? clabsPrefix + '--chat-text-fade-in'
-                    : ''}">
-                  ${textPiece.text}</span
-                >`
-              : enableHtmlRendering || textPiece.type === 'html'
-              ? html` <span
-                  class="${clabsPrefix}--chat-text-content-${textPiece.type}"
-                  >${unsafeHTML(textPiece.text)}</span
-                >`
-              : textPiece.type === 'new-line'
-              ? html`<br />`
-              : textPiece.type === 'code'
-              ? html`
-                  <span
-                    class="${clabsPrefix}--chat-text-content-${textPiece.type}"
-                    >${textPiece.text}</span
-                  >
-                `
-              : textPiece.type === 'default'
-              ? html` <span
-                  class="${streaming
-                    ? clabsPrefix + '--chat-text-fade-in'
-                    : ''}"
-                  >${textPiece.text}</span
-                >`
-              : html`<p class="${clabsPrefix}--chat-text-content-paragraph">
-                  ${textPiece.text}
-                </p>`}`
+                ? html` <span
+                    class="${streaming
+                      ? clabsPrefix + '--chat-text-fade-in'
+                      : ''}">
+                    ${textPiece.text}</span
+                  >`
+                : enableHtmlRendering || textPiece.type === 'html'
+                  ? html` <span
+                      class="${clabsPrefix}--chat-text-content-${textPiece.type}"
+                      >${unsafeHTML(textPiece.text)}</span
+                    >`
+                  : textPiece.type === 'new-line'
+                    ? html`<br />`
+                    : textPiece.type === 'code'
+                      ? html`
+                          <span
+                            class="${clabsPrefix}--chat-text-content-${textPiece.type}"
+                            >${textPiece.text}</span
+                          >
+                        `
+                      : textPiece.type === 'default'
+                        ? html` <span
+                            class="${streaming
+                              ? clabsPrefix + '--chat-text-fade-in'
+                              : ''}"
+                            >${textPiece.text}</span
+                          >`
+                        : html`<p
+                            class="${clabsPrefix}--chat-text-content-paragraph">
+                            ${textPiece.text}
+                          </p>`}`
         )}
         ${enableSummarization
           ? html`

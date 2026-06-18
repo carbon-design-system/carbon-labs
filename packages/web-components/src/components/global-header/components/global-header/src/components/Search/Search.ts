@@ -14,7 +14,7 @@ import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es-custom/components/search/index.js';
 
 import styles from './_index.scss?inline' assert { type: 'css' };
-import { SearchConfigs } from '../../types/Header.types';
+import type { SearchConfigs } from '../../types/Header.types';
 
 const { stablePrefix: clabsPrefix } = settings;
 

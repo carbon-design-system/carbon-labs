@@ -21,7 +21,8 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-image
-    content="https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg">
-  </clabs-chat-image>`,
+  render: () =>
+    html` <clabs-chat-image
+      content="https://bouqs.com/blog/wp-content/uploads/2019/05/summer-dahlia.jpg">
+    </clabs-chat-image>`,
 };

@@ -3,6 +3,101 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.21.0...@carbon-labs/react-split-panel@0.22.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/react-split-panel
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.20.0...@carbon-labs/react-split-panel@0.21.0) (2026-05-14)
+
+
+### Bug Fixes
+
+* **examples:** update react and web components standalone examples ([#1230](https://github.com/carbon-design-system/carbon-labs/issues/1230)) ([0ba3c58](https://github.com/carbon-design-system/carbon-labs/commit/0ba3c5866a08459a9e220737e85ce256cec08463))
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.19.0...@carbon-labs/react-split-panel@0.20.0) (2026-05-13)
+
+**Note:** Version bump only for package @carbon-labs/react-split-panel
+
+
+
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.18.0...@carbon-labs/react-split-panel@0.19.0) (2026-05-12)
+
+**Note:** Version bump only for package @carbon-labs/react-split-panel
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.17.0...@carbon-labs/react-split-panel@0.18.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/react-split-panel
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.16.0...@carbon-labs/react-split-panel@0.17.0) (2026-05-08)
+
+**Note:** Version bump only for package @carbon-labs/react-split-panel
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.15.0...@carbon-labs/react-split-panel@0.16.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/react-split-panel
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.14.0...@carbon-labs/react-split-panel@0.15.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/react-split-panel
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.13.0...@carbon-labs/react-split-panel@0.14.0) (2026-04-23)
+
+
+### Features
+
+* SplitPanel deprecation proposal ([#969](https://github.com/carbon-design-system/carbon-labs/issues/969)) ([4a8f886](https://github.com/carbon-design-system/carbon-labs/commit/4a8f8865968a9fbfba011586668bf4b19730296c))
+
+
+
+
+
+## [Unreleased]
+
+### ⚠ BREAKING CHANGES
+
+* **SplitPanel is now deprecated** and unlikely to progress to v1.0.0. Please migrate to [@carbon-labs/react-resizer](https://www.npmjs.com/package/@carbon-labs/react-resizer) for new implementations.
+
+### Features
+
+* **deprecation:** Mark SplitPanel as deprecated in favor of Resizer
+  * Added deprecation notices to documentation and Storybook
+  * Created comprehensive migration guide (DEPRECATION-plan.md)
+  * Added 6 migration stories demonstrating Resizer usage patterns
+  * Added runtime console warning in development mode
+  * Updated Storybook path to "Deprecated/Components/SplitPanel"
+  * Component will remain available but will not receive new features
+  * See [migration guide](https://github.com/carbon-design-system/carbon-labs/blob/main/packages/react/src/components/SplitPanel/DEPRECATION-plan.md) for details
+
 # [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-split-panel@0.12.0...@carbon-labs/react-split-panel@0.13.0) (2026-04-14)
 
 **Note:** Version bump only for package @carbon-labs/react-split-panel
@@ -17,7 +112,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **global-header:** upgrade to latest web-components ([#997](https://github.com/carbon-design-system/carbon-labs/issues/997)) ([5717728](https://github.com/carbon-design-system/carbon-labs/commit/57177282f0afa64ff7ad129667405091f9cea1c5))
-
 
 
 

@@ -45,7 +45,9 @@ $css--plex: true !default;
     min-block-size: 56px;
     padding-block: 12px;
     padding-inline: 16px 8px;
-    transition: border-color 150ms linear, block-size 300ms ease;
+    transition:
+      border-color 150ms linear,
+      block-size 300ms ease;
   }
 
   .#{$clabs-prefix}--chat-footer-prompt-items-expanded {

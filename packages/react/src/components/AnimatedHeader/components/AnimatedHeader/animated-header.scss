@@ -57,8 +57,10 @@ body {
     outline: 1px solid transparent;
 
     @media (prefers-reduced-motion: no-preference) {
-      transition: max-block-size 500ms motion.motion(entrance, expressive),
-        color 200ms linear, background-color 200ms linear,
+      transition:
+        max-block-size 500ms motion.motion(entrance, expressive),
+        color 200ms linear,
+        background-color 200ms linear,
         outline 500ms motion.motion(entrance, expressive);
     }
   }
@@ -69,7 +71,8 @@ body {
     outline: 1px solid $border-subtle-00;
 
     @media (prefers-reduced-motion: no-preference) {
-      transition: max-block-size 500ms motion.motion(exit, expressive),
+      transition:
+        max-block-size 500ms motion.motion(exit, expressive),
         outline 500ms motion.motion(exit, expressive);
     }
   }
@@ -84,19 +87,14 @@ body {
   display: flex;
   overflow: hidden;
   justify-content: flex-end;
-
+  /* stylelint-disable declaration-block-no-duplicate-properties -- % / -webkit / fill-available fallbacks */
   block-size: 100%;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: -webkit-fill-available;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
-
   inline-size: 100%;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: -webkit-fill-available;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: fill-available;
-
+  /* stylelint-enable declaration-block-no-duplicate-properties */
   max-inline-size: 96rem;
   writing-mode: horizontal-tb;
 }
@@ -121,19 +119,14 @@ body {
 .#{$prefix}__gradient--overlay {
   position: absolute;
   z-index: 1;
-
+  /* stylelint-disable declaration-block-no-duplicate-properties -- % / -webkit / fill-available fallbacks */
   block-size: 100%;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: -webkit-fill-available;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
-
   inline-size: 100%;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: -webkit-fill-available;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: fill-available;
-
+  /* stylelint-enable declaration-block-no-duplicate-properties */
   margin-inline: auto;
   max-inline-size: 99rem;
   padding-inline: var(--cds-grid-margin);
@@ -281,7 +274,8 @@ body {
   isolation: isolate;
 
   @media (prefers-reduced-motion: no-preference) {
-    transition: opacity 500ms linear,
+    transition:
+      opacity 500ms linear,
       margin 500ms motion.motion(standard, expressive);
   }
 
@@ -401,19 +395,14 @@ body {
   display: flex;
   overflow: hidden;
   justify-content: flex-end;
-
+  /* stylelint-disable declaration-block-no-duplicate-properties -- % / -webkit / fill-available fallbacks */
   block-size: 100%;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: -webkit-fill-available;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   block-size: fill-available;
-
   inline-size: 100%;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: -webkit-fill-available;
-  /* stylelint-disable-next-line declaration-block-no-duplicate-properties */
   inline-size: fill-available;
-
+  /* stylelint-enable declaration-block-no-duplicate-properties */
   max-inline-size: 96rem;
 }
 

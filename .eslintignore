@@ -6,3 +6,4 @@ node_modules
 storybook-static
 **/es
 **/lib
+**/test-coverage

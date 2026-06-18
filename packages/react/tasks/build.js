@@ -176,7 +176,7 @@ function getRollupConfig(input, rootDir, outDir) {
     }),
     plugins: [
       nodeResolve({
-        extensions: ['.mjs', '.js', '.json', '.node', '.ts', '.tsx'],
+        extensions: ['.mjs', '.js', '.jsx', '.json', '.node', '.ts', '.tsx'],
       }),
       commonjs({
         include: /node_modules/,

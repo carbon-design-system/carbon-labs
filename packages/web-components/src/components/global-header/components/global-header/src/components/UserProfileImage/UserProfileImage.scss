@@ -28,13 +28,6 @@ $themes: (
 );
 $theme-keys: map.keys($themes);
 
-@function --get-background-color($color, $key, $contrast-key) {
-  @return map.get(
-    mappedTokens.$carbon-colors,
-    #{$color}#{map.get(map.get($themes, $key), #{$contrast-key}-contrast)}
-  );
-}
-
 $sizes: (
   xlg: layout.$spacing-09,
   lg: layout.$spacing-07,

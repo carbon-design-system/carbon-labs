@@ -155,20 +155,19 @@ export const Default = {
    * @param {object} args Storybook arguments
    * @returns {TemplateResult<1>}
    */
-  render: (args) =>
-    html`
-      <clabs-feedback
-        @on-feedback-delete=${args['on-feedback-delete']}
-        @on-feedback-save=${args['on-feedback-save']}
-        model=${args.model}
-        input=${args.input}
-        output=${args.output}
-        generation-id=${args['generation-id']}
-        .feedbackList=${args['feedback-list']}
-        icon=${args.icon}>
-        ${iconLoader(Flag24, { slot: 'icon' })} ${args.output}
-      </clabs-feedback>
-    `,
+  render: (args) => html`
+    <clabs-feedback
+      @on-feedback-delete=${args['on-feedback-delete']}
+      @on-feedback-save=${args['on-feedback-save']}
+      model=${args.model}
+      input=${args.input}
+      output=${args.output}
+      generation-id=${args['generation-id']}
+      .feedbackList=${args['feedback-list']}
+      icon=${args.icon}>
+      ${iconLoader(Flag24, { slot: 'icon' })} ${args.output}
+    </clabs-feedback>
+  `,
 };
 
 export const Playground = {
@@ -197,18 +196,17 @@ export const Playground = {
    * @param {object} args Storybook arguments
    * @returns {TemplateResult<1>}
    */
-  render: (args) =>
-    html`
-      <clabs-feedback
-        @on-feedback-delete=${args['on-feedback-delete']}
-        @on-feedback-save=${args['on-feedback-save']}
-        model=${args.model}
-        input=${args.input}
-        output=${args.output}
-        generation-id=${args['generation-id']}
-        .feedbackList=${args['feedback-list']}
-        icon=${args.icon}>
-        ${iconLoader(Flag24, { slot: 'icon' })} ${args.output}
-      </clabs-feedback>
-    `,
+  render: (args) => html`
+    <clabs-feedback
+      @on-feedback-delete=${args['on-feedback-delete']}
+      @on-feedback-save=${args['on-feedback-save']}
+      model=${args.model}
+      input=${args.input}
+      output=${args.output}
+      generation-id=${args['generation-id']}
+      .feedbackList=${args['feedback-list']}
+      icon=${args.icon}>
+      ${iconLoader(Flag24, { slot: 'icon' })} ${args.output}
+    </clabs-feedback>
+  `,
 };

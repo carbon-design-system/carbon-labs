@@ -209,15 +209,14 @@ export const Showcase = {
    */
   render: () =>
     html` ${examples.map(
-      (example) =>
-        html`
-          <clabs-chat-diagram
-            title="${example.title}"
-            width="${example.width}"
-            height="${example.height}"
-            ?thumbnail-mode=${example.thumbnail}
-            definition="${example.definition}">
-          </clabs-chat-diagram>
-        `
+      (example) => html`
+        <clabs-chat-diagram
+          title="${example.title}"
+          width="${example.width}"
+          height="${example.height}"
+          ?thumbnail-mode=${example.thumbnail}
+          definition="${example.definition}">
+        </clabs-chat-diagram>
+      `
     )}`,
 };

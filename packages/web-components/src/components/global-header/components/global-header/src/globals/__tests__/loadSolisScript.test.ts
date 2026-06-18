@@ -9,10 +9,8 @@
 
 import { expect } from '@open-wc/testing';
 import * as loadSolisScript from '../loadSolisScript';
-import {
-  HeaderProps,
-  solisDeploymentEnvironment,
-} from '../../types/Header.types';
+import type { HeaderProps } from '../../types/Header.types';
+import { solisDeploymentEnvironment } from '../../types/Header.types';
 
 const propsWithSolisConfig: HeaderProps = {
   brand: {

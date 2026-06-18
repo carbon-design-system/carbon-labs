@@ -156,7 +156,6 @@ might want to run:
    ```
 
    This will generate:
-
    - An example test app for your component, located in
      `examples/react/TestComponent`. This example test app will be linked as a
      stackblitz link in the component storybook `mdx` file. Note that this
@@ -196,7 +195,6 @@ might want to run:
    ```
 
    This will generate:
-
    - An example test app for your component, located in
      `examples/web-components/test-component`. This example test app will be
      linked as a stackblitz link in the component storybook `mdx` file. Note

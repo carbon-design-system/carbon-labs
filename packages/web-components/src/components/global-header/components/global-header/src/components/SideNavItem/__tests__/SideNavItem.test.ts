@@ -11,7 +11,7 @@
 import { html, fixture, expect } from '@open-wc/testing';
 import '../SideNavItem';
 import { AUTOMATION_NAMESPACE_PREFIX } from '../../../constant';
-import { SideNavLink } from '../../../types/Header.types';
+import type { SideNavLink } from '../../../types/Header.types';
 import sinon from 'sinon';
 
 const sideItem: SideNavLink = {

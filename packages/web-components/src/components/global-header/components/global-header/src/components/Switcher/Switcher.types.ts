@@ -7,7 +7,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { SwitcherConfigs } from '../../types/Header.types';
+import type { SwitcherConfigs } from '../../types/Header.types';
 export type { ItemLink } from '../../types/Header.types';
 
 export type SwitcherProps = SwitcherConfigs;

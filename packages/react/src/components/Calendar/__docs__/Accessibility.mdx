@@ -1,0 +1,137 @@
+import CalendarAccessibilityHeader from './images/calendar-accessibility-header.png';
+import CalendarAccessibilityKeyboard from './images/calendar-accessibility-keyboard.png';
+
+<Meta title="Components/Calendar/Docs/Accessibility" />
+
+<PageDescription>
+
+No accessibility annotations are needed for calendars, but keep these considerations in mind if you are modifying Carbon or creating a custom component.
+
+</PageDescription>
+
+<AnchorLinks>
+  <AnchorLink>What Carbon provides</AnchorLink>
+  <AnchorLink>Design recommendations</AnchorLink>
+  <AnchorLink>Development considerations</AnchorLink>
+</AnchorLinks>
+
+## What Carbon provides
+
+Carbon bakes keyboard operation into its components, improving the experience of
+blind users and others who operate via the keyboard. Carbon incorporates many
+other accessibility considerations, some of which are described below.
+
+### Keyboard interactions
+
+The calendar component is fully keyboard accessible. Users can navigate through
+the calendar using standard keyboard controls:
+
+- `Tab` and `Shift+Tab` move focus between interactive elements (navigation buttons, view switcher, date cells, and action buttons)
+- `Arrow keys` navigate between date cells in the calendar grid
+- `Space` or `Enter` select a date or activate buttons
+- `Home` and `End` jump to the first or last day of the current view
+- `Page Up` and `Page Down` navigate to the previous or next month/week/day
+
+<Row>
+<Column lg={8}>
+
+<img
+  alt="Calendar keyboard navigation showing tab order and arrow key navigation"
+  src={CalendarAccessibilityHeader}
+/>
+
+<Caption>
+Calendar header with visible focus indicators on all interactive controls.
+</Caption>
+
+</Column>
+</Row>
+
+### Screen reader support
+
+The calendar provides comprehensive screen reader support:
+
+- Date cells announce the day, date, and any associated events
+- Navigation controls clearly indicate their purpose (e.g., "Previous month", "Next month")
+- The current date is identified with appropriate ARIA labels
+- Selected dates and date ranges are announced to screen reader users
+- View switcher states (Month, Week, Day) are properly communicated
+- Time indicators in Week and Day views include proper time formatting
+
+### Focus management
+
+- Focus is clearly visible on all interactive elements with a high-contrast focus indicator
+- Focus order follows a logical sequence through the calendar interface
+- When switching views, focus is maintained on the corresponding date or moved to a logical starting point
+- The mini calendar toggle maintains focus state when expanding or collapsing
+
+<Row>
+<Column lg={8}>
+
+<img
+  alt="Calendar header showing focus states and interactive elements"
+  src={CalendarAccessibilityKeyboard}
+/>
+
+<Caption>
+  Calendar interactive elements are in the tab order and fully keyboard operable with arrow key navigation for date selection.
+</Caption>
+
+</Column>
+</Row>
+
+## Design recommendations
+
+Design annotations are needed for the following instances.
+
+### Date format and localization
+
+Ensure date formats follow the user's locale settings and are announced clearly by screen readers. Annotate when custom date formats are required:
+
+- Use full month names in headers for clarity (e.g., "January 2024" instead of "Jan 2024")
+- Include day of week information for better context
+- Ensure time formats respect 12-hour or 24-hour preferences based on locale
+
+### Color contrast
+
+While Carbon provides accessible color tokens by default, verify that:
+
+- Event indicators have sufficient contrast against their backgrounds (minimum 3:1 for UI components)
+- The current day indicator meets contrast requirements
+- Selected date states are distinguishable from unselected states
+- Text on colored backgrounds maintains a 4.5:1 contrast ratio
+
+### Event density
+
+When displaying multiple events in a single day:
+
+- Ensure events are distinguishable from each other
+- Provide clear visual separation between overlapping events
+- Consider truncation patterns that don't hide critical information
+- Annotate if custom event display patterns are needed
+
+### Responsive considerations
+
+At smaller breakpoints:
+
+- Ensure touch targets meet minimum size requirements (44x44px)
+- Verify that scrollable areas are clearly indicated
+- Confirm that sticky headers remain accessible when scrolling
+- Test that mini calendar remains usable on mobile devices
+
+## Development considerations
+
+Keep these considerations in mind if you are modifying Carbon or creating a
+custom component:
+
+- The calendar grid uses a `<table>` structure with proper `<th>` headers for days of the week, providing context for screen readers
+- Each date cell has a `role="gridcell"` and includes `aria-label` with the full date
+- The current date is marked with `aria-current="date"`
+- Selected dates use `aria-selected="true"`
+- Navigation buttons include `aria-label` attributes describing their action (e.g., "Go to previous month")
+- The view switcher uses `role="tablist"` with proper `aria-selected` states
+- Time slots in Week and Day views include `aria-label` with formatted time information
+- The mini calendar toggle uses `aria-expanded` to indicate its state
+- Event elements include proper semantic markup and ARIA labels describing the event details
+- Ensure all interactive elements are reachable via keyboard and have visible focus indicators
+- See the [ARIA authoring practices for grids](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) for more guidance on calendar grid implementation

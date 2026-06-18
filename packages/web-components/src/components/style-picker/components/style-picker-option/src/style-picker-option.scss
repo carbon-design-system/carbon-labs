@@ -12,7 +12,7 @@ $css--plex: true !default;
 @use '@carbon/styles/scss/utilities/button-reset';
 
 @use '../../../../../globals/scss/vars' as *;
-@use '../../../defs/vars.scss' as *;
+@use '../../../defs/vars' as *;
 
 $block-class: #{$clabs-prefix}--style-picker-option;
 $min-value: 0.0625rem;

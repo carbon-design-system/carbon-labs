@@ -7,4 +7,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '@carbon-labs/wc-global-header/es/index.js';
+import '@carbon-labs/wc-global-header';

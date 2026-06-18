@@ -11,9 +11,8 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { CommonHeader } from '../CommonHeader';
 import { html } from 'lit';
+import type { HeaderProps, SearchConfigs } from '../../../types/Header.types';
 import {
-  HeaderProps,
-  SearchConfigs,
   TrialLinkType,
   solisDeploymentEnvironment,
 } from '../../../types/Header.types';

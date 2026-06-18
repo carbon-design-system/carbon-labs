@@ -82,7 +82,6 @@ methods.
 ## Next Steps
 
 1. **Add Demo GIF** (Recommended)
-
    - Record a 15-30 second demo showing snippets in action
    - Optimize to < 5MB
    - Save as `demo.gif` in package root
@@ -90,13 +89,11 @@ methods.
    - README already references it
 
 2. **Configure Publisher**
-
    - Create a publisher account on VSCode Marketplace
    - Update `"publisher"` field in package.json if needed
    - Generate a Personal Access Token
 
 3. **Test Thoroughly**
-
    - Build and package locally
    - Install the .vsix file
    - Test all snippet categories

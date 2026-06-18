@@ -15,7 +15,7 @@ import CLABSStylePickerOption from '../style-picker-option';
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
-  StylePickerContextType,
+  type StylePickerContextType,
 } from '../../../context/style-picker-context';
 import { prefix } from '../../../defs';
 import { settings } from '@carbon-labs/utilities';

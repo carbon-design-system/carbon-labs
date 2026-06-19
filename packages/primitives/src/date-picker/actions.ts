@@ -82,7 +82,9 @@ export const actions: ActionMap = {
      */
     CALENDAR_CLOSE: (context) => ({
       isOpen: false,
-      restoreFocusTo: context.shouldRestoreFocus ? context.restoreFocusTo : null,
+      restoreFocusTo: context.shouldRestoreFocus
+        ? context.restoreFocusTo
+        : null,
       shouldRestoreFocus: context.shouldRestoreFocus,
     }),
   },
@@ -999,7 +1001,9 @@ export const actions: ActionMap = {
      */
     CALENDAR_CLOSE: (context) => ({
       isOpen: false,
-      restoreFocusTo: context.shouldRestoreFocus ? context.restoreFocusTo : null,
+      restoreFocusTo: context.shouldRestoreFocus
+        ? context.restoreFocusTo
+        : null,
       shouldRestoreFocus: context.shouldRestoreFocus,
     }),
   },

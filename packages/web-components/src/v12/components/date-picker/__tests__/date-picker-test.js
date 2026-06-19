@@ -254,17 +254,15 @@ describe('cds-date-picker', () => {
       expect(calendarGrid).to.exist;
 
       const stateChangePromise = oneEvent(el, 'cds-date-picker-state-change');
-      el.shadowRoot
-        ?.querySelector('cds-date-picker-calendar')
-        ?.dispatchEvent(
-          new CustomEvent('cds-date-picker-calendar-date-select', {
-            detail: {
-              date: parseISOToPlainDate('2026-01-01'),
-            },
-            bubbles: true,
-            composed: true,
-          })
-        );
+      el.shadowRoot?.querySelector('cds-date-picker-calendar')?.dispatchEvent(
+        new CustomEvent('cds-date-picker-calendar-date-select', {
+          detail: {
+            date: parseISOToPlainDate('2026-01-01'),
+          },
+          bubbles: true,
+          composed: true,
+        })
+      );
 
       await stateChangePromise;
       await el.updateComplete;
@@ -305,14 +303,14 @@ describe('cds-date-picker', () => {
       expect(calendarGrid).to.exist;
 
       calendar.dispatchEvent(
-          new CustomEvent('cds-date-picker-calendar-date-select', {
-            detail: {
-              date: parseISOToPlainDate('2026-01-01'),
-            },
-            bubbles: true,
-            composed: true,
-          })
-        );
+        new CustomEvent('cds-date-picker-calendar-date-select', {
+          detail: {
+            date: parseISOToPlainDate('2026-01-01'),
+          },
+          bubbles: true,
+          composed: true,
+        })
+      );
 
       await el.updateComplete;
 
@@ -325,14 +323,14 @@ describe('cds-date-picker', () => {
 
       const stateChangePromise = oneEvent(el, 'cds-date-picker-state-change');
       calendar.dispatchEvent(
-          new CustomEvent('cds-date-picker-calendar-date-select', {
-            detail: {
-              date: parseISOToPlainDate('2026-01-02'),
-            },
-            bubbles: true,
-            composed: true,
-          })
-        );
+        new CustomEvent('cds-date-picker-calendar-date-select', {
+          detail: {
+            date: parseISOToPlainDate('2026-01-02'),
+          },
+          bubbles: true,
+          composed: true,
+        })
+      );
 
       await stateChangePromise;
       await el.updateComplete;

@@ -376,9 +376,9 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
             : (this.constructor as typeof CDSDatePicker).selectorInputFrom;
 
         // @ts-expect-error - querySelector is available from HTMLElement
-        const targetInput = this.querySelector(targetSelector) as
-          | CDSDatePickerInput
-          | null;
+        const targetInput = this.querySelector(
+          targetSelector
+        ) as CDSDatePickerInput | null;
 
         this._suppressOpenOnFocus = true;
         (targetInput as any)?.input?.focus();
@@ -670,7 +670,11 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         composedPath.includes(calendar);
 
       // Case 0: Tab FROM input while closed -> reopen calendar and keep focus on input
-      if (!this.open && (isOnFirstInput || isOnSecondInput) && !event.shiftKey) {
+      if (
+        !this.open &&
+        (isOnFirstInput || isOnSecondInput) &&
+        !event.shiftKey
+      ) {
         event.preventDefault();
         event.stopPropagation();
         this._lastTabCloseTime = 0;

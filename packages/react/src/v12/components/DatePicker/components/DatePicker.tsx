@@ -223,12 +223,7 @@ export function DatePicker({
       onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
         child.props.onKeyDown?.(e);
 
-        if (
-          !e.defaultPrevented &&
-          e.key === 'Tab' &&
-          !e.shiftKey &&
-          !isOpen
-        ) {
+        if (!e.defaultPrevented && e.key === 'Tab' && !e.shiftKey && !isOpen) {
           e.preventDefault();
           openCalendar();
         }

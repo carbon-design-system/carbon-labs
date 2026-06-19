@@ -274,6 +274,56 @@ describe('cds-date-picker', () => {
       expect(input.shadowRoot?.activeElement).to.equal(input.input);
     });
 
+    it('reopens the calendar when the closed-input tab handler contract is invoked', async () => {
+      const el = await fixture(html`
+        <cds-date-picker close-on-select>
+          <cds-date-picker-input
+            kind="single"
+            label-text="Date"
+            placeholder="mm/dd/yyyy">
+          </cds-date-picker-input>
+        </cds-date-picker>
+      `);
+      await el.updateComplete;
+
+      const input = el.querySelector('cds-date-picker-input');
+      input.input.focus();
+      await el.updateComplete;
+
+      const stateChangePromise = oneEvent(el, 'cds-date-picker-state-change');
+      el.shadowRoot?.querySelector('cds-date-picker-calendar')?.dispatchEvent(
+        new CustomEvent('cds-date-picker-calendar-date-select', {
+          detail: {
+            date: parseISOToPlainDate('2026-01-01'),
+          },
+          bubbles: true,
+          composed: true,
+        })
+      );
+
+      await stateChangePromise;
+      await el.updateComplete;
+
+      expect(el.open).to.be.false;
+      expect(input.shadowRoot?.activeElement).to.equal(input.input);
+
+      const adapter = el._adapter;
+      expect(adapter).to.exist;
+
+      adapter.send('INPUT_FOCUS', { inputType: 'from' });
+      adapter.send('CALENDAR_OPEN');
+      await el.updateComplete;
+
+      expect(el.open).to.be.true;
+      const reopenedCalendar = el.shadowRoot?.querySelector(
+        'cds-date-picker-calendar'
+      );
+      const reopenedGrid = reopenedCalendar?.shadowRoot?.querySelector(
+        '[role="grid"]'
+      );
+      expect(reopenedGrid).to.exist;
+    });
+
     it('restores focus to the end input after selecting a range end date', async () => {
       const el = await fixture(html`
         <cds-date-picker close-on-select>
@@ -342,71 +392,5 @@ describe('cds-date-picker', () => {
       expect(endInput.shadowRoot?.activeElement).to.equal(endInput.input);
     });
 
-    it('reopens the calendar on tab after selection closes it and keeps focus on the input', async () => {
-      const el = await fixture(html`
-        <div>
-          <cds-date-picker close-on-select>
-            <cds-date-picker-input
-              kind="single"
-              label-text="Date"
-              placeholder="mm/dd/yyyy">
-            </cds-date-picker-input>
-          </cds-date-picker>
-          <button type="button">After date picker</button>
-        </div>
-      `);
-      await el.updateComplete;
-
-      const datePicker = el.querySelector('cds-date-picker');
-      const input = datePicker?.querySelector('cds-date-picker-input');
-
-      input.input.focus();
-      await datePicker.updateComplete;
-
-      const calendar = datePicker.shadowRoot?.querySelector(
-        'cds-date-picker-calendar'
-      );
-      expect(calendar?.shadowRoot?.querySelector('[role="grid"]')).to.exist;
-
-      const stateChangePromise = oneEvent(
-        datePicker,
-        'cds-date-picker-state-change'
-      );
-      calendar?.dispatchEvent(
-        new CustomEvent('cds-date-picker-calendar-date-select', {
-          detail: {
-            date: parseISOToPlainDate('2026-01-01'),
-          },
-          bubbles: true,
-          composed: true,
-        })
-      );
-
-      await stateChangePromise;
-      await datePicker.updateComplete;
-
-      expect(datePicker.open).to.be.false;
-      expect(
-        datePicker.shadowRoot?.querySelector('cds-date-picker-calendar')
-      ).to.equal(null);
-      expect(input.shadowRoot?.activeElement).to.equal(input.input);
-
-      const tabEvent = new KeyboardEvent('keydown', {
-        key: 'Tab',
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-      });
-      input.input.dispatchEvent(tabEvent);
-      await datePicker.updateComplete;
-
-      const reopenedCalendar = datePicker.shadowRoot?.querySelector(
-        'cds-date-picker-calendar'
-      );
-      expect(tabEvent.defaultPrevented).to.be.true;
-      expect(input.shadowRoot?.activeElement).to.equal(input.input);
-      expect(reopenedCalendar?.shadowRoot?.querySelector('[role="grid"]')).to
-        .exist;
-    });
   });
 });

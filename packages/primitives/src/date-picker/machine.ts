@@ -138,6 +138,8 @@ export class DatePickerStateMachine {
       isReadonly: false,
       isInvalid: false,
       lastFocusedInput: null,
+      restoreFocusTo: null,
+      shouldRestoreFocus: false,
       minDate: null,
       maxDate: null,
       dateFormat: 'm/d/Y',

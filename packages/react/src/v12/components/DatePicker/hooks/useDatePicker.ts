@@ -111,7 +111,7 @@ export interface UseDatePickerReturn {
   /**
    * Send an event to the state machine
    */
-  send: (eventType: string, payload?: any) => void;
+  send: (eventType: string, payload?: unknown) => void;
 
   /**
    * Open the calendar
@@ -195,6 +195,7 @@ export function useDatePicker(
 
   // State machine instance (persists across renders)
   const machineRef = useRef<DatePickerStateMachine | null>(null);
+  const suppressOpenOnFocusRef = useRef(false);
 
   // React state for triggering re-renders
   const [context, setContext] = useState<DatePickerContext>(() => {
@@ -243,6 +244,33 @@ export function useDatePicker(
 
     return unsubscribe;
   }, [onOpen, onClose, context.isOpen]);
+
+  useEffect(() => {
+    if (!context.shouldRestoreFocus) {
+      return;
+    }
+
+    const targetRef =
+      context.restoreFocusTo === 'to' ? endInputRef : startInputRef;
+
+    const timeoutId = window.setTimeout(() => {
+      suppressOpenOnFocusRef.current = true;
+      targetRef.current?.focus();
+
+      machineRef.current?.updateContext({
+        shouldRestoreFocus: false,
+        restoreFocusTo: null,
+      });
+
+      window.setTimeout(() => {
+        suppressOpenOnFocusRef.current = false;
+      }, 0);
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [context.shouldRestoreFocus, context.restoreFocusTo]);
 
   // Track previous dates to prevent infinite loops
   const prevDatesRef = useRef<string>('');
@@ -339,24 +367,33 @@ export function useDatePicker(
           // Select end date
           send(DatePickerEvent.RANGE_END_SELECT, { date });
           if (closeOnSelect) {
-            closeCalendar();
+            machineRef.current?.updateContext({
+              isOpen: false,
+              restoreFocusTo: 'to',
+              shouldRestoreFocus: true,
+            });
+            send(DatePickerEvent.CALENDAR_CLOSE);
           }
         }
       } else {
         // Single date selection
         send(DatePickerEvent.DATE_SELECT, { date });
         if (closeOnSelect) {
-          closeCalendar();
+          machineRef.current?.updateContext({
+            restoreFocusTo: context.lastFocusedInput || 'from',
+            shouldRestoreFocus: true,
+          });
+          send(DatePickerEvent.CALENDAR_CLOSE);
         }
       }
     },
     [
+      closeOnSelect,
       datePickerType,
       context.startDate,
       context.endDate,
-      closeOnSelect,
+      context.lastFocusedInput,
       send,
-      closeCalendar,
     ]
   );
 
@@ -364,6 +401,11 @@ export function useDatePicker(
     (inputType: 'from' | 'to' = 'from') => {
       // Send INPUT_FOCUS to transition to FOCUSED state
       send(DatePickerEvent.INPUT_FOCUS, { inputType });
+
+      if (suppressOpenOnFocusRef.current) {
+        return;
+      }
+
       // Then send CALENDAR_OPEN to open the calendar
       // This matches the expected state machine flow: IDLE -> FOCUSED -> CALENDAR_OPEN
       send(DatePickerEvent.CALENDAR_OPEN);

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { Children, cloneElement, isValidElement, useRef } from 'react';
+import React, { Children, isValidElement, useRef } from 'react';
 import classNames from 'classnames';
 import { useDatePicker } from '../hooks/useDatePicker';
 import { Calendar } from './Calendar';
@@ -236,14 +236,16 @@ export function DatePicker({
         isEndInput && datePickerType === 'range',
     });
 
-    // Use cloneElement with ref separately to avoid TypeScript issues
+    // Preserve the forwarded input ref so focus management targets the actual input element
+    const childWithRef = React.createElement(child.type, {
+      ...child.props,
+      ...enhancedProps,
+      ref: inputRef,
+    });
+
     return (
       <div key={child.props.id} className={containerClasses}>
-        {cloneElement(child, {
-          ...enhancedProps,
-          // @ts-expect-error - ref is valid but TypeScript doesn't recognize it in cloneElement
-          ref: inputRef,
-        })}
+        {childWithRef}
       </div>
     );
   });

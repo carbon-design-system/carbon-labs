@@ -80,9 +80,19 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   private _clickOutsideHandler: ClickOutsideHandler | null = null;
 
   /**
+   * Pending input target for post-render focus restoration
+   */
+  private _pendingRestoreFocusTo: 'from' | 'to' | null = null;
+
+  /**
    * Timestamp of when calendar was last closed via Tab key
    */
   private _lastTabCloseTime = 0;
+
+  /**
+   * Prevents immediate reopen when focus is restored programmatically after selection
+   */
+  private _suppressOpenOnFocus = false;
 
   /**
    * @returns The effective date picker mode, determined by the child `<cds-date-picker-input>`.
@@ -153,10 +163,10 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       this._adapter.send(DatePickerEvent.INPUT_FOCUS, { inputType });
 
       // Don't auto-open calendar if we JUST closed it via Tab key (within 100ms)
-      // This prevents the immediate reopen when Tab moves focus to input,
-      // but allows normal opening after that brief window
+      // or if focus is being restored programmatically after selection close.
       const timeSinceTabClose = Date.now() - this._lastTabCloseTime;
-      const shouldSkipOpen = timeSinceTabClose < 100;
+      const shouldSkipOpen =
+        timeSinceTabClose < 100 || this._suppressOpenOnFocus;
 
       if (!shouldSkipOpen) {
         // Open calendar when input is focused (matching current Carbon behavior)
@@ -356,6 +366,35 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         )
       );
     }
+
+    if (context.shouldRestoreFocus && context.restoreFocusTo) {
+      this._pendingRestoreFocusTo = context.restoreFocusTo;
+      this.updateComplete.then(() => {
+        const targetSelector =
+          this._pendingRestoreFocusTo === 'to'
+            ? (this.constructor as typeof CDSDatePicker).selectorInputTo
+            : (this.constructor as typeof CDSDatePicker).selectorInputFrom;
+
+        // @ts-expect-error - querySelector is available from HTMLElement
+        const targetInput = this.querySelector(targetSelector) as
+          | CDSDatePickerInput
+          | null;
+
+        this._suppressOpenOnFocus = true;
+        (targetInput as any)?.input?.focus();
+
+        this._adapter?.updateContext({
+          shouldRestoreFocus: false,
+          restoreFocusTo: null,
+        });
+
+        setTimeout(() => {
+          this._suppressOpenOnFocus = false;
+        }, 0);
+
+        this._pendingRestoreFocusTo = null;
+      });
+    }
   };
 
   /**
@@ -496,6 +535,8 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * Releases the date picker state machine.
    */
   private _releaseDatePicker() {
+    this._pendingRestoreFocusTo = null;
+
     if (this._adapter) {
       this._adapter.destroy();
       this._adapter = null;

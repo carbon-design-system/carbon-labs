@@ -500,12 +500,6 @@ export function useDatePicker(
 
       // Handle Tab key - complex focus management
       if (key === 'Tab') {
-        if (!context.isOpen && isFocusInInput && !event.shiftKey) {
-          event.preventDefault();
-          send(DatePickerEvent.CALENDAR_OPEN);
-          return;
-        }
-
         // Case 1: Tab FROM input -> Focus the calendar container
         if (isFocusInInput && !event.shiftKey) {
           event.preventDefault();

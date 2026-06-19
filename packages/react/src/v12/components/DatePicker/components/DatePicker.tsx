@@ -220,6 +220,19 @@ export function DatePicker({
         child.props.onChange?.(e);
         handleInputChange(e.target.value, isEndInput ? 'to' : 'from');
       },
+      onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
+        child.props.onKeyDown?.(e);
+
+        if (
+          !e.defaultPrevented &&
+          e.key === 'Tab' &&
+          !e.shiftKey &&
+          !isOpen
+        ) {
+          e.preventDefault();
+          openCalendar();
+        }
+      },
       onIconClick: () => {
         child.props.onIconClick?.();
         handleIconClick();

@@ -262,9 +262,9 @@ export function useDatePicker(
         restoreFocusTo: null,
       });
 
-      window.setTimeout(() => {
+      queueMicrotask(() => {
         suppressOpenOnFocusRef.current = false;
-      }, 0);
+      });
     }, 0);
 
     return () => {
@@ -465,10 +465,6 @@ export function useDatePicker(
 
   // Handle keyboard events
   useEffect(() => {
-    if (!context.isOpen) {
-      return;
-    }
-
     /**
      * Handle keyboard events for calendar navigation
      *
@@ -496,7 +492,7 @@ export function useDatePicker(
         (endInputEl && endInputEl.contains(target));
 
       // Handle Escape key - close calendar (works from anywhere)
-      if (key === 'Escape') {
+      if (key === 'Escape' && context.isOpen) {
         event.preventDefault();
         send(DatePickerEvent.ESCAPE_KEY);
         return;
@@ -504,6 +500,12 @@ export function useDatePicker(
 
       // Handle Tab key - complex focus management
       if (key === 'Tab') {
+        if (!context.isOpen && isFocusInInput && !event.shiftKey) {
+          event.preventDefault();
+          send(DatePickerEvent.CALENDAR_OPEN);
+          return;
+        }
+
         // Case 1: Tab FROM input -> Focus the calendar container
         if (isFocusInInput && !event.shiftKey) {
           event.preventDefault();
@@ -546,6 +548,10 @@ export function useDatePicker(
         }
 
         // For other cases, let default Tab behavior work
+        return;
+      }
+
+      if (!context.isOpen) {
         return;
       }
 

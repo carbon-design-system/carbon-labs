@@ -343,5 +343,74 @@ describe('cds-date-picker', () => {
       );
       expect(endInput.shadowRoot?.activeElement).to.equal(endInput.input);
     });
+
+    it('reopens the calendar when the input is focused again after selection closes it', async () => {
+      const el = await fixture(html`
+        <div>
+          <cds-date-picker close-on-select>
+            <cds-date-picker-input
+              kind="single"
+              label-text="Date"
+              placeholder="mm/dd/yyyy">
+            </cds-date-picker-input>
+          </cds-date-picker>
+          <button type="button">After date picker</button>
+        </div>
+      `);
+      await el.updateComplete;
+
+      const datePicker = el.querySelector('cds-date-picker');
+      const input = datePicker?.querySelector('cds-date-picker-input');
+
+      input.input.focus();
+      await datePicker.updateComplete;
+
+      const calendar = datePicker.shadowRoot?.querySelector(
+        'cds-date-picker-calendar'
+      );
+      expect(calendar?.shadowRoot?.querySelector('[role="grid"]')).to.exist;
+
+      const stateChangePromise = oneEvent(
+        datePicker,
+        'cds-date-picker-state-change'
+      );
+      calendar?.dispatchEvent(
+        new CustomEvent('cds-date-picker-calendar-date-select', {
+          detail: {
+            date: parseISOToPlainDate('2026-01-01'),
+          },
+          bubbles: true,
+          composed: true,
+        })
+      );
+
+      await stateChangePromise;
+      await datePicker.updateComplete;
+
+      expect(datePicker.open).to.be.false;
+      expect(
+        datePicker.shadowRoot?.querySelector('cds-date-picker-calendar')
+      ).to.equal(null);
+      expect(input.shadowRoot?.activeElement).to.equal(input.input);
+
+      input.dispatchEvent(
+        new CustomEvent('cds-date-picker-input-focus', {
+          bubbles: true,
+          composed: true,
+          detail: {
+            inputType: 'from',
+          },
+        })
+      );
+      await datePicker.updateComplete;
+
+      let reopenedCalendar = datePicker.shadowRoot?.querySelector(
+        'cds-date-picker-calendar'
+      );
+      expect(input.shadowRoot?.activeElement).to.equal(input.input);
+      expect(reopenedCalendar?.shadowRoot?.querySelector('[role="grid"]')).to
+        .exist;
+
+    });
   });
 });

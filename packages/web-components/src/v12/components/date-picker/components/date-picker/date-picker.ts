@@ -388,9 +388,9 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           restoreFocusTo: null,
         });
 
-        setTimeout(() => {
+        queueMicrotask(() => {
           this._suppressOpenOnFocus = false;
-        }, 0);
+        });
 
         this._pendingRestoreFocusTo = null;
       });
@@ -668,6 +668,23 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         target === calendar ||
         target.closest?.('cds-date-picker-calendar') !== null ||
         composedPath.includes(calendar);
+
+      // Case 0: Tab FROM input while closed -> reopen calendar and keep focus on input
+      if (!this.open && (isOnFirstInput || isOnSecondInput) && !event.shiftKey) {
+        event.preventDefault();
+        event.stopPropagation();
+        this._lastTabCloseTime = 0;
+        this._adapter.updateContext({
+          isFocused: true,
+          lastFocusedInput: isOnSecondInput ? 'to' : 'from',
+        });
+        this._adapter.send(DatePickerEvent.INPUT_FOCUS, {
+          inputType: isOnSecondInput ? 'to' : 'from',
+        });
+        this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
+        this.requestUpdate();
+        return;
+      }
 
       // Case 1: Tab FROM first input -> Focus calendar (if open)
       if (this.open && isOnFirstInput && !event.shiftKey) {

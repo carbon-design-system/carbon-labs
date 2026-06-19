@@ -155,4 +155,47 @@ describe('DatePicker v12 focus restoration', () => {
       );
     });
   });
+
+  it('reopens the calendar on first tab after selection closes it and moves focus into it on second tab', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <div>
+        <DatePicker datePickerType="single" closeOnSelect>
+          <DatePickerInput id="single-date-tab-reopen" labelText="Date input" />
+        </DatePicker>
+        <button type="button">After date picker</button>
+      </div>
+    );
+
+    const dateInput = screen.getByLabelText('Date input');
+
+    await user.click(dateInput);
+
+    const dateButton = await screen.findByRole('button', {
+      name: 'January 1, 2026',
+    });
+
+    await user.click(dateButton);
+
+    await waitFor(() => {
+      expect(document.activeElement).toBe(dateInput);
+      expect(screen.queryByRole('grid', { name: 'Calendar' })).toBe(null);
+    });
+
+    await user.keyboard('{Tab}');
+
+    await waitFor(() => {
+      expect(document.activeElement).toBe(dateInput);
+      expect(screen.getByRole('grid', { name: 'Calendar' })).toBeTruthy();
+    });
+
+    await user.keyboard('{Tab}');
+
+    await waitFor(() => {
+      expect(document.activeElement).toBe(
+        screen.getByRole('grid', { name: 'Calendar' })
+      );
+    });
+  });
 });

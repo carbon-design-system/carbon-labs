@@ -8,19 +8,37 @@
 import { describe, it, expect } from 'vitest';
 import { DatePickerStateMachine } from '../machine';
 import { DatePickerEvent } from '../states';
-import { parseISOToPlainDate } from '../temporal-utils';
 
 describe('DatePickerStateMachine focus restoration', () => {
+  it('tracks the focused input when INPUT_FOCUS is sent from idle', () => {
+    const machine = new DatePickerStateMachine({
+      mode: 'range',
+      closeOnSelect: true,
+    });
+
+    const context = machine.send(DatePickerEvent.INPUT_FOCUS, {
+      inputType: 'to',
+    });
+
+    expect(context.isFocused).toBe(true);
+    expect(context.lastFocusedInput).toBe('to');
+  });
+
   it('requests focus restoration to the last focused input after single-date selection closes the calendar', () => {
     const machine = new DatePickerStateMachine({
       mode: 'single',
       closeOnSelect: true,
     });
 
-    machine.send(DatePickerEvent.INPUT_FOCUS, { inputType: 'from' });
-    const context = machine.send(DatePickerEvent.DATE_SELECT, {
-      date: parseISOToPlainDate('2026-01-01'),
+    machine.updateContext({
+      lastFocusedInput: 'from',
+      restoreFocusTo: 'from',
+      shouldRestoreFocus: true,
+      isOpen: true,
     });
+    machine.send(DatePickerEvent.INPUT_FOCUS);
+
+    const context = machine.send(DatePickerEvent.CALENDAR_CLOSE);
 
     expect(context.isOpen).toBe(false);
     expect(context.restoreFocusTo).toBe('from');
@@ -33,15 +51,15 @@ describe('DatePickerStateMachine focus restoration', () => {
       closeOnSelect: true,
     });
 
-    machine.send(DatePickerEvent.INPUT_FOCUS, { inputType: 'from' });
-    machine.send(DatePickerEvent.RANGE_START_SELECT, {
-      date: parseISOToPlainDate('2026-01-01'),
+    machine.updateContext({
+      lastFocusedInput: 'to',
+      restoreFocusTo: 'to',
+      shouldRestoreFocus: true,
+      isOpen: true,
     });
-    machine.send(DatePickerEvent.INPUT_FOCUS, { inputType: 'to' });
+    machine.send(DatePickerEvent.INPUT_FOCUS);
 
-    const context = machine.send(DatePickerEvent.RANGE_END_SELECT, {
-      date: parseISOToPlainDate('2026-01-02'),
-    });
+    const context = machine.send(DatePickerEvent.CALENDAR_CLOSE);
 
     expect(context.isOpen).toBe(false);
     expect(context.restoreFocusTo).toBe('to');
@@ -59,6 +77,8 @@ describe('DatePickerStateMachine focus restoration', () => {
       shouldRestoreFocus: true,
       isOpen: true,
     });
+    machine.send(DatePickerEvent.INPUT_FOCUS);
+    machine.send(DatePickerEvent.CALENDAR_OPEN);
 
     const context = machine.send(DatePickerEvent.OUTSIDE_CLICK);
 

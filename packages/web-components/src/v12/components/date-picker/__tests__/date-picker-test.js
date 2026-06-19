@@ -344,7 +344,7 @@ describe('cds-date-picker', () => {
       expect(endInput.shadowRoot?.activeElement).to.equal(endInput.input);
     });
 
-    it('reopens the calendar when the input is focused again after selection closes it', async () => {
+    it('reopens the calendar on tab after selection closes it and keeps focus on the input', async () => {
       const el = await fixture(html`
         <div>
           <cds-date-picker close-on-select>
@@ -393,24 +393,22 @@ describe('cds-date-picker', () => {
       ).to.equal(null);
       expect(input.shadowRoot?.activeElement).to.equal(input.input);
 
-      input.dispatchEvent(
-        new CustomEvent('cds-date-picker-input-focus', {
-          bubbles: true,
-          composed: true,
-          detail: {
-            inputType: 'from',
-          },
-        })
-      );
+      const tabEvent = new KeyboardEvent('keydown', {
+        key: 'Tab',
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
+      input.input.dispatchEvent(tabEvent);
       await datePicker.updateComplete;
 
-      let reopenedCalendar = datePicker.shadowRoot?.querySelector(
+      const reopenedCalendar = datePicker.shadowRoot?.querySelector(
         'cds-date-picker-calendar'
       );
+      expect(tabEvent.defaultPrevented).to.be.true;
       expect(input.shadowRoot?.activeElement).to.equal(input.input);
       expect(reopenedCalendar?.shadowRoot?.querySelector('[role="grid"]')).to
         .exist;
-
     });
   });
 });

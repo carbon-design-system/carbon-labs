@@ -46,6 +46,23 @@ export const actions: ActionMap = {
         focusedDate,
       };
     },
+    /**
+     * Action for INPUT_FOCUS event
+     *
+     * @param {DatePickerContext} _context - The current context (unused)
+     * @param {DatePickerEvent} event - The event
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    INPUT_FOCUS: (
+      _context,
+      event: DatePickerEvent
+    ): Partial<DatePickerContext> => {
+      const payload = event.payload as InputFocusPayload;
+      return {
+        isFocused: true,
+        lastFocusedInput: payload?.inputType || 'from',
+      };
+    },
     /** Action for INPUT_BLUR event */
     INPUT_BLUR: () => ({
       isFocused: false,
@@ -974,11 +991,16 @@ export const actions: ActionMap = {
       };
     },
 
-    /** Action for CALENDAR_CLOSE event */
-    CALENDAR_CLOSE: () => ({
+    /**
+     * Action for CALENDAR_CLOSE event
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    CALENDAR_CLOSE: (context) => ({
       isOpen: false,
-      restoreFocusTo: null,
-      shouldRestoreFocus: false,
+      restoreFocusTo: context.shouldRestoreFocus ? context.restoreFocusTo : null,
+      shouldRestoreFocus: context.shouldRestoreFocus,
     }),
   },
 

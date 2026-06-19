@@ -674,10 +674,6 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
         event.preventDefault();
         event.stopPropagation();
         this._lastTabCloseTime = 0;
-        this._adapter.updateContext({
-          isFocused: true,
-          lastFocusedInput: isOnSecondInput ? 'to' : 'from',
-        });
         this._adapter.send(DatePickerEvent.INPUT_FOCUS, {
           inputType: isOnSecondInput ? 'to' : 'from',
         });

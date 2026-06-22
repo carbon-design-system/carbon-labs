@@ -318,9 +318,8 @@ describe('cds-date-picker', () => {
       const reopenedCalendar = el.shadowRoot?.querySelector(
         'cds-date-picker-calendar'
       );
-      const reopenedGrid = reopenedCalendar?.shadowRoot?.querySelector(
-        '[role="grid"]'
-      );
+      const reopenedGrid =
+        reopenedCalendar?.shadowRoot?.querySelector('[role="grid"]');
       expect(reopenedGrid).to.exist;
     });
 
@@ -391,6 +390,5 @@ describe('cds-date-picker', () => {
       );
       expect(endInput.shadowRoot?.activeElement).to.equal(endInput.input);
     });
-
   });
 });

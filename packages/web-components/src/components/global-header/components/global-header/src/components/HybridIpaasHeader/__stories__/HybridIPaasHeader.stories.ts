@@ -76,13 +76,10 @@ export const Basic: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get(
-          '/hybrid-ipaas/v1/header/options',
-          async () => {
-            await delay();
-            return HttpResponse.json(mockHeaderOptions);
-          }
-        ),
+        http.get('/hybrid-ipaas/v1/header/options', async () => {
+          await delay();
+          return HttpResponse.json(mockHeaderOptions);
+        }),
       ],
     },
   },
@@ -101,13 +98,10 @@ export const BasicWithTrial: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get(
-          '/hybrid-ipaas/v1/header/options',
-          async () => {
-            await delay();
-            return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
-          }
-        ),
+        http.get('/hybrid-ipaas/v1/header/options', async () => {
+          await delay();
+          return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
+        }),
       ],
     },
   },
@@ -125,13 +119,10 @@ export const Platform: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get(
-          '/hybrid-ipaas/v1/header/options',
-          async () => {
-            await delay();
-            return HttpResponse.json(mockHeaderOptions);
-          }
-        ),
+        http.get('/hybrid-ipaas/v1/header/options', async () => {
+          await delay();
+          return HttpResponse.json(mockHeaderOptions);
+        }),
       ],
     },
   },
@@ -457,13 +448,10 @@ export const RefreshOptions: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get(
-          '/hybrid-ipaas/v1/header/options',
-          async () => {
-            await delay();
-            return HttpResponse.json(mockHeaderOptions);
-          }
-        ),
+        http.get('/hybrid-ipaas/v1/header/options', async () => {
+          await delay();
+          return HttpResponse.json(mockHeaderOptions);
+        }),
       ],
     },
   },
@@ -484,13 +472,10 @@ export const Logo: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get(
-          '/hybrid-ipaas/v1/header/options',
-          async () => {
-            await delay();
-            return HttpResponse.json(mockHeaderOptions);
-          }
-        ),
+        http.get('/hybrid-ipaas/v1/header/options', async () => {
+          await delay();
+          return HttpResponse.json(mockHeaderOptions);
+        }),
       ],
     },
   },

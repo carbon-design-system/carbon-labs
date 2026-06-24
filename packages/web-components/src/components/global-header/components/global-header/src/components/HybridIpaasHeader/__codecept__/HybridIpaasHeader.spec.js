@@ -11,6 +11,8 @@
 /* global Scenario */
 /* global locate */
 
+import { registerMockSolisSwitcher } from './mocks/solis-switcher-mock.js';
+
 Feature('HybridIpaasHeader');
 const localhost =
   'http://localhost:6009/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--basic&viewMode=story';
@@ -163,18 +165,27 @@ Scenario('Solis components render', async ({ I }) => {
   I.amOnPage(localhostWithSolis);
   I.waitForElement('clabs-global-header-apaas', 30);
 
-  // I.seeElement(locate('#ibm-automation-cds-solis-sidekick-button'));
-  // I.click(locate('#ibm-automation-cds-solis-sidekick-button'));
-  // I.seeElement('.sidekick-body');
-  // I.see('Overview');
-  // I.see('Analyze this page');
-  // I.see('Insights');
-
+  // Wait for the Solis button to be present
   I.seeElement(locate('#ibm-automation-cds-solis-switcher-button'));
-  I.click(locate('#ibm-automation-cds-solis-switcher-button'));
-  I.wait(2); // Wait for Solis switcher menu to render
-  I.see('Observability');
+
+  // Register mock solis-switcher custom element from external file
+  I.executeScript(registerMockSolisSwitcher);
+
+  // Wait a moment for the custom element to register and render
+  I.wait(1);
+
+  // Click the button to trigger the panel
+  I.click('#ibm-automation-cds-solis-switcher-button');
+
+  // Wait for the panel content to appear in shadow DOM
+  I.waitForText('Observability', 5);
   I.see('Community');
-  I.click(locate('#ibm-automation-cds-solis-switcher-button')); // Close the Solis switcher
-  I.dontSee('Observability'); // Solis switcher is closed
+  I.see('Integration');
+
+  // Click again to close
+  I.click('#ibm-automation-cds-solis-switcher-button');
+  I.wait(1);
+
+  // Verify panel is hidden
+  I.dontSee('Observability');
 });

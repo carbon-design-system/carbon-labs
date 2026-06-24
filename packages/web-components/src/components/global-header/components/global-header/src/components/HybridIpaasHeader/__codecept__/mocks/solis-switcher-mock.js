@@ -93,7 +93,17 @@ export function registerMockSolisSwitcher() {
        * Setup event listeners
        */
       setupEventListeners() {
-        // Listen for the custom event that the real Solis uses
+        // Use event delegation to catch button clicks even if button is added later
+        document.addEventListener('click', (e) => {
+          const target = e.target;
+          // Check if the clicked element or any parent is the switcher button
+          if (target.id === 'ibm-automation-cds-solis-switcher-button' ||
+              target.closest('#ibm-automation-cds-solis-switcher-button')) {
+            this.togglePanel();
+          }
+        });
+        
+        // Also listen for the custom event that the real Solis uses
         window.addEventListener('solis-nav-item-click', (e) => {
           if (e.detail?.id === 'switcher') {
             this.togglePanel();

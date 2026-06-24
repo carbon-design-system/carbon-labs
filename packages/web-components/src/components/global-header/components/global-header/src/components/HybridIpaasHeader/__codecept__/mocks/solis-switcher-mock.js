@@ -66,7 +66,7 @@ export function registerMockSolisSwitcher() {
           </style>
           <slot></slot>
         `;
-    
+
         // Render panel content in light DOM so tests can access it
         this.innerHTML = `
           <div class="switcher">

@@ -13,7 +13,7 @@ exports.config = {
   output: './codecept/screenshots',
   helpers: {
     WebDriver: {
-      url: 'http://localhost:6007',
+      url: 'http://localhost:6009',
       show: false,
       browser: 'chrome',
       desiredCapabilities: {

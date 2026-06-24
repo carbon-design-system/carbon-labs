@@ -77,7 +77,7 @@ export const Basic: Story = {
     msw: {
       handlers: [
         http.get(
-          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          '/hybrid-ipaas/v1/header/options',
           async () => {
             await delay();
             return HttpResponse.json(mockHeaderOptions);
@@ -102,7 +102,7 @@ export const BasicWithTrial: Story = {
     msw: {
       handlers: [
         http.get(
-          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          '/hybrid-ipaas/v1/header/options',
           async () => {
             await delay();
             return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
@@ -126,7 +126,7 @@ export const Platform: Story = {
     msw: {
       handlers: [
         http.get(
-          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          '/hybrid-ipaas/v1/header/options',
           async () => {
             await delay();
             return HttpResponse.json(mockHeaderOptions);
@@ -148,7 +148,7 @@ export const WithAIChat: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+        http.get('/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
         }),
       ],
@@ -168,7 +168,7 @@ export const WithSolis: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+        http.get('/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json({ ...mockHeaderOptions, trialConfigs });
         }),
       ],
@@ -218,7 +218,7 @@ export const CustomFooter: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+        http.get('/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],
@@ -238,7 +238,7 @@ export const LogoutCallback: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+        http.get('/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],
@@ -262,7 +262,7 @@ export const WithCookiePrefs: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+        http.get('/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],
@@ -282,7 +282,7 @@ export const WithYPCContentInjected: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+        http.get('/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],
@@ -398,7 +398,7 @@ export const CustomActions: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+        http.get('/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],
@@ -428,7 +428,7 @@ export const SearchCallback: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('http://localhost:6007/hybrid-ipaas/v1/header/options', () => {
+        http.get('/hybrid-ipaas/v1/header/options', () => {
           return HttpResponse.json(mockHeaderOptions);
         }),
       ],
@@ -458,7 +458,7 @@ export const RefreshOptions: Story = {
     msw: {
       handlers: [
         http.get(
-          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          '/hybrid-ipaas/v1/header/options',
           async () => {
             await delay();
             return HttpResponse.json(mockHeaderOptions);
@@ -485,7 +485,7 @@ export const Logo: Story = {
     msw: {
       handlers: [
         http.get(
-          'http://localhost:6007/hybrid-ipaas/v1/header/options',
+          '/hybrid-ipaas/v1/header/options',
           async () => {
             await delay();
             return HttpResponse.json(mockHeaderOptions);

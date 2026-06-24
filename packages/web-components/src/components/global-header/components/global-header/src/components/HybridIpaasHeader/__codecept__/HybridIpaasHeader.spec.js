@@ -13,17 +13,17 @@
 
 Feature('HybridIpaasHeader');
 const localhost =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--basic&viewMode=story';
+  'http://localhost:6009/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--basic&viewMode=story';
 const localhostWithChat =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--with-ai-chat&viewMode=story';
+  'http://localhost:6009/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--with-ai-chat&viewMode=story';
 const localhostWithSearch =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--search-callback&viewMode=story';
+  'http://localhost:6009/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--search-callback&viewMode=story';
 const localhostWithTrial =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--basic-with-trial&viewMode=story';
+  'http://localhost:6009/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--basic-with-trial&viewMode=story';
 const localhostWithCustomFooter =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--custom-footer&viewMode=story';
+  'http://localhost:6009/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--custom-footer&viewMode=story';
 const localhostWithSolis =
-  'http://localhost:6007/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--with-solis&viewMode=story';
+  'http://localhost:6009/iframe.html?globals=&args=&id=components-global-header-subcomponents-webmethods-hybrid-integration-header--with-solis&viewMode=story';
 
 Scenario('It checks the header content', async ({ I }) => {
   I.amOnPage(localhost);
@@ -172,6 +172,7 @@ Scenario('Solis components render', async ({ I }) => {
 
   I.seeElement(locate('#ibm-automation-cds-solis-switcher-button'));
   I.click(locate('#ibm-automation-cds-solis-switcher-button'));
+  I.wait(2); // Wait for Solis switcher menu to render
   I.see('Observability');
   I.see('Community');
   I.click(locate('#ibm-automation-cds-solis-switcher-button')); // Close the Solis switcher

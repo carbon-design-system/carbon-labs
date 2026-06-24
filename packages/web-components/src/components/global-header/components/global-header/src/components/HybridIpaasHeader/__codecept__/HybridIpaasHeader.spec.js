@@ -163,17 +163,17 @@ Scenario('Solis components render', async ({ I }) => {
   I.amOnPage(localhostWithSolis);
   I.waitForElement('clabs-global-header-apaas', 30);
 
-  // I.seeElement(locate('solis-sidekick'));
-  // I.click(locate('solis-sidekick'));
+  // I.seeElement(locate('#ibm-automation-cds-solis-sidekick-button'));
+  // I.click(locate('#ibm-automation-cds-solis-sidekick-button'));
   // I.seeElement('.sidekick-body');
   // I.see('Overview');
   // I.see('Analyze this page');
   // I.see('Insights');
 
-  I.seeElement(locate('solis-switcher'));
-  I.click(locate('solis-switcher'));
+  I.seeElement(locate('#ibm-automation-cds-solis-switcher-button'));
+  I.click(locate('#ibm-automation-cds-solis-switcher-button'));
   I.see('Observability');
   I.see('Community');
-  I.click(locate('solis-switcher')); // Close the Solis switcher
+  I.click(locate('#ibm-automation-cds-solis-switcher-button')); // Close the Solis switcher
   I.dontSee('Observability'); // Solis switcher is closed
 });

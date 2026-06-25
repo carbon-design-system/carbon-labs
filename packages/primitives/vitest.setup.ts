@@ -13,6 +13,12 @@
  * with, until, toString, daysInMonth.
  */
 
+/**
+ * Creates a minimal PlainDate-like object from a native Date.
+ *
+ * @param {Date} date - The native Date to wrap (interpreted as UTC).
+ * @returns A PlainDate-compatible object.
+ */
 function createPlainDate(date: Date) {
   // Normalise to midnight UTC so arithmetic is day-based
   const d = new Date(
@@ -47,9 +53,15 @@ function createPlainDate(date: Date) {
     },
     add(duration: { days?: number; months?: number; years?: number }) {
       const next = new Date(d);
-      if (duration.years) next.setUTCFullYear(next.getUTCFullYear() + duration.years);
-      if (duration.months) next.setUTCMonth(next.getUTCMonth() + duration.months);
-      if (duration.days) next.setUTCDate(next.getUTCDate() + duration.days);
+      if (duration.years) {
+        next.setUTCFullYear(next.getUTCFullYear() + duration.years);
+      }
+      if (duration.months) {
+        next.setUTCMonth(next.getUTCMonth() + duration.months);
+      }
+      if (duration.days) {
+        next.setUTCDate(next.getUTCDate() + duration.days);
+      }
       return createPlainDate(next);
     },
     until(other: { toString(): string }) {

@@ -241,7 +241,11 @@ describe('DatePickerStateMachine focus restoration', () => {
   });
 
   it('ENTER_KEY in range SELECTING_END sets restoreFocusTo "to" and shouldRestoreFocus true', () => {
-    const startDate = Temporal.PlainDate.from({ year: 2026, month: 3, day: 10 });
+    const startDate = Temporal.PlainDate.from({
+      year: 2026,
+      month: 3,
+      day: 10,
+    });
     const focusedDate = Temporal.PlainDate.from({
       year: 2026,
       month: 3,
@@ -283,8 +287,16 @@ describe('DatePickerStateMachine focus restoration', () => {
   });
 
   it('ENTER_KEY in range SELECTING_END swaps dates when end is before start', () => {
-    const startDate = Temporal.PlainDate.from({ year: 2026, month: 3, day: 20 });
-    const focusedDate = Temporal.PlainDate.from({ year: 2026, month: 3, day: 10 });
+    const startDate = Temporal.PlainDate.from({
+      year: 2026,
+      month: 3,
+      day: 20,
+    });
+    const focusedDate = Temporal.PlainDate.from({
+      year: 2026,
+      month: 3,
+      day: 10,
+    });
 
     const updates = executeAction(
       DatePickerState.SELECTING_END,

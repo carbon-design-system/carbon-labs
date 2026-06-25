@@ -261,6 +261,7 @@ export function useDatePicker(
         shouldRestoreFocus: false,
         restoreFocusTo: null,
       });
+      setContext(machineRef.current.getContext());
 
       queueMicrotask(() => {
         suppressOpenOnFocusRef.current = false;

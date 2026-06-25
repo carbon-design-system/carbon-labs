@@ -244,7 +244,7 @@ export const actions: ActionMap = {
       return {
         startDate,
         value: plainDateToISOString(startDate),
-        isOpen: false, // Close calendar after selecting date in single mode
+        isOpen: _context.closeOnSelect ? false : _context.isOpen,
         restoreFocusTo: _context.lastFocusedInput || 'from',
         shouldRestoreFocus: _context.closeOnSelect,
       };

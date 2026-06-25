@@ -130,4 +130,88 @@ describe('cds-date-picker calendar interaction', () => {
       reopenedCalendar?.shadowRoot?.querySelector('[role="grid"]');
     expect(reopenedGrid).to.exist;
   });
+  it('keeps the calendar open after selecting a date when close-on-select is false', async () => {
+    const el = await fixture(html`
+      <cds-date-picker>
+        <cds-date-picker-input
+          kind="single"
+          label-text="Date"
+          placeholder="mm/dd/yyyy">
+        </cds-date-picker-input>
+      </cds-date-picker>
+    `);
+    // Setting via property (not attribute) is the only reliable way to pass
+    // false for a LitElement Boolean property — close-on-select="false" in HTML
+    // would be treated as the truthy string "false".
+    el.closeOnSelect = false;
+    await el.updateComplete;
+
+    // Open the calendar via the adapter.
+    el._adapter.send('INPUT_FOCUS', { inputType: 'from' });
+    el._adapter.send('CALENDAR_OPEN');
+    await el.updateComplete;
+
+    const calendar = el.shadowRoot?.querySelector('cds-date-picker-calendar');
+    expect(calendar).to.exist;
+    await calendar.updateComplete;
+
+    const stateChangePromise = oneEvent(el, 'cds-date-picker-state-change');
+    calendar.dispatchEvent(
+      new CustomEvent('cds-date-picker-calendar-date-select', {
+        detail: { date: parseISOToPlainDate('2026-01-01') },
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    await stateChangePromise;
+    await el.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    // Without close-on-select the calendar must remain open.
+    expect(el.open).to.be.true;
+    expect(
+      el.shadowRoot?.querySelector('cds-date-picker-calendar')
+    ).to.exist;
+  });
+});
+
+describe('cds-date-picker click-to-close', () => {
+  it('closes the calendar when a date button is clicked', async () => {
+    const el = await fixture(html`
+      <cds-date-picker close-on-select>
+        <cds-date-picker-input
+          kind="single"
+          label-text="Date"
+          placeholder="mm/dd/yyyy">
+        </cds-date-picker-input>
+      </cds-date-picker>
+    `);
+    await el.updateComplete;
+
+    // Open the calendar via the adapter.
+    el._adapter.send('INPUT_FOCUS', { inputType: 'from' });
+    el._adapter.send('CALENDAR_OPEN');
+    await el.updateComplete;
+
+    const calendar = el.shadowRoot?.querySelector('cds-date-picker-calendar');
+    expect(calendar).to.exist;
+    await calendar.updateComplete;
+
+    // Find and click an actual date button in the calendar grid.
+    const dayButton = calendar.shadowRoot?.querySelector(
+      `.cds--date-picker__day:not([disabled])`
+    );
+    expect(dayButton).to.exist;
+    dayButton.click();
+
+    // Allow state machine + Lit render cycle + focus-restore setTimeout to settle.
+    await el.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    expect(el.open).to.be.false;
+    expect(el.shadowRoot?.querySelector('cds-date-picker-calendar')).to.equal(
+      null
+    );
+  });
 });

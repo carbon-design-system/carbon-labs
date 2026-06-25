@@ -90,6 +90,12 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   private _lastTabCloseTime = 0;
 
   /**
+   * True while programmatic focus restoration is in progress after date
+   * selection. Prevents the INPUT_FOCUS handler from auto-reopening the calendar.
+   */
+  private _restoringFocus = false;
+
+  /**
    * @returns The effective date picker mode, determined by the child `<cds-date-picker-input>`.
    */
   private get _mode() {
@@ -157,9 +163,10 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       const { inputType } = event.detail || {};
       this._adapter.send(DatePickerEvent.INPUT_FOCUS, { inputType });
 
-      // Don't auto-open calendar if we JUST closed it via Tab key (within 100ms).
+      // Don't auto-open calendar if focus was restored programmatically after
+      // date selection, or if it was JUST closed via Tab key (within 100ms).
       const timeSinceTabClose = Date.now() - this._lastTabCloseTime;
-      if (timeSinceTabClose >= 100) {
+      if (!this._restoringFocus && timeSinceTabClose >= 100) {
         this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
       }
     }
@@ -370,7 +377,11 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           targetSelector
         ) as CDSDatePickerInput | null;
 
+        // Guard against the INPUT_FOCUS handler auto-reopening the calendar
+        // when focus is restored programmatically after date selection.
+        this._restoringFocus = true;
         (targetInput as any)?.input?.focus();
+        this._restoringFocus = false;
 
         this._adapter?.updateContext({
           shouldRestoreFocus: false,
@@ -883,7 +894,9 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
        */
       containsNode: (node: Node) => {
         return (
-          this.contains(node) || (this.shadowRoot?.contains(node) ?? false)
+          node === (this as unknown as Node) ||
+          this.contains(node) ||
+          (this.shadowRoot?.contains(node) ?? false)
         );
       },
       /**
@@ -951,6 +964,10 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           // Hide popover using Popover API
           this._hideCalendarPopover();
         }
+      }
+
+      if (changedProperties.has('closeOnSelect')) {
+        this._adapter.updateContext({ closeOnSelect: this.closeOnSelect });
       }
 
       if (

@@ -364,37 +364,23 @@ export function useDatePicker(
           // Select start date
           send(DatePickerEvent.RANGE_START_SELECT, { date });
         } else {
-          // Select end date
+          // Select end date — the RANGE_END_SELECT action sets restoreFocusTo
+          // and shouldRestoreFocus; no updateContext needed here
           send(DatePickerEvent.RANGE_END_SELECT, { date });
           if (closeOnSelect) {
-            machineRef.current?.updateContext({
-              isOpen: false,
-              restoreFocusTo: 'to',
-              shouldRestoreFocus: true,
-            });
             send(DatePickerEvent.CALENDAR_CLOSE);
           }
         }
       } else {
-        // Single date selection
+        // Single date selection — the DATE_SELECT action sets restoreFocusTo
+        // and shouldRestoreFocus; no updateContext needed here
         send(DatePickerEvent.DATE_SELECT, { date });
         if (closeOnSelect) {
-          machineRef.current?.updateContext({
-            restoreFocusTo: context.lastFocusedInput || 'from',
-            shouldRestoreFocus: true,
-          });
           send(DatePickerEvent.CALENDAR_CLOSE);
         }
       }
     },
-    [
-      closeOnSelect,
-      datePickerType,
-      context.startDate,
-      context.endDate,
-      context.lastFocusedInput,
-      send,
-    ]
+    [closeOnSelect, datePickerType, context.startDate, context.endDate, send]
   );
 
   const handleInputFocus = useCallback(

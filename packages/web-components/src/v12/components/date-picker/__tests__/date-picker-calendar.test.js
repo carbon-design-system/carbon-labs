@@ -170,9 +170,7 @@ describe('cds-date-picker calendar interaction', () => {
 
     // Without close-on-select the calendar must remain open.
     expect(el.open).to.be.true;
-    expect(
-      el.shadowRoot?.querySelector('cds-date-picker-calendar')
-    ).to.exist;
+    expect(el.shadowRoot?.querySelector('cds-date-picker-calendar')).to.exist;
   });
 });
 

@@ -352,6 +352,8 @@ export const actions: ActionMap = {
         startDate: context.focusedDate,
         value: plainDateToISOString(context.focusedDate),
         isOpen: context.closeOnSelect ? false : context.isOpen,
+        restoreFocusTo: context.lastFocusedInput || 'from',
+        shouldRestoreFocus: context.closeOnSelect,
       };
     },
     /**
@@ -901,6 +903,8 @@ export const actions: ActionMap = {
           finalEndDate
         )}`,
         isOpen: false, // Always close after selecting end date in range mode
+        restoreFocusTo: 'to',
+        shouldRestoreFocus: true,
       };
     },
     /**

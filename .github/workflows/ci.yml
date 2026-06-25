@@ -106,6 +106,9 @@ jobs:
         run: yarn build
         env:
           NODE_OPTIONS: --max-old-space-size=6144
+      - name: run Primitives tests
+        working-directory: 'packages/primitives'
+        run: yarn test
       - name: run React tests
         working-directory: 'packages/react'
         run: yarn test

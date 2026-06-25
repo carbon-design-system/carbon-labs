@@ -52,8 +52,11 @@ $prefix: 'cds' !default;
   .#{$prefix}--header-action__button {
   z-index: z('header') + 2;
   background-color: $background;
-  border-inline-end: 1px solid $border-subtle;
-  border-inline-start: 1px solid $border-subtle;
+
+  &:not(:focus) {
+    border: 1px solid $border-subtle-01;
+    border-block-end: none;
+  }
 }
 
 .#{$prefix}--header-action.#{$prefix}--popover--border

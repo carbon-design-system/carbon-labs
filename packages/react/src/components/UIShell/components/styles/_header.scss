@@ -56,6 +56,19 @@ $prefix: 'cds' !default;
   &:not(:focus) {
     border: 1px solid $border-subtle-01;
     border-block-end: none;
+    &:not(:has(.#{$prefix}--trial-countdown)) {
+      border-block-start: none;
+    }
+  }
+}
+
+.#{$prefix}--header-action .#{$prefix}--header-action__button {
+  &:hover {
+    background-color: $layer-hover;
+  }
+
+  &:active {
+    background-color: $layer-active;
   }
 }
 

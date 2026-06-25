@@ -65,27 +65,20 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
   }
 
   /**
-   * The calendar icon.
-   */
-  @query(`.${prefix}--date-picker__icon`)
-  private _iconNode!: SVGElement;
-
-  /**
-   * Handles `click` event on the calendar icon.
+   * Handles `click` event on the calendar icon button.
+   * Dispatches a custom event and does NOT move focus to the text input,
+   * matching the React implementation where the icon is a separate button.
    *
-   * @param {MouseEvent} event - The event.
+   * @param {MouseEvent} event - The click event.
    */
-  private _handleClickWrapper(event: MouseEvent) {
-    if (event.target === this._iconNode) {
-      // Dispatch custom event for calendar icon click
-      this.dispatchEvent(
-        new CustomEvent(`${prefix}-date-picker-icon-click`, {
-          bubbles: true,
-          composed: true,
-        })
-      );
-      this.input.focus();
-    }
+  private _handleIconButtonClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.dispatchEvent(
+      new CustomEvent(`${prefix}-date-picker-icon-click`, {
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   /**
@@ -136,16 +129,23 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
   };
 
   /**
-   * @returns The template for the the calendar icon.
+   * @returns The template for the calendar icon button.
+   * Rendered as a focusable-false button (tabindex="-1") so clicking it does
+   * not move focus to the text input — matching the React implementation.
    */
   private _renderIcon() {
-    return this.kind === DATE_PICKER_INPUT_KIND.SIMPLE
-      ? undefined
-      : iconLoader(Calendar16, {
-          class: `${prefix}--date-picker__icon`,
-          role: 'img',
-          title: 'Open calendar',
-        });
+    if (this.kind === DATE_PICKER_INPUT_KIND.SIMPLE) {
+      return undefined;
+    }
+    return html`<button
+      type="button"
+      class="${prefix}--date-picker__icon"
+      ?disabled="${this.disabled || this.readonly}"
+      aria-label="Open calendar"
+      tabindex="-1"
+      @click="${this._handleIconButtonClick}">
+      ${iconLoader(Calendar16, { focusable: 'false', 'aria-hidden': 'true' })}
+    </button>`;
   }
 
   /**
@@ -301,7 +301,6 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
       value,
       warn,
       warnText,
-      _handleClickWrapper: handleClickWrapper,
       _handleInput: handleInput,
       _handleFocus: handleFocus,
       _handleBlur: handleBlur,
@@ -371,7 +370,7 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
       <label for="input" class="${labelClasses}">
         <slot name="label-text">${labelText}</slot>
       </label>
-      <div class="${inputWrapperClasses}" @click="${handleClickWrapper}">
+      <div class="${inputWrapperClasses}">
         <span>
           <input
             id="input"

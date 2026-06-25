@@ -125,6 +125,24 @@ export const actions: ActionMap = {
         focusedDate,
       };
     },
+    /**
+     * Action for CALENDAR_ICON_CLICK event from FOCUSED state
+     * Behaves identically to CALENDAR_OPEN — opens the calendar preserving
+     * any existing viewDate/focusedDate context.
+     *
+     * @param {DatePickerContext} context - Current context
+     * @returns {Partial<DatePickerContext>} Updated context
+     */
+    CALENDAR_ICON_CLICK: (context) => {
+      const viewDate =
+        context.viewDate || context.startDate || Temporal.Now.plainDateISO();
+      const focusedDate = context.focusedDate || context.startDate || null;
+      return {
+        isOpen: true,
+        viewDate,
+        focusedDate,
+      };
+    },
   },
 
   [DatePickerState.CALENDAR_OPEN]: {

@@ -90,11 +90,6 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   private _lastTabCloseTime = 0;
 
   /**
-   * Prevents immediate reopen when focus is restored programmatically after selection
-   */
-  private _suppressOpenOnFocus = false;
-
-  /**
    * @returns The effective date picker mode, determined by the child `<cds-date-picker-input>`.
    */
   private get _mode() {
@@ -162,14 +157,9 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
       const { inputType } = event.detail || {};
       this._adapter.send(DatePickerEvent.INPUT_FOCUS, { inputType });
 
-      // Don't auto-open calendar if we JUST closed it via Tab key (within 100ms)
-      // or if focus is being restored programmatically after selection close.
+      // Don't auto-open calendar if we JUST closed it via Tab key (within 100ms).
       const timeSinceTabClose = Date.now() - this._lastTabCloseTime;
-      const shouldSkipOpen =
-        timeSinceTabClose < 100 || this._suppressOpenOnFocus;
-
-      if (!shouldSkipOpen) {
-        // Open calendar when input is focused (matching current Carbon behavior)
+      if (timeSinceTabClose >= 100) {
         this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
       }
     }
@@ -380,16 +370,11 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
           targetSelector
         ) as CDSDatePickerInput | null;
 
-        this._suppressOpenOnFocus = true;
         (targetInput as any)?.input?.focus();
 
         this._adapter?.updateContext({
           shouldRestoreFocus: false,
           restoreFocusTo: null,
-        });
-
-        queueMicrotask(() => {
-          this._suppressOpenOnFocus = false;
         });
 
         this._pendingRestoreFocusTo = null;

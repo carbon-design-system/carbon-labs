@@ -97,9 +97,7 @@ describe('cds-date-picker icon-click reopen', () => {
     await el.updateComplete;
 
     expect(el.open).to.be.true;
-    expect(
-      el.shadowRoot?.querySelector('cds-date-picker-calendar')
-    ).to.exist;
+    expect(el.shadowRoot?.querySelector('cds-date-picker-calendar')).to.exist;
   });
 
   it('reopens the calendar when the icon is clicked after a date has been selected (FOCUSED state)', async () => {
@@ -140,8 +138,6 @@ describe('cds-date-picker icon-click reopen', () => {
     await el.updateComplete;
 
     expect(el.open).to.be.true;
-    expect(
-      el.shadowRoot?.querySelector('cds-date-picker-calendar')
-    ).to.exist;
+    expect(el.shadowRoot?.querySelector('cds-date-picker-calendar')).to.exist;
   });
 });

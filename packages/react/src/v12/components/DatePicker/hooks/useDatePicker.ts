@@ -243,7 +243,7 @@ export function useDatePicker(
     });
 
     return unsubscribe;
-  }, [onOpen, onClose, context.isOpen]);
+  }, [onOpen, onClose]);
 
   useEffect(() => {
     if (!context.shouldRestoreFocus) {

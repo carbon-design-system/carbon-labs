@@ -11,7 +11,6 @@
 @use '@carbon/react/scss/utilities/convert' as convert;
 @use '@carbon/react/scss/utilities/custom-property' as custom-property;
 @use '@carbon/react/scss/utilities/z-index' as *;
-@use '@carbon/react/scss/utilities/box-shadow' as *;
 @use '@carbon/react/scss/breakpoint' as *;
 
 $prefix: 'cds' !default;
@@ -75,8 +74,6 @@ $prefix: 'cds' !default;
 .#{$prefix}--header-action.#{$prefix}--popover--border
   > .#{$prefix}--popover
   > .#{$prefix}--popover-content {
-  @include box-shadow;
-
   border: 1px solid $border-subtle-01;
   border-block-start: none;
   outline: none;
@@ -124,8 +121,6 @@ $prefix: 'cds' !default;
 
 .#{$prefix}--header {
   .#{$prefix}--menu.#{$prefix}--menu--border {
-    @include box-shadow;
-
     border: 1px solid $border-subtle-01;
     outline: none;
   }

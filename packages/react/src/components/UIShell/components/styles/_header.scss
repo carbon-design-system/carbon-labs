@@ -28,7 +28,7 @@ $prefix: 'cds' !default;
 }
 
 .#{$prefix}--header-action__button {
-  block-size: convert.rem(48px);
+  block-size: convert.to-rem(48px);
 
   &:focus {
     outline-offset: -2px;
@@ -47,16 +47,28 @@ $prefix: 'cds' !default;
   fill: $icon-primary;
 }
 
-.#{$prefix}--header-action.#{$prefix}--popover--open
-  .#{$prefix}--header-action__button {
-  z-index: z('header') + 2;
-  background-color: $background;
+.#{$prefix}--header-action.#{$prefix}--popover--open {
+  &::after {
+    position: absolute;
+    z-index: z('header') + 1;
+    background: $background;
+    block-size: $spacing-01;
+    content: '';
+    inset-block-end: -$spacing-01;
+    inset-inline: convert.to-rem(1px);
+    pointer-events: none;
+  }
 
-  &:not(:focus) {
-    border: 1px solid $border-subtle-01;
-    border-block-end: none;
-    &:not(:has(.#{$prefix}--trial-countdown)) {
-      border-block-start: none;
+  .#{$prefix}--header-action__button {
+    z-index: z('header') + 2;
+    background-color: $background;
+
+    &:not(:focus) {
+      border: 1px solid $border-subtle-01;
+      border-block-end: none;
+      &:not(:has(.#{$prefix}--trial-countdown)) {
+        border-block-start: none;
+      }
     }
   }
 }
@@ -75,7 +87,6 @@ $prefix: 'cds' !default;
   > .#{$prefix}--popover
   > .#{$prefix}--popover-content {
   border: 1px solid $border-subtle-01;
-  border-block-start: none;
   outline: none;
 }
 

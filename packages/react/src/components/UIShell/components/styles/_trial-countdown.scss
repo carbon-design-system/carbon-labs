@@ -65,13 +65,6 @@ $trial-countdown-gradient--active:
   }
 }
 
-.#{$prefix}--header-action:not(.#{$prefix}--popover--open)
-  .#{$prefix}--header-action__button:has(.#{$prefix}--trial-countdown) {
-  &:not(:focus) {
-    border-block-end: 1px solid $border-subtle;
-  }
-}
-
 .#{$prefix}--header-action:has(.#{$prefix}--trial-countdown) {
   :hover p {
     color: $text-primary;

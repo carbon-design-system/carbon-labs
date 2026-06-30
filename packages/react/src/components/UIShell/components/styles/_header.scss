@@ -19,6 +19,12 @@ $prefix: 'cds' !default;
   align-items: center;
 }
 
+.#{$prefix}--header
+  .#{$prefix}--popover
+  .#{$prefix}--popover-content.#{$prefix}--header-action__content {
+  inset-block-end: convert.to-rem(0.5px);
+}
+
 .#{$prefix}--header__action {
   flex-shrink: 0;
 }

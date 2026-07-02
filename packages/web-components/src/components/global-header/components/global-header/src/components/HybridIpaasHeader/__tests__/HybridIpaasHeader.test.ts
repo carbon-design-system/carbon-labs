@@ -852,7 +852,7 @@ describe('HybridIpaasHeader Component', () => {
       }
     });
 
-    it('should return backendProxy URL when hostname is ibm.com', async () => {
+    it('should return undefined when hostname is ibm.com', async () => {
       const el = await fixture<HybridIpaasHeader>(
         html`<clabs-global-header-hybrid-ipaas
           productKey="test-key"
@@ -861,10 +861,10 @@ describe('HybridIpaasHeader Component', () => {
 
       hostnameStub = sinon.stub(el as any, 'getHostname').returns('ibm.com');
       const result = (el as any).getBackendProxy();
-      expect(result).to.equal('/test/hybrid-ipaas/v1/proxies/solis/backend');
+      expect(result).to.be.undefined;
     });
 
-    it('should return backendProxy URL when hostname is a subdomain of ibm.com', async () => {
+    it('should return undefined when hostname is a subdomain of ibm.com', async () => {
       const el = await fixture<HybridIpaasHeader>(
         html`<clabs-global-header-hybrid-ipaas
           productKey="test-key"
@@ -873,10 +873,10 @@ describe('HybridIpaasHeader Component', () => {
 
       hostnameStub = sinon.stub(el as any, 'getHostname').returns('cloud.ibm.com');
       const result = (el as any).getBackendProxy();
-      expect(result).to.equal('/api/hybrid-ipaas/v1/proxies/solis/backend');
+      expect(result).to.be.undefined;
     });
 
-    it('should return backendProxy URL when hostname is a nested subdomain of ibm.com', async () => {
+    it('should return undefined when hostname is a nested subdomain of ibm.com', async () => {
       const el = await fixture<HybridIpaasHeader>(
         html`<clabs-global-header-hybrid-ipaas
           productKey="test-key"
@@ -885,10 +885,10 @@ describe('HybridIpaasHeader Component', () => {
 
       hostnameStub = sinon.stub(el as any, 'getHostname').returns('test.cloud.ibm.com');
       const result = (el as any).getBackendProxy();
-      expect(result).to.equal('/base/hybrid-ipaas/v1/proxies/solis/backend');
+      expect(result).to.be.undefined;
     });
 
-    it('should return undefined when hostname is not an ibm.com domain', async () => {
+    it('should return backendProxy URL when hostname is not an ibm.com domain', async () => {
       const el = await fixture<HybridIpaasHeader>(
         html`<clabs-global-header-hybrid-ipaas
           productKey="test-key"
@@ -897,10 +897,10 @@ describe('HybridIpaasHeader Component', () => {
 
       hostnameStub = sinon.stub(el as any, 'getHostname').returns('example.com');
       const result = (el as any).getBackendProxy();
-      expect(result).to.be.undefined;
+      expect(result).to.equal('/test/hybrid-ipaas/v1/proxies/solis/backend');
     });
 
-    it('should return undefined when hostname is localhost', async () => {
+    it('should return backendProxy URL when hostname is localhost', async () => {
       const el = await fixture<HybridIpaasHeader>(
         html`<clabs-global-header-hybrid-ipaas
           productKey="test-key"
@@ -909,10 +909,10 @@ describe('HybridIpaasHeader Component', () => {
 
       hostnameStub = sinon.stub(el as any, 'getHostname').returns('localhost');
       const result = (el as any).getBackendProxy();
-      expect(result).to.be.undefined;
+      expect(result).to.equal('/test/hybrid-ipaas/v1/proxies/solis/backend');
     });
 
-    it('should return undefined when hostname ends with ibm.com but is not a valid subdomain', async () => {
+    it('should return backendProxy URL when hostname ends with ibm.com but is not a valid subdomain', async () => {
       const el = await fixture<HybridIpaasHeader>(
         html`<clabs-global-header-hybrid-ipaas
           productKey="test-key"
@@ -921,16 +921,16 @@ describe('HybridIpaasHeader Component', () => {
 
       hostnameStub = sinon.stub(el as any, 'getHostname').returns('notibm.com');
       const result = (el as any).getBackendProxy();
-      expect(result).to.be.undefined;
+      expect(result).to.equal('/test/hybrid-ipaas/v1/proxies/solis/backend');
     });
 
-    it('should return backendProxy with empty basePath when basePath is not provided', async () => {
+    it('should return backendProxy with empty basePath when basePath is not provided and not on IBM domain', async () => {
       const el = await fixture<HybridIpaasHeader>(
         html`<clabs-global-header-hybrid-ipaas
           productKey="test-key"></clabs-global-header-hybrid-ipaas>`
       );
 
-      hostnameStub = sinon.stub(el as any, 'getHostname').returns('ibm.com');
+      hostnameStub = sinon.stub(el as any, 'getHostname').returns('localhost');
       const result = (el as any).getBackendProxy();
       expect(result).to.equal('/hybrid-ipaas/v1/proxies/solis/backend');
     });

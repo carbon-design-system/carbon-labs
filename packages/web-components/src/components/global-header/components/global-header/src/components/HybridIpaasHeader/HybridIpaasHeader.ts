@@ -230,10 +230,10 @@ export class HybridIpaasHeader extends LitElement {
   }
 
   private getBackendProxy(): string | undefined {
-    // Only set backendProxy if the user is on *.ibm.com domain
+    // Only set backendProxy if the user is NOT on *.ibm.com domain
     const hostname = this.getHostname();
     const ibmDomainRegex = /^(.+\.)?ibm\.com$/;
-    if (ibmDomainRegex.test(hostname)) {
+    if (!ibmDomainRegex.test(hostname)) {
       return `${this.basePath}/hybrid-ipaas/v1/proxies/solis/backend`;
     }
     return undefined;

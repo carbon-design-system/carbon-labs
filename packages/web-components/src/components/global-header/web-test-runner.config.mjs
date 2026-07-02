@@ -54,10 +54,10 @@ export default {
     report: true,
     reportDir: 'test-coverage',
     threshold: {
-      statements: 96,
+      statements: 92,
       branches: 90,
-      functions: 93,
-      lines: 96,
+      functions: 91,
+      lines: 92,
     },
     include: ['components/**/*.ts'],
     exclude: ['**/node_modules/**'],

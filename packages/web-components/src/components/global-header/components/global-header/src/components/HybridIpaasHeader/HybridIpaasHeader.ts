@@ -215,6 +215,21 @@ export class HybridIpaasHeader extends LitElement {
       tell_me_more_enabled: false,
     };
   }
+
+  protected getHostname(): string {
+    return window.location.hostname;
+  }
+
+  private getBackendProxy(): string | undefined {
+    // Only set backendProxy if the user is on *.ibm.com domain
+    const hostname = this.getHostname();
+    const ibmDomainRegex = /^(.+\.)?ibm\.com$/;
+    if (ibmDomainRegex.test(hostname)) {
+      return `${this.basePath}/hybrid-ipaas/v1/proxies/solis/backend`;
+    }
+    return undefined;
+  }
+
   private initSolisOptions(env = 'local', forSidekick = false, isProd = true) {
     if (forSidekick) {
       return {
@@ -223,6 +238,7 @@ export class HybridIpaasHeader extends LitElement {
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
+        backendProxy: this.getBackendProxy()
       };
     } else {
       return {
@@ -232,6 +248,7 @@ export class HybridIpaasHeader extends LitElement {
         cdn_hostname: SOLIS_CDN_HOSTNAMES[env],
         deployment_environment: solisDeploymentEnvironment[env] || 'local',
         product_id: 'ipaas',
+        backendProxy: this.getBackendProxy()
       };
     }
   }

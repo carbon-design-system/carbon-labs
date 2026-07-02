@@ -219,13 +219,15 @@ export class AuthContext extends LitElement {
                       aria-label="${item.arialLabel}"
                       >${this.renderLinkItem(item)}</cds-custom-button
                     >`
-                  : html`<a
-                      href="${item.href}"
-                      target="${item?.newTab ? '_blank' : nothing}"
-                      rel="noreferrer"
-                      aria-label="${item.arialLabel}">
-                      ${this.renderLinkItem(item)}
-                    </a>`}
+                  : item['data-ypc-link']
+                    ? html`<div data-ypc-link></div>`
+                    : html`<a
+                        href="${item.href}"
+                        target="${item?.newTab ? '_blank' : nothing}"
+                        rel="noreferrer"
+                        aria-label="${item.arialLabel}">
+                        ${this.renderLinkItem(item)}
+                      </a>`}
               </li>
             </ul>
           </section>

@@ -33,7 +33,7 @@ export default {
             </script>
           </head>
           <body>
-            
+
           </body>
         </html>
         `,
@@ -54,10 +54,10 @@ export default {
     report: true,
     reportDir: 'test-coverage',
     threshold: {
-      statements: 92,
+      statements: 95,
       branches: 90,
-      functions: 91,
-      lines: 92,
+      functions: 90,
+      lines: 95,
     },
     include: ['components/**/*.ts'],
     exclude: ['**/node_modules/**'],

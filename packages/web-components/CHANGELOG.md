@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.156.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.155.0...@carbon-labs/web-components@0.156.0) (2026-06-17)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.155.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.154.0...@carbon-labs/web-components@0.155.0) (2026-06-02)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.154.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.153.0...@carbon-labs/web-components@0.154.0) (2026-05-28)
+
+
+### Features
+
+* **global-header:** add support for Your privacy choices ([#1259](https://github.com/carbon-design-system/carbon-labs/issues/1259)) ([3f3f26d](https://github.com/carbon-design-system/carbon-labs/commit/3f3f26d44c6f5517f84ad581e76d6b4bc86245cd))
+
+
+
+
+
+# [0.153.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.152.0...@carbon-labs/web-components@0.153.0) (2026-05-20)
+
+**Note:** Version bump only for package @carbon-labs/web-components
+
+
+
+
+
+# [0.152.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.151.0...@carbon-labs/web-components@0.152.0) (2026-05-18)
+
+
+### Bug Fixes
+
+* turning off sidekick everywhere for now ([#1241](https://github.com/carbon-design-system/carbon-labs/issues/1241)) ([b67d0ba](https://github.com/carbon-design-system/carbon-labs/commit/b67d0ba866a445e2b94b10142a5237d77a5a0b8a))
+
+
+
+
+
 # [0.151.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/web-components@0.150.0...@carbon-labs/web-components@0.151.0) (2026-05-16)
 
 

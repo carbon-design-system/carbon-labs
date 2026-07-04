@@ -215,49 +215,63 @@ const outlineViewTpl = () => html`
 `;
 
 /**
- * WebIDE example — a complete Web IDE-like interface with resizable panels.
-* Demonstrates primary sidebar, secondary sidebar, and bottom panel resizers.
- * @param {object} args - Story arguments
- * @returns {HTMLElement} Story root element
+ * Factory that returns [onStart, onDrag, onEnd, onReset] event handlers for a
+ * resizer handle. All four handlers share a single `initialSize` closure variable.
+ *
+ * @param {object} cfg
+ * @param {'prev'|'next'} cfg.sibling   - Which adjacent element to resize
+ * @param {'inline'|'block'} cfg.axis   - CSS logical axis to mutate
+ * @param {1|-1} cfg.deltaSign          - Sign to apply to drag delta
+ * @param {number} cfg.min              - Minimum size in px
+ * @param {(() => number)|undefined} cfg.max - Optional max size in px (as a function for live viewport reads)
+ * @param {string} cfg.resetValue       - CSS value to restore on reset (empty string clears the property)
  */
-export const WebIDE = (args) => {
-  if (!document.getElementById('web-ide-story-styles')) {
-    const style = document.createElement('style');
-    style.id = 'web-ide-story-styles';
-    style.textContent = storyStyles;
-    document.head.appendChild(style);
-  }
+function makeResizerHandlers({ sibling, axis, deltaSign, min, max, resetValue }) {
+  const prop = axis === 'inline' ? 'inlineSize' : 'blockSize';
+  const ariOrientation = axis === 'inline' ? 'vertical' : 'horizontal';
+  const transition = `${axis === 'inline' ? 'inline-size' : 'block-size'} 180ms cubic-bezier(0.25, 0.9, 0.25, 1)`;
+  let initialSize = 0;
 
-  const state = {
-    collapsed: {
-      primarySidebar: false,
-      secondarySidebar: false,
-      panel: false,
-      explorer: false,
-      outline: false,
-    },
-    activeView: VIEWS.EXPLORER,
-    tabs: [
-      { id: 'App.tsx', label: 'App.tsx', content: FILE_CONTENTS['App.tsx'] },
-      { id: 'index.tsx', label: 'index.tsx', content: FILE_CONTENTS['index.tsx'] },
-      { id: 'Header.tsx', label: 'Header.tsx', content: FILE_CONTENTS['Header.tsx'] },
-    ],
-    selectedTabIndex: 0,
+  const getEl = (target) =>
+    sibling === 'prev' ? target.previousElementSibling : target.nextElementSibling;
+
+  const onStart = (e) => {
+    const el = getEl(e.target);
+    if (el) {
+      initialSize = axis === 'inline' ? el.offsetWidth : el.offsetHeight;
+      el.style.transition = 'none';
+    }
   };
 
-  let primaryInitialWidth = 0;
-  let secondaryInitialWidth = 0;
-  let explorerInitialHeight = 0;
-  let panelInitialHeight = 0;
+  const onDrag = (e) => {
+    const el = getEl(e.target);
+    if (el && e.detail.delta !== undefined) {
+      const raw = initialSize + deltaSign * e.detail.delta;
+      const clamped = max ? Math.min(Math.max(raw, min), max()) : Math.max(raw, min);
+      el.style[prop] = `${clamped}px`;
+    }
+    updateResizerAria(e.target, ariOrientation);
+  };
 
-  const root = document.createElement('div');
-  root.className = 'web-ide';
-  root.style.setProperty('--resizer-thickness', `${args['--resizer-thickness']}px`);
-  root.style.setProperty('--resizer-grab-thickness', `${args['--resizer-grab-thickness']}px`);
-  root.style.setProperty('--resizer-grab-color', args['--resizer-grab-color'] ? 'var(--cds-background-selected)' : 'transparent');
+  const onEnd = (e) => {
+    const el = getEl(e.target);
+    if (el) el.style.transition = '';
+  };
 
-  // Build the bottom panel imperatively — cds-tabs requires panel siblings in
-  // the same container and manages visibility via target IDs once connected.
+  const onReset = (e) => {
+    const el = getEl(e.target);
+    if (el) {
+      el.style.transition = transition;
+      el.style[prop] = resetValue;
+    }
+  };
+
+  return [onStart, onDrag, onEnd, onReset];
+}
+
+/** Build the bottom panel DOM — cds-tabs requires panel siblings in the same
+ *  container and manages visibility via target IDs once connected to the DOM. */
+function createPanelEl() {
   const panelTabsEl = document.createElement('cds-tabs');
   panelTabsEl.setAttribute('value', 'terminal');
 
@@ -288,24 +302,20 @@ export const WebIDE = (args) => {
   panelTabsWrapperEl.appendChild(panelTabsEl);
   panelTabsWrapperEl.appendChild(panelCloseBtnEl);
 
-  const panelTabsContainerEl = document.createElement('div');
-  panelTabsContainerEl.className = 'web-ide__panel-tabs';
-  panelTabsContainerEl.appendChild(panelTabsWrapperEl);
+  const containerEl = document.createElement('div');
+  containerEl.className = 'web-ide__panel-tabs';
+  containerEl.appendChild(panelTabsWrapperEl);
 
   PANEL_TABS.forEach(({ id, target, content }) => {
-    const panel = document.createElement('div');
-    panel.id = target;
-    panel.className = 'cds--tab-content';
-    panel.setAttribute('role', 'tabpanel');
-    panel.setAttribute('aria-labelledby', id);
-    panel.hidden = true;
-    panel.innerHTML = `<div class="web-ide__panel-content">${content}</div>`;
-    panelTabsContainerEl.appendChild(panel);
+    const panelContentEl = document.createElement('div');
+    panelContentEl.id = target;
+    panelContentEl.className = 'cds--tab-content';
+    panelContentEl.setAttribute('role', 'tabpanel');
+    panelContentEl.setAttribute('aria-labelledby', id);
+    panelContentEl.hidden = true;
+    panelContentEl.innerHTML = `<div class="web-ide__panel-content">${content}</div>`;
+    containerEl.appendChild(panelContentEl);
   });
-
-  const panelEl = document.createElement('div');
-  panelEl.className = 'web-ide__panel';
-  panelEl.appendChild(panelTabsContainerEl);
 
   const panelResizerEl = document.createElement('clabs-resizer-handle');
   panelResizerEl.className = 'clabs__resizer--web-ide';
@@ -315,6 +325,54 @@ export const WebIDE = (args) => {
   panelResizerEl.setAttribute('pivot', 'both');
   panelResizerEl.setAttribute('for-start', 'web-ide-primary-resizer');
   panelResizerEl.setAttribute('for-end', 'web-ide-secondary-resizer');
+
+  const panelEl = document.createElement('div');
+  panelEl.className = 'web-ide__panel';
+  panelEl.appendChild(containerEl);
+
+  return { panelEl, panelResizerEl, panelCloseBtnEl };
+}
+
+/**
+ * WebIDE example — a complete Web IDE-like interface with resizable panels.
+ * Demonstrates primary sidebar, secondary sidebar, and bottom panel resizers.
+ * @param {object} args - Story arguments
+ * @returns {HTMLElement} Story root element
+ */
+export const WebIDE = (args) => {
+  if (!document.getElementById('web-ide-story-styles')) {
+    const style = document.createElement('style');
+    style.id = 'web-ide-story-styles';
+    style.textContent = storyStyles;
+    document.head.appendChild(style);
+  }
+
+  const state = {
+    collapsed: {
+      primarySidebar: false,
+      secondarySidebar: false,
+      panel: false,
+      explorer: false,
+      outline: false,
+    },
+    activeView: VIEWS.EXPLORER,
+    tabs: [
+      { id: 'App.tsx', label: 'App.tsx', content: FILE_CONTENTS['App.tsx'] },
+      { id: 'index.tsx', label: 'index.tsx', content: FILE_CONTENTS['index.tsx'] },
+      { id: 'Header.tsx', label: 'Header.tsx', content: FILE_CONTENTS['Header.tsx'] },
+    ],
+    selectedTabIndex: 0,
+  };
+
+  const root = document.createElement('div');
+  root.className = 'web-ide';
+  root.style.setProperty('--resizer-thickness', `${args['--resizer-thickness']}px`);
+  root.style.setProperty('--resizer-grab-thickness', `${args['--resizer-grab-thickness']}px`);
+  root.style.setProperty('--resizer-grab-color', args['--resizer-grab-color'] ? 'var(--cds-background-selected)' : 'transparent');
+
+  // Build the bottom panel imperatively — cds-tabs requires panel siblings in
+  // the same container and manages visibility via target IDs once connected.
+  const { panelEl, panelResizerEl, panelCloseBtnEl } = createPanelEl();
 
   // State mutations — all trigger a re-render
   const togglePanel = (key) => {
@@ -364,73 +422,22 @@ export const WebIDE = (args) => {
     openTab(fileName, content);
   };
 
-  // Resizer event handlers
-  const onPrimaryResizerStart = (e) => {
-    const prev = e.target.previousElementSibling;
-    if (prev) { primaryInitialWidth = prev.offsetWidth; prev.style.transition = 'none'; }
-  };
-  const onPrimaryResizerDrag = (e) => {
-    const prev = e.target.previousElementSibling;
-    if (prev && e.detail.delta !== undefined) {
-      prev.style.inlineSize = `${Math.max(120, Math.min(primaryInitialWidth + e.detail.delta, window.innerWidth - 320))}px`;
-    }
-    updateResizerAria(e.target, 'vertical');
-  };
-  const onPrimaryResizerReset = (e) => {
-    const prev = e.target.previousElementSibling;
-    if (prev) { prev.style.transition = 'inline-size 180ms cubic-bezier(0.25, 0.9, 0.25, 1)'; prev.style.inlineSize = '16rem'; }
-  };
+  // Resizer event handlers — built by a shared factory to avoid repetition.
+  const [onPrimaryResizerStart, onPrimaryResizerDrag, onPrimaryResizerEnd, onPrimaryResizerReset] =
+    makeResizerHandlers({ sibling: 'prev', axis: 'inline', deltaSign: 1,  min: 120, max: () => window.innerWidth - 320, resetValue: '16rem' });
 
-  const onSecondaryResizerStart = (e) => {
-    const next = e.target.nextElementSibling;
-    if (next) { secondaryInitialWidth = next.offsetWidth; next.style.transition = 'none'; }
-  };
-  const onSecondaryResizerDrag = (e) => {
-    const next = e.target.nextElementSibling;
-    if (next && e.detail.delta !== undefined) {
-      next.style.inlineSize = `${Math.max(120, Math.min(secondaryInitialWidth - e.detail.delta, window.innerWidth - 320))}px`;
-    }
-    updateResizerAria(e.target, 'vertical');
-  };
-  const onSecondaryResizerReset = (e) => {
-    const next = e.target.nextElementSibling;
-    if (next) { next.style.transition = 'inline-size 180ms cubic-bezier(0.25, 0.9, 0.25, 1)'; next.style.inlineSize = '16rem'; }
-  };
+  const [onSecondaryResizerStart, onSecondaryResizerDrag, onSecondaryResizerEnd, onSecondaryResizerReset] =
+    makeResizerHandlers({ sibling: 'next', axis: 'inline', deltaSign: -1, min: 120, max: () => window.innerWidth - 320, resetValue: '16rem' });
 
-  const onExplorerResizerStart = (e) => {
-    const prev = e.target.previousElementSibling;
-    if (prev) { explorerInitialHeight = prev.offsetHeight; prev.style.transition = 'none'; }
-  };
-  const onExplorerResizerDrag = (e) => {
-    const prev = e.target.previousElementSibling;
-    if (prev && e.detail.delta !== undefined) {
-      prev.style.blockSize = `${Math.max(28, explorerInitialHeight + e.detail.delta)}px`;
-    }
-    updateResizerAria(e.target, 'horizontal');
-  };
-  const onExplorerResizerReset = (e) => {
-    const prev = e.target.previousElementSibling;
-    if (prev) { prev.style.transition = 'block-size 180ms cubic-bezier(0.25, 0.9, 0.25, 1)'; prev.style.blockSize = ''; }
-  };
+  const [onExplorerResizerStart, onExplorerResizerDrag, onExplorerResizerEnd, onExplorerResizerReset] =
+    makeResizerHandlers({ sibling: 'prev', axis: 'block', deltaSign: 1,  min: 28,  resetValue: '' });
 
-  const onPanelResizerStart = (e) => {
-    const next = e.target.nextElementSibling;
-    if (next) { panelInitialHeight = next.offsetHeight; next.style.transition = 'none'; }
-  };
-  const onPanelResizerDrag = (e) => {
-    const next = e.target.nextElementSibling;
-    if (next && e.detail.delta !== undefined) {
-      next.style.blockSize = `${Math.max(40, panelInitialHeight - e.detail.delta)}px`;
-    }
-    updateResizerAria(e.target, 'horizontal');
-  };
-  const onPanelResizerReset = (e) => {
-    const next = e.target.nextElementSibling;
-    if (next) { next.style.transition = 'block-size 180ms cubic-bezier(0.25, 0.9, 0.25, 1)'; next.style.blockSize = 'calc(6 * var(--cds-spacing-08))'; }
-  };
+  const [onPanelResizerStart, onPanelResizerDrag, onPanelResizerEnd, onPanelResizerReset] =
+    makeResizerHandlers({ sibling: 'next', axis: 'block', deltaSign: -1, min: 40,  resetValue: 'calc(6 * var(--cds-spacing-08))' });
 
   panelResizerEl.addEventListener('resize-start', onPanelResizerStart);
   panelResizerEl.addEventListener('resize-drag', onPanelResizerDrag);
+  panelResizerEl.addEventListener('resize-end', onPanelResizerEnd);
   panelResizerEl.addEventListener('resize-reset', onPanelResizerReset);
   panelCloseBtnEl.addEventListener('click', () => togglePanel('panel'));
 
@@ -509,6 +516,7 @@ export const WebIDE = (args) => {
               aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
               @resize-start=${onExplorerResizerStart}
               @resize-drag=${onExplorerResizerDrag}
+              @resize-end=${onExplorerResizerEnd}
               @resize-reset=${onExplorerResizerReset}>
             </clabs-resizer-handle>
             <div class="web-ide__section web-ide__section--outline ${collapsed.outline ? 'web-ide__section--collapsed' : ''}">
@@ -533,6 +541,7 @@ export const WebIDE = (args) => {
           aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
           @resize-start=${onPrimaryResizerStart}
           @resize-drag=${onPrimaryResizerDrag}
+          @resize-end=${onPrimaryResizerEnd}
           @resize-reset=${onPrimaryResizerReset}>
         </clabs-resizer-handle>
 
@@ -574,6 +583,7 @@ export const WebIDE = (args) => {
           aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
           @resize-start=${onSecondaryResizerStart}
           @resize-drag=${onSecondaryResizerDrag}
+          @resize-end=${onSecondaryResizerEnd}
           @resize-reset=${onSecondaryResizerReset}>
         </clabs-resizer-handle>
 

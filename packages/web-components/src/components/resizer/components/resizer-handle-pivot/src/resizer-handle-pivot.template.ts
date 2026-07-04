@@ -9,7 +9,6 @@
 
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
-// @ts-ignore
 import styles from './resizer-handle-pivot.scss?inline';
 
 /** Public interface of <clabs-resizer-handle> */

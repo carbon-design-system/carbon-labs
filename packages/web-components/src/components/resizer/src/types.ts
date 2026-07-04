@@ -8,11 +8,6 @@
  */
 
 /**
- * Axis type for resizer components
- */
-export type ResizerAxis = 'x' | 'y';
-
-/**
  * Position coordinates
  */
 export interface Position {
@@ -24,7 +19,6 @@ export interface Position {
  * Resize event detail for resize-start event
  */
 export interface ResizeStartDetail {
-  axis: ResizerAxis;
   startPosition: Position;
 }
 
@@ -32,7 +26,6 @@ export interface ResizeStartDetail {
  * Resize event detail for resize-drag event
  */
 export interface ResizeDragDetail {
-  axis: ResizerAxis;
   delta: number;
   position: Position;
 }
@@ -41,7 +34,6 @@ export interface ResizeDragDetail {
  * Resize event detail for resize-end event
  */
 export interface ResizeEndDetail {
-  axis: ResizerAxis;
   delta: number;
   position: Position;
 }

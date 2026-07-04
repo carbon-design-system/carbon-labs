@@ -44,6 +44,39 @@ class ResizerHandleTemplate extends LitElement {
   axis: ResizerAxis = 'y';
 
   /**
+   * Pivot position override. Renders a built-in pivot element without requiring
+   * a child element. Works in both declarative (grid) and imperative mode.
+   *
+   * - `start`   — pivot at the start corner of the handle
+   * - `end`     — pivot at the end corner of the handle
+   * - `both`    — pivots at both corners
+   * - `default` — derives position from the parent panel slot (declarative only)
+   */
+  @property({ type: String, reflect: true })
+  pivot?: 'start' | 'end' | 'both' | 'default';
+
+  /**
+   * ID of the `clabs-resizer-handle` that ALL inline pivot elements control.
+   * Overridden per-position by `for-start` / `for-end`.
+   */
+  @property({ type: String, reflect: true })
+  for?: string;
+
+  /**
+   * ID of the handle controlled by the `start` pivot specifically.
+   * Takes precedence over `for` for the start pivot.
+   */
+  @property({ type: String, attribute: 'for-start', reflect: true })
+  forStart?: string;
+
+  /**
+   * ID of the handle controlled by the `end` pivot specifically.
+   * Takes precedence over `for` for the end pivot.
+   */
+  @property({ type: String, attribute: 'for-end', reflect: true })
+  forEnd?: string;
+
+  /**
    * Internal state for tracking drag operations
    */
   @state()
@@ -275,18 +308,20 @@ class ResizerHandleTemplate extends LitElement {
   };
 
   /**
-   * Get the pivot position based on parent panel slot (public API for pivot component)
-   * @returns The pivot position
+   * Resolved pivot position(s). Explicit `pivot` attribute takes precedence
+   * over the value derived from the parent panel slot (declarative mode).
+   * Returns `undefined` when no pivot should be rendered.
    */
-  get pivot(): 'start' | 'end' | undefined {
-    return this._pivot;
-  }
-
-  /**
-   * Get the pivot position based on parent panel slot (internal implementation)
-   * @returns The pivot position
-   */
-  private get _pivot(): 'start' | 'end' | undefined {
+  private get _resolvedPivot(): 'start' | 'end' | 'both' | undefined {
+   // Explicit attribute wins
+    if (
+      this.pivot === 'start' ||
+      this.pivot === 'end' ||
+      this.pivot === 'both'
+    ) {
+      return this.pivot;
+    }
+// `default` or absent: derive from declarative grid context
     const panel = safeClosest(this, SELECTORS.PANEL);
     if (!panel) {
       return undefined;
@@ -620,11 +655,10 @@ class ResizerHandleTemplate extends LitElement {
    * Render the resizer handle
    * @returns {TemplateResult} The template result
    */
-  /**
-   * Render the resizer handle
-   * @returns The template result
-   */
   render() {
+    const resolvedPivot = this._resolvedPivot;
+    const showStart = resolvedPivot === 'start' || resolvedPivot === 'both';
+    const showEnd = resolvedPivot === 'end' || resolvedPivot === 'both';
     return html`
       <div class="handle-content">
         <span class="sr-only">
@@ -632,16 +666,22 @@ class ResizerHandleTemplate extends LitElement {
           reset.
         </span>
         <div>
-          ${this._pivot === 'start'
-            ? html`<slot name="${SLOTS.PIVOT}"></slot>`
+          ${showStart
+            ? html`<clabs-resizer-handle-pivot
+                position="start"
+                .for=${this.forStart ?? this.for}
+              ></clabs-resizer-handle-pivot>`
             : ''}
         </div>
         <div class="icon-container" part="icon-container">
           <slot name="${SLOTS.ICON}"></slot>
         </div>
         <div>
-          ${this._pivot === 'end'
-            ? html`<slot name="${SLOTS.PIVOT}"></slot>`
+          ${showEnd
+            ? html`<clabs-resizer-handle-pivot
+                position="end"
+                .for=${this.forEnd ?? this.for}
+              ></clabs-resizer-handle-pivot>`
             : ''}
         </div>
       </div>

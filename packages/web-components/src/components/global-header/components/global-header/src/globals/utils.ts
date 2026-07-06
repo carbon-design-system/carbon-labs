@@ -15,6 +15,7 @@ import {
   Api16,
   AppConnectivity20,
   ArrowRight16,
+  ChartVennDiagram20,
   Checkmark16,
   CloudServices20,
   ColorPalette16,
@@ -32,6 +33,7 @@ import {
   RequestQuote16,
   Settings16,
   Share16,
+  Switcher20,
   User16,
   User20,
   User24,
@@ -40,7 +42,7 @@ import {
   UserProfile16,
 } from '@carbon/icons/es';
 import { toSVG, getAttributes } from '@carbon/icon-helpers';
-import { EventProps } from '../types/Header.types';
+import type { EventProps } from '../types/Header.types';
 
 export const ASSIST_ME_SCRIPT_DEV =
   'https://ibmassistme-dev.zll1vg8lrcq.us-south.codeengine.appdomain.cloud/resources/assist-me/controller.js';
@@ -67,6 +69,7 @@ export const renderCarbonIcon = (
     Api16,
     AppConnectivity20,
     ArrowRight16,
+    ChartVennDiagram20,
     Checkmark16,
     CloudServices20,
     ColorPalette16,
@@ -84,6 +87,7 @@ export const renderCarbonIcon = (
     RequestQuote16,
     Settings16,
     Share16,
+    Switcher20,
     User16,
     User20,
     User24,

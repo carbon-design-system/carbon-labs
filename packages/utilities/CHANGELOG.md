@@ -3,6 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.27.0...@carbon-labs/utilities@0.28.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/utilities
+
+
+
+
+
+# [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.26.0...@carbon-labs/utilities@0.27.0) (2026-05-14)
+
+
+### Bug Fixes
+
+* **examples:** update react and web components standalone examples ([#1230](https://github.com/carbon-design-system/carbon-labs/issues/1230)) ([0ba3c58](https://github.com/carbon-design-system/carbon-labs/commit/0ba3c5866a08459a9e220737e85ce256cec08463))
+
+
+
+
+
+# [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.25.0...@carbon-labs/utilities@0.26.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/utilities
+
+
+
+
+
+# [0.25.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.24.0...@carbon-labs/utilities@0.25.0) (2026-05-08)
+
+
+### Bug Fixes
+
+* update React import in usePrefix ([#1217](https://github.com/carbon-design-system/carbon-labs/issues/1217)) ([e426e8c](https://github.com/carbon-design-system/carbon-labs/commit/e426e8cab5e1c6e2f9bf1d3bc7c333d9799b6c80))
+
+
+
+
+
+# [0.24.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.23.0...@carbon-labs/utilities@0.24.0) (2026-05-06)
+
+
+### Features
+
+* **PlaneStack3D:** new PlaneStack3D pattern ([#1187](https://github.com/carbon-design-system/carbon-labs/issues/1187)) ([2ec587b](https://github.com/carbon-design-system/carbon-labs/commit/2ec587b0d789d715b2c7955023ecccc352975ec6))
+
+
+
+
+
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.22.0...@carbon-labs/utilities@0.23.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/utilities
+
+
+
+
+
 # [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.21.0...@carbon-labs/utilities@0.22.0) (2026-04-14)
 
 

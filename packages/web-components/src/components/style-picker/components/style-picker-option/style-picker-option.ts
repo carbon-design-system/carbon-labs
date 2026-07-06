@@ -12,7 +12,7 @@ import { stylePickerOptionTemplate } from './src/style-picker-option.template.js
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
-  StylePickerContextType,
+  type StylePickerContextType,
 } from '../../context/style-picker-context.js';
 import StylePickerOption from './src/style-picker-option.js';
 import { prefix } from '../../defs/index.js';

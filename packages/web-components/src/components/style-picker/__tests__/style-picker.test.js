@@ -143,17 +143,16 @@ const singleIconTemplate = (props = defaultProps) => html`
     </cds-icon-button>
     <clabs-style-picker-section heading="Icons">
       ${icons.map(
-        (item) =>
-          html`
-            <clabs-style-picker-option
-              value=${item.value}
-              label=${item.label}
-              ?selected=${item.value === 'apple'}>
-              <clabs-style-picker-icon>
-                ${item.renderIcon}
-              </clabs-style-picker-icon>
-            </clabs-style-picker-option>
-          `
+        (item) => html`
+          <clabs-style-picker-option
+            value=${item.value}
+            label=${item.label}
+            ?selected=${item.value === 'apple'}>
+            <clabs-style-picker-icon>
+              ${item.renderIcon}
+            </clabs-style-picker-icon>
+          </clabs-style-picker-option>
+        `
       )}
     </clabs-style-picker-section>
   </clabs-style-picker>
@@ -201,17 +200,16 @@ const flatIconColorTemplate = (props = defaultProps) => html`
     </clabs-style-picker-section>
     <clabs-style-picker-section heading="Icons">
       ${icons.map(
-        (item) =>
-          html`
-            <clabs-style-picker-option
-              value=${item.value}
-              label=${item.label}
-              ?selected=${item.value === 'apple'}>
-              <clabs-style-picker-icon>
-                ${item.renderIcon}
-              </clabs-style-picker-icon>
-            </clabs-style-picker-option>
-          `
+        (item) => html`
+          <clabs-style-picker-option
+            value=${item.value}
+            label=${item.label}
+            ?selected=${item.value === 'apple'}>
+            <clabs-style-picker-icon>
+              ${item.renderIcon}
+            </clabs-style-picker-icon>
+          </clabs-style-picker-option>
+        `
       )}
     </clabs-style-picker-section>
   </clabs-style-picker>
@@ -246,17 +244,16 @@ const disclosedColorAndIconTemplate = (props = defaultProps) => html`
     <clabs-style-picker-sections>
       <clabs-style-picker-section heading="Icons">
         ${icons.map(
-          (item) =>
-            html`
-              <clabs-style-picker-option
-                value=${item.value}
-                label=${item.label}
-                ?selected=${item.value === 'apple'}>
-                <clabs-style-picker-icon>
-                  ${item.renderIcon}
-                </clabs-style-picker-icon>
-              </clabs-style-picker-option>
-            `
+          (item) => html`
+            <clabs-style-picker-option
+              value=${item.value}
+              label=${item.label}
+              ?selected=${item.value === 'apple'}>
+              <clabs-style-picker-icon>
+                ${item.renderIcon}
+              </clabs-style-picker-icon>
+            </clabs-style-picker-option>
+          `
         )}
       </clabs-style-picker-section>
       <clabs-style-picker-section heading="Colors">

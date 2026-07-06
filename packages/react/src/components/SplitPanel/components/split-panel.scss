@@ -55,7 +55,8 @@ $prefix: 'clabs' !default;
 
 .#{$prefix}--split-panel__content--kb-interaction {
   /* linear looks smoother to my eye than motion(standard, productive) */
-  --#{$prefix}--split-panel-handle-transition: all #{$duration-moderate-01} linear;
+  --#{$prefix}--split-panel-handle-transition: all #{$duration-moderate-01}
+    linear;
 }
 
 .#{$prefix}--split-panel__panel {
@@ -69,8 +70,8 @@ $prefix: 'clabs' !default;
 /* panels that directly contain another split panel do not have a background color so that the
 split handle remains transparent through to the background color */
 .#{$prefix}--split-panel__panel:has(
-    > .#{$prefix}--split-panel .#{$prefix}--split-panel__panel
-  ) {
+  > .#{$prefix}--split-panel .#{$prefix}--split-panel__panel
+) {
   background-color: transparent;
 }
 

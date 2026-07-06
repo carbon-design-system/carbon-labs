@@ -17,14 +17,14 @@ import {
   INITIAL_AUTOMATION_HEADER_PROPS,
   SOLIS_CDN_HOSTNAMES,
 } from '../../constant';
-import {
+import type {
   GlobalActionConfig,
   HeaderProps,
   MainSectionItem,
   ProfileFooterLinks,
   SearchConfigs,
-  solisDeploymentEnvironment,
 } from '../../types/Header.types';
+import { solisDeploymentEnvironment } from '../../types/Header.types';
 import '../CommonHeader/CommonHeader';
 
 import styles from '../../index.scss?inline';
@@ -43,7 +43,7 @@ export class HybridIpaasHeader extends LitElement {
   @property({ type: String }) productName = null;
   @property({ type: String }) productKey = '';
   @property({ type: Object }) fetchHeaders = {};
-  @property({ type: Boolean }) solisSidekickEnabled = false;
+  private readonly solisSidekickEnabled = false;
   @property({ type: Boolean }) solisSwitcherEnabled = false;
   @property({ type: String }) solisEnvironment = 'local';
   @property({ type: Boolean }) solisDevMode = false; // override for storybook and local to use mock data
@@ -181,6 +181,15 @@ export class HybridIpaasHeader extends LitElement {
     return footerLink;
   }
 
+  private initYPCLink() {
+    const footerLink = {
+      'data-ypc-link': true,
+      text: '',
+      arialLabel: 'Your privacy choices',
+    };
+    return footerLink;
+  }
+
   private initLogoutLink() {
     const footerLink: ProfileFooterLinks = {
       text: 'Log out',
@@ -279,6 +288,9 @@ export class HybridIpaasHeader extends LitElement {
     if (logoutIndex !== undefined && logoutIndex > -1) {
       baseOptions.profileFooterLinks?.splice(logoutIndex, 1);
     }
+
+    // add an element with the data-ypc-link attribute for the YourPrivacyChoices UI
+    baseOptions.profileFooterLinks?.push(this.initYPCLink());
 
     // add our own 'log out' entry at the end of the list
     baseOptions.profileFooterLinks?.push(this.initLogoutLink());

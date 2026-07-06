@@ -174,23 +174,25 @@ function getEditModal(customElementClass) {
             This intent/view does not provide any context variables.
           </div>`
         : currentView.contextVariables.map(
-            (variable) => html` <cds-text-input
-              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
-              label=${variable}
-              invalid-text="Error message"
-              placeholder="Enter sample value...">
-            </cds-text-input>`
+            (variable) =>
+              html` <cds-text-input
+                class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
+                label=${variable}
+                invalid-text="Error message"
+                placeholder="Enter sample value...">
+              </cds-text-input>`
           );
     parameters =
       currentView.parameters.length <= 0
         ? html`<div>This intent/view does not provide any parameters.</div>`
         : currentView.parameters.map(
-            (parameter) => html` <cds-text-input
-              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
-              label=${parameter}
-              invalid-text="Error message"
-              placeholder="Enter expected value...">
-            </cds-text-input>`
+            (parameter) =>
+              html` <cds-text-input
+                class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
+                label=${parameter}
+                invalid-text="Error message"
+                placeholder="Enter expected value...">
+              </cds-text-input>`
           );
   } else {
     modalHeader = 'Edit prompt';
@@ -201,25 +203,27 @@ function getEditModal(customElementClass) {
             This intent/view does not provide any context variables.
           </div>`
         : Object.entries(currentContextVariables).map(
-            ([key, value]) => html` <cds-text-input
-              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
-              label=${key}
-              invalid-text="Error message"
-              placeholder="Enter sample value..."
-              value=${value}>
-            </cds-text-input>`
+            ([key, value]) =>
+              html` <cds-text-input
+                class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
+                label=${key}
+                invalid-text="Error message"
+                placeholder="Enter sample value..."
+                value=${value}>
+              </cds-text-input>`
           );
     parameters =
       Object.keys(currentParameters).length <= 0
         ? html`<div>This intent/view does not provide any parameters.</div>`
         : Object.entries(currentParameters).map(
-            ([key, value]) => html` <cds-text-input
-              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
-              label=${key}
-              invalid-text="Error message"
-              placeholder="Enter expected value..."
-              value=${value}>
-            </cds-text-input>`
+            ([key, value]) =>
+              html` <cds-text-input
+                class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
+                label=${key}
+                invalid-text="Error message"
+                placeholder="Enter expected value..."
+                value=${value}>
+              </cds-text-input>`
           );
   }
 
@@ -395,15 +399,16 @@ export function uxControlTemplate(customElementClass) {
                     This intent/view does not provide any parameters.
                   </div>`
                 : currentView.contextVariables.map(
-                    (variable) => html`<cds-tag
-                      filter
-                      type="gray"
-                      title="${variable}"
-                      textContent="${variable}"
-                      aria-label="Context variable"
-                      @cds-tag-closed=${handleCloseTag}>
-                      ${variable}
-                    </cds-tag>`
+                    (variable) =>
+                      html`<cds-tag
+                        filter
+                        type="gray"
+                        title="${variable}"
+                        textContent="${variable}"
+                        aria-label="Context variable"
+                        @cds-tag-closed=${handleCloseTag}>
+                        ${variable}
+                      </cds-tag>`
                   )}
               ${!showAddContextVariable
                 ? html` <cds-tag
@@ -459,15 +464,16 @@ export function uxControlTemplate(customElementClass) {
                     This intent/view does not provide any parameters.
                   </div>`
                 : currentView.parameters.map(
-                    (parameter) => html`<cds-tag
-                      filter
-                      type="gray"
-                      title="${parameter}"
-                      textContent="${parameter}"
-                      aria-label="Parameter"
-                      @cds-tag-closed=${handleCloseTag}>
-                      ${parameter}
-                    </cds-tag>`
+                    (parameter) =>
+                      html`<cds-tag
+                        filter
+                        type="gray"
+                        title="${parameter}"
+                        textContent="${parameter}"
+                        aria-label="Parameter"
+                        @cds-tag-closed=${handleCloseTag}>
+                        ${parameter}
+                      </cds-tag>`
                   )}
               ${!showAddParameter
                 ? html`<cds-tag

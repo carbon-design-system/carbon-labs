@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.54.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.53.0...@carbon-labs/react-animated-header@0.54.0) (2026-06-02)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.53.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.52.0...@carbon-labs/react-animated-header@0.53.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.52.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.51.0...@carbon-labs/react-animated-header@0.52.0) (2026-05-14)
+
+
+### Bug Fixes
+
+* **examples:** update react and web components standalone examples ([#1230](https://github.com/carbon-design-system/carbon-labs/issues/1230)) ([0ba3c58](https://github.com/carbon-design-system/carbon-labs/commit/0ba3c5866a08459a9e220737e85ce256cec08463))
+
+
+
+
+
+# [0.51.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.50.0...@carbon-labs/react-animated-header@0.51.0) (2026-05-13)
+
+
+### Features
+
+* **v12:** Configure dual-build Storybook architecture for v12 migration ([#1209](https://github.com/carbon-design-system/carbon-labs/issues/1209)) ([78ed8d4](https://github.com/carbon-design-system/carbon-labs/commit/78ed8d406f84fd877be4cda0fc17fee17a69ad48))
+
+
+
+
+
+# [0.50.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.49.0...@carbon-labs/react-animated-header@0.50.0) (2026-05-12)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.49.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.48.0...@carbon-labs/react-animated-header@0.49.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.48.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.47.0...@carbon-labs/react-animated-header@0.48.0) (2026-05-08)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.47.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.46.0...@carbon-labs/react-animated-header@0.47.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
+# [0.46.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.45.0...@carbon-labs/react-animated-header@0.46.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/react-animated-header
+
+
+
+
+
 # [0.45.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-animated-header@0.44.0...@carbon-labs/react-animated-header@0.45.0) (2026-04-29)
 
 **Note:** Version bump only for package @carbon-labs/react-animated-header

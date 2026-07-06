@@ -1,12 +1,16 @@
 {
   "name": "@carbon-labs/react-processing",
-  "version": "0.13.0",
+  "version": "0.21.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
   "type": "module",
   "description": "Carbon Labs - Processing",
+  "labs": {
+    "status": "preview",
+    "title": "React Processing"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -36,7 +40,7 @@
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 399aab88-efa6-421f-91f7-0be428e0b6c2 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "0.22.0"
+    "@carbon-labs/utilities": "0.28.0"
   },
   "dependencies": {
     "@ibm/telemetry-js": "^1.10.2"

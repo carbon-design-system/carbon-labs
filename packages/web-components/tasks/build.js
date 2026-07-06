@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { rollup } from 'rollup';
 import path from 'path';
@@ -33,6 +33,25 @@ const packageJson = JSON.parse(
 const componentPackageJson = JSON.parse(
   readFileSync(path.resolve(input, '../package.json'), 'utf8')
 );
+
+/**
+ * Find tsconfig.json by walking up the directory tree
+ */
+function findTsConfig() {
+  let currentDir = componentDir;
+  const root = path.parse(currentDir).root;
+
+  while (currentDir !== root) {
+    const tsConfigPath = path.join(currentDir, '../tsconfig.json');
+    if (existsSync(tsConfigPath)) {
+      return tsConfigPath;
+    }
+    currentDir = path.dirname(currentDir);
+  }
+
+  // Fallback to the original path
+  return path.join(componentDir, '../../../tsconfig.json');
+}
 
 /**
  * Build
@@ -100,7 +119,7 @@ function getRollupConfig(outDir) {
         entries: [{ find: /^(.*)\.scss\?inline$/, replacement: '$1.scss' }],
       }),
       typescript({
-        tsconfig: path.join(componentDir, '../../../tsconfig.json'),
+        tsconfig: findTsConfig(),
         compilerOptions: {
           rootDir: componentDir,
           outDir,

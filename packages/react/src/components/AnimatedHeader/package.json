@@ -1,12 +1,16 @@
 {
   "name": "@carbon-labs/react-animated-header",
-  "version": "0.45.0",
+  "version": "0.54.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
   "type": "module",
   "description": "Carbon Labs - Animated Header",
+  "labs": {
+    "status": "preview",
+    "title": "React Animated Header"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -43,6 +47,6 @@
     "lottie-web": "^5.12.2"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "0.22.0"
+    "@carbon-labs/utilities": "0.28.0"
   }
 }

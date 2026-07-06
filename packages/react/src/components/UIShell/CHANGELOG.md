@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.104.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.103.0...@carbon-labs/react-ui-shell@0.104.0) (2026-07-06)
+
+
+### Features
+
+* **ui-shell:** ui-shell header enhancements ([#1272](https://github.com/carbon-design-system/carbon-labs/issues/1272)) ([a8e7c09](https://github.com/carbon-design-system/carbon-labs/commit/a8e7c09595ca441e8a482613fe0037dcb4db9709))
+
+
+
+
+
 # [0.103.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-ui-shell@0.102.0...@carbon-labs/react-ui-shell@0.103.0) (2026-06-02)
 
 **Note:** Version bump only for package @carbon-labs/react-ui-shell

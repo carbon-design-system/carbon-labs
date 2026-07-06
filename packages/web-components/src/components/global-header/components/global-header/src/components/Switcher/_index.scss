@@ -28,22 +28,11 @@
   min-inline-size: $spacing-12 * 2 !important;
 
   &-item {
-    &-title {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-
-      span {
-        overflow: hidden;
-        margin-inline-end: $spacing-06;
-        max-inline-size: 224px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      &-hidden-checkmark {
-        visibility: hidden;
-      }
+    > span {
+      overflow: hidden;
+      max-inline-size: 224px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     &-title-icons-left {
@@ -62,11 +51,22 @@
       }
     }
 
-    > span {
-      overflow: hidden;
-      max-inline-size: 224px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    &-title {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      span {
+        overflow: hidden;
+        margin-inline-end: $spacing-06;
+        max-inline-size: 224px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &-hidden-checkmark {
+        visibility: hidden;
+      }
     }
   }
 
@@ -104,7 +104,6 @@ cds-custom-header-menu::part(trigger) {
   display: flex !important;
   overflow: hidden;
   flex-direction: row !important;
-  /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
   flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: space-between !important;

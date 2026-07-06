@@ -11,7 +11,7 @@ import { consume } from '@lit/context';
 import { CSSResultGroup, LitElement } from 'lit';
 import {
   stylePickerContext,
-  StylePickerContextType,
+  type StylePickerContextType,
 } from '../../../context/style-picker-context';
 // @ts-ignore
 import styles from './style-picker-group.scss?inline';

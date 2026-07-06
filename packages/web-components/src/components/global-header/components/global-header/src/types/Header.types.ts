@@ -131,6 +131,7 @@ export type ProfileFooterLinks = {
   carbonIcon?: string;
   newTab?: boolean;
   newTabIcon?: boolean;
+  'data-ypc-link'?: boolean;
   onClickHandler?: () => void;
 };
 
@@ -298,8 +299,10 @@ export interface HeaderProps {
   solisConfig?: SolisConfig;
 }
 
-export interface ReactWrapperProps
-  extends Omit<HeaderProps, 'chatBotConfigs' | 'notificationConfigs'> {
+export interface ReactWrapperProps extends Omit<
+  HeaderProps,
+  'chatBotConfigs' | 'notificationConfigs'
+> {
   productKey: string;
   productName?: null;
   fetchHeaders?: Record<string, string>;
@@ -360,6 +363,13 @@ export type SidekickInfo = {
   chat_enabled?: boolean;
   overview_enabled?: boolean;
   tell_me_more_enabled?: boolean;
+  openSidekick?: () => void | undefined;
+  closeSidekick?: () => void | undefined;
+};
+
+export type SwitcherInfo = {
+  openSwitcher?: () => void | undefined;
+  closeSwitcher?: () => void | undefined;
 };
 
 interface solisWindowConfig {
@@ -367,8 +377,12 @@ interface solisWindowConfig {
   cdn_hostname: string;
   deployment_environment: solisDeploymentEnvironment;
   sidekick?: SidekickInfo;
+  switcher?: SwitcherInfo;
   product_id: string;
   backend_proxy?: string;
+  coachmark_enabled?: boolean;
+  custom_switcher_button?: boolean;
+  custom_sidekick_button?: boolean;
 }
 
 declare global {

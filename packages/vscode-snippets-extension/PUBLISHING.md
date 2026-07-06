@@ -90,7 +90,6 @@ To test the extension locally before publishing:
    This creates a `.vsix` file (e.g., `carbon-token-snippets-0.1.0.vsix`)
 
 3. **Install locally in VSCode**
-
    - Open VSCode
    - Go to Extensions view (Cmd+Shift+X / Ctrl+Shift+X)
    - Click the "..." menu → "Install from VSIX..."
@@ -106,12 +105,10 @@ To test the extension locally before publishing:
 ### First-Time Setup
 
 1. **Update package.json**
-
    - Ensure `publisher` field matches your Marketplace publisher ID
    - Update version number if needed
 
 2. **Add Extension Icon** (Optional but recommended)
-
    - Create a 128x128 PNG icon named `icon.png`
    - Place it in the package root
    - Or remove the `"icon": "icon.png"` line from package.json
@@ -156,13 +153,11 @@ editors.
 ### First-Time Setup
 
 1. **Create an Open VSX account**
-
    - Go to https://open-vsx.org/
    - Sign in with GitHub
    - Create a namespace (e.g., "lee-chase")
 
 2. **Generate an Access Token**
-
    - Go to https://open-vsx.org/user-settings/tokens
    - Create a new access token
    - Save it securely

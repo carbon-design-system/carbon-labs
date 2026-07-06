@@ -307,14 +307,12 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
       } else {
         const prop = orientation === 'horizontal' ? 'height' : 'width';
         if (prevSibling) {
-          prevSibling.style[
-            prop
-          ] = `${initialSizes.current.prevSiblingSize[prop]}px`;
+          prevSibling.style[prop] =
+            `${initialSizes.current.prevSiblingSize[prop]}px`;
         }
         if (nextSibling) {
-          nextSibling.style[
-            prop
-          ] = `${initialSizes.current.nextSiblingSize[prop]}px`;
+          nextSibling.style[prop] =
+            `${initialSizes.current.nextSiblingSize[prop]}px`;
         }
       }
     };

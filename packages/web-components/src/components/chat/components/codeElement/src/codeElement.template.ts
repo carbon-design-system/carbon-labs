@@ -79,8 +79,8 @@ export function codeElementTemplate(customElementClass) {
                 ${assignedLanguage
                   ? assignedLanguage
                   : autoAssignLanguage
-                  ? language + ' ' + renderLabel('code-estimated-warning')
-                  : 'no language detected'}
+                    ? language + ' ' + renderLabel('code-estimated-warning')
+                    : 'no language detected'}
               `
             : ``}
           ${displayLineCount && lineCount > 1
@@ -174,30 +174,25 @@ export function codeElementTemplate(customElementClass) {
           ? ' ' + clabsPrefix + '--chat-code-color-hidden'
           : ''}">
         ${_renderedLines.map(
-          (lineObject, index) =>
-            html`
-              <div
-                class="${clabsPrefix}--chat-code-line ${comparisonReference[
-                  index
-                ]
-                  ? clabsPrefix +
-                    '--chat-code-line-' +
-                    comparisonReference[index]
-                  : ''} ${clabsPrefix}--chat-code-line-fade-in ${lineObject.hidden
-                  ? clabsPrefix + '--chat-code-line-hidden'
-                  : ''}">
-                ${disableLineTicks || _renderedLines.length < 2
-                  ? html``
-                  : html`
+          (lineObject, index) => html`
+            <div
+              class="${clabsPrefix}--chat-code-line ${comparisonReference[index]
+                ? clabsPrefix + '--chat-code-line-' + comparisonReference[index]
+                : ''} ${clabsPrefix}--chat-code-line-fade-in ${lineObject.hidden
+                ? clabsPrefix + '--chat-code-line-hidden'
+                : ''}">
+              ${disableLineTicks || _renderedLines.length < 2
+                ? html``
+                : html`
                       <div class="${clabsPrefix}--chat-code-line-tick">
                         ${
                           !comparisonReference[index]
                             ? index + 1
                             : comparisonReference[index] === 'removed'
-                            ? '-'
-                            : comparisonReference[index] === 'added'
-                            ? '+'
-                            : index + 1
+                              ? '-'
+                              : comparisonReference[index] === 'added'
+                                ? '+'
+                                : index + 1
                         }
                       </div>
                       <div class="${clabsPrefix}--chat-code-line-divider">
@@ -205,38 +200,38 @@ export function codeElementTemplate(customElementClass) {
 
                       </div>
                     `}
-                ${enableBlockCollapse && collapseAvailable
-                  ? html`
-                      <div
-                        class="${clabsPrefix}--chat-code-line-collapser"
-                        @click="${() => {
-                          collapseBlock(index);
-                        }}">
-                        ${!lineObject.collapsable
-                          ? ''
-                          : collapsedList.includes(index)
+              ${enableBlockCollapse && collapseAvailable
+                ? html`
+                    <div
+                      class="${clabsPrefix}--chat-code-line-collapser"
+                      @click="${() => {
+                        collapseBlock(index);
+                      }}">
+                      ${!lineObject.collapsable
+                        ? ''
+                        : collapsedList.includes(index)
                           ? iconLoader(ChevronLeft())
                           : iconLoader(ChevronDown())}
-                      </div>
-                    `
-                  : ``}
-                <div
-                  class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-${theme ||
-                  'default'}-theme ${editable
-                    ? ''
-                    : clabsPrefix +
-                      '--chat-code-line-offset-level-' +
-                      lineObject.indent}">
-                  ${enableColoring
-                    ? lineObject.content
-                    : unsafeHTML(
-                        preRender
-                          ? lineObject.content
-                          : highlightLine(lineObject.content, language)
-                      )}
-                </div>
+                    </div>
+                  `
+                : ``}
+              <div
+                class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-${theme ||
+                'default'}-theme ${editable
+                  ? ''
+                  : clabsPrefix +
+                    '--chat-code-line-offset-level-' +
+                    lineObject.indent}">
+                ${enableColoring
+                  ? lineObject.content
+                  : unsafeHTML(
+                      preRender
+                        ? lineObject.content
+                        : highlightLine(lineObject.content, language)
+                    )}
               </div>
-            `
+            </div>
+          `
         )}
       </div>
       ${currentlyEdited && !disableEditingOptions

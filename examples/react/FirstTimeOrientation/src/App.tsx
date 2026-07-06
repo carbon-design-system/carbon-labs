@@ -7,18 +7,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { InterstitialScreen, pkg } from '@carbon/ibm-products';
 import { Button } from '@carbon/react';
 import { ContentWrapper } from './components/ContentWrapper';
-import { PersonalizationInterstitial, WelcomeInterstitial } from './components';
+import { PersonalizationInterstitial } from './components/PersonalizationInterstitial';
+import { WelcomeInterstitial } from './components/WelcomeInterstitial';
 
 function App() {
   const [showInterstitialModal, setShowInterstitialModal] = useState(true);
 
   const defaultProps = {
     headerTitle: 'Welcome to your sandbox, Jack!',
-    interstitialAriaLabel: 'Interstitial Screen',
+    ariaLabel: 'Interstitial Screen',
   };
 
   pkg.component.InterstitialScreen = true;
@@ -36,7 +37,7 @@ function App() {
         onClose={() => {
           setShowInterstitialModal(false);
         }}
-        interstitialAriaLabel={defaultProps.interstitialAriaLabel}
+        ariaLabel={defaultProps.ariaLabel}
         isFullScreen={false}>
         <InterstitialScreen.Header
           headerTitle={defaultProps.headerTitle}></InterstitialScreen.Header>

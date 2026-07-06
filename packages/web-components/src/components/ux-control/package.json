@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-ai-ux-control",
-  "version": "0.20.0",
+  "version": "0.25.0",
   "private": true,
   "publishConfig": {
     "access": "public",
@@ -8,6 +8,10 @@
   },
   "type": "module",
   "description": "Carbon for AI - UX Control component",
+  "labs": {
+    "status": "draft",
+    "title": "WC AI UX Control"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -39,7 +43,7 @@
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.25.0",
+    "@carbon-labs/utilities": "0.28.0",
     "@carbon/grid": "^11.45.0",
     "@carbon/web-components": "^2.41.0",
     "@ibm/telemetry-js": "^1.10.2"

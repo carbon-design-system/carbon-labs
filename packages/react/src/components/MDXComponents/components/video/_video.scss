@@ -32,8 +32,8 @@
     background-color: colors.$blue-60;
     block-size: 4.5rem;
     inline-size: 4.5rem;
-    inset-block: 0% 0%;
-    inset-inline: 0% 0%;
+    inset-block: 0%;
+    inset-inline: 0%;
     transition: all motion.$duration-moderate-01 motion(entrance, productive);
 
     @media screen and (prefers-reduced-motion: reduce) {

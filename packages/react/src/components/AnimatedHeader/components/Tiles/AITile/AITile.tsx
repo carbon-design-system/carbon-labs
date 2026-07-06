@@ -84,7 +84,7 @@ export const AITile: React.FC<AITileProps> = ({
         className={`${prefix}--animated-header__tile ${blockClass}`}
         key={tileId}
         aria-label={ariaLabel ?? title ?? 'AI Tile'}
-        title={isDisabled ? disabledTaskLabel ?? '' : ''}
+        title={isDisabled ? (disabledTaskLabel ?? '') : ''}
         tabIndex={-1}
         {...dataAttributes}>
         {body}
@@ -104,7 +104,7 @@ export const AITile: React.FC<AITileProps> = ({
       key={tileId}
       href={href ?? undefined}
       disabled={isDisabled || isLoading}
-      title={isDisabled ? disabledTaskLabel ?? '' : ''}
+      title={isDisabled ? (disabledTaskLabel ?? '') : ''}
       {...dataAttributes}>
       {body}
     </Link>

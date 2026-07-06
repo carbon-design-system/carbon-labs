@@ -37,5 +37,5 @@
 }
 
 :host([position='start']) {
-margin-inline-start: calc(-1 * max(1px, var(--resizer-thickness)));
+  margin-inline-start: calc(-1 * max(1px, var(--resizer-thickness)));
 }

@@ -85,26 +85,47 @@ class ResizerHandleTemplate extends LitElement {
   private _boundMove?: (e: PointerEvent) => void;
   private _boundStop?: (e: PointerEvent) => void;
 
+  /**
+   *
+   */
   private get _isHorizontal(): boolean {
-    if (this.orientation === 'horizontal') return true;
-    if (this.orientation === 'vertical') return false;
+    if (this.orientation === 'horizontal') {
+      return true;
+    }
+    if (this.orientation === 'vertical') {
+      return false;
+    }
     return this.getAttribute('slot') === SLOTS.HANDLE_HORIZONTAL;
   }
 
+  /**
+   * Sets or removes the synthetic hover attribute on the host element.
+   * @param {boolean} isHovered - True to apply hover state, false to remove it
+   */
   setSyntheticHoverState(isHovered: boolean): void {
     this.toggleAttribute('data-synthetic-hover', isHovered);
   }
 
+  /**
+   * Sets or removes the synthetic active attribute on the host element.
+   * @param {boolean} isActive - True to apply active state, false to remove it
+   */
   setSyntheticActiveState(isActive: boolean): void {
     this.toggleAttribute('data-synthetic-active', isActive);
   }
 
+  /**
+   *
+   */
   connectedCallback() {
     super.connectedCallback();
     this._grid = safeClosest(this, SELECTORS.GRID) || undefined;
 
     if (this._grid) {
-      const panels = safeQuerySelectorAll<HTMLElement>(this._grid, SELECTORS.PANEL);
+      const panels = safeQuerySelectorAll<HTMLElement>(
+        this._grid,
+        SELECTORS.PANEL
+      );
       if (this._isHorizontal) {
         this._startNode = panels.find((p) => p.slot === SLOTS.LEFT);
         this._endNode = panels.find((p) => p.slot === SLOTS.RIGHT);
@@ -133,6 +154,9 @@ class ResizerHandleTemplate extends LitElement {
     this.addEventListener('keydown', this._handleKeyDown);
   }
 
+  /**
+   *
+   */
   disconnectedCallback() {
     this.removeEventListener('pointerdown', this._handlePointerDown);
     this.removeEventListener('keydown', this._handleKeyDown);
@@ -150,8 +174,13 @@ class ResizerHandleTemplate extends LitElement {
     super.disconnectedCallback();
   }
 
+  /**
+   *
+   */
   private _updateAriaAttributes(): void {
-    if (!this._grid || !this._startNode || !this._endNode) return;
+    if (!this._grid || !this._startNode || !this._endNode) {
+      return;
+    }
     const rectStart = this._startNode.getBoundingClientRect();
     const rectEnd = this._endNode.getBoundingClientRect();
     const startSize = this._isHorizontal ? rectStart.width : rectStart.height;
@@ -166,6 +195,10 @@ class ResizerHandleTemplate extends LitElement {
     }
   }
 
+  /**
+   * Resets both panels to their default sizes and dispatches a resize-reset event.
+   * @param {MouseEvent} e - The originating mouse event (double-click or equivalent)
+   */
   resetSizes = (e: MouseEvent): void => {
     e.preventDefault();
     this.dispatchEvent(createCustomEvent(EVENTS.RESIZE_RESET));
@@ -180,6 +213,9 @@ class ResizerHandleTemplate extends LitElement {
     }
   };
 
+  /**
+   *
+   */
   private get _resolvedPivot(): 'start' | 'end' | 'both' | undefined {
     if (
       this.pivot === 'start' ||
@@ -189,20 +225,34 @@ class ResizerHandleTemplate extends LitElement {
       return this.pivot;
     }
     const panel = safeClosest(this, SELECTORS.PANEL);
-    if (!panel) return undefined;
+    if (!panel) {
+      return undefined;
+    }
     const slot = panel.getAttribute('slot');
-    if (slot === SLOTS.LEFT) return 'end';
-    if (slot === SLOTS.RIGHT) return 'start';
+    if (slot === SLOTS.LEFT) {
+      return 'end';
+    }
+    if (slot === SLOTS.RIGHT) {
+      return 'start';
+    }
     return undefined;
   }
 
+  /**
+   * Returns true if the pointer event forms a double-tap with the previous tap.
+   * @param {PointerEvent} e - The current pointer-down event to evaluate
+   */
   private _detectDoubleTap(e: PointerEvent): boolean {
     const now = Date.now();
     const dt = now - this._lastTapTime;
     const currentPos: Position = { x: e.clientX, y: e.clientY };
     if (
       dt < DOUBLE_TAP.MAX_TIME_MS &&
-      isWithinDistance(currentPos, this._lastTapPosition, DOUBLE_TAP.MAX_DISTANCE_PX)
+      isWithinDistance(
+        currentPos,
+        this._lastTapPosition,
+        DOUBLE_TAP.MAX_DISTANCE_PX
+      )
     ) {
       triggerHapticFeedback(DOUBLE_TAP.VIBRATION_MS);
       this.resetSizes(e as unknown as MouseEvent);
@@ -214,13 +264,22 @@ class ResizerHandleTemplate extends LitElement {
     return false;
   }
 
-  /** Public API for pivot component */
+  /**
+   * Public API for pivot component — delegates to the internal pointer-down handler.
+   * @param {PointerEvent} e - The pointer-down event to begin dragging from
+   */
   startDrag = (e: PointerEvent): void => {
     this._handlePointerDown(e);
   };
 
+  /**
+   * Handles pointerdown: starts drag tracking and wires up global move/up listeners.
+   * @param {PointerEvent} e - The pointerdown event that initiated the drag
+   */
   private _handlePointerDown = (e: PointerEvent): void => {
-    if (this._detectDoubleTap(e)) return;
+    if (this._detectDoubleTap(e)) {
+      return;
+    }
 
     e.preventDefault();
     this._isDragging = true;
@@ -243,8 +302,14 @@ class ResizerHandleTemplate extends LitElement {
       endSize = this._isHorizontal ? rectEnd.width : rectEnd.height;
     }
 
+    /**
+     * Pointermove handler — updates grid sizes on every drag tick.
+     * @param {PointerEvent} ev - The pointermove event during an active drag
+     */
     this._boundMove = (ev: PointerEvent) => {
-      if (!this._isDragging) return;
+      if (!this._isDragging) {
+        return;
+      }
       const delta = (this._isHorizontal ? ev.clientX : ev.clientY) - startValue;
       this.dispatchEvent(
         createCustomEvent(EVENTS.RESIZE_DRAG, {
@@ -257,6 +322,10 @@ class ResizerHandleTemplate extends LitElement {
       }
     };
 
+    /**
+     * Pointerup handler — finalises the drag and removes global listeners.
+     * @param {PointerEvent} ev - The pointerup event that ends the drag
+     */
     this._boundStop = (ev: PointerEvent) => {
       const delta = (this._isHorizontal ? ev.clientX : ev.clientY) - startValue;
       this.dispatchEvent(
@@ -273,7 +342,9 @@ class ResizerHandleTemplate extends LitElement {
         window.removeEventListener('pointerup', this._boundStop);
         this._boundStop = undefined;
       }
-      if (this._grid) this._grid.style.removeProperty('transition');
+      if (this._grid) {
+        this._grid.style.removeProperty('transition');
+      }
       this._isDragging = false;
       this.setSyntheticActiveState(false);
     };
@@ -282,20 +353,53 @@ class ResizerHandleTemplate extends LitElement {
     window.addEventListener('pointerup', this._boundStop);
   };
 
-  private _updateGridSizes(delta: number, startSize: number, endSize: number): void {
-    if (!this._grid) return;
+  /**
+   * Applies new flex-ratio CSS custom properties to the grid based on a pixel delta.
+   * @param {number} delta - Signed pixel offset since drag start
+   * @param {number} startSize - Initial size of the start panel in pixels
+   * @param {number} endSize - Initial size of the end panel in pixels
+   */
+  private _updateGridSizes(
+    delta: number,
+    startSize: number,
+    endSize: number
+  ): void {
+    if (!this._grid) {
+      return;
+    }
     this._grid.style.transition = 'none';
     const start = startSize + delta;
     const end = endSize - delta;
     const total = start + end || 1;
-    this._grid.style.setProperty('--start-element-size', `${calculateFlexRatio(start, total)}fr`);
-    this._grid.style.setProperty('--end-element-size', `${calculateFlexRatio(end, total)}fr`);
+    this._grid.style.setProperty(
+      '--start-element-size',
+      `${calculateFlexRatio(start, total)}fr`
+    );
+    this._grid.style.setProperty(
+      '--end-element-size',
+      `${calculateFlexRatio(end, total)}fr`
+    );
     this._updateAriaAttributes();
   }
 
+  /**
+   * Handles keyboard events: moves the handle by a step or jumps to an extreme.
+   * @param {KeyboardEvent} e - The keydown event fired on the handle element
+   */
   private _handleKeyDown = (e: KeyboardEvent): void => {
-    const allKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown'];
-    if (!allKeys.includes(e.key)) return;
+    const allKeys = [
+      'ArrowUp',
+      'ArrowDown',
+      'ArrowLeft',
+      'ArrowRight',
+      'Home',
+      'End',
+      'PageUp',
+      'PageDown',
+    ];
+    if (!allKeys.includes(e.key)) {
+      return;
+    }
 
     e.preventDefault();
     e.stopPropagation();
@@ -304,11 +408,15 @@ class ResizerHandleTemplate extends LitElement {
     const isHorizontal = this._isHorizontal;
     let delta = 0;
 
-    if (e.key === 'ArrowLeft' && isHorizontal) delta = -step;
-    else if (e.key === 'ArrowRight' && isHorizontal) delta = step;
-    else if (e.key === 'ArrowUp' && !isHorizontal) delta = -step;
-    else if (e.key === 'ArrowDown' && !isHorizontal) delta = step;
-    else if (e.key === 'Home' && this._grid && this._startNode) {
+    if (e.key === 'ArrowLeft' && isHorizontal) {
+      delta = -step;
+    } else if (e.key === 'ArrowRight' && isHorizontal) {
+      delta = step;
+    } else if (e.key === 'ArrowUp' && !isHorizontal) {
+      delta = -step;
+    } else if (e.key === 'ArrowDown' && !isHorizontal) {
+      delta = step;
+    } else if (e.key === 'Home' && this._grid && this._startNode) {
       const rect = this._startNode.getBoundingClientRect();
       delta = isHorizontal ? -rect.width : -rect.height;
     } else if (e.key === 'End' && this._grid && this._endNode) {
@@ -316,9 +424,13 @@ class ResizerHandleTemplate extends LitElement {
       delta = isHorizontal ? rect.width : rect.height;
     }
 
-    if (delta === 0) return;
+    if (delta === 0) {
+      return;
+    }
 
-    this.dispatchEvent(createCustomEvent(EVENTS.RESIZE_START, { startPosition: { x: 0, y: 0 } }));
+    this.dispatchEvent(
+      createCustomEvent(EVENTS.RESIZE_START, { startPosition: { x: 0, y: 0 } })
+    );
 
     if (this._grid && this._startNode && this._endNode) {
       const rectStart = this._startNode.getBoundingClientRect();
@@ -328,10 +440,17 @@ class ResizerHandleTemplate extends LitElement {
       this._updateGridSizes(delta, startSize, endSize);
     }
 
-    this.dispatchEvent(createCustomEvent(EVENTS.RESIZE_DRAG, { delta, position: { x: 0, y: 0 } }));
-    this.dispatchEvent(createCustomEvent(EVENTS.RESIZE_END, { delta, position: { x: 0, y: 0 } }));
+    this.dispatchEvent(
+      createCustomEvent(EVENTS.RESIZE_DRAG, { delta, position: { x: 0, y: 0 } })
+    );
+    this.dispatchEvent(
+      createCustomEvent(EVENTS.RESIZE_END, { delta, position: { x: 0, y: 0 } })
+    );
   };
 
+  /**
+   *
+   */
   render() {
     const resolvedPivot = this._resolvedPivot;
     const showStart = resolvedPivot === 'start' || resolvedPivot === 'both';
@@ -346,8 +465,7 @@ class ResizerHandleTemplate extends LitElement {
           ${showStart
             ? html`<clabs-resizer-handle-pivot
                 position="start"
-                .for=${this.forStart ?? this.for}
-              ></clabs-resizer-handle-pivot>`
+                .for=${this.forStart ?? this.for}></clabs-resizer-handle-pivot>`
             : ''}
         </div>
         <div class="icon-container" part="icon-container">
@@ -357,8 +475,7 @@ class ResizerHandleTemplate extends LitElement {
           ${showEnd
             ? html`<clabs-resizer-handle-pivot
                 position="end"
-                .for=${this.forEnd ?? this.for}
-              ></clabs-resizer-handle-pivot>`
+                .for=${this.forEnd ?? this.for}></clabs-resizer-handle-pivot>`
             : ''}
         </div>
       </div>

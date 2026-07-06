@@ -64,9 +64,7 @@ class ResizerHandlePivotTemplate extends LitElement {
         : (root as ShadowRoot).querySelector(`#${CSS.escape(this.for)}`);
       const target =
         localTarget ??
-        (root !== document
-          ? document.getElementById(this.for)
-          : null);
+        (root !== document ? document.getElementById(this.for) : null);
       if (target && target.tagName?.toLowerCase() === 'clabs-resizer-handle') {
         this._cachedHandle = target as ResizerHandle;
         return this._cachedHandle;

@@ -157,19 +157,36 @@ const TOOLBAR_BTNS = [
   },
 ];
 
-/** Update ARIA valuenow on a resizer handle based on adjacent sibling sizes. */
+/**
+ * Update ARIA valuenow on a resizer handle based on adjacent sibling sizes.
+ * @param {Element} handle - The resizer handle element
+ * @param {'horizontal'|'vertical'} orientation - Orientation of the resizer
+ */
 function updateResizerAria(handle, orientation) {
   const prev = handle?.previousElementSibling;
   const next = handle?.nextElementSibling;
-  if (!prev || !next) return;
-  const prevSize = orientation === 'horizontal' ? prev.offsetHeight : prev.offsetWidth;
-  const nextSize = orientation === 'horizontal' ? next.offsetHeight : next.offsetWidth;
+  if (!prev || !next) {
+    return;
+  }
+  const prevSize =
+    orientation === 'horizontal' ? prev.offsetHeight : prev.offsetWidth;
+  const nextSize =
+    orientation === 'horizontal' ? next.offsetHeight : next.offsetWidth;
   const total = prevSize + nextSize;
   if (total > 0 && !isNaN(prevSize) && !isNaN(nextSize)) {
-    handle.setAttribute('aria-valuenow', String(Math.round((prevSize / total) * 100)));
+    handle.setAttribute(
+      'aria-valuenow',
+      String(Math.round((prevSize / total) * 100))
+    );
   }
 }
 
+/**
+ * Renders a collapsible section header.
+ * @param {string} title - Section title text
+ * @param {boolean} collapsed - Whether the section is currently collapsed
+ * @param {Function} onToggle - Callback to toggle collapsed state
+ */
 const sectionHeaderTpl = (title, collapsed, onToggle) => html`
   <div
     class="web-ide__section-header"
@@ -179,62 +196,117 @@ const sectionHeaderTpl = (title, collapsed, onToggle) => html`
     aria-label="${collapsed ? 'Expand' : 'Collapse'} ${title}"
     @click=${onToggle}
     @keydown=${(e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onToggle();
-    }
-  }}>
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onToggle();
+      }
+    }}>
     <span>${title}</span>
     ${collapsed ? iconLoader(ChevronDownIcon) : iconLoader(ChevronUpIcon)}
   </div>
 `;
 
+/**
+ * Renders the file explorer tree view.
+ * @param {Function} onFileSelect - Callback fired when a file node is selected
+ */
 const fileExplorerTpl = (onFileSelect) => html`
   <cds-tree-view hide-label size="xs" @cds-tree-node-selected=${onFileSelect}>
     <cds-tree-node id="src" label="src" value="src" is-expanded>
       <cds-tree-node id="app" label="App.tsx" value="App.tsx"></cds-tree-node>
-      <cds-tree-node id="index" label="index.tsx" value="index.tsx"></cds-tree-node>
-      <cds-tree-node id="components" label="components" value="components" is-expanded>
-        <cds-tree-node id="header" label="Header.tsx" value="Header.tsx"></cds-tree-node>
-        <cds-tree-node id="footer" label="Footer.tsx" value="Footer.tsx"></cds-tree-node>
+      <cds-tree-node
+        id="index"
+        label="index.tsx"
+        value="index.tsx"></cds-tree-node>
+      <cds-tree-node
+        id="components"
+        label="components"
+        value="components"
+        is-expanded>
+        <cds-tree-node
+          id="header"
+          label="Header.tsx"
+          value="Header.tsx"></cds-tree-node>
+        <cds-tree-node
+          id="footer"
+          label="Footer.tsx"
+          value="Footer.tsx"></cds-tree-node>
       </cds-tree-node>
     </cds-tree-node>
   </cds-tree-view>
 `;
 
+/**
+ * Renders the outline tree view showing functions and components in the active file.
+ */
 const outlineViewTpl = () => html`
   <cds-tree-view hide-label size="xs">
-    <cds-tree-node id="functions" label="Functions" value="Functions" is-expanded>
-      <cds-tree-node id="handleClick" label="handleClick()" value="handleClick()"></cds-tree-node>
-      <cds-tree-node id="render" label="render()" value="render()"></cds-tree-node>
+    <cds-tree-node
+      id="functions"
+      label="Functions"
+      value="Functions"
+      is-expanded>
+      <cds-tree-node
+        id="handleClick"
+        label="handleClick()"
+        value="handleClick()"></cds-tree-node>
+      <cds-tree-node
+        id="render"
+        label="render()"
+        value="render()"></cds-tree-node>
     </cds-tree-node>
-    <cds-tree-node id="components-outline" label="Components" value="Components" is-expanded>
-      <cds-tree-node id="header-component" label="Header" value="Header"></cds-tree-node>
+    <cds-tree-node
+      id="components-outline"
+      label="Components"
+      value="Components"
+      is-expanded>
+      <cds-tree-node
+        id="header-component"
+        label="Header"
+        value="Header"></cds-tree-node>
     </cds-tree-node>
   </cds-tree-view>
 `;
 
 /**
- * Factory that returns [onStart, onDrag, onEnd, onReset] event handlers for a
- * resizer handle. All four handlers share a single `initialSize` closure variable.
+ * Factory that returns event-handler objects for a resizer handle.
+ * All handlers share a single `initialSize` closure variable.
  *
- * @param {object} cfg
- * @param {'prev'|'next'} cfg.sibling   - Which adjacent element to resize
- * @param {'inline'|'block'} cfg.axis   - CSS logical axis to mutate
- * @param {1|-1} cfg.deltaSign          - Sign to apply to drag delta
- * @param {number} cfg.min              - Minimum size in px
+ * @param {object} cfg - Handler configuration
+ * @param {'prev'|'next'} cfg.sibling - Which adjacent element to resize
+ * @param {'inline'|'block'} cfg.axis - CSS logical axis to mutate
+ * @param {1|-1} cfg.deltaSign - Sign to apply to drag delta
+ * @param {number} cfg.min - Minimum size in px
  * @param {(() => number)|undefined} cfg.max - Optional max size in px (as a function for live viewport reads)
- * @param {string} cfg.resetValue       - CSS value to restore on reset (empty string clears the property)
+ * @param {string} cfg.resetValue - CSS value to restore on reset (empty string clears the property)
+ * @returns {{ onStart: Function, onDrag: Function, onEnd: Function, onReset: Function }}
  */
-function makeResizerHandlers({ sibling, axis, deltaSign, min, max, resetValue }) {
+function makeResizerHandlers({
+  sibling,
+  axis,
+  deltaSign,
+  min,
+  max,
+  resetValue,
+}) {
   const prop = axis === 'inline' ? 'inlineSize' : 'blockSize';
-  const ariOrientation = axis === 'inline' ? 'vertical' : 'horizontal';
+  const ariaOrientation = axis === 'inline' ? 'vertical' : 'horizontal';
   const transition = `${axis === 'inline' ? 'inline-size' : 'block-size'} 180ms cubic-bezier(0.25, 0.9, 0.25, 1)`;
   let initialSize = 0;
 
+  /**
+   * Returns the sibling element to resize relative to the given target.
+   * @param {Element} target - The resizer handle element that fired the event
+   */
   const getEl = (target) =>
-    sibling === 'prev' ? target.previousElementSibling : target.nextElementSibling;
+    sibling === 'prev'
+      ? target.previousElementSibling
+      : target.nextElementSibling;
 
+  /**
+   * Handles the resize-start event: captures the initial element size.
+   * @param {CustomEvent} e - The resize-start custom event
+   */
   const onStart = (e) => {
     const el = getEl(e.target);
     if (el) {
@@ -243,21 +315,37 @@ function makeResizerHandlers({ sibling, axis, deltaSign, min, max, resetValue })
     }
   };
 
+  /**
+   * Handles the resize-drag event: updates the element size on each drag tick.
+   * @param {CustomEvent} e - The resize-drag custom event carrying a delta value
+   */
   const onDrag = (e) => {
     const el = getEl(e.target);
     if (el && e.detail.delta !== undefined) {
       const raw = initialSize + deltaSign * e.detail.delta;
-      const clamped = max ? Math.min(Math.max(raw, min), max()) : Math.max(raw, min);
+      const clamped = max
+        ? Math.min(Math.max(raw, min), max())
+        : Math.max(raw, min);
       el.style[prop] = `${clamped}px`;
     }
-    updateResizerAria(e.target, ariOrientation);
+    updateResizerAria(e.target, ariaOrientation);
   };
 
+  /**
+   * Handles the resize-end event: restores CSS transition on the resized element.
+   * @param {CustomEvent} e - The resize-end custom event
+   */
   const onEnd = (e) => {
     const el = getEl(e.target);
-    if (el) el.style.transition = '';
+    if (el) {
+      el.style.transition = '';
+    }
   };
 
+  /**
+   * Handles the resize-reset event: animates the element back to its default size.
+   * @param {CustomEvent} e - The resize-reset custom event
+   */
   const onReset = (e) => {
     const el = getEl(e.target);
     if (el) {
@@ -266,71 +354,7 @@ function makeResizerHandlers({ sibling, axis, deltaSign, min, max, resetValue })
     }
   };
 
-  return [onStart, onDrag, onEnd, onReset];
-}
-
-/** Build the bottom panel DOM — cds-tabs requires panel siblings in the same
- *  container and manages visibility via target IDs once connected to the DOM. */
-function createPanelEl() {
-  const panelTabsEl = document.createElement('cds-tabs');
-  panelTabsEl.setAttribute('value', 'terminal');
-
-  PANEL_TABS.forEach(({ id, target, label, value }) => {
-    const tab = document.createElement('cds-tab');
-    tab.id = id;
-    tab.setAttribute('target', target);
-    tab.setAttribute('value', value);
-    tab.textContent = label;
-    panelTabsEl.appendChild(tab);
-  });
-
-  const panelCloseBtnEl = document.createElement('cds-icon-button');
-  panelCloseBtnEl.setAttribute('align', 'left');
-  panelCloseBtnEl.setAttribute('kind', 'ghost');
-  panelCloseBtnEl.setAttribute('size', 'md');
-  const closeBtnIcon = document.createElement('span');
-  closeBtnIcon.slot = 'icon';
-  render(iconLoader(CloseIcon), closeBtnIcon);
-  panelCloseBtnEl.appendChild(closeBtnIcon);
-  const closeBtnTooltip = document.createElement('span');
-  closeBtnTooltip.slot = 'tooltip-content';
-  closeBtnTooltip.textContent = 'Close Panel';
-  panelCloseBtnEl.appendChild(closeBtnTooltip);
-
-  const panelTabsWrapperEl = document.createElement('div');
-  panelTabsWrapperEl.className = 'web-ide__panel-tabs-wrapper';
-  panelTabsWrapperEl.appendChild(panelTabsEl);
-  panelTabsWrapperEl.appendChild(panelCloseBtnEl);
-
-  const containerEl = document.createElement('div');
-  containerEl.className = 'web-ide__panel-tabs';
-  containerEl.appendChild(panelTabsWrapperEl);
-
-  PANEL_TABS.forEach(({ id, target, content }) => {
-    const panelContentEl = document.createElement('div');
-    panelContentEl.id = target;
-    panelContentEl.className = 'cds--tab-content';
-    panelContentEl.setAttribute('role', 'tabpanel');
-    panelContentEl.setAttribute('aria-labelledby', id);
-    panelContentEl.hidden = true;
-    panelContentEl.innerHTML = `<div class="web-ide__panel-content">${content}</div>`;
-    containerEl.appendChild(panelContentEl);
-  });
-
-  const panelResizerEl = document.createElement('clabs-resizer-handle');
-  panelResizerEl.className = 'clabs__resizer--web-ide';
-  panelResizerEl.setAttribute('aria-valuemin', '0');
-  panelResizerEl.setAttribute('aria-valuemax', '100');
-  panelResizerEl.setAttribute('aria-valuenow', '50');
-  panelResizerEl.setAttribute('pivot', 'both');
-  panelResizerEl.setAttribute('for-start', 'web-ide-primary-resizer');
-  panelResizerEl.setAttribute('for-end', 'web-ide-secondary-resizer');
-
-  const panelEl = document.createElement('div');
-  panelEl.className = 'web-ide__panel';
-  panelEl.appendChild(containerEl);
-
-  return { panelEl, panelResizerEl, panelCloseBtnEl };
+  return { onStart, onDrag, onEnd, onReset };
 }
 
 /**
@@ -340,13 +364,6 @@ function createPanelEl() {
  * @returns {HTMLElement} Story root element
  */
 export const WebIDE = (args) => {
-  if (!document.getElementById('web-ide-story-styles')) {
-    const style = document.createElement('style');
-    style.id = 'web-ide-story-styles';
-    style.textContent = storyStyles;
-    document.head.appendChild(style);
-  }
-
   const state = {
     collapsed: {
       primarySidebar: false,
@@ -358,28 +375,55 @@ export const WebIDE = (args) => {
     activeView: VIEWS.EXPLORER,
     tabs: [
       { id: 'App.tsx', label: 'App.tsx', content: FILE_CONTENTS['App.tsx'] },
-      { id: 'index.tsx', label: 'index.tsx', content: FILE_CONTENTS['index.tsx'] },
-      { id: 'Header.tsx', label: 'Header.tsx', content: FILE_CONTENTS['Header.tsx'] },
+      {
+        id: 'index.tsx',
+        label: 'index.tsx',
+        content: FILE_CONTENTS['index.tsx'],
+      },
+      {
+        id: 'Header.tsx',
+        label: 'Header.tsx',
+        content: FILE_CONTENTS['Header.tsx'],
+      },
     ],
     selectedTabIndex: 0,
   };
 
   const root = document.createElement('div');
   root.className = 'web-ide';
-  root.style.setProperty('--resizer-thickness', `${args['--resizer-thickness']}px`);
-  root.style.setProperty('--resizer-grab-thickness', `${args['--resizer-grab-thickness']}px`);
-  root.style.setProperty('--resizer-grab-color', args['--resizer-grab-color'] ? 'var(--cds-background-selected)' : 'transparent');
+  root.style.setProperty(
+    '--resizer-thickness',
+    `${args['--resizer-thickness']}px`
+  );
+  root.style.setProperty(
+    '--resizer-grab-thickness',
+    `${args['--resizer-grab-thickness']}px`
+  );
+  root.style.setProperty(
+    '--resizer-grab-color',
+    args['--resizer-grab-color']
+      ? 'var(--cds-background-selected)'
+      : 'transparent'
+  );
 
-  // Build the bottom panel imperatively — cds-tabs requires panel siblings in
-  // the same container and manages visibility via target IDs once connected.
-  const { panelEl, panelResizerEl, panelCloseBtnEl } = createPanelEl();
+  // Inject story-scoped styles into the root element (not document.head).
+  const styleEl = document.createElement('style');
+  styleEl.textContent = storyStyles;
+  root.appendChild(styleEl);
 
-  // State mutations — all trigger a re-render
+  /**
+   * Toggles the collapsed state of the named panel and triggers a re-render.
+   * @param {string} key - Key of the panel in state.collapsed to toggle
+   */
   const togglePanel = (key) => {
     state.collapsed[key] = !state.collapsed[key];
     rerender();
   };
 
+  /**
+   * Activates a view in the primary sidebar, collapsing it if already active.
+   * @param {string} view - View identifier (e.g. VIEWS.EXPLORER)
+   */
   const handleViewToggle = (view) => {
     if (state.activeView === view && !state.collapsed.primarySidebar) {
       state.collapsed.primarySidebar = true;
@@ -390,6 +434,11 @@ export const WebIDE = (args) => {
     rerender();
   };
 
+  /**
+   * Opens or focuses an editor tab for the given file.
+   * @param {string} fileName - File name used as the tab identifier and label
+   * @param {string} content - Source code content to display in the editor tab
+   */
   const openTab = (fileName, content) => {
     const existing = state.tabs.findIndex((t) => t.id === fileName);
     if (existing !== -1) {
@@ -401,6 +450,10 @@ export const WebIDE = (args) => {
     rerender();
   };
 
+  /**
+   * Closes the editor tab at the given index and adjusts the selected tab.
+   * @param {number} idx - Zero-based index of the tab to close
+   */
   const closeTab = (idx) => {
     state.tabs = state.tabs.filter((_, i) => i !== idx);
     if (state.tabs.length === 0) {
@@ -413,34 +466,62 @@ export const WebIDE = (args) => {
     rerender();
   };
 
+  /**
+   * Handles tree-node selection in the file explorer, opening .tsx files as tabs.
+   * @param {CustomEvent} e - The cds-tree-node-selected event carrying a detail.value
+   */
   const handleFileSelect = (e) => {
     const fileName = e.detail.value;
-    if (!fileName.endsWith('.tsx')) return;
+    if (!fileName.endsWith('.tsx')) {
+      return;
+    }
     const content =
       FILE_CONTENTS[fileName] ||
       `import React from 'react';\n\nexport const ${fileName.replace('.tsx', '')} = () => (\n  <div><h2>${fileName.replace('.tsx', '')} Component</h2></div>\n);`;
     openTab(fileName, content);
   };
 
-  // Resizer event handlers — built by a shared factory to avoid repetition.
-  const [onPrimaryResizerStart, onPrimaryResizerDrag, onPrimaryResizerEnd, onPrimaryResizerReset] =
-    makeResizerHandlers({ sibling: 'prev', axis: 'inline', deltaSign: 1,  min: 120, max: () => window.innerWidth - 320, resetValue: '16rem' });
+  /** Returns the maximum inline size allowed for a sidebar (viewport minus reserved space). */
+  const maxSidebarSize = () => window.innerWidth - 320;
 
-  const [onSecondaryResizerStart, onSecondaryResizerDrag, onSecondaryResizerEnd, onSecondaryResizerReset] =
-    makeResizerHandlers({ sibling: 'next', axis: 'inline', deltaSign: -1, min: 120, max: () => window.innerWidth - 320, resetValue: '16rem' });
+  // Resizer event handlers — one object per handle, built by a shared factory.
+  const primaryHandlers = makeResizerHandlers({
+    sibling: 'prev',
+    axis: 'inline',
+    deltaSign: 1,
+    min: 120,
+    max: maxSidebarSize,
+    resetValue: '16rem',
+  });
 
-  const [onExplorerResizerStart, onExplorerResizerDrag, onExplorerResizerEnd, onExplorerResizerReset] =
-    makeResizerHandlers({ sibling: 'prev', axis: 'block', deltaSign: 1,  min: 28,  resetValue: '' });
+  const secondaryHandlers = makeResizerHandlers({
+    sibling: 'next',
+    axis: 'inline',
+    deltaSign: -1,
+    min: 120,
+    max: maxSidebarSize,
+    resetValue: '16rem',
+  });
 
-  const [onPanelResizerStart, onPanelResizerDrag, onPanelResizerEnd, onPanelResizerReset] =
-    makeResizerHandlers({ sibling: 'next', axis: 'block', deltaSign: -1, min: 40,  resetValue: 'calc(6 * var(--cds-spacing-08))' });
+  const explorerHandlers = makeResizerHandlers({
+    sibling: 'prev',
+    axis: 'block',
+    deltaSign: 1,
+    min: 28,
+    resetValue: '',
+  });
 
-  panelResizerEl.addEventListener('resize-start', onPanelResizerStart);
-  panelResizerEl.addEventListener('resize-drag', onPanelResizerDrag);
-  panelResizerEl.addEventListener('resize-end', onPanelResizerEnd);
-  panelResizerEl.addEventListener('resize-reset', onPanelResizerReset);
-  panelCloseBtnEl.addEventListener('click', () => togglePanel('panel'));
+  const panelHandlers = makeResizerHandlers({
+    sibling: 'next',
+    axis: 'block',
+    deltaSign: -1,
+    min: 40,
+    resetValue: 'calc(6 * var(--cds-spacing-08))',
+  });
 
+  /**
+   * Builds and returns the full IDE lit-html template for the current state.
+   */
   const buildTemplate = () => {
     const { collapsed, activeView, tabs, selectedTabIndex } = state;
 
@@ -450,20 +531,32 @@ export const WebIDE = (args) => {
           <span class="web-ide__top-toolbar-title">Web IDE Demo</span>
         </div>
         <div class="web-ide__top-toolbar-right">
-          ${TOOLBAR_BTNS.map(({ key, collapsedLabel, expandedLabel, CollapsedIcon, ExpandedIcon }) => {
-      const isCollapsed = collapsed[key];
-      return html`
-              <cds-icon-button
-                kind=${BUTTON_KIND.GHOST}
-                size="md"
-                align="bottom"
-                ?isselected=${!isCollapsed}
-                @click=${() => togglePanel(key)}>
-                ${iconLoader(isCollapsed ? CollapsedIcon : ExpandedIcon, { slot: 'icon' })}
-                <span slot="tooltip-content">${isCollapsed ? collapsedLabel : expandedLabel}</span>
-              </cds-icon-button>
-            `;
-    })}
+          ${TOOLBAR_BTNS.map(
+            ({
+              key,
+              collapsedLabel,
+              expandedLabel,
+              CollapsedIcon,
+              ExpandedIcon,
+            }) => {
+              const isCollapsed = collapsed[key];
+              return html`
+                <cds-icon-button
+                  kind=${BUTTON_KIND.GHOST}
+                  size="md"
+                  align="bottom"
+                  ?isselected=${!isCollapsed}
+                  @click=${() => togglePanel(key)}>
+                  ${iconLoader(isCollapsed ? CollapsedIcon : ExpandedIcon, {
+                    slot: 'icon',
+                  })}
+                  <span slot="tooltip-content"
+                    >${isCollapsed ? collapsedLabel : expandedLabel}</span
+                  >
+                </cds-icon-button>
+              `;
+            }
+          )}
         </div>
       </div>
 
@@ -474,7 +567,8 @@ export const WebIDE = (args) => {
               kind=${BUTTON_KIND.GHOST}
               align="right"
               size="md"
-              ?isselected=${activeView === VIEWS.EXPLORER && !collapsed.primarySidebar}
+              ?isselected=${activeView === VIEWS.EXPLORER &&
+              !collapsed.primarySidebar}
               @click=${() => handleViewToggle(VIEWS.EXPLORER)}>
               ${iconLoader(FoldersIcon, { slot: 'icon' })}
               <span slot="tooltip-content">Explorer</span>
@@ -483,7 +577,8 @@ export const WebIDE = (args) => {
               kind=${BUTTON_KIND.GHOST}
               align="right"
               size="md"
-              ?isselected=${activeView === VIEWS.SEARCH && !collapsed.primarySidebar}
+              ?isselected=${activeView === VIEWS.SEARCH &&
+              !collapsed.primarySidebar}
               @click=${() => handleViewToggle(VIEWS.SEARCH)}>
               ${iconLoader(SearchIcon, { slot: 'icon' })}
               <span slot="tooltip-content">Search</span>
@@ -491,118 +586,222 @@ export const WebIDE = (args) => {
           </div>
           <div class="web-ide__activity-bar-bottom">
             <cds-overflow-menu size="md" kind="ghost" align="right" autoalign>
-              ${iconLoader(SettingsAdjustIcon, { slot: 'icon', style: 'color: var(--cds-icon-primary)' })}
+              ${iconLoader(SettingsAdjustIcon, {
+                slot: 'icon',
+                style: 'color: var(--cds-icon-primary)',
+              })}
               <span slot="tooltip-content">Settings</span>
               <cds-overflow-menu-body direction="top">
                 <cds-overflow-menu-item>Preferences</cds-overflow-menu-item>
                 <cds-overflow-menu-item>Extensions</cds-overflow-menu-item>
-                <cds-overflow-menu-item>Keyboard Shortcuts</cds-overflow-menu-item>
+                <cds-overflow-menu-item
+                  >Keyboard Shortcuts</cds-overflow-menu-item
+                >
                 <cds-overflow-menu-item>About</cds-overflow-menu-item>
               </cds-overflow-menu-body>
             </cds-overflow-menu>
           </div>
         </div>
 
-        <div class="web-ide__primary-sidebar ${collapsed.primarySidebar ? 'web-ide__primary-sidebar--collapsed' : ''}">
-          ${activeView === VIEWS.EXPLORER ? html`
-            <div class="web-ide__section web-ide__section--explorer ${collapsed.explorer ? 'web-ide__section--collapsed' : ''}">
-              ${sectionHeaderTpl('Explorer', collapsed.explorer, () => togglePanel('explorer'))}
-              ${!collapsed.explorer ? html`
-                <div class="web-ide__section-content">${fileExplorerTpl(handleFileSelect)}</div>
-              ` : ''}
-            </div>
-            <clabs-resizer-handle
-              class="clabs__resizer--web-ide"
-              aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
-              @resize-start=${onExplorerResizerStart}
-              @resize-drag=${onExplorerResizerDrag}
-              @resize-end=${onExplorerResizerEnd}
-              @resize-reset=${onExplorerResizerReset}>
-            </clabs-resizer-handle>
-            <div class="web-ide__section web-ide__section--outline ${collapsed.outline ? 'web-ide__section--collapsed' : ''}">
-              ${sectionHeaderTpl('Outline', collapsed.outline, () => togglePanel('outline'))}
-              ${!collapsed.outline ? html`
-                <div class="web-ide__section-content">${outlineViewTpl()}</div>
-              ` : ''}
-            </div>
-          ` : activeView === VIEWS.SEARCH ? html`
-            <div class="web-ide__section">
-              <div class="web-ide__section-content">
-                <cds-search label-text="Search" placeholder="Search in files" size="sm"></cds-search>
-              </div>
-            </div>
-          ` : ''}
+        <div
+          class="web-ide__primary-sidebar ${collapsed.primarySidebar
+            ? 'web-ide__primary-sidebar--collapsed'
+            : ''}">
+          ${activeView === VIEWS.EXPLORER
+            ? html`
+                <div
+                  class="web-ide__section web-ide__section--explorer ${collapsed.explorer
+                    ? 'web-ide__section--collapsed'
+                    : ''}">
+                  ${sectionHeaderTpl('Explorer', collapsed.explorer, () =>
+                    togglePanel('explorer')
+                  )}
+                  ${!collapsed.explorer
+                    ? html`<div class="web-ide__section-content">
+                        ${fileExplorerTpl(handleFileSelect)}
+                      </div>`
+                    : ''}
+                </div>
+                <clabs-resizer-handle
+                  class="clabs__resizer--web-ide"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="50"
+                  @resize-start=${explorerHandlers.onStart}
+                  @resize-drag=${explorerHandlers.onDrag}
+                  @resize-end=${explorerHandlers.onEnd}
+                  @resize-reset=${explorerHandlers.onReset}>
+                </clabs-resizer-handle>
+                <div
+                  class="web-ide__section web-ide__section--outline ${collapsed.outline
+                    ? 'web-ide__section--collapsed'
+                    : ''}">
+                  ${sectionHeaderTpl('Outline', collapsed.outline, () =>
+                    togglePanel('outline')
+                  )}
+                  ${!collapsed.outline
+                    ? html`<div class="web-ide__section-content">
+                        ${outlineViewTpl()}
+                      </div>`
+                    : ''}
+                </div>
+              `
+            : activeView === VIEWS.SEARCH
+              ? html`
+                  <div class="web-ide__section">
+                    <div class="web-ide__section-content">
+                      <cds-search
+                        label-text="Search"
+                        placeholder="Search in files"
+                        size="sm"></cds-search>
+                    </div>
+                  </div>
+                `
+              : ''}
         </div>
 
         <clabs-resizer-handle
           id="web-ide-primary-resizer"
-          class="clabs__resizer--web-ide ${collapsed.primarySidebar ? 'clabs__resizer--hidden' : ''}"
+          class="clabs__resizer--web-ide ${collapsed.primarySidebar
+            ? 'clabs__resizer--hidden'
+            : ''}"
           orientation="horizontal"
-          aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
-          @resize-start=${onPrimaryResizerStart}
-          @resize-drag=${onPrimaryResizerDrag}
-          @resize-end=${onPrimaryResizerEnd}
-          @resize-reset=${onPrimaryResizerReset}>
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+          @resize-start=${primaryHandlers.onStart}
+          @resize-drag=${primaryHandlers.onDrag}
+          @resize-end=${primaryHandlers.onEnd}
+          @resize-reset=${primaryHandlers.onReset}>
         </clabs-resizer-handle>
 
         <div class="web-ide__main-content">
           <div class="web-ide__editor">
-            ${tabs.length > 0 ? html`
-              <cds-tabs
-                selected-index=${selectedTabIndex}
-                size="lg"
-                type="contained"
-                dismissable
-                @cds-tab-closed=${(e) => closeTab(e.detail.index)}>
-                ${tabs.map((tab, idx) => html`
-                  <cds-tab id="editor-tab-${idx}" target="editor-panel-${idx}" value=${tab.id}>
-                    ${tab.label}
-                  </cds-tab>
-                `)}
-              </cds-tabs>
-              ${tabs.map((tab, idx) => html`
-                <div
-                  id="editor-panel-${idx}"
-                  class="cds--tab-content"
-                  role="tabpanel"
-                  aria-labelledby="editor-tab-${idx}"
-                  hidden>
-                  <pre class="web-ide__editor-content">${tab.content}</pre>
-                </div>
-              `)}
-            ` : html`
-              <div class="web-ide__empty-state">No files open</div>
-            `}
+            ${tabs.length > 0
+              ? html`
+                  <cds-tabs
+                    selected-index=${selectedTabIndex}
+                    size="lg"
+                    type="contained"
+                    dismissable
+                    @cds-tab-closed=${(e) => closeTab(e.detail.index)}>
+                    ${tabs.map(
+                      (tab, idx) => html`
+                        <cds-tab
+                          id="editor-tab-${idx}"
+                          target="editor-panel-${idx}"
+                          value=${tab.id}>
+                          ${tab.label}
+                        </cds-tab>
+                      `
+                    )}
+                  </cds-tabs>
+                  ${tabs.map(
+                    (tab, idx) => html`
+                      <div
+                        id="editor-panel-${idx}"
+                        class="cds--tab-content"
+                        role="tabpanel"
+                        aria-labelledby="editor-tab-${idx}"
+                        hidden>
+                        <pre class="web-ide__editor-content">
+${tab.content}</pre
+                        >
+                      </div>
+                    `
+                  )}
+                `
+              : html`<div class="web-ide__empty-state">No files open</div>`}
+          </div>
+
+          <clabs-resizer-handle
+            class="clabs__resizer--web-ide ${collapsed.panel
+              ? 'clabs__resizer--hidden'
+              : ''}"
+            pivot="both"
+            for-start="web-ide-primary-resizer"
+            for-end="web-ide-secondary-resizer"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="50"
+            @resize-start=${panelHandlers.onStart}
+            @resize-drag=${panelHandlers.onDrag}
+            @resize-end=${panelHandlers.onEnd}
+            @resize-reset=${panelHandlers.onReset}>
+          </clabs-resizer-handle>
+
+          <div
+            class="web-ide__panel ${collapsed.panel
+              ? 'web-ide__panel--collapsed'
+              : ''}">
+            <div class="web-ide__panel-tabs">
+              <div class="web-ide__panel-tabs-wrapper">
+                <cds-tabs value="terminal">
+                  ${PANEL_TABS.map(
+                    ({ id, target, label, value }) => html`
+                      <cds-tab id=${id} target=${target} value=${value}
+                        >${label}</cds-tab
+                      >
+                    `
+                  )}
+                </cds-tabs>
+                <cds-icon-button
+                  align="left"
+                  kind="ghost"
+                  size="md"
+                  @click=${() => togglePanel('panel')}>
+                  ${iconLoader(CloseIcon, { slot: 'icon' })}
+                  <span slot="tooltip-content">Close Panel</span>
+                </cds-icon-button>
+              </div>
+              ${PANEL_TABS.map(
+                ({ id, target, content }) => html`
+                  <div
+                    id=${target}
+                    class="cds--tab-content"
+                    role="tabpanel"
+                    aria-labelledby=${id}
+                    hidden>
+                    <div
+                      class="web-ide__panel-content"
+                      .innerHTML=${content}></div>
+                  </div>
+                `
+              )}
+            </div>
           </div>
         </div>
 
         <clabs-resizer-handle
           id="web-ide-secondary-resizer"
-          class="clabs__resizer--web-ide ${collapsed.secondarySidebar ? 'clabs__resizer--hidden' : ''}"
+          class="clabs__resizer--web-ide ${collapsed.secondarySidebar
+            ? 'clabs__resizer--hidden'
+            : ''}"
           orientation="horizontal"
-          aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
-          @resize-start=${onSecondaryResizerStart}
-          @resize-drag=${onSecondaryResizerDrag}
-          @resize-end=${onSecondaryResizerEnd}
-          @resize-reset=${onSecondaryResizerReset}>
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+          @resize-start=${secondaryHandlers.onStart}
+          @resize-drag=${secondaryHandlers.onDrag}
+          @resize-end=${secondaryHandlers.onEnd}
+          @resize-reset=${secondaryHandlers.onReset}>
         </clabs-resizer-handle>
 
-        <div class="web-ide__secondary-sidebar ${collapsed.secondarySidebar ? 'web-ide__secondary-sidebar--collapsed' : ''}">
+        <div
+          class="web-ide__secondary-sidebar ${collapsed.secondarySidebar
+            ? 'web-ide__secondary-sidebar--collapsed'
+            : ''}">
           <div class="web-ide__empty-state">Secondary Sidebar</div>
         </div>
       </div>
     `;
   };
 
+  /**
+   * Re-renders the IDE template into the root element.
+   */
   const rerender = () => {
     render(buildTemplate(), root);
-    const mainContent = root.querySelector('.web-ide__main-content');
-    if (mainContent && !mainContent.contains(panelResizerEl)) {
-      mainContent.appendChild(panelResizerEl);
-      mainContent.appendChild(panelEl);
-    }
-    panelEl.classList.toggle('web-ide__panel--collapsed', state.collapsed.panel);
-    panelResizerEl.classList.toggle('clabs__resizer--hidden', state.collapsed.panel);
   };
 
   rerender();

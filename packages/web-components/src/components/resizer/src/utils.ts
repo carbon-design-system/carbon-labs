@@ -119,4 +119,3 @@ export function createCustomEvent<T = any>(
     ...options,
   });
 }
-

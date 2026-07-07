@@ -857,6 +857,14 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    * (shadow-DOM ids are already scoped, but a class is more conventional for
    * internal Lit @query targets and matches the cds-- naming pattern used
    * throughout this file).
+   *
+   * TODO (carbon monorepo migration): replace this hand-rolled sentinel with the
+   * upstream Carbon wrapFocus utility, which implements the same start/end sentinel
+   * pattern for focus trapping and exit.
+   * Upstream location: packages/react/src/internal/wrapFocus.ts (wrapFocus /
+   * wrapFocusWithoutSentinels exports).  Note that wrapFocus is designed to trap
+   * focus inside a container (modal pattern) rather than release it; the exit-only
+   * direction we need maps to the endTrapNode path in that utility.
    */
   @query(`.${prefix}--date-picker__exit-sentinel`)
   private _exitSentinelNode!: HTMLElement;

@@ -612,6 +612,14 @@ export function useDatePicker(
    * Called when the browser delivers focus to the exit sentinel.
    * Closes the calendar (state machine already received TAB_KEY in _handleKeyDown)
    * and immediately restores tabindex="-1" so future Tab presses skip the sentinel.
+   *
+   * TODO (carbon monorepo migration): replace this hand-rolled sentinel with the
+   * upstream Carbon wrapFocus utility, which implements the same start/end sentinel
+   * pattern for focus trapping and exit.
+   * Upstream location: packages/react/src/internal/wrapFocus.ts (wrapFocus /
+   * wrapFocusWithoutSentinels exports).  Note that wrapFocus is designed to trap
+   * focus inside a container (modal pattern) rather than release it; the exit-only
+   * direction we need maps to the endTrapNode path in that utility.
    */
   const handleExitSentinelFocus = useCallback(() => {
     if (exitSentinelRef.current) {

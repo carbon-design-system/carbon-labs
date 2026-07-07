@@ -42,13 +42,14 @@ import AnimatedHeader from '../components/AnimatedHeader/AnimatedHeader';
   - [Header Action](#header-action)
     - [Icon Button](#icon-button)
     - [Ghost Button](#ghost-button)
-    - [Carousel (coming soon)](#carousel-coming-soon)
+    - [Carousel](#carousel)
   - [Accessibility](#accessibility)
     - [Tile ARIA Labels](#tile-aria-labels)
     - [Tasks Dropdown ARIA Label](#tasks-dropdown-aria-label)
     - [Content Switcher ARIA Label](#content-switcher-aria-label)
     - [Workspace Selector ARIA Label](#workspace-selector-aria-label)
     - [Header Action ARIA Label](#header-action-aria-label)
+    - [Carousel ARIA Labels](#carousel-aria-labels)
     - [Additional ARIA Labels](#additional-aria-labels)
 - [Getting started](#getting-started)
   - [JS (via import)](#js-via-import)
@@ -377,12 +378,11 @@ const contentSwitcherConfig = {
 ### Header Action
 
 The Header Action is a small control that appears to the **left of the Collapse
-button** in the bottom action row. It’s meant for quick access patterns like a
-**settings icon** or a **“View all” ghost button**. A **Carousel pager** is
-planned to page through multiple tile views (see “coming soon”).
+button** in the bottom action row. It's meant for quick access patterns like a
+**settings icon** or a **"View all" ghost button**.
 
-> **Divider:** A subtle vertical divider is always shown to the left of the
-> header action to separate it from other actions.
+> **Divider:** A subtle vertical divider is always shown to the right of the
+> header action to separate it from the carousel or Collapse button.
 
 #### Icon Button
 
@@ -416,21 +416,87 @@ export const headerActionGhostConfig = {
 };
 ```
 
-#### Carousel (coming soon)
+---
 
-A compact pager that switches between **pages of tiles**. This feature will ship
-in a future release.
+### Carousel
+
+The Carousel is a separate pagination control that sits **between
+`headerActionConfig` and the Collapse button** in the bottom action row. It
+pages through multiple `TileGroup` entries supplied via `allTileGroups`, showing
+one page at a time.
+
+> **Left-to-right order:** `[ headerActionConfig ] [ carousel ] | [ Collapse ]`
+>
+> `headerActionConfig` and `carouselConfig` can be used at the same time.
+
+#### Basic usage
 
 ```tsx
-// COMING SOON
-export const headerActionCarouselConfig = {
-  type: 'carousel',
-  page: 0,
-  total: 3,
-  onSelectPage: (p) => setPage(p),
-  onStep: (direction, next) => analytics('pager-step', { direction, next }),
-};
+import {
+  AnimatedHeader,
+  type HeaderCarouselConfig,
+  type TileGroup,
+} from '@carbon-labs/react-animated-header';
+
+const journeyPages: TileGroup[] = [
+  {
+    id: 1,
+    label: 'Page 1',
+    tiles: [
+      /* 4 glass tiles */
+    ],
+  },
+  {
+    id: 2,
+    label: 'Page 2',
+    tiles: [
+      /* 4 glass tiles */
+    ],
+  },
+];
+
+// In your component:
+const [page, setPage] = React.useState(0);
+
+<AnimatedHeader
+  allTileGroups={journeyPages}
+  carouselConfig={{
+    ariaLabel: 'Journey pages',
+    prevButtonLabel: 'Previous journey page',
+    nextButtonLabel: 'Next journey page',
+    currentPage: page,
+    onPageChange: setPage,
+  }}
+/>;
 ```
+
+#### Props
+
+| Prop             | Type                           | Default | Description                                  |
+| ---------------- | ------------------------------ | ------- | -------------------------------------------- |
+| `carouselConfig` | `HeaderCarouselConfig \| null` | —       | Enables the carousel. Omit to hide controls. |
+
+#### `HeaderCarouselConfig` shape
+
+| Field             | Type                     | Default           | Description                                          |
+| ----------------- | ------------------------ | ----------------- | ---------------------------------------------------- |
+| `ariaLabel`       | `string`                 | —                 | `aria-label` for the carousel control group wrapper. |
+| `prevButtonLabel` | `string`                 | `'Previous page'` | `aria-label` for the previous chevron button.        |
+| `nextButtonLabel` | `string`                 | `'Next page'`     | `aria-label` for the next chevron button.            |
+| `currentPage`     | `number`                 | `0`               | 0-based index of the visible page.                   |
+| `onPageChange`    | `(page: number) => void` | —                 | Called when the user clicks prev / next / a dot.     |
+
+#### Behaviour
+
+- **Prev** chevron is `disabled` when `carouselConfig.currentPage === 0`.
+- **Next** chevron is `disabled` when
+  `carouselConfig.currentPage === totalPages - 1` (no looping).
+- Each **dot** is a keyboard-accessible `<button>` that jumps directly to that
+  page.
+- A visually-hidden `aria-live="polite"` region announces the current page to
+  screen readers on change.
+- The entire control fades out when the header is collapsed (matching
+  `headerActionConfig` behaviour).
 
 ---
 
@@ -541,6 +607,26 @@ export const headerActionIconConfig = {
 > ✅ Both the **tasks dropdown** and **workspace selector** must define their
 > `aria-label` values in the config to support accessibility. No other methods
 > of passing `aria-label`s are supported.
+
+---
+
+#### Carousel ARIA Labels
+
+Use the `carouselConfig` fields and the `ariaLabels` prop to customise all
+carousel-related labels:
+
+```tsx
+const carouselConfig: HeaderCarouselConfig = {
+  ariaLabel: 'Journey pages', // wrapper group label
+  prevButtonLabel: 'Previous page', // prev chevron aria-label
+  nextButtonLabel: 'Next page', // next chevron aria-label
+};
+
+const ariaLabels = {
+  // ...other labels
+  carouselDot: 'Page {n}', // dot button label template — {n} = 1-based page number
+};
+```
 
 ---
 

@@ -13,8 +13,11 @@ import {
   ThemeSettingType,
   ThemeSetType,
 } from '../components/theme-settings-types';
+import { canUseDOM } from './environment';
 
-const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+const initialMatch = canUseDOM
+  ? window.matchMedia('(prefers-color-scheme: dark)').matches
+  : false;
 
 /**
  *
@@ -56,10 +59,10 @@ export const useThemeSetting = (
     themeSetting,
     themeSet,
     complement,
-    mediaQueryList.matches
+    initialMatch
   );
   const [theme, setTheme] = useState(initialTheme);
-  const [systemDark, setSystemDark] = useState(mediaQueryList.matches);
+  const [systemDark, setSystemDark] = useState(initialMatch);
 
   /**
    *
@@ -70,6 +73,8 @@ export const useThemeSetting = (
   };
 
   useEffect(() => {
+    const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+
     mediaQueryList.addEventListener('change', handleMediaQueryEvent);
 
     return () =>
@@ -77,9 +82,7 @@ export const useThemeSetting = (
   }, []);
 
   useEffect(() => {
-    setTheme(
-      getTheme(themeSetting, themeSet, complement, mediaQueryList.matches)
-    );
+    setTheme(getTheme(themeSetting, themeSet, complement, systemDark));
   }, [systemDark, themeSetting, themeSet, complement]);
 
   return theme;

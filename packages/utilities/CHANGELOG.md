@@ -3,6 +3,107 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.27.0...@carbon-labs/utilities@0.28.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/utilities
+
+
+
+
+
+# [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.26.0...@carbon-labs/utilities@0.27.0) (2026-05-14)
+
+
+### Bug Fixes
+
+* **examples:** update react and web components standalone examples ([#1230](https://github.com/carbon-design-system/carbon-labs/issues/1230)) ([0ba3c58](https://github.com/carbon-design-system/carbon-labs/commit/0ba3c5866a08459a9e220737e85ce256cec08463))
+
+
+
+
+
+# [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.25.0...@carbon-labs/utilities@0.26.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/utilities
+
+
+
+
+
+# [0.25.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.24.0...@carbon-labs/utilities@0.25.0) (2026-05-08)
+
+
+### Bug Fixes
+
+* update React import in usePrefix ([#1217](https://github.com/carbon-design-system/carbon-labs/issues/1217)) ([e426e8c](https://github.com/carbon-design-system/carbon-labs/commit/e426e8cab5e1c6e2f9bf1d3bc7c333d9799b6c80))
+
+
+
+
+
+# [0.24.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.23.0...@carbon-labs/utilities@0.24.0) (2026-05-06)
+
+
+### Features
+
+* **PlaneStack3D:** new PlaneStack3D pattern ([#1187](https://github.com/carbon-design-system/carbon-labs/issues/1187)) ([2ec587b](https://github.com/carbon-design-system/carbon-labs/commit/2ec587b0d789d715b2c7955023ecccc352975ec6))
+
+
+
+
+
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.22.0...@carbon-labs/utilities@0.23.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/utilities
+
+
+
+
+
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.21.0...@carbon-labs/utilities@0.22.0) (2026-04-14)
+
+
+### Features
+
+* **datepicker:** added shared @carbon/primitives package, react implementation for datepicker ([#1158](https://github.com/carbon-design-system/carbon-labs/issues/1158)) ([b6a3662](https://github.com/carbon-design-system/carbon-labs/commit/b6a3662e6099576ee010ba9e1d66330013f0b24d))
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.20.0...@carbon-labs/utilities@0.21.0) (2026-01-14)
+
+
+### Features
+
+* VSCode snippets ([#947](https://github.com/carbon-design-system/carbon-labs/issues/947)) ([64d0039](https://github.com/carbon-design-system/carbon-labs/commit/64d0039a72223699151955de97b1de22058b106b))
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.18.0...@carbon-labs/utilities@0.20.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.17.0...@carbon-labs/utilities@0.18.0) (2025-12-01)
+
+
+### Bug Fixes
+
+* utilities exports ([#927](https://github.com/carbon-design-system/carbon-labs/issues/927)) ([e0a636d](https://github.com/carbon-design-system/carbon-labs/commit/e0a636da31cf30c251be0cfe3ed79bb8f9fa086e))
+
+
+
+
+
 # [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/utilities@0.16.0...@carbon-labs/utilities@0.17.0) (2025-07-09)
 
 **Note:** Version bump only for package @carbon-labs/utilities

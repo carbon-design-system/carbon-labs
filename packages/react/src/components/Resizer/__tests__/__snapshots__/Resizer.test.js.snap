@@ -8,7 +8,7 @@ exports[`Resizer renders as expected - Component API should match snapshot 1`] =
     class="clabs__resizer clabs__resizer--vertical"
     data-testid="resizer"
     role="separator"
-    style="inline-size: 4px;"
+    style="inline-size: 0.25rem;"
     tabindex="0"
   >
     <span

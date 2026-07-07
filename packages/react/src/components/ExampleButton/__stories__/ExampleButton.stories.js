@@ -13,7 +13,7 @@ import { ExampleButton } from '../components/ExampleButton';
 import '../components/example-button.scss';
 
 export default {
-  title: 'Example Component/ExampleButton',
+  title: 'Components/ExampleButton',
   component: ExampleButton,
   parameters: {
     docs: {

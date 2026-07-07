@@ -15,10 +15,10 @@ import CLABSStylePickerOption from '../style-picker-option';
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
-  StylePickerContextType,
+  type StylePickerContextType,
 } from '../../../context/style-picker-context';
 import { prefix } from '../../../defs';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import HostListener from '@carbon/web-components/es/globals/decorators/host-listener.js';
 import HostListenerMixin from '@carbon/web-components/es/globals/mixins/host-listener.js';
 
@@ -52,7 +52,26 @@ class StylePickerOption extends HostListenerMixin(LitElement) {
    * @param {string} triggeredBy - the element that triggered the change.
    */
   @HostListener('click', { capture: true })
-  handleClick(triggeredBy: EventTarget | null) {
+  handleClick() {
+    this.handleSelection();
+  }
+
+  /**
+   * @param {KeyboardEvent} event - the element that triggered the change.
+   */
+  @HostListener('keydown', { capture: true })
+  handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+
+      this.handleSelection();
+    }
+  }
+
+  /**
+   * Handle 'click' or 'Enter' key selection
+   */
+  handleSelection() {
     this.selected = true;
     this.setAttribute('aria-selected', 'true');
 
@@ -72,7 +91,7 @@ class StylePickerOption extends HostListenerMixin(LitElement) {
       cancelable: true,
       composed: true,
       detail: {
-        triggeredBy,
+        triggeredBy: this,
         value: this.value,
         label: this.label,
         selected: true,
@@ -95,22 +114,22 @@ class StylePickerOption extends HostListenerMixin(LitElement) {
   }
 
   /**
-   *
+   * Set attributes and classes.
    */
   _updateAttributes() {
     if (!this.hasAttribute('role')) {
       this.setAttribute('role', 'option');
     }
 
-    if (!this.hasAttribute('aria-label')) {
+    if (!this.hasAttribute('aria-label') && this.label?.trim()?.length) {
       this.setAttribute('aria-label', this.label);
     }
 
-    if (!this.hasAttribute('title')) {
+    if (!this.hasAttribute('title') && this.label?.trim()?.length) {
       this.setAttribute('title', this.label);
     }
 
-    if (!this.hasAttribute('data-value')) {
+    if (!this.hasAttribute('data-value') && this.value?.trim()?.length) {
       this.setAttribute('data-value', this.value);
     }
 

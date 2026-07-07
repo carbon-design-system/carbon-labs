@@ -3,6 +3,148 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.22.0...@carbon-labs/wc-empty-state@0.23.0) (2026-05-20)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.21.0...@carbon-labs/wc-empty-state@0.22.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.20.0...@carbon-labs/wc-empty-state@0.21.0) (2026-05-14)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.19.0...@carbon-labs/wc-empty-state@0.20.0) (2026-05-12)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.18.0...@carbon-labs/wc-empty-state@0.19.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.17.0...@carbon-labs/wc-empty-state@0.18.0) (2026-05-08)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.16.0...@carbon-labs/wc-empty-state@0.17.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.15.0...@carbon-labs/wc-empty-state@0.16.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.14.0...@carbon-labs/wc-empty-state@0.15.0) (2026-04-27)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.13.0...@carbon-labs/wc-empty-state@0.14.0) (2026-04-14)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.12.0...@carbon-labs/wc-empty-state@0.13.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.11.0...@carbon-labs/wc-empty-state@0.12.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.10.0...@carbon-labs/wc-empty-state@0.11.0) (2025-10-22)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.9.0...@carbon-labs/wc-empty-state@0.10.0) (2025-10-15)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.8.0...@carbon-labs/wc-empty-state@0.9.0) (2025-09-11)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.7.0...@carbon-labs/wc-empty-state@0.8.0) (2025-09-10)
+
+**Note:** Version bump only for package @carbon-labs/wc-empty-state
+
+
+
+
+
+# [0.7.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.6.0...@carbon-labs/wc-empty-state@0.7.0) (2025-08-28)
+
+
+### Bug Fixes
+
+* Component owners 8036 ([#771](https://github.com/carbon-design-system/carbon-labs/issues/771)) ([cd6f786](https://github.com/carbon-design-system/carbon-labs/commit/cd6f786ee88fbd9e7918aa88b08f8362492e61b3))
+
+
+
+
+
 # [0.6.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-empty-state@0.5.0...@carbon-labs/wc-empty-state@0.6.0) (2025-08-25)
 
 **Note:** Version bump only for package @carbon-labs/wc-empty-state

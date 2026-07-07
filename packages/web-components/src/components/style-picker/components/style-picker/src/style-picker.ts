@@ -14,15 +14,73 @@ import { property, state } from 'lit/decorators.js';
 import styles from './style-picker.scss?inline';
 import {
   stylePickerContext,
-  StylePickerContextType,
+  type StylePickerContextType,
 } from '../../../context/style-picker-context';
-import { Kind, prefix } from '../../../defs';
+import { prefix, type Kind } from '../../../defs';
+import CLABSStylePicker from '../style-picker';
 
 /**
  * Component extending the LitElement class.
  */
 class StylePicker extends LitElement {
   static styles = styles;
+
+  /**
+   * Dispatch an event when closing the style-picker.
+   */
+  _dispatchCloseEvent() {
+    const init = {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+      detail: {
+        triggeredBy: this,
+      },
+    };
+
+    const newEvent = new CustomEvent(
+      (this.constructor as typeof CLABSStylePicker).eventOptionChange,
+      init
+    );
+
+    this.dispatchEvent(newEvent);
+  }
+
+  /**
+   * Close the popover if the click is outside of the style picker.
+   * @param {Event} event Event.
+   */
+  private _handleOutsideClick(event: Event) {
+    const target = event.target as Node | null;
+
+    if (this.open && target && !this.contains(target)) {
+      this.open = false;
+    }
+  }
+
+  /**
+   *
+   */
+  constructor() {
+    super();
+
+    this._handleOutsideClick = this._handleOutsideClick.bind(this);
+  }
+
+  /**
+   * Connected callback lifecycle method.
+   */
+  connectedCallback() {
+    super.connectedCallback();
+    document.addEventListener('click', this._handleOutsideClick);
+  }
+
+  /**
+   * Disconnected callback lifecycle method.
+   */
+  disconnectedCallback() {
+    document.removeEventListener('click', this._handleOutsideClick);
+  }
 
   /**
    * @internal
@@ -39,7 +97,14 @@ class StylePicker extends LitElement {
    */
   @provide({ context: stylePickerContext })
   _stylePickerContext: StylePickerContextType = {
+    /**
+     * Default size of options.
+     */
     size: 'sm',
+    /**
+     * Default active section index.
+     */
+    activeSection: 0,
     /**
      * Set the active section index
      * @param {number} index - Index of the section to be set as active
@@ -123,6 +188,12 @@ class StylePicker extends LitElement {
   enableSearch = false;
 
   /**
+   * Show a loading state
+   */
+  @property({ type: Boolean, reflect: true, attribute: 'loading' })
+  isLoading = false;
+
+  /**
    * Search close close button label
    */
   @property({
@@ -163,6 +234,16 @@ class StylePicker extends LitElement {
   emptyStateSubtitle;
 
   /**
+   * Label text for search input.
+   */
+  @property({
+    type: String,
+    reflect: true,
+    attribute: 'search-label',
+  })
+  searchLabel;
+
+  /**
    * Update search term in the context
    * @param {object} e - Event raised when search input is changed
    */
@@ -192,6 +273,17 @@ class StylePicker extends LitElement {
         ..._newContextValues,
       };
     }
+
+    if (changed.has('open') && !this.open) {
+      this._dispatchCloseEvent();
+    }
+  }
+
+  /**
+   * The name of the custom event fired after close.
+   */
+  static get eventOptionChange() {
+    return `${prefix}-close`;
   }
 }
 

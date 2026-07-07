@@ -6,22 +6,22 @@
  */
 
 import React from 'react';
-import { P } from './p'
+import { P } from './p';
 
 const stories = {
-  title: 'MDX Components/Markdown/P',
-  component: P
-}
+  title: 'Components/MDX Components/Markdown/P',
+  component: P,
+};
 
-export default stories
+export default stories;
 
 const Template = (args) => (
   <P {...args}>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean feugiat ex massa, in tincidunt
-    ipsum tempor in. Maecenas ultrices sem nec blandit dictum. Fermentum ullamcorper pretium. Duis
-    turpis elit.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean feugiat ex
+    massa, in tincidunt ipsum tempor in. Maecenas ultrices sem nec blandit
+    dictum. Fermentum ullamcorper pretium. Duis turpis elit.
   </P>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

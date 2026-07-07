@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/wc-ai-ux-control",
-  "version": "0.8.0",
+  "version": "0.25.0",
   "private": true,
   "publishConfig": {
     "access": "public",
@@ -8,6 +8,10 @@
   },
   "type": "module",
   "description": "Carbon for AI - UX Control component",
+  "labs": {
+    "status": "draft",
+    "title": "WC AI UX Control"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -33,14 +37,15 @@
     "build:dist": "rm -rf dist && rollup --config ../../../tasks/build-dist.js",
     "build:dist:canary": "rm -rf dist && rollup --config ../../../tasks/build-dist.js --configCanary",
     "clean": "rimraf es lib",
-    "postinstall": "ibmtelemetry --config=telemetry.yml"
+    "postinstall": "ibmtelemetry --config=telemetry.yml",
+    "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id c32b4a2b-352b-4dfa-9250-d91aed78e7f3 --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(ts|tsx|js|jsx) --wc"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@babel/runtime": "^7.23.2",
-    "@carbon-labs/utilities": "0.8.0",
-    "@carbon/grid": "^11.21.0",
-    "@carbon/web-components": "2.36.0",
-    "@ibm/telemetry-js": "^1.9.1"
+    "@carbon-labs/utilities": "0.28.0",
+    "@carbon/grid": "^11.45.0",
+    "@carbon/web-components": "^2.41.0",
+    "@ibm/telemetry-js": "^1.10.2"
   }
 }

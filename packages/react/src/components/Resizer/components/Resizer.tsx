@@ -13,7 +13,8 @@ import React, {
   useCallback,
   forwardRef,
 } from 'react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { rem } from '@carbon/layout';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import cx from 'classnames';
 import debounce from 'lodash.debounce';
 export const DEBOUNCE_DELAY = 100;
@@ -94,9 +95,8 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
         return;
       }
 
-      element.style[
-        orientation === 'horizontal' ? 'blockSize' : 'inlineSize'
-      ] = `${thickness}px`;
+      element.style[orientation === 'horizontal' ? 'blockSize' : 'inlineSize'] =
+        rem(thickness);
 
       const prevSibling = element.previousElementSibling as HTMLElement;
       const nextSibling = element.nextElementSibling as HTMLElement;
@@ -193,9 +193,6 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
 
     const handleMouseDown = useCallback(
       (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-
         const element = getRefElement(ref);
         if (!element || event.button !== 0) {
           return;
@@ -310,14 +307,12 @@ export const Resizer = forwardRef<HTMLDivElement, ResizerProps>(
       } else {
         const prop = orientation === 'horizontal' ? 'height' : 'width';
         if (prevSibling) {
-          prevSibling.style[
-            prop
-          ] = `${initialSizes.current.prevSiblingSize[prop]}px`;
+          prevSibling.style[prop] =
+            `${initialSizes.current.prevSiblingSize[prop]}px`;
         }
         if (nextSibling) {
-          nextSibling.style[
-            prop
-          ] = `${initialSizes.current.nextSiblingSize[prop]}px`;
+          nextSibling.style[prop] =
+            `${initialSizes.current.nextSiblingSize[prop]}px`;
         }
       }
     };

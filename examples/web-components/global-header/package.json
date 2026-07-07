@@ -1,0 +1,19 @@
+{
+  "name": "carbon-labs-web-components-global-header",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "sass": "~1.99.0",
+    "vite": "^8.0.12"
+  },
+  "dependencies": {
+    "@carbon-labs/wc-global-header": "latest",
+    "@carbon/styles": "^1.93.0"
+  }
+}

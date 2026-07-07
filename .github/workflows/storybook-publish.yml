@@ -15,11 +15,11 @@ jobs:
     if: github.repository == 'carbon-design-system/carbon-labs'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - name: Use Node.js version from .nvmrc
+        uses: actions/setup-node@v6
         with:
-          node-version: '18.x'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
 
       - name: Install dependencies
@@ -28,22 +28,15 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Build storybook for Labs
-        working-directory: '.'
-        run: yarn storybook:build
+      - name: Build all Storybooks (root + packages, standard + v12)
+        run: yarn storybook:build:full
 
-      - name: Build storybook for web-components
-        working-directory: 'packages/web-components'
-        run: yarn storybook:build
-
-      - name: Build storybook for react
-        working-directory: 'packages/react'
-        run: yarn storybook:build
       - name: Create CNAME
         run: |
           touch storybook-static/.nojekyll
           touch storybook-static/CNAME
           echo "labs.carbondesignsystem.com" > storybook-static/CNAME
+
       # Deploy Labs Storybook Github Pages using `gh-pages` package
       - name: Deploy Labs Storybook
         run: |

@@ -8,7 +8,7 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -16,13 +16,14 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/icon-button/index.js';
 
-import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
+import Edit16 from '@carbon/icons/es/edit/16.js';
 import '@carbon/web-components/es/components/copy-button/index.js';
-import Checkmark16 from '@carbon/web-components/es/icons/checkmark/16.js';
-import Undo16 from '@carbon/web-components/es/icons/undo/16.js';
-import ChevronDown from '@carbon/web-components/es/icons/chevron--down/16.js';
-import ChevronLeft from '@carbon/web-components/es/icons/chevron--left/16.js';
-import Compare16 from '@carbon/web-components/es/icons/compare/16.js';
+import Checkmark16 from '@carbon/icons/es/checkmark/16.js';
+import Undo16 from '@carbon/icons/es/undo/16.js';
+import ChevronDown from '@carbon/icons/es/chevron--down/16.js';
+import ChevronLeft from '@carbon/icons/es/chevron--left/16.js';
+import Compare16 from '@carbon/icons/es/compare/16.js';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for code
@@ -78,8 +79,8 @@ export function codeElementTemplate(customElementClass) {
                 ${assignedLanguage
                   ? assignedLanguage
                   : autoAssignLanguage
-                  ? language + ' ' + renderLabel('code-estimated-warning')
-                  : 'no language detected'}
+                    ? language + ' ' + renderLabel('code-estimated-warning')
+                    : 'no language detected'}
               `
             : ``}
           ${displayLineCount && lineCount > 1
@@ -106,7 +107,7 @@ export function codeElementTemplate(customElementClass) {
                 ?isSelected="${comparisonEnabled}"
                 @click="${handleComparisonEnabled}"
                 role="button">
-                ${Compare16({ slot: 'icon' })}
+                ${iconLoader(Compare16, { slot: 'icon' })}
                 <span slot="tooltip-content"
                   >${comparisonEnabled
                     ? 'Exit comparison'
@@ -125,7 +126,7 @@ export function codeElementTemplate(customElementClass) {
                 ?isSelected="${editingEnabled}"
                 @click="${handleEditingEnabled}"
                 role="button">
-                ${Edit16({ slot: 'icon' })}
+                ${iconLoader(Edit16, { slot: 'icon' })}
                 <span slot="tooltip-content"
                   >${!editingEnabled
                     ? renderLabel('code-enable-editing')
@@ -173,69 +174,64 @@ export function codeElementTemplate(customElementClass) {
           ? ' ' + clabsPrefix + '--chat-code-color-hidden'
           : ''}">
         ${_renderedLines.map(
-          (lineObject, index) =>
-            html`
-              <div
-                class="${clabsPrefix}--chat-code-line ${comparisonReference[
-                  index
-                ]
-                  ? clabsPrefix +
-                    '--chat-code-line-' +
-                    comparisonReference[index]
-                  : ''} ${clabsPrefix}--chat-code-line-fade-in ${lineObject.hidden
-                  ? clabsPrefix + '--chat-code-line-hidden'
-                  : ''}">
-                ${disableLineTicks || _renderedLines.length < 2
-                  ? html``
-                  : html`
+          (lineObject, index) => html`
+            <div
+              class="${clabsPrefix}--chat-code-line ${comparisonReference[index]
+                ? clabsPrefix + '--chat-code-line-' + comparisonReference[index]
+                : ''} ${clabsPrefix}--chat-code-line-fade-in ${lineObject.hidden
+                ? clabsPrefix + '--chat-code-line-hidden'
+                : ''}">
+              ${disableLineTicks || _renderedLines.length < 2
+                ? html``
+                : html`
                       <div class="${clabsPrefix}--chat-code-line-tick">
                         ${
                           !comparisonReference[index]
                             ? index + 1
                             : comparisonReference[index] === 'removed'
-                            ? '-'
-                            : comparisonReference[index] === 'added'
-                            ? '+'
-                            : index + 1
+                              ? '-'
+                              : comparisonReference[index] === 'added'
+                                ? '+'
+                                : index + 1
                         }
                       </div>
                       <div class="${clabsPrefix}--chat-code-line-divider">
                       </div>
-                      
+
                       </div>
                     `}
-                ${enableBlockCollapse && collapseAvailable
-                  ? html`
-                      <div
-                        class="${clabsPrefix}--chat-code-line-collapser"
-                        @click="${() => {
-                          collapseBlock(index);
-                        }}">
-                        ${!lineObject.collapsable
-                          ? ''
-                          : collapsedList.includes(index)
-                          ? ChevronLeft()
-                          : ChevronDown()}
-                      </div>
-                    `
-                  : ``}
-                <div
-                  class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-${theme ||
-                  'default'}-theme ${editable
-                    ? ''
-                    : clabsPrefix +
-                      '--chat-code-line-offset-level-' +
-                      lineObject.indent}">
-                  ${enableColoring
-                    ? lineObject.content
-                    : unsafeHTML(
-                        preRender
-                          ? lineObject.content
-                          : highlightLine(lineObject.content, language)
-                      )}
-                </div>
+              ${enableBlockCollapse && collapseAvailable
+                ? html`
+                    <div
+                      class="${clabsPrefix}--chat-code-line-collapser"
+                      @click="${() => {
+                        collapseBlock(index);
+                      }}">
+                      ${!lineObject.collapsable
+                        ? ''
+                        : collapsedList.includes(index)
+                          ? iconLoader(ChevronLeft())
+                          : iconLoader(ChevronDown())}
+                    </div>
+                  `
+                : ``}
+              <div
+                class="${clabsPrefix}--chat-code-line-text ${clabsPrefix}--chat-code-${theme ||
+                'default'}-theme ${editable
+                  ? ''
+                  : clabsPrefix +
+                    '--chat-code-line-offset-level-' +
+                    lineObject.indent}">
+                ${enableColoring
+                  ? lineObject.content
+                  : unsafeHTML(
+                      preRender
+                        ? lineObject.content
+                        : highlightLine(lineObject.content, language)
+                    )}
               </div>
-            `
+            </div>
+          `
         )}
       </div>
       ${currentlyEdited && !disableEditingOptions
@@ -247,7 +243,7 @@ export function codeElementTemplate(customElementClass) {
               role="button"
               kind="danger-tertiary"
               @click="${handleEditCancellation}">
-              ${Undo16({ slot: 'icon' })}
+              ${iconLoader(Undo16, { slot: 'icon' })}
               <span slot="tooltip-content"
                 >${renderLabel('code-editing-cancelled')}</span
               >
@@ -260,7 +256,7 @@ export function codeElementTemplate(customElementClass) {
               align="left"
               kind="ghost"
               @click="${handleEditValidation}">
-              ${Checkmark16({ slot: 'icon' })}
+              ${iconLoader(Checkmark16, { slot: 'icon' })}
               <span slot="tooltip-content"
                 >${renderLabel('code-editing-validation')}</span
               >

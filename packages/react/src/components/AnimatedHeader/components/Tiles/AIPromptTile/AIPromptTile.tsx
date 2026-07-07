@@ -13,42 +13,56 @@ import {
   IconButton,
   SkeletonPlaceholder,
   TextInput,
+  Tag,
 } from '@carbon/react';
-import { usePrefix } from '@carbon-labs/utilities/es/index.js';
+import { usePrefix } from '@carbon-labs/utilities/usePrefix';
 import { Send } from '@carbon/react/icons';
+import {
+  type AITileBodyProps,
+  type AITileLabelVariant,
+} from '../AITile/AITileBody';
+import { AutotrackDataAttributes } from '../../types';
+import { extractAutotrackAttributes } from '../../utils';
 
-/** Primary UI component for user interaction */
-
-interface AIPromptTileProps {
+export type AIPromptTileProps = {
+  variant: 'aiPrompt';
+  tileId: string;
   href?: string | null;
-  id?: string;
-  mainIcon?: ElementType | null;
-  open?: boolean;
-  productName?: string;
   title?: string | null;
+  disabledTaskLabel?: string | null;
+  productName?: string;
+  promptPlaceholder?: string;
+  primaryIcon?: ElementType | null;
+  aiLabelVariant?: AITileLabelVariant;
+  aiLabelText?: string;
+  aiLabelTagType?: AITileBodyProps['aiLabelTagType'];
+  onClick?: ((event: React.MouseEvent<HTMLElement>) => void) | null;
+  ariaLabel?: string;
+  open?: boolean;
   isLoading?: boolean;
   isDisabled?: boolean;
-  disabledTaskLabel?: string;
-  onClick?: (() => void) | null;
-  ariaLabel?: string;
-}
+} & AutotrackDataAttributes;
 
 export const AIPromptTile: React.FC<AIPromptTileProps> = ({
+  tileId,
   href,
-  id,
-  mainIcon: MainIcon,
-  open,
-  productName,
   title,
-  isLoading,
-  isDisabled,
   disabledTaskLabel,
+  productName,
+  promptPlaceholder = 'Start chatting...',
+  primaryIcon: PrimaryIcon,
+  aiLabelVariant = 'aiLabel',
+  aiLabelText = 'AI',
+  aiLabelTagType = 'gray',
   onClick,
   ariaLabel,
+  open,
+  isLoading,
+  isDisabled,
+  ...rest
 }: AIPromptTileProps) => {
   const prefix = usePrefix();
   const blockClass = `${prefix}--animated-header__ai-prompt-tile`;
-  const collapsed = `${blockClass}--collapsed`;
   const disabled = `${blockClass}--disabled`;
 
   const [textInput, setTextInput] = useState('');
@@ -70,6 +84,9 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
     }
   };
 
+  // Extract data attributes from rest props
+  const dataAttributes = extractAutotrackAttributes(rest);
+
   return (
     <div
       id={`${blockClass}`}
@@ -78,19 +95,30 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
       }`}
       aria-label={ariaLabel ?? title ?? 'AI Tile'}
       role="listitem"
-      title={isDisabled ? disabledTaskLabel ?? '' : ''}
-      key={id}>
+      title={isDisabled ? (disabledTaskLabel ?? '') : ''}
+      key={tileId}
+      {...dataAttributes}>
       {isLoading ? (
         <SkeletonPlaceholder className={`${blockClass}--loading-skeleton`} />
       ) : (
-        <div className={`${blockClass}--body${!open ? ` ${collapsed}` : ''}`}>
+        <div className={`${blockClass}--body`} data-expanded={open}>
           <div className={`${blockClass}--body-background`} />
           <div className={`${blockClass}--body-gradient`} />
           <div className={`${blockClass}--icons`}>
-            {MainIcon && (
-              <MainIcon fill={`var(--cds-icon-secondary)`} size={24} />
+            {PrimaryIcon && (
+              <PrimaryIcon fill={`var(--cds-icon-secondary)`} size={24} />
             )}
-            <AILabel autoAlign aiText="AI" size="mini" />
+            {aiLabelVariant === 'tag' ? (
+              <Tag
+                size="sm"
+                type={aiLabelTagType}
+                className={`${blockClass}--tag`}
+                decorator={<AILabel aiText="AI" size="xs" kind="inline" />}>
+                {aiLabelText}
+              </Tag>
+            ) : (
+              <AILabel autoAlign aiText={aiLabelText} size="xs" />
+            )}
           </div>
           <div className={`${blockClass}--title`}>{title}</div>
 
@@ -104,7 +132,7 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
               type="text"
               labelText="AI Chat Input"
               hideLabel
-              placeholder="Start chatting..."
+              placeholder={promptPlaceholder}
               size="sm"
               onChange={handleTextInput}
               onKeyDown={handleTextInputKeyDown}
@@ -120,8 +148,8 @@ export const AIPromptTile: React.FC<AIPromptTileProps> = ({
               size="sm"
               disabled={!textInput}
               align="top-end"
-              onClick={() => {
-                onClick?.();
+              onClick={(event) => {
+                onClick?.(event);
                 openInNewTab(`${href}&primed_chat=${textInput}`);
               }}
               onKeyDown={handleTextInputKeyDown}>

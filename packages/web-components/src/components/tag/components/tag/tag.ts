@@ -8,7 +8,7 @@
  */
 
 import { customElement } from 'lit/decorators.js';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import { Tag } from './src/tag.js';
 import { TemplateResult } from 'lit';
 import { tagTemplate } from './src/tag.template.js';

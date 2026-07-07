@@ -3,24 +3,27 @@
 # These owners will be the default owners for everything in the
 # repo. Unless a later match takes precedence, this team will
 # be requested for review when someone opens a pull request.
-* @carbon-design-system/carbon-for-ibm-products-reviewers
+* @carbon-design-system/carbon-labs-developers
 
 # Carbon AI Chat
-/packages/web-components/src/components/chat/ @carbon-design-system/carbon-ai-chat-admins @carbon-design-system/developers-system-reviewers
+/packages/web-components/src/components/chat/              @carbon-design-system/carbon-ai-chat-admins @carbon-design-system/developers-system
 
 # Carbon UI Shell
-/packages/react/src/components/UIShell/ @carbon-design-system/carbon-ui-shell-labs-devs
+/packages/react/src/components/UIShell/                    @carbon-design-system/monorepo-reviewers
 
 # Other packages
-/packages/react/src/components/AnimatedHeader/   @carbon-design-system/animated-header-devs
-/packages/react/src/components/Processing/       @carbon-design-system/processing-devs
-/packages/react/src/components/SplitPanel/       @carbon-design-system/split-panel-devs
-/packages/react/src/components/TextHighlighter/  @carbon-design-system/text-highlighter-devs
-/packages/react/src/components/ThemeSettings/    @carbon-design-system/theme-settings-devs
+/packages/react/src/components/AnimatedHeader/             @carbon-design-system/animated-header-devs
+/packages/react/src/components/Processing/                 @carbon-design-system/processing-devs
+/packages/react/src/components/SplitPanel/                 @carbon-design-system/split-panel-devs
+/packages/react/src/components/TextHighlighter/            @carbon-design-system/text-highlighter-devs
+/packages/react/src/components/ThemeSettings/              @carbon-design-system/theme-settings-devs
+/packages/web-components/src/components/global-header/     @carbon-design-system/global-header-devs
 
 
-# Admins should be notified of changes to CI/CD workflows
-# codeowners, and any other config present in .github.
+# Admins should be notified of changes to the main package.json, 
+# CI/CD workflows, codeowners, and any other config present
+# in .github.
 # This should always be the last entry in this file.
 /.github/           @carbon-design-system/developers-system-admins
 /.github/CODEOWNERS @carbon-design-system/developers-system-admins
+/package.json       @carbon-design-system/developers-system-admins

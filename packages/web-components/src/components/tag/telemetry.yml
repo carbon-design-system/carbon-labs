@@ -1,8 +1,22 @@
 # yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
 version: 1
 projectId: 99a48c00-fd34-4267-80a4-935d08af5880
-endpoint: 'https://www-api.ibm.com/ibm-telemetry/v1/metrics'
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
 collect:
+  wc:
+    elements:
+      allowedAttributeNames:
+        # clabs-tag
+        - color
+        - ontag-click
+        - text
+        - tooltip-position
+        - tooltip-text
+      allowedAttributeStringValues:
+        # General - boolean attributes
+        - "true"
+        - "false"
   npm:
     dependencies: null
   js:

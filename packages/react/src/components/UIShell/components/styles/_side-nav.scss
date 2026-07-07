@@ -1,22 +1,22 @@
 /**
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2025, 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '@carbon/styles/scss/utilities/convert' as convert;
-@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
-@use '@carbon/styles/scss/utilities/button-reset' as button-reset;
-@use '@carbon/styles/scss/utilities/focus-outline' as *;
-@use '@carbon/styles/scss/breakpoint' as *;
-@use '@carbon/styles/scss/theme' as *;
-@use '@carbon/styles/scss/motion' as *;
-@use '@carbon/styles/scss/type' as *;
-@use '@carbon/styles/scss/utilities/z-index' as *;
+@use '@carbon/react/scss/utilities/convert' as convert;
+@use '@carbon/react/scss/utilities/custom-property' as custom-property;
+@use '@carbon/react/scss/utilities/button-reset' as button-reset;
+@use '@carbon/react/scss/utilities/focus-outline' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/motion' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/utilities/z-index' as *;
 @use '@carbon/styles/scss/components/ui-shell/mixins' as *;
 @use '@carbon/styles/scss/components/ui-shell/functions' as *;
-@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/react/scss/spacing' as *;
 
 $prefix: 'cds' !default;
 
@@ -118,24 +118,29 @@ div:has(.#{$prefix}--header)
   }
 }
 
+// Mobile styles for side nav - exclude rail and panel variants
 @include breakpoint-down(md) {
-  .#{$prefix}--side-nav__submenu {
-    padding: 0 $spacing-05 0 convert.to-rem(14px);
-  }
+  .#{$prefix}--side-nav:not(.#{$prefix}--side-nav--rail):not(
+      .#{$prefix}--side-nav--panel
+    ) {
+    .#{$prefix}--side-nav__submenu {
+      padding: 0 $spacing-05 0 convert.to-rem(14px);
+    }
 
-  .#{$prefix}--side-nav__submenu,
-  .#{$prefix}--side-nav__link,
-  .#{$prefix}--side-nav__menu a.#{$prefix}--side-nav__link {
-    block-size: $spacing-08;
-  }
+    .#{$prefix}--side-nav__submenu,
+    .#{$prefix}--side-nav__link,
+    .#{$prefix}--side-nav__menu a.#{$prefix}--side-nav__link {
+      block-size: $spacing-08;
+    }
 
-  .#{$prefix}--side-nav__icon {
-    margin-inline-end: convert.to-rem(14px);
-  }
+    .#{$prefix}--side-nav__menu-secondary-wrapper .#{$prefix}--side-nav__icon {
+      margin-inline-end: convert.to-rem(14px);
+    }
 
-  .#{$prefix}--side-nav__icon > svg {
-    block-size: convert.to-rem(20px);
-    inline-size: convert.to-rem(20px);
+    .#{$prefix}--side-nav__icon > svg {
+      block-size: convert.to-rem(20px);
+      inline-size: convert.to-rem(20px);
+    }
   }
 }
 
@@ -384,7 +389,9 @@ div:has(.#{$prefix}--header)
     padding: 0 $spacing-05;
     block-size: $spacing-07;
     color: $text-secondary;
-    transition: color $duration-fast-02, background-color $duration-fast-02,
+    transition:
+      color $duration-fast-02,
+      background-color $duration-fast-02,
       outline $duration-fast-02;
 
     &:hover {
@@ -549,9 +556,11 @@ div:has(.#{$prefix}--header)
     }
   }
 
-  // TODO: remove when https://github.com/carbon-design-system/carbon/pull/18725 is released
-  .#{$prefix}--tooltip-content {
-    color: $text-primary;
+  // Active state for Side Nav Link Popover
+  .#{$prefix}--side-nav-link-popover.#{$prefix}--side-nav__link--current::before {
+    block-size: $spacing-07;
+    inset-block-start: -1px;
+    margin-inline-start: -1px;
   }
 }
 
@@ -605,7 +614,8 @@ div:has(.#{$prefix}--header)
 }
 
 @each $breakpoint in ('sm', 'md', 'lg', 'xlg', 'max') {
-  .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint} {
+  .#{$prefix}--side-nav--rail.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint},
+  .#{$prefix}--side-nav--panel.#{$prefix}--side-nav--hide-rail-breakpoint-down-#{$breakpoint} {
     @include breakpoint-down($breakpoint) {
       display: none;
     }
@@ -625,7 +635,7 @@ div:has(.#{$prefix}--header)
 .#{$prefix}--side-nav__slot {
   display: flex;
   align-items: center;
-  margin: 0 $spacing-05 $spacing-05 $spacing-05;
+  margin: 0 $spacing-05 $spacing-05;
   block-size: 2rem;
 }
 

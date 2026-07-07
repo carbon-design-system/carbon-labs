@@ -141,6 +141,7 @@ export const parameters = {
   options: {
     storySort: {
       order: [
+        'V12',
         'Introduction',
         [
           'Welcome',
@@ -150,6 +151,8 @@ export const parameters = {
         ],
         'Components',
         'Layout',
+        'Patterns',
+        'Deprecated',
       ],
     },
   },

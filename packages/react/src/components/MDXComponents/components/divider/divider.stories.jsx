@@ -6,22 +6,22 @@
  */
 
 import React from 'react';
-import { Column, Grid } from '@carbon/react'
+import { Column, Grid } from '@carbon/react';
 
-import { Divider } from './divider'
+import { Divider } from './divider';
 
 export default {
-  title: 'MDX Components/Divider',
+  title: 'Components/MDX Components/Divider',
   component: Divider,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
     className: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
 const Template = (args) => (
   <>
@@ -32,9 +32,10 @@ const Template = (args) => (
         </Column>
         <Column sm={4} md={6} lg={8}>
           <p>
-            The sites first major release will help system users discover and learn about all the
-            assets and libraries in the system with confidence in their completeness, who maintains
-            them, and how to use them. System users can access documentation for all indexed assets
+            The sites first major release will help system users discover and
+            learn about all the assets and libraries in the system with
+            confidence in their completeness, who maintains them, and how to use
+            them. System users can access documentation for all indexed assets
             and libraries without leaving the platform.
           </p>
         </Column>
@@ -47,9 +48,10 @@ const Template = (args) => (
         </Column>
         <Column sm={4} md={6} lg={8}>
           <p>
-            The sites first major release will help system users discover and learn about all the
-            assets and libraries in the system with confidence in their completeness, who maintains
-            them, and how to use them. System users can access documentation for all indexed assets
+            The sites first major release will help system users discover and
+            learn about all the assets and libraries in the system with
+            confidence in their completeness, who maintains them, and how to use
+            them. System users can access documentation for all indexed assets
             and libraries without leaving the platform.
           </p>
         </Column>
@@ -57,7 +59,7 @@ const Template = (args) => (
     </Divider>
     <Divider />
   </>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

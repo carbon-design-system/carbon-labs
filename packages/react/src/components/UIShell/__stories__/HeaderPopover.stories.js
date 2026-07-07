@@ -65,10 +65,12 @@ export const Default = (args) => (
 );
 
 Default.args = {
-  dropShadow: false,
+  dropShadow: true,
   highContrast: false,
   open: true,
   align: 'bottom-end',
+  backgroundToken: 'background',
+  border: true,
 };
 
 Default.argTypes = {
@@ -86,6 +88,11 @@ Default.argTypes = {
     },
   },
   open: {
+    control: {
+      type: 'boolean',
+    },
+  },
+  border: {
     control: {
       type: 'boolean',
     },

@@ -1,12 +1,16 @@
 {
   "name": "@carbon-labs/react-example-button",
-  "version": "0.7.0",
+  "version": "0.18.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
   "type": "module",
   "description": "Carbon Labs - Example Button",
+  "labs": {
+    "status": "draft",
+    "title": "React example button"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -33,6 +37,6 @@
     "clean": "rimraf es lib scss"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "canary"
+    "@carbon-labs/utilities": "0.28.0"
   }
 }

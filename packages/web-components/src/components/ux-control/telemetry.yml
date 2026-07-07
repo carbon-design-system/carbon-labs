@@ -1,8 +1,43 @@
 # yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
 version: 1
 projectId: c32b4a2b-352b-4dfa-9250-d91aed78e7f3
-endpoint: 'https://www-api.ibm.com/ibm-telemetry/v1/metrics'
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
 collect:
+  wc:
+    elements:
+      allowedAttributeNames:
+        # clabs-ux-control
+        - _currentContextVariables
+        - _currentParameters
+        - _currentPrompt
+        - _currentResponse
+        - _currentResponseView
+        - _isNewPrompt
+        - _newContextVariable
+        - _newName
+        - _newParameter
+        - _showAddContextVariable
+        - _showAddParameter
+        - _showRename
+        - current-view
+        - isEditModalOpen
+        - onadd-context-variable
+        - onadd-parameter
+        - onadd-prompt
+        - onchange-view
+        - onclose-tag
+        - ondelete-prompt
+        - onsave-prompt
+        - onsave-rename
+        - onsubmit
+        - open
+        - prompt-samples
+        - view-list
+      allowedAttributeStringValues:
+        # General - boolean attributes
+        - "true"
+        - "false"
   npm:
     dependencies: null
   js:

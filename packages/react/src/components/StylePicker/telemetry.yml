@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: 64062a7c-df09-48a9-b109-4464ed8b4211
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  jsx:
+    elements:
+      allowedAttributeNames:
+        # General
+        - heading
+        # CLABSStylePicker
+        - align
+        - emptyStateSubtitle
+        - emptyStateTitle
+        - enableSearch
+        - kind
+        - open
+        - searchCloseButtonLabel
+        - searchInputPlaceholder
+        # CLABSStylePickerColor
+        - color
+        - label
+        # CLABSStylePickerSection
+        - size
+      allowedAttributeStringValues: []
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

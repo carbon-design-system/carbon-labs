@@ -8,18 +8,19 @@
  */
 
 import { html } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 const { stablePrefix: clabsPrefix } = settings;
 import '@carbon/web-components/es/components/modal/index.js';
 import '@carbon/web-components/es/components/data-table/index.js';
 import '@carbon/web-components/es/components/button/index.js';
 import '@carbon/web-components/es/components/form-group/index.js';
-import Edit16 from '@carbon/web-components/es/icons/edit/16.js';
-import TrashCan16 from '@carbon/web-components/es/icons/trash-can/16.js';
-import Add16 from '@carbon/web-components/es/icons/add/16.js';
-import RequestQuote16 from '@carbon/web-components/es/icons/request-quote/16.js';
-import Close16 from '@carbon/web-components/es/icons/close/16.js';
-import Checkmark16 from '@carbon/web-components/es/icons/checkmark/16.js';
+import Edit16 from '@carbon/icons/es/edit/16.js';
+import TrashCan16 from '@carbon/icons/es/trash-can/16.js';
+import Add16 from '@carbon/icons/es/add/16.js';
+import RequestQuote16 from '@carbon/icons/es/request-quote/16.js';
+import Close16 from '@carbon/icons/es/close/16.js';
+import Checkmark16 from '@carbon/icons/es/checkmark/16.js';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 import '@carbon/web-components/es/components/tag/index.js';
 
@@ -104,7 +105,7 @@ function getHTMLRows(customElementClass) {
                 item.output.parameters
               )}
               kind="ghost">
-              ${Edit16()} </cds-button
+              ${iconLoader(Edit16())} </cds-button
             ><cds-button
               @click=${onDeleteButtonClick.bind(
                 customElementClass,
@@ -115,7 +116,7 @@ function getHTMLRows(customElementClass) {
                 item.output.parameters
               )}
               kind="danger--ghost">
-              ${TrashCan16()}
+              ${iconLoader(TrashCan16())}
             </cds-button></cds-table-cell
           >
         </cds-table-row>`
@@ -173,23 +174,25 @@ function getEditModal(customElementClass) {
             This intent/view does not provide any context variables.
           </div>`
         : currentView.contextVariables.map(
-            (variable) => html` <cds-text-input
-              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
-              label=${variable}
-              invalid-text="Error message"
-              placeholder="Enter sample value...">
-            </cds-text-input>`
+            (variable) =>
+              html` <cds-text-input
+                class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
+                label=${variable}
+                invalid-text="Error message"
+                placeholder="Enter sample value...">
+              </cds-text-input>`
           );
     parameters =
       currentView.parameters.length <= 0
         ? html`<div>This intent/view does not provide any parameters.</div>`
         : currentView.parameters.map(
-            (parameter) => html` <cds-text-input
-              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
-              label=${parameter}
-              invalid-text="Error message"
-              placeholder="Enter expected value...">
-            </cds-text-input>`
+            (parameter) =>
+              html` <cds-text-input
+                class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
+                label=${parameter}
+                invalid-text="Error message"
+                placeholder="Enter expected value...">
+              </cds-text-input>`
           );
   } else {
     modalHeader = 'Edit prompt';
@@ -200,25 +203,27 @@ function getEditModal(customElementClass) {
             This intent/view does not provide any context variables.
           </div>`
         : Object.entries(currentContextVariables).map(
-            ([key, value]) => html` <cds-text-input
-              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
-              label=${key}
-              invalid-text="Error message"
-              placeholder="Enter sample value..."
-              value=${value}>
-            </cds-text-input>`
+            ([key, value]) =>
+              html` <cds-text-input
+                class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-context-variable"
+                label=${key}
+                invalid-text="Error message"
+                placeholder="Enter sample value..."
+                value=${value}>
+              </cds-text-input>`
           );
     parameters =
       Object.keys(currentParameters).length <= 0
         ? html`<div>This intent/view does not provide any parameters.</div>`
         : Object.entries(currentParameters).map(
-            ([key, value]) => html` <cds-text-input
-              class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
-              label=${key}
-              invalid-text="Error message"
-              placeholder="Enter expected value..."
-              value=${value}>
-            </cds-text-input>`
+            ([key, value]) =>
+              html` <cds-text-input
+                class="${clabsPrefix}--edit-form-item ${clabsPrefix}--edit-parameter"
+                label=${key}
+                invalid-text="Error message"
+                placeholder="Enter expected value..."
+                value=${value}>
+              </cds-text-input>`
           );
   }
 
@@ -344,7 +349,7 @@ export function uxControlTemplate(customElementClass) {
                   <cds-tooltip align="bottom">
                     <div class="sb-tooltip-trigger" aria-labelledby="content">
                       <cds-button @click=${toggleRename} kind="ghost">
-                        ${RequestQuote16()}
+                        ${iconLoader(RequestQuote16())}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -366,7 +371,7 @@ export function uxControlTemplate(customElementClass) {
                   <cds-tooltip align="bottom">
                     <div class="sb-tooltip-trigger" aria-labelledby="content">
                       <cds-button @click=${toggleRename} kind="danger--ghost">
-                        ${Close16()}
+                        ${iconLoader(Close16())}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -376,7 +381,7 @@ export function uxControlTemplate(customElementClass) {
                   <cds-tooltip align="bottom">
                     <div class="sb-tooltip-trigger" aria-labelledby="content">
                       <cds-button @click=${onSaveRename} kind="ghost">
-                        ${Checkmark16()}
+                        ${iconLoader(Checkmark16())}
                       </cds-button>
                     </div>
                     <cds-tooltip-content id="content">
@@ -394,22 +399,23 @@ export function uxControlTemplate(customElementClass) {
                     This intent/view does not provide any parameters.
                   </div>`
                 : currentView.contextVariables.map(
-                    (variable) => html`<cds-tag
-                      filter
-                      type="gray"
-                      title="${variable}"
-                      textContent="${variable}"
-                      aria-label="Context variable"
-                      @cds-tag-closed=${handleCloseTag}>
-                      ${variable}
-                    </cds-tag>`
+                    (variable) =>
+                      html`<cds-tag
+                        filter
+                        type="gray"
+                        title="${variable}"
+                        textContent="${variable}"
+                        aria-label="Context variable"
+                        @cds-tag-closed=${handleCloseTag}>
+                        ${variable}
+                      </cds-tag>`
                   )}
               ${!showAddContextVariable
                 ? html` <cds-tag
                     class="${clabsPrefix}--add-context-variable-tag"
                     @click=${toggleAddContextVariable}
                     type="gray">
-                    ${Add16({ slot: 'icon' })} Add context variable
+                    ${iconLoader(Add16, { slot: 'icon' })} Add context variable
                   </cds-tag>`
                 : html`
                     <div class="${clabsPrefix}--enter-new">
@@ -428,7 +434,7 @@ export function uxControlTemplate(customElementClass) {
                           <cds-button
                             @click=${toggleAddContextVariable}
                             kind="danger--ghost">
-                            ${Close16()}
+                            ${iconLoader(Close16())}
                           </cds-button>
                         </div>
                         <cds-tooltip-content id="content">
@@ -440,7 +446,7 @@ export function uxControlTemplate(customElementClass) {
                           class="sb-tooltip-trigger"
                           aria-labelledby="content">
                           <cds-button @click=${addContextVariable} kind="ghost">
-                            ${Checkmark16()}
+                            ${iconLoader(Checkmark16())}
                           </cds-button>
                         </div>
                         <cds-tooltip-content id="content">
@@ -458,22 +464,23 @@ export function uxControlTemplate(customElementClass) {
                     This intent/view does not provide any parameters.
                   </div>`
                 : currentView.parameters.map(
-                    (parameter) => html`<cds-tag
-                      filter
-                      type="gray"
-                      title="${parameter}"
-                      textContent="${parameter}"
-                      aria-label="Parameter"
-                      @cds-tag-closed=${handleCloseTag}>
-                      ${parameter}
-                    </cds-tag>`
+                    (parameter) =>
+                      html`<cds-tag
+                        filter
+                        type="gray"
+                        title="${parameter}"
+                        textContent="${parameter}"
+                        aria-label="Parameter"
+                        @cds-tag-closed=${handleCloseTag}>
+                        ${parameter}
+                      </cds-tag>`
                   )}
               ${!showAddParameter
                 ? html`<cds-tag
                     class="${clabsPrefix}--add-parameter-tag"
                     @click=${toggleAddParameter}
                     type="gray"
-                    >${Add16()} Add parameter
+                    >${iconLoader(Add16())} Add parameter
                   </cds-tag>`
                 : html`<div class="${clabsPrefix}--enter-new">
                     <cds-form-item>
@@ -489,7 +496,7 @@ export function uxControlTemplate(customElementClass) {
                         <cds-button
                           @click=${toggleAddParameter}
                           kind="danger--ghost">
-                          ${Close16()}
+                          ${iconLoader(Close16())}
                         </cds-button>
                       </div>
                       <cds-tooltip-content id="content">
@@ -499,7 +506,7 @@ export function uxControlTemplate(customElementClass) {
                     <cds-tooltip align="bottom">
                       <div class="sb-tooltip-trigger" aria-labelledby="content">
                         <cds-button @click=${addParameter} kind="ghost">
-                          ${Checkmark16()}
+                          ${iconLoader(Checkmark16())}
                         </cds-button>
                       </div>
                       <cds-tooltip-content id="content">

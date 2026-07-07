@@ -3,6 +3,151 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.24.0...@carbon-labs/wc-ai-ux-control@0.25.0) (2026-06-02)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.24.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.23.0...@carbon-labs/wc-ai-ux-control@0.24.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.22.0...@carbon-labs/wc-ai-ux-control@0.23.0) (2026-05-14)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.21.0...@carbon-labs/wc-ai-ux-control@0.22.0) (2026-05-12)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.20.0...@carbon-labs/wc-ai-ux-control@0.21.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.19.0...@carbon-labs/wc-ai-ux-control@0.20.0) (2026-05-08)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.18.0...@carbon-labs/wc-ai-ux-control@0.19.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.17.0...@carbon-labs/wc-ai-ux-control@0.18.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.16.0...@carbon-labs/wc-ai-ux-control@0.17.0) (2026-04-14)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.15.0...@carbon-labs/wc-ai-ux-control@0.16.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.14.0...@carbon-labs/wc-ai-ux-control@0.15.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.13.0...@carbon-labs/wc-ai-ux-control@0.14.0) (2025-10-22)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.12.0...@carbon-labs/wc-ai-ux-control@0.13.0) (2025-10-16)
+
+
+### Bug Fixes
+
+* **ux-control:** missing iconLoader ([#853](https://github.com/carbon-design-system/carbon-labs/issues/853)) ([714886d](https://github.com/carbon-design-system/carbon-labs/commit/714886db5a8f2cbadcd018c8a54aa7c2efef09ab))
+
+
+
+
+
+# [0.12.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.11.0...@carbon-labs/wc-ai-ux-control@0.12.0) (2025-10-15)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.11.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.10.0...@carbon-labs/wc-ai-ux-control@0.11.0) (2025-09-11)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.10.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.9.0...@carbon-labs/wc-ai-ux-control@0.10.0) (2025-09-10)
+
+**Note:** Version bump only for package @carbon-labs/wc-ai-ux-control
+
+
+
+
+
+# [0.9.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.8.0...@carbon-labs/wc-ai-ux-control@0.9.0) (2025-09-04)
+
+
+### Features
+
+* add React router to UIShell example ([#648](https://github.com/carbon-design-system/carbon-labs/issues/648)) ([2ade4f5](https://github.com/carbon-design-system/carbon-labs/commit/2ade4f50e84123a21081ab47751da99549624f47))
+
+
+
+
+
 # [0.8.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-ai-ux-control@0.7.0...@carbon-labs/wc-ai-ux-control@0.8.0) (2025-08-19)
 
 **Note:** Version bump only for package @carbon-labs/wc-ai-ux-control

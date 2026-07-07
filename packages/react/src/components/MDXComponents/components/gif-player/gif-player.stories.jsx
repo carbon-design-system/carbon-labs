@@ -5,32 +5,32 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react'
-import { GifPlayer } from './gif-player'
-import cloudGif from './cloud.gif'
-import cloudJpg from './cloud.jpg'
+import React from 'react';
+import { GifPlayer } from './gif-player';
+import cloudGif from './cloud.gif';
+import cloudJpg from './cloud.jpg';
 
 const stories = {
-  title: 'MDX Components/Images & Video/GifPlayer',
+  title: 'Components/MDX Components/Images & Video/GifPlayer',
   component: GifPlayer,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
     className: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
-export default stories
+export default stories;
 
 const Template = (args) => (
   <GifPlayer {...args}>
     <img alt="animated" src={cloudGif} />
     <img alt="static" src={cloudJpg} />
   </GifPlayer>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

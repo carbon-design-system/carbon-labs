@@ -1,7 +1,7 @@
 /**
  * @license
  *
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2025, 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -59,7 +59,7 @@ const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(function Profile(
   });
   return (
     <HeaderPopover ref={ref} align="bottom-end" className={className} {...rest}>
-      <HeaderPopoverButton align="bottom" label={label}>
+      <HeaderPopoverButton align="bottom-end" label={label}>
         {IconElement}
       </HeaderPopoverButton>
       <HeaderPopoverContent>{children}</HeaderPopoverContent>
@@ -103,14 +103,37 @@ interface ProfileUserInfoProps {
   email?: string;
 
   /**
+   * When passing the image prop, supply a full path to the image to be displayed in the user's avatar.
+   */
+  image?: string;
+
+  /**
+   * When passing the image prop use the imageDescription prop to describe the image for screen reader.
+   */
+  imageDescription?: string;
+
+  /**
    * When passing the name prop, either send the initials to be used or the user's full name. The first two capital letters of the user's name will be used as the name.
    */
   name: string;
+
+  /**
+   * Provide a custom icon to use for the user's avatar
+   */
+  renderIcon?: React.ElementType | string;
 }
 
 const ProfileUserInfo = React.forwardRef<HTMLDivElement, ProfileUserInfoProps>(
   function ProfileUserInfo(
-    { className: customClassName, name, email, ...rest }: ProfileUserInfoProps,
+    {
+      className: customClassName,
+      name,
+      email,
+      image,
+      imageDescription,
+      renderIcon,
+      ...rest
+    }: ProfileUserInfoProps,
     ref
   ) {
     const prefix = usePrefix();
@@ -118,9 +141,22 @@ const ProfileUserInfo = React.forwardRef<HTMLDivElement, ProfileUserInfoProps>(
       [`${prefix}--profile-user-info`]: true,
       [customClassName as string]: !!customClassName,
     });
+
+    const avatarProps =
+      image && imageDescription
+        ? {
+            size: 'lg' as const,
+            name,
+            image,
+            imageDescription,
+            renderIcon,
+            ...rest,
+          }
+        : { size: 'lg' as const, name, renderIcon, ...rest };
+
     return (
       <div ref={ref} className={className}>
-        <UserAvatar size="lg" name={name} {...rest} />
+        <UserAvatar {...avatarProps} />
         <div className={`${prefix}--profile-user-info__text-wrapper`}>
           <div className={`${prefix}--profile-user-info__name`}>{name}</div>
           <div className={`${prefix}--profile-user-info__email`}>{email}</div>
@@ -143,9 +179,29 @@ ProfileUserInfo.propTypes = {
   email: PropTypes.string,
 
   /**
+   * When passing the image prop, supply a full path to the image to be displayed in the user's avatar.
+   */
+  image: PropTypes.string,
+
+  /**
+   * When passing the image prop use the imageDescription prop to describe the image for screen reader.
+   */
+  imageDescription: PropTypes.string,
+
+  /**
    * When passing the name prop, either send the initials to be used or the user's full name. The first two capital letters of the user's name will be used as the name.
    */
   name: PropTypes.string.isRequired,
+
+  /**
+   * Provide a custom icon to use for the user's avatar
+   */
+  /**@ts-ignore */
+  renderIcon: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.object,
+    PropTypes.string,
+  ]),
 };
 
 interface ProfileReadOnlyItem {

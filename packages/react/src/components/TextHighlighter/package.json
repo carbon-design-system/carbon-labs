@@ -1,6 +1,6 @@
 {
   "name": "@carbon-labs/react-text-highlighter",
-  "version": "0.6.0",
+  "version": "0.23.0",
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -36,9 +36,9 @@
     "telemetry:config": "npx -y @ibm/telemetry-js-config-generator generate --id 18a7a4e1-d21d-4d71-9dce-20587f4abd2e --endpoint https://www-api.ibm.com/ibm-telemetry/v1/metrics --files ./components/**/*.(tsx|js|jsx)"
   },
   "devDependencies": {
-    "@carbon-labs/utilities": "canary"
+    "@carbon-labs/utilities": "0.28.0"
   },
   "dependencies": {
-    "@ibm/telemetry-js": "^1.9.1"
+    "@ibm/telemetry-js": "^1.10.2"
   }
 }

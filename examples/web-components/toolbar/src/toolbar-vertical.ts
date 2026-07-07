@@ -15,17 +15,18 @@ import '@carbon/web-components/es/components/icon-button/index.js';
 import '@carbon/web-components/es/components/dropdown/index.js';
 import '@carbon/web-components/es/components/overflow-menu/index.js';
 // Carbon icons
-import ZoomIn from '@carbon/web-components/es/icons/zoom--in/16.js';
-import ZoomOut from '@carbon/web-components/es/icons/zoom--out/16.js';
-import RulerAlt from '@carbon/web-components/es/icons/ruler--alt/16.js';
-import Pin from '@carbon/web-components/es/icons/pin/16.js';
-import ColorPalette from '@carbon/web-components/es/icons/color-palette/16.js';
-import Draggable from '@carbon/web-components/es/icons/draggable/16.js';
-import TextCreation from '@carbon/web-components/es/icons/text--creation/16.js';
-import OpenPanelLeft from '@carbon/web-components/es/icons/open-panel--left/16.js';
-import OpenPanelRight from '@carbon/web-components/es/icons/open-panel--right/16.js';
-import Move from '@carbon/web-components/es/icons/move/16.js';
-import Rotate from '@carbon/web-components/es/icons/rotate/16.js';
+import ZoomIn from '@carbon/icons/es/zoom--in/16.js';
+import ZoomOut from '@carbon/icons/es/zoom--out/16.js';
+import RulerAlt from '@carbon/icons/es/ruler--alt/16.js';
+import Pin from '@carbon/icons/es/pin/16.js';
+import ColorPalette from '@carbon/icons/es/color-palette/16.js';
+import Draggable from '@carbon/icons/es/draggable/16.js';
+import TextCreation from '@carbon/icons/es/text--creation/16.js';
+import OpenPanelLeft from '@carbon/icons/es/open-panel--left/16.js';
+import OpenPanelRight from '@carbon/icons/es/open-panel--right/16.js';
+import Move from '@carbon/icons/es/move/16.js';
+import Rotate from '@carbon/icons/es/rotate/16.js';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 import styles from './toolbar.scss?lit';
 
@@ -151,7 +152,7 @@ class ToolbarVertical extends LitElement {
           enter-delay-ms="100"
             leave-delay-ms="100"
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${Draggable({ slot: 'icon' })}
+            ${iconLoader(Draggable, { slot: 'icon' })}
             <span slot="tooltip-content">Drag</span>
           </cds-icon-button>
         </cds-stack class="toolbar-group">
@@ -161,7 +162,7 @@ class ToolbarVertical extends LitElement {
           enter-delay-ms="100"
             leave-delay-ms="100"
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${RulerAlt({ slot: 'icon' })}
+            ${iconLoader(RulerAlt, { slot: 'icon' })}
             <span slot="tooltip-content">Ruler</span>
           </cds-icon-button>
           <cds-icon-button
@@ -169,7 +170,7 @@ class ToolbarVertical extends LitElement {
           enter-delay-ms="100"
             leave-delay-ms="100"
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${Pin({ slot: 'icon' })}
+            ${iconLoader(Pin, { slot: 'icon' })}
             <span slot="tooltip-content">Pin</span>
           </cds-icon-button>
           <cds-icon-button
@@ -178,7 +179,7 @@ class ToolbarVertical extends LitElement {
             leave-delay-ms="100"
             caret
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${ColorPalette({ slot: 'icon' })}
+            ${iconLoader(ColorPalette, { slot: 'icon' })}
             <span slot="tooltip-content">Color palette</span>
           </cds-icon-button>
           <cds-icon-button
@@ -186,7 +187,7 @@ class ToolbarVertical extends LitElement {
           enter-delay-ms="100"
             leave-delay-ms="100"
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${TextCreation({ slot: 'icon' })}
+            ${iconLoader(TextCreation, { slot: 'icon' })}
             <span slot="tooltip-content">Text creation</span>
           </cds-icon-button>
         </cds-stack class="toolbar-group">
@@ -196,7 +197,7 @@ class ToolbarVertical extends LitElement {
           enter-delay-ms="100"
             leave-delay-ms="100"
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${OpenPanelLeft({ slot: 'icon' })}
+            ${iconLoader(OpenPanelLeft, { slot: 'icon' })}
             <span slot="tooltip-content">Open panel left</span>
           </cds-icon-button>
           <cds-icon-button
@@ -204,7 +205,7 @@ class ToolbarVertical extends LitElement {
           enter-delay-ms="100"
             leave-delay-ms="100"
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${OpenPanelRight({ slot: 'icon' })}
+            ${iconLoader(OpenPanelRight, { slot: 'icon' })}
             <span slot="tooltip-content">Open panel right</span>
           </cds-icon-button>
         </cds-stack class="toolbar-group">
@@ -214,7 +215,7 @@ class ToolbarVertical extends LitElement {
           enter-delay-ms="100"
             leave-delay-ms="100"
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${Move({ slot: 'icon' })}
+            ${iconLoader(Move, { slot: 'icon' })}
             <span slot="tooltip-content">Move</span>
           </cds-icon-button>
           <cds-icon-button
@@ -222,7 +223,7 @@ class ToolbarVertical extends LitElement {
           enter-delay-ms="100"
             leave-delay-ms="100"
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${Rotate({ slot: 'icon' })}
+            ${iconLoader(Rotate, { slot: 'icon' })}
             <span slot="tooltip-content">Rotate</span>
           </cds-icon-button>
         </cds-stack class="toolbar-group">
@@ -232,7 +233,7 @@ class ToolbarVertical extends LitElement {
           enter-delay-ms="100"
             leave-delay-ms="100"
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${ZoomIn({ slot: 'icon' })}
+            ${iconLoader(ZoomIn, { slot: 'icon' })}
             <span slot="tooltip-content">Zoom in</span>
           </cds-icon-button>
           <cds-icon-button
@@ -240,7 +241,7 @@ class ToolbarVertical extends LitElement {
           enter-delay-ms="100"
             leave-delay-ms="100"
             align=${this.orientation === 'vertical' ? 'right' : 'top'}>
-            ${ZoomOut({ slot: 'icon' })}
+            ${iconLoader(ZoomOut, { slot: 'icon' })}
             <span slot="tooltip-content">Zoom out</span>
           </cds-icon-button>
         </cds-stack class="toolbar-group">

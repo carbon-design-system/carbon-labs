@@ -8,8 +8,9 @@ collect:
     elements:
       allowedAttributeNames:
         # General
-        - addFocusListeners
         - align
+        - aria-label
+        - aria-labelledby
         - as
         - autoAlign
         - children
@@ -18,7 +19,6 @@ collect:
         - defaultOpen
         - element
         - enterDelayMs
-        - expanded
         - href
         - isActive
         - isSideNavExpanded
@@ -30,17 +30,25 @@ collect:
         - tabIndex
         - title
         # HeaderContainer
+        - isProfileExpanded
         - isSwitcherExpanded
         - render
-        # HeaderPanel
-        - onHeaderPanelFocus
+        - themeSetting
         # HeaderPopover
         - alignmentAxisOffset
+        # ProfileReadOnly
+        - items
+        # ProfileUserInfo
+        - email
+        - name
         # SharkFinIcon
         - small
         # SideNav
+        - addFocusListeners
         - addMouseListeners
+        - expanded
         - hideOverlay
+        - hideRailBreakpointDown
         - inert
         - isChildOfHeader
         - isCollapsible
@@ -60,9 +68,6 @@ collect:
         - menuContent
         # SideNavItems
         - accessibilityLabel
-        # SideNavLink
-        - aria-label
-        - aria-labelledby
         # SideNavLinkPopover
         - closeOnActivation
         - disabled
@@ -70,12 +75,18 @@ collect:
         - size
         - wrapperClasses
         # SideNavMenu
+        - backButtonRenderIcon
+        - backButtonTitle
         - depth
+        - id
         - onMenuToggle
+        - primary
         # SideNavMenuItem
         - isFlyoutMenuItem
-        # SideNavToggle
-        - onClick
+        # TrialCountdown
+        - count
+        - text
+        - warning
         # React
         - key
         - ref
@@ -101,6 +112,12 @@ collect:
         - top-left
         - top-right
         - top-start
+        # SideNav - hideRailBreakpointDown
+        - lg
+        - max
+        - md
+        - sm
+        - xlg
         # SideNavLinkPopover - size
         - lg
         - md

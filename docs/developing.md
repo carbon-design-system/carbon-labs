@@ -156,7 +156,6 @@ might want to run:
    ```
 
    This will generate:
-
    - An example test app for your component, located in
      `examples/react/TestComponent`. This example test app will be linked as a
      stackblitz link in the component storybook `mdx` file. Note that this
@@ -196,7 +195,6 @@ might want to run:
    ```
 
    This will generate:
-
    - An example test app for your component, located in
      `examples/web-components/test-component`. This example test app will be
      linked as a stackblitz link in the component storybook `mdx` file. Note
@@ -296,8 +294,5 @@ file (within `<component-name>/__stories__/<component-name>.mdx`)
 ## Publishing to NPM
 
 The
-[canary publish to NPM](https://github.com/carbon-design-system/carbon-labs/actions/workflows/release-canary.yml)
-occurs every time a PR is merged into `main`. This canary version of your
-package can be used in your applications.
 [Full minor releases](https://github.com/carbon-design-system/carbon-labs/actions/workflows/release.yml)
-occur when needed and are triggered manually.
+occurs automatically every time a PR is merged into `main`.

@@ -8,34 +8,42 @@ collect:
     elements:
       allowedAttributeNames:
         # General
+        - allTileGroups
+        - ariaLabel
+        - ariaLabels
+        - customContent
+        - disabledTaskLabel
         - href
         - id
+        - isDisabled
+        - isLoading
         - mainIcon
+        - onClick
         - open
         - productName
         - secondaryIcon
-        - subtitle
-        - title
-        # Animated Header
-        - allTiles
-        - allWorkspaces
-        - className
-        - description
-        - handleHeaderItemsToString
-        - handleWorkspaceItemsToString
-        - headerAnimation
-        - headerStatic
         - selectedTileGroup
-        - selectedWorkspace
         - setSelectedTileGroup
-        - setSelectedWorkspace
-        - tasksConfig
+        - subtitle
+        - tasksControllerConfig
+        - title
         - userName
         - welcomeText
-        - workspaceLabel
+        - workspaceSelectorConfig
+        # Animated Header
+        - className
+        - collapseButtonLabel
+        - description
+        - expandButtonLabel
+        - headerAnimation
+        - headerStatic
+        - tileClickHandler
+        # HeaderTitle
+        - headerExpanded
         # React
         - key
         - ref
+      allowedAttributeStringValues: []
   npm:
     dependencies: null
   js:

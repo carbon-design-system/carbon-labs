@@ -7,14 +7,15 @@ collect:
   jsx:
     elements:
       allowedAttributeNames:
-        # TextHighlighter
+        # ContentWrapper
         - children
-        - kind
-        - reference
-        - type
+        - className
+        - stepTitle
+        - translateWithId
         # React
         - key
         - ref
+      allowedAttributeStringValues: []
   npm:
     dependencies: null
   js:

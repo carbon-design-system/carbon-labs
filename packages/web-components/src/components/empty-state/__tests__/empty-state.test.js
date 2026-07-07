@@ -27,19 +27,20 @@ const defaultProps = {
  * @param {object} [props=defaultProps] - The properties to pass to the template.
  * @returns {TemplateResult} The Lit template result.
  */
-const template = (props = defaultProps) => html` <clabs-empty-state
-  title=${props.title}
-  subtitle=${props.subtitle}
-  size=${props.size}
-  .kind=${props.kind}
-  .illustrationTheme=${props.illustrationTheme}>
-  ${props.illustration &&
-  html` <img src=${props.illustration} alt="customillustration" /> `}
-  <cds-button kind="tertiary" size="sm" slot="action">Create new</cds-button>
-  <cds-link href="https://www.carbondesignsystem.com" slot="link"
-    >View documentation</cds-link
-  >
-</clabs-empty-state>`;
+const template = (props = defaultProps) =>
+  html` <clabs-empty-state
+    title=${props.title}
+    subtitle=${props.subtitle}
+    size=${props.size}
+    .kind=${props.kind}
+    .illustrationTheme=${props.illustrationTheme}>
+    ${props.illustration &&
+    html` <img src=${props.illustration} alt="customillustration" /> `}
+    <cds-button kind="tertiary" size="sm" slot="action">Create new</cds-button>
+    <cds-link href="https://www.carbondesignsystem.com" slot="link"
+      >View documentation</cds-link
+    >
+  </clabs-empty-state>`;
 describe('clabs-empty-state', function () {
   it('should render clabs-empty-state', async () => {
     const emptyState = await fixture(template());

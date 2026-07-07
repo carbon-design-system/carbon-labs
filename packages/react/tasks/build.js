@@ -29,6 +29,16 @@ const packageJSON = JSON.parse(
   readFileSync(path.resolve(__dirname, '../package.json'))
 );
 
+// Read component-level package.json if it exists
+let componentPackageJSON = {};
+try {
+  componentPackageJSON = JSON.parse(
+    readFileSync(path.resolve(process.cwd(), 'package.json'))
+  );
+} catch (e) {
+  // No component package.json, use empty object
+}
+
 /**
  * build function
  */
@@ -119,7 +129,17 @@ function getTsCompilerOptions() {
   const baseOpts = loadBaseTsCompilerOpts();
   const projectTsConfigPath = path.resolve(__dirname, '../tsconfig.json');
   const overrideOpts = loadTsCompilerOpts(projectTsConfigPath);
-  return { ...baseOpts, ...overrideOpts };
+
+  // Check for component-specific tsconfig.json
+  const componentTsConfigPath = path.resolve(process.cwd(), 'tsconfig.json');
+  let componentOpts = {};
+  try {
+    componentOpts = loadTsCompilerOpts(componentTsConfigPath);
+  } catch (e) {
+    // No component tsconfig, use empty object
+  }
+
+  return { ...baseOpts, ...overrideOpts, ...componentOpts };
 }
 
 /**
@@ -131,15 +151,21 @@ function getTsCompilerOptions() {
  * @returns
  */
 function getRollupConfig(input, rootDir, outDir) {
+  // Merge dependencies from both main package.json and component package.json
+  const allDependencies = {
+    ...packageJSON.peerDependencies,
+    ...packageJSON.dependencies,
+    ...packageJSON.devDependencies,
+    ...componentPackageJSON.peerDependencies,
+    ...componentPackageJSON.dependencies,
+    ...componentPackageJSON.devDependencies,
+  };
+
   return {
     input,
     // Mark dependencies listed in `package.json` as external so that they are
     // not included in the output bundle.
-    external: [
-      ...Object.keys(packageJSON.peerDependencies),
-      ...Object.keys(packageJSON.dependencies),
-      ...Object.keys(packageJSON.devDependencies),
-    ].map((name) => {
+    external: Object.keys(allDependencies).map((name) => {
       // Transform the name of each dependency into a regex so that imports from
       // nested paths are correctly marked as external.
       //
@@ -150,7 +176,7 @@ function getRollupConfig(input, rootDir, outDir) {
     }),
     plugins: [
       nodeResolve({
-        extensions: ['.mjs', '.js', '.json', '.node', '.ts', '.tsx'],
+        extensions: ['.mjs', '.js', '.jsx', '.json', '.node', '.ts', '.tsx'],
       }),
       commonjs({
         include: /node_modules/,
@@ -174,7 +200,8 @@ function getRollupConfig(input, rootDir, outDir) {
         outputToFilesystem: false,
         compilerOptions: {
           ...getTsCompilerOptions(),
-          rootDir,
+          // Only override rootDir if component tsconfig doesn't specify it
+          ...(getTsCompilerOptions().rootDir ? {} : { rootDir }),
           outDir,
         },
       }),

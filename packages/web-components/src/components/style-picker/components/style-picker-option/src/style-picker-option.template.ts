@@ -8,7 +8,8 @@
  */
 
 import { html } from 'lit';
-import CheckmarkFilled16 from '@carbon/web-components/es/icons/checkmark--filled/16.js';
+import CheckmarkFilled16 from '@carbon/icons/es/checkmark--filled/16.js';
+import { iconLoader } from '@carbon/web-components/es/globals/internal/icon-loader.js';
 
 /**
  * Lit template for style-picker-option component
@@ -24,7 +25,7 @@ export const stylePickerOptionTemplate = (customElementClass) => {
     <div class=${`${blockClass}__container ${blockClass}__container--${size}`}>
       <slot></slot>
       <div class=${`${blockClass}__selection-indicator`} aria-hidden=${false}>
-        ${CheckmarkFilled16()}
+        ${iconLoader(CheckmarkFilled16)}
       </div>
     </div>
   `;

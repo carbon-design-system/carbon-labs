@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://unpkg.com/@ibm/telemetry-config-schema@v1/dist/config.schema.json
+
+version: 1
+projectId: c0e6b5ea-e44d-4fbc-a40a-b5f18bd8ed93
+endpoint: https://www-api.ibm.com/ibm-telemetry/v1/metrics
+collect:
+  jsx:
+    elements:
+      allowedAttributeNames:
+        # SplitPanel
+        - childrenAfterSplit
+        - childrenBeforeSplit
+        - className
+        - defaultSplitValue
+        - gap
+        - onChange
+        - orientation
+        - splitKeyStepPixels
+        - splitMax
+        - splitMin
+        - splitShiftKeyStepPixels
+        # React
+        - key
+        - ref
+      allowedAttributeStringValues:
+        # SplitPanel - gap
+        - default
+        - narrow
+        - none
+        # SplitPanel - orientation
+        - horizontal
+        - vertical
+  npm:
+    dependencies: null
+  js:
+    functions: {}
+    tokens: null

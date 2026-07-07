@@ -1,15 +1,17 @@
 /**
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2025, 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-@use '@carbon/styles/scss/spacing' as *;
-@use '@carbon/styles/scss/theme' as *;
-@use '@carbon/styles/scss/motion' as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/motion' as *;
 @use '@carbon/react/scss/utilities/convert' as convert;
-@use '@carbon/styles/scss/utilities/custom-property' as custom-property;
+@use '@carbon/react/scss/utilities/custom-property' as custom-property;
+@use '@carbon/react/scss/utilities/z-index' as *;
+@use '@carbon/react/scss/breakpoint' as *;
 
 $prefix: 'cds' !default;
 
@@ -26,7 +28,7 @@ $prefix: 'cds' !default;
 }
 
 .#{$prefix}--header-action__button {
-  block-size: convert.rem(48px);
+  block-size: convert.to-rem(48px);
 
   &:focus {
     outline-offset: -2px;
@@ -45,9 +47,53 @@ $prefix: 'cds' !default;
   fill: $icon-primary;
 }
 
-.#{$prefix}--header-action.#{$prefix}--popover--open
+.#{$prefix}--header-action.#{$prefix}--popover--open {
+  &::after {
+    position: absolute;
+    z-index: z('header') + 1;
+    background: $background;
+    block-size: $spacing-01;
+    content: '';
+    inset-block-end: -$spacing-01;
+    inset-inline: convert.to-rem(1px);
+    pointer-events: none;
+  }
+
   .#{$prefix}--header-action__button {
-  background-color: $layer;
+    z-index: z('header') + 2;
+    background-color: $background;
+
+    &:not(:focus) {
+      border: 1px solid $border-subtle-01;
+      border-block-end: none;
+      &:not(:has(.#{$prefix}--trial-countdown)) {
+        border-block-start: none;
+      }
+    }
+  }
+}
+
+.#{$prefix}--header-action .#{$prefix}--header-action__button {
+  &:hover {
+    background-color: $layer-hover;
+  }
+
+  &:active {
+    background-color: $layer-active;
+  }
+}
+
+.#{$prefix}--header-action.#{$prefix}--popover--border
+  > .#{$prefix}--popover
+  > .#{$prefix}--popover-content {
+  border: 1px solid $border-subtle-01;
+  outline: none;
+}
+
+.#{$prefix}--popover--border.#{$prefix}--header-action
+  .#{$prefix}--tooltip
+  .#{$prefix}--tooltip-content {
+  outline: none;
 }
 
 .#{$prefix}--header-action .#{$prefix}--toggletip-content {
@@ -64,6 +110,10 @@ $prefix: 'cds' !default;
   @include custom-property.declaration('link-focus-text-color', $focus);
 }
 
+.#{$prefix}--header .#{$prefix}--header__name {
+  padding-inline-end: $spacing-05;
+}
+
 //----------------------------------------------------------------------------
 // Menu button inside Header
 //----------------------------------------------------------------------------
@@ -78,4 +128,47 @@ $prefix: 'cds' !default;
     [disabled]
   ):hover {
   color: $text-primary;
+}
+
+.#{$prefix}--header {
+  .#{$prefix}--menu.#{$prefix}--menu--border {
+    border: 1px solid $border-subtle-01;
+    outline: none;
+  }
+
+  .#{$prefix}--menu--background-token__background {
+    background-color: $layer-background;
+  }
+
+  .#{$prefix}--menu-button__trigger {
+    position: relative;
+
+    // z-index of menu + 1
+    z-index: z('modal') + 1;
+
+    &[aria-expanded='true'] {
+      border: 1px solid $border-subtle-01;
+    }
+
+    &[aria-expanded='true']::after {
+      position: absolute;
+      background: $background;
+      block-size: $spacing-01;
+      content: '';
+      inset-block-end: -$spacing-01;
+      inset-inline: 0;
+      pointer-events: none;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+// Search expanded inside Header
+//----------------------------------------------------------------------------
+@include breakpoint-down(lg) {
+  .#{$prefix}--header .#{$prefix}--search--expanded {
+    position: absolute;
+    z-index: 1;
+    inset-inline-start: 0;
+  }
 }

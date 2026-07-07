@@ -3,6 +3,132 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.27.0...@carbon-labs/react-whats-new@0.28.0) (2026-06-02)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.27.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.26.0...@carbon-labs/react-whats-new@0.27.0) (2026-05-15)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.26.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.25.0...@carbon-labs/react-whats-new@0.26.0) (2026-05-14)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.25.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.24.0...@carbon-labs/react-whats-new@0.25.0) (2026-05-12)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.24.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.23.0...@carbon-labs/react-whats-new@0.24.0) (2026-05-11)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.23.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.22.0...@carbon-labs/react-whats-new@0.23.0) (2026-05-08)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.22.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.21.0...@carbon-labs/react-whats-new@0.22.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.21.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.20.0...@carbon-labs/react-whats-new@0.21.0) (2026-05-06)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.20.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.19.0...@carbon-labs/react-whats-new@0.20.0) (2026-04-14)
+
+
+### Bug Fixes
+
+* **deps:** add @carbon/utilities as direct dep ([#1180](https://github.com/carbon-design-system/carbon-labs/issues/1180)) ([9f92951](https://github.com/carbon-design-system/carbon-labs/commit/9f929518617afeb2392b40ecf30bc5b40c4e1442))
+
+
+
+
+
+# [0.19.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.18.0...@carbon-labs/react-whats-new@0.19.0) (2026-04-14)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.18.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.17.0...@carbon-labs/react-whats-new@0.18.0) (2026-01-14)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.17.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.16.0...@carbon-labs/react-whats-new@0.17.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* Complete carbon utilities import update ([#937](https://github.com/carbon-design-system/carbon-labs/issues/937)) ([d853b7a](https://github.com/carbon-design-system/carbon-labs/commit/d853b7a6edeb474e0dab5206ec139a84a68d3e84))
+
+
+
+
+
+# [0.16.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.15.0...@carbon-labs/react-whats-new@0.16.0) (2025-10-15)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.15.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.14.0...@carbon-labs/react-whats-new@0.15.0) (2025-09-11)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
+# [0.14.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.13.0...@carbon-labs/react-whats-new@0.14.0) (2025-09-10)
+
+**Note:** Version bump only for package @carbon-labs/react-whats-new
+
+
+
+
+
 # [0.13.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/react-whats-new@0.12.0...@carbon-labs/react-whats-new@0.13.0) (2025-08-25)
 
 **Note:** Version bump only for package @carbon-labs/react-whats-new

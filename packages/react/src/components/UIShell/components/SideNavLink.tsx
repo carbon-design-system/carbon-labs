@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2025, 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -107,7 +107,11 @@ export const SideNavLink: SideNavLinkComponent = forwardRef(
 
     if (!expanded && navType === SIDE_NAV_TYPE.RAIL_PANEL) {
       return (
-        <SideNavLinkPopover align="right" label={children} {...rest}>
+        <SideNavLinkPopover
+          align="right"
+          label={children}
+          className={className}
+          {...rest}>
           {SideNavLinkIcon}
         </SideNavLinkPopover>
       );
@@ -177,7 +181,8 @@ SideNavLink.propTypes = {
 };
 
 // eslint-disable-next-line react/display-name
-export const createCustomSideNavLink = (element) => (props) =>
-  <SideNavLink element={element} {...props} />;
+export const createCustomSideNavLink = (element) => (props) => (
+  <SideNavLink element={element} {...props} />
+);
 
 export default SideNavLink;

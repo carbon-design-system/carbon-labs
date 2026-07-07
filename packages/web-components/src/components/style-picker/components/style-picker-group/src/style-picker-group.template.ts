@@ -8,7 +8,7 @@
  */
 
 import { html, TemplateResult } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es/components/accordion/accordion-item.js';
 
 import '../../style-picker-option/style-picker-option.js';
@@ -33,12 +33,7 @@ export const stylePickerGroupTemplate = (
    * Wrap group options here.
    */
   const renderDefault = () => {
-    return html`<div
-      class=${`${blockClass} ${blockClass}--${size}`}
-      role="listbox"
-      aria-label=${heading}
-      aria-orientation="horizontal"
-      tabindex="0">
+    return html`<div class=${`${blockClass} ${blockClass}--${size}`}>
       <div
         class=${`cds--contained-list ${carbonPrefix}--contained-list--disclosed ${blockClass}__group`}>
         <div class=${`cds--contained-list__header`} role="presentation">

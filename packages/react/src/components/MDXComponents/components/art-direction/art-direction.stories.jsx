@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react'
-import { ArtDirection } from './art-direction'
-import desktop from './desktop.jpg'
-import mobile from './mobile.jpg'
-import tablet from './tablet.jpg'
+import React from 'react';
+import { ArtDirection } from './art-direction';
+import desktop from './desktop.jpg';
+import mobile from './mobile.jpg';
+import tablet from './tablet.jpg';
 
 export default {
-  title: 'MDX Components/Images & Video/ArtDirection',
+  title: 'Components/MDX Components/Images & Video/ArtDirection',
   component: ArtDirection,
   argTypes: {
     children: {
-      control: false
-    }
-  }
-}
+      control: false,
+    },
+  },
+};
 
 const Template = (args) => (
   <div style={{ minHeight: '500px' }}>
@@ -29,7 +29,7 @@ const Template = (args) => (
       <img alt="desktop" src={desktop} />
     </ArtDirection>
   </div>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Default = Template.bind({});
+Default.args = {};

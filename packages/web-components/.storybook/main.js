@@ -22,13 +22,28 @@ function getAbsolutePath(value) {
   return dirname(require.resolve(join(value, 'package.json')));
 }
 
-const config = {
-  stories: [
-    '../src/**/__stories__/*.mdx',
-    '../src/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
-  ],
+const includeV12 = process.env.STORYBOOK_INCLUDE_V12 === 'true';
 
-  addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-docs")],
+// Build stories array based on environment variable
+const storiesGlobs = includeV12
+  ? [
+      '../src/v12/**/__stories__/*.mdx',
+      '../src/v12/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
+    ]
+  : [
+      '../src/components/**/__stories__/*.mdx',
+      '../src/components/**/__stories__/*.stories.@(js|jsx|mjs|ts|tsx)',
+    ];
+
+const config = {
+  stories: storiesGlobs,
+
+  addons: [
+    getAbsolutePath('@storybook/addon-a11y'),
+    getAbsolutePath('storybook-addon-accessibility-checker'),
+    getAbsolutePath('@storybook/addon-links'),
+    getAbsolutePath('@storybook/addon-docs'),
+  ],
 
   framework: {
     name: getAbsolutePath('@storybook/web-components-vite'),
@@ -39,8 +54,13 @@ const config = {
     storyStoreV7: true,
   },
 
+  staticDirs: ['../public'],
+
   async viteFinal(config) {
     return mergeConfig(config, {
+      build: {
+        cssMinify: 'esbuild',
+      },
       css: {
         preprocessorOptions: {
           scss: {
@@ -62,6 +82,6 @@ const config = {
         }),
       ],
     });
-  }
+  },
 };
 export default config;

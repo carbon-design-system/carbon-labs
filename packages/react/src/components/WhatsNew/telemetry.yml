@@ -35,6 +35,7 @@ collect:
         # React
         - key
         - ref
+      allowedAttributeStringValues: []
   npm:
     dependencies: null
   js:

@@ -12,13 +12,17 @@ export default {
   preset: 'ts-jest',
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': '<rootDir>/__mocks__/styleMock.js',
+    '^@carbon-labs/utilities$': '<rootDir>/../utilities/es/index.js',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
     '^.+\\.(js|jsx)$': ['babel-jest', { configFile: './.babelrc' }],
   },
-  transformIgnorePatterns: ['/node_modules/(?!@carbon-labs)'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!@carbon-labs)/',
+    '/node_modules/(?!@lit)/', // necessary for @lit/react wrapper components
+  ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
   // Test file patterns to match

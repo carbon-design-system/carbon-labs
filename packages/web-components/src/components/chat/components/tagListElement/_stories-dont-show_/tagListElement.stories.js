@@ -21,8 +21,9 @@ export const Default = {
    *
    * @returns {TemplateResult<1>}
    */
-  render: () => html` <clabs-chat-tag-list
-    use-tags
-    content="${'["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'}">
-  </clabs-chat-tag-list>`,
+  render: () =>
+    html` <clabs-chat-tag-list
+      use-tags
+      content="${'["Simone de Beauvoir","René Descartes","Jean-Paul Sartre","Voltaire","Michel Foucault","Albert Camus"]'}">
+    </clabs-chat-tag-list>`,
 };

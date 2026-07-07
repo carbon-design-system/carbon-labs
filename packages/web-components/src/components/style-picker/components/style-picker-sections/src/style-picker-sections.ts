@@ -14,7 +14,7 @@ import { query, state } from 'lit/decorators.js';
 import { consume } from '@lit/context';
 import {
   stylePickerContext,
-  StylePickerContextType,
+  type StylePickerContextType,
 } from '../../../context/style-picker-context';
 import { prefix } from '../../../defs';
 

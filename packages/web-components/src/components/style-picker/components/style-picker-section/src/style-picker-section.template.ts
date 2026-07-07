@@ -8,7 +8,7 @@
  */
 
 import { html, nothing, TemplateResult } from 'lit';
-import { settings } from '@carbon-labs/utilities/es/settings/index.js';
+import { settings } from '@carbon-labs/utilities';
 import '@carbon/web-components/es/components/accordion/accordion-item.js';
 import '@carbon/web-components/es/components/tag/index.js';
 
@@ -50,10 +50,7 @@ export const stylePickerSectionTemplate = (
       return html`
         <div
           class=${`${blockClass} ${blockClass}--${size}`}
-          role="listbox"
-          aria-label=${heading || 'section'}
-          aria-orientation="horizontal"
-          tabindex="0">
+          >
             <ul class=${`${blockClass}__items`} role="group">
               <slot></slot>
             </ul>
@@ -80,7 +77,9 @@ export const stylePickerSectionTemplate = (
       class=${`${blockClass}--disclosed`}
       @cds-accordion-item-toggled=${() => {
         setActiveSection?.(slotIndex);
-      }}>
+      }}
+      role="group"
+      ?open=${_stylePickerContext?.activeSection === slotIndex}>
       <div slot="title" class=${`${blockClass}__header`}>
         <strong class=${`${blockClass}__heading`}> ${heading} </strong>
         ${renderTag()}

@@ -199,6 +199,45 @@ describe('DatePicker v12 focus restoration', () => {
     });
   });
 
+  it('does not trap focus: Tab from calendar moves focus to the next page element', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <div>
+        <DatePicker datePickerType="single">
+          <DatePickerInput id="single-date-tab-trap" labelText="Date input" />
+        </DatePicker>
+        <button type="button">After date picker</button>
+      </div>
+    );
+
+    const dateInput = screen.getByLabelText('Date input');
+    const afterButton = screen.getByRole('button', {
+      name: 'After date picker',
+    });
+
+    // Tab onto the input — calendar opens
+    await user.tab();
+    expect(document.activeElement).toBe(dateInput);
+    expect(screen.getByRole('grid', { name: 'Calendar' })).toBeTruthy();
+
+    // Tab again — focus moves into the calendar grid
+    await user.tab();
+    expect(document.activeElement).toBe(
+      screen.getByRole('grid', { name: 'Calendar' })
+    );
+
+    // Tab once more — focus must leave the date picker entirely
+    await user.tab();
+
+    await waitFor(() => {
+      // Calendar should be closed
+      expect(screen.queryByRole('grid', { name: 'Calendar' })).toBe(null);
+      // Focus must be on the element after the date picker, not back on the input
+      expect(document.activeElement).toBe(afterButton);
+    });
+  });
+
   describe('DatePicker v12 input click reopens calendar', () => {
     it('reopens the calendar when clicking the input after a date has been selected', async () => {
       const user = userEvent.setup();

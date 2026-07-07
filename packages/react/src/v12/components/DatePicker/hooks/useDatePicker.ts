@@ -490,16 +490,14 @@ export function useDatePicker(
         // Case 1: Tab FROM input -> Focus the calendar container
         if (isFocusInInput && !event.shiftKey) {
           event.preventDefault();
-          // Focus the calendar container which has tabIndex={0}
+          // Focus synchronously — no setTimeout, to avoid a pending timer that
+          // would fire during a later Tab's act() flush and re-focus the calendar
+          // at the wrong time.
           if (calendarEl) {
-            setTimeout(() => {
-              const calendar = calendarEl.querySelector(
-                '.cds--date-picker__calendar'
-              ) as HTMLElement;
-              if (calendar) {
-                calendar.focus();
-              }
-            }, 0);
+            const calendar = calendarEl.querySelector(
+              '.cds--date-picker__calendar'
+            ) as HTMLElement;
+            calendar?.focus();
           }
           return;
         }
@@ -520,11 +518,71 @@ export function useDatePicker(
           return;
         }
 
-        // Case 3: Tab FROM calendar -> Close and move to next element
+        // Case 3: Tab FROM calendar -> close calendar and move focus to the
+        // next focusable element after the date picker.
+        //
+        // We must preventDefault and move focus explicitly here. Leaving it to
+        // the browser (no preventDefault) causes a synchronous React re-render
+        // via send(TAB_KEY) that unmounts the calendar before the browser
+        // resolves the next focusable element, dropping focus to <body>.
+        // Likewise, deferring send(TAB_KEY) with setTimeout does not help in
+        // test environments where act() flushes timers before focus settles.
+        //
+        // The focusable selector mirrors @testing-library/user-event's own
+        // FOCUSABLE_SELECTOR so tab-order matches what a real Tab key would do.
         if (isFocusInCalendar && !event.shiftKey) {
-          // Let the state machine handle closing
+          event.preventDefault();
+
+          const focusableSelector = [
+            'input:not([type=hidden]):not([disabled])',
+            'button:not([disabled])',
+            'select:not([disabled])',
+            'textarea:not([disabled])',
+            'a[href]',
+            '[tabindex]:not([tabindex="-1"]):not([disabled])',
+          ].join(',');
+
+          // Collect all focusable elements that are NOT inside the date picker.
+          // The calendar container is the last element owned by this widget, so
+          // the first element outside it is the natural Tab destination.
+          const calendarContainer = calendarEl?.closest(
+            '.cds--date-picker__calendar-container'
+          ) as HTMLElement | null;
+          const datepickerRoot = calendarContainer?.parentElement;
+
+          const allFocusable = Array.from(
+            document.querySelectorAll<HTMLElement>(focusableSelector)
+          ).filter(
+            (el) =>
+              !datepickerRoot?.contains(el) ||
+              el === startInputEl ||
+              el === endInputEl
+          );
+
+          // Find the last owned element (start or end input) in the focusable
+          // list, then take the element that follows it.
+          const lastOwnedIndex = allFocusable.reduce(
+            (lastIdx, el, idx) =>
+              el === startInputEl || el === endInputEl ? idx : lastIdx,
+            -1
+          );
+          const nextFocusable =
+            lastOwnedIndex >= 0
+              ? (allFocusable[lastOwnedIndex + 1] ?? null)
+              : null;
+
+          // Suppress auto-open in case focus momentarily passes through the
+          // input (e.g. if nextFocusable is null and browser falls back).
+          suppressOpenOnFocusRef.current = true;
+          if (nextFocusable) {
+            nextFocusable.focus();
+          }
+
           send(DatePickerEvent.TAB_KEY);
-          // Don't prevent default - let browser move focus naturally
+
+          window.setTimeout(() => {
+            suppressOpenOnFocusRef.current = false;
+          }, 0);
           return;
         }
 

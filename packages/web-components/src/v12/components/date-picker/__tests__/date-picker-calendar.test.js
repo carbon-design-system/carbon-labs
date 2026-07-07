@@ -229,9 +229,7 @@ describe('cds-date-picker input click reopens calendar', () => {
     await el.updateComplete;
 
     expect(el.open).to.be.true;
-    expect(
-      el.shadowRoot?.querySelector('cds-date-picker-calendar')
-    ).to.exist;
+    expect(el.shadowRoot?.querySelector('cds-date-picker-calendar')).to.exist;
   });
 });
 

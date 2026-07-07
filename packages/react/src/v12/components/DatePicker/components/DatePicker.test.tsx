@@ -198,74 +198,74 @@ describe('DatePicker v12 focus restoration', () => {
       );
     });
   });
-  
+
   describe('DatePicker v12 input click reopens calendar', () => {
     it('reopens the calendar when clicking the input after a date has been selected', async () => {
       const user = userEvent.setup();
-  
+
       render(
         <DatePicker datePickerType="single" closeOnSelect>
           <DatePickerInput id="single-date-reopen" labelText="Date input" />
         </DatePicker>
       );
-  
+
       const dateInput = screen.getByLabelText('Date input');
-  
+
       // Step 1: Click input to open calendar
       await user.click(dateInput);
       expect(screen.getByRole('grid', { name: 'Calendar' })).toBeTruthy();
-  
+
       // Step 2: Select a date — calendar should close
       const dateButton = await screen.findByRole('button', {
         name: 'January 1, 2026',
       });
       await user.click(dateButton);
-  
+
       await waitFor(() => {
         expect(screen.queryByRole('grid', { name: 'Calendar' })).toBe(null);
       });
-  
+
       // Step 3: Click the input again — calendar should reopen
       // The input already has focus, so only a click event fires (no onFocus)
       await user.click(dateInput);
-  
+
       await waitFor(() => {
         expect(screen.getByRole('grid', { name: 'Calendar' })).toBeTruthy();
       });
     });
-  
+
     it('reopens the calendar when clicking the range start input after a full range has been selected', async () => {
       const user = userEvent.setup();
-  
+
       render(
         <DatePicker datePickerType="range" closeOnSelect>
           <DatePickerInput id="range-reopen-start" labelText="Start date" />
           <DatePickerInput id="range-reopen-end" labelText="End date" />
         </DatePicker>
       );
-  
+
       const startInput = screen.getByLabelText('Start date');
-  
+
       // Step 1: Open calendar and select start date
       await user.click(startInput);
       const startDateButton = await screen.findByRole('button', {
         name: 'January 1, 2026',
       });
       await user.click(startDateButton);
-  
+
       // Step 2: Select end date — calendar should close
       const endDateButton = await screen.findByRole('button', {
         name: 'January 2, 2026',
       });
       await user.click(endDateButton);
-  
+
       await waitFor(() => {
         expect(screen.queryByRole('grid', { name: 'Calendar' })).toBe(null);
       });
-  
+
       // Step 3: Click the start input again — calendar should reopen
       await user.click(startInput);
-  
+
       await waitFor(() => {
         expect(screen.getByRole('grid', { name: 'Calendar' })).toBeTruthy();
       });

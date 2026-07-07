@@ -1,0 +1,316 @@
+/**
+ * Copyright IBM Corp. 2026
+ *
+ * This source code is licensed under the Apache-2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/motion' as *;
+@use '@carbon/styles/scss/utilities/visually-hidden' as *;
+
+$prefix: 'clabs' !default;
+
+// ---------------------------------------------------------------------------
+// Animated Digit
+// ---------------------------------------------------------------------------
+
+.#{$prefix}--animated-digit__container {
+  display: inline-flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  vertical-align: baseline;
+  min-inline-size: 1ch;
+  line-height: 1;
+}
+
+.#{$prefix}--animated-digit {
+  display: inline-block;
+}
+
+.#{$prefix}--animated-digit__slider {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.#{$prefix}--animated-digit__current {
+  display: block;
+}
+
+.#{$prefix}--animated-digit__next {
+  display: block;
+  position: absolute;
+  inset-inline-start: 0;
+  inline-size: 100%;
+}
+
+// Slide up animation (count-up)
+.#{$prefix}--animated-digit__slider--slide-up {
+  &.#{$prefix}--animated-digit__slider--animating {
+    animation: clabs--slide-up-animation $duration-moderate-02
+      motion(standard, productive) forwards;
+  }
+
+  .#{$prefix}--animated-digit__next {
+    inset-block-start: 100%;
+  }
+}
+
+// Slide down animation (count-down)
+.#{$prefix}--animated-digit__slider--slide-down {
+  &.#{$prefix}--animated-digit__slider--animating {
+    animation: clabs--slide-down-animation $duration-moderate-02
+      motion(standard, productive) forwards;
+  }
+
+  .#{$prefix}--animated-digit__next {
+    inset-block-end: 100%;
+  }
+}
+
+@keyframes clabs--slide-up-animation {
+  from {
+    transform: translateY(0) translateZ(0);
+  }
+
+  to {
+    transform: translateY(-100%) translateZ(0);
+  }
+}
+
+@keyframes clabs--slide-down-animation {
+  from {
+    transform: translateY(0) translateZ(0);
+  }
+
+  to {
+    transform: translateY(100%) translateZ(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .#{$prefix}--animated-digit__slider {
+    animation: none;
+    transition: none;
+  }
+
+  .#{$prefix}--animated-digit__slider--slide-up.#{$prefix}--animated-digit__slider--animating,
+  .#{$prefix}--animated-digit__slider--slide-down.#{$prefix}--animated-digit__slider--animating {
+    animation: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// TimeDisplay
+// ---------------------------------------------------------------------------
+
+.#{$prefix}--time-display {
+  display: inline-block;
+  font-family: font-family('mono');
+  text-align: start;
+}
+
+// Label
+.#{$prefix}--time-display__label {
+  @include type-style('label-01');
+
+  display: block;
+  color: $text-secondary;
+  margin-block-end: $spacing-03;
+}
+
+.#{$prefix}--time-display__label--inline {
+  display: inline;
+  margin-inline-end: $spacing-03;
+  margin-block-end: 0;
+}
+
+.#{$prefix}--time-display__label--hidden {
+  @include visually-hidden;
+}
+
+// Split format
+.#{$prefix}--time-display__split-container {
+  display: flex;
+  gap: $spacing-05;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.#{$prefix}--time-display__split-unit {
+  display: inline-flex;
+  min-inline-size: $spacing-10;
+}
+
+.#{$prefix}--time-display__split-unit--first {
+  .#{$prefix}--time-display__split-value-wrapper {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.#{$prefix}--time-display__split-value-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.#{$prefix}--time-display__split-value {
+  font-size: 2.5rem;
+  font-weight: font-weight('light');
+  line-height: 1.2;
+  color: $text-primary;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.#{$prefix}--time-display__split-label {
+  @include type-style('label-01');
+
+  color: $text-secondary;
+  margin-block-start: $spacing-02;
+  text-transform: lowercase;
+}
+
+// Boxed format
+.#{$prefix}--time-display__boxed-container {
+  display: flex;
+  gap: $spacing-04;
+  align-items: flex-start;
+}
+
+.#{$prefix}--time-display__boxed-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.#{$prefix}--time-display__boxed-value {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: $spacing-12;
+  min-block-size: $spacing-12;
+  padding-block: $spacing-03;
+  padding-inline: $spacing-05;
+  font-size: 2rem;
+  font-weight: font-weight('light');
+  line-height: 1.2;
+  color: $text-primary;
+  background-color: $layer-01;
+  border: 1px solid $border-subtle-01;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.#{$prefix}--time-display__boxed-label {
+  @include type-style('label-01');
+
+  color: $text-secondary;
+  margin-block-start: $spacing-03;
+  text-transform: lowercase;
+}
+
+// Colon format
+.#{$prefix}--time-display__colon-container {
+  display: inline-block;
+}
+
+.#{$prefix}--time-display__colon-value {
+  font-size: 2rem;
+  font-weight: font-weight('light');
+  line-height: 1.2;
+  color: $text-primary;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+// Inline format
+.#{$prefix}--time-display__inline-container {
+  display: inline-flex;
+  align-items: baseline;
+  gap: $spacing-02;
+  flex-wrap: wrap;
+}
+
+.#{$prefix}--time-display__inline-value {
+  @include type-style('body-compact-01');
+
+  color: $text-primary;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.#{$prefix}--time-display__inline-unit {
+  @include type-style('body-compact-01');
+
+  color: $text-secondary;
+  margin-inline-end: $spacing-03;
+  line-height: 1;
+}
+
+// Helper text
+.#{$prefix}--time-display__helper-text {
+  @include type-style('helper-text-01');
+
+  display: block;
+  color: $text-secondary;
+  margin-block-start: $spacing-03;
+}
+
+// Complete state
+.#{$prefix}--time-display__complete-label {
+  @include type-style('body-compact-01');
+
+  color: $text-secondary;
+}
+
+// Animated transition (productive motion)
+.#{$prefix}--time-display--animated {
+  .#{$prefix}--time-display__split-value,
+  .#{$prefix}--time-display__boxed-value,
+  .#{$prefix}--time-display__colon-value,
+  .#{$prefix}--time-display__inline-value {
+    transition: opacity $duration-moderate-01 motion(standard, productive);
+  }
+}
+
+// Screen reader only / live region
+.#{$prefix}--time-display__sr-only {
+  @include visually-hidden;
+}
+
+.#{$prefix}--time-display__live-region {
+  @include visually-hidden;
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .#{$prefix}--time-display--animated {
+    .#{$prefix}--time-display__split-value,
+    .#{$prefix}--time-display__boxed-value,
+    .#{$prefix}--time-display__colon-value,
+    .#{$prefix}--time-display__inline-value {
+      transition: none;
+    }
+  }
+}

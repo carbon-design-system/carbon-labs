@@ -145,6 +145,8 @@ export function DatePicker({
     startInputRef,
     endInputRef,
     calendarRef,
+    exitSentinelRef,
+    handleExitSentinelFocus,
   } = useDatePicker({
     datePickerType,
     value,
@@ -298,6 +300,27 @@ export function DatePicker({
           />
         </div>
       )}
+
+      {/*
+        Exit sentinel: a zero-size, aria-hidden span placed just after the
+        calendar container in the render tree (and therefore in DOM tab order).
+        Normally tabindex="-1" — invisible to Tab.  When the user presses Tab
+        from inside the calendar, the keydown handler briefly sets it to
+        tabindex="0" so the browser delivers that Tab keystroke here naturally.
+        The onFocus handler then closes the calendar and restores tabindex="-1".
+      */}
+      <span
+        ref={exitSentinelRef}
+        tabIndex={-1}
+        aria-hidden={true}
+        onFocus={handleExitSentinelFocus}
+        style={{
+          position: 'absolute',
+          width: 0,
+          height: 0,
+          overflow: 'hidden',
+        }}
+      />
     </div>
   );
 }

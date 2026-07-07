@@ -5,7 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  type RefObject,
+} from 'react';
 import {
   DatePickerStateMachine,
   DatePickerEvent,
@@ -97,6 +103,21 @@ export interface UseDatePickerReturn {
    * Current state machine context
    */
   context: DatePickerContext;
+
+  /**
+   * Ref to attach to the exit sentinel element in the render tree.
+   * The sentinel is a visually-hidden, aria-hidden span placed just after the
+   * calendar container.  It has tabindex="-1" by default and is briefly set to
+   * tabindex="0" when Tab is pressed from the calendar so the browser delivers
+   * focus there naturally — no DOM scan needed.
+   */
+  exitSentinelRef: RefObject<HTMLSpanElement>;
+
+  /**
+   * onFocus handler to attach to the exit sentinel element.
+   * Restores tabindex="-1" on the sentinel and closes the calendar if still open.
+   */
+  handleExitSentinelFocus: () => void;
 
   /**
    * Current state
@@ -192,6 +213,9 @@ export function useDatePicker(
   const startInputRef = useRef<HTMLInputElement>(null);
   const endInputRef = useRef<HTMLInputElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
+  // Ref for the exit sentinel — a visually-hidden span placed just after the
+  // calendar container.  See UseDatePickerReturn.exitSentinelRef for details.
+  const exitSentinelRef = useRef<HTMLSpanElement>(null);
 
   // State machine instance (persists across renders)
   const machineRef = useRef<DatePickerStateMachine | null>(null);
@@ -518,71 +542,22 @@ export function useDatePicker(
           return;
         }
 
-        // Case 3: Tab FROM calendar -> close calendar and move focus to the
-        // next focusable element after the date picker.
+        // Case 3: Tab FROM calendar -> activate exit sentinel and let the
+        // browser deliver focus to it naturally.
         //
-        // We must preventDefault and move focus explicitly here. Leaving it to
-        // the browser (no preventDefault) causes a synchronous React re-render
-        // via send(TAB_KEY) that unmounts the calendar before the browser
-        // resolves the next focusable element, dropping focus to <body>.
-        // Likewise, deferring send(TAB_KEY) with setTimeout does not help in
-        // test environments where act() flushes timers before focus settles.
+        // The sentinel (<span tabindex="-1"> rendered just after the calendar
+        // container) is briefly set to tabindex="0" here.  The browser then
+        // delivers focus to it as the natural Tab destination, triggering its
+        // onFocus handler which closes the calendar and restores tabindex="-1".
         //
-        // The focusable selector mirrors @testing-library/user-event's own
-        // FOCUSABLE_SELECTOR so tab-order matches what a real Tab key would do.
+        // This replaces the previous document.querySelectorAll walk, which
+        // could not pierce shadow DOM and required manual index arithmetic.
         if (isFocusInCalendar && !event.shiftKey) {
-          event.preventDefault();
-
-          const focusableSelector = [
-            'input:not([type=hidden]):not([disabled])',
-            'button:not([disabled])',
-            'select:not([disabled])',
-            'textarea:not([disabled])',
-            'a[href]',
-            '[tabindex]:not([tabindex="-1"]):not([disabled])',
-          ].join(',');
-
-          // Collect all focusable elements that are NOT inside the date picker.
-          // The calendar container is the last element owned by this widget, so
-          // the first element outside it is the natural Tab destination.
-          const calendarContainer = calendarEl?.closest(
-            '.cds--date-picker__calendar-container'
-          ) as HTMLElement | null;
-          const datepickerRoot = calendarContainer?.parentElement;
-
-          const allFocusable = Array.from(
-            document.querySelectorAll<HTMLElement>(focusableSelector)
-          ).filter(
-            (el) =>
-              !datepickerRoot?.contains(el) ||
-              el === startInputEl ||
-              el === endInputEl
-          );
-
-          // Find the last owned element (start or end input) in the focusable
-          // list, then take the element that follows it.
-          const lastOwnedIndex = allFocusable.reduce(
-            (lastIdx, el, idx) =>
-              el === startInputEl || el === endInputEl ? idx : lastIdx,
-            -1
-          );
-          const nextFocusable =
-            lastOwnedIndex >= 0
-              ? (allFocusable[lastOwnedIndex + 1] ?? null)
-              : null;
-
-          // Suppress auto-open in case focus momentarily passes through the
-          // input (e.g. if nextFocusable is null and browser falls back).
-          suppressOpenOnFocusRef.current = true;
-          if (nextFocusable) {
-            nextFocusable.focus();
-          }
-
           send(DatePickerEvent.TAB_KEY);
-
-          window.setTimeout(() => {
-            suppressOpenOnFocusRef.current = false;
-          }, 0);
+          // Activate sentinel — browser handles the rest, no preventDefault needed.
+          if (exitSentinelRef.current) {
+            exitSentinelRef.current.tabIndex = 0;
+          }
           return;
         }
 
@@ -632,6 +607,22 @@ export function useDatePicker(
     send,
   ]);
 
+  /**
+   * Called when the browser delivers focus to the exit sentinel.
+   * Closes the calendar (state machine already received TAB_KEY in _handleKeyDown)
+   * and immediately restores tabindex="-1" so future Tab presses skip the sentinel.
+   */
+  const handleExitSentinelFocus = useCallback(() => {
+    if (exitSentinelRef.current) {
+      exitSentinelRef.current.tabIndex = -1;
+    }
+    // Guard: if the calendar is still open (e.g. sentinel received focus by
+    // means other than our Tab handler), close it now.
+    if (context.isOpen) {
+      send(DatePickerEvent.TAB_KEY);
+    }
+  }, [context.isOpen, send]);
+
   return {
     context,
     state,
@@ -646,5 +637,7 @@ export function useDatePicker(
     startInputRef,
     endInputRef,
     calendarRef,
+    exitSentinelRef,
+    handleExitSentinelFocus,
   };
 }

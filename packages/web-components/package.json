@@ -25,8 +25,8 @@
     "generate": "node tasks/generate",
     "storybook:build": "NODE_OPTIONS='--max-old-space-size=6144' npx storybook build",
     "storybook:build:v12": "NODE_OPTIONS='--max-old-space-size=6144' STORYBOOK_INCLUDE_V12=true npx storybook build -o storybook-static/v12",
-    "test": "yarn build && web-test-runner \"{src/components/**/!(global-header),src/v12/components/**}/__tests__/*.test.js\" --node-resolve && yarn test:wc-global-header",
-    "test:updateSnapshot": "yarn build && web-test-runner \"{src/components/**/!(global-header),src/v12/components/**}/__tests__/*.test.js\" --node-resolve --update-snapshots && lerna run test --scope '@carbon-labs/wc-global-header' -- --update-snapshots",
+    "test": "yarn build && web-test-runner \"{src/components/**/!(global-header),src/v12/components/**}/__tests__/*.test.js\" --node-resolve --concurrency 1 && yarn test:wc-global-header",
+    "test:updateSnapshot": "yarn build && web-test-runner \"{src/components/**/!(global-header),src/v12/components/**}/__tests__/*.test.js\" --node-resolve --concurrency 1 --update-snapshots && lerna run test --scope '@carbon-labs/wc-global-header' -- --update-snapshots",
     "test:wc-global-header": "lerna run test --scope '@carbon-labs/wc-global-header'",
     "test-e2e": "start-server-and-test 'yarn storybook' http://localhost:6007/iframe.html 'yarn test-e2e:wc-global-header'",
     "test-e2e:wc-global-header": "lerna run test-e2e --scope '@carbon-labs/wc-global-header'"

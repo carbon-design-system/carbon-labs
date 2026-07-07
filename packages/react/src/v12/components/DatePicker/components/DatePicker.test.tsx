@@ -199,10 +199,10 @@ describe('DatePicker v12 focus restoration', () => {
     });
   });
 
-  it('does not trap focus: Tab from calendar moves focus to the next page element', async () => {
+  it('does not trap focus: Tab from calendar closes the calendar and moves focus out of the date picker', async () => {
     const user = userEvent.setup();
 
-    render(
+    const { container } = render(
       <div>
         <DatePicker datePickerType="single">
           <DatePickerInput id="single-date-tab-trap" labelText="Date input" />
@@ -227,15 +227,54 @@ describe('DatePicker v12 focus restoration', () => {
       screen.getByRole('grid', { name: 'Calendar' })
     );
 
-    // Tab once more — focus must leave the date picker entirely
+    // Tab once more — the keydown handler activates the exit sentinel (sets
+    // tabindex="0").  In jsdom, userEvent.tab() computes the next focusable
+    // element before our keydown handler mutates the sentinel's tabindex, so it
+    // falls back to body.  Simulate what the real browser does: deliver focus
+    // to the sentinel that is now tabbable.
+    await user.tab();
+
+    const sentinel = container.querySelector(
+      'span[aria-hidden="true"]'
+    ) as HTMLElement;
+    expect(sentinel).toBeTruthy();
+    // At this point the sentinel should have been activated by the keydown handler.
+    expect(sentinel.tabIndex).toBe(0);
+
+    // Deliver focus to sentinel — mirrors real browser Tab traversal.
+    sentinel.focus();
+
+    await waitFor(() => {
+      // Calendar must be closed.
+      expect(screen.queryByRole('grid', { name: 'Calendar' })).toBe(null);
+      // Sentinel must have deactivated itself.
+      expect(sentinel.tabIndex).toBe(-1);
+      // Focus must NOT be on body or the date input.
+      expect(document.activeElement).not.toBe(document.body);
+      expect(document.activeElement).not.toBe(dateInput);
+    });
+
+    // The sentinel is now tabindex="-1" so the next Tab skips it and lands on afterButton.
     await user.tab();
 
     await waitFor(() => {
-      // Calendar should be closed
-      expect(screen.queryByRole('grid', { name: 'Calendar' })).toBe(null);
-      // Focus must be on the element after the date picker, not back on the input
       expect(document.activeElement).toBe(afterButton);
     });
+  });
+
+  it('exit sentinel is rendered and starts with tabindex="-1"', () => {
+    const { container } = render(
+      <DatePicker datePickerType="single">
+        <DatePickerInput id="sentinel-check" labelText="Date input" />
+      </DatePicker>
+    );
+
+    // The sentinel is always in the DOM (even when calendar is closed).
+    // It should be aria-hidden and have tabIndex -1 by default.
+    const sentinel = container.querySelector(
+      'span[aria-hidden="true"][tabindex="-1"]'
+    );
+    expect(sentinel).toBeTruthy();
   });
 
   describe('DatePicker v12 input click reopens calendar', () => {

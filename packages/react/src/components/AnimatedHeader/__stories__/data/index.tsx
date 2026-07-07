@@ -282,9 +282,6 @@ export const headerTiles: TileGroup[] = [
   },
 ];
 
-// ---------------------------------------------------------------------------
-// Carousel story data — two pages of guided journey tiles matching Figma designs
-// ---------------------------------------------------------------------------
 export const carouselTileGroups: TileGroup[] = [
   {
     id: 101,
@@ -357,7 +354,8 @@ export const carouselTileGroups: TileGroup[] = [
         title: 'Another very long long long journey name goes here',
         subtitle: 'Journey 7',
         primaryIcon: ArrowRight,
-        ariaLabel: 'Journey 7: Another very long long long journey name goes here',
+        ariaLabel:
+          'Journey 7: Another very long long long journey name goes here',
       },
       {
         tileId: 'journey-8',
@@ -372,7 +370,6 @@ export const carouselTileGroups: TileGroup[] = [
   },
 ];
 
-// 3-page variant
 export const carouselTileGroups3: TileGroup[] = [
   ...carouselTileGroups,
   {
@@ -419,7 +416,6 @@ export const carouselTileGroups3: TileGroup[] = [
   },
 ];
 
-// 4-page variant
 export const carouselTileGroups4: TileGroup[] = [
   ...carouselTileGroups3,
   {
@@ -471,7 +467,6 @@ export const carouselConfig: HeaderCarouselConfig = {
   prevButtonLabel: 'Previous journey page',
   nextButtonLabel: 'Next journey page',
   currentPage: 0,
-  // onPageChange is wired in the story via useArgs
 };
 
 // ---------------------------------------------------------------------------

@@ -82,6 +82,24 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
   }
 
   /**
+   * Handles `click` event on `<input>` in the shadow DOM.
+   * Dispatches a custom event so the parent date picker can reopen the calendar
+   * when the input already has focus (clicking a focused input does not fire
+   * a new `focus` event, so a dedicated click event is required).
+   */
+  private _handleInputClick = () => {
+    this.dispatchEvent(
+      new CustomEvent(`${prefix}-date-picker-input-click`, {
+        bubbles: true,
+        composed: true,
+        detail: {
+          inputType: this.kind || 'from',
+        },
+      })
+    );
+  };
+
+  /**
    * Handles `input` event on `<input>` in the shadow DOM.
    *
    * @param {Event} event - The event.
@@ -304,6 +322,7 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
       _handleInput: handleInput,
       _handleFocus: handleFocus,
       _handleBlur: handleBlur,
+      _handleInputClick: handleInputClick,
       _hasAILabel: hasAILabel,
     } = this;
 
@@ -384,6 +403,7 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
             @input="${handleInput}"
             @focus="${handleFocus}"
             @blur="${handleBlur}"
+            @click="${handleInputClick}"
             ?readonly="${readonly}" />
           ${normalizedProps.icon || this._renderIcon()}
           <slot
@@ -460,6 +480,13 @@ class CDSDatePickerInput extends FocusMixin(LitElement) {
    */
   static get aiLabelItem() {
     return `${prefix}-ai-label`;
+  }
+
+  /**
+   * The name of the custom event fired when the input is clicked.
+   */
+  static get inputClickEventName() {
+    return `${prefix}-date-picker-input-click`;
   }
 
   static shadowRootOptions = {

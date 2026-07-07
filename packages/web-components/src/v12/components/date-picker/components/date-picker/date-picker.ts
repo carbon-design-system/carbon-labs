@@ -173,6 +173,25 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
   };
 
   /**
+   * Handles input click event from date-picker-input.
+   * When the input already has focus, clicking it does not fire a new focus
+   * event.  This handler ensures the calendar reopens on click even when focus
+   * is already on the input.
+   *
+   * @param {CustomEvent} event - The click event
+   */
+  @HostListener('eventInputClick')
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore: The decorator refers to this method, but TS thinks this method is not referred to
+  private _handleInputClick = (event: CustomEvent) => {
+    if (this._adapter && !this.disabled && !this.readonly && !this.open) {
+      const { inputType } = event.detail || {};
+      this._adapter.send(DatePickerEvent.INPUT_FOCUS, { inputType });
+      this._adapter.send(DatePickerEvent.CALENDAR_OPEN);
+    }
+  };
+
+  /**
    * Handles input blur event from date-picker-input
    *
    * @param {CustomEvent} event - The blur event
@@ -1174,6 +1193,13 @@ class CDSDatePicker extends HostListenerMixin(FormMixin(LitElement)) {
    */
   static get eventInputBlur() {
     return `${prefix}-date-picker-input-blur`;
+  }
+
+  /**
+   * The name of the custom event fired when an input is clicked.
+   */
+  static get eventInputClick() {
+    return `${prefix}-date-picker-input-click`;
   }
 
   static styles = styles;

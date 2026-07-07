@@ -104,6 +104,11 @@ export interface DatePickerInputProps {
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 
   /**
+   * Click handler
+   */
+  onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
+
+  /**
    * Icon description for accessibility
    */
   iconDescription?: string;
@@ -192,6 +197,7 @@ export const DatePickerInput = forwardRef<
     onFocus,
     onBlur,
     onKeyDown,
+    onClick,
     iconDescription = 'Open calendar',
     onIconClick,
     hideIcon = false,
@@ -283,6 +289,7 @@ export const DatePickerInput = forwardRef<
             onFocus={onFocus}
             onBlur={onBlur}
             onKeyDown={onKeyDown}
+            onClick={onClick}
             aria-invalid={invalid || undefined}
             aria-describedby={
               showInvalidText

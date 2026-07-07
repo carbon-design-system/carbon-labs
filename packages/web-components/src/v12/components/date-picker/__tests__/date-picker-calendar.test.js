@@ -174,6 +174,67 @@ describe('cds-date-picker calendar interaction', () => {
   });
 });
 
+describe('cds-date-picker input click reopens calendar', () => {
+  it('reopens the calendar when the input is clicked after a date has been selected and calendar is closed', async () => {
+    const el = await fixture(html`
+      <cds-date-picker close-on-select>
+        <cds-date-picker-input
+          kind="single"
+          label-text="Date"
+          placeholder="mm/dd/yyyy">
+        </cds-date-picker-input>
+      </cds-date-picker>
+    `);
+    await el.updateComplete;
+
+    const input = el.querySelector('cds-date-picker-input');
+
+    // Step 1: Open the calendar via the adapter
+    el._adapter.send('INPUT_FOCUS', { inputType: 'from' });
+    el._adapter.send('CALENDAR_OPEN');
+    await el.updateComplete;
+
+    const calendar = el.shadowRoot?.querySelector('cds-date-picker-calendar');
+    expect(calendar).to.exist;
+    await calendar.updateComplete;
+
+    // Step 2: Select a date — calendar should close
+    const stateChangePromise = oneEvent(el, 'cds-date-picker-state-change');
+    calendar.dispatchEvent(
+      new CustomEvent('cds-date-picker-calendar-date-select', {
+        detail: { date: parseISOToPlainDate('2026-01-01') },
+        bubbles: true,
+        composed: true,
+      })
+    );
+
+    await stateChangePromise;
+    await el.updateComplete;
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(el.open).to.be.false;
+    expect(el.shadowRoot?.querySelector('cds-date-picker-calendar')).to.equal(
+      null
+    );
+
+    // Step 3: Click the input — calendar should reopen
+    // The input already has focus so onFocus will not fire again; only click fires.
+    input.dispatchEvent(
+      new CustomEvent(`cds-date-picker-input-click`, {
+        bubbles: true,
+        composed: true,
+        detail: { inputType: 'from' },
+      })
+    );
+    await el.updateComplete;
+
+    expect(el.open).to.be.true;
+    expect(
+      el.shadowRoot?.querySelector('cds-date-picker-calendar')
+    ).to.exist;
+  });
+});
+
 describe('cds-date-picker click-to-close', () => {
   it('closes the calendar when a date button is clicked', async () => {
     const el = await fixture(html`

@@ -1,7 +1,7 @@
 /**
  * @license
  *
- * Copyright IBM Corp. 2025
+ * Copyright IBM Corp. 2025, 2026
  *
  * This source code is licensed under the Apache-2.0 license found in the
  * LICENSE file in the root directory of this source tree.
@@ -467,6 +467,7 @@ export const Demo = () => {
                   className="hide-at-md"
                   menuTarget={headerRef.current}
                   kind="ghost"
+                  menuAlignment="bottom-end"
                   menuBackgroundToken="background"
                   menuBorder
                   label={selectedCategory || 'Select Category'}>
@@ -484,6 +485,7 @@ export const Demo = () => {
                   className="hide-at-md"
                   menuTarget={headerRef.current}
                   kind="ghost"
+                  menuAlignment="bottom-end"
                   menuBackgroundToken="background"
                   menuBorder
                   label={selectedItem || 'Select Item'}

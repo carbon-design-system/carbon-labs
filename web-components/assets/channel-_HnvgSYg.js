@@ -1,0 +1,1 @@
+import{Xt as e,Zt as t}from"./diagramElement-Cg2TXZIS.js";var n=(n,r)=>t.lang.round(e.parse(n)[r]);export{n as t};

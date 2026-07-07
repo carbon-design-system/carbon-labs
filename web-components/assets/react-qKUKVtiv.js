@@ -1,1 +1,0 @@
-import{t as e}from"./lib--Vp7hyDB.js";export{e as MDXProvider};

@@ -1,0 +1,1 @@
+import{t as e}from"./lib-Ccaf7Yay.js";export{e as MDXProvider};

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.80.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.79.0...@carbon-labs/wc-global-header@0.80.0) (2026-07-07)
+
+
+### Features
+
+* **global-header:** Proxy if custom domain ([#1292](https://github.com/carbon-design-system/carbon-labs/issues/1292)) ([c88678d](https://github.com/carbon-design-system/carbon-labs/commit/c88678d4ad1a38cd638d0b1d8098d5156eaea69e))
+
+
+
+
+
 # [0.79.0](https://github.com/carbon-design-system/carbon-labs/compare/@carbon-labs/wc-global-header@0.78.0...@carbon-labs/wc-global-header@0.79.0) (2026-06-17)
 
 **Note:** Version bump only for package @carbon-labs/wc-global-header

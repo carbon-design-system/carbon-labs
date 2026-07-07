@@ -57,14 +57,21 @@ describe('cds-date-picker keyboard navigation – Tab from calendar (Issue #1174
     return { container, picker, sentinelAfter };
   }
 
-  /** Open the calendar programmatically via the adapter. */
+  /**
+   * Open the calendar programmatically via the adapter.
+   * @param {HTMLElement} picker - The cds-date-picker element under test.
+   */
   async function openCalendar(picker) {
     picker._adapter.send('INPUT_FOCUS', { inputType: 'from' });
     picker._adapter.send('CALENDAR_OPEN');
     await picker.updateComplete;
   }
 
-  /** Return the focusable calendar div from inside the calendar renderer's shadow DOM. */
+  /**
+   * Return the focusable calendar div from inside the calendar renderer's shadow DOM.
+   * @param {HTMLElement} picker - The cds-date-picker element under test.
+   * @returns {HTMLElement|null} The calendar div, or null if not open.
+   */
   function getCalendarDiv(picker) {
     const calendarElement = picker.shadowRoot?.querySelector(
       'cds-date-picker-calendar'
@@ -76,7 +83,11 @@ describe('cds-date-picker keyboard navigation – Tab from calendar (Issue #1174
     );
   }
 
-  /** Return the exit sentinel span from the date picker's shadow root. */
+  /**
+   * Return the exit sentinel span from the date picker's shadow root.
+   * @param {HTMLElement} picker - The cds-date-picker element under test.
+   * @returns {HTMLElement|null} The sentinel span.
+   */
   function getExitSentinel(picker) {
     return (
       picker.shadowRoot?.querySelector('.cds--date-picker__exit-sentinel') ??

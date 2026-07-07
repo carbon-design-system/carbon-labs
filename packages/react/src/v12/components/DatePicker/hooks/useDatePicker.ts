@@ -285,6 +285,7 @@ export function useDatePicker(
         shouldRestoreFocus: false,
         restoreFocusTo: null,
       });
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- machineRef is guaranteed non-null inside this setTimeout: it was set during initialisation and is only cleared in cleanup which runs after unmount, long after any pending timer.
       setContext(machineRef.current!.getContext());
 
       queueMicrotask(() => {

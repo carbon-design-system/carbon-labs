@@ -871,7 +871,9 @@ describe('HybridIpaasHeader Component', () => {
           basePath="/api"></clabs-global-header-hybrid-ipaas>`
       );
 
-      hostnameStub = sinon.stub(el as any, 'getHostname').returns('cloud.ibm.com');
+      hostnameStub = sinon
+        .stub(el as any, 'getHostname')
+        .returns('cloud.ibm.com');
       const result = (el as any).getBackendProxy();
       expect(result).to.be.undefined;
     });
@@ -883,7 +885,9 @@ describe('HybridIpaasHeader Component', () => {
           basePath="/base"></clabs-global-header-hybrid-ipaas>`
       );
 
-      hostnameStub = sinon.stub(el as any, 'getHostname').returns('test.cloud.ibm.com');
+      hostnameStub = sinon
+        .stub(el as any, 'getHostname')
+        .returns('test.cloud.ibm.com');
       const result = (el as any).getBackendProxy();
       expect(result).to.be.undefined;
     });
@@ -895,7 +899,9 @@ describe('HybridIpaasHeader Component', () => {
           basePath="/test"></clabs-global-header-hybrid-ipaas>`
       );
 
-      hostnameStub = sinon.stub(el as any, 'getHostname').returns('example.com');
+      hostnameStub = sinon
+        .stub(el as any, 'getHostname')
+        .returns('example.com');
       const result = (el as any).getBackendProxy();
       expect(result).to.equal('/test/hybrid-ipaas/v1/proxies/solis/backend');
     });

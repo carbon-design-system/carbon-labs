@@ -29,6 +29,8 @@ import '../CommonHeader/CommonHeader';
 
 import styles from '../../index.scss?inline';
 
+import solisSessionManager from '../../globals/solisSessionManager';
+
 const { stablePrefix: clabsPrefix } = settings;
 
 /**
@@ -70,6 +72,7 @@ export class HybridIpaasHeader extends LitElement {
   capabilityProfileFooterLinks: ProfileFooterLinks[] = [];
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
   @property({ type: Boolean }) addCookiePreferences = false;
+  @property({ type: Number }) solisSessionRefreshInterval = 25; // TODO - do we need to make this configurable per capability?
 
   @state()
   headerOptions: HeaderProps = {
@@ -88,6 +91,8 @@ export class HybridIpaasHeader extends LitElement {
     },
   };
 
+  private sessionManager: solisSessionManager | null = null;
+
   constructor() {
     super();
     this._customEventListener = this._customEventListener.bind(this);
@@ -100,6 +105,10 @@ export class HybridIpaasHeader extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (this.sessionManager) {
+      this.sessionManager.stopRefreshSchedule();
+      this.sessionManager = null;
+    }
     document.removeEventListener(CUSTOM_EVENT_NAME, this._customEventListener);
   }
 
@@ -135,6 +144,10 @@ export class HybridIpaasHeader extends LitElement {
       );
 
       this.headerOptions = this.buildHeaderOptions(serverOptions);
+      if (this.headerOptions.profile !== null && this.headerOptions.profile !== undefined) {
+        // backend is ready and user is authenticated
+        this.initializeSessionManager();
+      }
     } catch (error) {
       console.error('Failed to load header options:', error);
     }
@@ -168,6 +181,13 @@ export class HybridIpaasHeader extends LitElement {
     } else {
       // backup option in case the cookie script didn't load for some reason
       window.open('https://www.ibm.com/privacy');
+    }
+  }
+
+  private initializeSessionManager() {
+    if (!this.sessionManager) {
+      this.sessionManager = new solisSessionManager({ tokenRefreshInterval: this.solisSessionRefreshInterval});
+      this.sessionManager.startRefreshSchedule();
     }
   }
 

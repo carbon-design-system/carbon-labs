@@ -72,6 +72,7 @@ export class HybridIpaasHeader extends LitElement {
   capabilityProfileFooterLinks: ProfileFooterLinks[] = [];
   @property({ type: Array }) capabilityGlobalActions: GlobalActionConfig[] = [];
   @property({ type: Boolean }) addCookiePreferences = false;
+  @property({ type: Boolean }) solisSessionManagerEnabled = false;
   @property({ type: Number }) solisSessionRefreshInterval = 25; // TODO - do we need to make this configurable per capability?
 
   @state()
@@ -144,7 +145,7 @@ export class HybridIpaasHeader extends LitElement {
       );
 
       this.headerOptions = this.buildHeaderOptions(serverOptions);
-      if (this.headerOptions.profile !== null && this.headerOptions.profile !== undefined) {
+      if (this.solisSessionManagerEnabled && this.headerOptions.profile !== null && this.headerOptions.profile !== undefined) {
         // backend is ready and user is authenticated
         this.initializeSessionManager();
       }

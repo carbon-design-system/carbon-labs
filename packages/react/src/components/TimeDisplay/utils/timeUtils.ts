@@ -115,13 +115,13 @@ export function getFullUnitLabel(unit: TimeUnit, value: number): string {
 export function filterTimeUnits(
   timeValues: TimeValues,
   units: TimeUnit[],
-  showZeroUnits: boolean
+  keepZeroValueUnits: boolean
 ): Array<{ unit: TimeUnit; value: number }> {
   const result: Array<{ unit: TimeUnit; value: number }> = [];
 
   for (const unit of units) {
     const value = timeValues[unit];
-    if (showZeroUnits || value > 0) {
+    if (keepZeroValueUnits || value > 0) {
       result.push({ unit, value });
     }
   }
@@ -142,9 +142,9 @@ export function generateAccessibleText(
   label: string,
   timeValues: TimeValues,
   units: TimeUnit[],
-  showZeroUnits: boolean
+  keepZeroValueUnits: boolean
 ): string {
-  const filteredUnits = filterTimeUnits(timeValues, units, showZeroUnits);
+  const filteredUnits = filterTimeUnits(timeValues, units, keepZeroValueUnits);
 
   if (filteredUnits.length === 0) {
     return `${label}: 0 seconds`;

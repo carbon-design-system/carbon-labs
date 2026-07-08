@@ -126,10 +126,10 @@ export interface TimeDisplayProps {
   padWithZero?: boolean;
 
   /**
-   * Show units even when their value is zero.
+   * Keep units visible even when their value is zero.
    * @default true
    */
-  showZeroUnits?: boolean;
+  keepZeroValueUnits?: boolean;
 
   /**
    * Enable Carbon productive-motion animations for digit changes.

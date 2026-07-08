@@ -36,7 +36,7 @@ export const TimeDisplay: React.FC<TimeDisplayProps> = ({
   units = ['hours', 'minutes', 'seconds'],
   format = 'split',
   padWithZero = true,
-  showZeroUnits = true,
+  keepZeroValueUnits = true,
   animated = true,
   completeLabel,
   onComplete,
@@ -71,8 +71,8 @@ export const TimeDisplay: React.FC<TimeDisplayProps> = ({
     announceThresholds: announcementMode === 'threshold',
   });
 
-  const displayUnits = filterTimeUnits(timeValues, units, showZeroUnits);
-  const accessibleText = generateAccessibleText(label, timeValues, units, showZeroUnits);
+  const displayUnits = filterTimeUnits(timeValues, units, keepZeroValueUnits);
+  const accessibleText = generateAccessibleText(label, timeValues, units, keepZeroValueUnits);
 
   const renderLabel = () => (
     <span
